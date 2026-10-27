@@ -1,0 +1,30 @@
+{
+  "status": "FAIL",
+  "candidateSha256": "5329d895309d3abf3c79d84232d81ffceb2828294c47667110089bc7df3bc68f",
+  "versionCode": 94,
+  "scope": "Targeted load UI phone/font1.3; stopped after first material pixel failure in phone",
+  "modes": [
+    {
+      "mode": "phone",
+      "status": "FAIL",
+      "assertionExecutions": 121,
+      "stage": "load-physical-pixel-regression",
+      "failure": "java.lang.AssertionError: region-pixels-identical-to-full-JPEG-source",
+      "report": "phone/report.json",
+      "pixelProof": "phone/pixel-mapping.json",
+      "framebufferCompared": 1849,
+      "framebufferErrorsOver2": 43,
+      "framebufferMaxDelta": 48,
+      "tileCompared": 1848,
+      "tileErrors": 88
+    },
+    {
+      "mode": "font1.3",
+      "status": "NOT_RUN",
+      "reason": "Stopped after phone material pixel failure; not claimed covered"
+    }
+  ],
+  "uiStateEvidence": "Phone initial/provisional/full/pending100/pending200/error/retry assertions passed before old exact-pixel guard failed",
+  "thresholdsChanged": false,
+  "cleanup": "CLEANUP.json"
+}

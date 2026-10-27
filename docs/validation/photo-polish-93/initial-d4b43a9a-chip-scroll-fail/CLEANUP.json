@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "candidateSha256": "d4b43a9ad502a332cc0f1cdc52e859e0b981197730d827dcf38a5fb9290aa02c",
+  "ownJpegFixturesRemoved": 6,
+  "ownDraftsRemoved": 3,
+  "sourceShasUnchanged": true,
+  "appearanceAndSystemSettingsAndGrantsRestored": true,
+  "probeUninstalledAndAbsenceChecked": true,
+  "serial": "emulator-5586",
+  "deviceReleased": true,
+  "emulatorLeftRunningForRoot": true,
+  "atUtc": "2026-10-24T10:50:15.3867515Z"
+}

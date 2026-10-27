@@ -1,0 +1,23 @@
+{
+  "confirmedUtc": "2026-10-27T15:07:52.228Z",
+  "migrationSha256": "e0e82ee6435228ad4c285ab237522541e8b1443e6dff3a410bbea347a4d57178",
+  "applied": true,
+  "checks": {
+    "bucket32MiB": true,
+    "bucketPrivate": true,
+    "otherBucketMetadataPreserved": true,
+    "releaseRowsUnchanged": true,
+    "catalogUnchanged": true,
+    "functionAclPreserved": true,
+    "byteChecks32MiB": true,
+    "binPathSupported": true,
+    "legacyPathConstraintReplaced": true,
+    "chunk63": true,
+    "rpcCapacity": true,
+    "oldBudgetsPreserved": true
+  },
+  "pass": true,
+  "releaseCount": 17,
+  "catalogCount": 390,
+  "priorFalseCheck": "Original validator incorrectly required whitespace around p_index > 63. Readback stores the valid body p_index>63. SQL was not rerun or changed."
+}

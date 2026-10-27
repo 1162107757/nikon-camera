@@ -1,0 +1,14 @@
+{
+  "serial": "emulator-5588",
+  "ownedPids": [
+    43244,
+    40876
+  ],
+  "probeUninstalled": true,
+  "settingsRestoration": "Each final run-identity.json restores font/orientation/night/animations",
+  "fixtureCleanup": "Each final report.json true",
+  "physicalDeviceUsed": false,
+  "previewServerUntouched": true,
+  "ownedProcessesAbsent": true,
+  "serialAbsent": true
+}

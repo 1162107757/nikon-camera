@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "apkSha256": "c9dfa6037eea08d3cc8824e196960376867ec49d0cc5755dedc0153d2d849dd2",
+  "assertions": [
+    "owned-emulator-only",
+    "installed-candidate-hash",
+    "production-main-ready",
+    "export-version",
+    "trace-without-preset-report",
+    "legacy-json-fields-and-original-version-retained",
+    "legacy-text-retained",
+    "activity-result-writes-valid-current-json-through-content-resolver",
+    "owned-export-output-cleaned"
+  ],
+  "scope": "Production JSON export path only; no physical camera or throughput measurement"
+}

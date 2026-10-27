@@ -1,0 +1,55 @@
+{
+  "apkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+  "versionCode": 100,
+  "sourceDrift": 0,
+  "hostChecks": {
+    "heartbeat": 10,
+    "wifiRuntime": 29,
+    "ptp": 5043,
+    "gallery": 459,
+    "localDeletion": 23
+  },
+  "componentChecks": [
+    {
+      "run": "20261025-074806-phone-0b3406",
+      "pass": true,
+      "checks": 57,
+      "screens": 3,
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-074806-phone-0b3406",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    },
+    {
+      "run": "20261025-074813-large-font-c4d063",
+      "pass": true,
+      "checks": 57,
+      "screens": 3,
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-074813-large-font-c4d063",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    },
+    {
+      "run": "20261025-074819-rail-834d4d",
+      "pass": true,
+      "checks": 57,
+      "screens": 3,
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-074819-rail-834d4d",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    }
+  ],
+  "physicalCameraTested": false,
+  "published": false
+}

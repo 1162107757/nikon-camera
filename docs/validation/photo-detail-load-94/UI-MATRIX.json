@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "candidateSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+  "versionCode": 94,
+  "versionName": "0.19.3-beta",
+  "scope": "Targeted native load UI only: phone/font1.3, real editor entry while IO blocked, initial/provisional/full states, pending 100/200 certification, actual storage failure/retry, queued-close cleanup, real JPEG/physical-screen pixel regression and renamed album entry",
+  "countMeaning": "Assertion executions across two configurations, not independent scenarios",
+  "totalAssertionExecutions": 264,
+  "serial": "emulator-5586",
+  "probeJavaSha256": "541eea8b40fde371b05f3df2e63801ad603aa4f99dad55efcc39043cf617bbb1",
+  "probeApkSha256": "97ae1213347c4f42b43f6a21897ae60e7812b719592a4246ab958624e9d2d83e",
+  "probeAndThresholdsUnchangedSinceFirstFailure": true,
+  "priorFailures": [
+    "initial-5329d895-jpeg-boundary-fail",
+    "second-54e0022f-odd-sample-edge-fail"
+  ],
+  "unchangedSuitesNotRepeated": [
+    "five-editor-tools",
+    "export",
+    "backend",
+    "progress",
+    "dark",
+    "landscape"
+  ],
+  "sourceIdentity": "FINAL-IDENTITY.json",
+  "modes": [
+    {
+      "mode": "phone",
+      "status": "PASS",
+      "assertionExecutions": 132,
+      "apkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+      "runId": "c4d19f4eac4940a58c401cb7c73bf1ed",
+      "fontScale": 1,
+      "density": 2.625,
+      "orientation": 1,
+      "realPreset": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "realEffectFixture": {
+        "width": 4320,
+        "height": 2880,
+        "pixels": 12441600,
+        "sha256": "94cd9bd259a44b66913b0ca8b8cd76eeeaae458777c60d9f909c4b2137f14e53",
+        "origin": "Shipping photograph scaled as a test fixture, not claimed recovered optical detail"
+      },
+      "entryWhileIoBlocked": {
+        "clickToDialogMs": 25,
+        "causalProof": "Dialog isShowing before either editor.io or source.worker latch released; elapsed time is diagnostic, not a device-speed assertion"
+      },
+      "states": [
+        {
+          "name": "02-detail-initial-loading",
+          "text": "载入中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 8,
+          "metricText": "",
+          "raw": "phone/02-detail-initial-loading.png",
+          "geometry": "phone/02-detail-initial-loading-status.json"
+        },
+        {
+          "name": "03-detail-refining",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "phone/03-detail-refining.png",
+          "geometry": "phone/03-detail-refining-status.json"
+        },
+        {
+          "name": "05-detail-100-pending",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "phone/05-detail-100-pending.png",
+          "geometry": "phone/05-detail-100-pending-status.json"
+        },
+        {
+          "name": "05-detail-200-pending",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "phone/05-detail-200-pending.png",
+          "geometry": "phone/05-detail-200-pending-status.json"
+        },
+        {
+          "name": "06-detail-load-error",
+          "text": "细节暂存目录不可用，请检查存储空间。",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": false,
+          "failed": true,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "phone/06-detail-load-error.png",
+          "geometry": "phone/06-detail-load-error-status.json"
+        },
+        {
+          "name": "07-detail-retry-loading",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "phone/07-detail-retry-loading.png",
+          "geometry": "phone/07-detail-retry-loading-status.json"
+        }
+      ],
+      "truePixelProof": {
+        "sourceWidth": 2401,
+        "sourceHeight": 1601,
+        "scale": 1,
+        "sample": 1,
+        "framebufferCompared": 1849,
+        "framebufferMaxDelta": 0,
+        "framebufferErrorsOver2": 0,
+        "tileCompared": 1848,
+        "tileErrors": 0,
+        "record": "phone/pixel-mapping.json",
+        "raw": "phone/09-detail-grid-100.png"
+      },
+      "nativePngCount": 12,
+      "appearanceRestored": true,
+      "settingsAndGrantsRestored": "PASS",
+      "allOwnFixturesAndCachesAbsent": true,
+      "allOwnJpegBytesUnchanged": true,
+      "ownSourceCacheCount": 4,
+      "ownDraftCount": 1,
+      "ownJpegCount": 2,
+      "report": "phone/report.json",
+      "environment": "phone/environment.json",
+      "restoration": "phone/restoration.json"
+    },
+    {
+      "mode": "font1.3",
+      "status": "PASS",
+      "assertionExecutions": 132,
+      "apkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+      "runId": "43b9e2db8a91493f87a185e27cbe296f",
+      "fontScale": 1.2999999523162842,
+      "density": 2.625,
+      "orientation": 1,
+      "realPreset": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "realEffectFixture": {
+        "width": 4320,
+        "height": 2880,
+        "pixels": 12441600,
+        "sha256": "eaf25f8883276a0f4e95f968d1ab87ac03dadcac313949513a3922e8e099475e",
+        "origin": "Shipping photograph scaled as a test fixture, not claimed recovered optical detail"
+      },
+      "entryWhileIoBlocked": {
+        "clickToDialogMs": 23,
+        "causalProof": "Dialog isShowing before either editor.io or source.worker latch released; elapsed time is diagnostic, not a device-speed assertion"
+      },
+      "states": [
+        {
+          "name": "02-detail-initial-loading",
+          "text": "载入中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 8,
+          "metricText": "",
+          "raw": "font1.3/02-detail-initial-loading.png",
+          "geometry": "font1.3/02-detail-initial-loading-status.json"
+        },
+        {
+          "name": "03-detail-refining",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "font1.3/03-detail-refining.png",
+          "geometry": "font1.3/03-detail-refining-status.json"
+        },
+        {
+          "name": "05-detail-100-pending",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "font1.3/05-detail-100-pending.png",
+          "geometry": "font1.3/05-detail-100-pending-status.json"
+        },
+        {
+          "name": "05-detail-200-pending",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "font1.3/05-detail-200-pending.png",
+          "geometry": "font1.3/05-detail-200-pending-status.json"
+        },
+        {
+          "name": "06-detail-load-error",
+          "text": "细节暂存目录不可用，请检查存储空间。",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": false,
+          "failed": true,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "font1.3/06-detail-load-error.png",
+          "geometry": "font1.3/06-detail-load-error-status.json"
+        },
+        {
+          "name": "07-detail-retry-loading",
+          "text": "细化中…",
+          "lineCount": 1,
+          "maxLines": 3,
+          "lastLineReachesCompleteText": true,
+          "ellipsisCounts": [
+            0
+          ],
+          "layoutWidth": -2,
+          "layoutWeight": 0,
+          "loading": true,
+          "failed": false,
+          "hasFullPixels": false,
+          "metricVisibility": 0,
+          "metricText": "3456×2304 px",
+          "raw": "font1.3/07-detail-retry-loading.png",
+          "geometry": "font1.3/07-detail-retry-loading-status.json"
+        }
+      ],
+      "truePixelProof": {
+        "sourceWidth": 2401,
+        "sourceHeight": 1601,
+        "scale": 1,
+        "sample": 1,
+        "framebufferCompared": 1849,
+        "framebufferMaxDelta": 0,
+        "framebufferErrorsOver2": 0,
+        "tileCompared": 1848,
+        "tileErrors": 0,
+        "record": "font1.3/pixel-mapping.json",
+        "raw": "font1.3/09-detail-grid-100.png"
+      },
+      "nativePngCount": 12,
+      "appearanceRestored": true,
+      "settingsAndGrantsRestored": "PASS",
+      "allOwnFixturesAndCachesAbsent": true,
+      "allOwnJpegBytesUnchanged": true,
+      "ownSourceCacheCount": 4,
+      "ownDraftCount": 1,
+      "ownJpegCount": 2,
+      "report": "font1.3/report.json",
+      "environment": "font1.3/environment.json",
+      "restoration": "font1.3/restoration.json"
+    }
+  ],
+  "cleanup": "CLEANUP.json",
+  "performanceLimitation": "Test-only full-render latch makes intermediate screenshots deterministic; UI gated timings are not production cold-open benchmarks. Ungated performance evidence is separate.",
+  "interactionLimitations": [
+    "Entry uses actual Button.performClick listener, not separate touchscreen hit testing",
+    "Close case cancels a queued first frame and checks source/cache release; it does not claim already-running renderer late-callback coverage"
+  ],
+  "visualReview": "Unedited native PNGs provided for independent review; automated geometry/text/pixel PASS does not replace visual judgment",
+  "completedAtUtc": "2026-10-24T12:46:46.2493080Z"
+}

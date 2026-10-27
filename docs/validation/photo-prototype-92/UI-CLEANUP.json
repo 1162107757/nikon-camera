@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "candidateApkSha256": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+  "serial": "emulator-5586",
+  "scope": "Only reserved emulator; no physical phone/other emulator/MediaStore access",
+  "modeReports": [
+    "phone/report.json",
+    "font1.3/report.json",
+    "landscape/report.json"
+  ],
+  "restorationReports": [
+    "phone/restoration.json",
+    "font1.3/restoration.json",
+    "landscape/restoration.json"
+  ],
+  "ownJpegFixturesRemoved": 9,
+  "ownDraftFilesRemoved": 3,
+  "allOriginalFixtureShasUnchanged": true,
+  "appAppearanceRestoredAllModes": true,
+  "systemFontRotationNightAndGrantsRestoredAllModes": true,
+  "probePackage": "cc.huevia.imageupgradeqa",
+  "probeUninstalled": true,
+  "probeAbsenceChecked": true,
+  "deviceReleased": true,
+  "emulatorLeftRunningForRoot": true,
+  "privateDetailCache": "Production source close/owner invalidation asserted; private filesystem absence not independently inspected, package is not debuggable",
+  "createdAtUtc": "2026-10-24T09:36:44.8136240Z"
+}

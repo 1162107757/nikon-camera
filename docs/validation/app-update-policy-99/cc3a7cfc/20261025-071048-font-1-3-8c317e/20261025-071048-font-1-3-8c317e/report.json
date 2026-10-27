@@ -1,0 +1,1046 @@
+{
+  "scope": "production UpdatePanel component UI; synthetic validated Release\/status callbacks; no MainActivity implementation, metadata HTTP, DownloadManager or installer",
+  "pass": true,
+  "fontScale": 1.2999999523162842,
+  "candidateSha256": "cc3a7cfcdb04dc54054ec7446cc3d5f8d2cbe0f495c6c8367e7d2a89d8fabb7f",
+  "versionCode": 99,
+  "workerTasks": 0,
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "font-scale-supported",
+      "pass": true
+    },
+    {
+      "name": "output-created",
+      "pass": true
+    },
+    {
+      "name": "manager-prefs-cleared",
+      "pass": true
+    },
+    {
+      "name": "prompt-prefs-cleared",
+      "pass": true
+    },
+    {
+      "name": "main-activity-replaced-before-onCreate",
+      "pass": true
+    },
+    {
+      "name": "ordinary-pending-while-busy",
+      "pass": true
+    },
+    {
+      "name": "ordinary-new-version-dialog",
+      "pass": true
+    },
+    {
+      "name": "ordinary-title",
+      "pass": true
+    },
+    {
+      "name": "ordinary-later",
+      "pass": true
+    },
+    {
+      "name": "ordinary-version-visible",
+      "pass": true
+    },
+    {
+      "name": "ordinary-notes-complete",
+      "pass": true
+    },
+    {
+      "name": "ordinary-not-blocking",
+      "pass": true
+    },
+    {
+      "name": "ordinary-dialog-in-screen",
+      "pass": true
+    },
+    {
+      "name": "ordinary-button--1-in-screen",
+      "pass": true
+    },
+    {
+      "name": "ordinary-button--1-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "ordinary-button--2-in-screen",
+      "pass": true
+    },
+    {
+      "name": "ordinary-button--2-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-version-layout",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-version-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-version-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-version-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-required-message-layout",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-required-message-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-required-message-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-required-message-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-notes-layout",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-notes-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-notes-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-notes-no-ellipsis-1",
+      "pass": true
+    },
+    {
+      "name": "ordinary-update-prompt-notes-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "ordinary-later-dismissed",
+      "pass": true
+    },
+    {
+      "name": "ordinary-repeat-deduplicated",
+      "pass": true
+    },
+    {
+      "name": "ordinary-resume-deduplicated",
+      "pass": true
+    },
+    {
+      "name": "ordinary-new-artifact-prompts",
+      "pass": true
+    },
+    {
+      "name": "ordinary-back-dismisses",
+      "pass": true
+    },
+    {
+      "name": "ordinary-checking-does-not-pop",
+      "pass": true
+    },
+    {
+      "name": "ordinary-downloading-does-not-pop",
+      "pass": true
+    },
+    {
+      "name": "ordinary-verifying-does-not-pop",
+      "pass": true
+    },
+    {
+      "name": "ordinary-ready-after-worker-phase",
+      "pass": true
+    },
+    {
+      "name": "required-busy-gate-active",
+      "pass": true
+    },
+    {
+      "name": "required-busy-dialog-pending",
+      "pass": true
+    },
+    {
+      "name": "required-back-does-not-release-gate",
+      "pass": true
+    },
+    {
+      "name": "required-dialog-on-safe-host",
+      "pass": true
+    },
+    {
+      "name": "required-page-open",
+      "pass": true
+    },
+    {
+      "name": "required-title",
+      "pass": true
+    },
+    {
+      "name": "required-no-later",
+      "pass": true
+    },
+    {
+      "name": "required-exit-app",
+      "pass": true
+    },
+    {
+      "name": "required-recheck",
+      "pass": true
+    },
+    {
+      "name": "required-message",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-not-truncated",
+      "pass": true
+    },
+    {
+      "name": "required-back-cannot-dismiss",
+      "pass": true
+    },
+    {
+      "name": "required-outside-cannot-dismiss",
+      "pass": true
+    },
+    {
+      "name": "required-goBack-stays-open",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-dialog-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-button--1-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-button--1-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-button--2-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-button--2-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-button--3-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-button--3-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-version-layout",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-version-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-version-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-version-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-required-message-layout",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-required-message-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-required-message-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-required-message-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-layout",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-1",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-2",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-3",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-4",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-5",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-6",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-7",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-8",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-9",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-10",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-11",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-12",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-13",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-14",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-15",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-16",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-17",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-18",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-19",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-20",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-21",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-22",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-23",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-24",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-25",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-26",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-27",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-28",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-29",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-30",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-31",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-32",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-33",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-34",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-35",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-36",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-37",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-38",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-39",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-40",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-41",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-42",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-43",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-44",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-45",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-46",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-47",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-48",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-49",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-50",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-51",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-52",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-53",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-54",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-55",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-ellipsis-56",
+      "pass": true
+    },
+    {
+      "name": "required-long-notes-update-prompt-notes-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "required-notes-scrollable",
+      "pass": true
+    },
+    {
+      "name": "required-notes-tail-reachable",
+      "pass": true
+    },
+    {
+      "name": "required-scrolled-button--1-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-scrolled-button--1-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-scrolled-button--2-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-scrolled-button--2-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-scrolled-button--3-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-scrolled-button--3-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "download-progress-visible",
+      "pass": true
+    },
+    {
+      "name": "download-progress-37",
+      "pass": true
+    },
+    {
+      "name": "download-positive-disabled",
+      "pass": true
+    },
+    {
+      "name": "download-required-gate-kept",
+      "pass": true
+    },
+    {
+      "name": "verifying-indeterminate",
+      "pass": true
+    },
+    {
+      "name": "verifying-positive-disabled",
+      "pass": true
+    },
+    {
+      "name": "error-message-complete",
+      "pass": true
+    },
+    {
+      "name": "retry-download-enabled",
+      "pass": true
+    },
+    {
+      "name": "error-required-gate-kept",
+      "pass": true
+    },
+    {
+      "name": "required-error-dialog-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-error-button--1-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-error-button--1-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-error-button--2-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-error-button--2-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-error-button--3-in-screen",
+      "pass": true
+    },
+    {
+      "name": "required-error-button--3-no-ellipsis",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-version-layout",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-version-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-version-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-version-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-required-message-layout",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-required-message-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-required-message-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-required-message-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-detail-layout",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-detail-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-detail-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-detail-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-layout",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-full-text-laid-out",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-0",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-1",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-2",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-3",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-4",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-5",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-6",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-7",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-8",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-9",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-10",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-11",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-12",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-13",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-14",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-15",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-16",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-17",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-18",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-19",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-20",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-21",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-22",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-23",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-24",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-25",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-26",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-27",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-28",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-29",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-30",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-31",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-32",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-33",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-34",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-35",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-36",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-37",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-38",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-39",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-40",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-41",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-42",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-43",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-44",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-45",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-46",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-47",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-48",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-49",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-50",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-51",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-52",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-53",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-54",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-55",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-ellipsis-56",
+      "pass": true
+    },
+    {
+      "name": "required-error-update-prompt-notes-no-horizontal-overflow",
+      "pass": true
+    },
+    {
+      "name": "verified-install-action-visible",
+      "pass": true
+    },
+    {
+      "name": "pause-hides-window",
+      "pass": true
+    },
+    {
+      "name": "pause-does-not-release-gate",
+      "pass": true
+    },
+    {
+      "name": "background-does-not-show-dialog",
+      "pass": true
+    },
+    {
+      "name": "required-resume-prompts",
+      "pass": true
+    },
+    {
+      "name": "server-ordinary-releases-gate",
+      "pass": true
+    },
+    {
+      "name": "server-ordinary-dismisses-required-dialog",
+      "pass": true
+    },
+    {
+      "name": "ordinary-back-page-closes",
+      "pass": true
+    },
+    {
+      "name": "required-new-release-restored",
+      "pass": true
+    },
+    {
+      "name": "withdraw-releases-gate",
+      "pass": true
+    },
+    {
+      "name": "withdraw-dismisses-dialog",
+      "pass": true
+    },
+    {
+      "name": "withdraw-stale-download-click-rejected",
+      "pass": true
+    },
+    {
+      "name": "withdraw-back-page-closes",
+      "pass": true
+    },
+    {
+      "name": "first-foreground-pending-no-window",
+      "pass": true
+    },
+    {
+      "name": "resume-busy-still-pending",
+      "pass": true
+    },
+    {
+      "name": "resume-safe-displays-pending-required",
+      "pass": true
+    },
+    {
+      "name": "no-worker-task-network-or-installer",
+      "pass": true
+    },
+    {
+      "name": "no-host-install-or-feedback",
+      "pass": true
+    },
+    {
+      "name": "activity-still-open",
+      "pass": true
+    },
+    {
+      "name": "preferences-restored",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "01-ordinary.png",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "file": "02-required.png",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "file": "03-required-notes-end.png",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "file": "04-downloading.png",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "file": "05-download-error.png",
+      "width": 1080,
+      "height": 2424
+    }
+  ],
+  "layoutObservations": [
+    {
+      "phase": "ordinary",
+      "fontScale": 1.2999999523162842,
+      "dialogWidth": 1024,
+      "dialogHeight": 676
+    },
+    {
+      "phase": "required-long-notes",
+      "fontScale": 1.2999999523162842,
+      "dialogWidth": 1024,
+      "dialogHeight": 1123
+    },
+    {
+      "phase": "required-notes-end",
+      "scrollY": 3568,
+      "childBottom": 4408,
+      "viewportHeight": 840
+    },
+    {
+      "phase": "required-error",
+      "fontScale": 1.2999999523162842,
+      "dialogWidth": 1024,
+      "dialogHeight": 1123
+    }
+  ],
+  "failure": null,
+  "causes": [],
+  "stack": []
+}

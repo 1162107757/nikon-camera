@@ -1,0 +1,10 @@
+{
+  "independentPythonVerifier": true,
+  "allZipCRCsPassed": true,
+  "requestAndObservedMembersBytesModesEqual": true,
+  "allExistingMembersPreserved": true,
+  "onlyNewMember": "server/bundled-apks/b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347.apk",
+  "previousFiles": 44,
+  "deployedFiles": 45,
+  "historicalApksPreserved": 7
+}

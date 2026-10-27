@@ -1,0 +1,18 @@
+{
+  "pass": false,
+  "checks": [
+    "owned-emulator",
+    "exact-apk",
+    "output-created",
+    "main-ready",
+    "no-wifi-fixture",
+    "system-selector-opened-without-extra-tap",
+    "retry-dialog-retained",
+    "no-ssid-password-input",
+    "no-manual-entry",
+    "no-camera-connect-before-selection"
+  ],
+  "candidateSha256": "0d4faabab86637c3e5f6bb0c9759f457d4e662318ef4d779ca37431c695527db",
+  "scope": "Real MainActivity; system settings intent is intercepted and returned cancelled. No actual network selection, camera handshake or phone test.",
+  "failure": "java.lang.AssertionError: cancel-delivered-once"
+}

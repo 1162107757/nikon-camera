@@ -1,0 +1,95 @@
+{
+  "scope": "Native emulator + synthetic PTP/IP peer, not camera interoperability",
+  "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+  "modes": [
+    {
+      "mode": "phone",
+      "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+      "status": "PASS",
+      "assertions": 92,
+      "nativeOrientation": "portrait",
+      "root": "docs/validation/remote-capture-95/cb4d685b/phone-538162da",
+      "captures": [
+        "captured.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+      "status": "PASS",
+      "assertions": 92,
+      "nativeOrientation": "portrait",
+      "root": "docs/validation/remote-capture-95/cb4d685b/font1.3-1f57a691",
+      "captures": [
+        "captured.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "landscape",
+      "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+      "status": "PASS",
+      "assertions": 96,
+      "nativeOrientation": "landscape",
+      "root": "docs/validation/remote-capture-95/cb4d685b/landscape-ee18d508",
+      "captures": [
+        "captured.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "landscape-bright-tools.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "dark",
+      "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+      "status": "PASS",
+      "assertions": 92,
+      "nativeOrientation": "portrait",
+      "root": "docs/validation/remote-capture-95/cb4d685b/dark-06c75b40",
+      "captures": [
+        "captured.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    }
+  ]
+}

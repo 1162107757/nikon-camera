@@ -1,0 +1,9 @@
+{
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "candidateApk": "D:\\dev\\ai-project\\nikon\\.tooling\\photo-detail-load-94\\candidates\\35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555.apk",
+  "candidateApkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+  "runId": "e5d0ba6c14dc43b6a270d29bf05f5b46",
+  "startedAtUtc": "2026-10-24T12:38:59.2076220Z",
+  "scope": "Private generated 12 MP JPEG and production codecs/source; no phone, camera, network, account state, gallery publication, or system setting changes."
+}

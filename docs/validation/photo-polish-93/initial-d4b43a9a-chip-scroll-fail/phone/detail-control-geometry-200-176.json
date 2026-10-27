@@ -1,0 +1,192 @@
+[
+  {
+    "tag": "detail-compare-palette",
+    "shell": {
+      "left": 298,
+      "top": 295,
+      "right": 781,
+      "bottom": 400,
+      "width": 483,
+      "height": 105
+    },
+    "outerRadius": 52.5,
+    "leftGap": 11,
+    "rightGap": 11,
+    "topBottomGap": 11,
+    "buttons": [
+      {
+        "label": "当前",
+        "selected": true,
+        "hit": {
+          "class": "android.widget.Button",
+          "width": 230,
+          "height": 127,
+          "measuredHeight": 127,
+          "top": 0,
+          "screenTop": 284,
+          "screenLeft": 309,
+          "globalVisibleLeft": 309,
+          "globalVisibleTop": 284,
+          "globalVisibleRight": 539,
+          "globalVisibleBottom": 411,
+          "globalVisibleWidth": 230,
+          "globalVisibleHeight": 127
+        },
+        "face": {
+          "left": 309,
+          "top": 306,
+          "right": 539,
+          "bottom": 389,
+          "width": 230,
+          "height": 83
+        },
+        "topGap": 11,
+        "bottomGap": 11,
+        "innerRadius": 42,
+        "accentPixels": 10,
+        "sampleX": 424,
+        "sampleY": 311
+      },
+      {
+        "label": "调色前",
+        "selected": false,
+        "hit": {
+          "class": "android.widget.Button",
+          "width": 231,
+          "height": 127,
+          "measuredHeight": 127,
+          "top": 0,
+          "screenTop": 284,
+          "screenLeft": 539,
+          "globalVisibleLeft": 539,
+          "globalVisibleTop": 284,
+          "globalVisibleRight": 770,
+          "globalVisibleBottom": 411,
+          "globalVisibleWidth": 231,
+          "globalVisibleHeight": 127
+        },
+        "face": {
+          "left": 539,
+          "top": 306,
+          "right": 770,
+          "bottom": 389,
+          "width": 231,
+          "height": 83
+        },
+        "topGap": 11,
+        "bottomGap": 11,
+        "innerRadius": 42
+      }
+    ]
+  },
+  {
+    "tag": "detail-zoom-palette",
+    "shell": {
+      "left": 32,
+      "top": 2202,
+      "right": 599,
+      "bottom": 2329,
+      "width": 567,
+      "height": 127
+    },
+    "outerRadius": 47.25,
+    "leftGap": 11,
+    "rightGap": 11,
+    "topBottomGap": 11,
+    "buttons": [
+      {
+        "label": "适应",
+        "selected": false,
+        "hit": {
+          "class": "android.widget.Button",
+          "width": 181,
+          "height": 127,
+          "measuredHeight": 127,
+          "top": 0,
+          "screenTop": 2202,
+          "screenLeft": 43,
+          "globalVisibleLeft": 43,
+          "globalVisibleTop": 2202,
+          "globalVisibleRight": 224,
+          "globalVisibleBottom": 2329,
+          "globalVisibleWidth": 181,
+          "globalVisibleHeight": 127
+        },
+        "face": {
+          "left": 43,
+          "top": 2213,
+          "right": 224,
+          "bottom": 2318,
+          "width": 181,
+          "height": 105
+        },
+        "topGap": 11,
+        "bottomGap": 11,
+        "innerRadius": 36
+      },
+      {
+        "label": "100%",
+        "selected": false,
+        "hit": {
+          "class": "android.widget.Button",
+          "width": 182,
+          "height": 127,
+          "measuredHeight": 127,
+          "top": 0,
+          "screenTop": 2202,
+          "screenLeft": 224,
+          "globalVisibleLeft": 224,
+          "globalVisibleTop": 2202,
+          "globalVisibleRight": 406,
+          "globalVisibleBottom": 2329,
+          "globalVisibleWidth": 182,
+          "globalVisibleHeight": 127
+        },
+        "face": {
+          "left": 224,
+          "top": 2213,
+          "right": 406,
+          "bottom": 2318,
+          "width": 182,
+          "height": 105
+        },
+        "topGap": 11,
+        "bottomGap": 11,
+        "innerRadius": 36
+      },
+      {
+        "label": "200%",
+        "selected": true,
+        "hit": {
+          "class": "android.widget.Button",
+          "width": 182,
+          "height": 127,
+          "measuredHeight": 127,
+          "top": 0,
+          "screenTop": 2202,
+          "screenLeft": 406,
+          "globalVisibleLeft": 406,
+          "globalVisibleTop": 2202,
+          "globalVisibleRight": 588,
+          "globalVisibleBottom": 2329,
+          "globalVisibleWidth": 182,
+          "globalVisibleHeight": 127
+        },
+        "face": {
+          "left": 406,
+          "top": 2213,
+          "right": 588,
+          "bottom": 2318,
+          "width": 182,
+          "height": 105
+        },
+        "topGap": 11,
+        "bottomGap": 11,
+        "innerRadius": 36,
+        "accentPixels": 10,
+        "sampleX": 497,
+        "sampleY": 2218
+      }
+    ]
+  }
+]

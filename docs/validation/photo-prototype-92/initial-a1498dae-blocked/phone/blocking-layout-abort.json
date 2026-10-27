@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "candidateApkSha256": "a1498dae0cfd59ebef831a5ea4e4fd25b532ba58d8702f55e92c68294c4ce0dc",
+  "cause": "Production PhotoDetailDialog.positionControls unconditionally calls metric.setMaxWidth during layout; repeated requestLayout second pass prevents Instrumentation.waitForIdleSync returning.",
+  "evidence": "blocking-layout-logcat.txt",
+  "interruption": "Close own detail dialog using Android BACK so instrumentation can report and run its fixture/preferences cleanup. Later check failure is an intentional abort consequence.",
+  "atUtc": "2026-10-24T09:13:09.1490562Z"
+}

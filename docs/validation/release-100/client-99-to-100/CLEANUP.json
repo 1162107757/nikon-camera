@@ -1,0 +1,14 @@
+{
+  "serial": "emulator-5586",
+  "avd": "Pixel_9",
+  "emulatorLauncherPid": 43652,
+  "ownedReadOnlyInstance": true,
+  "temporaryUiXmlRemoved": true,
+  "appStopped": true,
+  "killRequested": true,
+  "physicalPhoneUsed": false,
+  "otherEmulatorsTouched": false,
+  "serialAbsent": true,
+  "ownedProcessIdsAbsent": true,
+  "readOnlyStateDiscardedOnEmulatorExit": true
+}

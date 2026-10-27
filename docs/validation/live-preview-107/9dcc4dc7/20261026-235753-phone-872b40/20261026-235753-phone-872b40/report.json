@@ -1,0 +1,71 @@
+{
+  "pass": true,
+  "baseline": true,
+  "stage": "curve-held-gesture",
+  "checks": [
+    "owned-emulator",
+    "exact-installed-apk",
+    "safe-run-id",
+    "main-ready",
+    "guest-fixtures-only",
+    "orientation",
+    "shipping-photo-fixture",
+    "real-editor-ready",
+    "editor-final-ready",
+    "editor-final-ready",
+    "laid-out-basic",
+    "held-view-retained-basic",
+    "native-progress-changed-basic",
+    "editor-final-ready",
+    "basic-one-undo",
+    "basic-final-full-resolution",
+    "colour-final-ready",
+    "laid-out-hsl-0",
+    "held-view-retained-hsl-0",
+    "native-progress-changed-hsl-0",
+    "colour-final-ready",
+    "hsl-final-full-0",
+    "hsl-cancel-no-parent-edit",
+    "colour-final-ready",
+    "laid-out-curve",
+    "held-view-retained-curve",
+    "colour-final-ready",
+    "editor-final-ready",
+    "curve-apply-one-undo",
+    "original-bytes-preserved",
+    "pending-saves-drained",
+    "pending-saves-drained"
+  ],
+  "measurements": [
+    {
+      "control": "basic",
+      "heldMs": 2733,
+      "pixelChangesBeforeUp": 0,
+      "distinctPhotoPixelSignatures": 1,
+      "firstChangedFrameMs": -1,
+      "lastChangedFrameMs": -1
+    },
+    {
+      "control": "hsl-0",
+      "heldMs": 2820,
+      "pixelChangesBeforeUp": 0,
+      "distinctPhotoPixelSignatures": 1,
+      "firstChangedFrameMs": -1,
+      "lastChangedFrameMs": -1
+    },
+    {
+      "control": "curve",
+      "heldMs": 2710,
+      "pixelChangesBeforeUp": 0,
+      "distinctPhotoPixelSignatures": 1,
+      "firstChangedFrameMs": -1,
+      "lastChangedFrameMs": -1
+    }
+  ],
+  "candidateSha256": "9dcc4dc793d8bb4ddfd89d5bd9b62ff95152e652b33b6ef7d04d9a1fee963ad6",
+  "mode": "phone",
+  "fontScale": 1,
+  "failure": null,
+  "fixtureRemoved": true,
+  "scope": "Real MainActivity\/editor\/native gestures; changed rendered photo pixels sampled before ACTION_UP, own JPEG and actual source\/effect ledgers. Emulator only; not physical-device FPS or camera throughput."
+}

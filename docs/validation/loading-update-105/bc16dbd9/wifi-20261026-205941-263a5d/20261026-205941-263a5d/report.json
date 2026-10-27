@@ -1,0 +1,25 @@
+{
+  "pass": true,
+  "checks": [
+    "owned-emulator",
+    "exact-apk",
+    "output-created",
+    "main-ready",
+    "no-wifi-fixture",
+    "system-selector-opened-without-extra-tap",
+    "retry-dialog-retained",
+    "no-ssid-password-input",
+    "no-manual-entry",
+    "no-camera-connect-before-selection",
+    "cancel-delivered-once",
+    "pending-system-wait-cleared",
+    "real-main-uses-animated-loader",
+    "no-static-loading-empty-message",
+    "screenshot-main-loading.png",
+    "real-main-update-heading",
+    "screenshot-main-update-current.png"
+  ],
+  "candidateSha256": "bc16dbd9ebfb3fc639cf3c9c1f000dd2a1a247c2354a198bec6a99bbaf36cec4",
+  "scope": "Real MainActivity; system settings intent is intercepted and returned cancelled. No actual network selection, camera handshake or phone test.",
+  "failure": null
+}

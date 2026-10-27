@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-27T04:26:05.461Z",
+  "source": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+  "sourceSha256": "127feb93cc5e9376fec9da91013603d461410e8ac6c913d12d9f1ae2d4f4c6e3",
+  "baselineSourceSha256": "5961340c7def7d1182b1893c11edfc77e354d6ce48acb4faf7db9ef13d9719b7",
+  "targetedCandidate": {
+    "scope": "Isolated107 bytecode baseline plus LocalAlbumPanel only; not unified108 or publishable release",
+    "baselineApkSha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+    "sourceSha256": "127feb93cc5e9376fec9da91013603d461410e8ac6c913d12d9f1ae2d4f4c6e3",
+    "candidateSha256": "3581f527a1e1dde80b775692bf84ee1fac470e8fd88a14125d5bfda04c6ca101",
+    "candidate": "D:\\dev\\ai-project\\nikon\\.tooling\\album-position-108\\album-position-patched-107.apk"
+  },
+  "probeSha256": "1d13f26083fd597a48550f7c8110eca6c810016451c55bacdee4b6096856e491",
+  "tests": [
+    {
+      "path": "tests/album-position-device-probe/AndroidManifest.xml",
+      "sha256": "cb8bbd91c5e0b4a486ac863797cd470d37994569478e574410ba0bc80cb97671"
+    },
+    {
+      "path": "tests/album-position-device-probe/build.ps1",
+      "sha256": "c8e9f6ac3280271c8c1b98e0a23ace81f4138a9104fb171aea649d3f653c1cd9"
+    },
+    {
+      "path": "tests/album-position-device-probe/build-patched-107.ps1",
+      "sha256": "f41f2a1f0407647e8c247e78957d400a0b88dcb3f78c096fb033939f5dfc37e5"
+    },
+    {
+      "path": "tests/album-position-device-probe/run.ps1",
+      "sha256": "23731e93a5dd79cfc5f264f207bf30363c4d039273923e743c1fa2ef8a902785"
+    },
+    {
+      "path": "tests/album-position-device-probe/src/cc/huevia/albumpositionqa/AlbumPositionProbe.java",
+      "sha256": "96bd12a4de0b1364cf09a72955d785527021c2e916be51c0f59a75423ac28124"
+    }
+  ],
+  "baselineReport": "b05fc8e8/20261027-121552-phone-c035ac/20261027-121552-phone-c035ac/report.json",
+  "finalComponentReport": "3581f527/20261027-122041-phone-6ab966/20261027-122041-phone-6ab966/report.json",
+  "finalChecks": 47,
+  "scope": "Only LocalAlbumPanel changed by this task. Targeted isolated107 bytecode snapshot; unified108 SHA verification will be run by the coordinating chat."
+}

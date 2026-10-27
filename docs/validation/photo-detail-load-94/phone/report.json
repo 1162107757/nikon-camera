@@ -1,0 +1,608 @@
+{
+  "runId": "c4d19f4eac4940a58c401cb7c73bf1ed",
+  "mode": "phone",
+  "savedReasonOnly": false,
+  "apkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+  "versionCode": "94",
+  "scope": "v94 targeted detail entry\/loading\/provisional\/full\/error\/retry\/close and album label only; actual native production classes, delegated real 12.4MP effect profile with test-only worker scheduling gates, actual JPEG pixel oracle; no old five-tool\/export\/backend\/dark suites, camera connection, account operations or MediaStore writes.",
+  "fontScale": 1,
+  "density": 2.625,
+  "orientation": 1,
+  "nightMask": 16,
+  "loadFixture": {
+    "width": 4320,
+    "height": 2880,
+    "pixels": 12441600,
+    "sha256": "94cd9bd259a44b66913b0ca8b8cd76eeeaae458777c60d9f909c4b2137f14e53",
+    "origin": "Shipping photograph scaled as a test fixture, not claimed recovered optical detail"
+  },
+  "presetFixture": {
+    "status": "PARSED",
+    "name": "Bluesky.NCP",
+    "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+    "bytes": 638,
+    "storage": "own JPEG draft only, no preset library writes"
+  },
+  "entryWhileIoBlocked": {
+    "clickToDialogMs": 25,
+    "causalProof": "Dialog isShowing before either editor.io or source.worker latch released; elapsed time is diagnostic, not a device-speed assertion"
+  },
+  "refining": {
+    "realProfileDelegated": true,
+    "realProvisionalFrame": true,
+    "fullProcessingAfterTestGateMs": 36811,
+    "timingLimitation": "The full-render scheduling latch makes intermediate UI deterministic; this elapsed time is not a production cold-open benchmark"
+  },
+  "status": "PASS",
+  "checks": 132,
+  "assertions": [
+    {
+      "name": "emulator-hardware-only",
+      "passed": true
+    },
+    {
+      "name": "exact-candidate-APK-bytes",
+      "passed": true
+    },
+    {
+      "name": "candidate-version",
+      "passed": true
+    },
+    {
+      "name": "probe-run-identity-valid",
+      "passed": true
+    },
+    {
+      "name": "prototype-scope-excludes-export-progress",
+      "passed": true
+    },
+    {
+      "name": "saved-reason-target-is-exclusive-landscape-prototype-scope",
+      "passed": true
+    },
+    {
+      "name": "load-scope-is-only-phone-and-font-without-old-suites",
+      "passed": true
+    },
+    {
+      "name": "main-activity-ready",
+      "passed": true
+    },
+    {
+      "name": "requested-native-orientation",
+      "passed": true
+    },
+    {
+      "name": "actual-font-scale",
+      "passed": true
+    },
+    {
+      "name": "actual-system-night-mode",
+      "passed": true
+    },
+    {
+      "name": "album-has-visible-real-shoot-and-transfer-entry",
+      "passed": true
+    },
+    {
+      "name": "album-old-live-label-is-absent",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "album-visible-text-and-accessibility-use-new-label",
+      "passed": true
+    },
+    {
+      "name": "load-shipping-photo-fixture-exists",
+      "passed": true
+    },
+    {
+      "name": "load-12mp-real-jpeg-written",
+      "passed": true
+    },
+    {
+      "name": "native-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "local-real-preset-fixture-SHA-matches-runner",
+      "passed": true
+    },
+    {
+      "name": "native-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "load-editor-binds-real-effect-draft",
+      "passed": true
+    },
+    {
+      "name": "own-fixture-pending-saves-drained",
+      "passed": true
+    },
+    {
+      "name": "load-editor-io-is-blocked-before-entry",
+      "passed": true
+    },
+    {
+      "name": "load-actual-native-entry-click-handled",
+      "passed": true
+    },
+    {
+      "name": "load-detail-dialog-shows-synchronously-while-editor-io-blocked",
+      "passed": true
+    },
+    {
+      "name": "load-source-worker-blocked-before-first-frame",
+      "passed": true
+    },
+    {
+      "name": "load-entry-does-not-wait-for-editor-io-release",
+      "passed": true
+    },
+    {
+      "name": "load-first-frame-really-not-yet-available",
+      "passed": true
+    },
+    {
+      "name": "02-detail-initial-loading-uses-complete-expected-short-status",
+      "passed": true
+    },
+    {
+      "name": "02-detail-initial-loading-status-uses-intrinsic-wrap-width-not-zero-weighted-width",
+      "passed": true
+    },
+    {
+      "name": "02-detail-initial-loading-status-lines-are-unellipsized-and-unclipped-with-three-line-limit",
+      "passed": true
+    },
+    {
+      "name": "02-detail-initial-loading-real-view-state-matches-status",
+      "passed": true
+    },
+    {
+      "name": "02-detail-initial-loading-feedback-and-retry-visibility-match-state",
+      "passed": true
+    },
+    {
+      "name": "02-detail-initial-loading-metric-never-shows-dash-placeholder",
+      "passed": true
+    },
+    {
+      "name": "load-metric-is-gone-and-empty-without-dimensions",
+      "passed": true
+    },
+    {
+      "name": "load-closed-before-first-frame-source-closed",
+      "passed": true
+    },
+    {
+      "name": "load-closed-before-first-frame-worker-released",
+      "passed": true
+    },
+    {
+      "name": "load-closed-before-first-frame-private-cache-removed",
+      "passed": true
+    },
+    {
+      "name": "load-late-first-frame-cannot-resurrect-closed-dialog",
+      "passed": true
+    },
+    {
+      "name": "load-scheduling-proxy-retains-real-colour-geometry-and-border-model",
+      "passed": true
+    },
+    {
+      "name": "load-real-full-resolution-render-entered-gate",
+      "passed": true
+    },
+    {
+      "name": "load-source-published-real-provisional-frame",
+      "passed": true
+    },
+    {
+      "name": "load-provisional-is-drawn-but-not-final-detail",
+      "passed": true
+    },
+    {
+      "name": "03-detail-refining-uses-complete-expected-short-status",
+      "passed": true
+    },
+    {
+      "name": "03-detail-refining-status-uses-intrinsic-wrap-width-not-zero-weighted-width",
+      "passed": true
+    },
+    {
+      "name": "03-detail-refining-status-lines-are-unellipsized-and-unclipped-with-three-line-limit",
+      "passed": true
+    },
+    {
+      "name": "03-detail-refining-real-view-state-matches-status",
+      "passed": true
+    },
+    {
+      "name": "03-detail-refining-feedback-and-retry-visibility-match-state",
+      "passed": true
+    },
+    {
+      "name": "03-detail-refining-metric-never-shows-dash-placeholder",
+      "passed": true
+    },
+    {
+      "name": "load-provisional-metric-shows-dimensions-without-precision-scale",
+      "passed": true
+    },
+    {
+      "name": "load-real-complete-frame-replaces-provisional",
+      "passed": true
+    },
+    {
+      "name": "load-complete-fit-frame-is-ready-and-feedback-hidden",
+      "passed": true
+    },
+    {
+      "name": "load-complete-metric-restores-actual-scale",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-source-worker-blocked",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-retained-old-frame-is-not-certified-while-new-regions-pending",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-metric-does-not-claim-precision-multiplier",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-uses-complete-expected-short-status",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-status-uses-intrinsic-wrap-width-not-zero-weighted-width",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-status-lines-are-unellipsized-and-unclipped-with-three-line-limit",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-real-view-state-matches-status",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-feedback-and-retry-visibility-match-state",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-pending-metric-never-shows-dash-placeholder",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-complete-new-regions-are-ready",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-loaded-regions-use-physical-scale-and-sample1",
+      "passed": true
+    },
+    {
+      "name": "05-detail-100-loaded-metric-restores-confirmed-multiplier",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-source-worker-blocked",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-retained-old-frame-is-not-certified-while-new-regions-pending",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-metric-does-not-claim-precision-multiplier",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-uses-complete-expected-short-status",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-status-uses-intrinsic-wrap-width-not-zero-weighted-width",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-status-lines-are-unellipsized-and-unclipped-with-three-line-limit",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-real-view-state-matches-status",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-feedback-and-retry-visibility-match-state",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-pending-metric-never-shows-dash-placeholder",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-complete-new-regions-are-ready",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-loaded-regions-use-physical-scale-and-sample1",
+      "passed": true
+    },
+    {
+      "name": "05-detail-200-loaded-metric-restores-confirmed-multiplier",
+      "passed": true
+    },
+    {
+      "name": "load-complete-detail-source-closed",
+      "passed": true
+    },
+    {
+      "name": "load-complete-detail-worker-released",
+      "passed": true
+    },
+    {
+      "name": "load-complete-detail-private-cache-removed",
+      "passed": true
+    },
+    {
+      "name": "load-failure-obstruction-is-only-owned-source-cache-path",
+      "passed": true
+    },
+    {
+      "name": "load-real-cache-storage-error-is-reported",
+      "passed": true
+    },
+    {
+      "name": "06-detail-load-error-uses-complete-expected-short-status",
+      "passed": true
+    },
+    {
+      "name": "06-detail-load-error-status-uses-intrinsic-wrap-width-not-zero-weighted-width",
+      "passed": true
+    },
+    {
+      "name": "06-detail-load-error-status-lines-are-unellipsized-and-unclipped-with-three-line-limit",
+      "passed": true
+    },
+    {
+      "name": "06-detail-load-error-real-view-state-matches-status",
+      "passed": true
+    },
+    {
+      "name": "06-detail-load-error-feedback-and-retry-visibility-match-state",
+      "passed": true
+    },
+    {
+      "name": "06-detail-load-error-metric-never-shows-dash-placeholder",
+      "passed": true
+    },
+    {
+      "name": "load-failure-is-real-source-error-and-dialog-remains-open",
+      "passed": true
+    },
+    {
+      "name": "load-owned-cache-obstruction-removed-before-retry",
+      "passed": true
+    },
+    {
+      "name": "load-retry-source-worker-held",
+      "passed": true
+    },
+    {
+      "name": "07-detail-retry-loading-uses-complete-expected-short-status",
+      "passed": true
+    },
+    {
+      "name": "07-detail-retry-loading-status-uses-intrinsic-wrap-width-not-zero-weighted-width",
+      "passed": true
+    },
+    {
+      "name": "07-detail-retry-loading-status-lines-are-unellipsized-and-unclipped-with-three-line-limit",
+      "passed": true
+    },
+    {
+      "name": "07-detail-retry-loading-real-view-state-matches-status",
+      "passed": true
+    },
+    {
+      "name": "07-detail-retry-loading-feedback-and-retry-visibility-match-state",
+      "passed": true
+    },
+    {
+      "name": "07-detail-retry-loading-metric-never-shows-dash-placeholder",
+      "passed": true
+    },
+    {
+      "name": "load-real-retry-completes-with-full-pixels",
+      "passed": true
+    },
+    {
+      "name": "load-retry-restores-three-line-cap-and-hides-retry-control",
+      "passed": true
+    },
+    {
+      "name": "load-retry-detail-source-closed",
+      "passed": true
+    },
+    {
+      "name": "load-retry-detail-worker-released",
+      "passed": true
+    },
+    {
+      "name": "load-retry-detail-private-cache-removed",
+      "passed": true
+    },
+    {
+      "name": "native-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "load-grid-real-entry-opens-detail",
+      "passed": true
+    },
+    {
+      "name": "load-grid-full-frame-ready",
+      "passed": true
+    },
+    {
+      "name": "load-grid100-full-frame-ready",
+      "passed": true
+    },
+    {
+      "name": "load-grid100-retains-physical-pixel-sample1",
+      "passed": true
+    },
+    {
+      "name": "region-pixels-identical-to-full-JPEG-source",
+      "passed": true
+    },
+    {
+      "name": "physical-framebuffer-1-to-1-high-frequency-pixels",
+      "passed": true
+    },
+    {
+      "name": "load-grid-detail-source-closed",
+      "passed": true
+    },
+    {
+      "name": "load-grid-detail-worker-released",
+      "passed": true
+    },
+    {
+      "name": "load-grid-detail-private-cache-removed",
+      "passed": true
+    },
+    {
+      "name": "load-original-effect-source-jpeg-sha-unchanged",
+      "passed": true
+    },
+    {
+      "name": "load-test-scheduling-gate-released-within-bound",
+      "passed": true
+    },
+    {
+      "name": "load-test-scheduling-gate-released-within-bound",
+      "passed": true
+    },
+    {
+      "name": "load-test-scheduling-gate-released-within-bound",
+      "passed": true
+    },
+    {
+      "name": "load-test-scheduling-gate-released-within-bound",
+      "passed": true
+    },
+    {
+      "name": "load-test-scheduling-gate-released-within-bound",
+      "passed": true
+    },
+    {
+      "name": "load-test-scheduling-gate-released-within-bound",
+      "passed": true
+    }
+  ],
+  "cleanup": [
+    {
+      "cache": "\/data\/user\/0\/cc.huevia\/cache\/photo-detail-94581c61-c49b-4d79-9615-4b92ef820289",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "cache": "\/data\/user\/0\/cc.huevia\/cache\/photo-detail-6def3146-b6d7-45e6-8009-8ebfb8355df6",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "cache": "\/data\/user\/0\/cc.huevia\/cache\/photo-detail-010dd1b8-379a-4140-a06b-3e7f8373d2a7",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "cache": "\/data\/user\/0\/cc.huevia\/cache\/photo-detail-bab64810-2e28-4c71-9c42-db7a47cd8b0c",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "draft": "\/data\/data\/cc.huevia\/files\/photo-edit-drafts\/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\/94cd9bd259a44b66913b0ca8b8cd76eeeaae458777c60d9f909c4b2137f14e53.draft",
+      "absent": true
+    },
+    {
+      "fixture": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/files\/Pictures\/camera-album\/image-upgrade-qa-df818bb9-48aa-429d-98b1-552929bac029__LOAD12MP.JPG",
+      "shaBeforeDelete": "94cd9bd259a44b66913b0ca8b8cd76eeeaae458777c60d9f909c4b2137f14e53",
+      "unchanged": true,
+      "absent": true
+    },
+    {
+      "fixture": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/files\/Pictures\/camera-album\/image-upgrade-qa-219c0b1a-5899-4eee-a5a4-e5b53b65b6c6__GRID.JPG",
+      "shaBeforeDelete": "14e57e9c5db159e72dad82dea932997175080a862183c657b7d775d2c97aed6a",
+      "unchanged": true,
+      "absent": true
+    }
+  ],
+  "appearanceRestored": true,
+  "osGuideDismissals": []
+}

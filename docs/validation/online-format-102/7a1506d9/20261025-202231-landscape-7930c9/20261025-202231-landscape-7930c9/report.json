@@ -1,0 +1,291 @@
+{
+  "fixtureItems": 72,
+  "np3FixtureSha256": "d64de018e668077a350de019c7ae70fc55e173e0141d46a71a27a2b3ce5e65af",
+  "initialScreenWidthDp": 923,
+  "initialScreenHeightDp": 411,
+  "fontScale": 1,
+  "pass": false,
+  "failure": "java.lang.AssertionError: native-scroll-fetches-second-format-page at format-and-pagination\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.until(OnlineFormatProbe.java:304)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.onStart(OnlineFormatProbe.java:119)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "catalogState": {
+    "format": "NP3",
+    "category": "全部",
+    "loading": false,
+    "loaded": true,
+    "page": 1,
+    "total": 24,
+    "count": 20,
+    "message": ""
+  },
+  "stage": "format-and-pagination",
+  "mode": "landscape",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "installed-version-code",
+      "pass": true
+    },
+    {
+      "name": "installed-version-name",
+      "pass": true
+    },
+    {
+      "name": "installed-frozen-apk-sha256",
+      "pass": true
+    },
+    {
+      "name": "initial-offline-startup-settled",
+      "pass": true
+    },
+    {
+      "name": "native-initial-orientation-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-app-theme-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-font-scale-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "catalog--全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-72",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-all",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-all",
+      "pass": true
+    },
+    {
+      "name": "format-label-single-line-all",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-all",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-all",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-all",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-24",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-048-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-049-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-050-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-051-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-052-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-053-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-054-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-055-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-056-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-057-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-058-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-059-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-060-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-061-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-062-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-063-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-064-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-065-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-066-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-067-NP3",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-np3",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-np3",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-np3",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-np3",
+      "pass": true
+    },
+    {
+      "name": "format-label-single-line-np3",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-np3",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-np3",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-np3",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-np3",
+      "pass": true
+    },
+    {
+      "name": "fixture-cleanup-scope",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "all-formats.png",
+      "sha256": "392ed77f17ceedef9949c27ef5bec1113b5ab9111239133ae5d6690199cc5fa8"
+    },
+    {
+      "file": "format-menu.png",
+      "sha256": "780dfb59214f187fc5585b459a1e465c35f2b6e87e3f80f6fc01d041e1553080"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "d71edfe8a8cf3486ce538ed7c962cb3779c6d6fa3798d2947167814832862b0d"
+    }
+  ],
+  "requests": [
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=",
+    "https:\/\/format-fixture.invalid\/format-qa-002.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-001.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-000.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-003.ncp",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=&fileFormat=NP3",
+    "https:\/\/format-fixture.invalid\/format-qa-051.np3"
+  ],
+  "scope": "Real installed MainActivity, native taps\/Views\/configuration and incumbent repository\/HTTPS JSON parser. Explicit in-memory public-recipe and synthetic catalogue fixtures; no live server request, account mutation, physical camera, update-policy change or physical performance claim."
+}

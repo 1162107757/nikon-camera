@@ -1,0 +1,46 @@
+{
+  "startedUtc": "2026-10-27T15:46:57.097Z",
+  "releaseId": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+  "environmentVerified": true,
+  "storagePath": "app-releases/5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8.bin",
+  "expectedByteLength": 9478052,
+  "expectedSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+  "downloadName": "Huevia-110-beta.apk",
+  "scope": "Read-only final release object verification plus temporary signing; no upload, deletion, deployment, policy or publication mutation",
+  "releaseObjectDeleted": false,
+  "releaseObjectModified": false,
+  "authenticated": {
+    "byteLength": 9478052,
+    "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+    "matches": true
+  },
+  "serverInspection": {
+    "packageName": "cc.huevia",
+    "versionCode": 110,
+    "versionName": "0.22.1-beta",
+    "minSdk": 26,
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureSchemes": [
+      2,
+      3
+    ]
+  },
+  "signing": {
+    "requestedTtlSeconds": 60,
+    "observedTtlSeconds": 60,
+    "host": "nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+    "pathname": "/v1/storages/object/sign/nikon-presets/app-releases/5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8.bin"
+  },
+  "signed": {
+    "status": 200,
+    "contentType": "application/octet-stream",
+    "contentLength": "9478052",
+    "contentDisposition": "attachment; filename=Huevia-110-beta.apk; filename*=UTF-8''Huevia-110-beta.apk",
+    "byteLength": 9478052,
+    "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+    "exactBytes": true,
+    "apkFilename": true
+  },
+  "pass": true,
+  "finishedUtc": "2026-10-27T15:47:46.441Z"
+}

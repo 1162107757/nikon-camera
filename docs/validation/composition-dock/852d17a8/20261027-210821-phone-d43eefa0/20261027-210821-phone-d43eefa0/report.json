@@ -1,0 +1,64 @@
+{
+  "pass": false,
+  "stage": "start",
+  "apkSha256": "852d17a89984f82f4af9d116c7bacb17b3243675299ce07de3bf237692b508c6",
+  "versionCode": 110,
+  "versionName": "0.22.1-beta",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "runner-version-code",
+      "pass": true
+    },
+    {
+      "name": "runner-version-name",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "fresh-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "fixture-name-reserved-exclusively",
+      "pass": true
+    },
+    {
+      "name": "private-jpeg-created",
+      "pass": true
+    },
+    {
+      "name": "fixture-has-no-prior-draft",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 0,
+  "fixtureRemoved": true,
+  "cleanupErrors": [],
+  "failure": "java.lang.NoSuchMethodException: cc.huevia.album.DownloadedPhoto.<init> [class java.io.File, class java.lang.String]",
+  "scope": "Actual installed MainActivity\/AlbumPanel\/local-photo editor; owned generated JPEG; native pointer clicks on four composition entries, reset and history; native perspective menu\/keyboard; temporary versus committed geometry; independent seeded colour\/local\/border preservation markers; font\/orientation layout and committed-frame screenshots. No camera, account transition, publication, physical-device or TalkBack certification."
+}

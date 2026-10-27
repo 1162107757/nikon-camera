@@ -1,0 +1,140 @@
+{
+  "candidateSha256": "7a1506d9bceb33a216425d6ad1bdd03dff5c7447be5ce2f77853c3758c4089d4",
+  "versionCode": 102,
+  "versionName": "0.21.3-beta",
+  "fullMatrixPass": false,
+  "completePassingRuns": [
+    "large-font",
+    "dark"
+  ],
+  "completePassingAssertionExecutions": 648,
+  "runs": [
+    {
+      "runId": "20261025-202140-phone-784551",
+      "reportPath": "docs/validation/online-format-102/7a1506d9/20261025-202140-phone-784551/20261025-202140-phone-784551/report.json",
+      "pass": false,
+      "mode": "phone",
+      "checks": 200,
+      "passedChecks": 199,
+      "stage": "stale-format-response",
+      "failure": "java.lang.AssertionError: old-format-request-held",
+      "screen": [
+        411,
+        923
+      ],
+      "screenshots": [
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202140-phone-784551/20261025-202140-phone-784551/all-formats.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202140-phone-784551/20261025-202140-phone-784551/format-menu.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202140-phone-784551/20261025-202140-phone-784551/np3-portrait.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202140-phone-784551/20261025-202140-phone-784551/np3-no-match.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202140-phone-784551/20261025-202140-phone-784551/failure.png"
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-202140-phone-784551",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    },
+    {
+      "runId": "20261025-202211-large-font-710883",
+      "reportPath": "docs/validation/online-format-102/7a1506d9/20261025-202211-large-font-710883/20261025-202211-large-font-710883/report.json",
+      "pass": true,
+      "mode": "large-font",
+      "checks": 324,
+      "passedChecks": 324,
+      "stage": "cached-format-category-combination",
+      "failure": null,
+      "screen": [
+        411,
+        923
+      ],
+      "screenshots": [
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202211-large-font-710883/20261025-202211-large-font-710883/all-formats.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202211-large-font-710883/20261025-202211-large-font-710883/format-menu.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202211-large-font-710883/20261025-202211-large-font-710883/np3-portrait.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202211-large-font-710883/20261025-202211-large-font-710883/np3-no-match.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202211-large-font-710883/20261025-202211-large-font-710883/rotated-selection.png"
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-202211-large-font-710883",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    },
+    {
+      "runId": "20261025-202231-landscape-7930c9",
+      "reportPath": "docs/validation/online-format-102/7a1506d9/20261025-202231-landscape-7930c9/20261025-202231-landscape-7930c9/report.json",
+      "pass": false,
+      "mode": "landscape",
+      "checks": 61,
+      "passedChecks": 61,
+      "stage": "format-and-pagination",
+      "failure": "java.lang.AssertionError: native-scroll-fetches-second-format-page at format-and-pagination",
+      "screen": [
+        923,
+        411
+      ],
+      "screenshots": [
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202231-landscape-7930c9/20261025-202231-landscape-7930c9/all-formats.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202231-landscape-7930c9/20261025-202231-landscape-7930c9/format-menu.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202231-landscape-7930c9/20261025-202231-landscape-7930c9/failure.png"
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-202231-landscape-7930c9",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    },
+    {
+      "runId": "20261025-202258-dark-e80b65",
+      "reportPath": "docs/validation/online-format-102/7a1506d9/20261025-202258-dark-e80b65/20261025-202258-dark-e80b65/report.json",
+      "pass": true,
+      "mode": "dark",
+      "checks": 324,
+      "passedChecks": 324,
+      "stage": "cached-format-category-combination",
+      "failure": null,
+      "screen": [
+        411,
+        923
+      ],
+      "screenshots": [
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202258-dark-e80b65/20261025-202258-dark-e80b65/all-formats.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202258-dark-e80b65/20261025-202258-dark-e80b65/format-menu.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202258-dark-e80b65/20261025-202258-dark-e80b65/np3-portrait.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202258-dark-e80b65/20261025-202258-dark-e80b65/np3-no-match.png",
+        "D:/dev/ai-project/nikon/docs/validation/online-format-102/7a1506d9/20261025-202258-dark-e80b65/20261025-202258-dark-e80b65/rotated-selection.png"
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "20261025-202258-dark-e80b65",
+        "testPackageUninstalled": true,
+        "settingsRestored": true,
+        "remoteEvidenceRemoved": true
+      }
+    },
+    {
+      "runId": "20261025-202317-rail-6ce86b",
+      "pass": false,
+      "mode": "rail",
+      "reportPath": null,
+      "failure": "Owned emulator became offline during instrumentation; no report, cleanup incomplete."
+    }
+  ],
+  "knownFixedProductDefect": "TextView min-height overwritten by setSingleLine; final candidate uses View.setMinimumHeight after setSingleLine. Hard touch-height assertions pass in all final runs that reached geometry.",
+  "limitations": [
+    "Phone final run: one native menu coordinate tap did not select NCP, so stale-response gate did not open. No new NCP request observed; product logic not independently implicated.",
+    "Landscape final run: programmatic smooth scrolling did not reach the pagination trigger within timeout; no native pagination PASS claimed for this mode.",
+    "Rail final run: owned emulator dropped offline; no completed report or cleanup claim.",
+    "Old candidate initial failures and diagnostic attempts remain separate and are not included in final pass totals.",
+    "No additional visual refinement round or post-failure rerun performed."
+  ],
+  "serialHandedBack": "emulator-5586",
+  "noFurtherAdb": true
+}

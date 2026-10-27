@@ -1,0 +1,12 @@
+{
+  "serial": "emulator-5588",
+  "pid": 19840,
+  "serialGone": true,
+  "parentGone": true,
+  "testPackageAbsent": true,
+  "photoFixtureDirectoryEmpty": true,
+  "fontScaleRestored": "1.0",
+  "preExistingAppDataRetained": true,
+  "physicalDevicesTouched": false,
+  "note": "Serial persisted briefly after emulator acknowledged kill; a later read confirmed both serial and parent gone. No forced process or AVD deletion."
+}

@@ -1,0 +1,11 @@
+{
+  "serial": "emulator-5586",
+  "testPackageRemoved": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "remoteFixtureRemoved": true,
+  "privateUniqueFixtureRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainFailure": null,
+  "errors": []
+}

@@ -1,0 +1,183 @@
+{
+  "verifiedAt": "2026-10-27T16:06:30.081Z",
+  "timezoneNote": "All timestamps are UTC; local Asia/Shanghai date is 2026-10-28",
+  "release": {
+    "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+    "packageName": "cc.huevia",
+    "versionName": "0.22.1-beta",
+    "versionCode": 110,
+    "minSdk": 26,
+    "byteLength": 9478052,
+    "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "channel": "beta",
+    "mandatory": true,
+    "revision": 3,
+    "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+    "downloadUrl": "https://huevia.cc/preset-library/releases/fdb53c9f-f523-4b0c-a67e-e3e85b68e37d/file"
+  },
+  "publicationMethod": "Root uploaded the signed APK and set mandatory/published through normal Chrome admin UI. This final verifier performed read-only checks.",
+  "downloadPage": "https://huevia.cc/preset-library/download/?channel=beta",
+  "origins": [
+    {
+      "origin": "https://huevia.cc",
+      "catalogCount": 390,
+      "cases": [
+        {
+          "case": "old108",
+          "status": 200,
+          "installedVersionCode": 108,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "releaseIdentityMatches": true
+        },
+        {
+          "case": "old109",
+          "status": 200,
+          "installedVersionCode": 109,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "releaseIdentityMatches": true
+        },
+        {
+          "case": "current110",
+          "status": 200,
+          "installedVersionCode": 110,
+          "sdk": 35,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "current",
+          "releaseIdentityMatches": true
+        },
+        {
+          "case": "sdk25",
+          "status": 200,
+          "installedVersionCode": 108,
+          "sdk": 25,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "incompatible",
+          "releaseIdentityMatches": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "catalogCount": 390,
+      "cases": [
+        {
+          "case": "old108",
+          "status": 200,
+          "installedVersionCode": 108,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "releaseIdentityMatches": true
+        },
+        {
+          "case": "old109",
+          "status": 200,
+          "installedVersionCode": 109,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "releaseIdentityMatches": true
+        },
+        {
+          "case": "current110",
+          "status": 200,
+          "installedVersionCode": 110,
+          "sdk": 35,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "current",
+          "releaseIdentityMatches": true
+        },
+        {
+          "case": "sdk25",
+          "status": 200,
+          "installedVersionCode": 108,
+          "sdk": 25,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "incompatible",
+          "releaseIdentityMatches": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "publicArtifact": {
+    "startedAt": "2026-10-27T16:06:15.596Z",
+    "publicOrigin": "https://huevia.cc",
+    "initialPath": "/preset-library/releases/fdb53c9f-f523-4b0c-a67e-e3e85b68e37d/file",
+    "largePublicDownloadRequestsInThisVerification": 1,
+    "otherOriginFullDownloadRepeated": false,
+    "canonicalStatus": 307,
+    "canonicalContentLength": "0",
+    "target": {
+      "host": "nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+      "pathname": "/v1/storages/object/sign/nikon-presets/app-releases/5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8.bin",
+      "observedTtlSeconds": 60
+    },
+    "finalStatus": 200,
+    "contentType": "application/octet-stream",
+    "contentDisposition": "attachment; filename=Huevia-110-beta.apk; filename*=UTF-8''Huevia-110-beta.apk",
+    "contentLength": "9478052",
+    "byteLength": 9478052,
+    "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+    "expectedArtifactMatches": true,
+    "apkFilename": true,
+    "signatureVerified": true,
+    "signatureSchemes": [
+      2,
+      3
+    ],
+    "verifiedAt": "2026-10-27T16:06:30.080Z",
+    "pass": true
+  },
+  "databasePreservation": {
+    "verifiedAt": "2026-10-27T16:04:31.761Z",
+    "scope": "Read-only release/catalog preservation after root publication",
+    "oldReleaseCount": 17,
+    "oldReleaseRowsUnchanged": true,
+    "catalogUnchanged": true,
+    "catalog": {
+      "count": 390,
+      "signature": "98fce718da414c710ced2c88cfcc8b0b"
+    },
+    "releaseCount": 18,
+    "current110": {
+      "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+      "status": "published",
+      "versionCode": 110,
+      "byteLength": 9478052,
+      "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+      "mandatory": true,
+      "revision": 3,
+      "storagePath": "app-releases/5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8.bin"
+    },
+    "pass": true
+  },
+  "nativeDownloadVerification": {
+    "evidenceDirectory": "docs/validation/update-large-download/5f42f3a9/20261027-235957-a0eeb80c/",
+    "report": "docs/validation/update-large-download/5f42f3a9/20261027-235957-a0eeb80c/20261027-235957-a0eeb80c/report.json",
+    "pass": true,
+    "checks": 35,
+    "apkSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8"
+  },
+  "legacyUpdateCompatibility": {
+    "serverMetadataFor108And109Required": true,
+    "legacyClient4MiBLimit": true,
+    "manualCoverInstallNeededOnce": true,
+    "installedLegacyClientAutomaticUpdateSuccessNotClaimed": true
+  },
+  "pass": true
+}

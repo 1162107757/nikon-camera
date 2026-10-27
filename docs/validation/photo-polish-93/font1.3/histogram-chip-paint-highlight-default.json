@@ -1,0 +1,31 @@
+{
+  "class": "cc.huevia.ui.PhotoHistogramPanel$ToggleButton",
+  "width": 148,
+  "height": 126,
+  "measuredHeight": 126,
+  "top": 0,
+  "screenTop": 502,
+  "screenLeft": 687,
+  "globalVisibleLeft": 687,
+  "globalVisibleTop": 502,
+  "globalVisibleRight": 835,
+  "globalVisibleBottom": 628,
+  "globalVisibleWidth": 148,
+  "globalVisibleHeight": 126,
+  "swatch": {
+    "left": 708,
+    "top": 555,
+    "right": 729,
+    "bottom": 576,
+    "width": 21,
+    "height": 21
+  },
+  "basePixels": 91,
+  "stripePixels": 169,
+  "scrollX": 524235,
+  "scrollY": 0,
+  "alpha": 1,
+  "textColor": -855638017,
+  "canvasTextX": 53,
+  "canvasTextBaseline": 75.8302001953125
+}

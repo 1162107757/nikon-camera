@@ -1,0 +1,134 @@
+{
+  "pass": true,
+  "stage": "browse-edit-back-2",
+  "checks": [
+    "owned-emulator",
+    "exact-apk",
+    "safe-run",
+    "main-ready",
+    "guest-only",
+    "orientation",
+    "visible-list-settled",
+    "real-library-fixtures-loaded",
+    "visible-list-settled",
+    "scrolled-below-top",
+    "capture-before-0",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "visible-list-settled",
+    "capture-after-0",
+    "return-keeps-photo-and-pixel-offset-0",
+    "draft-filter-saved",
+    "visible-list-settled",
+    "app-position-survives-source-tab-switch",
+    "scrolled-below-top",
+    "capture-before-1",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "visible-list-settled",
+    "capture-after-1",
+    "return-keeps-photo-and-pixel-offset-1",
+    "draft-filter-saved",
+    "scrolled-below-top",
+    "capture-before-2",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "hidden-library-refresh-complete",
+    "visible-list-settled",
+    "capture-after-2",
+    "return-keeps-photo-and-pixel-offset-2",
+    "draft-filter-saved",
+    "draft-io-drained",
+    "draft-io-drained"
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "before": {
+        "row": 14,
+        "key": "photo:photo-71d13c4dfb90faca6e2c8d67b315334861d8c54ffbe996fa9be155a3b5172692",
+        "keys": [
+          "photo:photo-71d13c4dfb90faca6e2c8d67b315334861d8c54ffbe996fa9be155a3b5172692",
+          "photo:photo-7446eaf9c207f9db6017e54558c04a601030d98978f780cdfdc28702d7d2cd18",
+          "photo:photo-7492ec96bc1a001053cf6b9489e1aa1d18fbfa4f04a5fdcdb700f9addcb253a8"
+        ],
+        "top": -65
+      },
+      "after": {
+        "row": 14,
+        "key": "photo:photo-71d13c4dfb90faca6e2c8d67b315334861d8c54ffbe996fa9be155a3b5172692",
+        "keys": [
+          "photo:photo-71d13c4dfb90faca6e2c8d67b315334861d8c54ffbe996fa9be155a3b5172692",
+          "photo:photo-7446eaf9c207f9db6017e54558c04a601030d98978f780cdfdc28702d7d2cd18",
+          "photo:photo-7492ec96bc1a001053cf6b9489e1aa1d18fbfa4f04a5fdcdb700f9addcb253a8"
+        ],
+        "top": -65
+      },
+      "sameAnchorAndPixelOffset": true
+    },
+    {
+      "cycle": 1,
+      "before": {
+        "row": 18,
+        "key": "photo:photo-93a9ed3daa4d9ef426c224c11a8019dc8be23e568d659f39f09d31a6730938c6",
+        "keys": [
+          "photo:photo-93a9ed3daa4d9ef426c224c11a8019dc8be23e568d659f39f09d31a6730938c6",
+          "photo:photo-93b068494e0dde0b7644d4f3ff7aa053a32a9fb9fedf16e6c4c3ac7e9af36fa3",
+          "photo:photo-95c2bbacb84eefe27c37f3a2a6435119c287e2e1fde5643f5d6394fa9ae809b7"
+        ],
+        "top": -65
+      },
+      "after": {
+        "row": 18,
+        "key": "photo:photo-93a9ed3daa4d9ef426c224c11a8019dc8be23e568d659f39f09d31a6730938c6",
+        "keys": [
+          "photo:photo-93a9ed3daa4d9ef426c224c11a8019dc8be23e568d659f39f09d31a6730938c6",
+          "photo:photo-93b068494e0dde0b7644d4f3ff7aa053a32a9fb9fedf16e6c4c3ac7e9af36fa3",
+          "photo:photo-95c2bbacb84eefe27c37f3a2a6435119c287e2e1fde5643f5d6394fa9ae809b7"
+        ],
+        "top": -65
+      },
+      "sameAnchorAndPixelOffset": true
+    },
+    {
+      "cycle": 2,
+      "before": {
+        "row": 12,
+        "key": "photo:photo-57d6f0d50f9dab5f55b2b9dc0dea6c2816697618be6b0653e330ad4b9364727d",
+        "keys": [
+          "photo:photo-57d6f0d50f9dab5f55b2b9dc0dea6c2816697618be6b0653e330ad4b9364727d",
+          "photo:photo-593603876f535b2eb7d3b5addc3822bc9ce623677d1595c3874dcddd515948a3",
+          "photo:photo-5e58693cadca39df814f5466c9149deaa6308ba22fcfb5f93f1e26426d512cfa"
+        ],
+        "top": -65
+      },
+      "after": {
+        "row": 19,
+        "key": "photo:photo-57d6f0d50f9dab5f55b2b9dc0dea6c2816697618be6b0653e330ad4b9364727d",
+        "keys": [
+          "photo:photo-57d6f0d50f9dab5f55b2b9dc0dea6c2816697618be6b0653e330ad4b9364727d",
+          "photo:photo-593603876f535b2eb7d3b5addc3822bc9ce623677d1595c3874dcddd515948a3",
+          "photo:photo-5e58693cadca39df814f5466c9149deaa6308ba22fcfb5f93f1e26426d512cfa"
+        ],
+        "top": -65
+      },
+      "sameAnchorAndPixelOffset": true
+    }
+  ],
+  "candidateSha256": "995b33c82c9f2b72835ad6a2a194a2db8fae50caebfca860f8af2e8dc3a089f1",
+  "baseline": "false",
+  "mode": "phone",
+  "fontScale": 1,
+  "failure": null,
+  "ownedFilesRemoved": true,
+  "scope": "Real MainActivity\/local album\/editor, 90 owned private JPEGs, native tile tap, actual production filter render\/draft, native Back, real visible photo identity and exact pixel offset. No camera\/MediaStore changes. Candidate identity is verified against the installed APK and recorded by the host runner."
+}

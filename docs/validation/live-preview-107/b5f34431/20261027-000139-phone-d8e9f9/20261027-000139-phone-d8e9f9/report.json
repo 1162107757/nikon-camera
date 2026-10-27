@@ -1,0 +1,62 @@
+{
+  "pass": false,
+  "baseline": false,
+  "stage": "hsl-held-gesture",
+  "checks": [
+    "owned-emulator",
+    "exact-installed-apk",
+    "safe-run-id",
+    "main-ready",
+    "guest-fixtures-only",
+    "orientation",
+    "shipping-photo-fixture",
+    "real-editor-ready",
+    "editor-final-ready",
+    "editor-final-ready",
+    "laid-out-basic",
+    "held-view-retained-basic",
+    "native-progress-changed-basic",
+    "multiple-photo-frames-before-up-basic",
+    "editor-final-ready",
+    "basic-one-undo",
+    "basic-final-full-resolution",
+    "advanced-inactive-曲线",
+    "advanced-caption-aligned-曲线",
+    "advanced-icon-aligned-曲线",
+    "advanced-inactive-HSL",
+    "advanced-caption-aligned-HSL",
+    "advanced-icon-aligned-HSL",
+    "screenshot-01-editor-adjustment",
+    "colour-final-ready",
+    "laid-out-hsl-0",
+    "held-view-retained-hsl-0",
+    "native-progress-changed-hsl-0",
+    "screenshot-failure",
+    "pending-saves-drained",
+    "pending-saves-drained"
+  ],
+  "measurements": [
+    {
+      "control": "basic",
+      "heldMs": 3337,
+      "pixelChangesBeforeUp": 38,
+      "distinctPhotoPixelSignatures": 39,
+      "firstChangedFrameMs": 171,
+      "lastChangedFrameMs": 3261
+    },
+    {
+      "control": "hsl-0",
+      "heldMs": 2877,
+      "pixelChangesBeforeUp": 1,
+      "distinctPhotoPixelSignatures": 2,
+      "firstChangedFrameMs": 173,
+      "lastChangedFrameMs": 173
+    }
+  ],
+  "candidateSha256": "b5f34431fe51001b29e49ab9f20a1c6993363120cbdacc2b473448ad68f8f30a",
+  "mode": "phone",
+  "fontScale": 1,
+  "failure": "java.lang.AssertionError: multiple-photo-frames-before-up-hsl-0",
+  "fixtureRemoved": true,
+  "scope": "Real MainActivity\/editor\/native gestures; changed rendered photo pixels sampled before ACTION_UP, own JPEG and actual source\/effect ledgers. Emulator only; not physical-device FPS or camera throughput."
+}

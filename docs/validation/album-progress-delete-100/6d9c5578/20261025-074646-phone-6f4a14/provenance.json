@@ -1,0 +1,39 @@
+{
+    "candidateApk":  "D:/dev/ai-project/nikon/dist/huevia-0.21.1-beta-debug.apk",
+    "candidateSha256":  "6d9c5578071d353e6ee4a3958c5cc0a7ec06383a030474c0d4e98f0be0806860",
+    "versionCode":  100,
+    "serial":  "emulator-5586",
+    "hardware":  "ranchu",
+    "mode":  "phone",
+    "runId":  "20261025-074646-phone-6f4a14",
+    "probeSha256":  "dc7488a0f881cc581bf301bf068c35d06a0288d913f6dbb46b6fd70d52d270f2",
+    "scope":  "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Cancel-only confirmation does not execute either beforeSavePhotos overload; APP_ONLY positive-path selection is a separate source review, not a dynamic claim of this probe. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+    "files":  [
+                  {
+                      "file":  "01-progress.png",
+                      "bytes":  128009,
+                      "sha256":  "4b0dbcdc2828d1ea00dab7de4fe1a07c791bf1bbecbb6b3aaac34c38c94ca519"
+                  },
+                  {
+                      "file":  "02-delete-confirmation.png",
+                      "bytes":  161525,
+                      "sha256":  "bbd2ed7f0f716d4cca04f5b2a7905bac6f7ceb24a5fc547fd53b58dc6f5d19df"
+                  },
+                  {
+                      "file":  "03-selection.png",
+                      "bytes":  106510,
+                      "sha256":  "955392d4d934ff8b1277d3683df59e518e2c67247dc683c39bc82694f0ee1b7c"
+                  },
+                  {
+                      "file":  "failure.png",
+                      "bytes":  106510,
+                      "sha256":  "955392d4d934ff8b1277d3683df59e518e2c67247dc683c39bc82694f0ee1b7c"
+                  },
+                  {
+                      "file":  "report.json",
+                      "bytes":  3721,
+                      "sha256":  "bcebc442da0acc5c16d26ad1418662fbc115527a299a439a120b33b29e577bdd"
+                  }
+              ],
+    "pass":  false
+}

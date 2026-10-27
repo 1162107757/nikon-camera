@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "a22195d81661a3ee50b6c93024ace63eafbcbd9d2024bf061eaac003d30b7629",
+  "versionCode": 107,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "4fffdeded3d5fdac95dd8fb6ba5d300d9ee3ad553e63256f058b23e54f5d4946",
+  "scope": "Real MainActivity/local album/editor, 90 owned private JPEGs, native tile tap, actual production filter render/draft, native Back, real visible photo identity and exact pixel offset. No camera/MediaStore changes. Targeted patched107 APK, not unified108 release.",
+  "pass": true,
+  "files": [
+    {
+      "file": "after-0.png",
+      "sha256": "cac2230e3fbc0882b55edf0a75e5a8d531bd2ebd255b16e9daee45260b35c33e"
+    },
+    {
+      "file": "after-1.png",
+      "sha256": "154a25afadac4f8b601cca7d60eba81557e610bfdcbd090280f1be67e0f0fd70"
+    },
+    {
+      "file": "after-2.png",
+      "sha256": "4ef8b8afd6d2958a0302229b634ddc1b4be932934d110532de5b4ed01a5e994d"
+    },
+    {
+      "file": "before-0.png",
+      "sha256": "4394b6b541be5d8558d4f9f3ed1bde86702602b065565adcea79cb088623d4f2"
+    },
+    {
+      "file": "before-1.png",
+      "sha256": "43643715be479de599d08c0b446930b0cd463cf2fcac491ae8770c2940d54f1c"
+    },
+    {
+      "file": "before-2.png",
+      "sha256": "f6bc8e12e12166fb48a9c5de58544e0a1dbe2a9c5152cf42c240c6b19fc46bd6"
+    },
+    {
+      "file": "report.json",
+      "sha256": "9241cdc2b7326d1548dd64f255cf754def2076bfaae72145ee819cf3b19d49ac"
+    }
+  ]
+}

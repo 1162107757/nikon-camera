@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T16:56:55.1232968Z",
+  "title": "Design System: Huevia 97 局部实现",
+  "extensions": {
+    "colorMeta": {
+      "capture-bg": {
+        "role": "neutral",
+        "displayName": "炭黑取景背景",
+        "tonalRamp": [
+          "oklch(15% 0.0016 197.02)",
+          "oklch(26.43% 0.0016 197.02)",
+          "oklch(37.86% 0.0016 197.02)",
+          "oklch(49.29% 0.0016 197.02)",
+          "oklch(60.71% 0.0016 197.02)",
+          "oklch(72.14% 0.0016 197.02)",
+          "oklch(83.57% 0.0016 197.02)",
+          "oklch(95% 0.0016 197.02)"
+        ]
+      },
+      "capture-panel": {
+        "role": "neutral",
+        "displayName": "深灰设置面板",
+        "tonalRamp": [
+          "oklch(15% 0.0024 67.73)",
+          "oklch(26.43% 0.0024 67.73)",
+          "oklch(37.86% 0.0024 67.73)",
+          "oklch(49.29% 0.0024 67.73)",
+          "oklch(60.71% 0.0024 67.73)",
+          "oklch(72.14% 0.0024 67.73)",
+          "oklch(83.57% 0.0024 67.73)",
+          "oklch(95% 0.0024 67.73)"
+        ]
+      },
+      "capture-text": {
+        "role": "neutral",
+        "displayName": "完整亮度暖白",
+        "tonalRamp": [
+          "oklch(15% 0.0096 72.66)",
+          "oklch(26.43% 0.0096 72.66)",
+          "oklch(37.86% 0.0096 72.66)",
+          "oklch(49.29% 0.0096 72.66)",
+          "oklch(60.71% 0.0096 72.66)",
+          "oklch(72.14% 0.0096 72.66)",
+          "oklch(83.57% 0.0096 72.66)",
+          "oklch(95% 0.0096 72.66)"
+        ]
+      },
+      "capture-secondary": {
+        "role": "neutral",
+        "displayName": "暖灰说明",
+        "tonalRamp": [
+          "oklch(15% 0.0113 76.58)",
+          "oklch(26.43% 0.0113 76.58)",
+          "oklch(37.86% 0.0113 76.58)",
+          "oklch(49.29% 0.0113 76.58)",
+          "oklch(60.71% 0.0113 76.58)",
+          "oklch(72.14% 0.0113 76.58)",
+          "oklch(83.57% 0.0113 76.58)",
+          "oklch(95% 0.0113 76.58)"
+        ]
+      },
+      "photo-accent": {
+        "role": "primary",
+        "displayName": "杏桃选择态",
+        "tonalRamp": [
+          "oklch(15% 0.0862 48.75)",
+          "oklch(26.43% 0.0862 48.75)",
+          "oklch(37.86% 0.0862 48.75)",
+          "oklch(49.29% 0.0862 48.75)",
+          "oklch(60.71% 0.0862 48.75)",
+          "oklch(72.14% 0.0862 48.75)",
+          "oklch(83.57% 0.0862 48.75)",
+          "oklch(95% 0.0862 48.75)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "settings-title": {
+        "displayName": "原生设置标题",
+        "purpose": "继承的系统中等字重标题。"
+      },
+      "setting-label": {
+        "displayName": "设置条目",
+        "purpose": "继承的原生设置条目与开关文案。"
+      },
+      "setting-note": {
+        "displayName": "设置说明",
+        "purpose": "继承的原生辅助说明。"
+      }
+    },
+    "native": {
+      "platform": "android",
+      "implementation": "Java / Android Views and Canvas",
+      "mode": "Operate; narrow local refinement",
+      "scope": "Available and selected grid/histogram affordances; evidenced AlbumController fixed-wait removal.",
+      "tokenUnits": "dp and sp are native units, not CSS pixels.",
+      "webPreview": false,
+      "webPreviewReason": "Native source and captured Android output are authoritative; no new HTML/CSS comp or raster.",
+      "htmlCssDetector": "not-applicable-native",
+      "tonalRamps": "Synthetic documentation-only OKLCH strips; not production colors or new normative tokens.",
+      "availableToggles": {
+        "alpha": 1,
+        "offColorRef": "colors.capture-text",
+        "onColorRef": "colors.photo-accent",
+        "source": "D:/dev/ai-project/nikon/app/src/main/java/cc/huevia/ui/RemoteCaptureView.java",
+        "lines": [
+          122,
+          123,
+          124
+        ],
+        "selectedState": "Synchronized with grid/histogram visibility.",
+        "gridStateDescription": {
+          "minimumApi": 30,
+          "on": "已开启",
+          "off": "未开启",
+          "fixedActionName": "切换构图网格"
+        },
+        "histogramStateDescription": {
+          "minimumApi": 30,
+          "on": "已显示",
+          "off": "已收起",
+          "fixedActionName": "显示或收起直方图"
+        }
+      },
+      "genuineDisabledStates": "Availability-driven focus, shutter and recent-photo dimming retained; no mapping or availability changes.",
+      "preserved": "Existing dark photo-first prototype, AppIcon/CaptureGlyph geometry, image rectangles, copy, toolbar order and saving semantics.",
+      "settingsOrder": "Gear remains left of histogram; save options remain inside gear.",
+      "accessibilityEvidence": "Source semantics and synthetic native interaction only; no TalkBack session.",
+      "afs": "Single autofocus is separate from single-frame shutter release; no camera parameter mapping changes."
+    },
+    "provenance": {
+      "root": "D:/dev/ai-project/nikon",
+      "documentReference": "C:/Users/11621/.codex/skills/impeccable/reference/document.md",
+      "sources": [
+        {
+          "path": "D:/dev/ai-project/nikon/DESIGN.md",
+          "sha256": "0680f97bc7f4f354b203ba18d4bf4b34069927c00edb97745a101b85b4e6f740",
+          "role": "Incumbent global visual authority"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/PRODUCT.md",
+          "sha256": "e19faca959b469429816166bfefd7425368bb18068b5d760c7ad10a750fe2f3a",
+          "role": "Incumbent product authority; no replacement"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-96/DESIGN.md",
+          "sha256": "60f1be182b997eb223a28f72a8485ab3ef9f9526ff03cce1c09841b2b4ceb6f4",
+          "role": "Inherited native surface authority"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/app/src/main/java/cc/huevia/ui/RemoteCaptureView.java",
+          "sha256": "e552e2de4406529a9c0ec63cf88d293c5486e0a7f5029529e6a592c8db0340cb",
+          "role": "Implemented native toolbar; lines 121-126 and 142"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/app/src/main/java/cc/huevia/album/AlbumController.java",
+          "sha256": "202a42ed6ed81ea12d2d61d2b709e219685b46819e1dcaed7ac8effbcd928539",
+          "role": "Implemented ready-queue scheduling"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/app/build.gradle",
+          "sha256": "12b1487e1f69605e0d2e8db16ad7ab8f16d05d9461deefad1016e1ab8081d493",
+          "role": "Version 97 / 0.20.2-beta"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/dist/huevia-0.20.2-beta-debug.apk",
+          "sha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+          "role": "Bound final candidate"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/DESIGN.md",
+          "sha256": "763c7ef48aa56c8f630a4ae7fa70d14031e65a9093a5716c9369d21a49f25874",
+          "role": "Normative local frontmatter and narrative"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/BRIEF.md",
+          "sha256": "707fc43f1b133fa153dc55b15db4f4cf81eb24ec44a92b0bea6f0bdb840cc67e",
+          "role": "Authorized Operate boundary"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/IMPLEMENTATION.md",
+          "sha256": "33d156bbf411739cc30c0bb6512eb4bccbef7a3161fc0a0413e72825d3c1607b",
+          "role": "Implementation and test boundary"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/PERFORMANCE.md",
+          "sha256": "28011ac710b5e75d441646ca6fd9fbdeda6e8b576df032d2cc901c755654cc22",
+          "role": "Synthetic performance method and limits"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/UI-MATRIX.json",
+          "sha256": "57a85fb1945f39b703478e1d1b02eaf1a68c38b48a78f64f25e635de1eac623c",
+          "role": "Twenty native capture origins and hashes"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/FINISH-REVIEW.md",
+          "sha256": "30d348fc18cea04bacdd1958efbb62f8e6f13cebcfb549c199e37b9da868e4da",
+          "role": "Final independent bounded ship disposition"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/CLEANUP.json",
+          "sha256": "b2e7ff1d16d5e5c1614b37f225329569b11a9dfd90c2229d5c6a295043ca7783",
+          "role": "Owned emulator cleanup; verified true"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/throughput-before.txt",
+          "sha256": "d84700292a809f7263a0d236f529b3ca98f2092a8694018c6d09b9a631b72c8d",
+          "role": "Single synthetic baseline run"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/throughput-after.txt",
+          "sha256": "81248b60cc6612302d5dcb54e90e22fbd707a5675d9b1613550887b84014e742",
+          "role": "Single synthetic optimized run"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/performance-source-before.sha256",
+          "sha256": "876b7b04d79d4a1ef092db953d6aa241ff85dbc05c34e0f4f0a30e2a29996fad",
+          "role": "Retained baseline source hash record"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/.tooling/remote-capture-97/AlbumController-before-performance.java",
+          "sha256": "c35e06b5528b5721376d6ec4aca7914c0341c23955fa7084b8ff2dc0b6d03c69",
+          "role": "Retained baseline controller source"
+        }
+      ],
+      "mutableReferences": [
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/FINAL-IDENTITY.json",
+          "role": "Mutable delivery identity; intentionally no hash to avoid circular identity/document binding."
+        }
+      ],
+      "captures": [
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/dark-vendor4294967295-8c329b6d/run/entry.png",
+          "sha256": "0f75327377ae4f1406bc4cd0df6447a51e9f52ddcd8f48ebeddc62c4061468ee",
+          "mode": "dark",
+          "state": "entry",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/dark-vendor4294967295-8c329b6d/run/grid-off.png",
+          "sha256": "00dc976a1690309005f8814fbeda8ce832fdb64ff8bb8086118680aea0658bfb",
+          "mode": "dark",
+          "state": "grid-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/dark-vendor4294967295-8c329b6d/run/grid-on.png",
+          "sha256": "a9a443faeb929e0acbe6bb73efc5d2e75ed852797b4679cecb2ef7d14ca51efc",
+          "mode": "dark",
+          "state": "grid-on",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/dark-vendor4294967295-8c329b6d/run/histogram-off.png",
+          "sha256": "0fe509ee91adf23b292933e2cb0c704d2b73348a5b12881a3dd3083deff50550",
+          "mode": "dark",
+          "state": "histogram-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/dark-vendor4294967295-8c329b6d/run/ready.png",
+          "sha256": "355ae01134be719c24b209892405c3de8da098097a4c493785dcbbcfe44a0aa1",
+          "mode": "dark",
+          "state": "ready",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/font1.3-vendor4294967295-9ac70788/run/entry.png",
+          "sha256": "cb6aa30886a1880f6d1bdb5c27eedd1766cb8b1fbc284563f5f3ffc8fbb5ab40",
+          "mode": "font1.3",
+          "state": "entry",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/font1.3-vendor4294967295-9ac70788/run/grid-off.png",
+          "sha256": "b240de8b1f9c3e633231f7f149ec0bf44b134478ea1ef2545e07e5d5e25aa45f",
+          "mode": "font1.3",
+          "state": "grid-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/font1.3-vendor4294967295-9ac70788/run/grid-on.png",
+          "sha256": "d96478b25ba9f1278fb6ce55d4db81259fec6bfa9d5bd08b7c4724925f9b1c39",
+          "mode": "font1.3",
+          "state": "grid-on",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/font1.3-vendor4294967295-9ac70788/run/histogram-off.png",
+          "sha256": "bee36cc35a21cd06cf63277e5a8e331c3701db5c5aaefb63e0ed6bf198bc684a",
+          "mode": "font1.3",
+          "state": "histogram-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/font1.3-vendor4294967295-9ac70788/run/ready.png",
+          "sha256": "b240de8b1f9c3e633231f7f149ec0bf44b134478ea1ef2545e07e5d5e25aa45f",
+          "mode": "font1.3",
+          "state": "ready",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/landscape-vendor4294967295-0ea17bec/run/entry.png",
+          "sha256": "7fa3c9e68ab5b7e431a896fd82b4dbe769f30a9af8c921956e0ef35fc31541c8",
+          "mode": "landscape",
+          "state": "entry",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/landscape-vendor4294967295-0ea17bec/run/grid-off.png",
+          "sha256": "9ca2fb1f8da467820598c5f83e84b9603edd3b7577eda830b75ac471da8f87e8",
+          "mode": "landscape",
+          "state": "grid-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/landscape-vendor4294967295-0ea17bec/run/grid-on.png",
+          "sha256": "88655d74518b0ce02682421f8657d9b7ba87fa1813d4a4086419b562e8d2343b",
+          "mode": "landscape",
+          "state": "grid-on",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/landscape-vendor4294967295-0ea17bec/run/histogram-off.png",
+          "sha256": "7fc26e966df926234e6bc8b2add7b8db9bbc29ee838bbdaa9535fbe0c1d5b36f",
+          "mode": "landscape",
+          "state": "histogram-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/landscape-vendor4294967295-0ea17bec/run/ready.png",
+          "sha256": "9ca2fb1f8da467820598c5f83e84b9603edd3b7577eda830b75ac471da8f87e8",
+          "mode": "landscape",
+          "state": "ready",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908/run/entry.png",
+          "sha256": "9780885f7893dc9d2e03b0f0a0d8dd5fe805a638406a98750d7890a675adf035",
+          "mode": "phone",
+          "state": "entry",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908/run/grid-off.png",
+          "sha256": "3fa303ebf78c7ad871773f975d4426baf2475ec47c82e40a687ca34df8c39912",
+          "mode": "phone",
+          "state": "grid-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908/run/grid-on.png",
+          "sha256": "277ba60559789afff54a7dc5d424282aa3043260937eada692d7bfa726070835",
+          "mode": "phone",
+          "state": "grid-on",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908/run/histogram-off.png",
+          "sha256": "a62a6c4d8e32677f1e15bbade42f89244d15023a3120f1c0377353c3df3bf686",
+          "mode": "phone",
+          "state": "histogram-off",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        },
+        {
+          "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908/run/ready.png",
+          "sha256": "3fa303ebf78c7ad871773f975d4426baf2475ec47c82e40a687ca34df8c39912",
+          "mode": "phone",
+          "state": "ready",
+          "origin": "UI-MATRIX.json; native Pixel_9 emulator capture with synthetic PTP/IP live frame and properties"
+        }
+      ],
+      "hero": {
+        "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/.impeccable/review/hero-repro.png",
+        "sha256": "3fa303ebf78c7ad871773f975d4426baf2475ec47c82e40a687ca34df8c39912",
+        "role": "Byte-identical copy of 97 phone ready capture",
+        "copiedFrom": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908/run/ready.png",
+        "copySha256": "3fa303ebf78c7ad871773f975d4426baf2475ec47c82e40a687ca34df8c39912"
+      },
+      "rasterMetadata": {
+        "scanned": 20,
+        "missingOrigins": 0,
+        "origin": "Supplied final metadata scan and UI-MATRIX.json",
+        "newProductionRasters": 0
+      }
+    },
+    "validation": {
+      "versionCode": 97,
+      "versionName": "0.20.2-beta",
+      "apkPath": "D:/dev/ai-project/nikon/dist/huevia-0.20.2-beta-debug.apk",
+      "apkSha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+      "recordedProductionInputs": 214,
+      "changedFrom96": [
+        "app/build.gradle",
+        "app/src/main/java/cc/huevia/album/AlbumController.java",
+        "app/src/main/java/cc/huevia/ui/RemoteCaptureView.java"
+      ],
+      "nativeMatrix": {
+        "configurations": [
+          "phone",
+          "font1.3",
+          "landscape",
+          "dark"
+        ],
+        "checksPerConfiguration": 45,
+        "checkExecutions": 180,
+        "captures": 20,
+        "shutterCommands": 0,
+        "scope": "toolbar-states-only",
+        "syntheticPeer": true
+      },
+      "independentReview": {
+        "disposition": "ship",
+        "inspectedNativeCaptures": 20,
+        "materialFixes": 0,
+        "scope": "Available/selected toolbar affordances and evidenced fixed-wait removal only."
+      },
+      "performance": {
+        "photos": 8,
+        "bytesPerPhoto": 1048576,
+        "beforeMs": 4346,
+        "afterMs": 420,
+        "runsEach": 1,
+        "integrityChecksEach": 19,
+        "transport": "synthetic in-memory PTP frames",
+        "scope": "Discovery, preview, original receive, private save and project association",
+        "exclusions": [
+          "physical Wi-Fi throughput",
+          "camera writes",
+          "device storage performance",
+          "MediaStore publication",
+          "unmodified remote-capture downloadPhoto after-shot import path"
+        ]
+      },
+      "albumRegression": {
+        "controller": 889,
+        "capability": 33,
+        "gateway": 22,
+        "projectStore": 356,
+        "projectFolders": 100
+      },
+      "cleanup": {
+        "path": "D:/dev/ai-project/nikon/docs/validation/remote-capture-97/CLEANUP.json",
+        "verified": true,
+        "physicalDeviceChanges": false
+      },
+      "limitation": "Local toolbar smoke and synthetic peer/controller evidence; not whole-app, physical camera, connection recovery or wireless-speed certification."
+    }
+  },
+  "components": [
+    {
+      "name": "可用的构图网格",
+      "kind": "button",
+      "refersTo": "capture-tool-available",
+      "description": "网格关闭时保持完整亮度暖白、原生触点及固定操作名称。"
+    },
+    {
+      "name": "开启的构图网格",
+      "kind": "button",
+      "refersTo": "capture-tool-selected",
+      "description": "网格开启以现有杏色表达 selected；照片区域保持。"
+    },
+    {
+      "name": "收起的直方图",
+      "kind": "button",
+      "refersTo": "capture-tool-available",
+      "description": "直方图收起仍可操作，保持完整亮度暖白。"
+    },
+    {
+      "name": "显示的直方图",
+      "kind": "button",
+      "refersTo": "capture-tool-selected",
+      "description": "直方图显示以现有杏色表达 selected。"
+    },
+    {
+      "name": "拍摄设置入口",
+      "kind": "button",
+      "refersTo": "capture-tool-available",
+      "description": "继承的齿轮入口位于直方图左侧，保存选项继续由此进入。"
+    },
+    {
+      "name": "拍摄设置面板",
+      "kind": "custom",
+      "refersTo": "capture-settings-panel",
+      "description": "继承的原生深灰面板，保留相机存储卡事实和可选 JPEG 传入；97 未重测整套设置。"
+    }
+  ],
+  "narrative": {
+    "northStar": "橙光进入照片",
+    "overview": "沿用根 [DESIGN.md](../../../DESIGN.md)、[PRODUCT.md](../../../PRODUCT.md) 与 [96 局部设计](../remote-capture-96/DESIGN.md) 的原生 Android Java / Views 世界：深色取景工具、暖白操作与杏色选择态。97 是 Operate 局部修正，范围以 [BRIEF.md](BRIEF.md) 为准；保留照片优先的原型、图标族、几何、文案与保存语义。\n\n当前版本为 97 / 0.20.2-beta，绑定 APK SHA-256 `de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f`。214 项生产输入中仅 RemoteCaptureView、AlbumController 与版本信息相对 96 改变。[独立复核](FINISH-REVIEW.md) 为限定 ship：逐张查看 20 张原生截图，无必改项；不是全 App 或实体相机认证。",
+    "keyCharacteristics": [
+      "可用但关闭的网格／直方图保持完整亮度，选中使用现有杏色。",
+      "真实禁用状态继续表达相机可用性，取景画面与工具排列保持。",
+      "保存位置与可选 JPEG 传入仍收纳在齿轮中。"
+    ],
+    "rules": [
+      {
+        "name": "The Available Is Visible Rule",
+        "body": "网格关闭、直方图收起时仍以完整亮度显示暖白图标；选中改为杏色，两态 alpha 均为 1。不得用禁用式降亮度表达关闭。",
+        "section": "colors"
+      },
+      {
+        "name": "The Availability Boundary Rule",
+        "body": "对焦、快门、最近照片继续由真实能力与结果状态控制 enabled 和既有变暗表现；工具关闭不等于不可用。",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** 用完整亮度暖白表示可用未选中，用现有杏色表示选中。",
+      "**Do** 保留真实禁用状态、工具几何、完整照片区域和齿轮中的保存选项。",
+      "**Do** 将 97 的结论限定于工具栏状态与已有证据支持的队列调度。"
+    ],
+    "donts": [
+      "**Don't** 再以低 alpha 把可用的关闭工具画成禁用。",
+      "**Don't** 把合成夹具、180 次配置检查或限定 ship 扩写为实体相机恢复、全 App 认证或真实无线提速。",
+      "**Don't** 将边拍边传队列收益归到未修改的遥控拍后传入路径。"
+    ]
+  }
+}

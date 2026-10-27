@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.largedownloadqa">
+    <application android:label="Large update download QA" android:allowBackup="false" android:debuggable="false" />
+    <instrumentation android:name=".LargeDownloadProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+</manifest>

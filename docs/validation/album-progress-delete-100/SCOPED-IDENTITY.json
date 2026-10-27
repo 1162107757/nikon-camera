@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-25",
+  "status": "source-and-host-tests-complete-native-pending",
+  "scope": "Bottom transfer/selection clearance and app-only downloaded JPEG deletion",
+  "files": [
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "bytes": 344980,
+      "sha256": "cffcade8c9f4411ee5915d527a7b1110735f720159eefcd0f0a2c0e2075fabd6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+      "bytes": 149277,
+      "sha256": "3d56882d8d14797d99750a96cc77d1020d375758870883f1b957df5e78426989"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAlbumDeletion.java",
+      "bytes": 9232,
+      "sha256": "2c341873d9165c9602622675d1b0b209e9f9402ec20b878e74a3f739ecd9ea5e"
+    },
+    {
+      "path": "tests/gallery-java/cc/huevia/album/PhotoAlbumDeletionHostTest.java",
+      "bytes": 21750,
+      "sha256": "938e6727bc33f0ac5b3b3d3d7df99c27b1f566693083b491774b462501f53f85"
+    },
+    {
+      "path": "tests/album-java/cc/huevia/album/AlbumControllerHostTest.java",
+      "bytes": 251824,
+      "sha256": "6d8f6879aaac612d87617add9c87164b6547cbbc8f1050fbf2eb9f0f815c514f"
+    },
+    {
+      "path": "tests/run-album.ps1",
+      "bytes": 5411,
+      "sha256": "c77010091397b0c0d4e23692f26c9b3fec2f664d3971be5beb6280d74fcb9d65"
+    }
+  ],
+  "tests": [
+    {
+      "path": ".tooling/album-progress-delete-100/gallery.log",
+      "passed": [
+        250,
+        86,
+        47,
+        18,
+        58
+      ]
+    },
+    {
+      "path": ".tooling/album-progress-delete-100/album-local.log",
+      "passed": 23
+    }
+  ],
+  "limitations": [
+    "No production APK built by this agent",
+    "No adb or user-device/user-photo operations",
+    "Native geometry and actual MainActivity inset integration pending root verification"
+  ]
+}

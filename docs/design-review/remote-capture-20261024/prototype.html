@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>遥控拍摄 · 界面设计</title>
+  <link rel="stylesheet" href="prototype.css">
+</head>
+<body>
+<!-- THESIS: Extend Huevia's Sync workspace with one deliberate camera-control surface: see the full frame, read the camera, release the shutter.
+OWN-WORLD: Existing warm-white shell, near-black photo workspace, #F3B493 control accent, compact system sans, 48px semantic targets.
+STORY: Enter from Sync, compose, focus, capture, then optionally transfer the JPEG through the existing download flow. All imagery and readings are illustrative.
+FIRST VIEWPORT: Modest camera identity, contained complete live image, separate current-value strip, centered 84px shutter. Landscape reserves a narrow right control rail.
+FORM: Code-led local feature extension; no identity replacement or production camera implementation. Signature: tap focus moves within image coordinates; interruption turns stale values into dashes and gates capture independently.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->
+  <main class="review-layout">
+    <aside class="review-panel">
+      <h1>遥控拍摄</h1>
+      <p class="review-intro">把取景、当前直方图、机身参数和快门，放到同一个拍摄页。</p>
+      <div class="review-disclosure">界面设计稿 · 等待你的审核<br>画面为合成示例，读数和操作均为模拟。</div>
+      <nav class="scenario-nav" aria-label="查看设计状态">
+        <button type="button" data-scene="entry">同步里的入口</button>
+        <button type="button" data-scene="ready">实时取景</button>
+        <button type="button" data-scene="histogram">当前直方图</button>
+        <button type="button" data-scene="captured">拍摄成功</button>
+        <button type="button" data-scene="options">拍摄设置</button>
+        <button type="button" data-scene="view-lost">取景中断</button>
+        <button type="button" data-scene="offline">连接断开</button>
+        <button type="button" data-scene="timeout">快门响应超时</button>
+      </nav>
+      <div class="review-controls">
+        <div class="orientation-control" role="group" aria-label="界面方向">
+          <button type="button" data-orientation="portrait" aria-pressed="true">竖屏</button>
+          <button type="button" data-orientation="landscape" aria-pressed="false">横屏</button>
+        </div>
+        <label class="review-font"><input id="large-type" type="checkbox"> 1.3 倍字号</label>
+      </div>
+      <p class="review-help">试着点画面对焦、按下快门；也可以开启“拍后传入 App”，检查反馈和最近照片。</p>
+      <a class="brief-link" href="BRIEF.md" target="_blank" rel="noopener">查看设计约定</a>
+    </aside>
+    <section class="review-stage" aria-label="手机界面预览">
+      <div class="device" id="device" data-orientation="portrait" data-scene="ready"></div>
+    </section>
+  </main>
+  <script src="histogram-data.js"></script>
+  <script src="prototype.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "status": "FAIL",
+  "candidateSha256": "54e0022fba9596a46884c2f60b5de6123b34d56f38119ad370171b9c603dc54b",
+  "versionCode": 94,
+  "scope": "Targeted load UI phone/font1.3; stopped on real odd-size JPEG FIT crop error before old exact-pixel checks",
+  "modes": [
+    {
+      "mode": "phone",
+      "status": "FAIL",
+      "assertionExecutions": 118,
+      "stage": "load-physical-pixel-regression",
+      "failure": "java.lang.AssertionError: load-grid-full-frame-ready timeout",
+      "actualNativeError": "x + width must be <= bitmap.width()",
+      "report": "phone/report.json",
+      "nativeEvidence": "phone/failure.png",
+      "pixelProof": "NOT_REACHED"
+    },
+    {
+      "mode": "font1.3",
+      "status": "NOT_RUN",
+      "reason": "Stopped after material phone FIT decode/crop error"
+    }
+  ],
+  "thresholdsChanged": false,
+  "probeChanged": false,
+  "uiStatesBeforeFailure": "Initial/provisional/full/pending100/pending200/error/retry passed using the same real 12.4MP effect fixture",
+  "cleanup": "CLEANUP.json"
+}

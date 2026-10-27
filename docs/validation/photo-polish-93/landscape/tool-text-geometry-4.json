@@ -1,0 +1,30 @@
+[
+  {
+    "class": "android.widget.Button",
+    "width": 704,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 95,
+    "screenTop": 358,
+    "screenLeft": 1678,
+    "globalVisibleLeft": 1678,
+    "globalVisibleTop": 358,
+    "globalVisibleRight": 2382,
+    "globalVisibleBottom": 484,
+    "globalVisibleWidth": 704,
+    "globalVisibleHeight": 126,
+    "text": "保存当前",
+    "sizePx": 31.5,
+    "textOriginX": 1968,
+    "compoundPaddingLeft": 0,
+    "compoundPaddingRight": 0,
+    "scrollX": 0,
+    "baselineInScreen": 434,
+    "fontAscent": -29.2236328125,
+    "fontDescent": 7.6904296875,
+    "maxLines": 2147483647,
+    "lineCount": 1,
+    "gravity": 17,
+    "bold": false
+  }
+]

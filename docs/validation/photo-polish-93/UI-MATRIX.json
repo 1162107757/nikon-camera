@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "candidateSha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+  "versionCode": 93,
+  "versionName": "0.19.2-beta",
+  "candidateBytes": 3905658,
+  "scope": "Native editor/detail text, actual alignment and selected/glass geometry, five tools, histogram paint/diagnostics, physical-pixel detail, source/lifecycle guards; phone/font1.3/landscape only",
+  "countMeaning": "Assertion executions across configurations, not independent scenarios",
+  "totalAssertionExecutions": 1917,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "sourceSnapshot": "source-snapshot.json",
+  "sourceSnapshotSha256": "51aca1a64b743a370609b7f5f722e81db4bb7df66e958175d18b42fd4ad2222f",
+  "priorFailureArchive": "initial-d4b43a9a-chip-scroll-fail",
+  "pixelThresholdsRetained": true,
+  "unchangedSuitesNotRepeated": [
+    "backend",
+    "export",
+    "progress",
+    "dark"
+  ],
+  "modes": [
+    {
+      "mode": "phone",
+      "status": "PASS",
+      "assertionExecutions": 635,
+      "candidateSha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+      "probeApkSha256": "7a061eac1bc35ab97a755dc80dc1eebcfd4fe3146b7d78cabac60e825b03105e",
+      "runId": "e5054762fd6d47f8b39004379c1a7572",
+      "fontScale": 1,
+      "orientation": 1,
+      "density": 2.625,
+      "nightMask": 16,
+      "presetFixture": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "framebufferPixelProof": {
+        "sourceWidth": 2401,
+        "sourceHeight": 1601,
+        "scale": 1,
+        "regionSample": 1,
+        "compared": 1849,
+        "maxDelta": 0,
+        "errorsOver2": 0,
+        "tileCompared": 1848,
+        "tileErrors": 0,
+        "record": "phone/pixel-mapping.json"
+      },
+      "inputAlignment": [
+        {
+          "dialog": "tool-parameter-exact",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "phone/tool-parameter-exact-input-alignment.json"
+        },
+        {
+          "dialog": "tool-strength-exact",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "phone/tool-strength-exact-input-alignment.json"
+        },
+        {
+          "dialog": "tool-recipe-name",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "phone/tool-recipe-name-input-alignment.json"
+        }
+      ],
+      "detailFitControlGeometry": [
+        {
+          "tag": "detail-compare-palette",
+          "outerRadiusPx": 52.5,
+          "leftGapPx": 11,
+          "rightGapPx": 11,
+          "topBottomGapPx": 11,
+          "selectedFaceRadiusPx": [
+            42
+          ]
+        },
+        {
+          "tag": "detail-zoom-palette",
+          "outerRadiusPx": 47.25,
+          "leftGapPx": 11,
+          "rightGapPx": 11,
+          "topBottomGapPx": 11,
+          "selectedFaceRadiusPx": [
+            36
+          ]
+        }
+      ],
+      "chipNativePaint": [
+        {
+          "chip": "shadow",
+          "state": "default",
+          "basePixels": 129,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "phone/histogram-chip-paint-shadow-default.json"
+        },
+        {
+          "chip": "highlight",
+          "state": "default",
+          "basePixels": 91,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "phone/histogram-chip-paint-highlight-default.json"
+        },
+        {
+          "chip": "shadow",
+          "state": "warnings-selected",
+          "basePixels": 73,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "phone/histogram-chip-paint-shadow-warnings-selected.json"
+        },
+        {
+          "chip": "highlight",
+          "state": "warnings-selected",
+          "basePixels": 73,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "phone/histogram-chip-paint-highlight-warnings-selected.json"
+        }
+      ],
+      "warningOffOnPrivateJpegBytesEqual": true,
+      "strengthNoOp": {
+        "status": "PASS",
+        "hasDraft": true,
+        "exported": false,
+        "undo": 0,
+        "previewRequest": 5,
+        "draftSha256": "ee0279b290c58af1ac78bb61ae870cabba929e106c5ba311c2355dd1cb4644dd",
+        "draftModified": 1792840142360
+      },
+      "nativePngCount": 32,
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "ownJpegFixtureCount": 3,
+      "ownDraftFixtureCount": 1,
+      "allOwnFixturesAbsent": true,
+      "allOwnSourceHashesUnchanged": true,
+      "report": "phone/report.json",
+      "environment": "phone/environment.json",
+      "restoration": "phone/restoration.json",
+      "rawFitHero": "phone/hero-detail-fit.png"
+    },
+    {
+      "mode": "font1.3",
+      "status": "PASS",
+      "assertionExecutions": 635,
+      "candidateSha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+      "probeApkSha256": "7a061eac1bc35ab97a755dc80dc1eebcfd4fe3146b7d78cabac60e825b03105e",
+      "runId": "6270b7cfbd71484db420f5d232b2980c",
+      "fontScale": 1.2999999523162842,
+      "orientation": 1,
+      "density": 2.625,
+      "nightMask": 16,
+      "presetFixture": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "framebufferPixelProof": {
+        "sourceWidth": 2401,
+        "sourceHeight": 1601,
+        "scale": 1,
+        "regionSample": 1,
+        "compared": 1849,
+        "maxDelta": 0,
+        "errorsOver2": 0,
+        "tileCompared": 1848,
+        "tileErrors": 0,
+        "record": "font1.3/pixel-mapping.json"
+      },
+      "inputAlignment": [
+        {
+          "dialog": "tool-parameter-exact",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "font1.3/tool-parameter-exact-input-alignment.json"
+        },
+        {
+          "dialog": "tool-strength-exact",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "font1.3/tool-strength-exact-input-alignment.json"
+        },
+        {
+          "dialog": "tool-recipe-name",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "font1.3/tool-recipe-name-input-alignment.json"
+        }
+      ],
+      "detailFitControlGeometry": [
+        {
+          "tag": "detail-compare-palette",
+          "outerRadiusPx": 52.5,
+          "leftGapPx": 11,
+          "rightGapPx": 11,
+          "topBottomGapPx": 11,
+          "selectedFaceRadiusPx": [
+            42
+          ]
+        },
+        {
+          "tag": "detail-zoom-palette",
+          "outerRadiusPx": 47.25,
+          "leftGapPx": 11,
+          "rightGapPx": 11,
+          "topBottomGapPx": 11,
+          "selectedFaceRadiusPx": [
+            36
+          ]
+        }
+      ],
+      "chipNativePaint": [
+        {
+          "chip": "shadow",
+          "state": "default",
+          "basePixels": 129,
+          "stripePixels": 169,
+          "nativeScrollX": 524235,
+          "record": "font1.3/histogram-chip-paint-shadow-default.json"
+        },
+        {
+          "chip": "highlight",
+          "state": "default",
+          "basePixels": 91,
+          "stripePixels": 169,
+          "nativeScrollX": 524235,
+          "record": "font1.3/histogram-chip-paint-highlight-default.json"
+        },
+        {
+          "chip": "shadow",
+          "state": "warnings-selected",
+          "basePixels": 73,
+          "stripePixels": 169,
+          "nativeScrollX": 524235,
+          "record": "font1.3/histogram-chip-paint-shadow-warnings-selected.json"
+        },
+        {
+          "chip": "highlight",
+          "state": "warnings-selected",
+          "basePixels": 73,
+          "stripePixels": 169,
+          "nativeScrollX": 524235,
+          "record": "font1.3/histogram-chip-paint-highlight-warnings-selected.json"
+        }
+      ],
+      "warningOffOnPrivateJpegBytesEqual": true,
+      "strengthNoOp": {
+        "status": "PASS",
+        "hasDraft": true,
+        "exported": false,
+        "undo": 0,
+        "previewRequest": 5,
+        "draftSha256": "afce9f9a001679d5f2940b9ecf66951e5bdbb0fff163031ff167827feb72ccac",
+        "draftModified": 1792840288308
+      },
+      "nativePngCount": 32,
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "ownJpegFixtureCount": 3,
+      "ownDraftFixtureCount": 1,
+      "allOwnFixturesAbsent": true,
+      "allOwnSourceHashesUnchanged": true,
+      "report": "font1.3/report.json",
+      "environment": "font1.3/environment.json",
+      "restoration": "font1.3/restoration.json",
+      "rawFitHero": "font1.3/hero-detail-fit.png"
+    },
+    {
+      "mode": "landscape",
+      "status": "PASS",
+      "assertionExecutions": 647,
+      "candidateSha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+      "probeApkSha256": "7a061eac1bc35ab97a755dc80dc1eebcfd4fe3146b7d78cabac60e825b03105e",
+      "runId": "f8fbdc20b387463eb71529bbb874227d",
+      "fontScale": 1,
+      "orientation": 2,
+      "density": 2.625,
+      "nightMask": 16,
+      "presetFixture": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "framebufferPixelProof": {
+        "sourceWidth": 2401,
+        "sourceHeight": 1601,
+        "scale": 1,
+        "regionSample": 1,
+        "compared": 1849,
+        "maxDelta": 0,
+        "errorsOver2": 0,
+        "tileCompared": 2772,
+        "tileErrors": 0,
+        "record": "landscape/pixel-mapping.json"
+      },
+      "inputAlignment": [
+        {
+          "dialog": "tool-parameter-exact",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "landscape/tool-parameter-exact-input-alignment.json"
+        },
+        {
+          "dialog": "tool-strength-exact",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "landscape/tool-strength-exact-input-alignment.json"
+        },
+        {
+          "dialog": "tool-recipe-name",
+          "maximumTextOriginDeltaPx": 0,
+          "leftFormPaddingPx": 53,
+          "rightFormPaddingPx": 53,
+          "record": "landscape/tool-recipe-name-input-alignment.json"
+        }
+      ],
+      "detailFitControlGeometry": [
+        {
+          "tag": "detail-compare-palette",
+          "outerRadiusPx": 52.5,
+          "leftGapPx": 11,
+          "rightGapPx": 11,
+          "topBottomGapPx": 11,
+          "selectedFaceRadiusPx": [
+            42
+          ]
+        },
+        {
+          "tag": "detail-zoom-palette",
+          "outerRadiusPx": 47.25,
+          "leftGapPx": 11,
+          "rightGapPx": 11,
+          "topBottomGapPx": 11,
+          "selectedFaceRadiusPx": [
+            36
+          ]
+        }
+      ],
+      "chipNativePaint": [
+        {
+          "chip": "shadow",
+          "state": "default",
+          "basePixels": 76,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "landscape/histogram-chip-paint-shadow-default.json"
+        },
+        {
+          "chip": "highlight",
+          "state": "default",
+          "basePixels": 76,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "landscape/histogram-chip-paint-highlight-default.json"
+        },
+        {
+          "chip": "shadow",
+          "state": "warnings-selected",
+          "basePixels": 73,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "landscape/histogram-chip-paint-shadow-warnings-selected.json"
+        },
+        {
+          "chip": "highlight",
+          "state": "warnings-selected",
+          "basePixels": 73,
+          "stripePixels": 169,
+          "nativeScrollX": 524244,
+          "record": "landscape/histogram-chip-paint-highlight-warnings-selected.json"
+        }
+      ],
+      "warningOffOnPrivateJpegBytesEqual": true,
+      "strengthNoOp": {
+        "status": "PASS",
+        "hasDraft": true,
+        "exported": false,
+        "undo": 0,
+        "previewRequest": 5,
+        "draftSha256": "87288768cff9bb3c5f3a6af88199cd7d0e2118d751aed0f64d7ac87535e253c8",
+        "draftModified": 1792840415608
+      },
+      "nativePngCount": 33,
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "ownJpegFixtureCount": 3,
+      "ownDraftFixtureCount": 1,
+      "allOwnFixturesAbsent": true,
+      "allOwnSourceHashesUnchanged": true,
+      "report": "landscape/report.json",
+      "environment": "landscape/environment.json",
+      "restoration": "landscape/restoration.json",
+      "rawFitHero": "landscape/hero-detail-fit.png"
+    }
+  ],
+  "cleanup": "CLEANUP.json",
+  "visualReview": "Raw native PNGs retained for independent visual review; automated PASS does not replace visual judgment",
+  "capturedAtUtc": "2026-10-24T11:18:05.9456782Z",
+  "probeApkSha256": "7a061eac1bc35ab97a755dc80dc1eebcfd4fe3146b7d78cabac60e825b03105e"
+}

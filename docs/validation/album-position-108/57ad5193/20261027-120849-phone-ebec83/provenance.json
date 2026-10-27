@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "57ad5193b98cdfd785cae5809cefc08e9993ad2a1b1378df17289973f0685757",
+  "versionCode": 107,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "4fffdeded3d5fdac95dd8fb6ba5d300d9ee3ad553e63256f058b23e54f5d4946",
+  "scope": "Real MainActivity/local album/editor, 90 owned private JPEGs, native tile tap, actual production filter render/draft, native Back, real visible photo identity and exact pixel offset. No camera/MediaStore changes. Targeted patched107 APK, not unified108 release.",
+  "pass": false,
+  "files": [
+    {
+      "file": "after-0.png",
+      "sha256": "29d43da01a607a936f0de0cb5a177a4383a7933c3b7dd6d4605cbcde67b1ff19"
+    },
+    {
+      "file": "after-1.png",
+      "sha256": "86a8772ed3139234629e9519e7adfaf816a43375701a8741905ae2d98d752418"
+    },
+    {
+      "file": "after-2.png",
+      "sha256": "f7fb738cbe1a02b7beac868ae8ff87ed71b670d8a39c76c56620ca3c7f5ad799"
+    },
+    {
+      "file": "before-0.png",
+      "sha256": "29d43da01a607a936f0de0cb5a177a4383a7933c3b7dd6d4605cbcde67b1ff19"
+    },
+    {
+      "file": "before-1.png",
+      "sha256": "86a8772ed3139234629e9519e7adfaf816a43375701a8741905ae2d98d752418"
+    },
+    {
+      "file": "before-2.png",
+      "sha256": "68757e8d8f6cbc179bd38f69d160830e35619ba2d9b27d80abd56afae34854ff"
+    },
+    {
+      "file": "failure-stack.txt",
+      "sha256": "646c517c1b7a78dd95bd7cc30b5730c030cbf99a7bc477c3a47af55bab60c902"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "f7fb738cbe1a02b7beac868ae8ff87ed71b670d8a39c76c56620ca3c7f5ad799"
+    },
+    {
+      "file": "report.json",
+      "sha256": "9d749b8d1bf73c96df13471517ccb96d6e1525e49d947fe22b402c9a206fe5d8"
+    }
+  ]
+}

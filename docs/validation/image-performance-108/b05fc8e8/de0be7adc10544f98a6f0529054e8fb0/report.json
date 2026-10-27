@@ -1,0 +1,341 @@
+{
+  "pass": true,
+  "baseline": true,
+  "stage": "complete",
+  "apkSha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "passed": true
+    },
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "fixture-jpeg-source-12mp.jpg",
+      "passed": true
+    },
+    {
+      "name": "decode-dimensions-4000-1",
+      "passed": true
+    },
+    {
+      "name": "decode-exact-pixels-4000-1",
+      "passed": true
+    },
+    {
+      "name": "decode-keeps-source-4000-1",
+      "passed": true
+    },
+    {
+      "name": "decode-dimensions-4000-6",
+      "passed": true
+    },
+    {
+      "name": "decode-exact-pixels-4000-6",
+      "passed": true
+    },
+    {
+      "name": "decode-keeps-source-4000-6",
+      "passed": true
+    },
+    {
+      "name": "decode-dimensions-4000-7",
+      "passed": true
+    },
+    {
+      "name": "decode-exact-pixels-4000-7",
+      "passed": true
+    },
+    {
+      "name": "decode-keeps-source-4000-7",
+      "passed": true
+    },
+    {
+      "name": "fixture-jpeg-source-24mp.jpg",
+      "passed": true
+    },
+    {
+      "name": "decode-dimensions-6000-1",
+      "passed": true
+    },
+    {
+      "name": "decode-exact-pixels-6000-1",
+      "passed": true
+    },
+    {
+      "name": "decode-keeps-source-6000-1",
+      "passed": true
+    },
+    {
+      "name": "decode-dimensions-6000-6",
+      "passed": true
+    },
+    {
+      "name": "decode-exact-pixels-6000-6",
+      "passed": true
+    },
+    {
+      "name": "decode-keeps-source-6000-6",
+      "passed": true
+    },
+    {
+      "name": "24mp-original-bytes-preserved",
+      "passed": true
+    },
+    {
+      "name": "main-ready",
+      "passed": true
+    },
+    {
+      "name": "normal-font-only",
+      "passed": true
+    },
+    {
+      "name": "initial-full-fit",
+      "passed": true
+    },
+    {
+      "name": "initial-real-dimensions",
+      "passed": true
+    },
+    {
+      "name": "initial-full-100",
+      "passed": true
+    },
+    {
+      "name": "initial-100-sample1",
+      "passed": true
+    },
+    {
+      "name": "pixel-oracle-sample1-initial",
+      "passed": true
+    },
+    {
+      "name": "tile-pixels-match-full-JPEG-initial",
+      "passed": true
+    },
+    {
+      "name": "physical-view-pixels-match-full-JPEG-initial",
+      "passed": true
+    },
+    {
+      "name": "held-never-certifies-sampled-frame-as-100",
+      "passed": true
+    },
+    {
+      "name": "after-up-full-100",
+      "passed": true
+    },
+    {
+      "name": "settled-100-sample1",
+      "passed": true
+    },
+    {
+      "name": "pixel-oracle-sample1-after-pan",
+      "passed": true
+    },
+    {
+      "name": "tile-pixels-match-full-JPEG-after-pan",
+      "passed": true
+    },
+    {
+      "name": "physical-view-pixels-match-full-JPEG-after-pan",
+      "passed": true
+    },
+    {
+      "name": "mode-pending-not-falsely-full",
+      "passed": true
+    },
+    {
+      "name": "before-mode-full",
+      "passed": true
+    },
+    {
+      "name": "pixel-oracle-sample1-before-mode",
+      "passed": true
+    },
+    {
+      "name": "tile-pixels-match-full-JPEG-before-mode",
+      "passed": true
+    },
+    {
+      "name": "physical-view-pixels-match-full-JPEG-before-mode",
+      "passed": true
+    },
+    {
+      "name": "latest-mode-wins",
+      "passed": true
+    },
+    {
+      "name": "owner-invalidation-dismisses",
+      "passed": true
+    },
+    {
+      "name": "source-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "source-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "12mp-original-bytes-preserved",
+      "passed": true
+    },
+    {
+      "name": "source-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "source-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "closed-view-has-no-frame",
+      "passed": true
+    },
+    {
+      "name": "source-bytes-preserved-after-close",
+      "passed": true
+    },
+    {
+      "name": "source-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "source-temporary-directory-removed",
+      "passed": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "fixture-source-12mp.jpg",
+      "width": 4000,
+      "height": 3000,
+      "bytes": 6237926,
+      "elapsedMs": 387.9522
+    },
+    {
+      "case": "decode-4000x3000-exif1",
+      "elapsedMs": 126.3858,
+      "outputWidth": 1280,
+      "outputHeight": 960,
+      "pixelsCompared": 1228800,
+      "pixelErrors": 0,
+      "nativeHeapDeltaBytes": 16950480,
+      "javaHeapDeltaBytes": 311296
+    },
+    {
+      "case": "decode-4000x3000-exif6",
+      "elapsedMs": 104.875,
+      "outputWidth": 960,
+      "outputHeight": 1280,
+      "pixelsCompared": 1228800,
+      "pixelErrors": 0,
+      "nativeHeapDeltaBytes": 28969504,
+      "javaHeapDeltaBytes": 147456
+    },
+    {
+      "case": "decode-4000x3000-exif7",
+      "elapsedMs": 107.3051,
+      "outputWidth": 960,
+      "outputHeight": 1280,
+      "pixelsCompared": 1228800,
+      "pixelErrors": 0,
+      "nativeHeapDeltaBytes": 28965232,
+      "javaHeapDeltaBytes": 114688
+    },
+    {
+      "case": "fixture-source-24mp.jpg",
+      "width": 6000,
+      "height": 4000,
+      "bytes": 14143952,
+      "elapsedMs": 497.6533
+    },
+    {
+      "case": "decode-6000x4000-exif1",
+      "elapsedMs": 138.867,
+      "outputWidth": 1280,
+      "outputHeight": 853,
+      "pixelsCompared": 1091840,
+      "pixelErrors": 0,
+      "nativeHeapDeltaBytes": 10395168,
+      "javaHeapDeltaBytes": 147456
+    },
+    {
+      "case": "decode-6000x4000-exif6",
+      "elapsedMs": 160.3888,
+      "outputWidth": 853,
+      "outputHeight": 1280,
+      "pixelsCompared": 1091840,
+      "pixelErrors": 0,
+      "nativeHeapDeltaBytes": -49748512,
+      "javaHeapDeltaBytes": -2523136
+    },
+    {
+      "case": "pixel-oracle-initial",
+      "tilePixels": 2448,
+      "tileErrors": 0,
+      "physicalViewPixels": 849,
+      "physicalViewErrors": 0
+    },
+    {
+      "case": "continuous-detail-pan",
+      "moves": 90,
+      "heldMs": 2850,
+      "newTileSetsBeforeUp": 0,
+      "lastNewTileSetMs": 0,
+      "stableButtonBackgrounds": 0,
+      "buttons": 5,
+      "stableSizeGlassBuffers": [
+        {
+          "bitmapIdentities": 89,
+          "pixelArrayIdentities": 0,
+          "blurArrayIdentities": 0
+        },
+        {
+          "bitmapIdentities": 89,
+          "pixelArrayIdentities": 0,
+          "blurArrayIdentities": 0
+        }
+      ],
+      "tileSets": []
+    },
+    {
+      "case": "pixel-oracle-after-pan",
+      "tilePixels": 2244,
+      "tileErrors": 0,
+      "physicalViewPixels": 849,
+      "physicalViewErrors": 0
+    },
+    {
+      "case": "pixel-oracle-before-mode",
+      "tilePixels": 2244,
+      "tileErrors": 0,
+      "physicalViewPixels": 849,
+      "physicalViewErrors": 0
+    }
+  ],
+  "screenshots": [
+    "01-before-pan.png",
+    "02-after-pan.png",
+    "03-before-mode.png"
+  ],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Identical reflection-only probe on actual installed APK; generated 12MP\/24MP JPEG, exact legacy decode oracle, native PhotoDetailDialog held pan, real tile pixels, mode and owner\/close guards. Normal-font emulator only; timings are observations, not physical-device latency or FPS claims."
+}

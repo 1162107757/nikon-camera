@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "scope": "Task-owned hidden read-only Pixel_9 emulator only; no physical devices",
+  "pidsBefore": [
+    31096,
+    18908
+  ],
+  "probePackage": "cc.huevia.remotecaptureqa",
+  "probeUninstalled": true,
+  "allFourRunsFixtureCleanup": true,
+  "settingsRestoration": "See each current run-identity.json",
+  "oldOwnedPid43808AlreadyAbsent": true,
+  "previewServerPreserved": true,
+  "ownedProcessesAbsent": true,
+  "serialAbsent": true,
+  "previewServerRestored": true,
+  "previousPreviewServerWasAlreadyAbsent": true,
+  "previewHttpStatus": 200,
+  "previewPid": 2816
+}

@@ -1,0 +1,14 @@
+{
+  "ownedEmulator": "emulator-5586",
+  "serialAbsent": true,
+  "launcherPid": 9556,
+  "launcherExited": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "allProbePackagesRemoved": true,
+  "finalProbeCleanupErrors": 0,
+  "hostAvdAndTempDirectoriesRetained": true,
+  "sourceInputCount": 262,
+  "postTestSourceDrift": 0,
+  "finalApkSha256": "a356ba5104699204c09c2ebfdd64e5ad4f903ed2cd80dbfd4bb392e144e64fb1"
+}

@@ -1,0 +1,122 @@
+{
+  "candidate": {
+    "path": "dist/huevia-0.21.7-beta-debug.apk",
+    "sha256": "af6ba8e01dcff40b4efb6f077e2e7f12daa4ff52908c7c9ce9dfc2cc06dfa1ad",
+    "bytes": 3987578,
+    "versionName": "0.21.7-beta",
+    "versionCode": 106,
+    "publication": "local-only"
+  },
+  "sourceInputChanges": [
+    "app/build.gradle",
+    "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+    "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+    "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+    "app/src/main/java/cc/huevia/ui/AppIcon.java",
+    "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java"
+  ],
+  "signatureSchemes": {
+    "v2": true,
+    "v3": true
+  },
+  "hostChecks": [
+    {
+      "suite": "editor-strength-drafts",
+      "checks": 34780
+    },
+    {
+      "suite": "basic-adjustment-regression",
+      "checks": 644888
+    },
+    {
+      "suite": "composition-recipes",
+      "checks": 1158
+    },
+    {
+      "suite": "border-migration",
+      "checks": 29
+    },
+    {
+      "suite": "curves-hsl-copy",
+      "checks": 11796
+    },
+    {
+      "suite": "preset-batch",
+      "checks": 688
+    },
+    {
+      "suite": "preset-source-links",
+      "checks": 82
+    }
+  ],
+  "native": [
+    {
+      "path": "docs/validation/photo-color-106/af6ba8e0/20261026-214510-phone-2b4dee",
+      "mode": "phone",
+      "fontScale": 1,
+      "checks": 59,
+      "screenshots": 5,
+      "pass": true,
+      "reportSha256": "d80791557d852c4d1670128e2ecf2eb6fd870cdd911a1d70029cf760c148011d",
+      "cleanup": {
+        "serial": "emulator-5588",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/photo-color-106/af6ba8e0/20261026-214522-font1.3-251256",
+      "mode": "font1.3",
+      "fontScale": 1.2999999523162842,
+      "checks": 59,
+      "screenshots": 5,
+      "pass": true,
+      "reportSha256": "8c7d7ee7c941a71686d76aa6656b43525a9ad482d3d87ae3bf32b932eedfa1b9",
+      "cleanup": {
+        "serial": "emulator-5588",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/photo-color-106/af6ba8e0/20261026-214534-landscape-3485e6",
+      "mode": "landscape",
+      "fontScale": 1,
+      "checks": 59,
+      "screenshots": 5,
+      "pass": true,
+      "reportSha256": "7b4ce74ef1197281d5e52a3ff799cce77fc906d0dc92b53929a8b3c9cd49af6f",
+      "cleanup": {
+        "serial": "emulator-5588",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    }
+  ],
+  "nativeAssertions": 177,
+  "nativeScreenshots": 15,
+  "review": {
+    "status": "pending",
+    "report": "docs/validation/photo-color-106/FINISH-REVIEW.md"
+  },
+  "scopeLimits": [
+    "No real phone or camera test",
+    "No MediaStore publication in this test",
+    "No Nikon or NX pixel-equivalence certification",
+    "No process-persistent batch-undo queue"
+  ],
+  "preservation": {
+    "frozenPriorApks": 6,
+    "serverMandatory100Unchanged": true,
+    "unrelatedWorktreeChangesPreserved": true
+  }
+}

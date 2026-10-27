@@ -1,0 +1,254 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "apkSha256": "9c61236ed1e2e49710bf17e048d3a03698b9703dd08e2dd9a9e20134a22241e2",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "passed": true
+    },
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "fixture-JPEG",
+      "passed": true
+    },
+    {
+      "name": "main-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-preview-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-preview-resolved-dimensions",
+      "passed": true
+    },
+    {
+      "name": "actual-preview-quality",
+      "passed": true
+    },
+    {
+      "name": "actual-file-byte-count",
+      "passed": true
+    },
+    {
+      "name": "actual-file-sha",
+      "passed": true
+    },
+    {
+      "name": "pre-encoder-canvas-equal",
+      "passed": true
+    },
+    {
+      "name": "preview-is-lossy-JPEG-not-lossless-reference",
+      "passed": true
+    },
+    {
+      "name": "jpeg-100-settled",
+      "passed": true
+    },
+    {
+      "name": "jpeg-sample1",
+      "passed": true
+    },
+    {
+      "name": "jpeg-pixels-equal-actual-decoded-file",
+      "passed": true
+    },
+    {
+      "name": "reference-100-settled",
+      "passed": true
+    },
+    {
+      "name": "reference-sample1",
+      "passed": true
+    },
+    {
+      "name": "reference-pixels-equal-actual-decoded-file",
+      "passed": true
+    },
+    {
+      "name": "reference-200-settled",
+      "passed": true
+    },
+    {
+      "name": "zoom-is-physical-200",
+      "passed": true
+    },
+    {
+      "name": "reference-pan-settled",
+      "passed": true
+    },
+    {
+      "name": "real-gesture-moves-photo-center",
+      "passed": true
+    },
+    {
+      "name": "preview-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "preview-private-files-removed",
+      "passed": true
+    },
+    {
+      "name": "exif-full-ready",
+      "passed": true
+    },
+    {
+      "name": "full-exif-displayed-dimensions",
+      "passed": true
+    },
+    {
+      "name": "full-95-quality",
+      "passed": true
+    },
+    {
+      "name": "exif-jpeg-100-ready",
+      "passed": true
+    },
+    {
+      "name": "exif-jpeg-sample1",
+      "passed": true
+    },
+    {
+      "name": "exif-jpeg-pixels-equal-actual-decoded-file",
+      "passed": true
+    },
+    {
+      "name": "exif-reference-100-ready",
+      "passed": true
+    },
+    {
+      "name": "exif-reference-sample1",
+      "passed": true
+    },
+    {
+      "name": "exif-reference-pixels-equal-actual-decoded-file",
+      "passed": true
+    },
+    {
+      "name": "preview-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "preview-private-files-removed",
+      "passed": true
+    },
+    {
+      "name": "framed-composition-ready",
+      "passed": true
+    },
+    {
+      "name": "frame-obeys-final-long-edge",
+      "passed": true
+    },
+    {
+      "name": "framed-100-ready",
+      "passed": true
+    },
+    {
+      "name": "framed-jpeg-sample1",
+      "passed": true
+    },
+    {
+      "name": "framed-jpeg-pixels-equal-actual-decoded-file",
+      "passed": true
+    },
+    {
+      "name": "owner-invalidation-dismisses",
+      "passed": true
+    },
+    {
+      "name": "preview-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "preview-private-files-removed",
+      "passed": true
+    },
+    {
+      "name": "original-preserved",
+      "passed": true
+    },
+    {
+      "name": "preview-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "preview-private-files-removed",
+      "passed": true
+    },
+    {
+      "name": "pending-close-preserves-original",
+      "passed": true
+    },
+    {
+      "name": "preview-worker-terminated",
+      "passed": true
+    },
+    {
+      "name": "preview-private-files-removed",
+      "passed": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "compression-difference",
+      "changedSamples": 5915,
+      "absoluteChannelError": 371222,
+      "jpegBytes": 97168,
+      "referenceBytes": 501868
+    },
+    {
+      "case": "jpeg",
+      "pixelsCompared": 1053,
+      "pixelErrors": 0
+    },
+    {
+      "case": "reference",
+      "pixelsCompared": 1053,
+      "pixelErrors": 0
+    },
+    {
+      "case": "exif-jpeg",
+      "pixelsCompared": 5100,
+      "pixelErrors": 0
+    },
+    {
+      "case": "exif-reference",
+      "pixelsCompared": 5100,
+      "pixelErrors": 0
+    },
+    {
+      "case": "framed-jpeg",
+      "pixelsCompared": 1404,
+      "pixelErrors": 0
+    }
+  ],
+  "screenshots": [
+    "01-real-jpeg-100.png",
+    "02-before-encoding-100.png",
+    "03-reference-200.png",
+    "04-frame-and-crop.png"
+  ],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Actual installed export-preview source and dialog; generated JPEG, JPEG\/reference pixel oracle, EXIF6, crop\/frame, normal-font emulator, account invalidation and pending close. No physical handset, camera or gallery publishing."
+}

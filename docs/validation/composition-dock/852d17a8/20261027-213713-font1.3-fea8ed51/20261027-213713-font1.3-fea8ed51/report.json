@@ -1,0 +1,1099 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "apkSha256": "852d17a89984f82f4af9d116c7bacb17b3243675299ce07de3bf237692b508c6",
+  "versionCode": 110,
+  "versionName": "0.22.1-beta",
+  "mode": "font1.3",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "runner-version-code",
+      "pass": true
+    },
+    {
+      "name": "runner-version-name",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "fresh-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "fixture-name-reserved-exclusively",
+      "pass": true
+    },
+    {
+      "name": "private-jpeg-created",
+      "pass": true
+    },
+    {
+      "name": "fixture-has-no-prior-draft",
+      "pass": true
+    },
+    {
+      "name": "real-local-photo-editor-ready",
+      "pass": true
+    },
+    {
+      "name": "non-neutral-colour-fixture",
+      "pass": true
+    },
+    {
+      "name": "non-neutral-local-fixture",
+      "pass": true
+    },
+    {
+      "name": "non-neutral-border-fixture",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-settled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "initial-filter-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "initial-filter-height-dock-224fp",
+      "pass": true
+    },
+    {
+      "name": "systemui-immersive-teaching-real-click",
+      "pass": true
+    },
+    {
+      "name": "systemui-teaching-dismissed",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "composition-tab-selected",
+      "pass": true
+    },
+    {
+      "name": "composition-content-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "composition-content-is-112fp",
+      "pass": true
+    },
+    {
+      "name": "composition-dock-is-160fp",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-48dp-touch-target",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-keyboard-focusable",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-has-icon",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-visible-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-single-line-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-caption-not-ellipsized",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-caption-fits-width",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-caption-fits-height",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-48dp-touch-target",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-keyboard-focusable",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-has-icon",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-visible-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-single-line-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-caption-not-ellipsized",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-caption-fits-width",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-caption-fits-height",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-48dp-touch-target",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-keyboard-focusable",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-has-icon",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-visible-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-single-line-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-caption-not-ellipsized",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-caption-fits-width",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-caption-fits-height",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-48dp-touch-target",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-keyboard-focusable",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-has-icon",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-visible-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-single-line-caption",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-caption-not-ellipsized",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-caption-fits-width",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-caption-fits-height",
+      "pass": true
+    },
+    {
+      "name": "reset-48dp-touch-target",
+      "pass": true
+    },
+    {
+      "name": "reset-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "reset-has-small-icon",
+      "pass": true
+    },
+    {
+      "name": "reset-does-not-overlap-editor-open-composition",
+      "pass": true
+    },
+    {
+      "name": "reset-does-not-overlap-editor-composition-rotate",
+      "pass": true
+    },
+    {
+      "name": "reset-does-not-overlap-editor-composition-straighten",
+      "pass": true
+    },
+    {
+      "name": "reset-does-not-overlap-editor-composition-perspective",
+      "pass": true
+    },
+    {
+      "name": "composition-summary-exists",
+      "pass": true
+    },
+    {
+      "name": "old-large-open-label-removed",
+      "pass": true
+    },
+    {
+      "name": "composition-gives-photo-more-height",
+      "pass": true
+    },
+    {
+      "name": "composition-keeps-photo-width",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "screenshot-pixels-settled-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-composition-dock",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-open-composition-opens-native-crop-workspace",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "crop-entry-keeps-geometry",
+      "pass": true
+    },
+    {
+      "name": "crop-entry-keeps-main-state",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "crop-dialog-cancelled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "crop-cancel-keeps-history",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-opens-native-crop-workspace",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "rotate-entry-stages-one-quarter-turn",
+      "pass": true
+    },
+    {
+      "name": "rotate-entry-is-tentative",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "crop-dialog-cancelled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "rotate-cancel-preserves-main-state",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-rotate-opens-native-crop-workspace",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-settled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "rotate-apply-commits-staged-geometry",
+      "pass": true
+    },
+    {
+      "name": "rotate-apply-one-history-step",
+      "pass": true
+    },
+    {
+      "name": "rotate-preserves-colour",
+      "pass": true
+    },
+    {
+      "name": "rotate-preserves-local",
+      "pass": true
+    },
+    {
+      "name": "rotate-preserves-border",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "undo-opens-adjustment-panel",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "undo-opens-adjustment-panel-dock-224fp",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-settled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "history-returns-to-composition-tab",
+      "pass": true
+    },
+    {
+      "name": "history-restores-composition-content-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "rotate-undo-restores-prior-geometry",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "redo-opens-adjustment-panel",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "redo-opens-adjustment-panel-dock-224fp",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-settled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "history-returns-to-composition-tab",
+      "pass": true
+    },
+    {
+      "name": "history-restores-composition-content-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "rotate-redo-restores-applied-geometry",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-straighten-opens-native-crop-workspace",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "straighten-default-mode-and-slider-focus",
+      "pass": true
+    },
+    {
+      "name": "straighten-open-keeps-geometry",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "crop-dialog-cancelled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-composition-perspective-opens-native-crop-workspace",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "perspective-default-horizontal-mode",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "native-menu-click-垂直透视",
+      "pass": true
+    },
+    {
+      "name": "native-vertical-perspective-selected",
+      "pass": true
+    },
+    {
+      "name": "perspective-popup-dismissed-before-keyboard",
+      "pass": true
+    },
+    {
+      "name": "perspective-dialog-regains-window-focus",
+      "pass": true
+    },
+    {
+      "name": "native-keyboard-focuses-perspective-slider",
+      "pass": true
+    },
+    {
+      "name": "perspective-native-slider-changes-temporary-geometry",
+      "pass": true
+    },
+    {
+      "name": "perspective-remains-tentative",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-02-composition-workspace",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-next-frame-02-composition-workspace",
+      "pass": true
+    },
+    {
+      "name": "screenshot-pixels-settled-02-composition-workspace",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-02-composition-workspace",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "crop-dialog-cancelled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "perspective-cancel-keeps-applied-rotation",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-settled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "reset-clears-only-geometry",
+      "pass": true
+    },
+    {
+      "name": "reset-adds-one-history-step",
+      "pass": true
+    },
+    {
+      "name": "reset-preserves-colour",
+      "pass": true
+    },
+    {
+      "name": "reset-preserves-local",
+      "pass": true
+    },
+    {
+      "name": "reset-preserves-border",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "undo-opens-adjustment-panel",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "undo-opens-adjustment-panel-dock-224fp",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-settled",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "history-returns-to-composition-tab",
+      "pass": true
+    },
+    {
+      "name": "history-restores-composition-content-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "undo-reset-restores-geometry",
+      "pass": true
+    },
+    {
+      "name": "undo-reset-preserves-colour",
+      "pass": true
+    },
+    {
+      "name": "undo-reset-preserves-local",
+      "pass": true
+    },
+    {
+      "name": "undo-reset-preserves-border",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "restored-filter-content-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "restored-filter-content-height-dock-224fp",
+      "pass": true
+    },
+    {
+      "name": "filter-restores-exact-stage-bounds",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-visible",
+      "pass": true
+    },
+    {
+      "name": "real-click-target-nonempty",
+      "pass": true
+    },
+    {
+      "name": "restored-adjustment-content-height",
+      "pass": true
+    },
+    {
+      "name": "visible-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "restored-adjustment-content-height-dock-224fp",
+      "pass": true
+    },
+    {
+      "name": "adjustment-restores-exact-stage-bounds",
+      "pass": true
+    },
+    {
+      "name": "source-jpeg-bytes-preserved",
+      "pass": true
+    },
+    {
+      "name": "exactly-two-success-screenshots",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "mode": "font1.3",
+      "fontScale": 1.2999999523162842,
+      "contentHeightPx": 255,
+      "dockHeightPx": 364,
+      "filterStage": [
+        0,
+        361,
+        720,
+        1049
+      ],
+      "compositionStage": [
+        0,
+        361,
+        720,
+        1194
+      ]
+    }
+  ],
+  "fixture": {
+    "resource": "app\/src\/main\/res\/drawable-nodpi\/preset_template.png",
+    "resourceSourceSha256": "067e391dcb5a61c20021dc9a4a7eb4c324829592a5de747dd1f4a958ce44c8d9",
+    "sourceWidth": 1448,
+    "sourceHeight": 1086,
+    "fixtureWidth": 853,
+    "fixtureHeight": 640
+  },
+  "screenshots": 2,
+  "fixtureRemoved": true,
+  "cleanupErrors": [],
+  "failure": null,
+  "scope": "Actual installed MainActivity\/AlbumPanel\/local-photo editor; owned JPEG derived from the shipping preset_template photo with its aspect ratio retained and a unique EXIF description; native pointer clicks on four composition entries, reset and history; native perspective menu\/keyboard; temporary versus committed geometry; independent seeded colour\/local\/border preservation markers; font\/orientation layout and committed-frame screenshots. No camera, account transition, publication, physical-device or TalkBack certification."
+}

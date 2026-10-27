@@ -1,0 +1,333 @@
+{
+  "scope": "Browser-rendered interactive design mockup, not native Android or real camera validation",
+  "status": "PASS",
+  "checks": 83,
+  "assertions": [
+    "portrait default ready scene",
+    "four separate live values",
+    "camera identity remains small",
+    "current histogram visible by default",
+    "demonstration bins match sample pixel count",
+    "histogram can collapse",
+    "collapsing histogram preserves image bounds",
+    "histogram opens readable detail",
+    "RGB mode displays three labelled channels",
+    "histogram mode switch preserves image bounds",
+    "histogram can move without opening detail",
+    "moving histogram preserves image bounds",
+    "tap moves focus within photo",
+    "focus feedback reaches complete",
+    "in-flight shutter disables repeats",
+    "capture pauses histogram until a new frame",
+    "repeated dispatch is guarded",
+    "capture confirmation updates recent photo",
+    "recent photo opens",
+    "explicit transfer reports imported",
+    "system escape closes panel",
+    "settings include independent live-view switch",
+    "transfer is independent",
+    "optional capture then transfer completes",
+    "live-view interruption keeps advertised shutter available",
+    "live-view interruption disables point focus",
+    "interrupted view marks histogram paused",
+    "retry view restores ready",
+    "disconnection disables shutter",
+    "disconnection cannot label old histogram live",
+    "disconnected readings show dashes",
+    "back does not invent connection",
+    "reopening work area does not reconnect implicitly",
+    "reconnect restores controls",
+    "unknown capture result blocks repeat",
+    "timeout recovery explains no repeat",
+    "confirmed result restores capture",
+    "disconnect during capture preserves unknown result",
+    "reconnect cannot silently repeat uncertain capture",
+    "Sync entry opens camera work area",
+    "Back returns to Sync",
+    "portrait .appbar inside frame",
+    "portrait .view-area inside frame",
+    "portrait .parameters inside frame",
+    "portrait .camera-feedback inside frame",
+    "portrait .release-row inside frame",
+    "portrait .transfer-row inside frame",
+    "portrait parameter labels honor requested scale",
+    "portrait image aspect retained",
+    "portrait app targets reach 48px",
+    "portrait font1.3 .appbar inside frame",
+    "portrait font1.3 .view-area inside frame",
+    "portrait font1.3 .parameters inside frame",
+    "portrait font1.3 .camera-feedback inside frame",
+    "portrait font1.3 .release-row inside frame",
+    "portrait font1.3 .transfer-row inside frame",
+    "portrait font1.3 parameter labels honor requested scale",
+    "portrait font1.3 image aspect retained",
+    "portrait font1.3 app targets reach 48px",
+    "landscape .appbar inside frame",
+    "landscape .view-area inside frame",
+    "landscape .parameters inside frame",
+    "landscape .camera-feedback inside frame",
+    "landscape .release-row inside frame",
+    "landscape .transfer-row inside frame",
+    "landscape parameter labels honor requested scale",
+    "landscape identity battery and title honor scale",
+    "landscape image aspect retained",
+    "landscape app targets reach 48px",
+    "landscape font1.3 .appbar inside frame",
+    "landscape font1.3 .view-area inside frame",
+    "landscape font1.3 .parameters inside frame",
+    "landscape font1.3 .camera-feedback inside frame",
+    "landscape font1.3 .release-row inside frame",
+    "landscape font1.3 .transfer-row inside frame",
+    "landscape font1.3 parameter labels honor requested scale",
+    "landscape font1.3 identity battery and title honor scale",
+    "landscape font1.3 image aspect retained",
+    "landscape font1.3 app targets reach 48px",
+    "landscape large-font settings scroll to disconnect",
+    "landscape large-font setting is actionable",
+    "phone browser review has no document horizontal overflow",
+    "no browser script errors"
+  ],
+  "errors": [],
+  "geometry": [
+    {
+      "orientation": "portrait",
+      "large": false,
+      "device": {
+        "x": 598,
+        "y": 38,
+        "width": 390,
+        "height": 844
+      },
+      "parts": {
+        ".appbar": {
+          "x": 0,
+          "y": 26,
+          "width": 390,
+          "height": 54,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".view-area": {
+          "x": 0,
+          "y": 112,
+          "width": 390,
+          "height": 427.8125,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".parameters": {
+          "x": 0,
+          "y": 539.8125,
+          "width": 390,
+          "height": 73.1875,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".camera-feedback": {
+          "x": 0,
+          "y": 613,
+          "width": 390,
+          "height": 36,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".release-row": {
+          "x": 0,
+          "y": 649,
+          "width": 390,
+          "height": 114,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".transfer-row": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 61,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        }
+      }
+    },
+    {
+      "orientation": "portrait",
+      "large": true,
+      "device": {
+        "x": 598,
+        "y": 38,
+        "width": 390,
+        "height": 844
+      },
+      "parts": {
+        ".appbar": {
+          "x": 0,
+          "y": 26,
+          "width": 390,
+          "height": 54,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".view-area": {
+          "x": 0,
+          "y": 112,
+          "width": 390,
+          "height": 416.65625,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".parameters": {
+          "x": 0,
+          "y": 528.65625,
+          "width": 390,
+          "height": 84.34375,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".camera-feedback": {
+          "x": 0,
+          "y": 613,
+          "width": 390,
+          "height": 43,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".release-row": {
+          "x": 0,
+          "y": 656,
+          "width": 390,
+          "height": 107,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        ".transfer-row": {
+          "x": 0,
+          "y": 763,
+          "width": 390,
+          "height": 61,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        }
+      }
+    },
+    {
+      "orientation": "landscape",
+      "large": false,
+      "device": {
+        "x": 371,
+        "y": 38,
+        "width": 844,
+        "height": 390
+      },
+      "parts": {
+        ".appbar": {
+          "x": 12,
+          "y": 24,
+          "width": 820,
+          "height": 48,
+          "scrollWidth": 820,
+          "clientWidth": 820
+        },
+        ".view-area": {
+          "x": 12,
+          "y": 72,
+          "width": 589,
+          "height": 302,
+          "scrollWidth": 589,
+          "clientWidth": 589
+        },
+        ".parameters": {
+          "x": 615,
+          "y": 72,
+          "width": 217,
+          "height": 108.5625,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        },
+        ".camera-feedback": {
+          "x": 615,
+          "y": 189.703125,
+          "width": 217,
+          "height": 30,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        },
+        ".release-row": {
+          "x": 615,
+          "y": 228.859375,
+          "width": 217,
+          "height": 84,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        },
+        ".transfer-row": {
+          "x": 615,
+          "y": 322,
+          "width": 217,
+          "height": 52,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        }
+      }
+    },
+    {
+      "orientation": "landscape",
+      "large": true,
+      "device": {
+        "x": 371,
+        "y": 38,
+        "width": 844,
+        "height": 390
+      },
+      "parts": {
+        ".appbar": {
+          "x": 12,
+          "y": 24,
+          "width": 820,
+          "height": 48,
+          "scrollWidth": 820,
+          "clientWidth": 820
+        },
+        ".view-area": {
+          "x": 12,
+          "y": 72,
+          "width": 589,
+          "height": 302,
+          "scrollWidth": 589,
+          "clientWidth": 589
+        },
+        ".parameters": {
+          "x": 615,
+          "y": 72,
+          "width": 217,
+          "height": 119.46875,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        },
+        ".camera-feedback": {
+          "x": 615,
+          "y": 199.640625,
+          "width": 217,
+          "height": 26,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        },
+        ".release-row": {
+          "x": 615,
+          "y": 233.828125,
+          "width": 217,
+          "height": 80,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        },
+        ".transfer-row": {
+          "x": 615,
+          "y": 322,
+          "width": 217,
+          "height": 52,
+          "scrollWidth": 217,
+          "clientWidth": 217
+        }
+      }
+    }
+  ]
+}

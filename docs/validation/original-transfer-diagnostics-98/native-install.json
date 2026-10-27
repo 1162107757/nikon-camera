@@ -1,0 +1,14 @@
+[
+  {
+    "apk": "dist/huevia-0.20.3-beta-debug.apk",
+    "exit": 0,
+    "output": "Performing Streamed Install\r\nSuccess\r\n",
+    "errors": ""
+  },
+  {
+    "apk": "tests/connection-report-device-probe/.build/connection-report-probe.apk",
+    "exit": 0,
+    "output": "Performing Streamed Install\r\nSuccess\r\n",
+    "errors": ""
+  }
+]

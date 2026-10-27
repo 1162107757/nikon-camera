@@ -1,0 +1,35 @@
+{
+  "pass": false,
+  "failure": "java.lang.NullPointerException: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference",
+  "mode": "phone",
+  "fontScale": 1,
+  "candidateSha256": "69cdbf5300af20964d27b66389d19fbabd4eeee84315079f94572d61810ef6f6",
+  "checks": [
+    "owned-emulator",
+    "supported-mode",
+    "expected-version",
+    "exact-apk",
+    "no-real-account",
+    "fixture-preferences-reset",
+    "output-created",
+    "main-replaced-before-onCreate-no-network-startup",
+    "local-initialisation-settled",
+    "actual-font",
+    "actual-width-category",
+    "actual-mode-rail",
+    "default-settings-collapsed",
+    "screenshot-failure",
+    "preferences-restored"
+  ],
+  "screenshots": [
+    {
+      "file": "failure.png",
+      "width": 1080,
+      "height": 2424
+    }
+  ],
+  "geometry": [],
+  "violations": [],
+  "cameraSocketAttempts": 0,
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height\/inset helpers through reflection. Real connection guide, actual settings edits and cancellation; synthetic connection stages; no system Wi-Fi or physical camera claim. No real MainActivity startup, real camera, HTTP\/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately."
+}

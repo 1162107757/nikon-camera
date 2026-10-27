@@ -1,0 +1,101 @@
+{
+  "pass": false,
+  "stage": "synthetic-dng",
+  "apkSha256": "9c61236ed1e2e49710bf17e048d3a03698b9703dd08e2dd9a9e20134a22241e2",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "full-active-dng-dimensions",
+      "passed": true
+    },
+    {
+      "name": "dng-sensor-white-level-bits",
+      "passed": true
+    },
+    {
+      "name": "actual-sensor-decoder-identified",
+      "passed": true
+    },
+    {
+      "name": "first-raw-development-not-cached",
+      "passed": true
+    },
+    {
+      "name": "raw-original-bytes-preserved",
+      "passed": true
+    },
+    {
+      "name": "full-size-srgb-png-without-embedded-jpeg",
+      "passed": true
+    },
+    {
+      "name": "raw-progress-completes-monotonically",
+      "passed": true
+    },
+    {
+      "name": "workspace-png-checksum",
+      "passed": true
+    },
+    {
+      "name": "demosaic-output-is-visible-image",
+      "passed": true
+    },
+    {
+      "name": "exact-source-settings-cache-reuse",
+      "passed": true
+    },
+    {
+      "name": "account-workspaces-isolated",
+      "passed": true
+    },
+    {
+      "name": "native-plus-one-ev-brightens",
+      "passed": true
+    },
+    {
+      "name": "native-minus-one-ev-darkens",
+      "passed": true
+    },
+    {
+      "name": "raw-exposure-cache-identity",
+      "passed": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "synthetic-dng-default",
+      "elapsedMs": 13.6281,
+      "width": 96,
+      "height": 64,
+      "workingBytes": 9327,
+      "meanLuma": 72.40369669596355,
+      "outputBits": 8
+    }
+  ],
+  "fixtureCleanup": true,
+  "failure": "java.io.IOException: RAW has no usable camera color matrix for custom white balance; use camera or auto white balance",
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+}

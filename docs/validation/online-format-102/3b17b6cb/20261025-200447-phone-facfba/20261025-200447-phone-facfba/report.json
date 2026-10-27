@@ -1,0 +1,83 @@
+{
+  "fixtureItems": 72,
+  "np3FixtureSha256": "d64de018e668077a350de019c7ae70fc55e173e0141d46a71a27a2b3ce5e65af",
+  "initialScreenWidthDp": 411,
+  "initialScreenHeightDp": 923,
+  "fontScale": 1,
+  "pass": false,
+  "failure": "java.lang.AssertionError: format-touch-height48dp-all\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.check(OnlineFormatProbe.java:296)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.lambda$geometry$24(OnlineFormatProbe.java:274)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.$r8$lambda$lpyKI0KsSiSFe9wDsTG7YpQEKv4(OnlineFormatProbe.java:0)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe$$ExternalSyntheticLambda3.run(D8$$SyntheticClass:0)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.lambda$ui$26(OnlineFormatProbe.java:298)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe$$ExternalSyntheticLambda4.run(D8$$SyntheticClass:0)\n\tat android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2721)\n\tat android.os.Handler.handleCallback(Handler.java:1080)\n\tat android.os.Handler.dispatchMessageImpl(Handler.java:135)\n\tat android.os.Handler.dispatchMessage(Handler.java:126)\n\tat android.os.Looper.loopOnce(Looper.java:285)\n\tat android.os.Looper.loop(Looper.java:390)\n\tat android.app.ActivityThread.main(ActivityThread.java:9884)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)\n\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:906)\n",
+  "stage": "inject-in-memory-http",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "installed-version-code",
+      "pass": true
+    },
+    {
+      "name": "installed-version-name",
+      "pass": true
+    },
+    {
+      "name": "installed-frozen-apk-sha256",
+      "pass": true
+    },
+    {
+      "name": "initial-offline-startup-settled",
+      "pass": true
+    },
+    {
+      "name": "native-app-theme-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-font-scale-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "catalog--全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-72",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-all",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-all",
+      "pass": false
+    },
+    {
+      "name": "fixture-cleanup-scope",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "failure.png",
+      "sha256": "9cae987692751a9baa30ea7a014603720629d2aad2bb47fb1bc565a88ff0a56e"
+    }
+  ],
+  "requests": [
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=",
+    "https:\/\/format-fixture.invalid\/format-qa-003.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-001.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-000.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-002.ncp"
+  ],
+  "scope": "Real installed MainActivity, native taps\/Views\/configuration and incumbent repository\/HTTPS JSON parser. Explicit in-memory public-recipe and synthetic catalogue fixtures; no live server request, account mutation, physical camera, update-policy change or physical performance claim."
+}

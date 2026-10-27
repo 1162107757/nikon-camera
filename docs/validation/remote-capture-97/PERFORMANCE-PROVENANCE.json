@@ -1,0 +1,24 @@
+{
+  "benchmarkSources": [
+    {
+      "path": "tests/album-java/cc/huevia/album/AlbumControllerHostTest.java",
+      "sha256": "b3becf48221201803abfdec271ff47ec620efcb5b61df6007b4a85bd6eea66de"
+    },
+    {
+      "path": "tests/run-album.ps1",
+      "sha256": "806b8c1f5bcc863956cae679704e88c89391b808705be6f7e5c4db2201099e9e"
+    }
+  ],
+  "beforeSourceSha256": "c35e06b5528b5721376d6ec4aca7914c0341c23955fa7084b8ff2dc0b6d03c69",
+  "java": "java version \"17.0.19\" 2026-04-21 LTS\r\nJava(TM) SE Runtime Environment (build 17.0.19+9-LTS-183)\r\nJava HotSpot(TM) 64-Bit Server VM (build 17.0.19+9-LTS-183, mixed mode, sharing)\r\n",
+  "measurements": {
+    "beforeMs": 4346,
+    "afterMs": 420,
+    "repetitions": 1,
+    "photos": 8,
+    "totalBytes": 8388608,
+    "physicalCamera": false,
+    "wifi": false,
+    "mediaStore": false
+  }
+}

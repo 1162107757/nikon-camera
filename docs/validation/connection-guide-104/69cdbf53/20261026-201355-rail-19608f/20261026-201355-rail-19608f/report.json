@@ -1,0 +1,131 @@
+{
+  "pass": false,
+  "failure": "java.lang.IllegalStateException: cancel-never-enters-either-save-overload",
+  "mode": "rail",
+  "fontScale": 1,
+  "candidateSha256": "69cdbf5300af20964d27b66389d19fbabd4eeee84315079f94572d61810ef6f6",
+  "checks": [
+    "owned-emulator",
+    "supported-mode",
+    "expected-version",
+    "exact-apk",
+    "no-real-account",
+    "fixture-preferences-reset",
+    "output-created",
+    "main-replaced-before-onCreate-no-network-startup",
+    "local-initialisation-settled",
+    "actual-font",
+    "actual-width-category",
+    "actual-mode-rail",
+    "default-settings-collapsed",
+    "default-ip-hidden",
+    "default-port-hidden",
+    "default-connect-exists",
+    "default-connect-full-visible",
+    "default-connect-clearance",
+    "default-connect-text-unclipped",
+    "default-settings-exists",
+    "default-settings-full-visible",
+    "default-settings-clearance",
+    "default-settings-text-unclipped",
+    "screenshot-01-collapsed-nikon",
+    "native-protocol-choice",
+    "fuji-default-port",
+    "fuji-automatic-by-default",
+    "brand-keeps-settings-collapsed",
+    "screenshot-02-settings-expanded",
+    "settings-show-ip-and-port",
+    "automatic-control-preserved",
+    "automatic-ip-readonly",
+    "manual-ip-editable",
+    "fold-removes-fields",
+    "fold-preserves-address",
+    "address-persisted",
+    "manual-mode-persisted",
+    "reopen-keeps-values",
+    "wifi-first",
+    "connect-held-before-system-wifi",
+    "real-camera-phase-label",
+    "confirmation-hint-exists",
+    "confirmation-hint-full-visible",
+    "confirmation-hint-clearance",
+    "confirmation-hint-text-unclipped",
+    "confirmation-announced",
+    "confirmation-auto-continue-explained",
+    "settings-not-forced-open",
+    "screenshot-03-camera-confirmation",
+    "confirmation-clears-after-approval",
+    "screenshot-04-reading-photos",
+    "cancel-retires-pending-start",
+    "error-short-exists",
+    "error-short-full-visible",
+    "error-short-clearance",
+    "error-short-text-unclipped",
+    "screenshot-05-error-details",
+    "error-detail-original-message",
+    "connection-remains-behind-host-gate",
+    "screenshot-failure",
+    "preferences-restored"
+  ],
+  "screenshots": [
+    {
+      "file": "01-collapsed-nikon.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "02-settings-expanded.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "03-camera-confirmation.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "04-reading-photos.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "05-error-details.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "failure.png",
+      "width": 1800,
+      "height": 2400
+    }
+  ],
+  "geometry": [
+    {
+      "name": "default-connect",
+      "view": "[312,753][1728,903]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "default-settings",
+      "view": "[312,927][1728,1071]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "confirmation-hint",
+      "view": "[372,768][1728,881]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "error-short",
+      "view": "[312,915][1728,1059]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    }
+  ],
+  "violations": [],
+  "cameraSocketAttempts": 0,
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height\/inset helpers through reflection. Real connection guide, actual settings edits and cancellation; synthetic connection stages; no system Wi-Fi or physical camera claim. No real MainActivity startup, real camera, HTTP\/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately."
+}

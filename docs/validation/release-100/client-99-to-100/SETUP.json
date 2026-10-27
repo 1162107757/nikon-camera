@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5586",
+  "realProductionClientVersionCode": 99,
+  "baselineApkSha256": "cc3a7cfcdb04dc54054ec7446cc3d5f8d2cbe0f495c6c8367e7d2a89d8fabb7f",
+  "candidateApkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+  "baselineCleanInstalledOnDisposableReadOnlyEmulator": true,
+  "platformRejectedDowngrade": true,
+  "apkSuppliedByAdbOnlyForBaseline": true,
+  "installedBaselineSha256": "cc3a7cfcdb04dc54054ec7446cc3d5f8d2cbe0f495c6c8367e7d2a89d8fabb7f",
+  "baselineTheme": "dark selected in production UI",
+  "usedSyntheticMetadata": false,
+  "usedTestInstrumentationForThisFlow": false,
+  "checksPending": [
+    "real endpoint mandatory prompt",
+    "Back/outside cannot dismiss",
+    "DownloadManager completes and APK verifies",
+    "unknown-source permission and system installer",
+    "installed100 hash + firstInstallTime + dark preference"
+  ]
+}

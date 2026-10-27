@@ -1,0 +1,194 @@
+{
+  "scope": "Native synthetic PTP/IP peer + real editor component in test container; no physical camera",
+  "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+  "assertions": 592,
+  "modes": [
+    {
+      "mode": "phone",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-96/8e61d0e0/phone-vendor4294967295-af0809f7",
+      "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+      "assertions": 98,
+      "orientation": "portrait",
+      "gridLtrOffset": [
+        0,
+        0
+      ],
+      "gridRtlOffset": [
+        0,
+        0
+      ],
+      "captures": [
+        "captured.png",
+        "editor-grid.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-96/8e61d0e0/font1.3-vendor4294967295-39b1d85a",
+      "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+      "assertions": 98,
+      "orientation": "portrait",
+      "gridLtrOffset": [
+        0,
+        0
+      ],
+      "gridRtlOffset": [
+        0,
+        0
+      ],
+      "captures": [
+        "captured.png",
+        "editor-grid.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "landscape",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-96/8e61d0e0/landscape-vendor4294967295-7e3146b9",
+      "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+      "assertions": 102,
+      "orientation": "landscape",
+      "gridLtrOffset": [
+        0,
+        0
+      ],
+      "gridRtlOffset": [
+        0,
+        0
+      ],
+      "captures": [
+        "captured.png",
+        "editor-grid.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "landscape-bright-tools.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "dark",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-96/8e61d0e0/dark-vendor4294967295-8b532075",
+      "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+      "assertions": 98,
+      "orientation": "portrait",
+      "gridLtrOffset": [
+        0,
+        0
+      ],
+      "gridRtlOffset": [
+        0,
+        0
+      ],
+      "captures": [
+        "captured.png",
+        "editor-grid.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "phone",
+      "vendorId": 6,
+      "root": "docs/validation/remote-capture-96/8e61d0e0/phone-vendor6-75f23980",
+      "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+      "assertions": 98,
+      "orientation": "portrait",
+      "gridLtrOffset": [
+        0,
+        0
+      ],
+      "gridRtlOffset": [
+        0,
+        0
+      ],
+      "captures": [
+        "captured.png",
+        "editor-grid.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    },
+    {
+      "mode": "phone",
+      "vendorId": 10,
+      "root": "docs/validation/remote-capture-96/8e61d0e0/phone-vendor10-e516b983",
+      "apkSha256": "8e61d0e001d4347fcb14714f387d24a26ac340a85a08367bfdac99db21a2b229",
+      "assertions": 98,
+      "orientation": "portrait",
+      "gridLtrOffset": [
+        0,
+        0
+      ],
+      "gridRtlOffset": [
+        0,
+        0
+      ],
+      "captures": [
+        "captured.png",
+        "editor-grid.png",
+        "entry.png",
+        "histogram-moved.png",
+        "histogram.png",
+        "offline-recent.png",
+        "offline.png",
+        "options.png",
+        "ready.png",
+        "rejected-focus.png",
+        "rejected-shutter.png",
+        "unknown.png",
+        "view-lost.png"
+      ]
+    }
+  ]
+}

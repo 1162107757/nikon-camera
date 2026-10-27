@@ -1,0 +1,7 @@
+{
+  "scope": "Source color contrast for the two named design fixes, not a full native accessibility audit",
+  "foreground": "#706A63",
+  "background": "#EEECE7",
+  "contrast": 4.525240897755808,
+  "target": 4.5
+}

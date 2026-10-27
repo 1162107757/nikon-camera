@@ -1,0 +1,101 @@
+# Local configuration and credentials (keep safe templates versioned).
+local.properties
+keystore.properties
+signing.properties
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+.local/
+*.jks
+*.keystore
+*.p12
+*.pfx
+
+# Build outputs and local tooling.
+.gradle/
+**/build/
+.tooling/
+.research/
+.community-pg-test/
+/tests/.build/
+/tests/.build-*/
+/tests/*-device-probe/.build/
+/tests/*-device-probe/*.apk
+/tests/*-device-probe/*.apk.idsig
+/tests/*-device-probe/*.apk.sha256
+/tests/personal-device-probe/*.apk*
+**/.build/
+**/.build-*/
+.cxx/
+.externalNativeBuild/
+
+# Local design review output. Keep .impeccable/design.json and surfaces/.
+/.impeccable/review/
+/.impeccable/mocks/
+
+# Generated validation evidence, not test fixtures or design source assets.
+# Keep lightweight Markdown/JSON reports and release notes for traceability.
+/docs/validation/**/*.[pP][nN][gG]
+/docs/validation/**/*.[jJ][pP][gG]
+/docs/validation/**/*.[jJ][pP][eE][gG]
+/docs/validation/**/*.[wW][eE][bB][pP]
+/docs/validation/**/*.[gG][iI][fF]
+/docs/validation/**/*.mp4
+/docs/validation/**/*.webm
+/docs/validation/**/*.mov
+/docs/validation/**/*.apk*
+/docs/validation/**/*.aab*
+/docs/validation/**/*.ipa
+/docs/validation/**/*.idsig
+/docs/validation/**/*.zip
+/docs/validation/**/*.log
+/docs/validation/**/*.xml
+/docs/validation/**/*.txt
+!/docs/validation/**/RELEASE-NOTES*.txt
+!/docs/validation/**/release-notes*.txt
+/docs/device-review/**/*.[pP][nN][gG]
+/docs/device-review/**/*.[jJ][pP][gG]
+/docs/device-review/**/*.[jJ][pP][eE][gG]
+/docs/device-review/**/*.[wW][eE][bB][pP]
+/docs/device-review/**/*.[gG][iI][fF]
+/docs/device-review/**/*.log
+/docs/device-review/**/*.xml
+
+# Generated release packages. Keep dist notes, icons and ZIP test fixtures.
+# server/bundled-apks is required by service packaging and stays versioned.
+/dist/*.apk
+/dist/*.apk.idsig
+/dist/*.apk.sha256
+/dist/*.aab
+/dist/*.aab.sha256
+
+# Dependency caches and Python virtual environments.
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE, OS, editor backups and crash scratch files.
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.rej
+/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.hprof
+hs_err_pid*.log
+replay_pid*.log

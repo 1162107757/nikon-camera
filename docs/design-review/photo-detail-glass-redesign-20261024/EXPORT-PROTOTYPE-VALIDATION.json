@@ -1,0 +1,30 @@
+{
+  "file": "D:\\dev\\ai-project\\nikon\\docs\\design-review\\photo-detail-glass-redesign-20261024\\prototype-export.html",
+  "sourceSha256": "9782fd02d20fac6800f32b9c46c80fb55b056b0f9ac72b8e3592af00845a400c",
+  "status": "PASS",
+  "cases": 21,
+  "checks": [
+    "Complete integer syntax and finite range: no truncation or signs",
+    "Natural full / final-canvas share / custom caps / small source",
+    "Canonical actual spec excludes tier and destination",
+    "Receipt branches and stable original request for pending/unknown",
+    "Accepted source/edit/account/spec/location request remain frozen",
+    "Safe cancellation retains completed items and completed-only denominator",
+    "Failures and unprocessed only retry; successful snapshots and counts preserved",
+    "Retried cancelled task uses final outcome, and normal vs new-copy time semantics differ",
+    "Publish failure keeps full result; retry starts at check and preserves request",
+    "Six initialized complete views, no initial focus theft, labeled inputs and unique ids",
+    "DOM custom invalid/valid edits preserve input focus/caret and gate main CTA",
+    "DOM all receipt actions: existing view/copy, missing publish, pending stable, unknown three outcomes, repair",
+    "DOM stop waits a stage and result provides per-item reason and single retry",
+    "DOM result retry converges while keeping prior eight successes",
+    "DOM original JPEG/NEF separate confirmations, ignore edits and keep draft/receipt; unavailable for cooked sources",
+    "DOM source-small disables custom; main job remains frozen if settings/source change",
+    "DOM automatic task pauses simulation in modal; background settings tick preserves live input node and selection",
+    "DOM manual stop followed immediately by minimize retains safe-point transition",
+    "DOM modal traps both Tab directions; Escape restores focus and removes background inertness",
+    "DOM font/narrow/landscape controls and export hash anchors exist",
+    "Static event bindings, local link targets, labels, and zero external resources/write APIs"
+  ],
+  "scope": "Node syntax/model + jsdom outside-only static DOM event checks; default resources disabled and network sentinels; no browser rendering, pixel comparison, native, real photo, file encoding, export, gallery or device claims."
+}

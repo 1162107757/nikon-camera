@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "candidateSha256": "54e0022fba9596a46884c2f60b5de6123b34d56f38119ad370171b9c603dc54b",
+  "serial": "emulator-5586",
+  "probeUninstalled": true,
+  "probePackageAbsenceVerified": true,
+  "fixtureCleanup": [
+    {
+      "cache": "/data/user/0/cc.huevia/cache/photo-detail-a318304b-54cd-41a1-b606-b86cbcb198fc",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "cache": "/data/user/0/cc.huevia/cache/photo-detail-61c6b60f-fe58-4219-84f2-8dcde80d231e",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "cache": "/data/user/0/cc.huevia/cache/photo-detail-0ed1bb3a-7333-475f-b583-8b8a76a4f389",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "cache": "/data/user/0/cc.huevia/cache/photo-detail-d437fc4f-dc5e-4469-ac33-9dfe27fcd543",
+      "workerTerminated": true,
+      "absent": true
+    },
+    {
+      "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/cb35e17b396dbe92f852702da210b04ddfa803eac26e6b20a7e1a127b8de0392.draft",
+      "absent": true
+    },
+    {
+      "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-c7472bf7-2309-443c-8d85-79d9aa7c91aa__LOAD12MP.JPG",
+      "shaBeforeDelete": "cb35e17b396dbe92f852702da210b04ddfa803eac26e6b20a7e1a127b8de0392",
+      "unchanged": true,
+      "absent": true
+    },
+    {
+      "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-32e601cd-7395-4671-81d5-d362d71141df__GRID.JPG",
+      "shaBeforeDelete": "1109772238050dab9398dd835262ff20ec29065e5781afa8a5af7ecc41d472dc",
+      "unchanged": true,
+      "absent": true
+    }
+  ],
+  "appearanceRestored": true,
+  "systemRestoration": {
+    "night": {
+      "command": "no",
+      "reported": "Night mode: no",
+      "secureMode": "1",
+      "customType": "-1"
+    },
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0",
+    "permissions": {
+      "android.permission.READ_MEDIA_IMAGES": false,
+      "android.permission.READ_MEDIA_VISUAL_USER_SELECTED": false,
+      "android.permission.POST_NOTIFICATIONS": false
+    },
+    "status": "PASS",
+    "errors": []
+  },
+  "emulatorClosed": false,
+  "released": true,
+  "completedAtUtc": "2026-10-24T12:35:17.5355243Z"
+}

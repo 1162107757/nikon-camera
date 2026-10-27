@@ -1,0 +1,45 @@
+{
+  "startedUtc": "2026-10-27T14:45:38.130Z",
+  "environmentVerified": true,
+  "ownedFixture": {
+    "path": "app-releases/8a651a08c5354acac1e8f2cef21880a74f99668ee2e116a0bb6ab20141dc7e99.apk",
+    "bytes": 106,
+    "sha256": "8a651a08c5354acac1e8f2cef21880a74f99668ee2e116a0bb6ab20141dc7e99"
+  },
+  "scope": "Unique owned small storage fixture only; no DB migration, code deployment, release or existing object modification",
+  "cleanup": {
+    "attempted": true,
+    "deleted": true,
+    "deleteAccepted": true,
+    "headAfterStatus": 404
+  },
+  "bucket": {
+    "id": "nikon-presets",
+    "public": false,
+    "fileSizeLimit": 4194304
+  },
+  "initialHeadStatus": 404,
+  "uploaded": true,
+  "requestedTtlSeconds": 60,
+  "provider": {
+    "fullSignedURL": {
+      "protocol": "https:",
+      "host": "nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+      "pathname": "/v1/storages/object/sign/nikon-presets/app-releases/8a651a08c5354acac1e8f2cef21880a74f99668ee2e116a0bb6ab20141dc7e99.apk",
+      "ttlSeconds": 60
+    },
+    "signedURL": {
+      "protocol": "https:",
+      "host": "nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+      "pathname": "/v1/storages/object/sign/nikon-presets/app-releases/8a651a08c5354acac1e8f2cef21880a74f99668ee2e116a0bb6ab20141dc7e99.apk",
+      "ttlSeconds": 60
+    }
+  },
+  "productionUrlValidationPassed": true,
+  "unauthenticatedGetStatus": 403,
+  "publicBytes": 128,
+  "publicSha256": "a910024d3e122ddc0f8276cb600c80ac592407b53cce599a6dd31cfc3bfe0e41",
+  "publicBytesMatch": false,
+  "pass": false,
+  "finishedUtc": "2026-10-27T14:45:57.183Z"
+}

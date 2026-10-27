@@ -1,0 +1,36 @@
+{
+  "createdOn": "2026-10-24",
+  "purpose": "Design-only Android remote capture review",
+  "generatedThisRun": false,
+  "assets": [
+    {
+      "file": "assets/live-view.png",
+      "sourcePath": "D:\\dev\\ai-project\\nikon\\docs\\design-review\\photo-detail-export-histogram-20261024\\assets\\sample.png",
+      "sourceSha256": "067e391dcb5a61c20021dc9a4a7eb4c324829592a5de747dd1f4a958ce44c8d9",
+      "destinationSha256": "067e391dcb5a61c20021dc9a4a7eb4c324829592a5de747dd1f4a958ce44c8d9",
+      "byteIdentical": true,
+      "format": "PNG",
+      "width": 1448,
+      "height": 1086,
+      "role": "illustrative photo; no real camera connection/live stream proof",
+      "provenance": {
+        "origin": "Existing OpenAI image_gen synthetic template generated 2026-10-16, already used in approved editor reviews",
+        "originalProjectAsset": "D:/dev/ai-project/nikon/app/src/main/res/drawable-nodpi/preset_template.png",
+        "provenanceDocument": "D:/dev/ai-project/nikon/docs/assets/preset-template-provenance.md",
+        "exactPromptFile": "D:/dev/ai-project/nikon/app/src/main/res/drawable-nodpi/preset-template.prompt.txt",
+        "promptEmbedded": true,
+        "rights": "Pre-existing project-generated synthetic asset; no new rights or camera-capture authenticity claim",
+        "sourceIsUserProvidedCameraPhoto": false
+      },
+      "cropNotes": "Full unframed 4:3 original, object-fit:contain; no crop, reencoding, color edit, or metadata edit in this run",
+      "selectionNote": "Requested user-provided desk scene exists only with white footer in tests/photo-borders-device-probe/fixtures/reference.jpg; do not use or crop that framed file. Existing unframed synthetic template selected instead. Kept correct PNG extension to preserve exact source bytes."
+    }
+  ],
+  "semanticCode": [
+    "All UI text and camera values",
+    "Navigation and camera icons",
+    "Focus rectangle and composition grid",
+    "Shutter button and transient feedback"
+  ],
+  "missingProducedAssets": []
+}

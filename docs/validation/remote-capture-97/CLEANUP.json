@@ -1,0 +1,34 @@
+{
+  "ownedPids": [
+    28268,
+    39656
+  ],
+  "serial": "emulator-5588",
+  "actions": [
+    {
+      "args": [
+        "-s",
+        "emulator-5588",
+        "uninstall",
+        "cc.huevia.remotecaptureqa"
+      ],
+      "exit": 0,
+      "output": "Success\r\n",
+      "errors": ""
+    },
+    {
+      "args": [
+        "-s",
+        "emulator-5588",
+        "emu",
+        "kill"
+      ],
+      "exit": 0,
+      "output": "OK: killing emulator, bye bye\r\r\nOK\r\r\n",
+      "errors": ""
+    }
+  ],
+  "remainingOwnedProcesses": [],
+  "ownedSerialAbsent": true,
+  "verified": true
+}

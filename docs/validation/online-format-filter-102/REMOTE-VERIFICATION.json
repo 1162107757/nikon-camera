@@ -1,0 +1,556 @@
+{
+  "verification": {
+    "at": "2026-10-25T12:01:14.566Z",
+    "passed": true,
+    "status": "PASS_WITH_EXPECTED_REQUEST_COUNTER_ACTIVITY",
+    "functions": {
+      "count": 8,
+      "sha256": "de7bf807e53c619888d383bffa6625a768815f38625192da0f113369e81009f3",
+      "feedSha256": "7ee1fc1cce1bf11370804f8895af0214561f58a978c64b8feca0ee498ea93f3f"
+    },
+    "feedChecks": [
+      {
+        "origin": "https://huevia.cc",
+        "format": "",
+        "page": 1,
+        "size": 50,
+        "omitFormat": true,
+        "httpStatus": 200,
+        "total": 241,
+        "returned": 50,
+        "echo": "",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "",
+        "page": 1,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 241,
+        "returned": 50,
+        "echo": "",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NCP",
+        "page": 1,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 5,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NCP",
+        "page": 2,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 0,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NP3",
+        "page": 1,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 50,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NP3",
+        "page": 2,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 50,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NP3",
+        "page": 5,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 36,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NP3",
+        "page": 99,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 0,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NCP",
+        "page": 1,
+        "size": 3,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 3,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NCP",
+        "page": 2,
+        "size": 3,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 2,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NP3",
+        "page": 1,
+        "size": 50,
+        "category": "__uncategorized__",
+        "httpStatus": 200,
+        "total": 0,
+        "returned": 0,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NP3",
+        "page": 1,
+        "size": 50,
+        "category": "QA_UNMATCHED_102",
+        "httpStatus": 200,
+        "total": 0,
+        "returned": 0,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "format": "NCP",
+        "page": 1,
+        "size": 50,
+        "category": "黑白",
+        "httpStatus": 200,
+        "total": 1,
+        "returned": 1,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "query": "fileFormat=ncp",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "query": "fileFormat=RAW",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "query": "fileFormat=%20NCP",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "query": "fileFormat=NCP&fileFormat=NP3",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "",
+        "page": 1,
+        "size": 50,
+        "omitFormat": true,
+        "httpStatus": 200,
+        "total": 241,
+        "returned": 50,
+        "echo": "",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "",
+        "page": 1,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 241,
+        "returned": 50,
+        "echo": "",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NCP",
+        "page": 1,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 5,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NCP",
+        "page": 2,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 0,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NP3",
+        "page": 1,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 50,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NP3",
+        "page": 2,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 50,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NP3",
+        "page": 5,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 36,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NP3",
+        "page": 99,
+        "size": 50,
+        "httpStatus": 200,
+        "total": 236,
+        "returned": 0,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NCP",
+        "page": 1,
+        "size": 3,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 3,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NCP",
+        "page": 2,
+        "size": 3,
+        "httpStatus": 200,
+        "total": 5,
+        "returned": 2,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NP3",
+        "page": 1,
+        "size": 50,
+        "category": "__uncategorized__",
+        "httpStatus": 200,
+        "total": 0,
+        "returned": 0,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NP3",
+        "page": 1,
+        "size": 50,
+        "category": "QA_UNMATCHED_102",
+        "httpStatus": 200,
+        "total": 0,
+        "returned": 0,
+        "echo": "NP3",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "format": "NCP",
+        "page": 1,
+        "size": 50,
+        "category": "黑白",
+        "httpStatus": 200,
+        "total": 1,
+        "returned": 1,
+        "echo": "NCP",
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "query": "fileFormat=ncp",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "query": "fileFormat=RAW",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "query": "fileFormat=%20NCP",
+        "httpStatus": 400,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "query": "fileFormat=NCP&fileFormat=NP3",
+        "httpStatus": 400,
+        "passed": true
+      }
+    ],
+    "releaseChecks": [
+      {
+        "origin": "https://huevia.cc",
+        "channel": "beta",
+        "versionCode": 99,
+        "httpStatus": 200,
+        "updateAvailable": true,
+        "updateRequired": true,
+        "reason": "available",
+        "release": {
+          "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+          "versionCode": 100,
+          "mandatory": true,
+          "revision": 3,
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+        }
+      },
+      {
+        "origin": "https://huevia.cc",
+        "channel": "beta",
+        "versionCode": 100,
+        "httpStatus": 200,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current",
+        "release": {
+          "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+          "versionCode": 100,
+          "mandatory": true,
+          "revision": 3,
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+        }
+      },
+      {
+        "origin": "https://huevia.cc",
+        "channel": "beta",
+        "versionCode": 101,
+        "httpStatus": 200,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "client_newer",
+        "release": {
+          "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+          "versionCode": 100,
+          "mandatory": true,
+          "revision": 3,
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+        }
+      },
+      {
+        "origin": "https://huevia.cc",
+        "channel": "stable",
+        "versionCode": 99,
+        "httpStatus": 200,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release",
+        "release": null
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "channel": "beta",
+        "versionCode": 99,
+        "httpStatus": 200,
+        "updateAvailable": true,
+        "updateRequired": true,
+        "reason": "available",
+        "release": {
+          "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+          "versionCode": 100,
+          "mandatory": true,
+          "revision": 3,
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+        }
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "channel": "beta",
+        "versionCode": 100,
+        "httpStatus": 200,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current",
+        "release": {
+          "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+          "versionCode": 100,
+          "mandatory": true,
+          "revision": 3,
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+        }
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "channel": "beta",
+        "versionCode": 101,
+        "httpStatus": 200,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "client_newer",
+        "release": {
+          "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+          "versionCode": 100,
+          "mandatory": true,
+          "revision": 3,
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+        }
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "channel": "stable",
+        "versionCode": 99,
+        "httpStatus": 200,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release",
+        "release": null
+      }
+    ],
+    "legacyCompatibility": {
+      "readOnlyPredicate": true,
+      "missing_default": "NCP",
+      "null_default": "NCP",
+      "included_in_ncp": true,
+      "included_in_np3": false,
+      "fixtureEndToEndEvidence": "docs/validation/online-format-filter-102/data/IMPLEMENTATION.md"
+    },
+    "allReleaseRowsUnchanged": true,
+    "dataVerification": {
+      "allTablesUnchanged": false,
+      "unchangedNonBudgetTables": 32,
+      "observedChangedTables": [
+        "nikon_app_release_budgets"
+      ],
+      "existingMetadataBudgetActivity": true,
+      "explanation": "Existing releases/latest handler charges metadata request counters and expires old buckets; counters were not reset.",
+      "beforeBudget": {
+        "table_name": "nikon_app_release_budgets",
+        "row_count": "5",
+        "content_md5": "bc98b809f6e136bd8283fb2614940dde"
+      },
+      "afterBudget": {
+        "table_name": "nikon_app_release_budgets",
+        "row_count": "5",
+        "content_md5": "a9c2695250886e848da3af26983f47b3"
+      }
+    },
+    "apkBundlesPreserved": 7,
+    "no102ReleaseCreated": true
+  },
+  "migration-015": {
+    "at": "2026-10-25T11:52:43.988Z",
+    "applied": true,
+    "migrationSha256": "ae3abe2f62295ae3c5300a402c8e9753191587f53aa726337035a40c7150aa80",
+    "verification": {
+      "count": 8,
+      "sha256": "de7bf807e53c619888d383bffa6625a768815f38625192da0f113369e81009f3",
+      "feedSha256": "7ee1fc1cce1bf11370804f8895af0214561f58a978c64b8feca0ee498ea93f3f"
+    },
+    "releaseRowsUnchanged": true,
+    "publicPresetRowsUnchanged": true,
+    "allDataTablesUnchanged": 33
+  },
+  "deployment": {
+    "at": "2026-10-25T11:57:01.917Z",
+    "deployed": true,
+    "requestArchiveSha256": "e6b92462f582460f1d8834b0f509db5045ed799bcb9105364dad26f7ea643f15",
+    "observedArchiveSha256": "9d131e679850c73abddf9363d334fc29dad6886602b29c929779ea8ebfdd9bd1",
+    "members": 44,
+    "onlyChangedMember": "server/community.mjs",
+    "allBundlesPreserved": true,
+    "configurationPreserved": true,
+    "releaseRowsUnchanged": true
+  },
+  "independent-cloud-zip-verification": {
+    "passed": true,
+    "members": 44,
+    "allCrcPassed": true,
+    "allHashesAndUnixModesMatchReviewedCandidate": true,
+    "bundledApks": 7,
+    "observedArchiveSha256": "9d131e679850c73abddf9363d334fc29dad6886602b29c929779ea8ebfdd9bd1"
+  },
+  "local-preservation": {
+    "at": "2026-10-25T12:00:32.359Z",
+    "readOnly": true,
+    "artifacts": [
+      {
+        "path": "dist/huevia-0.21.1-beta-debug.apk",
+        "bytes": 3901562,
+        "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+        "expectedSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+        "preserved": true
+      },
+      {
+        "path": "dist/huevia-0.21.2-beta-debug.apk",
+        "bytes": 3909754,
+        "sha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+        "expectedSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+        "preserved": true
+      }
+    ]
+  }
+}

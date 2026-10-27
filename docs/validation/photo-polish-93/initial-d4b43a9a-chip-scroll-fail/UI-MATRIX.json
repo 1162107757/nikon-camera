@@ -1,0 +1,99 @@
+{
+  "status": "FAIL",
+  "candidateSha256": "d4b43a9ad502a332cc0f1cdc52e859e0b981197730d827dcf38a5fb9290aa02c",
+  "scope": "First v93 three-configuration batch; stopped at real histogram chip framebuffer failure, later saved-file/warning-tail checks not reached",
+  "material": "Both custom chips show their backgrounds but no label/swatch; font1.3 scrollX=524235, stripePixels=0; original pixel threshold retained",
+  "additionalVisualIssue": "Root review found bare exact/strength input text aligned 20dp left of dialog title/body; queued for same production fix batch",
+  "modes": [
+    {
+      "mode": "phone",
+      "status": "FAIL",
+      "checksExecuted": 487,
+      "stage": "histogram-editor-overlay",
+      "failure": "java.lang.AssertionError: histogram-warning-pattern-is-painted-in-native-framebuffer-shadow-default",
+      "apkSha256": "d4b43a9ad502a332cc0f1cdc52e859e0b981197730d827dcf38a5fb9290aa02c",
+      "framebufferCompared": 1849,
+      "framebufferMaxDelta": 0,
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "fixtures": [
+        {
+          "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/2e16d5d68865aeffe59992ffa9ce2590c65ecfb57cf96f196213edcebd88e641.draft",
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-9dcb6a06-a25f-4555-9f65-dfd65528ca17__GRID.JPG",
+          "shaBeforeDelete": "33892c618102339abee3aa52cbe8952db1aa3226150bf6ced0ff75538e015851",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-86c15a62-8946-44e7-983a-aab86f468ef6__PHOTO.JPG",
+          "shaBeforeDelete": "2e16d5d68865aeffe59992ffa9ce2590c65ecfb57cf96f196213edcebd88e641",
+          "unchanged": true,
+          "absent": true
+        }
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "status": "FAIL",
+      "checksExecuted": 487,
+      "stage": "histogram-editor-overlay",
+      "failure": "java.lang.AssertionError: histogram-warning-pattern-is-painted-in-native-framebuffer-shadow-default",
+      "apkSha256": "d4b43a9ad502a332cc0f1cdc52e859e0b981197730d827dcf38a5fb9290aa02c",
+      "framebufferCompared": 1849,
+      "framebufferMaxDelta": 0,
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "fixtures": [
+        {
+          "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/23f27f8010203e4bc9727881d0ede782415b903b8b0f70e161734814f94e1b2e.draft",
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-a777d509-44f8-4090-ae7a-76826a333082__GRID.JPG",
+          "shaBeforeDelete": "9df6f0587d3960f1b6434a888e52a1f6e9a744ac829ce24178920c7a86af8cf4",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-8db5b237-d378-4142-a674-2065e70c03eb__PHOTO.JPG",
+          "shaBeforeDelete": "23f27f8010203e4bc9727881d0ede782415b903b8b0f70e161734814f94e1b2e",
+          "unchanged": true,
+          "absent": true
+        }
+      ]
+    },
+    {
+      "mode": "landscape",
+      "status": "FAIL",
+      "checksExecuted": 497,
+      "stage": "histogram-editor-overlay",
+      "failure": "java.lang.AssertionError: histogram-warning-pattern-is-painted-in-native-framebuffer-shadow-default",
+      "apkSha256": "d4b43a9ad502a332cc0f1cdc52e859e0b981197730d827dcf38a5fb9290aa02c",
+      "framebufferCompared": 1849,
+      "framebufferMaxDelta": 0,
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "fixtures": [
+        {
+          "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/ddea6ddf7abe513adcd14b0e0a6d68b5e260c3197200884c48186bf3d79c062d.draft",
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-a7f378eb-334b-44ae-9303-bb5921bd564d__GRID.JPG",
+          "shaBeforeDelete": "9e8555e32066cd679c3d756e646069c83bd3683dc9ada1b2e8a12bdcb5ea3b3e",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-40f35d7c-59fa-492c-bf13-d709fe4e4523__PHOTO.JPG",
+          "shaBeforeDelete": "ddea6ddf7abe513adcd14b0e0a6d68b5e260c3197200884c48186bf3d79c062d",
+          "unchanged": true,
+          "absent": true
+        }
+      ]
+    }
+  ]
+}

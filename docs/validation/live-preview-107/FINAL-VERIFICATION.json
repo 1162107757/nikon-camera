@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-26T17:07:13.757Z",
+  "versionCode": 107,
+  "versionName": "0.21.8-beta",
+  "apkSha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+  "byteLength": 3991674,
+  "productionInputs": 221,
+  "sourceDrift": 0,
+  "changedInputs": 8,
+  "hostQueueChecks": 15,
+  "nativeChecks": 261,
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 87,
+      "report": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/report.json"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 87,
+      "report": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/report.json"
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "checks": 87,
+      "report": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/report.json"
+    }
+  ],
+  "screenshots": 18,
+  "finishReview": "ship; scoped requested refinements",
+  "published": true,
+  "mandatory": true,
+  "releaseId": "88dc4d86-8409-4579-b418-acc1d5c6fbdd",
+  "releaseRevision": 3,
+  "publicCloudBytesVerified": true,
+  "customDomainVerified": false,
+  "cleanup": {
+    "serial": "emulator-5588",
+    "pid": 19840,
+    "serialGone": true,
+    "parentGone": true,
+    "testPackageAbsent": true,
+    "photoFixtureDirectoryEmpty": true,
+    "fontScaleRestored": "1.0",
+    "preExistingAppDataRetained": true,
+    "physicalDevicesTouched": false,
+    "note": "Serial persisted briefly after emulator acknowledged kill; a later read confirmed both serial and parent gone. No forced process or AVD deletion."
+  },
+  "scope": "Native/emulator validation and actual public release; no physical phone/camera certification."
+}

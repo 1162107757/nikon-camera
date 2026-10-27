@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "candidateSha256": "a1498dae0cfd59ebef831a5ea4e4fd25b532ba58d8702f55e92c68294c4ce0dc",
+  "outcome": "Initial production layout-loop blocker; only partial phone run, not complete three-configuration verification",
+  "partialPhoneChecks": 68,
+  "ownJpegFixturesRemoved": 2,
+  "originalFixtureHashesUnchanged": true,
+  "ownDraftRemoved": true,
+  "appearanceRestored": true,
+  "settingsAndGrantsRestored": "phone/restoration.json PASS",
+  "probeUninstalled": true,
+  "deviceReleased": "emulator-5586 remains running; no other device touched",
+  "sourcePrivateCache": "Dialog/source close invoked by instrumentation cleanup; private filesystem absence not independently inspected because production package is not debuggable",
+  "atUtc": "2026-10-24T09:14:49.8592352Z"
+}

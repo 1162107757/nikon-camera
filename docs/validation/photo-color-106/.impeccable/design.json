@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26",
+  "title": "Design System: Huevia 106 局部调色扩展",
+  "extensions": {
+    "scope": "Local Android Java Views extension: curves, HSL and batch adjustment copy only; root design files remain authoritative outside this scope.",
+    "nativePatterns": {"workspace": "PhotoColorDialog.java: safe-area full-screen photo and tentative controls; bottom portrait pane, 330dp right landscape pane", "dialogs": "Framework dark AlertDialog with PhotoEditorTypography; no HTML/CSS surrogate", "interaction": "Native ripple and selected bands; latest preview gates Apply; 100ms preview debounce is scheduling, not an animation token"},
+    "provenance": ["../../../app/src/main/java/cc/huevia/ui/PhotoColorDialog.java", "../../../app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java", "../../../app/src/main/java/cc/huevia/ui/AlbumPanel.java", "../../../app/src/main/java/cc/huevia/ui/PhotoEditorTypography.java"],
+    "provenanceBase": "Paths are relative to the adjacent scoped DESIGN.md directory, not this sidecar directory.",
+    "candidate": {"versionCode": 106, "versionName": "0.21.7-beta", "sha256": "9dcc4dc793d8bb4ddfd89d5bd9b62ff95152e652b33b6ef7d04d9a1fee963ad6", "publication": "local-only"},
+    "evidence": {"directory": "9dcc4dc7", "configurations": ["portrait 1.0", "portrait font 1.3", "landscape 1.0"], "checksPerConfiguration": 67, "capturesPerConfiguration": 6, "initialVisualReview": "FINISH-REVIEW.md: 15 initial captures approved, F1 found", "finish": "FIX-VERDICT.md: F1 RESOLVED; SHIP at this scope", "limits": "Recorded emulator evidence only; no new review or full-app, real-phone, TalkBack, camera, public MediaStore or Nikon/NX colour certification"}
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "照片优先的暖黑调色工作区",
+    "overview": "Operate 模式；本文件仅记录 106 的曲线、HSL 和批量复制，继承暖黑编辑器、系统字体与杏色操作。",
+    "keyCharacteristics": ["照片保留完整比例", "调色先暂存再应用", "批量范围通过原生对话框明确选择"],
+    "rules": [],
+    "dos": ["Do 延续本地编辑器的照片比例、系统控件、dp/sp 和暂存/应用边界。"],
+    "donts": ["Don't 将此局部记录扩展为全 App、实体手机、TalkBack、相机或 Nikon/NX 色彩认证。"]
+  }
+}

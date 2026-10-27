@@ -1,0 +1,24 @@
+{
+  "startedUtc": "2026-10-27T15:05:29.871Z",
+  "migrationSha256": "e0e82ee6435228ad4c285ab237522541e8b1443e6dff3a410bbea347a4d57178",
+  "applied": true,
+  "checks": {
+    "bucket32MiB": true,
+    "bucketPrivate": true,
+    "otherBucketMetadataPreserved": true,
+    "releaseRowsUnchanged": true,
+    "catalogUnchanged": true,
+    "functionAclPreserved": true,
+    "byteChecks32MiB": true,
+    "binPathSupported": true,
+    "legacyPathConstraintReplaced": true,
+    "chunk63": true,
+    "rpcCapacity": false,
+    "oldBudgetsPreserved": true
+  },
+  "pass": false,
+  "releaseCount": 17,
+  "catalogCount": 390,
+  "failureCode": "POST_MIGRATION_CHECK_FAILED",
+  "finishedUtc": "2026-10-27T15:05:45.243Z"
+}

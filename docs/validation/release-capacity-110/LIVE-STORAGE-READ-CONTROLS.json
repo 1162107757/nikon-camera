@@ -1,0 +1,66 @@
+{
+  "startedUtc": "2026-10-27T14:48:53.927Z",
+  "bytes": 71,
+  "sha256": "e34e17a85840653601345ba9cce0c9ae92f301fcef9950b5877a7f807f4376d5",
+  "fixtures": [
+    {
+      "path": "app-releases/e34e17a85840653601345ba9cce0c9ae92f301fcef9950b5877a7f807f4376d5.apk",
+      "cleanup": {
+        "headAfterStatus": 404,
+        "deleted": true
+      },
+      "initialHeadStatus": 404,
+      "uploaded": true,
+      "authenticatedOfficial": {
+        "status": 403,
+        "bytes": 128,
+        "matches": false,
+        "code": "STORAGE_ACCESS_DENIED",
+        "message": "cos get object denied (HTTP 403)"
+      },
+      "authenticatedExistingAdapter": {
+        "status": 403,
+        "bytes": 128,
+        "matches": false,
+        "code": "STORAGE_ACCESS_DENIED",
+        "message": "cos get object denied (HTTP 403)"
+      },
+      "signedGet": {
+        "status": 403,
+        "bytes": 128,
+        "matches": false,
+        "code": "STORAGE_ACCESS_DENIED",
+        "message": "cos get object denied (HTTP 403)"
+      }
+    },
+    {
+      "path": "verification/7f1bb386-1ac4-4950-a25d-59b2772d5c11.bin",
+      "cleanup": {
+        "headAfterStatus": 404,
+        "deleted": true
+      },
+      "initialHeadStatus": 404,
+      "uploaded": true,
+      "authenticatedOfficial": {
+        "status": 200,
+        "bytes": 71,
+        "matches": true,
+        "sha256": "e34e17a85840653601345ba9cce0c9ae92f301fcef9950b5877a7f807f4376d5"
+      },
+      "authenticatedExistingAdapter": {
+        "status": 200,
+        "bytes": 71,
+        "matches": true,
+        "sha256": "e34e17a85840653601345ba9cce0c9ae92f301fcef9950b5877a7f807f4376d5"
+      },
+      "signedGet": {
+        "status": 200,
+        "bytes": 71,
+        "matches": true,
+        "sha256": "e34e17a85840653601345ba9cce0c9ae92f301fcef9950b5877a7f807f4376d5"
+      }
+    }
+  ],
+  "scope": "Owned small fixture controls only; no existing content or configuration changed",
+  "finishedUtc": "2026-10-27T14:49:47.290Z"
+}

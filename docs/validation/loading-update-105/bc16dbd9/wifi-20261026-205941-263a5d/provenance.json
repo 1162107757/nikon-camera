@@ -1,0 +1,23 @@
+{
+  "candidateSha256": "bc16dbd9ebfb3fc639cf3c9c1f000dd2a1a247c2354a198bec6a99bbaf36cec4",
+  "versionCode": 105,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "probeSha256": "2da6a822673acddb6070a599e188ff350a83a2c022c752f05c0e32e5fd745eac",
+  "scope": "Real MainActivity; system settings intent is intercepted and returned cancelled. No actual network selection, camera handshake or phone test.",
+  "pass": true,
+  "files": [
+    {
+      "file": "main-loading.png",
+      "sha256": "f8244531294bc1a2ec5690fc6ad67c4e6fa3e00a0c6a38b18c15b109860042cf"
+    },
+    {
+      "file": "main-update-current.png",
+      "sha256": "b0857883d695eb44df4e9c6096c458c58a8810e310e873e21bada0781b6d173b"
+    },
+    {
+      "file": "report.json",
+      "sha256": "ae67607ea152a2c54e3d9b600f30a84aa13769a51aea2c1350129020cc86e7b2"
+    }
+  ]
+}

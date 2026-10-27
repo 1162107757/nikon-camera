@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-25",
+  "status": "LOCAL_DATA_API_PASS",
+  "productionFiles": [
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+      "bytes": 22507,
+      "sha256": "831a90748b4e14983ae5bb60173d006bbb36e8b811987a6a210c41d9d571c250"
+    },
+    {
+      "path": "online-library/server/community.mjs",
+      "bytes": 15825,
+      "sha256": "a1b56af26db9ff05679d9fc31a581f2592cae8b883312caf5af580905ef597c7"
+    },
+    {
+      "path": "online-library/database/015-preset-format-filter.sql",
+      "bytes": 3193,
+      "sha256": "ae3abe2f62295ae3c5300a402c8e9753191587f53aa726337035a40c7150aa80"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "tests/community-java/cc/huevia/library/CommunityPagingTest.java",
+      "bytes": 8400,
+      "sha256": "81c171efeb8fa910b175140f1c7c6cc0d24d1e56ec38cf553231d398940cda3e"
+    },
+    {
+      "path": "online-library/test/community.test.mjs",
+      "bytes": 23717,
+      "sha256": "86430d32a4cc38bccf87230ff545ec51c79aa8d3159bc48b73c20389de2fd29b"
+    },
+    {
+      "path": "online-library/test/preset-format-filter-postgres.mjs",
+      "bytes": 8295,
+      "sha256": "c49c7ecd7611783a1825168efe057dfab901cb5e43f0b5c70c9a241f3116ceec"
+    }
+  ],
+  "logs": [
+    {
+      "name": "community-host.txt",
+      "bytes": 448,
+      "sha256": "a501b72a1904263e29ddbf5a916edeaba1f60806a8e5d630281292f7ec509a4f"
+    },
+    {
+      "name": "community-http.txt",
+      "bytes": 1713,
+      "sha256": "a7cab41f9de73012ceffe974bb36bd3fda346efc2a8ca23c2d0ae7d7ce2365e9"
+    },
+    {
+      "name": "preset-format-filter-postgres.txt",
+      "bytes": 202,
+      "sha256": "0ddf95bc780509b737cd19bf2ac3e9ba58fb4049e98a9d20d8bfa24f02d5efdc"
+    },
+    {
+      "name": "preset-formats-http.txt",
+      "bytes": 699,
+      "sha256": "80d2787d86f8d0c3e2fd1d00c5df8ea7a8c7f876392b4bbaf8b5527b0438e0fb"
+    },
+    {
+      "name": "server-check.txt",
+      "bytes": 52,
+      "sha256": "6c005ea512ad7ab7655f5f9feeb2655960775ba687343fa8c7dc3febef2de5d4"
+    }
+  ],
+  "remoteMutations": false,
+  "apkBuilt": false
+}

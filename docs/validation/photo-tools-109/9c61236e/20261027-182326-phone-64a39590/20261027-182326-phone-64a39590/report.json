@@ -1,0 +1,104 @@
+{
+  "pass": false,
+  "stage": "local-cancel",
+  "candidateSha256": "9c61236ed1e2e49710bf17e048d3a03698b9703dd08e2dd9a9e20134a22241e2",
+  "versionCode": 109,
+  "versionName": "0.22.0-beta",
+  "mode": "phone",
+  "fontScale": 1,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-0",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-1",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": false
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 1,
+  "fixturesRemoved": true,
+  "failure": "java.lang.AssertionError: latest-local-preview-ready",
+  "scope": "Actual installed MainActivity\/AlbumPanel\/editor, private generated JPEGs, real native local\/clone gestures, pinch rollback, apply\/cancel\/history\/draft\/global detail controls\/perspective, private full reference\/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+}

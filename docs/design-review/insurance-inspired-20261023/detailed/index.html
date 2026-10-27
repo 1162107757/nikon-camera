@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Huevia · 橙光 / 功能细化稿</title>
+  <link rel="stylesheet" href="design.css">
+  <script src="design.js" defer></script>
+</head>
+<body>
+<!--
+THESIS: Make the chosen orange-light visual language carry Huevia's actual camera and photo workflows, with inspectable failure states and source-backed implementation notes.
+OWN-WORLD: Porcelain #FAFAF8, stone #E7E5E2, ember #C44730, peach #F6CFB7, ink #262320. Native sans, 48px actions, compact orange preset header, soft white groups, photo-first black editor.
+STORY: Browse → download → check slots → confirm import; receive → choose destination → edit → export without duplicate photos. Keep camera connection across root navigation.
+FIRST VIEWPORT: Source-backed page navigation on the left, a 390×844 interactive phone in the center, state controls and implementation explanation on the right. A separate board compares four actual root pages.
+FORM: Extend the user-pinned Paperpillar reference and the previous orange prototype. No new visual-world choice. Production Android remains untouched.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+  <div id="symbols" aria-hidden="true">  <svg  xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-aperture" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 3 5.2 9M20 7.5H9.6M20 16.5l-5.2-9M12 21l-5.2-9M4 16.5h10.4M4 7.5l5.2 9"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M19 8a8 8 0 0 0-13-2L3 9m0-5v5h5M5 16a8 8 0 0 0 13 2l3-3m0 5v-5h-5"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9 4 1-2h4l1 2 3 2 2 1v4l-2 1v2l2 1v4l-3 1-2 2h-4l-1-2-3-1-2-1v-4l2-1v-2L4 9V5l3-1Z" transform="translate(1 0) scale(.9)"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 8a14 14 0 0 1 18 0M6 12a9 9 0 0 1 12 0m-9 4a4 4 0 0 1 6 0"/><circle cx="12" cy="20" r=".7"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 7h4l2-3h6l2 3h4v13H3Z"/><circle cx="12" cy="13" r="4"/><path d="M18 10h.1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20 5a5 5 0 0 0-8 1 5 5 0 0 0-8-1C-2 11 12 21 12 21S26 11 20 5Z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h5m5 0h6M4 17h11m5 0h0"/><circle cx="11.5" cy="7" r="2.5"/><circle cx="17.5" cy="17" r="2.5"/></symbol>
+    <symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 3v15h15M3 6h15v15"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5Zm5 3h4"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1 1m12 12 1 1M5 19l1-1M18 6l1-1"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7V4h7l2 3h9v13H3Z"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M4 19v-3m5 3v-7m5 7V8m5 11V4"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 28 24"><rect x="2" y="7" width="21" height="10" rx="3"/><path d="M26 10v4M5 10h14v4H5Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8.5c1-3 6-2 6 1 0 2-3 2-3 4m0 3v.1"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9Z"/></symbol>
+<symbol id="i-undo" viewBox="0 0 24 24"><path d="M8 5 3 10l5 5M3 10h12a6 6 0 0 1 0 12"/></symbol>
+<symbol id="i-redo" viewBox="0 0 24 24"><path d="m16 5 5 5-5 5m5-5H9a6 6 0 0 0 0 12"/></symbol>
+<symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 9V3l-5 4a8 8 0 1 0 4 10M20 3h-6"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V6a4 4 0 0 1 8 0v4m-4 5v2"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="m3 3 19 8-8 3-3 8Z M3 3l11 11"/></symbol>
+<symbol id="i-usb" viewBox="0 0 24 24"><path d="M12 21V3m-3 3 3-3 3 3M12 15l-6-5V6m6 11 6-5V8"/><circle cx="6" cy="5" r="1.5"/><rect x="16.5" y="5" width="3" height="3"/></symbol>
+</defs></svg></div>
+  <header class="studio-header" id="page-top">
+    <a class="studio-brand" href="index.html"><span data-icon="aperture"></span><strong>huevia</strong><span class="brand-detail">橙光 · 功能细化稿</span></a>
+    <div class="studio-links"><a href="../index.html">第一版</a><a href="FUNCTION-MAP.md" target="_blank">功能对照</a><button data-act="preview-top" id="preview-top">回到顶部</button><button data-act="reset-demo">重置演示</button></div>
+  </header>
+  <div class="studio-heading">
+    <div><h1>让风格，长在真实功能上。</h1><p>基于当前 Android 源码细化页面与状态。照片、账号、连接和任务使用本页演示数据。</p></div>
+    <div class="mode-switch" aria-label="设计查看方式"><button data-act="mode:experience" class="active" aria-pressed="true">交互体验</button><button data-act="mode:board" aria-pressed="false">页面总览</button></div>
+  </div>
+  <main id="experience" class="workbench">
+    <aside class="page-rail" aria-label="页面目录"><div class="rail-heading">完整页面</div><nav id="page-nav"></nav><div class="rail-note"><span class="little-dot"></span>按现有四个入口组织<br>原生功能保留，视觉重新设计</div></aside>
+    <section class="device-stage" aria-label="手机交互预览"><div class="stage-caption"><span id="route-caption">预设库</span><span>390 × 844 · 可点击</span></div><div id="device" class="device" tabindex="-1"></div><p class="stage-hint">在手机内滚动浏览 · 底部四个入口可以切换</p></section>
+    <aside class="spec-panel" aria-label="功能与实现说明"><section class="scenario-panel"><h2>状态演练</h2><p>切换实际会遇到的状态，检查每一步怎么继续。</p><label for="scenario-select">当前页面状态</label><select id="scenario-select"></select></section><div id="page-spec"></div><div class="scope-note">这是可审阅的交互原型。原生接入位置和保留规则列在说明中；未在浏览器模拟尼康协议、系统权限或真实色彩渲染。</div></aside>
+  </main>
+  <section id="overview" class="overview" hidden aria-label="四个主页面总览"></section>
+  <footer class="studio-footer"><span>参考视觉：Paperpillar Insurance Mobile App · 实际功能：Huevia 当前工作区源码</span><span>保留原图 · 保存位置明确 · 不重复生成同一版本</span></footer>
+</body>
+</html>

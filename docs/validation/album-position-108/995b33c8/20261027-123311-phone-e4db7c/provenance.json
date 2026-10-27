@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "995b33c82c9f2b72835ad6a2a194a2db8fae50caebfca860f8af2e8dc3a089f1",
+  "versionCode": 108,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "1d13f26083fd597a48550f7c8110eca6c810016451c55bacdee4b6096856e491",
+  "scope": "Real MainActivity/local album/editor, 90 owned private JPEGs, native tile tap, actual production filter render/draft, native Back, real visible photo identity and exact pixel offset. No camera/MediaStore changes. Candidate identity is verified against the installed APK and recorded by the host runner.",
+  "pass": true,
+  "files": [
+    {
+      "file": "after-0.png",
+      "sha256": "c566679980439618fb40456a827998d7beb296c9186784c63761c0260af4bf3b"
+    },
+    {
+      "file": "after-1.png",
+      "sha256": "92c21557ec602ff795050f60568f4c6474dd6686cdd9612a28dc682bb57814e1"
+    },
+    {
+      "file": "after-2.png",
+      "sha256": "9b11838e9241f56557b8fcf9431ee910e93d206576a676f6516bafc5b1d04b8c"
+    },
+    {
+      "file": "before-0.png",
+      "sha256": "c566679980439618fb40456a827998d7beb296c9186784c63761c0260af4bf3b"
+    },
+    {
+      "file": "before-1.png",
+      "sha256": "92c21557ec602ff795050f60568f4c6474dd6686cdd9612a28dc682bb57814e1"
+    },
+    {
+      "file": "before-2.png",
+      "sha256": "4c93b7e2275ff66a8ea85ca6d2993df412f74f7d695aa8cfee8ba4d1c7417d28"
+    },
+    {
+      "file": "report.json",
+      "sha256": "978b7947fa1e97d3714382f6a248f28a52bb595bf54acb9fa9e9ee3fbc52a2b8"
+    }
+  ]
+}

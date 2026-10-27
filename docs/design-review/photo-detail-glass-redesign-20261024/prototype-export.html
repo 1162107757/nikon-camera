@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>导出 / 批量 / 结果 · 可交互审核原型 v3</title>
+<style>
+:root{
+  color-scheme: light;
+  --peach:#F2B48C;
+  --peach-deep:#E08A4F;
+  --peach-ink:#2A1C12;
+  --paper:#F3EFE9;
+  --paper-2:#E9E3DA;
+  --ink:#231F1B;
+  --ink-dim:#6B6259;
+  --rule:#DCD4C8;
+  --shadow:0 18px 40px rgba(60,46,32,.14);
+  --danger:#FF8A7A;
+  --ok:#8FD49B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;padding:40px 32px 64px;
+}
+.wrap{max-width:1780px;margin:0 auto}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+h1{font-size:34px;letter-spacing:-.4px;font-weight:800}
+.sub{margin-top:10px;font-size:14.5px;line-height:1.75;color:var(--ink-dim);max-width:760px}
+.badge{background:#F6DCC4;color:#7A4A1E;font-size:13px;font-weight:700;padding:10px 16px;border-radius:999px;white-space:nowrap}
+.toolbar{margin:26px 0 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--rule);border-radius:16px;padding:12px 14px}
+.toolbar .lbl{font-size:12.5px;color:var(--ink-dim)}
+.tbtn{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--rule);background:#FBF8F4;color:var(--ink);
+  padding:8px 14px;border-radius:999px;cursor:pointer}
+.tbtn[aria-pressed="true"]{background:var(--peach);border-color:var(--peach-deep);color:var(--peach-ink)}
+.tsep{width:1px;height:22px;background:var(--rule);margin:0 6px}
+.hint{font-size:12.5px;color:var(--ink-dim)}
+.board{display:flex;gap:40px;flex-wrap:wrap;margin-top:28px;align-items:flex-start}
+.cell{width:390px}
+.cap{font-size:14.5px;font-weight:750;margin-bottom:12px}
+.cap small{display:block;font-weight:500;color:var(--ink-dim);font-size:12.5px;margin-top:4px;line-height:1.6}
+.note{margin-top:14px;font-size:12.5px;line-height:1.75;color:var(--ink-dim)}
+.note b{color:#8A5520;font-weight:700}
+
+/* ---------- phone ---------- */
+.phone{
+  --fs:1;position:relative;width:390px;height:844px;border-radius:38px;overflow:hidden;
+  background:#121110;box-shadow:var(--shadow);border:1px solid #2A2522;
+  display:flex;flex-direction:column;color:#fff;font-size:calc(14px * var(--fs));
+}
+body.fs13 .phone{--fs:1.3}
+.statusbar{height:28px;flex:none;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;font-size:calc(11px * var(--fs));color:rgba(255,255,255,.72)}
+.phead{flex:none;height:calc(52px * var(--fs));display:flex;align-items:center;gap:6px;padding:0 8px;
+  border-bottom:1px solid rgba(255,255,255,.07)}
+.ico{width:48px;height:48px;flex:none;border:0;background:none;color:#fff;cursor:pointer;display:grid;place-items:center;border-radius:14px}
+.ico:hover{background:rgba(255,255,255,.07)}
+.ptitle{flex:1;text-align:center;font-size:calc(15px * var(--fs));font-weight:700}
+.txtbtn{height:44px;padding:0 12px;border:0;background:none;color:var(--peach);font:inherit;
+  font-size:calc(13.5px * var(--fs));font-weight:650;cursor:pointer}
+
+/* scroll body + sticky footer */
+.pbody{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.pbody::-webkit-scrollbar{width:0}
+.pfoot{flex:none;padding:10px 18px 8px;background:#121110;border-top:1px solid rgba(255,255,255,.07)}
+.primary{width:100%;height:calc(50px * var(--fs));border:0;border-radius:999px;background:var(--peach);color:var(--peach-ink);
+  font:inherit;font-size:calc(15px * var(--fs));font-weight:750;cursor:pointer}
+.primary[disabled]{background:rgba(242,180,140,.26);color:rgba(255,255,255,.38);cursor:not-allowed}
+.secondary{width:100%;height:calc(50px * var(--fs));border:1px solid rgba(255,255,255,.26);border-radius:999px;
+  background:transparent;color:#fff;font:inherit;font-size:calc(15px * var(--fs));font-weight:700;cursor:pointer}
+.lightlink{display:block;width:100%;margin-top:6px;height:calc(40px * var(--fs));border:0;background:none;
+  color:rgba(255,255,255,.58);font:inherit;font-size:calc(12.5px * var(--fs));cursor:pointer}
+.footnote{text-align:center;font-size:calc(11px * var(--fs));color:rgba(255,255,255,.45);margin-top:4px;line-height:1.5}
+.homebar{flex:none;height:18px;display:grid;place-items:center}
+.homebar i{width:120px;height:4px;border-radius:4px;background:rgba(255,255,255,.28)}
+
+/* photo row */
+.photorow{display:flex;align-items:center;gap:12px;padding:14px 18px}
+.thumb{width:52px;height:52px;flex:none;border-radius:12px;overflow:hidden;background:#000}
+.thumb svg{width:100%;height:100%;display:block}
+.photorow .t1{font-size:calc(14px * var(--fs));font-weight:650}
+.photorow .t2{font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.55);margin-top:3px;line-height:1.4}
+
+/* segmented */
+.seg{margin:2px 18px 16px;display:flex;background:rgba(255,255,255,.07);border-radius:14px;padding:4px;gap:2px}
+.seg button{flex:1;height:calc(40px * var(--fs));border:0;border-radius:11px;background:transparent;
+  color:rgba(255,255,255,.70);font:inherit;font-size:calc(13.5px * var(--fs));font-weight:650;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--peach);color:var(--peach-ink)}
+
+/* spec card */
+.card{margin:0 18px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 14px 12px}
+.card .k{font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.55)}
+.card .big{font-size:calc(24px * var(--fs));font-weight:750;letter-spacing:-.3px;margin-top:4px;line-height:1.15}
+.card .big i{font-size:calc(12px * var(--fs));font-weight:600;font-style:normal;color:rgba(255,255,255,.55);margin-left:4px}
+.card .s{font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.50);margin-top:5px;line-height:1.5}
+.disclose{margin-top:10px;border-top:1px solid rgba(255,255,255,.08);padding-top:9px}
+.disclose summary{list-style:none;cursor:pointer;font-size:calc(12px * var(--fs));color:var(--peach);display:flex;align-items:center;gap:5px;min-height:28px}
+.disclose summary::-webkit-details-marker{display:none}
+.disclose .dl{display:flex;justify-content:space-between;font-size:calc(12px * var(--fs));color:rgba(255,255,255,.74);padding:5px 0}
+.disclose .dl span:last-child{color:#fff;font-weight:600}
+
+/* rows */
+.rows{margin:0 18px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.row{display:flex;align-items:center;gap:10px;min-height:calc(50px * var(--fs));padding:8px 14px;
+  border-bottom:1px solid rgba(255,255,255,.07)}
+.row:last-child{border-bottom:0}
+.row .rk{flex:1;font-size:calc(13.5px * var(--fs));line-height:1.4}
+.row .rk small{display:block;font-size:calc(11px * var(--fs));color:rgba(255,255,255,.48);margin-top:2px;line-height:1.45}
+.row .rv{font-size:calc(13.5px * var(--fs));color:rgba(255,255,255,.80);text-align:right;white-space:nowrap}
+.row.tap{cursor:pointer}
+.row.tap:hover{background:rgba(255,255,255,.04)}
+.chev{color:rgba(255,255,255,.40);flex:none}
+
+/* numeric input */
+.numfield{display:flex;align-items:center;gap:8px}
+.numfield input{width:92px;height:calc(40px * var(--fs));border-radius:10px;border:1px solid rgba(255,255,255,.22);
+  background:rgba(0,0,0,.28);color:#fff;font:inherit;font-size:calc(14px * var(--fs));font-weight:650;text-align:center;
+  -moz-appearance:textfield}
+.numfield input::-webkit-outer-spin-button,.numfield input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.numfield input:focus{outline:none;border-color:var(--peach)}
+.numfield.bad input{border-color:var(--danger)}
+.numfield .u{font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.50)}
+.errline{display:none;padding:0 14px 10px;font-size:calc(11.5px * var(--fs));color:var(--danger);line-height:1.5}
+.errline.on{display:block}
+
+/* slider */
+.sliderrow{padding:4px 14px 12px}
+.sliderrow input[type=range]{width:100%;-webkit-appearance:none;background:transparent;height:28px}
+.sliderrow input[type=range]::-webkit-slider-runnable-track{height:2px;background:rgba(255,255,255,.22);border-radius:2px}
+.sliderrow input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--peach);margin-top:-7px;border:0}
+.scale{display:flex;justify-content:space-between;font-size:calc(10.5px * var(--fs));color:rgba(255,255,255,.42)}
+
+/* checkbox */
+.check{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;cursor:pointer}
+.check .box{width:20px;height:20px;flex:none;margin-top:1px;border-radius:6px;border:1.5px solid rgba(255,255,255,.34);
+  display:grid;place-items:center;color:transparent}
+.check[aria-checked="true"] .box{background:var(--peach);border-color:var(--peach);color:var(--peach-ink)}
+.check .ct{font-size:calc(13px * var(--fs));line-height:1.45}
+.check .ct small{display:block;font-size:calc(11px * var(--fs));color:rgba(255,255,255,.48);margin-top:3px;line-height:1.5}
+
+/* meta / estimate */
+.staticline{padding:0 20px 12px;font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.50);line-height:1.6}
+.est{margin:0 18px 16px;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+  padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.est .k{font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.55)}
+.est .v{font-size:calc(19px * var(--fs));font-weight:750;margin-top:3px;line-height:1.2}
+.est .s{font-size:calc(11px * var(--fs));color:rgba(255,255,255,.45);margin-top:4px;line-height:1.5}
+.est .pend{font-size:calc(11px * var(--fs));color:var(--peach)}
+
+/* status banner */
+.banner{margin:0 18px 14px;padding:12px 14px;border-radius:16px;display:flex;gap:10px;align-items:flex-start;
+  background:rgba(242,180,140,.12);border:1px solid rgba(242,180,140,.34)}
+.banner.warn{background:rgba(255,138,122,.10);border-color:rgba(255,138,122,.38)}
+.banner .bt{font-size:calc(12.5px * var(--fs));line-height:1.6}
+.banner .bt b{display:block;font-size:calc(13px * var(--fs));margin-bottom:3px}
+
+/* progress */
+.bigstate{padding:16px 20px 2px}
+.bigstate h3{font-size:calc(22px * var(--fs));font-weight:800;letter-spacing:-.3px;line-height:1.25}
+.bigstate p{font-size:calc(12px * var(--fs));color:rgba(255,255,255,.58);margin-top:6px;line-height:1.6}
+.bar{margin:14px 20px 6px;height:4px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--peach);border-radius:4px;transition:width .4s}
+.barmeta{display:flex;justify-content:space-between;padding:0 20px 10px;font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.55)}
+.items{padding:0 18px}
+.item{display:flex;align-items:center;gap:11px;padding:10px 2px;border-bottom:1px solid rgba(255,255,255,.07)}
+.item .thumb{width:42px;height:42px;border-radius:9px}
+.item .n{flex:1;min-width:0}
+.item .n b{display:block;font-size:calc(13px * var(--fs));font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .n small{display:block;font-size:calc(11px * var(--fs));color:rgba(255,255,255,.50);margin-top:2px}
+.item .st{font-size:calc(12px * var(--fs));white-space:nowrap;color:rgba(255,255,255,.60)}
+.item .st.run{color:var(--peach)}
+.item .st.bad{color:var(--danger)}
+.item .st.ok{color:var(--ok)}
+.item .retry{height:34px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.26);
+  background:transparent;color:#fff;font:inherit;font-size:calc(11.5px * var(--fs));cursor:pointer}
+.tally{margin:0 18px 12px;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.tally .tl{display:flex;justify-content:space-between;font-size:calc(12.5px * var(--fs));padding:4px 0;color:rgba(255,255,255,.76)}
+.tally .tl b{font-weight:700;color:#fff}
+
+/* sheet / dialog */
+.scrim{position:absolute;inset:0;background:rgba(0,0,0,.52);opacity:0;pointer-events:none;transition:opacity .22s;z-index:9}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:10;background:#1C1A18;border-radius:24px 24px 0 0;
+  padding:8px 0 16px;transform:translateY(102%);transition:transform .28s cubic-bezier(.22,.7,.3,1);
+  border-top:1px solid rgba(255,255,255,.10)}
+.sheet.on{transform:none}
+.grip{width:38px;height:4px;border-radius:4px;background:rgba(255,255,255,.26);margin:6px auto 10px}
+.sheet h4{font-size:calc(15px * var(--fs));font-weight:700;padding:0 20px 4px}
+.sheet .sh{font-size:calc(11.5px * var(--fs));color:rgba(255,255,255,.52);padding:0 20px 10px;line-height:1.6}
+.opt{display:flex;align-items:flex-start;gap:12px;padding:13px 20px;cursor:pointer}
+.opt .dot{width:20px;height:20px;flex:none;margin-top:2px;border-radius:50%;border:1.5px solid rgba(255,255,255,.34);display:grid;place-items:center}
+.opt[aria-checked="true"] .dot{border-color:var(--peach)}
+.opt[aria-checked="true"] .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--peach)}
+.opt .ot{font-size:calc(13.5px * var(--fs));line-height:1.45}
+.opt .ot small{display:block;font-size:calc(11px * var(--fs));color:rgba(255,255,255,.50);margin-top:3px;line-height:1.5}
+
+.dialog{position:absolute;left:20px;right:20px;top:50%;transform:translateY(-46%) scale(.96);z-index:11;
+  background:#1C1A18;border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:20px 20px 14px;
+  opacity:0;pointer-events:none;transition:opacity .2s, transform .2s}
+.dialog.on{opacity:1;pointer-events:auto;transform:translateY(-50%) scale(1)}
+.dialog h4{font-size:calc(16px * var(--fs));font-weight:750;line-height:1.4}
+.dialog p{font-size:calc(12.5px * var(--fs));color:rgba(255,255,255,.66);margin-top:10px;line-height:1.7}
+.dialog .acts{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.dialog .acts .primary{height:calc(46px * var(--fs))}
+.dialog .acts .ghost{height:calc(44px * var(--fs));border:0;background:none;color:rgba(255,255,255,.70);
+  font:inherit;font-size:calc(14px * var(--fs));cursor:pointer}
+
+/* spec table */
+.spec{margin-top:52px;background:#fff;border:1px solid var(--rule);border-radius:20px;padding:26px 28px}
+.spec h2{font-size:19px;margin-bottom:6px}
+.spec .lead{font-size:13px;color:var(--ink-dim);margin-bottom:18px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--paper-2);vertical-align:top;line-height:1.65}
+th{font-size:12px;color:var(--ink-dim);font-weight:700;background:#FBF8F4}
+td code{background:#F5F1EB;padding:1px 6px;border-radius:5px;font-size:12px}
+.tag-fix{display:inline-block;background:#E6F0E2;color:#3C6B33;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.tag-keep{display:inline-block;background:#F0ECE4;color:#6B6259;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+footer{margin-top:28px;font-size:12px;color:var(--ink-dim);line-height:1.8}
+/* Review controls are outside the simulated App. These layouts do not certify native rendering. */
+[hidden]{display:none!important}
+a{color:#82512F;text-underline-offset:3px}
+button,input,select{font:inherit}
+button:disabled{cursor:not-allowed;opacity:.55}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid #D6854F;outline-offset:3px}
+.phone :focus-visible{outline-color:#F4C5A5}
+.review-nav{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:22px;font-size:13px;line-height:1.7}
+.review-nav a{padding:5px 0;min-height:32px}
+.review-nav .current{font-weight:750;color:var(--ink)}
+.prototype-ribbon{flex:none;padding:5px 12px;color:#F1CAAE;background:#29211C;text-align:center;
+  font-size:calc(10.5px * var(--fs));line-height:1.4;border-bottom:1px solid #504033}
+.demo-tools{margin:0 0 12px;padding:12px;background:#FFFBF6;border:1px dashed #BCA28B;border-radius:12px;
+  display:grid;gap:8px;font-size:12px;line-height:1.5}
+.demo-tools label{display:grid;grid-template-columns:100px minmax(0,1fr);gap:6px;align-items:center}
+.demo-tools select{min-width:0;width:100%;min-height:36px;padding:4px 7px;border:1px solid #CBBBA8;border-radius:7px;background:#fff;color:var(--ink)}
+.demo-tools>div{display:flex;gap:6px;flex-wrap:wrap}
+.demo-tools .tbtn{padding:7px 10px;min-height:36px;font-size:12px}
+.demo-tools small{font-size:11px;color:#74614F}
+.phone h2{margin:0;line-height:1.3}
+.phead{min-height:calc(52px * var(--fs));height:auto;padding-block:2px}
+.phone .txtbtn{padding-inline:9px;min-width:48px}
+.photorow>div:last-child{min-width:0}
+.photorow .t1,.photorow .t2{overflow-wrap:anywhere}
+.seg button{min-height:48px;height:auto;padding:8px 2px;line-height:1.3}
+.seg button:disabled{color:rgba(255,255,255,.35)}
+.card .big{overflow-wrap:anywhere}
+.disclose summary{min-height:44px;line-height:1.5}
+.disclose .dl{gap:8px;flex-wrap:wrap}
+.row .rk{min-width:0;overflow-wrap:anywhere}
+.row .rv{white-space:normal;max-width:50%;overflow-wrap:anywhere}
+.row-button{width:100%;color:inherit;background:none;border:0;text-align:left;font:inherit;border-radius:16px 16px 0 0}
+.numfield{flex:none;gap:5px}
+.numfield input{width:82px;min-height:44px}
+.check{min-height:48px;gap:9px}
+.check input{width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--peach)}
+.check .ct{min-width:0}
+.primary,.secondary{min-height:50px;height:auto;line-height:1.45;padding:12px 14px;overflow-wrap:anywhere}
+.lightlink{min-height:44px;height:auto;padding:8px 6px;line-height:1.4}
+.lightlink:disabled{color:#888}
+.pfoot{padding:10px 16px 8px}
+.raw-actions{padding:0 18px 14px}
+.raw-actions:empty{display:none}
+.raw-actions .lightlink{text-align:left;color:#E4BC9D;border-top:1px solid #38312A;border-radius:0}
+.estimate-copy{font-size:calc(16px * var(--fs))!important;line-height:1.5!important}
+.inline-action{display:block;border:0;background:none;color:var(--peach);text-decoration:underline;text-underline-offset:3px;
+  min-height:44px;text-align:left;padding:7px 0;cursor:pointer;font:inherit}
+.banner>svg{flex:none;margin-top:3px}
+.bigstate h3{line-height:1.45}
+.barmeta{gap:8px;flex-wrap:wrap;line-height:1.6}
+.items .item{align-items:flex-start}
+.item .n small{line-height:1.6;overflow-wrap:anywhere}
+.item-action{display:flex;flex-direction:column;align-items:flex-end;gap:5px;max-width:32%;flex:none}
+.item .st{white-space:normal;text-align:right;line-height:1.5}
+.item .retry{min-height:44px;height:auto;padding:6px 10px;white-space:nowrap}
+.results-note{margin-top:14px}
+.modal-layer{position:absolute;inset:0;z-index:30;display:grid;place-items:center;padding:12px;isolation:isolate}
+.modal-shade{position:absolute;inset:0;z-index:-1;background:rgba(0,0,0,.75)}
+.review-dialog{width:100%;max-width:380px;max-height:100%;overflow:auto;overscroll-behavior:contain;padding:20px 18px 16px;
+  border:1px solid #615044;border-radius:20px;background:#211D1A;color:#FFF;box-shadow:0 10px 35px #0009}
+.review-dialog h3{font-size:calc(17px * var(--fs));line-height:1.5}
+.modal-copy p{font-size:calc(12.5px * var(--fs));line-height:1.8;color:#E2D8CF;margin-top:12px;overflow-wrap:anywhere}
+.modal-actions{display:grid;gap:10px;margin-top:18px}
+.modal-prototype{font-size:calc(10.5px * var(--fs));line-height:1.6;margin-top:12px;color:#D4AF92}
+.view-thumb{height:130px;overflow:hidden;border-radius:12px;margin-top:12px}
+.view-thumb svg{width:100%;height:100%;object-fit:cover}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.linked-example>.cap{color:#935122;text-decoration:underline;text-underline-offset:5px}
+.cell{max-width:100%;scroll-margin-top:20px}
+.phone{max-width:100%}
+.narrow-demo .cell,.narrow-demo .phone{width:320px}
+.landscape-demo .cell,.landscape-demo .phone{width:748px}
+.landscape-demo .phone{height:430px;border-radius:28px}
+.landscape-demo .pbody{scrollbar-width:thin;scrollbar-color:#71604F #211B16}
+.landscape-demo .photorow{padding-block:10px}
+.landscape-demo .homebar{height:12px}
+.spec{overflow:auto}
+.spec table{min-width:620px}
+@media(max-width:500px){
+  body{padding:24px 14px 40px}h1{font-size:27px;line-height:1.35}.sub{font-size:13px}.badge{font-size:12px}
+  .board{gap:30px;margin-top:22px}.cell{width:100%}.phone{width:100%;height:820px}.toolbar{gap:8px;padding:10px}
+  .toolbar .hint{flex-basis:100%;line-height:1.6}.spec{padding:18px 14px;margin-top:32px}
+  .landscape-demo .phone{height:430px}.demo-tools label{grid-template-columns:91px minmax(0,1fr)}
+  .narrow-demo .cell,.landscape-demo .cell{max-width:100%}.phone .row{padding-inline:11px}
+  .phone .card,.phone .rows,.phone .seg,.phone .banner,.phone .est{margin-inline:12px}
+}
+@media(max-width:350px){.phone .numfield input{width:73px}.phone .row{gap:5px}.phone .item .thumb{width:32px;height:32px}.phone .items{padding-inline:12px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="review-nav" aria-label="原型目录"><a href="index.html">目录首页</a><a href="prototype.html#editor">编辑与细节</a><span class="current" aria-current="page">导出与结果</span><a href="#settings">设置</a><a href="#custom">自定义</a><a href="#existing">已有结果</a><a href="#batch">批量进度</a><a href="#result">结果汇总</a><a href="#invalid">核对异常</a></nav>
+
+  <div class="head">
+    <div>
+      <h1>导出看得明白，任务说得清楚</h1>
+      <p class="sub">
+        本轮剩下的页面：导出设置（三档 / 自定义 / 已存在相册）、原始文件确认、批量进度、结果汇总与失败恢复。
+        信息顺序沿用已批准的需求 5.1。每台手机都可操作，手机框外可切换来源与回执分支。
+        全部是本地示意：不读取、不编码、不保存实际文件，刷新或跨页后不保留状态。小屏和大字结构已补齐，视觉仍待审核。
+      </p>
+    </div>
+    <span class="badge">交互原型 v3 · 待审核</span>
+  </div>
+
+  <div class="toolbar">
+    <span class="lbl">字号</span>
+    <button class="tbtn" id="fs10" aria-pressed="true">标准</button>
+    <button class="tbtn" id="fs13" aria-pressed="false">1.3 倍</button>
+    <span class="tsep"></span>
+    <button class="tbtn" id="view-narrow" aria-pressed="false">窄屏 320</button>
+    <button class="tbtn" id="view-landscape" aria-pressed="false">横屏结构</button>
+    <span class="hint">字号与视口可组合审核。仅主动作固定，原始文件动作随内容滚动；Tab 操作，Esc 关闭弹窗。</span>
+  </div>
+
+  <div class="board">
+
+    <div class="cell" id="settings">
+      <div class="cap">1 · 导出照片 · 完整尺寸（默认）
+        <small>可点档位、「保存到」、展开内容尺寸、底部原始文件入口。</small>
+      </div>
+      <div class="phone" data-screen="export" data-tier="full"></div>
+      <p class="note">
+        规格数字从 40sp 降到 <b>24sp</b>，省下的高度给了「保存方式」与体积状态。
+        有边框时才出现<b>可展开的「内容尺寸 / 导出尺寸」</b>，没边框不占位。
+      </p>
+    </div>
+
+    <div class="cell" id="custom">
+      <div class="cap">2 · 导出照片 · 自定义
+        <small>把长边改成 500 看行内错误与主按钮禁用；质量滑块可拖。</small>
+      </div>
+      <div class="phone" data-screen="export" data-tier="custom"></div>
+      <p class="note">
+        长边 <b>640–8192</b> 且不放大，质量 <b>70–100</b> 整数。错误文案在输入框正下方，
+        <b>不靠吐司</b>，主操作同时禁用。
+      </p>
+    </div>
+
+    <div class="cell" id="existing">
+      <div class="cap">3 · 导出照片 · 相册已有同一结果
+        <small>主操作变「查看已保存照片」；勾「另存新副本」后才变回导出。</small>
+      </div>
+      <div class="phone" data-screen="export" data-tier="exists"></div>
+      <p class="note">
+        同规格已核对存在时<b>默认不重复生成</b>；额外副本必须用户显式勾选，并明确说明
+        <b>新副本使用本次时间</b>，避免以为照片丢在相册旧日期。
+      </p>
+    </div>
+
+    <div class="cell" id="batch">
+      <div class="cap">4 · 批量导出 · 处理中
+        <small>点「停止后续」看取消的中间态文案。</small>
+      </div>
+      <div class="phone" data-screen="bulk"></div>
+      <p class="note">
+        阶段状态写「准备原图 / 生成照片 / 核对结果 / 保存到手机相册」，
+        <b>不编造平滑百分比</b>；进度条只表达已完成张数。
+      </p>
+    </div>
+
+    <div class="cell" id="result">
+      <div class="cap">5 · 结果汇总
+        <small>点「重试失败项」看只处理必要项。</small>
+      </div>
+      <div class="phone" data-screen="result"></div>
+      <p class="note">
+        四类分开计数：<b>新保存 / 复用已保存 / 失败 / 未处理</b>，每项可看原因。
+        重试保持其冻结规格，成功项不重复。
+      </p>
+    </div>
+
+    <div class="cell" id="invalid">
+      <div class="cap">6 · 异常：相册核对不可用
+        <small>成品已生成，先核对回执；框外可切换“仍未知／仍存在／已缺失”。</small>
+      </div>
+      <div class="phone" data-screen="error"></div>
+      <p class="note">
+        不谎报成功、<b>不重做像素处理</b>。状态不明时写「暂无法核对已保存照片」，
+        重试不会隐式变成新副本。
+      </p>
+    </div>
+
+  </div>
+
+  <section class="spec">
+    <h2>导出流程与边界</h2>
+    <p class="lead">照片摘要 → 三档 → 实际尺寸与质量 → 保存位置 → 保存方式与已有状态 → 体积说明与独立原始文件入口 → 主操作。手机框外只提供审核场景，不是新增App功能。</p>
+    <table>
+      <thead><tr><th style="width:160px">部件</th><th style="width:230px">规格</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>页面骨架</td><td>内容区可滚动 + 底部操作吸底 48dp 以上触达</td>
+          <td><span class="tag-fix">改</span> v1 是整页流式，1.3 字号下底部按钮会盖住预估体积与错误文案。</td></tr>
+        <tr><td>规格数字</td><td>24sp 粗体 + 11.5sp 副说明</td>
+          <td><span class="tag-fix">改</span> 从巨号降级；「格式 / 质量」收进同一张卡的键值行，不再各占一整行。</td></tr>
+        <tr><td>内容 / 导出尺寸</td><td>可展开，仅有边框时出现</td>
+          <td><span class="tag-keep">留</span> 输入口径一律是最终含框成品画布；分享 2048px 同口径。</td></tr>
+        <tr><td>自定义输入</td><td>数字键盘输入框 + 质量滑块；行内错误在输入框下方</td>
+          <td><span class="tag-fix">改</span> 错误不走吐司，主操作同步禁用；失焦只规范空格，不悄悄截断成别的合法值。</td></tr>
+        <tr><td>保存方式</td><td>独立分组：已有状态说明 + 「另存新副本」勾选</td>
+          <td><span class="tag-fix">改</span> v1 把它混在「保存到」一行里；现在已有 / 被删 / 不可核对三种状态各有自己的文案与动作。</td></tr>
+        <tr><td>体积</td><td>未生成时明确未知；实际生成后才可展示实际字节</td>
+          <td><span class="tag-fix">改</span> 此原型不生成文件，不填模拟大小。没有估算不能阻止合法导出。</td></tr>
+        <tr><td>原始文件入口</td><td>内容区低强调按钮 + 独立确认与位置选择</td>
+          <td><span class="tag-fix">补</span> JPEG仅可信完整原图；NEF仅沿用已有原文件保存，不显影。忽略全部编辑和上方规格，元数据可能含GPS，不把当前草稿标为已导出。</td></tr>
+        <tr><td>批量进度</td><td>阶段状态 + 已完成张数 + 逐张行</td>
+          <td><span class="tag-fix">改</span> 取消时先写「正在取消，等待当前步骤结束」，不立刻写「已取消」。</td></tr>
+        <tr><td>结果汇总</td><td>四类计数 + 逐项原因 + 仅重试失败 / 未处理</td>
+          <td><span class="tag-fix">改</span> 每项原因和单项重试可达；成功项保留。发布成功但记录写回失败时只修复记录，不再发布副本。</td></tr>
+        <tr><td>冻结与恢复</td><td>来源 / 编辑 / 账号 / 实际规格 / 位置 / 发布身份冻结</td>
+          <td><span class="tag-fix">补</span> 接受后修改设置不改变在途任务；重试沿用原快照。跨页或刷新结束本地演示，不声称后台持久队列恢复。</td></tr>
+        <tr><td>键盘与适配</td><td>原生按钮 / 输入标签 / 行内错误 / 模态焦点与Esc</td>
+          <td><span class="tag-fix">补</span> 窄屏、大字、横屏保留滚动内容；模态打开时背景不可操作，关闭返回原控件。静态结构验证不代替浏览器视觉审核。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    可交互审核稿，不是 App 已实现截图。照片、文件名、尺寸、张数与进度是声明的审核夹具，<b>不是实测或真实保存结果</b>；不编造文件大小。
+    本导出原型改动未操作生产源码、构建、设备或文件发布。<br>
+    配套：<a href="index.html">目录首页</a> · <a href="prototype.html#editor">编辑 / 细节 / 直方图原型</a> · 技术范围见
+    <code>docs/design-review/photo-detail-export-histogram-20261024/REQUIREMENTS.md</code>
+  </footer>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9CC4E0"/><stop offset=".55" stop-color="#CFE0E6"/><stop offset="1" stop-color="#EDF0EC"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7FB2C6"/><stop offset="1" stop-color="#3C6A81"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7E5739"/><stop offset="1" stop-color="#3E2A1B"/>
+    </linearGradient>
+    <linearGradient id="blouse" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F3EEE6"/><stop offset="1" stop-color="#D8D0C4"/>
+    </linearGradient>
+    <symbol id="scene" viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+      <rect width="300" height="400" fill="#13100E"/>
+      <rect width="300" height="236" fill="url(#sky)"/>
+      <ellipse cx="80" cy="42" rx="52" ry="15" fill="#fff" opacity=".55"/>
+      <polygon points="0,152 46,114 82,142 122,101 168,147 212,119 252,152 300,130 300,196 0,196" fill="#93AAB8" opacity=".92"/>
+      <polygon points="0,172 62,140 112,170 162,142 222,174 300,152 300,206 0,206" fill="#6E8795"/>
+      <rect y="194" width="300" height="94" fill="url(#lake)"/>
+      <path d="M198 0 L300 0 L300 46 Q252 58 206 40 Z" fill="#F4F0E6"/>
+      <g fill="#1E3A2A"><ellipse cx="14" cy="126" rx="48" ry="40"/><ellipse cx="44" cy="176" rx="40" ry="36"/>
+        <ellipse cx="8" cy="214" rx="42" ry="44"/></g>
+      <rect y="276" width="300" height="26" fill="#8D8274"/>
+      <rect y="300" width="300" height="100" fill="url(#wood)"/>
+      <ellipse cx="150" cy="198" rx="54" ry="60" fill="#30211A"/>
+      <path d="M96 302 Q100 246 150 240 Q200 246 204 302 Z" fill="url(#blouse)"/>
+      <path d="M119 266 Q150 288 181 266 L188 302 L112 302 Z" fill="#C4705C"/>
+      <rect x="138" y="226" width="24" height="22" rx="8" fill="#C9986F"/>
+      <ellipse cx="150" cy="200" rx="33" ry="39" fill="#DCAE86"/>
+      <path d="M117 190 Q122 156 150 156 Q178 156 183 192 Q170 172 150 172 Q128 173 117 190 Z" fill="#35251D"/>
+      <ellipse cx="139" cy="200" rx="3.4" ry="3" fill="#36251B"/><ellipse cx="162" cy="200" rx="3.4" ry="3" fill="#36251B"/>
+      <ellipse cx="236" cy="330" rx="15" ry="10" fill="#B6382C"/>
+      <circle cx="58" cy="336" r="15" fill="#E7C64A"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  "use strict";
+  const SCENE = '<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice"><use href="#scene"/></svg>';
+  const I = {
+    back:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>',
+    chev:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+    down:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    tick:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>',
+    info:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F2B48C" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.2" stroke-linecap="round"/></svg>',
+    warn:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="2" stroke-linejoin="round"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.2" stroke-linecap="round"/></svg>'
+  };
+  const bar = function(){ return '<div class="statusbar"><span>9:41</span><span>5G&nbsp;&nbsp;&#9646;&#9646;&#9646;</span></div>'; };
+  const thumb = function(cls){ return '<div class="thumb'+(cls?' '+cls:'')+'">'+SCENE+'</div>'; };
+
+  /* All values below are declared review fixtures. No file/network/MediaStore API is used. */
+  const PROFILES = Object.freeze({
+    framed:{id:'framed',name:'DSC_9187.JPG',w:6000,h:4500,contentW:5760,contentH:4320,frame:true,jpeg:true,nef:true,label:'可信 JPEG ＋关联 NEF（演示）'},
+    large:{id:'large',name:'LARGE_12000.JPG',w:12000,h:9000,frame:false,jpeg:true,nef:false,label:'12000 × 9000 大图（逻辑示例，不编码）'},
+    small:{id:'small',name:'SMALL.JPG',w:513,h:389,frame:false,jpeg:true,nef:false,label:'513 × 389 小图（演示）'},
+    saved:{id:'saved',name:'SAVED_EFFECT.JPG',w:1920,h:1280,frame:false,jpeg:false,nef:false,label:'历史成品，原图关联不可恢复（演示）'},
+    png:{id:'png',name:'PNG_白底工作副本.JPG',w:3000,h:2000,frame:false,jpeg:false,nef:false,label:'PNG 白底 JPEG 工作副本（演示）'}
+  });
+  const RECEIPTS = ['new','app','saved','missing','pending','unknown','record'];
+  const PHASES = ['准备原图','生成照片','核对结果','保存到手机相册'];
+  let sequence=0;
+  const clone=value=>JSON.parse(JSON.stringify(value));
+  function immutable(value){Object.freeze(value);Object.values(value).forEach(v=>{if(v&&typeof v==='object'&&!Object.isFrozen(v))immutable(v);});return value;}
+  function integer(raw,min,max,label){
+    const value=String(raw).trim();
+    if(!/^[0-9]+$/.test(value))return {error:label+'须为完整整数，不能含小数、符号或其他字符。'};
+    const n=Number(value);
+    if(!Number.isSafeInteger(n)||n<min||n>max)return {error:label+'须为 '+min+'–'+max+'。'};
+    return {value:n};
+  }
+  function createModel(profile='framed'){
+    return {profile,tier:'full',edge:String(Math.min(4096,Math.max(PROFILES[profile].w,PROFILES[profile].h))),quality:'90',target:'phone',newCopy:false,results:{},receipts:{},publications:{},recheck:'unknown'};
+  }
+  function resolve(model){
+    const p=PROFILES[model.profile],fullEdge=Math.max(p.w,p.h);
+    let edge=fullEdge,q=95;
+    if(model.tier==='share'){edge=Math.min(2048,fullEdge);q=90;}
+    if(model.tier==='custom'){
+      if(fullEdge<640)return {error:'完整成品长边不足 640 px，不能使用自定义；完整尺寸／分享仍可用。',field:'edge'};
+      const e=integer(model.edge,640,Math.min(8192,fullEdge),'最终成品长边');
+      if(e.error)return {error:e.error+' 不放大原成品。',field:'edge'};
+      const quality=integer(model.quality,70,100,'JPEG 质量');
+      if(quality.error)return {error:quality.error,field:'quality'};
+      edge=e.value;q=quality.value;
+    }
+    const w=p.w>=p.h?edge:Math.max(1,Math.round(p.w*edge/fullEdge));
+    const h=p.h>=p.w?edge:Math.max(1,Math.round(p.h*edge/fullEdge));
+    return {w,h,q,fullW:p.w,fullH:p.h,key:p.id+':'+w+'x'+h+':q'+q+':jpeg-srgb:capture-no-gps'};
+  }
+  function availability(model){
+    const spec=resolve(model);if(spec.error)return {state:'invalid',label:'修正输入后导出',detail:spec.error};
+    const ready=!!model.results[spec.key],receipt=model.receipts[spec.key]||'app';
+    if(!ready)return {state:'new',label:'导出照片',detail:'此实际规格尚未生成，将生成新的编码成品。'};
+    if(model.target==='app')return {state:'view',label:'查看已保存照片',detail:'此实际规格的成品已保存在 App 内。'};
+    if(model.newCopy)return {state:'copy',label:'另存新副本',detail:'明确新增一张手机副本，按本次时间排序；原图与规范成品保留。'};
+    if(receipt==='saved')return {state:'view',label:'查看已保存照片',detail:'此实际规格的手机副本已核对存在，默认查看。'};
+    if(receipt==='missing')return {state:'publish',label:'重新保存到手机相册',detail:'App 内成品有效，手机副本已明确核对为缺失，可只补保存。'};
+    if(receipt==='record')return {state:'repair',label:'修复保存记录',detail:'手机副本已确认保存成功，但记录写回失败；只修复记录，不再发布一张。'};
+    if(receipt==='pending')return {state:'publish',label:'继续保存到手机相册',detail:'上次请求尚未完成，继续同一请求，不隐式新建副本。'};
+    if(receipt==='unknown')return {state:'check',label:'核对并继续保存',detail:'暂无法核对已保存照片；未知不等于丢失，不覆盖、不删除、不默认新副本。'};
+    return {state:'publish',label:'保存到手机相册',detail:'App 内成品已生成，可直接保存并核对回执。'};
+  }
+  function setReceipt(model,state){
+    const spec=resolve(model);if(spec.error||!RECEIPTS.includes(state))return false;
+    if(state==='new'){delete model.results[spec.key];delete model.receipts[spec.key];delete model.publications[spec.key];}
+    else{model.results[spec.key]=true;model.receipts[spec.key]=state;if(!model.publications[spec.key])model.publications[spec.key]='review-existing-request-'+(++sequence);}
+    return true;
+  }
+  function freeze(model,name){
+    const spec=resolve(model);if(spec.error)throw new Error(spec.error);
+    const p=PROFILES[model.profile];
+    const newCopy=model.target==='phone'&&model.newCopy&&!!model.results[spec.key];
+    const publication=newCopy?'review-copy-request-'+(++sequence):(model.publications[spec.key]||(model.publications[spec.key]='review-request-'+(++sequence)));
+    return immutable({source:p.id+'@review-v1',edit:'frozen-colour-composition-border-v1',account:'演示账号 A',profile:p.id,name:name||p.name,spec:clone(spec),target:model.target,newCopy,publication,receipt:model.receipts[spec.key]||'app',renderReady:!!model.results[spec.key]});
+  }
+  function newJob(snapshots,plans=[]){
+    return {id:++sequence,items:snapshots.map((snapshot,i)=>({id:snapshot.source+':'+i,snapshot,plan:plans[i]||'',status:'waiting',phase:0,attempt:0,rendered:snapshot.renderReady,reason:'等待处理',outcome:''})),active:-1,cancelRequested:false,done:false,parent:null};
+  }
+  function counts(job){
+    const n={total:job.items.length,completed:0,new:0,reused:0,failed:0,unprocessed:0};
+    job.items.forEach(i=>{if(i.status==='completed'){n.completed++;n[i.outcome==='reused'?'reused':'new']++;}else if(i.status==='failed')n.failed++;else if(i.status==='cancelled')n.unprocessed++;});return n;
+  }
+  function stop(job){if(job&&!job.done)job.cancelRequested=true;return job;}
+  function advance(job){
+    if(!job||job.done)return job;
+    if(job.cancelRequested){job.items.forEach(i=>{if(i.status==='processing'){i.status='cancelled';i.reason='当前步骤结束后在安全点停止；未完成保存。';}else if(i.status==='waiting'){i.status='cancelled';i.reason='停止后续，尚未开始处理。';}});job.active=-1;job.done=true;return job;}
+    if(job.active<0){
+      const index=job.items.findIndex(i=>i.status==='waiting');
+      if(index<0){job.done=true;return job;}
+      job.active=index;const item=job.items[index];item.status='processing';item.phase=item.rendered?2:0;item.reason=item.rendered?'核对已生成成品；无需重做像素':'准备冻结的原图';return job;
+    }
+    const item=job.items[job.active];item.phase++;
+    const first=item.attempt===0;
+    if(first&&item.plan==='source'&&item.phase===1){item.status='failed';item.reason='冻结的原图暂不可读取；没有使用当前新原图顶替。';}
+    else if(first&&item.plan==='memory'&&item.phase===2){item.status='failed';item.reason='完整尺寸处理内存不足；未用低清预览冒充完成。';}
+    else if(item.phase>=4){
+      item.rendered=true;
+      if(first&&item.plan==='publish'){item.status='failed';item.reason='App 内成品完整；相册回执暂无法核对，重试只补核对／保存。';}
+      else{item.status='completed';item.outcome=item.snapshot.receipt==='saved'&&!item.snapshot.newCopy?'reused':'new';item.reason=item.outcome==='reused'?'复用已核对存在的保存结果，没有新增副本。':item.snapshot.target==='app'?'成品保留在 App 内；原图与草稿保留。':item.snapshot.newCopy?'已保存并核对示例新副本，按本次时间排序。':'已保存并核对示例手机照片，保留拍摄时间。';}
+    }else{if(item.phase>=2)item.rendered=true;item.reason=PHASES[item.phase];}
+    if(item.status!=='processing'){job.active=-1;if(job.items.every(i=>!['waiting','processing'].includes(i.status)))job.done=true;}
+    return job;
+  }
+  function retry(job,only){
+    const selected=job.items.filter(i=>['failed','cancelled'].includes(i.status)&&(!only||only.includes(i.id)));
+    if(!selected.length)return null;
+    const next=newJob(selected.map(i=>i.snapshot));next.parent=job;
+    next.items=selected.map(i=>({...clone(i),snapshot:i.snapshot,status:'waiting',phase:0,attempt:i.attempt+1,reason:'按原冻结设置重试；演示恢复条件',outcome:''}));
+    return next;
+  }
+  function merged(job){
+    if(!job.parent)return job;
+    const base=clone(job.parent),changed=new Map(job.items.map(i=>[i.id,i]));
+    base.items=base.items.map(i=>changed.get(i.id)||i);base.cancelRequested=base.items.some(i=>i.status==='cancelled');base.done=true;base.parent=null;return base;
+  }
+  function store(job,model){job.items.forEach(i=>{if(i.rendered||i.status==='completed')model.results[i.snapshot.spec.key]=true;if(i.status==='completed'&&i.snapshot.target==='phone')model.receipts[i.snapshot.spec.key]='saved';else if(i.plan==='publish'&&i.status==='failed')model.receipts[i.snapshot.spec.key]='unknown';});}
+  function demoSnapshots(n){
+    return Array.from({length:n},(_,i)=>{const m=createModel(i===2?'small':'framed');m.tier='share';if(i%3===1){m.profile='saved';}if(i===2||i===7)setReceipt(m,'saved');return freeze(m,'DSC_'+(9187+i)+'.JPG');});
+  }
+  function bulkFixture(){const job=newJob(demoSnapshots(8),['','','','', 'memory','','publish','']);job.items.slice(0,3).forEach((i,n)=>{i.status='completed';i.rendered=true;i.outcome=n===2?'reused':'new';i.reason=n===2?'复用已核对的保存结果':'已完成保存（演示状态）';});job.active=3;job.items[3].status='processing';job.items[3].phase=1;return job;}
+  function resultFixture(){const job=newJob(demoSnapshots(10));job.items.forEach((i,n)=>{i.status=n<8?'completed':n===8?'failed':'cancelled';i.rendered=n<8;i.outcome=n===2||n===7?'reused':'new';i.plan=n===8?'memory':'';i.reason=n<8?(i.outcome==='reused'?'复用已核对存在的结果':'新保存的示例结果'):n===8?'完整尺寸处理内存不足；未保存。':'停止后续，未开始处理。';});job.done=true;return job;}
+  const API=Object.freeze({PROFILES,integer,createModel,resolve,availability,setReceipt,freeze,newJob,counts,stop,advance,retry,merged,store,bulkFixture,resultFixture});
+  globalThis.ExportPrototypeModel=API;
+  if(typeof document==='undefined')return;
+
+  /* UI is a local state demonstration. It has no persistence and does not publish files. */
+  const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const controllers=[];let modalOwner=null;
+  function action(label,name,cls='primary',attrs=''){return '<button type="button" class="'+cls+'" data-action="'+name+'" '+attrs+'>'+label+'</button>';}
+  function header(title){return bar()+'<div class="phead">'+action(I.back,'back','ico','aria-label="返回导出设置"')+'<h2 class="ptitle" tabindex="-1">'+title+'</h2>'+action('关闭','close','txtbtn')+'</div><div class="prototype-ribbon">原型示意 · 不读取或保存任何文件</div>';}
+  const bottom=()=>'<div class="homebar" aria-hidden="true"><i></i></div>';
+  function specText(s){return s.w+' × '+s.h+' px · JPEG '+s.q;}
+  function targetText(t){return t==='phone'?'手机相册':'仅 App 内';}
+  function statusName(i){return {waiting:'等待',processing:'处理中',completed:i.outcome==='reused'?'已复用':'已完成',failed:'失败',cancelled:'未处理／已取消'}[i.status];}
+  function jobRows(c,job){return '<div class="items">'+job.items.map(i=>'<div class="item">'+thumb()+'<div class="n"><b>'+esc(i.snapshot.name)+'</b><small>'+specText(i.snapshot.spec)+'</small><small>'+esc(i.reason)+'</small></div><div class="item-action"><span class="st '+(i.status==='failed'?'bad':i.status==='completed'?'ok':i.status==='processing'?'run':'')+'">'+statusName(i)+'</span>'+action('详情','item','retry','data-id="'+esc(i.id)+'" aria-label="查看 '+esc(i.snapshot.name)+' 的冻结规格与原因"')+'</div></div>').join('')+'</div>';}
+  function exportView(c){
+    const m=c.model,p=PROFILES[m.profile],s=resolve(m),a=availability(m),busy=c.job&&!c.job.done;
+    const detail=p.id==='saved'?'已保存版本 · 含已烘焙内容，不能恢复调色前':p.id==='png'?'PNG原文件受保护 · 当前是白底JPEG工作副本':'当前效果 · 原图与草稿保留';
+    const unavailable=Math.max(p.w,p.h)<640;
+    return header('导出照片')+'<div class="pbody">'+
+      (c.job?'<div class="banner">'+I.info+'<div class="bt"><b>'+(!c.job.done?'已有演示任务，设置不会重定向它':'上一项演示任务已结束')+'</b>'+action(!c.job.done?'查看当前进度':'查看任务结果','show-job','inline-action')+'</div></div>':'')+
+      '<div class="photorow">'+thumb()+'<div><div class="t1">'+esc(p.name)+'</div><div class="t2">'+detail+'</div></div></div>'+
+      '<div class="seg" role="group" aria-label="JPEG导出规格">'+['full','share','custom'].map((t,i)=>action(['完整尺寸','分享','自定义'][i],'tier','', 'data-tier="'+t+'" aria-pressed="'+(m.tier===t)+'" '+(t==='custom'&&unavailable?'disabled title="完整长边不足640像素"':''))).join('')+'</div>'+
+      (unavailable?'<div class="staticline">此示例图小于640px，自定义不可用；分享也不会放大。</div>':'')+
+      '<div class="card"><div class="k">最终导出尺寸'+(p.frame?' · 包含边框':'')+'</div><div class="big"><span data-field="dimensions">'+(s.error?'等待合法输入':s.w+' × '+s.h)+'</span><i>px</i></div><div class="s" data-field="spec-sub">'+(m.tier==='full'?'完整自然画布 · JPEG 95，不受8192px上限限制':m.tier==='share'?'最终长边最多2048px · JPEG 90 · 只缩小不放大':'保持比例 · 不放大 · 质量100仍为有损JPEG')+'</div>'+
+      (p.frame?'<details class="disclose"><summary>'+I.down+'内容与最终含框尺寸</summary><div class="dl"><span>完整内容（示例）</span><span>'+p.contentW+' × '+p.contentH+' px</span></div><div class="dl"><span>完整含框画布</span><span>'+p.w+' × '+p.h+' px</span></div><div class="dl"><span>最终含框输出</span><span data-field="dimensions-small">'+(s.error?'等待合法输入':specText(s))+'</span></div></details>':'')+'</div>'+
+      (m.tier==='custom'?'<div class="rows"><div class="row"><label class="rk" for="'+c.id+'-edge">最终成品长边<small>640–'+Math.min(8192,Math.max(p.w,p.h))+'px，整数且不放大</small></label><div class="numfield" data-error-wrap="edge"><input id="'+c.id+'-edge" data-input="edge" type="text" inputmode="numeric" value="'+esc(m.edge)+'" aria-describedby="'+c.id+'-error" aria-invalid="false"><span class="u">px</span></div></div><div class="row"><label class="rk" for="'+c.id+'-quality">JPEG质量<small>70–100整数，100不等于无损</small></label><div class="numfield" data-error-wrap="quality"><input id="'+c.id+'-quality" data-input="quality" type="text" inputmode="numeric" value="'+esc(m.quality)+'" aria-describedby="'+c.id+'-error" aria-invalid="false"></div></div><div class="errline" id="'+c.id+'-error" data-field="error" aria-live="polite"></div><div class="sliderrow"><label class="sr-only" for="'+c.id+'-slider">JPEG质量滑块</label><input id="'+c.id+'-slider" data-input="slider" type="range" min="70" max="100" value="'+(integer(m.quality,70,100,'质量').value||90)+'"><div class="scale"><span>70</span><span>100</span></div></div></div>':'<div class="rows"><div class="row"><span class="rk">格式／质量</span><span class="rv">JPEG · sRGB · '+(s.q||95)+'</span></div></div>')+
+      '<div class="rows">'+action('<span class="rk">保存到</span><span class="rv">'+targetText(m.target)+'</span><span class="chev">'+I.chev+'</span>','destination','row tap row-button')+'<div class="row"><div class="rk">保存方式<small data-field="availability">'+a.detail+'</small></div></div><label class="check" data-field="newcopy-row" '+(!(m.target==='phone'&&!s.error&&m.results[s.key])?'hidden':'')+'><input type="checkbox" data-input="newcopy" '+(m.newCopy?'checked':'')+'><span class="ct">另存新副本<small>明确新增手机副本，使用本次时间；原图与规范成品保留。</small></span></label></div>'+
+      '<div class="staticline">编码成品：保留拍摄信息 · 不含定位。完整、分享和自定义均为JPEG编码；不会覆盖原图。</div><div class="est"><div><div class="k">体积</div><div class="v estimate-copy">导出后显示实际大小</div><div class="s">本原型不编码文件，未提供测量或虚构估算。</div></div></div><div class="raw-actions">'+
+      (p.jpeg?action('保存 JPEG 原始文件','original-jpeg','lightlink',busy?'disabled':''):'')+(p.nef?action('保存关联 NEF 原始文件','original-nef','lightlink',busy?'disabled':''):'')+'</div></div><div class="pfoot">'+action(busy?'查看当前任务':a.label,'primary','primary',s.error&&!busy?'disabled':'')+'</div>'+bottom();
+  }
+  function progressView(c){
+    const j=c.job,n=counts(j),active=j.active>=0?j.items[j.active]:null;
+    return header('批量导出')+'<div class="pbody"><div class="bigstate"><h3>'+ (j.cancelRequested?'正在取消，等待当前步骤结束':j.parent?'正在重试 '+n.total+' 项':'正在导出 '+n.total+' 张照片')+'</h3><p>接受时逐张冻结规格、来源、账号与位置。关闭此页不取消任务；停止后不开始下一张。</p></div><div class="bar" role="progressbar" aria-label="已完成照片" aria-valuemin="0" aria-valuemax="'+n.total+'" aria-valuenow="'+n.completed+'"><i style="width:'+(n.total?n.completed/n.total*100:0)+'%"></i></div><div class="barmeta"><span>已完成 '+n.completed+' / '+n.total+'</span><span>'+(j.cancelRequested?'等待当前安全点':active?'阶段：'+(active.snapshot.target==='app'&&active.phase===3?'保留App内成品':PHASES[Math.min(3,active.phase)]):'等待下一项')+'</span></div>'+jobRows(c,j)+'</div><div class="pfoot">'+action(j.cancelRequested?'正在取消…':'停止后续','stop','secondary',j.cancelRequested?'disabled':'')+action('收起进度，继续查看设置','minimize','lightlink')+'<div class="footnote">'+(j.cancelRequested?'当前步骤结束后停止，已完成项保留。':'进度仅按已完成／总数，不把失败或取消算完成。')+'</div></div>'+bottom();
+  }
+  function resultView(c){
+    const j=c.job,n=counts(j),remaining=j.items.filter(i=>['failed','cancelled'].includes(i.status)).length;
+    return header('导出结果')+'<div class="pbody"><div class="bigstate"><h3>已完成 '+n.completed+' / '+n.total+' 张</h3><p>'+ (j.cancelRequested?'已停止后续，保留已完成照片。':'以下为原型状态演示，不代表任何文件已实际保存。')+'</p></div><div class="tally">'+[['新保存',n.new],['复用已保存',n.reused],['失败',n.failed],['未处理／已取消',n.unprocessed]].map(x=>'<div class="tl"><span>'+x[0]+'</span><b>'+x[1]+' 张</b></div>').join('')+'</div>'+jobRows(c,j)+'<div class="staticline results-note">每项详情可查看失败／未处理原因与接受时冻结规格。没有生成文件或实际体积；重试只处理必要项，成功项不再执行。</div></div><div class="pfoot">'+(remaining?action('重试失败与未处理（'+remaining+' 项）','retry-all') : action('查看已保存结果（示意）','view-all'))+action('返回导出设置','settings','lightlink')+'</div>'+bottom();
+  }
+  function render(c,focus){
+    const oldBody=c.el.querySelector('.pbody'),scroll=oldBody?oldBody.scrollTop:0;
+    c.el.innerHTML=c.route==='progress'?progressView(c):c.route==='result'?resultView(c):exportView(c);
+    const body=c.el.querySelector('.pbody');if(body){body.scrollTop=focus?0:scroll;body.tabIndex=0;body.setAttribute('aria-label','可滚动的导出内容');}
+    if(c.route==='export')validateView(c);
+    syncTools(c);
+    if(focus){const target=c.el.querySelector(focus);if(target)target.focus();}
+    schedule(c);
+  }
+  function syncTools(c){
+    c.tools.querySelector('[data-demo="profile"]').value=c.model.profile;
+    const actual=resolve(c.model);c.tools.querySelector('[data-demo="receipt"]').value=actual.error?'new':c.model.results[actual.key]?(c.model.receipts[actual.key]||'app'):'new';
+    c.tools.querySelector('[data-demo="recheck"]').value=c.model.recheck;
+    c.tools.querySelector('[data-demo="step"]').disabled=!c.job||c.job.done;
+    c.tools.querySelector('[data-demo="auto"]').textContent=c.auto?'暂停自动演示':'自动演示';
+  }
+  function validateView(c){
+    const s=resolve(c.model),a=availability(c.model),q=sel=>c.el.querySelector(sel),error=q('[data-field="error"]');
+    if(error){error.textContent=s.error||'';error.classList.toggle('on',!!s.error);}
+    ['edge','quality'].forEach(k=>{const input=q('[data-input="'+k+'"]'),wrap=q('[data-error-wrap="'+k+'"]');if(input)input.setAttribute('aria-invalid',String(!!s.error&&s.field===k));if(wrap)wrap.classList.toggle('bad',!!s.error&&s.field===k);});
+    const dimensions=q('[data-field="dimensions"]');if(dimensions)dimensions.textContent=s.error?'等待合法输入':s.w+' × '+s.h;
+    const small=q('[data-field="dimensions-small"]');if(small)small.textContent=s.error?'等待合法输入':specText(s);
+    const avail=q('[data-field="availability"]');if(avail)avail.textContent=a.detail;
+    const button=q('[data-action="primary"]'),busy=c.job&&!c.job.done;if(button){button.disabled=!!s.error&&!busy;button.textContent=busy?'查看当前任务':a.label;}
+    const copy=q('[data-field="newcopy-row"]');if(copy)copy.hidden=!(c.model.target==='phone'&&!s.error&&c.model.results[s.key]);
+    const quality=integer(c.model.quality,70,100,'JPEG质量'),slider=q('[data-input="slider"]');if(slider&&!quality.error)slider.value=String(quality.value);
+  }
+  function inertAround(node){
+    const changed=[];let current=node;
+    while(current&&current!==document.body){const parent=current.parentElement;if(!parent)break;Array.from(parent.children).forEach(s=>{if(s!==current&&!['SCRIPT','STYLE'].includes(s.tagName)){changed.push([s,s.inert,s.getAttribute('aria-hidden')]);s.inert=true;s.setAttribute('aria-hidden','true');}});current=parent;}
+    return ()=>changed.forEach(([node,inert,hidden])=>{node.inert=inert;if(hidden===null)node.removeAttribute('aria-hidden');else node.setAttribute('aria-hidden',hidden);});
+  }
+  function closeModal(c,restore=true){
+    if(!c.modal)return;const m=c.modal;c.modal=null;m.undo();m.layer.remove();modalOwner=null;if(restore&&m.returnTo&&m.returnTo.isConnected)m.returnTo.focus();schedule(c);
+  }
+  function modal(c,title,body,choices){
+    if(modalOwner)closeModal(modalOwner);
+    const returnTo=document.activeElement,layer=document.createElement('div');layer.className='modal-layer';
+    layer.innerHTML='<div class="modal-shade"></div><section class="review-dialog" role="dialog" aria-modal="true" aria-labelledby="'+c.id+'-modal-title" tabindex="-1"><h3 id="'+c.id+'-modal-title">'+title+'</h3><div class="modal-copy">'+body+'</div><div class="modal-actions">'+choices.map((a,i)=>'<button type="button" class="'+(a.kind||'primary')+'" data-choice="'+i+'">'+a.label+'</button>').join('')+'</div><p class="modal-prototype">仅演示此分支，不生成／发送／发布文件。</p></section>';
+    if(c.timer){clearTimeout(c.timer);c.timer=null;}c.el.appendChild(layer);c.modal={layer,returnTo,undo:inertAround(layer)};modalOwner=c;
+    layer.addEventListener('click',e=>{const choice=e.target.closest('[data-choice]');if(choice){const a=choices[Number(choice.dataset.choice)];closeModal(c);if(a.run)a.run();}});
+    layer.querySelector('.review-dialog').focus();
+  }
+  document.addEventListener('keydown',e=>{
+    if(!modalOwner)return;const c=modalOwner,dialog=c.modal.layer.querySelector('.review-dialog');
+    if(e.key==='Escape'){e.preventDefault();closeModal(c);return;}
+    if(e.key==='Tab'){const controls=Array.from(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex="0"]'));if(!controls.length){e.preventDefault();dialog.focus();return;}const first=controls[0],last=controls[controls.length-1];if(!dialog.contains(document.activeElement)||document.activeElement===dialog||e.shiftKey&&document.activeElement===first){e.preventDefault();(e.shiftKey?last:first).focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
+  },true);
+  function reset(c,focus=true){if(c.timer)clearTimeout(c.timer);closeModal(c,false);c.auto=false;c.job=null;c.route='export';c.model=createModel();if(c.initial==='custom')c.model.tier='custom';if(c.initial==='exists')setReceipt(c.model,'saved');if(c.initial==='error'){setReceipt(c.model,'unknown');}if(c.initial==='bulk'){c.job=bulkFixture();c.route='progress';}if(c.initial==='result'){c.job=resultFixture();c.route='result';}render(c,focus?'.ptitle':null);}
+  function accept(c){
+    if(c.job&&!c.job.done){c.route='progress';render(c,'.ptitle');return;}
+    const s=resolve(c.model),a=availability(c.model);if(s.error){validateView(c);return;}
+    if(a.state==='view'){viewSaved(c);return;}
+    if(a.state==='repair'){modal(c,'修复保存记录（示意）','<p>手机副本已有明确成功回执。本动作只核对并补写记录，不重新编码或发布。这里不会实际读写相册。</p>',[{label:'演示记录修复完成',run:()=>{setReceipt(c.model,'saved');render(c,'[data-action="primary"]');}},{label:'稍后处理',kind:'secondary'}]);return;}
+    if(a.state==='check'){
+      const outcome=c.model.recheck;
+      if(outcome==='unknown'){modal(c,'暂无法核对已保存照片','<p>仍无法核对示例相册回执。未知不等于丢失，不会覆盖、删除或偷偷另存新副本。App 内成品保留。</p><p>审核时可在手机框外的“核对结果示例”切换分支。</p>',[{label:'稍后再核对',kind:'secondary'},{label:'本次仅保留在 App 内',run:()=>{c.model.target='app';c.model.newCopy=false;render(c,'.ptitle');}}]);return;}
+      setReceipt(c.model,outcome==='saved'?'saved':'missing');
+      if(outcome==='saved'){render(c,'[data-action="primary"]');viewSaved(c);return;}
+    }
+    c.job=newJob([freeze(c.model)]);c.route='progress';c.auto=true;render(c,'.ptitle');
+  }
+  function viewSaved(c){const s=resolve(c.model),p=PROFILES[c.model.profile];modal(c,'查看已保存照片（示意）','<div class="view-thumb">'+SCENE+'</div><p>'+esc(p.name)+'<br>'+specText(s)+'<br>'+targetText(c.model.target)+'</p><p>只展示核对后的默认查看动作，本原型没有真实照片URI。</p>',[{label:'返回设置',kind:'secondary'}]);}
+  function raw(c,kind){
+    const p=PROFILES[c.model.profile];if(kind==='jpeg'&&!p.jpeg||kind==='nef'&&!p.nef)return;
+    const label=kind==='jpeg'?'JPEG':'NEF';
+    modal(c,'保存 '+label+' 原始文件？','<p>忽略当前滤镜、强度、手动调节、构图、边框及上方尺寸／质量设置。逐字节保留原件及其已有元数据，可能包含定位。</p><p>不覆盖原图，不清除草稿，也不把当前编辑标为已导出。'+(kind==='nef'?'仅保存已有NEF原文件，不进行RAW显影或JPEG效果导出。':'仅对可信关联的完整JPEG原图提供。')+'</p>',[{label:'选择原始文件保存位置',run:()=>rawLocation(c,label)},{label:'取消',kind:'secondary'}]);
+  }
+  function rawLocation(c,label){modal(c,label+'原始文件 · 独立保存位置','<p>原始文件使用独立位置选择，不沿用上方效果导出的规格或“另存新副本”设置。正式App继续原有原文件保存流程。</p>',[{label:'演示：仅保留在应用',run:()=>rawDone(c,label,'应用原文件位置')},{label:'演示：选择系统保存位置',kind:'secondary',run:()=>rawDone(c,label,'系统位置选择流程')},{label:'取消',kind:'lightlink'}]);}
+  function rawDone(c,label,destination){modal(c,'原始文件保存动作（示意）','<p>'+label+'原始文件 → '+destination+'。</p><p>未应用任何编辑或JPEG规格；原件元数据可能含定位。这里只演示确认与路由，没有复制文件，也没有修改草稿或效果导出回执。</p>',[{label:'完成，返回设置',kind:'secondary'}]);}
+  function tick(c){
+    if(!c.job||c.job.done)return;advance(c.job);store(c.job,c.model);
+    if(c.job.done){c.job=merged(c.job);store(c.job,c.model);c.auto=false;if(c.route==='progress')c.route='result';}
+    if(c.route==='export'){
+      validateView(c);syncTools(c);
+      const banner=c.el.querySelector('.banner .bt b'),link=c.el.querySelector('[data-action="show-job"]');
+      if(banner)banner.textContent=c.job.done?'上一项演示任务已结束':'已有演示任务，设置不会重定向它';
+      if(link)link.textContent=c.job.done?'查看任务结果':'查看当前进度';
+      c.el.querySelectorAll('[data-action="original-jpeg"],[data-action="original-nef"]').forEach(b=>b.disabled=!c.job.done);
+      schedule(c);return;
+    }
+    render(c,c.route==='result'?'.ptitle':null);
+  }
+  function schedule(c){if(c.timer){clearTimeout(c.timer);c.timer=null;}if(!c.modal&&(c.auto||c.job&&c.job.cancelRequested)&&c.job&&!c.job.done)c.timer=setTimeout(()=>{c.timer=null;tick(c);},850);}
+  function retryConfirm(c,ids){
+    const n=c.job.items.filter(i=>['failed','cancelled'].includes(i.status)&&(!ids||ids.includes(i.id))).length;
+    if(!n)return;
+    modal(c,'仅重试 '+n+' 项？','<p>沿用各项接受时的原图／编辑／账号、实际规格、保存位置及发布请求；已完成项不会重做。已生成的失败项只补核对／保存。</p><p>此分支模拟外部失败条件恢复后的重试；正式App仍要重新核对来源与权限，不保证重试必定成功。</p>',[{label:'演示恢复条件并重试',run:()=>{c.job=retry(c.job,ids);c.route='progress';c.auto=true;render(c,'.ptitle');}},{label:'取消',kind:'secondary'}]);
+  }
+  const HANDLERS={
+    tier(c,b){c.model.tier=b.dataset.tier;c.model.newCopy=false;render(c,'[data-tier="'+c.model.tier+'"]');},
+    destination(c){modal(c,'保存到','<p>效果成品保留在 App 内；手机相册为另一个明确保存目标，不改变原图。</p>',[{label:'仅保留在应用',kind:'secondary',run:()=>{c.model.target='app';c.model.newCopy=false;render(c,'[data-action="destination"]');}},{label:'同时保存到手机相册',run:()=>{c.model.target='phone';c.model.newCopy=false;render(c,'[data-action="destination"]');}},{label:'取消',kind:'lightlink'}]);},
+    primary:accept,
+    'original-jpeg':c=>raw(c,'jpeg'),
+    'original-nef':c=>raw(c,'nef'),
+    stop(c){stop(c.job);render(c,'[data-action="minimize"]');},
+    minimize(c){c.route='export';render(c,'.ptitle');},
+    settings(c){c.route='export';render(c,'.ptitle');},
+    'show-job'(c){c.route=c.job.done?'result':'progress';render(c,'.ptitle');},
+    'retry-all':c=>retryConfirm(c),
+    'view-all'(c){modal(c,'已保存结果（示意）','<p>此任务有 '+counts(c.job).completed+' 项已完成。逐项“详情”保留实际规格、目标与完成原因；没有打开真实手机相册。</p>',[{label:'返回结果',kind:'secondary'}]);},
+    item(c,b){const i=c.job.items.find(x=>x.id===b.dataset.id);if(!i)return;modal(c,'逐项结果／原因','<p><b>'+esc(i.snapshot.name)+'</b><br>'+specText(i.snapshot.spec)+'<br>'+targetText(i.snapshot.target)+(i.snapshot.newCopy?' · 明确新副本':' · 原发布请求')+'</p><p>'+esc(i.reason)+'</p><p>来源／编辑／账号与发布身份均为接受时冻结快照。'+(i.rendered?'App内像素成品已生成，可复用后续保存步骤。':'尚无可核对的完整成品。')+'</p>',[...(['failed','cancelled'].includes(i.status)?[{label:'仅重试此项',run:()=>retryConfirm(c,[i.id])}]:[]),{label:'返回列表',kind:'secondary'}]);},
+    back(c){if(c.route==='progress'){c.route='export';render(c,'.ptitle');}else if(c.route==='result'){c.route='export';render(c,'.ptitle');}else modal(c,'返回编辑页（衔接示意）','<p>未接受的设置不产生文件。当前页面打开期间，已接受的演示任务继续使用冻结快照；跨页导航会结束本地演示，不提供后台或持久恢复。</p>',[{label:'留在本页',kind:'secondary'},{label:'打开编辑与细节原型',run:()=>{location.href='prototype.html#editor';}}]);},
+    close(c){if(c.route==='export')HANDLERS.back(c);else HANDLERS.settings(c);}
+  };
+  function createTools(c){
+    const tools=document.createElement('div');tools.className='demo-tools';tools.setAttribute('aria-label','仅用于原型审核的情景控制');
+    tools.innerHTML='<label>来源示例<select data-demo="profile">'+Object.values(PROFILES).map(p=>'<option value="'+p.id+'">'+p.label+'</option>').join('')+'</select></label><label>当前规格回执<select data-demo="receipt"><option value="new">尚未生成</option><option value="app">仅App成品已生成</option><option value="saved">手机副本已核对存在</option><option value="missing">手机副本已明确缺失</option><option value="pending">上次请求未完成</option><option value="unknown">暂无法核对</option><option value="record">已发布，记录待修复</option></select></label><label>再次核对结果示例<select data-demo="recheck"><option value="unknown">仍无法核对</option><option value="saved">已核对仍存在</option><option value="missing">已核对缺失</option></select></label><div>'+action('推进一阶段','demo-step','tbtn','data-demo="step"')+action('自动演示','demo-auto','tbtn','data-demo="auto"')+action('重置此示例','demo-reset','tbtn')+'</div><small>手机框外是演示控件，不是App功能。弹窗打开时暂缓原型推进；不代表正式任务暂停。刷新或跨页后不保留。</small>';
+    c.el.parentElement.insertBefore(tools,c.el);c.tools=tools;
+    tools.addEventListener('change',e=>{const t=e.target;if(t.dataset.demo==='profile'){c.model.profile=t.value;c.model.tier='full';const p=PROFILES[t.value];c.model.edge=String(Math.min(4096,Math.max(p.w,p.h)));c.model.quality='90';c.model.newCopy=false;render(c);}if(t.dataset.demo==='receipt'){if(!setReceipt(c.model,t.value)){modal(c,'请先修正当前规格','<p>非法输入不能对应有效成品或回执。保留输入，修正后再切换回执示例。</p>',[{label:'返回修正',kind:'secondary'}]);}render(c);}if(t.dataset.demo==='recheck')c.model.recheck=t.value;});
+    tools.addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(!b)return;if(b.dataset.action==='demo-step')tick(c);else if(b.dataset.action==='demo-auto'){c.auto=!c.auto;render(c);}else reset(c);});
+  }
+  document.querySelectorAll('.phone').forEach((el,index)=>{
+    const c={id:'export-demo-'+index,el,initial:el.dataset.screen==='export'?el.dataset.tier:el.dataset.screen,route:'export',model:createModel(),job:null,auto:false,timer:null,modal:null};
+    el.setAttribute('aria-label','导出原型示例 '+(index+1));controllers.push(c);createTools(c);
+    el.addEventListener('click',e=>{if(c.modal)return;const b=e.target.closest('[data-action]');if(b&&!b.disabled&&HANDLERS[b.dataset.action])HANDLERS[b.dataset.action](c,b);});
+    el.addEventListener('input',e=>{if(c.route!=='export')return;const k=e.target.dataset.input;if(k==='edge'||k==='quality'){c.model[k]=e.target.value;c.model.newCopy=false;const copy=el.querySelector('[data-input="newcopy"]');if(copy)copy.checked=false;validateView(c);}else if(k==='slider'){c.model.quality=e.target.value;c.model.newCopy=false;const copy=el.querySelector('[data-input="newcopy"]');if(copy)copy.checked=false;const input=el.querySelector('[data-input="quality"]');if(input)input.value=e.target.value;validateView(c);}});
+    el.addEventListener('change',e=>{if(e.target.dataset.input==='newcopy'){c.model.newCopy=e.target.checked;validateView(c);}});
+    el.addEventListener('focusout',e=>{const k=e.target.dataset.input;if(k==='edge'||k==='quality'){c.model[k]=e.target.value.trim();e.target.value=c.model[k];validateView(c);}});
+    reset(c,false);
+  });
+  function setFs(big){document.body.classList.toggle('fs13',big);document.getElementById('fs10').setAttribute('aria-pressed',String(!big));document.getElementById('fs13').setAttribute('aria-pressed',String(big));}
+  document.getElementById('fs10').addEventListener('click',()=>setFs(false));
+  document.getElementById('fs13').addEventListener('click',()=>setFs(true));
+  const narrow=document.getElementById('view-narrow'),land=document.getElementById('view-landscape');
+  if(narrow)narrow.addEventListener('click',()=>{document.body.classList.toggle('narrow-demo');narrow.setAttribute('aria-pressed',String(document.body.classList.contains('narrow-demo')));});
+  if(land)land.addEventListener('click',()=>{document.body.classList.toggle('landscape-demo');land.setAttribute('aria-pressed',String(document.body.classList.contains('landscape-demo')));});
+  const targets={settings:0,custom:1,existing:2,batch:3,result:4,invalid:5};
+  function followHash(){const index=targets[location.hash.slice(1)];if(index===undefined)return;const cell=controllers[index].el.parentElement;if(cell.scrollIntoView)cell.scrollIntoView({block:'start',behavior:'auto'});cell.classList.add('linked-example');setTimeout(()=>cell.classList.remove('linked-example'),1600);}
+  window.addEventListener('hashchange',followHash);if(location.hash)followHash();
+  document.addEventListener('visibilitychange',()=>controllers.forEach(c=>{if(document.hidden&&c.timer){clearTimeout(c.timer);c.timer=null;}else schedule(c);}));
+  window.addEventListener('pagehide',()=>controllers.forEach(c=>{if(c.timer)clearTimeout(c.timer);closeModal(c,false);}));
+})();
+
+</script>
+</body>
+</html>

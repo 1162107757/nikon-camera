@@ -1,0 +1,74 @@
+{
+  "candidateApk": "dist/huevia-0.21.6-beta-debug.apk",
+  "candidateSha256": "0d4faabab86637c3e5f6bb0c9759f457d4e662318ef4d779ca37431c695527db",
+  "versionCode": 105,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "fontScale": 1.0,
+  "runId": "20261026-204951-font-1-0-971dab",
+  "probeSha256": "827b6afbde7ff75a8d3edab0f9150dd951f9ed39db38d11fa0fbfb59b3b81a1e",
+  "scope": "Production UpdatePanel component UI with validated synthetic Release and state callbacks; no metadata HTTP, DownloadManager or installer",
+  "files": [
+    {
+      "file": "00-loading.png",
+      "bytes": 62256,
+      "sha256": "9333d71a0d9c98a360b26a68912b56ac7b791109111373ce90705001afc7bd1f"
+    },
+    {
+      "file": "01-ordinary.png",
+      "bytes": 82696,
+      "sha256": "72413e74419e1b9f3edc43365adc2c75cec225bccccbb4b91693380e459dfc72"
+    },
+    {
+      "file": "02-required.png",
+      "bytes": 309140,
+      "sha256": "976defd4db542102bb84f51cde2003160d548d66e87777c215a68eb7419051b6"
+    },
+    {
+      "file": "03-required-notes-end.png",
+      "bytes": 337604,
+      "sha256": "1f1bd5eb56459f91005ab14324beffd08a27d34fbebe6254ea77f5a9c9177ab1"
+    },
+    {
+      "file": "04-downloading.png",
+      "bytes": 305549,
+      "sha256": "61158c92c1255c6fe930f9f96ac6c9f385b9389e3248a783b838fdd1030c9529"
+    },
+    {
+      "file": "05-download-error.png",
+      "bytes": 307689,
+      "sha256": "24d616516cbadd2f17451019f64e57aaebfe62d6c0b4790913bc4cfc48d6a34a"
+    },
+    {
+      "file": "page-available.png",
+      "bytes": 104880,
+      "sha256": "4c8ecb2b9086b0235168848d4bf87bcce2d9b6edc0d3655331b822dafaf02864"
+    },
+    {
+      "file": "page-current.png",
+      "bytes": 76662,
+      "sha256": "38d8d8fbdac7dd93f093d4024c85a0d08919b287036341cf3b77b97da4fd5762"
+    },
+    {
+      "file": "page-downloading.png",
+      "bytes": 115973,
+      "sha256": "d2214fb629a86c46fd6ea49cca7d28ebfac7eef50d9e242ae71a90a45e800ea4"
+    },
+    {
+      "file": "page-error.png",
+      "bytes": 117370,
+      "sha256": "72390ceeb3f5c3381c9564cc781afd4088b003b91529f0394aa34b3a6005adb7"
+    },
+    {
+      "file": "page-ready.png",
+      "bytes": 105301,
+      "sha256": "fa375aac60df80b4da43b4f43b9470196a49840ece04777a2dc2bf90507d6889"
+    },
+    {
+      "file": "report.json",
+      "bytes": 27205,
+      "sha256": "0566e2c2975d0a093b87b3f77057249692ffd70d60c7f25aef0914a65042c2ec"
+    }
+  ],
+  "pass": true
+}

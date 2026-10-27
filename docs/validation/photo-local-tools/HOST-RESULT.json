@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-27",
+  "scope": "Local masks and explicit-source feathered clone module; no final APK/device claim.",
+  "host": {
+    "pass": true,
+    "checks": 43230,
+    "heap": "64MiB",
+    "script": "tests/run-photo-local-edits.ps1",
+    "log": ".tooling/photo-local-109/host-final.log",
+    "coverage": [
+      "mask model immutability and serialization limits",
+      "radial/linear/brush coverage",
+      "linear-light colour and alpha",
+      "EXIF1-8 raw/oriented exact pixels including clone",
+      "source-patch snapshot overlap",
+      "cancel before IO",
+      "32MiB clone patch bound before allocation",
+      "24MP streaming with bounded row/patch storage",
+      "canonical half-pixel and image-edge clone sampling invariant across EXIF1-8"
+    ]
+  },
+  "androidCompile": {
+    "pass": true,
+    "api": 35,
+    "scope": "These three files against frozen108 compiled classes plus current Pixels/Profile interface; final whole-app build owned by root. Core clone sampling was subsequently corrected for canonical half-pixel ties; unified root build verifies final integration."
+  },
+  "files": [
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "21b372ccdf288d08bf09bbf71b88473f1211e928b47fbb934e5ee9310f5ab2f0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "sha256": "cd88ce4801b7351e262baeb1847701d422c91bd7afe5e07b62f64693b0e92189"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java",
+      "sha256": "920db155c0b134dbcd8f50f7bb64107693f611375f88b19631b586185353f6cc"
+    },
+    {
+      "path": "tests/local-edits-java/cc/huevia/ncp/PhotoLocalEditsTest.java",
+      "sha256": "81c8a0b7b3054eb9e2c94e1a74f4090c5468a5d88b099f6391df90b7e0766f55"
+    },
+    {
+      "path": "tests/run-photo-local-edits.ps1",
+      "sha256": "97d7373ea64c62f863628abc0cf732f3938a98d9c4ede91172ed7e31daec9870"
+    }
+  ],
+  "pending": [
+    "root Draft/history/export integration",
+    "same-final-APK native gesture/cancel/apply/undo/redo and visual review"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "createdUtc": "2026-10-27T16:02:49.663Z",
+  "serial": "emulator-5586",
+  "avd": {
+    "status": 0,
+    "output": "Huevia_Format_102\r\r\nOK"
+  },
+  "mainPackageBeforeShutdown": {
+    "status": 0,
+    "output": "package:/data/app/~~fOirF8F0cnxt7lGZmUJ6JA==/cc.huevia-MNpoc13dlV-hYHPOkthyBw==/base.apk"
+  },
+  "kill": {
+    "status": 0,
+    "output": "OK: killing emulator, bye bye\r\r\nOK"
+  },
+  "launcherPid": 25880,
+  "launcherExitCheck": {
+    "status": 0,
+    "output": "False",
+    "error": ""
+  },
+  "devicesAfter": {
+    "status": 0,
+    "output": "List of devices attached"
+  },
+  "serialGone": true,
+  "mainPackageUninstalled": false,
+  "mainDataCleared": false,
+  "hostAvdDirectoriesDeleted": false
+}

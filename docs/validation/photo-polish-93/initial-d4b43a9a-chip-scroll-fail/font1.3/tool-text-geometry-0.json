@@ -1,0 +1,66 @@
+[
+  {
+    "class": "android.widget.Button",
+    "width": 121,
+    "height": 164,
+    "measuredHeight": 164,
+    "top": 0,
+    "screenTop": 1596,
+    "screenLeft": 155,
+    "globalVisibleLeft": 155,
+    "globalVisibleTop": 1596,
+    "globalVisibleRight": 276,
+    "globalVisibleBottom": 1760,
+    "globalVisibleWidth": 121,
+    "globalVisibleHeight": 164,
+    "field": "onlineButton",
+    "shellFace": {
+      "left": 0,
+      "top": 37,
+      "right": 258,
+      "bottom": 126,
+      "width": 258,
+      "height": 89
+    },
+    "selectedFace": {
+      "left": 0,
+      "top": 45,
+      "right": 121,
+      "bottom": 119,
+      "width": 121,
+      "height": 74
+    }
+  },
+  {
+    "class": "android.widget.Button",
+    "width": 121,
+    "height": 164,
+    "measuredHeight": 164,
+    "top": 0,
+    "screenTop": 1596,
+    "screenLeft": 276,
+    "globalVisibleLeft": 276,
+    "globalVisibleTop": 1596,
+    "globalVisibleRight": 397,
+    "globalVisibleBottom": 1760,
+    "globalVisibleWidth": 121,
+    "globalVisibleHeight": 164,
+    "field": "mineButton",
+    "shellFace": {
+      "left": 0,
+      "top": 37,
+      "right": 258,
+      "bottom": 126,
+      "width": 258,
+      "height": 89
+    },
+    "selectedFace": {
+      "left": 0,
+      "top": 45,
+      "right": 121,
+      "bottom": 119,
+      "width": 121,
+      "height": 74
+    }
+  }
+]

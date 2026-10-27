@@ -1,0 +1,45 @@
+{
+  "verifiedUtc": "2026-10-27T19:16:05.429Z",
+  "scope": "Download JavaScript and metadata only; no large APK GET",
+  "checks": [
+    {
+      "origin": "https://huevia.cc",
+      "scriptStatus": 200,
+      "scriptSha256": "4321e79ef1d3f3ec2f7019c6983f771802147991c921c35b423707eec8156b30",
+      "scriptSourceMatches": true,
+      "cacheControl": "no-cache",
+      "etag": null,
+      "max32MiB": true,
+      "metadataStatus": 200,
+      "release": {
+        "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+        "versionCode": 110,
+        "byteLength": 9478052,
+        "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+        "mandatory": true,
+        "revision": 3
+      },
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "scriptStatus": 200,
+      "scriptSha256": "4321e79ef1d3f3ec2f7019c6983f771802147991c921c35b423707eec8156b30",
+      "scriptSourceMatches": true,
+      "cacheControl": "no-store, no-cache, must-revalidate, max-age=0",
+      "etag": null,
+      "max32MiB": true,
+      "metadataStatus": 200,
+      "release": {
+        "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+        "versionCode": 110,
+        "byteLength": 9478052,
+        "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+        "mandatory": true,
+        "revision": 3
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

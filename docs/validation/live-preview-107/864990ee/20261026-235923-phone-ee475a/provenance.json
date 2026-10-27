@@ -1,0 +1,20 @@
+{
+  "candidateSha256": "864990ee3da786e5e8871dad4734789f82116bc0d469838e31cd7aa95fb6c487",
+  "versionCode": 107,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "ace6ce0abfbd9a4c99d29dea81cdbbf1c82c21afcf12eaa906338b9a71d37c87",
+  "scope": "Real MainActivity/editor/native gestures; changed rendered photo pixels sampled before ACTION_UP, own JPEG and actual source/effect ledgers. Emulator only; not physical-device FPS or camera throughput.",
+  "pass": false,
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "3724af07d285b2213d0e21d8b7b1e50c8d401140194f5b640751fce94bb2d1ed"
+    },
+    {
+      "file": "report.json",
+      "sha256": "5b16bc6a94753c4aa68d2996e3a3f1825179d365df3a40b2f3c70e7c150555b5"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'cc.huevia'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'cc.huevia'
+        minSdk 26
+        targetSdk 35
+        versionCode 110
+        versionName '0.22.1-beta'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+}
+
+dependencies {
+    implementation files('libs/open_sdk_3.5.19_r9483ffc7_lite.jar')
+    // Tencent exposes optional legacy Fragment overloads. This app uses native Activity only.
+    compileOnly files('libs/compile-only/support-fragment-28.0.0.jar')
+}

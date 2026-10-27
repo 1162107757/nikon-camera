@@ -1,0 +1,36 @@
+{
+  "verifiedUtc": "2026-10-27T19:16:10.871Z",
+  "scope": "Read-only DB preservation; no migration or release writes",
+  "before": {
+    "current110": {
+      "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+      "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+      "status": "published",
+      "revision": 3,
+      "mandatory": true,
+      "byteLength": 9478052
+    },
+    "catalogCount": 390,
+    "releaseCount": 18,
+    "catalogSignature": "98fce718da414c710ced2c88cfcc8b0b",
+    "releaseSignature": "61e9dc55ea9a7c2e5abb6147ebc5131d"
+  },
+  "after": {
+    "current110": {
+      "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+      "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+      "status": "published",
+      "revision": 3,
+      "mandatory": true,
+      "byteLength": 9478052
+    },
+    "catalogCount": 390,
+    "releaseCount": 18,
+    "catalogSignature": "98fce718da414c710ced2c88cfcc8b0b",
+    "releaseSignature": "61e9dc55ea9a7c2e5abb6147ebc5131d"
+  },
+  "all18ReleasesUnchanged": true,
+  "current110Unchanged": true,
+  "catalog390Unchanged": true,
+  "pass": true
+}

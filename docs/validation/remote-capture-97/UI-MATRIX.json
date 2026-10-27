@@ -1,0 +1,132 @@
+{
+  "scope": "Native toolbar only; synthetic live frame and camera properties; no shutters",
+  "apkSha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+  "runs": 4,
+  "checkExecutions": 180,
+  "modes": [
+    {
+      "mode": "dark",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-97/de078558/dark-vendor4294967295-8c329b6d",
+      "apkSha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+      "assertions": 45,
+      "orientation": "portrait",
+      "verificationScope": "toolbar-states-only",
+      "captures": [
+        {
+          "name": "entry.png",
+          "sha256": "0f75327377ae4f1406bc4cd0df6447a51e9f52ddcd8f48ebeddc62c4061468ee"
+        },
+        {
+          "name": "grid-off.png",
+          "sha256": "00dc976a1690309005f8814fbeda8ce832fdb64ff8bb8086118680aea0658bfb"
+        },
+        {
+          "name": "grid-on.png",
+          "sha256": "a9a443faeb929e0acbe6bb73efc5d2e75ed852797b4679cecb2ef7d14ca51efc"
+        },
+        {
+          "name": "histogram-off.png",
+          "sha256": "0fe509ee91adf23b292933e2cb0c704d2b73348a5b12881a3dd3083deff50550"
+        },
+        {
+          "name": "ready.png",
+          "sha256": "355ae01134be719c24b209892405c3de8da098097a4c493785dcbbcfe44a0aa1"
+        }
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-97/de078558/font1.3-vendor4294967295-9ac70788",
+      "apkSha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+      "assertions": 45,
+      "orientation": "portrait",
+      "verificationScope": "toolbar-states-only",
+      "captures": [
+        {
+          "name": "entry.png",
+          "sha256": "cb6aa30886a1880f6d1bdb5c27eedd1766cb8b1fbc284563f5f3ffc8fbb5ab40"
+        },
+        {
+          "name": "grid-off.png",
+          "sha256": "b240de8b1f9c3e633231f7f149ec0bf44b134478ea1ef2545e07e5d5e25aa45f"
+        },
+        {
+          "name": "grid-on.png",
+          "sha256": "d96478b25ba9f1278fb6ce55d4db81259fec6bfa9d5bd08b7c4724925f9b1c39"
+        },
+        {
+          "name": "histogram-off.png",
+          "sha256": "bee36cc35a21cd06cf63277e5a8e331c3701db5c5aaefb63e0ed6bf198bc684a"
+        },
+        {
+          "name": "ready.png",
+          "sha256": "b240de8b1f9c3e633231f7f149ec0bf44b134478ea1ef2545e07e5d5e25aa45f"
+        }
+      ]
+    },
+    {
+      "mode": "landscape",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-97/de078558/landscape-vendor4294967295-0ea17bec",
+      "apkSha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+      "assertions": 45,
+      "orientation": "landscape",
+      "verificationScope": "toolbar-states-only",
+      "captures": [
+        {
+          "name": "entry.png",
+          "sha256": "7fa3c9e68ab5b7e431a896fd82b4dbe769f30a9af8c921956e0ef35fc31541c8"
+        },
+        {
+          "name": "grid-off.png",
+          "sha256": "9ca2fb1f8da467820598c5f83e84b9603edd3b7577eda830b75ac471da8f87e8"
+        },
+        {
+          "name": "grid-on.png",
+          "sha256": "88655d74518b0ce02682421f8657d9b7ba87fa1813d4a4086419b562e8d2343b"
+        },
+        {
+          "name": "histogram-off.png",
+          "sha256": "7fc26e966df926234e6bc8b2add7b8db9bbc29ee838bbdaa9535fbe0c1d5b36f"
+        },
+        {
+          "name": "ready.png",
+          "sha256": "9ca2fb1f8da467820598c5f83e84b9603edd3b7577eda830b75ac471da8f87e8"
+        }
+      ]
+    },
+    {
+      "mode": "phone",
+      "vendorId": 4294967295,
+      "root": "docs/validation/remote-capture-97/de078558/phone-vendor4294967295-1eb9e908",
+      "apkSha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+      "assertions": 45,
+      "orientation": "portrait",
+      "verificationScope": "toolbar-states-only",
+      "captures": [
+        {
+          "name": "entry.png",
+          "sha256": "9780885f7893dc9d2e03b0f0a0d8dd5fe805a638406a98750d7890a675adf035"
+        },
+        {
+          "name": "grid-off.png",
+          "sha256": "3fa303ebf78c7ad871773f975d4426baf2475ec47c82e40a687ca34df8c39912"
+        },
+        {
+          "name": "grid-on.png",
+          "sha256": "277ba60559789afff54a7dc5d424282aa3043260937eada692d7bfa726070835"
+        },
+        {
+          "name": "histogram-off.png",
+          "sha256": "a62a6c4d8e32677f1e15bbade42f89244d15023a3120f1c0377353c3df3bf686"
+        },
+        {
+          "name": "ready.png",
+          "sha256": "3fa303ebf78c7ad871773f975d4426baf2475ec47c82e40a687ca34df8c39912"
+        }
+      ]
+    }
+  ]
+}

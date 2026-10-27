@@ -1,0 +1,24 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root=process.cwd(),base='docs/validation/remote-capture-96',apk='dist/huevia-0.20.1-beta-debug.apk';
+const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex');
+const hash=sha(apk),cohort=`${base}/${hash.slice(0,8)}`;
+const expected=[['phone',4294967295],['font1.3',4294967295],['landscape',4294967295],['dark',4294967295],['phone',6],['phone',10]];
+const runs=fs.readdirSync(cohort).map(name=>`${cohort}/${name}`).filter(dir=>fs.existsSync(`${dir}/run/report.json`)).map(dir=>({dir,data:JSON.parse(fs.readFileSync(`${dir}/run/report.json`,'utf8')),receipt:JSON.parse(fs.readFileSync(`${dir}/run-identity.json`,'utf8'))}));
+const modes=expected.map(([mode,vendor])=>{
+  const matches=runs.filter(r=>r.data.mode===mode&&r.data.vendorId===vendor&&r.data.apkSha256===hash&&r.data.status==='PASS');
+  if(matches.length!==1)throw Error(`Expected one current PASS for ${mode}/${vendor}`);
+  const {dir,data,receipt}=matches[0];
+  if(!data.fixtureCleanup||receipt.status!=='PASS')throw Error('Invalid cleanup receipt');
+  if((mode==='landscape')!==(data.nativeOrientation==='landscape'))throw Error('Invalid orientation');
+  return {mode,vendorId:vendor,root:dir,apkSha256:hash,assertions:data.assertions.length,orientation:data.nativeOrientation,gridLtrOffset:data.gridLtrOffset,gridRtlOffset:data.gridRtlOffset,captures:fs.readdirSync(`${dir}/run`).filter(n=>n.endsWith('.png')).sort()};
+});
+const old=JSON.parse(fs.readFileSync('docs/validation/remote-capture-95/FINAL-IDENTITY.json','utf8'));
+const inputs=old.inputs.map(input=>({path:input.path,bytes:fs.statSync(input.path).size,sha256:sha(input.path)}));
+const modified=inputs.filter(input=>old.inputs.find(previous=>previous.path===input.path).sha256!==input.sha256).map(input=>input.path);
+const identity={status:'CANDIDATE_AWAITING_INDEPENDENT_REVIEW',versionCode:96,versionName:'0.20.1-beta',apkPath:apk,apkSha256:hash,apkBytes:fs.statSync(apk).size,inputCount:inputs.length,inputs,modified95Inputs:modified,baseline95ApkSha256:sha(old.apkPath),baseline94ApkSha256:sha('dist/huevia-0.19.3-beta-debug.apk')};
+const matrix={scope:'Native synthetic PTP/IP peer + real editor component in test container; no physical camera',apkSha256:hash,assertions:modes.reduce((n,m)=>n+m.assertions,0),modes};
+fs.writeFileSync(`${base}/CANDIDATE-IDENTITY.json`,JSON.stringify(identity,null,2)+'\n');
+fs.writeFileSync(`${base}/UI-MATRIX.json`,JSON.stringify(matrix,null,2)+'\n');
+console.log(JSON.stringify({sha:hash,inputs:inputs.length,modified95Inputs:modified,runs:modes.length,checks:matrix.assertions,captures:modes.reduce((n,m)=>n+m.captures.length,0),offsets:modes.map(m=>({mode:m.mode,vendor:m.vendorId,ltr:m.gridLtrOffset,rtl:m.gridRtlOffset}))},null,2));

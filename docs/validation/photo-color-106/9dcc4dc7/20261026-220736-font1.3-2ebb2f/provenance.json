@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "9dcc4dc793d8bb4ddfd89d5bd9b62ff95152e652b33b6ef7d04d9a1fee963ad6",
+  "versionCode": 106,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "dab23a19ef6e8d7b7ce23c93178ef9dba3ebfc542df8c0a861f04d50fc89f34c",
+  "scope": "Real MainActivity, AlbumPanel, PhotoFilterEditor and native colour dialog; actual JPEG/draft/recipe/private full-size export paths. Own fixtures, guest only. No camera, real phone, MediaStore publication or NX colour-equivalence claim.",
+  "pass": true,
+  "files": [
+    {
+      "file": "00-editor-adjustment.png",
+      "sha256": "f71836473ddf133e8742ae439a374516c503f1f0a7265a5463d0e7282ad686c7"
+    },
+    {
+      "file": "01-curves-staged.png",
+      "sha256": "d5a99feb4daa1330ca9b355363e96324b5ed7abe079e29cb8f2ef746360e2ed6"
+    },
+    {
+      "file": "02-hsl-staged.png",
+      "sha256": "84458046ecf4a0d5b60264fd06e6f467244a8d0c4afb3e95ac0e6ed7439067c3"
+    },
+    {
+      "file": "03-hsl-validation.png",
+      "sha256": "0d4198befb8015b9df43a0b2968c17f275f4fc3955e5bf41dd7c2585b2ef89aa"
+    },
+    {
+      "file": "04-copy-options.png",
+      "sha256": "55510b2457930d71cbefd654ae03cbbfc701f333cc501421458ffb72d24d8864"
+    },
+    {
+      "file": "05-unavailable-saved-version.png",
+      "sha256": "aaa82d631122f44ecb7b9f6654e31386360e2e33f007a1a19e7450824e72412a"
+    },
+    {
+      "file": "report.json",
+      "sha256": "200d552e569d5396b8e7e98f861c122fbf328e8042e0608e4ee1670026654c9a"
+    }
+  ]
+}

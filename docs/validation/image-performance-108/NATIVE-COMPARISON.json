@@ -1,0 +1,53 @@
+{
+  "baselineEvidence": "docs/validation/image-performance-108/b05fc8e8/de0be7adc10544f98a6f0529054e8fb0/",
+  "candidateEvidence": "docs/validation/image-performance-108/995b33c8/e20554a9b79b40a9892784933617fe9d/",
+  "baseline": {
+    "checks": 54,
+    "pass": true,
+    "moves": 90,
+    "heldMs": 2850,
+    "newTileSetsBeforeUp": 0,
+    "stableButtonBackgrounds": 0,
+    "buttons": 5,
+    "stableSizeGlassBuffers": [
+      {
+        "bitmapIdentities": 89,
+        "pixelArrayIdentities": 0,
+        "blurArrayIdentities": 0
+      },
+      {
+        "bitmapIdentities": 89,
+        "pixelArrayIdentities": 0,
+        "blurArrayIdentities": 0
+      }
+    ],
+    "decodePixelsCompared": 5870080,
+    "decodePixelErrors": 0,
+    "fixtureCleanup": true
+  },
+  "candidate": {
+    "checks": 58,
+    "pass": true,
+    "moves": 90,
+    "heldMs": 2654,
+    "newTileSetsBeforeUp": 6,
+    "stableButtonBackgrounds": 5,
+    "buttons": 5,
+    "stableSizeGlassBuffers": [
+      {
+        "bitmapIdentities": 2,
+        "pixelArrayIdentities": 1,
+        "blurArrayIdentities": 1
+      },
+      {
+        "bitmapIdentities": 2,
+        "pixelArrayIdentities": 1,
+        "blurArrayIdentities": 1
+      }
+    ],
+    "decodePixelsCompared": 5870080,
+    "decodePixelErrors": 0,
+    "fixtureCleanup": true
+  },
+  "scope": "Same reflection-only probe, generated JPEGs, one normal-font emulator. No physical handset FPS, peak RAM or complete export throughput claim."
+}

@@ -1,0 +1,564 @@
+{
+  "schemaVersion": 1,
+  "status": "verified-for-user-review",
+  "verifiedAtUtc": "2026-10-24T11:25:29.1393748Z",
+  "versionCode": 93,
+  "versionName": "0.19.2-beta",
+  "apk": {
+    "path": "D:\\dev\\ai-project\\nikon\\dist\\huevia-0.19.2-beta-debug.apk",
+    "sha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+    "bytes": 3905658,
+    "immutableCandidate": "D:\\dev\\ai-project\\nikon\\.tooling\\photo-polish-93\\candidates\\378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6.apk",
+    "signature": "v2 and v3 verified by local Android apksigner"
+  },
+  "buildInputs": {
+    "count": 207,
+    "currentMatch": true,
+    "snapshot": "source-snapshot.json",
+    "snapshotSha256": "51aca1a64b743a370609b7f5f722e81db4bb7df66e958175d18b42fd4ad2222f"
+  },
+  "nativeMatrix": {
+    "path": "UI-MATRIX.json",
+    "sha256": "d2ac01bd9087fa186319ed07c807e778ebfafb94f9e3464f95638c51b3486984",
+    "modes": [
+      {
+        "mode": "phone",
+        "status": "PASS",
+        "assertionExecutions": 635,
+        "fontScale": 1,
+        "orientation": 1
+      },
+      {
+        "mode": "font1.3",
+        "status": "PASS",
+        "assertionExecutions": 635,
+        "fontScale": 1.2999999523162842,
+        "orientation": 1
+      },
+      {
+        "mode": "landscape",
+        "status": "PASS",
+        "assertionExecutions": 647,
+        "fontScale": 1,
+        "orientation": 2
+      }
+    ],
+    "assertionExecutions": 1917,
+    "countMeaning": "Assertion executions across configurations, not independent scenarios",
+    "rawPngCount": 97
+  },
+  "visualReview": {
+    "firstBatch": "51 raw PNGs actually viewed; only chip scroll and input origin defects",
+    "finalBoundedConfirmation": "15 current-candidate raw PNGs actually viewed across three modes; chip off/on, exact/strength input origins and fit selection confirmed",
+    "inheritedScope": "Other first-batch conclusions only for the 205 unchanged inputs; no claim all 97 final PNGs were individually reviewed",
+    "userAcceptance": "User aesthetic acceptance remains their own review"
+  },
+  "prototypeV4": {
+    "path": "D:\\dev\\ai-project\\nikon\\docs\\design-review\\photo-detail-glass-redesign-20261024\\prototype.html",
+    "sha256": "c1728206c0a5d6185153728d3c2db259bb88326575023b6a2662d7a59370946e",
+    "checks46": "EDITOR-PROTOTYPE-V4-VALIDATION.json PASS",
+    "disclosures2": "EDITOR-PROTOTYPE-V4-DISCLOSURE-VALIDATION.json PASS",
+    "scope": "No-network static DOM events and Node syntax; no browser/layout-pixel verification"
+  },
+  "cleanup": [
+    "CLEANUP.json PASS",
+    "EMULATOR-CLEANUP.json PASS"
+  ],
+  "excluded": [
+    "Physical phone and camera",
+    "New MediaStore publication",
+    "Unchanged native export, progress and backend suites",
+    "Dark-mode matrix"
+  ],
+  "historical": [
+    "initial-d4b43a9a-chip-scroll-fail remains FAIL",
+    "photo-prototype-92 remains superseded, with user-rejected visual review"
+  ],
+  "rawPngArtifacts": [
+    {
+      "path": "phone/01-detail-grid-100.png",
+      "sha256": "30eedbbbe4f9d465ad37d2d59d7365a4668d2a538c8f743c6a6f8103774c18bf",
+      "bytes": 975135
+    },
+    {
+      "path": "phone/02-detail-before.png",
+      "sha256": "4b227e6db57b2556f8e16f97f6d3148837a7dae80a7e360fb01f32fe28d1f0c2",
+      "bytes": 1763906
+    },
+    {
+      "path": "phone/03-detail-current.png",
+      "sha256": "275983f41e46701f1cfff8a3281964ff0119ebc6e96f800a9273ff255a613e70",
+      "bytes": 1935275
+    },
+    {
+      "path": "phone/04-editor-histogram-closed.png",
+      "sha256": "3ea956b5a4e6e4f2cbae37cbff640fe6096962956b1b66e1ee8a3bfcc9400c3f",
+      "bytes": 870494
+    },
+    {
+      "path": "phone/05-editor-histogram-rgb-warnings.png",
+      "sha256": "1839f45f20fae4a58fc4b6718819576db04115129c3749c49d7ab6954c844daf",
+      "bytes": 1081046
+    },
+    {
+      "path": "phone/07-detail-saved-file.png",
+      "sha256": "fc10675c8b60660e1bbc25b549938d15facfb71d70d68d0a0816fbc85b671ae5",
+      "bytes": 835455
+    },
+    {
+      "path": "phone/detail-control-geometry-100-134.png",
+      "sha256": "c0d956b123e31c29c4d6aea3a75c197d422ab8dffc87a848a1a5a3592ff6846b",
+      "bytes": 459214
+    },
+    {
+      "path": "phone/detail-control-geometry-200-176.png",
+      "sha256": "b42051cae1c81c9744017e9ab84ebe57cbe1199143974588fcb5df6d10de3db0",
+      "bytes": 915849
+    },
+    {
+      "path": "phone/detail-control-geometry-before-300.png",
+      "sha256": "4b227e6db57b2556f8e16f97f6d3148837a7dae80a7e360fb01f32fe28d1f0c2",
+      "bytes": 1763906
+    },
+    {
+      "path": "phone/hero-detail-fit.png",
+      "sha256": "bd36a5b66edd9bf48fa5da3239e537d20fc7d0cc8cbbde844a3ab67724e19825",
+      "bytes": 1306987
+    },
+    {
+      "path": "phone/hero-detail.png",
+      "sha256": "275983f41e46701f1cfff8a3281964ff0119ebc6e96f800a9273ff255a613e70",
+      "bytes": 1935275
+    },
+    {
+      "path": "phone/hero-editor-closed.png",
+      "sha256": "3ea956b5a4e6e4f2cbae37cbff640fe6096962956b1b66e1ee8a3bfcc9400c3f",
+      "bytes": 870494
+    },
+    {
+      "path": "phone/hero-editor-expanded.png",
+      "sha256": "1839f45f20fae4a58fc4b6718819576db04115129c3749c49d7ab6954c844daf",
+      "bytes": 1081046
+    },
+    {
+      "path": "phone/hero-editor-five-tools-returned.png",
+      "sha256": "3ea956b5a4e6e4f2cbae37cbff640fe6096962956b1b66e1ee8a3bfcc9400c3f",
+      "bytes": 870494
+    },
+    {
+      "path": "phone/histogram-chip-geometry-default.png",
+      "sha256": "5531a68f805f5ac5b2e2403b73cf6dbd60333d9c029a5bc0dab387e108148581",
+      "bytes": 1060279
+    },
+    {
+      "path": "phone/histogram-chip-geometry-warnings-selected.png",
+      "sha256": "1839f45f20fae4a58fc4b6718819576db04115129c3749c49d7ab6954c844daf",
+      "bytes": 1081046
+    },
+    {
+      "path": "phone/histogram-mode-line-luminance-selected.png",
+      "sha256": "2eabea054f2c8e1a8a1555e3696f66aa16d25bcb7ae648e633285d2a7074949e",
+      "bytes": 1060293
+    },
+    {
+      "path": "phone/histogram-mode-line-rgb-restored.png",
+      "sha256": "487c92e9f7033f9367a66fa2615532293913f7af4d44dedf7392e2984e90bb2c",
+      "bytes": 1057253
+    },
+    {
+      "path": "phone/histogram-mode-line-rgb-selected.png",
+      "sha256": "487c92e9f7033f9367a66fa2615532293913f7af4d44dedf7392e2984e90bb2c",
+      "bytes": 1057253
+    },
+    {
+      "path": "phone/tool-0.png",
+      "sha256": "5f8e9851193c515756c26f56a9d024a09941a7830bc87a6d85c311a66a60de25",
+      "bytes": 1036034
+    },
+    {
+      "path": "phone/tool-1.png",
+      "sha256": "a84aab8d915f166beb3a29a49b282c91d06c23cc531d5b6d38cda5d01b28daf0",
+      "bytes": 814750
+    },
+    {
+      "path": "phone/tool-2.png",
+      "sha256": "a8e8bec24d2c7b17cbcf380276769db3e3fe7cf95d7d74b437f5bad257613ec6",
+      "bytes": 802540
+    },
+    {
+      "path": "phone/tool-3.png",
+      "sha256": "1506010b9dceaa9403b72ddbf41ca2a12d188d3158ff91e5d945f7973990c94b",
+      "bytes": 967215
+    },
+    {
+      "path": "phone/tool-4.png",
+      "sha256": "bd7b2a89c0ddfe2f013ca2fdb6a3f7d9c6bbeaf558d6155085fa662e0819572c",
+      "bytes": 797295
+    },
+    {
+      "path": "phone/tool-border-information.png",
+      "sha256": "f676f9670b964f57afef1bd2df2607f660c4791b0f9a3703f5595a0c9375607a",
+      "bytes": 558534
+    },
+    {
+      "path": "phone/tool-border-settings.png",
+      "sha256": "9ae8440eb966522e428321aefc1b404c6bcc50f846d7cc4bef0188459a286b82",
+      "bytes": 550204
+    },
+    {
+      "path": "phone/tool-crop-tentative.png",
+      "sha256": "a3581775a7ec51ed9513e5c5ab2fd1d62295720ac6bd5e64d78cff6074e944b8",
+      "bytes": 2268275
+    },
+    {
+      "path": "phone/tool-filter-full-sheet.png",
+      "sha256": "049d66c85509561a2247d04e2bef0597d4a7d8ff936f94a4141458b86bc1ff0e",
+      "bytes": 76149
+    },
+    {
+      "path": "phone/tool-parameter-exact.png",
+      "sha256": "45d019f9d8b53d3547f4391765400806e89ffe5a1cbb0bc455fe2ab866606de4",
+      "bytes": 286352
+    },
+    {
+      "path": "phone/tool-parameter-help.png",
+      "sha256": "4e9427bd43b5be31143be96b9111a66d8327209f060b01bc212b5590270c0837",
+      "bytes": 320808
+    },
+    {
+      "path": "phone/tool-recipe-name.png",
+      "sha256": "1611c3d0b1ae19d6aa979cda2323990c207aa027b20f3ae6d662fadf66597e0b",
+      "bytes": 282549
+    },
+    {
+      "path": "phone/tool-strength-exact.png",
+      "sha256": "861443d2aaae1b12a4f9287ad0850c68643ad44408eee1965989b6e4be7d9aca",
+      "bytes": 514864
+    },
+    {
+      "path": "font1.3/01-detail-grid-100.png",
+      "sha256": "c8e39319ce3f3c0d62813dd7597bdd7d2f1daf6b8b4e5e544151c12208313334",
+      "bytes": 981159
+    },
+    {
+      "path": "font1.3/02-detail-before.png",
+      "sha256": "31914ff3c0484b59216b31c8c4ff09273a6483779977adf26702341046cb7e7a",
+      "bytes": 1769983
+    },
+    {
+      "path": "font1.3/03-detail-current.png",
+      "sha256": "a2641c79ad8c3b6ac5f64726f021766ca4ac0950464ce8a1aa7776a54f337b82",
+      "bytes": 1942178
+    },
+    {
+      "path": "font1.3/04-editor-histogram-closed.png",
+      "sha256": "0a2cdc27c938e62b2f84cca0566c19eb1ea10a7cd9bf9f7a005e5b6b52911b45",
+      "bytes": 912948
+    },
+    {
+      "path": "font1.3/05-editor-histogram-rgb-warnings.png",
+      "sha256": "98b51fc81de9c4f38c435c01c50555d7a3a5fe3ee7de1bd49335767aff7050d4",
+      "bytes": 1152963
+    },
+    {
+      "path": "font1.3/07-detail-saved-file.png",
+      "sha256": "49a70061120988ffeebf441c76b4f0fe099d1e1b76008138d2996831db396779",
+      "bytes": 843944
+    },
+    {
+      "path": "font1.3/detail-control-geometry-100-134.png",
+      "sha256": "8b6e3124fae41fb99e52ca14228880a0bd09a6bfff2bc98dc14c391964af463d",
+      "bytes": 465871
+    },
+    {
+      "path": "font1.3/detail-control-geometry-200-176.png",
+      "sha256": "1a93542e15e0fa2e32e5015937ca5973e353151c5de746244b42a2ce76900cba",
+      "bytes": 919630
+    },
+    {
+      "path": "font1.3/detail-control-geometry-before-300.png",
+      "sha256": "31914ff3c0484b59216b31c8c4ff09273a6483779977adf26702341046cb7e7a",
+      "bytes": 1769983
+    },
+    {
+      "path": "font1.3/hero-detail-fit.png",
+      "sha256": "ccb0feb259bd5cfe0698fec19e259dfdf7cc715183b93783bb5a207508ebd394",
+      "bytes": 1312676
+    },
+    {
+      "path": "font1.3/hero-detail.png",
+      "sha256": "a2641c79ad8c3b6ac5f64726f021766ca4ac0950464ce8a1aa7776a54f337b82",
+      "bytes": 1942178
+    },
+    {
+      "path": "font1.3/hero-editor-closed.png",
+      "sha256": "0a2cdc27c938e62b2f84cca0566c19eb1ea10a7cd9bf9f7a005e5b6b52911b45",
+      "bytes": 912948
+    },
+    {
+      "path": "font1.3/hero-editor-expanded.png",
+      "sha256": "98b51fc81de9c4f38c435c01c50555d7a3a5fe3ee7de1bd49335767aff7050d4",
+      "bytes": 1152963
+    },
+    {
+      "path": "font1.3/hero-editor-five-tools-returned.png",
+      "sha256": "0a2cdc27c938e62b2f84cca0566c19eb1ea10a7cd9bf9f7a005e5b6b52911b45",
+      "bytes": 912948
+    },
+    {
+      "path": "font1.3/histogram-chip-geometry-default.png",
+      "sha256": "94b43f485973432ffd7c5d68d6f8d0df2d6b71c1316d0578834b4c17ea9fe7ff",
+      "bytes": 1131901
+    },
+    {
+      "path": "font1.3/histogram-chip-geometry-warnings-selected.png",
+      "sha256": "98b51fc81de9c4f38c435c01c50555d7a3a5fe3ee7de1bd49335767aff7050d4",
+      "bytes": 1152963
+    },
+    {
+      "path": "font1.3/histogram-mode-line-luminance-selected.png",
+      "sha256": "25ec43a6e9043cc9771453877805ec0beb7b2003f2f903602c91fcc403376dd5",
+      "bytes": 1131917
+    },
+    {
+      "path": "font1.3/histogram-mode-line-rgb-restored.png",
+      "sha256": "56f0c5f97afc4b4408679a9eb338a9db8b7337a25dea228c5c6afcc09dd5d3e5",
+      "bytes": 1128543
+    },
+    {
+      "path": "font1.3/histogram-mode-line-rgb-selected.png",
+      "sha256": "56f0c5f97afc4b4408679a9eb338a9db8b7337a25dea228c5c6afcc09dd5d3e5",
+      "bytes": 1128543
+    },
+    {
+      "path": "font1.3/tool-0.png",
+      "sha256": "33af13574121168ce3b655201571d4cb0420fe5a09c4a94b2440132e87bf4e1c",
+      "bytes": 1108106
+    },
+    {
+      "path": "font1.3/tool-1.png",
+      "sha256": "c1cdd51123779d3433c43f7c99249024b6a0d05bb1a24377f67aee01742f67e6",
+      "bytes": 821449
+    },
+    {
+      "path": "font1.3/tool-2.png",
+      "sha256": "40151fab19f63cef59ca2ea3bba52eefbbc9eab0e7f64290dcbc090b1b1545b2",
+      "bytes": 810564
+    },
+    {
+      "path": "font1.3/tool-3.png",
+      "sha256": "9a4e55cc3e6e5ccc309d3450cd52c43e4ca884cefdf8f711d90bb57518a73020",
+      "bytes": 1066180
+    },
+    {
+      "path": "font1.3/tool-4.png",
+      "sha256": "101399d6ca50ed477c06be071eb673fe91c512ac0600732a6c42e7a60417d9e8",
+      "bytes": 804365
+    },
+    {
+      "path": "font1.3/tool-border-information.png",
+      "sha256": "637a029a85f23f88b8a4cd3db0202e8277e678fa752191c913d413600deb593d",
+      "bytes": 649937
+    },
+    {
+      "path": "font1.3/tool-border-settings.png",
+      "sha256": "3e203b319d77e2f7f10051f4623bfea9fbc408f72a777089c36b49510592c7f3",
+      "bytes": 641460
+    },
+    {
+      "path": "font1.3/tool-crop-tentative.png",
+      "sha256": "df9e90ac1b7bb68e6fd772f2081c54db189049d6505b0ae80f1578cadedca0a2",
+      "bytes": 2274362
+    },
+    {
+      "path": "font1.3/tool-filter-full-sheet.png",
+      "sha256": "609853e1935d0264a1c834491bfabe3e8b4848394ea6c4a1abb8a6c96956965d",
+      "bytes": 89496
+    },
+    {
+      "path": "font1.3/tool-parameter-exact.png",
+      "sha256": "7f74dc2b088852c7f7488eaf627252e082f2483ceb441665e6c0cd96c0cda578",
+      "bytes": 339519
+    },
+    {
+      "path": "font1.3/tool-parameter-help.png",
+      "sha256": "95fccdb67df9cf3242fda656cc0f7676fbce05727b6e081edd45274fefa6ab64",
+      "bytes": 284372
+    },
+    {
+      "path": "font1.3/tool-recipe-name.png",
+      "sha256": "b2119dc8a726fd067e88a7d875f9143373b73091469fea472279f65225e587d1",
+      "bytes": 338400
+    },
+    {
+      "path": "font1.3/tool-strength-exact.png",
+      "sha256": "fbaa2d012e45c1db29e330df1bde4c0a3244bb3282b7f1bd5389cca47be655af",
+      "bytes": 616256
+    },
+    {
+      "path": "landscape/01-detail-grid-100.png",
+      "sha256": "6f86d1ba07d29f5cd4fa10d782d7ae422c8c55d46c7a3cd916506bde75e138e0",
+      "bytes": 660639
+    },
+    {
+      "path": "landscape/02-detail-before.png",
+      "sha256": "bdc5cae40b577da19639933ac352c101f2aec21da8786d34551c172afda2884a",
+      "bytes": 2058018
+    },
+    {
+      "path": "landscape/03-detail-current.png",
+      "sha256": "0a954554518081d5da88af43e000b296d66c2b4c90f917c5ae7dfe8de29c4e9b",
+      "bytes": 2257411
+    },
+    {
+      "path": "landscape/04-editor-histogram-closed.png",
+      "sha256": "9343abad755a54ab273907fc0f8fbf6aa67c41060306d4212fd6520ffd5e47ff",
+      "bytes": 1353643
+    },
+    {
+      "path": "landscape/05-editor-histogram-rgb-warnings.png",
+      "sha256": "6046e289fbf3dd1bd8115d861662f1c0647f236b5c5233f8840c398e817cd4d9",
+      "bytes": 1355617
+    },
+    {
+      "path": "landscape/07-detail-saved-file.png",
+      "sha256": "c2b9006045154f14603cf06d18e8627908c64898301c6ad32e5c60968cbac0ec",
+      "bytes": 1465307
+    },
+    {
+      "path": "landscape/detail-control-geometry-100-134.png",
+      "sha256": "6f86d1ba07d29f5cd4fa10d782d7ae422c8c55d46c7a3cd916506bde75e138e0",
+      "bytes": 660639
+    },
+    {
+      "path": "landscape/detail-control-geometry-200-176.png",
+      "sha256": "80d7b82b8826b3c684ff6207acf47c058312b3e3e2f1bfa1d0f1564408117afb",
+      "bytes": 500082
+    },
+    {
+      "path": "landscape/detail-control-geometry-before-300.png",
+      "sha256": "bdc5cae40b577da19639933ac352c101f2aec21da8786d34551c172afda2884a",
+      "bytes": 2058018
+    },
+    {
+      "path": "landscape/hero-detail-fit.png",
+      "sha256": "625757560659ab6aef6cb8c05bed28645102f4c0df30e806c4f53968aa42a0e0",
+      "bytes": 1728270
+    },
+    {
+      "path": "landscape/hero-detail.png",
+      "sha256": "0a954554518081d5da88af43e000b296d66c2b4c90f917c5ae7dfe8de29c4e9b",
+      "bytes": 2257411
+    },
+    {
+      "path": "landscape/hero-editor-closed.png",
+      "sha256": "9343abad755a54ab273907fc0f8fbf6aa67c41060306d4212fd6520ffd5e47ff",
+      "bytes": 1353643
+    },
+    {
+      "path": "landscape/hero-editor-expanded.png",
+      "sha256": "6046e289fbf3dd1bd8115d861662f1c0647f236b5c5233f8840c398e817cd4d9",
+      "bytes": 1355617
+    },
+    {
+      "path": "landscape/hero-editor-five-tools-returned.png",
+      "sha256": "9343abad755a54ab273907fc0f8fbf6aa67c41060306d4212fd6520ffd5e47ff",
+      "bytes": 1353643
+    },
+    {
+      "path": "landscape/histogram-chip-geometry-default.png",
+      "sha256": "8a1942f2e9b480835bf2afdd9acc79234f7fc629ea9f91a4bd9e5f1d47e45641",
+      "bytes": 1360515
+    },
+    {
+      "path": "landscape/histogram-chip-geometry-warnings-selected.png",
+      "sha256": "6046e289fbf3dd1bd8115d861662f1c0647f236b5c5233f8840c398e817cd4d9",
+      "bytes": 1355617
+    },
+    {
+      "path": "landscape/histogram-mode-line-luminance-selected.png",
+      "sha256": "9f993457d29763df59793223cd87735c79307fb1b1367a2c126eeca2849ff100",
+      "bytes": 1360553
+    },
+    {
+      "path": "landscape/histogram-mode-line-rgb-restored.png",
+      "sha256": "807594c577636f0290a2196931fc3a6c7b493dcf0a26c0bca3b5513bfb85316c",
+      "bytes": 1357531
+    },
+    {
+      "path": "landscape/histogram-mode-line-rgb-selected.png",
+      "sha256": "807594c577636f0290a2196931fc3a6c7b493dcf0a26c0bca3b5513bfb85316c",
+      "bytes": 1357531
+    },
+    {
+      "path": "landscape/tool-0.png",
+      "sha256": "efbf6671bb44d88aa4544ef7a55fc440e2fdda3d589ebd355bda68162e2adec7",
+      "bytes": 1473328
+    },
+    {
+      "path": "landscape/tool-1.png",
+      "sha256": "e6899211ff911c4965eac1a8ae8ae3684f37bba83e9b79007c4cdd668e501589",
+      "bytes": 1295610
+    },
+    {
+      "path": "landscape/tool-2.png",
+      "sha256": "4959e9ab23aa7641d8568e5e155dea0c40a4cd977cefac6b60126de5f5255825",
+      "bytes": 1285632
+    },
+    {
+      "path": "landscape/tool-3.png",
+      "sha256": "c3dcc56e356a60bcaae97f5393413752992bc056e16cda805f4c79a7d848e7e3",
+      "bytes": 1441953
+    },
+    {
+      "path": "landscape/tool-4.png",
+      "sha256": "7b4e4ac94a37b7503769998992c9445ff5e5fcdad44e1c53c58f39fd81d7ed65",
+      "bytes": 1278889
+    },
+    {
+      "path": "landscape/tool-border-information.png",
+      "sha256": "234d1407f0d4a9fb9d80cf0fdc4e56fe5eee8c7f1ea3c4ed618a8514ae619bae",
+      "bytes": 57152
+    },
+    {
+      "path": "landscape/tool-border-settings.png",
+      "sha256": "befc4ed1766c537980b7e1820b996d967ea2b49c236d8b3ac5925a24e5da8ee1",
+      "bytes": 50856
+    },
+    {
+      "path": "landscape/tool-crop-tentative.png",
+      "sha256": "b3501d63d36e956e0bd4ed1093f843b070b6e285be840cd051143289bf073d83",
+      "bytes": 605723
+    },
+    {
+      "path": "landscape/tool-crop-upper-corners.png",
+      "sha256": "cddc6356d70f4aeb248d0657076724abe2c168d6559779bb4f65de84b9dc9d3c",
+      "bytes": 1016963
+    },
+    {
+      "path": "landscape/tool-filter-full-sheet.png",
+      "sha256": "5bebe9315b06203e9216af484c5de7a4f295747ca0e43ab7dddbcd25cc2773e4",
+      "bytes": 57455
+    },
+    {
+      "path": "landscape/tool-parameter-exact.png",
+      "sha256": "332f02a4d0fabcbf90b5d40324134aeb3eb1b5862ad4855d90edcb0921e81277",
+      "bytes": 375973
+    },
+    {
+      "path": "landscape/tool-parameter-help.png",
+      "sha256": "6c4aff8bb83f04e6c4259058fe43fd0124208a8009b1c9c08581693bda32a1d9",
+      "bytes": 430987
+    },
+    {
+      "path": "landscape/tool-recipe-name.png",
+      "sha256": "ab0725afbcabb6db9eca8826f0a54cbf479809d18c781d950f935a4ceffb9dc8",
+      "bytes": 377882
+    },
+    {
+      "path": "landscape/tool-strength-exact.png",
+      "sha256": "863fcf21dcdd06f0f492595e22cedf23b902603e4ddd329dc27bb07ce4008f0f",
+      "bytes": 594788
+    }
+  ]
+}

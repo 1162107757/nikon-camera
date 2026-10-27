@@ -1,0 +1,25 @@
+{
+  "candidateSha256": "852d17a89984f82f4af9d116c7bacb17b3243675299ce07de3bf237692b508c6",
+  "versionCode": 110,
+  "versionName": "0.22.1-beta",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "0c443f4ba491c0f134e7469db24106b2270371235d30eeb9506277bc6a39bfb1",
+  "pass": true,
+  "scope": "Actual installed MainActivity/AlbumPanel/local-photo editor; owned JPEG derived from the shipping preset_template photo with its aspect ratio retained and a unique EXIF description; native pointer clicks on four composition entries, reset and history; native perspective menu/keyboard; temporary versus committed geometry; independent seeded colour/local/border preservation markers; font/orientation layout and committed-frame screenshots. No camera, account transition, publication, physical-device or TalkBack certification.",
+  "files": [
+    {
+      "file": "01-composition-dock.png",
+      "sha256": "9c6802a56d3c0a3d2c2abb38f9922c561147b39e6f8652cc49146e16d25bd8f8"
+    },
+    {
+      "file": "02-composition-workspace.png",
+      "sha256": "624893ec753277d9718e55b58fa02f1c1afb7947d72fe4e9ea2b26fb4ab0fc57"
+    },
+    {
+      "file": "report.json",
+      "sha256": "7841efe5131ec878b9cd8ff6474817a53f9aa5d1fafbe756b6d92daac6ff9694"
+    }
+  ]
+}

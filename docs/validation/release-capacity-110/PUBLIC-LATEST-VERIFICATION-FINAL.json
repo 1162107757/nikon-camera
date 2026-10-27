@@ -1,0 +1,228 @@
+{
+  "verifiedAt": "2026-10-27T16:04:11.795Z",
+  "expected": {
+    "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+    "packageName": "cc.huevia",
+    "versionName": "0.22.1-beta",
+    "versionCode": 110,
+    "minSdk": 26,
+    "byteLength": 9478052,
+    "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "channel": "beta",
+    "mandatory": true,
+    "revision": 3
+  },
+  "origins": [
+    {
+      "origin": "https://huevia.cc",
+      "cases": [
+        {
+          "case": "old108",
+          "status": 200,
+          "versionCode": 108,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        },
+        {
+          "case": "old109",
+          "status": 200,
+          "versionCode": 109,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        },
+        {
+          "case": "current110",
+          "status": 200,
+          "versionCode": 110,
+          "sdk": 35,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "current",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        },
+        {
+          "case": "sdk25",
+          "status": 200,
+          "versionCode": 108,
+          "sdk": 25,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "incompatible",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        }
+      ],
+      "catalogStatus": 200,
+      "catalogCount": 390,
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "cases": [
+        {
+          "case": "old108",
+          "status": 200,
+          "versionCode": 108,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        },
+        {
+          "case": "old109",
+          "status": 200,
+          "versionCode": 109,
+          "sdk": 35,
+          "updateAvailable": true,
+          "updateRequired": true,
+          "reason": "available",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        },
+        {
+          "case": "current110",
+          "status": 200,
+          "versionCode": 110,
+          "sdk": 35,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "current",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        },
+        {
+          "case": "sdk25",
+          "status": 200,
+          "versionCode": 108,
+          "sdk": 25,
+          "updateAvailable": false,
+          "updateRequired": false,
+          "reason": "incompatible",
+          "release": {
+            "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+            "packageName": "cc.huevia",
+            "versionName": "0.22.1-beta",
+            "versionCode": 110,
+            "minSdk": 26,
+            "byteLength": 9478052,
+            "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+            "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+            "channel": "beta",
+            "mandatory": true,
+            "revision": 3
+          },
+          "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+          "pass": true
+        }
+      ],
+      "catalogStatus": 200,
+      "catalogCount": 390,
+      "pass": true
+    }
+  ],
+  "scope": "Public metadata contract only; not a claim that legacy 4 MiB Android clients accept the larger artifact",
+  "pass": true
+}

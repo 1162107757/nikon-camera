@@ -1,0 +1,378 @@
+{
+  "schemaVersion": 1,
+  "recordDate": "2026-10-27",
+  "scope": "composition-dock-110-final-release",
+  "artifact": {
+    "versionCode": 110,
+    "versionName": "0.22.1-beta",
+    "path": "dist/huevia-0.22.1-beta-debug.apk",
+    "apkSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+    "byteLength": 9478052,
+    "sourceIdentity": "docs/validation/composition-dock-110/SOURCE-IDENTITY.json",
+    "frozenInputCount": 262,
+    "postBuildInputDrift": 0,
+    "baselineVersionCode": 109,
+    "changedInputCountSince109": 5,
+    "changedInputsSince109": [
+      "app/build.gradle",
+      "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java",
+      "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "app/src/main/java/cc/huevia/updates/UpdatePolicy.java"
+    ],
+    "rebuildReason": "Raise the client update cap from 4 MiB to 32 MiB; UI and native library inputs match the UI-only candidate."
+  },
+  "implementation": {
+    "standardFontCompositionDock": {
+      "previousContentDp": 176,
+      "newContentDp": 112,
+      "navigationDp": 48,
+      "previousTotalDp": 224,
+      "newTotalDp": 160
+    },
+    "otherModeContentDp": 176,
+    "fontScaling": "fp uses max(1, configuration.fontScale)",
+    "minimumToolAndResetTouchTargetDp": 48,
+    "entries": [
+      "裁剪",
+      "旋转",
+      "拉直",
+      "透视"
+    ],
+    "rotation": "Opening stages one 90-degree turn; cancel preserves main state; apply creates one undo step; history is accessed through the visible adjustment panel.",
+    "reset": "Clears geometry only; undo restores composition while colour, local edits and border remain unchanged.",
+    "clientApkCapBytes": 33554432
+  },
+  "native": {
+    "pass": true,
+    "configurationCount": 3,
+    "totalChecks": 747,
+    "totalScreenshots": 6,
+    "probeSha256": "0c443f4ba491c0f134e7469db24106b2270371235d30eeb9506277bc6a39bfb1",
+    "platform": "owned Android emulator-5586; phone is a layout mode, not a physical phone",
+    "runs": [
+      {
+        "mode": "phone",
+        "runId": "20261027-232027-phone-0a1bdd50",
+        "pass": true,
+        "checks": 258,
+        "failedChecks": 0,
+        "reportPath": "docs/validation/composition-dock/5f42f3a9/20261027-232027-phone-0a1bdd50/20261027-232027-phone-0a1bdd50/report.json",
+        "runnerProvenancePath": "docs/validation/composition-dock/5f42f3a9/20261027-232027-phone-0a1bdd50/provenance.json",
+        "runnerCleanupPath": "docs/validation/composition-dock/5f42f3a9/20261027-232027-phone-0a1bdd50/cleanup.json",
+        "candidateSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+        "probeSha256": "0c443f4ba491c0f134e7469db24106b2270371235d30eeb9506277bc6a39bfb1",
+        "screenshots": [
+          {
+            "path": "docs/validation/composition-dock/5f42f3a9/20261027-232027-phone-0a1bdd50/20261027-232027-phone-0a1bdd50/01-composition-dock.png",
+            "width": 720,
+            "height": 1600,
+            "visualReview": "coordinating task confirmed clean"
+          },
+          {
+            "path": "docs/validation/composition-dock/5f42f3a9/20261027-232027-phone-0a1bdd50/20261027-232027-phone-0a1bdd50/02-composition-workspace.png",
+            "width": 720,
+            "height": 1600,
+            "visualReview": "independent reviewer confirmed clean"
+          }
+        ],
+        "measurements": {
+          "fontScale": 1,
+          "contentHeightPx": 196,
+          "dockHeightPx": 280,
+          "filterStage": [
+            0,
+            321,
+            720,
+            1166
+          ],
+          "compositionStage": [
+            0,
+            321,
+            720,
+            1278
+          ]
+        },
+        "cleanup": {
+          "fixtureRemoved": true,
+          "instrumentationCleanupErrors": [],
+          "fontScaleRestored": true,
+          "accelerometerRestored": true,
+          "userRotationRestored": true,
+          "airplaneCommandRestored": true,
+          "airplaneSettingRestored": true,
+          "immersiveConfirmationRestored": true,
+          "mainAppStopped": true,
+          "testPackageRemoved": true,
+          "mainDataCleared": false,
+          "primaryFailure": null,
+          "runnerErrors": []
+        }
+      },
+      {
+        "mode": "font1.3",
+        "runId": "20261027-232044-font1.3-2967af73",
+        "pass": true,
+        "checks": 254,
+        "failedChecks": 0,
+        "reportPath": "docs/validation/composition-dock/5f42f3a9/20261027-232044-font1.3-2967af73/20261027-232044-font1.3-2967af73/report.json",
+        "runnerProvenancePath": "docs/validation/composition-dock/5f42f3a9/20261027-232044-font1.3-2967af73/provenance.json",
+        "runnerCleanupPath": "docs/validation/composition-dock/5f42f3a9/20261027-232044-font1.3-2967af73/cleanup.json",
+        "candidateSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+        "probeSha256": "0c443f4ba491c0f134e7469db24106b2270371235d30eeb9506277bc6a39bfb1",
+        "screenshots": [
+          {
+            "path": "docs/validation/composition-dock/5f42f3a9/20261027-232044-font1.3-2967af73/20261027-232044-font1.3-2967af73/01-composition-dock.png",
+            "width": 720,
+            "height": 1600,
+            "visualReview": "independent reviewer confirmed clean"
+          },
+          {
+            "path": "docs/validation/composition-dock/5f42f3a9/20261027-232044-font1.3-2967af73/20261027-232044-font1.3-2967af73/02-composition-workspace.png",
+            "width": 720,
+            "height": 1600,
+            "visualReview": "independent reviewer confirmed clean"
+          }
+        ],
+        "measurements": {
+          "fontScale": 1.2999999523162842,
+          "contentHeightPx": 255,
+          "dockHeightPx": 364,
+          "filterStage": [
+            0,
+            361,
+            720,
+            1049
+          ],
+          "compositionStage": [
+            0,
+            361,
+            720,
+            1194
+          ]
+        },
+        "cleanup": {
+          "fixtureRemoved": true,
+          "instrumentationCleanupErrors": [],
+          "fontScaleRestored": true,
+          "accelerometerRestored": true,
+          "userRotationRestored": true,
+          "airplaneCommandRestored": true,
+          "airplaneSettingRestored": true,
+          "immersiveConfirmationRestored": true,
+          "mainAppStopped": true,
+          "testPackageRemoved": true,
+          "mainDataCleared": false,
+          "primaryFailure": null,
+          "runnerErrors": []
+        }
+      },
+      {
+        "mode": "landscape",
+        "runId": "20261027-232101-landscape-157392ea",
+        "pass": true,
+        "checks": 235,
+        "failedChecks": 0,
+        "reportPath": "docs/validation/composition-dock/5f42f3a9/20261027-232101-landscape-157392ea/20261027-232101-landscape-157392ea/report.json",
+        "runnerProvenancePath": "docs/validation/composition-dock/5f42f3a9/20261027-232101-landscape-157392ea/provenance.json",
+        "runnerCleanupPath": "docs/validation/composition-dock/5f42f3a9/20261027-232101-landscape-157392ea/cleanup.json",
+        "candidateSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+        "probeSha256": "0c443f4ba491c0f134e7469db24106b2270371235d30eeb9506277bc6a39bfb1",
+        "screenshots": [
+          {
+            "path": "docs/validation/composition-dock/5f42f3a9/20261027-232101-landscape-157392ea/20261027-232101-landscape-157392ea/01-composition-dock.png",
+            "width": 1600,
+            "height": 720,
+            "visualReview": "independent reviewer confirmed clean"
+          },
+          {
+            "path": "docs/validation/composition-dock/5f42f3a9/20261027-232101-landscape-157392ea/20261027-232101-landscape-157392ea/02-composition-workspace.png",
+            "width": 1600,
+            "height": 720,
+            "visualReview": "independent reviewer confirmed clean"
+          }
+        ],
+        "measurements": {
+          "fontScale": 1,
+          "contentHeightPx": 196,
+          "dockHeightPx": 503,
+          "filterStage": [
+            142,
+            91,
+            1075,
+            678
+          ],
+          "compositionStage": [
+            142,
+            91,
+            1075,
+            678
+          ]
+        },
+        "cleanup": {
+          "fixtureRemoved": true,
+          "instrumentationCleanupErrors": [],
+          "fontScaleRestored": true,
+          "accelerometerRestored": true,
+          "userRotationRestored": true,
+          "airplaneCommandRestored": true,
+          "airplaneSettingRestored": true,
+          "immersiveConfirmationRestored": true,
+          "mainAppStopped": true,
+          "testPackageRemoved": true,
+          "mainDataCleared": false,
+          "primaryFailure": null,
+          "runnerErrors": []
+        }
+      }
+    ],
+    "coverage": [
+      "native pointer clicks on four composition entries",
+      "crop entry preserves geometry",
+      "rotation stages 90 degrees, cancels safely, applies one history step, and supports undo/redo",
+      "straighten opens mode 0 with slider focus",
+      "perspective opens mode 1, selects the real vertical menu, and changes the temporary geometry with native keys",
+      "geometry-only reset preserves colour/local/border and supports undo",
+      "composition shrinks only its content panel; filter and adjustment restore 176fp content",
+      "48dp tool/reset touch targets, complete one-line captions, photo-stage dimensions",
+      "two committed and stable-frame screenshots per configuration"
+    ]
+  },
+  "fixture": {
+    "sourceResource": "app/src/main/res/drawable-nodpi/preset_template.png",
+    "resourceSourceSha256": "067e391dcb5a61c20021dc9a4a7eb4c324829592a5de747dd1f4a958ce44c8d9",
+    "sourceDimensions": [
+      1448,
+      1086
+    ],
+    "fixtureDimensions": [
+      853,
+      640
+    ],
+    "identity": "JPEG EXIF ImageDescription contains run ID plus UUID; no text painted over the photograph",
+    "ownedFilesOnly": true
+  },
+  "visual": {
+    "pass": true,
+    "reviewDocument": "docs/validation/composition-dock-110/VISUAL-REVIEW.md",
+    "independentFinalPngsReviewed": 5,
+    "coordinatorConfirmedPhoneDock": true,
+    "noSystemTeachingOverlay": true,
+    "noRequiredProductCorrection": true
+  },
+  "clientCapacityHost": {
+    "pass": true,
+    "totalChecks": 117,
+    "scope": "independent offline synthetic metadata, Android object and DownloadManager-counter fixtures; no device, real HTTP, real APK validation or install certification",
+    "suites": [
+      {
+        "script": "tests/run-updates.ps1",
+        "checks": 70,
+        "log": "docs/validation/release-capacity-110/android-update-policy.log"
+      },
+      {
+        "script": "tests/run-update-manager-host.ps1",
+        "checks": 47,
+        "log": "docs/validation/release-capacity-110/android-update-manager-host.log"
+      }
+    ],
+    "coverage": [
+      "9,478,052-byte metadata is accepted",
+      "32 MiB metadata boundary is accepted",
+      "cap plus one byte metadata is rejected",
+      "reported received bytes above cap cancel the download, remove its DownloadManager record and clear persisted tracking/verification state",
+      "existing SHA, signer, mandatory, withdrawal and install-boundary regressions pass"
+    ]
+  },
+  "historicalEvidence": {
+    "excludedFromFinalTotals": true,
+    "uiOnlyCandidate": {
+      "apkSha256": "852d17a89984f82f4af9d116c7bacb17b3243675299ce07de3bf237692b508c6",
+      "sourceIdentity": "docs/validation/composition-dock-110/SOURCE-IDENTITY.ui-only.json",
+      "totalChecks": 771,
+      "totalScreenshots": 6,
+      "runs": [
+        {
+          "mode": "phone",
+          "runId": "20261027-220003-phone-f19a046d",
+          "checks": 270
+        },
+        {
+          "mode": "font1.3",
+          "runId": "20261027-220018-font1.3-f52531b7",
+          "checks": 258
+        },
+        {
+          "mode": "landscape",
+          "runId": "20261027-220033-landscape-477e6d62",
+          "checks": 243
+        }
+      ],
+      "evidenceRoot": "docs/validation/composition-dock/852d17a8",
+      "role": "UI-only candidate history; never substitute for the final release's 747-check evidence"
+    },
+    "earlierAttempts": [
+      {
+        "runId": "20261027-210821-phone-d43eefa0",
+        "result": "probe setup failure",
+        "reason": "DownloadedPhoto constructors are package-private; public-only getConstructor lookup failed",
+        "correction": "Use the declared five-argument constructor and setAccessible(true)"
+      },
+      {
+        "runId": "20261027-211537-phone-7774d409",
+        "result": "probe flow failure after rotation applied successfully",
+        "reason": "Undo control belongs to the hidden adjustment panel",
+        "correction": "Click adjustment, use its visible history button, then return to composition"
+      },
+      {
+        "runId": "20261027-212622-phone-27eccc3f",
+        "result": "test-card fixture superseded",
+        "reason": "The final visual sample must show the shipping photograph",
+        "correction": "Use preset_template with its aspect ratio retained and unique EXIF identity"
+      },
+      {
+        "runId": "20261027-213659-phone-6e5bdb8e",
+        "result": "native checks passed but dock screenshot rejected",
+        "reason": "Android first-use Viewing full screen teaching surface dimmed/covered the image",
+        "correction": "Test runner temporarily confirms/restores immersive teaching state; capture checks and closes real Got it surfaces before/after capture"
+      }
+    ],
+    "additionalProbeCorrection": "Wait for the native perspective popup to disappear and the dialog window to regain focus before sending keyboard input.",
+    "earlierEmulatorLifecycleRecord": {
+      "path": "docs/validation/composition-dock-110/CLEANUP.json",
+      "usedAsFinalShutdownEvidence": false,
+      "reason": "The record predates the final runs and has serialGone=false; final cleanup claims use the three run-level cleanup records only."
+    }
+  },
+  "publication": {
+    "userSubsequentlyAuthorizedPublication": true,
+    "backendCapacity017": {
+      "applied": true,
+      "pass": true,
+      "confirmedUtc": "2026-10-27T15:07:52.228Z",
+      "migrationSha256": "e0e82ee6435228ad4c285ab237522541e8b1443e6dff3a410bbea347a4d57178",
+      "evidence": "docs/validation/release-capacity-110/MIGRATION-017-CONFIRMED.json"
+    },
+    "artifactUploadStatus": "Uploaded through the normal Chrome administrator UI; mandatory policy saved and beta release published. Public readback receipt is PUBLICATION.json.",
+    "releaseId": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+    "publishedConfirmed": true,
+    "legacy108UserAction": "Old version 108 must download the same-signer APK from the download page and perform one in-place upgrade; the installed 4 MiB cap cannot be changed remotely.",
+    "mandatory": true,
+    "proofScreenshot": "docs/validation/composition-dock-110/release-110-published.png",
+    "realDownloadManager": {
+      "pass": true,
+      "checks": 35,
+      "bytes": 9478052,
+      "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+      "evidence": "docs/validation/update-large-download/5f42f3a9/20261027-235957-a0eeb80c/",
+      "scope": "Actual Android DownloadManager follows public 307, full bytes/SHA and native PackageManager package/version/signer verified; no installer invoked."
+    },
+    "finalSessionCleanup": "docs/validation/composition-dock-110/CLEANUP-publication.json"
+  },
+  "limitations": {
+    "physicalDeviceComparisonPerformed": false,
+    "rawKernelsRetestedOn110": false,
+    "rawScope": "RAW library inputs are unchanged from the frozen 109 baseline; this composition probe uses a JPEG fixture and does not re-certify RAW decoding kernels.",
+    "hostFixturesAreNotRealApkInstallEvidence": true
+  }
+}

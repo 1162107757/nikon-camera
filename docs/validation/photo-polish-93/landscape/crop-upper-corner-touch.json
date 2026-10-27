@@ -1,0 +1,20 @@
+[
+  {
+    "side": 0,
+    "screenX": 503.0492248535156,
+    "screenY": 406.29998779296875,
+    "deltaX": 31.5,
+    "deltaY": 21,
+    "geometryBefore": "photo-composition-affine-v1:0:13:100000:100000:900000:900000",
+    "geometryAfter": "photo-composition-affine-v1:0:13:132647:132659:900000:900000"
+  },
+  {
+    "side": 1,
+    "screenX": 1274.95068359375,
+    "screenY": 427.29974365234375,
+    "deltaX": -31.5,
+    "deltaY": 21,
+    "geometryBefore": "photo-composition-affine-v1:0:13:132647:132659:900000:900000",
+    "geometryAfter": "photo-composition-affine-v1:0:13:132647:165318:867353:900000"
+  }
+]

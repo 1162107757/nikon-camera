@@ -1,0 +1,49 @@
+{
+  "mode": "landscape",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "candidateApk": "D:\\dev\\ai-project\\nikon\\.tooling\\photo-prototype-92\\candidates\\7b69df3e8ceb7cb018fff1a3553e9dfbc99d4a25a0c4c9ce5b8fd79837e380c8.apk",
+  "candidateApkSha256": "7b69df3e8ceb7cb018fff1a3553e9dfbc99d4a25a0c4c9ce5b8fd79837e380c8",
+  "candidateVersionCode": "92",
+  "candidateVersionName": "0.19.1-beta",
+  "startedAtUtc": "2026-10-24T09:47:37.5395844Z",
+  "settingsBefore": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0"
+  },
+  "nightBefore": {
+    "command": "no",
+    "reported": "Night mode: no",
+    "secureMode": "1",
+    "customType": "-1"
+  },
+  "permissionsBefore": {
+    "android.permission.READ_MEDIA_IMAGES": false,
+    "android.permission.READ_MEDIA_VISUAL_USER_SELECTED": false,
+    "android.permission.POST_NOTIFICATIONS": false
+  },
+  "runId": "e9ebd8e9aa604f27816c83816301cc11",
+  "presetFixture": {
+    "path": "D:\\dev\\ai-project\\nikon\\.tooling\\bluesky-preview\\Bluesky.NCP",
+    "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+    "bytes": 638,
+    "storage": "Instrumentation parameter; production parser; own JPEG draft only"
+  },
+  "settingsObserved": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "0",
+    "user_rotation": "0",
+    "night": {
+      "command": "no",
+      "reported": "Night mode: no",
+      "secureMode": "1",
+      "customType": "-1"
+    },
+    "permissions": {
+      "android.permission.READ_MEDIA_IMAGES": true,
+      "android.permission.READ_MEDIA_VISUAL_USER_SELECTED": false,
+      "android.permission.POST_NOTIFICATIONS": true
+    }
+  }
+}

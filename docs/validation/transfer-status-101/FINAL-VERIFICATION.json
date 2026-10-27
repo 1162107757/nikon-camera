@@ -1,0 +1,86 @@
+{
+  "versionCode": 101,
+  "apkSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+  "deliveryReady": true,
+  "productionInputsUnchangedSinceBuild": true,
+  "published": false,
+  "published100Preserved": true,
+  "nativeReports": [
+    {
+      "path": "docs/validation/transfer-status-101/be4352ee/20261025-125841-phone-63ad94/20261025-125841-phone-63ad94/report.json",
+      "sha256": "4460485e0ace7d66bc5be13e0cb0cfc8725fc1dd948fb6a06fddea8fc47fe9e9",
+      "pass": true,
+      "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+      "mode": "phone",
+      "checks": 58,
+      "shutterCommands": null
+    },
+    {
+      "path": "docs/validation/transfer-status-101/be4352ee/20261025-125850-large-font-d0f878/20261025-125850-large-font-d0f878/report.json",
+      "sha256": "39eaee447a7346f94891867a4421a6d5c197a8141d1fc76184a80c8f0b66493c",
+      "pass": true,
+      "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+      "mode": "large-font",
+      "checks": 58,
+      "shutterCommands": null
+    },
+    {
+      "path": "docs/validation/transfer-status-101/be4352ee/20261025-125900-rail-ffece6/20261025-125900-rail-ffece6/report.json",
+      "sha256": "03c02a66300b82124e3acf76332334f45fe5e70d6ea153b047a7173d0460359c",
+      "pass": true,
+      "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+      "mode": "rail",
+      "checks": 58,
+      "shutterCommands": null
+    },
+    {
+      "path": "docs/validation/remote-capture-101/be4352ee/font1.3-vendor10-78a9486c/run/report.json",
+      "sha256": "7e9634391fbcf6eb8edd6af911e38db1490c6b19e988379bfc4f27f39b61acac",
+      "pass": true,
+      "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+      "mode": "font1.3",
+      "checks": 67,
+      "shutterCommands": 0
+    },
+    {
+      "path": "docs/validation/remote-capture-101/be4352ee/landscape-vendor10-fd19aad0/run/report.json",
+      "sha256": "643e7f33d34611b3728585105ce990a103efbe46356c3efa8399d2fde0077600",
+      "pass": true,
+      "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+      "mode": "landscape",
+      "checks": 67,
+      "shutterCommands": 0
+    },
+    {
+      "path": "docs/validation/remote-capture-101/be4352ee/phone-vendor10-b1c0b120/run/report.json",
+      "sha256": "1b009b0e6a0bde2cdc8349d85a83c9cb0c59fc923a86633ac8c454f0651f5bdb",
+      "pass": true,
+      "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+      "mode": "phone",
+      "checks": 67,
+      "shutterCommands": 0
+    }
+  ],
+  "nativeAssertionExecutions": 375,
+  "finalScreenshotCount": 36,
+  "host": {
+    "album": 899,
+    "capability": 33,
+    "gateway": 22,
+    "projectStore": 356,
+    "projectFolders": 100,
+    "transferProgress": 23,
+    "raw": 126,
+    "projectAuto": 53,
+    "wifiRuntime": 29,
+    "nodeAnalysisTests": 3
+  },
+  "limits": [
+    "No physical camera/phone test",
+    "No demonstrated real Wi-Fi throughput improvement",
+    "No101 upload/deployment or mandatory-policy change",
+    "Native synthetic states and fake PTP peer; no real shutter",
+    "Manual filename native assertion label is broader than its implementation; see IMPLEMENTATION.md"
+  ],
+  "cleanup": "CLEANUP.json"
+}

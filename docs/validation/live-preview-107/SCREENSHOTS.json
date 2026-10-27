@@ -1,0 +1,92 @@
+[
+  {
+    "mode": "phone",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/01-editor-adjustment.png",
+    "sha256": "2b01fd9a696f387d447564ac755d679874f39bc9a9ce85075780dba41a97e15c"
+  },
+  {
+    "mode": "phone",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/02-hsl.png",
+    "sha256": "09d5b1b7bd5e5f69e70bf160ff6ae26872953b3995cfd6eea3540198972fe09c"
+  },
+  {
+    "mode": "phone",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/03-curves.png",
+    "sha256": "5c6c937939286d1ecd84f1fa1fabc3273e9375605b5f6e3f837725b00eddbaab"
+  },
+  {
+    "mode": "phone",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/04-border.png",
+    "sha256": "b4b402c953d365cfbf0b760ed905f64cb437992b814f0d667cf6c897fb67bb92"
+  },
+  {
+    "mode": "phone",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/05-album-version.png",
+    "sha256": "c86478c16e5de224fcb24f7ad38b2d5694c3db444027d47360c3ae59372d536b"
+  },
+  {
+    "mode": "phone",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000713-phone-f58a58/20261027-000713-phone-f58a58/06-version-chooser.png",
+    "sha256": "6c8ca3c4f0a56e92da4e15bcb40cf4bc074d54f0037fd62f0c80022653820129"
+  },
+  {
+    "mode": "font1.3",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/01-editor-adjustment.png",
+    "sha256": "b63f97aaf9084860b21283216f08df7e002a1bde0bb1ff5e82e778d1e9149a83"
+  },
+  {
+    "mode": "font1.3",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/02-hsl.png",
+    "sha256": "a9cbbe10d3dea79ab24e7f1f067d000fe9c203107b29743aadf5c689f61a2868"
+  },
+  {
+    "mode": "font1.3",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/03-curves.png",
+    "sha256": "27b1bf8a59fef7518f17233e1601c2a9624e2f6a0b17b8aedd6c28f35e963bfa"
+  },
+  {
+    "mode": "font1.3",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/04-border.png",
+    "sha256": "ddfbaa8be97e44fa467c5b0d20a1803d7fcacf82e6130162605e346a9f17f90d"
+  },
+  {
+    "mode": "font1.3",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/05-album-version.png",
+    "sha256": "d779eca6cbe9d1f891ea339bddf2493e0ff48a1bfcc8e7f3b41ab56c5722ef40"
+  },
+  {
+    "mode": "font1.3",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-000934-font1.3-39f3cb/20261027-000934-font1.3-39f3cb/06-version-chooser.png",
+    "sha256": "745a4f86848a19292c9daaceb876b588673fa88eb9b5d0236f09337cd0d07ced"
+  },
+  {
+    "mode": "landscape",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/01-editor-adjustment.png",
+    "sha256": "d7dd457f86eddc2307f9e951db69bcbd84ccc660852dca7385995115fdfca128"
+  },
+  {
+    "mode": "landscape",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/02-hsl.png",
+    "sha256": "7470301d9e22f4e271928e929c3c874f9aa63dbcb7b8d40c8e3384405d589c40"
+  },
+  {
+    "mode": "landscape",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/03-curves.png",
+    "sha256": "7d93d7249d84edf2e7bd4de35809f37ae6043bc134b46a705b16378fe54d5440"
+  },
+  {
+    "mode": "landscape",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/04-border.png",
+    "sha256": "e38893f27a7ed903bf2305bb89db0f4ad2d70417bfa4eb252f64ebefe4fe0628"
+  },
+  {
+    "mode": "landscape",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/05-album-version.png",
+    "sha256": "d657facb9052956966624bbe634a338761700901f90c01e5b5cc751534d6e7d7"
+  },
+  {
+    "mode": "landscape",
+    "path": "D:/dev/ai-project/nikon/docs/validation/live-preview-107/b05fc8e8/20261027-001022-landscape-9fcfd8/20261027-001022-landscape-9fcfd8/06-version-chooser.png",
+    "sha256": "b09d84911db07564e448f052f6a76ec9abe13030176d3a38cf5c7d3a916b5687"
+  }
+]

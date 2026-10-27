@@ -1,0 +1,32 @@
+Huevia RAW development uses LibRaw 0.22.3, Copyright LibRaw LLC and other authors
+listed in the accompanying COPYRIGHT file. LibRaw is used under LGPL version 2.1.
+The alternative upstream CDDL license is also retained for reference.
+
+The complete LibRaw source archive matching this build is included in this APK as
+assets/third-party/libraw/LibRaw-0.22.3-source.zip.
+Official original source: https://www.libraw.org/data/LibRaw-0.22.3.zip
+Original SHA-256: 114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac
+The bundled BUILD-IDENTITY.json identifies the actual source and libraries. The
+standard Huevia build uses the unmodified official source. Replacement builds
+made with -AllowModifiedLibRaw bundle their matching modified source instead.
+
+libraw.so is a separate dynamically linked shared library. The JNI bridge source,
+Java RAW adapter, settings model and reproducible build script are included beside
+the source archive. Build with Android NDK 28.2.13676358 / API 26. Both 64-bit
+ABI sets have 16KiB-compatible LOAD segments. The official NDK 32-bit libc++
+runtimes retain 4KiB alignment for legacy 32-bit Android processes. Per-library
+alignments are recorded in BUILD-IDENTITY.json. The application does not prohibit
+reverse engineering for debugging modifications to this LGPL-covered library.
+An ABI-compatible libraw.so may be substituted; when changing its ABI, rebuild the
+included bridge. Repack/sign/install a modified APK using Android's normal tools.
+Use a distinct runtime version string or clear the private RAW development cache
+when changing decoding behaviour. Existing RAW originals must remain untouched.
+
+LLVM libc++_shared.so is provided by Android NDK r28c and is covered by the bundled
+LLVM-NOTICE.txt (Apache 2.0 with LLVM exceptions and the listed component notices).
+
+This build enables Android system zlib, not optional RawSpeed, Adobe DNG SDK,
+external JPEG/JPEG2000 or proprietary decoder plugins. Unsupported camera modes
+and damaged RAW files return an error; they do not fall back to an embedded JPEG.
+Full active-pixel development feeds an 8-bit sRGB PNG workspace. The Java image
+editor is not a persistent linear 16-bit RAW pipeline.

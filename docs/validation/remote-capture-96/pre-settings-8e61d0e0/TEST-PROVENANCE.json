@@ -1,0 +1,33 @@
+{
+  "inputs": [
+    {
+      "path": "tests/remote-capture-device-probe/src/cc/huevia/remotecaptureqa/FakeNikonPeer.java",
+      "sha256": "cc4b139600adbdd53c6c16a3b8ec35367cf75ebb8492bad04ef77a45b377afad"
+    },
+    {
+      "path": "tests/remote-capture-device-probe/src/cc/huevia/remotecaptureqa/RemoteCaptureProbe.java",
+      "sha256": "8c5abb6939ac915bad91624dd32fee8946c00e63ac889aaf3414aa21141421d0"
+    },
+    {
+      "path": "tests/remote-capture-device-probe/AndroidManifest.xml",
+      "sha256": "7d08e48eabc835d6078614f9bc9b4c65bd64d7a32252cf84f52acfff39f46422"
+    },
+    {
+      "path": "tests/remote-capture-device-probe/build.ps1",
+      "sha256": "a359df5d6ff3ca30dfa541db1b822e44a7f6f0ebcaba02813e4434bb8d10468d"
+    },
+    {
+      "path": "tests/remote-capture-device-probe/run.ps1",
+      "sha256": "ccdc26698788823a6a1d7a0291bab14695004692a4ab9fb65dcc77f6c1126b90"
+    },
+    {
+      "path": "tests/remote-capture-device-probe/collect.ps1",
+      "sha256": "36a092b1a7708b6c34529549588fb42242e484e8011e6b7f5146be4b186549d0"
+    }
+  ],
+  "sampleSource": "docs/design-review/remote-capture-20261024/assets/live-view.png",
+  "sampleSha256": "067e391dcb5a61c20021dc9a4a7eb4c324829592a5de747dd1f4a958ce44c8d9",
+  "apkSha256": "1bb33e01b6aae37f4d6ed2340cff073dd6f0289bb0b4d5509610169a51a97382",
+  "collector96Sha256": "e1388a0d22093fe916fbd77b8bfa01f728012c918c89df81e6dd8dec3b216300",
+  "sourceDrift": []
+}

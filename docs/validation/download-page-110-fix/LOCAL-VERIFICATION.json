@@ -1,0 +1,23 @@
+{
+  "verifiedAt": "2026-10-27T19:12:09.084Z",
+  "cause": "Public download page retained a 4 MiB metadata limit and rejected the valid 9478052-byte release110.",
+  "productionChange": "download/download.js capacity aligned to 32 MiB; canonical route, hash, signer, numeric and external destination validation retained.",
+  "sourceSha256": "4321e79ef1d3f3ec2f7019c6983f771802147991c921c35b423707eec8156b30",
+  "red": {
+    "tests": 7,
+    "pass": 5,
+    "fail": 2,
+    "log": "regression-before.log"
+  },
+  "green": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0,
+    "log": "regression-after.log"
+  },
+  "scenarios": [
+    "Both public origins: 4 MiB +1, actual release110 size9478052, 32 MiB render visible release and a same-origin APK link",
+    "32 MiB +1 and malformed version/hash/size remain rejected",
+    "Existing canonical path and unsafe URL rejection cases retained"
+  ]
+}

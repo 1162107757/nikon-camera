@@ -1,0 +1,2002 @@
+{
+  "runId": "2bdd58ef36ea429ba1e978bd831eca0e",
+  "mode": "phone",
+  "savedReasonOnly": false,
+  "apkSha256": "d4b43a9ad502a332cc0f1cdc52e859e0b981197730d827dcf38a5fb9290aa02c",
+  "versionCode": "93",
+  "scope": "v93 text\/alignment and actual native control geometry\/framebuffer, editor tools\/detail\/histogram; own JPEG\/draft fixtures, no backend\/export\/progress\/dark repetition.",
+  "fontScale": 1,
+  "density": 2.625,
+  "orientation": 1,
+  "nightMask": 16,
+  "presetFixture": {
+    "status": "PARSED",
+    "name": "Bluesky.NCP",
+    "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+    "bytes": 638,
+    "storage": "own JPEG draft only, no preset library writes"
+  },
+  "strengthNoOp": {
+    "status": "PASS",
+    "hasDraft": true,
+    "exported": false,
+    "undo": 0,
+    "previewRequest": 5,
+    "draftSha256": "6048067eb2cb70a4bfb9a1de93ebc09e135f696ebee8d64e12ceefc18c4de788",
+    "draftModified": 1792838283656
+  },
+  "status": "FAIL",
+  "stage": "histogram-editor-overlay",
+  "failure": "java.lang.AssertionError: histogram-warning-pattern-is-painted-in-native-framebuffer-shadow-default",
+  "checks": 487,
+  "assertions": [
+    {
+      "name": "emulator-hardware-only",
+      "passed": true
+    },
+    {
+      "name": "exact-candidate-APK-bytes",
+      "passed": true
+    },
+    {
+      "name": "candidate-version",
+      "passed": true
+    },
+    {
+      "name": "probe-run-identity-valid",
+      "passed": true
+    },
+    {
+      "name": "prototype-scope-excludes-export-progress",
+      "passed": true
+    },
+    {
+      "name": "saved-reason-target-is-exclusive-landscape-prototype-scope",
+      "passed": true
+    },
+    {
+      "name": "main-activity-ready",
+      "passed": true
+    },
+    {
+      "name": "requested-native-orientation",
+      "passed": true
+    },
+    {
+      "name": "actual-font-scale",
+      "passed": true
+    },
+    {
+      "name": "actual-system-night-mode",
+      "passed": true
+    },
+    {
+      "name": "native-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "real-photo-detail-entry-present",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-visible-and-48dp-touch-target",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-has-18dp-visible-content-icon",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-wraps-content-without-large-empty-leading-space",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-editor-detail-entry-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-has-6dp-icon-gap-and-medium-text",
+      "passed": true
+    },
+    {
+      "name": "editor-compare-48dp-control-is-fully-visible-inside-host",
+      "passed": true
+    },
+    {
+      "name": "editor-compare-has-no-resolved-negative-margin",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-uses-inset-glass-not-white-pill",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-shares-real-photo-glass",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-real-photo-glass-ready",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-glass-samples-photo-with-bounded-memory",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-native-framebuffer-available",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-light-icon-is-painted-over-dark-glass",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-glass-visual-is-compact-32dp-with-48dp-hit-area",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-anchors-to-photo-stage-lower-left",
+      "passed": true
+    },
+    {
+      "name": "actual-photo-detail-entry-performClick-handled",
+      "passed": true
+    },
+    {
+      "name": "detail-dialog-opens",
+      "passed": true
+    },
+    {
+      "name": "detail-first-real-frame",
+      "passed": true
+    },
+    {
+      "name": "detail-page-and-header-real-views",
+      "passed": true
+    },
+    {
+      "name": "detail-header-does-not-intersect-system-bars-or-cutout",
+      "passed": true
+    },
+    {
+      "name": "detail-safe-insets-applied-exactly-once",
+      "passed": true
+    },
+    {
+      "name": "detail-no-double-top-padding",
+      "passed": true
+    },
+    {
+      "name": "detail-white-system-bar-icons",
+      "passed": true
+    },
+    {
+      "name": "detail-photo-owns-full-safe-stage-without-bottom-panel",
+      "passed": true
+    },
+    {
+      "name": "detail-floating-zoom-palette-holds-only-three-compact-buttons",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-has-separate-real-48dp-action-overlay",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-is-26dp-upper-right-stage-tag",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-avoids-header-and-comparison",
+      "passed": true
+    },
+    {
+      "name": "detail-header-has-52dp-two-line-title-and-filename",
+      "passed": true
+    },
+    {
+      "name": "detail-header-uses-real-bound-photo-display-name",
+      "passed": true
+    },
+    {
+      "name": "detail-comparison-width-with-40dp-face-and-48dp-hit-area",
+      "passed": true
+    },
+    {
+      "name": "detail-zoom-palette-in-safe-stage",
+      "passed": true
+    },
+    {
+      "name": "detail-glass-real-photo-backdrop-ready",
+      "passed": true
+    },
+    {
+      "name": "detail-glass-samples-real-photo-with-bounded-memory",
+      "passed": true
+    },
+    {
+      "name": "detail-has-no-permanent-explanatory-footer",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-native-framebuffer-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-compare-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-当前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-当前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-当前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-当前-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-调色前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-调色前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-调色前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-compare-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-zoom-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-适应-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-适应-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-适应-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-适应-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-100%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-100%-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-100%-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-200%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-200%-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-200%-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-zoom-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-title-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-filename-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-metric-test-point-is-outside-26dp-tag-inside-48dp-target",
+      "passed": true
+    },
+    {
+      "name": "detail-window-has-input-focus-before-metric-touch",
+      "passed": true
+    },
+    {
+      "name": "native-touchscreen-injection-0",
+      "passed": true
+    },
+    {
+      "name": "native-touchscreen-injection-1",
+      "passed": true
+    },
+    {
+      "name": "metric-outer-touch-area-opens-real-information-dialog",
+      "passed": true
+    },
+    {
+      "name": "metric-information-retains-pixel-and-framing-semantics",
+      "passed": true
+    },
+    {
+      "name": "detail-window-focus-restored-after-information",
+      "passed": true
+    },
+    {
+      "name": "detail-starts-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-full-source-not-1280-preview",
+      "passed": true
+    },
+    {
+      "name": "100-percent-ready",
+      "passed": true
+    },
+    {
+      "name": "100-percent-is-one-physical-pixel",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-native-framebuffer-100",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-compare-palette-100",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-当前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-当前-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-当前-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-当前-100",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-调色前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-调色前-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-调色前-100",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-compare-palette-100",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-zoom-palette-100",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-适应-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-适应-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-适应-100",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-100%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-100%-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-100%-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-100%-100",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-200%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-200%-100",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-200%-100",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-zoom-palette-100",
+      "passed": true
+    },
+    {
+      "name": "100-percent-regions-unsampled",
+      "passed": true
+    },
+    {
+      "name": "region-pixels-identical-to-full-JPEG-source",
+      "passed": true
+    },
+    {
+      "name": "physical-framebuffer-1-to-1-high-frequency-pixels",
+      "passed": true
+    },
+    {
+      "name": "200-percent-ready",
+      "passed": true
+    },
+    {
+      "name": "200-percent-scale",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-native-framebuffer-200",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-compare-palette-200",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-当前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-当前-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-当前-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-当前-200",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-调色前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-调色前-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-调色前-200",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-compare-palette-200",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-zoom-palette-200",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-适应-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-适应-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-适应-200",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-100%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-100%-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-100%-200",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-200%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-200%-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-200%-200",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-200%-200",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-zoom-palette-200",
+      "passed": true
+    },
+    {
+      "name": "zoom-has-live-mini-map",
+      "passed": true
+    },
+    {
+      "name": "detail-locator-only-visible-when-magnified-true",
+      "passed": true
+    },
+    {
+      "name": "detail-locator-does-not-reintroduce-footer",
+      "passed": true
+    },
+    {
+      "name": "detail-locator-is-76x98dp-raised-76dp",
+      "passed": true
+    },
+    {
+      "name": "detail-locator-does-not-cover-hint-or-zoom",
+      "passed": true
+    },
+    {
+      "name": "mini-map-pan-ready",
+      "passed": true
+    },
+    {
+      "name": "mini-map-repositions-real-viewport",
+      "passed": true
+    },
+    {
+      "name": "fit-again-ready",
+      "passed": true
+    },
+    {
+      "name": "fit-control-restores-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-locator-only-visible-when-magnified-false",
+      "passed": true
+    },
+    {
+      "name": "detail-locator-does-not-reintroduce-footer",
+      "passed": true
+    },
+    {
+      "name": "local-real-preset-fixture-SHA-matches-runner",
+      "passed": true
+    },
+    {
+      "name": "native-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "editor-loads-real-persisted-draft",
+      "passed": true
+    },
+    {
+      "name": "actual-photo-detail-entry-performClick-handled",
+      "passed": true
+    },
+    {
+      "name": "detail-dialog-opens",
+      "passed": true
+    },
+    {
+      "name": "detail-first-real-frame",
+      "passed": true
+    },
+    {
+      "name": "detail-page-and-header-real-views",
+      "passed": true
+    },
+    {
+      "name": "detail-header-does-not-intersect-system-bars-or-cutout",
+      "passed": true
+    },
+    {
+      "name": "detail-safe-insets-applied-exactly-once",
+      "passed": true
+    },
+    {
+      "name": "detail-no-double-top-padding",
+      "passed": true
+    },
+    {
+      "name": "detail-white-system-bar-icons",
+      "passed": true
+    },
+    {
+      "name": "detail-photo-owns-full-safe-stage-without-bottom-panel",
+      "passed": true
+    },
+    {
+      "name": "detail-floating-zoom-palette-holds-only-three-compact-buttons",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-has-separate-real-48dp-action-overlay",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-is-26dp-upper-right-stage-tag",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-avoids-header-and-comparison",
+      "passed": true
+    },
+    {
+      "name": "detail-header-has-52dp-two-line-title-and-filename",
+      "passed": true
+    },
+    {
+      "name": "detail-header-uses-real-bound-photo-display-name",
+      "passed": true
+    },
+    {
+      "name": "detail-comparison-width-with-40dp-face-and-48dp-hit-area",
+      "passed": true
+    },
+    {
+      "name": "detail-zoom-palette-in-safe-stage",
+      "passed": true
+    },
+    {
+      "name": "detail-glass-real-photo-backdrop-ready",
+      "passed": true
+    },
+    {
+      "name": "detail-glass-samples-real-photo-with-bounded-memory",
+      "passed": true
+    },
+    {
+      "name": "detail-has-no-permanent-explanatory-footer",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-native-framebuffer-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-compare-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-当前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-当前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-当前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-当前-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-调色前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-调色前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-调色前-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-compare-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-zoom-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-适应-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-适应-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-适应-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-适应-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-100%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-100%-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-100%-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-200%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-200%-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-200%-fit",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-zoom-palette-fit",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-title-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-filename-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-metric-test-point-is-outside-26dp-tag-inside-48dp-target",
+      "passed": true
+    },
+    {
+      "name": "detail-window-has-input-focus-before-metric-touch",
+      "passed": true
+    },
+    {
+      "name": "native-touchscreen-injection-0",
+      "passed": true
+    },
+    {
+      "name": "native-touchscreen-injection-1",
+      "passed": true
+    },
+    {
+      "name": "metric-outer-touch-area-opens-real-information-dialog",
+      "passed": true
+    },
+    {
+      "name": "metric-information-retains-pixel-and-framing-semantics",
+      "passed": true
+    },
+    {
+      "name": "detail-window-focus-restored-after-information",
+      "passed": true
+    },
+    {
+      "name": "detail-current-matches-unframed-composition",
+      "passed": true
+    },
+    {
+      "name": "detail-is-not-editor-framed-preview",
+      "passed": true
+    },
+    {
+      "name": "effect-at-100",
+      "passed": true
+    },
+    {
+      "name": "before-registered",
+      "passed": true
+    },
+    {
+      "name": "before-same-composition-dimensions",
+      "passed": true
+    },
+    {
+      "name": "before-preserves-anchor-and-scale",
+      "passed": true
+    },
+    {
+      "name": "before-removes-real-manual-colour-effect",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-native-framebuffer-before",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-compare-palette-before",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-当前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-当前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-当前-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-当前-before",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-调色前-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-调色前",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-调色前-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-调色前-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-调色前-before",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-compare-palette-before",
+      "passed": true
+    },
+    {
+      "name": "detail-controls-real-glass-detail-zoom-palette-before",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-适应-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-适应",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-适应-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-适应-before",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-100%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-100%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-100%-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-100%-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-fill-is-painted-in-real-framebuffer-100%-before",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-detail-control-200%-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "detail-control-medium-type-and-real-hit-area-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-uses-real-inset-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-is-native-ripple-200%",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-face-equal-vertical-insets-200%-before",
+      "passed": true
+    },
+    {
+      "name": "detail-selected-corner-is-outer-radius-minus-inset-200%-before",
+      "passed": true
+    },
+    {
+      "name": "detail-shell-has-equal-left-top-right-bottom-gap-detail-zoom-palette-before",
+      "passed": true
+    },
+    {
+      "name": "current-restored",
+      "passed": true
+    },
+    {
+      "name": "explicit-same-file-rebind-invalidates-detail-dialog",
+      "passed": true
+    },
+    {
+      "name": "rebound-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "editor-has-five-tools-sharing-one-panel-host",
+      "passed": true
+    },
+    {
+      "name": "editor-header-has-symmetric-leading-and-export-widths",
+      "passed": true
+    },
+    {
+      "name": "editor-filename-group-is-centered-in-header",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-editor-filename-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-editor-export-entry-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "editor-real-tool-tab-0",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-selects-real-panel-滤镜",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-keeps-photo-pixels-stage-and-draft-滤镜",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-filter-source-onlineButton-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "filter-source-has-real-fixed-face-onlineButton",
+      "passed": true
+    },
+    {
+      "name": "filter-source-shell34-and-selected28-face-onlineButton",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-filter-source-mineButton-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "filter-source-has-real-fixed-face-mineButton",
+      "passed": true
+    },
+    {
+      "name": "filter-source-shell34-and-selected28-face-mineButton",
+      "passed": true
+    },
+    {
+      "name": "editor-real-tool-tab-1",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-selects-real-panel-调节",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-keeps-photo-pixels-stage-and-draft-调节",
+      "passed": true
+    },
+    {
+      "name": "adjustment-caption-undo-and-exact-value-share-one-row",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-caption-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-value-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "all-thirteen-real-parameter-controls-retained",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-亮度-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-亮度",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-曝光-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-曝光",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-对比度-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-对比度",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-高光-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-高光",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-阴影-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-阴影",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-白色-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-白色",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-黑色-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-黑色",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-色温-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-色温",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-色调-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-色调",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-饱和度-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-饱和度",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-自然饱和度-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-自然饱和度",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-清晰度-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-清晰度",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-parameter-label-锐化-10.5sp",
+      "passed": true
+    },
+    {
+      "name": "parameter-label-is-one-line-锐化",
+      "passed": true
+    },
+    {
+      "name": "editor-real-tool-tab-2",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-selects-real-panel-构图",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-keeps-photo-pixels-stage-and-draft-构图",
+      "passed": true
+    },
+    {
+      "name": "composition-has-one-summary-and-action-row-without-footer",
+      "passed": true
+    },
+    {
+      "name": "composition-open-and-reset-share-one-row",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-composition-action-打开构图-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "composition-action-has-centered34-face-and48-hit-0",
+      "passed": true
+    },
+    {
+      "name": "composition-actions-are-unclipped-and-aligned-0",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-composition-action-重置-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "composition-action-has-centered34-face-and48-hit-1",
+      "passed": true
+    },
+    {
+      "name": "composition-actions-are-unclipped-and-aligned-1",
+      "passed": true
+    },
+    {
+      "name": "editor-real-tool-tab-3",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-selects-real-panel-边框",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-keeps-photo-pixels-stage-and-draft-边框",
+      "passed": true
+    },
+    {
+      "name": "border-information-has-one-label-and-right-aligned-value-0",
+      "passed": true
+    },
+    {
+      "name": "border-label-columns-have-consistent-width-0",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-label-0-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-value-0-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "border-information-has-one-label-and-right-aligned-value-1",
+      "passed": true
+    },
+    {
+      "name": "border-label-columns-have-consistent-width-1",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-label-1-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-value-1-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "border-information-has-one-label-and-right-aligned-value-2",
+      "passed": true
+    },
+    {
+      "name": "border-label-columns-have-consistent-width-2",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-label-2-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-value-2-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "border-information-has-one-label-and-right-aligned-value-3",
+      "passed": true
+    },
+    {
+      "name": "border-label-columns-have-consistent-width-3",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-label-3-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-value-3-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "border-information-has-one-label-and-right-aligned-value-4",
+      "passed": true
+    },
+    {
+      "name": "border-label-columns-have-consistent-width-4",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-label-4-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-value-4-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "border-information-has-one-label-and-right-aligned-value-5",
+      "passed": true
+    },
+    {
+      "name": "border-label-columns-have-consistent-width-5",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-label-5-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-border-value-5-11.5sp",
+      "passed": true
+    },
+    {
+      "name": "editor-real-tool-tab-4",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-selects-real-panel-配方",
+      "passed": true
+    },
+    {
+      "name": "editor-tool-switch-keeps-photo-pixels-stage-and-draft-配方",
+      "passed": true
+    },
+    {
+      "name": "recipe-save-copy-has-no-extra-leading-icon",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-recipe-save-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "recipe-has-no-permanent-explanatory-footer",
+      "passed": true
+    },
+    {
+      "name": "recipe-empty-copy-is-short-one-line",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-recipe-empty-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "filter-grid-opens-real-selector",
+      "passed": true
+    },
+    {
+      "name": "filter-grid-has-real-search-input",
+      "passed": true
+    },
+    {
+      "name": "filter-grid-search-updates-shared-query",
+      "passed": true
+    },
+    {
+      "name": "filter-grid-zero-query-updates-real-count-and-title",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-grid-title-14.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-grid-count-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "filter-zero-results-copy-is-centered",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-grid-empty-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "filter-status-is-hidden-or-single-line-issue-only",
+      "passed": true
+    },
+    {
+      "name": "closing-filter-search-keeps-current-edit",
+      "passed": true
+    },
+    {
+      "name": "own-fixture-pending-saves-drained",
+      "passed": true
+    },
+    {
+      "name": "strength-value-opens-real-integer-input",
+      "passed": true
+    },
+    {
+      "name": "strength-input-starts-at-real-selected-preset-value",
+      "passed": true
+    },
+    {
+      "name": "own-fixture-pending-saves-drained",
+      "passed": true
+    },
+    {
+      "name": "same-strength-apply-is-true-no-op-for-flags-undo-preview-and-draft-bytes",
+      "passed": true
+    },
+    {
+      "name": "manual-value-opens-real-exact-input",
+      "passed": true
+    },
+    {
+      "name": "manual-value-input-is-editable",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-exact-title-14.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-exact-message-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-exact-button-1-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-exact-button-2-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-exact-input-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "exact-parameter-range-is-one-short-line",
+      "passed": true
+    },
+    {
+      "name": "manual-out-of-range-keeps-dialog-and-edit-unchanged",
+      "passed": true
+    },
+    {
+      "name": "precise-manual-edit-rendered",
+      "passed": true
+    },
+    {
+      "name": "exact-exposure-input-updates-real-edit",
+      "passed": true
+    },
+    {
+      "name": "precise-manual-undo-rendered",
+      "passed": true
+    },
+    {
+      "name": "one-undo-restores-exact-input-step",
+      "passed": true
+    },
+    {
+      "name": "parameter-caption-opens-help",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-help-title-14.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-help-message-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-parameter-help-button-1-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "composition-tab-opens-summary-before-workspace",
+      "passed": true
+    },
+    {
+      "name": "composition-entry-opens-real-crop-workspace",
+      "passed": true
+    },
+    {
+      "name": "crop-has-real-rotate-and-cancel-actions",
+      "passed": true
+    },
+    {
+      "name": "crop-rotate-has-no-offset-compound-icon",
+      "passed": true
+    },
+    {
+      "name": "crop-rotate-has-no-offset-compound-icon",
+      "passed": true
+    },
+    {
+      "name": "crop-rotate-has-no-offset-compound-icon",
+      "passed": true
+    },
+    {
+      "name": "crop-rotate-has-no-offset-compound-icon",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-crop-rotate-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "crop-has-one-short-summary-line",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-crop-summary-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "crop-has-no-permanent-drag-instruction",
+      "passed": true
+    },
+    {
+      "name": "crop-cancel-does-not-change-draft-or-undo",
+      "passed": true
+    },
+    {
+      "name": "composition-workspace-reopens-after-cancel",
+      "passed": true
+    },
+    {
+      "name": "crop-has-real-apply-action",
+      "passed": true
+    },
+    {
+      "name": "crop-applied-rendered",
+      "passed": true
+    },
+    {
+      "name": "crop-apply-is-one-real-undo-step",
+      "passed": true
+    },
+    {
+      "name": "crop-undo-rendered",
+      "passed": true
+    },
+    {
+      "name": "one-undo-restores-crop-application",
+      "passed": true
+    },
+    {
+      "name": "border-real-template-entry-0",
+      "passed": true
+    },
+    {
+      "name": "border-real-template-entry-1",
+      "passed": true
+    },
+    {
+      "name": "border-real-template-entry-2",
+      "passed": true
+    },
+    {
+      "name": "border-real-template-entry-3",
+      "passed": true
+    },
+    {
+      "name": "border-fields-and-secondary-settings-are-reachable",
+      "passed": true
+    },
+    {
+      "name": "border-settings-opens-real-dialog",
+      "passed": true
+    },
+    {
+      "name": "border-information-checkbox-has-48dp-touch-size-0",
+      "passed": true
+    },
+    {
+      "name": "border-information-checkbox-has-48dp-touch-size-1",
+      "passed": true
+    },
+    {
+      "name": "border-information-checkbox-has-48dp-touch-size-2",
+      "passed": true
+    },
+    {
+      "name": "border-information-checkbox-has-48dp-touch-size-3",
+      "passed": true
+    },
+    {
+      "name": "border-information-checkbox-has-48dp-touch-size-4",
+      "passed": true
+    },
+    {
+      "name": "border-information-checkbox-has-48dp-touch-size-5",
+      "passed": true
+    },
+    {
+      "name": "border-information-settings-have-real-checkboxes",
+      "passed": true
+    },
+    {
+      "name": "closing-border-settings-does-not-change-edit",
+      "passed": true
+    },
+    {
+      "name": "recipe-save-current-entry-is-available",
+      "passed": true
+    },
+    {
+      "name": "recipe-entry-opens-real-name-input",
+      "passed": true
+    },
+    {
+      "name": "recipe-dialog-contains-name-input",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-recipe-name-title-14.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-recipe-name-message-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-recipe-name-button-1-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-recipe-name-button-2-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-tool-recipe-name-input-13.0sp",
+      "passed": true
+    },
+    {
+      "name": "cancel-recipe-name-keeps-edit-without-saving-recipe",
+      "passed": true
+    },
+    {
+      "name": "all-subflows-return-to-same-editor-photo-stage",
+      "passed": true
+    },
+    {
+      "name": "freeze-export-snapshot",
+      "passed": true
+    },
+    {
+      "name": "histogram-real-preview-statistics",
+      "passed": true
+    },
+    {
+      "name": "histogram-glass-real-photo-backdrop-ready",
+      "passed": true
+    },
+    {
+      "name": "histogram-glass-bounded-real-backdrop",
+      "passed": true
+    },
+    {
+      "name": "histogram-overlay-does-not-move-photo-or-tools",
+      "passed": true
+    },
+    {
+      "name": "histogram-shadow-header-full-width-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-highlight-header-full-width-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-header-full-glyphs-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-chip-native-framebuffer-default",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-histogram-mode-luminance-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-histogram-mode-rgb-12.0sp",
+      "passed": true
+    },
+    {
+      "name": "compact-type-size-histogram-chip-shadow-11.0sp",
+      "passed": true
+    },
+    {
+      "name": "histogram-chip-hit-and-minimum-padding-shadow-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-swatch-actual-draw-bounds-8dp-centered-shadow-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-swatch-and-text-group-have-centered-padding-and-4dp-gap-shadow-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-chip-real-face-28dp-centered-in-48dp-hit-shadow-default",
+      "passed": true
+    },
+    {
+      "name": "histogram-warning-pattern-is-painted-in-native-framebuffer-shadow-default",
+      "passed": false
+    }
+  ],
+  "cleanup": [
+    {
+      "draft": "\/data\/data\/cc.huevia\/files\/photo-edit-drafts\/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\/2e16d5d68865aeffe59992ffa9ce2590c65ecfb57cf96f196213edcebd88e641.draft",
+      "absent": true
+    },
+    {
+      "fixture": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/files\/Pictures\/camera-album\/image-upgrade-qa-9dcb6a06-a25f-4555-9f65-dfd65528ca17__GRID.JPG",
+      "shaBeforeDelete": "33892c618102339abee3aa52cbe8952db1aa3226150bf6ced0ff75538e015851",
+      "unchanged": true,
+      "absent": true
+    },
+    {
+      "fixture": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/files\/Pictures\/camera-album\/image-upgrade-qa-86c15a62-8946-44e7-983a-aab86f468ef6__PHOTO.JPG",
+      "shaBeforeDelete": "2e16d5d68865aeffe59992ffa9ce2590c65ecfb57cf96f196213edcebd88e641",
+      "unchanged": true,
+      "absent": true
+    }
+  ],
+  "appearanceRestored": true,
+  "osGuideDismissals": []
+}

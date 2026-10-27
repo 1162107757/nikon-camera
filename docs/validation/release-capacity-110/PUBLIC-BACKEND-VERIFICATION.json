@@ -1,0 +1,30 @@
+{
+  "verifiedUtc": "2026-10-27T15:19:27.967Z",
+  "checks": [
+    {
+      "origin": "https://huevia.cc",
+      "catalogStatus": 200,
+      "catalogCount": 390,
+      "catalog390": true,
+      "adminScriptStatus": 200,
+      "admin32MiB": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "catalogStatus": 200,
+      "catalogCount": 390,
+      "catalog390": true,
+      "adminScriptStatus": 200,
+      "admin32MiB": true
+    }
+  ],
+  "old108": {
+    "status": 200,
+    "versionCode": 108,
+    "mandatory": true,
+    "byteLength": 3938426,
+    "sha256": "995b33c82c9f2b72835ad6a2a194a2db8fae50caebfca860f8af2e8dc3a089f1",
+    "unchanged": true
+  },
+  "pass": true
+}

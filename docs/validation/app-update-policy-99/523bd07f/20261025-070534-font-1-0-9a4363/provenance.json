@@ -1,0 +1,44 @@
+{
+  "candidateApk": ".tooling/update-required-99/candidates/523bd07fb93bd7c1cea3ce8cb5bc451b91fe53ded2355a926dff559b0b61aaec.apk",
+  "candidateSha256": "523bd07fb93bd7c1cea3ce8cb5bc451b91fe53ded2355a926dff559b0b61aaec",
+  "versionCode": 99,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "fontScale": 1.0,
+  "runId": "20261025-070534-font-1-0-9a4363",
+  "probeSha256": "0d5321e8f78dcd91cea69b9afa046a81a49f66d7bdff8ef85fc5db943e562787",
+  "scope": "Production UpdatePanel component UI with validated synthetic Release and state callbacks; no metadata HTTP, DownloadManager or installer",
+  "files": [
+    {
+      "file": "01-ordinary.png",
+      "bytes": 65805,
+      "sha256": "ffc7d409930eed0d48c22210cc54a01858cd1e1eeefe47c22a2cef4cf750737a"
+    },
+    {
+      "file": "02-required.png",
+      "bytes": 333073,
+      "sha256": "edc78167824bcb3b3b55f47391d987dafa62cf84bdc1715b447bf6592e8a3e3c"
+    },
+    {
+      "file": "03-required-notes-end.png",
+      "bytes": 345393,
+      "sha256": "dabe7d46407b83694cf93b9c958c6d28e6f5a2aa293e98338586183c8dd9c6ce"
+    },
+    {
+      "file": "04-downloading.png",
+      "bytes": 327710,
+      "sha256": "d47bb325843d53c2ecbe0dda7d064fbb6c24bc4971f29efb53969fa538f15fb0"
+    },
+    {
+      "file": "05-download-error.png",
+      "bytes": 323888,
+      "sha256": "54fa30be948462ac44f6c9e6310d167bddda99dbadea5627bae7503ff52ebffb"
+    },
+    {
+      "file": "report.json",
+      "bytes": 24006,
+      "sha256": "b8eb6f1393d1190cb995e126d5537d45e776286168a3a49fa99622d43b062c61"
+    }
+  ],
+  "pass": true
+}

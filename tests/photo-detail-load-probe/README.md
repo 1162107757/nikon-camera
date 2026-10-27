@@ -1,0 +1,11 @@
+# Detail-load codec/source probe
+
+Build with `build.ps1`. Root may run `run.ps1 -CandidateApk <exact installed APK>` only while it exclusively owns `emulator-5586`. The script checks emulator hardware and the instrumentation verifies the installed APK SHA. It does not install the app APK or use a physical phone.
+
+The instrumentation generates its own deterministic 4000 × 3000 JPEG in the target app's cache. It compares the previous full JPEG → PNG → overview/fit region sequence (using the unchanged production renderer) against the new production `PhotoDetailSource`: new-page initial preview and full frame, same-page 100%/200% regions, re-open, explicitly unchanged current content with comparison still enabled, edited preview/full surface, neutral-before direct regions, EXIF normalization, account invalidation, original byte preservation, and full-decode versus actual region pixel equality. Source close must terminate its worker and remove only its own temporary surfaces. Test JPEGs are deleted in `finally`.
+
+“Cold” means a new `PhotoDetailSource` without prepared surfaces; the OS disk cache is not flushed. “Warm” means the same source and tile cache. These are per-stage emulator measurements, not promises about physical phone latency. A provisional overview cannot satisfy the complete-frame or sample-1 checks. The copied legacy baseline reproduces the relevant old preparation/fit sequence; it is not an APK-level before/after comparison. Only the new source is measured through the new callback API.
+
+Raw observations, test assertions, fixture cleanup, APK and probe provenance go to a fresh run directory under `docs/validation/photo-detail-load-94/`.
+
+Before the timing cases, the probe also reads a 2401 × 1601 JPEG at fit/sample-2 and 100% with a full-decoder pixel oracle, plus a 2049 × 1025 JPEG whose sampled tile grid leaves one-pixel right/bottom tails. The latter checks completion without crop overflow or zero-size output; it does not claim sample-2 per-pixel color equality. Every closed Source's own UUID cache directory must be absent after its worker terminates.

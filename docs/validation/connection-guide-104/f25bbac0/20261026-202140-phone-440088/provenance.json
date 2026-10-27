@@ -1,0 +1,49 @@
+{
+  "candidateApk": "D:/dev/ai-project/nikon/dist/huevia-0.21.5-beta-debug.apk",
+  "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f",
+  "versionCode": 104,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "runId": "20261026-202140-phone-440088",
+  "probeSha256": "e41945517f1bb496e8adc43e9142721d4c263233f1164209eabeee465ddae89a",
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Real connection guide, actual settings edits and cancellation; synthetic connection stages; no system Wi-Fi or physical camera claim. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+  "files": [
+    {
+      "file": "01-collapsed-nikon.png",
+      "bytes": 86321,
+      "sha256": "31f3c6feaa052a214afa2521434b2ada28b910af2f4daaec8aa2e42752709a17"
+    },
+    {
+      "file": "02-settings-expanded.png",
+      "bytes": 164033,
+      "sha256": "409f72c598954b2a673b155905581808ac5d5ecaed9f4b2c3ca342b8f8a527c2"
+    },
+    {
+      "file": "03-camera-confirmation.png",
+      "bytes": 89702,
+      "sha256": "4f9770e90ccc51358b0c6c6980eedf4c2d4268d09cfbbdd7da8598bc41fbbde0"
+    },
+    {
+      "file": "04-reading-photos.png",
+      "bytes": 86116,
+      "sha256": "c287f18cfc36bc8b4f6865afcab319b6fb1e6410588df262f42fba95eb971ac2"
+    },
+    {
+      "file": "05-wifi-error-details.png",
+      "bytes": 109275,
+      "sha256": "57486e5fb65f770e3d8c483ecffcf78302f568e24a8cfc1b372fa5ce86bbc8ff"
+    },
+    {
+      "file": "06-confirm-error-details.png",
+      "bytes": 106101,
+      "sha256": "3125efce67131855d12f37fe60ed6a8244a29e6d4e339eceae1bece434690bc2"
+    },
+    {
+      "file": "report.json",
+      "bytes": 4034,
+      "sha256": "9279b41610da8a99b635936490d894f13363b22570e92e05936ebb4b49c3dfde"
+    }
+  ],
+  "pass": true
+}

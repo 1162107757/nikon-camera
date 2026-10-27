@@ -1,0 +1,19 @@
+{
+  "ownedAvd": "Huevia_Format_102",
+  "serial": "emulator-5586",
+  "launcherPid": 35232,
+  "uiXmlRemoved": true,
+  "appStopped": true,
+  "killRequested": true,
+  "physicalDeviceUsed": false,
+  "otherEmulatorsTouched": false,
+  "railProbeCleanupIncompleteBecauseEarlierEmulatorExited": true,
+  "serialAbsent": true,
+  "ownedProcessCount": 0,
+  "temporaryDDirectoriesRemoved": false,
+  "automaticApprovalRejectedCleanup": true,
+  "rejection": "blocked by policy; no more specific reason supplied; command did not execute",
+  "noAlternativeDeletionAttempted": true,
+  "retainedTaskRoot": "D:/dev/ai-project/nikon/.tooling/online-format-102",
+  "originalCDeviceConfigUnchanged": true
+}

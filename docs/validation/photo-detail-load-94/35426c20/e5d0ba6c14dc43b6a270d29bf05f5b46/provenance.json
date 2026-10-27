@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "builtAtUtc": "2026-10-24T12:38:09.9116512Z",
+  "probeSource": "tests/photo-detail-load-probe/src/cc/huevia/detailloadqa/PhotoDetailLoadProbe.java",
+  "inputs": {
+    "probeJavaSha256": "fdcd8839953887ef33d77df8b43e650236087bac803d8ad657d27069dc17c7db",
+    "manifestSha256": "1d42907ea69dfdd9a8bca437589f45b77bfd30bafe11fd482c842c3febac07c9",
+    "buildScriptSha256": "b0ceb1ad4779947fcab7ad57ac9153e578742d04947f3a97950ed44dd610f924",
+    "runScriptSha256": "fccc13172cf6c67e1185d1fa12a2ebe11fb120b013fff9139203c405fd33564c"
+  },
+  "probeApkSha256": "3728a17986f54042bea8d7ce67e613bede0042b4ed342dc345fc5ff5468ae045"
+}

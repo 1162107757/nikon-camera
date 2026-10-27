@@ -1,0 +1,143 @@
+{
+  "candidate": {
+    "path": "dist/huevia-0.21.6-beta-debug.apk",
+    "sha256": "bc16dbd9ebfb3fc639cf3c9c1f000dd2a1a247c2354a198bec6a99bbaf36cec4",
+    "bytes": 3967098,
+    "versionCode": 105,
+    "versionName": "0.21.6-beta",
+    "publication": "local-only"
+  },
+  "productionInputChanges": [
+    "app/build.gradle",
+    "app/src/main/java/cc/huevia/MainActivity.java",
+    "app/src/main/java/cc/huevia/ui/CatalogLoadingView.java",
+    "app/src/main/java/cc/huevia/ui/UpdatePanel.java"
+  ],
+  "signatureSchemes": {
+    "v2": true,
+    "v3": true,
+    "log": ".tooling/loading-update-105/build-final.log"
+  },
+  "hostChecks": [
+    {
+      "name": "UpdatePolicy",
+      "checks": 66,
+      "pass": true,
+      "log": ".tooling/loading-update-105/policy.log"
+    },
+    {
+      "name": "AppUpdateManager",
+      "checks": 37,
+      "pass": true,
+      "log": ".tooling/loading-update-105/update-manager.log"
+    },
+    {
+      "name": "CameraWifiRuntimeLossTest",
+      "checks": 29,
+      "pass": true,
+      "log": ".tooling/loading-update-105/run-wifi-runtime.ps1.log"
+    }
+  ],
+  "native": [
+    {
+      "path": "docs/validation/loading-update-105/bc16dbd9/20261026-205902-font-1-0-892669",
+      "reportSha256": "fa3f206b348061fbb79912d4b1109c8140452041abb95b0af8500050ade70df3",
+      "checks": 263,
+      "screenshots": 11,
+      "fontScale": 1,
+      "theme": "light",
+      "motion": "on",
+      "pass": true,
+      "cleanup": {
+        "runId": "20261026-205902-font-1-0-892669",
+        "serial": "emulator-5588",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/loading-update-105/bc16dbd9/20261026-205912-font-1-3-76c58a",
+      "reportSha256": "850042eea7e48d0cadce17f3b10c34330ff3f12faf0db64dfc0a5cce56cc32cf",
+      "checks": 264,
+      "screenshots": 11,
+      "fontScale": 1.2999999523162842,
+      "theme": "dark",
+      "motion": "on",
+      "pass": true,
+      "cleanup": {
+        "runId": "20261026-205912-font-1-3-76c58a",
+        "serial": "emulator-5588",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/loading-update-105/bc16dbd9/20261026-205922-font-2-0-773d55",
+      "reportSha256": "54d383b50841507df9d7f3a2fbd7f6566e4f0538e5f31a46b71ee2c6801eadaa",
+      "checks": 322,
+      "screenshots": 11,
+      "fontScale": 2,
+      "theme": "light",
+      "motion": "on",
+      "pass": true,
+      "cleanup": {
+        "runId": "20261026-205922-font-2-0-773d55",
+        "serial": "emulator-5588",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/loading-update-105/bc16dbd9/20261026-205932-font-1-0-53a4ca",
+      "reportSha256": "6007f982338dfcd1dd0247c469082cb688d4adc6fc5fd94b89c5b2097d6234d2",
+      "checks": 263,
+      "screenshots": 11,
+      "fontScale": 1,
+      "theme": "light",
+      "motion": "off",
+      "pass": true,
+      "cleanup": {
+        "runId": "20261026-205932-font-1-0-53a4ca",
+        "serial": "emulator-5588",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/loading-update-105/bc16dbd9/wifi-20261026-205941-263a5d",
+      "reportSha256": "ae67607ea152a2c54e3d9b600f30a84aa13769a51aea2c1350129020cc86e7b2",
+      "checks": 17,
+      "screenshots": 2,
+      "pass": true,
+      "cleanup": {
+        "serial": "emulator-5588",
+        "wifiRestoredTo": "enabled",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    }
+  ],
+  "checks": 1129,
+  "screenshots": 46,
+  "scopeLimits": [
+    "Component update data is synthetic; no real download or installer invocation.",
+    "Real MainActivity system Wi-Fi Intent is intercepted; no actual hotspot join or camera handshake.",
+    "Not published; server mandatory 100 unchanged."
+  ],
+  "visualInspection": {
+    "rounds": 2,
+    "observed": [
+      "Light update page and shimmer skeleton",
+      "Dark mandatory prompt with scrolling notes",
+      "2.0 font optional prompt",
+      "Real MainActivity loader and application update route",
+      "Final download progress and real update page"
+    ],
+    "result": "No clipping or missing primary actions observed in inspected frames."
+  },
+  "preservation": {
+    "olderApks": 5,
+    "updateCoreUnchanged": true,
+    "unrelatedWorktreeChangesPreserved": true
+  }
+}

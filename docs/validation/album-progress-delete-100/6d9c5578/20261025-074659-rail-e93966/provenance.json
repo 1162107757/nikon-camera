@@ -1,0 +1,34 @@
+{
+    "candidateApk":  "D:/dev/ai-project/nikon/dist/huevia-0.21.1-beta-debug.apk",
+    "candidateSha256":  "6d9c5578071d353e6ee4a3958c5cc0a7ec06383a030474c0d4e98f0be0806860",
+    "versionCode":  100,
+    "serial":  "emulator-5586",
+    "hardware":  "ranchu",
+    "mode":  "rail",
+    "runId":  "20261025-074659-rail-e93966",
+    "probeSha256":  "dc7488a0f881cc581bf301bf068c35d06a0288d913f6dbb46b6fd70d52d270f2",
+    "scope":  "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Cancel-only confirmation does not execute either beforeSavePhotos overload; APP_ONLY positive-path selection is a separate source review, not a dynamic claim of this probe. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+    "files":  [
+                  {
+                      "file":  "01-progress.png",
+                      "bytes":  128939,
+                      "sha256":  "d50313c9c85ce79dc292d0ce46ca9a33149be62cce0ae668963d5c366cc8d6df"
+                  },
+                  {
+                      "file":  "02-delete-confirmation.png",
+                      "bytes":  164288,
+                      "sha256":  "b007f84129a9b900e969c213c590271bb5f96a08a15a59dfe87f4c8d1d94b809"
+                  },
+                  {
+                      "file":  "03-selection.png",
+                      "bytes":  107418,
+                      "sha256":  "1003d2e6a5ebde904d3a4f92e753ff0bdf654b55c1d88035d84d6d5708268b8b"
+                  },
+                  {
+                      "file":  "report.json",
+                      "bytes":  3564,
+                      "sha256":  "6b39ffb4b4f429e1a31f6d093eaf9ac8b740f30488de22293b92d87c9e5aee08"
+                  }
+              ],
+    "pass":  true
+}

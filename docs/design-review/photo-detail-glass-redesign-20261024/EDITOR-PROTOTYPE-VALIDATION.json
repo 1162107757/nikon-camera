@@ -1,0 +1,195 @@
+{
+  "scope": "Static DOM event verification only. No network, browser rendering, native pixels or real image writes.",
+  "file": "D:\\dev\\ai-project\\nikon\\docs\\design-review\\photo-detail-glass-redesign-20261024\\prototype.html",
+  "sourceSha256": "f4828175e405c18e458d780aa6119e3f52247d32918e83255b41b367c9786e15",
+  "stubWorkspaces": false,
+  "checks": 46,
+  "status": "PASS",
+  "results": [
+    {
+      "name": "initial state and no boot exception",
+      "passed": true
+    },
+    {
+      "name": "unsupported sample is visibly disabled",
+      "passed": true
+    },
+    {
+      "name": "grid opens accessible modal",
+      "passed": true
+    },
+    {
+      "name": "search empty state",
+      "passed": true
+    },
+    {
+      "name": "search filters actual cards",
+      "passed": true
+    },
+    {
+      "name": "grid selection updates shared editor and closes",
+      "passed": true
+    },
+    {
+      "name": "invalid numeric value stays and explains",
+      "passed": true
+    },
+    {
+      "name": "valid strength input commits",
+      "passed": true
+    },
+    {
+      "name": "adjust panel switches without losing filter",
+      "passed": true
+    },
+    {
+      "name": "invalid exposure step rejected",
+      "passed": true
+    },
+    {
+      "name": "exact exposure accepted",
+      "passed": true
+    },
+    {
+      "name": "undo last parameter only",
+      "passed": true
+    },
+    {
+      "name": "redo restores parameter",
+      "passed": true
+    },
+    {
+      "name": "no filter disables strength and preserves manual",
+      "passed": true
+    },
+    {
+      "name": "border selection is stateful",
+      "passed": true
+    },
+    {
+      "name": "border fields editable as display example",
+      "passed": true
+    },
+    {
+      "name": "recipe save creates actual list entry",
+      "passed": true
+    },
+    {
+      "name": "recipe application preserves crop and border",
+      "passed": true
+    },
+    {
+      "name": "recipe rename persists in list",
+      "passed": true
+    },
+    {
+      "name": "delete cancel keeps recipe",
+      "passed": true
+    },
+    {
+      "name": "delete confirms only selected recipe",
+      "passed": true
+    },
+    {
+      "name": "Escape closes sheet",
+      "passed": true
+    },
+    {
+      "name": "Escape closes modal",
+      "passed": true
+    },
+    {
+      "name": "large font switch applies globally",
+      "passed": true
+    },
+    {
+      "name": "landscape has all five actual panels",
+      "passed": true
+    },
+    {
+      "name": "reset restores initial editing state",
+      "passed": true
+    },
+    {
+      "name": "closed sheet stays inert after numeric dialog",
+      "passed": true
+    },
+    {
+      "name": "renamed recipe focus returns to replacement button",
+      "passed": true
+    },
+    {
+      "name": "deleted recipe focus returns to stable save action",
+      "passed": true
+    },
+    {
+      "name": "field focus returns to replacement field row",
+      "passed": true
+    },
+    {
+      "name": "appearance apply changes actual shared state",
+      "passed": true
+    },
+    {
+      "name": "retry has exactly one selected identity",
+      "passed": true
+    },
+    {
+      "name": "crop modifications remain draft",
+      "passed": true
+    },
+    {
+      "name": "crop cancel does not add undo or mutate state",
+      "passed": true
+    },
+    {
+      "name": "crop apply commits one history entry",
+      "passed": true
+    },
+    {
+      "name": "crop entire operation is undone once",
+      "passed": true
+    },
+    {
+      "name": "detail entry moves focus into detail",
+      "passed": true
+    },
+    {
+      "name": "zoom shows locator and complete metric",
+      "passed": true
+    },
+    {
+      "name": "detail arrow key pans the same photo",
+      "passed": true
+    },
+    {
+      "name": "comparison keeps same zoom and position",
+      "passed": true
+    },
+    {
+      "name": "fit immediately hides transient load and locator",
+      "passed": true
+    },
+    {
+      "name": "error state exposes retry",
+      "passed": true
+    },
+    {
+      "name": "retry reaches ready state",
+      "passed": true
+    },
+    {
+      "name": "saved JPEG has disabled before and explicit reason",
+      "passed": true
+    },
+    {
+      "name": "detail completion restores editor focus",
+      "passed": true
+    },
+    {
+      "name": "no uncaught script or network errors",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

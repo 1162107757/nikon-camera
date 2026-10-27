@@ -1,0 +1,21 @@
+{
+  "serial": "emulator-5588",
+  "avd": "Pixel_9",
+  "parentPid": 27344,
+  "testPackageAbsent": true,
+  "fontScaleAfterRuns": "1.0",
+  "ownPhotoFixtureRemnants": {
+    "private": 0,
+    "pictures": 0
+  },
+  "allFinalProbeReportsConfirmFixtureRootRemoved": true,
+  "ownSourceEffectLedgerFilesDeletedByProbe": true,
+  "stopRequested": true,
+  "serialAbsent": true,
+  "parentProcessAbsent": true,
+  "retained": [
+    "Local APK and validation evidence",
+    "Installed candidate on owned AVD; no app-data wipe"
+  ],
+  "noAvdFilesystemCleanupAttempted": true
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "class": "cc.huevia.ui.PhotoHistogramPanel$ToggleButton",
+    "width": 130,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 0,
+    "screenTop": 485,
+    "screenLeft": 465,
+    "globalVisibleLeft": 465,
+    "globalVisibleTop": 485,
+    "globalVisibleRight": 595,
+    "globalVisibleBottom": 611,
+    "globalVisibleWidth": 130,
+    "globalVisibleHeight": 126,
+    "name": "shadow",
+    "selected": false,
+    "face": {
+      "left": 0,
+      "top": 26,
+      "right": 130,
+      "bottom": 100
+    },
+    "swatch": {
+      "left": 486,
+      "top": 538,
+      "right": 507,
+      "bottom": 559,
+      "width": 21,
+      "height": 21
+    },
+    "groupLeft": 21,
+    "groupRightPadding": 21,
+    "textX": 53,
+    "actualGap": 11,
+    "baseline": 72.869384765625,
+    "advance": 56,
+    "expectedGlyph": {
+      "left": 520,
+      "top": 532,
+      "right": 573,
+      "bottom": 561,
+      "width": 53,
+      "height": 29
+    },
+    "actualSelectedInk": {
+      "left": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "width": 0,
+      "height": 0
+    },
+    "selectedInkPixels": 0,
+    "basePixels": 129,
+    "stripePixels": 169
+  },
+  {
+    "class": "cc.huevia.ui.PhotoHistogramPanel$ToggleButton",
+    "width": 130,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 0,
+    "screenTop": 485,
+    "screenLeft": 611,
+    "globalVisibleLeft": 611,
+    "globalVisibleTop": 485,
+    "globalVisibleRight": 741,
+    "globalVisibleBottom": 611,
+    "globalVisibleWidth": 130,
+    "globalVisibleHeight": 126,
+    "name": "highlight",
+    "selected": false,
+    "face": {
+      "left": 0,
+      "top": 26,
+      "right": 130,
+      "bottom": 100
+    },
+    "swatch": {
+      "left": 632,
+      "top": 538,
+      "right": 653,
+      "bottom": 559,
+      "width": 21,
+      "height": 21
+    },
+    "groupLeft": 21,
+    "groupRightPadding": 21,
+    "textX": 53,
+    "actualGap": 11,
+    "baseline": 72.869384765625,
+    "advance": 56,
+    "expectedGlyph": {
+      "left": 665,
+      "top": 532,
+      "right": 719,
+      "bottom": 561,
+      "width": 54,
+      "height": 29
+    },
+    "actualSelectedInk": {
+      "left": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "width": 0,
+      "height": 0
+    },
+    "selectedInkPixels": 0,
+    "basePixels": 91,
+    "stripePixels": 169
+  }
+]

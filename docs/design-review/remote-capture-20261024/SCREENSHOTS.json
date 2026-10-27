@@ -1,0 +1,102 @@
+{
+  "scope": "Browser-rendered interactive design, not native screenshots or real camera/live histogram evidence",
+  "status": "83 checks passing; internal scoped fix review SHIP; human approval pending",
+  "captureCount": 19,
+  "captures": [
+    {
+      "bytes": 462952,
+      "path": "screenshots/board-histogram.png",
+      "sha256": "dc115ab2b7014d669fefc437f19009b39c27364717946307fc31bf3402930656"
+    },
+    {
+      "bytes": 316397,
+      "path": "screenshots/board-landscape.png",
+      "sha256": "b7bcf2342c8838e0d00aad9ad9af34ed6681d00a52b5bf0fb278250ebbc1e3d0"
+    },
+    {
+      "bytes": 543705,
+      "path": "screenshots/board-main.png",
+      "sha256": "af52e8e20b7907402057c1111e49c23b3ae13c256eaff960b1dcb6108b5ea29c"
+    },
+    {
+      "bytes": 579830,
+      "path": "screenshots/board-states.png",
+      "sha256": "b65ab587aae0c4701c2413189658f6db1a1e6c4d23f23c15b32564c76dc6179a"
+    },
+    {
+      "bytes": 247550,
+      "path": "screenshots/captured.png",
+      "sha256": "075e08eefcdb1ea3ce885e80988dac7c97b5670f27f4d63e360c0b04abe0c4e0"
+    },
+    {
+      "bytes": 81208,
+      "path": "screenshots/entry.png",
+      "sha256": "b048b014b534386db8d48d5b01eda3278172757d8734a4109442d7346eace100"
+    },
+    {
+      "bytes": 118903,
+      "path": "screenshots/histogram-detail.png",
+      "sha256": "25a5aba48724ce46c922c7d096811a3d37eff53c87a67ae36c06bb03427f3be9"
+    },
+    {
+      "bytes": 241496,
+      "path": "screenshots/histogram-moved.png",
+      "sha256": "043f5eb690101917f78b8d05e2bf291a79ee65c3b17d8fdc67f2160ebf9db501"
+    },
+    {
+      "bytes": 258165,
+      "path": "screenshots/histogram-rgb.png",
+      "sha256": "f9202198f69aeb846bce0f7a3a5eedf9966f4944c088d4afa67bb58de564adfc"
+    },
+    {
+      "bytes": 274926,
+      "path": "screenshots/landscape-large-font.png",
+      "sha256": "8119e23e44c8746701087cd98395d9185aaf5053e86dd88ca0bf754de285a550"
+    },
+    {
+      "bytes": 189684,
+      "path": "screenshots/landscape-settings-large-font.png",
+      "sha256": "4e5425f74b137d40a0723febb915a58e1fa6e880131820d9191a60981a5579b1"
+    },
+    {
+      "bytes": 269780,
+      "path": "screenshots/landscape.png",
+      "sha256": "658abae5106c0ad93ce1c60b7095c7406f6fd2058f4aaf32b2a99f124b8c83ab"
+    },
+    {
+      "bytes": 107209,
+      "path": "screenshots/offline.png",
+      "sha256": "2297d172159afdb546361e58aab9b8a5a337fbdce57914e8e27c0682f0fa3c8b"
+    },
+    {
+      "bytes": 128400,
+      "path": "screenshots/options.png",
+      "sha256": "b97a97a2729b672afd85388395e7d45c5602316caa76baee0da368df926727e3"
+    },
+    {
+      "bytes": 263897,
+      "path": "screenshots/portrait-large-font.png",
+      "sha256": "abeebada7d21fbe3c09a434f31addb76dde6efc4808c75e9f352e32915655d17"
+    },
+    {
+      "bytes": 258331,
+      "path": "screenshots/portrait.png",
+      "sha256": "beff4e2b86a3010feff8542010354fc5b614381570eb5c51e26886ed9c70754b"
+    },
+    {
+      "bytes": 225249,
+      "path": "screenshots/review-mobile.png",
+      "sha256": "acc83db4a5e4f1f6c203b09000485f9c1ac82a0f30b38bf60c76a04fbbe3c934"
+    },
+    {
+      "bytes": 255996,
+      "path": "screenshots/timeout.png",
+      "sha256": "fe0a5d20db911f3856e65d68b0d1938f88515b6dad0d64138e23450954eb6ea1"
+    },
+    {
+      "bytes": 164986,
+      "path": "screenshots/view-lost.png",
+      "sha256": "666aa5f2d854a1ed8ce80573227a91172ec44ac69194f27d2b1ea9b7937567aa"
+    }
+  ]
+}

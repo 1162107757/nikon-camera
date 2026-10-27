@@ -1,0 +1,139 @@
+{
+  "candidate": {
+    "path": "dist/huevia-0.21.7-beta-debug.apk",
+    "sha256": "9dcc4dc793d8bb4ddfd89d5bd9b62ff95152e652b33b6ef7d04d9a1fee963ad6",
+    "bytes": 3987578,
+    "versionName": "0.21.7-beta",
+    "versionCode": 106,
+    "publication": "local-only"
+  },
+  "sourceInputChanges": [
+    "app/build.gradle",
+    "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+    "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+    "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+    "app/src/main/java/cc/huevia/ui/AppIcon.java",
+    "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java"
+  ],
+  "signatureSchemes": {
+    "v2": true,
+    "v3": true
+  },
+  "hostChecks": [
+    {
+      "suite": "editor-strength-drafts",
+      "checks": 34780
+    },
+    {
+      "suite": "basic-adjustment-regression",
+      "checks": 644888
+    },
+    {
+      "suite": "composition-recipes",
+      "checks": 1158
+    },
+    {
+      "suite": "border-migration",
+      "checks": 29
+    },
+    {
+      "suite": "curves-hsl-copy",
+      "checks": 11796
+    },
+    {
+      "suite": "preset-batch",
+      "checks": 688
+    },
+    {
+      "suite": "preset-source-links",
+      "checks": 82
+    }
+  ],
+  "native": [
+    {
+      "path": "docs/validation/photo-color-106/9dcc4dc7/20261026-220723-phone-80fedf",
+      "mode": "phone",
+      "fontScale": 1,
+      "checks": 67,
+      "screenshots": 6,
+      "pass": true,
+      "reportSha256": "a8ea3107f3234adca81c4994e5629b0179518fca8529711a46d3658b97fddc38",
+      "cleanup": {
+        "serial": "emulator-5588",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/photo-color-106/9dcc4dc7/20261026-220736-font1.3-2ebb2f",
+      "mode": "font1.3",
+      "fontScale": 1.2999999523162842,
+      "checks": 67,
+      "screenshots": 6,
+      "pass": true,
+      "reportSha256": "200d552e569d5396b8e7e98f861c122fbf328e8042e0608e4ee1670026654c9a",
+      "cleanup": {
+        "serial": "emulator-5588",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    },
+    {
+      "path": "docs/validation/photo-color-106/9dcc4dc7/20261026-220750-landscape-425742",
+      "mode": "landscape",
+      "fontScale": 1,
+      "checks": 67,
+      "screenshots": 6,
+      "pass": true,
+      "reportSha256": "6ed0651006ad2c0a8a6ca386c6b7e9788ac54a91ec97b7fc7adc2ddb5a7bf597",
+      "cleanup": {
+        "serial": "emulator-5588",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    }
+  ],
+  "nativeAssertions": 201,
+  "nativeScreenshots": 18,
+  "review": {
+    "initialDisposition": "fix",
+    "initialCandidateSha256": "af6ba8e01dcff40b4efb6f077e2e7f12daa4ff52908c7c9ce9dfc2cc06dfa1ad",
+    "initialReport": "docs/validation/photo-color-106/FINISH-REVIEW.md",
+    "finalDisposition": "ship",
+    "finding": "F1",
+    "findingScore": "resolved",
+    "scope": "F1 correction verdict only; original visual review retains its 15-capture initial-candidate scope",
+    "verdictReport": "docs/validation/photo-color-106/FIX-VERDICT.md",
+    "verdictSha256": "58349a99c9d0e80320038bd06c106d120f35300ebef489a967c4c15b9f3730bc",
+    "continuationInterruptedAndReplaced": true
+  },
+  "scopeLimits": [
+    "No real phone or camera test",
+    "No MediaStore publication in this test",
+    "No Nikon or NX pixel-equivalence certification",
+    "No process-persistent batch-undo queue"
+  ],
+  "preservation": {
+    "frozenPriorApks": 6,
+    "serverMandatory100Unchanged": true,
+    "unrelatedWorktreeChangesPreserved": true
+  },
+  "buildLog": ".tooling/photo-color-106/build-f1.log",
+  "hostScope": "Host suites cover unchanged backend/model inputs relative to the reviewed af6 candidate; the F1 guard in AlbumPanel is covered by the three newly rebuilt native runs.",
+  "cleanupReport": "docs/validation/photo-color-106/CLEANUP.json",
+  "documentation": {
+    "design": "docs/validation/photo-color-106/DESIGN.md",
+    "sidecar": "docs/validation/photo-color-106/.impeccable/design.json",
+    "designSha256": "7b32e81f345b7cbf4794cbbe645eeb9e4efb75bde15058a0d899b2f4d2423bda",
+    "sidecarSha256": "12bbe9500258bc9b76c62acac5322c3e00afa59f1fd8f3b0261547946eaa64f6"
+  }
+}

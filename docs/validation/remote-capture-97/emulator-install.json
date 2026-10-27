@@ -1,0 +1,14 @@
+[
+  {
+    "apk": "dist/huevia-0.20.2-beta-debug.apk",
+    "exit": 0,
+    "output": "Serving...\r\nPerforming Incremental Install\r\nSuccess\r\nInstall command complete in 1811 ms\r\n",
+    "errors": "All files should be loaded. Notifying the device.\r\n"
+  },
+  {
+    "apk": "tests/remote-capture-device-probe/.build/remote-capture-probe.apk",
+    "exit": 0,
+    "output": "Serving...\r\nPerforming Incremental Install\r\nSuccess\r\nInstall command complete in 1651 ms\r\n",
+    "errors": "All files should be loaded. Notifying the device.\r\n"
+  }
+]

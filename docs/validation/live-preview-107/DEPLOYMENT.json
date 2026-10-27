@@ -1,0 +1,15 @@
+{
+  "requestArchiveSha256": "c2e558ed987a8958d4382cb50502db653d297b77663062b3272167b5affea701",
+  "observedArchiveSha256": "0ec380ae30cd2ba862317f1c437decb8f65422835065052160d13b426ec0caf5",
+  "contentIdentitySha256": "eb6df059fe0fcf7dc236e0dbe0ca8e4bc8a675b7b3c2eab00f3f1aeba01f4508",
+  "memberContentAndModesVerified": true,
+  "files": 45,
+  "requestArchiveBytes": 30325967,
+  "observedArchiveBytes": 30325999,
+  "zipContainerBytesIdentical": false,
+  "configurationPreserved": true,
+  "oldRuntimeBytesPreserved": true,
+  "newMember": "server/bundled-apks/b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347.apk",
+  "published": false,
+  "transport": "Update request response failed; read-only inspection confirmed exact deployment; no duplicate update request"
+}

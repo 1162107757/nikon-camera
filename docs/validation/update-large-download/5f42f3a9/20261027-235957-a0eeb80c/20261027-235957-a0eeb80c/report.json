@@ -1,0 +1,217 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+  "candidateVersionCode": "110",
+  "candidateVersionName": "0.22.1-beta",
+  "downloadSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+  "downloadBytes": 9478052,
+  "downloadVersionCode": "110",
+  "downloadVersionName": "0.22.1-beta",
+  "transport": {
+    "publicStatus": 307,
+    "redirectHost": "nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+    "redirectPath": "\/v1\/storages\/object\/sign\/nikon-presets\/app-releases\/5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8.bin",
+    "signedUrlRecorded": false
+  },
+  "checks": [
+    {
+      "name": "target-package",
+      "pass": true
+    },
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "expected-sha",
+      "pass": true
+    },
+    {
+      "name": "large-apk-within-new-limit",
+      "pass": true
+    },
+    {
+      "name": "installed-candidate-sha",
+      "pass": true
+    },
+    {
+      "name": "installed-candidate-code",
+      "pass": true
+    },
+    {
+      "name": "installed-candidate-name",
+      "pass": true
+    },
+    {
+      "name": "external-files-available",
+      "pass": true
+    },
+    {
+      "name": "evidence-parent",
+      "pass": true
+    },
+    {
+      "name": "fresh-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "download-parent",
+      "pass": true
+    },
+    {
+      "name": "fresh-download-directory",
+      "pass": true
+    },
+    {
+      "name": "fresh-download-target",
+      "pass": true
+    },
+    {
+      "name": "canonical-public-url",
+      "pass": true
+    },
+    {
+      "name": "public-zero-body-307",
+      "pass": true
+    },
+    {
+      "name": "redirect-https-private-storage-origin",
+      "pass": true
+    },
+    {
+      "name": "redirect-exact-sha-object",
+      "pass": true
+    },
+    {
+      "name": "system-download-manager-available",
+      "pass": true
+    },
+    {
+      "name": "native-download-id",
+      "pass": true
+    },
+    {
+      "name": "download-record-present",
+      "pass": true
+    },
+    {
+      "name": "reported-byte-count-bounded",
+      "pass": true
+    },
+    {
+      "name": "reported-total-exact",
+      "pass": true
+    },
+    {
+      "name": "native-download-success",
+      "pass": true
+    },
+    {
+      "name": "downloaded-file-present",
+      "pass": true
+    },
+    {
+      "name": "downloaded-byte-length",
+      "pass": true
+    },
+    {
+      "name": "downloaded-sha256",
+      "pass": true
+    },
+    {
+      "name": "native-package-parser-accepts-apk",
+      "pass": true
+    },
+    {
+      "name": "downloaded-package-name",
+      "pass": true
+    },
+    {
+      "name": "downloaded-version-code",
+      "pass": true
+    },
+    {
+      "name": "downloaded-version-name",
+      "pass": true
+    },
+    {
+      "name": "downloaded-signing-info",
+      "pass": true
+    },
+    {
+      "name": "single-installed-signer",
+      "pass": true
+    },
+    {
+      "name": "single-downloaded-signer",
+      "pass": true
+    },
+    {
+      "name": "downloaded-same-installed-signature",
+      "pass": true
+    }
+  ],
+  "nativeDownloadStates": [
+    {
+      "status": 1,
+      "reason": 0,
+      "received": 0,
+      "total": -1
+    },
+    {
+      "status": 2,
+      "reason": 0,
+      "received": 0,
+      "total": -1
+    },
+    {
+      "status": 2,
+      "reason": 0,
+      "received": 0,
+      "total": 9478052
+    },
+    {
+      "status": 2,
+      "reason": 0,
+      "received": 65846,
+      "total": 9478052
+    },
+    {
+      "status": 2,
+      "reason": 0,
+      "received": 2035418,
+      "total": 9478052
+    },
+    {
+      "status": 2,
+      "reason": 0,
+      "received": 4884438,
+      "total": 9478052
+    },
+    {
+      "status": 2,
+      "reason": 0,
+      "received": 8094610,
+      "total": 9478052
+    },
+    {
+      "status": 8,
+      "reason": 0,
+      "received": 9478052,
+      "total": 9478052
+    }
+  ],
+  "downloadRemoved": true,
+  "targetRemoved": true,
+  "directoryRemoved": true,
+  "cleanupErrors": [],
+  "failure": null,
+  "installerStarted": false,
+  "accountChanged": false,
+  "scope": "Real Android DownloadManager canonical HTTPS307 to private storage; downloaded length\/SHA\/native package parser\/version\/current signer; no installation or account\/editor action. Emulator only."
+}

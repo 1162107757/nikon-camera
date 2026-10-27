@@ -1,0 +1,12 @@
+{
+    "schemaVersion":  1,
+    "builtAtUtc":  "2026-10-27T10:47:20.2790308Z",
+    "probeSource":  "tests/export-preview-device-probe/src/cc/huevia/exportpreviewqa/ExportPreviewProbe.java",
+    "inputs":  {
+                   "probeJavaSha256":  "bce9d500155b21d9827d6c772481d121a4b5ec3cea14c07460386f7bac1caeb3",
+                   "manifestSha256":  "aceafc2aad0748714078f03777896c40da967d5b4e73a1da23495dc72c8afafe",
+                   "buildScriptSha256":  "0f51e41a5d00d9cf1e6334b6e7e5a242adf8692e378f2ac284055458cc52221d",
+                   "runScriptSha256":  "cef1ffd84c827a44938f7df32f92dbf6a94611e5a198d63ba689437150ec9192"
+               },
+    "probeApkSha256":  "0374862401098b1c8c621017c6a3a5e0b060d3261feab7b4f167a52006250c36"
+}

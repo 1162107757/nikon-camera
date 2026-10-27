@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T14:35:25.826Z",
+  "title": "Design System: Huevia 遥控拍摄 · 95",
+  "extensions": {
+    "nativeBuiltWorld": {
+      "id": "remote-capture-95",
+      "platform": "Android Java / Views / Canvas",
+      "scope": "仅 docs/validation/remote-capture-95 局部已落地设计；根文档、历史原型和其他生产表面保持原范围。",
+      "authority": [
+        "../../../app/src/main/java/cc/huevia/ui/RemoteCaptureView.java",
+        "../../../app/src/main/java/cc/huevia/RemoteCaptureActivity.java",
+        "../../../app/src/main/java/cc/huevia/remote/RemoteCaptureController.java",
+        "../../design-review/remote-capture-20261024/IMPLEMENTATION-CONTRACT.md"
+      ],
+      "approval": "用户已批准原型并明确要求严格按照原型执行实现；没有重新征求风格偏好或创建新视觉世界。",
+      "versionCode": 95,
+      "versionName": "0.20.0-beta",
+      "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+      "identitySources": [
+        "CANDIDATE-IDENTITY.json",
+        "FINAL-IDENTITY.json"
+      ],
+      "evidence": {
+        "source": "既有 UI-MATRIX.json；自有 Pixel_9 模拟器和内存合成 PTP/IP 夹具",
+        "configurationChecks": 372,
+        "nativeCaptures": 49,
+        "countMeaning": "配置重复检查次数，不是独立场景数。",
+        "initialReview": "FINISH-REVIEW.md 保留 disposition: fix；其 APK 为历史初审候选。",
+        "boundedVerdict": "FIX-VERDICT.md 仅判 M1–M4 resolved、remaining clear、disposition: ship；不是全表面重新认证或用户最终视觉接受。",
+        "newVerificationByDocumenter": false,
+        "limitations": [
+          "没有真实 Nikon 相机／固件互操作验证",
+          "不认证 Wi-Fi 路由或吞吐",
+          "不认证持续帧率或硬件性能",
+          "不认证完整 TalkBack"
+        ]
+      },
+      "newProductionRasterAssets": 0,
+      "detector": "不适用于 Android 原生生产表面的 HTML/CSS detector；无新增 detector 认证。",
+      "productionImplementation": "原生 Material_NoActionBar Activity + Android Views/custom Canvas；未嵌入生产 HTML/WebView。"
+    },
+    "documentationPreview": {
+      "purpose": "所有 components[].html/css 只是原生设计系统的文档性预览，不是生产 HTML 实现、原生截图、测试相机或新的产品控件。",
+      "units": "DESIGN.md frontmatter 中 dp/sp 是原生事实；预览将 dp/sp 以 CSS px 近似，无法重现 Android 密度、fontScale、平台 Switch、触摸区域、无障碍或生命周期。",
+      "states": "预览仅展示现有控件和状态；浏览器 hover/focus/active 只是独立标本的基本反馈，不表示原生添加了这些 CSS 效果。",
+      "data": "参数未知值与等待取景均来自已有真实状态；没有模拟实况、示例相机参数或虚构直方图分布。",
+      "tonalRamps": "colorMeta 的八阶 OKLCH 色带仅为文档面板合成扩展；保持各源色的 hue/chroma 与 alpha，不是生产调色板或 Android tonal elevation。",
+      "navigation": "这些静态 HTML 片段不连接相机、路由、系统返回或 Dialog 生命周期。"
+    },
+    "colorMeta": {
+      "workspace": {
+        "role": "neutral",
+        "displayName": "近黑工作区",
+        "canonical": "#121313",
+        "tonalRamp": [
+          "oklch(15% 0.00160 197.02)",
+          "oklch(26% 0.00160 197.02)",
+          "oklch(38% 0.00160 197.02)",
+          "oklch(49% 0.00160 197.02)",
+          "oklch(61% 0.00160 197.02)",
+          "oklch(72% 0.00160 197.02)",
+          "oklch(84% 0.00160 197.02)",
+          "oklch(95% 0.00160 197.02)"
+        ]
+      },
+      "viewfinder": {
+        "role": "neutral",
+        "displayName": "取景底",
+        "canonical": "#090A0A",
+        "tonalRamp": [
+          "oklch(15% 0.00176 196.96)",
+          "oklch(26% 0.00176 196.96)",
+          "oklch(38% 0.00176 196.96)",
+          "oklch(49% 0.00176 196.96)",
+          "oklch(61% 0.00176 196.96)",
+          "oklch(72% 0.00176 196.96)",
+          "oklch(84% 0.00176 196.96)",
+          "oklch(95% 0.00176 196.96)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "暖炭弹层",
+        "canonical": "#272625",
+        "tonalRamp": [
+          "oklch(15% 0.00236 67.73)",
+          "oklch(26% 0.00236 67.73)",
+          "oklch(38% 0.00236 67.73)",
+          "oklch(49% 0.00236 67.73)",
+          "oklch(61% 0.00236 67.73)",
+          "oklch(72% 0.00236 67.73)",
+          "oklch(84% 0.00236 67.73)",
+          "oklch(95% 0.00236 67.73)"
+        ]
+      },
+      "instrument": {
+        "role": "neutral",
+        "displayName": "深色仪表",
+        "canonical": "#191A18",
+        "tonalRamp": [
+          "oklch(15% 0.00413 128.68)",
+          "oklch(26% 0.00413 128.68)",
+          "oklch(38% 0.00413 128.68)",
+          "oklch(49% 0.00413 128.68)",
+          "oklch(61% 0.00413 128.68)",
+          "oklch(72% 0.00413 128.68)",
+          "oklch(84% 0.00413 128.68)",
+          "oklch(95% 0.00413 128.68)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "暖白文字",
+        "canonical": "#F6F1EB",
+        "tonalRamp": [
+          "oklch(15% 0.00964 72.66)",
+          "oklch(26% 0.00964 72.66)",
+          "oklch(38% 0.00964 72.66)",
+          "oklch(49% 0.00964 72.66)",
+          "oklch(61% 0.00964 72.66)",
+          "oklch(72% 0.00964 72.66)",
+          "oklch(84% 0.00964 72.66)",
+          "oklch(95% 0.00964 72.66)"
+        ]
+      },
+      "secondary-text": {
+        "role": "neutral",
+        "displayName": "暖灰辅助文字",
+        "canonical": "#BEB9B2",
+        "tonalRamp": [
+          "oklch(15% 0.01130 76.58)",
+          "oklch(26% 0.01130 76.58)",
+          "oklch(38% 0.01130 76.58)",
+          "oklch(49% 0.01130 76.58)",
+          "oklch(61% 0.01130 76.58)",
+          "oklch(72% 0.01130 76.58)",
+          "oklch(84% 0.01130 76.58)",
+          "oklch(95% 0.01130 76.58)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "桃色仪表强调",
+        "canonical": "#F3B493",
+        "tonalRamp": [
+          "oklch(15% 0.08624 48.75)",
+          "oklch(26% 0.08624 48.75)",
+          "oklch(38% 0.08624 48.75)",
+          "oklch(49% 0.08624 48.75)",
+          "oklch(61% 0.08624 48.75)",
+          "oklch(72% 0.08624 48.75)",
+          "oklch(84% 0.08624 48.75)",
+          "oklch(95% 0.08624 48.75)"
+        ]
+      },
+      "accent-ink": {
+        "role": "neutral",
+        "displayName": "深陶土墨",
+        "canonical": "#352016",
+        "tonalRamp": [
+          "oklch(15% 0.03728 46.15)",
+          "oklch(26% 0.03728 46.15)",
+          "oklch(38% 0.03728 46.15)",
+          "oklch(49% 0.03728 46.15)",
+          "oklch(61% 0.03728 46.15)",
+          "oklch(72% 0.03728 46.15)",
+          "oklch(84% 0.03728 46.15)",
+          "oklch(95% 0.03728 46.15)"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "细分隔",
+        "canonical": "#343535",
+        "tonalRamp": [
+          "oklch(15% 0.00140 197.09)",
+          "oklch(26% 0.00140 197.09)",
+          "oklch(38% 0.00140 197.09)",
+          "oklch(49% 0.00140 197.09)",
+          "oklch(61% 0.00140 197.09)",
+          "oklch(72% 0.00140 197.09)",
+          "oklch(84% 0.00140 197.09)",
+          "oklch(95% 0.00140 197.09)"
+        ]
+      },
+      "tool-backing": {
+        "role": "neutral",
+        "displayName": "横屏工具衬底",
+        "canonical": "rgba(11, 12, 12, 0.8196078431)",
+        "tonalRamp": [
+          "oklch(15% 0.00168 196.98 / 0.8196078431)",
+          "oklch(26% 0.00168 196.98 / 0.8196078431)",
+          "oklch(38% 0.00168 196.98 / 0.8196078431)",
+          "oklch(49% 0.00168 196.98 / 0.8196078431)",
+          "oklch(61% 0.00168 196.98 / 0.8196078431)",
+          "oklch(72% 0.00168 196.98 / 0.8196078431)",
+          "oklch(84% 0.00168 196.98 / 0.8196078431)",
+          "oklch(95% 0.00168 196.98 / 0.8196078431)"
+        ]
+      },
+      "curtain": {
+        "role": "neutral",
+        "displayName": "取景中断遮罩",
+        "canonical": "rgba(18, 19, 19, 0.8509803922)",
+        "tonalRamp": [
+          "oklch(15% 0.00160 197.02 / 0.8509803922)",
+          "oklch(26% 0.00160 197.02 / 0.8509803922)",
+          "oklch(38% 0.00160 197.02 / 0.8509803922)",
+          "oklch(49% 0.00160 197.02 / 0.8509803922)",
+          "oklch(61% 0.00160 197.02 / 0.8509803922)",
+          "oklch(72% 0.00160 197.02 / 0.8509803922)",
+          "oklch(84% 0.00160 197.02 / 0.8509803922)",
+          "oklch(95% 0.00160 197.02 / 0.8509803922)"
+        ]
+      },
+      "ripple": {
+        "role": "primary",
+        "displayName": "桃色涟漪",
+        "canonical": "rgba(243, 180, 147, 0.1490196078)",
+        "tonalRamp": [
+          "oklch(15% 0.08624 48.75 / 0.1490196078)",
+          "oklch(26% 0.08624 48.75 / 0.1490196078)",
+          "oklch(38% 0.08624 48.75 / 0.1490196078)",
+          "oklch(49% 0.08624 48.75 / 0.1490196078)",
+          "oklch(61% 0.08624 48.75 / 0.1490196078)",
+          "oklch(72% 0.08624 48.75 / 0.1490196078)",
+          "oklch(84% 0.08624 48.75 / 0.1490196078)",
+          "oklch(95% 0.08624 48.75 / 0.1490196078)"
+        ]
+      },
+      "warning": {
+        "role": "semantic",
+        "displayName": "结果警示",
+        "canonical": "#FFB4A7",
+        "tonalRamp": [
+          "oklch(15% 0.09011 30.04)",
+          "oklch(26% 0.09011 30.04)",
+          "oklch(38% 0.09011 30.04)",
+          "oklch(49% 0.09011 30.04)",
+          "oklch(61% 0.09011 30.04)",
+          "oklch(72% 0.09011 30.04)",
+          "oklch(84% 0.09011 30.04)",
+          "oklch(95% 0.09011 30.04)"
+        ]
+      },
+      "focus-confirmed": {
+        "role": "semantic",
+        "displayName": "相机确认合焦",
+        "canonical": "#9AC8AE",
+        "tonalRamp": [
+          "oklch(15% 0.06092 159.86)",
+          "oklch(26% 0.06092 159.86)",
+          "oklch(38% 0.06092 159.86)",
+          "oklch(49% 0.06092 159.86)",
+          "oklch(61% 0.06092 159.86)",
+          "oklch(72% 0.06092 159.86)",
+          "oklch(84% 0.06092 159.86)",
+          "oklch(95% 0.06092 159.86)"
+        ]
+      },
+      "switch-off-thumb": {
+        "role": "neutral",
+        "displayName": "关闭开关 thumb",
+        "canonical": "#CBC7BF",
+        "tonalRamp": [
+          "oklch(15% 0.01188 84.58)",
+          "oklch(26% 0.01188 84.58)",
+          "oklch(38% 0.01188 84.58)",
+          "oklch(49% 0.01188 84.58)",
+          "oklch(61% 0.01188 84.58)",
+          "oklch(72% 0.01188 84.58)",
+          "oklch(84% 0.01188 84.58)",
+          "oklch(95% 0.01188 84.58)"
+        ]
+      },
+      "switch-on-track": {
+        "role": "neutral",
+        "displayName": "开启开关 track",
+        "canonical": "#A36B4C",
+        "tonalRamp": [
+          "oklch(15% 0.08456 49.45)",
+          "oklch(26% 0.08456 49.45)",
+          "oklch(38% 0.08456 49.45)",
+          "oklch(49% 0.08456 49.45)",
+          "oklch(61% 0.08456 49.45)",
+          "oklch(72% 0.08456 49.45)",
+          "oklch(84% 0.08456 49.45)",
+          "oklch(95% 0.08456 49.45)"
+        ]
+      },
+      "switch-off-track": {
+        "role": "neutral",
+        "displayName": "关闭开关 track",
+        "canonical": "#66645F",
+        "tonalRamp": [
+          "oklch(15% 0.00818 88.69)",
+          "oklch(26% 0.00818 88.69)",
+          "oklch(38% 0.00818 88.69)",
+          "oklch(49% 0.00818 88.69)",
+          "oklch(61% 0.00818 88.69)",
+          "oklch(72% 0.00818 88.69)",
+          "oklch(84% 0.00818 88.69)",
+          "oklch(95% 0.00818 88.69)"
+        ]
+      },
+      "histogram-luminance": {
+        "role": "instrument",
+        "displayName": "亮度曲线",
+        "canonical": "#C7C4BB",
+        "tonalRamp": [
+          "oklch(15% 0.01284 91.54)",
+          "oklch(26% 0.01284 91.54)",
+          "oklch(38% 0.01284 91.54)",
+          "oklch(49% 0.01284 91.54)",
+          "oklch(61% 0.01284 91.54)",
+          "oklch(72% 0.01284 91.54)",
+          "oklch(84% 0.01284 91.54)",
+          "oklch(95% 0.01284 91.54)"
+        ]
+      },
+      "histogram-red": {
+        "role": "instrument",
+        "displayName": "红通道",
+        "canonical": "#FF707C",
+        "tonalRamp": [
+          "oklch(15% 0.17437 17.46)",
+          "oklch(26% 0.17437 17.46)",
+          "oklch(38% 0.17437 17.46)",
+          "oklch(49% 0.17437 17.46)",
+          "oklch(61% 0.17437 17.46)",
+          "oklch(72% 0.17437 17.46)",
+          "oklch(84% 0.17437 17.46)",
+          "oklch(95% 0.17437 17.46)"
+        ]
+      },
+      "histogram-green": {
+        "role": "instrument",
+        "displayName": "绿通道",
+        "canonical": "#95CCA8",
+        "tonalRamp": [
+          "oklch(15% 0.07657 155.59)",
+          "oklch(26% 0.07657 155.59)",
+          "oklch(38% 0.07657 155.59)",
+          "oklch(49% 0.07657 155.59)",
+          "oklch(61% 0.07657 155.59)",
+          "oklch(72% 0.07657 155.59)",
+          "oklch(84% 0.07657 155.59)",
+          "oklch(95% 0.07657 155.59)"
+        ]
+      },
+      "histogram-blue": {
+        "role": "instrument",
+        "displayName": "蓝通道",
+        "canonical": "#79A9FF",
+        "tonalRamp": [
+          "oklch(15% 0.13565 261.44)",
+          "oklch(26% 0.13565 261.44)",
+          "oklch(38% 0.13565 261.44)",
+          "oklch(49% 0.13565 261.44)",
+          "oklch(61% 0.13565 261.44)",
+          "oklch(72% 0.13565 261.44)",
+          "oklch(84% 0.13565 261.44)",
+          "oklch(95% 0.13565 261.44)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "原生标题",
+        "purpose": "竖屏标题与 sheet 标题；sans-serif-medium，实际值在 frontmatter。"
+      },
+      "title-landscape": {
+        "displayName": "横屏标题",
+        "purpose": "横屏上下文栏紧凑标题。"
+      },
+      "reading": {
+        "displayName": "竖屏只读读数",
+        "purpose": "四列当前参数，启用 tnum；不是输入字段。"
+      },
+      "reading-landscape": {
+        "displayName": "横屏只读读数",
+        "purpose": "右侧二乘二当前参数。"
+      },
+      "control": {
+        "displayName": "原生控制文字",
+        "purpose": "sheet 按钮、详情及默认开关文字。"
+      },
+      "support": {
+        "displayName": "辅助仪表文字",
+        "purpose": "参数标签、状态、竖屏机型与说明。"
+      },
+      "compact-identity": {
+        "displayName": "紧凑机型与传入说明",
+        "purpose": "横屏机型／电量、主区传入开关。"
+      },
+      "caption": {
+        "displayName": "小标题",
+        "purpose": "最近拍摄、对焦及小直方图对应字级。"
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [],
+    "nativeLayout": {
+      "orientationCondition": "Configuration.ORIENTATION_LANDSCAPE；没有 CSS 宽度断点。",
+      "portrait": "48dp 标题栏 + 32dp 设备行；48dp 工具行；完整 fit 画面；四列读数；至少48dp状态区；84dp快门。",
+      "landscape": "左侧完整 fit 画面，工具覆盖画面；右侧217dp可滚动控制区；二乘二读数与74dp快门；机型在右上。",
+      "frameFit": "min(stageWidth/bitmapWidth, stageHeight/bitmapHeight)，居中，不裁切、不拉伸。",
+      "histogram": "190×64dp；可在 stage 内拖动，8dp 位移后判为拖动；轻点放大。",
+      "sheets": "Dialog + ScrollView；竖屏底部，全工作区宽，min(600dp, workspaceHeight*0.78)高；横屏右侧390dp宽、全高。",
+      "insets": "Activity 应用 systemBars/displayCutout WindowInsets，显示系统栏并保留系统返回。"
+    },
+    "nativeDepth": {
+      "customShadows": "工作区、工具和读数无自定义投影/模糊；Dialog 系统窗口效果由平台管理。",
+      "dialogDimAmount": 0.55,
+      "tonalStrategy": "实色层次、divider、横屏工具有界暗衬底与中断 curtain。"
+    },
+    "nativeBehavior": {
+      "readOnlyParameters": true,
+      "staleParametersMs": 5000,
+      "histogramFreshMs": 2000,
+      "frameCurtainStaleMs": 3000,
+      "actionFeedbackMs": 4000,
+      "histogram": "显示位图和统计来自同一解码帧；等待、实时和上次取景已暂停分别标示，预览统计不是 RAW。",
+      "unknownResult": "发送快门前持久化相机/基线；UNKNOWN 禁用快门且不自动重发，重连仍需显式核对。",
+      "recentOffline": "保留最近预览；未传入 JPEG 的动作 disabled、alpha 0.45，并显示重连后可传入 App。",
+      "outOfScope": [
+        "参数设置",
+        "视频",
+        "B门",
+        "连拍",
+        "定时器"
+      ]
+    }
+  },
+  "components": [
+    {
+      "name": "原生主动作 · 文档预览",
+      "kind": "button",
+      "refersTo": "primary-action",
+      "description": "对应 action() 的恢复实时取景按钮。CSS px 仅近似 dp/sp；浏览器 hover/focus 是预览的基本可操作反馈，不声明原生新增效果。",
+      "html": "<button class=\"ds-remote-action\" type=\"button\">恢复实时取景</button>",
+      "css": ".ds-remote-action{min-height:48px;padding:0 18px;border:0;border-radius:12px;background:#F3B493;color:#352016;font:400 13px sans-serif;cursor:pointer}.ds-remote-action:hover{background:linear-gradient(rgba(243,180,147,.15),rgba(243,180,147,.15)),#F3B493}.ds-remote-action:focus-visible{outline:2px solid #F6F1EB;outline-offset:2px}.ds-remote-action:active{box-shadow:inset 0 0 0 2px #352016}.ds-remote-action:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "选中直方图工具 · 文档预览",
+      "kind": "button",
+      "refersTo": "icon-action-selected",
+      "description": "对应 48dp ImageButton、13dp 内边距与桃色选中字形；SVG 逐点转写 AppIcon.HISTOGRAM 的原生线条。",
+      "html": "<div class=\"ds-remote-tool-ground\"><button class=\"ds-remote-tool\" type=\"button\" aria-label=\"显示或收起直方图\" aria-pressed=\"true\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 4v17h19 M7 17v-5 M11 17V6 M15 17V3 M19 17v-7\"/></svg></button></div>",
+      "css": ".ds-remote-tool-ground{display:inline-flex;border-radius:10px;background:rgba(11,12,12,.8196078431)}.ds-remote-tool{width:48px;height:48px;padding:13px;border:0;border-radius:12px;background:transparent;color:#F3B493;cursor:pointer}.ds-remote-tool svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-remote-tool[aria-pressed=false]{color:#F6F1EB;opacity:.55}.ds-remote-tool:hover,.ds-remote-tool:active{background:rgba(243,180,147,.1490196078)}.ds-remote-tool:focus-visible{outline:2px solid #F6F1EB;outline-offset:0}"
+    },
+    {
+      "name": "双圆主快门 · 文档预览",
+      "kind": "button",
+      "refersTo": "shutter",
+      "description": "对应 Shutter Canvas 的 84dp View、2dp 环线及内圆间隔；横屏 View 为 74dp。此标本没有相机命令或模拟曝光。",
+      "html": "<div class=\"ds-remote-shutter-ground\"><button class=\"ds-remote-shutter\" type=\"button\" aria-label=\"拍照\"></button></div>",
+      "css": ".ds-remote-shutter-ground{display:inline-flex;padding:12px;background:#121313}.ds-remote-shutter{position:relative;display:block;width:84px;height:84px;padding:0;border:0;border-radius:50%;background:transparent;color:#F3B493;cursor:pointer}.ds-remote-shutter::before{content:\"\";position:absolute;inset:1px;border:2px solid currentColor;border-radius:50%}.ds-remote-shutter::after{content:\"\";position:absolute;inset:9px;border-radius:50%;background:currentColor}.ds-remote-shutter:hover{filter:brightness(1.03)}.ds-remote-shutter:active::after{box-shadow:inset 0 0 0 2px #352016}.ds-remote-shutter:focus-visible{outline:2px solid #F6F1EB;outline-offset:-6px}.ds-remote-shutter:disabled{opacity:.4117647059;cursor:default}.ds-remote-shutter.ds-landscape{width:74px;height:74px}"
+    },
+    {
+      "name": "拍后传入开关 · 文档预览",
+      "kind": "custom",
+      "description": "对应现有 Android Switch 的关闭状态与 48dp 行；36dp 是源码的 switchMinWidth。轨道和 thumb 的 CSS 几何仅为平台控件的文档近似，生产大小与交互由 Android 绘制。",
+      "html": "<div class=\"ds-remote-switch-ground\"><button class=\"ds-remote-switch\" type=\"button\" role=\"switch\" aria-checked=\"false\"><span>拍后传入 App</span><span class=\"ds-remote-switch-track\" aria-hidden=\"true\"><span class=\"ds-remote-switch-thumb\"></span></span></button></div>",
+      "css": ".ds-remote-switch-ground{display:inline-flex;padding:8px 16px;background:#121313}.ds-remote-switch{display:flex;gap:10px;align-items:center;min-height:48px;padding:0;border:0;background:transparent;color:#F6F1EB;font:400 10px sans-serif;cursor:pointer}.ds-remote-switch-track{position:relative;display:inline-block;width:36px;height:16px;border-radius:10px;background:#66645F}.ds-remote-switch-thumb{position:absolute;width:20px;height:20px;left:0;top:-2px;border-radius:50%;background:#CBC7BF}.ds-remote-switch[aria-checked=true] .ds-remote-switch-track{background:#A36B4C}.ds-remote-switch[aria-checked=true] .ds-remote-switch-thumb{left:16px;background:#F3B493}.ds-remote-switch:hover,.ds-remote-switch:active{background:rgba(243,180,147,.1490196078)}.ds-remote-switch:focus-visible{outline:2px solid #F6F1EB;outline-offset:2px}.ds-remote-switch:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "只读当前参数 · 文档预览",
+      "kind": "custom",
+      "refersTo": "reading",
+      "description": "对应真实四个只读字段；用源码的未知值“—”展示，未发明相机参数、输入框或可编辑动作。",
+      "html": "<div class=\"ds-remote-readings\"><div class=\"ds-remote-reading\"><strong>—</strong><span>快门</span></div><div class=\"ds-remote-reading\"><strong>—</strong><span>光圈</span></div><div class=\"ds-remote-reading\"><strong>—</strong><span>ISO</span></div><div class=\"ds-remote-reading\"><strong>—</strong><span>曝光补偿</span></div></div>",
+      "css": ".ds-remote-readings{display:grid;grid-template-columns:repeat(4,minmax(52px,1fr));padding:7px 10px;background:#121313;border-bottom:1px solid #343535;gap:0}.ds-remote-reading{text-align:center}.ds-remote-reading strong{display:block;font:500 20px sans-serif;font-variant-numeric:tabular-nums;color:#F6F1EB}.ds-remote-reading span{display:block;padding-top:3px;font:400 11px sans-serif;color:#BEB9B2}.ds-remote-readings.ds-landscape{width:197px;grid-template-columns:repeat(2,minmax(0,1fr));row-gap:14px}.ds-landscape .ds-remote-reading strong{font-size:18px}"
+    },
+    {
+      "name": "等待取景的小直方图 · 文档预览",
+      "kind": "custom",
+      "refersTo": "histogram",
+      "description": "对应 Chart(false) 在 frame 为空时的真实等待状态：190×64dp、9dp 圆角，无伪造曲线或实时数据。拖动、统计与暂停仍以原生实现为准。",
+      "html": "<button class=\"ds-remote-histogram\" type=\"button\" aria-label=\"取景直方图，点按放大，拖动调整位置\"><span>等待取景</span></button>",
+      "css": ".ds-remote-histogram{position:relative;display:block;width:190px;height:64px;padding:0;border:0;border-radius:9px;background:#191A18;text-align:left;color:#BEB9B2;cursor:pointer}.ds-remote-histogram span{position:absolute;left:9px;top:5px;font:400 9px sans-serif}.ds-remote-histogram:hover{outline:1px solid #343535}.ds-remote-histogram:focus-visible{outline:2px solid #F6F1EB;outline-offset:2px}.ds-remote-histogram:active{cursor:grabbing}"
+    },
+    {
+      "name": "原生只读参数 sheet · 文档预览",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "节选现有参数 sheet 的标题、关闭目标、只读说明与两行现有字段。原生 Dialog 的底部／右侧位置、ScrollView、窗口和系统返回不由这个 HTML 标本实现。",
+      "html": "<section class=\"ds-remote-sheet\" aria-label=\"机身当前参数\"><div class=\"ds-remote-sheet-heading\"><strong>机身当前参数</strong><button class=\"ds-remote-sheet-close\" type=\"button\" aria-label=\"关闭\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m6 6 12 12 M18 6 6 18\"/></svg></button></div><p class=\"ds-remote-sheet-note\">参数只读，请在相机上调整。未提供的项目显示 —。</p><div class=\"ds-remote-sheet-detail\"><span>机型</span><span>—</span></div><div class=\"ds-remote-sheet-detail\"><span>拍摄模式</span><span>—</span></div></section>",
+      "css": ".ds-remote-sheet{width:280px;padding:14px 20px 20px;border-radius:24px;background:#272625;color:#F6F1EB;font-family:sans-serif}.ds-remote-sheet-heading{display:flex;align-items:center;justify-content:space-between}.ds-remote-sheet-heading strong{font-size:17px;font-weight:500}.ds-remote-sheet-close{width:48px;height:48px;padding:13px;border:0;border-radius:12px;background:transparent;color:#F6F1EB;cursor:pointer}.ds-remote-sheet-close svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}.ds-remote-sheet-close:hover,.ds-remote-sheet-close:active{background:rgba(243,180,147,.1490196078)}.ds-remote-sheet-close:focus-visible{outline:2px solid #F6F1EB}.ds-remote-sheet-note{margin:0;padding:10px 0 14px;font-size:11px;line-height:1.6;color:#BEB9B2}.ds-remote-sheet-detail{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #343535;font-size:13px}.ds-remote-sheet-detail span:first-child{color:#BEB9B2}"
+    },
+    {
+      "name": "遥控拍摄标题栏 · 文档预览",
+      "kind": "nav",
+      "description": "对应 48dp 原生上下文栏的返回、标题与拍摄设置；图标转写原生 AppIcon，不新增目的地。系统 Back、WindowInsets 与 Activity 生命周期仍由原生代码提供。",
+      "html": "<nav class=\"ds-remote-appbar\" aria-label=\"遥控拍摄\"><button class=\"ds-remote-appbar-icon\" type=\"button\" aria-label=\"返回同步\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14 4 6 12l8 8 M6 12h16\"/></svg></button><strong>遥控拍摄</strong><button class=\"ds-remote-appbar-icon\" type=\"button\" aria-label=\"拍摄设置\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"5\" r=\"1\"/><circle cx=\"12\" cy=\"12\" r=\"1\"/><circle cx=\"12\" cy=\"19\" r=\"1\"/></svg></button></nav>",
+      "css": ".ds-remote-appbar{display:flex;align-items:center;min-width:280px;height:48px;padding:0 8px;background:#121313;color:#F6F1EB;font-family:sans-serif}.ds-remote-appbar strong{flex:1;font-size:17px;font-weight:500}.ds-remote-appbar-icon{width:48px;height:48px;padding:13px;border:0;border-radius:12px;background:transparent;color:#F6F1EB;cursor:pointer}.ds-remote-appbar-icon svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.ds-remote-appbar-icon:hover,.ds-remote-appbar-icon:active{background:rgba(243,180,147,.1490196078)}.ds-remote-appbar-icon:focus-visible{outline:2px solid #F6F1EB}.ds-remote-appbar.ds-landscape strong{font-size:15px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "橙光进入照片",
+    "overview": "这是 Huevia 既有原生世界在遥控拍摄表面的局部记录：近黑工作区承托完整画面，小机型和小图标退到画面周围，桃色集中标记主快门与选中状态。它继承用户批准的[原型实施约定](../../design-review/remote-capture-20261024/IMPLEMENTATION-CONTRACT.md)，不另设视觉方向。全局品牌与其他表面仍见根 [DESIGN.md](../../../DESIGN.md) 和 [PRODUCT.md](../../../PRODUCT.md)。\n\n规范以 [RemoteCaptureView](../../../app/src/main/java/cc/huevia/ui/RemoteCaptureView.java)、[Activity](../../../app/src/main/java/cc/huevia/RemoteCaptureActivity.java) 和 [Controller](../../../app/src/main/java/cc/huevia/remote/RemoteCaptureController.java) 的实际代码为准；原型 HTML／CSS／JS 是批准的设计来源，生产界面没有 WebView。当前是原生 Material 无 ActionBar Activity、Android Views 与 Canvas；不据平台指南补写代码尚未提供的主题、动效或组件。\n\n本文对应 95／0.20.0-beta，APK SHA-256 为 `cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012`，身份见 [FINAL-IDENTITY](FINAL-IDENTITY.json) 与 [CANDIDATE-IDENTITY](CANDIDATE-IDENTITY.json)。[UI-MATRIX](UI-MATRIX.json) 记录自有 Pixel_9 模拟器和合成 PTP/IP 夹具的 372 次配置检查、49 张原生截图；不是独立场景数或真实相机证据。[完整初审](FINISH-REVIEW.md)的 `disposition: fix` 保留；[后续 verdict](FIX-VERDICT.md) 仅判 M1–M4 resolved、remaining clear、`disposition: ship`，不构成全表面重新认证或用户最终视觉接受。本文件只碳化已落地设计，没有新增运行、设备或视觉审核结论。",
+    "keyCharacteristics": [
+      "完整比例取景、近黑仪表材料与紧凑的机型／工具。",
+      "四个只读读数围绕单一桃色双环快门组织。",
+      "可移动、收起和放大的同帧直方图；旧帧明确暂停。",
+      "原生 sp 字号、安全区、系统返回与至少 48dp 操作目标。",
+      "竖屏上下布局，横屏左图与可滚动右侧控制区。",
+      "拒绝、中断、离线和未知拍摄结果分别给出真实状态。"
+    ],
+    "rules": [
+      {
+        "name": "The State Color Rule",
+        "body": "选中工具必须实际绘成桃色，未选中工具保留中性文字色；关闭的 Switch thumb 使用中性颜色。颜色不能替代状态文字和禁用语义。",
+        "section": "colors"
+      },
+      {
+        "name": "The Read-Only Instrument Rule",
+        "body": "数字是当前相机属性的读数，不是可编辑字段；未提供的项目显示“—”，不以照片 EXIF 或示例参数填充。",
+        "section": "typography"
+      },
+      {
+        "name": "The Whole Frame Rule",
+        "body": "让完整画面与主快门先被看见；不要为填满容器而改变取景比例，也不要放大机型或可见图标来填空。",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "**Do** 以批准的局部原型和实际原生代码延续近黑、桃色、紧凑机型与小图标。",
+      "**Do** 保留完整比例画面、48dp 操作目标、sp 字号、WindowInsets、系统返回和可滚动 sheet。",
+      "**Do** 让显示帧与统计同源，并明确区分等待、实时、暂停和断线。",
+      "**Do** 让只读参数、相机保存、传入 App 和未知拍摄结果各自反映真实状态。",
+      "**Do** 将本地模拟器／合成夹具证据与真实 Nikon 相机联调分别记录，保留初审和后续有界 verdict。"
+    ],
+    "donts": [
+      "**Don't** 裁切或拉伸取景来消除留黑，或用大机型文字和大图标填满工作区。",
+      "**Don't** 将参数读数变成设置控件，或以 EXIF、样例参数和文档预览冒充当前相机数据。",
+      "**Don't** 把旧直方图当作实时分布、把预览统计称为 RAW 数据，或在未知结果后自动重发快门。",
+      "**Don't** 在未传入 JPEG 的离线状态提供无解释的可用传入动作，或让轮询立即抹去拒绝原因。",
+      "**Don't** 把文档性 HTML／CSS 组件预览当成生产实现、原生截图、实机验证或全表面认证。"
+    ]
+  }
+}

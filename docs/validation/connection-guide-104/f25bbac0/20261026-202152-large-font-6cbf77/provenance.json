@@ -1,0 +1,49 @@
+{
+  "candidateApk": "D:/dev/ai-project/nikon/dist/huevia-0.21.5-beta-debug.apk",
+  "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f",
+  "versionCode": 104,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "large-font",
+  "runId": "20261026-202152-large-font-6cbf77",
+  "probeSha256": "e41945517f1bb496e8adc43e9142721d4c263233f1164209eabeee465ddae89a",
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Real connection guide, actual settings edits and cancellation; synthetic connection stages; no system Wi-Fi or physical camera claim. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+  "files": [
+    {
+      "file": "01-collapsed-nikon.png",
+      "bytes": 100358,
+      "sha256": "ac1054eca42055f2198a506253c4d8fbf3850e334e883373bacff1fc7b0f7a87"
+    },
+    {
+      "file": "02-settings-expanded.png",
+      "bytes": 194595,
+      "sha256": "58853377010b4ff40e65dbeea33a635b428da6090722fce1e7be532980f2e3c0"
+    },
+    {
+      "file": "03-camera-confirmation.png",
+      "bytes": 103784,
+      "sha256": "411ecf8d4a896a6349ba8c49c100d27d927041159c465c6f1d8f4f8afe9a3e04"
+    },
+    {
+      "file": "04-reading-photos.png",
+      "bytes": 100765,
+      "sha256": "39c31a73fef3f344366b403b5d2d5372cff409fc02963a3ba6517f41ea94c614"
+    },
+    {
+      "file": "05-wifi-error-details.png",
+      "bytes": 118004,
+      "sha256": "a31d2ecbf031ba461464d4d90d268bcd54b06c3e30f383126651dc8a03a11e5a"
+    },
+    {
+      "file": "06-confirm-error-details.png",
+      "bytes": 115879,
+      "sha256": "759aba7d0c2ea6f7b4d85846edd9ba290a45d56b88689614c3ef4236d3c44856"
+    },
+    {
+      "file": "report.json",
+      "bytes": 4056,
+      "sha256": "c5f0d16065b57e807680a75d16cc6b749a79f1c065bb1b9f95a9b739cde514b2"
+    }
+  ],
+  "pass": true
+}

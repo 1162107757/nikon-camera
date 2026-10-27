@@ -1,0 +1,101 @@
+{
+  "candidateSha256": "523bd07fb93bd7c1cea3ce8cb5bc451b91fe53ded2355a926dff559b0b61aaec",
+  "versionCode": 99,
+  "scope": "Real production UpdatePanel + native Android dialogs in an instrumented replacement Activity; validated synthetic Release/state callback injection. No MainActivity implementation, metadata HTTP, DownloadManager, unknown-source permission, installer, camera or account integration.",
+  "finalChecks": 489,
+  "finalScreenshots": 10,
+  "allFinalScreenshotsVisuallyReviewed": true,
+  "workerTasks": 0,
+  "finalRuns": [
+    "20261025-070534-font-1-0-9a4363",
+    "20261025-070543-font-1-3-445cd7"
+  ],
+  "failedAttemptsPreserved": true,
+  "attempts": [
+    {
+      "run": "20261025-070425-font-1-0-aec82e",
+      "pass": false,
+      "fontScale": 1,
+      "checks": 7,
+      "workerTasks": 0,
+      "screenshots": 0,
+      "failure": "java.lang.reflect.InvocationTargetException",
+      "probeSha256": "e3646f70775f7231522221de72161ca021ce7188d95a0a51b25b5889864459d3",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-070425-font-1-0-aec82e",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "report": "docs/validation/app-update-policy-99/523bd07f/20261025-070425-font-1-0-aec82e/20261025-070425-font-1-0-aec82e/report.json"
+    },
+    {
+      "run": "20261025-070505-font-1-0-172e74",
+      "pass": false,
+      "fontScale": 1,
+      "checks": 131,
+      "workerTasks": 0,
+      "screenshots": 2,
+      "failure": "java.lang.AssertionError: java.lang.AssertionError: required-notes-tail-reachable",
+      "probeSha256": "5b1c18e6259c2554c25eda45f96726bf5e2c415d6c5a93629428707fcc89d6b4",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-070505-font-1-0-172e74",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "report": "docs/validation/app-update-policy-99/523bd07f/20261025-070505-font-1-0-172e74/20261025-070505-font-1-0-172e74/report.json"
+    },
+    {
+      "run": "20261025-070534-font-1-0-9a4363",
+      "pass": true,
+      "fontScale": 1,
+      "checks": 244,
+      "workerTasks": 0,
+      "screenshots": 5,
+      "failure": null,
+      "probeSha256": "0d5321e8f78dcd91cea69b9afa046a81a49f66d7bdff8ef85fc5db943e562787",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-070534-font-1-0-9a4363",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "report": "docs/validation/app-update-policy-99/523bd07f/20261025-070534-font-1-0-9a4363/20261025-070534-font-1-0-9a4363/report.json"
+    },
+    {
+      "run": "20261025-070543-font-1-3-445cd7",
+      "pass": true,
+      "fontScale": 1.2999999523162842,
+      "checks": 245,
+      "workerTasks": 0,
+      "screenshots": 5,
+      "failure": null,
+      "probeSha256": "0d5321e8f78dcd91cea69b9afa046a81a49f66d7bdff8ef85fc5db943e562787",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-070543-font-1-3-445cd7",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "report": "docs/validation/app-update-policy-99/523bd07f/20261025-070543-font-1-3-445cd7/20261025-070543-font-1-3-445cd7/report.json"
+    }
+  ],
+  "testPackageAbsent": true,
+  "deviceHandback": {
+    "serial": "emulator-5586",
+    "stillRunning": true,
+    "closedByProbe": false,
+    "installedCandidateUnchanged": true
+  },
+  "limits": [
+    "Synthetic status updates verify progress/error UI, not actual download throughput or backend delivery.",
+    "No retry/download/install/exit action was executed; stale withdrawn button handler was executed and rejected with zero worker tasks.",
+    "Only portrait normal and activity-local 1.3 font configuration are covered.",
+    "Probe Activity supplies the background; screenshots are component evidence, not MainActivity layout approval."
+  ]
+}

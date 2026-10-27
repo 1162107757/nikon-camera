@@ -1,0 +1,471 @@
+# Pure Java PTP core
+
+This code is original, dependency-free Java 17. It models standard USB PTP containers and parses the standard GetDeviceInfo, GetStorageIDs and GetStorageInfo datasets. Android classes are excluded, so the protocol core can be tested without a phone or Android SDK.
+
+## Current implementation: fast Photo Live and projects (0.7.0-beta / code 28)
+
+Live startup persists a named project, then reads fresh StorageIDs and per-storage
+ObjectHandles. It does not read every old ObjectInfo, preview or original before ready.
+Events/new photos and original transfers precede optional idle metadata work, limited
+to one old descriptor per reconciliation. Unknown baseline handles only prime identity
+on their first descriptor; reuse before that sample is not guaranteed detectable.
+First-readable-slot baselines still prevent old events from bypassing storage recovery.
+
+An independent browse cancellation token drops queued page/thumbnail work, drains one
+in-flight response and yields without reconnecting; the live tab does not preload the
+camera grid. Project IDs isolate equally named runs, persisted original membership and
+offline project detail paging. Old files stay in the downloaded collection. The separate
+`PhotoLiveProjectStoreTest` covers source protection, checksummed atomic records,
+backup recovery, idempotence and invalid input. Classification/publication retries use
+the completed local original, while new project MediaStore rows use a project subfolder.
+
+The synthetic server suite passes **238 checks**: the original 51, dual-storage 117,
+10,000-photo baseline 60 and baseline-argument 10. `--live-baseline-count=3..19000`
+requires `--photo-live-synthetic`, defaults to 3 and clones shared fixture buffers only;
+handles start with 1–3 then 100 upward, reserving 4–49 for new events. Dual-storage
+0x2013 mode remains composable, with no additional network listener or automatic original
+request. The complete 0.7.0 run passes **10,595 core** (including 626 production controller
+and 106 project-store), **12,089 probe** and **238 server** checks: **22,922 total**.
+
+Final APK emulator verification on Android 17 / Pixel 9 uses 10,000 old photos with the
+first slot continuously returning 0x2013. The named startup sends one StorageIDs and two
+Handles requests, with zero old metadata/preview/original before ready; subsequent old
+metadata is idle-only, one per scan. New duplicate/missed events, HOME screen-off with a
+busy-original retry, and missed-event reception during forced deep Doze IDLE succeed.
+The screen is OFF/Asleep/IDLE, but keyguard showing=false: this is not a secure-lock test.
+Studio_A holds four photos, Studio_B three; new B arrivals cannot replace selected A,
+project detail boundaries hold and force-stop/relaunch restores both projects offline.
+Seven project-separated MediaStore originals are pending=0 with fixture-matching hashes.
+After stop the next photo is not read, and explicit disconnect releases service/CPU locks.
+The 475-line protocol log has one Init/Open, zero CloseSession and zero camera writes.
+
+The final APK is **2,798,201 bytes**, SHA-256
+`2381807a1b02b5af059304ef1aa287f54759ea68256f41396f23a769fdf1b3c5`,
+with no production edits after its 14:33:33 build. PKG110 / Android 16 user 0 was updated
+27→28 at 2026-10-17 14:40:59 +08:00, preserving data and matching the installed base hash.
+Existing preset/downloads remain. Before installation the camera session/live task were
+stopped and services empty; no transmission was deliberately interrupted, phone battery
+or permission settings changed, or real-camera capture/import initiated. This does not
+measure new-version Z6II speed or certify hardware secure-lock reception. See
+[0.7.0 delivery](../dist/nikon-usb-0.7.0-beta-VALIDATION.txt),
+[baseline](../docs/device-review/live-0.7.0-baseline.log),
+[protocol](../docs/device-review/live-0.7.0-protocol.log),
+[Doze](../docs/device-review/live-0.7.0-doze.log),
+[originals](../docs/device-review/live-0.7.0-originals.log) and
+[audit](../docs/device-review/live-0.7.0-audit.md). All counts below retain historical scope.
+
+## Public API
+
+All classes use the package `com.nikonpreset.usbprobe.ptp`.
+
+```java
+byte[] command = PtpContainer.command(PtpConstants.GET_DEVICE_INFO, 0).toBytes();
+PtpContainerReader reader = new PtpContainerReader(byteSource, 1024 * 1024);
+PtpContainer first = reader.read();
+byte[] dataset = PtpValidation.requireData(first, 0, PtpConstants.GET_DEVICE_INFO);
+PtpValidation.requireOkResponse(reader.read(), 0);
+PtpDeviceInfo info = PtpDeviceInfo.parse(dataset);
+```
+
+`PtpContainerReader` accepts either an `InputStream` or a `ByteSource` with `read(byte[], int offset, int length) throws IOException`. The latter returns positive byte counts or `-1` at EOF. It must retain any bytes beyond the requested length when adapting a USB bulk packet; timeouts must throw rather than return zero. A bulk packet can contain part of one container or several containers. The reader handles both cases when the adapter follows this contract.
+
+The reader returns `null` only at EOF on a container boundary. A partial header or payload throws `EOFException`. Lengths, container types, parameter alignment, five-parameter command/response limits, three-parameter event limits and data-size limits are validated before allocation. Invalid framing terminates that stream; do not continue scanning for a new header after failure. Create a new transport/session instead.
+
+`PtpContainer` factories encode `command`, `data`, `response` and `event`; getters are `type()`, `code()`, `transactionId()`, `payload()` and `parameters()`. Transaction IDs and parameters use `long` for unsigned 32-bit values. Byte and array getters return copies.
+
+`PtpValidation.requireData(container, expectedTransactionId, expectedOperation)` returns the data payload. `requireOkResponse(container, expectedTransactionId)` returns void. A failed response throws `PtpResponseException`, with `responseCode()` and `transactionId()`. Messages distinguish `DeviceBusy` and `SessionAlreadyOpen`, among other standard response codes. Unexpected identities or types throw `PtpProtocolException`. Validate both the data container and its final response before treating the dataset as a successful transaction.
+
+`PtpDeviceInfo.parse(byte[])` returns getters. Use `parseRedacted(byte[])` in diagnostics; it validates and skips the serial number without decoding it or retaining its value:
+
+- `standardVersion()`, `vendorExtensionVersion()` and `functionalMode()` as `int`.
+- `vendorExtensionId()` as unsigned `long` and `vendorExtensionDescription()` as `String`.
+- `operationsSupported()`, `eventsSupported()`, `devicePropertiesSupported()`, `captureFormats()` and `imageFormats()` as `int[]`.
+- `manufacturer()`, `model()`, `deviceVersion()` and `serialNumber()` as `String`.
+- `supportsOperation(int)`, `supportsStandardObjectSend()` and `operationsAsHex()`.
+
+Do not export the device serial number in diagnostics. `supportsStandardObjectSend()` means only that the standard operation pair `SendObjectInfo`/`SendObject` is advertised. It does **not** establish that a Nikon camera accepts NCP objects, supports the required card path or can register an imported Picture Control.
+
+`PtpStorageIds.parse(byte[])` returns a `long[]` of unsigned storage IDs.
+
+`PtpStorageInfo.parse(byte[])` returns `storageType()`, `fileSystemType()` and `accessCapability()` as `int`; `maxCapacity()` and `freeSpaceBytes()` as unsigned `BigInteger`; `freeSpaceImages()` as unsigned `long`; `description()` and `volumeLabel()` as strings. `readOnly()` returns `Optional<Boolean>`: `false` for access capability 0, `true` for 1 or 2, and empty for a reserved/vendor value. Standard writable-storage metadata is not evidence that arbitrary NCP objects are accepted.
+
+PTP strings use one unsigned byte for the number of UTF-16 code units, including the terminator. Empty strings may use zero units or one null code unit. Malformed Unicode, missing terminators, embedded nulls, truncated datasets, extra trailing bytes and oversized array counts are rejected. Dataset arrays are capped at 65,536 elements and must fit inside the received payload.
+
+`PtpObjectHandles.parse(byte[])` returns the unsigned `long[]` dataset from GetObjectHandles. It shares the bounds-checked UINT32 array parser.
+
+`PtpObjectInfo.parse(byte[])` and `toBytes()` decode/encode all standard ObjectInfo fields, in order: storage ID, object format, protection status, compressed size, thumbnail format/size/width/height, image width/height/bit depth, parent object, association type/description, sequence number, filename, capture date, modification date and keywords. Getters use standard camelCase names; `compressedSize()` is unsigned UINT32 as a long, and `associationDescription()` is unsigned UINT32 as a long.
+
+For standard-object experiments, `PtpObjectInfo.file(storageId, parentObject, filename, compressedSize)` uses UndefinedFile format `0x3000`; `folder(storageId, parentObject, filename)` uses Association format `0x3001` and GenericFolder association type 1. These factories accept only one filename component and reject traversal, slashes, control characters, FAT reserved characters and trailing spaces/dots. The parent object handle identifies the directory. A filename may contain valid Unicode and at most 254 UTF-16 units. The complete standard metadata can also be constructed with `new PtpObjectInfo.Builder()` and setters matching all getter names; builders are copied on `build()`.
+
+The generic codec is not an operation authorization boundary. The read-only probe must allow only its known read commands plus OpenSession/CloseSession. A separate experimental upload flow can use standard SendObjectInfo/SendObject only after the user explicitly chooses to upload a file, validates the destination/size and checks existing objects to avoid overwrites. Do not send unknown vendor commands. A successful object upload plus a matching read-back hash establishes card-file transfer; the camera's menu must still be used to establish Picture Control loading support.
+
+## Read-only directory survey
+
+`com.nikonpreset.usbprobe.usb.PtpDirectorySurvey` is compiled directly in the JVM suite. It compares `GetObjectHandles(storage, 0, 0xFFFFFFFF)` with `GetObjectHandles(storage, 0x3001, 0)` and reads only `GetObjectInfo` metadata for the returned handles. When the all-association selector receives a validated unsupported-format/parameter response `0x2006` or `0x2014`, it adds one `GetObjectHandles(storage, 0, 0)` fallback. An unsupported root selector remains a separate unsupported result; it does not independently enable that fallback. The scanner never reads photo/file contents, creates objects, sends vendor commands or manages USB sessions.
+
+Construct it with `new PtpDirectorySurvey(operations, storageId)` and call `scan()`. The owner supplies `Operations.getData(int operation, long... parameters)` and must already have opened the session. The owner also remains responsible for increasing transaction IDs, validating framing and matching response transaction IDs, USB timeouts and cancelling in-flight I/O. Only a fully validated negative PTP response may arrive as a `PtpResponseException`; the scanner cannot validate a transaction that its interface does not receive. Tests inject exceptions at that boundary and do not claim to verify the Android transport. The optional third constructor argument is a monotonic `Clock`, used by deterministic deadline tests.
+
+`result()` retains the same partial result after an exception. It reports each query's selector, status, response code, raw handle count, completion/truncation, errors and object records with handle, filename, parent, storage, format and association type. Scheduled queries that were never reached remain `pending`. `Result.completed` means all scheduled queries finished; each `QueryResult.complete` independently states whether that view was fully checked. A selector that returns objects at unexpected parents or formats is recorded as `selector_mismatch`, preserves the returned fields and cannot claim a complete view. Seeing `NIKON/CUSTOMPC` requires the corresponding visible directory names and parent links. Not seeing them establishes only the camera's USB view, not their physical absence on the SD card or any write capability.
+
+Each query retains counts but skips its metadata if it has more than 4,096 handles or more than 128 candidate metadata objects. Valid larger lists, including 65,537 handles, are recorded as truncated instead of being misreported as empty or corrupt solely due to their size. Invalid count/length pairs still fail. All queries share a 128-request metadata budget and cache; failed metadata requests count against that budget. A 60-second monotonic deadline and thread interruption are checked before and after operations and prevent the next request. These are boundary checks; in-flight USB cancellation/timeouts remain the owner's responsibility.
+
+## Run tests
+
+With JDK 17 or newer on PATH:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tests\run.ps1
+```
+
+Or specify an existing JDK:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tests\run.ps1 -JdkHome 'C:\path\to\jdk'
+```
+
+Tests use literal wire fixtures and synthetic datasets to cover fragmented/concatenated containers, Unicode including supplementary characters, unsigned integers, array allocation bounds, malformed lengths, truncated transfers, transport errors, transaction mismatches, negative responses, serial redaction, ObjectInfo field offsets and upload filename/size limits. Passing these tests does not verify a real Z6II, USB cable, Android permission behavior or NCP import.
+
+The same script also runs these additional suites:
+
+- `NcpFileTest` executes the production NCP structural validator against a synthetic 0100 envelope, every truncated prefix, counterfeit signatures, unsigned record lengths, absent/extra termination data, duplicate preset records and unsupported versions. These fixtures only establish parser behavior; they are not claimed to be camera-compatible presets.
+- `NcpTransferSessionTest` executes the production transfer planner against a stateful simulated PTP camera. It covers ordinary-mode directory creation, alternate filename allocation, preflight operation/model/storage/size failures, object conflicts, session ownership, changed filenames before reservation, unexpected returned storage, pre-existing returned object handles and byte/hash/path verification failures. The multiple-slot regression cases audit operation codes, transaction IDs, storage parameters and the first-write order: a matching GetStorageInfo response `0x2013` permits checking another slot, while InvalidStorageID `0x2008`, DeviceBusy `0x2019`, a response from another transaction, and any command/upload-phase `0x2013` must stop. Physical-only IDs with a zero low word must never receive GetStorageInfo; their unmounted status is reported separately without inventing a `0x2013` response. All-unavailable slots must produce zero object writes.
+- The same transfer suite exercises the explicitly requested `existing_directory_experiment` mode. The ordinary constructor still refuses access capability 2. The experiment can select access 2 only when the other storage guards pass and `NIKON/CUSTOMPC` is already visible as two exact-name standard GenericFolder associations. Missing, USB-invisible, incorrectly cased, duplicate or wrong-type directories produce a local `ExistingDirectoryCheck` refusal and no write requests; this is not a camera upload rejection or proof that the directory is absent on the card. The requested mode never creates directories, including when it selects an ordinary writable card. Tests cover ambiguous candidates, unique SD identification, writable-card priority, operation/model/storage/filesystem/space guards, occupied filenames, all 99 names occupied and a last-moment filename conflict. A successful simulated experiment still needs the normal location, byte and SHA-256 verification; it never verifies camera-menu import.
+- Experimental write tests audit the exact parent handle and file metadata of the first standard `SendObjectInfo`. Before that request, `existingPathVerified` and `readOnlyExceptionAttempted` must be recorded. Simulated camera responses `0x200F` and `0x2020` to that request preserve the actual failed operation, transaction and storage context, cause no content transaction and are never retried. If the subsequent `SendObject` fails, the result retains accepted file metadata, the returned handle and the attempted-content state: a new incomplete object may already exist. It does not claim a zero-write failure, acknowledged content or a verified transfer. No guessed vendor operation is used.
+- `StorageAssessmentTest` executes the production storage assessment helper against independent PTP StorageInfo datasets. It verifies hierarchical filesystem 2 and DCF filesystem 3 have ordinary eligibility only with writable access, and retains the logical-media, removable-media, filesystem and byte-reserve guards. Read-only-with-deletion access 2 remains ordinarily ineligible, including when it is separately marked `experimentCandidate` after an explicit opt-in. Access 1 and unknown access values can never become experiment candidates. Flat/unknown filesystems, unknown access/storage values, invalid/unmounted storage IDs and insufficient space remain excluded; multiple constraints retain every reason and all raw metadata. Transfer simulations also verify that local storage policy refusals are labeled `StorageEligibilityCheck`, preserve the successful GetStorageInfo evidence, never fabricate a failed PTP operation and produce zero directory/file writes.
+- `PtpDirectorySurveyTest` executes the production directory scanner against independent object-handle datasets and synthetic object metadata. It covers a root view containing only DCIM while the all-association view exposes the full Nikon directory parent chain, both views containing only DCIM, unsupported selectors and the limited fallback, unmodified propagation of fatal busy/storage/metadata errors, partial record retention, invalid/duplicate handles, cross-storage objects, mismatched selector fields and raw Unicode metadata. It checks shared metadata caching, oversized 129/4,097/65,537-handle lists, the global 128-request budget, a monotonic deadline crossing during a response and thread interruption before or during a query. Its operations facade rejects every opcode except `GetObjectHandles` and `GetObjectInfo`; those checks verify the scanner's command boundary, not actual USB packets.
+
+The transfer planner references the Android `UsbNcpTransfer.Result` and SHA-256 method. Pure JVM compilation uses a facade under `tests/stubs` with the same data fields and a JDK SHA-256 implementation. Production `NcpTransferSession`, `StorageAssessment`, `PtpDirectorySurvey` and `NcpFile` are compiled directly, without Android dependencies. These simulations do not exercise the actual Android outer classes, their lifecycle/JSON reports, USB driver, permission handling or USB packets; those require the Android build and device testing.
+
+The 0.1.4 local run passed 3,934 checks: 186 PTP core, 68 NCP structure, 2,577 transfer simulation, 148 storage assessment and 955 read-only directory survey checks. These counts describe synthetic test execution, not real-camera compatibility, actual SD directory visibility or an established special write permission for `NIKON/CUSTOMPC`.
+
+## Production UsbProbe host regression
+
+The separate `run-probe.ps1` script executes the real production `UsbProbe.probe(...)`, including its private USB transport, directory-survey adapter, error wrapping and session cleanup. It compiles `UsbProbe.java`, the production PTP sources, `StorageAssessment.java` and `PtpDirectorySurvey.java` directly. It does not substitute the earlier transfer-result facade or replace the production probe with a helper.
+
+```powershell
+& '.\tests\run-probe.ps1' -JdkHome '.tooling\jdk\jdk-17.0.20.1+1' -Reproduce014
+```
+
+`-AndroidJar 'C:\path\to\android.jar'` can specify another existing Android platform jar. The default uses the project's ignored Android 35 SDK. Eight small classes under `tests/android-stubs` provide only the USB device/interface/endpoint/manager/connection, worker-thread Looper and monotonic SystemClock surfaces needed by this test. The platform jar supplies the remaining declarations; the test does not invoke its throwing `Stub!` methods or JSON serialization. These classes are isolated in `tests/.build/probe` and are not compiled into the app or the existing pure-Java test suite.
+
+`UsbProbeHostTest` parses the actual command containers passed by the production code to `bulkTransfer`, records their operation, transaction and parameters, then supplies scripted PTP DATA and RESPONSE containers through the same production bulk-input and container-reader path. Tests run both combined containers and seven-byte fragments. The scripted connection rejects every opcode except the probe's seven read/session operations; it sends no upload, property write, vendor command or object-content read. It verifies the full ordinary and directory probe sequences, the skipped empty physical slot, interface/session ownership and cleanup, and both nullable and concrete storage contexts. Failure cases check original parameters/transaction/storage after cleanup, a separate cleanup error that cannot replace the primary failure, GetObjectInfo's survey storage context, validated unsupported-selector recovery and refusal to recover a response from the wrong transaction.
+
+With `-Reproduce014`, the script first creates a generated copy of `UsbProbe.java` under `tests/.build/probe/repro` and restores only the 0.1.4 nullable nested conditional expression. The checked-in production file is never edited. That variant must fail through the actual `UsbProbe.probe` call with a `NullPointerException` originating in `UsbProbe$Transport.exchange`, before sending any USB command. The script then separately compiles and runs the current unmodified production source. The 0.1.5 verification reproduced the old failure with seven checks and passed 685 production-probe host checks. The prior 3,934 pure-Java checks were not rerun for this isolated nullable-context fix.
+
+This host regression exercises production Java control flow and transport framing against a synthetic USB connection. It does not verify Android USB permission dialogs, actual Android class behavior, kernel/OTG drivers, JSON export, a physical Z6II or successful NCP import; those still require the APK and real-device testing.
+
+## Picture Control read-only regression
+
+The 0.1.6 suites add independent synthetic fixtures for the SDK-documented read datasets and execute the new production `PictureControlReadSession`, `UsbPictureControlProbe` and the real `PtpUsbTransport` in its dedicated read-only mode. The request fixtures distinguish zero parameters from a parameter whose value is zero: optional `GetVendorPropCodes` has no parameters, the standard capability request selects item 1, and data reads select Standard or C1–C9 with the current-data selector. They do not create a file-to-dataset conversion, infer a write command from a read command or install a custom slot.
+
+The regular `run.ps1` script now compiles the production `picturecontrol` package and runs `PictureControlCodecTest`. Its 50 checks cover 36-byte and 614-byte returned data, exact capability size, curve structure, empty base state, unknown base/capability values, signed parameter sentinels, unsigned raw fields, ASCII/NUL registration-name structure and opaque padding. Input arrays, returned arrays and immutable collections are checked independently. Invalid lengths, an enabled curve without its required tail, unsupported curve flags, missing termination and non-ASCII name bytes are rejected. These are read-format checks, not proof of camera acceptance or a serializer for NCP files.
+
+The separate host script also runs `UsbPictureControlProbeHostTest`. Its 453 checks include direct calls to the actual read-only transport dispatcher: data uploads, deletion/property/mode commands, unknown vendor operations, file/storage reads, incorrect parameter counts and incorrect selector values must fail before USB I/O. Ordinary transport mode does not acquire vendor-read permission. The production session is also exercised with in-memory operations to verify optional enumeration and session ownership without USB.
+
+The real wrapper/transport success case runs the full device-info, owned-session, optional vendor-property enumeration, standard capability and Standard/C1–C9 data-read sequence over scripted USB containers, including seven-byte fragments, a 614-byte custom curve and an empty C1 slot. It verifies that no per-empty-slot capability request is invented and that raw item bytes remain protected by copies. Failure cases preserve successfully read items, distinguish received raw data from parsed data, retain the original failed item/parameters/transaction through a separate cleanup error, and stop on malformed capability/profile data. A semantic dataset rejection after a complete matching DATA+OK exchange preserves that known protocol boundary: it stops further Picture Control reads and still closes the tool's own session. Wrong data operation, wrong final-response transaction, an oversized data header, missing final response and a partial command write instead close the transport without sending any subsequent slot read or `CloseSession` on an unconfirmed phase.
+
+Run the two suites with the existing commands:
+
+```powershell
+& '.\tests\run.ps1' -JdkHome '.tooling\jdk\jdk-17.0.20.1+1'
+& '.\tests\run-probe.ps1' -JdkHome '.tooling\jdk\jdk-17.0.20.1+1'
+```
+
+The final 0.1.6 local run passed 3,984 pure-Java checks (the prior 3,934 plus 50 codec checks) and 1,138 host integration checks (the prior 685 plus 453 Picture Control checks), totaling 5,122 checks. The pure suite ran once after the new files were complete; the host suite ran again after the targeted semantic-parse cleanup fix and its new boundary assertions. The unchanged pure suite and the old 0.1.4 failure reconstruction were not repeated. The host build reuses the eight Android stubs and the existing unrelated upload-result facade only to satisfy the shared transport's compile-time dependency; the Picture Control wrapper, result model, planner, codecs and transport are all the actual production classes. JSON export, Android lifecycle/driver behavior and physical-camera results remain outside the host tests. Passing a read-only query test establishes neither NCP conversion nor a supported direct-write route.
+
+## Camera preset copy to an empty slot
+
+The 0.1.7 host script adds the production `PictureControlImportSession`, `UsbPictureControlImport` and `PtpUsbTransport.Mode.WRITE_EMPTY_PC` to its direct-source compilation. `UsbPictureControlImportHostTest` executes their real Java paths over scripted USB commands, data stages and responses. The public copy API requires different explicit source and target custom slots. The backend reads all nine slots, verifies that the fresh nonempty source bytes match the selected snapshot, checks the target is empty and reads that target again immediately before its one registration request. It then reads the target back and compares the complete bytes. No request selects the active preset, edits an occupied slot, changes camera mode, deletes a slot or writes a card file.
+
+The tests contain only independently constructed synthetic wire bytes: a fixed ASCII test name, literal parameter values and an artificial linear LUT. No captured user preset, user curve or original NCP mapping is embedded in the test sources or fixtures. The expected data bytes are not generated by a production converter. There is no NCP converter in this version: the missing modern-field mapping remains unverified, and file-shaped input is rejected by the copy backend. Synthetic payload success in the scripted camera proves control flow and byte preservation, not physical-camera acceptance or appearance.
+
+The 788 copy checks cover:
+
+- Actual transport dispatch: only the explicit write mode permits `SetPicCtrlData(target, new=0)`, only once per connection. Read-only and ordinary modes reject that vendor write before USB I/O. Wrong operation, target, parameter count, edit flag, file/content/property/mode/delete command and unsupported query all remain blocked.
+- Strict write-input checks independent of the permissive read decoder: known nonempty base/name and field ranges, printable terminated ASCII, control flags, curve length/header and rejected file-format bytes. This does not claim to validate an unimplemented NCP conversion.
+- A full source-C1 to empty-C7 sequence, all-nine-slot inspection, the adjacent target recheck, exact outbound command and DATA bytes, fragmented reads, full readback and unchanged simulated C1–C6/C8–C9 contents.
+- Initially occupied target, target occupied at recheck, changed or empty source, missing source and self-copy. Every such refusal sends zero registration commands or data stages.
+- A rejected registration response with a possible simulated target change, a separate cleanup failure that cannot replace the original write context, and acknowledged data with a different readback. The report preserves attempted/acknowledged/verified distinctions, byte differences and possible changes. No case automatically retries, deletes or rolls back the target.
+- Lost registration response, partial DATA write and wrong readback transaction. Those unconfirmed phases close USB without another PTP command. Fully returned semantic differences still permit closing the tool's own session. A final cancellation after verified readback keeps that evidence but reports unconfirmed session cleanup, `completed=false` and an `ImportException`; it sends no further command.
+
+The two empty observations are not an atomic compare-and-set. The tests verify the implemented recheck and refusal boundaries; they do not eliminate a camera-side state change between the final read and registration, or establish how the real camera handles duplicate names.
+
+Run all host regressions with `run-probe.ps1` as above. After an isolated copy-driver change, the same script can compile the current sources and run only the copy suite:
+
+```powershell
+& '.\tests\run-probe.ps1' -JdkHome '.tooling\jdk\jdk-17.0.20.1+1' -OnlyCopy
+```
+
+The effective 0.1.7 validation totals 5,910 checks: 3,984 unchanged pure-Java checks from the preceding version, 685 ordinary-probe host checks, 453 Picture Control read-only host checks and 788 copy host checks. This work ran the full host suite once, then only the copy suite after the targeted late-cancellation fix; it did not rerun the unchanged pure-Java suite. Physical USB writes, menu behavior, rendering/JSON export and actual preset results still require device verification.
+
+## Explicit NCP compatibility adaptation
+
+The 0.1.8 version adds `NcpPictureControlConverter` for one deliberately restricted legacy color-and-curve NCP subset. This is an explicit compatibility adaptation, not a claim that modern camera settings can be recovered as Nikon's native loader would choose them. The user supplies the missing middle-range sharpening and clarity values in quarter units. Quick sharpening, contrast and brightness use the disclosed fixed adaptation values; the supported known fields and complete curve are retained. Other formats, flags, encodings and unknown values are rejected instead of guessed.
+
+`NcpCompatibilityFixtures` contains a hand-authored synthetic canonical NCP container, an independent expected camera dataset and an artificial linear LUT. It contains no user file or recipe. The expected bytes use literal mappings and chosen values; they are not generated by the production converter. `NcpPictureControlConverterTest` adds 77 pure-Java checks for:
+
+- Exact output bytes and hashes, all five supported literal base mappings, signed quarter-unit scaling and explicit adaptation values.
+- Choice limits and unsupported sentinels, strict record order/length/version/metadata, printable terminated names with zero padding and rejected unknown fields.
+- Complete unchanged curve bytes, no byte swapping, sorting or resampling, permitted nonmonotonic samples and rejected header/size/range violations.
+- Independent input/output arrays, immutable conversion state and a reviewable adaptation preview.
+
+The public `UsbPictureControlImport.importNcpPreset(...)` entry accepts original NCP bytes and choices. It recomputes conversion inside the backend before opening USB, then uses the existing all-nine-slot inspection, double-empty guard, one-registration limit, readback comparison and cleanup behavior. It does not require a camera source slot and cannot pretend that one was verified. The host suite reuses the existing scripted camera with an independently expected registration payload rather than duplicating the already-covered wire failure cases.
+
+The expanded copy/adaptation host suite has 1,004 checks. Its new cases verify the actual NCP entry's output bytes, choices, original-file and curve hashes, registered name and retained preview; pre-USB rejection of invalid choices or unsupported original metadata; refusal to overwrite an occupied target; and retained adaptation metadata when a registration response fails after data was sent. Existing-camera copies retain their separate purpose and cannot be marked as NCP imports. Successful exact registration sets `ncpRegistrationVerified`; `ncpImportVerified`, `conversionEquivalentToNative` and `photoEffectVerified` remain false, including after an otherwise successful registration. These distinctions are asserted against the actual production result fields.
+
+The first 0.1.8 verification passed 6,203 checks: 4,061 pure-Java checks (the prior 3,984 plus 77 converter checks) and 2,142 host checks (685 ordinary-probe, 453 read-only Picture Control and 1,004 copy/adaptation checks). Both complete scripts ran once after the production APIs were stable. `run-probe.ps1 -OnlyCopy` now selects the shared copy/adaptation suite for a later isolated fix. Host success verifies the stated adaptation and registration control flow; it does not establish native equivalence or photographic appearance. Actual device registration and visual results require device testing.
+
+## Wireless Picture Control regression (0.3.0-beta)
+
+At 0.3.0, `PtpIpClient` gained an explicit Picture Control mode alongside its default album read-only mode. `WirelessPictureControl` adapts the same production `PictureControlReadSession` and `PictureControlImportSession` to standard PTP/IP. The original independent import opens a fresh owned session, reads the nine custom slots, checks the target twice, permits one registration, compares the exact readback and requires confirmed session cleanup. The album constructor cannot acquire Picture Control read or write permission.
+
+`PtpIpClientTest` covers the mode boundary, operation/parameter validation, independent outbound wire framing, transaction and response checks, fragmented reads, bounded data and immediate shutdown after an unconfirmed phase. Data-out requests use DataPhase 2 followed by StartData and EndData; data-in/no-data requests use DataPhase 1. Synthetic fixtures verify the bytes independently of the production packet encoder.
+
+`UsbWirelessPictureControlHostTest` executes the production wireless adapter and shared sessions over scripted command/event sockets. Its 1,345 checks cover successful read-only snapshots and NCP adaptation, source-copy isolation, invalid input before socket creation, unsupported capabilities, initially occupied or subsequently changed targets, and no takeover of another initiator's session. Failure cases retain received evidence, the primary failed operation and separate cleanup failure; partial writes, missing responses and wrong transactions abort the connection without subsequent commands. Readback differences, failed CloseSession and cancellation after otherwise exact readback cannot report completed import. Concurrent close unblocks an in-flight socket operation and prevents starting another flow.
+
+The local pending-import journal uses schema 2 with transport, host and port, so recovery reads through the original connection route. Old records default to USB. The regular library suite verifies production persistence separately; Android UI state, real network selection and a physical camera remain outside these host tests.
+
+The 0.3.0-beta run passed 10,520 checks: 6,906 from `run.ps1`, 3,487 from `run-probe.ps1` (685 ordinary USB probe, 453 Picture Control read-only, 1,004 USB copy/adaptation and 1,345 wireless), and 127 from `run-library.ps1`. These are synthetic protocol and persistence checks. That version was not installed on a physical phone and no physical-camera operation was executed in that run. At that release there was no Z6II wireless registration evidence; subsequent 0.5.3 user feedback is recorded below. USB results cannot establish Wi-Fi support. See [wireless-import.md](../docs/wireless-import.md) for version-specific evidence, usage and compatibility sources.
+
+Example commands for the installed tools on this development machine:
+
+```powershell
+.\tests\run.ps1 -JdkHome 'D:\dev\Java\jdk-17.0.19'
+.\tests\run-probe.ps1 -JdkHome 'D:\dev\Java\jdk-17.0.19' -AndroidJar 'D:\dev\android-sdk\platforms\android-35\android.jar'
+.\tests\run-library.ps1 -JdkHome 'D:\dev\Java\jdk-17.0.19' -AndroidJar 'D:\dev\android-sdk\platforms\android-35\android.jar'
+```
+
+## Retained wireless confirmation session (0.5.3-beta)
+
+The reported `EHOSTUNREACH` occurred during `WirelessConnection`, before a registration request. Source inspection and synthetic regression establish an avoidable close/reconnect gap: the old snapshot closed its owned session and both sockets before confirmation, then import attempted a new connection. Whether that close caused the physical camera to disable its access point remains an inference. Network selection already used sockets pinned to the selected Android Wi-Fi `Network`; this fix does not add or remove a system Wi-Fi disconnect call. See [wireless-import.md](../docs/wireless-import.md) for the source evidence and its limits.
+
+In 0.5.3, standalone `probe()`, settings detection and recovery retained the original close-after-read contract. Actual imports use `prepareImport()` to retain only this instance's successfully opened PTP session and command/event sockets. The confirmation page queues one read-only Standard request every 10 seconds on the same serial worker. `importPreparedNcpPreset()` accepts no new endpoint and cannot reconnect: it converts a private copy of the original NCP again, freshly reads DeviceInfo and Standard capability, inspects all nine slots, rechecks the selected empty target, sends at most one registration and compares the exact readback. Transaction IDs continue monotonically across preparation, heartbeat, import and cleanup. Album instances remain read-only; no foreign session is taken over.
+
+`Result.sessionRetained` is exported as `sessionRetainedForConfirmation`. A complete held snapshot has `completed=true`, `sessionRetainedForConfirmation=true` and `sessionCloseConfirmed=false`; the UI additionally requires the same live owner's `isPrepared()`. Release or consumption clears retention. Returning, changing pages or destroying an idle confirmation queues owned `CloseSession` before socket release. Immediate cancellation closes in-flight sockets; uncertain protocol phases abort without a further cleanup command. No path automatically reconnects, retries registration, deletes or rolls back a target. Import completion still requires exact readback and acknowledged owned-session closure.
+
+The expanded wireless host suite has **3,544 checks**. It verifies a synthetic camera that refuses new connections after session closure, preparation and heartbeat without writes or extra sockets, retained endpoint and ownership, fresh model/operation/capability checks, all-slot and final-target races, invalid confirmed input cleanup, stale/consumed handles, graceful release and separate cleanup errors. Blocked, rejected, lost and mismatched responses retain the appropriate possible-write evidence; concurrent cancellation unblocks I/O and prevents subsequent commands or a second registration.
+
+The 0.5.3 run passed **8,212 `run.ps1` checks** and **5,686 `run-probe.ps1` checks** (685 ordinary USB probe + 453 Picture Control read-only + 1,004 USB copy/adaptation + 3,544 wireless), totaling **13,898**. Historical counts above describe their stated versions; the earlier 127 library checks are not added to that run. These automated results cover synthetic Java/protocol behavior, not Android UI/lifecycle, physical installation, camera hotspot policy, wireless acceptance or photographic appearance.
+
+## Retained settings and one-way album handoff (0.5.4-beta)
+
+The Z6II user subsequently reported successful wireless import on **0.5.3**, with one remaining disconnect while reading capability and empty slots. This is real-camera user feedback, not an independently reviewed complete protocol report. It does not establish 0.5.4 acceptance or identify the camera's hotspot shutdown policy. Source audit found two remaining close/reconnect boundaries: settings detection closed after reading, and entering import from an active album closed the album sockets first.
+
+Settings now uses `prepareReadOnly()` and keeps its owned session across root pages with serialized 10-second Standard heartbeat. Read-only preparation can complete without advertised `0x90CD`; it grants no write permission. Entering import calls `refreshPreparedSnapshot(true)` to freshly read DeviceInfo, capability, Standard and all nine custom slots on the same owner and transaction sequence, requiring registration capability. Failure clears retained state without automatic reconnection. Independent `probe()` and recovery retain close-after-read behavior.
+
+`PtpIpClient.transferToPictureControl()` waits for the current synchronized album transaction and returns a new explicit Picture Control owner. The album controller also drains its worker and retires old callbacks before handoff. The old album handle is permanently invalid: reads, writes, reconnection and a second transfer fail, while old `close()` or abort cannot affect the new owner. `claimTransferredSession()` consumes the inherited next transaction once. `prepareFromHandoff()` checks the exact endpoint and adopts the already open session without a handshake or `OpenSession`; no fallback connector is used. The same two sockets and unique event reader remain active. A shared ownership token directs event failure to the current owner, preserving the first handshake, command or event close reason in report diagnostics.
+
+`isPrepared()` still requires a live owned connection. `hasPreparedSession()` only indicates retained state that may need cleanup/reporting even after a physical disconnect; it cannot authorize import. Explicit album reconnection, endpoint changes, cancellation, USB selection and recovery release the old connection; ordinary root-page changes keep the read-only owner. Unconsumed queued handoffs have an independent close holder so Activity destruction cannot lose ownership before the worker starts. Known idle ownership is closed normally; cancellation or an uncertain protocol phase closes sockets without further commands. Import retains the fresh capability/all-slot check, adjacent target recheck, one-write limit, exact readback and confirmed cleanup requirements. No registration is automatically repeated.
+
+The final complete 0.5.4 run passed **8,690 `run.ps1` checks** (including **3,288 PTP/IP checks**) and **6,938 `run-probe.ps1` checks** (685 ordinary USB + 453 Picture Control read-only + 1,004 USB copy/adaptation + **4,796 wireless**), totaling **15,628**. New cases cover partial-frame handoff barriers, cancellation before transfer/claim, revoked handles, one-time consumption, endpoint refusal without consuming the caller's owner, event ping/EOF/malformed frames, read-only hold and fresh refresh, missing registration capability, and original close-reason retention. Synthetic album → settings read → refresh → registration uses only the original two channels and one `OpenSession`. These counts do not claim 0.5.4 UI success, phone installation or physical-camera verification; version-specific delivery evidence is recorded separately.
+
+## Keep the verified import connection (0.5.5-beta)
+
+The user's next Z6II report clarified that **0.5.4 imported successfully, then disconnected**. Source inspection confirms that the successful import path still issued `CloseSession` and released both sockets. That deliberate application cleanup is established; a resulting physical hotspot shutdown remains unproven without a complete camera/network report. This feedback is not a 0.5.5 verification.
+
+`importPreparedNcpPresetKeepingConnection(...)` is a new explicit API. Fresh source conversion, DeviceInfo/capability/all-nine-slot inspection, adjacent empty-target recheck, one registration and exact readback must all succeed before the owned session moves back to read-only holding. At that commit, `completed`, `ncpRegistrationVerified`, `readbackVerified` and the new `sessionRetainedAfterImport` are true, while `sessionClosed` / JSON `sessionCloseConfirmed` remain false. No session-close acknowledgement is invented. The old prepared-import API, independent import and USB APIs retain their close-confirmed success contract.
+
+The transport independently binds `transferAfterVerifiedPictureControlImport(nextTx)` to its unique acknowledged write, exact bytes read back from that same target, and `nextTx == lastPictureControlTransaction + 1`. Only then is a new explicit PC facade created on the same sockets, PTP session and unique event reader; the old facade is revoked. Each facade still permits only one write attempt. The new facade consumes its inherited transaction once, and a subsequent import requires another explicit user confirmation and complete fresh checks. No generic budget reset is exposed. A legal Open/CloseSession attempt clears the old ACK/readback proof without resetting the consumed write budget, preventing proof reuse across PTP sessions. Rejected, missing, mismatched, canceled or otherwise unverified registration cannot authorize continuation.
+
+The retained read-only `Probe.Result` is independent of the completed `Import.Result`. Its nine slot records come from this import's fresh inspection with the target replaced by exact readback; Standard is carried from the earlier snapshot and is not used as future write evidence. Heartbeat, refresh, release or a later connection loss updates current connection facts without rewriting the prior import's successful historical result. Cancellation or handoff failure before the success commit remains terminal with `completed=false` and `sessionRetainedAfterImport=false`, while any completed readback evidence is preserved; no automatic repeat follows.
+
+Explicit disconnect/reconnection, endpoint changes, cancellation, USB selection and recovery retain their release behavior. Ordinary Activity destruction, backgrounding or screen lock no longer owns the connection lifetime: the application runtime and connected-device foreground service hold the workers and connections, with serialized read-only heartbeat. Shared `AlbumPanel.close()` detaches its own UI listener and resources, while the original two-argument constructor retains its exclusive-controller close behavior. Lifecycle observers remain independent of UI attachment. New panels recover complete `ConnectionInfo` and the original handle snapshot, or receive the result of an in-progress connection without reconnecting.
+
+A matching-transaction `DeviceBusy (0x2019)` heartbeat response preserves a still-open, owned and protocol-confirmed session for the next scheduled read-only tick. It remains a reported heartbeat refusal, not a reconnect or successful data read. The PC exception is confined to that exact code and verified transaction; malformed/wrong-transaction replies and invalid semantic datasets still terminate the current owner. Album heartbeat retains any fully validated PTP negative response, but closes only its still-current client on protocol/semantic failure. A superseded generation cannot close a replacement owner. Fresh import checks and write guards retain their original failure behavior.
+
+The album host suite now has **166 checks**. New tests verify one queued `GetStorageIDs` heartbeat without object enumeration, metadata/content reads, writes or reconnection; unchanged pagination cursor despite changed server inventory; canceled queued heartbeat completion; complete cached connection metadata; observer/UI-listener separation; old-listener removal not affecting a replacement; connecting-state success, failure and cancellation; valid busy retention; invalid storage-dataset termination; and old-generation failure not clearing a new connection. The final full run passed **9,205 `run.ps1` checks** (including **3,719 PTP/IP** and **166 album host**) and **8,627 `run-probe.ps1` checks** (685 ordinary USB + 453 Picture Control read-only + 1,004 USB copy/adaptation + **6,485 wireless**), totaling **17,832**.
+
+The expanded wireless/transport regressions cover two separately confirmed imports to different empty slots on the same two channels and single open session, post-success heartbeat/refresh, release as the first session close, immutable prior import results, ACK/target/exact-byte/next-transaction proof, refusal to reuse proof after a session close/reopen without resetting the consumed write budget, unconfirmed/rejected/mismatched writes, cancellation after readback but before the retention commit, matched-busy heartbeat continuation and wrong-transaction busy termination. These checks compile production protocol/controller code against synthetic peers; they do not establish foreground-service scheduling, CPU/Wi-Fi lock effectiveness, screen-lock behavior, phone installation or physical-camera results. The earlier 0.5.4 file-picker/background disconnect remains an unresolved observation, not a proven OS or firmware policy. Current delivery evidence is recorded separately. Process termination, force-stop and a camera-side network loss are not handled by automatic reconnection or repeated registration.
+
+## Confirmed occupied-slot replacement and heartbeat refusal (0.5.6-beta)
+
+The existing APIs remain empty-only by default. New last-parameter overloads accept an immutable `PictureControlImportSession.OverwriteConfirmation(targetItem, confirmedTargetSnapshot)`. Its constructor copies and parses the occupied original slot, deriving its SHA-256, name and base; arbitrary separately supplied hash/name claims cannot substitute for that snapshot. Both the fresh full nine-slot scan and the adjacent pre-write target read must match the confirmed target and complete original bytes, hash, name and base. A target becoming empty, renamed or otherwise changed stops before registration. Fresh NCP conversion for NCP imports, capability inspection, one write and exact readback remain mandatory; no atomic compare-and-set protection is claimed.
+
+USB replacement uses the distinct `WRITE_CONFIRMED_PC` transport mode. Relative to the old empty-slot mode, it only additionally permits `GetPicCtrlCapability(0x90CF, Standard=1)` after opening the owned session. The old mode's allow-list remains intact, and registration still permits only the validated payload, C1–C9, `new=0` and one attempt. USB success still requires acknowledged session cleanup. Wireless keeping-connection success retains the same two sockets, session, transaction sequence and ACK/same-target/exact-readback handback proof; it grants no general write-budget reset. A second replacement requires a new explicit confirmation and fresh checks.
+
+Reports record `overwriteRequested`, `confirmedTargetItem`, `confirmedTargetSha256`, `confirmedTargetName`, `confirmedTargetBasePictureControl`, `freshCapabilityVerified`, `initialTargetMatched` and `recheckTargetMatched`. Occupied-slot success leaves the empty-target flags false. The confirmation UI offers all nine slots, preferring the first empty one; an occupied selection shows the original name and requires a final replacement confirmation. The schema-2 journal records overwrite intent and the original hash/name before backend entry. An immutable journal JSON accompanies application-level `ImportStatus`, allowing a recreated Activity to restore the same recovery intent. Unknown outcomes are only read and compared against expected or original contents; registration is never automatically replayed.
+
+The user subsequently reported that, on the installed **0.5.5**, the phone's system Wi-Fi connection to the camera also disconnected after import. The phone was offline during this investigation, so no new report, journal or network-state evidence was obtained. Source review independently identified a premature-close path: a complete, matching-transaction Standard heartbeat `GeneralError (0x2002)` still triggered owned `CloseSession` and socket release. Fixing that established code path does not prove it caused the user's particular disconnect, or establish a Nikon access-point policy.
+
+`WirelessPictureControl.isRecoverableKeepAliveResponse(Integer)` is shared with the runtime and accepts only `0x2002` and `DeviceBusy (0x2019)`. A complete response with the expected transaction preserves only the same live, owned, protocol-confirmed session, with all cancellation and identity checks intact. The heartbeat still throws and records its refusal, rather than claiming a successful read; the next scheduled tick may read again without reconnecting. Other response codes, including `SessionNotOpen (0x2003)`, `InvalidTransactionID (0x2004)` and `InvalidParameter (0x201D)`, wrong transactions, invalid datasets and protocol/network failure remain terminal. A registration response `0x2002` is not exempt: the write is not retained or repeated.
+
+The final host runs passed **9,505 `run.ps1` checks** (including **3,956 PTP/IP**, **226 album host** and **53 preview-cache** checks) plus **11,477 `run-probe.ps1` checks** (685 ordinary USB + 453 Picture Control read-only + **1,253 USB copy/adaptation** + **9,086 wireless**), totaling **20,982**. New replacement cases cover default refusal of occupied slots, immutable confirmation evidence, fresh capabilities, changes at both target checks, exact replacement readback, cancellation after a matching recheck but before Set, unknown results, and a second explicitly confirmed replacement in the same session. Heartbeat cases cover matching GeneralError continuation, wrong-transaction and nonrecoverable-code termination, the first post-import refusal followed by a successful tick and another explicit import, and continued terminal treatment of write-phase GeneralError. Synthetic peer self-tests cover the occupied-slot mode and the existing empty-slot mode. These counts do not establish 0.5.6 Android UI, installation or physical-camera results; version-specific delivery evidence is maintained separately.
+
+## Bidirectional session handoff and browse readiness (0.5.7-beta)
+
+The user reports that actual **0.5.6** use no longer disconnects the camera hotspot after import. This is Z6II user feedback, not an independently reviewed complete camera/protocol trace or evidence for every model and firmware. The new request concerns a separate state boundary: a held preset connection had not yet initialized the album. Through 0.5.6, seamless handoff only supported album to Picture Control; any earlier statement that the reverse direction was unsupported describes that historical boundary. Version 0.5.7 adds the reverse without closing and reconnecting.
+
+Worker-only `WirelessPictureControl.transferPreparedToAlbum()` accepts only an idle, live, complete owned read-only snapshot. `PtpIpClient.transferToAlbum(exactNextTx)` creates a new album-only facade while preserving both sockets, the open PTP session, one physical event reader and the inherited transaction sequence. It requires the exact next transaction, a claimed healthy PC owner and no write attempt on that facade. A verified import must first pass the existing ACK/same-target/exact-readback handback to a new PC facade; rejected, uncertain or active writes cannot use a mode round trip to recover a consumed budget. The old PC facade and wireless wrapper are permanently revoked, and closing them cannot close the new owner.
+
+`isPendingAlbumHandoff()` identifies the unconsumed album-only handoff. `claimTransferredAlbumSession()` consumes it once; album reads and another handoff are blocked before claim. `AlbumController.connectFromHandoff(client, host, port, callback)` returns false on refusal without consuming or closing the caller's handle, and still reports an error callback. Returning true synchronously installs the controller's owned holder before work is queued. The worker checks endpoint/ownership, claims, reads fresh DeviceInfo at the inherited positive transaction, verifies Nikon and actual album operation support, then enumerates StorageIDs/Handles. It sends no Init/Open and invokes no fallback connector. Picture Control slot snapshots do not substitute for a photo index, and album mode receives no write permission. A later album-to-PC handoff retains the existing fresh PC capabilities/all-slot/target checks before another explicitly confirmed import.
+
+`hasLiveSession()` and `sessionConnectionInfo()` describe the claimed healthy camera session independently of `isConnected()` / `connectionInfo()`, which require a completed photo index. Session metadata may initially contain only host/port, with model filled after real DeviceInfo parsing. Explicitly missing album capabilities or a complete matching PTP refusal other than session-invalid responses preserves the live read-only owner, records `browseError()` and calls onError rather than falsely marking browse readiness. `retryBrowse()` re-reads DeviceInfo and the index only on that existing owner. A live browse-failed session can also return to preset import. Invalid datasets, wrong transactions, `SessionNotOpen (0x2003)`, `InvalidTransactionID (0x2004)`, EOF and other uncertain I/O terminate the original owner; old-generation cleanup cannot close a replacement. Legacy independent-connect failure keeps its original close behavior.
+
+The runtime's service, connection badges and routing use live-session state; actual page, thumbnail and download work still require browse readiness. A held browse-failed session can heartbeat without losing its error or gaining a fake index: declared `GetStorageIDs` is parsed, otherwise `readAlbumDeviceInfo()` is parsed, without enumeration or reconnect. The runtime owns operation leases and pending handoff holders in both directions, so ordinary destination changes or Activity replacement do not close the physical session. Accepted adopt/retry operations register exact-once completions; disconnect/close completes cancellation even if shutdownNow discards their queued runnable. The new suite caught this completion gap and verified the production fix.
+
+A separate P2 source-review finding in runtime preparation is fixed: the attempted owner identity is recorded before foreground-service startup, so a service-start exception followed by rendering does not automatically retry the same failed preparation indefinitely. An explicit retry or changed owner can start a new attempt. This is an implementation/review statement, not an Android UI or foreground-service scheduling result for this build.
+
+The full runs passed **9,928 `run.ps1` checks** (including **4,258 PTP/IP**, **319 album host**, **53 preview-cache** and **28 gesture** checks) plus **12,089 `run-probe.ps1` checks** (685 ordinary USB + 453 Picture Control read-only + 1,253 USB copy/adaptation + **9,698 wireless**), totaling **22,017**. Added regressions cover PC-to-album-to-PC with another explicit import on the original two channels and single open session, immediate post-import handoff, inherited transaction/claim rules, revoked owners, pending/queued cancellation, event ownership, refusal without consuming caller ownership, held browse failures, same-session retry and heartbeat, return to PC despite unavailable photos, and terminal data/session faults. These host counts do not establish this round's Android UI, physical installation, camera interoperability or hotspot behavior; 0.5.6 and earlier evidence retains its stated version scope.
+
+## 0.5.8 immersive pager validation
+
+The complete core suite passes **9,981** checks on 0.5.8, including **43**
+swipe classification and **38** pager motion checks. The new motion cases cover
+velocity handoff, frame-step independence, spring settling, grab/reverse,
+cancel-to-home, boundary damping, exact-once completion and animation-off.
+Gesture cases include missing-current-preview navigation and explicit edge
+retry without committing a nonexistent page. Android UI observations and
+installation scope are recorded in the [0.5.8 delivery record](../dist/nikon-usb-0.5.8-beta-VALIDATION.txt).
+The Picture Control probe suite was not rerun for this UI-only revision; the
+0.5.7 probe count above is historical and is not a new combined test total.
+
+## Photo Live regression (0.6.0-beta)
+
+The complete historical 0.6.0 `run.ps1` suite passes **10,309** checks: 186 PTP core, 68 NCP
+structure, 2,577 transfer simulation, 148 storage eligibility, 955 directory survey,
+50 Picture Control codec, 77 NCP compatibility, 1,108 preview-profile, **4,459 PTP/IP
+client**, 53 preview-cache, 101 album paging, 43 swipe classifier, 38 page motion and
+**446 production album-controller** checks. The complete `run-probe.ps1` suite passes
+**12,089** (685 ordinary USB probe + 453 read-only Picture Control + 1,253 USB
+copy/adaptation + 9,698 wireless wrapper), for **22,398 Java checks**.
+
+`AlbumControllerHostTest` compiles production `PhotoLiveState` and `PhotoLiveLedger`
+alongside the real controller and PTP/IP transport. Framed synthetic command/event
+sockets exercise existing-photo baselines; ObjectAdded hints, duplicates and missed
+events recovered by polling; preview-before-original; exact original bytes; temporary
+metadata and original rejections with backoff; changed metadata and incomplete JPEG
+refusal; durable completion/file-hash recovery; and exclusion of RAW objects. UI listener
+detachment and replacement, stop, disconnect, handoff, queued-start cancellation,
+protocol failure and event loss test ownership and exact-once completion. A publisher
+callback failure verifies that the completed original survives and a retry republishes
+the same file without another GetObject. It does not substitute thumbnail bytes or
+reconnect to retry.
+
+Two controlled-worker regressions exercise capacity without downloading hundreds of
+irrelevant files. A full 128-item queue remains retryable for six inspection rounds,
+does not consume camera metadata failure attempts and accepts the deferred JPEG after
+one slot is freed. History trimming preserves queued/current, unsaved, original-error
+and gallery-error identities while retiring the oldest successful history toward 120.
+At 256 retained pending/error identities, new admission leaves `known` unchanged and
+retains a finite retry; completing one older failure permits the intended new JPEG to
+enter without losing another failure. These tests use reflection only to prefill state
+and hold the clock; metadata operations and worker decisions execute production code.
+
+The separate server regression runs the actual local-only `--photo-live-synthetic`
+fixture mode: it starts with three photos and applies a revisioned `live-control.json`
+to introduce new handles. Its **51** checks cover duplicate ObjectAdded events, no-event
+additions, one-shot ObjectInfo `0x2009` and original `0x2019`, complete originals,
+transaction/event framing, rejected invalid control revisions and recovery on the
+original single command session. It brings the combined automated total to **22,449**.
+
+```powershell
+& '.\tests\run.ps1' -JdkHome 'D:\dev\Java\jdk-17.0.19'
+& '.\tests\run-probe.ps1' -JdkHome 'D:\dev\Java\jdk-17.0.19' -AndroidJar 'D:\dev\android-sdk\platforms\android-35\android.jar'
+node tests/tools/album-camera-server-live-test.js
+```
+
+In the restricted Windows test environment, the final Java runs used a command-local
+`JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=D:/dev/ai-project/nikon/app/build/v060-test-tmp`
+after creating that workspace directory: the sandbox's redirected system TEMP rejected
+the JPEG cache's file rename. No production path or rename behavior was changed. The
+server test required loopback permission after the sandbox refused local TCP. These are
+test-environment accommodations, not camera compatibility results.
+
+Photo Live appears as an explicitly enabled album tab, does not trigger the shutter,
+and receives only new JPEG identities after its baseline. Its original and publication
+journals are tested at the Java/controller boundaries. Separate final-APK emulator
+evidence confirms a six-photo baseline with zero old originals, five new originals
+(7–11) saved to the app and MediaStore with matching bytes/hashes and `IS_PENDING=0`,
+duplicates and missed-event compensation, metadata/original busy recovery, background
+reception, Activity recreation, keeping the current detail photo when a new one arrives,
+and no reception after Stop. Preset read-only handoff/return retained the one connection
+without restarting reception; final explicit disconnect released the service and the
+application crash log was empty. The frozen protocol has 654 commands, positive
+transactions 1–652 each once, one command/event handshake and OpenSession, six
+GetObject requests including one rejected busy attempt and five completed originals,
+and no CloseSession or preset registration. See the
+[functional checkpoints](../docs/device-review/live-0.6.0-functional.log) and
+[independent protocol audit](../docs/device-review/live-0.6.0-audit.md).
+
+The final 2,781,817-byte APK, SHA-256
+`00ac0cf7c6dae130e059dbd532359f1a8c83713e10ba16db1d223ac65d336005`, was installed
+preserving data on PKG110 / Android 16 user 0 at 2026-10-17 13:49:19 +08:00;
+code 26 / 0.6.0-beta and the installed base APK hash matched. This is installation and
+synthetic-emulator reception evidence, not physical-camera or physical-phone shooting
+verification. The Android gallery failure-injection probe was not executed because
+`run-as` rejected the non-debuggable package; recovery/crash-window statements retain
+source/host coverage only. Full scope is in the
+[0.6.0 delivery record](../dist/nikon-usb-0.6.0-beta-VALIDATION.txt).
+All 0.5.x results above remain historical.
+
+## Storage availability and background protection (0.6.1-beta)
+
+Version code 27 treats only a complete matched `StoreNotAvailable (0x2013)` as a
+temporary per-storage condition. Ordinary album enumeration and live discovery skip
+that card and continue other cards. Live scans retain prior identities during an
+outage; the first readable inventory of a previously unavailable slot is its baseline.
+All slots unavailable leaves the healthy session waiting with backoff rather than
+closing or reconnecting it. Initial baseline ObjectInfo failure with 0x2013 suspends
+that slot's remaining metadata without blocking another card's preparation; preserved
+baseline handles do not become newly downloadable photographs. Bad framing, wrong
+transactions, invalid sessions and actual transport loss retain terminal behavior.
+
+The background implementation continues using the existing application-owned worker,
+connected-device FGS, CPU wake lock and sockets bound to the chosen camera Wi-Fi.
+`ConnectionProtection` reads actual battery exemption and notification/channel state.
+The live-start system authorization path verifies the real exemption on return even
+without Intent data, refuses cancellation without exemption, and clears a destroyed
+Activity's pending callback. These control-flow observations are source review, not a
+substitute for Android authorization, lifecycle or lock-screen tests.
+
+Modern low-latency Wi-Fi locks are not effective with the screen off; requesting the
+deprecated high-performance lock does not bypass that on Android 34+. Doze exemption
+must be requested from the user for continuous network/partial-wake-lock access. See
+[WifiManager](https://developer.android.com/reference/android/net/wifi/WifiManager#WIFI_MODE_FULL_LOW_LATENCY)
+and [Doze](https://developer.android.com/training/monitoring-device-state/doze-standby).
+The physical PKG110 phone's exemption and running FGS already existed when inspected,
+so the new storage response is not attributed to an absent battery setting.
+
+The final 0.6.1 complete core run passes **10,381**, including **518 production album
+controller checks**. The probe suite passes **12,089**. Synthetic server regressions
+pass **168** (the 51 photo-live checks plus 117 storage checks), totaling **22,638**.
+Storage cases cover per-slot refusal and continued accessible-card reception, preserved
+old identities, later recovery, first-readable-slot baseline, all-slot waiting and
+0x2013 during initial ObjectInfo without blocking the other card's baseline.
+
+The final APK separately passed Android 17 / API 37 emulator reception with slot 65537
+continuously unavailable and slot 131073's initial photos 1–3 excluded as baseline.
+All slots unavailable preserved enabled/live connection state and waited. After
+recovery, background HOME received 4; actual screen-off/sleep/keyguard state received
+5 despite repeated events and one busy original response. With battery exemption,
+forced deep Doze `IDLE` still received event-free 6 through polling. Only the three new
+live JPEGs were published into MediaStore rows 40–42, all `IS_PENDING=0` and matching
+fixture content hashes. Stop prevented any preview/original for 7 while maintaining
+the connection; settings read actual protection enabled. Final explicit disconnect
+removed the service and CPU lock with an empty crash buffer. The 468-line protocol
+log keeps one initialization and OpenSession, zero CloseSession and zero preset writes.
+
+The final APK is **2,785,913 bytes**, SHA-256
+`f458b989e30a6cc84206351f22d718b79e99209a0c419caa7ae07e950838e18c`.
+PKG110 / Android 16 user 0 was upgraded preserving data from code 26 to
+**27 / 0.6.1-beta**, last updated 2026-10-17 14:10:20 +08:00; installed base APK hash
+matched. The camera FGS was already stopped and battery exemption already present on
+the phone before installation. No uninstall, data clear, phone permission change or
+physical-camera capture was performed. The final APK verified granting system
+exemption and starting on return. Denial/cancellation smoke checks belong to an earlier
+draft APK with the same logic, not complete final-APK authorization branch testing.
+Actual Z6II shooting and physical-phone screen-off behavior remain unverified; system
+force-stop, OEM process killing and camera hotspot shutdown cannot be guaranteed away.
+See the [0.6.1 delivery record](../dist/nikon-usb-0.6.1-beta-VALIDATION.txt),
+[functional checkpoints](../docs/device-review/live-0.6.1-functional.log),
+[screen-off/Doze system evidence](../docs/device-review/live-0.6.1-doze.log) and
+[protocol log](../docs/device-review/live-0.6.1-protocol.log).
+The 0.6.0 and earlier results above retain their original version scope.
+
+## Protocol references
+
+- [USB-IF Still Image Capture Device Definition 1.0 and Errata](https://www.usb.org/document-library/still-image-capture-device-definition-10-and-errata-16-mar-2007): USB PTP transport and container framing.
+- [Android upstream libmtp PTP definitions](https://android.googlesource.com/platform/external/libmtp/+/refs/tags/android-10.0.0_r24/src/ptp.h): primary implementation reference for standard code values and dataset field types. No implementation source was copied.
+- [Ricoh original GetDeviceInfo dataset documentation](https://github.com/ricohapi/theta-api-specs/blob/main/theta-usb-api/operation/get_device_info.md): standard dataset field order. This is a protocol-format reference, not a claim of Nikon feature compatibility.
+- [libgphoto2 original PTP dataset implementation](https://github.com/gphoto/libgphoto2/blob/master/camlibs/ptp2/ptp-pack.c): checked standard ObjectInfo field offsets (52 fixed bytes) and counted string layout. The Java implementation was authored independently.
+- [libgphoto2 original PTP/IP implementation](https://github.com/gphoto/libgphoto2/blob/master/camlibs/ptp2/ptpip.c): operation data phase, StartData / EndData and response framing; this does not establish that a specific Nikon wireless mode offers vendor operations.

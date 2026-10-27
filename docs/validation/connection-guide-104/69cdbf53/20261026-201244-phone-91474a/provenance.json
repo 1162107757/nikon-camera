@@ -1,0 +1,24 @@
+{
+  "candidateApk": "D:/dev/ai-project/nikon/dist/huevia-0.21.5-beta-debug.apk",
+  "candidateSha256": "69cdbf5300af20964d27b66389d19fbabd4eeee84315079f94572d61810ef6f6",
+  "versionCode": 104,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "runId": "20261026-201244-phone-91474a",
+  "probeSha256": "5111b1ecc705467f0880d2e2480fb99ad8bacc44f6a86f9a1f655425de2509a0",
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Real connection guide, actual settings edits and cancellation; synthetic connection stages; no system Wi-Fi or physical camera claim. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+  "files": [
+    {
+      "file": "failure.png",
+      "bytes": 86306,
+      "sha256": "ac85ada4ed6316fb3e719e5993503bb4f142692f2420afb583c5c3acf2f31012"
+    },
+    {
+      "file": "report.json",
+      "bytes": 1351,
+      "sha256": "f2c9c18ec6115d7e72b0345678773d688a356d081df97b97cc8f45395fa15085"
+    }
+  ],
+  "pass": false
+}

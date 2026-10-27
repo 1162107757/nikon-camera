@@ -1,0 +1,36 @@
+{
+  "startedUtc": "2026-10-27T19:12:59.402Z",
+  "scope": "Only download/download.js code overlay; no DB mutation, release mutation or APK upload",
+  "baselineZipSha256": "8975da9434325ebd0f047f14a660736350616d810bf66d9aaeeb5038867b9395",
+  "candidateZipSha256": "3ca593939d0ae3949f4c2cf30fe2b51ff08ea121036cc94ca2d62d8a82bcff7c",
+  "candidateZipBytes": 30332310,
+  "expectedSourceSha256": "4321e79ef1d3f3ec2f7019c6983f771802147991c921c35b423707eec8156b30",
+  "updateAttempted": true,
+  "updated": true,
+  "pass": true,
+  "configurationBeforeSha256": "da33acd719d9c43196919efe50eca2461873afc885c58d961705b1218f126768",
+  "updateRequestId": "bc695cbe-1881-41fb-9336-cdb7fc420721",
+  "status": "Active",
+  "configurationAfterSha256": "da33acd719d9c43196919efe50eca2461873afc885c58d961705b1218f126768",
+  "configurationPreserved": true,
+  "nonCodeConfigurationFieldsCompared": 57,
+  "unexpectedConfigurationChanges": [],
+  "observedZipSha256": "885022eecade9d6815a7912e676f37e9dcf5b734218585c4f9ec1f1eb083d03a",
+  "observedZipBytes": 30332314,
+  "observedCodeSha256": "885022eecade9d6815a7912e676f37e9dcf5b734218585c4f9ec1f1eb083d03a",
+  "apiDeploymentPassed": true,
+  "stage": "Complete; root may perform browser page and download acceptance",
+  "finishedUtc": "2026-10-27T19:14:19.885Z",
+  "verification": {
+    "zip": true,
+    "onlyDownloadPageChanged": true,
+    "publicSource": true,
+    "database": true
+  },
+  "evidence": {
+    "zip": "ZIP-VERIFICATION.json",
+    "publicSource": "PUBLIC-SOURCE-VERIFICATION.json",
+    "database": "DATABASE-VERIFICATION.json"
+  },
+  "verifiedUtc": "2026-10-27T19:16:23.946Z"
+}

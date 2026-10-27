@@ -1,0 +1,215 @@
+{
+  "pass": true,
+  "checks": {
+    "realBaseline99InstalledHash": true,
+    "realProductionEndpointMandatory100": true,
+    "ordinaryLaterAbsent": true,
+    "backCannotDismiss": true,
+    "outsideCannotDismiss": true,
+    "realDownloadManagerProgressObserved": true,
+    "verifiedInstallButtonReached": true,
+    "systemSourcePermissionViaUi": true,
+    "systemInstallerUpdateConfirmation": true,
+    "playProtectScanSafe": true,
+    "finalVersionCode100": true,
+    "installedApkHashMatchesPublished": true,
+    "firstInstallTimePreserved": true,
+    "darkPreferencePreserved": true,
+    "current100NoMandatoryPrompt": true,
+    "current100LatestStatus": true
+  },
+  "checkCount": 16,
+  "baselineCode": 99,
+  "installedCode": 100,
+  "installedSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+  "releaseId": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+  "releaseRevision": 3,
+  "serial": "emulator-5586",
+  "physicalDevice": false,
+  "syntheticMetadata": false,
+  "testInstrumentation": false,
+  "method": "Real production99 MainActivity -> HTTPS metadata -> OS DownloadManager -> verification -> normal system unknown-source UI -> installer confirmation -> Play Protect scan -> actual cover update100",
+  "firstInstallTime": "2026-10-24 23:49:58",
+  "files": [
+    {
+      "file": "01-baseline-ui.xml",
+      "bytes": 20499,
+      "sha256": "02733dc9fbabdb10258ee831ee7492dcc63f9fd4720a542233561e5ba426f654"
+    },
+    {
+      "file": "02-settings-ui.xml",
+      "bytes": 33586,
+      "sha256": "fbb9a5bc875ae289df37eb608d7e069bd2c72b9dcdcdabd90f3079cc19836435"
+    },
+    {
+      "file": "03-settings-scrolled-ui.xml",
+      "bytes": 32921,
+      "sha256": "8b6340830b7ba5c029165932e1c185b51f89d7d04f389fdc53b188e42472cbee"
+    },
+    {
+      "file": "04-appearance-ui.xml",
+      "bytes": 5958,
+      "sha256": "96c5ce72c0c738fe48a4f84c7c5aee3c5ad68ebb7515378c352d5fc3a484e9b3"
+    },
+    {
+      "file": "05-dark-baseline-ui.xml",
+      "bytes": 33574,
+      "sha256": "320dbf1d897606360925d657f51bbc559fa5e3ccb5fdd47f990b631e2a07eeff"
+    },
+    {
+      "file": "05-dark-baseline.png",
+      "bytes": 186604,
+      "sha256": "1f4f62ab8a6074f32bfe4d8846862d8a2c0cb199a4479928a23c7860aacb0bd3"
+    },
+    {
+      "file": "06-public-mandatory-ui.xml",
+      "bytes": 7243,
+      "sha256": "809e03d8e9016d021fe615e6a1e6c19fbc06468d1086b0119d980ac5712c2de7"
+    },
+    {
+      "file": "06-public-mandatory.png",
+      "bytes": 210405,
+      "sha256": "45fa9b46e3776733c637486e108b69310c16caec8a5887b6cfea95ce60ff5a8a"
+    },
+    {
+      "file": "07-back-outside.json",
+      "bytes": 197,
+      "sha256": "fa04743b73b4d454981f3f2bc1659302e10339a440a05773880dd87a2b48b273"
+    },
+    {
+      "file": "08-download-ui.xml",
+      "bytes": 7582,
+      "sha256": "28b2e7cce46ee6ef01a7efb09a8e1d94a92e054fd2e175045477fdb3407dfeaa"
+    },
+    {
+      "file": "09-download-result-ui.xml",
+      "bytes": 7583,
+      "sha256": "cd885a6640039559dddfa6a63769ff793d4ca309b6f1dd249d73295d529aaa10"
+    },
+    {
+      "file": "09-download-result.png",
+      "bytes": 209648,
+      "sha256": "9b93f088bef40852de930d66553b881e6251d02e38551c867a661aecf50015aa"
+    },
+    {
+      "file": "10-download-result-ui.xml",
+      "bytes": 7243,
+      "sha256": "330c83f4ef2f764e7a9421f6da2fef0e27a0ecbf73688a952018561b9fd663a0"
+    },
+    {
+      "file": "10-verified-install-ready.png",
+      "bytes": 211349,
+      "sha256": "99deb145885ad313fd36615b07a25f0bfe313b62febb474ee66bd28b952637d7"
+    },
+    {
+      "file": "11-install-permission-ui.xml",
+      "bytes": 6002,
+      "sha256": "8a553f7faafbe66ae36cb25ceb861fabaf856e074b7a0a73190dda55ae72affc"
+    },
+    {
+      "file": "11-install-permission.png",
+      "bytes": 172195,
+      "sha256": "4cbdc0ef992476f257ff66bb4348c7d33c47817b958c10b89a468fdfc5921796"
+    },
+    {
+      "file": "12-system-source-permission-ui.xml",
+      "bytes": 10480,
+      "sha256": "44b6583953bf55d8f9ba0a1fc418e1e1da47b7d8efaaf016b3749b5a4faf6959"
+    },
+    {
+      "file": "13-system-installer-ui.xml",
+      "bytes": 7589,
+      "sha256": "ceaeaf4a3093b45f1a488fe41d241729a80f8b532aca0bd3e887e3267ab6c5ce"
+    },
+    {
+      "file": "13-system-installer.png",
+      "bytes": 218447,
+      "sha256": "ac5fb6f89926d6ef8a0066b8697c086a195cc1a104647171e9d1e18ea54028d7"
+    },
+    {
+      "file": "14-system-installer-confirm-ui.xml",
+      "bytes": 8169,
+      "sha256": "20af8265266ef0b9bcbd13b17361bc22dd2428d6d5ce03b60a74a5c99a97d8bd"
+    },
+    {
+      "file": "14-system-installer-confirm.png",
+      "bytes": 146298,
+      "sha256": "cc09f6a59ec48496aabc30e7aa47de39456fa5aac69def8daea6a17075832fb8"
+    },
+    {
+      "file": "15-system-install-result-ui.xml",
+      "bytes": 7812,
+      "sha256": "f4458fca0638b1052205ff6c6f3c7eb5af3040dfd6023deccfb73bfe0c8b5468"
+    },
+    {
+      "file": "16-system-install-result-ui.xml",
+      "bytes": 8753,
+      "sha256": "67c2521b0a2967b52d036c4607f88992dd1f49c8d978075b0b98f797d225a370"
+    },
+    {
+      "file": "16-system-install-result.png",
+      "bytes": 159326,
+      "sha256": "2f910ac1ebcd4d71fd8fc2856e966b470bd05883fc4dd921251be16c2221f0ab"
+    },
+    {
+      "file": "17-play-protect-scan-ui.xml",
+      "bytes": 6222,
+      "sha256": "555b6ba7f9c26d3082489f98fd366e9faa9fa506ddcaaee7ff8727902f98b2fc"
+    },
+    {
+      "file": "18-play-protect-safe.png",
+      "bytes": 126157,
+      "sha256": "ea3131cf53f3c6391fc67614aa6859c519b6fdee3e59ffed60dc9f08d11c097c"
+    },
+    {
+      "file": "18-scan-result-ui.xml",
+      "bytes": 7917,
+      "sha256": "be20037c6737e92544f5cceeeebfcac79d99ddbc5913bd3a22441362de1bf844"
+    },
+    {
+      "file": "19-final-package.txt",
+      "bytes": 156,
+      "sha256": "85445f3044b6e50d3fdd49f68876e96c9b71c473c4d17b1c08d5c9fb4a7f2965"
+    },
+    {
+      "file": "19-installed-home.png",
+      "bytes": 227632,
+      "sha256": "d6d8c48ffe339117f37636efd0896b7a971ca568b729936bc0d7f74f6a5e3242"
+    },
+    {
+      "file": "19-installed-ui.xml",
+      "bytes": 20499,
+      "sha256": "02733dc9fbabdb10258ee831ee7492dcc63f9fd4720a542233561e5ba426f654"
+    },
+    {
+      "file": "20-settings-retained-ui.xml",
+      "bytes": 32909,
+      "sha256": "c2b22f2fe8e0e40a9655c86133767752033a24c24ef5377adbd7adc7456b5471"
+    },
+    {
+      "file": "20-settings-retained.png",
+      "bytes": 185457,
+      "sha256": "53afe7e7f71665b8beff413fe297a1845a20af626c072d0f50a022d7feb87971"
+    },
+    {
+      "file": "21-current-version-ui.xml",
+      "bytes": 6910,
+      "sha256": "170ca1578cb4e5f1e5a86fa363dcede5f2e285491e430b752035dd5cbcfeea43"
+    },
+    {
+      "file": "21-current-version.png",
+      "bytes": 116988,
+      "sha256": "6a32b496ea8dea3647b29c84a57601e918778e9ef16b0fe663e3cccd61bf5f6f"
+    },
+    {
+      "file": "baseline-package.txt",
+      "bytes": 155,
+      "sha256": "fb3f14446f540d2a4a8370dae824ab92b41c99c3b53d049723a7b42b89b458aa"
+    },
+    {
+      "file": "SETUP.json",
+      "bytes": 892,
+      "sha256": "261a7456f5453f4aa19525b8536bf0ec524c81d546282af62342a676dee76261"
+    }
+  ]
+}

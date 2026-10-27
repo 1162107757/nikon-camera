@@ -1,0 +1,13 @@
+{
+  "candidateSha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+  "versionCode": 110,
+  "versionName": "0.22.1-beta",
+  "byteLength": 9478052,
+  "canonicalUrl": "https://huevia.cc/preset-library/releases/fdb53c9f-f523-4b0c-a67e-e3e85b68e37d/file",
+  "serial": "emulator-5586",
+  "avd": "Huevia_Format_102",
+  "probeSha256": "eb83b03d72747b55d4f1b0aca0d6280e7453f742131fe597ccaf6c5c01414826",
+  "pass": true,
+  "scope": "Real Android DownloadManager canonical HTTPS307 to private storage; downloaded length/SHA/native package parser/version/current signer; no installation or account/editor action. Emulator only.",
+  "reportSha256": "d51657001c503a7f044c94bb4e26ed86f28f4bdf8456e8874e4f0379b06a9fad"
+}

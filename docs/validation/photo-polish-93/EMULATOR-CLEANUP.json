@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "candidateApkSha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+  "serial": "emulator-5586",
+  "hardwareBefore": "ranchu",
+  "ownedLauncherPid": 41356,
+  "ownedLauncherCommand": "\"D:\\dev\\Android\\Sdk\\emulator\\emulator.exe\" -avd Pixel_9 -port 5586 -read-only -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 2048",
+  "ownedPidFile": "D:\\dev\\ai-project\\nikon\\.tooling\\photo-prototype-92\\emulator.pid",
+  "uiCleanup": "CLEANUP.json PASS; probe uninstalled, original own JPEGs unchanged and fixtures removed, settings restored",
+  "shutdown": "adb -s emulator-5586 emu kill",
+  "launcherExited": true,
+  "serialAbsent": true,
+  "remainingOwnedQemuProcesses": 0,
+  "otherDevices": "No commands sent to physical phones or emulator-5582",
+  "completedAtUtc": "2026-10-24T11:21:12.8762204Z"
+}

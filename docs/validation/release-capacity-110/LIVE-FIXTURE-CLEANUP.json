@@ -1,0 +1,56 @@
+{
+  "checkedUtc": "2026-10-27T14:56:55.959Z",
+  "uniqueOwnedFixtureCount": 8,
+  "allDeleted": true,
+  "noCredentialOrSignedQueryStored": true,
+  "fixtures": [
+    {
+      "receipt": "LIVE-STORAGE-BIN-APK-FILENAME.json",
+      "path": "app-releases/519438f0b45bd8bacfc1664b7aba28ea2469bef9da4fd42fd5761a5116e0e33c.bin",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-EXTENSION-CONTROLS.json",
+      "path": "app-releases/347843a4c1f76c56950b872e5f96b6ee7ebc4b86fb3b1b1d1f06639224147c30.bin",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-EXTENSION-CONTROLS.json",
+      "path": "verification/0f27ce79-6f05-40d9-80de-d8513811b53c.apk",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-EXTENSION-CONTROLS.json",
+      "path": "verification/d7a679bf-a2d8-48e3-a6a9-3165a35987a5.bin",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-READ-CONTROLS.json",
+      "path": "app-releases/e34e17a85840653601345ba9cce0c9ae92f301fcef9950b5877a7f807f4376d5.apk",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-READ-CONTROLS.json",
+      "path": "verification/7f1bb386-1ac4-4950-a25d-59b2772d5c11.bin",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-SIGNING-DIAGNOSTIC.json",
+      "path": "app-releases/0cfdea8d051c485a41ca392818ebed695d210f138009402c5b3d68fc88080a04.apk",
+      "deleted": true,
+      "headAfter": 404
+    },
+    {
+      "receipt": "LIVE-STORAGE-SIGNING.json",
+      "path": "app-releases/8a651a08c5354acac1e8f2cef21880a74f99668ee2e116a0bb6ab20141dc7e99.apk",
+      "deleted": true,
+      "headAfter": 404
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "apkSha256": "a356ba5104699204c09c2ebfdd64e5ad4f903ed2cd80dbfd4bb392e144e64fb1",
+  "byteLength": 9478052,
+  "sourceInputCount": 262,
+  "postTestDrift": 0,
+  "totalAssertionExecutions": 741,
+  "countNote": "Includes repeated checks across modes; not unique scenarios.",
+  "results": [
+    {
+      "name": "local-phone",
+      "path": "docs/validation/photo-tools-109/a356ba51/20261027-195639-phone-7175070d/20261027-195639-phone-7175070d/report.json",
+      "pass": true,
+      "assertionExecutions": 184,
+      "measurements": [
+        {
+          "case": "native-pinch",
+          "minimumSpanPx": 298,
+          "spanSlopPx": 28,
+          "startSpanPx": 354,
+          "endSpanPx": 566.4000244140625,
+          "zoomBefore": 1,
+          "zoomAfter": 1.454545259475708,
+          "moves": 12
+        },
+        {
+          "case": "full-reference-vs-real-detail-0",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-1",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "independent-oriented-vs-raw-exif-six",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "actual-detail-tiles-vs-full-reference",
+          "samples": 2262,
+          "pixelErrors": 0
+        }
+      ],
+      "scope": "Actual installed MainActivity/AlbumPanel/editor, private generated JPEGs, real native local/clone gestures, pinch rollback, apply/cancel/history/draft/global detail controls/perspective, private full reference/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+    },
+    {
+      "name": "local-font1.3",
+      "path": "docs/validation/photo-tools-109/a356ba51/20261027-195840-font1.3-75356dba/20261027-195840-font1.3-75356dba/report.json",
+      "pass": true,
+      "assertionExecutions": 184,
+      "measurements": [
+        {
+          "case": "native-pinch",
+          "minimumSpanPx": 298,
+          "spanSlopPx": 28,
+          "startSpanPx": 354,
+          "endSpanPx": 566.4000244140625,
+          "zoomBefore": 1,
+          "zoomAfter": 1.454545259475708,
+          "moves": 12
+        },
+        {
+          "case": "full-reference-vs-real-detail-0",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-1",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "independent-oriented-vs-raw-exif-six",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "actual-detail-tiles-vs-full-reference",
+          "samples": 2262,
+          "pixelErrors": 0
+        }
+      ],
+      "scope": "Actual installed MainActivity/AlbumPanel/editor, private generated JPEGs, real native local/clone gestures, pinch rollback, apply/cancel/history/draft/global detail controls/perspective, private full reference/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+    },
+    {
+      "name": "local-landscape",
+      "path": "docs/validation/photo-tools-109/a356ba51/20261027-200013-landscape-54b9357c/20261027-200013-landscape-54b9357c/report.json",
+      "pass": true,
+      "assertionExecutions": 184,
+      "measurements": [
+        {
+          "case": "native-pinch",
+          "minimumSpanPx": 298,
+          "spanSlopPx": 28,
+          "startSpanPx": 354,
+          "endSpanPx": 566.4000244140625,
+          "zoomBefore": 1,
+          "zoomAfter": 1.454545259475708,
+          "moves": 12
+        },
+        {
+          "case": "full-reference-vs-real-detail-0",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-1",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "independent-oriented-vs-raw-exif-six",
+          "pixels": 614400,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "actual-detail-tiles-vs-full-reference",
+          "samples": 2262,
+          "pixelErrors": 0
+        }
+      ],
+      "scope": "Actual installed MainActivity/AlbumPanel/editor, private generated JPEGs, real native local/clone gestures, pinch rollback, apply/cancel/history/draft/global detail controls/perspective, private full reference/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+    },
+    {
+      "name": "raw-return-chain",
+      "path": "docs/validation/photo-image-suite/raw-development/a356ba51/20261027-194820-e6ab31ca7d/20261027-194820-e6ab31ca7d/report.json",
+      "pass": true,
+      "assertionExecutions": 87,
+      "measurements": [
+        {
+          "case": "synthetic-dng-default",
+          "elapsedMs": 24.4542,
+          "width": 96,
+          "height": 64,
+          "workingBytes": 9327,
+          "meanLuma": 72.40369669596355,
+          "outputBits": 8
+        },
+        {
+          "case": "real-nef",
+          "make": "Nikon",
+          "model": "Z 6",
+          "decoder": "nikon_load_raw()",
+          "width": 6064,
+          "height": 4040,
+          "sourceSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+          "workingSha256": "f1e58c23f9296b41f4c8fafabddc88072cc6eba3a597d074149bf5293736a515",
+          "workingBytes": 21525643,
+          "elapsedMs": 17047.0129,
+          "outputBits": 8
+        }
+      ],
+      "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+    },
+    {
+      "name": "actual-export",
+      "path": "docs/validation/photo-export-preview/a356ba51/ed7359199300489bab77d70c2d3c428b/report.json",
+      "pass": true,
+      "assertionExecutions": 55,
+      "measurements": [
+        {
+          "case": "compression-difference",
+          "changedSamples": 5915,
+          "absoluteChannelError": 371222,
+          "jpegBytes": 97168,
+          "referenceBytes": 501868
+        },
+        {
+          "case": "jpeg",
+          "pixelsCompared": 1053,
+          "pixelErrors": 0
+        },
+        {
+          "case": "reference",
+          "pixelsCompared": 1053,
+          "pixelErrors": 0
+        },
+        {
+          "case": "exif-jpeg",
+          "pixelsCompared": 5100,
+          "pixelErrors": 0
+        },
+        {
+          "case": "exif-reference",
+          "pixelsCompared": 5100,
+          "pixelErrors": 0
+        },
+        {
+          "case": "framed-jpeg",
+          "pixelsCompared": 1404,
+          "pixelErrors": 0
+        }
+      ],
+      "scope": "Actual installed export-preview source and dialog; generated JPEG, JPEG/reference pixel oracle, EXIF6, crop/frame, normal-font emulator, account invalidation and pending close. No physical handset, camera or gallery publishing."
+    },
+    {
+      "name": "album-position",
+      "path": "docs/validation/album-position-108/a356ba51/20261027-200333-phone-3a4ab7/20261027-200333-phone-3a4ab7/report.json",
+      "pass": true,
+      "assertionExecutions": 47,
+      "measurements": [],
+      "scope": "Real MainActivity/local album/editor, 90 owned private JPEGs, native tile tap, actual production filter render/draft, native Back, real visible photo identity and exact pixel offset. No camera/MediaStore changes. Candidate identity is verified against the installed APK and recorded by the host runner."
+    }
+  ]
+}

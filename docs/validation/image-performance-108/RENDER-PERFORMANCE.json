@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-27",
+  "sourceBaselineVersion": 107,
+  "productionFiles": [
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "baseline107": "305ef8216a71090e1036be283af947da98230c5c99bfabcbc6a8d59cbf2ac1dc",
+      "baselineSnapshot": "305ef8216a71090e1036be283af947da98230c5c99bfabcbc6a8d59cbf2ac1dc",
+      "implementedSha256": "139e97c140ac465cbbba2f8f4d1043654a2308b0793368e1f8726d4444139ac1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "baseline107": "8de0b77ca0d5630808a6f6108a23bf67778b8c7d0254818cd9e7a2ec8706edaf",
+      "baselineSnapshot": "8de0b77ca0d5630808a6f6108a23bf67778b8c7d0254818cd9e7a2ec8706edaf",
+      "implementedSha256": "6009f5c136a682efbbbc5eec660c7c053d618a0910140cc0866e4b18897958b7"
+    }
+  ],
+  "scope": "Invariant manual colour coefficients and scaled only-sharpening spatial work buffers",
+  "modelIdentityChanged": false,
+  "legacyPresetPathChanged": false,
+  "sourcePixelMathChanged": false,
+  "tests": {
+    "exact": {
+      "pass": true,
+      "checks": 12072662,
+      "comparedPixels": 9881352,
+      "log": ".tooling/image-performance-108/audit-render/exact-regression.log"
+    },
+    "editor": {
+      "pass": true,
+      "checks": 692651,
+      "log": ".tooling/image-performance-108/audit-render/editor-regression.log"
+    },
+    "spatial": {
+      "pass": true,
+      "cases": 16,
+      "assertions": 41534647,
+      "heap": "64MiB",
+      "log": ".tooling/image-performance-108/audit-render/spatial-regression.log"
+    }
+  },
+  "benchmark": {
+    "platform": "desktop JDK17",
+    "inputPixels": 24000000,
+    "rounds": 3,
+    "baselineMedianMs": 1461.101,
+    "implementedMedianMs": 1057.839,
+    "outputHashMatches": true,
+    "log": ".tooling/image-performance-108/audit-render/spatial-benchmark-final.log",
+    "limitations": "Streaming generated pixels; excludes Android Bitmap/codec, disk, physical handset and total export latency."
+  },
+  "workingBufferEstimates": [
+    {
+      "width": 6000,
+      "oldSlots": 91,
+      "newSlots": 9,
+      "oldWorkingBytes": 17848384,
+      "newWorkingBytes": 1048384
+    },
+    {
+      "width": 8192,
+      "oldSlots": 123,
+      "newSlots": 11,
+      "oldWorkingBytes": 32751616,
+      "newWorkingBytes": 1687552
+    },
+    {
+      "width": 12000,
+      "oldSlots": 181,
+      "newSlots": 17,
+      "oldWorkingBytes": 70240384,
+      "newWorkingBytes": 3616384
+    }
+  ],
+  "notPerformed": [
+    "ADB",
+    "APK build",
+    "publication",
+    "physical device test"
+  ],
+  "diffCheck": true
+}

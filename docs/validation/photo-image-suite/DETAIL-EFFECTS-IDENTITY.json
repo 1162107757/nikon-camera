@@ -1,0 +1,65 @@
+{
+  "createdAt": "2026-10-27T08:20:35.431Z",
+  "files": [
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "sha256": "b88813caa2f0c308216ba4abd104449a54222e901dfa0416b74c19310e8fecb3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "sha256": "3ccd04aede06961b29343b24a8b57f6200568e7bc89e8bd0029602bc39225c91"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "sha256": "7d0dd22d127cd3d45f15511818f7c27525ab9ff6acdeb36da5d2dfddc7bc7f19"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "sha256": "8fab6efeada313399292c141c68d644add31275e5f0e499944a7bf8b32337646"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "sha256": "e16df4116a9ac99c82fc68a9d244e8385c02696c665de5fbb00fb3418714c947"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java",
+      "sha256": "f3b1b905769b4cc40aa8c568a7369ca9c785be985a94519dbdc040456719fdca"
+    },
+    {
+      "path": "tests/run-photo-detail-effects.ps1",
+      "sha256": "01af47d40a279049ee07189d03ff7693c83feebb03a89f26908424ae6b403c04"
+    },
+    {
+      "path": "tests/detail-effects-java/cc/huevia/ncp/PhotoDetailEffectsTest.java",
+      "sha256": "32346bb1d48dc08a469422bc5cce8ed09ed92bd551116ea6531cf360793e3cc8"
+    },
+    {
+      "path": "tests/editor-java/cc/huevia/album/PhotoAdjustmentsTest.java",
+      "sha256": "df9702fe71c001fad9acb72c7c4bf8b661184dde1d92c71c293155764bdf5ca4"
+    },
+    {
+      "path": "tests/editor-java/cc/huevia/album/PhotoBorderTest.java",
+      "sha256": "a771dd7cc4cf4836e5ed6d08cfb2d8b1f7d613aa7f2228163ac5e56d4560e9ce"
+    }
+  ],
+  "tests": {
+    "detailEffects": {
+      "pass": true,
+      "checks": 39904,
+      "streamingPixels": 24000000,
+      "javaHeapMiB": 64,
+      "desktopMs": 11341.4
+    },
+    "legacyRendering": {
+      "pass": true,
+      "checks": 12400382,
+      "comparedPixels": 10209032
+    }
+  },
+  "notRun": [
+    "main APK build",
+    "ADB",
+    "physical phone",
+    "publication"
+  ]
+}

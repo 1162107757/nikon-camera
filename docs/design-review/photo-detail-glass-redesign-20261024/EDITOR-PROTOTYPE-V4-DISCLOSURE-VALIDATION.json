@@ -1,0 +1,19 @@
+{
+  "revision": "v4",
+  "scope": "Two static DOM disclosure event groups; no network, browser rendering, layout, native pixels, or real image writes.",
+  "file": "D:\\dev\\ai-project\\nikon\\docs\\design-review\\photo-detail-glass-redesign-20261024\\prototype.html",
+  "sourceSha256": "c1728206c0a5d6185153728d3c2db259bb88326575023b6a2662d7a59370946e",
+  "checks": 2,
+  "status": "PASS",
+  "results": [
+    {
+      "name": "parameter explanation opens actual modal, preserves edit and restores focus",
+      "passed": true
+    },
+    {
+      "name": "pixel metric opens live and saved explanations without changing viewport or edit",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

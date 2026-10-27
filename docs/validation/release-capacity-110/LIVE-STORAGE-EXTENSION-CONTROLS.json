@@ -1,0 +1,49 @@
+{
+  "startedUtc": "2026-10-27T14:50:33.784Z",
+  "bytes": 71,
+  "sha256": "347843a4c1f76c56950b872e5f96b6ee7ebc4b86fb3b1b1d1f06639224147c30",
+  "fixtures": [
+    {
+      "path": "app-releases/347843a4c1f76c56950b872e5f96b6ee7ebc4b86fb3b1b1d1f06639224147c30.bin",
+      "mime": "application/octet-stream",
+      "cleanup": {
+        "headAfterStatus": 404,
+        "deleted": true
+      },
+      "initialHeadStatus": 404,
+      "status": 200,
+      "matches": true,
+      "responseSha256": "347843a4c1f76c56950b872e5f96b6ee7ebc4b86fb3b1b1d1f06639224147c30"
+    },
+    {
+      "path": "verification/0f27ce79-6f05-40d9-80de-d8513811b53c.apk",
+      "mime": "application/octet-stream",
+      "cleanup": {
+        "headAfterStatus": 404,
+        "deleted": true
+      },
+      "initialHeadStatus": 404,
+      "status": 403,
+      "matches": false,
+      "responseSha256": "a910024d3e122ddc0f8276cb600c80ac592407b53cce599a6dd31cfc3bfe0e41",
+      "code": "STORAGE_ACCESS_DENIED",
+      "message": "cos get object denied (HTTP 403)"
+    },
+    {
+      "path": "verification/d7a679bf-a2d8-48e3-a6a9-3165a35987a5.bin",
+      "mime": "application/vnd.android.package-archive",
+      "cleanup": {
+        "headAfterStatus": 404,
+        "deleted": true
+      },
+      "initialHeadStatus": 404,
+      "status": 403,
+      "matches": false,
+      "responseSha256": "a910024d3e122ddc0f8276cb600c80ac592407b53cce599a6dd31cfc3bfe0e41",
+      "code": "STORAGE_ACCESS_DENIED",
+      "message": "cos get object denied (HTTP 403)"
+    }
+  ],
+  "scope": "Owned small extension/prefix controls only; no existing objects or configurations changed",
+  "finishedUtc": "2026-10-27T14:51:29.022Z"
+}

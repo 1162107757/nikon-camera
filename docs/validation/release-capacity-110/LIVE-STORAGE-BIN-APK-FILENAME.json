@@ -1,0 +1,22 @@
+{
+  "startedUtc": "2026-10-27T14:53:29.445Z",
+  "path": "app-releases/519438f0b45bd8bacfc1664b7aba28ea2469bef9da4fd42fd5761a5116e0e33c.bin",
+  "bytes": 71,
+  "sha256": "519438f0b45bd8bacfc1664b7aba28ea2469bef9da4fd42fd5761a5116e0e33c",
+  "downloadName": "Huevia-111-beta.apk",
+  "cleanup": {
+    "headAfterStatus": 404,
+    "deleted": true
+  },
+  "initialHeadStatus": 404,
+  "validatedOrigin": "https://nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+  "validatedPathname": "/v1/storages/object/sign/nikon-presets/app-releases/519438f0b45bd8bacfc1664b7aba28ea2469bef9da4fd42fd5761a5116e0e33c.bin",
+  "status": 200,
+  "contentType": "application/octet-stream",
+  "contentDisposition": "attachment; filename=Huevia-111-beta.apk; filename*=UTF-8''Huevia-111-beta.apk",
+  "publicSha256": "519438f0b45bd8bacfc1664b7aba28ea2469bef9da4fd42fd5761a5116e0e33c",
+  "exactBytes": true,
+  "apkFilenameDisposition": true,
+  "pass": true,
+  "finishedUtc": "2026-10-27T14:53:46.171Z"
+}

@@ -1,0 +1,66 @@
+{
+  "pass": false,
+  "failure": "java.lang.IllegalStateException: progress-cancel-text-unclipped",
+  "mode": "large-font",
+  "fontScale": 1.2999999523162842,
+  "candidateSha256": "3b142b8a517f68ac9b7cff11a7aa1f1d005b41df1f71077b142b0e152cfb5c74",
+  "checks": [
+    "owned-emulator",
+    "supported-mode",
+    "expected-version",
+    "exact-apk",
+    "no-real-account",
+    "output-created",
+    "main-replaced-before-onCreate-no-network-startup",
+    "local-initialisation-settled",
+    "actual-font",
+    "actual-width-category",
+    "actual-mode-rail",
+    "progress-panel-present",
+    "compact-percent",
+    "real-speed-and-eta",
+    "manual-rate-exists",
+    "manual-rate-full-visible",
+    "manual-rate-clearance",
+    "manual-rate-text-unclipped",
+    "progress-bytes-exists",
+    "progress-bytes-full-visible",
+    "progress-bytes-clearance",
+    "progress-bytes-text-unclipped",
+    "progress-cancel-exists",
+    "progress-cancel-full-visible",
+    "screenshot-failure"
+  ],
+  "screenshots": [
+    {
+      "file": "failure.png",
+      "width": 1080,
+      "height": 2424
+    }
+  ],
+  "geometry": [
+    {
+      "name": "manual-rate",
+      "view": "[48,1974][718,2040]",
+      "nav": "[72,2100][1008,2310]",
+      "insetPx": 252
+    },
+    {
+      "name": "progress-bytes",
+      "view": "[718,1980][840,2034]",
+      "nav": "[72,2100][1008,2310]",
+      "insetPx": 252
+    },
+    {
+      "name": "progress-cancel",
+      "view": "[840,1935][1032,2079]",
+      "nav": "[72,2100][1008,2310]",
+      "insetPx": 252
+    }
+  ],
+  "violations": [
+    "progress-cancel-clearance"
+  ],
+  "cameraSocketAttempts": 0,
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height\/inset helpers through reflection. Synthetic snapshots exercise receiving, waiting, recovery, saving, disconnection and explicit detail expansion without camera I\/O. No real MainActivity startup, real camera, HTTP\/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately."
+}

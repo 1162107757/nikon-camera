@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-25",
+  "serial": "emulator-5586",
+  "avd": "Huevia_Format_102",
+  "apkSha256": "3d51c723e820a3c1cf0ed4863c1bdb7e5db14cb1d745539e8404b5cad11839a7",
+  "installedApkMatches": true,
+  "screen": {
+    "widthPx": 720,
+    "heightPx": 1600,
+    "density": 280,
+    "fontScale": 1
+  },
+  "source": "ordinary MainActivity, real production HTTPS, no test proxy or injected catalog",
+  "outer": {
+    "text": "",
+    "desc": "预设格式：NCP",
+    "bounds": "[531,612][629,696]"
+  },
+  "label": {
+    "text": "NCP",
+    "desc": "",
+    "bounds": "[531,626][629,682]"
+  },
+  "count": {
+    "text": "5 份",
+    "desc": "",
+    "bounds": "[647,639][685,669]"
+  },
+  "geometryDp": {
+    "visibleWidth": 56,
+    "visibleHeight": 32,
+    "hitWidth": 56,
+    "hitHeight": 48,
+    "topInset": 8,
+    "bottomInset": 8
+  },
+  "centersAligned": true,
+  "transparentOuterHit": {
+    "tap": [
+      535,
+      618
+    ],
+    "visibleTop": 626,
+    "outerTop": 612,
+    "nativeMenuOpened": true,
+    "options": [
+      "全部格式",
+      "NCP",
+      "NP3"
+    ]
+  },
+  "selectedFormatResult": "NCP / 5 份",
+  "visualReview": "Viewed ncp-result.png; compact capsule, centered text and chevron, number vertically aligned",
+  "scope": "one focused normal-font phone visual and click check; not a full regression or physical-device test"
+}

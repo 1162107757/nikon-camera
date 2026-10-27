@@ -1,0 +1,275 @@
+{
+  "runId": "e9ebd8e9aa604f27816c83816301cc11",
+  "mode": "landscape",
+  "savedReasonOnly": true,
+  "apkSha256": "7b69df3e8ceb7cb018fff1a3553e9dfbc99d4a25a0c4c9ce5b8fd79837e380c8",
+  "versionCode": "92",
+  "scope": "Targeted landscape saved-JPEG detail reason visibility\/style and immediate entry\/window\/whole-file\/disabled-before guards only; original three-mode f919 evidence retains its own identity.",
+  "fontScale": 1,
+  "density": 2.625,
+  "orientation": 2,
+  "nightMask": 16,
+  "presetFixture": {
+    "status": "PARSED",
+    "name": "Bluesky.NCP",
+    "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+    "bytes": 638,
+    "storage": "own JPEG draft only, no preset library writes"
+  },
+  "status": "PASS",
+  "checks": 59,
+  "assertions": [
+    {
+      "name": "emulator-hardware-only",
+      "passed": true
+    },
+    {
+      "name": "exact-candidate-APK-bytes",
+      "passed": true
+    },
+    {
+      "name": "candidate-version",
+      "passed": true
+    },
+    {
+      "name": "probe-run-identity-valid",
+      "passed": true
+    },
+    {
+      "name": "prototype-scope-excludes-export-progress",
+      "passed": true
+    },
+    {
+      "name": "saved-reason-target-is-exclusive-landscape-prototype-scope",
+      "passed": true
+    },
+    {
+      "name": "main-activity-ready",
+      "passed": true
+    },
+    {
+      "name": "requested-native-orientation",
+      "passed": true
+    },
+    {
+      "name": "actual-font-scale",
+      "passed": true
+    },
+    {
+      "name": "actual-system-night-mode",
+      "passed": true
+    },
+    {
+      "name": "local-real-preset-fixture-SHA-matches-runner",
+      "passed": true
+    },
+    {
+      "name": "native-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "target-saved-only-editor-ready",
+      "passed": true
+    },
+    {
+      "name": "target-real-workspace-binds-owned-whole-saved-JPEG",
+      "passed": true
+    },
+    {
+      "name": "real-photo-detail-entry-present",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-visible-and-48dp-touch-target",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-has-18dp-visible-content-icon",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-wraps-content-without-large-empty-leading-space",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-uses-inset-glass-not-white-pill",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-shares-real-photo-glass",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-real-photo-glass-ready",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-glass-samples-photo-with-bounded-memory",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-native-framebuffer-available",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-light-icon-is-painted-over-dark-glass",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-glass-visual-is-compact-32dp-with-48dp-hit-area",
+      "passed": true
+    },
+    {
+      "name": "detail-entry-anchors-to-photo-stage-lower-left",
+      "passed": true
+    },
+    {
+      "name": "actual-photo-detail-entry-performClick-handled",
+      "passed": true
+    },
+    {
+      "name": "detail-dialog-opens",
+      "passed": true
+    },
+    {
+      "name": "detail-first-real-frame",
+      "passed": true
+    },
+    {
+      "name": "detail-page-and-header-real-views",
+      "passed": true
+    },
+    {
+      "name": "detail-header-does-not-intersect-system-bars-or-cutout",
+      "passed": true
+    },
+    {
+      "name": "detail-safe-insets-applied-exactly-once",
+      "passed": true
+    },
+    {
+      "name": "detail-no-double-top-padding",
+      "passed": true
+    },
+    {
+      "name": "detail-white-system-bar-icons",
+      "passed": true
+    },
+    {
+      "name": "detail-photo-owns-full-safe-stage-without-bottom-panel",
+      "passed": true
+    },
+    {
+      "name": "detail-floating-zoom-palette-holds-only-three-compact-buttons",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-has-separate-real-48dp-action-overlay",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-is-26dp-upper-right-stage-tag",
+      "passed": true
+    },
+    {
+      "name": "detail-pixel-metric-avoids-header-and-comparison",
+      "passed": true
+    },
+    {
+      "name": "detail-header-has-52dp-two-line-title-and-filename",
+      "passed": true
+    },
+    {
+      "name": "detail-header-uses-real-bound-photo-display-name",
+      "passed": true
+    },
+    {
+      "name": "detail-comparison-is-216dp-with-40dp-face-and-48dp-hit-area",
+      "passed": true
+    },
+    {
+      "name": "detail-zoom-palette-in-safe-stage",
+      "passed": true
+    },
+    {
+      "name": "detail-glass-real-photo-backdrop-ready",
+      "passed": true
+    },
+    {
+      "name": "detail-glass-samples-real-photo-with-bounded-memory",
+      "passed": true
+    },
+    {
+      "name": "detail-metric-test-point-is-outside-26dp-tag-inside-48dp-target",
+      "passed": true
+    },
+    {
+      "name": "detail-window-has-input-focus-before-metric-touch",
+      "passed": true
+    },
+    {
+      "name": "native-touchscreen-injection-0",
+      "passed": true
+    },
+    {
+      "name": "native-touchscreen-injection-1",
+      "passed": true
+    },
+    {
+      "name": "metric-outer-touch-area-opens-real-information-dialog",
+      "passed": true
+    },
+    {
+      "name": "detail-window-focus-restored-after-information",
+      "passed": true
+    },
+    {
+      "name": "target-saved-file-before-remains-disabled",
+      "passed": true
+    },
+    {
+      "name": "target-saved-file-details-show-entire-baked-JPEG-canvas",
+      "passed": true
+    },
+    {
+      "name": "target-saved-reason-is-explicit-and-visible",
+      "passed": true
+    },
+    {
+      "name": "target-saved-reason-has-white-glyphs-and-black-shadow",
+      "passed": true
+    },
+    {
+      "name": "target-saved-reason-rectangle-is-unclipped",
+      "passed": true
+    },
+    {
+      "name": "target-saved-hint-still-describes-whole-baked-file",
+      "passed": true
+    },
+    {
+      "name": "target-closing-saved-detail-releases-source",
+      "passed": true
+    },
+    {
+      "name": "target-original-JPEG-bytes-unchanged",
+      "passed": true
+    }
+  ],
+  "cleanup": [
+    {
+      "fixture": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/files\/Pictures\/camera-album\/image-upgrade-qa-db974747-c786-47e3-b8ec-6317d7894eb6__PHOTO.JPG",
+      "shaBeforeDelete": "c1c2cca5d6dd7e43f524bd1195268efd3846aba5a4d6aa2d1da5f1392bc40943",
+      "unchanged": true,
+      "absent": true
+    },
+    {
+      "fixture": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/files\/Pictures\/camera-album\/effect-077be5cf9023aef5325be04316a64edba6d0e80e6dc57f87e045669662e2ba3d__Effect.JPG",
+      "shaBeforeDelete": "777beff97ce90e4b81d03ac2fb7a2ca384859bef295497a66cf2cb6a7ecdcefc",
+      "unchanged": true,
+      "absent": true
+    }
+  ],
+  "appearanceRestored": true,
+  "osGuideDismissals": []
+}

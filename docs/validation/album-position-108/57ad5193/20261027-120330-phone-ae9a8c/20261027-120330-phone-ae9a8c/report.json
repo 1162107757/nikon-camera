@@ -1,0 +1,103 @@
+{
+  "pass": false,
+  "stage": "browse-edit-back-2",
+  "checks": [
+    "owned-emulator",
+    "exact-apk",
+    "safe-run",
+    "main-ready",
+    "guest-only",
+    "orientation",
+    "visible-list-settled",
+    "real-library-fixtures-loaded",
+    "visible-list-settled",
+    "scrolled-below-top",
+    "capture-before-0",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "visible-list-settled",
+    "capture-after-0",
+    "return-keeps-photo-and-pixel-offset-0",
+    "draft-filter-saved",
+    "visible-list-settled",
+    "app-position-survives-source-tab-switch",
+    "scrolled-below-top",
+    "capture-before-1",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "visible-list-settled",
+    "capture-after-1",
+    "return-keeps-photo-and-pixel-offset-1",
+    "draft-filter-saved",
+    "scrolled-below-top",
+    "capture-before-2",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "hidden-library-refresh-complete",
+    "visible-list-settled",
+    "capture-after-2",
+    "capture-failure",
+    "draft-io-drained",
+    "draft-io-drained"
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "before": {
+        "row": 14,
+        "key": "photo:photo-59911caa5bc31995ee178c80f8c9d33e675556deac06ee2077c8daf9996a7f41",
+        "top": -97
+      },
+      "after": {
+        "row": 14,
+        "key": "photo:photo-59911caa5bc31995ee178c80f8c9d33e675556deac06ee2077c8daf9996a7f41",
+        "top": -97
+      },
+      "sameAnchorAndPixelOffset": true
+    },
+    {
+      "cycle": 1,
+      "before": {
+        "row": 18,
+        "key": "photo:photo-84ff2fac12e77e48db0746060d604137e5cfdf6312dbf4a21d246769d01e307c",
+        "top": -97
+      },
+      "after": {
+        "row": 18,
+        "key": "photo:photo-84ff2fac12e77e48db0746060d604137e5cfdf6312dbf4a21d246769d01e307c",
+        "top": -97
+      },
+      "sameAnchorAndPixelOffset": true
+    },
+    {
+      "cycle": 2,
+      "before": {
+        "row": 12,
+        "key": "photo:photo-51c14509530769040e2b89aa759f2c02fa51953c1c21603716f32913636cef71",
+        "top": -97
+      },
+      "after": {
+        "row": 12,
+        "key": "photo:photo-481bf1bc02fba08d16f68fbbecdc2e942454cb6cc649d920812c30fc3f0d3931",
+        "top": -97
+      },
+      "sameAnchorAndPixelOffset": false
+    }
+  ],
+  "candidateSha256": "57ad5193b98cdfd785cae5809cefc08e9993ad2a1b1378df17289973f0685757",
+  "baseline": "false",
+  "mode": "phone",
+  "fontScale": 1,
+  "failure": "java.lang.AssertionError: return-keeps-photo-and-pixel-offset-2",
+  "ownedFilesRemoved": true,
+  "scope": "Real MainActivity\/local album\/editor, 90 owned private JPEGs, native tile tap, actual production filter render\/draft, native Back, real visible photo identity and exact pixel offset. No camera\/MediaStore changes. Targeted patched107 APK, not unified108 release."
+}

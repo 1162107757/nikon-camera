@@ -1,0 +1,42 @@
+{
+  "mode": "phone",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "candidateApk": "D:\\dev\\ai-project\\nikon\\.tooling\\photo-prototype-92\\candidates\\a1498dae0cfd59ebef831a5ea4e4fd25b532ba58d8702f55e92c68294c4ce0dc.apk",
+  "candidateApkSha256": "a1498dae0cfd59ebef831a5ea4e4fd25b532ba58d8702f55e92c68294c4ce0dc",
+  "candidateVersionCode": "92",
+  "candidateVersionName": "0.19.1-beta",
+  "startedAtUtc": "2026-10-24T09:06:22.7402917Z",
+  "settingsBefore": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0"
+  },
+  "nightBefore": {
+    "command": "no",
+    "reported": "Night mode: no",
+    "secureMode": "1",
+    "customType": "-1"
+  },
+  "permissionsBefore": {
+    "android.permission.READ_MEDIA_IMAGES": false,
+    "android.permission.READ_MEDIA_VISUAL_USER_SELECTED": false,
+    "android.permission.POST_NOTIFICATIONS": false
+  },
+  "settingsObserved": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "0",
+    "user_rotation": "0",
+    "night": {
+      "command": "no",
+      "reported": "Night mode: no",
+      "secureMode": "1",
+      "customType": "-1"
+    },
+    "permissions": {
+      "android.permission.READ_MEDIA_IMAGES": true,
+      "android.permission.READ_MEDIA_VISUAL_USER_SELECTED": false,
+      "android.permission.POST_NOTIFICATIONS": true
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "preparedUtc": "2026-10-27T19:12:09.075987+00:00",
+  "baselineZipSha256": "8975da9434325ebd0f047f14a660736350616d810bf66d9aaeeb5038867b9395",
+  "candidateZipSha256": "3ca593939d0ae3949f4c2cf30fe2b51ff08ea121036cc94ca2d62d8a82bcff7c",
+  "candidateZipBytes": 30332310,
+  "members": 45,
+  "changed": [
+    "download/download.js"
+  ],
+  "otherMembersPreserved": 44,
+  "unixModesPreserved": true,
+  "oldBundledApksPreserved": [
+    {
+      "path": "server/bundled-apks/2543241174c2c7b6656b08b4142d3c3812d095b2ecd732836a11ab9a3c173987.apk",
+      "sha256": "2543241174c2c7b6656b08b4142d3c3812d095b2ecd732836a11ab9a3c173987"
+    },
+    {
+      "path": "server/bundled-apks/4aea78f19ddc4e245e27470b29c9f111674f74c2e22b3229d03a2ec5fd6834bb.apk",
+      "sha256": "4aea78f19ddc4e245e27470b29c9f111674f74c2e22b3229d03a2ec5fd6834bb"
+    },
+    {
+      "path": "server/bundled-apks/7861ae7163d17a5651a8c41b25ddf1b368e868cd326bdcc04a2bd72d5df7aa80.apk",
+      "sha256": "7861ae7163d17a5651a8c41b25ddf1b368e868cd326bdcc04a2bd72d5df7aa80"
+    },
+    {
+      "path": "server/bundled-apks/88d284ffadb92c8ce15c1e5833f00c9fb25a8608b8071557c6464f4c7e6d5ec5.apk",
+      "sha256": "88d284ffadb92c8ce15c1e5833f00c9fb25a8608b8071557c6464f4c7e6d5ec5"
+    },
+    {
+      "path": "server/bundled-apks/cf74460f3a01ca29250a1c77f8a051bc0cf7e3439df20bb91c9b6b2b33b5fa95.apk",
+      "sha256": "cf74460f3a01ca29250a1c77f8a051bc0cf7e3439df20bb91c9b6b2b33b5fa95"
+    },
+    {
+      "path": "server/bundled-apks/f320eef5e6068e94fff54f37509374d09f723492f6fb3077052d727e55d79ebd.apk",
+      "sha256": "f320eef5e6068e94fff54f37509374d09f723492f6fb3077052d727e55d79ebd"
+    },
+    {
+      "path": "server/bundled-apks/4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0.apk",
+      "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0"
+    },
+    {
+      "path": "server/bundled-apks/b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347.apk",
+      "sha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347"
+    }
+  ],
+  "sourceSha256": "4321e79ef1d3f3ec2f7019c6983f771802147991c921c35b423707eec8156b30",
+  "pass": true
+}

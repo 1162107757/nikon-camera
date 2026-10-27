@@ -1,0 +1,143 @@
+{
+  "fixtureItems": 72,
+  "np3FixtureSha256": "d64de018e668077a350de019c7ae70fc55e173e0141d46a71a27a2b3ce5e65af",
+  "initialScreenWidthDp": 411,
+  "initialScreenHeightDp": 923,
+  "fontScale": 1,
+  "pass": false,
+  "failure": "java.lang.AssertionError: native-popup-select-NP3\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.check(OnlineFormatProbe.java:301)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.clickActive(OnlineFormatProbe.java:299)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.chooseFormat(OnlineFormatProbe.java:255)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.onStart(OnlineFormatProbe.java:116)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "stage": "format-and-pagination",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "installed-version-code",
+      "pass": true
+    },
+    {
+      "name": "installed-version-name",
+      "pass": true
+    },
+    {
+      "name": "installed-frozen-apk-sha256",
+      "pass": true
+    },
+    {
+      "name": "initial-offline-startup-settled",
+      "pass": true
+    },
+    {
+      "name": "native-initial-orientation-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-app-theme-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-font-scale-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "catalog--全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-72",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-all",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-all",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-all",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-all",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-all",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-all",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-select-NP3",
+      "pass": false
+    },
+    {
+      "name": "fixture-cleanup-scope",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "all-formats.png",
+      "sha256": "5d3829432b9665842fd4e294ee2a4788a0a1715dff76889cca90a91c65626913"
+    },
+    {
+      "file": "format-menu.png",
+      "sha256": "40270ced9cc91b608942c2ef031854d4ce2010fe90d7024d25baa11314b13536"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "44c780b6528627ca72964f1727ce1989a61d5a1973f4c9b7e423c61a08ff0b41"
+    }
+  ],
+  "requests": [
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=",
+    "https:\/\/format-fixture.invalid\/format-qa-001.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-003.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-000.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-002.ncp"
+  ],
+  "scope": "Real installed MainActivity, native taps\/Views\/configuration and incumbent repository\/HTTPS JSON parser. Explicit in-memory public-recipe and synthetic catalogue fixtures; no live server request, account mutation, physical camera, update-policy change or physical performance claim."
+}

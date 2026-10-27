@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-25",
+  "status": "PUBLISHED_BETA_MANDATORY_AND_CLIENT_UPGRADE_PASS",
+  "versionCode": 100,
+  "versionName": "0.21.1-beta",
+  "apkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+  "sourceInputCount": 214,
+  "sourceDrift": [],
+  "release": {
+    "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+    "mandatory": true,
+    "revision": 3,
+    "downloadUrl": "https://huevia.cc/preset-library/releases/a7a5ad8b-db8a-4de6-b951-adf0a71ff02c/file"
+  },
+  "componentConfigurations": 3,
+  "componentChecks": 171,
+  "componentScreenshots": 9,
+  "realProduction99To100": true,
+  "clientCriteria": 16,
+  "physicalCameraVerified": false,
+  "limits": [
+    "Camera black-screen/standby and OEM background retention require real-device retest",
+    "111-second receive delay is measured incoming payload; no claim of real wireless throughput improvement",
+    "Delete positive permission path statically checked; native probe cancels confirmation, host suite tests private/public isolation"
+  ],
+  "emulatorCleanup": {
+    "serial": "emulator-5586",
+    "avd": "Pixel_9",
+    "emulatorLauncherPid": 43652,
+    "ownedReadOnlyInstance": true,
+    "temporaryUiXmlRemoved": true,
+    "appStopped": true,
+    "killRequested": true,
+    "physicalPhoneUsed": false,
+    "otherEmulatorsTouched": false,
+    "serialAbsent": true,
+    "ownedProcessIdsAbsent": true,
+    "readOnlyStateDiscardedOnEmulatorExit": true
+  },
+  "otherChatHandoffSent": true
+}

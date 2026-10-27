@@ -1,0 +1,148 @@
+{
+  "fixtureItems": 72,
+  "np3FixtureSha256": "d64de018e668077a350de019c7ae70fc55e173e0141d46a71a27a2b3ce5e65af",
+  "initialScreenWidthDp": 411,
+  "initialScreenHeightDp": 923,
+  "fontScale": 1,
+  "pass": false,
+  "failure": "java.lang.AssertionError: catalog-NP3-全部-page1-count20 at format-and-pagination\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.until(OnlineFormatProbe.java:302)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.awaitCatalog(OnlineFormatProbe.java:263)\n\tat cc.huevia.onlineformatqa.OnlineFormatProbe.onStart(OnlineFormatProbe.java:116)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "stage": "format-and-pagination",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "installed-version-code",
+      "pass": true
+    },
+    {
+      "name": "installed-version-name",
+      "pass": true
+    },
+    {
+      "name": "installed-frozen-apk-sha256",
+      "pass": true
+    },
+    {
+      "name": "initial-offline-startup-settled",
+      "pass": true
+    },
+    {
+      "name": "native-initial-orientation-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-app-theme-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-font-scale-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "catalog--全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-72",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-all",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-all",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-all",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-all",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-all",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-all",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "fixture-cleanup-scope",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "all-formats.png",
+      "sha256": "878db2c3da0ad05aefbdaae161b97ae0b62df5922cb9279ae5b773fdced2640e"
+    },
+    {
+      "file": "format-menu.png",
+      "sha256": "e4b70d6e1ab98b1e754cdfc84927d20598ebafbfa253d970329913f83949e6a9"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "61927dcd1828963b001041424e7922763f618b653bd7d45347c068e44b3f82c6"
+    }
+  ],
+  "requests": [
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=",
+    "https:\/\/format-fixture.invalid\/format-qa-003.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-001.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-000.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-002.ncp",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=&fileFormat=NP3"
+  ],
+  "scope": "Real installed MainActivity, native taps\/Views\/configuration and incumbent repository\/HTTPS JSON parser. Explicit in-memory public-recipe and synthetic catalogue fixtures; no live server request, account mutation, physical camera, update-policy change or physical performance claim."
+}

@@ -1,0 +1,27 @@
+{
+  "serial": "emulator-5588",
+  "ownedEmulatorPid": 25732,
+  "remoteEvidenceRemoved": [
+    "/sdcard/Android/data/cc.huevia/files/remote-capture-101/78a9486cdc744427814046be10f2ebad",
+    "/sdcard/Android/data/cc.huevia/files/remote-capture-101/b1c0b12036594b609679a18ff58f338c",
+    "/sdcard/Android/data/cc.huevia/files/remote-capture-101/c45ec888d2e142aa969aa0e5988706ac",
+    "/sdcard/Android/data/cc.huevia/files/remote-capture-101/fd19aad0de684f269ecbbacbee85b730",
+    "/sdcard/Android/data/cc.huevia/files/transfer-status-qa/20261025-125019-rail-363a03",
+    "/sdcard/Android/data/cc.huevia/files/transfer-status-qa/20261025-125516-phone-429515"
+  ],
+  "probePackages": [
+    {
+      "package": "cc.huevia.transferqa",
+      "result": "already absent"
+    },
+    {
+      "package": "cc.huevia.remotecaptureqa",
+      "result": "Success"
+    }
+  ],
+  "perRunSettingsRestored": true,
+  "size": "Physical size: 1080x2424",
+  "density": "Physical density: 420",
+  "fontScale": "1.0",
+  "emulatorStop": "OK: killing emulator, bye bye\r\r\nOK"
+}

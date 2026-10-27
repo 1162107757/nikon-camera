@@ -1,0 +1,1357 @@
+{
+  "fixtureItems": 72,
+  "np3FixtureSha256": "d64de018e668077a350de019c7ae70fc55e173e0141d46a71a27a2b3ce5e65af",
+  "initialScreenWidthDp": 411,
+  "initialScreenHeightDp": 923,
+  "fontScale": 1,
+  "pass": false,
+  "failure": "Known format touch-height defect retained as FAIL; other diagnostic stages completed",
+  "diagnosticKnownFailures": 6,
+  "stage": "cached-format-category-combination",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "installed-version-code",
+      "pass": true
+    },
+    {
+      "name": "installed-version-name",
+      "pass": true
+    },
+    {
+      "name": "installed-frozen-apk-sha256",
+      "pass": true
+    },
+    {
+      "name": "initial-offline-startup-settled",
+      "pass": true
+    },
+    {
+      "name": "native-initial-orientation-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-app-theme-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "native-font-scale-matches-mode",
+      "pass": true
+    },
+    {
+      "name": "catalog--全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-72",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-all",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-all",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-all",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-all",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-all",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-all",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-all",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-24",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-048-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-049-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-050-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-051-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-052-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-053-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-054-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-055-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-056-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-057-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-058-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-059-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-060-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-061-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-062-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-063-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-064-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-065-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-066-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-067-NP3",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-np3",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-np3",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-np3",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-np3",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-np3",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-np3",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-np3",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-np3",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-np3",
+      "pass": true
+    },
+    {
+      "name": "native-scroll-fetches-second-format-page",
+      "pass": true
+    },
+    {
+      "name": "two-format-pages-have-24-items",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-048",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-049",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-050",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-051",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-052",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-053",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-054",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-055",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-056",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-057",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-058",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-059",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-060",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-061",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-062",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-063",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-064",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-065",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-066",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-067",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-068",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-069",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-070",
+      "pass": true
+    },
+    {
+      "name": "paged-unique-id-format-qa-071",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-048-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-049-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-050-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-051-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-052-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-053-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-054-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-055-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-056-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-057-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-058-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-059-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-060-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-061-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-062-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-063-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-064-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-065-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-066-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-067-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-068-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-069-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-070-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-071-NP3",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NP3",
+      "pass": true
+    },
+    {
+      "name": "last-format-page-stops-pagination",
+      "pass": true
+    },
+    {
+      "name": "category-control-present-人像",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-人像-page1-count12",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-12",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-048-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-049-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-050-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-051-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-052-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-053-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-054-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-055-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-056-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-057-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-058-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-059-NP3",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NCP",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NCP",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "catalog-NCP-人像-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-20",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-000-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-001-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-002-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-003-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-004-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-005-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-006-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-007-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-008-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-009-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-010-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-011-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-012-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-013-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-014-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-015-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-016-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-017-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-018-NCP",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-019-NCP",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NCP",
+      "pass": true
+    },
+    {
+      "name": "request-combines-category-and-format",
+      "pass": true
+    },
+    {
+      "name": "category-control-present-黑白",
+      "pass": true
+    },
+    {
+      "name": "catalog-NCP-黑白-page1-count8",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-8",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-黑白-page1-count0",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-0",
+      "pass": true
+    },
+    {
+      "name": "filter-empty-copy-visible",
+      "pass": true
+    },
+    {
+      "name": "filter-empty-reset-action-visible",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-empty",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-empty",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-empty",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-empty",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-empty",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-empty",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-empty",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-empty",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-empty",
+      "pass": true
+    },
+    {
+      "name": "catalog--全部-page1-count20",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-72",
+      "pass": true
+    },
+    {
+      "name": "clear-restores-online-format-control",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NCP",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NCP",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "old-format-request-held",
+      "pass": true
+    },
+    {
+      "name": "format-menu-visible-before-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-opened",
+      "pass": true
+    },
+    {
+      "name": "format-menu-has-only-three-options",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-0",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-1",
+      "pass": true
+    },
+    {
+      "name": "format-menu-single-selection-2",
+      "pass": true
+    },
+    {
+      "name": "native-popup-target-visible-NP3",
+      "pass": true
+    },
+    {
+      "name": "format-popup-closes-after-selection",
+      "pass": true
+    },
+    {
+      "name": "new-format-result-arrives-before-old-response",
+      "pass": true
+    },
+    {
+      "name": "new-format-request-starts-page-one-before-scroll-restoration",
+      "pass": true
+    },
+    {
+      "name": "late-ncp-response-keeps-np3-selection",
+      "pass": true
+    },
+    {
+      "name": "late-ncp-response-keeps-new-total",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-048-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-049-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-050-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-051-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-052-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-053-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-054-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-055-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-056-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-057-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-058-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-059-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-060-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-061-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-062-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-063-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-064-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-065-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-066-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-067-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-068-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-069-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-070-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-071-NP3",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NP3",
+      "pass": true
+    },
+    {
+      "name": "category-control-present-人像",
+      "pass": true
+    },
+    {
+      "name": "old-category-request-held",
+      "pass": true
+    },
+    {
+      "name": "category-control-present-风景",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-风景-page1-count12",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-12",
+      "pass": true
+    },
+    {
+      "name": "late-portrait-response-keeps-landscape-selection",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "late-category-response-cannot-leak-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-switch-to-local",
+      "pass": true
+    },
+    {
+      "name": "online-format-control-hidden-in-local-library",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-风景-page1-count12",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-12",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-online-return",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-online-return",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-online-return",
+      "pass": true
+    },
+    {
+      "name": "saved-instance-state-retains-format",
+      "pass": true
+    },
+    {
+      "name": "saved-instance-state-retains-category",
+      "pass": true
+    },
+    {
+      "name": "native-orientation-change-observed",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-风景-page1-count12",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-12",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-rotated",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-rotated",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-rotated",
+      "pass": true
+    },
+    {
+      "name": "native-orientation-restored",
+      "pass": true
+    },
+    {
+      "name": "catalog-NP3-风景-page1-count12",
+      "pass": true
+    },
+    {
+      "name": "heading-shows-server-total-12",
+      "pass": true
+    },
+    {
+      "name": "format-control-present-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-control-label-present-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-control-unclipped-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-touch-height48dp-rotation-return",
+      "pass": false
+    },
+    {
+      "name": "format-label-single-line-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-label-not-ellipsized-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-font-stays-compact-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-control-selected-state-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "format-sits-with-heading-and-count-rotation-return",
+      "pass": true
+    },
+    {
+      "name": "explicit-cache-read-marked",
+      "pass": true
+    },
+    {
+      "name": "cache-count-uses-both-active-filters",
+      "pass": true
+    },
+    {
+      "name": "visible-results-present-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-060-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-061-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-062-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-063-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-064-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-065-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-066-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-067-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-068-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-069-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-070-NP3",
+      "pass": true
+    },
+    {
+      "name": "visible-format-format-qa-071-NP3",
+      "pass": true
+    },
+    {
+      "name": "grid-position-key-includes-format-NP3",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cached-rows-keep-category",
+      "pass": true
+    },
+    {
+      "name": "cache-heading-count-disclosed",
+      "pass": true
+    },
+    {
+      "name": "fixture-cleanup-scope",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "all-formats.png",
+      "sha256": "a589d8e3fd3fc92d140f7e07fa65e26da7abbbb76cfc6746ffe71c3857093faa"
+    },
+    {
+      "file": "format-menu.png",
+      "sha256": "98fe77720e7c76e136d98bf6aef33e0d3120d967e48dd714d26d1d61b14fa9a0"
+    },
+    {
+      "file": "np3-portrait.png",
+      "sha256": "1dec5c073101393ddc31daf3140b81cb93741a9203e950f128adacd9fe234256"
+    },
+    {
+      "file": "np3-no-match.png",
+      "sha256": "dc88e39a756603b3eea86e9df403a12df83a24656bc302b06fbd589db443f3e0"
+    },
+    {
+      "file": "rotated-selection.png",
+      "sha256": "88cdbfe714c113a6d26aff371819563454100f222be1110baba0aade7963434b"
+    }
+  ],
+  "requests": [
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=",
+    "https:\/\/format-fixture.invalid\/format-qa-003.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-001.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-000.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-002.ncp",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=&fileFormat=NP3",
+    "https:\/\/format-fixture.invalid\/format-qa-051.np3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=2&pageSize=20&category=&fileFormat=NP3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=%E4%BA%BA%E5%83%8F&fileFormat=NP3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=%E4%BA%BA%E5%83%8F&fileFormat=NCP",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=%E9%BB%91%E7%99%BD&fileFormat=NCP",
+    "https:\/\/format-fixture.invalid\/format-qa-041.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-043.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-040.ncp",
+    "https:\/\/format-fixture.invalid\/format-qa-042.ncp",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=%E9%BB%91%E7%99%BD&fileFormat=NP3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=&fileFormat=NCP",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=&fileFormat=NP3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=2&pageSize=20&category=&fileFormat=NP3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=%E4%BA%BA%E5%83%8F&fileFormat=NP3",
+    "https:\/\/nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com\/preset-library\/community\/feed?page=1&pageSize=20&category=%E9%A3%8E%E6%99%AF&fileFormat=NP3"
+  ],
+  "scope": "Real installed MainActivity, native taps\/Views\/configuration and incumbent repository\/HTTPS JSON parser. Explicit in-memory public-recipe and synthetic catalogue fixtures; no live server request, account mutation, physical camera, update-policy change or physical performance claim."
+}

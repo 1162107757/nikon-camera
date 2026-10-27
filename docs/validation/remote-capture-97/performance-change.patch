@@ -1,0 +1,55 @@
+diff --git a/D:/dev/ai-project/nikon/.tooling/remote-capture-97/AlbumController-before-performance.java b/D:/dev/ai-project/nikon/app/src/main/java/cc/huevia/album/AlbumController.java
+index 8bb8ce1..9beb810 100644
+--- a/D:/dev/ai-project/nikon/.tooling/remote-capture-97/AlbumController-before-performance.java
++++ b/D:/dev/ai-project/nikon/app/src/main/java/cc/huevia/album/AlbumController.java
+@@ -781,7 +781,7 @@ public final class AlbumController implements AutoCloseable {
+             }
+             synchronized (lifecycle) {
+                 run.failures = 0;
+-                if (!run.inspect.isEmpty() || !run.queue.isEmpty() || !run.resumeReceipts.isEmpty()) nextDelay = 250;
++                nextDelay = nextLiveWorkDelay(run);
+             }
+         } catch (LiveCancelled cancelled) {
+             // Ownership and stop are cancellation barriers, never a reason to close the replacement owner.
+@@ -809,12 +809,31 @@ public final class AlbumController implements AutoCloseable {
+             synchronized (lifecycle) {
+                 run.workQueued = false;
+                 if (run.current != null) { if (!run.enabled && run.current.saved == null) run.current.status = "stopped"; run.current = null; publishLiveLocked(run); }
+-                if (run.wakeAgain) { run.wakeAgain = false; nextDelay = Math.min(nextDelay, 250); }
++                if (run.wakeAgain) { run.wakeAgain = false; nextDelay = Math.min(nextDelay, run.failures == 0 ? 0 : 250); }
+             }
+             scheduleLive(run, nextDelay);
+         }
+     }
+ 
++    /** Yield between transactions, but do not throttle an original which is already ready. */
++    private long nextLiveWorkDelay(LiveRun run) {
++        long now = System.nanoTime();
++        if (!run.hints.isEmpty()) return 0;
++        for (LiveCandidate item : run.recent.values()) {
++            if (item.galleryRetry && !item.galleryPublishing) return 0;
++        }
++        for (LiveCandidate item : run.queue) {
++            if (run.unavailableStorages.contains(item.photo.storageId())) continue;
++            if (item.ready <= now) return 0;
++            break; // Preserve capture order and the existing busy retry deadline.
++        }
++        for (long handle : run.inspect) {
++            Long ready = run.metadataReady.get(handle);
++            if (ready == null || ready <= now) return 0;
++        }
++        return !run.inspect.isEmpty() || !run.queue.isEmpty() || !run.resumeReceipts.isEmpty() ? 250 : 3000;
++    }
++
+     /** Revalidates only explicitly unfinished records; the card baseline remains handle-only. */
+     private void restoreLiveReceipts(LiveRun run) throws IOException {
+         synchronized (lifecycle) {
+@@ -1019,7 +1038,7 @@ public final class AlbumController implements AutoCloseable {
+                 requireLive(run);
+                 synchronized (lifecycle) {
+                     item.previewDone = true; item.status = "preview";
+-                    item.ready = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(250); run.queue.addFirst(item);
++                    item.ready = 0; run.queue.addFirst(item);
+                     run.current = null; publishLiveLocked(run);
+                 }
+                 return;

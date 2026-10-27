@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-25",
+  "serial": "emulator-5586",
+  "ownedAvd": "Huevia_Format_102",
+  "launcherPid": 47628,
+  "serialAbsent": true,
+  "ownedProcessCount": 0,
+  "temporaryDirectoriesRetained": true,
+  "cleanupRetryAttempted": false,
+  "reason": "Prior directory cleanup was rejected by automatic approval: blocked by policy. Reused the owned AVD for legitimate visual verification, then stopped it; no directory deletion attempted."
+}

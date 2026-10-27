@@ -1,0 +1,24 @@
+{
+  "verifiedUtc": "2026-10-27T15:03:14.384Z",
+  "status": "Active",
+  "runtime": "Nodejs20.19",
+  "baselineZipBytes": 30327599,
+  "baselineZipSha256": "c0e5aaae27ac6249182d8a7a1d16a8fd8ce83b89fad38396064558df46647ff9",
+  "codeSha256": "c0e5aaae27ac6249182d8a7a1d16a8fd8ce83b89fad38396064558df46647ff9",
+  "environmentSha256": "ca5207b66e5bead65ccb2a7e88b290b2d93bc8974cdec9c80e07b2822ec7f078",
+  "selectedConfigurationSha256": "ab8dddb3d8a53a10936f40efb4b49bf7e439c00fdce855cd63c080fd9f8ced8a",
+  "configurationFields": [
+    "Runtime",
+    "Timeout",
+    "MemorySize",
+    "Type",
+    "Handler",
+    "Role",
+    "VpcConfig",
+    "PublicNetConfig",
+    "ProtocolType",
+    "Environment"
+  ],
+  "baselineDrift": false,
+  "method": "SCF GetFunctionAddress/readback; address and credentials omitted"
+}

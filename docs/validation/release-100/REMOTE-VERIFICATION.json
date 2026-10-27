@@ -1,0 +1,189 @@
+{
+  "public": {
+    "at": "2026-10-24T23:58:48.742Z",
+    "published": true,
+    "release": {
+      "id": "a7a5ad8b-db8a-4de6-b951-adf0a71ff02c",
+      "package_name": "cc.huevia",
+      "version_name": "0.21.1-beta",
+      "version_code": 100,
+      "min_sdk": 26,
+      "byte_length": 3901562,
+      "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+      "signer_sha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+      "storage_path": "app-releases/4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0.apk",
+      "channel": "beta",
+      "notes": "改进边拍边传的后台保活，并补充断连诊断，便于排查息屏后的连接问题。\n调整相册下载进度的位置，减少对悬浮导航和照片操作的遮挡。\nApp 内相册新增照片删除入口，删除前确认并校验目标。",
+      "status": "published",
+      "revision": 3,
+      "created_at": "2026-10-25T07:55:57.194311+08:00",
+      "published_at": "2026-10-25T07:57:13.576864+08:00",
+      "withdrawn_at": null,
+      "mandatory": true
+    },
+    "auditEvidence": [
+      {
+        "id": 37,
+        "actor": "admin",
+        "action": "upload_verified",
+        "details": {
+          "method": "function-bundled-signed-artifact",
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+          "byteLength": 3901562,
+          "notesSha256": "b95342007705229cb048b71a7439854146bd0990669d3c2046cc57daa5c2b77c",
+          "versionCode": 100,
+          "signatureSchemes": [
+            2,
+            3
+          ],
+          "requestArchiveSha256": "98f96772c136d49a170a6cb55682ae824868baa4571611e2b368326988bb5d40",
+          "contentIdentitySha256": "0ac7e95912b8a8f0748f54880a5a3791051215ef521b88064557f8905a2c8660",
+          "observedArchiveSha256": "f503632cb4b09fa5889d5feb6c30df97366a52e1d2e4b38a630b8b240d3edadc",
+          "privateObjectUploaded": false
+        },
+        "created_at": "2026-10-25T07:55:57.194311+08:00"
+      },
+      {
+        "id": 38,
+        "actor": "admin",
+        "action": "policy",
+        "details": {
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+          "channel": "beta",
+          "revision": 2,
+          "mandatory": true,
+          "versionCode": 100,
+          "previousMandatory": false
+        },
+        "created_at": "2026-10-25T07:57:06.717353+08:00"
+      },
+      {
+        "id": 39,
+        "actor": "admin",
+        "action": "publish",
+        "details": {
+          "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+          "channel": "beta",
+          "revision": 3,
+          "versionCode": 100
+        },
+        "created_at": "2026-10-25T07:57:13.576864+08:00"
+      }
+    ],
+    "checks": [
+      {
+        "origin": "https://huevia.cc",
+        "publicBytesVerified": true,
+        "signatureSchemes": [
+          2,
+          3
+        ],
+        "apkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+        "cases": [
+          {
+            "versionCode": 99,
+            "sdk": 35,
+            "reason": "available",
+            "updateRequired": true
+          },
+          {
+            "versionCode": 100,
+            "sdk": 35,
+            "reason": "current",
+            "updateRequired": false
+          },
+          {
+            "versionCode": 101,
+            "sdk": 35,
+            "reason": "client_newer",
+            "updateRequired": false
+          },
+          {
+            "versionCode": 99,
+            "sdk": 25,
+            "reason": "incompatible",
+            "updateRequired": false
+          }
+        ]
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "publicBytesVerified": true,
+        "signatureSchemes": [
+          2,
+          3
+        ],
+        "apkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+        "cases": [
+          {
+            "versionCode": 99,
+            "sdk": 35,
+            "reason": "available",
+            "updateRequired": true
+          },
+          {
+            "versionCode": 100,
+            "sdk": 35,
+            "reason": "current",
+            "updateRequired": false
+          },
+          {
+            "versionCode": 101,
+            "sdk": 35,
+            "reason": "client_newer",
+            "updateRequired": false
+          },
+          {
+            "versionCode": 99,
+            "sdk": 25,
+            "reason": "incompatible",
+            "updateRequired": false
+          }
+        ]
+      }
+    ],
+    "historicalRowsPreserved": true,
+    "stableAndLegacyUnchanged": true,
+    "apkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+    "notesSha256": "b95342007705229cb048b71a7439854146bd0990669d3c2046cc57daa5c2b77c",
+    "requestArchiveSha256": "98f96772c136d49a170a6cb55682ae824868baa4571611e2b368326988bb5d40",
+    "observedArchiveSha256": "f503632cb4b09fa5889d5feb6c30df97366a52e1d2e4b38a630b8b240d3edadc",
+    "contentIdentitySha256": "0ac7e95912b8a8f0748f54880a5a3791051215ef521b88064557f8905a2c8660",
+    "memberContentAndModesVerified": true,
+    "configurationPreserved": true,
+    "files": 44
+  },
+  "migration": {
+    "at": "2026-10-24T23:53:04.748Z",
+    "migrationSha256": "d8fbac9608ae8c6c9833c5abc2010c376396bf471118175a9054bc255c3c58bf",
+    "permissions": {
+      "mandatory_column": true,
+      "policy_rpc": true,
+      "service_allowed": true,
+      "public_denied": true
+    },
+    "historicalRowsPreserved": true,
+    "noPolicyEnabled": true
+  },
+  "deploymentBeforePublish": {
+    "at": "2026-10-24T23:54:52.917Z",
+    "status": "Active",
+    "apkSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+    "requestArchiveSha256": "98f96772c136d49a170a6cb55682ae824868baa4571611e2b368326988bb5d40",
+    "observedArchiveSha256": "f503632cb4b09fa5889d5feb6c30df97366a52e1d2e4b38a630b8b240d3edadc",
+    "contentIdentitySha256": "0ac7e95912b8a8f0748f54880a5a3791051215ef521b88064557f8905a2c8660",
+    "memberContentAndModesVerified": true,
+    "configurationPreserved": true,
+    "files": 44,
+    "historicalRowsPreserved": true,
+    "published": false
+  },
+  "independentCloudArchive": {
+    "independentPythonVerifier": true,
+    "cloudZipCrcPassed": true,
+    "all44MembersAndModesEqualReviewedCandidate": true,
+    "historicalBundlesPreserved": 6,
+    "requestArchiveSha256": "98f96772c136d49a170a6cb55682ae824868baa4571611e2b368326988bb5d40",
+    "observedArchiveSha256": "f503632cb4b09fa5889d5feb6c30df97366a52e1d2e4b38a630b8b240d3edadc"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "pass": true,
+  "failure": null,
+  "mode": "rail",
+  "fontScale": 1,
+  "candidateSha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+  "checks": [
+    "owned-emulator",
+    "supported-mode",
+    "expected-version",
+    "exact-apk",
+    "no-real-account",
+    "output-created",
+    "main-replaced-before-onCreate-no-network-startup",
+    "local-initialisation-settled",
+    "actual-font",
+    "actual-width-category",
+    "actual-mode-rail",
+    "progress-panel-present",
+    "bytes-include-current-and-total",
+    "progress-bytes-exists",
+    "progress-bytes-full-visible",
+    "progress-bytes-clearance",
+    "progress-bytes-text-unclipped",
+    "progress-cancel-exists",
+    "progress-cancel-full-visible",
+    "progress-cancel-clearance",
+    "progress-cancel-text-unclipped",
+    "bytes-not-truncated",
+    "progress-overlap-inset",
+    "screenshot-01-progress",
+    "fixture-directory",
+    "fixture-fresh",
+    "fixture-jpeg",
+    "real-library-group",
+    "selection-actions-present",
+    "downloaded-delete-exists",
+    "downloaded-delete-full-visible",
+    "downloaded-delete-clearance",
+    "downloaded-delete-text-unclipped",
+    "downloaded-export-exists",
+    "downloaded-export-full-visible",
+    "downloaded-export-clearance",
+    "downloaded-export-text-unclipped",
+    "downloaded-effect-exists",
+    "downloaded-effect-full-visible",
+    "downloaded-effect-clearance",
+    "downloaded-effect-text-unclipped",
+    "selection-has-two-action-rows",
+    "delete-real-click",
+    "real-delete-confirmation-shown",
+    "scope-is-app-copy",
+    "no-system-or-camera-delete-claim",
+    "confirmation-has-explicit-cancel",
+    "no-deletion-started",
+    "screenshot-02-delete-confirmation",
+    "screenshot-03-selection",
+    "cancel-did-not-start-delete",
+    "no-camera-sockets",
+    "cancel-never-enters-either-save-overload",
+    "fixture-bytes-unchanged-no-production-delete",
+    "all-native-layout-bounds-pass",
+    "fixture-owned-path",
+    "fixture-cleaned"
+  ],
+  "screenshots": [
+    {
+      "file": "01-progress.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "02-delete-confirmation.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "03-selection.png",
+      "width": 1800,
+      "height": 2400
+    }
+  ],
+  "geometry": [
+    {
+      "name": "progress-bytes",
+      "view": "[252,2097][1758,2142]",
+      "nav": "[0,141][210,2316]",
+      "insetPx": 0
+    },
+    {
+      "name": "progress-cancel",
+      "view": "[252,2153][1758,2284]",
+      "nav": "[0,141][210,2316]",
+      "insetPx": 0
+    },
+    {
+      "name": "downloaded-delete",
+      "view": "[1516,2043][1747,2169]",
+      "nav": "[0,141][210,2316]",
+      "insetPx": 0
+    },
+    {
+      "name": "downloaded-export",
+      "view": "[263,2169][994,2295]",
+      "nav": "[0,141][210,2316]",
+      "insetPx": 0
+    },
+    {
+      "name": "downloaded-effect",
+      "view": "[1015,2169][1747,2295]",
+      "nav": "[0,141][210,2316]",
+      "insetPx": 0
+    }
+  ],
+  "violations": [],
+  "cameraSocketAttempts": 0,
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height\/inset helpers through reflection. Cancel-only confirmation does not execute either beforeSavePhotos overload; APP_ONLY positive-path selection is a separate source review, not a dynamic claim of this probe. No real MainActivity startup, real camera, HTTP\/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately."
+}

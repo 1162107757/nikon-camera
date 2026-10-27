@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T15:48:18.387Z",
+  "title": "Design System: Huevia 96 局部实现",
+  "extensions": {
+    "colorMeta": {
+      "capture-bg": {
+        "role": "neutral",
+        "displayName": "取景炭黑",
+        "tonalRamp": [
+          "oklch(15% 0.0016 197.02)",
+          "oklch(26% 0.0016 197.02)",
+          "oklch(38% 0.0016 197.02)",
+          "oklch(49% 0.0016 197.02)",
+          "oklch(61% 0.0016 197.02)",
+          "oklch(72% 0.0016 197.02)",
+          "oklch(84% 0.0016 197.02)",
+          "oklch(95% 0.0016 197.02)"
+        ]
+      },
+      "capture-panel": {
+        "role": "neutral",
+        "displayName": "设置深灰",
+        "tonalRamp": [
+          "oklch(15% 0.0024 67.73)",
+          "oklch(26% 0.0024 67.73)",
+          "oklch(38% 0.0024 67.73)",
+          "oklch(49% 0.0024 67.73)",
+          "oklch(61% 0.0024 67.73)",
+          "oklch(72% 0.0024 67.73)",
+          "oklch(84% 0.0024 67.73)",
+          "oklch(95% 0.0024 67.73)"
+        ]
+      },
+      "capture-text": {
+        "role": "neutral",
+        "displayName": "遥控暖白",
+        "tonalRamp": [
+          "oklch(15% 0.0096 72.66)",
+          "oklch(26% 0.0096 72.66)",
+          "oklch(38% 0.0096 72.66)",
+          "oklch(49% 0.0096 72.66)",
+          "oklch(61% 0.0096 72.66)",
+          "oklch(72% 0.0096 72.66)",
+          "oklch(84% 0.0096 72.66)",
+          "oklch(95% 0.0096 72.66)"
+        ]
+      },
+      "capture-secondary": {
+        "role": "neutral",
+        "displayName": "遥控说明灰",
+        "tonalRamp": [
+          "oklch(15% 0.0113 76.58)",
+          "oklch(26% 0.0113 76.58)",
+          "oklch(38% 0.0113 76.58)",
+          "oklch(49% 0.0113 76.58)",
+          "oklch(61% 0.0113 76.58)",
+          "oklch(72% 0.0113 76.58)",
+          "oklch(84% 0.0113 76.58)",
+          "oklch(95% 0.0113 76.58)"
+        ]
+      },
+      "photo-accent": {
+        "role": "primary",
+        "displayName": "摄影杏光",
+        "tonalRamp": [
+          "oklch(15% 0.0862 48.75)",
+          "oklch(26% 0.0862 48.75)",
+          "oklch(38% 0.0862 48.75)",
+          "oklch(49% 0.0862 48.75)",
+          "oklch(61% 0.0862 48.75)",
+          "oklch(72% 0.0862 48.75)",
+          "oklch(84% 0.0862 48.75)",
+          "oklch(95% 0.0862 48.75)"
+        ]
+      },
+      "editor-text": {
+        "role": "neutral",
+        "displayName": "编辑器冷白",
+        "tonalRamp": [
+          "oklch(15% 0.0029 264.54)",
+          "oklch(26% 0.0029 264.54)",
+          "oklch(38% 0.0029 264.54)",
+          "oklch(49% 0.0029 264.54)",
+          "oklch(61% 0.0029 264.54)",
+          "oklch(72% 0.0029 264.54)",
+          "oklch(84% 0.0029 264.54)",
+          "oklch(95% 0.0029 264.54)"
+        ]
+      },
+      "editor-dock": {
+        "role": "neutral",
+        "displayName": "编辑器工具炭黑",
+        "tonalRamp": [
+          "oklch(15% 0.0039 48.50)",
+          "oklch(26% 0.0039 48.50)",
+          "oklch(38% 0.0039 48.50)",
+          "oklch(49% 0.0039 48.50)",
+          "oklch(61% 0.0039 48.50)",
+          "oklch(72% 0.0039 48.50)",
+          "oklch(84% 0.0039 48.50)",
+          "oklch(95% 0.0039 48.50)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "settings-title": {
+        "displayName": "拍摄设置标题",
+        "purpose": "遥控设置面板标题；生产使用 Android 系统字体与 sp。"
+      },
+      "setting-label": {
+        "displayName": "设置条目",
+        "purpose": "保存位置只读行与开关标签。"
+      },
+      "setting-note": {
+        "displayName": "设置说明",
+        "purpose": "解释照片仍保存在相机及可选 JPEG 传入。"
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "原生拍摄设置顶部 · 说明预览",
+      "kind": "custom",
+      "refersTo": "capture-settings-panel",
+      "description": "仅为原生设计说明预览，非生产 Web 实现或截图；CSS px 对应基础 dp/sp 的示意。齿轮入口在直方图左侧。实际顶部先为只读存储卡行，再为可选 JPEG 开关；此处静态展示关闭态，实际开关可打开、关闭并在重开面板后保持选择。",
+      "html": "<div class=\"ds-settings\" role=\"img\" aria-label=\"原生拍摄设置顶部说明：照片保存到相机存储卡，拍后传入 App 为可选开关，当前示意关闭\"><div class=\"ds-settings-title\">拍摄设置</div><div class=\"ds-storage\"><span>照片保存位置</span><strong>相机存储卡</strong></div><div class=\"ds-transfer\"><span>拍后传入 App</span><span class=\"ds-switch-off\"><i></i></span></div><p class=\"ds-transfer-note\">照片仍保存在相机，JPEG 另传入 App</p></div>",
+      "css": ".ds-settings{width:300px;max-width:100%;padding:14px 20px 20px;border-radius:24px;background:#272625;color:#F6F1EB;font-family:Arial,sans-serif}.ds-settings-title{display:flex;align-items:center;min-height:48px;font-size:17px;font-weight:500}.ds-storage{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #343535;font-size:13px;color:#BEB9B2}.ds-storage strong{margin-left:auto;color:#F6F1EB;font-weight:400}.ds-transfer{display:flex;align-items:center;gap:10px;min-height:48px;font-size:13px}.ds-switch-off{display:flex;align-items:center;width:36px;height:14px;margin-left:auto;border-radius:9px;background:#66645F}.ds-switch-off i{display:block;width:20px;height:20px;border-radius:50%;background:#CBC7BF}.ds-transfer-note{margin:0;padding:10px 0 14px;border-bottom:1px solid #343535;color:#BEB9B2;font-size:11px;line-height:15px}"
+    },
+    {
+      "name": "原生查看全部滤镜 · 居中说明预览",
+      "kind": "custom",
+      "refersTo": "editor-grid-target",
+      "description": "仅为原生设计说明预览，非生产 Web 实现或截图；静态示意基础 48dp 触点与居中的同一 19dp AppIcon.GRID。实际使用 LayerDrawable / Gravity.CENTER，保留原底形和颜色，字号放大时行高扩展；LTR/RTL 当前字形边界中心偏移均为 [0,0]。",
+      "html": "<div class=\"ds-editor-preview\"><div class=\"ds-grid-target\" role=\"img\" aria-label=\"查看全部滤镜：四方块居中于原生触点\"><span class=\"ds-grid-face\"></span><svg class=\"ds-grid-glyph\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/></svg></div></div>",
+      "css": ".ds-editor-preview{display:flex;align-items:center;padding:8px;background:#131110}.ds-grid-target{position:relative;display:grid;place-items:center;width:48px;height:48px;color:#F4F5F7}.ds-grid-face{position:absolute;left:6px;right:6px;top:6px;bottom:6px;border:1px solid rgba(255,255,255,.2);border-radius:10px;background:rgba(255,255,255,.0588235294)}.ds-grid-glyph{position:relative;width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}"
+    }
+  ],
+  "narrative": {
+    "northStar": "橙光进入照片",
+    "overview": "延续根 [DESIGN.md](../../../DESIGN.md) 已批准的原生 Android Java / Views 世界：炭黑摄影工具、暖白文字与杏色选择态。此处只记录 96 的保存设置收纳和滤镜入口对齐；全局规则仍以根文档为准，Operate 任务范围见 [BRIEF.md](BRIEF.md)。\n\n当前版本为 96 / 0.20.1-beta，绑定 APK SHA-256 `2bcb395db84af40a0f6732078fa7ab5707fc93dbd43c2a1794d3420f9a7f0c8e`。[独立审核](FINISH-REVIEW.md) 的 ship 限本轮三个请求；[矩阵](UI-MATRIX.json) 为六次原生运行、622 次配置检查和 79 张截图，审核逐张检查其中 14 张 required。相机证据来自内存 PTP/IP 夹具和合成样片；editor-grid 为真实 createDock 装入原生 Dialog 的组件证据，未绑定用户照片。没有实体设备、发布或新增生产栅格资产，HTML/CSS detector 不适用于此原生实现。",
+    "keyCharacteristics": [
+      "保存设置归入取景工具行的小齿轮，让竖屏取景获得原底部保存行的高度。",
+      "四方块保留原图标、颜色、底形和触点，仅修正整体居中。"
+    ],
+    "rules": [
+      {
+        "name": "The Settings Consolidation Rule",
+        "body": "工具行顺序为齿轮、直方图、构图网格、机身信息；齿轮在直方图左侧。底部保存说明／开关行和右上重复三点均已移除，释放的竖屏高度交还取景区域。此用户追加指令覆盖旧原型的底部保存行。",
+        "section": "layout"
+      },
+      {
+        "name": "The Whole Target Center Rule",
+        "body": "同一 AppIcon.GRID 以 LayerDrawable 的 Gravity.CENTER 放在整个触点中心，清除空文字按钮的 compound drawable 与其定位内边距。字形尺寸取 `editor-grid-glyph`，触点宽度取 `touch-target`；基础行高使用该触点值，放大字号时随原生 fp 行高扩展。当前六次运行的 LTR／RTL 白色字形边界中心偏移均为 `[0,0]`；这证明组件对齐，不代表完整照片编辑页面复测。实现见 [PhotoFilterEditor.createDock](../../../app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java)。",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "**Do** 保持齿轮在直方图左侧，并将保存位置与可选 JPEG 传入放在设置顶部。",
+      "**Do** 保留四方块的原 AppIcon、颜色、底形和原生触点，按整个触点居中。"
+    ],
+    "donts": [
+      "**Don't** 把 95 或追加要求前原型的底部保存行写成当前布局。",
+      "**Don't** 将夹具连接成功或组件截图表述为用户相机恢复、完整编辑流程或全 App 认证。"
+    ]
+  }
+}

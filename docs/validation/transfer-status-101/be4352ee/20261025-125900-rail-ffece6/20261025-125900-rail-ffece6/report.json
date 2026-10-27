@@ -1,0 +1,129 @@
+{
+  "pass": true,
+  "failure": null,
+  "mode": "rail",
+  "fontScale": 1,
+  "candidateSha256": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480",
+  "checks": [
+    "owned-emulator",
+    "supported-mode",
+    "expected-version",
+    "exact-apk",
+    "no-real-account",
+    "output-created",
+    "main-replaced-before-onCreate-no-network-startup",
+    "local-initialisation-settled",
+    "actual-font",
+    "actual-width-category",
+    "actual-mode-rail",
+    "progress-panel-present",
+    "compact-percent",
+    "real-speed-and-eta",
+    "manual-rate-exists",
+    "manual-rate-full-visible",
+    "manual-rate-clearance",
+    "manual-rate-text-unclipped",
+    "progress-bytes-exists",
+    "progress-bytes-full-visible",
+    "progress-bytes-clearance",
+    "progress-bytes-text-unclipped",
+    "progress-cancel-exists",
+    "progress-cancel-full-visible",
+    "progress-cancel-clearance",
+    "progress-cancel-text-unclipped",
+    "compact-card",
+    "filename-off-primary-surface",
+    "bytes-not-truncated",
+    "progress-overlap-inset",
+    "screenshot-01-progress",
+    "manual-details-explicit",
+    "manual-full-filename-preserved",
+    "stop-finishes-current-original",
+    "live-one-row-height",
+    "live-measured-rate",
+    "live-rate-exists",
+    "live-rate-full-visible",
+    "live-rate-clearance",
+    "live-rate-text-unclipped",
+    "live-stop-exists",
+    "live-stop-full-visible",
+    "live-stop-clearance",
+    "live-stop-text-unclipped",
+    "live-detail-hidden",
+    "screenshot-02-live-speed",
+    "live-silence-short",
+    "screenshot-03-waiting",
+    "live-wait-clears-on-data",
+    "live-save-short",
+    "screenshot-04-saving",
+    "disconnect-short",
+    "disconnect-action",
+    "screenshot-05-details",
+    "original-explanation-preserved",
+    "no-camera-sockets",
+    "cancel-never-enters-either-save-overload",
+    "all-native-layout-bounds-pass"
+  ],
+  "screenshots": [
+    {
+      "file": "01-progress.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "02-live-speed.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "03-waiting.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "04-saving.png",
+      "width": 1800,
+      "height": 2400
+    },
+    {
+      "file": "05-details.png",
+      "width": 1800,
+      "height": 2400
+    }
+  ],
+  "geometry": [
+    {
+      "name": "manual-rate",
+      "view": "[288,2179][1458,2231]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "progress-bytes",
+      "view": "[1458,2184][1560,2226]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "progress-cancel",
+      "view": "[1560,2133][1752,2277]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "live-rate",
+      "view": "[366,1479][1383,1551]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    },
+    {
+      "name": "live-stop",
+      "view": "[1542,1451][1686,1595]",
+      "nav": "[0,156][240,2304]",
+      "insetPx": 0
+    }
+  ],
+  "violations": [],
+  "cameraSocketAttempts": 0,
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height\/inset helpers through reflection. Synthetic snapshots exercise receiving, waiting, recovery, saving, disconnection and explicit detail expansion without camera I\/O. No real MainActivity startup, real camera, HTTP\/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately."
+}

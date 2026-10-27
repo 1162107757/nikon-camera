@@ -1,0 +1,79 @@
+{
+  "pass": true,
+  "apkSha256": "7a1506d9bceb33a216425d6ad1bdd03dff5c7447be5ce2f77853c3758c4089d4",
+  "serial": "emulator-5586",
+  "avd": "Huevia_Format_102",
+  "viewport": "720x1600/density280/411dp wide",
+  "physicalDevice": false,
+  "checks": {
+    "realProductionMainActivity": true,
+    "noInstrumentationOrSyntheticRepository": true,
+    "all241": true,
+    "ncp5": true,
+    "np3_236": true,
+    "actualNativeMenuSelection": true,
+    "page2NamesOutsideFirst20Visible": true
+  },
+  "files": [
+    {
+      "name": "01-initial.xml",
+      "sha256": "92dd899b447cc09e8edc4676eceab27025d7edddc2abddd7a2802d6cea62e5dd"
+    },
+    {
+      "name": "02-online-all.png",
+      "sha256": "4fd0aa62cfbd5cc58ffe8ff0c1bbe8af8ad7732ce5229bf92a522dca0242a96e"
+    },
+    {
+      "name": "02-online-all.xml",
+      "sha256": "c6a807ad245f9fe8de90479bd4e3dba9b47bdb759a8b2ca762d07cc3fc497575"
+    },
+    {
+      "name": "03-format-menu.xml",
+      "sha256": "d76df32695f93db204acbb48dda1ebc94078c09cd69c7d5aba985b0d93f8691d"
+    },
+    {
+      "name": "04-ncp.png",
+      "sha256": "f0242150325215c73011f534dd032ad135fa675e6256b0816386df27bf05a256"
+    },
+    {
+      "name": "04-ncp.xml",
+      "sha256": "5f09e62a621a3aca98850160a52e3340f1fbedcad9534f418e13f5c65ffe9111"
+    },
+    {
+      "name": "05-ncp-result.png",
+      "sha256": "4a3613864222b0767a5ba57b7624e2078c95cdbf04d525c2b1733967dadca85d"
+    },
+    {
+      "name": "05-ncp-result.xml",
+      "sha256": "20d73de0e013723e4ff7f733e237daf1c48e037598e3cd5951558becc87acad2"
+    },
+    {
+      "name": "06-format-menu.xml",
+      "sha256": "c69e5de634c42a411898063c19a80af5f9d5c88e74761ab3f1789aacf105137f"
+    },
+    {
+      "name": "07-np3.xml",
+      "sha256": "94615e29f039c181bd220a49ef6de62876850daafbec2c9e8af3240e0b635722"
+    },
+    {
+      "name": "08-np3-result.png",
+      "sha256": "c3d513be7a9d7da3cf7b1b50374ffcdd2057ea4efedba6987bfc2b5ba20f3b92"
+    },
+    {
+      "name": "08-np3-result.xml",
+      "sha256": "9eb99c1988dc01cd6836c2182ea9654535738ecc84d2b2a9d24a768d5d068c3d"
+    },
+    {
+      "name": "09-np3-scroll.png",
+      "sha256": "e7643303e55e83395e0aadf0f11da01ca201d36229cabf294067fa85b4ce21cb"
+    },
+    {
+      "name": "09-np3-scroll.xml",
+      "sha256": "3463509ba2bbac43718870caaa3595a19a927d1ba9ec1d688d34cbb956141600"
+    },
+    {
+      "name": "PAGINATION-OBSERVATION.json",
+      "sha256": "587dd39392d80483146294f90e8e6ba91dfee5751629503799de3aafa6b9f7fb"
+    }
+  ]
+}

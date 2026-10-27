@@ -1,0 +1,49 @@
+{
+    "candidateApk":  "D:/dev/ai-project/nikon/dist/huevia-0.21.2-beta-debug.apk",
+    "candidateSha256":  "3b142b8a517f68ac9b7cff11a7aa1f1d005b41df1f71077b142b0e152cfb5c74",
+    "versionCode":  101,
+    "serial":  "emulator-5588",
+    "hardware":  "ranchu",
+    "mode":  "phone",
+    "runId":  "20261025-124748-phone-f122b0",
+    "probeSha256":  "d7aa9b63a61b6523549fc83783c314e3b4025fb5e40601b7c17c7399fcd7def7",
+    "scope":  "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Synthetic snapshots exercise receiving, waiting, recovery, saving, disconnection and explicit detail expansion without camera I/O. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+    "files":  [
+                  {
+                      "file":  "01-progress.png",
+                      "bytes":  114815,
+                      "sha256":  "43bd6256189f4931d944194fcdffada1372d73d8395f4f0336a281924fe37e45"
+                  },
+                  {
+                      "file":  "02-live-speed.png",
+                      "bytes":  140639,
+                      "sha256":  "e7651190a0e2aff6fdac5678e9c26ac23b5dc0b24ac5a03b74604e9ccbe5015a"
+                  },
+                  {
+                      "file":  "03-waiting.png",
+                      "bytes":  136156,
+                      "sha256":  "2b6ec9af99b9c03fd93f2062823a7cc8518dd60308a49edefaab6ff3e4a357d1"
+                  },
+                  {
+                      "file":  "04-saving.png",
+                      "bytes":  132389,
+                      "sha256":  "0e8ecb1b085c47a71cb2947090c39c571a1370ea3f59f525b7f80da96d9bce4e"
+                  },
+                  {
+                      "file":  "05-details.png",
+                      "bytes":  173454,
+                      "sha256":  "a821bd1ba824fd5f705f2d594444493a8a9fe3cde9287cf1c99e7d0ea8981851"
+                  },
+                  {
+                      "file":  "failure.png",
+                      "bytes":  134341,
+                      "sha256":  "98b46f69a0ee142cd73296c06dcff8dd21643b7fade32c20fbcb4974f67e6065"
+                  },
+                  {
+                      "file":  "report.json",
+                      "bytes":  3704,
+                      "sha256":  "1d3b62ef45f940961f5fb7fdb19517486cb947d67fdfaa8978cba1fab4d4d822"
+                  }
+              ],
+    "pass":  false
+}

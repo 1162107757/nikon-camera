@@ -1,0 +1,17 @@
+[
+  {
+    "action": [
+      "keyevent",
+      "4"
+    ],
+    "requiredStillVisible": true
+  },
+  {
+    "action": [
+      "tap",
+      "40",
+      "400"
+    ],
+    "requiredStillVisible": true
+  }
+]

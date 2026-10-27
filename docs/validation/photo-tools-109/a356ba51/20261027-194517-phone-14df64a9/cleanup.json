@@ -1,0 +1,18 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Photo tools probe failed: java.lang.AssertionError: full-reference-dimensions-1; D:\\dev\\ai-project\\nikon\\docs\\validation\\photo-tools-109\\a356ba51\\20261027-194517-phone-14df64a9\\20261027-194517-phone-14df64a9\\report.json",
+  "errors": []
+}

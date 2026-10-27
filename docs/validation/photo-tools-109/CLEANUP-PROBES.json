@@ -1,0 +1,106 @@
+{
+  "ownedEmulator": "emulator-5586",
+  "launcherPid": 9556,
+  "checks": [
+    {
+      "path": "docs/validation/photo-tools-109/a356ba51/20261027-195639-phone-7175070d/",
+      "cleanup": {
+        "serial": "emulator-5586",
+        "fontScaleRestoredTo": "1.0",
+        "fontScaleRestored": true,
+        "airplaneModeRestoredTo": "0",
+        "airplaneCommandRestored": true,
+        "airplaneSettingRestored": true,
+        "airplaneModeRestored": true,
+        "immersiveConfirmationRestoredTo": "confirmed",
+        "immersiveConfirmationRestored": true,
+        "mainAppStopped": true,
+        "testPackageRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainAppUninstalled": false,
+        "mainDataCleared": false,
+        "primaryFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "path": "docs/validation/photo-tools-109/a356ba51/20261027-195840-font1.3-75356dba/",
+      "cleanup": {
+        "serial": "emulator-5586",
+        "fontScaleRestoredTo": "1.0",
+        "fontScaleRestored": true,
+        "airplaneModeRestoredTo": "0",
+        "airplaneCommandRestored": true,
+        "airplaneSettingRestored": true,
+        "airplaneModeRestored": true,
+        "immersiveConfirmationRestoredTo": "confirmed",
+        "immersiveConfirmationRestored": true,
+        "mainAppStopped": true,
+        "testPackageRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainAppUninstalled": false,
+        "mainDataCleared": false,
+        "primaryFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "path": "docs/validation/photo-tools-109/a356ba51/20261027-200013-landscape-54b9357c/",
+      "cleanup": {
+        "serial": "emulator-5586",
+        "fontScaleRestoredTo": "1.0",
+        "fontScaleRestored": true,
+        "airplaneModeRestoredTo": "0",
+        "airplaneCommandRestored": true,
+        "airplaneSettingRestored": true,
+        "airplaneModeRestored": true,
+        "immersiveConfirmationRestoredTo": "confirmed",
+        "immersiveConfirmationRestored": true,
+        "mainAppStopped": true,
+        "testPackageRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainAppUninstalled": false,
+        "mainDataCleared": false,
+        "primaryFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "path": "docs/validation/photo-image-suite/raw-development/a356ba51/20261027-194820-e6ab31ca7d/",
+      "cleanup": {
+        "serial": "emulator-5586",
+        "testPackageRemoved": true,
+        "fontRestored": true,
+        "airplaneRestored": true,
+        "remoteFixtureRemoved": true,
+        "privateUniqueFixtureRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "path": "docs/validation/photo-export-preview/a356ba51/ed7359199300489bab77d70c2d3c428b/",
+      "cleanup": {
+        "serial": "emulator-5586",
+        "runId": "ed7359199300489bab77d70c2d3c428b",
+        "testPackageRemoved": true,
+        "settingsRestored": true,
+        "remoteEvidenceRetained": true
+      }
+    },
+    {
+      "path": "docs/validation/album-position-108/a356ba51/20261027-200333-phone-3a4ab7/",
+      "cleanup": {
+        "serial": "emulator-5586",
+        "fontScaleRestoredTo": "1.0",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      }
+    }
+  ],
+  "killOutput": "OK: killing emulator, bye bye\r\r\nOK",
+  "hostDirectoriesRetained": true,
+  "mainDataCleared": false,
+  "mainAppUninstalled": false
+}

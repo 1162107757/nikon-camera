@@ -1,0 +1,48 @@
+{
+  "verifiedAt": "2026-10-27T04:59:41.906Z",
+  "release": {
+    "id": "5e6fe107-06f3-4eed-a4cc-36ab4cf6cdfc",
+    "packageName": "cc.huevia",
+    "versionName": "0.21.9-beta",
+    "versionCode": 108,
+    "minSdk": 26,
+    "byteLength": 3938426,
+    "sha256": "995b33c82c9f2b72835ad6a2a194a2db8fae50caebfca860f8af2e8dc3a089f1",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "channel": "beta",
+    "notes": "新增 149 款 NikonPC 预设，按胶片、人像、风景、日常、黑白、平坦/视频分类，在线目录共 390 款。\n优化大图细节预览，拖动时持续加载高清区域。\n减少图片预览、毛玻璃控件和锐化处理的重复内存分配。\n修复相册照片编辑后返回列表跳到顶部的问题。\n扩展在线预设目录容量，修复大目录读取不完整的问题。",
+    "publishedAt": "2026-10-27T12:58:36.575129+08:00",
+    "mandatory": true,
+    "revision": 3,
+    "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/5e6fe107-06f3-4eed-a4cc-36ab4cf6cdfc/file"
+  },
+  "old107": {
+    "updateAvailable": true,
+    "updateRequired": true
+  },
+  "current108": {
+    "updateAvailable": false,
+    "updateRequired": false
+  },
+  "publicApkBytes": 3938426,
+  "publicApkSha256": "995b33c82c9f2b72835ad6a2a194a2db8fae50caebfca860f8af2e8dc3a089f1",
+  "signatureSchemes": [
+    2,
+    3
+  ],
+  "signatureVerified": true,
+  "downloadPage": "https://huevia.cc/preset-library/download/",
+  "rootPublicDownloadVerification": {
+    "verifiedAt": "2026-10-27T05:03:57.519Z",
+    "sha256": "995b33c82c9f2b72835ad6a2a194a2db8fae50caebfca860f8af2e8dc3a089f1",
+    "byteLength": 3938426,
+    "matchesTestedArtifact": true
+  },
+  "presets": {
+    "baselinePresetsPreserved": 241,
+    "importedPresets": 149,
+    "publicCatalogCount": 390,
+    "allDownloadChecksumsVerified": true,
+    "allImportedItemsInPaginatedFeed": true
+  }
+}

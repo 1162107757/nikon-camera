@@ -1,0 +1,55 @@
+{
+  "ownedPids": [
+    4868,
+    37456,
+    34180
+  ],
+  "serial": "emulator-5588",
+  "processesBefore": [
+    {
+      "ProcessId": 4868,
+      "ParentProcessId": 1304,
+      "Name": "emulator.exe",
+      "CommandLine": "\"D:\\dev\\Android\\Sdk\\emulator\\emulator.exe\" -avd Pixel_9 -port 5588 -read-only -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 2048"
+    },
+    {
+      "ProcessId": 34180,
+      "ParentProcessId": 4868,
+      "Name": "conhost.exe",
+      "CommandLine": "\\??\\C:\\Windows\\system32\\conhost.exe 0x4"
+    },
+    {
+      "ProcessId": 37456,
+      "ParentProcessId": 4868,
+      "Name": "qemu-system-x86_64-headless.exe",
+      "CommandLine": "D:\\dev\\Android\\Sdk\\emulator\\qemu\\windows-x86_64\\qemu-system-x86_64-headless.exe -avd Pixel_9 -port 5588 -read-only -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 2048"
+    }
+  ],
+  "actions": [
+    {
+      "args": [
+        "-s",
+        "emulator-5588",
+        "uninstall",
+        "cc.huevia.connectionqa"
+      ],
+      "exit": 0,
+      "output": "Success\r\n",
+      "errors": ""
+    },
+    {
+      "args": [
+        "-s",
+        "emulator-5588",
+        "emu",
+        "kill"
+      ],
+      "exit": 0,
+      "output": "OK: killing emulator, bye bye\r\r\nOK\r\r\n",
+      "errors": ""
+    }
+  ],
+  "remainingOwnedProcesses": [],
+  "serialAbsent": true,
+  "verified": true
+}

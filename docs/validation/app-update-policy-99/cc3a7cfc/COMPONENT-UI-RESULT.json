@@ -1,0 +1,216 @@
+{
+  "candidateSha256": "cc3a7cfcdb04dc54054ec7446cc3d5f8d2cbe0f495c6c8367e7d2a89d8fabb7f",
+  "versionCode": 99,
+  "probeSha256": "8450ab751dce5f6a0e55f0dbc9ad2760f49859f93745c7997e1111340ef5db47",
+  "scope": "Production UpdatePanel/native dialogs in replacement Activity; validated synthetic Release/state callbacks; no MainActivity implementation, metadata HTTP, DownloadManager, unknown-source permission, installer, camera, accounts or physical devices.",
+  "finalRuns": [
+    "20261025-071234-font-1-0-814d64",
+    "20261025-071241-font-1-3-1f5307"
+  ],
+  "finalChecks": 489,
+  "finalScreenshots": 10,
+  "allFinalScreenshotsVisuallyReviewed": true,
+  "visualConclusion": "Opaque rounded dialog after native animation settles; no background text bleed in all 10 final images. Text completeness, scroll end and buttons remain reachable at both font scales.",
+  "settleMs": 500,
+  "thresholdChanges": false,
+  "productionChangesByProbe": false,
+  "workerTasks": 0,
+  "attempts": [
+    {
+      "run": "20261025-071043-font-1-0-943486",
+      "classification": "superseded-interaction-pass-150ms-transition-frames",
+      "pass": true,
+      "fontScale": 1,
+      "checks": 244,
+      "screenshots": 5,
+      "workerTasks": 0,
+      "probeSha256": "0d5321e8f78dcd91cea69b9afa046a81a49f66d7bdff8ef85fc5db943e562787",
+      "report": "docs/validation/app-update-policy-99/cc3a7cfc/20261025-071043-font-1-0-943486/20261025-071043-font-1-0-943486/report.json",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-071043-font-1-0-943486",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "drawableObservations": []
+    },
+    {
+      "run": "20261025-071048-font-1-3-8c317e",
+      "classification": "superseded-interaction-pass-150ms-transition-frames",
+      "pass": true,
+      "fontScale": 1.2999999523162842,
+      "checks": 245,
+      "screenshots": 5,
+      "workerTasks": 0,
+      "probeSha256": "0d5321e8f78dcd91cea69b9afa046a81a49f66d7bdff8ef85fc5db943e562787",
+      "report": "docs/validation/app-update-policy-99/cc3a7cfc/20261025-071048-font-1-3-8c317e/20261025-071048-font-1-3-8c317e/report.json",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-071048-font-1-3-8c317e",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "drawableObservations": []
+    },
+    {
+      "run": "20261025-071234-font-1-0-814d64",
+      "classification": "final-500ms-settle",
+      "pass": true,
+      "fontScale": 1,
+      "checks": 244,
+      "screenshots": 5,
+      "workerTasks": 0,
+      "probeSha256": "8450ab751dce5f6a0e55f0dbc9ad2760f49859f93745c7997e1111340ef5db47",
+      "report": "docs/validation/app-update-policy-99/cc3a7cfc/20261025-071234-font-1-0-814d64/20261025-071234-font-1-0-814d64/report.json",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-071234-font-1-0-814d64",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "drawableObservations": [
+        {
+          "phase": "capture-01-ordinary",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-02-required",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-03-required-notes-end",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-04-downloading",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-05-download-error",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        }
+      ]
+    },
+    {
+      "run": "20261025-071241-font-1-3-1f5307",
+      "classification": "final-500ms-settle",
+      "pass": true,
+      "fontScale": 1.2999999523162842,
+      "checks": 245,
+      "screenshots": 5,
+      "workerTasks": 0,
+      "probeSha256": "8450ab751dce5f6a0e55f0dbc9ad2760f49859f93745c7997e1111340ef5db47",
+      "report": "docs/validation/app-update-policy-99/cc3a7cfc/20261025-071241-font-1-3-1f5307/20261025-071241-font-1-3-1f5307/report.json",
+      "preferencesRestored": true,
+      "cleanup": {
+        "runId": "20261025-071241-font-1-3-1f5307",
+        "serial": "emulator-5586",
+        "testPackageUninstalled": true,
+        "remoteFixtureRemoved": true
+      },
+      "drawableObservations": [
+        {
+          "phase": "capture-01-ordinary",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-02-required",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-03-required-notes-end",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-04-downloading",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        },
+        {
+          "phase": "capture-05-download-error",
+          "settleMs": 500,
+          "clipToOutline": true,
+          "viewAlpha": 1,
+          "windowAlpha": 1,
+          "backgroundClass": "android.graphics.drawable.GradientDrawable",
+          "backgroundAlpha": 255,
+          "backgroundColor": "#FFFFFFFF",
+          "backgroundColorAlpha": 255
+        }
+      ]
+    }
+  ],
+  "testPackageAbsent": true,
+  "deviceHandback": {
+    "serial": "emulator-5586",
+    "stillRunning": true,
+    "closedByProbe": false,
+    "installedCandidateUnchanged": true
+  },
+  "historicalEvidence": "All523 candidate artifacts and both150ms cc3a interaction-PASS attempts are preserved. Do not sum superseded runs into final counts."
+}

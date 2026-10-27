@@ -1,0 +1,64 @@
+{
+  "versionCode": 104,
+  "apkSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f",
+  "deliveryReady": true,
+  "published": false,
+  "nativeReports": [
+    {
+      "path": "docs/validation/connection-guide-104/f25bbac0/20261026-202140-phone-440088/20261026-202140-phone-440088/report.json",
+      "sha256": "9279b41610da8a99b635936490d894f13363b22570e92e05936ebb4b49c3dfde",
+      "pass": true,
+      "checks": 66,
+      "mode": "phone",
+      "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f"
+    },
+    {
+      "path": "docs/validation/connection-guide-104/f25bbac0/20261026-202152-large-font-6cbf77/20261026-202152-large-font-6cbf77/report.json",
+      "sha256": "c5f0d16065b57e807680a75d16cc6b749a79f1c065bb1b9f95a9b739cde514b2",
+      "pass": true,
+      "checks": 66,
+      "mode": "large-font",
+      "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f"
+    },
+    {
+      "path": "docs/validation/connection-guide-104/f25bbac0/20261026-202204-extra-large-4b27f3/20261026-202204-extra-large-4b27f3/report.json",
+      "sha256": "15316f430d0fdcb3b564b3e77e6e09fd7a2f450f3fe40121eb7e5e4484a61e90",
+      "pass": true,
+      "checks": 66,
+      "mode": "extra-large",
+      "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f"
+    },
+    {
+      "path": "docs/validation/connection-guide-104/f25bbac0/20261026-202217-rail-d2ac33/20261026-202217-rail-d2ac33/report.json",
+      "sha256": "3e46bcb09a108d347a1b15baf76811e22b0639a53a74765f8cbbe9621ec0e12b",
+      "pass": true,
+      "checks": 66,
+      "mode": "rail",
+      "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f"
+    }
+  ],
+  "nativeAssertionExecutions": 264,
+  "nativeScreenshots": 24,
+  "productionInputCount": 214,
+  "productionInputDrift": false,
+  "historicalArtifactsUnchanged": true,
+  "diffCheck": 0,
+  "host": {
+    "fujiSynthetic": true,
+    "addedFujiPhaseChecks": 6,
+    "album": 899,
+    "capability": 33,
+    "gateway": 25,
+    "projectStore": 356,
+    "projectFolders": 100,
+    "transferProgress": 23
+  },
+  "limits": [
+    "Physical Fuji camera and system Wi-Fi UI not exercised",
+    "Native host gate withholds real connection; stage display is controlled input",
+    "Fuji wire-stage behavior separately verified in synthetic protocol tests",
+    "Prior failed candidates and probes retained",
+    "No upload/deployment or update-policy change"
+  ],
+  "cleanup": "CLEANUP.json"
+}

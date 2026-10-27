@@ -1,0 +1,13 @@
+{
+  "error": "java.lang.AssertionError: existing-export-action-opens-document-picker-with-no-preset-report",
+  "status": "FAIL",
+  "apkSha256": "b6c09fd0e2656dfc1079081ae12c6a70a1ebbd068d62fe80f1a8b893dbea3e43",
+  "assertions": [
+    "owned-emulator-only",
+    "installed-candidate-hash",
+    "production-main-ready",
+    "export-version",
+    "trace-without-preset-report"
+  ],
+  "scope": "Production JSON export path only; no physical camera or throughput measurement"
+}

@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "candidateApkSha256": "7b69df3e8ceb7cb018fff1a3553e9dfbc99d4a25a0c4c9ce5b8fd79837e380c8",
+  "scope": "Targeted landscape saved-version reason only",
+  "checks": 59,
+  "sourceThreeModeCandidateSha256": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+  "fullMatrixUnchanged": true,
+  "fixtureCleanup": [
+    {
+      "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-db974747-c786-47e3-b8ec-6317d7894eb6__PHOTO.JPG",
+      "shaBeforeDelete": "c1c2cca5d6dd7e43f524bd1195268efd3846aba5a4d6aa2d1da5f1392bc40943",
+      "unchanged": true,
+      "absent": true
+    },
+    {
+      "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-077be5cf9023aef5325be04316a64edba6d0e80e6dc57f87e045669662e2ba3d__Effect.JPG",
+      "shaBeforeDelete": "777beff97ce90e4b81d03ac2fb7a2ca384859bef295497a66cf2cb6a7ecdcefc",
+      "unchanged": true,
+      "absent": true
+    }
+  ],
+  "appAppearanceRestored": true,
+  "systemSettingsAndGrantsRestored": "PASS",
+  "probeUninstalled": true,
+  "probeAbsenceChecked": true,
+  "serial": "emulator-5586",
+  "deviceReleased": true,
+  "emulatorLeftRunningForRoot": true,
+  "createdAtUtc": "2026-10-24T09:49:29.3458433Z"
+}

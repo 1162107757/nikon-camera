@@ -1,0 +1,290 @@
+{
+  "verifiedUtc": "2026-10-27T15:09:27.519059+00:00",
+  "beforeZipSha256": "c0e5aaae27ac6249182d8a7a1d16a8fd8ce83b89fad38396064558df46647ff9",
+  "preparedZipSha256": "43d05745749aabd8d5f1dd0b62e50acab59079df6a86f1ba8f83e156a65a26ca",
+  "observedZipSha256": "8975da9434325ebd0f047f14a660736350616d810bf66d9aaeeb5038867b9395",
+  "members": 45,
+  "changed": [
+    "server/apk.mjs",
+    "server/cloudbase.mjs",
+    "server/releases.mjs",
+    "admin/releases.js"
+  ],
+  "unchangedCount": 41,
+  "unixModeDrift": [],
+  "preparedContentDrift": [],
+  "oldBundledApkCount": 8,
+  "files": [
+    {
+      "path": "server/abuse.mjs",
+      "sha256": "ce8a73437d0acb3b354c06cb056954a3e0d510d0057b8c4d55b1ec5d4ae40778",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/apk.mjs",
+      "sha256": "e902e7398b2892217b20f6d5ca3b9027414dd2939b01cf0f1358168707bfb6ac",
+      "unixMode": "0o100644",
+      "unchanged": false
+    },
+    {
+      "path": "server/app.mjs",
+      "sha256": "3aff5865e238136dc58af2e4d3e238ad46d0742a9bc848bda6e63179135e2337",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/auth.mjs",
+      "sha256": "30f3670f4ece470213d131db992212a654aa075200c3f57b5e90f63975f5bd9a",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/2543241174c2c7b6656b08b4142d3c3812d095b2ecd732836a11ab9a3c173987.apk",
+      "sha256": "2543241174c2c7b6656b08b4142d3c3812d095b2ecd732836a11ab9a3c173987",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/4aea78f19ddc4e245e27470b29c9f111674f74c2e22b3229d03a2ec5fd6834bb.apk",
+      "sha256": "4aea78f19ddc4e245e27470b29c9f111674f74c2e22b3229d03a2ec5fd6834bb",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/7861ae7163d17a5651a8c41b25ddf1b368e868cd326bdcc04a2bd72d5df7aa80.apk",
+      "sha256": "7861ae7163d17a5651a8c41b25ddf1b368e868cd326bdcc04a2bd72d5df7aa80",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/88d284ffadb92c8ce15c1e5833f00c9fb25a8608b8071557c6464f4c7e6d5ec5.apk",
+      "sha256": "88d284ffadb92c8ce15c1e5833f00c9fb25a8608b8071557c6464f4c7e6d5ec5",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/cf74460f3a01ca29250a1c77f8a051bc0cf7e3439df20bb91c9b6b2b33b5fa95.apk",
+      "sha256": "cf74460f3a01ca29250a1c77f8a051bc0cf7e3439df20bb91c9b6b2b33b5fa95",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/f320eef5e6068e94fff54f37509374d09f723492f6fb3077052d727e55d79ebd.apk",
+      "sha256": "f320eef5e6068e94fff54f37509374d09f723492f6fb3077052d727e55d79ebd",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/challenge.mjs",
+      "sha256": "4c88d6b8c5743bc249be17a6d7247f8f37b4c7e9c8ea8efd00a5e003952e53eb",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/cloudbase.mjs",
+      "sha256": "8e8a7b6377e42d945680d984f8c388d8fde8881d2a270656db265d12616b846d",
+      "unixMode": "0o100644",
+      "unchanged": false
+    },
+    {
+      "path": "server/comment-moderation.mjs",
+      "sha256": "874849e5e759bba1367eaa0596273ad98fa1e095df3ef0a0f1cca37e9955169a",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/community.mjs",
+      "sha256": "a1b56af26db9ff05679d9fc31a581f2592cae8b883312caf5af580905ef597c7",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/index.mjs",
+      "sha256": "fc91c686660434e3f6a52f4bba421c2d973e8771dbcda88284919c4ab5d207f7",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/personal.mjs",
+      "sha256": "b3c6d77569a8a82b5e8ef6ec6d9107592bce0b5f594781cc56567cb9c881add6",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/profile.mjs",
+      "sha256": "04d60b8f86d50d38ba4e3d07d0f2259f7d5b1d29c6cd22162c543f039bbbf0d9",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/qq.mjs",
+      "sha256": "fe3887adbb662f81f396fe8a805c6dff805108efac45b8fe20b63cd5e1d8ddfe",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/releases.mjs",
+      "sha256": "464e15081c051eaf7e073acba6a3523462d012e6f079fcb57278faf6051cb532",
+      "unixMode": "0o100644",
+      "unchanged": false
+    },
+    {
+      "path": "server/validation.mjs",
+      "sha256": "6d296e282a1e26430e77c481b176685c10a25dc40ecb0365a510e7845a303453",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/api.js",
+      "sha256": "cfb018a6a0d14a4bd299f504f6de31550b090ad49e597c7e88541512d4e119bb",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/app.js",
+      "sha256": "5896eee2dd9d011ff702e93b7a6f4805c6055b115f23d879d664e8b8c754ffb9",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/assets.js",
+      "sha256": "03452eaeeed4afcd9b8f75d9ff6ba1126b7ccef23e2d2feebcae2d6eaec42945",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/categories.js",
+      "sha256": "a96e3bfdac6ad5d616f432571f753b17e02f3b821ba8bcaa94d41170d3941b8b",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/community.css",
+      "sha256": "be65fbb6d6dfc2ad4aa6431f0017ee00e321e1641524729b8839f9b6ffaaa837",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/community.js",
+      "sha256": "531659aa61549ccdc761c9a5c9dbf7ac7b33d96ec92eb99dd276e5baaeb62793",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/index.html",
+      "sha256": "817b00b2a303e7a0533459b67f0688d27cd0742cf44c0829d1201ae96aa2aef8",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/mark.svg",
+      "sha256": "bacc3d49c6b1ff809b1a7681a422f436e718e40226cb3fb818a2b1a1c482411e",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/releases.css",
+      "sha256": "305bdb063129a0ad99ade4fecaf4d181db5c3c45cd9d8662ca44b8ca1989f87d",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/releases.js",
+      "sha256": "21c7f036bd1fd72a3ae1ddf75f95143c63c3b37f006511a373091ad86d69f63c",
+      "unixMode": "0o100644",
+      "unchanged": false
+    },
+    {
+      "path": "admin/styles.css",
+      "sha256": "58996489ace2bf6cfe97b26cf807e473c67364e5d0ce3e26659b60554bb01b84",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "admin/tokens.css",
+      "sha256": "8b0126da4550875f67704334b489c69b15f35718b2f698fe1e7fc6ce27a09299",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/download.css",
+      "sha256": "9ca7d36fd91691e0e6f21e3144fccce7a8263ecf999f4f78379566bd61e9035f",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/download.js",
+      "sha256": "335e1432947a6b365206ef50f6a2169cdd8ada4c0a4f8dfe4504f51fc6d0ac85",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/icon.png",
+      "sha256": "7fa5ba0e44cdee3cdb26845b1c7428719e322ce76aeaa59c9395004c232544e7",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/index.html",
+      "sha256": "eeeb51481732fb6fc05625c931e7c8b7dc4fd12c0df905229997cb16673c600b",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/preview-community.png",
+      "sha256": "310e0c1879304c37a8c186d7b9fc138ef859999386ccf4753203d58cc47195c9",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/preview-messages.png",
+      "sha256": "e66484c45f6fd129270198a8c5462b9910418a0720319924057ede8e9147d24c",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/preview-submission.png",
+      "sha256": "5b4ef9bdbc07fcad4f24306d02b4bdf6c9bcd2245cf94cc9fde8c5e19aeb7dc8",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/qr.js",
+      "sha256": "2511bc17f40a3c41d4a0578995db956b38997334d3d20113a5d4dc5c49c69480",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "download/tokens.css",
+      "sha256": "8b0126da4550875f67704334b489c69b15f35718b2f698fe1e7fc6ce27a09299",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "d7b7bd78aaf404762b622b91a7e5209a22702c557506d4612892ec6a7d975e04",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "scf_bootstrap",
+      "sha256": "15b50db938b2ae0df91e6d63b2edecf5273b8134326f367623f90fe81da39afc",
+      "unixMode": "0o100755",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0.apk",
+      "sha256": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+      "unixMode": "0o100644",
+      "unchanged": true
+    },
+    {
+      "path": "server/bundled-apks/b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347.apk",
+      "sha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+      "unixMode": "0o100644",
+      "unchanged": true
+    }
+  ],
+  "pass": true
+}

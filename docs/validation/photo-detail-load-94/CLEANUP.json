@@ -1,0 +1,158 @@
+{
+  "status": "PASS",
+  "candidateSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+  "scope": "UI load scope phone/font1.3 only; separate performance-probe cleanup retains its own evidence",
+  "serial": "emulator-5586",
+  "probeUninstalled": true,
+  "probePackageAbsenceVerified": true,
+  "ownJpegCount": 4,
+  "ownDraftCount": 2,
+  "ownDetailCacheCount": 8,
+  "entries": [
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-94581c61-c49b-4d79-9615-4b92ef820289",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-6def3146-b6d7-45e6-8009-8ebfb8355df6",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-010dd1b8-379a-4140-a06b-3e7f8373d2a7",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-bab64810-2e28-4c71-9c42-db7a47cd8b0c",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/94cd9bd259a44b66913b0ca8b8cd76eeeaae458777c60d9f909c4b2137f14e53.draft",
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-df818bb9-48aa-429d-98b1-552929bac029__LOAD12MP.JPG",
+        "shaBeforeDelete": "94cd9bd259a44b66913b0ca8b8cd76eeeaae458777c60d9f909c4b2137f14e53",
+        "unchanged": true,
+        "absent": true
+      },
+      "independentExternalShellAbsence": true
+    },
+    {
+      "mode": "phone",
+      "instrumentationEvidence": {
+        "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-219c0b1a-5899-4eee-a5a4-e5b53b65b6c6__GRID.JPG",
+        "shaBeforeDelete": "14e57e9c5db159e72dad82dea932997175080a862183c657b7d775d2c97aed6a",
+        "unchanged": true,
+        "absent": true
+      },
+      "independentExternalShellAbsence": true
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-ba77a6d6-9ede-48c6-8229-10f0d2cbdad7",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-c4460abd-e2f8-4d5a-a2bf-57045a49ebba",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-22626281-54ae-4540-9903-329fa189e8cf",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "cache": "/data/user/0/cc.huevia/cache/photo-detail-77f4f55f-d277-4697-8ed2-d7d8b96d4e95",
+        "workerTerminated": true,
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/eaf25f8883276a0f4e95f968d1ab87ac03dadcac313949513a3922e8e099475e.draft",
+        "absent": true
+      },
+      "verification": "Private file/cache absence and worker completion checked in-process by instrumentation; production package is not debuggable"
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-ee5e480e-19ec-4299-b48e-03caf56e25d5__LOAD12MP.JPG",
+        "shaBeforeDelete": "eaf25f8883276a0f4e95f968d1ab87ac03dadcac313949513a3922e8e099475e",
+        "unchanged": true,
+        "absent": true
+      },
+      "independentExternalShellAbsence": true
+    },
+    {
+      "mode": "font1.3",
+      "instrumentationEvidence": {
+        "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-3073d377-234a-4f9d-a3da-5a75d90c247e__GRID.JPG",
+        "shaBeforeDelete": "4771bbda7bc3dd925674b8fc70a626403d375c52fa5adfc693814b98142ea580",
+        "unchanged": true,
+        "absent": true
+      },
+      "independentExternalShellAbsence": true
+    }
+  ],
+  "restorations": [
+    {
+      "mode": "phone",
+      "status": "PASS",
+      "record": "phone/restoration.json",
+      "appearanceRestored": true
+    },
+    {
+      "mode": "font1.3",
+      "status": "PASS",
+      "record": "font1.3/restoration.json",
+      "appearanceRestored": true
+    }
+  ],
+  "emulatorClosed": false,
+  "released": true,
+  "completedAtUtc": "2026-10-24T12:45:51.8549905Z"
+}

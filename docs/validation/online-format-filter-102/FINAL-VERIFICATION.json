@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-25",
+  "status": "FEATURE_IMPLEMENTED_API_DEPLOYED_LOCAL_APK",
+  "apkSha256": "7a1506d9bceb33a216425d6ad1bdd03dff5c7447be5ce2f77853c3758c4089d4",
+  "apkBytes": 3913850,
+  "versionCode": 102,
+  "versionName": "0.21.3-beta",
+  "sourceDrift": [],
+  "changedAppInputs": [
+    "app/build.gradle",
+    "app/src/main/java/cc/huevia/MainActivity.java",
+    "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java"
+  ],
+  "backendDeployed": true,
+  "apkPublished": false,
+  "published100MandatoryUnchanged": true,
+  "passingNativeConfigurations": [
+    "large-font",
+    "dark"
+  ],
+  "nativeCompletePassAssertions": 648,
+  "fullFiveConfigurationMatrixPassed": false,
+  "productionSmoke": true,
+  "apiFeedChecks": 34,
+  "apiReleaseChecks": 8,
+  "limits": [
+    "Native phone gate gesture and landscape smoothScroll harness cases did not complete; failure receipts retained",
+    "Native rail run interrupted by emulator exit; no pass/cleanup claimed for that run",
+    "Root ordinary-mode real HTTPS all/NCP/NP3 and actual gesture pagination passed separately",
+    "No physical phone or camera operated"
+  ],
+  "previousArtifactHashesPreserved": true,
+  "cleanup": {
+    "ownedAvd": "Huevia_Format_102",
+    "serial": "emulator-5586",
+    "launcherPid": 35232,
+    "uiXmlRemoved": true,
+    "appStopped": true,
+    "killRequested": true,
+    "physicalDeviceUsed": false,
+    "otherEmulatorsTouched": false,
+    "railProbeCleanupIncompleteBecauseEarlierEmulatorExited": true,
+    "serialAbsent": true,
+    "ownedProcessCount": 0,
+    "temporaryDDirectoriesRemoved": false,
+    "automaticApprovalRejectedCleanup": true,
+    "rejection": "blocked by policy; no more specific reason supplied; command did not execute",
+    "noAlternativeDeletionAttempted": true,
+    "retainedTaskRoot": "D:/dev/ai-project/nikon/.tooling/online-format-102",
+    "originalCDeviceConfigUnchanged": true
+  },
+  "preservedApks": {
+    "published100": "4ebc35f9fc5930080ba994a6bffe7538feec5bc8679066c698d8f3001b9e37f0",
+    "local101": "be4352ee8985f4dac1a4bfba91da1e249589366401c4d2bac91752131ac1d480"
+  }
+}

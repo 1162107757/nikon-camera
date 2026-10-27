@@ -1,0 +1,62 @@
+{
+  "row": {
+    "class": "android.widget.LinearLayout",
+    "width": 788,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 0,
+    "screenTop": 137,
+    "screenLeft": 1636,
+    "globalVisibleLeft": 1636,
+    "globalVisibleTop": 137,
+    "globalVisibleRight": 2424,
+    "globalVisibleBottom": 263,
+    "globalVisibleWidth": 788,
+    "globalVisibleHeight": 126
+  },
+  "back": {
+    "class": "android.widget.FrameLayout",
+    "width": 158,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 0,
+    "screenTop": 137,
+    "screenLeft": 1662,
+    "globalVisibleLeft": 1662,
+    "globalVisibleTop": 137,
+    "globalVisibleRight": 1820,
+    "globalVisibleBottom": 263,
+    "globalVisibleWidth": 158,
+    "globalVisibleHeight": 126
+  },
+  "name": {
+    "class": "android.widget.LinearLayout",
+    "width": 420,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 0,
+    "screenTop": 137,
+    "screenLeft": 1820,
+    "globalVisibleLeft": 1820,
+    "globalVisibleTop": 137,
+    "globalVisibleRight": 2240,
+    "globalVisibleBottom": 263,
+    "globalVisibleWidth": 420,
+    "globalVisibleHeight": 126
+  },
+  "export": {
+    "class": "android.widget.Button",
+    "width": 158,
+    "height": 126,
+    "measuredHeight": 126,
+    "top": 0,
+    "screenTop": 137,
+    "screenLeft": 2240,
+    "globalVisibleLeft": 2240,
+    "globalVisibleTop": 137,
+    "globalVisibleRight": 2398,
+    "globalVisibleBottom": 263,
+    "globalVisibleWidth": 158,
+    "globalVisibleHeight": 126
+  }
+}

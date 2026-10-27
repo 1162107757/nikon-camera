@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "path": "tests/connection-report-device-probe/src/cc/huevia/connectionqa/ConnectionReportProbe.java",
+      "sha256": "00aaa238961b90552c8722ef675ca6b378e92ce7ec153936437f2660d1639e5e"
+    },
+    {
+      "path": "tests/connection-report-device-probe/AndroidManifest.xml",
+      "sha256": "94895a428b544efe6e5a8ce084856606139a78a7767d63cdf254d574dc7924b8"
+    },
+    {
+      "path": "tests/connection-report-device-probe/build.ps1",
+      "sha256": "3f416c07765553b356c8cd64d78d2599ef73b64a718f24ab6187addc134a3158"
+    }
+  ],
+  "apkSha256": "e7d397a0d92a024ec5873d99af8ea9d868353ccafc1e9cd958f5961d14af3267"
+}

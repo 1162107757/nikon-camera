@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-25",
+  "apkSha256": "cc3a7cfcdb04dc54054ec7446cc3d5f8d2cbe0f495c6c8367e7d2a89d8fabb7f",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "ownedProcesses": [
+    {
+      "ProcessId": 18776,
+      "ParentProcessId": 3364,
+      "Name": "emulator.exe",
+      "CommandLine": "\"D:\\dev\\Android\\Sdk\\emulator\\emulator.exe\" -avd Pixel_9 -port 5586 -read-only -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 2048"
+    },
+    {
+      "ProcessId": 31312,
+      "ParentProcessId": 18776,
+      "Name": "qemu-system-x86_64-headless.exe",
+      "CommandLine": "D:\\dev\\Android\\Sdk\\emulator\\qemu\\windows-x86_64\\qemu-system-x86_64-headless.exe -avd Pixel_9 -port 5586 -read-only -no-window -no-audio -no-snapshot -gpu swiftshader_indirect -memory 2048"
+    }
+  ],
+  "shutdownOutput": "OK: killing emulator, bye bye\n\nOK\n",
+  "pidAbsent": true,
+  "serialAbsent": true,
+  "ownedPortProcessCountRemaining": 0,
+  "status": "PASS",
+  "scope": "Only own Pixel_9 emulator5586; physical devices and other emulator ports were not operated."
+}

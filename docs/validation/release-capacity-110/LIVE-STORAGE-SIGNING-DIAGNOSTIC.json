@@ -1,0 +1,23 @@
+{
+  "startedUtc": "2026-10-27T14:47:06.521Z",
+  "ownedPath": "app-releases/0cfdea8d051c485a41ca392818ebed695d210f138009402c5b3d68fc88080a04.apk",
+  "sha256": "0cfdea8d051c485a41ca392818ebed695d210f138009402c5b3d68fc88080a04",
+  "bytes": 68,
+  "cleanup": {
+    "headAfterStatus": 404,
+    "deleted": true
+  },
+  "initialHeadStatus": 404,
+  "status": 403,
+  "contentType": "application/json; charset=utf-8",
+  "errorFields": [
+    "code",
+    "error",
+    "message",
+    "statusCode"
+  ],
+  "code": "STORAGE_ACCESS_DENIED",
+  "error": "STORAGE_ACCESS_DENIED",
+  "message": "cos get object denied (HTTP 403)",
+  "finishedUtc": "2026-10-27T14:47:27.070Z"
+}

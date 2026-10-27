@@ -1,0 +1,233 @@
+{
+  "candidateApkSha256": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+  "versionCode": 92,
+  "versionName": "0.19.1-beta",
+  "status": "PASS",
+  "scope": "Native v3 editor/five tool panels/detail/histogram, own fixtures only; unchanged export/progress/backend/dark matrix not repeated",
+  "assertionExecutions": 729,
+  "countNote": "Sum of repeated checks across three configurations, not independent scenario count",
+  "modes": [
+    {
+      "mode": "phone",
+      "status": "PASS",
+      "assertionExecutions": 239,
+      "apkSha256": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+      "versionCode": "92",
+      "runId": "03395f54f2f942528c5799dc43753440",
+      "fontScale": 1,
+      "orientation": 1,
+      "nightMask": 16,
+      "physicalPixelProof": {
+        "framebufferCompared": 1849,
+        "framebufferErrorsOver2": 0,
+        "framebufferMaxDelta": 0,
+        "tileCompared": 1848,
+        "tileErrors": 0
+      },
+      "strengthNoOp": "PASS",
+      "realPreset": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "ownFixtureAndDraftCleanup": [
+        {
+          "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/eed7dc20d8523d8109ed97d617c508975aa7b0f774b8ac977d2b99d7bb24408c.draft",
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-1e36f41b-9397-4adf-ac37-9f50fdb153e0__GRID.JPG",
+          "shaBeforeDelete": "620375adcb55d8d3fdc7e7b9e45b5174a92d8065ac9c6c35b70c0376e8c316f9",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-f075e7bd-986e-40b2-88fe-6aad8a4196e3__PHOTO.JPG",
+          "shaBeforeDelete": "eed7dc20d8523d8109ed97d617c508975aa7b0f774b8ac977d2b99d7bb24408c",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-dcb98b49c493b6cfa028980f732615d120ad83998c2862484e46c72c6b26bf1d__Effect.JPG",
+          "shaBeforeDelete": "777beff97ce90e4b81d03ac2fb7a2ca384859bef295497a66cf2cb6a7ecdcefc",
+          "unchanged": true,
+          "absent": true
+        }
+      ],
+      "heroes": [
+        {
+          "file": "phone/hero-editor-closed.png",
+          "raw": "phone/04-editor-histogram-closed.png",
+          "sha256": "5c76df22639d44c4af85ebc344b980454f4821b464ffcb51fecda9eeacda019c"
+        },
+        {
+          "file": "phone/hero-editor-expanded.png",
+          "raw": "phone/05-editor-histogram-rgb-warnings.png",
+          "sha256": "1fecdaa9685d82edb7a7a49129ad92e84e89fe6a6c095f8528ffd3da119a44aa"
+        },
+        {
+          "file": "phone/hero-detail.png",
+          "raw": "phone/03-detail-current.png",
+          "sha256": "038604c41f98a0f344ce4049c45a5b0288ae8b04e958f0336f5e2f8c75075269"
+        }
+      ],
+      "cropUpperCornerProof": null
+    },
+    {
+      "mode": "font1.3",
+      "status": "PASS",
+      "assertionExecutions": 239,
+      "apkSha256": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+      "versionCode": "92",
+      "runId": "e0196d0a5398487d8634407bbeab7ddd",
+      "fontScale": 1.2999999523162842,
+      "orientation": 1,
+      "nightMask": 16,
+      "physicalPixelProof": {
+        "framebufferCompared": 1849,
+        "framebufferErrorsOver2": 0,
+        "framebufferMaxDelta": 0,
+        "tileCompared": 1848,
+        "tileErrors": 0
+      },
+      "strengthNoOp": "PASS",
+      "realPreset": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "ownFixtureAndDraftCleanup": [
+        {
+          "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/cd1065b0bc7b3929ef036cfa79092c698f5bd854bfe24111187e2f3962a3d089.draft",
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-32bb2ab9-d028-4823-906c-c06695f5e70c__GRID.JPG",
+          "shaBeforeDelete": "6e4f86e5ca09da41a4e9e5840da31209507da8c03814409d3c53a149e8ca601a",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-e4c718f3-70cf-4502-93a2-55e9b71d25a1__PHOTO.JPG",
+          "shaBeforeDelete": "cd1065b0bc7b3929ef036cfa79092c698f5bd854bfe24111187e2f3962a3d089",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-7dcf402f57ca06d94347e01ea83827379120df238fd346f6ca930fbc9da8759f__Effect.JPG",
+          "shaBeforeDelete": "777beff97ce90e4b81d03ac2fb7a2ca384859bef295497a66cf2cb6a7ecdcefc",
+          "unchanged": true,
+          "absent": true
+        }
+      ],
+      "heroes": [
+        {
+          "file": "font1.3/hero-editor-closed.png",
+          "raw": "font1.3/04-editor-histogram-closed.png",
+          "sha256": "74bf833673c5fedd8235ee92c514e84c9955343e49d82e89949bed02bbc26edd"
+        },
+        {
+          "file": "font1.3/hero-editor-expanded.png",
+          "raw": "font1.3/05-editor-histogram-rgb-warnings.png",
+          "sha256": "431a81a037876f57ed1226104f448e9a67e5230bae5cba066021db352c254fa7"
+        },
+        {
+          "file": "font1.3/hero-detail.png",
+          "raw": "font1.3/03-detail-current.png",
+          "sha256": "462d957005d4a6f974b5dd116a91827f9a848b75114432a7d571ec5060760d25"
+        }
+      ],
+      "cropUpperCornerProof": null
+    },
+    {
+      "mode": "landscape",
+      "status": "PASS",
+      "assertionExecutions": 251,
+      "apkSha256": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+      "versionCode": "92",
+      "runId": "545d511077cf4480beae96822a10dae7",
+      "fontScale": 1,
+      "orientation": 2,
+      "nightMask": 16,
+      "physicalPixelProof": {
+        "framebufferCompared": 1849,
+        "framebufferErrorsOver2": 0,
+        "framebufferMaxDelta": 0,
+        "tileCompared": 2772,
+        "tileErrors": 0
+      },
+      "strengthNoOp": "PASS",
+      "realPreset": {
+        "status": "PARSED",
+        "name": "Bluesky.NCP",
+        "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6",
+        "bytes": 638,
+        "storage": "own JPEG draft only, no preset library writes"
+      },
+      "appearanceRestored": true,
+      "systemSettingsAndGrantsRestored": "PASS",
+      "ownFixtureAndDraftCleanup": [
+        {
+          "draft": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/316093825ec5cc61e2bede46525ab4af19dbc8dfd12ab1a3674ed429b3c1e053.draft",
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-7356addd-c284-467c-a5c4-e77f711be056__GRID.JPG",
+          "shaBeforeDelete": "62c82c595245575257eb6596f6182deaa8b62b8601d5c5adcdd6a62efc0adabb",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-44ecd569-076c-4750-8240-188bbc391000__PHOTO.JPG",
+          "shaBeforeDelete": "316093825ec5cc61e2bede46525ab4af19dbc8dfd12ab1a3674ed429b3c1e053",
+          "unchanged": true,
+          "absent": true
+        },
+        {
+          "fixture": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-61d8951fbf9b14359b799d19bf7b441b9c55f5ec4cde8af345952a4f98a92415__Effect.JPG",
+          "shaBeforeDelete": "777beff97ce90e4b81d03ac2fb7a2ca384859bef295497a66cf2cb6a7ecdcefc",
+          "unchanged": true,
+          "absent": true
+        }
+      ],
+      "heroes": [
+        {
+          "file": "landscape/hero-editor-closed.png",
+          "raw": "landscape/04-editor-histogram-closed.png",
+          "sha256": "bc331a20ea5bb2a2c0583368d22d01d8ec4fd86921818488753ad244688c1d25"
+        },
+        {
+          "file": "landscape/hero-editor-expanded.png",
+          "raw": "landscape/05-editor-histogram-rgb-warnings.png",
+          "sha256": "fe58236d87213bf30936070e32f18e930d1bc82102aa96070e89646d86ab7e75"
+        },
+        {
+          "file": "landscape/hero-detail.png",
+          "raw": "landscape/03-detail-current.png",
+          "sha256": "39c6e82b18cb964775bc85197804cde45cbba42c001b0b168448c16fe6b54c90"
+        }
+      ],
+      "cropUpperCornerProof": "landscape/crop-upper-corner-touch.json"
+    }
+  ],
+  "historicalFailures": [
+    {
+      "directory": "initial-a1498dae-blocked",
+      "identity": "a1498dae",
+      "type": "Production layout request loop; partial phone only, aborted, not three-configuration validation"
+    },
+    {
+      "directory": "f919-injection-harness-fail",
+      "identity": "f919bd9821634e31c52d6e8cb7661810d07fd6796b27d5abcc6488022ce41379",
+      "type": "Instrumentation.sendPointerSync target-UID injection failure; repaired harness uses focused native UiAutomation touchscreen injection; no product rebuild"
+    }
+  ]
+}

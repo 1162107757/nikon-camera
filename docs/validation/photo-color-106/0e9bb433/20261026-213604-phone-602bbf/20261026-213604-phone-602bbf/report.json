@@ -1,0 +1,23 @@
+{
+  "pass": false,
+  "stage": "start",
+  "checks": [
+    "owned-emulator",
+    "exact-apk",
+    "safe-run-id",
+    "fixture-folder",
+    "main-ready",
+    "isolated-guest-account",
+    "orientation",
+    "shipping-photo-fixture",
+    "shipping-photo-fixture",
+    "shipping-photo-fixture",
+    "screenshot-failure"
+  ],
+  "candidateSha256": "0e9bb433a8f231a338d7a8965f348369a7beab06f54a80cd9e657adb26f8fed6",
+  "mode": "phone",
+  "fontScale": 1,
+  "scope": "Real MainActivity, AlbumPanel, PhotoFilterEditor and native colour dialog; actual JPEG\/draft\/recipe\/private full-size export paths. Own fixtures, guest only. No camera, real phone, MediaStore publication or NX colour-equivalence claim.",
+  "failure": "java.lang.AssertionError: actual-editor-ready",
+  "fixturesRemoved": true
+}

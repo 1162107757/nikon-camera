@@ -1,0 +1,60 @@
+{
+  "status": "LOCAL_PASS",
+  "checkedAtUtc": "2026-10-24T23:17:04.085Z",
+  "apkSha256": "cc3a7cfcdb04dc54054ec7446cc3d5f8d2cbe0f495c6c8367e7d2a89d8fabb7f",
+  "apkBytes": 3901562,
+  "versionCode": 99,
+  "nativeInputCount": 214,
+  "nativeInputDrift": 0,
+  "backendInputDrift": 0,
+  "distEqualsImmutableCandidate": true,
+  "policyChecks": 66,
+  "managerHostChecks": 37,
+  "backendTests": 13,
+  "syntaxModules": 64,
+  "componentUiChecks": 489,
+  "componentUiScreenshots": 10,
+  "finalComponentRuns": [
+    "20261025-071234-font-1-0-814d64",
+    "20261025-071241-font-1-3-1f5307"
+  ],
+  "componentProbeSha256": "8450ab751dce5f6a0e55f0dbc9ad2760f49859f93745c7997e1111340ef5db47",
+  "componentNetworkTasks": 0,
+  "signatureV2V3": true,
+  "emulatorCleanup": "PASS",
+  "oldApks": [
+    {
+      "version": 94,
+      "sha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+      "unchanged": true
+    },
+    {
+      "version": 95,
+      "sha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+      "unchanged": true
+    },
+    {
+      "version": 96,
+      "sha256": "2bcb395db84af40a0f6732078fa7ab5707fc93dbd43c2a1794d3420f9a7f0c8e",
+      "unchanged": true
+    },
+    {
+      "version": 97,
+      "sha256": "de07855886b72077852faa07a0e45c70363af89a686c5e702a6200ed01f4418f",
+      "unchanged": true
+    },
+    {
+      "version": 98,
+      "sha256": "c9dfa6037eea08d3cc8824e196960376867ec49d0cc5755dedc0153d2d849dd2",
+      "unchanged": true
+    }
+  ],
+  "deploymentComplete": false,
+  "remotePolicyActivated": false,
+  "hostCleanup": "Two historical 24B mock APK files remain in Temp; cleanup rejected by automatic approval: blocked by policy. Current final host run cleanup passed. See CORE-REVIEW.md.",
+  "limits": [
+    "Component-only Android UI with replacement Activity and state injection; no actual HTTP, APK download, unknown-source permission or installer run",
+    "No backend migration/deployment or release publication performed",
+    "No physical phone/camera operation"
+  ]
+}

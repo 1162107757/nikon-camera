@@ -1,0 +1,79 @@
+{
+  "productionVersion": 97,
+  "productionChanged": false,
+  "trialReverted": true,
+  "newApk": false,
+  "scope": "Desktop loopback TCP, CRC sink, no camera/Wi-Fi/disk",
+  "hashes": [
+    {
+      "path": "tests/run-ptpip-throughput.ps1",
+      "sha256": "294950cb018dbfb2157483516044712c408e285286c338557adef2d05f22891a"
+    },
+    {
+      "path": "tests/java/cc/huevia/album/PtpIpTcpThroughputBenchmark.java",
+      "sha256": "184a6aaec2eec014056332d60876201814f6d1851e55b28fab3a1eb32a8b8bb2"
+    },
+    {
+      "path": ".tooling/original-transfer-98/PtpIpClient-before.java",
+      "sha256": "1ef2848f147fd98d82d99662c38101148a6dc73abc6f7c1b9fa897c6ffd0f65c"
+    },
+    {
+      "path": ".tooling/original-transfer-98/PtpIpClient-timeout-trial.java",
+      "sha256": "e54d2b98a821dd7d1f157f66fcfa951667389c7d78dfe48702e00e155d89f697"
+    },
+    {
+      "path": "docs/validation/original-transfer-investigation-20261025/tcp-before.txt",
+      "sha256": "f5644208e347dede7e7404ec58620fef32c7fafb711b56eb669ea6016766285d"
+    },
+    {
+      "path": "docs/validation/original-transfer-investigation-20261025/tcp-after.txt",
+      "sha256": "8b78af3559c32be7fea63765d81c48e5f524e3527140a40cbb79f9a3424fdd65"
+    }
+  ],
+  "summaries": {
+    "before": [
+      {
+        "chunk": 1024,
+        "trials": 3,
+        "medianUs": 436848
+      },
+      {
+        "chunk": 16384,
+        "trials": 3,
+        "medianUs": 368879
+      },
+      {
+        "chunk": 65536,
+        "trials": 3,
+        "medianUs": 349840
+      },
+      {
+        "chunk": 262144,
+        "trials": 3,
+        "medianUs": 332599
+      }
+    ],
+    "after": [
+      {
+        "chunk": 1024,
+        "trials": 3,
+        "medianUs": 394706
+      },
+      {
+        "chunk": 16384,
+        "trials": 3,
+        "medianUs": 388430
+      },
+      {
+        "chunk": 65536,
+        "trials": 3,
+        "medianUs": 350144
+      },
+      {
+        "chunk": 262144,
+        "trials": 3,
+        "medianUs": 377210
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "pass": false,
+  "baseline": false,
+  "stage": "basic-held-gesture",
+  "checks": [
+    "owned-emulator",
+    "exact-installed-apk",
+    "safe-run-id",
+    "main-ready",
+    "guest-fixtures-only",
+    "orientation",
+    "shipping-photo-fixture",
+    "real-editor-ready",
+    "editor-final-ready",
+    "editor-final-ready",
+    "laid-out-basic",
+    "held-view-retained-basic",
+    "native-progress-changed-basic",
+    "multiple-photo-frames-before-up-basic",
+    "editor-final-ready",
+    "basic-one-undo",
+    "basic-final-full-resolution",
+    "advanced-inactive-曲线",
+    "advanced-caption-aligned-曲线",
+    "advanced-icon-aligned-曲线",
+    "advanced-inactive-HSL",
+    "screenshot-failure",
+    "pending-saves-drained",
+    "pending-saves-drained"
+  ],
+  "measurements": [
+    {
+      "control": "basic",
+      "heldMs": 3396,
+      "pixelChangesBeforeUp": 38,
+      "distinctPhotoPixelSignatures": 39,
+      "firstChangedFrameMs": 203,
+      "lastChangedFrameMs": 3284
+    }
+  ],
+  "candidateSha256": "864990ee3da786e5e8871dad4734789f82116bc0d469838e31cd7aa95fb6c487",
+  "mode": "phone",
+  "fontScale": 1,
+  "failure": "java.lang.RuntimeException: java.lang.AssertionError: advanced-caption-aligned-HSL",
+  "fixtureRemoved": true,
+  "scope": "Real MainActivity\/editor\/native gestures; changed rendered photo pixels sampled before ACTION_UP, own JPEG and actual source\/effect ledgers. Emulator only; not physical-device FPS or camera throughput."
+}

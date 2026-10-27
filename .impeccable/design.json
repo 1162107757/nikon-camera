@@ -1,0 +1,859 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T02:26:51.7900966Z",
+  "title": "Design System: Huevia",
+  "extensions": {
+    "nativeActualBuiltWorlds": [
+      {
+        "id": "native-photo-borders-and-thumbnail-placeholder-89",
+        "date": "2026-10-24",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "Local extension of the existing native world; header, root navigation and global app world were not redesigned. No HTML/CSS detector applies.",
+        "version": "89 / 0.18.0-beta",
+        "apk": {
+          "path": "dist/huevia-0.18.0-beta-debug.apk",
+          "bytes": 3831930,
+          "sha256": "1f74ece275423198208750b804e7dad8e72c443b881c02eccb85eea9c4cd2ba0",
+          "delivery": "local build only; no physical phone install or public release"
+        },
+        "authorities": [
+          "docs/design-review/photo-borders-20261024/IMPLEMENTATION.md",
+          "docs/design-review/photo-borders-20261024/border-templates-v3.png",
+          "docs/design-review/photo-borders-20261024/border-templates-v3.json",
+          "docs/design-review/thumbnail-placeholder-20261024/IMPLEMENTATION.md",
+          "app/src/main/assets/photo-borders/source-manifest.json"
+        ],
+        "nativeBehavior": [
+          "Existing 176dp content + 48dp tool navigation + divider; filter, adjust, composition, border, recipe. Three templates plus none, four current-photo thumbnails, 11sp camera label, 9sp state, 14dp icon inside a 48dp row.",
+          "Photo content is retained; shared proportional preview/export layout adds border canvas after color and oriented geometry. Automatic original EXIF or four-brand manual/search/custom camera; field visibility and manual parameters; margin, corner, shadow, blur and logo controls.",
+          "PED4 is compatible with PED1/2/3; border state participates in undo, drafts, frozen cache/export identities and per-photo batches. Original bytes remain intact. PhotoExifRationals preserves the exact synthetic 1/640 source/display/export fraction.",
+          "Official sourced Nikon wordmarks/yellow mark; Tomorrow ExtraBold Italic under SIL OFL 1.1 is a close font match with the reference face unidentified. Other brands use neutral text, not claimed official marks.",
+          "Final fix includes owner/binding-generation/source identity and tracked field/custom-camera/logo child dialogs, plus actual-paint brand measurement and explicit width slots.",
+          "Thumbnail placeholder is separately owned by LocalAlbumPanel/PhotoPlaceholder. Small bounds-drawn icon, static loading dots or unavailable caption, then real Bitmap/CENTER_CROP; existing cache, queues and stale-view checks remain."
+        ],
+        "evidence": {
+          "border": {
+            "matrix": "docs/validation/photo-borders-89/matrix.json",
+            "cleanup": "docs/validation/photo-borders-89/cleanup.json",
+            "review": "docs/validation/photo-borders-89/FIX-VERDICT.md",
+            "initialReview": "docs/validation/photo-borders-89/FINISH-REVIEW.md",
+            "disposition": "SHIP: two P2 findings resolved; landscape gesture reachability closed",
+            "assertionExecutions": 282,
+            "counts": {
+              "phone": 70,
+              "largeFont": 50,
+              "dark": 50,
+              "landscape": 62,
+              "tablet": 50
+            },
+            "countMeaning": "Base 50 repeats across configurations, with supplemental phone/landscape checks; not 282 independent scenes.",
+            "artifacts": {
+              "manifest": "docs/validation/photo-borders-89/screenshots.json",
+              "nativePng": 36,
+              "actualJpeg": 40,
+              "total": 76
+            }
+          },
+          "placeholder": {
+            "readme": "docs/validation/thumbnail-placeholder/README.md",
+            "review": "docs/validation/thumbnail-placeholder/FINISH-REVIEW.md",
+            "disposition": "PASS limited to the thumbnail component",
+            "assertionExecutions": 150,
+            "configurations": [
+              "phone",
+              "font1.3",
+              "dark"
+            ],
+            "perConfiguration": 50,
+            "nativePng": 9,
+            "sourcePins": "docs/validation/thumbnail-placeholder/owned-source-pins.json",
+            "countMeaning": "The same 50 assertions repeated in three configurations; kept separate from border evidence."
+          }
+        },
+        "limits": [
+          "Emulator evidence uses an explicit QA desk-photo crop and synthetic EXIF. No physical camera/phone compatibility, production account/network, FPS, color calibration or TalkBack certification.",
+          "The original d433 review remains historical. Final evidence is tied to the stated 1f74 APK. Separate task counts are not added into independent scene totals."
+        ]
+      }
+    ],
+    "colorMeta": {
+      "surface": {
+        "role": "neutral",
+        "displayName": "暖白页面",
+        "tonalRamp": [
+          "oklch(15.000% 0.00264 106.448)",
+          "oklch(26.429% 0.00264 106.448)",
+          "oklch(37.857% 0.00264 106.448)",
+          "oklch(49.286% 0.00264 106.448)",
+          "oklch(60.714% 0.00264 106.448)",
+          "oklch(72.143% 0.00264 106.448)",
+          "oklch(83.571% 0.00264 106.448)",
+          "oklch(95.000% 0.00264 106.448)"
+        ]
+      },
+      "container": {
+        "role": "neutral",
+        "displayName": "暖灰容器",
+        "tonalRamp": [
+          "oklch(15.000% 0.00576 84.567)",
+          "oklch(26.429% 0.00576 84.567)",
+          "oklch(37.857% 0.00576 84.567)",
+          "oklch(49.286% 0.00576 84.567)",
+          "oklch(60.714% 0.00576 84.567)",
+          "oklch(72.143% 0.00576 84.567)",
+          "oklch(83.571% 0.00576 84.567)",
+          "oklch(95.000% 0.00576 84.567)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "白色内容",
+        "tonalRamp": [
+          "oklch(15.000% 0.00000 0)",
+          "oklch(26.429% 0.00000 0)",
+          "oklch(37.857% 0.00000 0)",
+          "oklch(49.286% 0.00000 0)",
+          "oklch(60.714% 0.00000 0)",
+          "oklch(72.143% 0.00000 0)",
+          "oklch(83.571% 0.00000 0)",
+          "oklch(95.000% 0.00000 0)"
+        ]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "暖墨正文",
+        "tonalRamp": [
+          "oklch(15.000% 0.00714 67.504)",
+          "oklch(26.429% 0.00714 67.504)",
+          "oklch(37.857% 0.00714 67.504)",
+          "oklch(49.286% 0.00714 67.504)",
+          "oklch(60.714% 0.00714 67.504)",
+          "oklch(72.143% 0.00714 67.504)",
+          "oklch(83.571% 0.00714 67.504)",
+          "oklch(95.000% 0.00714 67.504)"
+        ]
+      },
+      "secondary-text": {
+        "role": "neutral",
+        "displayName": "暖灰辅助字",
+        "tonalRamp": [
+          "oklch(15.000% 0.01315 71.775)",
+          "oklch(26.429% 0.01315 71.775)",
+          "oklch(37.857% 0.01315 71.775)",
+          "oklch(49.286% 0.01315 71.775)",
+          "oklch(60.714% 0.01315 71.775)",
+          "oklch(72.143% 0.01315 71.775)",
+          "oklch(83.571% 0.01315 71.775)",
+          "oklch(95.000% 0.01315 71.775)"
+        ]
+      },
+      "primary": {
+        "role": "primary",
+        "displayName": "深陶土",
+        "tonalRamp": [
+          "oklch(15.000% 0.15044 33.031)",
+          "oklch(26.429% 0.15044 33.031)",
+          "oklch(37.857% 0.15044 33.031)",
+          "oklch(49.286% 0.15044 33.031)",
+          "oklch(60.714% 0.15044 33.031)",
+          "oklch(72.143% 0.15044 33.031)",
+          "oklch(83.571% 0.15044 33.031)",
+          "oklch(95.000% 0.15044 33.031)"
+        ]
+      },
+      "on-primary": {
+        "role": "primary",
+        "displayName": "陶土上文字",
+        "tonalRamp": [
+          "oklch(15.000% 0.00000 0)",
+          "oklch(26.429% 0.00000 0)",
+          "oklch(37.857% 0.00000 0)",
+          "oklch(49.286% 0.00000 0)",
+          "oklch(60.714% 0.00000 0)",
+          "oklch(72.143% 0.00000 0)",
+          "oklch(83.571% 0.00000 0)",
+          "oklch(95.000% 0.00000 0)"
+        ]
+      },
+      "primary-container": {
+        "role": "primary",
+        "displayName": "杏色选择底",
+        "tonalRamp": [
+          "oklch(15.000% 0.04470 58.398)",
+          "oklch(26.429% 0.04470 58.398)",
+          "oklch(37.857% 0.04470 58.398)",
+          "oklch(49.286% 0.04470 58.398)",
+          "oklch(60.714% 0.04470 58.398)",
+          "oklch(72.143% 0.04470 58.398)",
+          "oklch(83.571% 0.04470 58.398)",
+          "oklch(95.000% 0.04470 58.398)"
+        ]
+      },
+      "on-primary-container": {
+        "role": "primary",
+        "displayName": "深陶土选中字",
+        "tonalRamp": [
+          "oklch(15.000% 0.11964 33.743)",
+          "oklch(26.429% 0.11964 33.743)",
+          "oklch(37.857% 0.11964 33.743)",
+          "oklch(49.286% 0.11964 33.743)",
+          "oklch(60.714% 0.11964 33.743)",
+          "oklch(72.143% 0.11964 33.743)",
+          "oklch(83.571% 0.11964 33.743)",
+          "oklch(95.000% 0.11964 33.743)"
+        ]
+      },
+      "outline": {
+        "role": "neutral",
+        "displayName": "暖灰分隔",
+        "tonalRamp": [
+          "oklch(15.000% 0.01092 76.594)",
+          "oklch(26.429% 0.01092 76.594)",
+          "oklch(37.857% 0.01092 76.594)",
+          "oklch(49.286% 0.01092 76.594)",
+          "oklch(60.714% 0.01092 76.594)",
+          "oklch(72.143% 0.01092 76.594)",
+          "oklch(83.571% 0.01092 76.594)",
+          "oklch(95.000% 0.01092 76.594)"
+        ]
+      },
+      "success": {
+        "role": "neutral",
+        "displayName": "叶绿成功",
+        "tonalRamp": [
+          "oklch(15.000% 0.06618 161.553)",
+          "oklch(26.429% 0.06618 161.553)",
+          "oklch(37.857% 0.06618 161.553)",
+          "oklch(49.286% 0.06618 161.553)",
+          "oklch(60.714% 0.06618 161.553)",
+          "oklch(72.143% 0.06618 161.553)",
+          "oklch(83.571% 0.06618 161.553)",
+          "oklch(95.000% 0.06618 161.553)"
+        ]
+      },
+      "error": {
+        "role": "neutral",
+        "displayName": "砖红错误",
+        "tonalRamp": [
+          "oklch(15.000% 0.15110 28.870)",
+          "oklch(26.429% 0.15110 28.870)",
+          "oklch(37.857% 0.15110 28.870)",
+          "oklch(49.286% 0.15110 28.870)",
+          "oklch(60.714% 0.15110 28.870)",
+          "oklch(72.143% 0.15110 28.870)",
+          "oklch(83.571% 0.15110 28.870)",
+          "oklch(95.000% 0.15110 28.870)"
+        ]
+      },
+      "action": {
+        "role": "neutral",
+        "displayName": "炭黑动作起点",
+        "tonalRamp": [
+          "oklch(15.000% 0.01212 72.460)",
+          "oklch(26.429% 0.01212 72.460)",
+          "oklch(37.857% 0.01212 72.460)",
+          "oklch(49.286% 0.01212 72.460)",
+          "oklch(60.714% 0.01212 72.460)",
+          "oklch(72.143% 0.01212 72.460)",
+          "oklch(83.571% 0.01212 72.460)",
+          "oklch(95.000% 0.01212 72.460)"
+        ]
+      },
+      "action-end": {
+        "role": "neutral",
+        "displayName": "炭黑动作终点",
+        "tonalRamp": [
+          "oklch(15.000% 0.01013 80.626)",
+          "oklch(26.429% 0.01013 80.626)",
+          "oklch(37.857% 0.01013 80.626)",
+          "oklch(49.286% 0.01013 80.626)",
+          "oklch(60.714% 0.01013 80.626)",
+          "oklch(72.143% 0.01013 80.626)",
+          "oklch(83.571% 0.01013 80.626)",
+          "oklch(95.000% 0.01013 80.626)"
+        ]
+      },
+      "on-action": {
+        "role": "neutral",
+        "displayName": "动作上文字",
+        "tonalRamp": [
+          "oklch(15.000% 0.00000 0)",
+          "oklch(26.429% 0.00000 0)",
+          "oklch(37.857% 0.00000 0)",
+          "oklch(49.286% 0.00000 0)",
+          "oklch(60.714% 0.00000 0)",
+          "oklch(72.143% 0.00000 0)",
+          "oklch(83.571% 0.00000 0)",
+          "oklch(95.000% 0.00000 0)"
+        ]
+      },
+      "navigation-glass": {
+        "role": "neutral",
+        "displayName": "暖白导航底",
+        "tonalRamp": [
+          "oklch(15.000% 0.00264 106.448 / 0.9607843137)",
+          "oklch(26.429% 0.00264 106.448 / 0.9607843137)",
+          "oklch(37.857% 0.00264 106.448 / 0.9607843137)",
+          "oklch(49.286% 0.00264 106.448 / 0.9607843137)",
+          "oklch(60.714% 0.00264 106.448 / 0.9607843137)",
+          "oklch(72.143% 0.00264 106.448 / 0.9607843137)",
+          "oklch(83.571% 0.00264 106.448 / 0.9607843137)",
+          "oklch(95.000% 0.00264 106.448 / 0.9607843137)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "暖石墨页面",
+        "tonalRamp": [
+          "oklch(15.000% 0.00405 84.586)",
+          "oklch(26.429% 0.00405 84.586)",
+          "oklch(37.857% 0.00405 84.586)",
+          "oklch(49.286% 0.00405 84.586)",
+          "oklch(60.714% 0.00405 84.586)",
+          "oklch(72.143% 0.00405 84.586)",
+          "oklch(83.571% 0.00405 84.586)",
+          "oklch(95.000% 0.00405 84.586)"
+        ]
+      },
+      "dark-container": {
+        "role": "neutral",
+        "displayName": "深棕灰容器",
+        "tonalRamp": [
+          "oklch(15.000% 0.00823 75.271)",
+          "oklch(26.429% 0.00823 75.271)",
+          "oklch(37.857% 0.00823 75.271)",
+          "oklch(49.286% 0.00823 75.271)",
+          "oklch(60.714% 0.00823 75.271)",
+          "oklch(72.143% 0.00823 75.271)",
+          "oklch(83.571% 0.00823 75.271)",
+          "oklch(95.000% 0.00823 75.271)"
+        ]
+      },
+      "dark-card": {
+        "role": "neutral",
+        "displayName": "深色卡片",
+        "tonalRamp": [
+          "oklch(15.000% 0.00619 78.224)",
+          "oklch(26.429% 0.00619 78.224)",
+          "oklch(37.857% 0.00619 78.224)",
+          "oklch(49.286% 0.00619 78.224)",
+          "oklch(60.714% 0.00619 78.224)",
+          "oklch(72.143% 0.00619 78.224)",
+          "oklch(83.571% 0.00619 78.224)",
+          "oklch(95.000% 0.00619 78.224)"
+        ]
+      },
+      "dark-text": {
+        "role": "neutral",
+        "displayName": "浅暖正文",
+        "tonalRamp": [
+          "oklch(15.000% 0.00964 72.661)",
+          "oklch(26.429% 0.00964 72.661)",
+          "oklch(37.857% 0.00964 72.661)",
+          "oklch(49.286% 0.00964 72.661)",
+          "oklch(60.714% 0.00964 72.661)",
+          "oklch(72.143% 0.00964 72.661)",
+          "oklch(83.571% 0.00964 72.661)",
+          "oklch(95.000% 0.00964 72.661)"
+        ]
+      },
+      "dark-secondary-text": {
+        "role": "neutral",
+        "displayName": "深色辅助字",
+        "tonalRamp": [
+          "oklch(15.000% 0.01742 70.475)",
+          "oklch(26.429% 0.01742 70.475)",
+          "oklch(37.857% 0.01742 70.475)",
+          "oklch(49.286% 0.01742 70.475)",
+          "oklch(60.714% 0.01742 70.475)",
+          "oklch(72.143% 0.01742 70.475)",
+          "oklch(83.571% 0.01742 70.475)",
+          "oklch(95.000% 0.01742 70.475)"
+        ]
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "浅杏操作",
+        "tonalRamp": [
+          "oklch(15.000% 0.08624 48.746)",
+          "oklch(26.429% 0.08624 48.746)",
+          "oklch(37.857% 0.08624 48.746)",
+          "oklch(49.286% 0.08624 48.746)",
+          "oklch(60.714% 0.08624 48.746)",
+          "oklch(72.143% 0.08624 48.746)",
+          "oklch(83.571% 0.08624 48.746)",
+          "oklch(95.000% 0.08624 48.746)"
+        ]
+      },
+      "dark-on-primary": {
+        "role": "primary",
+        "displayName": "浅杏上深字",
+        "tonalRamp": [
+          "oklch(15.000% 0.03728 46.150)",
+          "oklch(26.429% 0.03728 46.150)",
+          "oklch(37.857% 0.03728 46.150)",
+          "oklch(49.286% 0.03728 46.150)",
+          "oklch(60.714% 0.03728 46.150)",
+          "oklch(72.143% 0.03728 46.150)",
+          "oklch(83.571% 0.03728 46.150)",
+          "oklch(95.000% 0.03728 46.150)"
+        ]
+      },
+      "dark-primary-container": {
+        "role": "primary",
+        "displayName": "暖棕选择底",
+        "tonalRamp": [
+          "oklch(15.000% 0.04038 44.709)",
+          "oklch(26.429% 0.04038 44.709)",
+          "oklch(37.857% 0.04038 44.709)",
+          "oklch(49.286% 0.04038 44.709)",
+          "oklch(60.714% 0.04038 44.709)",
+          "oklch(72.143% 0.04038 44.709)",
+          "oklch(83.571% 0.04038 44.709)",
+          "oklch(95.000% 0.04038 44.709)"
+        ]
+      },
+      "dark-on-primary-container": {
+        "role": "primary",
+        "displayName": "浅杏选中字",
+        "tonalRamp": [
+          "oklch(15.000% 0.08624 48.746)",
+          "oklch(26.429% 0.08624 48.746)",
+          "oklch(37.857% 0.08624 48.746)",
+          "oklch(49.286% 0.08624 48.746)",
+          "oklch(60.714% 0.08624 48.746)",
+          "oklch(72.143% 0.08624 48.746)",
+          "oklch(83.571% 0.08624 48.746)",
+          "oklch(95.000% 0.08624 48.746)"
+        ]
+      },
+      "dark-outline": {
+        "role": "neutral",
+        "displayName": "深色分隔",
+        "tonalRamp": [
+          "oklch(15.000% 0.01280 67.447)",
+          "oklch(26.429% 0.01280 67.447)",
+          "oklch(37.857% 0.01280 67.447)",
+          "oklch(49.286% 0.01280 67.447)",
+          "oklch(60.714% 0.01280 67.447)",
+          "oklch(72.143% 0.01280 67.447)",
+          "oklch(83.571% 0.01280 67.447)",
+          "oklch(95.000% 0.01280 67.447)"
+        ]
+      },
+      "dark-success": {
+        "role": "neutral",
+        "displayName": "深色成功",
+        "tonalRamp": [
+          "oklch(15.000% 0.06092 159.860)",
+          "oklch(26.429% 0.06092 159.860)",
+          "oklch(37.857% 0.06092 159.860)",
+          "oklch(49.286% 0.06092 159.860)",
+          "oklch(60.714% 0.06092 159.860)",
+          "oklch(72.143% 0.06092 159.860)",
+          "oklch(83.571% 0.06092 159.860)",
+          "oklch(95.000% 0.06092 159.860)"
+        ]
+      },
+      "dark-error": {
+        "role": "neutral",
+        "displayName": "深色错误",
+        "tonalRamp": [
+          "oklch(15.000% 0.09011 30.043)",
+          "oklch(26.429% 0.09011 30.043)",
+          "oklch(37.857% 0.09011 30.043)",
+          "oklch(49.286% 0.09011 30.043)",
+          "oklch(60.714% 0.09011 30.043)",
+          "oklch(72.143% 0.09011 30.043)",
+          "oklch(83.571% 0.09011 30.043)",
+          "oklch(95.000% 0.09011 30.043)"
+        ]
+      },
+      "dark-action": {
+        "role": "neutral",
+        "displayName": "暖米动作起点",
+        "tonalRamp": [
+          "oklch(15.000% 0.01487 70.883)",
+          "oklch(26.429% 0.01487 70.883)",
+          "oklch(37.857% 0.01487 70.883)",
+          "oklch(49.286% 0.01487 70.883)",
+          "oklch(60.714% 0.01487 70.883)",
+          "oklch(72.143% 0.01487 70.883)",
+          "oklch(83.571% 0.01487 70.883)",
+          "oklch(95.000% 0.01487 70.883)"
+        ]
+      },
+      "dark-action-end": {
+        "role": "neutral",
+        "displayName": "暖米动作终点",
+        "tonalRamp": [
+          "oklch(15.000% 0.01867 70.213)",
+          "oklch(26.429% 0.01867 70.213)",
+          "oklch(37.857% 0.01867 70.213)",
+          "oklch(49.286% 0.01867 70.213)",
+          "oklch(60.714% 0.01867 70.213)",
+          "oklch(72.143% 0.01867 70.213)",
+          "oklch(83.571% 0.01867 70.213)",
+          "oklch(95.000% 0.01867 70.213)"
+        ]
+      },
+      "dark-on-action": {
+        "role": "neutral",
+        "displayName": "深色动作上文字",
+        "tonalRamp": [
+          "oklch(15.000% 0.01194 67.240)",
+          "oklch(26.429% 0.01194 67.240)",
+          "oklch(37.857% 0.01194 67.240)",
+          "oklch(49.286% 0.01194 67.240)",
+          "oklch(60.714% 0.01194 67.240)",
+          "oklch(72.143% 0.01194 67.240)",
+          "oklch(83.571% 0.01194 67.240)",
+          "oklch(95.000% 0.01194 67.240)"
+        ]
+      },
+      "dark-navigation-glass": {
+        "role": "neutral",
+        "displayName": "暖石墨导航底",
+        "tonalRamp": [
+          "oklch(15.000% 0.00619 78.224 / 0.9411764706)",
+          "oklch(26.429% 0.00619 78.224 / 0.9411764706)",
+          "oklch(37.857% 0.00619 78.224 / 0.9411764706)",
+          "oklch(49.286% 0.00619 78.224 / 0.9411764706)",
+          "oklch(60.714% 0.00619 78.224 / 0.9411764706)",
+          "oklch(72.143% 0.00619 78.224 / 0.9411764706)",
+          "oklch(83.571% 0.00619 78.224 / 0.9411764706)",
+          "oklch(95.000% 0.00619 78.224 / 0.9411764706)"
+        ]
+      },
+      "photo-accent": {
+        "role": "primary",
+        "displayName": "照片杏光",
+        "tonalRamp": [
+          "oklch(15.000% 0.08624 48.746)",
+          "oklch(26.429% 0.08624 48.746)",
+          "oklch(37.857% 0.08624 48.746)",
+          "oklch(49.286% 0.08624 48.746)",
+          "oklch(60.714% 0.08624 48.746)",
+          "oklch(72.143% 0.08624 48.746)",
+          "oklch(83.571% 0.08624 48.746)",
+          "oklch(95.000% 0.08624 48.746)"
+        ]
+      },
+      "photo-track": {
+        "role": "neutral",
+        "displayName": "照片暖棕轨道",
+        "tonalRamp": [
+          "oklch(15.000% 0.02866 54.738)",
+          "oklch(26.429% 0.02866 54.738)",
+          "oklch(37.857% 0.02866 54.738)",
+          "oklch(49.286% 0.02866 54.738)",
+          "oklch(60.714% 0.02866 54.738)",
+          "oklch(72.143% 0.02866 54.738)",
+          "oklch(83.571% 0.02866 54.738)",
+          "oklch(95.000% 0.02866 54.738)"
+        ]
+      },
+      "photo-control-scrim": {
+        "role": "neutral",
+        "displayName": "照片控制衬底",
+        "tonalRamp": [
+          "oklch(15.000% 0.00714 67.504 / 0.7215686275)",
+          "oklch(26.429% 0.00714 67.504 / 0.7215686275)",
+          "oklch(37.857% 0.00714 67.504 / 0.7215686275)",
+          "oklch(49.286% 0.00714 67.504 / 0.7215686275)",
+          "oklch(60.714% 0.00714 67.504 / 0.7215686275)",
+          "oklch(72.143% 0.00714 67.504 / 0.7215686275)",
+          "oklch(83.571% 0.00714 67.504 / 0.7215686275)",
+          "oklch(95.000% 0.00714 67.504 / 0.7215686275)"
+        ]
+      },
+      "editor-canvas": {
+        "role": "neutral",
+        "displayName": "照片画布",
+        "tonalRamp": [
+          "oklch(15.000% 0.00199 286.210)",
+          "oklch(26.429% 0.00199 286.210)",
+          "oklch(37.857% 0.00199 286.210)",
+          "oklch(49.286% 0.00199 286.210)",
+          "oklch(60.714% 0.00199 286.210)",
+          "oklch(72.143% 0.00199 286.210)",
+          "oklch(83.571% 0.00199 286.210)",
+          "oklch(95.000% 0.00199 286.210)"
+        ]
+      },
+      "editor-tools": {
+        "role": "neutral",
+        "displayName": "黑色工具",
+        "tonalRamp": [
+          "oklch(15.000% 0.00000 0)",
+          "oklch(26.429% 0.00000 0)",
+          "oklch(37.857% 0.00000 0)",
+          "oklch(49.286% 0.00000 0)",
+          "oklch(60.714% 0.00000 0)",
+          "oklch(72.143% 0.00000 0)",
+          "oklch(83.571% 0.00000 0)",
+          "oklch(95.000% 0.00000 0)"
+        ]
+      },
+      "editor-divider": {
+        "role": "neutral",
+        "displayName": "工具分隔",
+        "tonalRamp": [
+          "oklch(15.000% 0.00000 0)",
+          "oklch(26.429% 0.00000 0)",
+          "oklch(37.857% 0.00000 0)",
+          "oklch(49.286% 0.00000 0)",
+          "oklch(60.714% 0.00000 0)",
+          "oklch(72.143% 0.00000 0)",
+          "oklch(83.571% 0.00000 0)",
+          "oklch(95.000% 0.00000 0)"
+        ]
+      },
+      "editor-text": {
+        "role": "neutral",
+        "displayName": "照片工具文字",
+        "tonalRamp": [
+          "oklch(15.000% 0.00287 264.542)",
+          "oklch(26.429% 0.00287 264.542)",
+          "oklch(37.857% 0.00287 264.542)",
+          "oklch(49.286% 0.00287 264.542)",
+          "oklch(60.714% 0.00287 264.542)",
+          "oklch(72.143% 0.00287 264.542)",
+          "oklch(83.571% 0.00287 264.542)",
+          "oklch(95.000% 0.00287 264.542)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "page-title": {
+        "displayName": "根页标题",
+        "purpose": "常规高度根页，系统 medium；带返回与紧凑根页使用 back-page-title。"
+      },
+      "back-page-title": {
+        "displayName": "返回页／紧凑标题",
+        "purpose": "保持单行标题、返回目标及紧凑可用高度。"
+      },
+      "preset-name": {
+        "displayName": "预设卡片名称",
+        "purpose": "正常15sp粗体；紧凑13sp单行由实际组件决定。"
+      },
+      "body": {
+        "displayName": "正文",
+        "purpose": "系统 sans；实际正文按场景14–16sp。"
+      },
+      "source-label": {
+        "displayName": "来源与分类",
+        "purpose": "来源控制、分类胶囊及相关标签。"
+      },
+      "navigation-label": {
+        "displayName": "根导航",
+        "purpose": "11sp；当前目的地加粗，与图标同时显示。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-navigation",
+        "value": "Android elevation 8dp; light ambient #26302B23 / spot #30302B23; dark ambient #40000000 / spot #60000000",
+        "purpose": "手机 GlassBar 悬浮容器，暖棕灰细边与条件式模糊；降级为不透明 card，宽屏侧栏不使用此阴影。"
+      },
+      {
+        "name": "card-light",
+        "value": "Android elevation 2dp; ambient #12302B23; spot #18302B23",
+        "purpose": "HueTheme.card 浅色卡片。CSS 标本只近似原生阴影，不建立新的 shadow token。"
+      },
+      {
+        "name": "card-dark",
+        "value": "0dp",
+        "purpose": "深色卡片以色调建立层次。"
+      },
+      {
+        "name": "source-selected",
+        "value": "1dp",
+        "purpose": "预设来源选中胶囊的轻抬升。"
+      },
+      {
+        "name": "fab",
+        "value": "4dp",
+        "purpose": "预设54dp及相册56dp悬浮加号。"
+      },
+      {
+        "name": "button",
+        "value": "0dp",
+        "purpose": "HueTheme 普通动作去掉默认 elevation / StateListAnimator。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "navigation-enter",
+        "value": "220ms; 20dp; alpha 0.82 → 1; cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "PageTransitions 普通页面可打断入场，根导航不参与。"
+      },
+      {
+        "name": "photo-enter",
+        "value": "180ms; up to 8dp; alpha 0.65 → 1; cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "照片路径的短过渡；实际方向为0时仅渐显。"
+      },
+      {
+        "name": "motion-disabled",
+        "value": "restore alpha 1 and translation 0",
+        "purpose": "系统关闭动画、取消或卸载恢复静止可见；非FPS认证。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-navigation",
+        "value": "screenWidthDp >= 600dp"
+      },
+      {
+        "name": "compact-height",
+        "value": "screenHeightDp < 480dp"
+      },
+      {
+        "name": "bounded-workspace",
+        "value": "max-width 720dp after the 80dp rail"
+      },
+      {
+        "name": "preset-large-font-single-column",
+        "value": "fontScale >= 1.8 when not compact"
+      },
+      {
+        "name": "photo-landscape-tools",
+        "value": "orientation LANDSCAPE: 300dp side controls"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Charcoal Action",
+      "kind": "button",
+      "refersTo": "primary-button",
+      "description": "HueTheme 原生主动作的垂直渐变；dp/sp 在浏览器标本中按 CSS px 近似，hover/focus 仅提供标本交互反馈，不能替代原生 RippleDrawable。",
+      "html": "<button class=\"ds-action\">导入到 C3</button>",
+      "css": ".ds-action{box-sizing:border-box;min-height:48px;padding:10px 16px;border:0;border-radius:26px;background:linear-gradient(#46413B,#27241F);color:#FFFFFF;font:700 15px system-ui,sans-serif;cursor:pointer}.ds-action:disabled{background:#EFEDE9;color:#706A63;cursor:default}.ds-action:focus-visible{outline:2px solid #B3432D;outline-offset:3px}.ds-action:hover{filter:brightness(.98)}.ds-action:active{filter:brightness(.92)}@media(prefers-color-scheme:dark){.ds-action{background:linear-gradient(#F0E8DF,#DAD0C5);color:#26211C}.ds-action:disabled{background:#33302C;color:#BAB1A7}}"
+    },
+    {
+      "name": "Secondary Action",
+      "kind": "button",
+      "refersTo": "secondary-button",
+      "description": "暖灰次动作与正文色；原生高度至少 48dp。此 HTML 为视觉标本，不执行业务操作。",
+      "html": "<button class=\"ds-secondary\">取消</button>",
+      "css": ".ds-secondary{box-sizing:border-box;min-height:48px;padding:10px 16px;border:0;border-radius:26px;background:#EFEDE9;color:#262320;font:400 15px system-ui,sans-serif;cursor:pointer}.ds-secondary:disabled{color:#706A63;cursor:default}.ds-secondary:focus-visible{outline:2px solid #B3432D;outline-offset:3px}.ds-secondary:hover{filter:brightness(.98)}.ds-secondary:active{filter:brightness(.92)}@media(prefers-color-scheme:dark){.ds-secondary{background:#33302C;color:#F6F1EB}.ds-secondary:disabled{color:#BAB1A7}}"
+    },
+    {
+      "name": "Native Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "社区／账号表单的暖灰 14dp 字段、16sp 正文；浏览器标本保留标签与焦点，不模拟 Android 输入法或验证流程。",
+      "html": "<label class=\"ds-field-label\" for=\"ds-preset-name\">预设名称</label><input class=\"ds-field\" id=\"ds-preset-name\" placeholder=\"输入名称\" value=\"暖阳胶片\">",
+      "css": ".ds-field-label{display:block;margin:0 0 8px;color:#262320;font:700 13px system-ui,sans-serif}.ds-field{box-sizing:border-box;display:block;max-width:100%;min-height:52px;padding:12px 14px;border:0;border-radius:14px;background:#EFEDE9;color:#262320;font:400 16px system-ui,sans-serif}.ds-field::placeholder{color:#706A63;opacity:1}.ds-field:focus-visible{outline:2px solid #B3432D;outline-offset:2px}.ds-field:hover{filter:brightness(.99)}.ds-field:disabled{color:#706A63}@media(prefers-color-scheme:dark){.ds-field-label{color:#F6F1EB}.ds-field{background:#33302C;color:#F6F1EB}.ds-field::placeholder{color:#BAB1A7}.ds-field:focus-visible{outline-color:#F3B493}}"
+    },
+    {
+      "name": "Four Destinations",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "当前四入口导航的手机悬浮标本：外栏圆角为实际栏高的一半、最大宽 360dp 且左右至少各 24dp，基础高 68dp，安全区内底距 14dp；选中项以实际单元高度一半为圆角的杏色底完整包住 54×26dp 图标槽和下方 11sp 名称，图标槽没有独立底色。水平导航填满外栏、四边均内缩 5dp；四项等宽并填满内侧高度，单元左右外边距为 0，首尾内外弧线同心。各项上下内边距 4dp、最小高 58dp，名称上间距 2dp，图标和名称居中。原生在宽度≥600dp 保持 80dp 侧栏及 16dp 圆角图标选中底；字号增长和材料降级见 DESIGN.md。CSS 的背景模糊与阴影仅近似原生 GlassBar。 相册导航留位在宽度<600dp 时为 104dp 加 24 倍字号增量，≥600dp 为 92dp 加 20 倍增量；增量基数为 max(0, fontScale−1.2)。预设加号仅紧凑且≥600dp 时用 16dp 底距，其余为 104dp 加 24 倍增量；预设列表同条件用 76dp，其余为 108dp 加 24 倍增量，增量均取整。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主导航\"><button class=\"ds-nav-item\" aria-current=\"page\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"2\"/><circle cx=\"9\" cy=\"8\" r=\"1.5\"/><path d=\"m5 17 5-6 4 4 3-3 3 4\"/></svg></span><span>预设</span></button><button class=\"ds-nav-item\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7h4l2-3h6l2 3h4v13H3z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/></svg></span><span>同步</span></button><button class=\"ds-nav-item\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 4H3v14\"/><rect x=\"7\" y=\"8\" width=\"14\" height=\"13\" rx=\"1\"/><path d=\"m8 18 4-4 3 3 3-4 3 5\"/></svg></span><span>相册</span></button><button class=\"ds-nav-item\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m10 3-.6 2.4-2 .9L5 5.6 3.6 8l1.7 1.7-.2 2.2L3 13l1 2.7 2.5.1 1.5 1.6-.1 2.4 2.8.8 1.4-2 2.2-.3 1.9 1.5 2.2-1.8-.8-2.3.6-2.1 2.4-.8-.2-2.9-2.3-.6-1.1-1.9.4-2.4-2.6-1.2L13.2 5l-2.2-.2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg></span><span>设置</span></button></nav>",
+      "css": ".ds-nav{box-sizing:border-box;display:flex;align-items:stretch;gap:0;width:360px;max-width:calc(100% - 48px);height:68px;margin:0 auto 14px;padding:5px;border:0;border-radius:999px;background:rgba(250,250,248,.9607843137);box-shadow:inset 0 0 0 .5px rgba(48,43,35,.0941176471),0 8px 16px rgba(48,43,35,.1882352941);backdrop-filter:blur(18px)}.ds-nav-item{box-sizing:border-box;display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:54px;height:100%;min-height:58px;margin:0;padding:4px 8px;border:0;border-radius:999px;background:transparent;color:#706A63;font:400 11px system-ui,sans-serif;cursor:pointer}.ds-nav-icon{display:grid;place-items:center;width:54px;height:26px;border-radius:16px}.ds-nav-item[aria-current]{background:#F4D6C0;color:#262320;font-weight:700}.ds-nav-item:hover,.ds-nav-item:active{background:#F4D6C0}.ds-nav-item:focus-visible{outline:2px solid #B3432D;outline-offset:1px}@media(prefers-color-scheme:dark){.ds-nav{background:rgba(41,39,36,.9411764706);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.2078431373),0 8px 16px rgba(0,0,0,.3764705882)}.ds-nav-item{color:#BAB1A7}.ds-nav-item[aria-current]{background:#51382D;color:#F6F1EB}.ds-nav-item:hover,.ds-nav-item:active{background:#51382D}.ds-nav-item:focus-visible{outline-color:#F3B493}}"
+    },
+    {
+      "name": "Selected Category",
+      "kind": "chip",
+      "refersTo": "category-selected",
+      "description": "分类的杏底／深陶土选中字配对；标本采用原生 48dp 目标与 13sp 字号，selected 状态必须和颜色共同表达。",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">全部</button><button class=\"ds-chip\" aria-pressed=\"false\">风景</button>",
+      "css": ".ds-chip{min-height:48px;margin-right:4px;padding:9px 14px;border:0;border-radius:24px;background:#EFEDE9;color:#262320;font:400 13px system-ui,sans-serif;cursor:pointer}.ds-chip[aria-pressed=true]{background:#F4D6C0;color:#85311F;font-weight:700}.ds-chip:focus-visible{outline:2px solid #B3432D;outline-offset:3px}.ds-chip:hover{filter:brightness(.98)}.ds-chip:active{filter:brightness(.92)}@media(prefers-color-scheme:dark){.ds-chip{background:#33302C;color:#F6F1EB}.ds-chip[aria-pressed=true]{background:#51382D;color:#F3B493}}"
+    },
+    {
+      "name": "Settings Group",
+      "kind": "card",
+      "refersTo": "settings-group",
+      "description": "22dp 设置分组与 66dp 行；浅色 2dp 原生 elevation 用柔和 CSS 影子作视觉近似，深色平面。示例未连接状态不代表真实硬件状态。",
+      "html": "<section class=\"ds-settings\"><button class=\"ds-settings-row\"><span class=\"ds-settings-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7h4l2-3h6l2 3h4v13H3z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/></svg></span><span class=\"ds-settings-copy\"><strong>Wi-Fi 无线连接</strong><small>尼康相机 / 富士</small></span><span aria-hidden=\"true\">›</span></button><button class=\"ds-settings-row\"><span class=\"ds-settings-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 4H3v14\"/><rect x=\"7\" y=\"8\" width=\"14\" height=\"13\" rx=\"1\"/><path d=\"m8 18 4-4 3 3 3-4 3 5\"/></svg></span><span class=\"ds-settings-copy\"><strong>预览模板</strong><small>内置照片 · 模板模拟</small></span><span aria-hidden=\"true\">›</span></button></section>",
+      "css": ".ds-settings{width:320px;max-width:100%;overflow:hidden;border-radius:22px;background:#FFFFFF;box-shadow:0 2px 4px rgba(48,43,35,.07);color:#262320;font-family:system-ui,sans-serif}.ds-settings-row{box-sizing:border-box;display:flex;align-items:center;gap:11px;width:100%;min-height:66px;padding:11px 14px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.ds-settings-row+.ds-settings-row{border-top:1px solid #E4DFD8}.ds-settings-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#EFEDE9}.ds-settings-icon svg{width:18px;height:18px}.ds-settings-copy{flex:1}.ds-settings-copy strong{display:block;font-size:14px;font-weight:400}.ds-settings-copy small{display:block;margin-top:3px;color:#706A63;font-size:11px}.ds-settings-row:hover,.ds-settings-row:active{background:#F4D6C0}.ds-settings-row:focus-visible{outline:2px solid #B3432D;outline-offset:-3px}@media(prefers-color-scheme:dark){.ds-settings{background:#292724;color:#F6F1EB;box-shadow:none}.ds-settings-icon{background:#33302C}.ds-settings-copy small{color:#BAB1A7}.ds-settings-row+.ds-settings-row{border-color:#4C4640}.ds-settings-row:hover,.ds-settings-row:active{background:#51382D}}"
+    },
+    {
+      "name": "Preset Source",
+      "kind": "nav",
+      "refersTo": "source-pill",
+      "description": "48dp 来源目标内的 40dp 卡片胶囊、13sp 文字与 1dp 轻抬升；浏览器标本只展示当前来源，不加载列表。",
+      "html": "<div class=\"ds-source\" role=\"group\" aria-label=\"预设来源\"><button class=\"ds-source-button\" aria-pressed=\"false\">在线预设</button><button class=\"ds-source-button\" aria-pressed=\"true\">我的预设</button></div>",
+      "css": ".ds-source{box-sizing:border-box;display:flex;align-items:center;width:320px;max-width:100%;min-height:48px;padding:0 3px;border-radius:25px;background:rgba(255,255,255,.4392156863);font-family:system-ui,sans-serif}.ds-source-button{box-sizing:border-box;flex:1;min-height:40px;margin:4px 2px;padding:0 12px;border:0;border-radius:19px;background:transparent;color:#706A63;font:400 13px system-ui,sans-serif;cursor:pointer}.ds-source-button[aria-pressed=true]{background:#FFFFFF;color:#262320;font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.1)}.ds-source-button:focus-visible{outline:2px solid #B3432D;outline-offset:3px}.ds-source-button:hover{filter:brightness(.98)}.ds-source-button:active{filter:brightness(.92)}@media(prefers-color-scheme:dark){.ds-source{background:rgba(81,56,45,.3764705882)}.ds-source-button{color:#BAB1A7}.ds-source-button[aria-pressed=true]{background:#292724;color:#F6F1EB}}"
+    },
+    {
+      "name": "Photo Overlay Controls",
+      "kind": "custom",
+      "refersTo": "photo-control",
+      "description": "照片上收藏／更多／图标对比的 48dp 目标与共享 #B8262320 Android ARGB 衬底。标本白底刻意演示最差背景，收藏与更多间隔 8dp；不含照片或原生手势实现。",
+      "html": "<div class=\"ds-photo-controls\"><button class=\"ds-photo-control\" aria-label=\"收藏照片\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z\"/></svg></button><button class=\"ds-photo-control\" aria-label=\"更多照片操作和重置\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"5\" r=\"1\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"1\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"19\" r=\"1\" fill=\"currentColor\"/></svg></button><button class=\"ds-photo-control\" aria-label=\"按住看原图，松开恢复预设效果\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3v18M4 6h16v13H4z\"/></svg></button></div>",
+      "css": ".ds-photo-controls{display:flex;align-items:center;gap:8px;padding:12px;background:#FFFFFF}.ds-photo-control{box-sizing:border-box;display:grid;place-items:center;width:48px;height:48px;padding:12px;border:0;border-radius:24px;background:rgba(38,35,32,.7215686275);color:#FFFFFF;cursor:pointer}.ds-photo-control:hover{background:rgba(38,35,32,.80)}.ds-photo-control:active{background:rgba(38,35,32,.93)}.ds-photo-control:focus-visible{outline:2px solid #FFFFFF;outline-offset:-3px;box-shadow:0 0 0 2px #262320}"
+    },
+    {
+      "name": "Orange Light",
+      "kind": "custom",
+      "description": "HueTheme.orangeLight 的叠加 shader 以 CSS 渐变翻译的视觉标本，保留浅深色四层材料与218dp正常高度；原生按实际边界缓存 shader，紧凑高度为168dp。此 CSS 不替代 Android 绘制坐标。",
+      "html": "<div class=\"ds-orange-light\"><strong>预设</strong><p>把喜欢的色彩，带进相机</p></div>",
+      "css": ".ds-orange-light{box-sizing:border-box;height:218px;min-width:280px;padding:20px;color:#262320;font-family:system-ui,sans-serif;background:linear-gradient(to bottom,transparent 65%,#FAFAF8 100%),radial-gradient(circle at 96% 2%,#FFE5AC 0,rgba(255,229,172,0) 82%),radial-gradient(circle at 38% 45%,#E96C40 0,rgba(233,108,64,0) 72%),linear-gradient(135deg,#BEB5BC,#E6653C,#F2AB67,#FAFAF8)}.ds-orange-light strong{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em}.ds-orange-light p{margin-top:12px;color:#5B3025;font-size:13px}@media(prefers-color-scheme:dark){.ds-orange-light{color:#F6F1EB;background:linear-gradient(to bottom,transparent 65%,#201F1D 100%),radial-gradient(circle at 96% 2%,rgba(124,103,71,.4666666667) 0,rgba(255,229,172,0) 82%),radial-gradient(circle at 38% 45%,rgba(125,48,36,.5333333333) 0,rgba(233,108,64,0) 72%),linear-gradient(135deg,#423636,#7C3B29,#6D4B30,#201F1D)}.ds-orange-light p{color:#F2D6C4}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "橙光进入照片",
+    "overview": "Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白层次、橙杏光晕、炭黑胶囊与系统无衬线字。光晕为发现预设建立气氛，照片仍是内容；编辑时让位于完整比例画布、黑色工具区与杏色控制。\n\n本文件记录 0.17.4-beta（88）的实际实现；本次按用户参考图将手机悬浮底栏四边统一为 5dp 内缩，让首尾选中项与外栏弧线同心、等距，保留 87 的 68dp 基础高度、86 的整项选中态、85 的悬浮位置与内容留位，以及 84 的暖色设计与四个根入口，全面取代原生界面此前的云白／蓝色声明。当前代码权威为 [UiPalette](app/src/main/java/cc/huevia/ui/UiPalette.java) 与 [HueTheme](app/src/main/java/cc/huevia/ui/HueTheme.java)，布局取自 [MainActivity](app/src/main/java/cc/huevia/MainActivity.java)、[LocalAlbumPanel](app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java)、[AlbumPanel](app/src/main/java/cc/huevia/ui/AlbumPanel.java)、[PhotoFilterEditor](app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java) 及其原生面板。批准的 [详细交互稿](docs/design-review/insurance-inspired-20261023/detailed/index.html) 与 [84 需求](docs/design-review/orange-ui-84/REQUIREMENTS.md) 解释意图，发生差异时以本版实际颜色、布局与截图为准。\n\n浅色与深色是完整配对的语义系统，设置中的跟随系统／浅色／深色保持持久化。保留现有 Huevia 标识、代码绘制图标族和有来源的照片模板；本轮新增生产栅格为零。下方 Web 管理后台和旧社区／版本 Web 记录保留独立作用域，不能反向覆盖当前原生规则。\n\n**89 局部实际落地（2026-10-24）：** [照片边框](docs/design-review/photo-borders-20261024/IMPLEMENTATION.md)沿用以上橙光全局世界与原生黑色编辑区；标题、根导航和全局布局未重设计。三款边框与小机型栏以用户批准的 [v3 稿](docs/design-review/photo-borders-20261024/border-templates-v3.png)及其[批准记录](docs/design-review/photo-borders-20261024/border-templates-v3.json)为方向，实际 Android Views／Canvas 产物为当前局部规则。协调加入的[相册缩略图占位](docs/design-review/thumbnail-placeholder-20261024/IMPLEMENTATION.md)只定义加载／不可用／真实照片状态，不改变边框及全局世界。最终 89 / 0.18.0-beta 本地 APK 的 SHA-256 为 `1f74ece275423198208750b804e7dad8e72c443b881c02eccb85eea9c4cd2ba0`；[边框最终 SHIP](docs/validation/photo-borders-89/FIX-VERDICT.md)只关闭初审两个 P2 及横屏可达性补证，[占位 PASS](docs/validation/thumbnail-placeholder/FINISH-REVIEW.md)保持独立组件范围。边框 282 次重复／配置断言与 76 个产物、占位 150 次重复／配置检查与 9 张 PNG 分别记录，不合并为独立场景；本轮未实体安装或公开发布，没有 HTML／CSS 检测适用面。",
+    "keyCharacteristics": [
+      "暖白页面、白色分组与暖石墨深色。",
+      "橙杏光区只承担预设发现页的光感，照片与真实状态保持清楚。",
+      "炭黑渐变主动作、杏色选择态与可读的深陶土选中文字。",
+      "四个根入口、紧凑高度重排、宽屏侧栏和原生 48dp 操作目标。",
+      "系统 sans-serif 与 sp 字号；编辑工具保留黑底、杏色强调和完整比例照片。"
+    ],
+    "rules": [
+      {
+        "name": "The Native Authority Rule",
+        "body": "新增原生页面从 UiPalette 和 HueTheme 取值；历史蓝色记录及浏览器原型不再定义本版原生全局样式。",
+        "section": "colors"
+      },
+      {
+        "name": "The Selected Text Rule",
+        "body": "杏色选择底必须配 onPrimaryContainer，不能直接把 primary 当作小字颜色。",
+        "section": "colors"
+      },
+      {
+        "name": "The Photograph Rule",
+        "body": "照片内容保持真实来源与状态；光晕、模拟角标和工具不能冒充真实相机效果或遮掉关键内容。",
+        "section": "elevation"
+      },
+      {
+        "name": "The Reachable Action Rule",
+        "body": "自有主要操作保留至少 48dp 命中区域，紧凑高度通过合并信息、滚动与重排节省空间。",
+        "section": "typography"
+      },
+      {
+        "name": "The Border Space Rule",
+        "body": "品牌按真实绘制字形测量并约束在明确槽位内；品牌／机型组合留出间隔，白底品牌不越过分隔或参数，长文字在各自分配范围内缩放。保持 Nikon 官方标志的原始比例，不用中性文字的宽度估算代替真实绘制尺寸。字段、自定义机型及 Logo 子弹窗随当前编辑绑定关闭，旧 owner／绑定代次／原图身份的回调不能写入新草稿。",
+        "section": "components"
+      },
+      {
+        "name": "The Thumbnail State Rule",
+        "body": "占位图在容器 bounds 内绘制且不声明 intrinsic 尺寸，仅内部符号使用固定 dp，避免 CENTER_CROP 放大导航图形。真实 Bitmap 就绪后仍用 CENTER_CROP 并替换占位，恢复文件／版本描述。加载、不可用、成功和刷新恢复必须反映真实状态，不伪造照片；原 12MiB 缓存、两个 worker、24 个排队位置、失败去重和过期绑定校验保留。",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do 从 UiPalette / HueTheme 和本版原生截图提取规则，维护浅深色完整对应。",
+      "Do 在分类、槽位选择等杏色小字区域使用 onPrimaryContainer，并同时保留选中语义。",
+      "Do 为连接、权限、下载、保存、加载和失败提供真实文字状态；圆点与颜色只作辅助。",
+      "Do 保留 sp 字号缩放、系统返回、WindowInsets 安全区、48dp 主要操作与完整比例照片。",
+      "Do 保留现有标识与模板溯源；模板模拟、发布者样片和用户照片分别标识。",
+      "Do 将边框品牌／机型／参数约束在各自槽位，原图内容、字节和自动／手动来源保持清楚。",
+      "Do 以固定小占位符号表达真实加载或不可用状态，就绪后显示真实 CENTER_CROP 照片。"
+    ],
+    "donts": [
+      "Don't 把旧原生蓝色或原型示例数据当作当前实现；恢复悬浮导航时仍使用现有暖色 tokens 与真实四个入口。",
+      "Don't 用橙色铺满所有表面；编辑画布与工具保持黑色材料，局部操作使用杏色。",
+      "Don't 用无底白图标直接覆盖任意照片；收藏、更多和图标对比使用共享照片控件衬底。",
+      "Don't 将模拟、下载、导入读回、实际拍摄与已发布／已安装混称同一种成功。",
+      "Don't 把重复断言次数或限定 UI 复核写成真实相机、生产网络、FPS、颜色标定或 TalkBack 认证。",
+      "Don't 将参考字体近似匹配或其他品牌的中性文字称为相同字体／官方 Logo，也不把边框材料推广为全局材料。",
+      "Don't 用会被 CENTER_CROP 放大的导航图形或设计稿切片代替原生占位，也不将不同专项的重复断言相加为独立场景。"
+    ]
+  }
+}

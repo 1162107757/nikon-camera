@@ -1,0 +1,29 @@
+{
+  "serial": "emulator-5588",
+  "apkSha256": "cb4d685bfdc9ddae3663b84e0836d45a5b61085ce55967f8f1fa4f81c39e3012",
+  "runId": "538162da655449c9afbe30b4f4bac264",
+  "mode": "phone",
+  "original": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0"
+  },
+  "restored": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0"
+  },
+  "originalNight": "no",
+  "restoredNight": "Night mode: no",
+  "originalAnimations": {
+    "window_animation_scale": "1.0",
+    "transition_animation_scale": "1.0",
+    "animator_duration_scale": "null"
+  },
+  "restoredAnimations": {
+    "window_animation_scale": "1.0",
+    "transition_animation_scale": "1.0",
+    "animator_duration_scale": "null"
+  },
+  "status": "PASS"
+}

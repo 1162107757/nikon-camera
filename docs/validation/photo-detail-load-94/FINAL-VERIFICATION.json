@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-24T12:50:21.2378829Z",
+  "apkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555",
+  "apkBytes": 3909754,
+  "productionInputCount": 207,
+  "inputHashMismatches": 0,
+  "distEqualsImmutableCandidate": true,
+  "signature": "v2/v3 PASS, raw SIGNATURE.txt",
+  "performanceAssertionExecutions": 121,
+  "uiAssertionExecutions": 264,
+  "uiModes": [
+    {
+      "mode": "phone",
+      "status": "PASS",
+      "assertionExecutions": 132,
+      "apkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555"
+    },
+    {
+      "mode": "font1.3",
+      "status": "PASS",
+      "assertionExecutions": 132,
+      "apkSha256": "35426c2001892979cd793ae71c9eea282f6e33eed0255113876b1af0403bf555"
+    }
+  ],
+  "cleanup": "PASS",
+  "ownedEmulatorCleanup": "PASS",
+  "scope": "Final94 snapshot before coordinated release to next95 task; later production edits belong to that task."
+}

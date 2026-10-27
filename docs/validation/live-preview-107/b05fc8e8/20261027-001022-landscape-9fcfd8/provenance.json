@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+  "versionCode": 107,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "36cb2ef8ed0048a31057ad118bc1779b752501e3e516a5ac3ef066d8369d3a33",
+  "scope": "Real MainActivity/editor/native gestures; changed rendered photo pixels sampled before ACTION_UP, own JPEG and actual source/effect ledgers. Emulator only; not physical-device FPS or camera throughput.",
+  "pass": true,
+  "files": [
+    {
+      "file": "01-editor-adjustment.png",
+      "sha256": "d7dd457f86eddc2307f9e951db69bcbd84ccc660852dca7385995115fdfca128"
+    },
+    {
+      "file": "02-hsl.png",
+      "sha256": "7470301d9e22f4e271928e929c3c874f9aa63dbcb7b8d40c8e3384405d589c40"
+    },
+    {
+      "file": "03-curves.png",
+      "sha256": "7d93d7249d84edf2e7bd4de35809f37ae6043bc134b46a705b16378fe54d5440"
+    },
+    {
+      "file": "04-border.png",
+      "sha256": "e38893f27a7ed903bf2305bb89db0f4ad2d70417bfa4eb252f64ebefe4fe0628"
+    },
+    {
+      "file": "05-album-version.png",
+      "sha256": "d657facb9052956966624bbe634a338761700901f90c01e5b5cc751534d6e7d7"
+    },
+    {
+      "file": "06-version-chooser.png",
+      "sha256": "b09d84911db07564e448f052f6a76ec9abe13030176d3a38cf5c7d3a916b5687"
+    },
+    {
+      "file": "report.json",
+      "sha256": "65fc4c1a70407fc36fce5b665d7466bcb4887a835305da3c8f4f6d3f8afc0b00"
+    }
+  ]
+}

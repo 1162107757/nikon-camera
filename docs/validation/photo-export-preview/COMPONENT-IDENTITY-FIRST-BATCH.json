@@ -1,0 +1,30 @@
+{
+  "scope": "Component compiled; native final APK run delegated to root",
+  "compilePassed": true,
+  "files": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExportPreview.java",
+      "sha256": "b9d87a0aefd6c6dd8b225b42c227406ebd8651aa0461970e5300b203d44555d2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportPreviewDialog.java",
+      "sha256": "f056979c7a632b162ee1ac800a1e2ff40e61caa49515bd0d4845aab67fd84dd8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportDialog.java",
+      "sha256": "20486e88940df246c43947760956011a50db9034eb4fe4af39cff005d69a0cfc"
+    }
+  ],
+  "probe": {
+    "schemaVersion": 1,
+    "builtAtUtc": "2026-10-27T09:03:54.6800018Z",
+    "probeSource": "tests/export-preview-device-probe/src/cc/huevia/exportpreviewqa/ExportPreviewProbe.java",
+    "inputs": {
+      "probeJavaSha256": "4949ff155b974bf84a008153acaeb0e15e9309f531e76080c7aee115c0e9212e",
+      "manifestSha256": "aceafc2aad0748714078f03777896c40da967d5b4e73a1da23495dc72c8afafe",
+      "buildScriptSha256": "0f51e41a5d00d9cf1e6334b6e7e5a242adf8692e378f2ac284055458cc52221d",
+      "runScriptSha256": "cef1ffd84c827a44938f7df32f92dbf6a94611e5a198d63ba689437150ec9192"
+    },
+    "probeApkSha256": "e83ca132ae9ed4b3cc5f30db16c917784d898b8ba2a352e0e8e23210f1951f35"
+  }
+}

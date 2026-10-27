@@ -1,0 +1,22 @@
+{
+  "ownedEmulator": {
+    "avd": "Pixel_9",
+    "serial": "emulator-5588",
+    "parentPid": 17780,
+    "stopRequested": true,
+    "serialAbsent": true,
+    "parentProcessAbsent": true
+  },
+  "probePackageAbsent": true,
+  "allFinalRunFixturesRemoved": true,
+  "animationSettingAfterRuns": "null",
+  "wifiAfterRuns": "Wifi is enabled",
+  "globalFontScaleUntouched": true,
+  "themeAndUpdatePreferencesRestoredByProbe": true,
+  "retained": [
+    "Local APK and source/evidence documents",
+    "Installed candidate on owned AVD; no app-data deletion",
+    "Failed/intermediate evidence"
+  ],
+  "noFilesystemAvdCleanupAttempted": true
+}

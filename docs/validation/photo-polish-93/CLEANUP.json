@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "candidateSha256": "378959346ea968f700841896253cddfada148256d449ec5506d59f0e167d12a6",
+  "completedAtUtc": "2026-10-24T11:16:28.0954908Z",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "ownInstrumentationPackage": "cc.huevia.imageupgradeqa",
+  "probeUninstalled": true,
+  "probePackageAbsenceVerified": true,
+  "restorations": [
+    {
+      "mode": "phone",
+      "status": "PASS",
+      "record": "phone/restoration.json"
+    },
+    {
+      "mode": "font1.3",
+      "status": "PASS",
+      "record": "font1.3/restoration.json"
+    },
+    {
+      "mode": "landscape",
+      "status": "PASS",
+      "record": "landscape/restoration.json"
+    }
+  ],
+  "released": true,
+  "emulatorClosed": false,
+  "noPhysicalDeviceOrMediaStoreOperations": true,
+  "fixtureAbsence": [
+    {
+      "mode": "phone",
+      "path": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/bfffdc41a6cab7937b5562abc4364b38d9c7f91487f808c193928ae9cc9442f3.draft",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": null,
+      "independentShellAbsence": null,
+      "verification": "In-process instrumentation finally confirmed delete and absence; app is not debuggable so run-as is unavailable"
+    },
+    {
+      "mode": "phone",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-6ae0b47b-95cd-433d-b17e-4b5ec47fddf2__GRID.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "phone",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-b96da5ba-5081-49b2-b923-1edcb0cf818b__PHOTO.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "phone",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-a41cd43687b96c92b7e057a00f3248070e46cfe7a2c7d5f200a50d725f142f1b__Effect.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "font1.3",
+      "path": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/f74bbaa57e6f3c71c3253f333ff55ba343e75e71b1d88fae7631a7b9f732b6cd.draft",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": null,
+      "independentShellAbsence": null,
+      "verification": "In-process instrumentation finally confirmed delete and absence; app is not debuggable so run-as is unavailable"
+    },
+    {
+      "mode": "font1.3",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-6f6aa539-7b03-4c51-8f2a-682a30c30249__GRID.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "font1.3",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-f6bf28dd-146d-4520-8a28-e9941c1a8060__PHOTO.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "font1.3",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-55f30b84850dfa7504d6535da965b017cd2c5337955e5d0189af1f5df5afa6ca__Effect.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "landscape",
+      "path": "/data/data/cc.huevia/files/photo-edit-drafts/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/9080d4c9f1825db8a7297ca9e85c5e274ae4318749ec242772d259c2ac99eaad.draft",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": null,
+      "independentShellAbsence": null,
+      "verification": "In-process instrumentation finally confirmed delete and absence; app is not debuggable so run-as is unavailable"
+    },
+    {
+      "mode": "landscape",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-1fc0b08c-7552-464b-92e7-7f6f1e1ad343__GRID.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "landscape",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/image-upgrade-qa-77efb792-9a5b-42ae-8d54-dc731b415e6d__PHOTO.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    },
+    {
+      "mode": "landscape",
+      "path": "/storage/emulated/0/Android/data/cc.huevia/files/Pictures/camera-album/effect-47109f90bfa0c071a7f87fcb76807bee83db346e5b67ed6789bc96f0148c272d__Effect.JPG",
+      "instrumentationReportedAbsent": true,
+      "instrumentationReportedUnchanged": true,
+      "independentShellAbsence": true
+    }
+  ],
+  "privateFileVerificationLimitation": "run-as reports package not debuggable; its exit1 was not used as file absence evidence. Private draft absence is recorded by the running instrumentation, external fixture absence additionally verified with ls No such file or directory."
+}

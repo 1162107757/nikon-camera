@@ -1,0 +1,50 @@
+{
+  "pass": true,
+  "stage": "browse-edit-back-0",
+  "checks": [
+    "owned-emulator",
+    "exact-apk",
+    "safe-run",
+    "main-ready",
+    "guest-only",
+    "orientation",
+    "visible-list-settled",
+    "real-library-fixtures-loaded",
+    "visible-list-settled",
+    "scrolled-below-top",
+    "capture-before-0",
+    "photo-row-clickable",
+    "native-photo-tap",
+    "native-editor-open",
+    "actual-filter-preview-ready",
+    "draft-io-drained",
+    "visible-list-settled",
+    "capture-after-0",
+    "draft-filter-saved",
+    "draft-io-drained",
+    "draft-io-drained"
+  ],
+  "cycles": [
+    {
+      "cycle": 0,
+      "before": {
+        "row": 14,
+        "key": "photo:photo-7083abf59fc5a04abe010131927a210082d7fbfca6d54a891367007fd8c1e20a",
+        "top": -97
+      },
+      "after": {
+        "row": 14,
+        "key": "photo:photo-7083abf59fc5a04abe010131927a210082d7fbfca6d54a891367007fd8c1e20a",
+        "top": -97
+      },
+      "sameAnchorAndPixelOffset": true
+    }
+  ],
+  "candidateSha256": "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+  "baseline": "true",
+  "mode": "phone",
+  "fontScale": 1,
+  "failure": null,
+  "ownedFilesRemoved": true,
+  "scope": "Real MainActivity\/local album\/editor, 90 owned private JPEGs, native tile tap, actual production filter render\/draft, native Back, real visible photo identity and exact pixel offset. No camera\/MediaStore changes. Targeted patched107 APK, not unified108 release."
+}

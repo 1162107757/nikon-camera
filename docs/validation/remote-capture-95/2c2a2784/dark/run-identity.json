@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "apkSha256": "2c2a2784c6a05eeea00249a747d19ad4a860f08fc516f70c8d21a099160799c1",
+  "runId": "36408a939b0a4510a550469cab36f379",
+  "mode": "dark",
+  "original": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0"
+  },
+  "restored": {
+    "font_scale": "1.0",
+    "accelerometer_rotation": "1",
+    "user_rotation": "0"
+  },
+  "originalNight": "no",
+  "restoredNight": "Night mode: no",
+  "status": "PASS"
+}

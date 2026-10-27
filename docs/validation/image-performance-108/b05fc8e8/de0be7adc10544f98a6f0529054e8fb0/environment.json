@@ -1,0 +1,22 @@
+{
+    "serial":  "emulator-5586",
+    "hardware":  "ranchu",
+    "candidateApk":  "D:\\dev\\ai-project\\nikon\\dist\\huevia-0.21.8-beta-debug.apk",
+    "candidateSha256":  "b05fc8e8bbe786b5f41f1bc1998c4bf6649ee329b3413f8ab800c73d6ab3d347",
+    "runId":  "de0be7adc10544f98a6f0529054e8fb0",
+    "baseline":  true,
+    "probe":  {
+                  "schemaVersion":  1,
+                  "builtAtUtc":  "2026-10-27T03:09:55.1797576Z",
+                  "probeSource":  "tests/image-performance-device-probe/src/cc/huevia/imageperformanceqa/ImagePerformanceProbe.java",
+                  "inputs":  {
+                                 "probeJavaSha256":  "ab5655bfab7d03e5b02e73e9627615912df2d0097bab44b482781e9316402366",
+                                 "manifestSha256":  "66c3b8eb5d83d39565ae79b701003e35f0edaa3c4a261f782e3bcb2b040f4af1",
+                                 "buildScriptSha256":  "f7fbc805bc7762b017ed3c9a681993cc02e7b9cccdafa8328aff019ecf09bd2f",
+                                 "runScriptSha256":  "bd430ccefce5e00c7faf44f3be2b9638f34f22eabefc564326efcab14cb9d317"
+                             },
+                  "probeApkSha256":  "dd012486b6d2a8a069297be7ccc9aa517825e76e7548b7500abf5e6120f1090c"
+              },
+    "pass":  true,
+    "scope":  "Identical reflection-only probe on actual installed APK; generated 12MP/24MP JPEG, exact legacy decode oracle, native PhotoDetailDialog held pan, real tile pixels, mode and owner/close guards. Normal-font emulator only; timings are observations, not physical-device latency or FPS claims."
+}

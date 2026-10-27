@@ -1,0 +1,20 @@
+{
+  "closedOwnEmulator": true,
+  "ownLaunchPid": 16640,
+  "ownLaunchPidExited": true,
+  "adbDevices": "List of devices attached",
+  "performanceProbeCleanup": {
+    "serial": "emulator-5586",
+    "runId": "e20554a9b79b40a9892784933617fe9d",
+    "testPackageRemoved": true,
+    "settingsRestored": true,
+    "remoteEvidenceRetained": true
+  },
+  "albumProbeCleanup": {
+    "serial": "emulator-5586",
+    "fontScaleRestoredTo": "1.0",
+    "testPackageUninstalled": true,
+    "remoteFixtureRemoved": true
+  },
+  "hostTemporaryDirectories": "Existing D-drive AVD/temp directories retained; no recursive delete retried."
+}

@@ -1,0 +1,11 @@
+# Image performance 108 native probe
+
+This standalone, reflection-only instrumentation APK runs unchanged against frozen 107 and candidate 108. It compiles only against Android 35, never a copy of production classes.
+
+Root must exclusively own the selected emulator, install the exact candidate separately, then run `run.ps1 -CandidateApk <path> -ExpectedApkSha256 <sha> [-Baseline] [-Serial emulator-5586|emulator-5588]`. Build with `build.ps1` before starting the emulator on a low-memory host. No physical device is accepted. The runner verifies installed APK bytes, temporarily enables airplane mode and normal font, and restores both settings. It does not install or uninstall the app.
+
+Private deterministic 12MP and 24MP JPEGs are generated one at a time using one bitmap and one row buffer. Preview decode is compared pixel for pixel with the frozen 107 decode order at normal, rotated and mirrored EXIF orientations. This checks output equivalence while recording duration and heap observations; heap deltas are not peak-memory measurements and no speed threshold is asserted.
+
+A real `PhotoDetailDialog` and its production source/view receive 90 native MOVE events before UP. The gesture crosses several tile columns; frame tile bounds/sample are observed, so mere movement of the old bitmap does not count as fresh detail. Baseline mode records the old behavior without requiring intermediate tile changes. Candidate mode requires multiple new tile sets before release, stable selection backgrounds and bounded same-size glass buffers. After release, sample-1 regions are compared with a full Android JPEG decode. Mode changes, owner invalidation and closing pending work are checked. Three actual screenshots are retained.
+
+All generated JPEGs live in the current run's private cache folder, are removed in `finally`, and never enter the photo library. Source workers must terminate and release their own surfaces. Reports are copied to a fresh `docs/validation/image-performance-108/<APK prefix>/<run ID>/` directory. Remote evidence is retained; no prior verification or blocked temporary directory is deleted. This is one normal-font emulator configuration, not a full app regression, phone performance certification or camera test.

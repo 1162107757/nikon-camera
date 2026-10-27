@@ -1,0 +1,61 @@
+{
+  "scope": "production UpdatePanel component UI; synthetic validated Release\/status callbacks; no MainActivity implementation, metadata HTTP, DownloadManager or installer",
+  "pass": false,
+  "fontScale": 1,
+  "candidateSha256": "523bd07fb93bd7c1cea3ce8cb5bc451b91fe53ded2355a926dff559b0b61aaec",
+  "versionCode": 99,
+  "workerTasks": 0,
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "font-scale-supported",
+      "pass": true
+    },
+    {
+      "name": "output-created",
+      "pass": true
+    },
+    {
+      "name": "manager-prefs-cleared",
+      "pass": true
+    },
+    {
+      "name": "prompt-prefs-cleared",
+      "pass": true
+    },
+    {
+      "name": "main-activity-replaced-before-onCreate",
+      "pass": true
+    },
+    {
+      "name": "preferences-restored",
+      "pass": true
+    }
+  ],
+  "screenshots": [],
+  "layoutObservations": [],
+  "failure": "java.lang.reflect.InvocationTargetException",
+  "stack": [
+    "java.lang.reflect.Constructor.newInstance0(Native Method)",
+    "java.lang.reflect.Constructor.newInstance(Constructor.java:341)",
+    "cc.huevia.updateqa.UpdatePromptProbe.seed(UpdatePromptProbe.java:268)",
+    "cc.huevia.updateqa.UpdatePromptProbe.lambda$ordinaryFlow$2(UpdatePromptProbe.java:118)",
+    "cc.huevia.updateqa.UpdatePromptProbe.$r8$lambda$ymdWo-3HYnhcPxPolnP8RzNk1W0(UpdatePromptProbe.java:0)",
+    "cc.huevia.updateqa.UpdatePromptProbe$$ExternalSyntheticLambda11.run(D8$$SyntheticClass:0)",
+    "cc.huevia.updateqa.UpdatePromptProbe.lambda$ui$18(UpdatePromptProbe.java:321)",
+    "cc.huevia.updateqa.UpdatePromptProbe$$ExternalSyntheticLambda10.run(D8$$SyntheticClass:0)",
+    "android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2721)",
+    "android.os.Handler.handleCallback(Handler.java:1080)",
+    "android.os.Handler.dispatchMessageImpl(Handler.java:135)",
+    "android.os.Handler.dispatchMessage(Handler.java:126)",
+    "android.os.Looper.loopOnce(Looper.java:285)",
+    "android.os.Looper.loop(Looper.java:390)",
+    "android.app.ActivityThread.main(ActivityThread.java:9884)",
+    "java.lang.reflect.Method.invoke(Native Method)",
+    "com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)",
+    "com.android.internal.os.ZygoteInit.main(ZygoteInit.java:906)"
+  ]
+}

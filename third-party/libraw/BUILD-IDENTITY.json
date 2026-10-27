@@ -1,0 +1,1359 @@
+{
+  "version": "LibRaw 0.22.3",
+  "sourceUrl": "https://www.libraw.org/data/LibRaw-0.22.3.zip",
+  "officialArchiveSha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
+  "bundledSourceSha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
+  "sourceFingerprint": "72baacc8af4e647b9e6fe7c89b724d3a7fcadb4f63452a90bda65a8c17e5842c",
+  "modifiedSource": false,
+  "ndk": "Pkg.Desc = Android NDK\nPkg.Revision = 28.2.13676358\nPkg.BaseRevision = 28.2.13676358\nPkg.ReleaseName = r28c\n",
+  "minimumAndroidApi": 26,
+  "openmp": false,
+  "optionalLibraries": [
+    "Android system zlib"
+  ],
+  "sourceInputs": [
+    {
+      "path": "LibRaw-0.22.3/object/.keep_me",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "officialSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "LibRaw-0.22.3/install-sh",
+      "sha256": "776876b3909b096439109a4c7642eb0f9100f6ba3fb42fa93d05351e50a0a7ef",
+      "officialSha256": "776876b3909b096439109a4c7642eb0f9100f6ba3fb42fa93d05351e50a0a7ef"
+    },
+    {
+      "path": "LibRaw-0.22.3/compile",
+      "sha256": "92ed7feeda61ad958dc3c4cc4efd724e1414482f1cad60b74b09e0633a93dfd6",
+      "officialSha256": "92ed7feeda61ad958dc3c4cc4efd724e1414482f1cad60b74b09e0633a93dfd6"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/traces.3",
+      "sha256": "834a403c2bc5e99145ce85d77fc98a4e9d5180d3d991256342cf93c21e17fda7",
+      "officialSha256": "834a403c2bc5e99145ce85d77fc98a4e9d5180d3d991256342cf93c21e17fda7"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/output.2",
+      "sha256": "a1ca00137eccd8fdd181d8e3999f0c29c87c1c803ee0e04dd88f24a90b2dfd5a",
+      "officialSha256": "a1ca00137eccd8fdd181d8e3999f0c29c87c1c803ee0e04dd88f24a90b2dfd5a"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/traces.0",
+      "sha256": "ebe7356be65099ec4a33bab970b97a0787204808055b0f5426a5d65aae62e6a9",
+      "officialSha256": "ebe7356be65099ec4a33bab970b97a0787204808055b0f5426a5d65aae62e6a9"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/output.1",
+      "sha256": "a1ca00137eccd8fdd181d8e3999f0c29c87c1c803ee0e04dd88f24a90b2dfd5a",
+      "officialSha256": "a1ca00137eccd8fdd181d8e3999f0c29c87c1c803ee0e04dd88f24a90b2dfd5a"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/traces.2",
+      "sha256": "aa8084da5b7f4b30a74cd5e54a70bdc3a7e99fc52b22f4b911ddd8da043d5b70",
+      "officialSha256": "aa8084da5b7f4b30a74cd5e54a70bdc3a7e99fc52b22f4b911ddd8da043d5b70"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/output.3",
+      "sha256": "6809f8002c2e669f69795a8271971176b4587c1087de67e4c035d745bf4e7d31",
+      "officialSha256": "6809f8002c2e669f69795a8271971176b4587c1087de67e4c035d745bf4e7d31"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/traces.1",
+      "sha256": "6755fe340286b3a106ac559ec3774a3a38fde23c3db52138904f8478d909af9b",
+      "officialSha256": "6755fe340286b3a106ac559ec3774a3a38fde23c3db52138904f8478d909af9b"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/output.0",
+      "sha256": "a1ca00137eccd8fdd181d8e3999f0c29c87c1c803ee0e04dd88f24a90b2dfd5a",
+      "officialSha256": "a1ca00137eccd8fdd181d8e3999f0c29c87c1c803ee0e04dd88f24a90b2dfd5a"
+    },
+    {
+      "path": "LibRaw-0.22.3/autom4te.cache/requests",
+      "sha256": "ff7fe2c9340986e9d3d2653cbfb468aecf7618050f40faf4631cfe1bb8856a86",
+      "officialSha256": "ff7fe2c9340986e9d3d2653cbfb468aecf7618050f40faf4631cfe1bb8856a86"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/unprocessed_raw.cpp",
+      "sha256": "f13eb14e9470b3970fa4dbb1d8643910879b0861c981c523f32fe53bc5a37c83",
+      "officialSha256": "f13eb14e9470b3970fa4dbb1d8643910879b0861c981c523f32fe53bc5a37c83"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/Makefile",
+      "sha256": "c87092e038d6924d5b911ba066073db0da81d98e3dafbb09d11a1520c16b7b16",
+      "officialSha256": "c87092e038d6924d5b911ba066073db0da81d98e3dafbb09d11a1520c16b7b16"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/4channels.cpp",
+      "sha256": "7e8d07898ad72c98590c930dd4abce79654a21956b46f7508dd3418aca6e7df2",
+      "officialSha256": "7e8d07898ad72c98590c930dd4abce79654a21956b46f7508dd3418aca6e7df2"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/simple_dcraw.cpp",
+      "sha256": "cf931f580d0f9809e71d56c25a7bef5a2896ef05ab64c550e37f48b63bfa7fa7",
+      "officialSha256": "cf931f580d0f9809e71d56c25a7bef5a2896ef05ab64c550e37f48b63bfa7fa7"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/rawtextdump.cpp",
+      "sha256": "80601345d7b1a018d3068beaad0b81d46b4cd65fe961729e70db05ae3713d7d9",
+      "officialSha256": "80601345d7b1a018d3068beaad0b81d46b4cd65fe961729e70db05ae3713d7d9"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/half_mt_win32.c",
+      "sha256": "3454f016255d1575fe7a13514cd49390d3360ad8f8ca0f795bcea3ae9bbcb666",
+      "officialSha256": "3454f016255d1575fe7a13514cd49390d3360ad8f8ca0f795bcea3ae9bbcb666"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/dcraw_emu.cpp",
+      "sha256": "16c923c033f1aa70c52e46a6cd7e520263ad1eb7a8896c8081276b58680756fc",
+      "officialSha256": "16c923c033f1aa70c52e46a6cd7e520263ad1eb7a8896c8081276b58680756fc"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/raw-identify.cpp",
+      "sha256": "a1fdf30c0dfe7c1313a3570a5afcecfd8c6e99722de92a66eb72b4fa02a7aee1",
+      "officialSha256": "a1fdf30c0dfe7c1313a3570a5afcecfd8c6e99722de92a66eb72b4fa02a7aee1"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/multirender_test.cpp",
+      "sha256": "4fec81ba9eb5d6ab7e8283a05c4d20a49b216477b56579ca0b6b6a94025d9b3d",
+      "officialSha256": "4fec81ba9eb5d6ab7e8283a05c4d20a49b216477b56579ca0b6b6a94025d9b3d"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/dcraw_half.c",
+      "sha256": "03847c09ef6d47fa41063b0026e60873e32eba88e2e2b7b07656efa7e1749957",
+      "officialSha256": "03847c09ef6d47fa41063b0026e60873e32eba88e2e2b7b07656efa7e1749957"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/openbayer_sample.cpp",
+      "sha256": "a744a6c3772ca9a9f8880fa7257853cdb7f1b26ea4aa0522c495cdbc5382bdf9",
+      "officialSha256": "a744a6c3772ca9a9f8880fa7257853cdb7f1b26ea4aa0522c495cdbc5382bdf9"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/postprocessing_benchmark.cpp",
+      "sha256": "ba4d127d141a6c55a36ffb96d4b597602783fb4c2aaeabf7fa7316ad51c01d1c",
+      "officialSha256": "ba4d127d141a6c55a36ffb96d4b597602783fb4c2aaeabf7fa7316ad51c01d1c"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/mem_image_sample.cpp",
+      "sha256": "5518fc73752f68c6818979eb8705f5c6e453149b37eee2ec98195d4ade5e08d2",
+      "officialSha256": "5518fc73752f68c6818979eb8705f5c6e453149b37eee2ec98195d4ade5e08d2"
+    },
+    {
+      "path": "LibRaw-0.22.3/samples/half_mt.c",
+      "sha256": "248d3fbe68712be9e60e717d89c4f8a6c54ffc3206d2cac3faaddce0c6a1fec6",
+      "officialSha256": "248d3fbe68712be9e60e717d89c4f8a6c54ffc3206d2cac3faaddce0c6a1fec6"
+    },
+    {
+      "path": "LibRaw-0.22.3/config.guess",
+      "sha256": "7791fa2c24a0aa966399c7ae9265b1a421b442610db487a429378b7103a6bd28",
+      "officialSha256": "7791fa2c24a0aa966399c7ae9265b1a421b442610db487a429378b7103a6bd28"
+    },
+    {
+      "path": "LibRaw-0.22.3/aclocal.m4",
+      "sha256": "c3bd9626ccb137c4fab8fea7947d824e88bc9305f90875cb7d16f94669449df7",
+      "officialSha256": "c3bd9626ccb137c4fab8fea7947d824e88bc9305f90875cb7d16f94669449df7"
+    },
+    {
+      "path": "LibRaw-0.22.3/lib/Makefile",
+      "sha256": "e7f707874a22ab91701d47603c1ac0e67e0c8fad5fb34a7b4c311c410f8ad343",
+      "officialSha256": "e7f707874a22ab91701d47603c1ac0e67e0c8fad5fb34a7b4c311c410f8ad343"
+    },
+    {
+      "path": "LibRaw-0.22.3/README.GoPro.txt",
+      "sha256": "64b7c1166c46db9822ac53c6809d4ffd52728ca1b973e24c279f2c4aae141250",
+      "officialSha256": "64b7c1166c46db9822ac53c6809d4ffd52728ca1b973e24c279f2c4aae141250"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/libraw_cameraids.h",
+      "sha256": "69b7a108d7abe11b52b07543452631fd5496e4e00db596c82e99f8990f93dd58",
+      "officialSha256": "69b7a108d7abe11b52b07543452631fd5496e4e00db596c82e99f8990f93dd58"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/dcraw_defs.h",
+      "sha256": "111a87c4dc3c9b8681481aec580d122423547f097ebb949b44f286a7747832f7",
+      "officialSha256": "111a87c4dc3c9b8681481aec580d122423547f097ebb949b44f286a7747832f7"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/dcraw_fileio_defs.h",
+      "sha256": "bdf7f4436979f84f11fabc048c9e037adc31ba4eb5e43b0854cae42566e6cd46",
+      "officialSha256": "bdf7f4436979f84f11fabc048c9e037adc31ba4eb5e43b0854cae42566e6cd46"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/x3f_tools.h",
+      "sha256": "dd78c16dd739b1d2fd01650153811d4d503b9d3e0ae3d5e4ba527298e6fb192d",
+      "officialSha256": "dd78c16dd739b1d2fd01650153811d4d503b9d3e0ae3d5e4ba527298e6fb192d"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/dmp_include.h",
+      "sha256": "73d9af47a7e5a7ec1cef6789d3924076abc4f12e88f1d4325e0c829a55479071",
+      "officialSha256": "73d9af47a7e5a7ec1cef6789d3924076abc4f12e88f1d4325e0c829a55479071"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/libraw_cxx_defs.h",
+      "sha256": "a44523ea082a535c73a84b6f6f4c3cd47fd69018a04863d89c47c6a9f1b20dcb",
+      "officialSha256": "a44523ea082a535c73a84b6f6f4c3cd47fd69018a04863d89c47c6a9f1b20dcb"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/losslessjpeg.h",
+      "sha256": "4380c6312e0fb0faf6149197b65eda8a9f9bf6c09392a7b8bb6447ff2663a7b5",
+      "officialSha256": "4380c6312e0fb0faf6149197b65eda8a9f9bf6c09392a7b8bb6447ff2663a7b5"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/var_defines.h",
+      "sha256": "7f36890d30d2ba1caccf00f3eb5984303a101539b901ca603c8f3b11a82e5319",
+      "officialSha256": "7f36890d30d2ba1caccf00f3eb5984303a101539b901ca603c8f3b11a82e5319"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/libraw_checked_buffer.h",
+      "sha256": "d55f9749f10fefac15102cf7d29477bd61bcbac8df4f241ac6240d2886810d06",
+      "officialSha256": "d55f9749f10fefac15102cf7d29477bd61bcbac8df4f241ac6240d2886810d06"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/libraw_internal_funcs.h",
+      "sha256": "00dc9059fc06918ebd080265fc8be57dbfe4cf9f2c00be63352dce17fcd68dd0",
+      "officialSha256": "00dc9059fc06918ebd080265fc8be57dbfe4cf9f2c00be63352dce17fcd68dd0"
+    },
+    {
+      "path": "LibRaw-0.22.3/internal/defines.h",
+      "sha256": "252b22f03da4c086580153b4b9a76e3fdc31d61ee9059a2348c281022611f413",
+      "officialSha256": "252b22f03da4c086580153b4b9a76e3fdc31d61ee9059a2348c281022611f413"
+    },
+    {
+      "path": "LibRaw-0.22.3/m4/ltsugar.m4",
+      "sha256": "4f022724d2703c0c318eed04e04e833b82761b0a0cc02c865d0b7c1e5b2c6aba",
+      "officialSha256": "4f022724d2703c0c318eed04e04e833b82761b0a0cc02c865d0b7c1e5b2c6aba"
+    },
+    {
+      "path": "LibRaw-0.22.3/m4/libtool.m4",
+      "sha256": "4a3239a2d468e711ce9cee4035b1d4b8fd28c41aac67ca911cafac091fe1c10a",
+      "officialSha256": "4a3239a2d468e711ce9cee4035b1d4b8fd28c41aac67ca911cafac091fe1c10a"
+    },
+    {
+      "path": "LibRaw-0.22.3/m4/lt~obsolete.m4",
+      "sha256": "5a416905cc27c5d99ff81b61b9cf6a85c168b80178bb88f4c3eaf2e8f76c8cac",
+      "officialSha256": "5a416905cc27c5d99ff81b61b9cf6a85c168b80178bb88f4c3eaf2e8f76c8cac"
+    },
+    {
+      "path": "LibRaw-0.22.3/m4/ltversion.m4",
+      "sha256": "40207e691ec7d3f06cedd592e50e44d7bc187b21ad791aeabdd50871b6606799",
+      "officialSha256": "40207e691ec7d3f06cedd592e50e44d7bc187b21ad791aeabdd50871b6606799"
+    },
+    {
+      "path": "LibRaw-0.22.3/m4/ax_openmp.m4",
+      "sha256": "a98198173c1e465fcfd41081594e5d718aeb473bdb69183976e30016f12b9ba1",
+      "officialSha256": "a98198173c1e465fcfd41081594e5d718aeb473bdb69183976e30016f12b9ba1"
+    },
+    {
+      "path": "LibRaw-0.22.3/m4/ltoptions.m4",
+      "sha256": "4cc29b667909fcde7a08c984367bce1a1902c860acf8774794484a2e1adeb07b",
+      "officialSha256": "4cc29b667909fcde7a08c984367bce1a1902c860acf8774794484a2e1adeb07b"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.dist",
+      "sha256": "bc48198be8cfab9a59bf0bbb6064e078dffc4b4c81ede8cabed1d22b3f07f72e",
+      "officialSha256": "bc48198be8cfab9a59bf0bbb6064e078dffc4b4c81ede8cabed1d22b3f07f72e"
+    },
+    {
+      "path": "LibRaw-0.22.3/LICENSE.LGPL",
+      "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+      "officialSha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/mem_image.vcxproj.filters",
+      "sha256": "de65e1ae07cefc81b6d5ea8a7b11fbf698e2e3357832c3937cbfbe42d11725b9",
+      "officialSha256": "de65e1ae07cefc81b6d5ea8a7b11fbf698e2e3357832c3937cbfbe42d11725b9"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/openbayer_sample.vcxproj.filters",
+      "sha256": "a8f3d380b14be7d6ca50319f3d3efdaeacfc75a205733b903b8f8e294acfe0fb",
+      "officialSha256": "a8f3d380b14be7d6ca50319f3d3efdaeacfc75a205733b903b8f8e294acfe0fb"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/unprocessed_raw.pro",
+      "sha256": "31046baa5aa63dcb94915d2fd7f18a60e96ff75257d9f0513b73ceeb5b4037aa",
+      "officialSha256": "31046baa5aa63dcb94915d2fd7f18a60e96ff75257d9f0513b73ceeb5b4037aa"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/dcraw_emu.pro",
+      "sha256": "707dca83cef628978c2c4faf981718eb24ecc213155aa57e0e02b44497d8dd3a",
+      "officialSha256": "707dca83cef628978c2c4faf981718eb24ecc213155aa57e0e02b44497d8dd3a"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/rawtextdump.vcxproj",
+      "sha256": "bf01e998836ca801c69d3d2b4ff1015dac2da509c795bbe4933c5b6c5568273c",
+      "officialSha256": "bf01e998836ca801c69d3d2b4ff1015dac2da509c795bbe4933c5b6c5568273c"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/raw-identify.pro",
+      "sha256": "9e071c179864b2e46b2a6b2ad25424a50e6576adb65815f0ac2370c67147d04d",
+      "officialSha256": "9e071c179864b2e46b2a6b2ad25424a50e6576adb65815f0ac2370c67147d04d"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/openbayer_sample.pro",
+      "sha256": "b9ae62a1d1fb3ecc1fcbc416c3a5bf7dd87069cb12fe1aeed93f6c16371ea126",
+      "officialSha256": "b9ae62a1d1fb3ecc1fcbc416c3a5bf7dd87069cb12fe1aeed93f6c16371ea126"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/unprocessed_raw.vcxproj.filters",
+      "sha256": "fc88a9813ac5e2813a65e1b19cb3280149dcdea333c9416ceb9841910381b32b",
+      "officialSha256": "fc88a9813ac5e2813a65e1b19cb3280149dcdea333c9416ceb9841910381b32b"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/raw-identify.vcxproj.filters",
+      "sha256": "752744706ef72c319bfc5ed15e10b3a2ae69d905aef81e98234a261be2af5239",
+      "officialSha256": "752744706ef72c319bfc5ed15e10b3a2ae69d905aef81e98234a261be2af5239"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/4channels.vcxproj",
+      "sha256": "2848beb2d25bc5ad6adc6187f9c5c4f4c61131a5900528b8cca69aac3a656e41",
+      "officialSha256": "2848beb2d25bc5ad6adc6187f9c5c4f4c61131a5900528b8cca69aac3a656e41"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/multirender_test.pro",
+      "sha256": "756810eacff8f31232498e6aab41c6c4b731e3a04753163d6e1938a0455bb2b4",
+      "officialSha256": "756810eacff8f31232498e6aab41c6c4b731e3a04753163d6e1938a0455bb2b4"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/4channels.vcxproj.filters",
+      "sha256": "273660bd774d7eee74d64f6505e80cb2ce4fd71c1c3d597e4db9ea3a2a999526",
+      "officialSha256": "273660bd774d7eee74d64f6505e80cb2ce4fd71c1c3d597e4db9ea3a2a999526"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/dcraw_half.pro",
+      "sha256": "cbc36c21592914fe9aaff21f0f7f97c562bd11417ceb01c09c2640d39881bfb7",
+      "officialSha256": "cbc36c21592914fe9aaff21f0f7f97c562bd11417ceb01c09c2640d39881bfb7"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/dcraw_emu.vcxproj.filters",
+      "sha256": "486c738f660a61f543bbd052c9046667bd93aa2a5e81b0e88a563bf99185496f",
+      "officialSha256": "486c738f660a61f543bbd052c9046667bd93aa2a5e81b0e88a563bf99185496f"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/libraw.pro",
+      "sha256": "da2a2bdb4d68453b44aa9a9304830e24e80b1322cdee78437a504c60a8d4ad91",
+      "officialSha256": "da2a2bdb4d68453b44aa9a9304830e24e80b1322cdee78437a504c60a8d4ad91"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/rawtextdump.pro",
+      "sha256": "530a09c8466dacc78d39056606b33afe648df61d19d4865ad5cf516e7eb3ffe8",
+      "officialSha256": "530a09c8466dacc78d39056606b33afe648df61d19d4865ad5cf516e7eb3ffe8"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/rawtextdump.vcxproj.filters",
+      "sha256": "e7a13e71bc26cfbc1111c2e5d06e1c90563687496ab96256725d340c83eaf72c",
+      "officialSha256": "e7a13e71bc26cfbc1111c2e5d06e1c90563687496ab96256725d340c83eaf72c"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/simple_dcraw.pro",
+      "sha256": "80802a821fe527a9a371c540dce6337db94907c4c3ba205c63576bb936dc862a",
+      "officialSha256": "80802a821fe527a9a371c540dce6337db94907c4c3ba205c63576bb936dc862a"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/dcraw_half.vcxproj.filters",
+      "sha256": "d0815f9fac863c8d65f0b302a9ee8efebb72855c83a7fadca7c7bbdd007b750a",
+      "officialSha256": "d0815f9fac863c8d65f0b302a9ee8efebb72855c83a7fadca7c7bbdd007b750a"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/libraw.vcxproj",
+      "sha256": "f72d002fa42450464c9ba6e8d6b043da7f3d24915aa9204eeedf4b3236c37176",
+      "officialSha256": "f72d002fa42450464c9ba6e8d6b043da7f3d24915aa9204eeedf4b3236c37176"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/dcraw_emu.vcxproj",
+      "sha256": "448739f442e8b3f26037ad444b35e4121a2048a2ea0e797f332391f83272c3c9",
+      "officialSha256": "448739f442e8b3f26037ad444b35e4121a2048a2ea0e797f332391f83272c3c9"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/postprocessing_benchmark.vcxproj",
+      "sha256": "52cfc8b63ea807d8655cedcf9390c5629c6bf1f9032a5e45c2803151779f1dd2",
+      "officialSha256": "52cfc8b63ea807d8655cedcf9390c5629c6bf1f9032a5e45c2803151779f1dd2"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/raw-identify.vcxproj",
+      "sha256": "6494c5c7a44292e63998583a653a5b84c98a8cdddebc2b7d6c4fdf94c5b14110",
+      "officialSha256": "6494c5c7a44292e63998583a653a5b84c98a8cdddebc2b7d6c4fdf94c5b14110"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/unprocessed_raw.vcxproj",
+      "sha256": "c07e6c5b40852101615e06ee44c2efa5495c889141a725f7bf400939ad1e3275",
+      "officialSha256": "c07e6c5b40852101615e06ee44c2efa5495c889141a725f7bf400939ad1e3275"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/simple_dcraw.vcxproj",
+      "sha256": "89e4d656b156e3b69f88e48f3c50b817a8ada8f6423a866db02bfd58035df384",
+      "officialSha256": "89e4d656b156e3b69f88e48f3c50b817a8ada8f6423a866db02bfd58035df384"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/multirender_test.vcxproj.filters",
+      "sha256": "33878b52c5646b23f510b60e17199bd3c26cedc24d14bc44175429ca3e7b718d",
+      "officialSha256": "33878b52c5646b23f510b60e17199bd3c26cedc24d14bc44175429ca3e7b718d"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/dcraw_half.vcxproj",
+      "sha256": "946e6fd92b6571ba83848396e181292d10283001d39aaca390d539031d1c2497",
+      "officialSha256": "946e6fd92b6571ba83848396e181292d10283001d39aaca390d539031d1c2497"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/4channels.pro",
+      "sha256": "2ab557a3171a3704ea3c0c5b7ee880ee615c4470ba517a6f4c19c8facc56a955",
+      "officialSha256": "2ab557a3171a3704ea3c0c5b7ee880ee615c4470ba517a6f4c19c8facc56a955"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/openbayer_sample.vcxproj",
+      "sha256": "f5f903386246ca5ffb1406f9a1378d3de66910add03e7cb24e3069e959540fdf",
+      "officialSha256": "f5f903386246ca5ffb1406f9a1378d3de66910add03e7cb24e3069e959540fdf"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/mem_image.pro",
+      "sha256": "95a9d5729a50fa9aba2fd5bdae36e8ece3bffdf19a56d5b4cc235453572b157c",
+      "officialSha256": "95a9d5729a50fa9aba2fd5bdae36e8ece3bffdf19a56d5b4cc235453572b157c"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/libraw-common.pro",
+      "sha256": "7056f64a3a24c583e22330851cd42d3513e267a0bbe1614b7df96feac5888b8b",
+      "officialSha256": "7056f64a3a24c583e22330851cd42d3513e267a0bbe1614b7df96feac5888b8b"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/postprocessing_benchmark.pro",
+      "sha256": "23bb66e404a5a357760bc857085572d9b7af849d272dfb091c3c2c0978ee29c5",
+      "officialSha256": "23bb66e404a5a357760bc857085572d9b7af849d272dfb091c3c2c0978ee29c5"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/postprocessing_benchmark.vcxproj.filters",
+      "sha256": "e79cd5aba35d3f93c48fa75dce0cb526fd01ab044bdbaed30b6a09bc662c68c5",
+      "officialSha256": "e79cd5aba35d3f93c48fa75dce0cb526fd01ab044bdbaed30b6a09bc662c68c5"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/mem_image.vcxproj",
+      "sha256": "8e1daca029ad29a2b96818b84ba9fe78d65f301d34aa5687a57780cf7f7fb5b6",
+      "officialSha256": "8e1daca029ad29a2b96818b84ba9fe78d65f301d34aa5687a57780cf7f7fb5b6"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/multirender_test.vcxproj",
+      "sha256": "8be33c759d2c88a318d03a5eb717db2fe9ce31e1eda4929456af399fa065e68d",
+      "officialSha256": "8be33c759d2c88a318d03a5eb717db2fe9ce31e1eda4929456af399fa065e68d"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/half_mt.pro",
+      "sha256": "890ee582d4871fd4214cea8e8fec560ce165c5632f8bd0d8067c9a31283864a3",
+      "officialSha256": "890ee582d4871fd4214cea8e8fec560ce165c5632f8bd0d8067c9a31283864a3"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/libraw.vcxproj.filters",
+      "sha256": "d739a140ed98a6f7e5008cb9788046d929b9b6429d57c202ba444559bf3413be",
+      "officialSha256": "d739a140ed98a6f7e5008cb9788046d929b9b6429d57c202ba444559bf3413be"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/libraw-common-lib.pro",
+      "sha256": "2f53bfb4773f0a006814b48abd2b63a14b938db288f71867597734cfb6c8805d",
+      "officialSha256": "2f53bfb4773f0a006814b48abd2b63a14b938db288f71867597734cfb6c8805d"
+    },
+    {
+      "path": "LibRaw-0.22.3/buildfiles/simple_dcraw.vcxproj.filters",
+      "sha256": "81172d8c65b9b9e5d829cf7de6eea6700fd051e84c3ce58b99ad8d0401d7f3a0",
+      "officialSha256": "81172d8c65b9b9e5d829cf7de6eea6700fd051e84c3ce58b99ad8d0401d7f3a0"
+    },
+    {
+      "path": "LibRaw-0.22.3/bin/.keep_me",
+      "sha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+      "officialSha256": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070"
+    },
+    {
+      "path": "LibRaw-0.22.3/depcomp",
+      "sha256": "ac3ae010382a83144ff6ec1a4c368a3f16a14ea2b12751aa73ddfb548d931574",
+      "officialSha256": "ac3ae010382a83144ff6ec1a4c368a3f16a14ea2b12751aa73ddfb548d931574"
+    },
+    {
+      "path": "LibRaw-0.22.3/missing",
+      "sha256": "4f17c4a66ec5b8000d44573a576f6b5d9c0c84848e8fd1286f84a52f439db4e9",
+      "officialSha256": "4f17c4a66ec5b8000d44573a576f6b5d9c0c84848e8fd1286f84a52f439db4e9"
+    },
+    {
+      "path": "LibRaw-0.22.3/README.DNGSDK.txt",
+      "sha256": "343b98888f88f1bde4ceb952fb4f6e32c598a0d2bc5ee4fca7bc566f06af56d2",
+      "officialSha256": "343b98888f88f1bde4ceb952fb4f6e32c598a0d2bc5ee4fca7bc566f06af56d2"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.devel.noppr2i",
+      "sha256": "202cf93ffef1291d095070122dc1f60cc23a571588750271f655c9ace4ba17e6",
+      "officialSha256": "202cf93ffef1291d095070122dc1f60cc23a571588750271f655c9ace4ba17e6"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw_r.pc.in",
+      "sha256": "3eb5a7100526c3b4dc548d1774bcdf6962b2f5b51d56a77308368988ae22f021",
+      "officialSha256": "3eb5a7100526c3b4dc548d1774bcdf6962b2f5b51d56a77308368988ae22f021"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/libraw_c_api.cpp",
+      "sha256": "93227da95765cd08feb2db0e14b10c86eb73da9222c9355c1b0a145c1494b8d0",
+      "officialSha256": "93227da95765cd08feb2db0e14b10c86eb73da9222c9355c1b0a145c1494b8d0"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/preprocessing/subtract_black.cpp",
+      "sha256": "dfb40396a6654fd45adee4410ae4b75def7278b5b3187413bb8c6f7079a82239",
+      "officialSha256": "dfb40396a6654fd45adee4410ae4b75def7278b5b3187413bb8c6f7079a82239"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/preprocessing/preprocessing_ph.cpp",
+      "sha256": "fd5935603f3cc68bb7ca72162f95dac3c899f9be6bc95eddc766816903199d24",
+      "officialSha256": "fd5935603f3cc68bb7ca72162f95dac3c899f9be6bc95eddc766816903199d24"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/preprocessing/ext_preprocess.cpp",
+      "sha256": "f7e96dfe6d04ebb52bfde566cc5e313c3c20b2b868011b641474698ac7e757dc",
+      "officialSha256": "f7e96dfe6d04ebb52bfde566cc5e313c3c20b2b868011b641474698ac7e757dc"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/preprocessing/raw2image.cpp",
+      "sha256": "24b5268f66fa8684aba8456e71fef3f25ffd2a8826ca9a633006bf1e5465b35f",
+      "officialSha256": "24b5268f66fa8684aba8456e71fef3f25ffd2a8826ca9a633006bf1e5465b35f"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/x3f/x3f_utils_patched.cpp",
+      "sha256": "ccb45d5e3ecbad0c4fb625b235a873f2f7a25d77364dbaf69e510329c3f0c1f6",
+      "officialSha256": "ccb45d5e3ecbad0c4fb625b235a873f2f7a25d77364dbaf69e510329c3f0c1f6"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/x3f/x3f_parse_process.cpp",
+      "sha256": "ff05e7616cfc72a75b557507b243b04f895591819a0dc967f1ce4b8d15bc3503",
+      "officialSha256": "ff05e7616cfc72a75b557507b243b04f895591819a0dc967f1ce4b8d15bc3503"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/tables/cameralist.cpp",
+      "sha256": "7db5ef12c6ef5b81a81f344b798701f04beee27b340675911f848b22ec611bd7",
+      "officialSha256": "7db5ef12c6ef5b81a81f344b798701f04beee27b340675911f848b22ec611bd7"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/tables/colordata.cpp",
+      "sha256": "621d6a7e1a1904095d27087cf10ac7e935c6a984ec336816b79c273a8eaca768",
+      "officialSha256": "621d6a7e1a1904095d27087cf10ac7e935c6a984ec336816b79c273a8eaca768"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/tables/wblists.cpp",
+      "sha256": "172d53844b49df0875f84c1283a285c05414341a8528e8d49966a0c81addc0f6",
+      "officialSha256": "172d53844b49df0875f84c1283a285c05414341a8528e8d49966a0c81addc0f6"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/tables/colorconst.cpp",
+      "sha256": "cad6b9a6661400e70de73fe0c0f9eae501ed58d98c8ecad7afae54275798609b",
+      "officialSha256": "cad6b9a6661400e70de73fe0c0f9eae501ed58d98c8ecad7afae54275798609b"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/integration/dngsdk_glue.cpp",
+      "sha256": "0bff3a8fe78b341557fdb4395a3462cf93f5eff8cea33348f909e8f15942018b",
+      "officialSha256": "0bff3a8fe78b341557fdb4395a3462cf93f5eff8cea33348f909e8f15942018b"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/integration/rawspeed_glue.cpp",
+      "sha256": "505264b9905f0f4d9918fe4cf68bb430efb06e8bb154d2d7b6869d82298fcf80",
+      "officialSha256": "505264b9905f0f4d9918fe4cf68bb430efb06e8bb154d2d7b6869d82298fcf80"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/unpack_thumb.cpp",
+      "sha256": "b9382b99fe8082e0711f8ad105d01e17877121ad5c43188bec3f820cbbab38f6",
+      "officialSha256": "b9382b99fe8082e0711f8ad105d01e17877121ad5c43188bec3f820cbbab38f6"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/dng.cpp",
+      "sha256": "468f71ccc16e861aab734d5d1f4965c70a25990c56d86807af5386ebbc9048dd",
+      "officialSha256": "468f71ccc16e861aab734d5d1f4965c70a25990c56d86807af5386ebbc9048dd"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/olympus14.cpp",
+      "sha256": "9d9587df3d7ae603261b67d658d3dc2805fb83c006c68984940446f478e50ced",
+      "officialSha256": "9d9587df3d7ae603261b67d658d3dc2805fb83c006c68984940446f478e50ced"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/decoders_libraw_dcrdefs.cpp",
+      "sha256": "ce0af83648b31b06de2d536ccfa9e96b61a56d5d56ac4c5ee875fe5b304ed2f4",
+      "officialSha256": "ce0af83648b31b06de2d536ccfa9e96b61a56d5d56ac4c5ee875fe5b304ed2f4"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/canon_600.cpp",
+      "sha256": "ebaac5d26a497092a24c0479b615250a4a74097807bcfd27b2591df147fa172f",
+      "officialSha256": "ebaac5d26a497092a24c0479b615250a4a74097807bcfd27b2591df147fa172f"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/unpack.cpp",
+      "sha256": "6a462fdec8c2961790f2077af3016c314ac00ce3cabe33f1ea33a051c8d9f97c",
+      "officialSha256": "6a462fdec8c2961790f2077af3016c314ac00ce3cabe33f1ea33a051c8d9f97c"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/load_mfbacks.cpp",
+      "sha256": "589692bb16137640e24f2c6a340f9455d174e1b10fd0d90fd735989f27c98ad2",
+      "officialSha256": "589692bb16137640e24f2c6a340f9455d174e1b10fd0d90fd735989f27c98ad2"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/sonycc.cpp",
+      "sha256": "35e5077e11699ac26266258e5fc13ad9c09f416db66e8fad53f43d8103f310c3",
+      "officialSha256": "35e5077e11699ac26266258e5fc13ad9c09f416db66e8fad53f43d8103f310c3"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/crx.cpp",
+      "sha256": "53dc4a6950eabe0e9d197bfe3e118bdf1386ca5eb43c8b3ba2a66c166dfbad87",
+      "officialSha256": "53dc4a6950eabe0e9d197bfe3e118bdf1386ca5eb43c8b3ba2a66c166dfbad87"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/fuji_compressed.cpp",
+      "sha256": "70155663033a535573403d2202d712fcddb7407af31300c956b95d4e2a0886ad",
+      "officialSha256": "70155663033a535573403d2202d712fcddb7407af31300c956b95d4e2a0886ad"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/fp_dng.cpp",
+      "sha256": "db7e17ba960be72f16ac3fa2751398addc3a966757ddd1f685a73230380073b2",
+      "officialSha256": "db7e17ba960be72f16ac3fa2751398addc3a966757ddd1f685a73230380073b2"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/decoders_dcraw.cpp",
+      "sha256": "e17e3faac2e9d5de0d1c3155b5fe37165010a09eab9a80f63523a391237d1658",
+      "officialSha256": "e17e3faac2e9d5de0d1c3155b5fe37165010a09eab9a80f63523a391237d1658"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/smal.cpp",
+      "sha256": "da85bad70142dc1f5bb7803f65f7d1c7388037d3cac417980ae4efe4954d523e",
+      "officialSha256": "da85bad70142dc1f5bb7803f65f7d1c7388037d3cac417980ae4efe4954d523e"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/generic.cpp",
+      "sha256": "54d6528a5c6cf938862fabb506dacf5785a2e6b86404c7908573cb07c15de79e",
+      "officialSha256": "54d6528a5c6cf938862fabb506dacf5785a2e6b86404c7908573cb07c15de79e"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/pana8.cpp",
+      "sha256": "36d03a03139354f75d7c14c520b8ea436281dee6528075383710beebe715f5b9",
+      "officialSha256": "36d03a03139354f75d7c14c520b8ea436281dee6528075383710beebe715f5b9"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/kodak_decoders.cpp",
+      "sha256": "f819457938a761344d07bf6520248f382013f490aa466fca03474de6d8e4fa3c",
+      "officialSha256": "f819457938a761344d07bf6520248f382013f490aa466fca03474de6d8e4fa3c"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decoders/decoders_libraw.cpp",
+      "sha256": "6563ff7b2fcfe451a29e8ff6606da5f957953b5443a3881e41192cd35f35e2b2",
+      "officialSha256": "6563ff7b2fcfe451a29e8ff6606da5f957953b5443a3881e41192cd35f35e2b2"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/dcraw_process.cpp",
+      "sha256": "6b50457c0267d3beda5155f661f05f6ad72e6e1f1d2c9013651aa068ce6db365",
+      "officialSha256": "6b50457c0267d3beda5155f661f05f6ad72e6e1f1d2c9013651aa068ce6db365"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/postprocessing_utils.cpp",
+      "sha256": "e8f9e4eba7c473eb19ab271bd149e6110fef0eb55a601e9a2db6466a20675ebf",
+      "officialSha256": "e8f9e4eba7c473eb19ab271bd149e6110fef0eb55a601e9a2db6466a20675ebf"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/postprocessing_aux.cpp",
+      "sha256": "35e12fff82f6b60c55553b9e29b94c8be27143e13ca447aee306f2d3f1d00013",
+      "officialSha256": "35e12fff82f6b60c55553b9e29b94c8be27143e13ca447aee306f2d3f1d00013"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/postprocessing_utils_dcrdefs.cpp",
+      "sha256": "335761c5d3ce3c6150e09e7114dd9669323112c792651a7d70b34586bf4876ea",
+      "officialSha256": "335761c5d3ce3c6150e09e7114dd9669323112c792651a7d70b34586bf4876ea"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/mem_image.cpp",
+      "sha256": "8555fd3f58f1936f6497175eb663cc1ec252f13091a0958d8e82116e7cea50c6",
+      "officialSha256": "8555fd3f58f1936f6497175eb663cc1ec252f13091a0958d8e82116e7cea50c6"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/aspect_ratio.cpp",
+      "sha256": "5a6e0e52ecb187d56e6e83ac62bd08112e3b6da24d023c1e1ce293519cd7b49d",
+      "officialSha256": "5a6e0e52ecb187d56e6e83ac62bd08112e3b6da24d023c1e1ce293519cd7b49d"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/postprocessing/postprocessing_ph.cpp",
+      "sha256": "bf52e61efd827fa243b36f9ec39787c07882ee6afe677ab3b0f3476a6cb36219",
+      "officialSha256": "bf52e61efd827fa243b36f9ec39787c07882ee6afe677ab3b0f3476a6cb36219"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/write/tiff_writer.cpp",
+      "sha256": "830a24b827e7913f522f43b34162164fa30c392d1450ea17b985aefcba181f4c",
+      "officialSha256": "830a24b827e7913f522f43b34162164fa30c392d1450ea17b985aefcba181f4c"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/write/file_write.cpp",
+      "sha256": "1a9d9ffb771b920ae04256a42ab44a866fb0abc41ff649e6aac8df9883ad6b81",
+      "officialSha256": "1a9d9ffb771b920ae04256a42ab44a866fb0abc41ff649e6aac8df9883ad6b81"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/write/apply_profile.cpp",
+      "sha256": "b4052e42ea8444fde9ec99eb6a21576521354cff25f1220003836495fa314c76",
+      "officialSha256": "b4052e42ea8444fde9ec99eb6a21576521354cff25f1220003836495fa314c76"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/write/write_ph.cpp",
+      "sha256": "e4f8d4cd75379a3af3827d2794a03773afffa27a7356bbe0cdb841e753cb10dc",
+      "officialSha256": "e4f8d4cd75379a3af3827d2794a03773afffa27a7356bbe0cdb841e753cb10dc"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/Makefile",
+      "sha256": "b6eb00d29221106d8f7260487fc3ecb873a35e6fadc2735ad8bfb12d1a1d0786",
+      "officialSha256": "b6eb00d29221106d8f7260487fc3ecb873a35e6fadc2735ad8bfb12d1a1d0786"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/init_close_utils.cpp",
+      "sha256": "f245e420f1c901c547428507f9c4517d787e1f5fbce489bc0a9d46949f433af9",
+      "officialSha256": "f245e420f1c901c547428507f9c4517d787e1f5fbce489bc0a9d46949f433af9"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/curves.cpp",
+      "sha256": "298a82b1d71c84ba1f1d061f888be6ca7c162a43985483232152b5e152ab47e2",
+      "officialSha256": "298a82b1d71c84ba1f1d061f888be6ca7c162a43985483232152b5e152ab47e2"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/thumb_utils.cpp",
+      "sha256": "57ba0b151c81e1277f6b505d82518366043e4150e584bd04a469d923fa714596",
+      "officialSha256": "57ba0b151c81e1277f6b505d82518366043e4150e584bd04a469d923fa714596"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/utils_libraw.cpp",
+      "sha256": "a3d6fbce952d0c61b262252544d238cf8e6304fbe2b7b6fd5998bc7fc7b37b32",
+      "officialSha256": "a3d6fbce952d0c61b262252544d238cf8e6304fbe2b7b6fd5998bc7fc7b37b32"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/read_utils.cpp",
+      "sha256": "f11992e950b50bc759d3a695b839b19f76998031d85f13a173cd88b7c2bc8687",
+      "officialSha256": "f11992e950b50bc759d3a695b839b19f76998031d85f13a173cd88b7c2bc8687"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/open.cpp",
+      "sha256": "7e14d880956f307e3216de43c1502747e5fa95d55d49c7ea8157a44f9fce0741",
+      "officialSha256": "7e14d880956f307e3216de43c1502747e5fa95d55d49c7ea8157a44f9fce0741"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/phaseone_processing.cpp",
+      "sha256": "1a581a0f1f7a43fbc0a397a2591d79b342552f955d61c3c3b0b826117bb962dd",
+      "officialSha256": "1a581a0f1f7a43fbc0a397a2591d79b342552f955d61c3c3b0b826117bb962dd"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/decoder_info.cpp",
+      "sha256": "1c81efc0587dbf253f9ee4c43ba840c11c0872e165f3be7eb6680c8d40912148",
+      "officialSha256": "1c81efc0587dbf253f9ee4c43ba840c11c0872e165f3be7eb6680c8d40912148"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/utils/utils_dcraw.cpp",
+      "sha256": "61d3fda9d20a8263bbb5b9b09a41c0c37d2729763cf4b1742fa63a784651ce73",
+      "officialSha256": "61d3fda9d20a8263bbb5b9b09a41c0c37d2729763cf4b1742fa63a784651ce73"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/libraw_datastream.cpp",
+      "sha256": "c8dfb6ba879ee6a2df869f4804d550a6746bb3d9ba8361241549f957786787ff",
+      "officialSha256": "c8dfb6ba879ee6a2df869f4804d550a6746bb3d9ba8361241549f957786787ff"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/decompressors/losslessjpeg.cpp",
+      "sha256": "9b33eafce1b6e84c83bb191f80ee35bf7c80258fe5c6700c3f2e37c3b14853ac",
+      "officialSha256": "9b33eafce1b6e84c83bb191f80ee35bf7c80258fe5c6700c3f2e37c3b14853ac"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/epson.cpp",
+      "sha256": "700ef8fbcbee6c2be439a371dd7aac83ffc50ecacbfada4066c5073335899712",
+      "officialSha256": "700ef8fbcbee6c2be439a371dd7aac83ffc50ecacbfada4066c5073335899712"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/canon.cpp",
+      "sha256": "c4fb78c71326f190c986f85ceea5c4599db42e0a7d7a7d722b7c9ca393e18713",
+      "officialSha256": "c4fb78c71326f190c986f85ceea5c4599db42e0a7d7a7d722b7c9ca393e18713"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/makernotes.cpp",
+      "sha256": "a8815454596d5b5404e5924b95a91bfb6ad3463492da9fabb43e97d00138e6e0",
+      "officialSha256": "a8815454596d5b5404e5924b95a91bfb6ad3463492da9fabb43e97d00138e6e0"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/minolta.cpp",
+      "sha256": "b0e2da67138e7ac841e143f154e090dc47ce539be1f178b116096594508facd8",
+      "officialSha256": "b0e2da67138e7ac841e143f154e090dc47ce539be1f178b116096594508facd8"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/fuji.cpp",
+      "sha256": "cc7c90036716625975c25d18d9a43c02f12f91274d22c7cd76f034a94641fc74",
+      "officialSha256": "cc7c90036716625975c25d18d9a43c02f12f91274d22c7cd76f034a94641fc74"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/identify.cpp",
+      "sha256": "715cfb9904b8b657f3f658e653da5fea4efa4bc78d16bd955c796843b1696e14",
+      "officialSha256": "715cfb9904b8b657f3f658e653da5fea4efa4bc78d16bd955c796843b1696e14"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/tiff.cpp",
+      "sha256": "f5d6faa740d7ff2bd14a012f38e13f11d1b5b057a5c470a3d045176274b52a9b",
+      "officialSha256": "f5d6faa740d7ff2bd14a012f38e13f11d1b5b057a5c470a3d045176274b52a9b"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/ciff.cpp",
+      "sha256": "7954e8b598db3dab9f7c44ace9e4cc0c7dabf250a0271d7c0464408a4c548828",
+      "officialSha256": "7954e8b598db3dab9f7c44ace9e4cc0c7dabf250a0271d7c0464408a4c548828"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/nikon.cpp",
+      "sha256": "7f5b4c7ee5952ad0072aa3123d389ce0dc30ea3a074f8bc0cef0592bfe4d99e2",
+      "officialSha256": "7f5b4c7ee5952ad0072aa3123d389ce0dc30ea3a074f8bc0cef0592bfe4d99e2"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/leica.cpp",
+      "sha256": "ea325ec9edc0cc0f825299acb41a6f3bbec7e98343bfd18dd30bebfd4d4d9260",
+      "officialSha256": "ea325ec9edc0cc0f825299acb41a6f3bbec7e98343bfd18dd30bebfd4d4d9260"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/pentax.cpp",
+      "sha256": "70f3d2f3a9b918eb912bcf2e4c00c14350885c3d54d9a300524b879cc4c62af2",
+      "officialSha256": "70f3d2f3a9b918eb912bcf2e4c00c14350885c3d54d9a300524b879cc4c62af2"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/kodak.cpp",
+      "sha256": "0ffb2ac3514abbf2009153052682f4b9303f9f79993a284727ecde6fe2384328",
+      "officialSha256": "0ffb2ac3514abbf2009153052682f4b9303f9f79993a284727ecde6fe2384328"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/normalize_model.cpp",
+      "sha256": "70168c5e58c2f680ba884e0baf974bf71e14026807fcfffef735357de8b2e7ce",
+      "officialSha256": "70168c5e58c2f680ba884e0baf974bf71e14026807fcfffef735357de8b2e7ce"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/misc_parsers.cpp",
+      "sha256": "2c6e88799eb4d437c1f064d8e4150d0cfb7b440a3e23001e75725effc4e050b9",
+      "officialSha256": "2c6e88799eb4d437c1f064d8e4150d0cfb7b440a3e23001e75725effc4e050b9"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/identify_tools.cpp",
+      "sha256": "8197f97fb91e84676fd76926c5e4bdfe66a1c0bd259cf7909dbc0ab92586082d",
+      "officialSha256": "8197f97fb91e84676fd76926c5e4bdfe66a1c0bd259cf7909dbc0ab92586082d"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/p1.cpp",
+      "sha256": "1b7d58e696ab416ab669e5a7a32ecdf5096774c3c1d5b583d5edf5b71b659ea8",
+      "officialSha256": "1b7d58e696ab416ab669e5a7a32ecdf5096774c3c1d5b583d5edf5b71b659ea8"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/mediumformat.cpp",
+      "sha256": "a034a409201c87a37031647d29360214752fcd4c662b65bedf2515068e9ae469",
+      "officialSha256": "a034a409201c87a37031647d29360214752fcd4c662b65bedf2515068e9ae469"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/olympus.cpp",
+      "sha256": "584cbd7a3347f6235c31cbbc912457ae271256975f0cc2dbf34dff6bafe86bf9",
+      "officialSha256": "584cbd7a3347f6235c31cbbc912457ae271256975f0cc2dbf34dff6bafe86bf9"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/adobepano.cpp",
+      "sha256": "24963d7f98c7fc5fd9dd67e50be651a95e5779a6e92e53ead766bcd1af78b6f0",
+      "officialSha256": "24963d7f98c7fc5fd9dd67e50be651a95e5779a6e92e53ead766bcd1af78b6f0"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/sony.cpp",
+      "sha256": "f5dad6c104f935ca885eec4c003a3eda9f62db210427777ed511635915100e4a",
+      "officialSha256": "f5dad6c104f935ca885eec4c003a3eda9f62db210427777ed511635915100e4a"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/cr3_parser.cpp",
+      "sha256": "3a6688c29a5e65d9c524c6680645dcad287342781ab53d58270c1f2e725015ee",
+      "officialSha256": "3a6688c29a5e65d9c524c6680645dcad287342781ab53d58270c1f2e725015ee"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/exif_gps.cpp",
+      "sha256": "a751dcb863eb3564c39b0c080dc23db43089f42014496bc106412cd4e4cec401",
+      "officialSha256": "a751dcb863eb3564c39b0c080dc23db43089f42014496bc106412cd4e4cec401"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/samsung.cpp",
+      "sha256": "0d858a3d60347d1b4bf394af9c714d4dbc2fb5c0a57b5b64de374f4d8efea002",
+      "officialSha256": "0d858a3d60347d1b4bf394af9c714d4dbc2fb5c0a57b5b64de374f4d8efea002"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/metadata/hasselblad_model.cpp",
+      "sha256": "f735f808e5eeed69d2387c43c7dddd56d0c7bacc2444594bdcd89d18186eed58",
+      "officialSha256": "f735f808e5eeed69d2387c43c7dddd56d0c7bacc2444594bdcd89d18186eed58"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/demosaic/aahd_demosaic.cpp",
+      "sha256": "234ec195d9aea3353792397a9d4563997b552926100069021260bfa473f10f05",
+      "officialSha256": "234ec195d9aea3353792397a9d4563997b552926100069021260bfa473f10f05"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/demosaic/ahd_demosaic.cpp",
+      "sha256": "5445b43a06543f2117cc3a0123e14c7b136cdc7fd92dc64d9af63671a66a6688",
+      "officialSha256": "5445b43a06543f2117cc3a0123e14c7b136cdc7fd92dc64d9af63671a66a6688"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/demosaic/dcb_demosaic.cpp",
+      "sha256": "e02a3626c5794c40221bde1be4bd55ee0cad15c860013319969f0cbec682410f",
+      "officialSha256": "e02a3626c5794c40221bde1be4bd55ee0cad15c860013319969f0cbec682410f"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/demosaic/dht_demosaic.cpp",
+      "sha256": "6203338d108919868ee8ad4d514712dbc3e438d150b608a7d6859a32a2a7f45c",
+      "officialSha256": "6203338d108919868ee8ad4d514712dbc3e438d150b608a7d6859a32a2a7f45c"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/demosaic/misc_demosaic.cpp",
+      "sha256": "f1743f8cc1e14fba6309f6b1939d6d60e8e976ad7d546e38f2c5dfec2a6d9b48",
+      "officialSha256": "f1743f8cc1e14fba6309f6b1939d6d60e8e976ad7d546e38f2c5dfec2a6d9b48"
+    },
+    {
+      "path": "LibRaw-0.22.3/src/demosaic/xtrans_demosaic.cpp",
+      "sha256": "1f2146059c548af46fc08d18763752e8afe4277346df2bb58423992add7fb84c",
+      "officialSha256": "1f2146059c548af46fc08d18763752e8afe4277346df2bb58423992add7fb84c"
+    },
+    {
+      "path": "LibRaw-0.22.3/LICENSE.CDDL",
+      "sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f",
+      "officialSha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f"
+    },
+    {
+      "path": "LibRaw-0.22.3/ltmain.sh",
+      "sha256": "30712e3401deb6e6d5255c71f7bd57f374429d220cfc199ba1f2376ab42c2e35",
+      "officialSha256": "30712e3401deb6e6d5255c71f7bd57f374429d220cfc199ba1f2376ab42c2e35"
+    },
+    {
+      "path": "LibRaw-0.22.3/shlib-version.sh",
+      "sha256": "881ce9bb8f586cc6918c5cebeb7d9477c843c24613b8f163adc1b05e46aabf2a",
+      "officialSha256": "881ce9bb8f586cc6918c5cebeb7d9477c843c24613b8f163adc1b05e46aabf2a"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/README.md",
+      "sha256": "94b3703f5b881d8800004565b7a07fdcfe2ec1fb6382f5828b56e56e4a3d8795",
+      "officialSha256": "94b3703f5b881d8800004565b7a07fdcfe2ec1fb6382f5828b56e56e4a3d8795"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/rawspeed3_c_api/rawspeed3_capi_test.cpp",
+      "sha256": "53efdc6f7b22d9d03e4419236b1b2582f9d118e219cb4fee9ba2efeadb29e437",
+      "officialSha256": "53efdc6f7b22d9d03e4419236b1b2582f9d118e219cb4fee9ba2efeadb29e437"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/rawspeed3_c_api/rawspeed3_capi.h",
+      "sha256": "9e5b612735e5c038311225969f8337ab7fc0c9cc99c9789783aab77e778600d2",
+      "officialSha256": "9e5b612735e5c038311225969f8337ab7fc0c9cc99c9789783aab77e778600d2"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/rawspeed3_c_api/rsxml2c.sh",
+      "sha256": "76924c4177cc154a27a73622bfcfe5c09e593b3aa33f5c8b199e5b031fc49f6d",
+      "officialSha256": "76924c4177cc154a27a73622bfcfe5c09e593b3aa33f5c8b199e5b031fc49f6d"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/rawspeed3_c_api/rawspeed3_capi.cpp",
+      "sha256": "c14f9e2e1cf7cfd357d1863c1c7a06fdef164f3cc23d44cd6a35425e92f58226",
+      "officialSha256": "c14f9e2e1cf7cfd357d1863c1c7a06fdef164f3cc23d44cd6a35425e92f58226"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/patches/01.CameraMeta-extensibility.patch",
+      "sha256": "fcbebe0d0e03ee3849fab63d5f115697fc5bcda124cdf56efe1f0de00826db0a",
+      "officialSha256": "fcbebe0d0e03ee3849fab63d5f115697fc5bcda124cdf56efe1f0de00826db0a"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/patches/05.no-phase-one-correction.patch",
+      "sha256": "048db1b2ed7735bfbb136a4f42ab726566ef0f31c5706899d72535cb7fe41313",
+      "officialSha256": "048db1b2ed7735bfbb136a4f42ab726566ef0f31c5706899d72535cb7fe41313"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/patches/03.remove-limits-and-logging.patch",
+      "sha256": "d7924108af23bcbd3a95cebdd29465b00172695f9a4bbf4a6de8f756af5394c4",
+      "officialSha256": "d7924108af23bcbd3a95cebdd29465b00172695f9a4bbf4a6de8f756af5394c4"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/patches/02.Makernotes-processing.patch",
+      "sha256": "865a63f2d42adfcb0728a556ca63c4822326d445f802e614e48e382aecf5cc7f",
+      "officialSha256": "865a63f2d42adfcb0728a556ca63c4822326d445f802e614e48e382aecf5cc7f"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed3/patches/04.clang-cl-compatibility.patch",
+      "sha256": "44646383fc16c83b7c068452968b2e73c391201a0a01053a2b924cc4250ba7f1",
+      "officialSha256": "44646383fc16c83b7c068452968b2e73c391201a0a01053a2b924cc4250ba7f1"
+    },
+    {
+      "path": "LibRaw-0.22.3/LibRaw.pro",
+      "sha256": "ae8e1347283d73c424062524fdcef00eaec2d29f4865449dc813ea51f61a176b",
+      "officialSha256": "ae8e1347283d73c424062524fdcef00eaec2d29f4865449dc813ea51f61a176b"
+    },
+    {
+      "path": "LibRaw-0.22.3/version.sh",
+      "sha256": "0ed807489c4f583a4143a957448b28ae641dd5ddd200b00d710bbb7394fbbe17",
+      "officialSha256": "0ed807489c4f583a4143a957448b28ae641dd5ddd200b00d710bbb7394fbbe17"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw.pc.in",
+      "sha256": "6ee2a89b7ca189e9fbf7b914d5e889c5918039e85e63367ab47e5c8f399e3033",
+      "officialSha256": "6ee2a89b7ca189e9fbf7b914d5e889c5918039e85e63367ab47e5c8f399e3033"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw_internal.h",
+      "sha256": "50a814b8f5d8308d57d31aa616f239215042f3d4befea50c9a8af983f4bf9c27",
+      "officialSha256": "50a814b8f5d8308d57d31aa616f239215042f3d4befea50c9a8af983f4bf9c27"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw_types.h",
+      "sha256": "294f6d0c904d017d4b047fd30890e16dbd4a6b7665911b5aa1b99df7bde0aa20",
+      "officialSha256": "294f6d0c904d017d4b047fd30890e16dbd4a6b7665911b5aa1b99df7bde0aa20"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw_alloc.h",
+      "sha256": "e070165e315ee222114a2483d55563228cf4298c902e419f73b16cb4a75a9650",
+      "officialSha256": "e070165e315ee222114a2483d55563228cf4298c902e419f73b16cb4a75a9650"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw.h",
+      "sha256": "48b3048304f42266ddb5bb5068f69427c249d574f80d8423387906d44bcae27d",
+      "officialSha256": "48b3048304f42266ddb5bb5068f69427c249d574f80d8423387906d44bcae27d"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw_datastream.h",
+      "sha256": "382a77b9d9f3c595ee4248bbe81f44a0a548c22bf9f2bccfdbc64ce95a3d2dfd",
+      "officialSha256": "382a77b9d9f3c595ee4248bbe81f44a0a548c22bf9f2bccfdbc64ce95a3d2dfd"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw_version.h",
+      "sha256": "e9b0acb51d512928fa0b9c2c5fe4ba04b7eeb2286ed6dff6ed550748f9be99be",
+      "officialSha256": "e9b0acb51d512928fa0b9c2c5fe4ba04b7eeb2286ed6dff6ed550748f9be99be"
+    },
+    {
+      "path": "LibRaw-0.22.3/libraw/libraw_const.h",
+      "sha256": "77f83993ba6fe3ec67baba0f8c9d10d333aa0c1e3463cd1e861c4477aeded8a2",
+      "officialSha256": "77f83993ba6fe3ec67baba0f8c9d10d333aa0c1e3463cd1e861c4477aeded8a2"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.devel.nopp",
+      "sha256": "92cba828a29b77af4ec92afd93625c815684cb42ec7602d3f3d97e0c019bd82f",
+      "officialSha256": "92cba828a29b77af4ec92afd93625c815684cb42ec7602d3f3d97e0c019bd82f"
+    },
+    {
+      "path": "LibRaw-0.22.3/INSTALL",
+      "sha256": "29962e9afd73bb49ba29d93a77ba5a2ca7af8a2892f79da7a2aa111860028ca1",
+      "officialSha256": "29962e9afd73bb49ba29d93a77ba5a2ca7af8a2892f79da7a2aa111860028ca1"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.mingw",
+      "sha256": "a3e3422d573120b7700a316218aaa6e70cb7e6c6d837e9ba600514f0f07fefc5",
+      "officialSha256": "a3e3422d573120b7700a316218aaa6e70cb7e6c6d837e9ba600514f0f07fefc5"
+    },
+    {
+      "path": "LibRaw-0.22.3/Changelog.txt",
+      "sha256": "f079e9b4f2e83280c88abfb619c1e4c3021ac8505ec967e89ccbc44b2d141ca6",
+      "officialSha256": "f079e9b4f2e83280c88abfb619c1e4c3021ac8505ec967e89ccbc44b2d141ca6"
+    },
+    {
+      "path": "LibRaw-0.22.3/CONTRIBUTING.md",
+      "sha256": "87c7fe08d8a8ed66ffb07a2d651f52869d5e5e3155557430d227510b5c4d75e9",
+      "officialSha256": "87c7fe08d8a8ed66ffb07a2d651f52869d5e5e3155557430d227510b5c4d75e9"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/Why-LibRaw.html",
+      "sha256": "6168ce83b3bbfc6d55458a0d4206b90f683b6a8c940848e3d6a54f549d6cd698",
+      "officialSha256": "6168ce83b3bbfc6d55458a0d4206b90f683b6a8c940848e3d6a54f549d6cd698"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/API-C.html",
+      "sha256": "ed726b7d1c9f565fc8cb26447865d89912eddb5e7743f33ec676f21ba1a9344f",
+      "officialSha256": "ed726b7d1c9f565fc8cb26447865d89912eddb5e7743f33ec676f21ba1a9344f"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/API-CXX.html",
+      "sha256": "fd4b92057666b673738830242c55ab5548f61337e765b1ae906c37ae15938c76",
+      "officialSha256": "fd4b92057666b673738830242c55ab5548f61337e765b1ae906c37ae15938c76"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/Install-LibRaw.html",
+      "sha256": "8968e3fa4b674d22b60fdefae39c1dfca7bc8d01494c7d2a66f08cc870d0cd60",
+      "officialSha256": "8968e3fa4b674d22b60fdefae39c1dfca7bc8d01494c7d2a66f08cc870d0cd60"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/API-overview.html",
+      "sha256": "6e39b97435a5bffaca3b3ff38b17303e7fb69a788c84dc1af2decb3fb58e4d8e",
+      "officialSha256": "6e39b97435a5bffaca3b3ff38b17303e7fb69a788c84dc1af2decb3fb58e4d8e"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/index.html",
+      "sha256": "cedd8eae16a7ff15d707cf9252629be31e24d233271824bf8ea223c5da3d76fc",
+      "officialSha256": "cedd8eae16a7ff15d707cf9252629be31e24d233271824bf8ea223c5da3d76fc"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/API-datastruct.html",
+      "sha256": "6d4b45719d9afd4fe16f7a149236d1dd9d0f99be30024d87d11a9dbaf11030f4",
+      "officialSha256": "6d4b45719d9afd4fe16f7a149236d1dd9d0f99be30024d87d11a9dbaf11030f4"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/API-notes.html",
+      "sha256": "46a1ffccb21f3eaff924b2328f784200fe97d470f5a8f3b7faa9f335eb53ccb4",
+      "officialSha256": "46a1ffccb21f3eaff924b2328f784200fe97d470f5a8f3b7faa9f335eb53ccb4"
+    },
+    {
+      "path": "LibRaw-0.22.3/doc/Samples-LibRaw.html",
+      "sha256": "51713a4bed72bdae5d42b47503510541e58c9d7fb4bd4083f95aa755479d1c27",
+      "officialSha256": "51713a4bed72bdae5d42b47503510541e58c9d7fb4bd4083f95aa755479d1c27"
+    },
+    {
+      "path": "LibRaw-0.22.3/.clang-format",
+      "sha256": "2939d8e152ca3ffae6981ad5ee8099445f680b4ac745313d3b871ed314bc4e7e",
+      "officialSha256": "2939d8e152ca3ffae6981ad5ee8099445f680b4ac745313d3b871ed314bc4e7e"
+    },
+    {
+      "path": "LibRaw-0.22.3/COPYRIGHT",
+      "sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509",
+      "officialSha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509"
+    },
+    {
+      "path": "LibRaw-0.22.3/rsxml2c.sh",
+      "sha256": "087b9295b27d26210c804cc4be4d7a96ea9155c8244c8be3034f792ee1bb718a",
+      "officialSha256": "087b9295b27d26210c804cc4be4d7a96ea9155c8244c8be3034f792ee1bb718a"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.am",
+      "sha256": "d00767ccc91f29a0f77dc3f4f1ef24a8c530f7c8601f338f93404bf229b70f34",
+      "officialSha256": "d00767ccc91f29a0f77dc3f4f1ef24a8c530f7c8601f338f93404bf229b70f34"
+    },
+    {
+      "path": "LibRaw-0.22.3/config.sub",
+      "sha256": "4431bef46ac3d3bee68f283f48d8b94caba57d2f566f8a72b61e92cbad2b8385",
+      "officialSha256": "4431bef46ac3d3bee68f283f48d8b94caba57d2f566f8a72b61e92cbad2b8385"
+    },
+    {
+      "path": "LibRaw-0.22.3/configure",
+      "sha256": "41fc0f0c237d164d800d15f519b9a5d39ee4cbcbf0a0ce2d7c641c6f7c7485f0",
+      "officialSha256": "41fc0f0c237d164d800d15f519b9a5d39ee4cbcbf0a0ce2d7c641c6f7c7485f0"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/gpr_read_image.h-dng16.diff",
+      "sha256": "32484201e2317f07b2665f9b8b285ef91ffca088e801010b92b0ef67ac2a32db",
+      "officialSha256": "32484201e2317f07b2665f9b8b285ef91ffca088e801010b92b0ef67ac2a32db"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/dng-sdk-1_6-hide-ccVc5-definitiion.diff",
+      "sha256": "eb3bcacfc2cc10a5d16fa10eeb2547c808ee312a708ca321f7e1b4c7d4132bc4",
+      "officialSha256": "eb3bcacfc2cc10a5d16fa10eeb2547c808ee312a708ca321f7e1b4c7d4132bc4"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/gpr_read_image.h-dng17.diff",
+      "sha256": "1dc5f8b84add940efad35087fca0c61256897b6e445f1a7bf5c08214a470a3f1",
+      "officialSha256": "1dc5f8b84add940efad35087fca0c61256897b6e445f1a7bf5c08214a470a3f1"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/dng-sdk-1_6-1_7-hide-ccVc5-definitiion.diff",
+      "sha256": "b5ec9852fbb1eb8bc091e1a71023ec1227fbbf2729a4d48952cd54598aebe105",
+      "officialSha256": "b5ec9852fbb1eb8bc091e1a71023ec1227fbbf2729a4d48952cd54598aebe105"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/dng-sdk-allow-VC5-validate.diff",
+      "sha256": "170a7b78014b61d0c2f475482df1c1c6961ec41eabb7831597f562e7545cc72a",
+      "officialSha256": "170a7b78014b61d0c2f475482df1c1c6961ec41eabb7831597f562e7545cc72a"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/dng-sdk-1_4-allow-VC5-validate.diff",
+      "sha256": "170a7b78014b61d0c2f475482df1c1c6961ec41eabb7831597f562e7545cc72a",
+      "officialSha256": "170a7b78014b61d0c2f475482df1c1c6961ec41eabb7831597f562e7545cc72a"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/gpr_read_image.h.diff",
+      "sha256": "32484201e2317f07b2665f9b8b285ef91ffca088e801010b92b0ef67ac2a32db",
+      "officialSha256": "32484201e2317f07b2665f9b8b285ef91ffca088e801010b92b0ef67ac2a32db"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/gpr_read_image.cpp-dng17.diff",
+      "sha256": "9e09cedd9bda229461c81f34b06770eb34b914a622419ff40bc455cd159d11ce",
+      "officialSha256": "9e09cedd9bda229461c81f34b06770eb34b914a622419ff40bc455cd159d11ce"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/gpr_read_image.cpp.diff",
+      "sha256": "6bb37a67f7f46a5a957f6c15347397e954a448b428520f52bfa2cc409763dddd",
+      "officialSha256": "6bb37a67f7f46a5a957f6c15347397e954a448b428520f52bfa2cc409763dddd"
+    },
+    {
+      "path": "LibRaw-0.22.3/GoPro/gpr_read_image.cpp-dng16.diff",
+      "sha256": "6bb37a67f7f46a5a957f6c15347397e954a448b428520f52bfa2cc409763dddd",
+      "officialSha256": "6bb37a67f7f46a5a957f6c15347397e954a448b428520f52bfa2cc409763dddd"
+    },
+    {
+      "path": "LibRaw-0.22.3/README.md",
+      "sha256": "47d6d721c3d3cda045a2780f807a6f3400bc29911df070daa38da4f4d5448fa5",
+      "officialSha256": "47d6d721c3d3cda045a2780f807a6f3400bc29911df070daa38da4f4d5448fa5"
+    },
+    {
+      "path": "LibRaw-0.22.3/README.cmake",
+      "sha256": "a11f28f25939cffc2bf2edcaf0ddc2fc865f718a54a5e6cb4dfb1bbe754ff85a",
+      "officialSha256": "a11f28f25939cffc2bf2edcaf0ddc2fc865f718a54a5e6cb4dfb1bbe754ff85a"
+    },
+    {
+      "path": "LibRaw-0.22.3/README.demosaic-packs",
+      "sha256": "a737665db77c1a78d4cdb6ef7fcd14b86986c2d9892986ad932cc5f886678355",
+      "officialSha256": "a737665db77c1a78d4cdb6ef7fcd14b86986c2d9892986ad932cc5f886678355"
+    },
+    {
+      "path": "LibRaw-0.22.3/LibRaw.sln",
+      "sha256": "48af968346153b38ebd5953430f7cd2d013c209e51bd90b1fa2d44aa17c35dc2",
+      "officialSha256": "48af968346153b38ebd5953430f7cd2d013c209e51bd90b1fa2d44aa17c35dc2"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.msvc",
+      "sha256": "d98c891e54002eb71db90fd7eefe961a661e309539098b7beb373b369aaaf865",
+      "officialSha256": "d98c891e54002eb71db90fd7eefe961a661e309539098b7beb373b369aaaf865"
+    },
+    {
+      "path": "LibRaw-0.22.3/Makefile.in",
+      "sha256": "62ad61c22827907b39f767726368557507c65b4de93ef1ce8d2e39cb9361b050",
+      "officialSha256": "62ad61c22827907b39f767726368557507c65b4de93ef1ce8d2e39cb9361b050"
+    },
+    {
+      "path": "LibRaw-0.22.3/configure.ac",
+      "sha256": "2f3862154470c3e50cf83815f80f7f130747fb8565ead6d6601050a684d6f3e0",
+      "officialSha256": "2f3862154470c3e50cf83815f80f7f130747fb8565ead6d6601050a684d6f3e0"
+    },
+    {
+      "path": "LibRaw-0.22.3/README.RawSpeed.txt",
+      "sha256": "46119a8c55a47cef017dd401c42f5f95ef40179d34b2098932f5a64bb422b840",
+      "officialSha256": "46119a8c55a47cef017dd401c42f5f95ef40179d34b2098932f5a64bb422b840"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed/rawspeed.qmake-pro-files.patch",
+      "sha256": "7db13f00fa23a7394536a79e58c0c924545a94d74700aa863e11a16a9aeba2d5",
+      "officialSha256": "7db13f00fa23a7394536a79e58c0c924545a94d74700aa863e11a16a9aeba2d5"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed/rawspeed.win32-dll.patch",
+      "sha256": "c787937d51198788b6e20119bdcf2272d872eb04ab55336f6f99554fc1072781",
+      "officialSha256": "c787937d51198788b6e20119bdcf2272d872eb04ab55336f6f99554fc1072781"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed/rawspeed.samsung-decoder.patch",
+      "sha256": "3653b23a41a1b66f2ec5ce6940b583a0c43374d274e7feaa101152decbecedd6",
+      "officialSha256": "3653b23a41a1b66f2ec5ce6940b583a0c43374d274e7feaa101152decbecedd6"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed/rawspeed_xmldata.cpp",
+      "sha256": "7192bdbeeeb5cc0b64bd4a836c57054c9f984d395f0d59ff135d4f4e6340a1db",
+      "officialSha256": "7192bdbeeeb5cc0b64bd4a836c57054c9f984d395f0d59ff135d4f4e6340a1db"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed/rawspeed.uncompressed-color-dng.patch",
+      "sha256": "c9bf3148395f4cae648f17f469ba7a3f8d96d0ec95d4eab76ece645d4d8f131a",
+      "officialSha256": "c9bf3148395f4cae648f17f469ba7a3f8d96d0ec95d4eab76ece645d4d8f131a"
+    },
+    {
+      "path": "LibRaw-0.22.3/RawSpeed/rawspeed.cpucount-unix.patch",
+      "sha256": "657e8767d54d56f00b0436e683dfcca3068bbec7e4a462a601f98ac8671ad659",
+      "officialSha256": "657e8767d54d56f00b0436e683dfcca3068bbec7e4a462a601f98ac8671ad659"
+    }
+  ],
+  "outputs": [
+    {
+      "abi": "arm64-v8a",
+      "abiBits": 64,
+      "path": "app/src/main/jniLibs/arm64-v8a/libraw.so",
+      "bytes": 1207392,
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": true
+    },
+    {
+      "abi": "arm64-v8a",
+      "abiBits": 64,
+      "path": "app/src/main/jniLibs/arm64-v8a/libhuevia_raw.so",
+      "bytes": 49960,
+      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": true
+    },
+    {
+      "abi": "arm64-v8a",
+      "abiBits": 64,
+      "path": "app/src/main/jniLibs/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": true
+    },
+    {
+      "abi": "armeabi-v7a",
+      "abiBits": 32,
+      "path": "app/src/main/jniLibs/armeabi-v7a/libraw.so",
+      "bytes": 1146600,
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": false
+    },
+    {
+      "abi": "armeabi-v7a",
+      "abiBits": 32,
+      "path": "app/src/main/jniLibs/armeabi-v7a/libhuevia_raw.so",
+      "bytes": 19904,
+      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": false
+    },
+    {
+      "abi": "armeabi-v7a",
+      "abiBits": 32,
+      "path": "app/src/main/jniLibs/armeabi-v7a/libc++_shared.so",
+      "bytes": 850380,
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "minimumLoadAlignmentBytes": 4096.0,
+      "page16KiBCompatible": false,
+      "requires16KiBAlignment": false
+    },
+    {
+      "abi": "x86_64",
+      "abiBits": 64,
+      "path": "app/src/main/jniLibs/x86_64/libraw.so",
+      "bytes": 1284728,
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": true
+    },
+    {
+      "abi": "x86_64",
+      "abiBits": 64,
+      "path": "app/src/main/jniLibs/x86_64/libhuevia_raw.so",
+      "bytes": 50184,
+      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": true
+    },
+    {
+      "abi": "x86_64",
+      "abiBits": 64,
+      "path": "app/src/main/jniLibs/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": true
+    },
+    {
+      "abi": "x86",
+      "abiBits": 32,
+      "path": "app/src/main/jniLibs/x86/libraw.so",
+      "bytes": 1265240,
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": false
+    },
+    {
+      "abi": "x86",
+      "abiBits": 32,
+      "path": "app/src/main/jniLibs/x86/libhuevia_raw.so",
+      "bytes": 46564,
+      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "minimumLoadAlignmentBytes": 16384.0,
+      "page16KiBCompatible": true,
+      "requires16KiBAlignment": false
+    },
+    {
+      "abi": "x86",
+      "abiBits": 32,
+      "path": "app/src/main/jniLibs/x86/libc++_shared.so",
+      "bytes": 1143240,
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "minimumLoadAlignmentBytes": 4096.0,
+      "page16KiBCompatible": false,
+      "requires16KiBAlignment": false
+    }
+  ],
+  "bridgeSha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae"
+}

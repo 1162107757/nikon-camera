@@ -1,0 +1,49 @@
+{
+  "candidateApk": "D:/dev/ai-project/nikon/dist/huevia-0.21.5-beta-debug.apk",
+  "candidateSha256": "f25bbac00d1013e519514398cff7947dff122fd2116558dab8b2e13d2952c57f",
+  "versionCode": 104,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "rail",
+  "runId": "20261026-202217-rail-d2ac33",
+  "probeSha256": "e41945517f1bb496e8adc43e9142721d4c263233f1164209eabeee465ddae89a",
+  "scope": "Real AlbumPanel and GlassBar in substitute Activity, calling MainActivity shared navigation height/inset helpers through reflection. Real connection guide, actual settings edits and cancellation; synthetic connection stages; no system Wi-Fi or physical camera claim. No real MainActivity startup, real camera, HTTP/download, destructive confirmation, or production deletion. MainActivity host wiring must also be reviewed separately.",
+  "files": [
+    {
+      "file": "01-collapsed-nikon.png",
+      "bytes": 86691,
+      "sha256": "cc08ac669d571dfcc1d2662f8b88f8605455c404d3ccdad3968d689c58db71d2"
+    },
+    {
+      "file": "02-settings-expanded.png",
+      "bytes": 204147,
+      "sha256": "e3cbedd3556c97503a532cca4b2f24250ae567c3e6e9993ce275704eb3c320f8"
+    },
+    {
+      "file": "03-camera-confirmation.png",
+      "bytes": 89244,
+      "sha256": "38252e02a70e3caf372262351750be324b878c926f38064447bf6a6e072f5132"
+    },
+    {
+      "file": "04-reading-photos.png",
+      "bytes": 85682,
+      "sha256": "dbeaba40ccca26400f31161e0160120261e3cf6d0cc5385b58fa8e2711de20a3"
+    },
+    {
+      "file": "05-wifi-error-details.png",
+      "bytes": 107121,
+      "sha256": "2b85e513d193af8faeaed9634b8dc4f15877dc923de1642519a1ed34c43ddeff"
+    },
+    {
+      "file": "06-confirm-error-details.png",
+      "bytes": 105707,
+      "sha256": "3d40d883bc92464a8fa989b821e29d4826af513706dc0a9c979054037265dcaf"
+    },
+    {
+      "file": "report.json",
+      "bytes": 4016,
+      "sha256": "3e46bcb09a108d347a1b15baf76811e22b0639a53a74765f8cbbe9621ec0e12b"
+    }
+  ],
+  "pass": true
+}

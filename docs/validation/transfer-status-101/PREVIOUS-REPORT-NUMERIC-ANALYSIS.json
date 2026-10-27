@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "transfers": [
+    {
+      "transfer": 1,
+      "status": "COMPLETE",
+      "samples": 49,
+      "bytes": 12853156,
+      "totalBytes": 12853156,
+      "elapsedMs": 111032,
+      "averageMBps": 0.116,
+      "payloadReadMs": 110465,
+      "sinkWriteMs": 77,
+      "progressCallbackMs": 78,
+      "timeouts": 0,
+      "otherElapsedMs": 412,
+      "payloadReadPercent": 99.5,
+      "longestSampleIntervalMs": 2884
+    }
+  ],
+  "completed": 1,
+  "medianCompletedMBps": 0.116,
+  "limitation": "接收耗时包含等待读取；不能单凭此报告区分相机发送与无线链路。采样间隔不等于网络停顿。报告仅保留最近一段日志，未完成记录可能已被截断。"
+}
