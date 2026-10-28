@@ -8,24 +8,40 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      ANDROID_HOME: C:\Android\android-sdk
+      ANDROID_SDK_ROOT: C:\Android\android-sdk
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-      - uses: android-actions/setup-android@v3
       - name: Install Android SDK packages
         shell: pwsh
         run: |
-          $sdk = "$env:ANDROID_HOME\cmdline-tools\latest\bin\sdkmanager.bat"
-          if (-not (Test-Path $sdk)) { $sdk = "$env:ANDROID_HOME\cmdline-tools\bin\sdkmanager.bat" }
-          & $sdk "platforms;android-35" "build-tools;35.0.0" "ndk;28.2.13676358"
+          $sdkRoot = $env:ANDROID_HOME
+          Write-Output "ANDROID_HOME=$sdkRoot"
+          $candidates = @(
+            "$sdkRoot\cmdline-tools\latest\bin\sdkmanager.bat",
+            "$sdkRoot\cmdline-tools\16.0\bin\sdkmanager.bat",
+            "$sdkRoot\cmdline-tools\bin\sdkmanager.bat"
+          )
+          $sdk = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $sdk) { throw "sdkmanager.bat not found under $sdkRoot\cmdline-tools" }
+          Write-Output "Using sdkmanager: $sdk"
+          # Accept licenses first, then install only the packages the project script needs.
+          # Do not use android-actions/setup-android: on current windows runners it tries
+          # to install the obsolete 'tools' package and fails with exit code 1.
+          try { 1..20 | ForEach-Object { "y" } | & $sdk --sdk_root="$sdkRoot" --licenses } catch { Write-Output "license step warning: $_" }
+          & $sdk --sdk_root="$sdkRoot" "platforms;android-35" "build-tools;35.0.0" "ndk;28.2.13676358"
           if ($LASTEXITCODE -ne 0) { throw "sdkmanager failed" }
+          if (-not (Test-Path "$sdkRoot\platforms\android-35\android.jar")) { throw "platform 35 not installed" }
+          if (-not (Test-Path "$sdkRoot\build-tools\35.0.0")) { throw "build-tools 35.0.0 not installed" }
       - name: Build APK with project script
         shell: pwsh
         run: |
-          ./scripts/build-apk.ps1
+          ./scripts/build-apk.ps1 -SdkRoot $env:ANDROID_HOME
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
