@@ -15,7 +15,7 @@ public final class AdjustedPreviewProfile implements PresetPreviewProfile {
     private final PhotoAdjustments settings;
     private final double[][] channels=new double[3][256];
     private final boolean colourNeutral;
-    private final double contrastGain, brightnessGain, highlightsGain, shadowsGain, whitesGain, blacksGain, saturationGain, vibranceGain;
+    private final double contrastGain, brightnessGain, highlightsGain, shadowsGain, whitesGain, blacksGain, saturationGain, vibranceGain, dehazeGain, splitHighlights, splitShadows;
     private final boolean hasCurves, hasHsl;
     private final ThreadLocal<double[]> rgb=ThreadLocal.withInitial(()->new double[3]);
     private AdjustedPreviewProfile(PresetPreviewProfile base,PhotoAdjustments settings){
@@ -24,9 +24,9 @@ public final class AdjustedPreviewProfile implements PresetPreviewProfile {
         contrastGain=Math.exp(settings.get(CONTRAST)*.009);
         brightnessGain=settings.get(BRIGHTNESS)/100.0*.32;highlightsGain=settings.get(HIGHLIGHTS)/100.0*.38;shadowsGain=settings.get(SHADOWS)/100.0*.38;
         whitesGain=settings.get(WHITES)/100.0*.25;blacksGain=settings.get(BLACKS)/100.0*.25;
-        saturationGain=1+settings.get(SATURATION)/100.0;vibranceGain=settings.get(VIBRANCE)/100.0*.8;
+        saturationGain=1+settings.get(SATURATION)/100.0;vibranceGain=settings.get(VIBRANCE)/100.0*.8;dehazeGain=settings.get(DEHAZE)/100.0;splitHighlights=settings.get(SPLIT_HIGHLIGHTS)/100.0;splitShadows=settings.get(SPLIT_SHADOWS)/100.0;
         hasCurves=!settings.curves.isNeutral();hasHsl=!settings.hsl.isNeutral();
-        boolean neutral=true;for(PhotoAdjustments.Parameter p:PhotoAdjustments.Parameter.values())if(p.ordinal()<PhotoAdjustments.LEGACY_PARAMETER_COUNT&&p!=CLARITY&&p!=SHARPENING&&settings.get(p)!=0)neutral=false;
+        boolean neutral=true;for(PhotoAdjustments.Parameter p:PhotoAdjustments.Parameter.values())if(p!=CLARITY&&p!=SHARPENING&&p!=LUMA_DENOISE&&p!=COLOR_DENOISE&&p!=GRAIN&&p!=VIGNETTE&&settings.get(p)!=0)neutral=false;
         colourNeutral=neutral&&settings.curves.isNeutral()&&settings.hsl.isNeutral();
         double exposure=Math.pow(2,settings.get(EXPOSURE)/10.0),t=settings.get(TEMPERATURE)/100.0,tint=settings.get(TINT)/100.0;
         double[] gain={Math.exp(.35*t+.13*tint),Math.exp(-.15*tint),Math.exp(-.35*t+.13*tint)};
@@ -61,6 +61,8 @@ public final class AdjustedPreviewProfile implements PresetPreviewProfile {
         double saturation=max>0?(max-min)/max:0;
         double amount=saturationGain*(1+vibranceGain*Math.pow(1-saturation,2));
         r=l+(r-l)*amount;g=l+(g-l)*amount;b=l+(b-l)*amount;
+        if(dehazeGain!=0){double contrast=1+dehazeGain*.35;r=.5+(r-.5)*contrast;g=.5+(g-.5)*contrast;b=.5+(b-.5)*contrast;double shadowWeight=Math.pow(1-l,2);r-=dehazeGain*.08*shadowWeight;g-=dehazeGain*.08*shadowWeight;b-=dehazeGain*.08*shadowWeight;double l2=.2126*r+.7152*g+.0722*b;double boost=1+dehazeGain*.15;r=l2+(r-l2)*boost;g=l2+(g-l2)*boost;b=l2+(b-l2)*boost;}
+        if(splitHighlights!=0||splitShadows!=0){double hw=smooth(.5,1,l),sw=1-smooth(0,.5,l);double tint=(splitHighlights*hw+splitShadows*sw)*.12;r+=tint;b-=tint;}
         if(hasCurves){
             r=settings.curves.map(1,settings.curves.map(0,r));g=settings.curves.map(2,settings.curves.map(0,g));b=settings.curves.map(3,settings.curves.map(0,b));
         }
