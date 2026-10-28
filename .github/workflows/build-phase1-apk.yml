@@ -38,6 +38,27 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw "sdkmanager failed" }
           if (-not (Test-Path "$sdkRoot\platforms\android-35\android.jar")) { throw "platform 35 not installed" }
           if (-not (Test-Path "$sdkRoot\build-tools\35.0.0")) { throw "build-tools 35.0.0 not installed" }
+      - name: Restore official LibRaw sources from zip
+        shell: pwsh
+        run: |
+          # build-raw-native.ps1 hashes every LibRaw source file against the official
+          # zip. A Windows checkout can change line endings (CRLF) and make
+          # install-sh and other text files hash-mismatch, even though the code
+          # is unchanged. Overwrite the source tree with the exact zip bytes
+          # before building, without changing the project scripts.
+          $zipPath = "third-party/libraw/LibRaw-0.22.3.zip"
+          if (-not (Test-Path $zipPath)) { throw "LibRaw archive not found: $zipPath" }
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = [IO.Compression.ZipFile]::OpenRead($zipPath)
+          try {
+            foreach ($entry in $zip.Entries) {
+              if ($entry.FullName.EndsWith('/')) { continue }
+              $target = Join-Path "third-party/libraw" $entry.FullName
+              New-Item -ItemType Directory -Force -Path (Split-Path $target) | Out-Null
+              [IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $target, $true)
+            }
+          } finally { $zip.Dispose() }
+          Write-Output "LibRaw sources restored from official zip"
       - name: Build APK with project script
         shell: pwsh
         run: |
