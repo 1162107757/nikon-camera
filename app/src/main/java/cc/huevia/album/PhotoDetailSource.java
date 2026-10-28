@@ -68,8 +68,9 @@ public final class PhotoDetailSource implements AutoCloseable {
         public String registrationName(){return "已保存版本";}public String modelVersion(){return "saved-file-pixels-v1";}
         public double mapTone(double v){return v;}public int applyArgb(int v){return v;}
     };
-    private static final class Surface {final File file;final BitmapRegionDecoder decoder;final Bitmap overview;final int width,height;final boolean temporary;
-        Surface(File file,BitmapRegionDecoder decoder,Bitmap overview,boolean temporary){this.file=file;this.decoder=decoder;this.overview=overview;this.width=decoder.getWidth();this.height=decoder.getHeight();this.temporary=temporary;}}
+    private static final class Surface {final File file;final BitmapRegionDecoder decoder;final Bitmap overview;final int width,height;final boolean temporary;final PresetPreviewProfile colourProfile;
+        Surface(File file,BitmapRegionDecoder decoder,Bitmap overview,boolean temporary){this(file,decoder,overview,temporary,null);}
+        Surface(File file,BitmapRegionDecoder decoder,Bitmap overview,boolean temporary,PresetPreviewProfile colourProfile){this.file=file;this.decoder=decoder;this.overview=overview;this.width=decoder.getWidth();this.height=decoder.getHeight();this.temporary=temporary;this.colourProfile=colourProfile;}}
     private static final class Pending {final long token;final int mode;final Callback callback;Pending(long token,int mode,Callback callback){this.token=token;this.mode=mode;this.callback=callback;}}
     private final Request request;private final File directory;private final Handler main=new Handler(Looper.getMainLooper());
     private final long sourceLength,sourceModified;private final FileObserver observer;
@@ -171,6 +172,18 @@ public final class PhotoDetailSource implements AutoCloseable {
             try{checkPreparation();Surface created=new Surface(request.file,decoder,previewFor(mode).overview,false);surfaces[mode]=created;return created;}
             catch(IOException|RuntimeException|OutOfMemoryError failure){decoder.recycle();throw failure;}
         }
+        // On-demand colour path: when geometry is neutral, orientation is stored
+        // upright, and the profile is colour-only, decode JPEG tiles directly and
+        // apply the point colour transform per tile. This avoids rendering the
+        // whole image to a temporary PNG first. Spatial, geometry and perspective
+        // cases still fall through to the rendered PNG path below, preserving
+        // exactness for those effects.
+        if(mode==CURRENT&&request.canCompare&&request.profile!=null&&orientation==1&&geometry().isNeutral()&&request.profile.isColourOnly()&&previewFor(mode)!=null){
+            BitmapRegionDecoder decoder=BitmapRegionDecoder.newInstance(request.file.getPath(),false);
+            if(decoder==null)throw new IOException("无法读取完整细节。");
+            try{checkPreparation();Surface created=new Surface(request.file,decoder,previewFor(mode).overview,false,request.profile);surfaces[mode]=created;return created;}
+            catch(IOException|RuntimeException|OutOfMemoryError failure){decoder.recycle();throw failure;}
+        }
         if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("细节暂存目录不可用，请检查存储空间。");
         File target=new File(directory,mode==CURRENT?"current.png":"before.png");
         BitmapRegionDecoder decoder=null;Bitmap overview=null;
@@ -202,7 +215,13 @@ public final class PhotoDetailSource implements AutoCloseable {
             int x=(region.left-expanded.left)/sample,y=(region.top-expanded.top)/sample;
             int width=Math.min((region.width()+sample-1)/sample,decoded.getWidth()-x),height=Math.min((region.height()+sample-1)/sample,decoded.getHeight()-y);
             Bitmap tile=Bitmap.createBitmap(decoded,x,y,width,height);tile.setDensity(Bitmap.DENSITY_NONE);
-            if(tile==decoded)decoded=null;return tile;
+            if(tile==decoded)decoded=null;
+            if(surface.colourProfile!=null){
+                int w=tile.getWidth(),h=tile.getHeight();int[] pixels=new int[w*h];tile.getPixels(pixels,0,w,0,0,w,h);
+                for(int i=0;i<pixels.length;i++)pixels[i]=surface.colourProfile.applyArgb(pixels[i]);
+                Bitmap coloured=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);coloured.setPixels(pixels,0,w,0,0,w,h);coloured.setDensity(Bitmap.DENSITY_NONE);return coloured;
+            }
+            return tile;
         }finally{if(decoded!=null)decoded.recycle();}
     }
     private static BitmapFactory.Options options(int sample){BitmapFactory.Options o=new BitmapFactory.Options();o.inScaled=false;o.inSampleSize=sample;o.inPreferredConfig=Bitmap.Config.ARGB_8888;o.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);return o;}
