@@ -12,7 +12,7 @@ import android.graphics.drawable.Drawable;
 public final class AppIcon extends Drawable {
     public enum Kind { PRESETS, ALBUM, CAMERA, FILE, DOWNLOAD, BACK, HELP, CHECK, WIFI, ADJUST, REFRESH,
         SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
-        UNDO, REDO, COMPARE, MORE, BRIGHTNESS, EXPOSURE, CONTRAST, HIGHLIGHTS, SHADOWS, WHITES, BLACKS, TEMPERATURE, TINT, SATURATION, VIBRANCE, CLARITY, SHARPENING,
+        UNDO, REDO, COMPARE, MORE, BRIGHTNESS, EXPOSURE, CONTRAST, HIGHLIGHTS, SHADOWS, WHITES, BLACKS, TEMPERATURE, TINT, SATURATION, VIBRANCE, CLARITY, SHARPENING, DEHAZE, SPLIT_HIGHLIGHTS, SPLIT_SHADOWS,
         CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK }
     private final Kind kind;
     private final Paint ink = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -66,6 +66,8 @@ public final class AppIcon extends Drawable {
             case VIBRANCE: line(canvas,12,3,21,20,3,20,12,3);canvas.drawCircle(12,14,3,ink);break;
             case CLARITY: canvas.drawRect(4,4,20,20,ink);line(canvas,8,8,16,8,16,16,8,16,8,8);break;
             case SHARPENING: line(canvas,12,3,21,21,3,21,12,3);line(canvas,12,9,12,16);break;
+            case DEHAZE: canvas.drawRect(4,4,20,20,ink);line(canvas,8,8,16,8,16,16,8,16,8,8);break;
+            case SPLIT_HIGHLIGHTS: case SPLIT_SHADOWS: canvas.drawCircle(9,10,6,ink);canvas.drawCircle(15,10,6,ink);break;
             case CLOSE: line(canvas,6,6,18,18);line(canvas,18,6,6,18);break;
             case GRID: canvas.drawRoundRect(new RectF(3,3,10,10),1,1,ink);canvas.drawRoundRect(new RectF(14,3,21,10),1,1,ink);canvas.drawRoundRect(new RectF(3,14,10,21),1,1,ink);canvas.drawRoundRect(new RectF(14,14,21,21),1,1,ink);break;
             case SEARCH: canvas.drawCircle(10,10,6,ink);line(canvas,15,15,21,21);break;
