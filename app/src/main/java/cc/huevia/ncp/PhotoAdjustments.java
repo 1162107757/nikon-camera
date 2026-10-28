@@ -15,7 +15,8 @@ public final class PhotoAdjustments {
         SATURATION("饱和度", -100, 100), VIBRANCE("自然饱和度", -100, 100),
         CLARITY("清晰度", -100, 100), SHARPENING("锐化", 0, 100),
         LUMA_DENOISE("明度降噪", 0, 100), COLOR_DENOISE("彩色降噪", 0, 100),
-        GRAIN("颗粒", 0, 100), VIGNETTE("暗角", 0, 100);
+        GRAIN("颗粒", 0, 100), VIGNETTE("暗角", 0, 100),
+        DEHAZE("去雾", 0, 100), SPLIT_HIGHLIGHTS("高光色调", -100, 100), SPLIT_SHADOWS("阴影色调", -100, 100);
         public final String label;
         public final int min, max;
         Parameter(String label, int min, int max) { this.label=label;this.min=min;this.max=max; }
@@ -42,6 +43,9 @@ public final class PhotoAdjustments {
                 case COLOR_DENOISE:return "降低彩色斑点，尽量保持照片原有的明暗纹理；与明度降噪分别调整。";
                 case GRAIN:return "增加固定位置的细颗粒；同一设置在预览、细节和导出中使用同一颗粒图案。";
                 case VIGNETTE:return "逐渐压暗照片四角，中心亮度保持。暗角随原图位置变化，裁剪后保留原有位置。";
+                case DEHAZE:return "去雾：降低画面雾感，压暗被雾提亮的暗部并增加中间调反差与色彩浓度。数值过高可能让暗部过黑、色彩过浓。";
+                case SPLIT_HIGHLIGHTS:return "高光色调：只给较亮区域染色，正值偏暖、负值偏冷，不改变暗部颜色。";
+                case SPLIT_SHADOWS:return "阴影色调：只给较暗区域染色，正值偏暖、负值偏冷，不改变亮部颜色。";
                 default:throw new AssertionError(this);
             }
         }
@@ -54,7 +58,7 @@ public final class PhotoAdjustments {
         this(values,PhotoCurves.NONE,PhotoHsl.NONE);
     }
     public PhotoAdjustments(int[] values,PhotoCurves curves,PhotoHsl hsl) {
-        if(values==null||(values.length!=Parameter.values().length&&values.length!=LEGACY_PARAMETER_COUNT))throw new IllegalArgumentException("基础调整数据不完整。");
+        if(values==null||values.length<LEGACY_PARAMETER_COUNT||values.length>Parameter.values().length)throw new IllegalArgumentException("基础调整数据不完整。");
         this.values=Arrays.copyOf(values,Parameter.values().length);
         if(curves==null||hsl==null)throw new IllegalArgumentException("调色数据不完整。");
         this.curves=curves;this.hsl=hsl;
