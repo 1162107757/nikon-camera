@@ -14,6 +14,9 @@ public interface PresetPreviewProfile {
 
     default SpatialPreviewFilter.Settings spatialSettings() { return SpatialPreviewFilter.Settings.NONE; }
 
+    /** True when applyArgb alone reproduces the profile, with no neighbourhood, denoise, grain or vignette step. Detail tiles may then be rendered on demand from the original JPEG instead of a full-size rendered surface. */
+    default boolean isColourOnly() { return spatialSettings().isNone(); }
+
     /** Shared, bounded-memory path for thumbnails and full-size photographs. */
     default void renderPixels(SpatialPreviewFilter.Pixels pixels, BooleanSupplier cancel,
             DoubleConsumer progress) throws IOException {

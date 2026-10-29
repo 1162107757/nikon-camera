@@ -39,6 +39,10 @@ public final class AdjustedPreviewProfile implements PresetPreviewProfile {
         return new AdjustedPreviewProfile(base,settings);
     }
     public String registrationName(){return base==null?"基础调节":base.registrationName();}
+    @Override public boolean isColourOnly(){
+        if(settings.get(SHARPENING)!=0||settings.get(CLARITY)!=0||settings.get(LUMA_DENOISE)!=0||settings.get(COLOR_DENOISE)!=0||settings.get(GRAIN)!=0||settings.get(VIGNETTE)!=0)return false;
+        return base==null||base.isColourOnly();
+    }
     public String modelVersion(){
         String value=(base==null?ORIGINAL.modelVersion():base.modelVersion())+":"+settings.identity();
         if(settings.curves.isNeutral()&&settings.hsl.isNeutral())return value;
