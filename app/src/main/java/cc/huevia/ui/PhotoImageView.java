@@ -31,6 +31,7 @@ public final class PhotoImageView extends View {
     private final ScaleGestureDetector scales;
     private Bitmap photo;
     private Runnable singleTap;
+    private java.util.function.BiConsumer<Float,Float> photoTap;
     private IntConsumer swipe;
     private IntConsumer pageBoundary;
     private boolean retryNextAvailable;
@@ -77,6 +78,17 @@ public final class PhotoImageView extends View {
             @Override public boolean onDown(MotionEvent event) { return true; }
 
             @Override public boolean onSingleTapConfirmed(MotionEvent event) {
+                if (photoTap != null && hasPhoto()) {
+                    float scale = fitScale * zoom;
+                    if (scale > 0f) {
+                        float x = (event.getX() - offsetX - pager.offset()) / scale;
+                        float y = (event.getY() - offsetY) / scale;
+                        if (x >= 0f && y >= 0f && x < photo.getWidth() && y < photo.getHeight()) {
+                            photoTap.accept(x, y);
+                            return true;
+                        }
+                    }
+                }
                 performClick();
                 return true;
             }
@@ -165,6 +177,7 @@ public final class PhotoImageView extends View {
     public void setOnSingleTap(Runnable callback) {
         singleTap = callback;
     }
+    public void setOnPhotoTap(java.util.function.BiConsumer<Float,Float> callback) { photoTap = callback; }
 
     /** Overlay chrome follows the visible photograph without changing its rendering transform. */
     public void setOnPhotoTransformChanged(Runnable callback) {
