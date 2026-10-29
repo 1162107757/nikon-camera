@@ -3611,6 +3611,18 @@ public final class AlbumPanel implements AutoCloseable {
             public void download() { exportCurrentJpeg(); }
             public void addFilters() { host.onPresetRequired(); }
             public void error(String error) { if (!closed) host.onMessage("照片编辑", error); }
+            public void whiteBalancePickMode(boolean enabled) {
+                if (viewerImage == null) return;
+                if (!enabled) { viewerImage.setOnPhotoTap(null); return; }
+                viewerImage.setOnPhotoTap((x, y) -> {
+                    if (filterEditor == null || viewerPhoto == null) return;
+                    Bitmap orig = filterEditor.original();
+                    if (orig == null || orig.isRecycled() || viewerPhoto.getWidth() <= 0 || viewerPhoto.getHeight() <= 0) return;
+                    int ox = Math.min(orig.getWidth() - 1, Math.max(0, Math.round(x * orig.getWidth() / (float) viewerPhoto.getWidth())));
+                    int oy = Math.min(orig.getHeight() - 1, Math.max(0, Math.round(y * orig.getHeight() / (float) viewerPhoto.getHeight())));
+                    filterEditor.pickWhiteBalance(orig.getPixel(ox, oy));
+                });
+            }
             public void copyAdjustments(cc.huevia.ncp.PhotoAdjustments settings,DownloadedPhoto source){chooseAdjustmentTargets(settings,source);}
             public void undoAdjustmentCopy(){undoCopiedAdjustments();}
         });
