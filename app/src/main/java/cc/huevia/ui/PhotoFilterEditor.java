@@ -41,6 +41,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
         void download();
         void addFilters();
         void error(String message);
+        default void whiteBalancePickMode(boolean enabled){}
         default void saveOriginal(DownloadedPhoto photo){}
         default void viewSaved(PhotoExportAvailability.Result result){}
         default void applyRecipeToSelection(PhotoRecipeStore.Recipe recipe){}
@@ -84,6 +85,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
     private LinearLayout recipePanel,recipeRows;private TextView recipeStatus;private Button saveRecipeButton;
     private PhotoAdjustments.Parameter parameter=PhotoAdjustments.Parameter.EXPOSURE;
     private boolean adjustmentMode;
+    private boolean wbPicking;
     private volatile int thumbRevision;
     private Bitmap plainThumb;
     private final ArrayDeque<EditState> undo=new ArrayDeque<>(),redo=new ArrayDeque<>();
@@ -247,7 +249,18 @@ public final class PhotoFilterEditor implements AutoCloseable {
         borderControls=new PhotoBorderPanel(activity,new PhotoBorderPanel.Host(){
             public PhotoBorder border(){return border;}public PhotoCaptureInfo capture(){return captureInfo;}public boolean ready(){return ready;}public String identity(){return owner+":"+generation+":"+sourceSha;}
             public Bitmap thumbnail(){return plainThumb;}public PresetPreviewProfile colour(){return GeometryPreviewProfile.of(LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(selectedProfile==null?null:StrengthPreviewProfile.of(selectedProfile,strength),adjustments),localEdits),geometry);}
-            public void change(PhotoBorder value){if(!readableSettings()||border.equals(value))return;finishDrag(true);EditState before=snapshot();border=value;remember(before);edited();}
+            public void setWhiteBalancePicking(boolean enabled){
+        if(!ready||unrecoverableSaved){if(enabled)host.error("当前照片暂不可编辑。");return;}
+        if(!geometry.isNeutral()){if(enabled)host.error("请先取消裁剪、旋转或透视后再取色。");return;}
+        if(wbPicking==enabled)return;wbPicking=enabled;host.whiteBalancePickMode(enabled);
+    }
+    public void pickWhiteBalance(int rgb){
+        if(!ready||unrecoverableSaved)return;
+        EditState before=snapshot();PhotoAdjustments picked=WhiteBalancePicker.pick(rgb,adjustments);
+        if(picked.equals(adjustments)){wbPicking=false;host.whiteBalancePickMode(false);return;}
+        adjustments=picked;remember(before);edited();updateAdjustmentControls();wbPicking=false;host.whiteBalancePickMode(false);
+    }
+    public void change(PhotoBorder value){if(!readableSettings()||border.equals(value))return;finishDrag(true);EditState before=snapshot();border=value;remember(before);edited();}
             public void startDrag(){if(!readableSettings())return;finishDrag(true);dragStart=snapshot();interactivePreview=true;}
             public void dragChange(PhotoBorder value){if(!ready||unrecoverableSaved||border.equals(value))return;border=value;hasDraft=true;exported=false;schedulePreview();scheduleSave();}
             public void endDrag(){finishDrag(true);if(borderControls!=null)borderControls.refresh();}
@@ -328,6 +341,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
     private void reset(boolean all){if(!ready||unrecoverableSaved||!all&&adjustments.isNeutral())return;EditState before=snapshot();adjustments=PhotoAdjustments.NONE;if(all){localEdits=PhotoLocalEdits.NONE;border=PhotoBorder.NONE;geometry=PhotoGeometry.NONE;cancelPendingRetry();pendingChoice=null;selected="";selectedName="无滤镜";selectedBytes=new byte[0];selectedProfile=null;strength=0;}remember(before);edited();refreshManualThumbnails();}
     public void addMenuItems(Menu menu){
         if(!ready)return;
+        menu.add("白平衡取色（点照片取色）").setOnMenuItemClickListener(v->{setWhiteBalancePicking(true);return true;});
         menu.add("局部与修复").setOnMenuItemClickListener(v->{showLocal();return true;});
         menu.add("构图（裁剪、旋转、拉直）").setOnMenuItemClickListener(v->{showComposition();return true;});
         menu.add("曲线").setOnMenuItemClickListener(v->{showColor(true);return true;});
