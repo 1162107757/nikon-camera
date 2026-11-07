@@ -1,0 +1,202 @@
+{
+  "pass": false,
+  "stage": "polished-photo-menu",
+  "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+  "mode": "tablet",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "custom-photo-menu",
+      "pass": true
+    },
+    {
+      "name": "menu-stays-on-screen",
+      "pass": true
+    },
+    {
+      "name": "short-title-11",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-11",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-11",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-11",
+      "pass": true
+    },
+    {
+      "name": "short-title-10",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-10",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-10",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-10",
+      "pass": true
+    },
+    {
+      "name": "short-title-12",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-12",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-12",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-12",
+      "pass": true
+    },
+    {
+      "name": "short-title-20",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-20",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-20",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-20",
+      "pass": true
+    },
+    {
+      "name": "short-title-30",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-30",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-30",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-30",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-visible-30",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-not-truncated-30",
+      "pass": true
+    },
+    {
+      "name": "short-title-31",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-31",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-31",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-31",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-visible-31",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-not-truncated-31",
+      "pass": true
+    },
+    {
+      "name": "short-title-40",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-40",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-40",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-40",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-visible-40",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-not-truncated-40",
+      "pass": true
+    },
+    {
+      "name": "short-title-41",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-41",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-41",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-41",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-visible-41",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-not-truncated-41",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 3,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: Timeout histogram callback",
+  "stack": "java.lang.AssertionError: Timeout histogram callback\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.until(PhotoMenuProbe.java:111)\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.menuSliderFlow(PhotoMenuProbe.java:55)\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.onStart(PhotoMenuProbe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

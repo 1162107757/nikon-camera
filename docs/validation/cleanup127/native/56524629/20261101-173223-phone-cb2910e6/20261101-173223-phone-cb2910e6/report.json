@@ -1,0 +1,210 @@
+{
+  "pass": true,
+  "stage": "diagnostic-correlated-block-noise-preview-only",
+  "mode": "phone",
+  "scope": "diagnostic",
+  "candidateSha256": "56524629b4b4e58d49ab4b8d80610382e0b596efff38ebfdd1d36fd02d39971c",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing-diagnostic-correlated-3px-block-noise",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "diagnostic-correlated-3px-block-noise-ui-matches-production-render",
+      "pass": true
+    },
+    {
+      "name": "diagnostic-correlated-3px-block-noise-does-not-mutate-main-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing-diagnostic-independent-pixel-noise",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "diagnostic-independent-pixel-noise-ui-matches-production-render",
+      "pass": true
+    },
+    {
+      "name": "diagnostic-independent-noise-preview-variance-reduces-at-least-half-percent",
+      "pass": true
+    },
+    {
+      "name": "diagnostic-independent-pixel-noise-does-not-mutate-main-photo",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "diagnostic-correlated-3px-block-noise-ui",
+      "beforeWidth": 1280,
+      "beforeHeight": 960,
+      "afterWidth": 1280,
+      "afterHeight": 960,
+      "roiNormalized": [
+        0.08,
+        0.12,
+        0.42,
+        0.34
+      ],
+      "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)\/256 on a constant-signal flat ROI; not high-frequency residual variance",
+      "pixelChanges": 0,
+      "beforeMean": 114.34091529287193,
+      "afterMean": 114.34091529287193,
+      "beforeVariance": 37.48508498700721,
+      "afterVariance": 37.48508498700721,
+      "beforeSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+      "afterSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "estimatedLumaNoise": 13,
+      "effectivePreviewLumaDenoise": 8,
+      "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:67381:69:100:63:203:206:209:13:0"
+    },
+    {
+      "case": "diagnostic-correlated-3px-block-noise-direct-engine",
+      "beforeWidth": 1280,
+      "beforeHeight": 960,
+      "afterWidth": 1280,
+      "afterHeight": 960,
+      "roiNormalized": [
+        0.08,
+        0.12,
+        0.42,
+        0.34
+      ],
+      "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)\/256 on a constant-signal flat ROI; not high-frequency residual variance",
+      "pixelChanges": 0,
+      "beforeMean": 114.34091529287193,
+      "afterMean": 114.34091529287193,
+      "beforeVariance": 37.48508498700721,
+      "afterVariance": 37.48508498700721,
+      "beforeSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+      "afterSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "estimatedLumaNoise": 13,
+      "effectivePreviewLumaDenoise": 8,
+      "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:67381:69:100:63:203:206:209:13:0"
+    },
+    {
+      "case": "diagnostic-correlated-3px-block-noise-original-100percent-noise-only",
+      "productionComponent": "PhotoCleanupRenderer.apply; full original dimensions\/read pixels, noise-only single pass; retain only 96x96 output tile",
+      "sourceWidth": 3200,
+      "sourceHeight": 2400,
+      "tileX": 752,
+      "tileY": 552,
+      "tileSize": 96,
+      "effectiveLumaDenoise": 13,
+      "beforeVariance": 83.80732515123236,
+      "afterVariance": 83.70257111537649,
+      "pixelChanges": 42
+    },
+    {
+      "case": "diagnostic-independent-pixel-noise-ui",
+      "beforeWidth": 1280,
+      "beforeHeight": 960,
+      "afterWidth": 1280,
+      "afterHeight": 960,
+      "roiNormalized": [
+        0.08,
+        0.12,
+        0.42,
+        0.34
+      ],
+      "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)\/256 on a constant-signal flat ROI; not high-frequency residual variance",
+      "pixelChanges": 602530,
+      "beforeMean": 114.37674903476875,
+      "afterMean": 114.37702141042926,
+      "beforeVariance": 9.335267994460082,
+      "afterVariance": 5.69167809470855,
+      "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+      "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "estimatedLumaNoise": 51,
+      "effectivePreviewLumaDenoise": 32,
+      "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+    },
+    {
+      "case": "diagnostic-independent-pixel-noise-direct-engine",
+      "beforeWidth": 1280,
+      "beforeHeight": 960,
+      "afterWidth": 1280,
+      "afterHeight": 960,
+      "roiNormalized": [
+        0.08,
+        0.12,
+        0.42,
+        0.34
+      ],
+      "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)\/256 on a constant-signal flat ROI; not high-frequency residual variance",
+      "pixelChanges": 602530,
+      "beforeMean": 114.37674903476875,
+      "afterMean": 114.37702141042926,
+      "beforeVariance": 9.335267994460082,
+      "afterVariance": 5.69167809470855,
+      "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+      "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "estimatedLumaNoise": 51,
+      "effectivePreviewLumaDenoise": 32,
+      "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+    },
+    {
+      "case": "diagnostic-independent-pixel-noise-original-100percent-noise-only",
+      "productionComponent": "PhotoCleanupRenderer.apply; full original dimensions\/read pixels, noise-only single pass; retain only 96x96 output tile",
+      "sourceWidth": 3200,
+      "sourceHeight": 2400,
+      "tileX": 752,
+      "tileY": 552,
+      "tileSize": 96,
+      "effectiveLumaDenoise": 51,
+      "beforeVariance": 85.85134180092791,
+      "afterVariance": 47.20372781635888,
+      "pixelChanges": 8161
+    }
+  ],
+  "screenshots": 0,
+  "persistentFixturesCreated": true,
+  "ownedFixtureCount": 2,
+  "ownedDraftCount": 2,
+  "privateFixtureRemoved": true
+}

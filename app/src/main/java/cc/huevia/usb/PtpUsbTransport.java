@@ -1,4 +1,5 @@
 package cc.huevia.usb;
+import cc.huevia.picturecontrol.CameraParameterWriteGuard;
 
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
@@ -110,7 +111,8 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
     @Override public byte[] getData(int operation, long transactionId, long... parameters) throws IOException {
         if (mode == Mode.PC_READ_ONLY) validatePictureControlQuery(operation, parameters);
         if (isPictureControlWriteMode()) {
-            validatePictureControlImportQuery(operation, parameters, mode == Mode.WRITE_CONFIRMED_PC);
+            if (!(pictureControlWriteAttempted && CameraParameterWriteGuard.propertyRead(operation, parameters)))
+                validatePictureControlImportQuery(operation, parameters, mode == Mode.WRITE_CONFIRMED_PC);
         }
         return guarded(() -> getDataInternal(operation, transactionId, parameters));
     }
@@ -161,6 +163,10 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
             throw new IOException("优化校准只读模式禁止所有数据上传、属性修改和删除操作。");
         }
         if (isPictureControlWriteMode()) {
+            if (operation == 0x1016) {
+                cameraParameterWrites.consume(bytes, parameters);
+                return guarded(() -> sendDataInternal(operation, transactionId, bytes, parameters));
+            }
             if (operation != 0x90cd || parameters == null || parameters.length != 2
                     || parameters[0] < 201 || parameters[0] > 209 || parameters[1] != 0) {
                 throw new IOException("优化校准登记模式仅允许 SetPicCtrlData(C1–C9, new=0)。");
@@ -170,6 +176,13 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
             pictureControlWriteAttempted = true;
         }
         return guarded(() -> sendDataInternal(operation, transactionId, bytes, parameters));
+    }
+
+    private final CameraParameterWriteGuard cameraParameterWrites = new CameraParameterWriteGuard();
+    @Override public void authorizeCameraParameters(java.util.Map<Integer, byte[]> values) throws IOException {
+        if (!isPictureControlWriteMode() || !pictureControlWriteAttempted)
+            throw new IOException("仅在预设登记后允许单次拍摄参数授权。");
+        cameraParameterWrites.authorize(values);
     }
 
     private boolean isPictureControlWriteMode() {

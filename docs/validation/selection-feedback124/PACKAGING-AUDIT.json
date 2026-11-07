@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "checkedAtUtc": "2026-10-30T11:31:19.379785+00:00",
+  "apk": {
+    "path": "dist/huevia-0.24.2-beta-debug.apk",
+    "bytes": 33436428,
+    "sha256": "aa5461290742af6f2afcabbad89ab7805e9b75b7bcdda25ec411256955ed3dfd",
+    "remainingUploadBytes": 118004
+  },
+  "reference123Sha256": "024332082067562fabbcd113db591747b8f63b93f0e95a9fae9501f13d7e5f42",
+  "productionInputCount": 292,
+  "changedFrom123": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "b4991bfb3f20b46490bc134e6f916dfafc44c832b23799b2681fedf9635d9a32"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+      "sha256": "b2067e871deab7798baca0088dc3c4e0e8052cca88c349d2d521bb67dbc65e37"
+    }
+  ],
+  "unchangedNativeModelAssetEntries": 46,
+  "differentApkEntries": [
+    "AndroidManifest.xml",
+    "classes.dex",
+    "META-INF/ANDROIDD.SF",
+    "META-INF/ANDROIDD.RSA",
+    "META-INF/MANIFEST.MF"
+  ],
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "commands": {
+    "badging": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\aapt2.exe",
+        "dump",
+        "badging",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.2-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "package: name='cc.huevia' versionCode='124' versionName='0.24.2-beta' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'\nminSdkVersion:'26'\ntargetSdkVersion:'35'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\nuses-permission: name='android.permission.ACCESS_NETWORK_STATE'\nuses-permission: name='android.permission.CHANGE_NETWORK_STATE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING'\nuses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='32'\nuses-permission: name='android.permission.READ_MEDIA_IMAGES'\nuses-permission: name='android.permission.READ_MEDIA_VISUAL_USER_SELECTED'\nuses-permission: name='android.permission.CHANGE_WIFI_STATE'\nuses-permission: name='android.permission.ACCESS_WIFI_STATE'\nuses-permission: name='android.permission.NEARBY_WIFI_DEVICES' usesPermissionFlags='neverForLocation'\nuses-permission: name='android.permission.ACCESS_FINE_LOCATION' maxSdkVersion='32'\nuses-permission: name='android.permission.ACCESS_COARSE_LOCATION' maxSdkVersion='32'\nuses-permission: name='android.permission.WAKE_LOCK'\nuses-permission: name='android.permission.POST_NOTIFICATIONS'\nuses-permission: name='android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS'\napplication-label:'Huevia'\napplication-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication-icon-65535:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication: label='Huevia' icon='res/mipmap-anydpi-v26/ic_launcher.xml'\nlaunchable-activity: name='cc.huevia.MainActivity'  label='' icon=''\nfeature-group: label=''\n  uses-feature: name='android.hardware.usb.host'\n  uses-feature: name='android.hardware.faketouch'\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\n  uses-feature: name='android.hardware.location'\n  uses-implied-feature: name='android.hardware.location' reason='requested android.permission.ACCESS_COARSE_LOCATION permission, and requested android.permission.ACCESS_FINE_LOCATION permission'\n  uses-feature: name='android.hardware.wifi'\n  uses-implied-feature: name='android.hardware.wifi' reason='requested android.permission.ACCESS_WIFI_STATE permission, and requested android.permission.CHANGE_WIFI_STATE permission'\nmain\nother-activities\nother-services\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\nsupports-any-density: 'true'\nlocales: '--_--'\ndensities: '160' '65534' '65535'\nnative-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'",
+      "stderr": ""
+    },
+    "signature": {
+      "arguments": [
+        "D:/dev/Java/jdk-17.0.19/bin/java.exe",
+        "-jar",
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\lib\\apksigner.jar",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.2-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): true\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: CN=Nikon USB Debug, OU=Development, O=Local, C=CN\nSigner #1 certificate SHA-256 digest: 04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31\nSigner #1 certificate SHA-1 digest: f867798b3814ab374d0234148e50c5e8477d7d2a\nSigner #1 certificate MD5 digest: 945aa44a13dd8c10155ad0078edf698e\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 11a7f998a2df77f4622355408d4764ba9349f1c6e36241702bf2d9d0f37ec72c\nSigner #1 public key SHA-1 digest: 30757f8481e4bfbd3cad3b2d46ddfeaeee08c026\nSigner #1 public key MD5 digest: 757136592c1c45370cd6828fee14702a",
+      "stderr": ""
+    },
+    "alignment": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\zipalign.exe",
+        "-c",
+        "-P",
+        "16",
+        "-v",
+        "4",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.2-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "Verifying alignment of D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.2-beta-debug.apk (4)...\n      49 AndroidManifest.xml (OK - compressed)\n    2563 res/drawable/ic_account_password_hidden.xml (OK - compressed)\n    3078 res/drawable/ic_account_password_visible.xml (OK - compressed)\n    3566 res/drawable/ic_camera.xml (OK - compressed)\n    4025 res/drawable/ic_huevia_foreground.xml (OK - compressed)\n    4332 res/drawable/ic_qq_login.png (OK)\n    5332 res/drawable-nodpi-v4/huevia_launcher.png (OK)\n   14160 res/drawable-nodpi-v4/preset_template.png (OK)\n 2464741 res/mipmap-anydpi-v26/ic_launcher.xml (OK - compressed)\n 2465017 res/xml/device_filter.xml (OK - compressed)\n 2465196 resources.arsc (OK)\n 2468003 assets/photo-borders/nikon-wordmark-black.png (OK - compressed)\n 2525500 assets/photo-borders/nikon-wordmark-white.png (OK - compressed)\n 2587648 assets/photo-borders/nikon-yellow-square.png (OK - compressed)\n 2708970 assets/photo-borders/parameters-OFL.txt (OK - compressed)\n 2711035 assets/photo-borders/parameters.ttf (OK - compressed)\n 2739306 assets/photo-borders/source-manifest.json (OK - compressed)\n 2742053 assets/portrait/face_landmarks_detector.tflite (OK - compressed)\n 5026404 assets/portrait/face_skin_multiclass.shuffle4.zlib (OK)\n18908254 assets/third-party/libfuji-MIT.txt (OK - compressed)\n18909267 assets/third-party/libraw/BUILD-IDENTITY.json (OK - compressed)\n18923137 assets/third-party/libraw/COPYRIGHT (OK - compressed)\n18923825 assets/third-party/libraw/LICENSE.CDDL (OK - compressed)\n18929720 assets/third-party/libraw/LICENSE.LGPL (OK - compressed)\n18938450 assets/third-party/libraw/LLVM-NOTICE.txt (OK - compressed)\n18950809 assets/third-party/libraw/LibRaw-0.22.3-source.zip (OK - compressed)\n20738511 assets/third-party/libraw/NOTICE.txt (OK - compressed)\n20739782 assets/third-party/libraw/RawDeveloper.java (OK - compressed)\n20743898 assets/third-party/libraw/RawDevelopmentSettings.java (OK - compressed)\n20745213 assets/third-party/libraw/build-raw-native.ps1 (OK - compressed)\n20748810 assets/third-party/libraw/huevia_raw.cpp (OK - compressed)\n20753503 assets/third-party/litert/BUILD-IDENTITY.json (OK - compressed)\n20756488 assets/third-party/litert/LICENSE-LiteRT.txt (OK - compressed)\n20761436 assets/third-party/litert/LICENSE-MediaPipe.txt (OK - compressed)\n20765811 assets/third-party/litert/README.md (OK - compressed)\n20768405 classes.dex (OK - compressed)\n22134897 lib/arm64-v8a/libraw.so (OK - compressed)\n22575278 lib/arm64-v8a/libhuevia_raw.so (OK - compressed)\n22598260 lib/arm64-v8a/libc++_shared.so (OK - compressed)\n22991818 lib/arm64-v8a/libtensorflowlite_jni.so (OK - compressed)\n24729374 lib/armeabi-v7a/libraw.so (OK - compressed)\n25160406 lib/armeabi-v7a/libhuevia_raw.so (OK - compressed)\n25170445 lib/armeabi-v7a/libc++_shared.so (OK - compressed)\n25514902 lib/armeabi-v7a/libtensorflowlite_jni.so (OK - compressed)\n26839589 lib/x86_64/libraw.so (OK - compressed)\n27293382 lib/x86_64/libhuevia_raw.so (OK - compressed)\n27316708 lib/x86_64/libc++_shared.so (OK - compressed)\n27725933 lib/x86_64/libtensorflowlite_jni.so (OK - compressed)\n30081811 lib/x86/libraw.so (OK - compressed)\n30556538 lib/x86/libhuevia_raw.so (OK - compressed)\n30578769 lib/x86/libc++_shared.so (OK - compressed)\n30993681 lib/x86/libtensorflowlite_jni.so (OK - compressed)\n33383957 assets/com.tencent.open.config.json (OK - compressed)\n33384057 assets/h5_qr_back.png (OK - compressed)\n33384228 assets/libwbsafeedit (OK - compressed)\n33390951 assets/libwbsafeedit_64 (OK - compressed)\n33399931 assets/libwbsafeedit_x86 (OK - compressed)\n33408354 assets/libwbsafeedit_x86_64 (OK - compressed)\n33417359 META-INF/ANDROIDD.SF (OK - compressed)\n33420264 META-INF/ANDROIDD.RSA (OK - compressed)\n33421405 META-INF/MANIFEST.MF (OK - compressed)\nVerification succesful",
+      "stderr": ""
+    }
+  },
+  "deviceAccessed": false,
+  "networkAccessed": false
+}

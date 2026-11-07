@@ -1,0 +1,188 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "5318b1e52c05628443a0c73b6568f620a6a9bd4fcab8339f2093ce89fb1cbc69",
+  "mode": "tablet",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "compare-48dp-target",
+      "pass": true
+    },
+    {
+      "name": "compare-48dp-mount",
+      "pass": true
+    },
+    {
+      "name": "compare-no-long-label",
+      "pass": true
+    },
+    {
+      "name": "compare-22dp-artwork",
+      "pass": true
+    },
+    {
+      "name": "compare-unclipped",
+      "pass": true
+    },
+    {
+      "name": "compare-accessible-hold-instruction",
+      "pass": true
+    },
+    {
+      "name": "distinct-original-and-effect",
+      "pass": true
+    },
+    {
+      "name": "effect-shown-before-hold",
+      "pass": true
+    },
+    {
+      "name": "hold-shows-original",
+      "pass": true
+    },
+    {
+      "name": "held-control-stays-icon-only",
+      "pass": true
+    },
+    {
+      "name": "release-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "move-outside-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "cancel-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "accessibility-click-shows-original",
+      "pass": true
+    },
+    {
+      "name": "accessibility-second-click-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "keyboard-activation-shows-original",
+      "pass": true
+    },
+    {
+      "name": "explicit-release-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "unavailable-icon-disabled",
+      "pass": true
+    },
+    {
+      "name": "restored-icon-ready",
+      "pass": true
+    },
+    {
+      "name": "comparison-does-not-add-undo",
+      "pass": true
+    },
+    {
+      "name": "editor-more-only-five-utilities",
+      "pass": true
+    },
+    {
+      "name": "utility-menu-entry-0",
+      "pass": true
+    },
+    {
+      "name": "utility-menu-entry-1",
+      "pass": true
+    },
+    {
+      "name": "utility-menu-entry-2",
+      "pass": true
+    },
+    {
+      "name": "utility-menu-entry-3",
+      "pass": true
+    },
+    {
+      "name": "utility-menu-entry-4",
+      "pass": true
+    },
+    {
+      "name": "actual-popup-keeps-photo-utilities",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-调节工具",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-局部与修复",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-人像精修",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-构图（裁剪、旋转、拉直）",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-曲线",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-HSL 分色",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-保存当前为我的配方",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-参数说明",
+      "pass": true
+    },
+    {
+      "name": "no-duplicate-重置当前参数",
+      "pass": true
+    },
+    {
+      "name": "direct-tools-retained",
+      "pass": true
+    },
+    {
+      "name": "chrome-keeps-adjustments",
+      "pass": true
+    },
+    {
+      "name": "original-file-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 3,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true
+}

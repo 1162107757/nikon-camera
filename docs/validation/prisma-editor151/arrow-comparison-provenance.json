@@ -1,0 +1,16 @@
+{
+  "kind": "native screenshot detail comparison",
+  "before": "docs\\validation\\prisma-editor151\\final\\native\\phone\\01-filters.png",
+  "after": "docs\\validation\\prisma-editor151\\round\\native\\phone\\01-filters.png",
+  "cropPixels": [
+    36,
+    1563,
+    324,
+    1707
+  ],
+  "operations": "same rectangle, uniform 2x resampling; no repaint or colour changes",
+  "sha256": {
+    "docs\\validation\\prisma-editor151\\final\\native\\phone\\01-filters.png": "2be7a252e448b428b1f7a3ac12ff702c8c68008382f768a2241fbcd50e72f65f",
+    "docs\\validation\\prisma-editor151\\round\\native\\phone\\01-filters.png": "91cc8b1a7d8dab86a65c49f7dc31eb35cc5cf9524546419fd4a9c5adbeacdd32"
+  }
+}

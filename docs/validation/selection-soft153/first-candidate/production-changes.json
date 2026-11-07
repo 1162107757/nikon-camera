@@ -1,0 +1,31 @@
+{
+  "baselineApkSha256": "eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07",
+  "currentApkSha256": "643dc3ec12a086a0db44bee02414c08ee2bffa141e83a5decbb83d17ed82da28",
+  "totalInputs": 305,
+  "changed": [
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBorderPanel.java",
+      "sha256": "b3390e607781a102918a6b7e346c1ffd14d8dfc246f773a1b4dc5638725fccbd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCompactDock.java",
+      "sha256": "b9824a45e58f28ecb29ba377301cbc60a3fbe4405c1945b23bea55f0d4717b3d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "5db61ec3b17235d96342416cf88fa315125e9b63985ae5e03067c9d2b878a128"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+      "sha256": "34b028a5df836d4f223ad0dea85cf254ff3833571a29d5d55d14ee8f0ee4dd1a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+      "sha256": "2b8140145a57ed20954f9f8b679f9c880c22dc1f5dc114a698376bc763f3088e"
+    },
+    {
+      "path": "app/build.gradle",
+      "sha256": "84054329997285b2a51114b0d48415257f0faccd8c591b22cdaaf1f1baa273d1"
+    }
+  ]
+}

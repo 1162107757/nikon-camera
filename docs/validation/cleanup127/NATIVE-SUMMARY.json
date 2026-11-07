@@ -1,0 +1,943 @@
+{
+  "status": "passed-native-fix-confirmation",
+  "candidateSha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+  "versionCode": 127,
+  "versionName": "0.24.5-beta",
+  "serial": "emulator-5588",
+  "completedAtUtc": "2026-11-01T09:47:22.886Z",
+  "runs": [
+    {
+      "runId": "20261101-174228-phone-1489e512",
+      "mode": "phone",
+      "scope": "full",
+      "pass": true,
+      "checks": 124,
+      "screenshots": 7,
+      "probeSha256": "7365bfec5ef45f01f57e0208613b565ea3713e1b40c26583c93aa0d2c5cd82ca",
+      "probeSourceInputs": [
+        {
+          "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+          "sha256": "aed79f11c72cbc80534a039bf33e3d9dcaeefaeef29ebe007dc0bc5311a711c0"
+        },
+        {
+          "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+          "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+        },
+        {
+          "path": "tests/cleanup-device-probe/build.ps1",
+          "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+        },
+        {
+          "path": "tests/cleanup-device-probe/run.ps1",
+          "sha256": "2734a39ad0f7c962b0a1827cd9eebacfb005352068b16ac8eb6bc1a4260d4e85"
+        }
+      ],
+      "privateFixtureRemoved": true,
+      "ownedFixtureCount": 3,
+      "ownedDraftCount": 2,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1301][1048,2099]",
+          "photo": "[0,268][1080,1164]",
+          "fontScale": 1
+        },
+        {
+          "case": "palette-v2-press-field-only",
+          "aspect": 1.1500000953674316,
+          "outsideProtectedPixels": 291984,
+          "outsideDifferences": 0,
+          "pressedChangedPixels": 16007
+        },
+        {
+          "case": "exif6-upper-original-analysis",
+          "sourceWidth": 600,
+          "sourceHeight": 800,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 52505,
+          "hazeConfidence": 3,
+          "noiseConfidence": 100,
+          "lumaNoise": 13
+        },
+        {
+          "case": "exif6-lower-original-analysis",
+          "sourceWidth": 600,
+          "sourceHeight": 800,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 61634,
+          "hazeConfidence": 0,
+          "noiseConfidence": 100,
+          "lumaNoise": 0
+        },
+        {
+          "case": "exif6-original-region-mapping",
+          "rawWidth": 800,
+          "rawHeight": 600,
+          "orientedWidth": 600,
+          "orientedHeight": 800,
+          "upperRegionLumaNoise": 13,
+          "lowerRegionLumaNoise": 0
+        },
+        {
+          "case": "global-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 69339,
+          "hazeConfidence": 10,
+          "noiseConfidence": 100,
+          "lumaNoise": 51
+        },
+        {
+          "case": "cleanup-native-denoise-before-assert",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 602530,
+          "beforeMean": 114.37674903476875,
+          "afterMean": 114.37702141042926,
+          "beforeVariance": 9.335267994460082,
+          "afterVariance": 5.69167809470855,
+          "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+          "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 51,
+          "effectivePreviewLumaDenoise": 32,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+        },
+        {
+          "case": "cleanup-native-image-quality",
+          "previewWidth": 1280,
+          "previewHeight": 960,
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "flatVarianceBefore": 9.335267994460082,
+          "flatVarianceDenoised": 5.69167809470855,
+          "hazyContrastBefore": 82.02013202786483,
+          "hazyContrastAfter": 85.02296893345023,
+          "zeroStrengthDifferences": 0
+        },
+        {
+          "case": "region-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 47152,
+          "hazeConfidence": 13,
+          "noiseConfidence": 100,
+          "lumaNoise": 52
+        },
+        {
+          "case": "cleanup-native-region-pixels",
+          "width": 1280,
+          "height": 960,
+          "protectedPixels": 1119256,
+          "outsideDifferences": 0,
+          "changedPixels": 60134
+        }
+      ],
+      "report": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/report.json"
+    },
+    {
+      "runId": "20261101-174345-font1.3-4fd4ff1b",
+      "mode": "font1.3",
+      "scope": "full",
+      "pass": true,
+      "checks": 102,
+      "screenshots": 0,
+      "probeSha256": "7365bfec5ef45f01f57e0208613b565ea3713e1b40c26583c93aa0d2c5cd82ca",
+      "probeSourceInputs": [
+        {
+          "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+          "sha256": "aed79f11c72cbc80534a039bf33e3d9dcaeefaeef29ebe007dc0bc5311a711c0"
+        },
+        {
+          "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+          "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+        },
+        {
+          "path": "tests/cleanup-device-probe/build.ps1",
+          "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+        },
+        {
+          "path": "tests/cleanup-device-probe/run.ps1",
+          "sha256": "2734a39ad0f7c962b0a1827cd9eebacfb005352068b16ac8eb6bc1a4260d4e85"
+        }
+      ],
+      "privateFixtureRemoved": true,
+      "ownedFixtureCount": 1,
+      "ownedDraftCount": 1,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1301][1048,2099]",
+          "photo": "[0,268][1080,1164]",
+          "fontScale": 1.2999999523162842
+        },
+        {
+          "case": "palette-v2-press-field-only",
+          "aspect": 1.1500000953674316,
+          "outsideProtectedPixels": 291984,
+          "outsideDifferences": 0,
+          "pressedChangedPixels": 16002
+        },
+        {
+          "case": "global-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 69339,
+          "hazeConfidence": 10,
+          "noiseConfidence": 100,
+          "lumaNoise": 51
+        },
+        {
+          "case": "cleanup-native-denoise-before-assert",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 602530,
+          "beforeMean": 114.37674903476875,
+          "afterMean": 114.37702141042926,
+          "beforeVariance": 9.335267994460082,
+          "afterVariance": 5.69167809470855,
+          "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+          "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 51,
+          "effectivePreviewLumaDenoise": 32,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+        },
+        {
+          "case": "cleanup-native-image-quality",
+          "previewWidth": 1280,
+          "previewHeight": 960,
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "flatVarianceBefore": 9.335267994460082,
+          "flatVarianceDenoised": 5.69167809470855,
+          "hazyContrastBefore": 82.02013202786483,
+          "hazyContrastAfter": 85.02296893345023,
+          "zeroStrengthDifferences": 0
+        },
+        {
+          "case": "region-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 47152,
+          "hazeConfidence": 13,
+          "noiseConfidence": 100,
+          "lumaNoise": 52
+        },
+        {
+          "case": "cleanup-native-region-pixels",
+          "width": 1280,
+          "height": 960,
+          "protectedPixels": 1119256,
+          "outsideDifferences": 0,
+          "changedPixels": 60134
+        }
+      ],
+      "report": "docs/validation/cleanup127/native/70ea200c/20261101-174345-font1.3-4fd4ff1b/20261101-174345-font1.3-4fd4ff1b/report.json"
+    },
+    {
+      "runId": "20261101-174449-landscape-d0d61295",
+      "mode": "landscape",
+      "scope": "full",
+      "pass": true,
+      "checks": 102,
+      "screenshots": 4,
+      "probeSha256": "7365bfec5ef45f01f57e0208613b565ea3713e1b40c26583c93aa0d2c5cd82ca",
+      "probeSourceInputs": [
+        {
+          "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+          "sha256": "aed79f11c72cbc80534a039bf33e3d9dcaeefaeef29ebe007dc0bc5311a711c0"
+        },
+        {
+          "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+          "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+        },
+        {
+          "path": "tests/cleanup-device-probe/build.ps1",
+          "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+        },
+        {
+          "path": "tests/cleanup-device-probe/run.ps1",
+          "sha256": "2734a39ad0f7c962b0a1827cd9eebacfb005352068b16ac8eb6bc1a4260d4e85"
+        }
+      ],
+      "privateFixtureRemoved": true,
+      "ownedFixtureCount": 1,
+      "ownedDraftCount": 1,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][2424,1080]",
+          "pad": "[1616,400][2392,1017]",
+          "photo": "[142,263][1584,1017]",
+          "fontScale": 1
+        },
+        {
+          "case": "palette-v2-press-field-only",
+          "aspect": 0.9984126687049866,
+          "outsideProtectedPixels": 190386,
+          "outsideDifferences": 0,
+          "pressedChangedPixels": 15999
+        },
+        {
+          "case": "global-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 69339,
+          "hazeConfidence": 10,
+          "noiseConfidence": 100,
+          "lumaNoise": 51
+        },
+        {
+          "case": "cleanup-native-denoise-before-assert",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 602530,
+          "beforeMean": 114.37674903476875,
+          "afterMean": 114.37702141042926,
+          "beforeVariance": 9.335267994460082,
+          "afterVariance": 5.69167809470855,
+          "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+          "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 51,
+          "effectivePreviewLumaDenoise": 32,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+        },
+        {
+          "case": "cleanup-native-image-quality",
+          "previewWidth": 1280,
+          "previewHeight": 960,
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "flatVarianceBefore": 9.335267994460082,
+          "flatVarianceDenoised": 5.69167809470855,
+          "hazyContrastBefore": 82.02013202786483,
+          "hazyContrastAfter": 85.02296893345023,
+          "zeroStrengthDifferences": 0
+        },
+        {
+          "case": "region-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 47152,
+          "hazeConfidence": 13,
+          "noiseConfidence": 100,
+          "lumaNoise": 52
+        },
+        {
+          "case": "cleanup-native-region-pixels",
+          "width": 1280,
+          "height": 960,
+          "protectedPixels": 1119256,
+          "outsideDifferences": 0,
+          "changedPixels": 60134
+        }
+      ],
+      "report": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/20261101-174449-landscape-d0d61295/report.json"
+    },
+    {
+      "runId": "20261101-174639-animations-off-50be10a0",
+      "mode": "animations-off",
+      "scope": "full",
+      "pass": true,
+      "checks": 15,
+      "screenshots": 0,
+      "probeSha256": "7365bfec5ef45f01f57e0208613b565ea3713e1b40c26583c93aa0d2c5cd82ca",
+      "probeSourceInputs": [
+        {
+          "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+          "sha256": "aed79f11c72cbc80534a039bf33e3d9dcaeefaeef29ebe007dc0bc5311a711c0"
+        },
+        {
+          "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+          "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+        },
+        {
+          "path": "tests/cleanup-device-probe/build.ps1",
+          "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+        },
+        {
+          "path": "tests/cleanup-device-probe/run.ps1",
+          "sha256": "2734a39ad0f7c962b0a1827cd9eebacfb005352068b16ac8eb6bc1a4260d4e85"
+        }
+      ],
+      "privateFixtureRemoved": true,
+      "ownedFixtureCount": 0,
+      "ownedDraftCount": 0,
+      "measurements": [],
+      "report": "docs/validation/cleanup127/native/70ea200c/20261101-174639-animations-off-50be10a0/20261101-174639-animations-off-50be10a0/report.json"
+    }
+  ],
+  "checks": 343,
+  "screenshots": 11,
+  "failedFinalNativeRuns": 0,
+  "confirmationRoundUsed": true,
+  "confirmationReason": "Original batch was interrupted after a correlated-texture fixture failed a preview variance oracle. A bounded two-fixture native diagnostic established quantization and unchanged production behavior. Final IID noise fixture retains the original >=0.5% criterion; only two production identity gates changed.",
+  "productionDeltaFromHistoricalCandidate": [
+    "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+  ],
+  "other297ProductionInputsUnchanged": true,
+  "historicalCandidateSha256": "56524629b4b4e58d49ab4b8d80610382e0b596efff38ebfdd1d36fd02d39971c",
+  "historicalRuns": [
+    {
+      "runId": "20261101-171714-phone-54557833",
+      "mode": "phone",
+      "scope": "full",
+      "pass": false,
+      "checks": 63,
+      "screenshots": 6,
+      "probeSha256": "4eaee4616cff4ba430375aa0b20c165038a973b06f60ca5e9e9e6a3c8f5581d3",
+      "probeSourceInputs": [
+        {
+          "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+          "sha256": "78e10f9a02d065726409835a9af862eaadecf59712c4f144f78773bede48d3d7"
+        },
+        {
+          "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+          "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+        },
+        {
+          "path": "tests/cleanup-device-probe/build.ps1",
+          "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+        },
+        {
+          "path": "tests/cleanup-device-probe/run.ps1",
+          "sha256": "7c956dd366ff06f1667987328ecba2a4e6b2935c442de82799d34be7f735700d"
+        }
+      ],
+      "privateFixtureRemoved": true,
+      "ownedFixtureCount": 2,
+      "ownedDraftCount": 1,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1301][1048,2099]",
+          "photo": "[0,268][1080,1164]",
+          "fontScale": 1
+        },
+        {
+          "case": "palette-v2-press-field-only",
+          "aspect": 1.1500000953674316,
+          "outsideProtectedPixels": 291984,
+          "outsideDifferences": 0,
+          "pressedChangedPixels": 15996
+        },
+        {
+          "case": "exif6-upper-original-analysis",
+          "sourceWidth": 600,
+          "sourceHeight": 800,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 52505,
+          "hazeConfidence": 3,
+          "noiseConfidence": 100,
+          "lumaNoise": 13
+        },
+        {
+          "case": "exif6-lower-original-analysis",
+          "sourceWidth": 600,
+          "sourceHeight": 800,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 61634,
+          "hazeConfidence": 0,
+          "noiseConfidence": 100,
+          "lumaNoise": 0
+        },
+        {
+          "case": "exif6-original-region-mapping",
+          "rawWidth": 800,
+          "rawHeight": 600,
+          "orientedWidth": 600,
+          "orientedHeight": 800,
+          "upperRegionLumaNoise": 13,
+          "lowerRegionLumaNoise": 0
+        },
+        {
+          "case": "global-original-analysis",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "patchCount": 9,
+          "patchPixels": 82944,
+          "noiseSamples": 67381,
+          "hazeConfidence": 69,
+          "noiseConfidence": 100,
+          "lumaNoise": 13
+        }
+      ],
+      "report": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/report.json",
+      "excludedFromFinalChecks": true,
+      "reason": "Original correlated 3px texture fixture failed the preview variance oracle; retained unchanged, not a final-candidate pass."
+    },
+    {
+      "runId": "20261101-173223-phone-cb2910e6",
+      "mode": "phone",
+      "scope": "diagnostic",
+      "pass": true,
+      "checks": 16,
+      "screenshots": 0,
+      "probeSha256": "342850c27011f3678fbbca3b2ecc4521a40b3ce6bbdb44d049b93d397262ced7",
+      "probeSourceInputs": [
+        {
+          "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+          "sha256": "4d81c7ee658e7c2ab22f467a34e21cb09800ae9fd05a78e87c76cbe1b87580a7"
+        },
+        {
+          "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+          "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+        },
+        {
+          "path": "tests/cleanup-device-probe/build.ps1",
+          "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+        },
+        {
+          "path": "tests/cleanup-device-probe/run.ps1",
+          "sha256": "2734a39ad0f7c962b0a1827cd9eebacfb005352068b16ac8eb6bc1a4260d4e85"
+        }
+      ],
+      "privateFixtureRemoved": true,
+      "ownedFixtureCount": 2,
+      "ownedDraftCount": 2,
+      "measurements": [
+        {
+          "case": "diagnostic-correlated-3px-block-noise-ui",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 0,
+          "beforeMean": 114.34091529287193,
+          "afterMean": 114.34091529287193,
+          "beforeVariance": 37.48508498700721,
+          "afterVariance": 37.48508498700721,
+          "beforeSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+          "afterSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 13,
+          "effectivePreviewLumaDenoise": 8,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:67381:69:100:63:203:206:209:13:0"
+        },
+        {
+          "case": "diagnostic-correlated-3px-block-noise-direct-engine",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 0,
+          "beforeMean": 114.34091529287193,
+          "afterMean": 114.34091529287193,
+          "beforeVariance": 37.48508498700721,
+          "afterVariance": 37.48508498700721,
+          "beforeSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+          "afterSha": "977d51d2def3f57314dd20e26f7c9f471730e4d7d81c03702eccc1942855e3e9",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 13,
+          "effectivePreviewLumaDenoise": 8,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:67381:69:100:63:203:206:209:13:0"
+        },
+        {
+          "case": "diagnostic-correlated-3px-block-noise-original-100percent-noise-only",
+          "productionComponent": "PhotoCleanupRenderer.apply; full original dimensions/read pixels, noise-only single pass; retain only 96x96 output tile",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "tileX": 752,
+          "tileY": 552,
+          "tileSize": 96,
+          "effectiveLumaDenoise": 13,
+          "beforeVariance": 83.80732515123236,
+          "afterVariance": 83.70257111537649,
+          "pixelChanges": 42
+        },
+        {
+          "case": "diagnostic-independent-pixel-noise-ui",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 602530,
+          "beforeMean": 114.37674903476875,
+          "afterMean": 114.37702141042926,
+          "beforeVariance": 9.335267994460082,
+          "afterVariance": 5.69167809470855,
+          "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+          "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 51,
+          "effectivePreviewLumaDenoise": 32,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+        },
+        {
+          "case": "diagnostic-independent-pixel-noise-direct-engine",
+          "beforeWidth": 1280,
+          "beforeHeight": 960,
+          "afterWidth": 1280,
+          "afterHeight": 960,
+          "roiNormalized": [
+            0.08,
+            0.12,
+            0.42,
+            0.34
+          ],
+          "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)/256 on a constant-signal flat ROI; not high-frequency residual variance",
+          "pixelChanges": 602530,
+          "beforeMean": 114.37674903476875,
+          "afterMean": 114.37702141042926,
+          "beforeVariance": 9.335267994460082,
+          "afterVariance": 5.69167809470855,
+          "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+          "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+          "originalWidth": 3200,
+          "originalHeight": 2400,
+          "estimatedLumaNoise": 51,
+          "effectivePreviewLumaDenoise": 32,
+          "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+        },
+        {
+          "case": "diagnostic-independent-pixel-noise-original-100percent-noise-only",
+          "productionComponent": "PhotoCleanupRenderer.apply; full original dimensions/read pixels, noise-only single pass; retain only 96x96 output tile",
+          "sourceWidth": 3200,
+          "sourceHeight": 2400,
+          "tileX": 752,
+          "tileY": 552,
+          "tileSize": 96,
+          "effectiveLumaDenoise": 51,
+          "beforeVariance": 85.85134180092791,
+          "afterVariance": 47.20372781635888,
+          "pixelChanges": 8161
+        }
+      ],
+      "report": "docs/validation/cleanup127/native/56524629/20261101-173223-phone-cb2910e6/20261101-173223-phone-cb2910e6/report.json",
+      "excludedFromFinalChecks": true,
+      "reason": "Limited same-candidate two-fixture diagnostic; UI/direct production output matched; correlated texture at effective strength8 quantized to unchanged preview, IID passed original noise threshold."
+    }
+  ],
+  "historicalChecksExcludedFromFinal": 79,
+  "protectedRegionPixels": 3357768,
+  "outsideRegionDifferences": 0,
+  "qualityMeasurements": [
+    {
+      "case": "cleanup-native-image-quality",
+      "previewWidth": 1280,
+      "previewHeight": 960,
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "flatVarianceBefore": 9.335267994460082,
+      "flatVarianceDenoised": 5.69167809470855,
+      "hazyContrastBefore": 82.02013202786483,
+      "hazyContrastAfter": 85.02296893345023,
+      "zeroStrengthDifferences": 0
+    },
+    {
+      "case": "cleanup-native-image-quality",
+      "previewWidth": 1280,
+      "previewHeight": 960,
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "flatVarianceBefore": 9.335267994460082,
+      "flatVarianceDenoised": 5.69167809470855,
+      "hazyContrastBefore": 82.02013202786483,
+      "hazyContrastAfter": 85.02296893345023,
+      "zeroStrengthDifferences": 0
+    },
+    {
+      "case": "cleanup-native-image-quality",
+      "previewWidth": 1280,
+      "previewHeight": 960,
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "flatVarianceBefore": 9.335267994460082,
+      "flatVarianceDenoised": 5.69167809470855,
+      "hazyContrastBefore": 82.02013202786483,
+      "hazyContrastAfter": 85.02296893345023,
+      "zeroStrengthDifferences": 0
+    }
+  ],
+  "probePackagesProductionClasses": false,
+  "hostMatrixRerunByNative": false,
+  "privateUserImagesUsed": false,
+  "networkPublicationPerformed": false,
+  "scopeNotes": [
+    "Phone/font1.3/landscape run palette-v2 and cleanup; animations-off is a short palette interaction case.",
+    "Palette field aspect and real press Canvas comparisons verify visible feedback stays in field; distant tap animates and drag follows immediately.",
+    "Actual cleanup UI uses true 3200x2400 original analysis, bounded 9x96x96 patches, isolated denoise/veil image metrics, exact zero strength and one-main-undo transactions.",
+    "Phone-only helper checks cooperative cancellation, bad SHA and EXIF6 upper/lower region noise mapping on a small asymmetric synthetic JPEG.",
+    "Pure global and pure region zero-strength cleanup analysis is saved, changes draft identity and survives unbind/bind with all other adjustments neutral.",
+    "Actual private drafts are read for global/region effect state; recipe mathematical/wire regressions remain in the engine host report.",
+    "All evidence was pulled and hashed before deleting the exact six owned remote run directories. Target-process cleanup covers every owned JPEG/EXIF fixture and SHA-named draft."
+  ],
+  "evidence": [
+    {
+      "path": "docs/validation/cleanup127/SOURCE-FREEZE.json",
+      "sha256": "4a71ee00bff60e6e85cea2a034882824d37ad696e475bef07d9b0b1b9b9736be"
+    },
+    {
+      "path": "docs/validation/cleanup127/candidates/56524629/SOURCE-FREEZE.json",
+      "sha256": "cd9bd635ef479d192a616270f8852481150caf46d95f6910768f505595cbc44b"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/01-palette-v2-layout.png",
+      "sha256": "ca15d67abc3cf55921b822a29aed57d181ba8f07de9e08ae547875aa58e64d73"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/02-palette-v2-idle-field.png",
+      "sha256": "0130a2b688cb730eec525dc97fbd213ea8ea42b19a7ed30c6f116d543d796f50"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/03-palette-v2-pressed-field.png",
+      "sha256": "479894502b7001830bc346228b10deda55d3a5b6a671bd3e13228d202a3ddee6"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/04-palette-v2-released-field.png",
+      "sha256": "4c6afc6136dc4bef7f78322750002d035229900a0af185cd5d3e16905748d8a9"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/05-cleanup-default-layout.png",
+      "sha256": "0f0aa5a34c30484410fe3e096e1d7c407a4669fe43d62d80812e11f14e516cf5"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/06-cleanup-advanced-layout.png",
+      "sha256": "ab5f3e95e2acb6c539c271fd2ee4f83d3e458bc5bab980fa7e490bf279ae8e7e"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/07-cleanup-region-applied-photo.png",
+      "sha256": "d1b2fe3b57261bc68d79f9683b0a880b3400ef821441e09e226e386467b3361f"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/20261101-174228-phone-1489e512/report.json",
+      "sha256": "dd55d907ddd9f928bf118df29acda5a4782339f14aaab3ca4d1821b3cfb9964a"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/provenance.json",
+      "sha256": "9d99339e4ae0a195345db5186facc8c3b1278473ef009b835bdde89035bbc29f"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/instrumentation.txt",
+      "sha256": "566125b31c21102f0051c9e75dc17851fe694efb307b77442fa365734b0ebf68"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174228-phone-1489e512/probe-source/build-provenance.json",
+      "sha256": "bd7ebd53d6192ff4c7bba87e10123a94bedbba0836dcce270e6c09962dbda59d"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174345-font1.3-4fd4ff1b/20261101-174345-font1.3-4fd4ff1b/report.json",
+      "sha256": "54105e8a6661349a5ac20c026ba30121edfa4262bc906d9eed8b82393784f3d4"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174345-font1.3-4fd4ff1b/provenance.json",
+      "sha256": "d3ff537b532d8331d48fc05c436da184bdf8f4da27b62152bada3299cb9d5fb1"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174345-font1.3-4fd4ff1b/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174345-font1.3-4fd4ff1b/instrumentation.txt",
+      "sha256": "4f598a3037f90dabbb2fc38ea1133697d996dc9edbbdcf0ddf0b249408e0bc47"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174345-font1.3-4fd4ff1b/probe-source/build-provenance.json",
+      "sha256": "bd7ebd53d6192ff4c7bba87e10123a94bedbba0836dcce270e6c09962dbda59d"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/20261101-174449-landscape-d0d61295/01-palette-v2-layout.png",
+      "sha256": "2a07a7d650f07f38a7e95df46e40590d90242946bee6554fec49a1aa1bc98380"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/20261101-174449-landscape-d0d61295/05-cleanup-default-layout.png",
+      "sha256": "ff1df86c9baf6a75af6a014d4e1590c5f1870a66e12e55a9a58507aecea24216"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/20261101-174449-landscape-d0d61295/06-cleanup-advanced-layout.png",
+      "sha256": "cf9589a7f37c699f54f8901d115c526b37a8186d7efa09ad37dfe9d8544c2c0b"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/20261101-174449-landscape-d0d61295/07-cleanup-region-applied-photo.png",
+      "sha256": "ca665559192ee21fd561ad14f81d587d997ea63cf3f3d5eba4359222d1a407a3"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/20261101-174449-landscape-d0d61295/report.json",
+      "sha256": "ede3b155e6c5db6de3c88ec07a2fe4f92c8bd3c7ae6282d72088baa2cea707bc"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/provenance.json",
+      "sha256": "453a51b954524d5b26ee1763bdc052848ccb7f1800a57534e8234448dad6d0d7"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/instrumentation.txt",
+      "sha256": "4f598a3037f90dabbb2fc38ea1133697d996dc9edbbdcf0ddf0b249408e0bc47"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174449-landscape-d0d61295/probe-source/build-provenance.json",
+      "sha256": "bd7ebd53d6192ff4c7bba87e10123a94bedbba0836dcce270e6c09962dbda59d"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174639-animations-off-50be10a0/20261101-174639-animations-off-50be10a0/report.json",
+      "sha256": "72d0e2da41c18dc2aeb92b433fd0819c9094d2bdbb21712eb3aac2cc021b75fd"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174639-animations-off-50be10a0/provenance.json",
+      "sha256": "956c2c73c41371992deea4bc7f8fe0bef4c0c224f09f495abd15f8bc7b6f667d"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174639-animations-off-50be10a0/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174639-animations-off-50be10a0/instrumentation.txt",
+      "sha256": "e0219a310e6d4dceec0e84e32dd354b624f05da2b50e72a496540fb7a53e7f93"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/70ea200c/20261101-174639-animations-off-50be10a0/probe-source/build-provenance.json",
+      "sha256": "bd7ebd53d6192ff4c7bba87e10123a94bedbba0836dcce270e6c09962dbda59d"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/01-palette-v2-layout.png",
+      "sha256": "253583317bf132f2d8c72fed5802e31419a6673b3e3c16dec3d6adbcd865eedb"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/02-palette-v2-idle-field.png",
+      "sha256": "0130a2b688cb730eec525dc97fbd213ea8ea42b19a7ed30c6f116d543d796f50"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/03-palette-v2-pressed-field.png",
+      "sha256": "82237710e595ffe0b66454226b313895bb6aa693ed689d1c02963c1c031dd897"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/04-palette-v2-released-field.png",
+      "sha256": "4c6afc6136dc4bef7f78322750002d035229900a0af185cd5d3e16905748d8a9"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/05-cleanup-default-layout.png",
+      "sha256": "1bda00bdf6d2aa34a4b69177d2d169ff1d4e06f4288e068e461e6178b19d53e4"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/failure.png",
+      "sha256": "7878547a04ac63497803e450b3c1c6a6e84e06bc908cce7fb1a84d7ca83f5c17"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/20261101-171714-phone-54557833/report.json",
+      "sha256": "ae2ad7c4e52401142630ef4f6f5e6f0803a5056492ed6767652b460612860aed"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/provenance.json",
+      "sha256": "0d2fc817654a1bdfba9ceeca22ea67c943f11bdc7d199cceb06f028fec905082"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/cleanup.json",
+      "sha256": "1a74d319852ea3f66d0dd3772bd6d09b16044dba1fe28f4572b1caa149e476e5"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/instrumentation.txt",
+      "sha256": "127489ae594c54bee795f2247a3e4e05445f21e62f8744d5d04758e6a4588db4"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-171714-phone-54557833/probe-source/build-provenance.json",
+      "sha256": "6149e87637412e5894a495b9d0e0bfa12d34060e2f63c65fed4a41d3b6d320e8"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-173223-phone-cb2910e6/20261101-173223-phone-cb2910e6/report.json",
+      "sha256": "e6f2d2fc3d903a45dc9f967441b7d4cd1dbea7dc15bc34278604bd0939fb53bb"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-173223-phone-cb2910e6/provenance.json",
+      "sha256": "5777ee591ee0eeeb799cf317d7278a8ddb8e84a6ceb04610676dfd4a76d20836"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-173223-phone-cb2910e6/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-173223-phone-cb2910e6/instrumentation.txt",
+      "sha256": "25a808b6a4fd8de684e1a6eb5e2369ec91ec71b753c1078c06ff32675830c29d"
+    },
+    {
+      "path": "docs/validation/cleanup127/native/56524629/20261101-173223-phone-cb2910e6/probe-source/build-provenance.json",
+      "sha256": "feee9113bfeb4a93dc623830dcaa1914cefd231dc59e56a9d6421b2087bed0ec"
+    },
+    {
+      "path": "docs/validation/cleanup127/NATIVE-CLEANUP.json",
+      "sha256": "03edf1301d8840375d113ad6ee8da638b838f075c1b3480567a6a3961fbfa499"
+    }
+  ]
+}

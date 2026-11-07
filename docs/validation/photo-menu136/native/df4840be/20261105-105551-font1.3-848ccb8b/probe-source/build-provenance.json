@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/photo-menu-device-probe/src/cc/huevia/photomenuqa/PhotoMenuProbe.java",
+      "sha256": "ac54eb2e91185584e4773831e01575c33e81cb6e4a42e33010a1f5164ea07d00"
+    },
+    {
+      "path": ".tooling/portrait-qa/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "path": "tests/photo-menu-device-probe/AndroidManifest.xml",
+      "sha256": "0b77701aba7e7e00e787bb11873a4c0001d9fee3c67a236b563ea471e4e40a47"
+    },
+    {
+      "path": "tests/photo-menu-device-probe/build.ps1",
+      "sha256": "3094501e26ced03960eb7c8afed63f3f0212221cab126383c05a889394b84be6"
+    },
+    {
+      "path": "tests/photo-menu-device-probe/run.ps1",
+      "sha256": "cceb8149d9fec32e4c35932c567555772ca9c7d5a446b23cc5ac12fc508d0f11"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/photomenuqa/PhotoMenuProbe.class",
+    "cc/huevia/photomenuqa/PhotoMenuProbe$Condition.class",
+    "cc/huevia/photomenuqa/PhotoMenuProbe$Work.class"
+  ],
+  "apkSha256": "b7b1fcec67b1992b4d98743e7eddf0e48714ee4664e6410c7d2d37ba8ef3fe2c"
+}

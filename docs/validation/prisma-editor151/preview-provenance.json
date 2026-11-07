@@ -1,0 +1,18 @@
+{
+  "kind": "native screenshot contact sheet",
+  "operations": "uniform 1/3 resampling and side-by-side placement; no UI content replacement",
+  "sources": [
+    {
+      "path": "docs\\validation\\prisma-editor151\\round\\native\\phone\\01-filters.png",
+      "sha256": "91cc8b1a7d8dab86a65c49f7dc31eb35cc5cf9524546419fd4a9c5adbeacdd32"
+    },
+    {
+      "path": "docs\\validation\\prisma-editor151\\round\\native\\phone\\02-adjust-compare.png",
+      "sha256": "ed857e4c3e0a7921e3342ed55c62139e3135781772795519cb6f0d730c508ebd"
+    },
+    {
+      "path": "docs\\validation\\prisma-editor151\\round\\native\\phone\\03-crop.png",
+      "sha256": "f0033b89de4c0a5664618cbf21af858455bf9f33ae2a9c63150c0e9fecabab47"
+    }
+  ]
+}

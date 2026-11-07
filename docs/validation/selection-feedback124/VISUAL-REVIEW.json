@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "reviewer": "root",
+  "reviewedFrames": {
+    "phone": [
+      "01-strong-first",
+      "02-soft-gap",
+      "03-strong-second",
+      "04-soft-rest"
+    ],
+    "font1.3": [
+      "01-strong-first"
+    ],
+    "landscape": [
+      "01-strong-first"
+    ]
+  },
+  "result": "Stronger warm-white acknowledgement is visible; soft rest retains the incumbent tone. No further visual edits.",
+  "extraVisualRevisionPasses": 0
+}

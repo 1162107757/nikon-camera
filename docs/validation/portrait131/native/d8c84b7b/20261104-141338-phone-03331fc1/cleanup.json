@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Skin smoothing probe failed: java.lang.AssertionError: synthetic-acne-review-commits-record; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\portrait131\\native\\d8c84b7b\\20261104-141338-phone-03331fc1\\20261104-141338-phone-03331fc1\\report.json",
+  "errors": []
+}

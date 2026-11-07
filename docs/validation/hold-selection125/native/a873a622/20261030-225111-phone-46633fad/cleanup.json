@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Hold selection probe failed: java.lang.AssertionError: new-stroke-cancels-held-mask; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\hold-selection125\\native\\a873a622\\20261030-225111-phone-46633fad\\20261030-225111-phone-46633fad\\report.json",
+  "errors": []
+}

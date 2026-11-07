@@ -1,0 +1,218 @@
+{
+  "pass": false,
+  "stage": "gallery",
+  "candidateSha256": "721bbce924273b81ad2e65852f8654cd8f5ecb65af46b3996d58cae654ecd63f",
+  "mode": "font1.3",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "native-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-0",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-1",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-2",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-3",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-4",
+      "pass": true
+    },
+    {
+      "name": "advanced-rail-hidden-in-first-view",
+      "pass": true
+    },
+    {
+      "name": "quick-first-view",
+      "pass": true
+    },
+    {
+      "name": "first-frame-save-action-painted",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-0",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-1",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-2",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-3",
+      "pass": true
+    },
+    {
+      "name": "natural-bundle-real-parameters",
+      "pass": true
+    },
+    {
+      "name": "natural-cleanup-frozen",
+      "pass": true
+    },
+    {
+      "name": "quick-gesture-one-undo",
+      "pass": true
+    },
+    {
+      "name": "quick-slider-live",
+      "pass": true
+    },
+    {
+      "name": "quick-undo-restores-slider",
+      "pass": true
+    },
+    {
+      "name": "quick-redo-restores-slider",
+      "pass": true
+    },
+    {
+      "name": "switch-tool-keeps-parameters",
+      "pass": true
+    },
+    {
+      "name": "basic-entry-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "basic-entry-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "basic-entry-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "basic-entry-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "basic-controls-edit-production-settings",
+      "pass": true
+    },
+    {
+      "name": "primary-tools-keep-canvas-height",
+      "pass": true
+    },
+    {
+      "name": "header-save-still-visible",
+      "pass": true
+    },
+    {
+      "name": "filter-library-retained",
+      "pass": true
+    },
+    {
+      "name": "crop-entry-retained",
+      "pass": true
+    },
+    {
+      "name": "advanced-parameters-retained",
+      "pass": true
+    },
+    {
+      "name": "basic-return",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-primary",
+      "pass": true
+    },
+    {
+      "name": "skin-opens-without-extra-group",
+      "pass": true
+    },
+    {
+      "name": "skin-autodetection-prepared",
+      "pass": true
+    },
+    {
+      "name": "skin-back-returns-to-main-editor",
+      "pass": true
+    },
+    {
+      "name": "skin-cancel-keeps-main-settings",
+      "pass": true
+    },
+    {
+      "name": "body-opens-directly",
+      "pass": true
+    },
+    {
+      "name": "body-cancel-keeps-settings",
+      "pass": true
+    },
+    {
+      "name": "natural-portrait-amount",
+      "pass": true
+    },
+    {
+      "name": "portrait-automatic-skin",
+      "pass": true
+    },
+    {
+      "name": "portrait-automatic-faces",
+      "pass": true
+    },
+    {
+      "name": "compound-draft-saved",
+      "pass": true
+    },
+    {
+      "name": "save-sheet-phone-action",
+      "pass": true
+    },
+    {
+      "name": "advanced-export-preserved",
+      "pass": true
+    },
+    {
+      "name": "original-bytes-preserved",
+      "pass": true
+    },
+    {
+      "name": "gallery-fixture-available",
+      "pass": false
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 5,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: gallery-fixture-available",
+  "stack": "java.lang.AssertionError: gallery-fixture-available\n\tat cc.huevia.compacteditorqa.CompactEditorProbe.check(CompactEditorProbe.java:112)\n\tat cc.huevia.compacteditorqa.CompactEditorProbe.gallery(CompactEditorProbe.java:69)\n\tat cc.huevia.compacteditorqa.CompactEditorProbe.compactFlow(CompactEditorProbe.java:60)\n\tat cc.huevia.compacteditorqa.CompactEditorProbe.onStart(CompactEditorProbe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

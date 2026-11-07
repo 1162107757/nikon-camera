@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-24T02:26:51.7900966Z",
+  "generatedAt": "2026-11-07T10:56:00Z",
   "title": "Design System: Huevia",
   "extensions": {
     "nativeActualBuiltWorlds": [
@@ -73,6 +73,309 @@
         "limits": [
           "Emulator evidence uses an explicit QA desk-photo crop and synthetic EXIF. No physical camera/phone compatibility, production account/network, FPS, color calibration or TalkBack certification.",
           "The original d433 review remains historical. Final evidence is tied to the stated 1f74 APK. Separate task counts are not added into independent scene totals."
+        ]
+      },
+      {
+        "id": "native-prisma-photo-editor-151",
+        "date": "2026-11-07",
+        "version": "151 / 0.29.0-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "Historical151 main photo editor. Its approved Prisma foundation continues in152; menu, draft continuity and secondary-workspace rules now follow the152 record.",
+        "approvedArtifact": "docs/design-review/prisma-editor-20261107/prototype.html",
+        "authorities": [
+          "DESIGN.md",
+          ".impeccable/surfaces/photo-filter-editor.md",
+          "docs/prisma-editor151.md",
+          "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+          "app/src/main/java/cc/huevia/ui/PhotoCompactDock.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/AlbumPanel.java"
+        ],
+        "nativeBehavior": [
+          "Photo-derived blurred backdrop is prepared off the drawing path; the contained photograph keeps its actual aspect ratio. Native filenames, preset names, system bars, safe insets and sp scaling remain real.",
+          "Below the photograph: shared history, five circular tools in filter/adjustment/crop/portrait/border order, then active workspace. Filter cards use prisma-filter-gap exterior separation and prisma-rail-inset sides; labels sit on white and selection/export use prisma-yellow.",
+          "Adjustment title and value sit above the slider. Inline crop uses yellow selection and white rotate/flip/reset text with a subdued disabled state.",
+          "Compact portrait reduces workspace allocation and the primary tool row while retaining native sp scaling and 48dp input rows; landscape preserves tools before the workspace.",
+          "Persistent draggable original/effect seam supports touch, direction keys and accessibility progress; the original reference is aligned by background preparation.",
+          "Horizontal mirror joins geometry, history, draft and frozen identity; legacy drafts and unmirrored identities remain compatible. Existing specialised editing and new-copy export flows remain accessible.",
+          "User-requested undo/redo circularity refinement changes only AppIcon.java: equal 17×17 coordinate bounds, a 300-degree circle and connected rounded arrowhead; redo is an exact horizontal mirror. Prototype SVG symbols and offline HTML are synchronized."
+        ],
+        "geometryExtensions": {
+          "compactWorkspace": "160dp",
+          "compactPrimaryRow": "67dp",
+          "inputRows": "48dp",
+          "largeFontNarrowPhoto": "Approximately 186.4×233dp at 320×640dp/fontScale 1.3; measured top/bottom insets 52dp/24dp explain authorised prototype differences.",
+          "defaultWorkspace": "184dp × max(1, fontScale)",
+          "defaultPrimaryRow": "67dp × max(1, fontScale)",
+          "historyRow": "48dp",
+          "headerRow": "56dp",
+          "filterCard": "66×83dp × max(1, fontScale), image 62dp + caption 21dp",
+          "compactFilterCard": "Fixed 66×59dp, image 39dp + caption 20dp",
+          "selectionOutline": "2dp",
+          "toolIcon": "Approximately 21dp within the 39dp circle",
+          "slider": "White 14dp knob and 2dp line",
+          "exportTarget": "80×48dp native target around the 68×42dp visual pill",
+          "photoShape": "Contained rectangle; no corner rounding or masking.",
+          "historyGlyph": {
+            "coordinateBounds": "17×17 equal-width/height icon coordinates",
+            "arc": "300-degree circle",
+            "arrowhead": "Connected with rounded joins/caps",
+            "redo": "Exact horizontal mirror of undo",
+            "unchanged": "Positions, native targets and event handlers."
+          }
+        },
+        "apk": {
+          "path": "dist/huevia-0.29.0-beta-debug.apk",
+          "sha256": "2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad",
+          "delivery": "Local only; no public release change."
+        },
+        "evidence": {
+          "validation": "docs/validation/prisma-editor151/validation.json",
+          "productionInputDelta": {
+            "changed": [
+              "AppIcon.java"
+            ],
+            "unchangedUiInputs": 304,
+            "meaning": "Positions, targets, handlers and remaining UI inputs are unchanged from the stated layout-reference SHA."
+          },
+          "currentGlyph": {
+            "sha256": "2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad",
+            "configurations": [
+              "phone",
+              "font1.3"
+            ],
+            "checksPerConfiguration": 57,
+            "assertionExecutions": 114,
+            "countMeaning": "57 checks repeated in two configurations; not seven-mode layout revalidation.",
+            "finalCaptures": "docs/validation/prisma-editor151/round/native/",
+            "reviewedOriginals": 4,
+            "review": ".impeccable/review/prisma-editor151-round/review.md",
+            "disposition": "ship; no fixes. Circularity, exact mirror, connected rounded head, clipping, retained positions and semantics passed; scoped glyph and direct-regression review only."
+          },
+          "unchangedLayoutReference": {
+            "validation": "docs/validation/prisma-editor151/before-rounding/validation.json",
+            "configurations": 7,
+            "assertionExecutions": 400,
+            "countMeaning": "Includes repeated assertions across device configurations, not 400 independent scenes.",
+            "hostCoreSuites": 6,
+            "finalCaptures": "docs/validation/prisma-editor151/final/native/",
+            "requiredCaptures": ".impeccable/review/prisma-editor151/required-captures.json",
+            "review": ".impeccable/review/prisma-editor151/review.md",
+            "verdict": ".impeccable/review/prisma-editor151/verdict.md",
+            "disposition": "ship for three scored fixes: narrow-photo recovery, white crop text, current design persistence; remaining clear.",
+            "sha256": "5a39e634482924c5719a2e62f1ffae6f7c3acdf6232f1476000a4a727e26e5ac",
+            "role": "Historical unchanged-layout and core-logic reference; not rerun on the current glyph-only candidate."
+          }
+        },
+        "limits": [
+          "Initial native/ captures remain historical; final/native/ and seven-mode/400 assertions belong to the 5a39 layout-reference candidate. Current round/native/ and 114 assertions belong to 2eda. Current review is the full scoped glyph review, not whole-surface, whole-app or hardware acceptance.",
+          "No full MediaStore-save, physical-phone, real-camera or whole-app retest claim.",
+          "No production raster was added; existing illustrative project photo and synthetic NCP bytes are temporary QA inputs only. Demo CSS filters and simulated portrait algorithms are not production assets."
+        ],
+        "materialExtensions": {
+          "photoSample": "Background sample has a maximum edge of 64px; decoded/prepared off the draw path.",
+          "scrimTop": "rgba(23, 34, 30, 0.5372549020)",
+          "scrimMiddle": "rgba(21, 33, 29, 0.1686274510)",
+          "scrimBottom": "rgba(19, 27, 27, 0.6196078431)",
+          "compareControl": "rgba(20, 35, 29, 0.7411764706)",
+          "compareSelected": "rgba(23, 35, 31, 0.9333333333)",
+          "note": "Converted from Android ARGB in PhotoPrismaStyle; not a global material palette."
+        },
+        "notCanonized": "Prototype CSS filters, simulated portrait algorithms, board furniture and fake system bars are not native production design rules. QA imagery and synthetic NCP bytes are not production assets.",
+        "status": "historical",
+        "supersededBy": "native-editor-continuity-152",
+        "historicalRules": [
+          {
+            "name": "The Editor Scope Rule",
+            "body": "本节及 `prisma-*` tokens 只约束当前主图片编辑页；下方 `editor-*` 的固定炭黑材料与旧面板尺寸保留为专用工作区／历史记录，不能覆盖本节。照片本身和系统字号、安全区是布局输入，不复制原型中的假系统栏或示意效果。",
+            "section": "layout"
+          }
+        ]
+      },
+      {
+        "id": "native-editor-continuity-152",
+        "status": "historical",
+        "date": "2026-11-07",
+        "version": "152 / 0.29.1-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "Historical152 draft continuity and shared photo-tool family. Its layout, behavior and limited body-glyph verdict remain historical;153 changes only the card-selection role.",
+        "authorities": [
+          "DESIGN.md",
+          ".impeccable/surfaces/photo-filter-editor.md",
+          "docs/editor-continuity152.md",
+          ".impeccable/review/editor-continuity152/contract.md",
+          "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+          "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/PhotoBodyDialog.java",
+          "app/src/main/java/cc/huevia/ui/AlbumPanel.java"
+        ],
+        "approvedArtifact": "docs/design-review/prisma-editor-20261107/prototype.html",
+        "apk": {
+          "path": "dist/huevia-0.29.1-beta-debug.apk",
+          "bytes": 33606103,
+          "sha256": "eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07",
+          "delivery": "Local only; no physical install or public release."
+        },
+        "nativeBehavior": [
+          "Ordinary PhotoFilterEditor.bind resumes the current-account/original-identity pending draft. Only explicit saved-version selection uses bindSavedVersion; closing flushes editing parameters and actual phone-album reimport retains draft identity.",
+          "Reset glyph and all circular state carriers share the target center. Radius follows the short side of rectangular targets, preserving native48dp input targets. Secondary undo/redo use the circular mirror family; reset shares AppIcon.drawRefresh.",
+          "Skin, face, body, curves, HSL, palette, cleanup, local, brush and precision crop share bounded worker-produced photo atmosphere, translucent charcoal circles, yellow primary actions and white knobs. Photo/color-card content and processing algorithms keep their own data.",
+          "Portrait and body history rows are transparent: contrast is carried by individual circles rather than a full-width dark band.",
+          "Body has five equal circular tools: 瘦身, 瘦腿, 拉长, 范围, 重置. Range toggles parameters; reset affects only the current tool with undo; leg mode stays beside its owning strength. Automation/background protection are secondary11sp muted operations.",
+          "Local creation instructions appear once in the native top selection row, clear of the bottom history toolbar.",
+          "More is visible beside Close; existing handlers, conditions and specialised Apply/Back transactions remain. Generic native confirmation/data-entry dialogs keep platform structure.",
+          "Distinct body affordances: upper guides uses eye, upper fit uses four corners, lower range uses the range-options slider glyph, and labelled lower reset is unchanged. Five-peer rail and transparent history row remain."
+        ],
+        "geometryExtensions": {
+          "toolDisc": "39dp",
+          "sliderKnob": "White14dp",
+          "nativeInputTargets": "At least48dp",
+          "circularCarrier": "Short-side radius; icon and default/pressed/focused/selected disk share one center.",
+          "bodyToolRail": "Five equal circular peers; current-tool reset semantics.",
+          "bodyCollapsed": "180dp",
+          "bodyExpanded": "372dp",
+          "bodyFontIncrement": "72dp × (max(1, fontScale) − 1)",
+          "bodyCap": "At most half of available body height; existing landscape side layout retained.",
+          "secondaryHistory": "Transparent; contrast belongs to individual circles.",
+          "bodyAffordances": {
+            "upperGuides": "eye",
+            "upperFit": "four corners",
+            "lowerRange": "range-options sliders",
+            "lowerReset": "Existing labelled circular reset; current-item-only semantics unchanged."
+          }
+        },
+        "evidence": {
+          "validation": "docs/validation/editor-continuity152/validation.json",
+          "frozenProductionInputs": 305,
+          "changedRelativeTo151": 24,
+          "sourceAndProbeProvenance": "Frozen beside validation; includes the raw probe source.",
+          "nativeMatrix": {
+            "sameApkShaInAllModes": true,
+            "configurations": 7,
+            "ordinaryChecksPerMode": 101,
+            "narrowChecks": 102,
+            "assertionExecutions": 708,
+            "nativeCaptures": 98
+          },
+          "forceStop": {
+            "prepareChecks": 6,
+            "verifyChecks": 9,
+            "assertionExecutions": 15,
+            "nativeCaptures": 1
+          },
+          "totals": {
+            "assertionExecutions": 723,
+            "nativeCaptures": 99,
+            "countMeaning": "Repeated assertion executions across configurations plus the separate force-stop prepare/verify run; not723 independent scenes."
+          },
+          "finalCaptures": "docs/validation/editor-continuity152/native/",
+          "requiredCaptures": ".impeccable/review/editor-continuity152/required-captures.json",
+          "requiredFramesAvailable": 31,
+          "actualImport": "MediaStore JPEG imported through LocalPhotoRepository.",
+          "initialReview": ".impeccable/review/editor-continuity152/review.md",
+          "initialDisposition": "fix: secondary reset, local instruction overlap and records. Code fixes landed, then user refined tool-band contrast and body action hierarchy.",
+          "finalReview": ".impeccable/review/editor-continuity152/final-review.md",
+          "finalReviewStatus": "FIX history: one ambiguity between viewport/guide and range/reset glyphs. The full matrix review is not relabelled as ship; the separate verdict scores only that correction.",
+          "uiInputs": "docs/validation/editor-continuity152/UI-INPUTS.json",
+          "productionChanges": "docs/validation/editor-continuity152/production-changes.json",
+          "finalReviewCandidateSha256": "1cfb137da9434e1df3145d7a81a350306babe22ec451073a05ca9621f83bf6b4",
+          "verdict": ".impeccable/review/editor-continuity152/verdict.md",
+          "verdictStatus": "ship limited to the sole scored body-glyph fix and direct regressions; finding resolved, remaining clear; not whole-surface/app/physical-device certification.",
+          "requiredFramesPackageSha256": "eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07",
+          "deviceProperties": {
+            "sdk": 37,
+            "release": "17",
+            "previewSdk": 0,
+            "environment": "Android17 / API37",
+            "source": "Direct adb properties recorded in validation.json; corrects the imprecise inherited API37.2 label for current152 only."
+          },
+          "recoveryReview": {
+            "validationRecord": "docs/validation/editor-continuity152/validation.json.review",
+            "reason": "Original scoring agent did not respond after waits and was interrupted.",
+            "reviewer": "Fresh recovery reviewer",
+            "reviewedAffectedCaptures": 7,
+            "scope": "Seven same-path body originals spanning all modes; sole body-glyph ambiguity and direct regressions only.",
+            "result": "resolved; no direct regressions observed; remaining clear; limited ship."
+          }
+        },
+        "limits": [
+          "Evidence is from the owned emulator; no physical-device or public-release acceptance.",
+          "Actual MediaStore JPEG import is covered; no new end-to-end gallery-export proof.",
+          "Manual face/all-coverage skin-mask metadata and hand-authored presets are QA fixtures, not recognition or portrait-inference accuracy certification.",
+          "151 and intermediate build evidence keep their original identities and scope. No whole-app certification."
+        ],
+        "notCanonized": "Full-width dark secondary-history bands and duplicated bottom local instructions were removed as defects; they are not reusable system rules. No production raster or new visual concept was introduced.",
+        "supersededBy": "native-selection-soft-153"
+      },
+      {
+        "id": "native-selection-soft-153",
+        "status": "current",
+        "date": "2026-11-07",
+        "version": "153 / 0.29.2-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "User-pinned narrow card-selection refinement within the approved Prisma photo-editing family; no new concept, layout or processing change.",
+        "authorities": [
+          "DESIGN.md",
+          ".impeccable/surfaces/photo-filter-editor.md",
+          "docs/selection-soft153.md",
+          ".impeccable/review/selection-soft153/contract.md",
+          "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/PhotoCompactDock.java",
+          "app/src/main/java/cc/huevia/ui/PhotoBorderPanel.java"
+        ],
+        "approvedArtifact": "docs/design-review/prisma-editor-20261107/prototype.html",
+        "apk": {
+          "path": "dist/huevia-0.29.2-beta-debug.apk",
+          "bytes": 33606103,
+          "sha256": "10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e",
+          "delivery": "Local only; no hardware/public-release claim."
+        },
+        "nativeBehavior": [
+          "Original, built-in, personal and custom skin-tone cards share addToneCard and the quiet1dp selected frame, neutral white caption and translucent selected plate. Actual swatch colours, checkmarks, native selected semantics and click/render behavior are unchanged.",
+          "Filter strip/full picker, quick previews and border templates share the card-selection frame role. Translucent fill applies to tone/large cards, while white filmstrip captions retain dark ink.",
+          "Primary buttons and tool accents retain yellow. Manipulation-range lines, colour-wheel cursors and keyboard focus keep their own interaction semantics. No layout/model/render/draft/export changes."
+        ],
+        "evidence": {
+          "validation": "docs/validation/selection-soft153/validation.json",
+          "productionChanges": "docs/validation/selection-soft153/production-changes.json",
+          "changedProductionInputs": 6,
+          "nativeMatrix": {
+            "configurations": 7,
+            "checksPerMode": 10,
+            "assertionExecutions": 70,
+            "countMeaning": "Repeated bounded selection-switching/file/fixture protection checks; not a rerun of152 broader723 assertions.",
+            "nativeCaptures": 42
+          },
+          "requiredCaptures": ".impeccable/review/selection-soft153/required-captures.json",
+          "requiredFramesAvailable": 12,
+          "review": ".impeccable/review/selection-soft153/review.md",
+          "reviewStatus": "FIX history: first-candidate landscape small-caption contrast around3.5:1 only. The full review is not relabelled as ship; the separate verdict scores the caption correction.",
+          "environment": "Owned Android17 / API37 emulator",
+          "uiInputs": "docs/validation/selection-soft153/UI-INPUTS.json",
+          "reviewCandidateSha256": "643dc3ec12a086a0db44bee02414c08ee2bffa141e83a5decbb83d17ed82da28",
+          "verdict": ".impeccable/review/selection-soft153/verdict.md",
+          "verdictStatus": "ship limited to the scored caption-contrast fix and direct regressions; resolved, landscape contrast approximately4.82:1, no direct regressions; not whole-surface/app acceptance.",
+          "currentProof": "All70 checks and42 native frames repeated on the current exact SHA; all12 same-path required frames recaptured.",
+          "historicalMobileReference": "D:/dev/ai-project/nikon-camera/docs/design-review/prisma-editor-20261107/.impeccable/review/mobile.png",
+          "reviewScopeRecord": "docs/validation/selection-soft153/validation.json.review"
+        },
+        "limits": [
+          "152 broader723 assertions and its limited body-glyph ship remain historical and were not rerun for153.",
+          "No new hardware or public-release acceptance.",
+          "Current evidence covers bounded selection style/switching and fixture/file protection, not whole-surface or algorithm/draft/export certification."
+        ],
+        "notCanonized": "Former2dp saturated-yellow outline and opaque selected tone plate are removed contrast defects, not card-selection rules.",
+        "candidateHistory": [
+          {
+            "sha256": "643dc3ec12a086a0db44bee02414c08ee2bffa141e83a5decbb83d17ed82da28",
+            "selectionLabel": "#E1DCC5",
+            "scope": "First153 candidate; the full review found only landscape small-caption contrast around3.5:1. Current-label correction and repeated proof are recorded separately.",
+            "review": ".impeccable/review/selection-soft153/review.md",
+            "disposition": "FIX"
+          }
         ]
       }
     ],
@@ -622,6 +925,186 @@
           "oklch(83.571% 0.00287 264.542)",
           "oklch(95.000% 0.00287 264.542)"
         ]
+      },
+      "prisma-yellow": {
+        "role": "primary",
+        "displayName": "Prisma editor selection and export",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0.16 100)",
+          "oklch(26% 0.16 100)",
+          "oklch(38% 0.16 100)",
+          "oklch(49% 0.16 100)",
+          "oklch(61% 0.16 100)",
+          "oklch(72% 0.16 100)",
+          "oklch(84% 0.16 100)",
+          "oklch(95% 0.16 100)"
+        ]
+      },
+      "prisma-white": {
+        "role": "neutral",
+        "displayName": "Prisma editor white",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "prisma-ink": {
+        "role": "neutral",
+        "displayName": "Prisma export ink",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0.014 130)",
+          "oklch(26% 0.014 130)",
+          "oklch(38% 0.014 130)",
+          "oklch(49% 0.014 130)",
+          "oklch(61% 0.014 130)",
+          "oklch(72% 0.014 130)",
+          "oklch(84% 0.014 130)",
+          "oklch(95% 0.014 130)"
+        ]
+      },
+      "prisma-text": {
+        "role": "neutral",
+        "displayName": "Prisma editor text",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0.003 265)",
+          "oklch(26% 0.003 265)",
+          "oklch(38% 0.003 265)",
+          "oklch(49% 0.003 265)",
+          "oklch(61% 0.003 265)",
+          "oklch(72% 0.003 265)",
+          "oklch(84% 0.003 265)",
+          "oklch(95% 0.003 265)"
+        ]
+      },
+      "prisma-label-ink": {
+        "role": "neutral",
+        "displayName": "Prisma filmstrip ink",
+        "scope": "Main photo workspace 151 only.",
+        "tonalRamp": [
+          "oklch(15% 0.017 180)",
+          "oklch(26% 0.017 180)",
+          "oklch(38% 0.017 180)",
+          "oklch(49% 0.017 180)",
+          "oklch(61% 0.017 180)",
+          "oklch(72% 0.017 180)",
+          "oklch(84% 0.017 180)",
+          "oklch(95% 0.017 180)"
+        ]
+      },
+      "prisma-canvas": {
+        "role": "neutral",
+        "displayName": "Prisma fallback canvas",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0.013 160)",
+          "oklch(26% 0.013 160)",
+          "oklch(38% 0.013 160)",
+          "oklch(49% 0.013 160)",
+          "oklch(61% 0.013 160)",
+          "oklch(72% 0.013 160)",
+          "oklch(84% 0.013 160)",
+          "oklch(95% 0.013 160)"
+        ]
+      },
+      "prisma-tool": {
+        "role": "neutral",
+        "displayName": "Prisma translucent tool",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0.009 155)",
+          "oklch(26% 0.009 155)",
+          "oklch(38% 0.009 155)",
+          "oklch(49% 0.009 155)",
+          "oklch(61% 0.009 155)",
+          "oklch(72% 0.009 155)",
+          "oklch(84% 0.009 155)",
+          "oklch(95% 0.009 155)"
+        ]
+      },
+      "prisma-tool-selected": {
+        "role": "neutral",
+        "displayName": "Prisma selected tool",
+        "scope": "Shared photo-editing family retained in153; primary/tool accents remain unchanged. Historical151/152 usage is recorded separately.",
+        "tonalRamp": [
+          "oklch(15% 0.012 150)",
+          "oklch(26% 0.012 150)",
+          "oklch(38% 0.012 150)",
+          "oklch(49% 0.012 150)",
+          "oklch(61% 0.012 150)",
+          "oklch(72% 0.012 150)",
+          "oklch(84% 0.012 150)",
+          "oklch(95% 0.012 150)"
+        ]
+      },
+      "prisma-muted": {
+        "role": "neutral",
+        "displayName": "Prisma secondary control text",
+        "scope": "152 photo workspaces, including11sp body automation controls.",
+        "tonalRamp": [
+          "oklch(15% .007 150)",
+          "oklch(26% .007 150)",
+          "oklch(38% .007 150)",
+          "oklch(49% .007 150)",
+          "oklch(61% .007 150)",
+          "oklch(72% .007 150)",
+          "oklch(84% .007 150)",
+          "oklch(95% .007 150)"
+        ]
+      },
+      "prisma-selection-frame": {
+        "role": "neutral",
+        "displayName": "Quiet olive-gold card frame",
+        "scope": "Native photo-card selection in153 only; not primary actions, tools, manipulation guides or focus.",
+        "tonalRamp": [
+          "oklch(15% 0.025 105)",
+          "oklch(26% 0.025 105)",
+          "oklch(38% 0.025 105)",
+          "oklch(49% 0.025 105)",
+          "oklch(61% 0.025 105)",
+          "oklch(72% 0.025 105)",
+          "oklch(84% 0.025 105)",
+          "oklch(95% 0.025 105)"
+        ]
+      },
+      "prisma-selection-label": {
+        "role": "neutral",
+        "displayName": "Neutral white selected card caption",
+        "scope": "Native photo-card selection in153 only; not primary actions, tools, manipulation guides or focus.",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "prisma-selection-fill": {
+        "role": "neutral",
+        "displayName": "Translucent selected tone plate",
+        "scope": "Native photo-card selection in153 only; not primary actions, tools, manipulation guides or focus.",
+        "tonalRamp": [
+          "oklch(15% 0.015 155)",
+          "oklch(26% 0.015 155)",
+          "oklch(38% 0.015 155)",
+          "oklch(49% 0.015 155)",
+          "oklch(61% 0.015 155)",
+          "oklch(72% 0.015 155)",
+          "oklch(84% 0.015 155)",
+          "oklch(95% 0.015 155)"
+        ]
       }
     },
     "typographyMeta": {
@@ -648,6 +1131,26 @@
       "navigation-label": {
         "displayName": "根导航",
         "purpose": "11sp；当前目的地加粗，与图标同时显示。"
+      },
+      "prisma-filename": {
+        "displayName": "Editor filename",
+        "purpose": "13sp native medium, centred actual filename."
+      },
+      "prisma-caption": {
+        "displayName": "Editor subtitle",
+        "purpose": "10sp native regular supporting context."
+      },
+      "prisma-label": {
+        "displayName": "Editor tool and filmstrip label",
+        "purpose": "10.5sp native regular; sp follows system scale."
+      },
+      "prisma-category": {
+        "displayName": "Editor category",
+        "purpose": "11.5sp native regular; scope is main photo editor."
+      },
+      "prisma-auxiliary": {
+        "displayName": "Secondary photo operation",
+        "purpose": "11sp native regular body automation and background-protection actions, with prisma-muted."
       }
     },
     "shadows": [
@@ -719,8 +1222,23 @@
       {
         "name": "photo-landscape-tools",
         "value": "orientation LANDSCAPE: 300dp side controls"
+      },
+      {
+        "name": "prisma-compact-portrait",
+        "value": "orientation PORTRAIT && screenWidthDp < 600 && screenHeightDp < 720"
       }
-    ]
+    ],
+    "currentPhotoWorkspace": "native-selection-soft-153",
+    "nativeCardSelection": {
+      "version": "153 / 0.29.2-beta",
+      "frame": "{colors.prisma-selection-frame}",
+      "strokeWidth": "1dp",
+      "selectedCaption": "{colors.prisma-selection-label}",
+      "toneAndLargeCardFill": "{colors.prisma-selection-fill}",
+      "scope": "Shared tone-card builder, filter strip/full picker, quick previews and border templates. White filmstrip captions keep their dark ink; translucent fill is limited to tone/large cards.",
+      "retained": "Checkmarks, actual colour values, native selected semantics, click/render behavior, primary yellow and distinct focus/manipulation cues.",
+      "notCanonized": "Former2dp saturated-yellow card frame and opaque#272019 selected tone plate were removed as excessive-contrast defects."
+    }
   },
   "components": [
     {
@@ -793,6 +1311,22 @@
       "description": "HueTheme.orangeLight 的叠加 shader 以 CSS 渐变翻译的视觉标本，保留浅深色四层材料与218dp正常高度；原生按实际边界缓存 shader，紧凑高度为168dp。此 CSS 不替代 Android 绘制坐标。",
       "html": "<div class=\"ds-orange-light\"><strong>预设</strong><p>把喜欢的色彩，带进相机</p></div>",
       "css": ".ds-orange-light{box-sizing:border-box;height:218px;min-width:280px;padding:20px;color:#262320;font-family:system-ui,sans-serif;background:linear-gradient(to bottom,transparent 65%,#FAFAF8 100%),radial-gradient(circle at 96% 2%,#FFE5AC 0,rgba(255,229,172,0) 82%),radial-gradient(circle at 38% 45%,#E96C40 0,rgba(233,108,64,0) 72%),linear-gradient(135deg,#BEB5BC,#E6653C,#F2AB67,#FAFAF8)}.ds-orange-light strong{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em}.ds-orange-light p{margin-top:12px;color:#5B3025;font-size:13px}@media(prefers-color-scheme:dark){.ds-orange-light{color:#F6F1EB;background:linear-gradient(to bottom,transparent 65%,#201F1D 100%),radial-gradient(circle at 96% 2%,rgba(124,103,71,.4666666667) 0,rgba(255,229,172,0) 82%),radial-gradient(circle at 38% 45%,rgba(125,48,36,.5333333333) 0,rgba(233,108,64,0) 72%),linear-gradient(135deg,#423636,#7C3B29,#6D4B30,#201F1D)}.ds-orange-light p{color:#F2D6C4}}"
+    },
+    {
+      "name": "Prisma Export Action",
+      "kind": "button",
+      "refersTo": "prisma-export",
+      "description": "Current main-editor export. Browser specimen approximates dp with px; the native pill has an 80×48dp target and uses the existing new-copy export flow.",
+      "html": "<span class=\"ds-prisma-export-target\"><button class=\"ds-prisma-export\">导出</button></span>",
+      "css": ".ds-prisma-export-target{display:inline-flex;align-items:center;justify-content:center;width:80px;min-height:48px}.ds-prisma-export{width:68px;min-height:42px;padding:0;border:0;border-radius:999px;background:#FFE335;color:#191E17;font-family:system-ui,sans-serif;cursor:pointer}.ds-prisma-export:hover{filter:brightness(1.04)}.ds-prisma-export:active{filter:brightness(.94)}.ds-prisma-export:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px}.ds-prisma-export:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Prisma Filter Rail",
+      "kind": "custom",
+      "refersTo": "prisma-filter-card",
+      "description": "Current153 main-editor filmstrip:14dp exterior gaps,18dp side insets, white captions with dark ink and a1dp muted olive-gold selected frame. Browser specimen shows blank thumbnail geometry; actual cards use the edited photograph. Native layout/fontScale behavior is unchanged.",
+      "html": "<div class=\"ds-prisma-rail\" aria-label=\"滤镜标本\"><button class=\"ds-prisma-card\" aria-pressed=\"true\"><span class=\"ds-prisma-thumb\" aria-hidden=\"true\"></span><span class=\"ds-prisma-label\">原图</span></button><button class=\"ds-prisma-card\" aria-pressed=\"false\"><span class=\"ds-prisma-thumb\" aria-hidden=\"true\"></span><span class=\"ds-prisma-label\">滤镜</span></button></div>",
+      "css": ".ds-prisma-rail{display:flex;gap:14px;max-width:100%;overflow-x:auto;padding:6px 18px;background:#242B27}.ds-prisma-card{display:flex;flex:0 0 66px;flex-direction:column;width:66px;height:83px;overflow:hidden;padding:0;border:0;border-radius:7px;background:#FFFFFF;color:#1F2B29;cursor:pointer}.ds-prisma-thumb{display:block;flex:0 0 62px;width:100%;background:#242B27}.ds-prisma-label{display:grid;place-items:center;width:100%;height:21px;color:#1F2B29;font:400 10.5px system-ui,sans-serif;white-space:nowrap;overflow:hidden}.ds-prisma-card[aria-pressed=true]{outline:1px solid #BBB9A1;outline-offset:-1px}.ds-prisma-card:hover{filter:brightness(1.06)}.ds-prisma-card:active{opacity:.8}.ds-prisma-card:focus-visible{outline:2px solid #FFE335;outline-offset:2px}"
     }
   ],
   "narrative": {
@@ -834,6 +1368,26 @@
       {
         "name": "The Thumbnail State Rule",
         "body": "占位图在容器 bounds 内绘制且不声明 intrinsic 尺寸，仅内部符号使用固定 dp，避免 CENTER_CROP 放大导航图形。真实 Bitmap 就绪后仍用 CENTER_CROP 并替换占位，恢复文件／版本描述。加载、不可用、成功和刷新恢复必须反映真实状态，不伪造照片；原 12MiB 缓存、两个 worker、24 个排队位置、失败去重和过期绑定校验保留。",
+        "section": "components"
+      },
+      {
+        "name": "The Shared Photo Family Rule",
+        "body": "`prisma-*` 的共同材料与控件规则用于主编辑和已列明的二级工作区；具体参数、色卡和算法保持各自语义。圆形控件承担状态对比，二级历史行不以全宽深色带替代照片氛围。",
+        "section": "components"
+      },
+      {
+        "name": "The Resumable Draft Rule",
+        "body": "普通打开照片恢复当前账号与原图身份的 pending draft，关闭仍保存编辑参数；只有明确选择已保存版本时走 `bindSavedVersion`。照片从手机相册重新导入仍保留相同草稿身份，不用显式版本查看替代正常编辑续接。",
+        "section": "components"
+      },
+      {
+        "name": "The Distinct Body Action Rule",
+        "body": "塑形同时出现辅助视口与参数操作时，上方范围可见性用眼睛、适应照片用四角框；下方范围参数用滑块图标，当前项重置保留带文案的圆箭头。不同作用不以重复图形暗示同一操作。",
+        "section": "components"
+      },
+      {
+        "name": "The Quiet Card Selection Rule",
+        "body": "卡片选择使用 1dp 柔和边框，并保留勾选与原生 selected 语义；中性白字和轻透底按卡片材料使用。主操作／工具强调与编辑范围、游标、焦点不随卡片角色一同弱化。",
         "section": "components"
       }
     ],

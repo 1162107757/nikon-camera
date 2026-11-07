@@ -1,0 +1,94 @@
+{
+  "candidate": {
+    "versionCode": 117,
+    "versionName": "0.23.6-beta",
+    "sha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2",
+    "bytes": 33395468
+  },
+  "productionSourceSha256": {
+    "PhotoFaceBodySkin": "dd582ea470eaa1ad81f4ec22067578074935a8f3eef8ed45f0f6b9e0df73c504",
+    "SkinBodyRegions": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5",
+    "PhotoFaceSkinMask": "8f71111afa65f907d2ae13aca4e029a935db8c72c36a148c58c9f9fe5b3b164e",
+    "PhotoFaceLandmarks": "f9e643389eea846712e66f42beab4d9e8283943daf7e1ac95dd78558b4d09d40",
+    "PortraitPreviewFilter": "c0ad4b2f29e3739751f1c921949b6aa15ce61b07cacf5288324107645a65abf1",
+    "PhotoPortrait": "322236433e1626aa3693aa5c0229d5cd4167294981e26620b4586578f5f8d5eb"
+  },
+  "execution": {
+    "offline": true,
+    "retainedFaces": 1,
+    "elapsedMs": 1126.9487,
+    "scope": "One private supplied image, one production pass on the owned emulator. No population accuracy or physical-phone timing claim."
+  },
+  "weights": [
+    {
+      "category": "occluding-hand-skin",
+      "face": [
+        0,
+        0,
+        0
+      ],
+      "body": [
+        0.915686274509805,
+        0.9970588235294118,
+        1
+      ]
+    },
+    {
+      "category": "upper-forehead-transition",
+      "face": [
+        0.8193739351849009,
+        0.8596434921594217,
+        0.9866794401895024
+      ],
+      "body": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "category": "hair",
+      "face": 0,
+      "body": 0
+    },
+    {
+      "category": "collar",
+      "face": 0,
+      "body": 0
+    },
+    {
+      "category": "background",
+      "face": 0,
+      "body": 0
+    },
+    {
+      "category": "coat",
+      "face": 0,
+      "body": 0
+    }
+  ],
+  "cleanup": {
+    "remoteFixtureRemoved": true,
+    "privateProbeUninstalled": true,
+    "privateAndTargetProcessesStopped": true,
+    "networkRestored": true,
+    "errors": []
+  },
+  "network": {
+    "before": {
+      "airplane": "0",
+      "wifi": "1",
+      "mobile": "1"
+    },
+    "during": {
+      "airplane": "1",
+      "wifi": "0",
+      "mobile": "0"
+    },
+    "after": {
+      "airplane": "0",
+      "wifi": "1",
+      "mobile": "1"
+    }
+  }
+}

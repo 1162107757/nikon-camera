@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "candidate": {
+    "versionCode": 124,
+    "versionName": "0.24.2-beta",
+    "apk": {
+      "path": "dist/huevia-0.24.2-beta-debug.apk",
+      "sha256": "aa5461290742af6f2afcabbad89ab7805e9b75b7bcdda25ec411256955ed3dfd"
+    },
+    "bytes": 33436428,
+    "buildIdentity": {
+      "path": "docs/validation/selection-feedback124/BUILD-IDENTITY.json",
+      "sha256": "0c28e6f704387331b779e9581f7bd6dbe8ed3c4f3a2451f10bd6da73a0e46e16"
+    },
+    "packagingAudit": {
+      "path": "docs/validation/selection-feedback124/PACKAGING-AUDIT.json",
+      "sha256": "f2d3e2da1b0072b455af669ac6e37ebf9ccc4fcdff1bfe74e2dac8013008ec3f"
+    }
+  },
+  "successfulFinalCandidateRuns": [
+    {
+      "run": "20261030-193626-phone-88c183f3",
+      "mode": "phone",
+      "pass": true,
+      "checks": 50,
+      "screenshots": 5,
+      "report": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-193626-phone-88c183f3/20261030-193626-phone-88c183f3/report.json",
+        "sha256": "fd115a039797a1a7000e618598c0e4400aa0a757b90e0b31a6f186b53d568f26"
+      },
+      "provenance": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-193626-phone-88c183f3/provenance.json",
+        "sha256": "7711f100e2ba3510a18bbeb3c4aadfacd82a6285d3b8d6f628997366a0468fad"
+      },
+      "cleanup": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-193626-phone-88c183f3/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "measurements": [
+        {
+          "case": "strong-versus-existing-soft",
+          "changedPixels": 41622,
+          "protectedPixels": 1725836,
+          "outsideDifferences": 0,
+          "strongToSoftTotalDeltaRatio": 2.847386674614572
+        },
+        {
+          "case": "actual-preview-flash",
+          "firstToSoftMs": 259,
+          "softToSecondMs": 143,
+          "secondToRestMs": 198
+        }
+      ]
+    },
+    {
+      "run": "20261030-194006-font1.3-b28242c5",
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 29,
+      "screenshots": 5,
+      "report": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-194006-font1.3-b28242c5/20261030-194006-font1.3-b28242c5/report.json",
+        "sha256": "c1b1e237d60bb34ffc719cbf202f8d40597885bb66fefb124dcd8c3d33eabbaa"
+      },
+      "provenance": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-194006-font1.3-b28242c5/provenance.json",
+        "sha256": "1c98f7fdd867f10604c0cdfe5e1bd08fd056e3720d7f85095a2b3d4307e4b2ee"
+      },
+      "cleanup": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-194006-font1.3-b28242c5/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "measurements": [
+        {
+          "case": "strong-versus-existing-soft",
+          "changedPixels": 41622,
+          "protectedPixels": 1725836,
+          "outsideDifferences": 0,
+          "strongToSoftTotalDeltaRatio": 2.847386674614572
+        },
+        {
+          "case": "actual-preview-flash",
+          "firstToSoftMs": 301,
+          "softToSecondMs": 129,
+          "secondToRestMs": 183
+        }
+      ]
+    },
+    {
+      "run": "20261030-194145-landscape-b42e581b",
+      "mode": "landscape",
+      "pass": true,
+      "checks": 29,
+      "screenshots": 5,
+      "report": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-194145-landscape-b42e581b/20261030-194145-landscape-b42e581b/report.json",
+        "sha256": "c0db7aafca3bda1fc470170b9cc8151a5f2ed4baa0d39df9ba83023eb919791e"
+      },
+      "provenance": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-194145-landscape-b42e581b/provenance.json",
+        "sha256": "38505dd6540968f6c02176ca694a5cf61d2481f3cfff7034611415dd9a4b5c6c"
+      },
+      "cleanup": {
+        "path": "docs/validation/selection-feedback124/native/aa546129/20261030-194145-landscape-b42e581b/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "measurements": [
+        {
+          "case": "strong-versus-existing-soft",
+          "changedPixels": 34994,
+          "protectedPixels": 1004476,
+          "outsideDifferences": 0,
+          "strongToSoftTotalDeltaRatio": 2.8507520778624595
+        },
+        {
+          "case": "actual-preview-flash",
+          "firstToSoftMs": 253,
+          "softToSecondMs": 103,
+          "secondToRestMs": 229
+        }
+      ]
+    }
+  ],
+  "successfulFinalCandidateTotals": {
+    "runs": 3,
+    "checks": 108,
+    "screenshots": 15
+  },
+  "historicalNativeAttempts": [],
+  "probe": {
+    "apkSha256": "1155b183eb75841cd59fd2d4e4fe2f5039990acec19fb17d73807000b642c22f",
+    "classpath": "Android API35 only; no production class included",
+    "archivedSources": {
+      "path": "docs/validation/selection-feedback124/native/probe-source/provenance.json",
+      "sha256": "856a434c004bac881f53c22cf5a540458c1d51ba874d5cec6ba395b93004e17a"
+    }
+  },
+  "coverage": [
+    "Actual PhotoBrushDialog Canvas strong-soft-strong-original-soft phases",
+    "Strong selected overlay more visible; protected outside pixels unchanged",
+    "Soft display exactly equal to live-paint soft; cached mask, settings, undo, source pixels unchanged",
+    "New DOWN, erase, undo/redo, two-finger navigation, dismissal cancel preview feedback",
+    "Completion still has clean original-photo gap, two strong pulses, commit then dismissal",
+    "Reopening existing selection pulses then settles soft",
+    "System disabled animations use one highlight then soft or completion; animator duration restored"
+  ],
+  "oldUniversalProbeOracleAdaptation": {
+    "source": {
+      "path": "tests/universal-brush-device-probe/src/cc/huevia/brushqa/BrushProbe.java",
+      "sha256": "b24bae83296d830e4cb10bc89d432833b7e0c5576b7a339e492bb7d071b5a515"
+    },
+    "change": "Display oracle uses 104/38 alpha boost; raw cache/vector alpha38 checks remain unchanged. Broad old suite not rerun."
+  },
+  "sourceFreeze": {
+    "productionInputs": 292,
+    "allStillMatch": true
+  },
+  "cleanup": {
+    "path": "docs/validation/selection-feedback124/NATIVE-CLEANUP.json",
+    "sha256": "292e0ff6cccde53f2ede4c2c825f0284a74b6b3ebc81dc81d8ee630804f4ae03"
+  },
+  "visualReview": {
+    "rootReviewedPhoneStrongSoftStrongRest": true,
+    "rootReportedNoFurtherVisualChanges": true
+  },
+  "limitations": "Owned emulator functional/Canvas consistency only; no physical phone performance or camera connection. Synthetic in-memory gradient only. No 149-preset or broad adjustment-engine matrix repeated.",
+  "deviceHandoff": {
+    "serial": "emulator-5588",
+    "adbReturnedTo": "root",
+    "targetStopped": true,
+    "testPackageRemoved": true,
+    "emulatorClosureOwnedBy": "root",
+    "furtherAdbByQaAgent": false
+  },
+  "publication": "No upload, commit or push"
+}

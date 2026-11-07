@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "2d21da748e5ee70bc411d1813d9bfca9f06548844758f801339c92a1d84177e3",
+  "versionCode": 121,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "10fd398063faab4bae4db5370f7446f3f542a81252e5c7b484bc99bd9ff810da",
+  "pass": true,
+  "scope": "Focused hierarchical portrait tool entries matching actual Adjust Portrait/Local icon-caption controls. Landing contains two entry tools and no editing fields; skin/face children contain no persistent bottom switcher and return through a single back action. Automatic whole-image skin from NONE without selected faces, inference/detection navigation race, native two-face edits, independent model/history and remembered tools, system Back hierarchy, top-back eyedropper/custom cancellation, advanced person-colour reopening, live rotation and apply/cancel. Real installed production dialog/filter and public-domain NASA collage. UI navigation evidence; no fresh broad segmentation, physical-phone performance or export-pipeline claim.",
+  "files": [
+    {
+      "file": "hierarchy-00-adjustment-tools.png",
+      "sha256": "b361431f1d6debbe3769fe17754dd5a63e7e11988cd59793f1cd6c665d6abee1"
+    },
+    {
+      "file": "hierarchy-01-portrait-entry-tools.png",
+      "sha256": "3812039421ffc1f03957eec506e187961df57838a592852a3373d8d2e2213417"
+    },
+    {
+      "file": "hierarchy-02-skin-child.png",
+      "sha256": "a5968a25d152098936e64338514114e09c65c1c9300f9dc6d44bd7503d6b90ab"
+    },
+    {
+      "file": "hierarchy-03-face-child.png",
+      "sha256": "f6984b84d367f5facaeda47b77687c49167b9dd140eaf5e45a9ae3639854e0db"
+    },
+    {
+      "file": "hierarchy-04-edits-retained-at-entry.png",
+      "sha256": "647aa480862ebb61f1ff718627c162a5731101c46db68f0f1acf9f450f16d5b6"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "735c0de80d72d4431c5622888dce0e6041998dec7b9d5206700b030ebe23fcc6"
+    },
+    {
+      "file": "report.json",
+      "sha256": "6ace22bd39abc4f7979a8a0c26faf09692d249c3a1c6c99e5c720f3be108b657"
+    }
+  ]
+}

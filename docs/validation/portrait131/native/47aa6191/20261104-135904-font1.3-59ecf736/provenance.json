@@ -1,0 +1,24 @@
+{
+  "candidateSha256": "47aa61913d3416ed71a6c541b7ff3c8b597350469bb498ff7b79d5a3dda7ab06",
+  "versionCode": 131,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "6f7dc2823ed3f61c05b602d00675306a3598e2f4a273a019d2d7078743b6d667",
+  "pass": true,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "01-skin-upgrade.png",
+      "sha256": "5770d3b642bc57b6f4e3b1001042b233faa46af777713a50b43756cad8e31eb9"
+    },
+    {
+      "file": "02-directional-face-light.png",
+      "sha256": "ed4ce2a55fdb77f77e0e65ff01cb420e09f40cdaf260877e7c6eb2a3bf9ab4e7"
+    },
+    {
+      "file": "report.json",
+      "sha256": "c1421d81e462044c21c550947981b1cce6c08371883d000e6e6762dfcbebf136"
+    }
+  ]
+}

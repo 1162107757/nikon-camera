@@ -4,6 +4,7 @@ import android.content.Context;
 import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -30,6 +31,11 @@ public final class PhotoImageView extends View {
     private final GestureDetector gestures;
     private final ScaleGestureDetector scales;
     private Bitmap photo;
+    private Bitmap splitOriginal;
+    private boolean splitComparison,cropGridVisible;
+    private float splitFraction=.5f;
+    private int splitPointer=MotionEvent.INVALID_POINTER_ID;
+    private final Paint comparisonPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
     private Runnable singleTap;
     private IntConsumer swipe;
     private IntConsumer pageBoundary;
@@ -120,6 +126,7 @@ public final class PhotoImageView extends View {
 
     public void setPhoto(Bitmap bitmap) {
         if (photo == bitmap) return;
+        setSplitComparison(null,false);
         cancelZoomAnimation(); swipeGesture.cancel(); resetPager();
         photo = bitmap;
         resetZoom();
@@ -177,6 +184,17 @@ public final class PhotoImageView extends View {
         if(!bounds.intersect(0,0,getWidth(),getHeight()))bounds.setEmpty();
         return bounds;
     }
+    /** The reference is prepared with the same crop/frame by the preview worker. */
+    public void setSplitComparison(Bitmap reference,boolean enabled){
+        boolean usable=enabled&&reference!=null&&!reference.isRecycled();
+        if(usable&&!splitComparison)splitFraction=.5f;
+        splitOriginal=reference;splitComparison=usable;
+        if(!usable){splitPointer=MotionEvent.INVALID_POINTER_ID;disallowParentIntercept(false);}
+        invalidate();
+    }
+    public boolean isSplitComparison(){return splitComparison;}
+    public float comparisonFraction(){return splitFraction;}
+    public void setCropGridVisible(boolean visible){if(cropGridVisible!=visible){cropGridVisible=visible;invalidate();}}
     private void notifyPhotoTransform() {
         float size=fitScale*zoom,x=offsetX+pager.offset(),y=offsetY;
         if(photoTransformChanged==null||photo==reportedPhoto&&size==reportedScale&&x==reportedX&&y==reportedY)return;
@@ -249,12 +267,14 @@ public final class PhotoImageView extends View {
         }
         if (pager.offset() < 0 && canNext) drawNeighbour(canvas, nextPhoto, getWidth() + pager.offset());
         else if (pager.offset() > 0 && canPrevious) drawNeighbour(canvas, previousPhoto, -getWidth() + pager.offset());
+        drawEditorGuides(canvas);
         canvas.restoreToCount(saved);
         notifyPhotoTransform();
     }
 
     @Override public boolean onTouchEvent(MotionEvent event) {
         if (!isEnabled()) return false;
+        if(handleComparisonTouch(event))return true;
         if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
             cancelZoomAnimation();
             removeCallbacks(pageFrame); pager.grab();
@@ -332,6 +352,38 @@ public final class PhotoImageView extends View {
             default:
                 break;
         }
+        return true;
+    }
+    private float guideDp(float value){return value*getResources().getDisplayMetrics().density;}
+    private void drawEditorGuides(Canvas canvas){
+        RectF bounds=visiblePhotoBounds();if(bounds.isEmpty())return;
+        comparisonPaint.setStyle(Paint.Style.STROKE);comparisonPaint.setStrokeWidth(guideDp(1));
+        if(cropGridVisible&&!splitComparison){
+            comparisonPaint.setColor(0xaaffffff);canvas.drawRect(bounds,comparisonPaint);comparisonPaint.setColor(0x80ffffff);
+            for(int i=1;i<3;i++){float x=bounds.left+bounds.width()*i/3,y=bounds.top+bounds.height()*i/3;canvas.drawLine(x,bounds.top,x,bounds.bottom,comparisonPaint);canvas.drawLine(bounds.left,y,bounds.right,y,comparisonPaint);}
+            comparisonPaint.setColor(Color.WHITE);comparisonPaint.setStrokeWidth(guideDp(2));float arm=guideDp(17);
+            for(int i=0;i<4;i++){float x=i%2==0?bounds.left:bounds.right,y=i<2?bounds.top:bounds.bottom;canvas.drawLine(x,y,x+(i%2==0?arm:-arm),y,comparisonPaint);canvas.drawLine(x,y,x,y+(i<2?arm:-arm),comparisonPaint);}
+        }
+        if(!splitComparison||splitOriginal==null||splitOriginal.isRecycled())return;
+        float seam=bounds.left+bounds.width()*splitFraction;int saved=canvas.save();canvas.clipRect(bounds.left,bounds.top,seam,bounds.bottom);
+        RectF full=new RectF(offsetX+pager.offset(),offsetY,offsetX+pager.offset()+photo.getWidth()*fitScale*zoom,offsetY+photo.getHeight()*fitScale*zoom);
+        canvas.drawBitmap(splitOriginal,null,full,paint);canvas.restoreToCount(saved);
+        comparisonPaint.setStyle(Paint.Style.STROKE);comparisonPaint.setColor(Color.WHITE);comparisonPaint.setStrokeWidth(guideDp(2));canvas.drawLine(seam,bounds.top,seam,bounds.bottom,comparisonPaint);
+        float cy=bounds.centerY();comparisonPaint.setStyle(Paint.Style.FILL);comparisonPaint.setColor(0xf2ffffff);canvas.drawRoundRect(new RectF(seam-guideDp(15.5f),cy-guideDp(21.5f),seam+guideDp(15.5f),cy+guideDp(21.5f)),guideDp(18),guideDp(18),comparisonPaint);
+        comparisonPaint.setStyle(Paint.Style.STROKE);comparisonPaint.setStrokeWidth(guideDp(1.5f));comparisonPaint.setColor(0xff222e2a);canvas.drawLine(seam-guideDp(5),cy-guideDp(3),seam-guideDp(8),cy,comparisonPaint);canvas.drawLine(seam-guideDp(8),cy,seam-guideDp(5),cy+guideDp(3),comparisonPaint);canvas.drawLine(seam+guideDp(5),cy-guideDp(3),seam+guideDp(8),cy,comparisonPaint);canvas.drawLine(seam+guideDp(8),cy,seam+guideDp(5),cy+guideDp(3),comparisonPaint);
+        comparisonPaint.setStyle(Paint.Style.FILL);comparisonPaint.setTextSize(10*getResources().getDisplayMetrics().scaledDensity);drawComparisonLabel(canvas,"原图",bounds.left+guideDp(12),bounds.top+guideDp(10));float labelWidth=comparisonPaint.measureText("效果")+guideDp(16);drawComparisonLabel(canvas,"效果",Math.max(bounds.left+guideDp(68),bounds.right-guideDp(64)-labelWidth),bounds.top+guideDp(10));
+    }
+    private void drawComparisonLabel(Canvas canvas,String label,float x,float y){
+        Paint.FontMetrics metrics=comparisonPaint.getFontMetrics();float width=comparisonPaint.measureText(label)+guideDp(16),height=metrics.descent-metrics.ascent+guideDp(8);
+        comparisonPaint.setColor(0xb3101815);canvas.drawRoundRect(new RectF(x,y,x+width,y+height),guideDp(12),guideDp(12),comparisonPaint);comparisonPaint.setColor(Color.WHITE);canvas.drawText(label,x+guideDp(8),y+guideDp(4)-metrics.ascent,comparisonPaint);
+    }
+    private boolean handleComparisonTouch(MotionEvent event){
+        if(!splitComparison)return false;RectF bounds=visiblePhotoBounds();if(bounds.isEmpty())return false;
+        if(event.getActionMasked()==MotionEvent.ACTION_DOWN){float seam=bounds.left+bounds.width()*splitFraction;if(bounds.contains(event.getX(),event.getY())&&Math.abs(event.getX()-seam)<=guideDp(28)){splitPointer=event.getPointerId(0);cancelZoomAnimation();swipeGesture.cancel();disallowParentIntercept(true);return true;}return false;}
+        if(splitPointer==MotionEvent.INVALID_POINTER_ID)return false;
+        if(event.getPointerCount()!=1||event.getActionMasked()==MotionEvent.ACTION_CANCEL){splitPointer=MotionEvent.INVALID_POINTER_ID;disallowParentIntercept(false);return true;}
+        int pointer=event.findPointerIndex(splitPointer);if(pointer>=0&&event.getActionMasked()==MotionEvent.ACTION_MOVE){splitFraction=Math.max(0,Math.min(1,(event.getX(pointer)-bounds.left)/bounds.width()));invalidate();}
+        if(event.getActionMasked()==MotionEvent.ACTION_UP){splitPointer=MotionEvent.INVALID_POINTER_ID;disallowParentIntercept(false);super.performClick();}
         return true;
     }
 
@@ -455,6 +507,7 @@ public final class PhotoImageView extends View {
 
     @Override public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
+        if(splitComparison){info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS);info.setRangeInfo(AccessibilityNodeInfo.RangeInfo.obtain(AccessibilityNodeInfo.RangeInfo.RANGE_TYPE_FLOAT,0,100,splitFraction*100));}
         boolean fitted = zoom <= 1.001f && swipe != null;
         info.setScrollable(fitted && (canPrevious || canNext || retryNextAvailable && pageBoundary != null));
         if (fitted && canNext) info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_FORWARD);
@@ -464,6 +517,7 @@ public final class PhotoImageView extends View {
     }
 
     @Override public boolean performAccessibilityAction(int action, Bundle arguments) {
+        if(splitComparison&&action==AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.getId()&&arguments!=null){float value=arguments.getFloat(AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE,splitFraction*100);if(!Float.isFinite(value))return false;splitFraction=Math.max(0,Math.min(1,value/100));invalidate();return true;}
         int direction = action == AccessibilityNodeInfo.ACTION_SCROLL_FORWARD ? 1
                 : action == AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD ? -1 : 0;
         if (direction == 1 && !canNext && retryNextAvailable && pageBoundary != null && zoom <= 1.001f && swipe != null) {
@@ -473,6 +527,10 @@ public final class PhotoImageView extends View {
             swipeGesture.cancel(); pager.grab(); pager.spring(direction, getWidth(), 0); startPageAnimation(); return true;
         }
         return super.performAccessibilityAction(action, arguments);
+    }
+    @Override public boolean onKeyDown(int key,android.view.KeyEvent event){
+        if(splitComparison&&(key==android.view.KeyEvent.KEYCODE_DPAD_LEFT||key==android.view.KeyEvent.KEYCODE_DPAD_RIGHT)){splitFraction=Math.max(0,Math.min(1,splitFraction+(key==android.view.KeyEvent.KEYCODE_DPAD_LEFT?-.05f:.05f)));invalidate();return true;}
+        return super.onKeyDown(key,event);
     }
 
     private void constrainOffsets() {

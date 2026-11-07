@@ -1,0 +1,151 @@
+{
+  "status": "complete-local-package-not-published",
+  "versionCode": 136,
+  "versionName": "0.27.4-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.27.4-beta-debug.apk",
+  "sha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+  "bytes": 33542924,
+  "productionInputs": 309,
+  "changedProductionInputs": [
+    "app/build.gradle",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+    "app/src/main/java/cc/huevia/ui/PhotoActionsMenu.java",
+    "app/src/main/java/cc/huevia/ui/PhotoCompactDock.java",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+    "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java"
+  ],
+  "unchangedAssetsAndNativeEntries": 46,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "zipalign16KiB": true,
+  "nativeAssertions": 405,
+  "nativeScreenshots": 30,
+  "successfulRuns": [
+    {
+      "runId": "20261105-111207-phone-f9096b0a",
+      "mode": "phone",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 81,
+      "screenshots": 6,
+      "failure": null,
+      "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+      "path": "docs/validation/photo-menu136/native/01c04c8b/20261105-111207-phone-f9096b0a"
+    },
+    {
+      "runId": "20261105-111232-font1.3-234a1981",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 81,
+      "screenshots": 6,
+      "failure": null,
+      "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+      "path": "docs/validation/photo-menu136/native/01c04c8b/20261105-111232-font1.3-234a1981"
+    },
+    {
+      "runId": "20261105-111253-font2.0-836b56bb",
+      "mode": "font2.0",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 81,
+      "screenshots": 6,
+      "failure": null,
+      "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+      "path": "docs/validation/photo-menu136/native/01c04c8b/20261105-111253-font2.0-836b56bb"
+    },
+    {
+      "runId": "20261105-111640-landscape-aba2fd73",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 81,
+      "screenshots": 6,
+      "failure": null,
+      "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+      "path": "docs/validation/photo-menu136/native/01c04c8b/20261105-111640-landscape-aba2fd73"
+    },
+    {
+      "runId": "20261105-111353-tablet-c810fb31",
+      "mode": "tablet",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 81,
+      "screenshots": 6,
+      "failure": null,
+      "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+      "path": "docs/validation/photo-menu136/native/01c04c8b/20261105-111353-tablet-c810fb31"
+    }
+  ],
+  "priorCandidateRuns": [
+    {
+      "runId": "20261105-105513-phone-b115e4d1",
+      "mode": "phone",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 47,
+      "screenshots": 3,
+      "failure": "java.lang.AssertionError: Timeout histogram callback",
+      "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+      "path": "docs/validation/photo-menu136/native/df4840be/20261105-105513-phone-b115e4d1"
+    },
+    {
+      "runId": "20261105-105551-font1.3-848ccb8b",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 47,
+      "screenshots": 3,
+      "failure": "java.lang.AssertionError: Timeout histogram callback",
+      "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+      "path": "docs/validation/photo-menu136/native/df4840be/20261105-105551-font1.3-848ccb8b"
+    },
+    {
+      "runId": "20261105-105632-font2.0-e2699de1",
+      "mode": "font2.0",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 47,
+      "screenshots": 3,
+      "failure": "java.lang.AssertionError: Timeout histogram callback",
+      "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+      "path": "docs/validation/photo-menu136/native/df4840be/20261105-105632-font2.0-e2699de1"
+    },
+    {
+      "runId": "20261105-105712-landscape-b0984741",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 29,
+      "screenshots": 2,
+      "failure": "java.lang.AssertionError: Timeout menu row reachable",
+      "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+      "path": "docs/validation/photo-menu136/native/df4840be/20261105-105712-landscape-b0984741"
+    },
+    {
+      "runId": "20261105-105801-tablet-0af27ef3",
+      "mode": "tablet",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 47,
+      "screenshots": 3,
+      "failure": "java.lang.AssertionError: Timeout histogram callback",
+      "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+      "path": "docs/validation/photo-menu136/native/df4840be/20261105-105801-tablet-0af27ef3"
+    }
+  ],
+  "failedFinalRuns": [
+    {
+      "runId": "20261105-111317-landscape-50a28bb1",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 29,
+      "screenshots": 2,
+      "failure": "java.lang.AssertionError: Timeout menu row reachable",
+      "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+      "path": "docs/validation/photo-menu136/native/01c04c8b/20261105-111317-landscape-50a28bb1"
+    }
+  ],
+  "uploaded": false,
+  "published": false
+}

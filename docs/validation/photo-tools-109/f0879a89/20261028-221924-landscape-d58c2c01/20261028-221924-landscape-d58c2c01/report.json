@@ -1,0 +1,325 @@
+{
+  "pass": false,
+  "stage": "local-apply",
+  "candidateSha256": "f0879a895e5ea9127bd05e554aafce4a1e6c475214dc96cf43c67a52425d7c4c",
+  "versionCode": 112,
+  "versionName": "0.23.1-beta",
+  "mode": "landscape",
+  "fontScale": 1,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-0",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-1",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "feather-choice-revealed",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "feather-choice-revealed-after-new-mask",
+      "pass": true
+    },
+    {
+      "name": "feather-selection-kept-after-new-mask",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "slider-refresh-keeps-user-rail-position",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-00-local-neutral-layout",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-00-local-neutral-layout",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-staged-not-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-local-radial",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-local-radial",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "workspace-disposed",
+      "pass": true
+    },
+    {
+      "name": "workspace-no-rendered-bitmap",
+      "pass": true
+    },
+    {
+      "name": "workspace-queue-closed",
+      "pass": true
+    },
+    {
+      "name": "workspace-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "workspace-owned-frame-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cancel-keeps-editor",
+      "pass": true
+    },
+    {
+      "name": "cancel-keeps-disk",
+      "pass": true
+    },
+    {
+      "name": "cancel-no-main-history",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-1",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-1",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "three-real-ui-mask-types",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": false
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "local-layout-observation",
+      "mode": "landscape",
+      "density": 2,
+      "bodyOrientation": "horizontal",
+      "bodyWidthPixels": 1069,
+      "bodyHeightPixels": 384,
+      "safeBodyWidthDp": 534.5,
+      "safeBodyHeightDp": 192,
+      "stageWidthDp": 294.5,
+      "stageHeightDp": 192,
+      "canvasWidthDp": 294.5,
+      "canvasHeightDp": 192,
+      "dockWidthDp": 240,
+      "dockHeightDp": 184
+    }
+  ],
+  "screenshots": 3,
+  "fixturesRemoved": true,
+  "failure": "java.lang.AssertionError: pinch-span-crosses-platform-threshold",
+  "scope": "Actual installed MainActivity\/AlbumPanel\/editor, private generated JPEGs, real native local\/clone gestures, pinch rollback, apply\/cancel\/history\/draft\/global detail controls\/perspective, private full reference\/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+}

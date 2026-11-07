@@ -1,0 +1,76 @@
+{
+  "candidateSha256": "ec22f079fcc4fc71a4a01b80a83cf8a06e1385768ed0a3f76edb15f4353e77b7",
+  "versionCode": 114,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "05939fdaf09da67db471cfea2b95f915c883d71afa72c0bf1005676c2685c3fc",
+  "pass": true,
+  "scope": "Actual installed portrait detector/dialog/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank/manual fallback, colour/texture/light controls, add/erase strokes, healing, apply/cancel/history/draft isolation, injected preview failure, simulated owner mismatch, full export reference/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim.",
+  "files": [
+    {
+      "file": "01-auto-two-faces.png",
+      "sha256": "3aa003f20c84fc1fa80b2b2f2ea4a696ac90f531264fade71d6859c200bb2551"
+    },
+    {
+      "file": "02-skin-colour.png",
+      "sha256": "abf5214d176a8cfc29931271a55124f356b6e4cdd687391154369b0d895c587d"
+    },
+    {
+      "file": "03-skin-texture.png",
+      "sha256": "83ee532b3ae2a06bce7b079970780ca6e3c99a459b135cf769e81f00b80a8d34"
+    },
+    {
+      "file": "04-face-light.png",
+      "sha256": "de214bf5dbeefbc1bd3924ecab8b814cef48e40fb88802e15c132aad3a2a0d2c"
+    },
+    {
+      "file": "05-mask-corrections.png",
+      "sha256": "960b08419fed4e1ebd8bcd3b2d172c10df25089411729a0dd7843c7ada356b2d"
+    },
+    {
+      "file": "06-blemish-healing.png",
+      "sha256": "5d2a1ed2b94521db91048b499e467873889b0a527e6ae889d8f60276bda7dab9"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "1c97382b18f7f07b0c8f811151fee78c2095bad391c2101bfa65c67c60e911cb"
+    },
+    {
+      "file": "08-first-face-selected.png",
+      "sha256": "d58675791f1902d1407599b55477d5038e346eb97d19590ffd2e36bf5413106a"
+    },
+    {
+      "file": "09-second-face-selected.png",
+      "sha256": "1bc648e7c49dee072211379917f4a8b2b5b1ae1c9aab0c0cd0632cb1981cdcb4"
+    },
+    {
+      "file": "10-clean-hold-comparison.png",
+      "sha256": "c34d0bb8b1099e3c317f3b331e51c6ccb1db41a54ab4fdcd2dbf0d744184c7b5"
+    },
+    {
+      "file": "11-face-picker-current.png",
+      "sha256": "f71cfc6e2f32405d22ee1fd95a950d5ade7cb9ce552116f555296b8ca472a3bf"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "9f8ea61460690f0b8dfc494d2ceb85058d5505be2e268484ec19de0a798b79ca"
+    },
+    {
+      "file": "report.json",
+      "sha256": "8537f8986bffe2c66153c8b0a04c572c51691741dab2660be12b2bea8e1a4841"
+    },
+    {
+      "file": "ui-jpeg-analysis-14.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    },
+    {
+      "file": "ui-jpeg-analysis-25.png",
+      "sha256": "e034a3875f10fb584ca35769c509c619ee29634d4de7dc194f26ee9886808c73"
+    },
+    {
+      "file": "ui-jpeg-analysis-9.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    }
+  ]
+}

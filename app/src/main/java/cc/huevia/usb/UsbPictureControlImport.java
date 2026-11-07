@@ -73,6 +73,21 @@ public final class UsbPictureControlImport implements AutoCloseable {
                            int sourceItem, int targetItem, boolean requireSource, boolean ncpMode,
                            int middleQuarter, int clarityQuarter,
                            PictureControlImportSession.OverwriteConfirmation overwrite) throws Exception {
+        return execute(device, manager, bytes, sourceItem, targetItem, requireSource, ncpMode,
+                middleQuarter, clarityQuarter, overwrite, null);
+    }
+
+    public Result importPreset(UsbDevice device, UsbManager manager, byte[] original,
+            int middleQuarter, int clarityQuarter, int targetItem,
+            PictureControlImportSession.OverwriteConfirmation overwrite, PresetImportOptions options) throws Exception {
+        if (options == null) throw new IllegalArgumentException("缺少导入确认。");
+        return execute(device, manager, original, -1, targetItem, false, true, middleQuarter, clarityQuarter, overwrite, options);
+    }
+
+    private Result execute(UsbDevice device, UsbManager manager, byte[] bytes,
+                            int sourceItem, int targetItem, boolean requireSource, boolean ncpMode,
+                            int middleQuarter, int clarityQuarter,
+                            PictureControlImportSession.OverwriteConfirmation overwrite, PresetImportOptions options) throws Exception {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             throw new IllegalStateException("优化校准登记必须在后台线程运行。");
         }
@@ -112,8 +127,9 @@ public final class UsbPictureControlImport implements AutoCloseable {
             if (overwrite != null) overwrite.requireTargetMatch(targetItem);
             if (ncpMode) {
                 result.phase = "NcpCompatibilityAdaptation";
-                NcpPictureControlConverter.Conversion conversion = NcpPictureControlConverter.convert(
-                        requestedInput, middleQuarter, clarityQuarter);
+                NcpPictureControlConverter.Conversion conversion = options == null
+                        ? NcpPictureControlConverter.convert(requestedInput, middleQuarter, clarityQuarter)
+                        : options.convert(requestedInput, middleQuarter, clarityQuarter);
                 result.sourceNcpName = conversion.registrationName();
                 result.sourceCurveSha256 = conversion.curveSha256();
                 result.basePictureControl = conversion.basePictureControl();
@@ -138,6 +154,7 @@ public final class UsbPictureControlImport implements AutoCloseable {
             } else {
                 session = new PictureControlImportSession(transport, result, requested, targetItem, overwrite);
             }
+            session.configure(options);
             session.run();
         } catch (Exception error) {
             failure = toException(error, result);
@@ -218,6 +235,19 @@ public final class UsbPictureControlImport implements AutoCloseable {
         return result;
     }
 
+    public static JSONObject cameraParametersJson(CameraParameterController.Result result) throws JSONException {
+        JSONObject json = new JSONObject();
+        JSONArray changes = new JSONArray();
+        if (result != null) for (CameraParameterController.Change change : result.changes()) {
+            changes.put(new JSONObject().put("property", change.code).put("requested", change.desired)
+                    .put("before", change.before == null ? JSONObject.NULL : change.before)
+                    .put("observed", change.observed == null ? JSONObject.NULL : change.observed)
+                    .put("status", change.status).put("reason", change.reason));
+        }
+        return json.put("uncertain", result != null && result.uncertain).put("changes", changes)
+                .put("summary", result == null ? "拍摄参数：未调整" : result.text());
+    }
+
     public boolean isProbingDevice(UsbDevice device) {
         return device != null && running.get() && device.getDeviceId() == activeDeviceId;
     }
@@ -285,6 +315,7 @@ public final class UsbPictureControlImport implements AutoCloseable {
         public final int adaptationBrightnessQuarter = 0;
         public boolean adaptationPrepared;
         public String adaptationPreview = "";
+        public CameraParameterController.Result cameraParameters;
         public boolean ncpRegistrationVerified;
         public final boolean ncpImportVerified = false;
         public final boolean conversionEquivalentToNative = false;
@@ -372,6 +403,7 @@ public final class UsbPictureControlImport implements AutoCloseable {
                     .put("adaptationContrastQuarter", adaptationContrastQuarter)
                     .put("adaptationBrightnessQuarter", adaptationBrightnessQuarter)
                     .put("adaptationPreview", adaptationPreview)
+                    .put("cameraParameters", cameraParametersJson(cameraParameters))
                     .put("currentSelectionWriteRequested", false)
                     .put("modeChangeRequested", false).put("deletionRequested", false).put("atomicEmptyGuard", false)
                     .put("manufacturer", manufacturer).put("model", model).put("firmware", firmware)

@@ -1,0 +1,61 @@
+{
+  "versionCode": 132,
+  "versionName": "0.27.0-beta",
+  "sha256": "22b60c1d0037602c5f3a03c45c218998d98e3fc8c712da91076c825c0a870839",
+  "bytes": 33538828,
+  "fileCapBytes": 33554432,
+  "productionInputs": 308,
+  "productionInputsChangedAfterFreeze": [],
+  "nativeAndAssetEntriesComparedTo131": 46,
+  "nativeAndAssetChanges": [],
+  "newAssetEntries": [],
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "v2Verified": true,
+  "v3Verified": true,
+  "zipalign16KiB": true,
+  "hostSuitesPassed": 11,
+  "published": false,
+  "uploaded": false,
+  "status": "complete-local-package-not-published",
+  "verifiedAt": "2026-11-04T22:44:09.006330+08:00",
+  "approvedPrototypeVariant": "紧凑工具区",
+  "apk": "D:/dev/ai-project/nikon-camera/dist/huevia-0.27.0-beta-debug.apk",
+  "newQuickPresetHostAssertions": 6584,
+  "nativeFinalRuns": [
+    {
+      "run": "20261104-223414-phone-0fdfd1a3",
+      "mode": "phone",
+      "scope": "full",
+      "assertionExecutions": 67,
+      "screenshots": 5,
+      "pass": true
+    },
+    {
+      "run": "20261104-223437-font1.3-a904f3ec",
+      "mode": "font1.3",
+      "scope": "ui",
+      "assertionExecutions": 52,
+      "screenshots": 5,
+      "pass": true
+    },
+    {
+      "run": "20261104-223457-landscape-44f3e4ed",
+      "mode": "landscape",
+      "scope": "ui",
+      "assertionExecutions": 51,
+      "screenshots": 5,
+      "pass": true
+    }
+  ],
+  "nativeAssertionExecutions": 170,
+  "nativeScreenshots": 15,
+  "privateFixtureCleanupVerified": true,
+  "deviceEvidenceFilesVerifiedAndRemoved": 67,
+  "ownedEmulatorClosed": true,
+  "originalBytesPreserved": true,
+  "previewAndFullRenderPixelsCompared": true,
+  "phoneSaveIntentVerified": true,
+  "physicalPhoneMediaStorePublicationExecuted": false,
+  "physicalPhonePerformanceTested": false,
+  "scheduled": false
+}

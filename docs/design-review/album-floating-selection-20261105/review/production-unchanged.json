@@ -1,0 +1,9 @@
+{
+  "pass": true,
+  "prototypeOnly": true,
+  "productionFiles": {
+    "app/src/main/java/cc/huevia/MainActivity.java": "7f91622b14eb3c18bd68e108880c1f0b8e541751976e354471ce3032a3a291b7",
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "178b29d09270f9859529b708e8f50dd9864ebcc6dad577656eaa8140771205a1",
+    "app/build.gradle": "a2a790f8538cd584e0514d39baa590889c03519e01a8dbb6723445a32136aa6a"
+  }
+}

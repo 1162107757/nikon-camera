@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "candidate": {
+    "versionCode": 125,
+    "versionName": "0.24.3-beta",
+    "apk": {
+      "path": "dist/huevia-0.24.3-beta-debug.apk",
+      "sha256": "49455868c4b03c5feb8669252a6b850847c8ab1f5314fb29035680077b72aa36"
+    },
+    "bytes": 33444620,
+    "buildIdentity": {
+      "path": "docs/validation/hold-selection125/BUILD-IDENTITY.json",
+      "sha256": "7f49af530876cfe691cb3fa73763f8c40237c066c29b4088901ec210b3517226"
+    },
+    "packagingAudit": {
+      "path": "docs/validation/hold-selection125/PACKAGING-AUDIT.json",
+      "sha256": "34a5f8bc842d2fb969537e8f625fa52eb661cb111f1bbde2d507c90c9b365f1d"
+    }
+  },
+  "successfulFinalCandidateRuns": [
+    {
+      "run": "20261030-230651-phone-6819debe",
+      "mode": "phone",
+      "scope": "full",
+      "pass": true,
+      "checks": 90,
+      "screenshots": 6,
+      "report": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-230651-phone-6819debe/20261030-230651-phone-6819debe/report.json",
+        "sha256": "e9c6a1b376714d978e3fa81f4827a78a10a63ef22a0739ed6577fadf8b73955e"
+      },
+      "provenance": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-230651-phone-6819debe/provenance.json",
+        "sha256": "772abc1d4a4f90ba9e092a1812daed689903cdb6f9a2693d3d42a03e76c588c6"
+      },
+      "cleanup": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-230651-phone-6819debe/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "probe": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-230651-phone-6819debe/probe-source/probe.apk",
+        "sha256": "35315cccc0fd3cb82640f0dbcaa2cc5ecbfbddab5ca74704c452694fe5dd9528"
+      },
+      "probeInputs": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-230651-phone-6819debe/probe-source/build-provenance.json",
+        "sha256": "61eee1b928713d05b1cf329073cd235eafc63e7f617feaa1057ac34cb31c63a3"
+      },
+      "measurements": [
+        {
+          "case": "strong-versus-existing-soft",
+          "changedPixels": 41622,
+          "protectedPixels": 1725836,
+          "outsideDifferences": 0,
+          "strongToSoftTotalDeltaRatio": 2.847386674614572
+        },
+        {
+          "case": "live-and-confirmation",
+          "firstToGapMs": 233,
+          "gapToSecondMs": 154,
+          "secondToHiddenMs": 224
+        },
+        {
+          "case": "saved-export-source-metadata-basis-only",
+          "fullWidth": 1601,
+          "fullHeight": 1103,
+          "decodedBaseWidth": 1280,
+          "savedRestorePathExecuted": false
+        },
+        {
+          "case": "main-crop-rotate-border-mapping",
+          "width": 670,
+          "height": 1099,
+          "changedPixels": 55059,
+          "protectedPixels": 634674,
+          "outsideDifferences": 0
+        }
+      ]
+    },
+    {
+      "run": "20261030-231218-font1.3-8b293f2c",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "checks": 66,
+      "screenshots": 0,
+      "report": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231218-font1.3-8b293f2c/20261030-231218-font1.3-8b293f2c/report.json",
+        "sha256": "0592a7c33c0864841046f6602937ea0651e7c85f864f9c6ed76f1471fa857b90"
+      },
+      "provenance": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231218-font1.3-8b293f2c/provenance.json",
+        "sha256": "77cf064aec104f9911ef4351c58ef2ec76424dd7e090890738082c4b97437130"
+      },
+      "cleanup": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231218-font1.3-8b293f2c/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "probe": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231218-font1.3-8b293f2c/probe-source/probe.apk",
+        "sha256": "0f109ff6e60f34aea6856c2f80226a3bd90187a4ad1842a720d274bb3c6a4836"
+      },
+      "probeInputs": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231218-font1.3-8b293f2c/probe-source/build-provenance.json",
+        "sha256": "fe443135203ad105908dbdd6b565ba65d0285d1708d902a5c9fa309e97c8657a"
+      },
+      "measurements": [
+        {
+          "case": "strong-versus-existing-soft",
+          "changedPixels": 41622,
+          "protectedPixels": 1725836,
+          "outsideDifferences": 0,
+          "strongToSoftTotalDeltaRatio": 2.847386674614572
+        },
+        {
+          "case": "live-and-confirmation",
+          "firstToGapMs": 185,
+          "gapToSecondMs": 157,
+          "secondToHiddenMs": 228
+        },
+        {
+          "case": "saved-export-source-metadata-basis-only",
+          "fullWidth": 1601,
+          "fullHeight": 1103,
+          "decodedBaseWidth": 1280,
+          "savedRestorePathExecuted": false
+        },
+        {
+          "case": "main-crop-rotate-border-mapping",
+          "width": 670,
+          "height": 1099,
+          "changedPixels": 55059,
+          "protectedPixels": 634674,
+          "outsideDifferences": 0
+        }
+      ]
+    },
+    {
+      "run": "20261030-231449-landscape-1794d100",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "checks": 66,
+      "screenshots": 6,
+      "report": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231449-landscape-1794d100/20261030-231449-landscape-1794d100/report.json",
+        "sha256": "c773385f2ec59e31a390e9f5c7c0968705f280fb66ba993710f8b61483ad8a72"
+      },
+      "provenance": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231449-landscape-1794d100/provenance.json",
+        "sha256": "b8fb696dc4fa6c9a772caa44f1b566c9cbcbaa76cb5b121b6811dee8e1e96173"
+      },
+      "cleanup": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231449-landscape-1794d100/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "probe": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231449-landscape-1794d100/probe-source/probe.apk",
+        "sha256": "0f109ff6e60f34aea6856c2f80226a3bd90187a4ad1842a720d274bb3c6a4836"
+      },
+      "probeInputs": {
+        "path": "docs/validation/hold-selection125/native/49455868/20261030-231449-landscape-1794d100/probe-source/build-provenance.json",
+        "sha256": "fe443135203ad105908dbdd6b565ba65d0285d1708d902a5c9fa309e97c8657a"
+      },
+      "measurements": [
+        {
+          "case": "strong-versus-existing-soft",
+          "changedPixels": 34994,
+          "protectedPixels": 1004476,
+          "outsideDifferences": 0,
+          "strongToSoftTotalDeltaRatio": 2.8507520778624595
+        },
+        {
+          "case": "live-and-confirmation",
+          "firstToGapMs": 231,
+          "gapToSecondMs": 154,
+          "secondToHiddenMs": 242
+        },
+        {
+          "case": "saved-export-source-metadata-basis-only",
+          "fullWidth": 1601,
+          "fullHeight": 1103,
+          "decodedBaseWidth": 1280,
+          "savedRestorePathExecuted": false
+        },
+        {
+          "case": "main-crop-rotate-border-mapping",
+          "width": 670,
+          "height": 1099,
+          "changedPixels": 55059,
+          "protectedPixels": 634674,
+          "outsideDifferences": 0
+        }
+      ]
+    }
+  ],
+  "successfulFinalCandidateTotals": {
+    "checks": 222,
+    "screenshots": 12,
+    "runs": 3,
+    "nativeFailures": 0,
+    "historicalAttemptsExcluded": true
+  },
+  "historicalNativeAttempts": [
+    {
+      "run": "20261030-225111-phone-46633fad",
+      "candidateSha256": "a873a6226ae1cb5d3cccff20450593f2974915560ead8956adc03d58a5677ce1",
+      "scope": "full",
+      "pass": false,
+      "checks": 35,
+      "screenshots": 5,
+      "stage": "hold-interruption-and-readonly-state",
+      "failure": "java.lang.AssertionError: new-stroke-cancels-held-mask",
+      "classification": "Production mask-hold interruption found and corrected",
+      "report": {
+        "path": "docs/validation/hold-selection125/native/a873a622/20261030-225111-phone-46633fad/20261030-225111-phone-46633fad/report.json",
+        "sha256": "255d40de7e68de083777ed725900e4e3f4289af85afe5a35670e76b95bdd6cc8"
+      },
+      "provenance": {
+        "path": "docs/validation/hold-selection125/native/a873a622/20261030-225111-phone-46633fad/provenance.json",
+        "sha256": "aa57b2a68908af540d727b50627f93a0446c287622335c5d30d084a101acc068"
+      },
+      "cleanup": {
+        "path": "docs/validation/hold-selection125/native/a873a622/20261030-225111-phone-46633fad/cleanup.json",
+        "sha256": "eaeaa9f24452a25040a1a503a55a9e1f264b3779192226d201fe96808dec3900"
+      },
+      "probeArtifact": {
+        "path": "docs/validation/hold-selection125/native/probe-history/first-discovery/probe.apk",
+        "sha256": "1985d3ec7a9e398f756c77561c5c21a7db6dc29a634b541f2b36903f9a8c5c52"
+      },
+      "probeRecovery": {
+        "path": "docs/validation/hold-selection125/native/probe-history/first-discovery/RECOVERY.json",
+        "sha256": "d50ddf6bf200cc7d660ec5f5c6ee4ed738342d4316dfbc72cd368a5b0decc15f"
+      }
+    },
+    {
+      "run": "20261030-225656-phone-6a2dcd14",
+      "candidateSha256": "a873a6226ae1cb5d3cccff20450593f2974915560ead8956adc03d58a5677ce1",
+      "scope": "core",
+      "pass": true,
+      "checks": 32,
+      "screenshots": 1,
+      "stage": "main-scope-change-hides-button",
+      "failure": null,
+      "classification": "Independent Main discovery phase; not final-candidate count",
+      "report": {
+        "path": "docs/validation/hold-selection125/native/a873a622/20261030-225656-phone-6a2dcd14/20261030-225656-phone-6a2dcd14/report.json",
+        "sha256": "2664aa158a66c18b670f9429c7c7a2083306aa8a36f8eb92ef07cabfa4a3d6b6"
+      },
+      "provenance": {
+        "path": "docs/validation/hold-selection125/native/a873a622/20261030-225656-phone-6a2dcd14/provenance.json",
+        "sha256": "233ec66c2da0b1c73483a06cc8e02bb87bae8ec6d02720a271e9855758a667b1"
+      },
+      "cleanup": {
+        "path": "docs/validation/hold-selection125/native/a873a622/20261030-225656-phone-6a2dcd14/cleanup.json",
+        "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+      },
+      "probeArtifact": {
+        "path": "docs/validation/hold-selection125/native/probe-history/core-discovery/probe.apk",
+        "sha256": "00b917a177efae94cfe52146f3739aeee75eb0828158d9e8006543cb847aad24"
+      },
+      "probeBuildProvenance": {
+        "path": "docs/validation/hold-selection125/native/probe-history/core-discovery/build-provenance.json",
+        "sha256": "d76922f9d9520e4dffb15fea4e1e7d47f2d35dcbdaeb8436f274400b2c1dfe37"
+      }
+    }
+  ],
+  "coreCoverage": [
+    "Visible selection in real DOWN/MOVE before UP",
+    "Confirmation two pulses then clean idle",
+    "Right momentary mask control: hold, release, cancel, leave, bounded accessibility click, keyboard and focus loss",
+    "New-stroke, erase and pinch immediately clear old hold; slider controls use the same reviewed cancelStroke ownership path",
+    "Read-only source bitmap, cached mask, region, history and draft",
+    "Actual parameter-stage region button and global-scope absence",
+    "Crop/90-degree rotation/white information border support mapping and protected footer",
+    "PhotoImageView zoom/pan preserved bit-for-bit",
+    "Released and rapidly repeated requests cannot display a late mask result",
+    "Full source1601x1103 metadata versus1280 preview and bounded full-source mask diagnostic"
+  ],
+  "savedExportCoverage": {
+    "metadataAndFullSourceMaskBasisTested": true,
+    "fullSourceWidth": 1601,
+    "fullSourceHeight": 1103,
+    "savedRestorePathExecuted": false,
+    "limitation": "Saved-version rebinding branch is code-reviewed and metadata/basis diagnosed, not an end-to-end export-record restore run."
+  },
+  "sourceFreeze": {
+    "path": "docs/validation/hold-selection125/SOURCE-FREEZE.json",
+    "sha256": "fdb1d5d69bfee7437407388a7245807dbcc6e73da2114b039ff84e3917c6e4d1",
+    "productionInputCount": 292,
+    "mismatches": []
+  },
+  "cleanup": {
+    "path": "docs/validation/hold-selection125/NATIVE-CLEANUP.json",
+    "sha256": "2da43b735b280c70e4ae86612ccc0f41d0938de20160cd3424e4609e658cdee0"
+  },
+  "privateFixtures": {
+    "generatedJpegs": 4,
+    "targetProcessRemovalAssertionsAllPassed": true,
+    "privateDraftsRemoved": 4,
+    "privateUserPhotographsRead": false,
+    "externalRunAsNotUsedAsAbsenceEvidence": true
+  },
+  "visualReview": {
+    "status": "PASS",
+    "reviewer": "root",
+    "phone": [
+      "03-dialog-right-button",
+      "04-release-clean"
+    ],
+    "landscape": [
+      "03-dialog-right-button",
+      "06-main-right-hold"
+    ],
+    "additionalVisualEditsRequested": false
+  },
+  "limitations": "Dedicated owned-emulator functional, Canvas, geometry and state verification. No unrelated NCP149/17-parameter or physical-phone performance matrix rerun. Historical discovery and final confirmation are separate.",
+  "deviceHandoff": {
+    "serial": "emulator-5588",
+    "adbReturnedTo": "root",
+    "targetStopped": true,
+    "testPackageRemoved": true,
+    "emulatorClosureOwnedBy": "root",
+    "furtherAdbByQaAgent": false
+  },
+  "publication": "No upload, commit or push"
+}

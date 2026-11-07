@@ -1,0 +1,4951 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "versionCode": 122,
+  "versionName": "0.24.0-beta",
+  "mode": "font1.3",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-2",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-baseline-is-nonneutral",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增涂抹区域",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "empty-brush-cannot-finish",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "paint-cancel-dismisses",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "paint-cancel-keeps-model-draft-history",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增涂抹区域",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "live-stroke-disables-finish",
+      "pass": true
+    },
+    {
+      "name": "pending-paint-is-visible-before-model-commit",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-live-brush-mask",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-live-brush-mask",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "committed-live-cache-matches-vector-add",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "radius-and-feather-affect-stored-stroke",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-erase",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-erase",
+      "pass": true
+    },
+    {
+      "name": "pending-erase-is-visible-before-model-commit",
+      "pass": true
+    },
+    {
+      "name": "committed-live-cache-matches-vector-erase",
+      "pass": true
+    },
+    {
+      "name": "erase-is-a-real-subtractive-stroke",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-undo",
+      "pass": true
+    },
+    {
+      "name": "brush-undo-restores-paint-before-erase",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-redo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-redo",
+      "pass": true
+    },
+    {
+      "name": "brush-redo-restores-erased-mask",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-clear",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-clear",
+      "pass": true
+    },
+    {
+      "name": "clear-mask-disables-finish",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-undo",
+      "pass": true
+    },
+    {
+      "name": "clear-mask-is-undoable",
+      "pass": true
+    },
+    {
+      "name": "real-two-finger-navigation-zooms",
+      "pass": true
+    },
+    {
+      "name": "two-finger-navigation-discards-pending-paint",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-fit",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-fit",
+      "pass": true
+    },
+    {
+      "name": "navigation-does-not-edit-mask",
+      "pass": true
+    },
+    {
+      "name": "brush-finish-uses-enabled-real-control",
+      "pass": true
+    },
+    {
+      "name": "brush-first-flash-starts-on-finish",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-feedback-step-1",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-feedback-step-2",
+      "pass": true
+    },
+    {
+      "name": "brush-two-flashes-complete-before-commit",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "brush-source-is-existing-final-photo-size",
+      "pass": true
+    },
+    {
+      "name": "brush-source-is-existing-final-photo-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "first-completion-pulse-is-actual-soft-mask-size",
+      "pass": true
+    },
+    {
+      "name": "first-completion-pulse-is-actual-soft-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "completion-gap-is-entire-clean-photo-size",
+      "pass": true
+    },
+    {
+      "name": "completion-gap-is-entire-clean-photo-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "second-completion-pulse-repeats-actual-soft-mask-size",
+      "pass": true
+    },
+    {
+      "name": "second-completion-pulse-repeats-actual-soft-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "completion-mask-matches-real-vector-coverage",
+      "pass": true
+    },
+    {
+      "name": "completion-feedback-is-subtle-warm-white",
+      "pass": true
+    },
+    {
+      "name": "feedback-does-not-edit-region",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-flash-01-first-warm-white",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-flash-02-clean-gap",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-flash-03-second-warm-white",
+      "pass": true
+    },
+    {
+      "name": "finished-mask-is-one-editor-undo-step",
+      "pass": true
+    },
+    {
+      "name": "completed-neutral-mask-is-kept-for-later-parameters",
+      "pass": true
+    },
+    {
+      "name": "completing-mask-does-not-bake-selection-colour-size",
+      "pass": true
+    },
+    {
+      "name": "completing-mask-does-not-bake-selection-colour-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "all-seventeen-actual-adjustment-controls",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "native-BRIGHTNESS-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-BRIGHTNESS-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-BRIGHTNESS-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-BRIGHTNESS-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-BRIGHTNESS-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-BRIGHTNESS-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "native-EXPOSURE-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-EXPOSURE-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-EXPOSURE-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-EXPOSURE-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-EXPOSURE-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-EXPOSURE-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "native-CONTRAST-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-CONTRAST-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-CONTRAST-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-CONTRAST-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-CONTRAST-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-CONTRAST-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "native-HIGHLIGHTS-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-HIGHLIGHTS-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-HIGHLIGHTS-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-HIGHLIGHTS-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-HIGHLIGHTS-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-HIGHLIGHTS-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "native-SHADOWS-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-SHADOWS-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-SHADOWS-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-SHADOWS-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-SHADOWS-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-SHADOWS-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-WHITES",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-WHITES",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-WHITES",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-WHITES",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-WHITES",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-WHITES",
+      "pass": true
+    },
+    {
+      "name": "native-WHITES-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-WHITES-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-WHITES-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-WHITES-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-WHITES",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-WHITES-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-WHITES-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "native-BLACKS-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-BLACKS-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-BLACKS-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-BLACKS-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-BLACKS-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-BLACKS-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "native-TEMPERATURE-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-TEMPERATURE-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-TEMPERATURE-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-TEMPERATURE-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-TEMPERATURE-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-TEMPERATURE-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-TINT",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-TINT",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-TINT",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-TINT",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-TINT",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-TINT",
+      "pass": true
+    },
+    {
+      "name": "native-TINT-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-TINT-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-TINT-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-TINT-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-TINT",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-TINT-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-TINT-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "native-SATURATION-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-SATURATION-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-SATURATION-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-SATURATION-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-SATURATION-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-SATURATION-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "native-VIBRANCE-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-VIBRANCE-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-VIBRANCE-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-VIBRANCE-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-VIBRANCE-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-VIBRANCE-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "native-CLARITY-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-CLARITY-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-CLARITY-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-CLARITY-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-CLARITY-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-CLARITY-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "native-SHARPENING-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-SHARPENING-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-SHARPENING-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-SHARPENING-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-SHARPENING-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-SHARPENING-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "native-LUMA_DENOISE-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-LUMA_DENOISE-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-LUMA_DENOISE-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-LUMA_DENOISE-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-LUMA_DENOISE-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-LUMA_DENOISE-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "native-COLOR_DENOISE-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-COLOR_DENOISE-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-COLOR_DENOISE-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-COLOR_DENOISE-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-COLOR_DENOISE-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-COLOR_DENOISE-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "native-GRAIN-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-GRAIN-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-GRAIN-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-GRAIN-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-GRAIN-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-GRAIN-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-model-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-keeps-global-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-one-main-undo-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "native-VIGNETTE-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-VIGNETTE-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-VIGNETTE-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-VIGNETTE-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-keeps-same-region-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-VIGNETTE-size",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-undo-exact-VIGNETTE-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-colour-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "curve-preview-keeps-main-state",
+      "pass": true
+    },
+    {
+      "name": "native-curves-temporary-preview-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-curves-temporary-preview-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-curves-temporary-preview-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-curves-temporary-preview-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "screenshot-02-masked-curve-preview",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-02-masked-curve-preview",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "curve-cancel-keeps-main-state-and-history",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-colour-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-curve-is-nonneutral",
+      "pass": true
+    },
+    {
+      "name": "regional-curve-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-curve-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "masked-curve-keeps-global",
+      "pass": true
+    },
+    {
+      "name": "native-curves-applied-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-curves-applied-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-curves-applied-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-curves-applied-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "masked-curve-undo-exact-size",
+      "pass": true
+    },
+    {
+      "name": "masked-curve-undo-exact-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-colour-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-HSL-is-nonneutral",
+      "pass": true
+    },
+    {
+      "name": "regional-HSL-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-HSL-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "masked-HSL-keeps-global",
+      "pass": true
+    },
+    {
+      "name": "native-HSL-applied-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-HSL-applied-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-HSL-applied-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-HSL-applied-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "masked-HSL-undo-exact-size",
+      "pass": true
+    },
+    {
+      "name": "masked-HSL-undo-exact-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-colour-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-curve-is-nonneutral",
+      "pass": true
+    },
+    {
+      "name": "regional-curve-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-curve-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-colour-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-HSL-is-nonneutral",
+      "pass": true
+    },
+    {
+      "name": "regional-HSL-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-HSL-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "same-region-retains-multiple-basic-and-advanced-parameters",
+      "pass": true
+    },
+    {
+      "name": "screenshot-03-clean-local-parameter-editing",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-03-clean-local-parameter-editing",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增涂抹区域",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "second-region-has-independent-identity",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "second-region-keeps-first-and-global",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-区域 1",
+      "pass": true
+    },
+    {
+      "name": "actual-scope-selected",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "scope-switch-does-not-edit-or-add-history",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "screenshot-04-independent-region-scope-picker",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-04-independent-region-scope-picker",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-区域 2",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-区域 1",
+      "pass": true
+    },
+    {
+      "name": "actual-scope-selected",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "actual-portrait-workspace-open",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "selected-scope-uses-regional-portrait-constructor",
+      "pass": true
+    },
+    {
+      "name": "regional-portrait-preview-keeps-both-existing-regions-size",
+      "pass": true
+    },
+    {
+      "name": "regional-portrait-preview-keeps-both-existing-regions-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "regional-comparison-retains-other-regions-outside-current-mask-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "regional-comparison-retains-other-regions-outside-current-mask-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "regional-comparison-retains-other-regions-outside-current-mask-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "regional-portrait-inspection-cancelled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-inspection-does-not-edit-or-add-history",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-编辑当前选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "reopened-mask-has-full-region-payload",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "reopened-mask-cancelled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "reopened-mask-cancel-keeps-model-draft-history",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-编辑当前选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-erase",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-erase",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editing-mask-keeps-its-parameters-and-other-regions",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "undo-mask-edit-restores-prior-region",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "redo-mask-edit-restores-full-model",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-编辑当前选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-clear",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-clear",
+      "pass": true
+    },
+    {
+      "name": "existing-mask-can-commit-empty-coverage",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "clear-existing-mask-preserves-region-parameters",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "undo-cleared-mask-restores-complete-region",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-删除当前区域",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "delete-only-removes-selected-region",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "undo-delete-restores-complete-regions",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-区域 1",
+      "pass": true
+    },
+    {
+      "name": "actual-scope-selected",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-编辑当前选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "owner-rejected-mask-dialog-finishes",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owner-mismatch-rejects-region-mask-commit",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-全图",
+      "pass": true
+    },
+    {
+      "name": "actual-scope-selected",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-edit-does-not-rewrite-local-region-payloads",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-undo-keeps-regions-and-restores-global-settings",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-区域 1",
+      "pass": true
+    },
+    {
+      "name": "actual-scope-selected",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "real-draft-keeps-all-region-payloads",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regions-do-not-leak-to-other-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "return-restores-region-draft",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-0",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增涂抹区域",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-colour-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-regional-colour-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-regional-HSL-is-nonneutral",
+      "pass": true
+    },
+    {
+      "name": "regional-HSL-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-HSL-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "exif-six-draft-keeps-real-mask-and-HSL",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-1",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-exif-six-fixture",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-size",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-1",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-effect-not-misclassified-unchanged",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-full-one-to-one",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-sample-one-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-07-real-portrait-detail",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-07-real-portrait-detail",
+      "pass": true
+    },
+    {
+      "name": "detail-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "detail-view-closed-no-frame",
+      "pass": true
+    },
+    {
+      "name": "detail-temporary-surface-released",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-2",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "skin-photo-starts-with-independent-empty-regions",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "actual-portrait-workspace-open",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "global-portrait-starts-in-global-mode",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-tone-preset-2",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-tone-preset-2",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "linked-brush-cancel-returns-to-global-parent",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "linked-brush-cancel-retains-staged-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "paint-completion-opens-linked-regional-child",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "painted-linked-child-is-regional",
+      "pass": true
+    },
+    {
+      "name": "linked-child-keeps-main-uncommitted",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "linked-regional-cancel-returns-to-global-parent",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "linked-regional-cancel-retains-parent-settings",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-back",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-back",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "linked-global-parent-cancelled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "linked-parent-cancel-keeps-whole-main-state",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "actual-portrait-workspace-open",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-tone-preset-2",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-tone-preset-2",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "paint-completion-opens-linked-regional-child",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "painted-linked-child-is-regional",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-apply",
+      "pass": true
+    },
+    {
+      "name": "linked-regional-child-applied",
+      "pass": true
+    },
+    {
+      "name": "linked-apply-closes-global-parent",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "linked-global-and-painted-region-commit-together-once",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "linked-apply-one-undo-restores-all-original-state",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增涂抹区域",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-slider-enabled-for-current-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "actual-portrait-workspace-open",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "selected-scope-uses-regional-portrait-constructor",
+      "pass": true
+    },
+    {
+      "name": "selected-region-opens-regional-portrait",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "regional-skin-is-automatic-without-face-selection",
+      "pass": true
+    },
+    {
+      "name": "automatic-skin-cache-does-not-reapply-ordinary-parameters-size",
+      "pass": true
+    },
+    {
+      "name": "automatic-skin-cache-does-not-reapply-ordinary-parameters-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "ordinary-free-brush-affects-painted-non-skin",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-0",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-0",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-brightness",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-brightness",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-1",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-1",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-warmth",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-warmth",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-warmth-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-warmth-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-warmth-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-2",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-2",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-redness",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-redness",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-redness-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-redness-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-redness-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-3",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-3",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-smoothing",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-smoothing",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-smoothing-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-smoothing-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-smoothing-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-4",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-4",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-texture",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-texture",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-texture-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-texture-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-texture-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "screenshot-05-regional-skin-parameters-clean-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-05-regional-skin-parameters-clean-photo",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-editing-has-no-selection-overlay",
+      "pass": true
+    },
+    {
+      "name": "regional-context-is-visible-in-title",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-nested-region-brush-open",
+      "pass": true
+    },
+    {
+      "name": "nested-brush-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "nested-mask-opens-with-entire-staged-region",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "nested-mask-cancel-returns-to-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "nested-mask-cancel-keeps-staged-and-main-model",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-nested-region-brush-open",
+      "pass": true
+    },
+    {
+      "name": "nested-brush-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "brush-finishes-after-feedback",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "nested-mask-finish-retains-all-staged-parameters",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-undo",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "portrait-undo-restores-complete-pre-paint-region",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-redo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-redo",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "portrait-redo-restores-complete-painted-region",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-tone-preset-5",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-tone-preset-5",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "regional-skin-tone-retains-other-local-operators",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-back",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-back",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-cancel",
+      "pass": true
+    },
+    {
+      "name": "outer-regional-portrait-cancelled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "outer-cancel-discards-skin-and-nested-mask-transaction",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "actual-portrait-workspace-open",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "selected-scope-uses-regional-portrait-constructor",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-entry-skin",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-0",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-0",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-brightness",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-brightness",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-brightness-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-1",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-1",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-warmth",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-warmth",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-warmth-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-warmth-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-warmth-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-2",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-2",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-redness",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-redness",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-redness-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-redness-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-redness-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-3",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-3",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-smoothing",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-smoothing",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-smoothing-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-smoothing-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-smoothing-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-effect-4",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-effect-4",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "actual-skin-parameter-binding-texture",
+      "pass": true
+    },
+    {
+      "name": "skin-parameter-retains-ordinary-settings-texture",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-texture-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-texture-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-texture-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-tone-preset-5",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-tone-preset-5",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "regional-skin-tone-retains-other-local-operators",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-semantic-skin-tone-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-apply",
+      "pass": true
+    },
+    {
+      "name": "regional-skin-and-tone-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-portrait-commits-one-main-history-step",
+      "pass": true
+    },
+    {
+      "name": "scoped-skin-and-tone-keep-ordinary-global-and-global-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-portrait",
+      "pass": true
+    },
+    {
+      "name": "actual-portrait-workspace-open",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "selected-scope-uses-regional-portrait-constructor",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-entry-face",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-entry-face",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-auto",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-auto",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "regional-auto-detects-one-owned-NASA-face",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-effect-5",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-effect-5",
+      "pass": true
+    },
+    {
+      "name": "latest-full-region-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-final-preview-matches-full-region",
+      "pass": true
+    },
+    {
+      "name": "regional-face-light-is-bound-to-selected-face",
+      "pass": true
+    },
+    {
+      "name": "face-operator-retains-full-nonface-region-payload",
+      "pass": true
+    },
+    {
+      "name": "native-regional-face-light-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "native-regional-face-light-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "native-regional-face-light-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "native-regional-face-light-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "face-parameter-editing-cancels-selection-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-portrait-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-portrait-apply",
+      "pass": true
+    },
+    {
+      "name": "regional-face-light-applied",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-face-apply-one-history-with-full-payload",
+      "pass": true
+    },
+    {
+      "name": "regional-face-dialog-and-main-final-profile-match-size",
+      "pass": true
+    },
+    {
+      "name": "regional-face-dialog-and-main-final-profile-match-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "one-main-undo-restores-entire-pre-face-region",
+      "pass": true
+    },
+    {
+      "name": "regional-face-undo-restores-exact-prior-photo-size",
+      "pass": true
+    },
+    {
+      "name": "regional-face-undo-restores-exact-prior-photo-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "draft-keeps-actual-painted-skin-mask-and-full-payload",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-2",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-2-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-2-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-2",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "skin-photo-does-not-overwrite-other-region-draft",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-2",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-menu-locator",
+      "item": "新增涂抹区域",
+      "windowId": 93,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "新增涂抹区域",
+      "windowId": 95,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "committed-live-coverage-add",
+      "maximumAbsoluteError": 2.9198855999723605E-8,
+      "zeroCoverageLeaks": 0
+    },
+    {
+      "case": "actual-brush-radius-feather-controls",
+      "firstRadius": 0.052,
+      "secondRadius": 0.064,
+      "firstFeather": 0.65,
+      "secondFeather": 0.5
+    },
+    {
+      "case": "committed-live-coverage-erase",
+      "maximumAbsoluteError": 6.720088996381435E-8,
+      "zeroCoverageLeaks": 0
+    },
+    {
+      "case": "brush-source-is-existing-final-photo",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "first-completion-pulse-is-actual-soft-mask",
+      "pixels": 1805760,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "completion-gap-is-entire-clean-photo",
+      "pixels": 1805760,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "second-completion-pulse-repeats-actual-soft-mask",
+      "pixels": 1805760,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "actual-two-warm-white-brush-completion-pulses",
+      "firstToGapMs": 230,
+      "gapToSecondMs": 150,
+      "secondToClosedMs": 272,
+      "maximumMaskAlpha": 38,
+      "maskVisiblePixels": 6822,
+      "scope": "Actual main-thread canvas frames captured before pixel scans or PNG encoding; first and second match generated vector mask composited over the source, gap is exact clean source, commit occurs after both pulses."
+    },
+    {
+      "case": "completing-mask-does-not-bake-selection-colour",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-BRIGHTNESS",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 26752
+    },
+    {
+      "case": "local-parameter-undo-exact-BRIGHTNESS",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-EXPOSURE",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 27310
+    },
+    {
+      "case": "local-parameter-undo-exact-EXPOSURE",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-CONTRAST",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 25621
+    },
+    {
+      "case": "local-parameter-undo-exact-CONTRAST",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-HIGHLIGHTS",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 10066
+    },
+    {
+      "case": "local-parameter-undo-exact-HIGHLIGHTS",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-SHADOWS",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 14881
+    },
+    {
+      "case": "local-parameter-undo-exact-SHADOWS",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-WHITES",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 11590
+    },
+    {
+      "case": "local-parameter-undo-exact-WHITES",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-BLACKS",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 16214
+    },
+    {
+      "case": "local-parameter-undo-exact-BLACKS",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-TEMPERATURE",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 24484
+    },
+    {
+      "case": "local-parameter-undo-exact-TEMPERATURE",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-TINT",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 23529
+    },
+    {
+      "case": "local-parameter-undo-exact-TINT",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-SATURATION",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 25001
+    },
+    {
+      "case": "local-parameter-undo-exact-SATURATION",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-VIBRANCE",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 21255
+    },
+    {
+      "case": "local-parameter-undo-exact-VIBRANCE",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-CLARITY",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 5621
+    },
+    {
+      "case": "local-parameter-undo-exact-CLARITY",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-SHARPENING",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 11843
+    },
+    {
+      "case": "local-parameter-undo-exact-SHARPENING",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-LUMA_DENOISE",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 980
+    },
+    {
+      "case": "local-parameter-undo-exact-LUMA_DENOISE",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-COLOR_DENOISE",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 4067
+    },
+    {
+      "case": "local-parameter-undo-exact-COLOR_DENOISE",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-GRAIN",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 17522
+    },
+    {
+      "case": "local-parameter-undo-exact-GRAIN",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-VIGNETTE",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 7716
+    },
+    {
+      "case": "local-parameter-undo-exact-VIGNETTE",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-curves-temporary-preview",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 27116
+    },
+    {
+      "case": "native-curves-applied",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 27116
+    },
+    {
+      "case": "masked-curve-undo-exact",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-HSL-applied",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 6914
+    },
+    {
+      "case": "masked-HSL-undo-exact",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "新增涂抹区域",
+      "windowId": 102,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "区域 1",
+      "windowId": 104,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "区域 2",
+      "windowId": 105,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "区域 1",
+      "windowId": 106,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "regional-portrait-preview-keeps-both-existing-regions",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "regional-comparison-retains-other-regions-outside-current-mask",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 278346,
+      "coveredPixels": 28854,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 0
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "编辑当前选区",
+      "windowId": 108,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "编辑当前选区",
+      "windowId": 110,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "编辑当前选区",
+      "windowId": 112,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "删除当前区域",
+      "windowId": 114,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "区域 1",
+      "windowId": 115,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "编辑当前选区",
+      "windowId": 116,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "全图",
+      "windowId": 118,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "区域 1",
+      "windowId": 119,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "full-reference-vs-real-detail-0",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "新增涂抹区域",
+      "windowId": 120,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "full-reference-vs-real-detail-1",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "independent-oriented-vs-raw-exif-six",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "actual-detail-tiles-vs-full-reference",
+      "samples": 1131,
+      "pixelErrors": 0
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "新增涂抹区域",
+      "windowId": 131,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "automatic-skin-cache-does-not-reapply-ordinary-parameters",
+      "pixels": 262144,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "free-brush-versus-semantic-skin",
+      "paintedNonSkinOrdinaryChangedPixels": 21792,
+      "scope": "Same actual painted region: ordinary brightness changes non-skin; later skin operators are separately checked to leave zero semantic-mask pixels exact."
+    },
+    {
+      "case": "native-semantic-skin-brightness",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 8623
+    },
+    {
+      "case": "native-semantic-skin-warmth",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 8283
+    },
+    {
+      "case": "native-semantic-skin-redness",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 8102
+    },
+    {
+      "case": "native-semantic-skin-smoothing",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 1715
+    },
+    {
+      "case": "native-semantic-skin-texture",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 462
+    },
+    {
+      "case": "native-semantic-skin-tone",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 9071
+    },
+    {
+      "case": "native-semantic-skin-brightness",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 8623
+    },
+    {
+      "case": "native-semantic-skin-warmth",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 8283
+    },
+    {
+      "case": "native-semantic-skin-redness",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 8102
+    },
+    {
+      "case": "native-semantic-skin-smoothing",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 1715
+    },
+    {
+      "case": "native-semantic-skin-texture",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 462
+    },
+    {
+      "case": "native-semantic-skin-tone",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 252072,
+      "coveredPixels": 10072,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 9071
+    },
+    {
+      "case": "native-regional-face-light",
+      "width": 512,
+      "height": 512,
+      "zeroMaskPixels": 224894,
+      "coveredPixels": 37250,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 5551
+    },
+    {
+      "case": "regional-face-dialog-and-main-final-profile-match",
+      "pixels": 262144,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "regional-face-undo-restores-exact-prior-photo",
+      "pixels": 262144,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "full-reference-vs-real-detail-2",
+      "pixels": 262144,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    }
+  ],
+  "screenshots": 6,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Exact installed universal brush and scoped adjustment UI: real live paint\/erase, size\/feather, two-finger navigation, clear\/reopen\/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves\/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing\/deletion, owner rejection, real drafts\/photo switching and representative full\/detail export EXIF1\/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures\/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim."
+}

@@ -1,0 +1,18 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Portrait tools probe failed: java.lang.AssertionError: dialog-analysis-size-colour-detects-exactly-two-faces; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\portrait-tools\\1d8aae1c\\20261028-203428-phone-a61f437e\\20261028-203428-phone-a61f437e\\report.json",
+  "errors": []
+}

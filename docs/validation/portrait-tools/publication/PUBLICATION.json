@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "published-verified",
+  "releaseId": "36356cac-43d8-4732-aee3-630e68acd2f0",
+  "publishedAt": "2026-10-28T21:13:59.599269+08:00",
+  "revision": 3,
+  "channel": "beta",
+  "mandatory": true,
+  "authorization": {
+    "uploadRequested": true,
+    "mandatoryExplicitlyConfirmed": true,
+    "adminSignInCompletedByUser": true,
+    "continueExplicitlyRequested": true
+  },
+  "method": "Authenticated Chrome admin UI: upload, server validation, save mandatory policy, publish.",
+  "apk": {
+    "path": "dist/huevia-0.23.0-beta-debug.apk",
+    "packageName": "cc.huevia",
+    "versionName": "0.23.0-beta",
+    "versionCode": 111,
+    "minSdk": 26,
+    "bytes": 9519012,
+    "sha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31"
+  },
+  "notesFile": "dist/huevia-0.23.0-beta-RELEASE-NOTES.txt",
+  "downloadPage": "https://huevia.cc/preset-library/download/?channel=beta",
+  "canonicalApkUrl": "https://huevia.cc/preset-library/releases/36356cac-43d8-4732-aee3-630e68acd2f0/file",
+  "verification": {
+    "publicArtifact": "docs/validation/portrait-tools/publication/PUBLIC-ARTIFACT-VERIFY.json",
+    "publicArtifactPass": true,
+    "publicApkDownloads": 1,
+    "publicMetadata": "docs/validation/portrait-tools/publication/PUBLIC-METADATA-VERIFY.json",
+    "publicMetadataPass": true,
+    "publicOrigins": 2,
+    "metadataCases": 10,
+    "old110": "updateAvailable=true; updateRequired=true",
+    "current111AndNewer112": "updateAvailable=false; updateRequired=false",
+    "sdk25": "incompatible; updateAvailable=false; updateRequired=false",
+    "stable": "no_release; unchanged from public-before.json"
+  },
+  "evidenceScreenshot": "docs/validation/portrait-tools/publication/published-111.jpg",
+  "localValidationIdentity": "docs/validation/portrait-tools/FINAL-IDENTITY.json"
+}

@@ -1,0 +1,506 @@
+{
+  "pass": true,
+  "stage": "cleanup-only-regional-zero-strength-persist-and-rebind",
+  "mode": "font1.3",
+  "scope": "full",
+  "candidateSha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "pad-inside-window",
+      "pass": true
+    },
+    {
+      "name": "photo-visible",
+      "pass": true
+    },
+    {
+      "name": "pad-reaches-useful-touch-size",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-cancel-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-cancel-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-undo-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-undo-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-redo-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-redo-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-near-square-field",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-press-has-visible-optical-feedback",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-press-does-not-alter-photo",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-cross-slop-enters-direct-drag",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-drag-follows-pointer-without-delay",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-drag-has-no-marker-animation",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-release-keeps-exact-position",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-distant-tap-logical-target-immediate",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-distant-tap-has-short-movement",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-distant-tap-endpoint-exact",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-tap-one-undo",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-other-sliders-unchanged",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-zero-strength-retains-target",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-zero-strength-photo-identical",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-cancel-not-committed",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing-A",
+      "pass": true
+    },
+    {
+      "name": "cleanup-source-preview-smaller-than-original",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "global-cleanup-analysis-present",
+      "pass": true
+    },
+    {
+      "name": "global-analysis-original-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "global-analysis-real-patches-bounded",
+      "pass": true
+    },
+    {
+      "name": "global-analysis-has-real-flat-noise-samples",
+      "pass": true
+    },
+    {
+      "name": "cleanup-analysis-is-tentative",
+      "pass": true
+    },
+    {
+      "name": "cleanup-photo-visible",
+      "pass": true
+    },
+    {
+      "name": "cleanup-apply-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-cancel-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-advanced-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-undo-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-redo-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-native-denoise-reduces-flat-patch-variance",
+      "pass": true
+    },
+    {
+      "name": "cleanup-native-dehaze-increases-hazy-patch-contrast",
+      "pass": true
+    },
+    {
+      "name": "cleanup-native-zero-strength-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "cleanup-zero-strength-retains-analysis",
+      "pass": true
+    },
+    {
+      "name": "cleanup-cancel-keeps-main-settings",
+      "pass": true
+    },
+    {
+      "name": "cleanup-cancel-keeps-main-history",
+      "pass": true
+    },
+    {
+      "name": "cleanup-cancel-keeps-main-photo",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "cleanup-apply-exact-settings",
+      "pass": true
+    },
+    {
+      "name": "cleanup-apply-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "cleanup-apply-changes-visible-photo",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cleanup-draft-written",
+      "pass": true
+    },
+    {
+      "name": "cleanup-draft-restores-model-and-analysis",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cleanup-cancel-does-not-rewrite-draft",
+      "pass": true
+    },
+    {
+      "name": "cleanup-main-undo-restores-settings",
+      "pass": true
+    },
+    {
+      "name": "cleanup-main-undo-restores-pixels",
+      "pass": true
+    },
+    {
+      "name": "cleanup-main-redo-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "pure-global-zero-has-analysis",
+      "pass": true
+    },
+    {
+      "name": "pure-global-zero-other-manual-neutral",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "pure-global-zero-apply-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "pure-global-zero-analysis-persists-in-draft",
+      "pass": true
+    },
+    {
+      "name": "pure-global-zero-analysis-affects-draft-identity",
+      "pass": true
+    },
+    {
+      "name": "pure-global-zero-reopens-analysis-and-strength",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "region-cleanup-analysis-present",
+      "pass": true
+    },
+    {
+      "name": "region-analysis-original-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "region-analysis-real-patches-bounded",
+      "pass": true
+    },
+    {
+      "name": "region-analysis-has-real-flat-noise-samples",
+      "pass": true
+    },
+    {
+      "name": "cleanup-regional-apply-only-selected-settings",
+      "pass": true
+    },
+    {
+      "name": "cleanup-regional-apply-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "cleanup-region-preview-dimensions-stable",
+      "pass": true
+    },
+    {
+      "name": "cleanup-region-has-visible-selected-effect",
+      "pass": true
+    },
+    {
+      "name": "cleanup-region-no-selection-overlay-in-photo",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cleanup-region-draft-restores-settings-and-analysis",
+      "pass": true
+    },
+    {
+      "name": "cleanup-region-undo-restores-settings",
+      "pass": true
+    },
+    {
+      "name": "cleanup-region-undo-restores-pixels",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-strength-has-analysis",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-strength-pixels-neutral",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-other-adjustments-neutral",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-apply-one-main-undo",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-analysis-persists-in-draft",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-analysis-affects-draft-identity",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-reopens-analysis-and-strength",
+      "pass": true
+    },
+    {
+      "name": "pure-region-zero-rebind-keeps-global-neutral",
+      "pass": true
+    },
+    {
+      "name": "cleanup-original-jpeg-unchanged",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-layout",
+      "window": "[0,0][1080,2424]",
+      "pad": "[32,1301][1048,2099]",
+      "photo": "[0,268][1080,1164]",
+      "fontScale": 1.2999999523162842
+    },
+    {
+      "case": "palette-v2-press-field-only",
+      "aspect": 1.1500000953674316,
+      "outsideProtectedPixels": 291984,
+      "outsideDifferences": 0,
+      "pressedChangedPixels": 16002
+    },
+    {
+      "case": "global-original-analysis",
+      "sourceWidth": 3200,
+      "sourceHeight": 2400,
+      "patchCount": 9,
+      "patchPixels": 82944,
+      "noiseSamples": 69339,
+      "hazeConfidence": 10,
+      "noiseConfidence": 100,
+      "lumaNoise": 51
+    },
+    {
+      "case": "cleanup-native-denoise-before-assert",
+      "beforeWidth": 1280,
+      "beforeHeight": 960,
+      "afterWidth": 1280,
+      "afterHeight": 960,
+      "roiNormalized": [
+        0.08,
+        0.12,
+        0.42,
+        0.34
+      ],
+      "varianceAlgorithm": "population variance of BT.709-like luma (54R+183G+19B)\/256 on a constant-signal flat ROI; not high-frequency residual variance",
+      "pixelChanges": 602530,
+      "beforeMean": 114.37674903476875,
+      "afterMean": 114.37702141042926,
+      "beforeVariance": 9.335267994460082,
+      "afterVariance": 5.69167809470855,
+      "beforeSha": "3585bd4c66e25d7d9b111811a442612c1feb6f234b4d022f3eab526ce66782f5",
+      "afterSha": "d9604f0cf5f063b283734faeb2fda87f31e9322f47a58d1a27709f762f408ac5",
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "estimatedLumaNoise": 51,
+      "effectivePreviewLumaDenoise": 32,
+      "cleanupIdentity": "photo-cleanup-veil-noise-v1:100:0:100:3200:2400:9:82944:69339:10:100:66:201:204:207:51:0"
+    },
+    {
+      "case": "cleanup-native-image-quality",
+      "previewWidth": 1280,
+      "previewHeight": 960,
+      "originalWidth": 3200,
+      "originalHeight": 2400,
+      "flatVarianceBefore": 9.335267994460082,
+      "flatVarianceDenoised": 5.69167809470855,
+      "hazyContrastBefore": 82.02013202786483,
+      "hazyContrastAfter": 85.02296893345023,
+      "zeroStrengthDifferences": 0
+    },
+    {
+      "case": "region-original-analysis",
+      "sourceWidth": 3200,
+      "sourceHeight": 2400,
+      "patchCount": 9,
+      "patchPixels": 82944,
+      "noiseSamples": 47152,
+      "hazeConfidence": 13,
+      "noiseConfidence": 100,
+      "lumaNoise": 52
+    },
+    {
+      "case": "cleanup-native-region-pixels",
+      "width": 1280,
+      "height": 960,
+      "protectedPixels": 1119256,
+      "outsideDifferences": 0,
+      "changedPixels": 60134
+    }
+  ],
+  "screenshots": 0,
+  "persistentFixturesCreated": true,
+  "ownedFixtureCount": 1,
+  "ownedDraftCount": 1,
+  "privateFixtureRemoved": true
+}

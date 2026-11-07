@@ -1,0 +1,304 @@
+{
+  "verifiedAt": "2026-10-28T14:55:58.267Z",
+  "phase": "after",
+  "scope": "Read-only public latest-release JSON; no credentials, online mutations or APK download.",
+  "expected": {
+    "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+    "packageName": "cc.huevia",
+    "versionName": "0.23.1-beta",
+    "versionCode": 112,
+    "minSdk": 26,
+    "byteLength": 9531300,
+    "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "channel": "beta",
+    "mandatory": true
+  },
+  "results": [
+    {
+      "origin": "https://huevia.cc",
+      "case": "old111",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": true,
+        "updateRequired": true,
+        "reason": "available"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "current112",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=112&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "newer113",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=113&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "client_newer"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "sdk25",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=111&sdk=25",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "incompatible"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "stable-unchanged",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=stable&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "stable",
+        "release": null,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "old111",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": true,
+        "updateRequired": true,
+        "reason": "available"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "current112",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=112&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "newer113",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=113&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "client_newer"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "sdk25",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=111&sdk=25",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "a08d3bea-967e-476d-be94-2a53175f9702",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.1-beta",
+          "versionCode": 112,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "重做人像与局部调整布局：扩大照片区域，底部改为线条图标工具栏；人像去掉分类，直接选择具体功能，每次只显示当前参数。\n选脸、蒙版和历史操作移到照片边缘，次级操作集中到更多菜单；横屏和大字号自动重排。",
+          "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/a08d3bea-967e-476d-be94-2a53175f9702/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "incompatible"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "stable-unchanged",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=stable&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "stable",
+        "release": null,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release"
+      },
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "publicApkDownloads": 0,
+  "pass": true,
+  "publishedAt": "2026-10-28T22:54:59.307788+08:00",
+  "revision": 3,
+  "stableBaselineUnchanged": true
+}

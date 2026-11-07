@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "complete-local-package-not-published",
+  "completedAtUtc": "2026-11-01T09:53:13.753957+00:00",
+  "versionCode": 127,
+  "versionName": "0.24.5-beta",
+  "apk": {
+    "path": "dist/huevia-0.24.5-beta-debug.apk",
+    "bytes": 33477388,
+    "sha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+    "remainingUploadBytes": 77044
+  },
+  "productionInputsVerified": 299,
+  "hostChecks": 2700869,
+  "legacy126PixelsExact": 65536,
+  "olderLegacyPixelsExact": 294912,
+  "nativeChecks": 343,
+  "nativeScreenshots": 11,
+  "nativeEvidenceHashesVerified": 50,
+  "finalNativeFailures": 0,
+  "historicalNativeFailureCount": 1,
+  "historicalDiagnosticChecksExcluded": 16,
+  "historicalFailedRunChecksExcluded": 63,
+  "uploaded": false,
+  "published": false,
+  "automationCreated": false,
+  "ownedEmulatorClosed": true,
+  "references": [
+    {
+      "path": "docs/validation/cleanup127/BUILD-IDENTITY.json",
+      "sha256": "c89192694b0035173000deb3851c0ca8d28cb6d07f47f1e3b459ce05dac54651"
+    },
+    {
+      "path": "docs/validation/cleanup127/SOURCE-FREEZE.json",
+      "sha256": "4a71ee00bff60e6e85cea2a034882824d37ad696e475bef07d9b0b1b9b9736be"
+    },
+    {
+      "path": "docs/validation/cleanup127/PACKAGING-AUDIT.json",
+      "sha256": "18a9ccfe668a1cb7b88a23889b4536a6ebe744d8bdb0b1afc536f558629cde91"
+    },
+    {
+      "path": "docs/validation/cleanup127/ENGINE-HOST.json",
+      "sha256": "66f6d7c284e81ab315beb27d8a0f6c2db9a54eb02174f85fcf8ae24c7c96b80a"
+    },
+    {
+      "path": "docs/validation/cleanup127/NATIVE-SUMMARY.json",
+      "sha256": "bb921f07fc2cb17c1848a19b388b6f7e13cd3ff9c6203c457792cba84200126b"
+    },
+    {
+      "path": "docs/validation/cleanup127/NATIVE-CLEANUP.json",
+      "sha256": "03edf1301d8840375d113ad6ee8da638b838f075c1b3480567a6a3961fbfa499"
+    },
+    {
+      "path": "docs/validation/cleanup127/DEVICE-CLEANUP.json",
+      "sha256": "19cf89254684339b91e2ffb7dd123a69badc34576dd83f75095b243c1e28674a"
+    }
+  ],
+  "historicalCandidateExcludedFromFinalCounts": "56524629"
+}

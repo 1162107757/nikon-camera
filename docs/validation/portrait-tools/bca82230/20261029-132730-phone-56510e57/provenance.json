@@ -1,0 +1,120 @@
+{
+  "candidateSha256": "bca8223091df1634dcabcc266b804dc4ceb1fec5e9d3ed3bbe6b7e98ba21b01e",
+  "versionCode": 116,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "436d5dfdcb834a3cb7d0b7e645724e7fdacc1d22bb5ac645d7dbbc519db04a8f",
+  "pass": true,
+  "scope": "Actual installed portrait detector/dialog/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank/manual fallback, colour/texture/light controls, add/erase strokes, healing, apply/cancel/history/draft isolation, injected preview failure, simulated owner mismatch, full export reference/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim.",
+  "files": [
+    {
+      "file": "01-auto-two-faces.png",
+      "sha256": "55000a4b1e2d4fd1d4e769cb721937bfefbb608cfb29ab595134918f61ce58bc"
+    },
+    {
+      "file": "02-skin-colour.png",
+      "sha256": "3ba1f45f259f1130c443466c0ad2836978fb5f6c0dae94626d7c186f5ab40323"
+    },
+    {
+      "file": "03-skin-texture.png",
+      "sha256": "4c49d7cd9a0d30590908ee35acd36bf85f6066fb2fd83101c2b34b786e06fb41"
+    },
+    {
+      "file": "04-face-light.png",
+      "sha256": "69d4b697e6548f10cd1ef249e6012137d495924ad878e895cea239541eda7193"
+    },
+    {
+      "file": "05-mask-corrections.png",
+      "sha256": "51c9ff7ac98e3cc0e818cbb01ad25335f6b8aca9d7f4b38bd1dc84a317d522bf"
+    },
+    {
+      "file": "06-blemish-healing.png",
+      "sha256": "d5160ee38f4956aa60ab99398c2d82f0810a1730a6018a88d56189d66f188267"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "08ff156cf8453ba465637213c98b2676b47a777f7885a53c2f5a050b3619fd38"
+    },
+    {
+      "file": "08-first-face-selected-canvas.png",
+      "sha256": "6bdfcee3f38ac9dd32f82a6a41875ec6f232fc2cc7df5461d267a4d5ae24a2d3"
+    },
+    {
+      "file": "08-first-face-selected.png",
+      "sha256": "7500826c67ec48cb1a45bc367d2f91278a7b474f48696620aba8861f7d9f847c"
+    },
+    {
+      "file": "09-second-face-selected-canvas.png",
+      "sha256": "e8104d4d7d324122834c7934f9dfd63b0ac356da6107c335fdfc7ad08fc10738"
+    },
+    {
+      "file": "09-second-face-selected.png",
+      "sha256": "b1e9a7835db6c817902546654254db741142622e4af7cc3f02f503c75243cbc3"
+    },
+    {
+      "file": "10-clean-hold-comparison.png",
+      "sha256": "2b39319b1b379aeeb8c09701cd880077313b5e26972a385dabb927c6c2cdb312"
+    },
+    {
+      "file": "11-face-picker-current.png",
+      "sha256": "6180d002faf5ef441047323b597cffe34d9f8bcb4d8a857d2a62958050438d65"
+    },
+    {
+      "file": "12-feedback-ended-clean.png",
+      "sha256": "689f351164e1fb9a7d4124309b1ab4680a0f81eb16913ca40890272b268611a7"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "72ab66073d1445e97920a622acabf7ef05ed1d078e189e013affd6af56e988a9"
+    },
+    {
+      "file": "report.json",
+      "sha256": "23f2c9bf50047f9dae97cb5fb68fd41bab6ed7701e3af2ec2e0e610ce25ffeef"
+    },
+    {
+      "file": "tap-first-ended-clean.png",
+      "sha256": "859203ff7dd94d8fc27481ddaecde43a4404a658f0b6c603e7b97b36d67e21ef"
+    },
+    {
+      "file": "tap-first-first-pulse.png",
+      "sha256": "6bdfcee3f38ac9dd32f82a6a41875ec6f232fc2cc7df5461d267a4d5ae24a2d3"
+    },
+    {
+      "file": "tap-first-off-gap.png",
+      "sha256": "859203ff7dd94d8fc27481ddaecde43a4404a658f0b6c603e7b97b36d67e21ef"
+    },
+    {
+      "file": "tap-first-second-pulse.png",
+      "sha256": "6bdfcee3f38ac9dd32f82a6a41875ec6f232fc2cc7df5461d267a4d5ae24a2d3"
+    },
+    {
+      "file": "tap-second-ended-clean.png",
+      "sha256": "859203ff7dd94d8fc27481ddaecde43a4404a658f0b6c603e7b97b36d67e21ef"
+    },
+    {
+      "file": "tap-second-first-pulse.png",
+      "sha256": "e8104d4d7d324122834c7934f9dfd63b0ac356da6107c335fdfc7ad08fc10738"
+    },
+    {
+      "file": "tap-second-off-gap.png",
+      "sha256": "859203ff7dd94d8fc27481ddaecde43a4404a658f0b6c603e7b97b36d67e21ef"
+    },
+    {
+      "file": "tap-second-second-pulse.png",
+      "sha256": "e8104d4d7d324122834c7934f9dfd63b0ac356da6107c335fdfc7ad08fc10738"
+    },
+    {
+      "file": "ui-jpeg-analysis-14.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    },
+    {
+      "file": "ui-jpeg-analysis-66.png",
+      "sha256": "e034a3875f10fb584ca35769c509c619ee29634d4de7dc194f26ee9886808c73"
+    },
+    {
+      "file": "ui-jpeg-analysis-9.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    }
+  ]
+}

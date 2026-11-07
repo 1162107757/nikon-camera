@@ -1,0 +1,24 @@
+{
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "versionCode": 122,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "2d198a649d846dd5d5b82d6f4e74e827d79836d05696644a664c85eefc30aa6e",
+  "pass": false,
+  "scope": "Exact installed universal brush and scoped adjustment UI: real live paint/erase, size/feather, two-finger navigation, clear/reopen/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing/deletion, owner rejection, real drafts/photo switching and representative full/detail export EXIF1/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "01-live-brush-mask.png",
+      "sha256": "cf33d59d93cddc49bae01fabd624612331f0e3dbca1568c301d417cfb31a4471"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "ab1a2c45e646f31f21d366b9d5ae8099e36fc6c1d604719402f4b3123e876ffd"
+    },
+    {
+      "file": "report.json",
+      "sha256": "86a7f7b9b88a3510267e155d88677767fe5590f600f2e94c813fcce4ef9831fa"
+    }
+  ]
+}

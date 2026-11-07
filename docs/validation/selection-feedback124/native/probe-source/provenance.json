@@ -1,0 +1,28 @@
+{
+  "inputs": [
+    {
+      "path": "tests/selection-feedback-device-probe/src/cc/huevia/selectionqa/SelectionProbe.java",
+      "sha256": "3c30af894504603fe71f406869244edd5af83c64e905b578f845a87842cca0a9"
+    },
+    {
+      "path": "tests/selection-feedback-device-probe/AndroidManifest.xml",
+      "sha256": "a50fa5976951547fb118594082534dc4f9a34921f0d52470f337f2c42941392c"
+    },
+    {
+      "path": "tests/selection-feedback-device-probe/build.ps1",
+      "sha256": "5a82c167e3954c7b319e238c8f87b2a8f8962636c122f3c6155a0b31e741f61f"
+    },
+    {
+      "path": "tests/selection-feedback-device-probe/run.ps1",
+      "sha256": "155c8ccdcd16e797d08fa0845462d9b8d77fda34e51effd9dad13782015a4cdc"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/selectionqa/SelectionProbe.class",
+    "cc/huevia/selectionqa/SelectionProbe$Condition.class",
+    "cc/huevia/selectionqa/SelectionProbe$Frame.class",
+    "cc/huevia/selectionqa/SelectionProbe$Work.class"
+  ],
+  "apkSha256": "1155b183eb75841cd59fd2d4e4fe2f5039990acec19fb17d73807000b642c22f"
+}

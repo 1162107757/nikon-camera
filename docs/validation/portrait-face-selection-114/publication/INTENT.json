@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "status": "published-verified",
+  "authorization": {
+    "upload": "User: 完成后上传; continued after reporting face-selection regression.",
+    "mandatory": "User: 沿用强制更新",
+    "login": "User confirmed 已登录 on 2026-10-29"
+  },
+  "channel": "beta",
+  "mandatory": true,
+  "versionCode": 114,
+  "versionName": "0.23.3-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.3-beta-debug.apk",
+    "bytes": 9531300,
+    "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "notesFile": "dist/huevia-0.23.3-beta-RELEASE-NOTES.txt",
+  "supersededDraft": {
+    "versionCode": 113,
+    "releaseId": "485954a2-dff9-4fbc-a176-d5798f4623e8",
+    "published": false
+  },
+  "interaction": "Two transient real skin-mask pulses; no persistent face circles or numbers.",
+  "localValidationIdentity": "docs/validation/portrait-face-selection-114/FINAL-IDENTITY.json",
+  "releaseId": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+  "serverVerified": {
+    "versionCode": 114,
+    "bytes": 9531300,
+    "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31"
+  },
+  "publishedAt": "2026-10-29T09:56:54.390687+08:00"
+}

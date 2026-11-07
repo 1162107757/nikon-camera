@@ -1,0 +1,111 @@
+{
+  "versionCode": 142,
+  "versionName": "0.28.5-beta",
+  "apk": "dist/huevia-0.28.5-beta-debug.apk",
+  "apkSha256": "b5d1fbfd51b434f9b960b333368f6f91ec3921f9e87207bbce316fcd74610b9b",
+  "apkBytes": 33563404,
+  "scope": "date group selection and saved/current-edit version export",
+  "native": {
+    "device": "Owned read-only Pixel_9 emulator, API 37.2, no physical device/camera acceptance",
+    "results": [
+      {
+        "mode": "phone",
+        "pass": true,
+        "assertions": 86,
+        "report": "final/phone/report.json"
+      },
+      {
+        "mode": "font",
+        "pass": true,
+        "assertions": 45,
+        "report": "final/font/report.json"
+      },
+      {
+        "mode": "narrow",
+        "pass": true,
+        "assertions": 45,
+        "report": "final/narrow/report.json"
+      },
+      {
+        "mode": "dark",
+        "pass": true,
+        "assertions": 45,
+        "report": "final/dark/report.json"
+      },
+      {
+        "mode": "tablet",
+        "pass": true,
+        "assertions": 45,
+        "report": "final/tablet/report.json"
+      },
+      {
+        "mode": "compact",
+        "pass": true,
+        "assertions": 45,
+        "report": "final/compact/report.json"
+      }
+    ],
+    "totalAssertionExecutions": 311,
+    "independentScenarios": false,
+    "actualJpegExports": 11,
+    "pixelAndVersionNameChecks": 11,
+    "newCopyRowCountChecks": 11,
+    "syncSnapshot": "Real completed owned JPEGs assigned to Sync downloaded in-memory view snapshot, no camera acquisition/session simulated",
+    "cleanup": "Owned emulator dimensions/density/font restored and emulator terminated after validation; no physical phone touched."
+  },
+  "host": {
+    "photoLibrary": 59,
+    "dateGroups": 55,
+    "dateReader": 67,
+    "presetBatch": 688,
+    "presetSources": 82,
+    "editorRegression": "passed; focused math/storage tests, not a UI/device certification"
+  },
+  "limits": {
+    "groupAndOutputBatch": 100,
+    "phonePagination": "metadata completion at date-page boundary",
+    "notDeviceCertified": [
+      "physical phone/tablet",
+      "camera/USB/Wi-Fi transport",
+      "API26-32",
+      "permission-revocation variants of new features"
+    ]
+  },
+  "review": {
+    "disposition": "ship",
+    "reviewer": "/root/impeccable_finish_reviewer_142",
+    "record": ".impeccable/review/album-versions142/review.md",
+    "materialFixes": 0,
+    "scope": "Full scoped review, no global product certification"
+  },
+  "published": false,
+  "gitCommitOrPush": false,
+  "sourceHashes": {
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "cd62c27835b2a67b67cbdb67caa34a324cff30856ad8f3c424ce6dc65d2ad3cc",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "26c8ffdd1f23809b1f6007469133961dfb1f0d12560b80c9d7a5e7b4ebc1af2a",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java": "a9223fefd36de57d43b921338777bc299c5e65f308974b9c497765eec3b938fe",
+    "app/src/main/java/cc/huevia/ui/PhotoQuickSaveDialog.java": "3c8cc960f94f92d829c58917e8d3cb052adaf10f8064d632ab8d722e710f876d",
+    "app/src/main/java/cc/huevia/ui/PhotoVersionBadge.java": "8531e2f1f6b91f7a5dc8a05601c33220cb6106a055ca52082f57f1e211827965",
+    "app/src/main/java/cc/huevia/ui/PhotoExportAvailability.java": "3b2a933b6e711b07faa4168159cc8e3ca3b5d467b8996caa763e977a86879981",
+    "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java": "1b81190fc863e22ab220c14e637923aadc1a1cd87f5bac97a0977711a0b2d2a7",
+    "app/src/main/java/cc/huevia/album/DownloadedPhoto.java": "78279779455a8b2e928a9c37b63b53b5335f25683e05f523c3d658183f51857a",
+    "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java": "22aae666a088dd79cff98020af4b1b32ef9f106d3dcb3823335cc066574574f2",
+    "app/build.gradle": "b02646716eb27289d75fc4c613a2d98c5e2c43f1b8be25c01c20f0cf30de39a5",
+    "app/src/main/java/cc/huevia/ui/PhotoGroupCheck.java": "2fb6373e5c0db6844131fde20713eff73ed50c81b0bbf5f742212bdd4a385b62",
+    "app/src/main/java/cc/huevia/ui/PhotoVersionExport.java": "21ca0e16942f82a94d86a943b827a051a2ea120649087657b0701745824abd3f",
+    "app/src/main/java/cc/huevia/album/PhotoGroupSelection.java": "108c5bb81d36de8483be49b6a250aedb5eb3b3cdb7e8e64a347c495e0f2a326a",
+    "app/src/main/java/cc/huevia/album/PhotoVersionExportPlan.java": "6a8a01235e8ac0eac56f3ba14748f63e6dd6538c30f9bf92dcbbee0557419a20",
+    "app/src/main/java/cc/huevia/album/PhotoLibraryCatalog.java": "4e7bfc38d985461ab20f923a7f06e83f81bb54088edb5cda990d559f3d9042a1",
+    "app/src/main/java/cc/huevia/album/PhotoDateGroups.java": "95ce1520cd39f38323a249d9ed8f4f521a8f79b514ec7190247ec626fb9e5308",
+    "app/src/main/java/cc/huevia/ui/PhotoExportDialog.java": "14a0d6897bfc5812ac8a81702e3f6b67edf2e75162a0cbe2d51bbb8da3717d61",
+    "tests/sync-polish-device-probe/src/cc/huevia/syncpolishqa/AlbumVersionsProbe.java": "88cfd10f95e6cd50887fbbd4b1a0d016dd086c086ef72f6ae415d4885aaa063d",
+    "tests/run-album-versions-device.ps1": "1b84494734602b2fd1e78e4c23bd2520c6dbb09bc87639b368ec54813fb978c3",
+    "tests/library-java/cc/huevia/album/PhotoLibraryCatalogTest.java": "5bfa47920c9ef688c0102102f141492144de6ba81405bc8a0ca5b8b2d834ae77"
+  },
+  "documentation": [
+    ".impeccable/surfaces/local-album.md",
+    ".impeccable/surfaces/photo-filter-editor.md",
+    "docs/album-versions142.md",
+    "dist/huevia-0.28.5-beta-RELEASE-NOTES.txt"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "versionCode": 152,
+  "versionName": "0.29.1-beta",
+  "apk": "dist/huevia-0.29.1-beta-debug.apk",
+  "apkSha256": "1cfb137da9434e1df3145d7a81a350306babe22ec451073a05ca9621f83bf6b4",
+  "apkBytes": 33606103,
+  "device": "Task-owned Pixel_9 emulator-5596, Android 17 / API 37; viewport classes emulated; no physical device claim",
+  "pass": true,
+  "runs": [
+    {
+      "mode": "phone",
+      "runId": "20261107-150338-phone-a2937a",
+      "checks": 101,
+      "screenshots": 14,
+      "evidence": "native/phone/report.json"
+    },
+    {
+      "mode": "font",
+      "runId": "20261107-150409-font-ddd3f2",
+      "checks": 101,
+      "screenshots": 14,
+      "evidence": "native/font/report.json"
+    },
+    {
+      "mode": "narrow",
+      "runId": "20261107-150439-narrow-e4c8f1",
+      "checks": 102,
+      "screenshots": 14,
+      "evidence": "native/narrow/report.json"
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261107-150504-landscape-e8c61b",
+      "checks": 101,
+      "screenshots": 14,
+      "evidence": "native/landscape/report.json"
+    },
+    {
+      "mode": "tablet",
+      "runId": "20261107-150529-tablet-a13f85",
+      "checks": 101,
+      "screenshots": 14,
+      "evidence": "native/tablet/report.json"
+    },
+    {
+      "mode": "tablet-landscape",
+      "runId": "20261107-150609-tablet-landscape-4bc2bc",
+      "checks": 101,
+      "screenshots": 14,
+      "evidence": "native/tablet-landscape/report.json"
+    },
+    {
+      "mode": "dark",
+      "runId": "20261107-150640-dark-8271e1",
+      "checks": 101,
+      "screenshots": 14,
+      "evidence": "native/dark/report.json"
+    }
+  ],
+  "restarts": [
+    {
+      "phase": "prepare",
+      "runId": "20261107-150713-phone-9a359c",
+      "checks": 6,
+      "screenshots": 0,
+      "evidence": "restart/prepare/report.json"
+    },
+    {
+      "phase": "verify",
+      "runId": "20261107-150722-phone-104e18",
+      "checks": 9,
+      "screenshots": 1,
+      "evidence": "restart/verify/report.json"
+    }
+  ],
+  "totalAssertions": 723,
+  "totalScreenshots": 99,
+  "baselineRegression": {
+    "apkSha256": "2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad",
+    "expectedFailure": "ordinary-open-restores-pending-draft",
+    "evidence": "baseline-regression.json"
+  },
+  "scope": [
+    "real close/reopen restores pending filter/manual/composition/portrait edits",
+    "explicit saved-version view keeps pending draft",
+    "real MediaStore JPEG insertion plus LocalPhotoRepository import and both local editor entry routes",
+    "Activity recreation loads persisted settings",
+    "force-stop between separate instrumentations restores complete draft identity and exact preview pixels",
+    "concentric reset normal/pressed/focused pixels; rectangular body-back target paints a circle",
+    "visible More menu beside Close and original utilities",
+    "skin/face/body real Apply plus sibling editing workspace styles",
+    "existing comparison, cropping, mirroring, history, filter spacing and export-dialog entry",
+    "shared primary/secondary reset geometry; native local instructions have no ellipsis and stay separate from toolbar in seven modes",
+    "transparent portrait/body history rows; body actions form five visible circular tools; range expansion/collapse and current reset undo verified in seven modes"
+  ],
+  "fixtures": "Existing illustrative project photo; hand-authored QA presets; synthetic manually selected face and all-coverage skin mask. UI/serialization/render smoke, not inference-accuracy acceptance. Only owned emulator fixtures and MediaStore rows are removed.",
+  "limits": [
+    "No physical device, alternate Android OS or TalkBack acceptance",
+    "No new MediaStore export or OTA/public release; import exercised only",
+    "No whole-app/backend certification"
+  ],
+  "productionInputs": "UI-INPUTS.json",
+  "changes": "production-changes.json",
+  "probe": "probe-source/provenance.json",
+  "priorCandidate": "before-review-fixes/validation.json",
+  "deviceProperties": {
+    "sdk": 37,
+    "release": "17",
+    "previewSdk": 0,
+    "readFrom": "adb shell getprop ro.build.version.*"
+  },
+  "immutableRawRuns": [
+    ".tooling/editor-continuity152-actions/native/20261107-150338-phone-a2937a",
+    ".tooling/editor-continuity152-actions/native/20261107-150409-font-ddd3f2",
+    ".tooling/editor-continuity152-actions/native/20261107-150439-narrow-e4c8f1",
+    ".tooling/editor-continuity152-actions/native/20261107-150504-landscape-e8c61b",
+    ".tooling/editor-continuity152-actions/native/20261107-150529-tablet-a13f85",
+    ".tooling/editor-continuity152-actions/native/20261107-150609-tablet-landscape-4bc2bc",
+    ".tooling/editor-continuity152-actions/native/20261107-150640-dark-8271e1"
+  ]
+}

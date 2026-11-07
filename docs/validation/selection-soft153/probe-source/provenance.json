@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/prisma-editor-device-probe/src/cc/huevia/prismaqa/PrismaEditorProbe.java",
+      "sha256": "87e42d0c5bd43b73f2f2823ba3b5fcb1df23f6f6562cd9af851da36fb017144f"
+    },
+    {
+      "path": "docs/design-review/prisma-editor-20261107/assets/portrait.jpg",
+      "sha256": "e9bbc4c6924cfe3b5a1ecff12d5cefbefcbaa9907e0e24ddac228289d51576ba"
+    },
+    {
+      "path": "tests/prisma-editor-device-probe/AndroidManifest.xml",
+      "sha256": "8412195c8ea42f267ae985d326e52b2fa77b24d2a71ab1be308ef792bb3759b7"
+    },
+    {
+      "path": "tests/prisma-editor-device-probe/build.ps1",
+      "sha256": "c05a2f12086935beeed9a5e50d171d8173ef28ad574a9c09889fbba741d92991"
+    },
+    {
+      "path": "tests/prisma-editor-device-probe/run.ps1",
+      "sha256": "60f8c01eb5b865463392b066e44d27587c16884fe180fd83da1a7cb45a248f68"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/prismaqa/PrismaEditorProbe.class",
+    "cc/huevia/prismaqa/PrismaEditorProbe$Condition.class",
+    "cc/huevia/prismaqa/PrismaEditorProbe$Work.class"
+  ],
+  "apkSha256": "7520224a53bfc48588b57b35c1523c2f68a98b46ecd5ca0e5561a4d4e199645b"
+}

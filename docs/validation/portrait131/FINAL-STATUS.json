@@ -1,0 +1,58 @@
+{
+  "status": "complete-local-package-not-published",
+  "verifiedAt": "2026-11-04T14:25:49.972055+08:00",
+  "versionCode": 131,
+  "versionName": "0.26.0-beta",
+  "apk": "D:/dev/ai-project/nikon-camera/dist/huevia-0.26.0-beta-debug.apk",
+  "sha256": "d8c84b7b1b65ca9768ebe3f44b2441744f129ebd764affa75384620d16ea72ae",
+  "bytes": 33526540,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "v2Verified": true,
+  "v3Verified": true,
+  "zipalign16KiB": true,
+  "frozenProductionInputs": 304,
+  "changedProductionInputs": [],
+  "hostSuitesPassed": 10,
+  "newRetouchHostAssertions": 24804,
+  "nativeFinalRuns": [
+    {
+      "run": "20261104-141624-phone-b00c7994",
+      "checks": 48,
+      "screenshots": 3,
+      "pass": true,
+      "mode": "phone",
+      "scope": "full"
+    },
+    {
+      "run": "20261104-141711-font1.3-d3a06ff3",
+      "checks": 26,
+      "screenshots": 2,
+      "pass": true,
+      "mode": "font1.3",
+      "scope": "ui"
+    },
+    {
+      "run": "20261104-141733-landscape-ef765688",
+      "checks": 26,
+      "screenshots": 2,
+      "pass": true,
+      "mode": "landscape",
+      "scope": "ui"
+    }
+  ],
+  "nativeAssertionExecutions": 100,
+  "nativeScreenshots": 7,
+  "visualConfirmationCompleted": true,
+  "evidenceRemoteFilesVerifiedAndRemoved": 30,
+  "ownedEmulatorClosed": true,
+  "published": false,
+  "uploaded": false,
+  "scheduled": false,
+  "limitations": [
+    "Automatic body ranges are editable silhouette/head-based suggestions, not pose reconstruction.",
+    "Background protection targets obvious long straight edges.",
+    "Acne proposals are conservative; positive UI review uses synthetic candidates.",
+    "Soft fill approximates facial shading; it is not 3D relighting.",
+    "No physical-phone performance or arbitrary-photo aesthetic acceptance claim."
+  ]
+}

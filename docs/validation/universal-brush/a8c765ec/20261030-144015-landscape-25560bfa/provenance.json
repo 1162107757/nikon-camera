@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "versionCode": 122,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "51dbadc017827a635c6ea9446cd0acbbefcbd5a252765615b8b774601e8d9bd3",
+  "pass": false,
+  "scope": "Exact installed universal brush and scoped adjustment UI: real live paint/erase, size/feather, two-finger navigation, clear/reopen/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing/deletion, owner rejection, real drafts/photo switching and representative full/detail export EXIF1/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "01-live-brush-mask.png",
+      "sha256": "b8756831bf45980eb875343d99e251d65cdb65d06bf230963c11c53deddcf957"
+    },
+    {
+      "file": "02-masked-curve-preview.png",
+      "sha256": "9db1a3e75d6fbed47c388d9c35a60ec11a6e104a5a45c85bafef679d8eb181af"
+    },
+    {
+      "file": "03-clean-local-parameter-editing.png",
+      "sha256": "fece8becdad9096be4358bd4d07ebd8062b90c7f08acc88d087a21f93fc07ca7"
+    },
+    {
+      "file": "04-independent-region-scope-picker.png",
+      "sha256": "f88096bb81e6f9cd87329cb53d1dcf254072e83280d3b9de5a7b96482daba80c"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "1f84094adf9911cb4ebd8e30ed0745b21c8f7d945102f53bf70a134673c42115"
+    },
+    {
+      "file": "flash-01-first-warm-white.png",
+      "sha256": "bd8aa5feed77b10b5ff450014fa8ad668a7c50c2e2adda3867dacf2a3666b4b6"
+    },
+    {
+      "file": "flash-02-clean-gap.png",
+      "sha256": "45f8fbdfaf3732df603976a3996c400384322f3b21f3a930d60f9b48698b5eba"
+    },
+    {
+      "file": "flash-03-second-warm-white.png",
+      "sha256": "bd8aa5feed77b10b5ff450014fa8ad668a7c50c2e2adda3867dacf2a3666b4b6"
+    },
+    {
+      "file": "report.json",
+      "sha256": "596d3450dd8026642747ef76b73c60bad4530c08d8275cbd53a15a1b976437f7"
+    }
+  ]
+}

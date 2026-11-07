@@ -1,0 +1,43 @@
+{
+  "candidateSha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+  "serial": "emulator-5588",
+  "ownedLaunchPid": 21240,
+  "completedAtUtc": "2026-11-01T09:49:20.9921592Z",
+  "shutdownExitCode": 0,
+  "shutdownOutput": [
+    "OK: killing emulator, bye bye",
+    "",
+    "OK",
+    ""
+  ],
+  "ownedEmulatorAbsent": true,
+  "observations": [
+    {
+      "checkedAtUtc": "2026-11-01T09:49:18.9074166Z",
+      "absent": false,
+      "inventory": [
+        "List of devices attached",
+        "emulator-5588          device product:sdk_gphone16k_x86_64 model:sdk_gphone16k_x86_64 device:emu64xa16k transport_id:2",
+        ""
+      ]
+    },
+    {
+      "checkedAtUtc": "2026-11-01T09:49:19.9524764Z",
+      "absent": false,
+      "inventory": [
+        "List of devices attached",
+        "emulator-5588          device product:sdk_gphone16k_x86_64 model:sdk_gphone16k_x86_64 device:emu64xa16k transport_id:2",
+        ""
+      ]
+    },
+    {
+      "checkedAtUtc": "2026-11-01T09:49:20.9921087Z",
+      "absent": true,
+      "inventory": [
+        "List of devices attached",
+        ""
+      ]
+    }
+  ],
+  "otherDevicesTouched": false
+}

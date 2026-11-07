@@ -1,0 +1,95 @@
+{
+  "candidateSha256": "2d21da748e5ee70bc411d1813d9bfca9f06548844758f801339c92a1d84177e3",
+  "versionCode": 121,
+  "versionName": "0.23.10-beta",
+  "buildIdentitySha256": "e638b4afef11776a2cf0f2606d1f357fc18f146d187815d81c59c01e2a00f6af",
+  "pass": true,
+  "workflow": "PortraitGroupsOnly",
+  "totalChecks": 2207,
+  "totalScreenshots": 18,
+  "runs": [
+    {
+      "mode": "phone",
+      "runId": "20261030-114638-phone-f9b17a72",
+      "pass": true,
+      "checks": 730,
+      "screenshots": 6,
+      "probeSha256": "10fd398063faab4bae4db5370f7446f3f542a81252e5c7b484bc99bd9ff810da",
+      "report": "docs/validation/portrait-tools/2d21da74/20261030-114638-phone-f9b17a72/20261030-114638-phone-f9b17a72/report.json",
+      "reportSha256": "42ecba7db57ca56e578320b5be362eb56dc8154e13a210aa528cf1dca46fa008",
+      "provenance": "docs/validation/portrait-tools/2d21da74/20261030-114638-phone-f9b17a72/provenance.json",
+      "provenanceSha256": "a6726dff19837fa20ae3fbe60d13b369b08105690e11424397ae46e49faab4c7",
+      "cleanup": "docs/validation/portrait-tools/2d21da74/20261030-114638-phone-f9b17a72/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "font1.3",
+      "runId": "20261030-114717-font1.3-8c8bfb55",
+      "pass": true,
+      "checks": 730,
+      "screenshots": 6,
+      "probeSha256": "10fd398063faab4bae4db5370f7446f3f542a81252e5c7b484bc99bd9ff810da",
+      "report": "docs/validation/portrait-tools/2d21da74/20261030-114717-font1.3-8c8bfb55/20261030-114717-font1.3-8c8bfb55/report.json",
+      "reportSha256": "c7f6361a161de92c7878e9bdea95690a77b3b61229dc6da1ffe388eab4197c2e",
+      "provenance": "docs/validation/portrait-tools/2d21da74/20261030-114717-font1.3-8c8bfb55/provenance.json",
+      "provenanceSha256": "dc243ada33501764b6667d28f79270bac7a0f926d59b44e648618c8a5b8cd2bd",
+      "cleanup": "docs/validation/portrait-tools/2d21da74/20261030-114717-font1.3-8c8bfb55/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261030-114833-landscape-d3cf43e8",
+      "pass": true,
+      "checks": 747,
+      "screenshots": 6,
+      "probeSha256": "10fd398063faab4bae4db5370f7446f3f542a81252e5c7b484bc99bd9ff810da",
+      "report": "docs/validation/portrait-tools/2d21da74/20261030-114833-landscape-d3cf43e8/20261030-114833-landscape-d3cf43e8/report.json",
+      "reportSha256": "6ace22bd39abc4f7979a8a0c26faf09692d249c3a1c6c99e5c720f3be108b657",
+      "provenance": "docs/validation/portrait-tools/2d21da74/20261030-114833-landscape-d3cf43e8/provenance.json",
+      "provenanceSha256": "11e05df3aba979ff71c5cd987afbf800b7544cafef69a5b47154823cfb8fb551",
+      "cleanup": "docs/validation/portrait-tools/2d21da74/20261030-114833-landscape-d3cf43e8/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    }
+  ],
+  "historicalAttempts": [],
+  "probeSourceInputs": [
+    {
+      "path": "tests/portrait-device-probe/src/cc/huevia/portraitqa/PortraitProbe.java",
+      "sha256": "e34f3d6e315138a513416210120efde0f39dc28a74ce6a65ae786cf47ff537ef"
+    },
+    {
+      "path": "tests/portrait-device-probe/AndroidManifest.xml",
+      "sha256": "36beadea570e7daf803df35e9095fcf8d09ac1bc6c5d8569212d5f8027e58972"
+    },
+    {
+      "path": "tests/portrait-device-probe/build.ps1",
+      "sha256": "59bb80534a6173699a52bda2b3abbca71aa38009468d9fdf5d77ecdf0fc655c5"
+    },
+    {
+      "path": "tests/portrait-device-probe/run.ps1",
+      "sha256": "59961caf063fe3307c75bf57bca8708637d8e8126dfe099be88c43d9806aa122"
+    }
+  ],
+  "earlyActualLandingScreenshot": {
+    "path": "docs/validation/portrait-entry121/entry-preview.png",
+    "sha256": "9b0a290ba02285d041a7c2def6c72ac60396c2426e417dbe719176e8e5009636",
+    "source": "docs/validation/portrait-tools/2d21da74/20261030-114638-phone-f9b17a72/20261030-114638-phone-f9b17a72/hierarchy-01-portrait-entry-tools.png"
+  },
+  "scope": "Hierarchical portrait tool navigation: actual Adjust > Portrait icon opens landing with two icon-caption entry tools matching actual primary Portrait/Local cell/icon/caption/ripple geometry. Skin/Face children hide both entries and contain no bottom switcher, use one top-back and contextual title; actual native Back cancels custom preview then returns to landing then dismisses. Top-back cancels eyedropper and unconfirmed custom transactions. Automatic full-image skin requires no selected face, independent skin/face settings/history and remembered tools persist across navigation, real two-face refinement and parameter isolation, inference/detection navigation race, actual slider Down/Move without Up followed by back produces one final-preview undo entry and late Cancel cannot duplicate it, advanced person-colour reopening, rotation and apply/cancel. Exact installed production dialog/filter and owned public-domain NASA images. No fresh broad segmentation, physical-phone latency or export-pipeline claim.",
+  "cleanup": {
+    "serial": "emulator-5588",
+    "ownedRunRemoteEvidenceDirectoriesRemoved": 3,
+    "runSpecificTransferredFixturesRemoved": 3,
+    "instrumentationPackageRemoved": true,
+    "temporaryPortraitFixturesIncludingPrimaryEditorJpegsAndDraftsRemoved": true,
+    "personalSwatchKeyExactlyRestored": true,
+    "fontScale": "1.0",
+    "airplaneMode": "0",
+    "wifiOn": "1",
+    "mobileData": "1",
+    "immersiveConfirmation": "null",
+    "mainAppStopped": true,
+    "deviceReturnedToRoot": true,
+    "ownedEmulatorClosurePendingRoot": true
+  }
+}

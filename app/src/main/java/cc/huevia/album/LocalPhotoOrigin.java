@@ -41,12 +41,12 @@ public final class LocalPhotoOrigin {
             File expected = photo.file().getAbsoluteFile(), source = expected.getCanonicalFile();
             // Android exposes the same app data through /data/user/0 and /data/data.
             // Permit that configured root alias, while keeping every path below it literal and owned.
-            for (java.nio.file.Path part : expected.toPath()) if (part.toString().equals("..")) throw new IOException("App 内照片路径无效。");
+            for (java.nio.file.Path part : expected.toPath()) if (part.toString().equals("..")) throw new IOException("应用相册照片路径无效。");
             File parent = expected.toPath().normalize().getParent().toFile();
             if ((!parent.equals(declaredPictures.toPath().normalize().toFile()) && !parent.equals(pictures))
                     || !pictures.equals(pictures.getCanonicalFile()) || Files.isSymbolicLink(picturesRoot.toPath())
                     || Files.isSymbolicLink(pictures.toPath()) || !pictures.equals(source.getParentFile())
-                    || !source.getName().equals(expected.getName()) || Files.isSymbolicLink(expected.toPath()) || !source.isFile()) throw new IOException("App 内照片路径无效。");
+                    || !source.getName().equals(expected.getName()) || Files.isSymbolicLink(expected.toPath()) || !source.isFile()) throw new IOException("应用相册照片路径无效。");
             String key = source.getName().substring(0, source.getName().indexOf("__"));
             File directory = new File(root, "local-photo-sources"), record = new File(directory, key + ".source");
             if (!directory.equals(directory.getCanonicalFile()) || Files.isSymbolicLink(directory.toPath())
@@ -74,7 +74,7 @@ public final class LocalPhotoOrigin {
                 return new Result(State.UNAVAILABLE, "", "所选来源暂不能确认已在手机相册中。请从手机照片列表重新选择，或勾选“另存新副本”。");
             }
             long modified = source.lastModified();
-            if (source.length() != workingBytes || !workingSha.equals(hashFile(source, workingBytes))) throw new IOException("App 内照片已变化，无法复用原来源。");
+            if (source.length() != workingBytes || !workingSha.equals(hashFile(source, workingBytes))) throw new IOException("应用相册照片已变化，无法复用原来源。");
             String[] columns = Build.VERSION.SDK_INT >= 29
                     ? new String[]{MediaStore.Images.Media.MIME_TYPE, MediaStore.Images.Media.IS_PENDING}
                     : new String[]{MediaStore.Images.Media.MIME_TYPE};
@@ -90,7 +90,7 @@ public final class LocalPhotoOrigin {
                 current = fingerprint(input, workingBytes);
             }
             if (current == null || !workingSha.equals(current)) return result(State.MISSING_OR_CHANGED);
-            if (source.length() != workingBytes || source.lastModified() != modified || !workingSha.equals(hashFile(source, workingBytes))) throw new IOException("App 内照片在核对期间发生变化。");
+            if (source.length() != workingBytes || source.lastModified() != modified || !workingSha.equals(hashFile(source, workingBytes))) throw new IOException("应用相册照片在核对期间发生变化。");
             return new Result(State.EXISTING_SOURCE, address, "原照片仍在手机相册，未新增副本。");
         } catch (OutOfMemoryError memory) {
             return new Result(State.UNAVAILABLE, "", "核对原照片时内存不足，未新增副本。请稍后重试，或勾选“另存新副本”。");

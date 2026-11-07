@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "tests/cleanup-device-probe/src/cc/huevia/cleanupqa/CleanupProbe.java",
+      "sha256": "aed79f11c72cbc80534a039bf33e3d9dcaeefaeef29ebe007dc0bc5311a711c0"
+    },
+    {
+      "path": "tests/cleanup-device-probe/AndroidManifest.xml",
+      "sha256": "c61dffd72b3750e7900d2ab472345417a20b6a454e44fa70e12c514d5889082e"
+    },
+    {
+      "path": "tests/cleanup-device-probe/build.ps1",
+      "sha256": "95ac73e9ef16d07fdd3c0b48191d035433ecf2eae8839f80c1585cc11f058220"
+    },
+    {
+      "path": "tests/cleanup-device-probe/run.ps1",
+      "sha256": "2734a39ad0f7c962b0a1827cd9eebacfb005352068b16ac8eb6bc1a4260d4e85"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/cleanupqa/CleanupProbe.class",
+    "cc/huevia/cleanupqa/CleanupProbe$Condition.class",
+    "cc/huevia/cleanupqa/CleanupProbe$Work.class"
+  ],
+  "apkSha256": "7365bfec5ef45f01f57e0208613b565ea3713e1b40c26583c93aa0d2c5cd82ca"
+}

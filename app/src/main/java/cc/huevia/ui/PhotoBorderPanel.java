@@ -23,7 +23,7 @@ public final class PhotoBorderPanel implements AutoCloseable {
         void change(PhotoBorder border);void undo();void redo();boolean canUndo();boolean canRedo();void error(String message);
         default void startDrag(){}default void dragChange(PhotoBorder border){change(border);}default void endDrag(){}
     }
-    private static final int TEXT=0xffffffff,MUTED=0x9effffff,ACCENT=0xfff2b48c,FIELD=0xff292724;
+    private static final int TEXT=0xffffffff,MUTED=0x9effffff,ACCENT=PhotoPrismaStyle.YELLOW,FIELD=0xff292724;
     private final Activity activity;private final Host host;private final Handler main=new Handler(Looper.getMainLooper());
     private final ExecutorService worker=Executors.newSingleThreadExecutor();private volatile boolean closed;private volatile int request;private int tab;private String thumbKey="",lastSource="";private PhotoBorder lastBorder=PhotoBorder.NONE;
     private LinearLayout root,body,cards;private final Button[] tabs=new Button[3];private final ImageView[] images=new ImageView[4];private final LinearLayout[] tiles=new LinearLayout[4];private final TextView[] labels=new TextView[4];
@@ -32,7 +32,7 @@ public final class PhotoBorderPanel implements AutoCloseable {
     private SeekBar appearanceTracking;private String appearanceIdentity="";
     public PhotoBorderPanel(Activity a,Host h){activity=a;host=h;}
     public View create(){
-        root=column();root.setTag("border-prototype-panel");root.setBackgroundColor(0xff131110);
+        root=column();root.setTag("border-prototype-panel");root.setBackgroundColor(Color.TRANSPARENT);
         styles();buildInformationSummary();refresh();return root;
     }
     private void styles(){
@@ -46,7 +46,7 @@ public final class PhotoBorderPanel implements AutoCloseable {
             TextView label=text(PhotoBorder.TEMPLATES[i],10.5f,0xa8ffffff);label.setGravity(Gravity.CENTER);label.setSingleLine(true);
             tile.addView(label,new LinearLayout.LayoutParams(-1,scaled(20)));
             tile.setOnClickListener(v->{if(host.ready())host.change(host.border().withTemplate(template));});tile.setContentDescription(PhotoBorder.TEMPLATES[i]);tile.setFocusable(true);
-            tile.setForeground(new RippleDrawable(ColorStateList.valueOf(0x22f2b48c),null,shape(Color.WHITE,10)));
+            tile.setForeground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),null,shape(Color.WHITE,10)));
             LinearLayout.LayoutParams size=new LinearLayout.LayoutParams(scaled(70),scaled(82));if(i<3)size.rightMargin=dp(9);cards.addView(tile,size);
             images[i]=preview;tiles[i]=tile;labels[i]=label;
         }
@@ -67,15 +67,15 @@ public final class PhotoBorderPanel implements AutoCloseable {
     private LinearLayout summaryRow(String name){
         LinearLayout line=row();TextView label=text(name,11.5f,MUTED);label.setSingleLine(true);label.setPadding(0,0,dp(8),0);line.addView(label,new LinearLayout.LayoutParams(scaled(60),-1));
         LayerDrawable surface=new LayerDrawable(new Drawable[]{shape(Color.TRANSPARENT,0),shape(0x12ffffff,0)});surface.setLayerHeight(1,Math.max(1,dp(.5f)));surface.setLayerGravity(1,Gravity.BOTTOM|Gravity.FILL_HORIZONTAL);
-        line.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22f2b48c),surface,null));return line;
+        line.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),surface,null));return line;
     }
     public void refresh(){
         if(root==null)return;String source=host.identity();PhotoBorder b=host.border();boolean changed=!source.equals(lastSource)||!b.equals(lastBorder);
         if(!source.equals(lastSource)){request++;thumbKey="";}lastSource=source;lastBorder=b;
         if(undo!=null){undo.setEnabled(host.ready()&&host.canUndo());undo.setAlpha(undo.isEnabled()?1:.35f);}if(redo!=null){redo.setEnabled(host.ready()&&host.canRedo());redo.setAlpha(redo.isEnabled()?1:.35f);}
         for(int i=0;i<4;i++){
-            boolean active=i==b.template;GradientDrawable face=shape(0xff1a1715,10);face.setStroke(dp(2),active?ACCENT:Color.TRANSPARENT);images[i].setBackground(face);images[i].setPadding(dp(2),dp(2),dp(2),dp(2));
-            tiles[i].setSelected(active);tiles[i].setEnabled(host.ready());labels[i].setTextColor(active?ACCENT:0xa8ffffff);labels[i].setTypeface(Typeface.create(active?"sans-serif-medium":"sans-serif",Typeface.NORMAL));tiles[i].setContentDescription(PhotoBorder.TEMPLATES[i]+(active?"，已选择":""));
+            boolean active=i==b.template;GradientDrawable face=shape(0xff1a1715,10);face.setStroke(dp(1),active?PhotoPrismaStyle.SELECTION_FRAME:Color.TRANSPARENT);images[i].setBackground(face);images[i].setPadding(dp(2),dp(2),dp(2),dp(2));
+            tiles[i].setSelected(active);tiles[i].setEnabled(host.ready());labels[i].setTextColor(active?PhotoPrismaStyle.SELECTION_LABEL:0xa8ffffff);labels[i].setTypeface(Typeface.create(active?"sans-serif-medium":"sans-serif",Typeface.NORMAL));tiles[i].setContentDescription(PhotoBorder.TEMPLATES[i]+(active?"，已选择":""));
         }
         String[] names={"机型","焦距","光圈","快门","ISO","拍摄时间"};
         for(int i=0;i<6;i++){
@@ -115,7 +115,7 @@ public final class PhotoBorderPanel implements AutoCloseable {
             entry.addView(label,new LinearLayout.LayoutParams(scaled(60),-1));
             TextView value=text(visible,11.5f,raw.isEmpty()?MUTED:TEXT);value.setTypeface(Typeface.create(raw.isEmpty()?"sans-serif":"sans-serif-medium",Typeface.NORMAL));value.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
             entry.addView(value,new LinearLayout.LayoutParams(0,-1,1));
-            entry.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22f2b48c),shape(Color.TRANSPARENT,10),null));entry.setPadding(0,0,0,0);
+            entry.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),shape(Color.TRANSPARENT,10),null));entry.setPadding(0,0,0,0);
             entry.setOnClickListener(v->{if(index==0)showCamera();else editField(index-1,names[index]);});entry.setEnabled(host.ready());entry.setFocusable(true);
             entry.setContentDescription(names[i]+"，"+visible+"，轻点编辑");entry.setTooltipText(names[i]+" · "+visible);
             line.addView(entry,new LinearLayout.LayoutParams(0,dp(48),1));
@@ -160,10 +160,10 @@ public final class PhotoBorderPanel implements AutoCloseable {
     private EditText input(String hint){EditText e=new EditText(themed());e.setTextColor(TEXT);e.setHintTextColor(MUTED);e.setTextSize(13);e.setTypeface(Typeface.create("sans-serif",Typeface.NORMAL));e.setIncludeFontPadding(false);e.setGravity(Gravity.CENTER_VERTICAL);e.setSingleLine(true);e.setHint(hint);e.setBackground(shape(FIELD,12));e.setPadding(dp(12),0,dp(12),0);e.setFilters(new InputFilter[]{new InputFilter.LengthFilter(96)});return e;}
     private LinearLayout column(){LinearLayout r=new LinearLayout(activity);r.setOrientation(1);return r;}private LinearLayout row(){LinearLayout r=new LinearLayout(activity);r.setGravity(Gravity.CENTER_VERTICAL);r.setBaselineAligned(false);return r;}
     private TextView text(String s,float size,int color){TextView v=new TextView(activity);v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setGravity(Gravity.CENTER_VERTICAL);v.setIncludeFontPadding(false);v.setSingleLine(true);v.setEllipsize(TextUtils.TruncateAt.END);return v;}
-    private Button button(String name,Runnable action){Button b=new Button(themed());b.setText(name);b.setAllCaps(false);b.setTextSize(12);b.setTypeface(Typeface.create("sans-serif",Typeface.NORMAL));b.setTextColor(ACCENT);b.setIncludeFontPadding(false);b.setSingleLine(true);b.setEllipsize(TextUtils.TruncateAt.END);b.setGravity(Gravity.CENTER);b.setMinWidth(0);b.setMinimumWidth(0);b.setMinHeight(dp(48));b.setMinimumHeight(dp(48));b.setBackgroundTintList(null);b.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22f3b493),shape(Color.TRANSPARENT,10),null));b.setPadding(dp(8),0,dp(8),0);b.setStateListAnimator(null);b.setOnClickListener(v->action.run());return b;}
+    private Button button(String name,Runnable action){Button b=new Button(themed());b.setText(name);b.setAllCaps(false);b.setTextSize(12);b.setTypeface(Typeface.create("sans-serif",Typeface.NORMAL));b.setTextColor(ACCENT);b.setIncludeFontPadding(false);b.setSingleLine(true);b.setEllipsize(TextUtils.TruncateAt.END);b.setGravity(Gravity.CENTER);b.setMinWidth(0);b.setMinimumWidth(0);b.setMinHeight(dp(48));b.setMinimumHeight(dp(48));b.setBackgroundTintList(null);b.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),shape(Color.TRANSPARENT,10),null));b.setPadding(dp(8),0,dp(8),0);b.setStateListAnimator(null);b.setOnClickListener(v->action.run());return b;}
     private Button primaryButton(String name,Runnable action){Button b=button(name,action);b.setBackground(faceRipple(ACCENT,Color.TRANSPARENT,34,10));b.setPadding(dp(12),0,dp(12),0);b.setTextColor(0xff352016);b.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));b.setTooltipText("仅修改边框显示，不修改原片信息");return b;}
     private void styleMode(Button b,boolean selected){b.setSelected(selected);b.setBackground(faceRipple(selected?ACCENT:FIELD,selected?Color.TRANSPARENT:0x30ffffff,32,10));b.setPadding(dp(8),0,dp(8),0);b.setTextColor(selected?0xff352016:MUTED);b.setTypeface(Typeface.create(selected?"sans-serif-medium":"sans-serif",Typeface.NORMAL));}
-    private Drawable faceRipple(int fill,int stroke,int height,int radius){return new RippleDrawable(ColorStateList.valueOf(0x22f3b493),new ButtonFace(fill,stroke,height,radius),new ButtonFace(Color.WHITE,Color.TRANSPARENT,height,radius));}
+    private Drawable faceRipple(int fill,int stroke,int height,int radius){return new RippleDrawable(ColorStateList.valueOf(0x22ffe335),new ButtonFace(fill,stroke,height,radius),new ButtonFace(Color.WHITE,Color.TRANSPARENT,height,radius));}
     /** A compact face centred in the full 48dp hit area; background and mask share bounds. */
     private final class ButtonFace extends Drawable {
         private final int fill,stroke,height,radius;private final Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);private final RectF face=new RectF();private int alpha=255;

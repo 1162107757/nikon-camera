@@ -20,7 +20,7 @@ if ($JdkHome) {
 
 $javaRoot = Join-Path $projectRoot 'app\src\main\java\cc\huevia'
 $sources = @()
-foreach ($name in @('NcpFile', 'NcpPreviewProfile', 'PresetPreviewProfile', 'Np3PreviewProfile', 'Np3MonochromePreviewProfile', 'PresetPreviewProfiles', 'SpatialPreviewFilter', 'StrengthPreviewProfile')) {
+foreach ($name in @('NcpFile', 'NcpPreviewProfile', 'NcpMonochromePreviewProfile', 'PresetPreviewProfile', 'Np3PreviewProfile', 'Np3MonochromePreviewProfile', 'PresetPreviewProfiles', 'SpatialPreviewFilter', 'StrengthPreviewProfile')) {
     $sources += Join-Path $javaRoot ('ncp\' + $name + '.java')
 }
 $sources += Join-Path $javaRoot 'library\LibraryJson.java'

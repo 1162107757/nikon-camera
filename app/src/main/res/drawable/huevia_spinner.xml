@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/huevia_field"/>
+    <item android:width="16dp" android:height="16dp" android:right="12dp" android:gravity="right|center_vertical">
+        <vector android:width="16dp" android:height="16dp" android:viewportWidth="16" android:viewportHeight="16"><path android:pathData="M4,6 L8,10 L12,6" android:strokeColor="?attr/hueMuted" android:strokeWidth="1.7" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="@android:color/transparent"/></vector>
+    </item>
+</layer-list>

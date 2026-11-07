@@ -1,0 +1,16 @@
+{
+  "candidateSha256": "25d283c5a1ef09ce8bde29d49975ef56941a12434c800251911431b3a55ebcfa",
+  "versionCode": 111,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "d43f380af1de2f6a1c654d3afcd04aa001a9cea270aefd94f7bf4285d0908c30",
+  "pass": true,
+  "scope": "Raw RGB565 detector candidate confidence/eye geometry measurements only; no UI or full feature verdict.",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "ef1f3a8fd3af8fcdf73c02b779e5aa0c30e009bac999084bd74752cb00d338cc"
+    }
+  ]
+}

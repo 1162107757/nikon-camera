@@ -1,5 +1,7 @@
 package cc.huevia;
 
+import cc.huevia.ui.AppDialog;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -74,10 +76,14 @@ import cc.huevia.album.DownloadedPhoto;
 import cc.huevia.album.PhotoSaveTarget;
 import cc.huevia.ncp.NcpFile;
 import cc.huevia.ncp.NcpPictureControlConverter;
+import cc.huevia.ncp.CameraPresetAdapter;
+import cc.huevia.usb.CameraParameterRequest;
+import cc.huevia.usb.PresetImportOptions;
 import cc.huevia.ncp.PresetPreviewProfile;
 import cc.huevia.ncp.PresetPreviewProfiles;
 import cc.huevia.picturecontrol.PictureControlData;
 import cc.huevia.ui.AlbumPanel;
+import cc.huevia.ui.SubcategorySwipeLayout;
 import cc.huevia.ui.LocalAlbumPanel;
 import cc.huevia.ui.AccountPanel;
 import cc.huevia.ui.CommunityPanel;
@@ -182,6 +188,7 @@ public final class MainActivity extends Activity {
     private LocalAlbumPanel localAlbum;
     private AlbumPanel localPhotoEditor;
     private boolean localAlbumTab;
+    private Object selectionBackCallback;
     private AccountPanel account;
     private CommunityPanel community;
     private View settingsUnreadDot, settingsNavigationItem, settingsMessageEntry;
@@ -303,6 +310,9 @@ public final class MainActivity extends Activity {
         final List<ImportSlot> slots = new ArrayList<>();
         int targetIndex, middle = 4, clarity;
         NcpPictureControlConverter.Conversion conversion;
+        CameraPresetAdapter.Plan adaptation;
+        boolean approximateAccepted;
+        CameraParameterRequest parameters = CameraParameterRequest.NONE;
         PendingConfirmation(CameraConnection connection, String model, PresetRecord preset, byte[] source,
                             List<UsbPictureControlProbe.ItemRecord> observedSlots) throws IOException {
             this.connection = connection; this.model = model; this.preset = preset; this.source = source.clone();
@@ -488,6 +498,7 @@ public final class MainActivity extends Activity {
             @Override public void changed() { if (!destroyed && ready && localAlbumTab) render(); }
             @Override public void open(DownloadedPhoto photo) { openLocalPhoto(photo); }
             @Override public void batch(List<DownloadedPhoto> photos) { localPhotoEditor.chooseLocalWorkspaceAction(photos); }
+            @Override public void export(List<DownloadedPhoto> photos) { localPhotoEditor.exportLocalWorkspace(photos); }
             @Override public void feedback(String heading, String detail) { MainActivity.this.feedback(heading, detail); }
             @Override public void addFilters() { switchRoot(0); }
         });
@@ -537,7 +548,6 @@ public final class MainActivity extends Activity {
     }
 
     private void render() {
-        if (onlineFormatMenu != null) { onlineFormatMenu.dismiss(); onlineFormatMenu = null; }
         settingsUnreadDot = settingsNavigationItem = settingsMessageEntry = null; settingsMessageBadge = null;
         rememberPresetPosition();
         rememberDetailPosition();
@@ -548,6 +558,7 @@ public final class MainActivity extends Activity {
         presetDownloadTargets.clear(); detailPresetFooter = null; detailPresetDeleteMount = null;
         detailPresetStorage = null; detailPresetSha = "";
         if (destroyed) return;
+        updateSelectionBackCallback();
         if (community != null) {
             community.setInlineVisible(false);
             if (albumTab || localAlbumTab || settingsTab || wirelessGuide || confirmation != null || importOutcome != null
@@ -571,10 +582,10 @@ public final class MainActivity extends Activity {
         renderedConnectionState = new ConnectionUiState(connections, album, preparedWireless);
         AlbumPanel activeAlbumPanel = activeAlbumPanel();
         if (ready && activeAlbumPanel != null && !wirelessGuide && activeAlbumPanel.isImmersive()) {
-            getWindow().setStatusBarColor(Color.BLACK); getWindow().setNavigationBarColor(Color.BLACK);
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            boolean photoEditor=activeAlbumPanel.isEditingPhoto();boolean showPhotoEditorBars=photoEditor&&getResources().getConfiguration().screenHeightDp>=480;
+            getWindow().setStatusBarColor(photoEditor?Color.TRANSPARENT:Color.BLACK);getWindow().setNavigationBarColor(photoEditor?Color.TRANSPARENT:Color.BLACK);
+            int photoLayout=View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decor.setSystemUiVisibility(showPhotoEditorBars?photoLayout:photoLayout|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             shell = vertical(); shell.setBackgroundColor(Color.BLACK);
             View viewerContent = activeAlbumPanel.createView();
             shell.addView(viewerContent, new LinearLayout.LayoutParams(-1, -1));
@@ -584,7 +595,7 @@ public final class MainActivity extends Activity {
                 android.view.WindowInsetsController controller = getWindow().getInsetsController();
                 if (controller != null) {
                     controller.setSystemBarsBehavior(android.view.WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-                    controller.hide(WindowInsets.Type.systemBars());
+                    if(showPhotoEditorBars){controller.setSystemBarsAppearance(0,android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);controller.show(WindowInsets.Type.systemBars());}else controller.hide(WindowInsets.Type.systemBars());
                 }
             }
             return;
@@ -623,9 +634,17 @@ public final class MainActivity extends Activity {
                 && (!detailId.isEmpty() || detailOnline != null);
         community.setInlineVisible(detailPage && !accountPage && !communityPage && !updatePage);
         if (!detailPage) community.detachInlineComments();
+        boolean localSelection = localAlbumTab && !accountPage && !communityPage && !updatePage && !localPhotoEditor.isImmersive() && localAlbum.hasSelectionDock();
+        if (localSelection && getResources().getConfiguration().screenWidthDp >= 600) {
+            // Keep selected thumbnails in the same columns when the navigation rail hides.
+            int safeWidth = dp(getResources().getConfiguration().screenWidthDp);
+            paneParams.width = Math.min(dp(720), safeWidth - dp(80));
+            paneParams.leftMargin = dp(80) + Math.max(0, (safeWidth - dp(80) - paneParams.width) / 2);
+            paneParams.gravity = Gravity.TOP | Gravity.START; pane.setLayoutParams(paneParams);
+        }
         boolean back = accountPage || communityPage || updatePage || wirelessGuide || settingsGuide || confirmation != null || importOutcome != null
                 || (presetPage && (!detailId.isEmpty() || detailOnline != null)) || (albumTab && album.canGoBack())
-                || (localAlbumTab && (localPhotoEditor.canGoBack() || localAlbum.canGoBack()));
+                || (localAlbumTab && (localPhotoEditor.isImmersive() && localPhotoEditor.canGoBack() || localAlbum.canGoBack() && !localSelection));
         boolean compactLocalAlbum = localAlbumTab && !localPhotoEditor.isImmersive() && !accountPage && !communityPage && !updatePage
                 && getResources().getConfiguration().screenHeightDp < 480
                 && getResources().getConfiguration().screenWidthDp > getResources().getConfiguration().screenHeightDp;
@@ -642,6 +661,9 @@ public final class MainActivity extends Activity {
         bar.addView(title, new LinearLayout.LayoutParams(0, -2, 1));
         View accountAction = accountPage ? account.createHeaderAction(colors) : null;
         if (accountAction != null) bar.addView(accountAction);
+        if (localAlbumTab && !accountPage && !communityPage && !updatePage && !localPhotoEditor.isImmersive()) {
+            bar.setTag("local-album-titlebar"); if (!localSelection) bar.addView(localAlbum.createHeaderAction());
+        }
         if (!back && albumTab) bar.addView(connectionIndicator(true));
         if(orangeHome&&compactRoot)bar.addView(connectionIndicator(false));
         if (orangeHome) {
@@ -654,7 +676,7 @@ public final class MainActivity extends Activity {
             ProgressBar spinner = new ProgressBar(this); loading.addView(spinner, new LinearLayout.LayoutParams(dp(24), dp(24)));
             busyLabel = text(progress, 14, false); busyLabel.setPadding(dp(12), 0, 0, 0); loading.addView(busyLabel, new LinearLayout.LayoutParams(0, -2, 1)); pane.addView(loading);
         } else busyLabel = null;
-        body = vertical(); pane.addView(body, new LinearLayout.LayoutParams(-1, 0, 1));
+        body = presetPage&&!back ? new SubcategorySwipeLayout(this,()->localTab?1:0,2,index->selectPresetSource(index==1),()->ready&&!busy&&initializationError.isEmpty()) : vertical(); pane.addView(body, new LinearLayout.LayoutParams(-1, 0, 1));
         if (!ready) empty(body, "正在准备预设库", "正在读取保存在手机中的预设。", null, null);
         else if (!initializationError.isEmpty()) empty(body, "预设库暂不可用", initializationError, "查看帮助", this::showHelp);
         else if (accountPage) body.addView(account.createView(colors), new LinearLayout.LayoutParams(-1, -1));
@@ -673,7 +695,7 @@ public final class MainActivity extends Activity {
         else if (confirmation != null) renderConfirmation();
         else if (!detailId.isEmpty() || detailOnline != null) renderDetail();
         else renderHome();
-        if (!back || albumTab && !album.isImmersive() && !accountPage && !communityPage && !updatePage && !wirelessGuide) {
+        if (!localSelection && (!back || albumTab && !album.isImmersive() && !accountPage && !communityPage && !updatePage && !wirelessGuide)) {
             boolean rail = getResources().getConfiguration().screenWidthDp >= 600;
             FrameLayout material = rail ? new FrameLayout(this) : new GlassBar(this);
             if (material instanceof GlassBar glass) glass.setBackdrop(pane);
@@ -755,15 +777,23 @@ public final class MainActivity extends Activity {
         int root = settingsTab ? 3 : localAlbumTab ? 2 : albumTab ? 1 : 0;
         if (ready && !lastRoute.isEmpty() && !lastRoute.equals(route)) {
             topNotice.dismiss();
-            boolean photo = route.contains("DETAIL") || lastRoute.contains("DETAIL");
-            int direction = root != lastRoot ? Integer.signum(root - lastRoot)
-                    : (route.startsWith(lastRoute + ":") || route.contains("detail") || route.contains("wifi") || route.startsWith("wireless")) ? 1 : -1;
-            PageTransitions.enter(content, photo ? 0 : direction, photo);
+            if (root != lastRoot) {
+                boolean photo = route.contains("DETAIL") || lastRoute.contains("DETAIL");
+                PageTransitions.enter(content, photo ? 0 : Integer.signum(root - lastRoot), photo);
+            } else {
+                // Switching a source, mode or section within the current tab is immediate.
+                PageTransitions.cancel(content);
+            }
         }
         lastRoute = route; lastRoot = root; transitioningContent = content;
     }
 
     private boolean compactPresetHeight(){return getResources().getConfiguration().screenHeightDp<480;}
+
+    private void selectPresetSource(boolean local){
+        if(localTab==local)return;
+        SubcategorySwipeLayout.changeSource(body,localTab?1:0,local?1:0,()->{localTab=local;render();if(!local&&!catalogLoaded)loadCatalog(false);},()->body);
+    }
 
     private void renderHome() {
         boolean compact=compactPresetHeight();
@@ -779,17 +809,17 @@ public final class MainActivity extends Activity {
             selected = PresetCategories.ALL;
             if (localTab) localCategoryFilter = selected; else onlineCategoryFilter = selected;
         }
-        for (Object value : source) if ((PresetCategories.ALL.equals(selected) || selected.equals(presetCategory(value)))
-                && (localTab || onlineFormatFilter.isEmpty() || onlineFormatFilter.equals(((OnlinePreset) value).fileFormat))) visiblePresets.add(value);
+        for (Object value : source) if (PresetCategories.ALL.equals(selected) || selected.equals(presetCategory(value))) visiblePresets.add(value);
         LinearLayout top = vertical(); top.setPadding(dp(20), 0, dp(20), dp(compact?4:10));
         TextView intro = text("把喜欢的色彩，带进相机", 13, false); intro.setTextColor(colors.dark ? 0xffF2D6C4 : 0xff5B3025); intro.setPadding(0, 0, 0, dp(12)); if(!compact)top.addView(intro);
         LinearLayout sourceRow = horizontal();
         LinearLayout tabs = horizontal(); tabs.setPadding(dp(3),0,dp(3),0); tabs.setBackground(shape(colors.dark ? 0x6051382D : 0x70FFFFFF,25));
-        sourceTab(tabs, "在线预设", !localTab, () -> { localTab = false; render(); if (!catalogLoaded) loadCatalog(false); });
-        sourceTab(tabs, "我的预设", localTab, () -> { localTab = true; render(); });
+        sourceTab(tabs, "在线预设", !localTab, () -> selectPresetSource(false));
+        sourceTab(tabs, "我的预设", localTab, () -> selectPresetSource(true));
         sourceRow.addView(tabs, new LinearLayout.LayoutParams(compact?dp(216):-1, dp(48)));
         View sourceSpace = new View(this); if(!compact)sourceRow.addView(sourceSpace, new LinearLayout.LayoutParams(0, 1, 1));
         top.addView(sourceRow);
+        if(body instanceof SubcategorySwipeLayout)((SubcategorySwipeLayout)body).setMotionAnchor(sourceRow);
         LinearLayout cameraState = horizontal(); cameraState.setPadding(dp(12),dp(2),dp(4),dp(2));
         cameraState.setBackground(shape(colors.card,18));
         cameraState.addView(connectionIndicator(false),new LinearLayout.LayoutParams(0,dp(44),1));
@@ -814,7 +844,6 @@ public final class MainActivity extends Activity {
         body.addView(filters, new LinearLayout.LayoutParams(-1, -2));
         LinearLayout resultHeading=horizontal(); resultHeading.setPadding(dp(20),dp(compact?0:2),dp(20),dp(compact?4:10));
         TextView resultTitle=text(localTab?"我的色彩":"发现预设",15,true);resultTitle.setSingleLine(true);resultTitle.setEllipsize(TextUtils.TruncateAt.END);resultHeading.addView(resultTitle,new LinearLayout.LayoutParams(0,-2,1));
-        if (!localTab) addOnlinePresetFormatFilter(resultHeading);
         String count = localTab ? visiblePresets.size() + " 份" : catalogFromCache ? "缓存 · " + visiblePresets.size() + " 份"
                 : catalogTotal >= 0 ? catalogTotal + " 份" : loadingCatalog ? "加载中"
                 : catalogLoaded ? visiblePresets.size() + (catalogHasMore ? "+" : "") + " 份" : "未加载";
@@ -866,51 +895,8 @@ public final class MainActivity extends Activity {
         else render();
     }
 
-    private void addOnlinePresetFormatFilter(LinearLayout parent) {
-        boolean active = !onlineFormatFilter.isEmpty();
-        FrameLayout target = new FrameLayout(this);
-        target.setTag("online-preset-format-filter"); target.setMinimumHeight(dp(48)); target.setMinimumWidth(dp(48));
-        target.setSelected(active); target.setFocusable(true);
-        target.setContentDescription("预设格式：" + (active ? onlineFormatFilter : "全部格式"));
-        TextView filter = text(active ? onlineFormatFilter : "全部格式", 12, false);
-        filter.setTag("online-preset-format-label"); filter.setGravity(Gravity.CENTER);
-        filter.setSingleLine(true); filter.setMinimumHeight(dp(32)); filter.setPadding(dp(9), 0, dp(8), 0);
-        filter.setDuplicateParentStateEnabled(true); filter.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-        filter.setTextColor(active ? colors.onPrimaryContainer : colors.text);
-        filter.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer),
-                shape(active ? colors.primaryContainer : colors.container, 16), null));
-        AppIcon arrow = new AppIcon(AppIcon.Kind.CHEVRON_DOWN, active ? colors.onPrimaryContainer : colors.secondary,
-                getResources().getDisplayMetrics().density);
-        arrow.setBounds(0, 0, dp(12), dp(12)); filter.setCompoundDrawablesRelative(null, null, arrow, null);
-        filter.setCompoundDrawablePadding(dp(3));
-        target.addView(filter, new FrameLayout.LayoutParams(-2, -2, Gravity.CENTER));
-        target.setOnClickListener(v -> showOnlinePresetFormats(filter));
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2); params.rightMargin = dp(10);
-        parent.addView(target, params);
-    }
-
-    private void showOnlinePresetFormats(View anchor) {
-        if (waitForCurrentTask()) return;
-        if (onlineFormatMenu != null) onlineFormatMenu.dismiss();
-        String[] values = {"", PresetFile.NCP, PresetFile.NP3};
-        android.widget.PopupMenu menu = new android.widget.PopupMenu(this, anchor, Gravity.END);
-        for (int i = 0; i < values.length; i++) menu.getMenu().add(0, i, i, i == 0 ? "全部格式" : values[i])
-                .setCheckable(true).setChecked(values[i].equals(onlineFormatFilter));
-        menu.getMenu().setGroupCheckable(0, true, true);
-        menu.setOnMenuItemClickListener(item -> { selectOnlinePresetFormat(values[item.getItemId()]); return true; });
-        menu.setOnDismissListener(ignored -> { if (onlineFormatMenu == menu) onlineFormatMenu = null; });
-        onlineFormatMenu = menu; menu.show();
-    }
-
     private static String restoredOnlinePresetFormat(String value) {
-        return PresetFile.NCP.equals(value) || PresetFile.NP3.equals(value) ? value : "";
-    }
-
-    private void selectOnlinePresetFormat(String format) {
-        if (waitForCurrentTask()) return;
-        String value = restoredOnlinePresetFormat(format);
-        if (onlineFormatFilter.equals(value)) return;
-        onlineFormatFilter = value; reloadOnlineCatalog();
+        return ""; // Retired format filters must not hide presets after upgrading.
     }
 
     private void reloadOnlineCatalog() {
@@ -1006,8 +992,7 @@ public final class MainActivity extends Activity {
             if (latest != null && latest != shownImportStatus) {
                 shellChanged = true;
                 shownImportStatus = latest;
-                importOutcome = new ImportOutcome(latest.heading, latest.detail, latest.presetName, latest.camera,
-                        latest.target, latest.verified, latest.uncertain, latest.sourceSha256);
+                importOutcome = importOutcomeFromStatus(latest);
                 recoveryBlocked = latest.uncertain;
                 if (!recoveryBlocked) pendingJournal = null;
                 else if (!latest.pendingJournalJson.isEmpty()) {
@@ -1069,7 +1054,7 @@ public final class MainActivity extends Activity {
         if (destroyed || save == null) return;
         if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
             preparePhotoSave(save);
-        } else feedback("未保存到系统相册", "请允许存储权限后重试。已下载的原图仍保留在 App 内。");
+        } else feedback("未保存到系统相册", "请允许存储权限后重试。已下载的原图仍保留在应用相册。");
     }
 
     private void syncDownloadRecoveryOwner() {
@@ -1113,7 +1098,7 @@ public final class MainActivity extends Activity {
         });
         retry.setMinHeight(dp(48)); fields.addView(retry);
         ScrollView scroll = new ScrollView(this); scroll.addView(fields);
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("连接相机 Wi-Fi").setView(scroll)
+        AlertDialog dialog = new AppDialog.Builder(this).setTitle("连接相机 Wi-Fi").setView(scroll)
                 .setNegativeButton("取消", (d, which) -> cancelCameraWifiUi(ticket, failure))
                 .setPositiveButton("选择相机 Wi-Fi", null).create();
         cameraWifiDialog = dialog;
@@ -1156,7 +1141,7 @@ public final class MainActivity extends Activity {
             wifiSessionToken = token; clearSystemWifiWait();
             AlertDialog previous = cameraWifiDialog; cameraWifiDialog = null;
             if (previous != null) previous.dismiss();
-            AlertDialog waiting = new AlertDialog.Builder(this).setTitle("正在连接相机")
+            AlertDialog waiting = new AppDialog.Builder(this).setTitle("正在连接相机")
                     .setMessage("正在确认当前 Wi-Fi，请保持相机热点开启。")
                     .setNegativeButton("取消连接", (d, which) -> cancelCameraWifiUi(ticket, failure)).create();
             waiting.setOnCancelListener(d -> cancelCameraWifiUi(ticket, failure));
@@ -1245,7 +1230,7 @@ public final class MainActivity extends Activity {
         if (!canStartPhotoLive(projectId)) return;
         if (pendingProtectedPhotoLive != null) { feedback("正在等待后台运行授权", "请先完成系统里的后台运行设置，返回后再开始边拍边传。"); return; }
         if (ConnectionProtection.batteryExempt(this)) { beginPhotoLive(start, projectId); return; }
-        new AlertDialog.Builder(this).setTitle("开启锁屏接收")
+        new AppDialog.Builder(this).setTitle("开启锁屏接收")
                 .setMessage("允许后台运行后，边拍边传才能在深度待机时继续接收。连接期间会保持通知和后台运行，耗电会增加。")
                 .setPositiveButton("开启保护", (dialog, which) -> {
                     pendingProtectedPhotoLive = start;
@@ -1264,7 +1249,7 @@ public final class MainActivity extends Activity {
 
     private void showBackgroundProtection() {
         boolean unrestricted = ConnectionProtection.batteryExempt(this);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this).setTitle("后台连接保护")
+        AlertDialog.Builder dialog = new AppDialog.Builder(this).setTitle("后台连接保护")
                 .setMessage((unrestricted ? "已允许后台运行，连接期间会持续维护会话、接收照片，锁屏不会主动断开。" : "尚未允许后台运行。深度待机可能暂停网络，影响锁屏接收照片。")
                         + "\n\n" + (ConnectionProtection.notificationsVisible(this) ? "连接通知已开启。" : "连接通知未开启，可在通知设置中打开。")
                         + "\n\n部分手机还需在系统应用电池设置中选择不限制，并允许后台活动。连接保护会增加耗电。")
@@ -1371,14 +1356,14 @@ public final class MainActivity extends Activity {
         if (waitForCurrentTask()) return;
         String[] modes = {AppAppearance.SYSTEM, AppAppearance.LIGHT, AppAppearance.DARK};
         String mode = AppAppearance.mode(this); int checked = AppAppearance.LIGHT.equals(mode) ? 1 : AppAppearance.DARK.equals(mode) ? 2 : 0;
-        new AlertDialog.Builder(this).setTitle("外观").setSingleChoiceItems(new String[]{"跟随系统", "浅色", "深色"}, checked, (dialog, which) -> {
+        new AppDialog.Builder(this).setTitle("外观").setSingleChoiceItems(new String[]{"跟随系统", "浅色", "深色"}, checked, (dialog, which) -> {
             AppAppearance.setMode(this, modes[which]); dialog.dismiss(); render();
         }).setNegativeButton("取消", null).show();
     }
 
     private void choosePreviewTemplate() {
         if (waitForCurrentTask()) return;
-        new AlertDialog.Builder(this).setTitle("预览模板").setItems(new String[]{"查看当前模板", "从手机选择模板图", "使用内置模板"}, (dialog, which) -> {
+        new AppDialog.Builder(this).setTitle("预览模板").setItems(new String[]{"查看当前模板", "从手机选择模板图", "使用内置模板"}, (dialog, which) -> {
             if (which == 0) showTemplateOriginal();
             else if (which == 1) startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_TEMPLATE);
             else updatePreviewTemplate(null);
@@ -1406,7 +1391,7 @@ public final class MainActivity extends Activity {
                     busy = false; progress = ""; render();
                     ImageView original = new ImageView(this); original.setImageBitmap(bitmap); original.setAdjustViewBounds(true); original.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     original.setContentDescription("当前预览模板原图，未应用预设");
-                    new AlertDialog.Builder(this).setTitle("模板原图 · 未应用预设").setView(original).setPositiveButton("关闭", null).show();
+                    new AppDialog.Builder(this).setTitle("模板原图 · 未应用预设").setView(original).setPositiveButton("关闭", null).show();
                 });
             } catch (Exception e) { onUi(() -> { finishBusy("模板原图暂时无法读取。"); notice("无法查看模板", readable(e)); }); }
         });
@@ -1451,7 +1436,7 @@ public final class MainActivity extends Activity {
             feedback("未检测到 USB 相机", "请开启相机，用数据线连接手机并打开 OTG。", "重试", this::connectUsbSettings); return;
         }
         if (devices.size() == 1) requestUsbSettings(devices.get(0));
-        else { String[] names = new String[devices.size()]; for (int i = 0; i < names.length; i++) names[i] = "Nikon USB · " + String.format(Locale.ROOT, "%04X", devices.get(i).getProductId()); new AlertDialog.Builder(this).setTitle("选择相机").setItems(names, (d, which) -> requestUsbSettings(devices.get(which))).setNegativeButton("取消", null).show(); }
+        else { String[] names = new String[devices.size()]; for (int i = 0; i < names.length; i++) names[i] = "Nikon USB · " + String.format(Locale.ROOT, "%04X", devices.get(i).getProductId()); new AppDialog.Builder(this).setTitle("选择相机").setItems(names, (d, which) -> requestUsbSettings(devices.get(which))).setNegativeButton("取消", null).show(); }
     }
 
     private void requestUsbSettings(UsbDevice device) {
@@ -1476,7 +1461,6 @@ public final class MainActivity extends Activity {
     private final List<Object> visiblePresets = new ArrayList<>();
     private String localCategoryFilter = PresetCategories.ALL, onlineCategoryFilter = PresetCategories.ALL;
     private String onlineFormatFilter = "";
-    private android.widget.PopupMenu onlineFormatMenu;
     private String presetGridKey = "";
     private int presetCardWidth = 170;
     private final Map<String, Parcelable> presetPositions = new HashMap<>();
@@ -1577,8 +1561,6 @@ public final class MainActivity extends Activity {
             LinearLayout caption = vertical(); caption.setPadding(dp(12), dp(compact?6:10), dp(12), dp(2));
             TextView nameView = text(name, compact?13:15, true); nameView.setMinLines(1); nameView.setMaxLines(compact?1:2);
             nameView.setEllipsize(TextUtils.TruncateAt.END); caption.addView(nameView);
-            TextView format = text(record == null ? item.fileFormat : record.fileFormat, 11, true);
-            format.setTextColor(colors.secondary); caption.addView(format);
             boolean downloaded = record != null;
             LinearLayout meta = horizontal();
             TextView category = text(PresetCategories.label(presetCategory(value)), 11, false); category.setTextColor(colors.secondary);
@@ -1619,10 +1601,9 @@ public final class MainActivity extends Activity {
         content.setPadding(dp(16), dp(4), dp(16), dp(20)); scroll.addView(content); body.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
         content.addView(preview(local, remote, photoHeight(1.25f), true));
         heading(content, local != null ? local.displayName : remote.name, 24);
-        label(content, fileFormat, 12, colors.secondary);
         String description = local != null ? local.description : remote.description;
-        if (np3) description = description.replace("当前支持下载保存，相机写入和手机模拟暂不支持。",
-                "支持下载保存；手机模拟状态见上方预览，相机写入暂不支持。");
+        description = description.replace("当前支持下载保存，相机写入和手机模拟暂不支持。", "")
+                .replace("支持下载保存；手机模拟状态见上方预览，相机写入暂不支持。", "").trim();
         if (!description.isEmpty()) label(content, description, 15, colors.text);
         if (remote != null) label(content, "分类 · " + PresetCategories.label(remote.category), 13, colors.secondary);
         if (remote != null) {
@@ -1634,10 +1615,9 @@ public final class MainActivity extends Activity {
             curveLayout.topMargin = dp(10); curveLayout.bottomMargin = dp(16);
             content.addView(presetCurve(local), curveLayout);
         }
-        detailPresetStorage = informationRow(content, AppIcon.Kind.CHECK, local != null ? "已保存在手机" : "在线预设 · 尚未下载", local != null ? fileFormat + " 预设文件" : "可直接预览效果，下载后保留在我的预设");
+        detailPresetStorage = informationRow(content, AppIcon.Kind.CHECK, local != null ? "已保存在手机" : "在线预设 · 尚未下载", local != null ? "原始预设已保留" : "可直接预览效果，下载后保留在我的预设");
         divider(content);
-        if (np3) informationRow(content, AppIcon.Kind.INFO, "手机近似调色", "支持已验证的灵活色彩、单色和深色调单色配方，可在相册中套用；其它配方会显示原因。");
-        else informationRow(content, AppIcon.Kind.CAMERA, "相机兼容导入", "支持 USB 或 Wi-Fi；可导入空槽，也可确认后覆盖");
+        informationRow(content, AppIcon.Kind.CAMERA, "相机兼容导入", "导入前检查兼容性；部分适配会列出差异，由你确认。当前受控通道支持 Z6II。");
         String previewKey = local != null && !local.previewUri.isEmpty() ? local.previewUri : remote == null ? "" : remote.previewUrl;
         if (remote != null && !remote.compatibleModels.isEmpty()) label(content, "发布者标注机型：" + String.join("、", remote.compatibleModels) + (np3 ? "。手机调色不受此机型列表限制。" : "。导入前仍会检查文件兼容性。"), 12, colors.secondary);
         if (!previewKey.isEmpty()) content.addView(textLink("查看配套实拍参考", () -> showReferenceSample(previewKey, remote)));
@@ -1646,8 +1626,7 @@ public final class MainActivity extends Activity {
             content.addView(textLink(local.previewUri.isEmpty() ? "添加实拍参考（可选）" : "更换实拍参考", () -> pickSample(id)));
             label(content, local.originalFileName + " · " + local.byteLength + " 字节", 12, colors.secondary);
         }
-        String previewNote = np3 ? "将受支持的 NP3 配方应用到当前模板，包含近似的色调、锐化与清晰度效果；实际效果以照片预览为准，与 NX Studio 可能有差异。"
-                : "将可解析的曲线、饱和度与色相应用到当前模板，仅供色调参考；不模拟相机基底、锐化或实拍效果。";
+        String previewNote = "手机预览为近似效果；相机导入会单独检查可保留的参数，实际效果请试拍确认。";
         TextView sampleNote = label(content, previewNote, 12, colors.secondary); sampleNote.setBackground(shape(colors.container, 14)); sampleNote.setPadding(dp(12), dp(10), dp(12), dp(10));
         detailPresetDeleteMount = vertical(); content.addView(detailPresetDeleteMount); fillPresetDeleteEntry(local);
         if (!message.isEmpty()) label(content, message, 13, colors.secondary);
@@ -1664,10 +1643,7 @@ public final class MainActivity extends Activity {
         boolean np3 = local != null && "NP3".equals(local.fileFormat);
         footer.removeAllViews();
         if (remote != null && presetDownloads.isActive(remote.sha256)) { footer.addView(presetDownloadControl(remote, false)); return; }
-        if (local != null && np3) {
-            footer.addView(button("前往相册", AppIcon.Kind.ALBUM, true, () -> switchRoot(3)));
-            TextView note = label(footer, "选择照片后套用预设 · 手机近似效果", 13, colors.secondary); note.setGravity(Gravity.CENTER);
-        } else if (local != null) {
+        if (local != null) {
             PresetRecord choice = local;
             footer.addView(button("导入相机", AppIcon.Kind.CAMERA, true, () -> beginImport(choice)));
             String transport = album.hasCameraConnection() || hasPreparedWireless() ? "通过 Wi-Fi · " : verifiedUsb() != null ? "通过 USB · " : "";
@@ -1692,7 +1668,7 @@ public final class MainActivity extends Activity {
         List<String> values = new ArrayList<>(choices); String[] labels = new String[values.size()];
         int selected = 0;
         for (int i = 0; i < labels.length; i++) { labels[i] = PresetCategories.label(values.get(i)); if (record.category.equals(values.get(i))) selected = i; }
-        new AlertDialog.Builder(this).setTitle("预设分类").setSingleChoiceItems(labels, selected, (dialog, which) -> {
+        new AppDialog.Builder(this).setTitle("预设分类").setSingleChoiceItems(labels, selected, (dialog, which) -> {
             dialog.dismiss(); savePresetCategory(record.id, values.get(which));
         }).setPositiveButton("新建分类", (dialog, which) -> newPresetCategory(record.id)).setNegativeButton("取消", null).show();
     }
@@ -1700,7 +1676,7 @@ public final class MainActivity extends Activity {
     private void newPresetCategory(String id) {
         EditText input = new EditText(this); input.setSingleLine(true); input.setHint("例如：电影感"); input.setContentDescription("分类名称");
         input.setTextColor(colors.text); input.setHintTextColor(colors.secondary); input.setPadding(dp(20), dp(16), dp(20), dp(16));
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("新建分类").setView(input)
+        AlertDialog dialog = new AppDialog.Builder(this).setTitle("新建分类").setView(input)
                 .setNegativeButton("取消", null).setPositiveButton("保存", null).create();
         dialog.setOnShowListener(v -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(button -> {
             try {
@@ -1920,7 +1896,7 @@ public final class MainActivity extends Activity {
         target.placeholder.setText(unsupported ? "暂不支持手机模拟\n"+(target.detail?"点按查看原因":"点按卡片查看详情") : "效果暂不可用\n"+(target.detail?"点按重试":"点按查看详情"));
         target.image.setContentDescription(unsupported ? "此配方暂不支持手机模拟，未生成效果" : "效果加载失败，未生成效果");
         if(!target.detail){target.placeholder.setOnClickListener(null);target.placeholder.setClickable(false);target.placeholder.setFocusable(false);target.placeholder.setLongClickable(false);return;}
-        target.placeholder.setOnClickListener(v -> new AlertDialog.Builder(this)
+        target.placeholder.setOnClickListener(v -> new AppDialog.Builder(this)
                 .setTitle(unsupported ? "暂不支持手机模拟" : "无法生成效果")
                 .setMessage(reason + (unsupported ? "\n原预设仍可下载保留。" : "\n请检查可上网的网络后重试，已下载预设可离线预览。"))
                 .setNegativeButton("关闭", null).setPositiveButton("重试", (dialog, which) -> {
@@ -1991,7 +1967,7 @@ public final class MainActivity extends Activity {
                     busy = false; progress = ""; render();
                     ImageView view = new ImageView(this); view.setImageBitmap(bitmap); view.setAdjustViewBounds(true); view.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     view.setContentDescription("预设配套实拍参考，与模板模拟分开显示");
-                    new AlertDialog.Builder(this).setTitle("实拍参考").setView(view).setPositiveButton("关闭", null).show();
+                    new AppDialog.Builder(this).setTitle("实拍参考").setView(view).setPositiveButton("关闭", null).show();
                 });
             } catch (Exception e) { onUi(() -> { finishBusy("实拍参考暂不可用。"); notice("无法读取参考图", readable(e)); }); }
         });
@@ -2144,7 +2120,7 @@ public final class MainActivity extends Activity {
             if (local == null && detailOnline == null) { detailId = ""; render(); return; }
             if (detailPresetStorage != null) {
                 detailPresetStorage[0].setText(local == null ? "在线预设 · 尚未下载" : "已保存在手机");
-                detailPresetStorage[1].setText(local == null ? "可直接预览效果，下载后保留在我的预设" : local.fileFormat + " 预设文件");
+                detailPresetStorage[1].setText(local == null ? "可直接预览效果，下载后保留在我的预设" : "原始预设已保留");
             }
             fillPresetDetailFooter(detailPresetFooter, local, detailOnline); fillPresetDeleteEntry(local);
         } else if (localTab && detailId.isEmpty() && detailOnline == null) render();
@@ -2172,7 +2148,7 @@ public final class MainActivity extends Activity {
                 StringBuilder text = new StringBuilder(personal!=null&&!personal.owner().isEmpty()?"删除本机预设和个人云端记录；离线时排队等待同步。相机槽位、拍摄原图与已生成照片保留。":"删除手机中的这份预设和 App 保存的配套样片。相机槽位、拍摄原图与已生成照片保留。");
                 if (!inspection.projectNames.isEmpty()) text.append("\n\n以下项目将取消默认预设：\n").append(String.join("\n", inspection.projectNames));
                 if (inspection.references.failedTasks > 0) text.append("\n\n还有 ").append(inspection.references.failedTasks).append(" 张效果待重试，删除后需重新下载同一预设才能继续；处理记录会保留。");
-                new AlertDialog.Builder(MainActivity.this).setTitle("删除“" + preset.displayName + "”？").setMessage(text.toString())
+                new AppDialog.Builder(MainActivity.this).setTitle("删除“" + preset.displayName + "”？").setMessage(text.toString())
                         .setNegativeButton("取消", null).setPositiveButton("删除预设", (dialog, which) -> deleteConfirmedPreset(preset, inspection)).show();
             }
             @Override public void onError(String error) { if (!destroyed) { finishBusy(""); feedback("暂时无法删除", error); } }
@@ -2200,7 +2176,7 @@ public final class MainActivity extends Activity {
     private void pickNcp(boolean thenImport) {
         if (waitForCurrentTask() || !requirePresetLibrary()) return;
         boolean logged=personal!=null&&!personal.owner().isEmpty();
-        AlertDialog.Builder prompt=new AlertDialog.Builder(this).setTitle("添加到我的预设").setMessage(logged?"所选预设文件、名称和分类将自动保存到个人云端，仅你可见；本机保留离线副本。\n模板和自选样片保留在本机。":"当前未登录，所选预设仅保存在本机。登录后可选择同步到个人云端，换手机也能恢复。")
+        AlertDialog.Builder prompt=new AppDialog.Builder(this).setTitle("添加到我的预设").setMessage(logged?"所选预设文件、名称和分类将自动保存到个人云端，仅你可见；本机保留离线副本。\n模板和自选样片保留在本机。":"当前未登录，所选预设仅保存在本机。登录后可选择同步到个人云端，换手机也能恢复。")
             .setNegativeButton("取消",null).setPositiveButton(logged?"选择预设文件":"先保存到本机",(d,w)->openPresetFilePicker(thenImport));
         if(!logged)prompt.setNeutralButton("登录后同步",(d,w)->{pendingPersonalPick=true;account.open();});prompt.show();
     }
@@ -2274,17 +2250,16 @@ public final class MainActivity extends Activity {
 
     private void beginImport(PresetRecord record) {
         if (album.hasCameraConnection() && !album.supportsPictureControl()) {
-            notice("请连接尼康相机", "NCP / NP3 是尼康预设，不能写入富士 X-T20。当前富士连接可继续下载 JPEG，手机套预设仍可使用。"); return;
+            notice("请连接尼康相机", "此相机不支持尼康预设导入。手机套用预设仍可使用。"); return;
         }
         clearPendingPhotoLive();
         if (!canChangeConnection() || !requirePresetLibrary()) return;
         if (record == null) { showPresetRequired(); return; }
-        if ("NP3".equals(record.fileFormat)) { notice("NP3 文件已保留", "当前暂不支持将 NP3 导入相机，原文件仍保存在手机预设库中。"); return; }
         pendingImportId = "";
         if (recoveryBlocked) { showRecoveryRequired("导入预设"); return; }
         selected = record; selectedBytes = null; startBusy("正在检查预设兼容性…");
         worker.execute(() -> { try {
-            byte[] bytes = library.readNcp(record.id); NcpPictureControlConverter.convert(bytes, 4, 0);
+            byte[] bytes = library.readNcp(record.id); CameraPresetAdapter.plan(bytes, 4, 0);
             onUi(() -> { selectedBytes = bytes; busy = false; chooseConnection(); });
         } catch (Exception e) { onUi(() -> { finishBusy("这份预设暂不能通过当前兼容通道导入。"); notice("暂不支持这份预设", readable(e) + "\n原文件已保留在手机。"); }); } });
     }
@@ -2293,7 +2268,7 @@ public final class MainActivity extends Activity {
         clearPendingPhotoLive();
         if (waitForCurrentTask()) return;
         if (pendingJournal == null) { notice("导入记录无法读取", "请先通过帮助导出已有报告，并在相机上检查已保存的预设。当前不会发起新写入。 "); return; }
-        new AlertDialog.Builder(this).setTitle("核对上次使用的相机")
+        new AppDialog.Builder(this).setTitle("核对上次使用的相机")
                 .setMessage("请确认当前连接的是上次导入的同一台相机。应用无法区分同型号的不同机身。\n\n接下来只读取相机中的预设，不会写入或覆盖。")
                 .setNegativeButton("取消", null).setPositiveButton("已确认，继续核对", (d, w) -> {
                     settingsTab = false; albumTab = false; localAlbumTab = false; settingsReturnToPreset = false;
@@ -2420,7 +2395,7 @@ public final class MainActivity extends Activity {
         livePreparationPrompted = true;
         String error = connections.albumPreparationError();
         if (error.isEmpty()) error = "相机照片暂时无法读取，请检查存储卡后重试。";
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("边拍边传尚未就绪")
+        AlertDialog dialog = new AppDialog.Builder(this).setTitle("边拍边传尚未就绪")
                 .setMessage(error + "\n\n相机连接仍保持。重试成功后会继续新建项目。")
                 .setNegativeButton("取消", (d, w) -> {
                     if (photoLiveContinuation.matches(revision)) {
@@ -2454,7 +2429,7 @@ public final class MainActivity extends Activity {
         String model = wireless ? album.hasCameraConnection() ? album.connectionModel() : preparedWirelessModel : usbModel;
         String address = wireless ? (album.hasCameraConnection() ? album.connectionHost() : preparedWirelessHost)
                 + ":" + (album.hasCameraConnection() ? album.connectionPort() : preparedWirelessPort) : "USB 数据线";
-        AlertDialog.Builder details = new AlertDialog.Builder(this).setTitle("相机详情")
+        AlertDialog.Builder details = new AppDialog.Builder(this).setTitle("相机详情")
                 .setMessage(model + "\n" + (wireless ? "Wi-Fi · " : "") + address)
                 .setPositiveButton("关闭", null);
         if (wireless) details.setNeutralButton("检测预设支持", (d, w) -> {
@@ -2749,14 +2724,14 @@ public final class MainActivity extends Activity {
         List<UsbDevice> devices = UsbProbe.findNikonDevices(usb);
         if (devices.isEmpty()) {
             render();
-            new AlertDialog.Builder(this).setTitle("用数据线连接相机")
+            new AppDialog.Builder(this).setTitle("用数据线连接相机")
                     .setMessage("打开相机，用支持数据传输的 USB 线连接手机。\n\n如果手机提供 OTG 开关，请先打开。连接后允许此 App 访问相机，并关闭占用相机的其他应用。")
                     .setNegativeButton("稍后", null).setPositiveButton("已连接，重新检测", (d, w) -> findCamera(recovery)).show(); return;
         }
         if (devices.size() == 1) requestCamera(devices.get(0), recovery);
         else {
             String[] names = new String[devices.size()]; for (int i = 0; i < names.length; i++) names[i] = "Nikon USB · " + String.format(Locale.ROOT, "%04X", devices.get(i).getProductId());
-            new AlertDialog.Builder(this).setTitle("选择相机").setItems(names, (d, which) -> requestCamera(devices.get(which), recovery)).setNegativeButton("取消", null).show();
+            new AppDialog.Builder(this).setTitle("选择相机").setItems(names, (d, which) -> requestCamera(devices.get(which), recovery)).setNegativeButton("取消", null).show();
         }
     }
 
@@ -2841,14 +2816,16 @@ public final class MainActivity extends Activity {
         startBusy("正在准备导入信息…");
         worker.execute(() -> {
             try {
-                NcpPictureControlConverter.Conversion conversion = NcpPictureControlConverter.convert(next.sourceBytes(), next.middle, next.clarity);
+                CameraPresetAdapter.Plan adaptation = CameraPresetAdapter.initialPlan(next.sourceBytes());
+                NcpPictureControlConverter.Conversion conversion = adaptation.conversion;
                 if (!conversion.sourceSha256().equals(next.preset.sha256)) throw new IOException("文件与已选择的预设不一致，请重新选择。");
                 onUi(() -> {
                     if (connection.wireless() && (preparedWireless != connection.wirelessOwner || !connection.wirelessOwner.isPrepared())) {
                         releasePreparedWireless(connection.wirelessOwner);
                         finishBusy("相机连接已断开，请重新读取槽位；本次未写入。"); return;
                     }
-                    next.conversion = conversion; confirmation = next; importOutcome = null; busy = false;
+                    next.middle = conversion.middleRangeSharpeningQuarter(); next.clarity = conversion.clarityQuarter();
+                    next.adaptation = adaptation; next.conversion = conversion; confirmation = next; importOutcome = null; busy = false;
                     if (connection.wireless()) startWirelessHeartbeat(connection.wirelessOwner);
                     render();
                 });
@@ -2864,15 +2841,13 @@ public final class MainActivity extends Activity {
         ScrollView scroll = new ScrollView(this); scroll.setFillViewport(true);
         LinearLayout content = vertical(); content.setPadding(dp(16), dp(4), dp(16), dp(24)); scroll.addView(content);
         body.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
-        heading(content, "将导入的预设", 16);
         LinearLayout summary = horizontal(); summary.setPadding(dp(12), dp(12), dp(12), dp(12)); summary.setBackground(shape(colors.container, 10));
         summary.addView(preview(plan.preset, null, 88), new LinearLayout.LayoutParams(dp(80), dp(88)));
         LinearLayout copy = vertical(); copy.setPadding(dp(14), 0, 0, 0); TextView name = text(plan.preset.displayName, 18, true); copy.addView(name);
         TextView file = text(plan.preset.originalFileName, 12, false); file.setPadding(0, dp(8), 0, 0); file.setTextColor(colors.secondary); copy.addView(file); summary.addView(copy, new LinearLayout.LayoutParams(0, -2, 1));
         LinearLayout.LayoutParams summaryParams = new LinearLayout.LayoutParams(-1, -2); summaryParams.topMargin = dp(10); summaryParams.bottomMargin = dp(16); content.addView(summary, summaryParams);
-        divider(content); heading(content, "连接的相机", 16);
-        informationRow(content, AppIcon.Kind.CAMERA, plan.model, plan.connection.label()
-                + (plan.connection.wireless() ? " · 会话保持连接，导入前在同一连接复查" : " · 已读取槽位，导入前将重新连接复查"));
+        informationRow(content, AppIcon.Kind.CAMERA, plan.model,
+                (plan.connection.wireless() ? "Wi-Fi" : "USB") + " · 导入前复查槽位");
         heading(content, "选择存储位置", 16);
         String[] choices = new String[plan.slots.size()];
         for (int i = 0; i < choices.length; i++) {
@@ -2885,7 +2860,7 @@ public final class MainActivity extends Activity {
             if(i%3==0) { LinearLayout line=horizontal(); line.setGravity(Gravity.TOP); slotGrid.addView(line,new LinearLayout.LayoutParams(-1,-2)); }
             ImportSlot slot=plan.slots.get(i); Button slotButton=new Button(this);
             slotButton.setAllCaps(false); slotButton.setTextSize(13); slotButton.setMinWidth(0); slotButton.setMinimumWidth(0);
-            slotButton.setMinHeight(dp(84)); slotButton.setMinimumHeight(dp(84)); slotButton.setPadding(dp(6),dp(10),dp(6),dp(10));
+            slotButton.setMinHeight(dp(64)); slotButton.setMinimumHeight(dp(64)); slotButton.setPadding(dp(6),dp(8),dp(6),dp(8));
             slotButton.setMaxLines(3); slotButton.setEllipsize(TextUtils.TruncateAt.END); slotButton.setStateListAnimator(null);
             slotButton.setText(slotLabel(slot.itemCode)+"\n"+(slot.overwrite==null?"空槽位":slot.name()));
             slotButton.setContentDescription(choices[i]);slotButton.setEnabled(!busy); slotViews.add(slotButton);
@@ -2897,13 +2872,34 @@ public final class MainActivity extends Activity {
         content.addView(slotGrid,new LinearLayout.LayoutParams(-1,-2));
         TextView slotNote = label(content, "", 12, colors.secondary);
         LinearLayout compatibility = vertical(); compatibility.setPadding(dp(14), dp(6), dp(14), dp(10)); compatibility.setBackground(shape(colors.container, 10));
-        LinearLayout compatibilityTitle = horizontal(); TextView compatibilityName = text("兼容适配", 16, true); compatibilityTitle.addView(compatibilityName, new LinearLayout.LayoutParams(0, -2, 1));
-        compatibilityTitle.addView(textLink("查看并调整 ›", () -> editCompatibility(plan))); compatibility.addView(compatibilityTitle);
+        LinearLayout compatibilityTitle = horizontal(); TextView compatibilityName = text(plan.adaptation.approximate ? "部分适配" : "兼容适配", 15, true); compatibilityTitle.addView(compatibilityName, new LinearLayout.LayoutParams(0, -2, 1));
+        TextView editAdaptation = textLink("调整 ›", () -> editCompatibility(plan));
+        editAdaptation.setMinWidth(dp(48)); editAdaptation.setGravity(Gravity.END | Gravity.CENTER_VERTICAL); editAdaptation.setTag("preset-adaptation-edit");
+        editAdaptation.setBackground(ripple(Color.TRANSPARENT)); compatibilityTitle.addView(editAdaptation); compatibility.addView(compatibilityTitle);
         TextView compatibilityValues = text("中等范围锐化 " + quarter(plan.middle) + " / 清晰度 " + quarter(plan.clarity), 13, false); compatibilityValues.setTextColor(colors.secondary); compatibility.addView(compatibilityValues);
         LinearLayout.LayoutParams compatibilityParams = new LinearLayout.LayoutParams(-1, -2); compatibilityParams.topMargin = dp(16); content.addView(compatibility, compatibilityParams);
-        label(content, "兼容适配，效果可能与相机原生载入不同。", 12, colors.secondary);
+        label(compatibility, plan.adaptation.summary(), 12, colors.secondary);
+        LinearLayout parameterRow = horizontal(); parameterRow.setGravity(Gravity.CENTER_VERTICAL);
+        LinearLayout parameterCopy = vertical();
+        label(parameterCopy, "拍摄参数", 15, colors.text);
+        label(parameterCopy, plan.parameters.summary(), 12, colors.secondary);
+        parameterRow.addView(parameterCopy, new LinearLayout.LayoutParams(0, -2, 1));
+        TextView editParameters = textLink("选择 ›", () -> editCameraParameters(plan));
+        editParameters.setMinWidth(dp(48)); editParameters.setGravity(Gravity.END | Gravity.CENTER_VERTICAL); editParameters.setTag("preset-parameters-edit");
+        parameterRow.addView(editParameters);
+        LinearLayout.LayoutParams parameterParams = new LinearLayout.LayoutParams(-1, -2); parameterParams.topMargin = dp(12);
+        content.addView(parameterRow, parameterParams);
+        label(content, "可选调节机身参数，不能替代丢失的调色效果。", 12, colors.secondary);
         LinearLayout footer = vertical(); footer.setPadding(dp(16), dp(4), dp(16), dp(12));
         Button confirm = button("", AppIcon.Kind.CAMERA, true, () -> confirmImport(plan));
+        if (plan.adaptation.approximate) {
+            CheckBox accept = new CheckBox(this); accept.setText("接受上述差异，继续导入"); accept.setTextSize(13);
+            accept.setTextColor(colors.text); accept.setMinHeight(dp(48)); accept.setChecked(plan.approximateAccepted);
+            accept.setButtonTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_checked},new int[]{}},new int[]{colors.primary,colors.secondary}));
+            accept.setTag("preset-approximation-consent"); confirm.setEnabled(plan.approximateAccepted);
+            accept.setOnCheckedChangeListener((view, checked) -> { plan.approximateAccepted = checked; confirm.setEnabled(checked); });
+            content.addView(accept, new LinearLayout.LayoutParams(-1, -2));
+        }
         updateImportSlot(plan, slotNote, confirm);
         footer.addView(confirm); TextView footerNote = label(footer, "导入时保持连接，请勿在相机上更改槽位", 12, colors.secondary); footerNote.setGravity(Gravity.CENTER); body.addView(footer);
         Runnable updateSlots=()->{
@@ -2929,15 +2925,17 @@ public final class MainActivity extends Activity {
 
     private void confirmImport(PendingConfirmation plan) {
         if (!requireCurrentConfirmation(plan)) return;
+        if (plan.adaptation.approximate && !plan.approximateAccepted) { notice("请确认适配差异", plan.adaptation.summary()); return; }
         final ImportSlot slot = plan.selectedSlot();
         Runnable write = () -> {
             if (!requireCurrentConfirmation(plan)) return;
             if (plan.selectedSlot() != slot) { feedback("槽位已变化", "请按确认页中当前选择的槽位重新确认导入。"); return; }
             writePreset(plan.connection, plan.model, plan.preset, plan.sourceBytes(), slot.itemCode,
-                    plan.middle, plan.clarity, plan.conversion.dataSha256(), slot.overwrite);
+                    plan.middle, plan.clarity, plan.conversion.dataSha256(), slot.overwrite,
+                    plan.approximateAccepted, plan.parameters);
         };
         if (slot.overwrite == null) { write.run(); return; }
-        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("覆盖 " + slotLabel(slot.itemCode) + "？")
+        AlertDialog dialog = new AppDialog.Builder(this).setTitle("覆盖 " + slotLabel(slot.itemCode) + "？")
                 .setMessage("将「" + slot.name() + "」替换为「" + plan.preset.displayName + "」。\n\n原槽位内容将被覆盖。写入前会再次核对，若槽位内容已变化，本次导入会停止。")
                 .setNegativeButton("取消", null)
                 .setPositiveButton("确认覆盖 " + slotLabel(slot.itemCode), (d, w) -> write.run()).create();
@@ -2949,21 +2947,57 @@ public final class MainActivity extends Activity {
     private void editCompatibility(PendingConfirmation plan) {
         if (!requireCurrentConfirmation(plan)) return;
         LinearLayout content = vertical(); content.setPadding(dp(24), dp(4), dp(24), dp(16));
-        label(content, "原 NCP 没有以下两项参数，可根据需要调整兼容适配值。", 14, colors.text);
-        label(content, "中等范围锐化", 14, colors.text); Spinner middle = spinner(content, quarters(0, 20), plan.middle);
+        label(content, "以下为本次导入值，不修改原始预设。", 13, colors.secondary);
+        label(content, "中等范围锐化", 14, colors.text); Spinner middle = spinner(content, quarters(-20, 20), plan.middle + 20);
         label(content, "清晰度", 14, colors.text); Spinner clarity = spinner(content, quarters(-20, 20), plan.clarity + 20);
         heading(content, "当前完整参数说明", 16); label(content, plan.conversion.toDisplayText(), 13, colors.secondary);
         ScrollView scroll = new ScrollView(this); scroll.addView(content);
-        new AlertDialog.Builder(this).setTitle("查看并调整兼容设置").setView(scroll).setNegativeButton("取消", null)
+        new AppDialog.Builder(this).setTitle("查看并调整兼容设置").setView(scroll).setNegativeButton("取消", null)
                 .setPositiveButton("保存设置", (d, w) -> {
                     if (!requireCurrentConfirmation(plan)) return;
-                    final int selectedMiddle = middle.getSelectedItemPosition(), selectedClarity = clarity.getSelectedItemPosition() - 20;
+                    final int selectedMiddle = middle.getSelectedItemPosition() - 20, selectedClarity = clarity.getSelectedItemPosition() - 20;
                     startBusy("正在更新兼容设置…");
                     worker.execute(() -> { try {
-                        NcpPictureControlConverter.Conversion next = NcpPictureControlConverter.convert(plan.sourceBytes(), selectedMiddle, selectedClarity);
+                        CameraPresetAdapter.Plan adaptation = CameraPresetAdapter.plan(plan.sourceBytes(), selectedMiddle, selectedClarity);
+                        NcpPictureControlConverter.Conversion next = adaptation.conversion;
                         if (!next.sourceSha256().equals(plan.preset.sha256)) throw new IOException("源预设校验失败。");
-                        onUi(() -> { if (confirmation == plan) { plan.middle = selectedMiddle; plan.clarity = selectedClarity; plan.conversion = next; } finishBusy(""); });
+                        onUi(() -> { if (confirmation == plan) { plan.middle = selectedMiddle; plan.clarity = selectedClarity; plan.conversion = next; plan.adaptation = adaptation; plan.approximateAccepted = false; } finishBusy(""); });
                     } catch (Exception e) { onUi(() -> { finishBusy(""); notice("设置未保存", readable(e)); }); } });
+                }).show();
+    }
+
+    private void editCameraParameters(PendingConfirmation plan) {
+        if (!requireCurrentConfirmation(plan)) return;
+        LinearLayout content = vertical(); content.setPadding(dp(24), dp(4), dp(24), dp(16));
+        label(content, "默认不调整；所选值影响后续拍摄。", 12, colors.secondary);
+        final long[] wbValues = {-1, 2, 4, 0x8010, 0x8011, 6, 5, 7, CameraParameterRequest.KELVIN_MODE};
+        String[] wbLabels = {"不调整", "自动", "晴天", "阴天", "阴影", "白炽灯", "荧光灯", "闪光灯", "指定色温"};
+        int wbIndex = 0; for (int i = 1; i < wbValues.length; i++) if (plan.parameters.whiteBalance != null && wbValues[i] == plan.parameters.whiteBalance) wbIndex = i;
+        label(content, "白平衡", 13, colors.text); Spinner wb = spinner(content, wbLabels, wbIndex);
+        LinearLayout kelvinRow = vertical(); label(kelvinRow, "色温", 13, colors.text);
+        String[] kelvinLabels = new String[76]; for (int i = 0; i < kelvinLabels.length; i++) kelvinLabels[i] = (2500 + i * 100) + " K";
+        Spinner kelvin = spinner(kelvinRow, kelvinLabels, plan.parameters.kelvin == null ? 25 : (int) ((plan.parameters.kelvin - 2500) / 100));
+        content.addView(kelvinRow); kelvinRow.setVisibility(wbIndex == wbValues.length - 1 ? View.VISIBLE : View.GONE);
+        wb.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) { kelvinRow.setVisibility(position == wbValues.length - 1 ? View.VISIBLE : View.GONE); }
+            public void onNothingSelected(android.widget.AdapterView<?> parent) {}
+        });
+        final long[] evValues = {-3000,-2667,-2333,-2000,-1667,-1333,-1000,-667,-333,0,333,667,1000,1333,1667,2000,2333,2667,3000};
+        String[] evLabels = new String[evValues.length + 1]; evLabels[0] = "不调整";
+        int evIndex = 0;
+        for (int i = 0; i < evValues.length; i++) { evLabels[i + 1] = CameraParameterRequest.evLabel(evValues[i]) + " EV"; if (plan.parameters.exposureMilliEv != null && evValues[i] == plan.parameters.exposureMilliEv) evIndex = i + 1; }
+        label(content, "曝光补偿", 13, colors.text); Spinner ev = spinner(content, evLabels, evIndex);
+        label(content, "不支持的项会跳过；原值保存在导入报告。", 12, colors.secondary);
+        ScrollView scroll = new ScrollView(this); scroll.addView(content);
+        new AppDialog.Builder(this).setTitle("拍摄参数 · 可选").setView(scroll).setNegativeButton("取消", null)
+                .setNeutralButton("全部不调整", (d, w) -> { if (requireCurrentConfirmation(plan)) { plan.parameters = CameraParameterRequest.NONE; render(); } })
+                .setPositiveButton("保存选择", (d, w) -> {
+                    if (!requireCurrentConfirmation(plan)) return;
+                    long value = wbValues[wb.getSelectedItemPosition()];
+                    plan.parameters = new CameraParameterRequest(value == -1 ? null : value,
+                            value == CameraParameterRequest.KELVIN_MODE ? (long) (2500 + kelvin.getSelectedItemPosition() * 100) : null,
+                            ev.getSelectedItemPosition() == 0 ? null : evValues[ev.getSelectedItemPosition() - 1]);
+                    render();
                 }).show();
     }
 
@@ -2987,6 +3021,7 @@ public final class MainActivity extends Activity {
             TextView next = label(content, "请在相机中选择 " + slotLabel(result.target) + "，并试拍确认效果。", 14, colors.secondary); next.setGravity(Gravity.CENTER); next.setPadding(0, dp(24), 0, dp(8));
             TextView caveat = label(content, "兼容适配，实际效果仍需拍摄确认。", 12, colors.secondary); caveat.setGravity(Gravity.CENTER);
             if (result.uncertain) label(content, result.detail, 13, colors.error);
+            else if (result.detail.contains("\n\n拍摄参数")) label(content, result.detail.substring(result.detail.indexOf("\n\n拍摄参数") + 2), 13, colors.secondary);
             if (hasPreparedWireless()) {
                 TextView connected = label(content, "相机保持连接，可继续导入", 12, colors.success); connected.setGravity(Gravity.CENTER);
             }
@@ -3027,7 +3062,8 @@ public final class MainActivity extends Activity {
     private static String quarter(int value) { return java.math.BigDecimal.valueOf(value).divide(java.math.BigDecimal.valueOf(4)).stripTrailingZeros().toPlainString(); }
 
     private void writePreset(CameraConnection connection, String model, PresetRecord preset, byte[] source, int target, int middle, int clarity,
-                             String expectedHash, PictureControlImportSession.OverwriteConfirmation overwrite) {
+                             String expectedHash, PictureControlImportSession.OverwriteConfirmation overwrite,
+                             boolean approximateAccepted, CameraParameterRequest parameters) {
         if (waitForCurrentTask()) return;
         if (recoveryBlocked) { showRecoveryRequired("导入预设"); return; }
         final WirelessPictureControl owner = connection.wirelessOwner;
@@ -3054,11 +3090,12 @@ public final class MainActivity extends Activity {
                     wirelessImporter = owner;
                     if (!wirelessImporter.isPrepared()) throw new IOException("确认期间相机连接已断开，请重新读取槽位；未重新连接或写入。");
                 }
-                JSONObject journal = new JSONObject().put("schemaVersion", 2).put("createdAt", System.currentTimeMillis())
+                JSONObject journal = new JSONObject().put("schemaVersion", 3).put("createdAt", System.currentTimeMillis())
                         .put("presetName", preset.displayName).put("sourceSha256", preset.sha256).put("expectedSha256", expectedHash)
                         .put("targetItem", target).put("model", model).put("transport", connection.wireless() ? "wifi" : "usb")
                         .put("wirelessHost", connection.host).put("wirelessPort", connection.port)
-                        .put("overwriteRequested", overwrite != null);
+                        .put("overwriteRequested", overwrite != null).put("approximationAccepted", approximateAccepted)
+                        .put("cameraParameterChoice", parameters.summary());
                 if (overwrite != null) journal.put("confirmedTargetSha256", overwrite.sha256()).put("confirmedTargetName", overwrite.registrationName());
                 if (!connection.wireless()) journal.put("vendorId", connection.device.getVendorId()).put("productId", connection.device.getProductId());
                 // A durable intent record precedes the backend call. An interrupted process must not silently repeat a write.
@@ -3070,9 +3107,21 @@ public final class MainActivity extends Activity {
                 }
                 }
                 pendingJournal = journal; recoveryBlocked = true; started = true;
+                PresetImportOptions options = new PresetImportOptions(approximateAccepted, expectedHash, parameters, snapshot -> {
+                    try {
+                        journal.put("cameraParameterBackup", UsbPictureControlImport.cameraParametersJson(snapshot));
+                        byte[] backup = journal.toString(2).getBytes(StandardCharsets.UTF_8);
+                        synchronized (CameraConnectionRuntime.PERSISTENCE_LOCK) {
+                            writeAtomic(journalFile(), backup);
+                            try (InputStream saved = journalFile().openRead()) {
+                                if (!Arrays.equals(backup, readBounded(saved, 32 * 1024))) throw new IOException("参数原值保存后校验失败。");
+                            }
+                        }
+                    } catch (org.json.JSONException invalid) { throw new IOException("无法保存拍摄参数原值，未修改参数。", invalid); }
+                });
                 result = connection.wireless()
-                        ? wirelessImporter.importPreparedNcpPresetKeepingConnection(source.clone(), middle, clarity, target, overwrite)
-                        : importer.importNcpPreset(connection.device, usb, source.clone(), middle, clarity, target, overwrite);
+                        ? wirelessImporter.importPreparedPresetKeepingConnection(source.clone(), middle, clarity, target, overwrite, options)
+                        : importer.importPreset(connection.device, usb, source.clone(), middle, clarity, target, overwrite, options);
             } catch (Exception e) {
                 failure = e;
                 if (e instanceof UsbPictureControlImport.ImportException) result = ((UsbPictureControlImport.ImportException) e).partialResult;
@@ -3106,26 +3155,19 @@ public final class MainActivity extends Activity {
             boolean verified = outcome != null && outcome.ncpRegistrationVerified && outcome.completed && outcome.readbackVerified
                     && (outcome.sessionClosed || outcome.sessionRetainedAfterImport);
             boolean resultUncertain = !verified && invoked && (outcome == null || outcome.writeAttempted);
-            connections.publishImportStatus(new CameraConnectionRuntime.ImportStatus(
+            final CameraConnectionRuntime.ImportStatus completedStatus = new CameraConnectionRuntime.ImportStatus(
                     verified ? "已保存到 " + slotLabel(target) + " 并核对" : resultUncertain ? "结果待核对" : "暂未导入",
                     verified ? "预设已保存，相机读回的数据与本次适配数据一致。" + warning
+                            + (outcome.cameraParameters == null ? "" : "\n\n拍摄参数\n" + outcome.cameraParameters.text())
                             : (error == null ? "相机尚未确认完整结果。" : readable(error))
-                            + "\n\n" + (resultUncertain ? "相机可能已保存，请先只读核对，勿重复导入。" : "本次未发起写入，请检查连接后重试。") + warning,
+                            + "\n\n" + (resultUncertain ? "相机可能已保存，请先只读核对，勿重复导入。" : "本次未发起写入，请检查连接后重试。") + warning
+                            + (outcome == null || outcome.cameraParameters == null ? "" : "\n\n拍摄参数\n" + outcome.cameraParameters.text()),
                     preset.displayName, model, target, verified, recoveryBlocked, preset.sha256,
-                    recoveryBlocked && pendingJournal != null ? pendingJournal.toString() : ""));
+                    recoveryBlocked && pendingJournal != null ? pendingJournal.toString() : "");
+            connections.publishImportStatus(completedStatus);
             onUi(() -> {
-                busy = false;
-                boolean success = outcome != null && outcome.ncpRegistrationVerified && outcome.completed && outcome.readbackVerified
-                        && (outcome.sessionClosed || outcome.sessionRetainedAfterImport);
-                confirmation = null;
-                if (success) {
-                    importOutcome = new ImportOutcome("已保存到 " + slotLabel(target) + " 并核对", "预设已保存，相机读回的数据与本次适配数据一致。" + warning, preset.displayName, model, target, true, recoveryBlocked, preset.sha256);
-                } else {
-                    boolean uncertain = invoked && (outcome == null || outcome.writeAttempted);
-                    importOutcome = new ImportOutcome(uncertain ? "结果待核对" : "暂未导入", (error == null ? "相机尚未确认完整结果。" : readable(error))
-                            + "\n\n" + (uncertain ? "相机可能已经保存预设，请先只读核对，不要重复导入。" : "未发起写入，请检查连接后重新开始。") + warning,
-                            preset.displayName, model, target, false, uncertain);
-                }
+                completeImportOutcome(completedStatus);
+                boolean success = completedStatus.verified;
                 message = "";
                 if (success && outcome.sessionRetainedAfterImport) {
                     if (preparedWireless == owner && owner.isPrepared()) startWirelessHeartbeat(owner);
@@ -3135,6 +3177,17 @@ public final class MainActivity extends Activity {
             });
             } finally { if (lease != null) lease.close(); }
         });
+    }
+
+    private static ImportOutcome importOutcomeFromStatus(CameraConnectionRuntime.ImportStatus status) {
+        return new ImportOutcome(status.heading, status.detail, status.presetName, status.camera,
+                status.target, status.verified, status.uncertain, status.sourceSha256);
+    }
+
+    /** USB has no operation lease completion event: bind the full published result immediately. */
+    private void completeImportOutcome(CameraConnectionRuntime.ImportStatus status) {
+        busy = false; confirmation = null; shownImportStatus = status;
+        importOutcome = importOutcomeFromStatus(status);
     }
 
     private void completeRecovery(UsbPictureControlProbe.Result snapshot, List<UsbPictureControlProbe.ItemRecord> slots, int wirelessRequest) throws Exception {
@@ -3150,10 +3203,12 @@ public final class MainActivity extends Activity {
         JSONObject json = snapshot.toJson().put("consumerRecovery", true).put("pendingImport", journal)
                 .put("expectedDataObserved", match).put("targetObservedEmpty", empty).put("confirmedOriginalObserved", original);
         String warning = saveReport(json.toString(2));
-        final String text = match ? "已在 " + slotLabel(target) + " 读到与上次导入一致的数据。请在相机菜单选择它使用。"
+        final String recoveryText = match ? "已在 " + slotLabel(target) + " 读到与上次导入一致的数据。请在相机菜单选择它使用。"
                 : empty ? slotLabel(target) + " 当前为空，没有读到上次导入的数据。可以重新选择预设并确认导入。"
                 : original ? slotLabel(target) + " 仍是覆盖前的「" + journal.optString("confirmedTargetName") + "」，没有读到本次预期数据。请重新读取槽位并确认后再导入。"
                 : slotLabel(target) + " 当前已有其他数据，与上次预期不一致。本次核对未修改相机；继续导入前请重新读取并确认目标槽位。";
+        final String text = recoveryText + (journal.has("cameraParameterBackup")
+                ? "\n\n拍摄参数\n上次同时选择了拍摄参数，本次只核对预设。请在相机确认参数是否已调整；调整前原值已保存在报告，未自动重试。" : "");
         onUi(() -> {
             if (wirelessRequest != -1 && wirelessRequest != wirelessScanEpoch) return;
             if (pendingJournal != journal) return;
@@ -3209,7 +3264,7 @@ public final class MainActivity extends Activity {
         labels.add("预设导入说明"); labels.add("导出最近报告"); labels.add("高级诊断");
         if (recoveryBlocked) labels.add("核对上次导入 · 只读");
         labels.add("关于 " + getString(R.string.app_name));
-        new AlertDialog.Builder(this).setTitle("帮助与设置").setItems(labels.toArray(new String[0]), (d, w) -> {
+        new AppDialog.Builder(this).setTitle("帮助与设置").setItems(labels.toArray(new String[0]), (d, w) -> {
             switch (w) {
                 case 0: notice("导入相机", "打开本地预设，点击“导入相机”。应用使用当前 Wi-Fi 或 USB 连接；尚未连接时会前往设置，连接完成后自动继续到槽位确认。\n\n无线连接不需要先读取相册。导入时自动检查相机能力与槽位，无需提前手动检测；相机详情中仍可按需检测预设支持。若无线接口不支持导入，可在设置中改用 USB。\n\n选择空槽可直接导入；选择已有预设的槽位时，会显示原名称并要求确认覆盖。确认后重新核对目标内容，只登记一次并读回核对；槽位已变化则停止。结果不明时先只读核对，勿重复导入。\n\n导入成功并读回核对后保持连接，需要断开时请到设置操作。"); break;
                 case 1: exportReport(); break;
@@ -3255,7 +3310,7 @@ public final class MainActivity extends Activity {
         else if (settingsTab && settingsReturnToPreset) returnToPreset();
         else if (settingsTab) switchRoot(0);
         else if (importOutcome != null || confirmation != null) finishImportScreen();
-        else if (localAlbumTab && localPhotoEditor.canGoBack()) { localPhotoEditor.goBack(); if (!localPhotoEditor.canGoBack()) localAlbum.refresh(); render(); }
+        else if (localAlbumTab && localPhotoEditor.isImmersive() && localPhotoEditor.canGoBack()) { localPhotoEditor.goBack(); if (!localPhotoEditor.canGoBack()) localAlbum.refresh(); render(); }
         else if (localAlbumTab && localAlbum.goBack()) { render(); }
         else if (localAlbumTab) switchRoot(0);
         else if (albumTab && album.canGoBack()) { album.goBack(); render(); }
@@ -3264,6 +3319,27 @@ public final class MainActivity extends Activity {
         else super.onBackPressed();
     }
     @Override public void onBackPressed() { goBack(); }
+    private void updateSelectionBackCallback() {
+        if (Build.VERSION.SDK_INT < 33) return;
+        boolean enabled = !destroyed && localAlbumTab && localAlbum != null && localAlbum.hasSelectionDock()
+                && localPhotoEditor != null && !localPhotoEditor.isImmersive()
+                && (account == null || !account.isOpen()) && (community == null || !community.isOpen())
+                && (updates == null || !updates.isOpen());
+        if (enabled && selectionBackCallback == null) selectionBackCallback = SelectionBackApi33.register(this, this::goBack);
+        else if (!enabled && selectionBackCallback != null) {
+            SelectionBackApi33.unregister(this, selectionBackCallback); selectionBackCallback = null;
+        }
+    }
+    private static final class SelectionBackApi33 {
+        static Object register(Activity activity, Runnable action) {
+            android.window.OnBackInvokedCallback callback = action::run;
+            activity.getOnBackInvokedDispatcher().registerOnBackInvokedCallback(android.window.OnBackInvokedDispatcher.PRIORITY_DEFAULT, callback);
+            return callback;
+        }
+        static void unregister(Activity activity, Object callback) {
+            activity.getOnBackInvokedDispatcher().unregisterOnBackInvokedCallback((android.window.OnBackInvokedCallback) callback);
+        }
+    }
     @Override public void onWindowFocusChanged(boolean focused) {
         super.onWindowFocusChanged(focused);
         if(focused)restoreSystemBarAppearance();
@@ -3305,7 +3381,6 @@ public final class MainActivity extends Activity {
     @Override public void onConfigurationChanged(Configuration config) { super.onConfigurationChanged(config); render(); }
 
     @Override protected void onPause() {
-        if (onlineFormatMenu != null) { onlineFormatMenu.dismiss(); onlineFormatMenu = null; }
         ConnectionTrace.mark("UI_BACKGROUND");
         activityVisible = false;
         presetDownloads.removeObserver(presetDownloadObserver);
@@ -3362,7 +3437,7 @@ public final class MainActivity extends Activity {
             feedback("请先完成照片任务", "边拍边传、预设导入或照片处理期间不能安装更新。请先停止传输，并等待传输和保存完成。"); return;
         }
         if (connections.hasCameraServiceWork() || verifiedUsb() != null) {
-            new AlertDialog.Builder(this).setTitle("断开相机并安装更新？")
+            new AppDialog.Builder(this).setTitle("断开相机并安装更新？")
                     .setMessage("更新会重新启动 Huevia。当前相机连接将结束，已保存的照片和项目会保留。")
                     .setNegativeButton("稍后", null).setPositiveButton("断开并继续", (dialog, which) -> {
                         if (destroyed || !activityVisible || !updates.isOpen()) return;
@@ -3461,7 +3536,7 @@ public final class MainActivity extends Activity {
 
     private void showRecoveryRequired(String operation) {
         if (destroyed || isFinishing() || waitForCurrentTask()) return;
-        new AlertDialog.Builder(this).setTitle("请先核对上次导入")
+        new AppDialog.Builder(this).setTitle("请先核对上次导入")
                 .setMessage("上次导入结果尚未确认，请先只读核对相机中的预设，再" + operation + "。")
                 .setNegativeButton("取消", null).setPositiveButton("核对上次导入", (d, w) -> {
                     if (!canChangeConnection()) return;
@@ -3479,7 +3554,7 @@ public final class MainActivity extends Activity {
     private void startBusy(String value) { busy = true; progress = value; render(); }
     private void finishBusy(String value) { busy = false; progress = ""; message = value; render(); resumePendingImport(); resumePendingPhotoLive(); }
     private void onUi(Runnable task) { if (!destroyed) runOnUiThread(() -> { if (!destroyed) task.run(); }); }
-    private void notice(String title, String message) { if (!destroyed) new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("知道了", null).show(); }
+    private void notice(String title, String message) { if (!destroyed) new AppDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("知道了", null).show(); }
     private void feedback(String title, String text) {
         if (text != null && (text.length() > 52 || text.contains("\n"))) {
             String summary = text.split("[。\\n]", 2)[0];
@@ -3646,6 +3721,7 @@ public final class MainActivity extends Activity {
     private static String readText(AtomicFile file, int limit) throws IOException { synchronized (CameraConnectionRuntime.PERSISTENCE_LOCK) { try (InputStream input = file.openRead()) { return new String(readBounded(input, limit), StandardCharsets.UTF_8); } } }
 
     @Override protected void onDestroy() {
+        if (Build.VERSION.SDK_INT >= 33 && selectionBackCallback != null) { SelectionBackApi33.unregister(this, selectionBackCallback); selectionBackCallback = null; }
         presetDownloads.removeObserver(presetDownloadObserver);
         cancelPendingCameraWifi();
         if (account != null) account.close();

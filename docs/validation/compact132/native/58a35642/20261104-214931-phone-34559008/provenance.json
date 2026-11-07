@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "58a356422c3ad350147b6e2af8e6d1f6da234a806d24bdea50fe40f066c8ccca",
+  "versionCode": 132,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "752206e32ca2969d1987a19ef4a82f5feebd57dce6e17a70e8dfcb2ebae27d2f",
+  "pass": false,
+  "scope": "full",
+  "files": [
+    {
+      "file": "01-quick-editor.png",
+      "sha256": "e2668b328aa5c9eb99490036ad3e86acd45e1f31e742e07cc37bb2b2d3ea8d66"
+    },
+    {
+      "file": "02-basic-adjustment.png",
+      "sha256": "5f5b05552c4620d4c754b0b547bd1f918b8f8b5d2a2da2806c1a8861f36e5bed"
+    },
+    {
+      "file": "03-portrait-main.png",
+      "sha256": "aa69a1aa0b8bd36bb28713df45299c4473821d0a0ac9368250f6e76b3ff48462"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "8c185a21908e125fd29921acc687251a6c5cfc3ad4d8f085924ca20b89473258"
+    },
+    {
+      "file": "report.json",
+      "sha256": "c37012fed844be1e706cbfc31835da3392ca3a7028709699fd076c6f6ec11aeb"
+    }
+  ]
+}

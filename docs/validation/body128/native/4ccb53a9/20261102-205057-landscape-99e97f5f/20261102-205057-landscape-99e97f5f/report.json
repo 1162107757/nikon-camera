@@ -1,0 +1,256 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "mode": "landscape",
+  "scope": "full",
+  "candidateSha256": "4ccb53a991b00dfc9875362b243ec9e5b2cd8d54f384b08b2e41abefb8db6d82",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "installed-exact-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-evidence-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "three-compact-entries",
+      "pass": true
+    },
+    {
+      "name": "photograph-has-useful-space",
+      "pass": true
+    },
+    {
+      "name": "body-cancel-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-apply-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-strength-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-undo-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-redo-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-guides-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-compare-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-tool-0-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-tool-1-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-tool-2-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "actual-font-setting",
+      "pass": true
+    },
+    {
+      "name": "drag-disables-apply",
+      "pass": true
+    },
+    {
+      "name": "slider-gesture-active",
+      "pass": true
+    },
+    {
+      "name": "cancel-strength-restores-exact-state",
+      "pass": true
+    },
+    {
+      "name": "body-strength-changes",
+      "pass": true
+    },
+    {
+      "name": "one-history-per-slider",
+      "pass": true
+    },
+    {
+      "name": "actual-preview-warped",
+      "pass": true
+    },
+    {
+      "name": "parent-and-main-still-tentative",
+      "pass": true
+    },
+    {
+      "name": "finger-moves-range",
+      "pass": true
+    },
+    {
+      "name": "range-undo-exact",
+      "pass": true
+    },
+    {
+      "name": "range-redo-exact",
+      "pass": true
+    },
+    {
+      "name": "cancel-range-restores-exact-state",
+      "pass": true
+    },
+    {
+      "name": "range-can-hide",
+      "pass": true
+    },
+    {
+      "name": "range-can-return",
+      "pass": true
+    },
+    {
+      "name": "independent-leg-strength",
+      "pass": true
+    },
+    {
+      "name": "single-leg-mode",
+      "pass": true
+    },
+    {
+      "name": "double-leg-mode",
+      "pass": true
+    },
+    {
+      "name": "independent-length-strength",
+      "pass": true
+    },
+    {
+      "name": "range-keyboard-controls-present",
+      "pass": true
+    },
+    {
+      "name": "exact-invalid-does-not-dismiss",
+      "pass": true
+    },
+    {
+      "name": "exact-value-applied",
+      "pass": true
+    },
+    {
+      "name": "child-cancel-leaves-parent",
+      "pass": true
+    },
+    {
+      "name": "child-cancel-leaves-main",
+      "pass": true
+    },
+    {
+      "name": "child-apply-stages-in-parent",
+      "pass": true
+    },
+    {
+      "name": "child-apply-does-not-commit-main",
+      "pass": true
+    },
+    {
+      "name": "parent-undo-restores-shape",
+      "pass": true
+    },
+    {
+      "name": "parent-redo-restores-shape",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "parent-apply-one-main-history",
+      "pass": true
+    },
+    {
+      "name": "main-shape-committed",
+      "pass": true
+    },
+    {
+      "name": "displayed-shape-frozen-with-photo",
+      "pass": true
+    },
+    {
+      "name": "selection-mask-follows-body-warp",
+      "pass": true
+    },
+    {
+      "name": "actual-draft-keeps-shape",
+      "pass": true
+    },
+    {
+      "name": "face-workspace-uses-original-coordinates",
+      "pass": true
+    },
+    {
+      "name": "landing-restores-shaped-preview",
+      "pass": true
+    },
+    {
+      "name": "brush-explicit-original-positioning",
+      "pass": true
+    },
+    {
+      "name": "rebind-restores-shape",
+      "pass": true
+    },
+    {
+      "name": "reopened-body-restores-controls",
+      "pass": true
+    },
+    {
+      "name": "zero-shape-pixels-neutral",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "zero-shape-actual-draft-keeps-position",
+      "pass": true
+    },
+    {
+      "name": "zero-shape-rebind-restores-position",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-removed",
+      "pass": true
+    }
+  ],
+  "screenshots": 7,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true
+}

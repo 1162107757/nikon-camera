@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "serial": "emulator-5588",
+  "exactRemoteEvidenceDirectoriesRemoved": [
+    {
+      "remotePath": "/sdcard/Android/data/cc.huevia/files/selection-feedback124/20261030-193626-phone-88c183f3",
+      "removed": true,
+      "absenceExitCode": 1
+    },
+    {
+      "remotePath": "/sdcard/Android/data/cc.huevia/files/selection-feedback124/20261030-194006-font1.3-b28242c5",
+      "removed": true,
+      "absenceExitCode": 1
+    },
+    {
+      "remotePath": "/sdcard/Android/data/cc.huevia/files/selection-feedback124/20261030-194145-landscape-b42e581b",
+      "removed": true,
+      "absenceExitCode": 1
+    }
+  ],
+  "persistentFixtureCreated": false,
+  "targetStopped": true,
+  "targetProcessEvidence": {
+    "arguments": [
+      "shell",
+      "pidof",
+      "cc.huevia"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "testPackageRemoved": true,
+  "testPackageEvidence": {
+    "arguments": [
+      "shell",
+      "pm",
+      "list",
+      "packages",
+      "cc.huevia.selectionqa"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "settings": {
+    "font_scale": {
+      "arguments": [
+        "shell",
+        "settings",
+        "get",
+        "system",
+        "font_scale"
+      ],
+      "exitCode": 0,
+      "stdout": "1.0",
+      "stderr": ""
+    },
+    "airplane_mode_on": {
+      "arguments": [
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "airplane_mode_on"
+      ],
+      "exitCode": 0,
+      "stdout": "0",
+      "stderr": ""
+    },
+    "animator_duration_scale": {
+      "arguments": [
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "animator_duration_scale"
+      ],
+      "exitCode": 0,
+      "stdout": "null",
+      "stderr": ""
+    },
+    "wifi_on": {
+      "arguments": [
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "wifi_on"
+      ],
+      "exitCode": 0,
+      "stdout": "1",
+      "stderr": ""
+    },
+    "mobile_data": {
+      "arguments": [
+        "shell",
+        "settings",
+        "get",
+        "global",
+        "mobile_data"
+      ],
+      "exitCode": 0,
+      "stdout": "1",
+      "stderr": ""
+    },
+    "immersive_mode_confirmations": {
+      "arguments": [
+        "shell",
+        "settings",
+        "get",
+        "secure",
+        "immersive_mode_confirmations"
+      ],
+      "exitCode": 0,
+      "stdout": "null",
+      "stderr": ""
+    }
+  },
+  "errors": [],
+  "mainAppUninstalled": false,
+  "mainDataCleared": false
+}

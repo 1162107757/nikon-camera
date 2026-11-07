@@ -1,0 +1,24 @@
+{
+  "candidateSha256": "b644a9e67aee1082f5b3ce38e644189ac78d51e32dad0fb8fca14c0db5681e3d",
+  "versionCode": 129,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "e6bb1a8e9c40e531e0cf6922accf5688784673fad48c7a90c7c483f886e8c8ac",
+  "pass": true,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "01-app-album-selection.png",
+      "sha256": "d6009dde5e9d5e2a9c6d8cd748a92564a2940076c9dccd036b6b586e46dee994"
+    },
+    {
+      "file": "02-batch-export-settings.png",
+      "sha256": "ebcb4b53502437fec0a530d45677a54a0cc9a3582dd28566b31e5f7acf4ddb95"
+    },
+    {
+      "file": "report.json",
+      "sha256": "881397cb24ca682ceff18768a71fb1c20c12ddc697699017868c8cf50f0e3fe3"
+    }
+  ]
+}

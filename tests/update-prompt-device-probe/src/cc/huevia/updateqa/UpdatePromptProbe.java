@@ -210,6 +210,9 @@ public final class UpdatePromptProbe extends Instrumentation {
             require("download-progress-visible", tagged(prompt(), "update-prompt-progress").getVisibility() == View.VISIBLE);
             require("download-progress-37", ((ProgressBar) tagged(prompt(), "update-prompt-progress")).getProgress() == 37);
             require("download-positive-disabled", !prompt().getButton(AlertDialog.BUTTON_POSITIVE).isEnabled());
+            require("download-positive-hidden", prompt().getButton(AlertDialog.BUTTON_POSITIVE).getVisibility() == View.GONE);
+            require("download-status-in-progress-area", "正在下载 · 37%".equals(tagText(prompt(), "update-required-message")));
+            require("download-no-redundant-action-status", !textIn(prompt().getWindow().getDecorView(), "正在下载"));
             require("download-required-gate-kept", activity.panel.isMandatoryBlocking());
             ancestor(tagged(prompt(), "update-prompt-notes"), ScrollView.class).fullScroll(View.FOCUS_UP);
         });
@@ -218,9 +221,16 @@ public final class UpdatePromptProbe extends Instrumentation {
             activity.manager.downloading = false; activity.manager.verifying = true; listener().changed();
             require("verifying-indeterminate", ((ProgressBar) tagged(prompt(), "update-prompt-progress")).isIndeterminate());
             require("verifying-positive-disabled", !prompt().getButton(AlertDialog.BUTTON_POSITIVE).isEnabled());
+            require("verifying-positive-hidden", prompt().getButton(AlertDialog.BUTTON_POSITIVE).getVisibility() == View.GONE);
+            require("verifying-status-in-progress-area", "正在校验安装包…".equals(tagText(prompt(), "update-required-message")));
+            require("verifying-exit-still-reachable", prompt().getButton(AlertDialog.BUTTON_NEGATIVE).getVisibility() == View.VISIBLE);
+        });
+        waitForIdleSync(); ui(() -> assertLayout(prompt(), "required-verifying")); screenshot("06-verifying");
+        ui(() -> {
             activity.manager.verifying = false; activity.manager.error = "下载中断，请检查网络后重试。"; listener().changed();
             require("error-message-complete", "下载中断，请检查网络后重试。".equals(tagText(prompt(), "update-prompt-detail")));
             require("retry-download-enabled", prompt().getButton(AlertDialog.BUTTON_POSITIVE).isEnabled() && "重试下载".contentEquals(prompt().getButton(AlertDialog.BUTTON_POSITIVE).getText()));
+            require("retry-download-visible-again", prompt().getButton(AlertDialog.BUTTON_POSITIVE).getVisibility() == View.VISIBLE);
             require("error-required-gate-kept", activity.panel.isMandatoryBlocking());
         });
         ui(() -> assertLayout(prompt(), "required-error"));
@@ -229,6 +239,16 @@ public final class UpdatePromptProbe extends Instrumentation {
             // Deliberately do not click retry/install: the component probe must never enqueue an APK download.
             activity.manager.error = ""; activity.manager.verified = true; listener().changed();
             require("verified-install-action-visible", "安装更新".contentEquals(prompt().getButton(AlertDialog.BUTTON_POSITIVE).getText()));
+            require("verified-install-visible-again", prompt().getButton(AlertDialog.BUTTON_POSITIVE).getVisibility() == View.VISIBLE && prompt().getButton(AlertDialog.BUTTON_POSITIVE).isEnabled());
+        });
+        waitForIdleSync(); ui(() -> assertLayout(prompt(), "required-ready-to-install")); screenshot("07-ready-to-install");
+        ui(() -> {
+            activity.manager.verified = false; activity.manager.checking = true; listener().changed();
+            require("checking-positive-hidden", prompt().getButton(AlertDialog.BUTTON_POSITIVE).getVisibility() == View.GONE);
+            require("checking-recheck-disabled", !prompt().getButton(AlertDialog.BUTTON_NEUTRAL).isEnabled());
+            require("checking-exit-still-visible", prompt().getButton(AlertDialog.BUTTON_NEGATIVE).getVisibility() == View.VISIBLE);
+            activity.manager.checking = false; listener().changed();
+            require("checking-done-download-visible", prompt().getButton(AlertDialog.BUTTON_POSITIVE).getVisibility() == View.VISIBLE && prompt().getButton(AlertDialog.BUTTON_POSITIVE).isEnabled());
             activity.manager.verified = false;
             activity.panel.onPause();
             require("pause-hides-window", prompt() == null);

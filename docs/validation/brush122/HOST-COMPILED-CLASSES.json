@@ -1,0 +1,900 @@
+{
+  "schemaVersion": 1,
+  "sourceManifestSha256": "6be027dca9ea9eef6697ccd4abd281d9fbafcb1bac4e8224e80e759328b3571d",
+  "classFiles": {
+    "matrix": [
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy$Change.class",
+        "sha256": "efe46adb585494d881a2ea6a052728122a138bc63c12c5e2b833bb28365b0cd8"
+      },
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy$Receipt.class",
+        "sha256": "624b277889e9115110000607180fe8fe8deb59e6997c6537a59724d583bb9187"
+      },
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy$Target.class",
+        "sha256": "a9db61e5f80c19ff3665d7c6404d2b325a3cab6d9528b76660aa4368c9007881"
+      },
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy.class",
+        "sha256": "99e27a0c39aaafa60235d50bd88069c502144c2b8c28136b77523ef4acb717f5"
+      },
+      {
+        "path": "cc/huevia/album/PhotoEditStore$Draft.class",
+        "sha256": "a2a330e4ad95e95b91a9c19bf01661896d01883a1d5967c75658e2d19a0bdc33"
+      },
+      {
+        "path": "cc/huevia/album/PhotoEditStore.class",
+        "sha256": "bf7e40fe885040c821fab35fa7901bec33a5e33e470696f9f28b76830f55bf8c"
+      },
+      {
+        "path": "cc/huevia/album/PhotoRecipeStore$Recipe.class",
+        "sha256": "c61364474002516a6515cd14e53a849d30738dc970294cdda72c9808cc59f5f1"
+      },
+      {
+        "path": "cc/huevia/album/PhotoRecipeStore.class",
+        "sha256": "15b9110b6fc2c08c521912be0dd4fdf9bd28c129f2f985ebbb8698e091e9697e"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustedPreviewProfile$1.class",
+        "sha256": "1077e24bba7384c6433140e811fe55c9608f803fb2639220f4bedf165684d083"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustedPreviewProfile.class",
+        "sha256": "246cb33beec41079b5a1cbf393a942c3b4652d21dbd84e305466581bfef5be88"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegion$Brush.class",
+        "sha256": "de9c026b7052be65d4a44fae4f0151f42d773e447698e351aeb692653ff77ead"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegion$SegmentStroke.class",
+        "sha256": "f271ec7eaf07639fcf6eb2fde36ed599cabaddad812fbb3e4022ffe881b92b69"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegion.class",
+        "sha256": "60a8d58052584b8d750777c2872ad7b73445bd8b4cf070753cadf3b19a0bfac1"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionRenderer$Scratch.class",
+        "sha256": "9477e0381c29ab28796337da96030b5ab1e94965c36ae7e8dd3e8bcad2d07ebb"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionRenderer.class",
+        "sha256": "b16cc36953b000aea36886895563e1d6ad7c38c360b9735f6e783e74aeb70a68"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionTest$1.class",
+        "sha256": "bd7ea1b2af79d505929131ca76dfab96b93b8c4706595a1294adb1917e5746dd"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionTest$Raster.class",
+        "sha256": "364132956d52d1aa08e00ac997ca3c3537ad23f6ed510fcef3e711611dd4ff3a"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionTest$Throwing.class",
+        "sha256": "bae33d931b6366cf7d787c5abaf54887acfce1f0722979a079ad5fb4ab2836ad"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionTest$TileRaster.class",
+        "sha256": "eec17c8faa0e4b83676e7a4d160142eccb465a9b780772ef2ed8249772f6c032"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionTest.class",
+        "sha256": "8535058c437ec727328bf3c7380eb8a7cc5342c3afa4ed90232728484a257a51"
+      },
+      {
+        "path": "cc/huevia/ncp/BorderPreviewProfile.class",
+        "sha256": "c07217b8f0646a5c38b05bea995c456add8f7b15f0e09c2cc8a82dec8f047ca8"
+      },
+      {
+        "path": "cc/huevia/ncp/GeometryPreviewProfile.class",
+        "sha256": "71783006cbfa792e950d1e06f5a69ef5746577c2c81cb7971d7d384b07a78f3d"
+      },
+      {
+        "path": "cc/huevia/ncp/LocalEditsPreviewProfile$BrushIndex.class",
+        "sha256": "fd43d178f99daa73f2c5780eaf3b0ae916642a5d560803d16ba6477c44adaca3"
+      },
+      {
+        "path": "cc/huevia/ncp/LocalEditsPreviewProfile$CompiledMask.class",
+        "sha256": "d74b1a1846a3de8eba03b095b289c5c6afcdb0af92b990c90bf4e32232f2658e"
+      },
+      {
+        "path": "cc/huevia/ncp/LocalEditsPreviewProfile.class",
+        "sha256": "769dd255dc1bfb81ecd7a189e242aed5a35a6947a207a1a0214a5f7bf8349823"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpFile.class",
+        "sha256": "22939924b5238449bb38967bf20fbb92830794d40682dae588c935b539580300"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpPictureControlConverter$Conversion.class",
+        "sha256": "12d5f44731c0f4ec9e8b5a05fb3178e282a46e6bc3f1edc077d8dcd6de59599e"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpPictureControlConverter.class",
+        "sha256": "c6da511cc50b50ae2f47b348f44e7d886e4ab8a82b715e31dc37ea66c299fedd"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpPreviewProfile.class",
+        "sha256": "edcae9436373f33052704c430543a876ae0094a824ebdcb73c4ac04803d9476c"
+      },
+      {
+        "path": "cc/huevia/ncp/Np3MonochromePreviewProfile.class",
+        "sha256": "6c34fa413bd11a6159df023f436f34293bf50d5423e393250c05e452056fc785"
+      },
+      {
+        "path": "cc/huevia/ncp/Np3PreviewProfile.class",
+        "sha256": "684db1e2e5139541d4699ab512eadb65002fa9ff3cc58c9971e6476ee0182d13"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoAdjustments$1.class",
+        "sha256": "31afb7c1f473a3d6bdd59045b5919d286b78f8b068d803e401134505707a91f2"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoAdjustments$Parameter.class",
+        "sha256": "d667ccd03c6d052b92610151294b1cbc8fb3b3015ae7d77190d4bce0716edc66"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoAdjustments.class",
+        "sha256": "ebd07c510a123bcc98a6d3b9f7c51494d39fa5de60d47b6c6deac217b1bdf22b"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoBorder.class",
+        "sha256": "97d407a94ece138a7c3d5b75b63caa34a9c9cc7c6d31d3dd5c522e3910297464"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoCurves.class",
+        "sha256": "e1c74d5ab1e1fcc574abd953fb7a8797ee127f2bfec465e29a32c9023b270fd2"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoDetailEffects$Denoise.class",
+        "sha256": "7c0af909f370546c004f5414e14588d0080cfe33254813090470600802024f04"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoDetailEffects.class",
+        "sha256": "ad18c2d427136210af0ee1090503af67bf0a2d933c8d4676e93cb78db5638d79"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoGeometry$Plan.class",
+        "sha256": "68fff14b3c8bc722e0368a6a6f36f470b3e15470229e162fdd9a15a0147c39cb"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoGeometry.class",
+        "sha256": "db2191c9d7a8dbdaee25f131dd42b44c1c2239d55391e340c975252f8cc79910"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHistogram$Builder.class",
+        "sha256": "488d4f3f4f18d12da39e9c9cdc6dbb144297d8678271c55a07b430056ee86d88"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHistogram$Channel.class",
+        "sha256": "5e7fe34dcf0acb7cf2e73766a4d501cdfb7237dd3598caaf7804fa819acf49e7"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHistogram.class",
+        "sha256": "3e16c09fc0b8f56f4a625e8c414dca893c1fa3f8a424f0d808e61a466db9a434"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHsl.class",
+        "sha256": "72935025a3940ca6923005e37b7971ab448c3dc1fd95c052fb7d02540ba0cd2a"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$1.class",
+        "sha256": "e75a2b992103614140e1bd4e3d30b4b7b9e633b7be136ed0d9ec90bc6bee60a7"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$Clone.class",
+        "sha256": "148eebdfe5d5d51a3aba089c9ae09e24dbd68014dffca305eba2ac09d6ab6e31"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$Kind.class",
+        "sha256": "208986562bb1d1e26af22ee6ad08a9135c8e6fcd82c017d1e8b2852c64686426"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$Mask.class",
+        "sha256": "9a320992321b8b2ce564ba7a2336a0a2dbf71d8ef7322846c4a718b3babd6228"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits.class",
+        "sha256": "fca7669c9bcf98ca36e091cb3bdc91d7ecabd1beabfae0dd3779a4533e3e49ea"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$BodySkinMask.class",
+        "sha256": "77b18cddc18323b8af45d756d72e9516244d62954e96fe16624069affacbe972"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Face.class",
+        "sha256": "b7ba0a568d9c0c1118196b60e9c513d9c705eb235e41b950cffec5a5366b27a2"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Heal.class",
+        "sha256": "eb5483ad78deba7cbdf60e21989c5c56a64a963221fab267d087afaf95ef6ed7"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Landmarks.class",
+        "sha256": "764f5d51c657e90f9e597edf06f22a749d11b60ea14ae638e5e9e15516e9f45e"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Settings.class",
+        "sha256": "768473cddac522e2f5b8379c5ce8755142e2ef0efa7cdeea63826be36cb0373b"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$SkinMask.class",
+        "sha256": "edcdacf652da8437670b490e7596fe17b0f123f4c88a65de303a7f0936aab593"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Stroke.class",
+        "sha256": "4f9b86acf5bc914b16e0c84ef6f439270e5a063b750aa31c9f320e07f6a68e0d"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Tone.class",
+        "sha256": "a9a175b3e1b69fb42cb4d26dcacac2207700d2e3f000adbed48a5009d0a66e37"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait.class",
+        "sha256": "83a06e9a52358089d5beb9e86c61829c0996190b4d8321fa7782f97b89181c00"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$GlobalFeature.class",
+        "sha256": "447fad26cbab6deb70ac5a9e1e0a104e6e9570068a46273d47cd15dac38219f2"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$GlobalMask.class",
+        "sha256": "12c3cb6bc9b8e0c232ef69b55686a4295532bad2521c78089f73e4ac4844cc27"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$GlobalTone.class",
+        "sha256": "9901889b3fd8bca8ae7897781f6e2bf6ddfc1529d10fb909a708414e18801274"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$Mask.class",
+        "sha256": "bae355d3450e86683df86e29fa3ad55643f97c1046f493c321f228e2ad73a1b6"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$MeshRegion.class",
+        "sha256": "caa5519a9d8cb09186d062f0044de6380a8b653ab14f92f8dab350f3e164d388"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$Polygon.class",
+        "sha256": "cb0e3bfe46045e49ed679c78af62a5d497565d1aaf7c94adf6c8f2509c7b496f"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$StrokeMask.class",
+        "sha256": "35c57da8cf3ed629e3662cc9e407a051fdb479e15689abe4f96c07fdc4bd45c6"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter.class",
+        "sha256": "fb3e481d95b783c070c41c7005a89bcec041b34a0779fc41b3fd88eccaa3acb2"
+      },
+      {
+        "path": "cc/huevia/ncp/PresetPreviewProfile$1.class",
+        "sha256": "1d50692468825c2d7d894476afc219bfbfdb058b38c55b4e8d2b202e5bd1346d"
+      },
+      {
+        "path": "cc/huevia/ncp/PresetPreviewProfile.class",
+        "sha256": "7212344f67405f939357e99e55f69a2ff30ef3ba9e3b1b79194c1b5723f80188"
+      },
+      {
+        "path": "cc/huevia/ncp/PresetPreviewProfiles.class",
+        "sha256": "13e2c14bf54f891957bd903261213d0c18e018a23304498876be5e49265d4ac9"
+      },
+      {
+        "path": "cc/huevia/ncp/RawDevelopmentSettings$WhiteBalance.class",
+        "sha256": "a1a1d5a60a4a1df8a23951a3439127ebd66020e71548038833663a79e56c616c"
+      },
+      {
+        "path": "cc/huevia/ncp/RawDevelopmentSettings.class",
+        "sha256": "ac4d9ad8e46d3480abb074e55ba6774ba06ba7039b16c73c3f5e6fcb891a62b8"
+      },
+      {
+        "path": "cc/huevia/ncp/RegionBoundedMemoryProbe$Source.class",
+        "sha256": "a742eaf9b7cf340fab4c59a47f0e702ffe4cf00fd48ada6d71da2090ae8493a4"
+      },
+      {
+        "path": "cc/huevia/ncp/RegionBoundedMemoryProbe.class",
+        "sha256": "97fceab04dbe14207995778bcb89fb524ae28e179f9943a244dc71e9427d9035"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinBodyRegions.class",
+        "sha256": "bbe6f939f16c9cdcca5e5a90a71156b0404cafd5c5cd319c13c964929569b6de"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone$Entry.class",
+        "sha256": "ec3ba5e46cf310ce06da364e591ecc4ba95b7523ed4e45a44f3146a033a4450d"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone$Transfer.class",
+        "sha256": "118b9cba153965bce48571097c6417a684d524d2f3043b161bed290e0b7bf5db"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone$Transform.class",
+        "sha256": "ee6aa1d215178ab6106e6199483f18ea5f29595f9e8483e44cb78351bd673b58"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone.class",
+        "sha256": "cccb4f6378f7bc3419a852b7c5f05f650f7b2f3a9aac13a315dcb48db822eb0a"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter$Filter.class",
+        "sha256": "d8cd42922dd1883ea1e0787b55570858bf6fec96b4a52ad3fc04e8a8c48c4519"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter$Pixels.class",
+        "sha256": "52451264c2d1aa91353c748c6ba7cf5c30438332566a7b14d2ff4aa01db4ac71"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter$Settings.class",
+        "sha256": "89466b5d02220de9670ead964a2e657efe8edbebe74c99d9643afde0b99111d6"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter.class",
+        "sha256": "31e56e9b724b60900de3afc8d341db5a6c8d966f8d0073546132e088ffadad11"
+      },
+      {
+        "path": "cc/huevia/ncp/StrengthPreviewProfile$1.class",
+        "sha256": "48a92b31169326a6705280bbf0dd34f74e17b7f47ba005cc5679609ed83361d8"
+      },
+      {
+        "path": "cc/huevia/ncp/StrengthPreviewProfile.class",
+        "sha256": "448cc8ae26acc83babc3f7d6f2a950130d0e02ef745ab928612cfdd7afa77b74"
+      }
+    ],
+    "legacy": [
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy$Change.class",
+        "sha256": "efe46adb585494d881a2ea6a052728122a138bc63c12c5e2b833bb28365b0cd8"
+      },
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy$Receipt.class",
+        "sha256": "624b277889e9115110000607180fe8fe8deb59e6997c6537a59724d583bb9187"
+      },
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy$Target.class",
+        "sha256": "a9db61e5f80c19ff3665d7c6404d2b325a3cab6d9528b76660aa4368c9007881"
+      },
+      {
+        "path": "cc/huevia/album/PhotoAdjustmentCopy.class",
+        "sha256": "99e27a0c39aaafa60235d50bd88069c502144c2b8c28136b77523ef4acb717f5"
+      },
+      {
+        "path": "cc/huevia/album/PhotoEditStore$Draft.class",
+        "sha256": "a2a330e4ad95e95b91a9c19bf01661896d01883a1d5967c75658e2d19a0bdc33"
+      },
+      {
+        "path": "cc/huevia/album/PhotoEditStore.class",
+        "sha256": "bf7e40fe885040c821fab35fa7901bec33a5e33e470696f9f28b76830f55bf8c"
+      },
+      {
+        "path": "cc/huevia/album/PhotoRecipeStore$Recipe.class",
+        "sha256": "c61364474002516a6515cd14e53a849d30738dc970294cdda72c9808cc59f5f1"
+      },
+      {
+        "path": "cc/huevia/album/PhotoRecipeStore.class",
+        "sha256": "15b9110b6fc2c08c521912be0dd4fdf9bd28c129f2f985ebbb8698e091e9697e"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustedPreviewProfile$1.class",
+        "sha256": "1077e24bba7384c6433140e811fe55c9608f803fb2639220f4bedf165684d083"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustedPreviewProfile.class",
+        "sha256": "246cb33beec41079b5a1cbf393a942c3b4652d21dbd84e305466581bfef5be88"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegion$Brush.class",
+        "sha256": "de9c026b7052be65d4a44fae4f0151f42d773e447698e351aeb692653ff77ead"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegion$SegmentStroke.class",
+        "sha256": "f271ec7eaf07639fcf6eb2fde36ed599cabaddad812fbb3e4022ffe881b92b69"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegion.class",
+        "sha256": "60a8d58052584b8d750777c2872ad7b73445bd8b4cf070753cadf3b19a0bfac1"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionRenderer$Scratch.class",
+        "sha256": "9477e0381c29ab28796337da96030b5ab1e94965c36ae7e8dd3e8bcad2d07ebb"
+      },
+      {
+        "path": "cc/huevia/ncp/AdjustmentRegionRenderer.class",
+        "sha256": "b16cc36953b000aea36886895563e1d6ad7c38c360b9735f6e783e74aeb70a68"
+      },
+      {
+        "path": "cc/huevia/ncp/BorderPreviewProfile.class",
+        "sha256": "c07217b8f0646a5c38b05bea995c456add8f7b15f0e09c2cc8a82dec8f047ca8"
+      },
+      {
+        "path": "cc/huevia/ncp/GeometryPreviewProfile.class",
+        "sha256": "71783006cbfa792e950d1e06f5a69ef5746577c2c81cb7971d7d384b07a78f3d"
+      },
+      {
+        "path": "cc/huevia/ncp/GlobalTonePerformanceProbe$Rows.class",
+        "sha256": "b88377ad11cc9090f1ee773ac77cafbb669193f255df39bab65cef75fc126ce1"
+      },
+      {
+        "path": "cc/huevia/ncp/GlobalTonePerformanceProbe.class",
+        "sha256": "300f32c8079471439d09a88773243df8c4b751ef18cfa88a961e699928dcfb6a"
+      },
+      {
+        "path": "cc/huevia/ncp/LocalEditsPreviewProfile$BrushIndex.class",
+        "sha256": "fd43d178f99daa73f2c5780eaf3b0ae916642a5d560803d16ba6477c44adaca3"
+      },
+      {
+        "path": "cc/huevia/ncp/LocalEditsPreviewProfile$CompiledMask.class",
+        "sha256": "d74b1a1846a3de8eba03b095b289c5c6afcdb0af92b990c90bf4e32232f2658e"
+      },
+      {
+        "path": "cc/huevia/ncp/LocalEditsPreviewProfile.class",
+        "sha256": "769dd255dc1bfb81ecd7a189e242aed5a35a6947a207a1a0214a5f7bf8349823"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpFile.class",
+        "sha256": "22939924b5238449bb38967bf20fbb92830794d40682dae588c935b539580300"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpPictureControlConverter$Conversion.class",
+        "sha256": "12d5f44731c0f4ec9e8b5a05fb3178e282a46e6bc3f1edc077d8dcd6de59599e"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpPictureControlConverter.class",
+        "sha256": "c6da511cc50b50ae2f47b348f44e7d886e4ab8a82b715e31dc37ea66c299fedd"
+      },
+      {
+        "path": "cc/huevia/ncp/NcpPreviewProfile.class",
+        "sha256": "edcae9436373f33052704c430543a876ae0094a824ebdcb73c4ac04803d9476c"
+      },
+      {
+        "path": "cc/huevia/ncp/Np3MonochromePreviewProfile.class",
+        "sha256": "6c34fa413bd11a6159df023f436f34293bf50d5423e393250c05e452056fc785"
+      },
+      {
+        "path": "cc/huevia/ncp/Np3PreviewProfile.class",
+        "sha256": "684db1e2e5139541d4699ab512eadb65002fa9ff3cc58c9971e6476ee0182d13"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoAdjustments$1.class",
+        "sha256": "31afb7c1f473a3d6bdd59045b5919d286b78f8b068d803e401134505707a91f2"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoAdjustments$Parameter.class",
+        "sha256": "d667ccd03c6d052b92610151294b1cbc8fb3b3015ae7d77190d4bce0716edc66"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoAdjustments.class",
+        "sha256": "ebd07c510a123bcc98a6d3b9f7c51494d39fa5de60d47b6c6deac217b1bdf22b"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoBorder.class",
+        "sha256": "97d407a94ece138a7c3d5b75b63caa34a9c9cc7c6d31d3dd5c522e3910297464"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoCurves.class",
+        "sha256": "e1c74d5ab1e1fcc574abd953fb7a8797ee127f2bfec465e29a32c9023b270fd2"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoDetailEffects$Denoise.class",
+        "sha256": "7c0af909f370546c004f5414e14588d0080cfe33254813090470600802024f04"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoDetailEffects.class",
+        "sha256": "ad18c2d427136210af0ee1090503af67bf0a2d933c8d4676e93cb78db5638d79"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoGeometry$Plan.class",
+        "sha256": "68fff14b3c8bc722e0368a6a6f36f470b3e15470229e162fdd9a15a0147c39cb"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoGeometry.class",
+        "sha256": "db2191c9d7a8dbdaee25f131dd42b44c1c2239d55391e340c975252f8cc79910"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHistogram$Builder.class",
+        "sha256": "488d4f3f4f18d12da39e9c9cdc6dbb144297d8678271c55a07b430056ee86d88"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHistogram$Channel.class",
+        "sha256": "5e7fe34dcf0acb7cf2e73766a4d501cdfb7237dd3598caaf7804fa819acf49e7"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHistogram.class",
+        "sha256": "3e16c09fc0b8f56f4a625e8c414dca893c1fa3f8a424f0d808e61a466db9a434"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoHsl.class",
+        "sha256": "72935025a3940ca6923005e37b7971ab448c3dc1fd95c052fb7d02540ba0cd2a"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$1.class",
+        "sha256": "e75a2b992103614140e1bd4e3d30b4b7b9e633b7be136ed0d9ec90bc6bee60a7"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$Clone.class",
+        "sha256": "148eebdfe5d5d51a3aba089c9ae09e24dbd68014dffca305eba2ac09d6ab6e31"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$Kind.class",
+        "sha256": "208986562bb1d1e26af22ee6ad08a9135c8e6fcd82c017d1e8b2852c64686426"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits$Mask.class",
+        "sha256": "9a320992321b8b2ce564ba7a2336a0a2dbf71d8ef7322846c4a718b3babd6228"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoLocalEdits.class",
+        "sha256": "fca7669c9bcf98ca36e091cb3bdc91d7ecabd1beabfae0dd3779a4533e3e49ea"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$BodySkinMask.class",
+        "sha256": "77b18cddc18323b8af45d756d72e9516244d62954e96fe16624069affacbe972"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Face.class",
+        "sha256": "b7ba0a568d9c0c1118196b60e9c513d9c705eb235e41b950cffec5a5366b27a2"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Heal.class",
+        "sha256": "eb5483ad78deba7cbdf60e21989c5c56a64a963221fab267d087afaf95ef6ed7"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Landmarks.class",
+        "sha256": "764f5d51c657e90f9e597edf06f22a749d11b60ea14ae638e5e9e15516e9f45e"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Settings.class",
+        "sha256": "768473cddac522e2f5b8379c5ce8755142e2ef0efa7cdeea63826be36cb0373b"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$SkinMask.class",
+        "sha256": "edcdacf652da8437670b490e7596fe17b0f123f4c88a65de303a7f0936aab593"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Stroke.class",
+        "sha256": "4f9b86acf5bc914b16e0c84ef6f439270e5a063b750aa31c9f320e07f6a68e0d"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait$Tone.class",
+        "sha256": "a9a175b3e1b69fb42cb4d26dcacac2207700d2e3f000adbed48a5009d0a66e37"
+      },
+      {
+        "path": "cc/huevia/ncp/PhotoPortrait.class",
+        "sha256": "83a06e9a52358089d5beb9e86c61829c0996190b4d8321fa7782f97b89181c00"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitGlobalToneTest$Action.class",
+        "sha256": "9b663db72ceb000c1145f2290d295a81ef4bbaeda737c736ede1258b397d3500"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitGlobalToneTest$Raster.class",
+        "sha256": "4434d642f8fd9341c87478e523264716137449f60e53fc507793128c74947b29"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitGlobalToneTest.class",
+        "sha256": "b7b8a0f7309ec20f3f9332c3e8f84bcfa1c905040a664c144301873df5c3a657"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitLandmarkMaskTest$Raster.class",
+        "sha256": "1024ce3f6871587bb52dc548b217564e9bde7c0ca768e25d163f1fad6fc26dd4"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitLandmarkMaskTest.class",
+        "sha256": "8e1c2105ee86f5e8251697fe84131bf18c5404e79fd08fd1fe195f42a7512264"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitLandmarksTest$Action.class",
+        "sha256": "c96706c47c3e24ad264dafa9cb047629ad6360165edfc717573e94398b259cb1"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitLandmarksTest.class",
+        "sha256": "35759d8629540b83d020ba14dafd312e932f11f9b4b517788c8d6e5dd0fc8336"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitModelTest$Action.class",
+        "sha256": "a8fcc432fa976cce17eafa2fbefa935cd9616086cd36634add9765996381de67"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitModelTest.class",
+        "sha256": "c428a53fe4324b90e7fafaa889276b50b8cecdf6306369d084a4e63819b8e2bc"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPipelineTest$Action.class",
+        "sha256": "b8920f9fb26ce676def578b2986b61fee21c711e6bc0e85cd969762abdd4d8b4"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPipelineTest$Raster.class",
+        "sha256": "b0aa5945de108fb46588613530e3c5e469874613a7dd0baeed3b732ed8f30e89"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPipelineTest.class",
+        "sha256": "7c7e7eb6f53634a07afea359974d2883cdeda3d512fa38aa8a499f6a8c492051"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$GlobalFeature.class",
+        "sha256": "447fad26cbab6deb70ac5a9e1e0a104e6e9570068a46273d47cd15dac38219f2"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$GlobalMask.class",
+        "sha256": "12c3cb6bc9b8e0c232ef69b55686a4295532bad2521c78089f73e4ac4844cc27"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$GlobalTone.class",
+        "sha256": "9901889b3fd8bca8ae7897781f6e2bf6ddfc1529d10fb909a708414e18801274"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$Mask.class",
+        "sha256": "bae355d3450e86683df86e29fa3ad55643f97c1046f493c321f228e2ad73a1b6"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$MeshRegion.class",
+        "sha256": "caa5519a9d8cb09186d062f0044de6380a8b653ab14f92f8dab350f3e164d388"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$Polygon.class",
+        "sha256": "cb0e3bfe46045e49ed679c78af62a5d497565d1aaf7c94adf6c8f2509c7b496f"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter$StrokeMask.class",
+        "sha256": "35c57da8cf3ed629e3662cc9e407a051fdb479e15689abe4f96c07fdc4bd45c6"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitPreviewFilter.class",
+        "sha256": "fb3e481d95b783c070c41c7005a89bcec041b34a0779fc41b3fd88eccaa3acb2"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitSemanticMaskTest$Raster.class",
+        "sha256": "fbaf3b1662aaf1a05911fb964f472efaefe3ad47e588ab1a498fd259041c9f96"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitSemanticMaskTest.class",
+        "sha256": "fa68f226c0ed3909a1763f707c6231715939597cd75ab9178a2570c81c91ecce"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitSkinMaskTest$Action.class",
+        "sha256": "af4e5d88ca0df555c260d06567670a79af96d138f0ff63122a049e99fd4b6bd1"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitSkinMaskTest.class",
+        "sha256": "d9a7ab06eb6012ae41434f1e2840300c626f8f54a2d5e02b49b73687bc2fbbbd"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitToneTest$Action.class",
+        "sha256": "936a7ce677aec6aff0d903cbb1aacaf306bbac57dc503f84d65edadc1a52f37d"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitToneTest$Raster.class",
+        "sha256": "26e6ef0f76d94981183f917d853cfc14354b06a99d6a363e5dce1fe538ef3a80"
+      },
+      {
+        "path": "cc/huevia/ncp/PortraitToneTest.class",
+        "sha256": "dc4cddfea9fb9353304205f7b92b36e7d478881d5d182177635e1d5346e2cbc0"
+      },
+      {
+        "path": "cc/huevia/ncp/PresetPreviewProfile$1.class",
+        "sha256": "1d50692468825c2d7d894476afc219bfbfdb058b38c55b4e8d2b202e5bd1346d"
+      },
+      {
+        "path": "cc/huevia/ncp/PresetPreviewProfile.class",
+        "sha256": "7212344f67405f939357e99e55f69a2ff30ef3ba9e3b1b79194c1b5723f80188"
+      },
+      {
+        "path": "cc/huevia/ncp/PresetPreviewProfiles.class",
+        "sha256": "13e2c14bf54f891957bd903261213d0c18e018a23304498876be5e49265d4ac9"
+      },
+      {
+        "path": "cc/huevia/ncp/RawDevelopmentSettings$WhiteBalance.class",
+        "sha256": "a1a1d5a60a4a1df8a23951a3439127ebd66020e71548038833663a79e56c616c"
+      },
+      {
+        "path": "cc/huevia/ncp/RawDevelopmentSettings.class",
+        "sha256": "ac4d9ad8e46d3480abb074e55ba6774ba06ba7039b16c73c3f5e6fcb891a62b8"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinBodyRegions.class",
+        "sha256": "bbe6f939f16c9cdcca5e5a90a71156b0404cafd5c5cd319c13c964929569b6de"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinBodyRegionsTest.class",
+        "sha256": "3144b81d1ff28ec730492a5488fd4c653d5a9b33bee6324958627b2abcda5b62"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone$Entry.class",
+        "sha256": "ec3ba5e46cf310ce06da364e591ecc4ba95b7523ed4e45a44f3146a033a4450d"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone$Transfer.class",
+        "sha256": "118b9cba153965bce48571097c6417a684d524d2f3043b161bed290e0b7bf5db"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone$Transform.class",
+        "sha256": "ee6aa1d215178ab6106e6199483f18ea5f29595f9e8483e44cb78351bd673b58"
+      },
+      {
+        "path": "cc/huevia/ncp/SkinTone.class",
+        "sha256": "cccb4f6378f7bc3419a852b7c5f05f650f7b2f3a9aac13a315dcb48db822eb0a"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter$Filter.class",
+        "sha256": "d8cd42922dd1883ea1e0787b55570858bf6fec96b4a52ad3fc04e8a8c48c4519"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter$Pixels.class",
+        "sha256": "52451264c2d1aa91353c748c6ba7cf5c30438332566a7b14d2ff4aa01db4ac71"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter$Settings.class",
+        "sha256": "89466b5d02220de9670ead964a2e657efe8edbebe74c99d9643afde0b99111d6"
+      },
+      {
+        "path": "cc/huevia/ncp/SpatialPreviewFilter.class",
+        "sha256": "31e56e9b724b60900de3afc8d341db5a6c8d966f8d0073546132e088ffadad11"
+      },
+      {
+        "path": "cc/huevia/ncp/StrengthPreviewProfile$1.class",
+        "sha256": "48a92b31169326a6705280bbf0dd34f74e17b7f47ba005cc5679609ed83361d8"
+      },
+      {
+        "path": "cc/huevia/ncp/StrengthPreviewProfile.class",
+        "sha256": "448cc8ae26acc83babc3f7d6f2a950130d0e02ef745ab928612cfdd7afa77b74"
+      },
+      {
+        "path": "cc/huevia/ncp/TonePerformanceProbe$Rows.class",
+        "sha256": "c2dea8cbba8acf28187ed846477823ccb4b91c6b1547c9606d0fe121644c49fd"
+      },
+      {
+        "path": "cc/huevia/ncp/TonePerformanceProbe.class",
+        "sha256": "f82c7788ce2afac14d7fdf726851e95de2a8557bdc7499187cdfc255b3a48bd3"
+      }
+    ],
+    "platform": [
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$1.class",
+        "sha256": "658b7976706b27d4c8d3f645de112ff0497e0448679e12b62e95086c80ae712f"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$2.class",
+        "sha256": "00bb7a05fce5b9a316d0291ca6b5647abbfde1240bb7108e0aaa7f201ca53977"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$3.class",
+        "sha256": "22adffbc67e412d7d1b5a82128a7d7266f0425c7a1ffbd315ad8dbd88289963c"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$Callback.class",
+        "sha256": "5970f886a23c40bbc2ad182ba92e22010f7ecaa1698c711cfa7ff727b98cbb9c"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$Frame.class",
+        "sha256": "909d158f9dd620e7b97e30b5e6e1b39a2d34cd394d53b003391db617ca06e735"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$Pending.class",
+        "sha256": "acaef5c139e6b8684ae4d6706251e8f0d84e1ceaa900412a2e2eb16276bcf215"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$Request.class",
+        "sha256": "11fc6fa4367ddb3faad5ae47ed58066398210c22fa70d97683bb77dc47ca5ff4"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$Surface.class",
+        "sha256": "81da97e434d780172da006d6a88aa586e2bfaeb5cbbd54a757e975711fe7caf2"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource$Tile.class",
+        "sha256": "f0e204b5cba0f47fc61bf70c6ca916aa2cd70d602b75899b7fae9b458a43d871"
+      },
+      {
+        "path": "cc/huevia/album/PhotoDetailSource.class",
+        "sha256": "979e27e2143d950fbeb778d15881bb5c79600f9e2b4ceba4ede94296ad14450d"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$1.class",
+        "sha256": "7d333cd2460be7b6f53390b82b1105197f0ea1464d99d3446e8bc9fb02499876"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$Frame.class",
+        "sha256": "f1e77dcf1592664e734abf35d7eb1db86472bdb6676d9b85eda43303c021ed1d"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$FrameCallback.class",
+        "sha256": "ac372709902beec254fb24112073c9f5343f7d5b9f59a112fb959b3ea8fdf56b"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$Info.class",
+        "sha256": "cc1d2bb7f8614bdabc76673ecc18fe229a22d68b424fc5854ca6ccc157226192"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$Listener.class",
+        "sha256": "b04cf7f87ee3fcf75cc8e64210be03d816613d3dab7d30183681c4cd79ffbd8f"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$Request.class",
+        "sha256": "3851de410dc95fb96c3a2d16165294fe39904c19dc828e91b325cbc0787315c3"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$Surface.class",
+        "sha256": "ff3896d6cb0c83e429c303427e5dae1c54ccd447eec63564214a4b211f620f77"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview$Tile.class",
+        "sha256": "0c9d7c4686ebd63dd19bf8c9583117e01ccb10c81267ede000aa2931adfbb301"
+      },
+      {
+        "path": "cc/huevia/album/PhotoExportPreview.class",
+        "sha256": "e44ee6eb61641466230dd5bb62e6f75747db243838beb18c56858bc6e256b1ed"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$1.class",
+        "sha256": "b896950d903d962ff11bed3254a9683ec2e4a1294fd1c924755bef916c0c4445"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$AccountChanged.class",
+        "sha256": "1412613de14a5698b006c4c264bf73133b2918397bbf07c0fa93d6bf5efd6b98"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$AcquisitionTimeout.class",
+        "sha256": "c635532820ca84a98af2392d37c81dca9abddbd8b9188a3e7af2a7fb55545000"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$Derived.class",
+        "sha256": "ceefda97df243569d32294f6b21fa3a3475392a1982da9b8a0ae65c218655494"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$Edit.class",
+        "sha256": "7bee58627cd3994b64fcef0f61aa8c7282c4fc09f7159da19c58bbcb035f7d2f"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$Job.class",
+        "sha256": "8141efff8c01bc7bbe3e4b706086bc0ba95b7e35fcb9902ce04167e0f82b0687"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$Outcome.class",
+        "sha256": "406d21091a42287862e4022d6c7b39732406228672ee5d267107fd4d0c18b3e6"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$OutputRecord.class",
+        "sha256": "10b660eef12db589fb29508616ef4705180fd7a5f72aa19eb3cb9e41cb9f4258"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch$Source.class",
+        "sha256": "c9e4011e7f730ea984b26c41de3e2d566760e49591f3bc74511fb90ab4cf018c"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetBatch.class",
+        "sha256": "aa0f740fa31538756a9e833c9d1ca5ccab2195fd9d7186ad7b2ef8ea38147a59"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$1.class",
+        "sha256": "92f1ebff61117c5343f5e826f768ddfde59a6e19e3b11d74bbaaafb0697b16a6"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$2.class",
+        "sha256": "0d52541c485ce69713460c4a7559b9e19d57d1de39363e9798b47fe33bec0176"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$Cancelled.class",
+        "sha256": "ef7e11b7867e54e42d984a8c67577db41efe96cc69cfb0834d68d99a791189cc"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$DetailResult.class",
+        "sha256": "ade30886fa81715dcc625c869a8b26b5269560bde4d53c76b8e81dbf5bc7b6a5"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$Dimensions.class",
+        "sha256": "2cf264a83e5cee44d23a84c5d1ecbcbe2834e8066712ba840754ba127a379731"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$Pixels.class",
+        "sha256": "e4b5ee77825b45a5d3fb1a3591deba97f798d6a1fdecae86a0d8d8e2608e90a4"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer$Progress.class",
+        "sha256": "83af692a2430f5a20967c2e49023701e34fda3ba3a4b38844f9310b3ac35748a"
+      },
+      {
+        "path": "cc/huevia/album/PhotoPresetRenderer.class",
+        "sha256": "933d805e3f054c62156554b3074383b2cc4fbf6a11978ec1a76f160a42025d1d"
+      }
+    ]
+  }
+}

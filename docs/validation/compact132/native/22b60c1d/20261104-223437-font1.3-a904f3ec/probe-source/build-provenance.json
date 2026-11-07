@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/compact-editor-device-probe/src/cc/huevia/compacteditorqa/CompactEditorProbe.java",
+      "sha256": "21cecbb59daffe4b332672db9bb434e0df41c77d9e07c0572db8af79d46ad3a0"
+    },
+    {
+      "path": ".tooling/portrait-qa/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "path": "tests/compact-editor-device-probe/AndroidManifest.xml",
+      "sha256": "bb39829a7cc9d361ec6adcb7f663cc2888e688587e6641119bd0272e48f4447f"
+    },
+    {
+      "path": "tests/compact-editor-device-probe/build.ps1",
+      "sha256": "b531b19fdeaca46b53ca5c319f0cdfab3a96e6a3a1f4cc65227c44e78e0f002c"
+    },
+    {
+      "path": "tests/compact-editor-device-probe/run.ps1",
+      "sha256": "82d4bc161bb98e58c0e351d8b1d3e13b4ac9d4c6b641ba98d7665fca64a3a988"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/compacteditorqa/CompactEditorProbe.class",
+    "cc/huevia/compacteditorqa/CompactEditorProbe$Condition.class",
+    "cc/huevia/compacteditorqa/CompactEditorProbe$Work.class"
+  ],
+  "apkSha256": "89a9e1e21b5670dabbdb78f42174bb6dcdbbd70a4ad2b4b1db64265414791a88"
+}

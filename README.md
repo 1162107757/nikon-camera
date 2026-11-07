@@ -1,5 +1,43 @@
 # Huevia · Android
 
+## 0.29.2-beta · 柔和卡片选中态（153，本地交付）
+
+人像肤色及同类滤镜／快速预览／边框卡片使用 1dp 柔和灰金选中框；肤色／大卡片采用轻透底与中性白字，保留勾选和实际颜色。主操作、工具黄色及布局不变。[本地 APK](dist/huevia-0.29.2-beta-debug.apk) 为 33,606,103 字节，SHA-256 `10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e`；七模式共 70 次有界检查、42 张原生图，完整[独立复核](.impeccable/review/selection-soft153/review.md)为 FIX，仅小字对比度；白字修正后同包重跑 70 次／42 图，[评分 verdict](.impeccable/review/selection-soft153/verdict.md)为限定 ship，仅关闭卡片文字对比度修正及直接回归，不代表整页通过。见[实施及验证](docs/selection-soft153.md)；152 的 723 次未重跑，本轮无实体机或公开发布结论。
+
+## 0.29.1-beta · 草稿续接与统一编辑工具（152，历史本地交付）
+
+普通打开照片恢复未导出草稿，关闭旁恢复三点菜单；重置与选中圆盘同心，皮肤／面部／塑形及二级工具沿用 Prisma 材料。人像／塑形历史行透明，塑形范围和重置并入五个圆形工具；上方眼睛／四角框与下方范围滑块／带文案重置区分各自作用。[本地 APK](dist/huevia-0.29.1-beta-debug.apk) 为 33,606,103 字节，SHA-256 `eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07`；同包七模式及独立强停重开共 723 次含重复断言、99 张原生图，实际手机相册 JPEG 导入已验证。见[实施及验证](docs/editor-continuity152.md)；完整[独立复核](.impeccable/review/editor-continuity152/final-review.md)为 fix，唯一图标歧义修正已落地，[评分 verdict](.impeccable/review/editor-continuity152/verdict.md)为限定 ship，仅关闭该图标歧义与直接回归，不代表整页通过。本地交付，未公开发布或实机验收，未新增端到端相册导出验证。
+
+## 0.29.0-beta · Prisma 图片编辑页（151，历史本地交付）
+
+按已确认原型实现照片模糊背景、黄色导出、五个圆形工具、可拖分割对比及即时裁切／旋转／翻转；滤镜卡片外间距为 14dp。追加反馈已将撤销／重做改为正圆弧、连续圆头箭头及精确镜像。151 当时的[本地安装包](dist/huevia-0.29.0-beta-debug.apk) SHA-256 为 `2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad`，手机／1.3 字号各通过 57 次检查，[圆箭头专项 review](.impeccable/review/prisma-editor151-round/review.md) 为 ship。此前 `5a39…` 的七配置 400 次与六组核心回归保留为未改布局／逻辑参考，未在该 SHA 全量重跑。见[实施及验证](docs/prisma-editor151.md)；本轮未公开发布，未新增实体手机／相机或完整 MediaStore 保存验收。
+
+## 0.23.4-beta · 自动选脸与更新弹窗（115）
+
+自动选脸增加镜像、多尺度位置和原始角度复核，减少背景误检，合并近似重复候选并保留多人。更新弹窗下载、检查和校验时集中显示状态与进度，隐藏右下角不可操作的大按钮；重试、安装时恢复可操作按钮。见[115 安装包](dist/huevia-0.23.4-beta-debug.apk)与[验证及发布记录](docs/validation/portrait-detection-update115/README.md)。已有照片需重新点“自动选脸”更新旧选区，弹窗样式安装 115 后生效。
+
+## 0.23.3-beta · 人像选脸反馈（114）
+
+点击人脸时，实际选区的半透明蒙版闪两下后消失；重复点选可再次提示。照片上不常驻人脸圆圈和编号，开始调节、缩放或对比时立即收起提示，顶部选择按钮和菜单保留当前人物状态。见[114 安装包](dist/huevia-0.23.3-beta-debug.apk)与[验证及发布记录](docs/validation/portrait-face-selection-114/README.md)。
+
+## 0.23.1-beta · 照片优先的人像与局部工具（112，本地待发布）
+
+人像移除肤色／柔肤／光照三分类及二级参数标签，改为提亮、冷暖、红润、柔肤、纹理、光照、眼下阴影、祛痘、选区九个直达工具。局部保留画笔、径向、渐变、修复四工具，一次显示当前一个参数。
+
+人像效果工具区为132dp、大字号144dp，选区按需增加48dp；局部通常为184／192dp，短屏压缩留白而保留触控尺寸。窄横屏按480dp宽度阈值重排，底部工具区不超过主体半高。选中项自动水平揭示，保留用户主动横滚，两处应用按钮统一暖杏色，沿用 Huevia 品牌。
+
+[112 本地安装包](dist/huevia-0.23.1-beta-debug.apk)已通过普通字号／大字号／横屏及小屏旋转等原生验证；见[验证记录](docs/validation/portrait-local-layout-112/README.md)、[最终身份](docs/validation/portrait-local-layout-112/FINAL-IDENTITY.json)与[完成复核](docs/validation/portrait-local-layout-112/FINISH-REVIEW.md)。本轮为本地 Android 模拟器验证，112 待发布，111 已发布记录保留。
+
+112 发布补记（2026-10-28 22:54 +08:00）：同一最终安装包已上架 [beta 下载页](https://huevia.cc/preset-library/download/?channel=beta)，开启强制更新。公开 APK 的 9,531,300 字节及 SHA-256 与冻结本地包精确一致，双域 10 项元数据核对通过。上文“待发布”为本地交付阶段记录；见[112 发布回执](docs/validation/portrait-local-layout-112/publication/PUBLICATION.json)。
+
+## 0.23.0-beta · 自然人像精修（111，本地测试包）
+
+本地完整照片在「调节 → 人像」或更多菜单「人像精修」打开，新增肤色调整、保留纹理的柔肤、融合式点按祛痘、面部光影和自动面部皮肤蒙版。支持多人独立调整、手动添加及补选／擦除；侧脸、遮挡和小脸可手动修正。见[人像操作与边界](docs/portrait-processing.md)。
+
+最终[111 本地安装包](dist/huevia-0.23.0-beta-debug.apk)在普通字号／实际 1.3 字号／横屏通过 668 次含配置重复的断言执行，留有 24 张正式 UI 截图；同包细节加载回归通过 187 次断言。见[验证与完成复核](docs/validation/portrait-tools/README.md)及[最终身份](docs/validation/portrait-tools/FINAL-IDENTITY.json)。本轮为模拟器实际 Android 编解码与控件验证，未作实体手机／相机验证，111 未上架更新通道。
+
+发布补记（2026-10-28 21:13 +08:00）：同一最终 111 安装包已上架 [beta 下载页](https://huevia.cc/preset-library/download/?channel=beta)，开启强制更新。公开下载字节与本地最终包一致，双域 10 项元数据核对通过。上文“未上架”为本地交付阶段记录；见[发布回执](docs/validation/portrait-tools/publication/PUBLICATION.json)。
+
 ## 0.22.1-beta · 紧凑构图工具栏与大包更新（110）
 
 构图页改为裁剪／旋转／拉直／透视四个图标入口，重置缩为小图标；普通竖屏构图工具区从224dp降至160dp。沿用109的完整图片工具和RAW显影。最终[110安装包](dist/huevia-0.22.1-beta-debug.apk)通过普通／1.3字号／横屏747项原生构图检查及35项真实系统下载检查；已上架[beta下载页](https://huevia.cc/preset-library/download/?channel=beta)，沿用强制更新策略。服务与新版客户端支持32MiB安装包，大包经私有存储短期链接下载。**旧108及更早版本请从下载页覆盖安装一次，无需卸载。** 本轮未作实体手机视觉对照。见[实施记录](docs/validation/composition-dock-110/IMPLEMENTATION.md)、[发布回执](docs/validation/composition-dock-110/PUBLICATION.json)及[最终验证](docs/validation/composition-dock-110/FINAL-VERIFICATION.md)。
@@ -705,3 +743,7 @@ USB 导入复用已有后端：自动读空槽、兼容参数摘要、确认后�
 - [安卓 USB 主机文档](https://developer.android.com/develop/connectivity/usb/host)：手机 USB 主机访问机制。
 - [Z6II 官方无线连接手册](https://onlinemanual.nikonimglib.com/z7II_z6II/en/10_establishing_wireless_connections_03.html)：智能设备 Wi-Fi 开启与系统连接流程；未声明支持本 App 的预设登记。
 - [libgphoto2 PTP/IP 实现](https://github.com/gphoto/libgphoto2/blob/master/camlibs/ptp2/ptpip.c)：数据方向、StartData / EndData 和事务响应参考；不证明特定相机在无线模式开放厂商操作。
+
+114 发布补记（2026-10-29 09:56 +08:00）：双闪蒙版方案已上架 [beta 下载页](https://huevia.cc/preset-library/download/?channel=beta)，沿用强制更新。普通字号、大字号、横屏共 1,685 次检查通过，公开 APK 与冻结本地包字节及 SHA-256 一致；见[114 发布回执](docs/validation/portrait-face-selection-114/publication/PUBLICATION.json)。
+
+115 发布补记（2026-10-29 11:03 +08:00）：自动选脸与更新弹窗修复已上架 [beta 下载页](https://huevia.cc/preset-library/download/?channel=beta)，沿用强制更新。原生 1,366 项、纯几何 87 项和 20 个有界检测配置通过；公网安装包字节及 SHA-256 与本地冻结包精确一致，见[115 发布回执](docs/validation/portrait-detection-update115/publication/PUBLICATION.json)。

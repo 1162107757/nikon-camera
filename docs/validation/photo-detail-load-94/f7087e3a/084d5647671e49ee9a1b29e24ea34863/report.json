@@ -1,0 +1,886 @@
+{
+  "apkSha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+  "runId": "084d5647671e49ee9a1b29e24ea34863",
+  "hardware": "ranchu",
+  "scope": "Production Android JPEG\/PNG codecs, lossless ARGB surfaces and PhotoDetailSource; private deterministic 4000x3000 JPEG. Cold means a new page\/source without surfaces; OS disk cache is not flushed. Warm means same source\/tile cache. Timings are emulator observations, not a physical phone claim. PNG oracle generation is outside measured source-frame timings.",
+  "fixture": {
+    "width": 4000,
+    "height": 3000,
+    "bytes": 6237926,
+    "sha256": "954adbd0f45982b69eee46fe99ec211acc0a45b818e1bb4d617869446b63b85e"
+  },
+  "oddPhysicalPixelProof": {
+    "count": 1716,
+    "errors": 0,
+    "sample": 1
+  },
+  "physicalPixelProof": {
+    "count": 2184,
+    "errors": 0,
+    "sample": 1
+  },
+  "beforePhysicalPixelProof": {
+    "count": 2184,
+    "errors": 0,
+    "sample": 1
+  },
+  "editedRasterPixelProof": {
+    "count": 3145728,
+    "errors": 0,
+    "sample": 1,
+    "oracle": "full renderDetail PNG decode",
+    "coverage": "every pixel of returned visible 100% tiles"
+  },
+  "rotatedRasterPixelProof": {
+    "count": 3145728,
+    "errors": 0,
+    "sample": 1,
+    "oracle": "full renderDetail PNG decode",
+    "coverage": "every pixel of returned visible 100% tiles"
+  },
+  "switch-to-beforePhysicalPixelProof": {
+    "count": 2184,
+    "errors": 0,
+    "sample": 1
+  },
+  "cancel-then-beforePhysicalPixelProof": {
+    "count": 2184,
+    "errors": 0,
+    "sample": 1
+  },
+  "status": "PASS",
+  "assertions": [
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "exact-installed-APK",
+      "passed": true
+    },
+    {
+      "name": "run-identity",
+      "passed": true
+    },
+    {
+      "name": "own-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "own-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "large-local-JPEG-generated",
+      "passed": true
+    },
+    {
+      "name": "odd-JPEG-generated",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "odd-2401x1601-fit-reads-real-sampled-edge-tiles",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "direct-region-pixels-equal-full-JPEG-decode",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "odd-JPEG-source-unchanged",
+      "passed": true
+    },
+    {
+      "name": "thin-tail-JPEG-generated",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "sub-sample-one-pixel-tails-remain-decodable",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "legacy-source-pre-hash",
+      "passed": true
+    },
+    {
+      "name": "legacy-source-post-hash",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-request-overload-defaults-to-unknown-current",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "interim-frame-explicitly-provisional",
+      "passed": true
+    },
+    {
+      "name": "complete-saved-frame-keeps-full-dimensions",
+      "passed": true
+    },
+    {
+      "name": "saved-frame-directly-decodes-owned-original-without-PNG",
+      "passed": true
+    },
+    {
+      "name": "saved-direct-path-does-not-create-PNG-directory",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "100-percent-unsampled-regions",
+      "passed": true
+    },
+    {
+      "name": "direct-region-pixels-equal-full-JPEG-decode",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "200-percent-unsampled-regions",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "closing-direct-decoder-preserves-source-bytes",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "legacy-source-pre-hash",
+      "passed": true
+    },
+    {
+      "name": "legacy-source-post-hash",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "explicit-neutral-current-uses-direct-JPEG",
+      "passed": true
+    },
+    {
+      "name": "neutral-current-retains-before-comparison",
+      "passed": true
+    },
+    {
+      "name": "neutral-current-preview-and-complete-keep-full-dimensions",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "neutral-current-100-percent-unsampled",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "legacy-source-pre-hash",
+      "passed": true
+    },
+    {
+      "name": "legacy-source-post-hash",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "legacy-visible-fit-region",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "edited-fit-preview-arrives-before-full-pixel-surface",
+      "passed": true
+    },
+    {
+      "name": "edited-final-frame-retains-lossless-full-resolution-surface",
+      "passed": true
+    },
+    {
+      "name": "edited-uses-uncompressed-lossless-raster",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "edited-100-percent-unsampled-regions",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "neutral-before-direct-JPEG-path",
+      "passed": true
+    },
+    {
+      "name": "before-current-same-full-geometry",
+      "passed": true
+    },
+    {
+      "name": "before-request-retains-before-mode",
+      "passed": true
+    },
+    {
+      "name": "direct-region-pixels-equal-full-JPEG-decode",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "comparison-returns-to-current-mode",
+      "passed": true
+    },
+    {
+      "name": "comparison-return-retains-current-raster-tiles",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-checks-unsampled-production-tiles",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-full-PNG-oracle-decodes",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-full-render-geometry-equal",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "editedRasterPixelProof-all-visible-raster-pixels-equal-full-PNG-render",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "rotated-EXIF-full-dimensions-preserved",
+      "passed": true
+    },
+    {
+      "name": "rotated-source-uses-normalized-lossless-surface",
+      "passed": true
+    },
+    {
+      "name": "rotated-EXIF-uses-uncompressed-lossless-raster",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-checks-unsampled-production-tiles",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-full-PNG-oracle-decodes",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-full-render-geometry-equal",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-tile-has-one-pixel-per-source-coordinate",
+      "passed": true
+    },
+    {
+      "name": "rotatedRasterPixelProof-all-visible-raster-pixels-equal-full-PNG-render",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "rotated-EXIF-source-bytes-preserved",
+      "passed": true
+    },
+    {
+      "name": "switch-to-before-replacement-completes",
+      "passed": true
+    },
+    {
+      "name": "switch-to-before-replacement-has-no-callback-failure",
+      "passed": true
+    },
+    {
+      "name": "switch-to-before-suppresses-stale-current-completion",
+      "passed": true
+    },
+    {
+      "name": "switch-to-before-returns-unsampled-before-mode",
+      "passed": true
+    },
+    {
+      "name": "switch-to-before-abandons-current-surface-and-partial-raster",
+      "passed": true
+    },
+    {
+      "name": "direct-region-pixels-equal-full-JPEG-decode",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "cancel-then-before-replacement-completes",
+      "passed": true
+    },
+    {
+      "name": "cancel-then-before-replacement-has-no-callback-failure",
+      "passed": true
+    },
+    {
+      "name": "cancel-then-before-suppresses-stale-current-completion",
+      "passed": true
+    },
+    {
+      "name": "cancel-then-before-returns-unsampled-before-mode",
+      "passed": true
+    },
+    {
+      "name": "cancel-then-before-abandons-current-surface-and-partial-raster",
+      "passed": true
+    },
+    {
+      "name": "direct-region-pixels-equal-full-JPEG-decode",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "preview-close-callback-completes",
+      "passed": true
+    },
+    {
+      "name": "preview-close-has-no-callback-failure",
+      "passed": true
+    },
+    {
+      "name": "provisional-preview-can-close-source",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "closing-from-preview-suppresses-stale-complete-frame",
+      "passed": true
+    },
+    {
+      "name": "closing-preparation-preserves-source-bytes",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "source-frame-valid",
+      "passed": true
+    },
+    {
+      "name": "source-frame-completed-within-bounded-time",
+      "passed": true
+    },
+    {
+      "name": "owner-invalidation-rejects-cache-and-preview",
+      "passed": true
+    },
+    {
+      "name": "source-worker-closed-and-surfaces-released",
+      "passed": true
+    },
+    {
+      "name": "source-owned-temporary-directory-removed",
+      "passed": true
+    },
+    {
+      "name": "all-read-and-close-paths-preserve-original",
+      "passed": true
+    }
+  ],
+  "timings": [
+    {
+      "case": "saved-legacy-cold",
+      "firstPreviewMs": -1,
+      "completeFrameMs": 2533.9547,
+      "temporaryPngBytes": 9159455,
+      "sample": 2
+    },
+    {
+      "case": "saved-optimized-cold",
+      "firstPreviewMs": 99.3134,
+      "completeFrameMs": 721.5189,
+      "sample": 2
+    },
+    {
+      "case": "saved-optimized-warm-100",
+      "firstPreviewMs": 0.3793,
+      "completeFrameMs": 537.5825,
+      "sample": 1
+    },
+    {
+      "case": "saved-optimized-warm-200",
+      "firstPreviewMs": 0.3048,
+      "completeFrameMs": 0.5815,
+      "sample": 1
+    },
+    {
+      "case": "saved-optimized-reopen",
+      "firstPreviewMs": 99.3149,
+      "completeFrameMs": 750.2958,
+      "sample": 2
+    },
+    {
+      "case": "unmodified-current-legacy-cold",
+      "firstPreviewMs": -1,
+      "completeFrameMs": 2684.8198,
+      "temporaryPngBytes": 9159455,
+      "sample": 2
+    },
+    {
+      "case": "unmodified-current-optimized-cold",
+      "firstPreviewMs": 103.4088,
+      "completeFrameMs": 761.4781,
+      "sample": 2
+    },
+    {
+      "case": "effect-legacy-cold",
+      "firstPreviewMs": -1,
+      "completeFrameMs": 6182.5804,
+      "temporaryPngBytes": 17483286,
+      "sample": 2
+    },
+    {
+      "case": "effect-optimized-cold",
+      "firstPreviewMs": 290.6023,
+      "completeFrameMs": 3060.0959,
+      "sample": 2
+    },
+    {
+      "case": "effect-optimized-warm-100",
+      "firstPreviewMs": 0.2431,
+      "completeFrameMs": 77.3977,
+      "sample": 1
+    },
+    {
+      "case": "before-optimized-cold-100",
+      "firstPreviewMs": 94.2353,
+      "completeFrameMs": 620.1319,
+      "sample": 1
+    },
+    {
+      "case": "switch-to-before-from-current-preview",
+      "firstPreviewMs": 241.3751,
+      "completeFrameMs": 758.6759,
+      "sample": 1
+    },
+    {
+      "case": "cancel-then-before-from-current-preview",
+      "firstPreviewMs": 92.4045,
+      "completeFrameMs": 597.7036,
+      "sample": 1
+    }
+  ],
+  "fixtureCleanup": true
+}

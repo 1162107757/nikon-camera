@@ -1,0 +1,23 @@
+{
+  "scope": "Conservative source-bound wire capacity audit; no production state mutation",
+  "parts": {
+    "magic": 4,
+    "sourceShaUtf": 66,
+    "nameUtfMax": 770,
+    "strengthExportedPresetLength": 9,
+    "adjustmentModelUtf": 33,
+    "adjustmentCountAndValues": 72,
+    "curvesModelAndCountPoints": 429,
+    "hslModelAndValues": 122,
+    "geometryModelAndValues": 61,
+    "borderModelAndFields": 2076,
+    "sha256Footer": 32
+  },
+  "maxMetadataBytes": 3674,
+  "maxPresetBytes": 1048576,
+  "maxCompleteLocalRecipeBytes": 1000000,
+  "maxDraftBytes": 2052250,
+  "readerLimitBytes": 2097152,
+  "remainingBytes": 44902,
+  "completeLocalWireIncludesLegacyPortraitAndMasks": true
+}

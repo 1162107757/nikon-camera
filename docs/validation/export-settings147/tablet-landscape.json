@@ -1,0 +1,281 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "batch-sheet-shows-selected-count",
+      "pass": true
+    },
+    {
+      "name": "batch-row-touch-target",
+      "pass": true
+    },
+    {
+      "name": "batch-type-is-compact",
+      "pass": true
+    },
+    {
+      "name": "batch-label-not-clipped",
+      "pass": true
+    },
+    {
+      "name": "batch-row-touch-target",
+      "pass": true
+    },
+    {
+      "name": "batch-type-is-compact",
+      "pass": true
+    },
+    {
+      "name": "batch-label-not-clipped",
+      "pass": true
+    },
+    {
+      "name": "batch-row-touch-target",
+      "pass": true
+    },
+    {
+      "name": "batch-type-is-compact",
+      "pass": true
+    },
+    {
+      "name": "batch-label-not-clipped",
+      "pass": true
+    },
+    {
+      "name": "batch-row-touch-target",
+      "pass": true
+    },
+    {
+      "name": "batch-type-is-compact",
+      "pass": true
+    },
+    {
+      "name": "batch-label-not-clipped",
+      "pass": true
+    },
+    {
+      "name": "batch-row-touch-target",
+      "pass": true
+    },
+    {
+      "name": "batch-type-is-compact",
+      "pass": true
+    },
+    {
+      "name": "batch-label-not-clipped",
+      "pass": true
+    },
+    {
+      "name": "last-batch-action-reachable-inside-sheet",
+      "pass": true
+    },
+    {
+      "name": "batch-cancel-dismisses-only",
+      "pass": true
+    },
+    {
+      "name": "batch-action-callback-0",
+      "pass": true
+    },
+    {
+      "name": "batch-action-callback-1",
+      "pass": true
+    },
+    {
+      "name": "batch-action-callback-2",
+      "pass": true
+    },
+    {
+      "name": "batch-action-callback-3",
+      "pass": true
+    },
+    {
+      "name": "batch-action-callback-4",
+      "pass": true
+    },
+    {
+      "name": "four-stops-default-original",
+      "pass": true
+    },
+    {
+      "name": "drag-snaps-to-grade-0",
+      "pass": true
+    },
+    {
+      "name": "grade-label-state-and-touch-target",
+      "pass": true
+    },
+    {
+      "name": "grade-label-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "quality-tick-aligns-with-label-0",
+      "pass": true
+    },
+    {
+      "name": "drag-snaps-to-grade-1",
+      "pass": true
+    },
+    {
+      "name": "grade-label-state-and-touch-target",
+      "pass": true
+    },
+    {
+      "name": "grade-label-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "quality-tick-aligns-with-label-1",
+      "pass": true
+    },
+    {
+      "name": "drag-snaps-to-grade-2",
+      "pass": true
+    },
+    {
+      "name": "grade-label-state-and-touch-target",
+      "pass": true
+    },
+    {
+      "name": "grade-label-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "quality-tick-aligns-with-label-2",
+      "pass": true
+    },
+    {
+      "name": "drag-snaps-to-grade-3",
+      "pass": true
+    },
+    {
+      "name": "grade-label-state-and-touch-target",
+      "pass": true
+    },
+    {
+      "name": "grade-label-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "quality-tick-aligns-with-label-3",
+      "pass": true
+    },
+    {
+      "name": "no-export-destination-selector",
+      "pass": true
+    },
+    {
+      "name": "legacy-App-preference-does-not-change-export-target",
+      "pass": true
+    },
+    {
+      "name": "advanced-default-is-new-copy",
+      "pass": true
+    },
+    {
+      "name": "reuse-remains-explicit-opt-in",
+      "pass": true
+    },
+    {
+      "name": "original-formats-present",
+      "pass": true
+    },
+    {
+      "name": "originals-scroll-separately-from-main-action",
+      "pass": true
+    },
+    {
+      "name": "original-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "original-format-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "original-has-full-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "original-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "original-format-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "original-has-full-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "original-formats-have-independent-spacing",
+      "pass": true
+    },
+    {
+      "name": "advanced-action-width-bounded-on-wide-screen",
+      "pass": true
+    },
+    {
+      "name": "invalid-custom-size-does-not-export",
+      "pass": true
+    },
+    {
+      "name": "valid-custom-size-recovers",
+      "pass": true
+    },
+    {
+      "name": "jpeg-original-callback-only",
+      "pass": true
+    },
+    {
+      "name": "original-formats-present",
+      "pass": true
+    },
+    {
+      "name": "originals-scroll-separately-from-main-action",
+      "pass": true
+    },
+    {
+      "name": "original-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "original-format-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "original-has-full-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "original-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "original-format-fits-one-line",
+      "pass": true
+    },
+    {
+      "name": "original-has-full-accessible-name",
+      "pass": true
+    },
+    {
+      "name": "original-formats-have-independent-spacing",
+      "pass": true
+    },
+    {
+      "name": "advanced-action-width-bounded-on-wide-screen",
+      "pass": true
+    },
+    {
+      "name": "nef-original-callback-only",
+      "pass": true
+    }
+  ]
+}

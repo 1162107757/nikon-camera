@@ -1,0 +1,53 @@
+{
+  "pass": true,
+  "stage": "complete-selection-style",
+  "candidateSha256": "10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e",
+  "mode": "dark",
+  "scope": "selection-soft153-confirmed",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "quick-original-selected",
+      "pass": true
+    },
+    {
+      "name": "skin-original-selected-and-visible",
+      "pass": true
+    },
+    {
+      "name": "skin-choice-updates-selected-state",
+      "pass": true
+    },
+    {
+      "name": "skin-choice-visible-and-labelled",
+      "pass": true
+    },
+    {
+      "name": "source-photo-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 6,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "layout": {}
+}

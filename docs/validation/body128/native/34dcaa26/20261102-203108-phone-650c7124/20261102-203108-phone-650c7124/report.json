@@ -1,0 +1,98 @@
+{
+  "pass": false,
+  "stage": "strength-and-cancel",
+  "mode": "phone",
+  "scope": "full",
+  "candidateSha256": "34dcaa2692415d55d57cb6ecbcee57a535c93fb0daeb2d0b6068af5742756f2d",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "installed-exact-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-evidence-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "three-compact-entries",
+      "pass": true
+    },
+    {
+      "name": "photograph-has-useful-space",
+      "pass": true
+    },
+    {
+      "name": "body-cancel-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-apply-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-strength-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-undo-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-redo-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-guides-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-compare-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-tool-0-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-tool-1-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "body-tool-2-minimum-touch-target",
+      "pass": true
+    },
+    {
+      "name": "actual-font-setting",
+      "pass": true
+    },
+    {
+      "name": "drag-disables-apply",
+      "pass": false
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-removed",
+      "pass": true
+    }
+  ],
+  "screenshots": 3,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: drag-disables-apply",
+  "stack": "java.lang.AssertionError: drag-disables-apply\n\tat cc.huevia.bodyqa.BodyProbe.check(BodyProbe.java:81)\n\tat cc.huevia.bodyqa.BodyProbe.flow(BodyProbe.java:43)\n\tat cc.huevia.bodyqa.BodyProbe.onStart(BodyProbe.java:31)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

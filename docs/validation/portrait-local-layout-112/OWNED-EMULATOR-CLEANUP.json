@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-28",
+  "ownedSerials": [
+    "emulator-5586",
+    "emulator-5588"
+  ],
+  "closed": true,
+  "fixtureAndRunnerCleanup": "Per-run cleanup.json and fixturesRemoved=true",
+  "localWmRecord": "docs/validation/photo-tools-109/b1dce865/COMPACT-WM-UNOBSTRUCTED.json",
+  "originalPixel9Data": "Read-only launch",
+  "secondAvd": "Independent task directory Layout112",
+  "physicalDevicesTouched": false,
+  "remainingOwnedEmulators": 0
+}

@@ -83,6 +83,8 @@ public final class SpatialPreviewFilter {
         int height();
         /** Direction of the supplied pixels before composition. Preview pixels are already oriented. */
         default int exifOrientation() { return 1; }
+        /** Private, caller-owned temporary directory for bounded-memory adjustment branches. */
+        default java.io.File scratchDirectory() { return null; }
         void read(int[] dest, int firstRow, int rows) throws IOException;
         void write(int[] source, int firstRow, int rows) throws IOException;
     }

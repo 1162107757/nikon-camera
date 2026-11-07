@@ -1,0 +1,343 @@
+{
+  "status": "passed-feature-and-motion-native-confirmation",
+  "candidateSha256": "d7bdd73e333cbe39e6bbb0664c5d0c8eb0f1e2b32a039bff344153371e9f9e42",
+  "versionCode": 126,
+  "versionName": "0.24.4-beta",
+  "serial": "emulator-5588",
+  "completedAtUtc": "2026-11-01T06:17:15.709Z",
+  "runs": [
+    {
+      "runId": "20261101-141313-phone-fbe8378b",
+      "mode": "phone",
+      "checks": 109,
+      "screenshots": 8,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1553][1048,1973]",
+          "photo": "[0,268][1080,1542]",
+          "fontScale": 1
+        },
+        {
+          "case": "native-region-final-image",
+          "width": 1280,
+          "height": 882,
+          "protectedPixels": 1029980,
+          "outsideDifferences": 0,
+          "changedPixels": 86522
+        },
+        {
+          "case": "native-motion-reset-frames",
+          "frames": [
+            {
+              "uptimeMs": 1372338,
+              "markerColor": 40,
+              "markerTone": 40,
+              "pressProgress": 0
+            },
+            {
+              "uptimeMs": 1372400,
+              "markerColor": 19.355192184448242,
+              "markerTone": 19.355192184448242,
+              "pressProgress": 0
+            },
+            {
+              "uptimeMs": 1372573,
+              "markerColor": 0,
+              "markerTone": 0,
+              "pressProgress": 0
+            }
+          ]
+        }
+      ],
+      "report": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/report.json",
+      "probeSha256": "7490bc633b99fa70ae1dd92f24a701d8b908764d3105cca5750bc91d2a66c08c"
+    },
+    {
+      "runId": "20261101-141419-font1.3-959ba878",
+      "mode": "font1.3",
+      "checks": 109,
+      "screenshots": 0,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1553][1048,1973]",
+          "photo": "[0,268][1080,1542]",
+          "fontScale": 1.2999999523162842
+        },
+        {
+          "case": "native-region-final-image",
+          "width": 1280,
+          "height": 882,
+          "protectedPixels": 1029980,
+          "outsideDifferences": 0,
+          "changedPixels": 86522
+        },
+        {
+          "case": "native-motion-reset-frames",
+          "frames": [
+            {
+              "uptimeMs": 1438222,
+              "markerColor": 40,
+              "markerTone": 40,
+              "pressProgress": 0
+            },
+            {
+              "uptimeMs": 1438253,
+              "markerColor": 19.355192184448242,
+              "markerTone": 19.355192184448242,
+              "pressProgress": 0
+            },
+            {
+              "uptimeMs": 1438433,
+              "markerColor": 0,
+              "markerTone": 0,
+              "pressProgress": 0
+            }
+          ]
+        }
+      ],
+      "report": "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/20261101-141419-font1.3-959ba878/report.json",
+      "probeSha256": "7490bc633b99fa70ae1dd92f24a701d8b908764d3105cca5750bc91d2a66c08c"
+    },
+    {
+      "runId": "20261101-141448-landscape-b3117c6f",
+      "mode": "landscape",
+      "checks": 109,
+      "screenshots": 5,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][2424,1080]",
+          "pad": "[1616,274][2392,694]",
+          "photo": "[142,263][1584,1017]",
+          "fontScale": 1
+        },
+        {
+          "case": "native-region-final-image",
+          "width": 1280,
+          "height": 882,
+          "protectedPixels": 1029980,
+          "outsideDifferences": 0,
+          "changedPixels": 86522
+        },
+        {
+          "case": "native-motion-reset-frames",
+          "frames": [
+            {
+              "uptimeMs": 1468435,
+              "markerColor": 40,
+              "markerTone": 40,
+              "pressProgress": 0
+            },
+            {
+              "uptimeMs": 1468477,
+              "markerColor": 20.258066177368164,
+              "markerTone": 20.258066177368164,
+              "pressProgress": 0
+            },
+            {
+              "uptimeMs": 1468640,
+              "markerColor": 0,
+              "markerTone": 0,
+              "pressProgress": 0
+            }
+          ]
+        }
+      ],
+      "report": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/report.json",
+      "probeSha256": "7490bc633b99fa70ae1dd92f24a701d8b908764d3105cca5750bc91d2a66c08c"
+    },
+    {
+      "runId": "20261101-141532-animations-off-26a1adc1",
+      "mode": "animations-off",
+      "checks": 22,
+      "screenshots": 0,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [],
+      "report": "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/20261101-141532-animations-off-26a1adc1/report.json",
+      "probeSha256": "7490bc633b99fa70ae1dd92f24a701d8b908764d3105cca5750bc91d2a66c08c"
+    }
+  ],
+  "checks": 349,
+  "screenshots": 13,
+  "failedNativeRuns": 0,
+  "confirmationRoundUsed": true,
+  "confirmationReason": "User requested softer palette motion after the complete original feature batch; the only production delta is PhotoPaletteDialog.",
+  "baselineCandidateSha256": "c006041f7380620a55db0d50bef0fd1146867ebe1e3b3c9cbd5eed98af88704c",
+  "baselineNativeChecks": 252,
+  "productionDelta": [
+    "app/src/main/java/cc/huevia/ui/PhotoPaletteDialog.java"
+  ],
+  "allOther293ProductionInputsUnchanged": true,
+  "engineHostMatrixRerun": false,
+  "protectedRegionPixels": 3089940,
+  "outsideRegionDifferences": 0,
+  "probeDoesNotPackageProductionClasses": true,
+  "networkPublicationPerformed": false,
+  "privateUserImagesUsed": false,
+  "scopeNotes": [
+    "Real touch DOWN/MOVE preview verified before UP, complete gesture internal undo, CANCEL rollback, strength zero and exact numeric controls.",
+    "Keyboard and TalkBack actions plus actual Dialog window-focus callback exercised.",
+    "Main editor entry, transaction apply/cancel, private draft unchanged on cancel, one outer undo/redo, selected brush region and zero-strength stored coordinate reset/undo verified.",
+    "Motion checks compare actual displayed marker coordinates with the pointer-mapped settings immediately; release halo, reset/undo intermediate positions and exact endpoints, new touch takeover and dismissal without late visual mutation all passed.",
+    "Phone has three native Canvas reset frames; font 1.3 and landscape add motion assertions without additional animation frame captures.",
+    "animations-off is a short separate 22-check run with captured/restored system animator duration; it creates no persistent fixture.",
+    "Target-process cleanup verifies each synthetic JPEG and SHA-named private draft are gone; no run-as claim."
+  ],
+  "evidence": [
+    {
+      "path": "docs/validation/palette126/SOURCE-FREEZE.json",
+      "sha256": "4dc911b1f3507c9a77d9cc6eca2c0d41db110cf5a58b197c7b28a30c8455f8f2"
+    },
+    {
+      "path": "docs/validation/palette126/candidates/c006041f/NATIVE-SUMMARY.json",
+      "sha256": "89532b0bc3d9b5d277cbadc6824368b2774babec50a9f1e01ee067fb55dd3510"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/01-palette-open.png",
+      "sha256": "9f88e1d0835f436f0731eaf7ba0b0c8c46290529b4ef4613ccf9653007a80693"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/02-live-drag-before-up.png",
+      "sha256": "d70855c9734b68db1a582eb1fb4eef869accf54c225ee210b9af39aa5993967f"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/03-reset-clean-preview.png",
+      "sha256": "edf9b84def8cc491d94c1bd24d58150267a77a41533e5db9f8e4a3a93cb74d72"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/04-main-palette-before-apply.png",
+      "sha256": "857e85854960369301f08dbb53d8c17c9342c3f69754d0e048e3be4088126616"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/05-region-applied-clean-photo.png",
+      "sha256": "d18cb165090812cb48e57925b96bcafb822ac350b7fb622b4100c03b63d70d90"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/06-motion-reset-start.png",
+      "sha256": "5564992ea445d44657674be13927900b68c4e4b97e5de3bc81c2b5fd269f09bd"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/07-motion-reset-middle.png",
+      "sha256": "2a6f1920a02eb0f44b78f75bddc496585e0c8e57fd5a751643e31bf1604d77c3"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/08-motion-reset-end.png",
+      "sha256": "09c82b256ab728d4ac450e417c6d5e45afef6601b39ad0681556b092797da309"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/20261101-141313-phone-fbe8378b/report.json",
+      "sha256": "fe46c4833a37cb79f4813bbaee9c36bc21b169aea44110ed2a2befbace31e0ed"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/provenance.json",
+      "sha256": "57119a0127affce377de922cc8b6f696557df443fb60d97b4495ed5edb77c9d1"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/instrumentation.txt",
+      "sha256": "568583fdfd66a14e3dfd24cc9802a69b859e23a17a7b9024a7ac916c872b23ba"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/probe-source/build-provenance.json",
+      "sha256": "b6b6671bb7958e4b0ef1b266f41a2ae0073786b8579a20567fca54adfac75bf5"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/20261101-141419-font1.3-959ba878/report.json",
+      "sha256": "23bd67ebac4111343e33143f17752a9e2f5f0ac78b1a84a1c3e5a80b6c5c1376"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/provenance.json",
+      "sha256": "ccb0ec47962de915a0fcac3e75fc14f6ccc4551ca823c11514c939d1d6bcd86a"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/instrumentation.txt",
+      "sha256": "568583fdfd66a14e3dfd24cc9802a69b859e23a17a7b9024a7ac916c872b23ba"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/probe-source/build-provenance.json",
+      "sha256": "b6b6671bb7958e4b0ef1b266f41a2ae0073786b8579a20567fca54adfac75bf5"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/01-palette-open.png",
+      "sha256": "94f5ff3edca6b6961703995de8e0e356da779b9a5eb3e0e3db65622075066d35"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/02-live-drag-before-up.png",
+      "sha256": "b80c726cf13a169b0c7c9f3482b103d170c63e51d660f4c891aa9714a23c623b"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/03-reset-clean-preview.png",
+      "sha256": "51d01beed20d562669e6b838e91179b68e9d2f4cbb5e9064282d8853541fc685"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/04-main-palette-before-apply.png",
+      "sha256": "a19dfad42bd06d0ad16d5cf2652e168c8f3337b04819d331e49243bfc2e81c7f"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/05-region-applied-clean-photo.png",
+      "sha256": "c05062b34bfdc08e2ff6dbad397a361c1aa2e34a6d41f8a46c7b5fd3f2b6f851"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/20261101-141448-landscape-b3117c6f/report.json",
+      "sha256": "4d881d8ff8df9bc8efa071dff1aeff301feb88ee024deaf0e7aabb5b8026feac"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/provenance.json",
+      "sha256": "5321339fda898c37f061771eb9cef488524dc95cd383350e3bde116c185548a0"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/instrumentation.txt",
+      "sha256": "568583fdfd66a14e3dfd24cc9802a69b859e23a17a7b9024a7ac916c872b23ba"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/probe-source/build-provenance.json",
+      "sha256": "b6b6671bb7958e4b0ef1b266f41a2ae0073786b8579a20567fca54adfac75bf5"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/20261101-141532-animations-off-26a1adc1/report.json",
+      "sha256": "fe9c28c919825d8cccbd9a01e8c6e40181834a2395c26439341bdff3e9a3522e"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/provenance.json",
+      "sha256": "a90112973f5a440d8f336f0eea79ccdc9031f07c92f25f4a2d10174c861b995a"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/instrumentation.txt",
+      "sha256": "f64a9817f06115d72abbe8307ae3248331e8962d561cae86579bf990a4f1fd57"
+    },
+    {
+      "path": "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/probe-source/build-provenance.json",
+      "sha256": "b6b6671bb7958e4b0ef1b266f41a2ae0073786b8579a20567fca54adfac75bf5"
+    },
+    {
+      "path": "docs/validation/palette126/NATIVE-CLEANUP.json",
+      "sha256": "bd3f17be496f6d76925ea9c86ec7a2936e2bcfc9d5e7e688040a0f57406d2111"
+    }
+  ]
+}

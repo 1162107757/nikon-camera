@@ -1,0 +1,1929 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+  "versionCode": 118,
+  "versionName": "0.23.7-beta",
+  "mode": "landscape",
+  "globalSkinToneOnly": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-public-domain-face-fixture",
+      "pass": true
+    },
+    {
+      "name": "astronaut-decodes",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-test-key-isolated",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "standalone-starts-with-exact-NONE",
+      "pass": true
+    },
+    {
+      "name": "global-entry-faces-empty-before-tool",
+      "pass": true
+    },
+    {
+      "name": "global-colour-control-enabled-without-face",
+      "pass": true
+    },
+    {
+      "name": "global-preparation-starts-on-tool-entry",
+      "pass": true
+    },
+    {
+      "name": "global-automatic-skin-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-colour-survives-asynchronous-preparation",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-selected-colour-visible",
+      "pass": true
+    },
+    {
+      "name": "standalone-no-faces-preview-size",
+      "pass": true
+    },
+    {
+      "name": "standalone-no-faces-skin-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "standalone-no-faces-background-stays-exact",
+      "pass": true
+    },
+    {
+      "name": "screenshot-global-01-NONE-automatic-skin",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-global-01-NONE-automatic-skin",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preset-0",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preset-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "standalone-original-skin-exact-pixels-size",
+      "pass": true
+    },
+    {
+      "name": "standalone-original-skin-exact-pixels-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "standalone-original-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "standalone-original-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "standalone-original-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "standalone-original-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-more",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-more",
+      "pass": true
+    },
+    {
+      "name": "global-more-native-menu-click-逐人肤色调节（高级）",
+      "pass": true
+    },
+    {
+      "name": "global-more-can-reach-optional-advanced-mode",
+      "pass": true
+    },
+    {
+      "name": "advanced-entry-does-not-add-faces",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-more",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-more",
+      "pass": true
+    },
+    {
+      "name": "global-more-native-menu-click-全图肤色调节",
+      "pass": true
+    },
+    {
+      "name": "advanced-menu-returns-to-global-mode",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "advanced-roundtrip-keeps-neutral-global-model",
+      "pass": true
+    },
+    {
+      "name": "advanced-return-global-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "advanced-return-global-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "advanced-return-global-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "advanced-return-global-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "standalone-global-cancel-no-commit",
+      "pass": true
+    },
+    {
+      "name": "private-portrait-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "private-portrait-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-global-entry-has-no-faces",
+      "pass": true
+    },
+    {
+      "name": "global-entry-faces-empty-before-tool",
+      "pass": true
+    },
+    {
+      "name": "global-colour-control-enabled-without-face",
+      "pass": true
+    },
+    {
+      "name": "global-preparation-starts-on-tool-entry",
+      "pass": true
+    },
+    {
+      "name": "global-automatic-skin-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-colour-survives-asynchronous-preparation",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-selected-colour-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-tool",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-tool",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preset-5",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preset-5",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-custom",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-custom",
+      "pass": true
+    },
+    {
+      "name": "native-tone-picker-open",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-hue",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-hue",
+      "pass": true
+    },
+    {
+      "name": "native-tone-palette-visible",
+      "pass": true
+    },
+    {
+      "name": "native-picker-visible-hex-colour",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-save",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-save",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-name-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-name-save",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-name-save",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-card-saved",
+      "pass": true
+    },
+    {
+      "name": "one-owned-personal-tone-card",
+      "pass": true
+    },
+    {
+      "name": "saving-card-does-not-edit-portrait-or-undo",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "picker-cancel-keeps-complete-staged-portrait",
+      "pass": true
+    },
+    {
+      "name": "global-cancel-staged-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-cancel-staged-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-cancel-staged-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-cancel-staged-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-staging-does-not-write-editor",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "global-cancel-keeps-editor-draft-history",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-entry-faces-empty-before-tool",
+      "pass": true
+    },
+    {
+      "name": "global-colour-control-enabled-without-face",
+      "pass": true
+    },
+    {
+      "name": "global-preparation-starts-on-tool-entry",
+      "pass": true
+    },
+    {
+      "name": "global-automatic-skin-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-colour-survives-asynchronous-preparation",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-selected-colour-visible",
+      "pass": true
+    },
+    {
+      "name": "global-two-person-without-faces-preview-size",
+      "pass": true
+    },
+    {
+      "name": "global-two-person-without-faces-skin-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "global-two-person-without-faces-background-stays-exact",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preset-0",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preset-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-original-exact-preview-size",
+      "pass": true
+    },
+    {
+      "name": "global-original-exact-preview-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preset-4",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preset-4",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-strength-zero-model",
+      "pass": true
+    },
+    {
+      "name": "global-zero-strength-exact-preview-size",
+      "pass": true
+    },
+    {
+      "name": "global-zero-strength-exact-preview-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-strength-keyboard-without-face",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-saved-5d317f6d-4933-47df-8aeb-2431cdf8185b",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-saved-5d317f6d-4933-47df-8aeb-2431cdf8185b",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-personal-card-survives-reopen",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-custom",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-custom",
+      "pass": true
+    },
+    {
+      "name": "native-tone-picker-open",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-hue",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-hue",
+      "pass": true
+    },
+    {
+      "name": "native-tone-palette-visible",
+      "pass": true
+    },
+    {
+      "name": "native-picker-visible-hex-colour",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-use",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-use",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-has-matching-real-preview",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-cannot-apply-entire-portrait",
+      "pass": true
+    },
+    {
+      "name": "global-custom-preview-without-face",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-has-matching-real-preview",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-cannot-apply-entire-portrait",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preview-edit",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preview-edit",
+      "pass": true
+    },
+    {
+      "name": "native-tone-picker-open",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-hue",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-hue",
+      "pass": true
+    },
+    {
+      "name": "native-tone-palette-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-use",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-use",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-has-matching-real-preview",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-cannot-apply-entire-portrait",
+      "pass": true
+    },
+    {
+      "name": "global-continue-keeps-one-transaction",
+      "pass": true
+    },
+    {
+      "name": "screenshot-global-03-custom-photo-preview",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-global-03-custom-photo-preview",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preview-cancel",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preview-cancel",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-custom-cancel-restores-model-and-history",
+      "pass": true
+    },
+    {
+      "name": "global-custom-cancel-exact-pixels-size",
+      "pass": true
+    },
+    {
+      "name": "global-custom-cancel-exact-pixels-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-custom",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-custom",
+      "pass": true
+    },
+    {
+      "name": "native-tone-picker-open",
+      "pass": true
+    },
+    {
+      "name": "global-eyedropper-owned-skin-point",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-sample",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-sample",
+      "pass": true
+    },
+    {
+      "name": "global-eyedropper-starts-with-no-face",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-tone-picker-open",
+      "pass": true
+    },
+    {
+      "name": "native-picker-visible-hex-colour",
+      "pass": true
+    },
+    {
+      "name": "global-eyedropper-exact-analysis-rgb",
+      "pass": true
+    },
+    {
+      "name": "global-eyedropper-does-not-select-face-or-edit",
+      "pass": true
+    },
+    {
+      "name": "screenshot-global-04-custom-picker",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-global-04-custom-picker",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-skin-tone-use",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-skin-tone-use",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-has-matching-real-preview",
+      "pass": true
+    },
+    {
+      "name": "temporary-tone-cannot-apply-entire-portrait",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-visible-portrait-tone-preview-use",
+      "pass": true
+    },
+    {
+      "name": "tone-native-control-enabled-portrait-tone-preview-use",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-custom-confirm-one-undo",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-custom-undo",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-custom-redo",
+      "pass": true
+    },
+    {
+      "name": "global-custom-confirmed-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-custom-confirmed-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-custom-confirmed-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-custom-confirmed-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "global-controls-complete-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-controls-complete-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-controls-complete-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-controls-complete-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "global-no-selection-overlay-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-global-02-whole-image-skin",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-global-02-whole-image-skin",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-ten-direct-tools-with-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-9",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "tone-current-scope-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-strength-control-visible",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-photo-stage-remains-usable",
+      "pass": true
+    },
+    {
+      "name": "tone-bounded-context-dock",
+      "pass": true
+    },
+    {
+      "name": "portrait-ten-direct-tools-with-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-9",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "tone-current-scope-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-strength-control-visible",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-landscape",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-ten-direct-tools-with-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-9",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "tone-current-scope-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-strength-control-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-portrait-rotated-open",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-portrait-rotated-open",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-photo-stage-remains-usable",
+      "pass": true
+    },
+    {
+      "name": "tone-bounded-context-dock",
+      "pass": true
+    },
+    {
+      "name": "portrait-ten-direct-tools-with-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-9",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "tone-current-scope-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-strength-control-visible",
+      "pass": true
+    },
+    {
+      "name": "open-dialog-rotation-preserves-complete-staged-state",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-landscape",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-ten-direct-tools-with-skin-tone",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-9",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "tone-current-scope-visible",
+      "pass": true
+    },
+    {
+      "name": "tone-strength-control-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "global-apply-one-main-history-step",
+      "pass": true
+    },
+    {
+      "name": "global-applied-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-applied-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-applied-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-applied-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-main-undo-restores-opening-state",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "global-main-redo-keeps-full-model",
+      "pass": true
+    },
+    {
+      "name": "empty-face-global-draft-exact-model",
+      "pass": true
+    },
+    {
+      "name": "global-saved-draft-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-saved-draft-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-saved-draft-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-saved-draft-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-tone-does-not-leak-to-other-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-draft-reopen-exact-model",
+      "pass": true
+    },
+    {
+      "name": "global-restored-draft-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-restored-draft-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-restored-draft-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-restored-draft-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-entry-faces-empty-before-tool",
+      "pass": true
+    },
+    {
+      "name": "global-colour-control-enabled-without-face",
+      "pass": true
+    },
+    {
+      "name": "global-automatic-skin-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-colour-survives-asynchronous-preparation",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-selected-colour-visible",
+      "pass": true
+    },
+    {
+      "name": "global-owner-mismatch-rejects-commit",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-0",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-entry-faces-empty-before-tool",
+      "pass": true
+    },
+    {
+      "name": "global-colour-control-enabled-without-face",
+      "pass": true
+    },
+    {
+      "name": "global-preparation-starts-on-tool-entry",
+      "pass": true
+    },
+    {
+      "name": "global-automatic-skin-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-colour-survives-asynchronous-preparation",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-prepared-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "global-selected-colour-visible",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-staged-no-face-regions",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-staged-global-mode-default",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-staged-no-face-bar-or-scope-gate",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-staged-no-persistent-selection",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-draft-faces-remain-empty",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-draft-active-global-tone",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-draft-global-skin-mask-present",
+      "pass": true
+    },
+    {
+      "name": "global-exif-six-draft-real-global-skin-coverage",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-1",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-exif-six-fixture",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-size",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-1",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "portrait-effect-not-misclassified-unchanged",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-full-one-to-one",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-sample-one-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-07-real-portrait-detail",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-07-real-portrait-detail",
+      "pass": true
+    },
+    {
+      "name": "detail-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "detail-view-closed-no-frame",
+      "pass": true
+    },
+    {
+      "name": "detail-temporary-surface-released",
+      "pass": true
+    },
+    {
+      "name": "global-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "global-original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "standalone-no-faces-real-global-pixels",
+      "skinGridSamples": 465,
+      "changedLeftHalf": 417,
+      "changedRightHalf": 48,
+      "zeroMaskSamples": 15664,
+      "zeroMaskDifferentPixels": 0
+    },
+    {
+      "case": "standalone-original-skin-exact-pixels",
+      "pixels": 262144,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "global-two-person-without-faces-real-global-pixels",
+      "skinGridSamples": 501,
+      "changedLeftHalf": 245,
+      "changedRightHalf": 252,
+      "zeroMaskSamples": 15544,
+      "zeroMaskDifferentPixels": 0
+    },
+    {
+      "case": "global-original-exact-preview",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "global-zero-strength-exact-preview",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "global-custom-cancel-exact-pixels",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "global-no-selection-overlay-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "global-no-selection-overlay-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "full-reference-vs-real-detail-0",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "full-reference-vs-real-detail-1",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "independent-oriented-vs-raw-exif-six",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "actual-detail-tiles-vs-full-reference",
+      "samples": 1922,
+      "pixelErrors": 0
+    }
+  ],
+  "screenshots": 6,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Focused 118 global exposed-skin workflow from PhotoPortrait.NONE and empty face lists, standalone production filter and actual editor, automatic skin inference without probe detection or Auto\/Add Face UI prerequisites, pixel identity\/background preservation, custom preview\/eyedropper\/personal cards, cancel\/apply\/history\/draft\/owner\/full export\/detail\/EXIF6. Owned public-domain NASA fixture; no physical-phone or broad segmentation accuracy claim."
+}

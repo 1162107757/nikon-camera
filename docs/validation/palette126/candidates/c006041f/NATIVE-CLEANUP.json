@@ -1,0 +1,43 @@
+{
+  "candidateSha256": "c006041f7380620a55db0d50bef0fd1146867ebe1e3b3c9cbd5eed98af88704c",
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "completedAtUtc": "2026-11-01T05:58:26.387Z",
+  "testPackageRemoved": true,
+  "targetProcessFixtureAndDraftCleanupVerifiedByEachRun": true,
+  "exactRemoteEvidenceDirectoriesRemoved": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-135256-phone-78bab899",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 6
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-135409-font1.3-bcecfa42",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 1
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-135519-landscape-c6e2814d",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 6
+    }
+  ],
+  "mainAppStopped": true,
+  "mainAppDataCleared": false,
+  "mainAppUninstalled": false,
+  "observedFinalSettings": {
+    "fontScale": "1.0",
+    "animatorDurationScale": "null",
+    "airplaneMode": "0",
+    "immersiveConfirmation": "null",
+    "wifiOn": "1",
+    "mobileData": "1"
+  },
+  "settingsRestorationEvidence": [
+    "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/cleanup.json",
+    "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/cleanup.json",
+    "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/cleanup.json"
+  ],
+  "emulatorRetainedForRootFinalShutdown": true,
+  "errors": []
+}

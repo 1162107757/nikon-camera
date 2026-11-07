@@ -1,0 +1,76 @@
+{
+  "versionCode": 153,
+  "versionName": "0.29.2-beta",
+  "apk": "dist/huevia-0.29.2-beta-debug.apk",
+  "apkSha256": "643dc3ec12a086a0db44bee02414c08ee2bffa141e83a5decbb83d17ed82da28",
+  "apkBytes": 33606103,
+  "pass": true,
+  "device": "Owned Pixel_9 emulator-5596; Android17/API37. Display classes emulated.",
+  "runs": [
+    {
+      "mode": "phone",
+      "runId": "20261107-182848-phone-1e377e",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/phone/report.json"
+    },
+    {
+      "mode": "font",
+      "runId": "20261107-182902-font-0d4d94",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/font/report.json"
+    },
+    {
+      "mode": "narrow",
+      "runId": "20261107-182913-narrow-be7795",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/narrow/report.json"
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261107-182923-landscape-c7d7b5",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/landscape/report.json"
+    },
+    {
+      "mode": "tablet",
+      "runId": "20261107-182939-tablet-7f718c",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/tablet/report.json"
+    },
+    {
+      "mode": "tablet-landscape",
+      "runId": "20261107-183004-tablet-landscape-1c23b6",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/tablet-landscape/report.json"
+    },
+    {
+      "mode": "dark",
+      "runId": "20261107-183022-dark-cc476e",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/dark/report.json"
+    }
+  ],
+  "totalAssertions": 70,
+  "totalScreenshots": 42,
+  "scope": "Bounded selection-style capture and native selection switching only. Source image hash/fixture cleanup checked.",
+  "fixtures": "Existing illustrative photo, hand-authored QA presets, synthetic global skin mask. No inference accuracy claim.",
+  "limits": "No model/renderer/export/persistence changes; their broader152 runs were not repeated or reattributed to153. No physical-device or public-release acceptance.",
+  "productionInputs": "UI-INPUTS.json",
+  "changes": "production-changes.json",
+  "immutableRawRuns": [
+    ".tooling/selection-soft153/native/20261107-182848-phone-1e377e",
+    ".tooling/selection-soft153/native/20261107-182902-font-0d4d94",
+    ".tooling/selection-soft153/native/20261107-182913-narrow-be7795",
+    ".tooling/selection-soft153/native/20261107-182923-landscape-c7d7b5",
+    ".tooling/selection-soft153/native/20261107-182939-tablet-7f718c",
+    ".tooling/selection-soft153/native/20261107-183004-tablet-landscape-1c23b6",
+    ".tooling/selection-soft153/native/20261107-183022-dark-cc476e"
+  ]
+}

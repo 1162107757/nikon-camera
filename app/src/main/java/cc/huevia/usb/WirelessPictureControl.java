@@ -414,6 +414,21 @@ public final class WirelessPictureControl implements AutoCloseable {
             String host, int port, byte[] guid, byte[] originalNcp, int middleQuarter,
             int clarityQuarter, int targetItem,
             PictureControlImportSession.OverwriteConfirmation overwrite) throws Exception {
+        return importNcp(prepared, keepConnection, host, port, guid, originalNcp, middleQuarter,
+                clarityQuarter, targetItem, overwrite, null);
+    }
+
+    public UsbPictureControlImport.Result importPreparedPresetKeepingConnection(byte[] original,
+            int middleQuarter, int clarityQuarter, int targetItem,
+            PictureControlImportSession.OverwriteConfirmation overwrite, PresetImportOptions options) throws Exception {
+        if (options == null) throw new IllegalArgumentException("缺少导入确认。");
+        return importNcp(true, true, null, 0, null, original, middleQuarter, clarityQuarter, targetItem, overwrite, options);
+    }
+
+    private UsbPictureControlImport.Result importNcp(boolean prepared, boolean keepConnection,
+            String host, int port, byte[] guid, byte[] originalNcp, int middleQuarter,
+            int clarityQuarter, int targetItem,
+            PictureControlImportSession.OverwriteConfirmation overwrite, PresetImportOptions options) throws Exception {
         begin(prepared);
         UsbPictureControlImport.Result result = new UsbPictureControlImport.Result();
         result.transport = "wifi";
@@ -457,8 +472,9 @@ public final class WirelessPictureControl implements AutoCloseable {
             if (targetItem < 201 || targetItem > 209) throw new IOException("必须明确选择 C1–C9 目标槽。");
             if (overwrite != null) overwrite.requireTargetMatch(targetItem);
             result.phase = "NcpCompatibilityAdaptation";
-            NcpPictureControlConverter.Conversion conversion = NcpPictureControlConverter.convert(
-                    source, middleQuarter, clarityQuarter);
+            NcpPictureControlConverter.Conversion conversion = options == null
+                    ? NcpPictureControlConverter.convert(source, middleQuarter, clarityQuarter)
+                    : options.convert(source, middleQuarter, clarityQuarter);
             result.sourceNcpName = conversion.registrationName();
             result.sourceCurveSha256 = conversion.curveSha256();
             result.basePictureControl = conversion.basePictureControl();
@@ -480,6 +496,7 @@ public final class WirelessPictureControl implements AutoCloseable {
                 session = new PictureControlImportSession(new Operations(client, result.commandsSent), result,
                         requested, targetItem, overwrite);
             }
+            session.configure(options);
             session.run();
             if (keepConnection) {
                 result.phase = "RetainVerifiedWirelessSession";
@@ -823,6 +840,9 @@ public final class WirelessPictureControl implements AutoCloseable {
                                                 long... parameters) throws IOException {
             record(operation, transaction, parameters);
             return client.sendPictureControlData(operation, transaction, bytes, parameters);
+        }
+        @Override public void authorizeCameraParameters(java.util.Map<Integer, byte[]> values) throws IOException {
+            client.authorizeCameraParameters(values);
         }
         private void record(int operation, long transaction, long[] parameters) {
             commands.add(PtpConstants.hex16(operation) + " transaction=" + transaction

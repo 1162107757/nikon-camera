@@ -1,0 +1,53 @@
+{
+  "candidateSha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "completedAtUtc": "2026-11-01T09:47:22.885Z",
+  "targetProcessFixtureAndDraftCleanupVerifiedByEachRun": true,
+  "exactRemoteEvidenceDirectoriesRemoved": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/cleanup127/20261101-174228-phone-1489e512",
+      "remoteFilesMatchedLocalHashes": 8,
+      "verifiedAbsent": true
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/cleanup127/20261101-174345-font1.3-4fd4ff1b",
+      "remoteFilesMatchedLocalHashes": 1,
+      "verifiedAbsent": true
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/cleanup127/20261101-174449-landscape-d0d61295",
+      "remoteFilesMatchedLocalHashes": 5,
+      "verifiedAbsent": true
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/cleanup127/20261101-174639-animations-off-50be10a0",
+      "remoteFilesMatchedLocalHashes": 1,
+      "verifiedAbsent": true
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/cleanup127/20261101-171714-phone-54557833",
+      "remoteFilesMatchedLocalHashes": 7,
+      "verifiedAbsent": true
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/cleanup127/20261101-173223-phone-cb2910e6",
+      "remoteFilesMatchedLocalHashes": 1,
+      "verifiedAbsent": true
+    }
+  ],
+  "testPackageRemoved": true,
+  "mainAppStopped": true,
+  "mainAppUninstalled": false,
+  "mainAppDataCleared": false,
+  "observedFinalSettings": {
+    "fontScale": "1.0",
+    "animatorDurationScale": "null",
+    "airplaneMode": "0",
+    "immersiveConfirmation": "null",
+    "wifiOn": "1",
+    "mobileData": "1"
+  },
+  "emulatorRetainedForRootFinalShutdown": true,
+  "errors": []
+}

@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "candidate": {
+    "versionCode": 123,
+    "versionName": "0.24.1-beta",
+    "apk": {
+      "path": "dist/huevia-0.24.1-beta-debug.apk",
+      "sha256": "024332082067562fabbcd113db591747b8f63b93f0e95a9fae9501f13d7e5f42"
+    },
+    "bytes": 33436428,
+    "buildIdentity": {
+      "path": "docs/validation/ncp-preview123/BUILD-IDENTITY.json",
+      "sha256": "ed694c6f7fb5be03e41652a0b7cd387118d9f01350edc027320f59be85da21c5"
+    },
+    "packagingAudit": {
+      "path": "docs/validation/ncp-preview123/PACKAGING-AUDIT.json",
+      "sha256": "dedb7915a5c0b83415a432509c91b050b7e37e8b9ba1f9faff647d7b75fd80a8"
+    }
+  },
+  "golden": {
+    "path": "docs/validation/ncp-preview123/native-vectors.json",
+    "sha256": "25cd71853f7018725392a301fddefaca61ee17a04a811b82bf8f02a4413f8433"
+  },
+  "hostSummary": {
+    "path": "docs/validation/ncp-preview123/HOST-SUMMARY.json",
+    "sha256": "7e14ab3672345e1993921dc3bc3770b0ca3fb5ca08604232b61010cdefce563c"
+  },
+  "successfulFinalCandidateRuns": [
+    {
+      "run": "20261030-173259-phone-41355851",
+      "mode": "phone",
+      "scope": "core",
+      "pass": true,
+      "checks": 179,
+      "screenshots": 7,
+      "probeSha256": "d0c20c6de89c179208ddc93151bc1cabf58731d5a5d5292c599acd27148c5343",
+      "report": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173259-phone-41355851/20261030-173259-phone-41355851/report.json",
+        "sha256": "7a37b5e42a532e3d5d65d992c03845de231b805e3a2bce1d35aa1df59b382e47"
+      },
+      "provenance": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173259-phone-41355851/provenance.json",
+        "sha256": "b01f44c0427c3cd4e9613d7effd732697b493af9d9b41003a977b3c35e2ca17d"
+      },
+      "cleanup": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173259-phone-41355851/cleanup.json",
+        "sha256": "caff4d3469a1e1bb0821a32ef026e8ae3fe45a169d21b90c8f9060d6dca5ff7e"
+      },
+      "measurements": [
+        {
+          "case": "monochrome-existing-painted-region",
+          "protectedPixels": 250524,
+          "outsideDifferences": 0,
+          "selectedChangedPixels": 44872
+        },
+        {
+          "case": "full-detail-0",
+          "width": 640,
+          "height": 480,
+          "exactArgb": true,
+          "orientation": 1
+        },
+        {
+          "case": "full-detail-1",
+          "width": 480,
+          "height": 640,
+          "exactArgb": true,
+          "orientation": 6
+        }
+      ]
+    },
+    {
+      "run": "20261030-173349-font1.3-2ce5fa40",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "checks": 137,
+      "screenshots": 6,
+      "probeSha256": "d0c20c6de89c179208ddc93151bc1cabf58731d5a5d5292c599acd27148c5343",
+      "report": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173349-font1.3-2ce5fa40/20261030-173349-font1.3-2ce5fa40/report.json",
+        "sha256": "5adc7ec846ca1c8ea7d111dd01a8bdaf09e85b70fb41427079ff3ebfdbcd6bec"
+      },
+      "provenance": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173349-font1.3-2ce5fa40/provenance.json",
+        "sha256": "3b24e8a6d0cd20d5fdb01b766d7c2f110242005628d869bdb7422046376ba848"
+      },
+      "cleanup": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173349-font1.3-2ce5fa40/cleanup.json",
+        "sha256": "caff4d3469a1e1bb0821a32ef026e8ae3fe45a169d21b90c8f9060d6dca5ff7e"
+      },
+      "measurements": []
+    },
+    {
+      "run": "20261030-173430-landscape-3b553cda",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "checks": 137,
+      "screenshots": 6,
+      "probeSha256": "d0c20c6de89c179208ddc93151bc1cabf58731d5a5d5292c599acd27148c5343",
+      "report": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173430-landscape-3b553cda/20261030-173430-landscape-3b553cda/report.json",
+        "sha256": "ab99d4cec879249d65cb0b8bf0aff155c9ea3e5c0e7935d8365193726ffcf49b"
+      },
+      "provenance": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173430-landscape-3b553cda/provenance.json",
+        "sha256": "6022f06fc6f18e6c8bafa50e9f4e72d2c8615335541fb66483bc74dcd4e6cdf4"
+      },
+      "cleanup": {
+        "path": "docs/validation/ncp-preview123/native/02433208/20261030-173430-landscape-3b553cda/cleanup.json",
+        "sha256": "caff4d3469a1e1bb0821a32ef026e8ae3fe45a169d21b90c8f9060d6dca5ff7e"
+      },
+      "measurements": []
+    }
+  ],
+  "successfulFinalCandidateTotals": {
+    "checks": 453,
+    "screenshots": 19,
+    "runs": 3,
+    "matrix149NotRerun": true,
+    "historicalChecksAndScreenshotsExcluded": true
+  },
+  "completedAll149MatrixPhase": {
+    "report": {
+      "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172250-phone-9876355f/20261030-172250-phone-9876355f/report.json",
+      "sha256": "6fe80c672ff593e9280229ea982518bbecf065a9d37ea8a812a56fe26ed938ca"
+    },
+    "reportOverallStatus": "FAIL later in UI harness setup; this completed earlier matrix phase is separately verified, not counted as an overall successful run",
+    "candidateSha256": "1fa780798a476d1f5e2c5547d2ba1ef40162a2cf1891b7c1c4762be84e478715",
+    "originalFiles": 149,
+    "legacyColorFiles": 130,
+    "newMonochromeFiles": 19,
+    "shaVerified": 149,
+    "androidTemplateProfileExactCases": 149,
+    "independentFixedVectors": 532,
+    "monochromeStrengthCases": 57,
+    "matrixCompletionAssertion": "all149-template-source-preserved PASS",
+    "profileIdenticalBridge": {
+      "priorSourceFreeze": {
+        "path": ".tooling/ncp-preview123/candidate-1fa78079/SOURCE-FREEZE.json",
+        "sha256": "7fc756e67dc1bf11a87dbe81e3afce7229607ea5672c95b2ae707d34fb755f00"
+      },
+      "finalSourceFreeze": {
+        "path": "docs/validation/ncp-preview123/SOURCE-FREEZE.json",
+        "sha256": "af0ed574dd266b1b3eac12018b98a756beecf948c9f7bfd74034b0704d89c540"
+      },
+      "productionInputs": 292,
+      "unchangedInputs": 291,
+      "onlyChangedPath": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "allNcpProfilesFactoryTemplateRendererFullDetailRendererAndGoldenUnchanged": true,
+      "priorCandidateApk": {
+        "path": ".tooling/ncp-preview123/candidate-1fa78079/huevia-0.24.1-beta-debug.apk",
+        "sha256": "1fa780798a476d1f5e2c5547d2ba1ef40162a2cf1891b7c1c4762be84e478715"
+      }
+    }
+  },
+  "coreCoverage": [
+    "Actual current-window Mine→Online→Mine Buttons; old onDismiss cannot clear new grid/adapter; selection/history unchanged",
+    "Sealed122 actual DEX model-key failure caches remain isolated from new-key successful960 gallery previews on same original IDs without reimport",
+    "Owned legal NCP file moved after bind; actual read failure is retryable; same path/SHA restored; real card tap succeeds with unchanged record count/metadata",
+    "Owned legal-envelope unverified-toning fixture produces genuine nonretryable unsupported state; actual tap does not change selection/history",
+    "Actual native picker ready cards and editor card selection for gray, sepia, yellow and old color representatives",
+    "Independent synthetic-photo preset bytes/50percent strength/drafts survive two-photo switching",
+    "Actual complete JPEG/reference/detail pipelines exact: monochrome640x480 EXIF1, color480x640 EXIF6; source JPEG bytes preserved",
+    "Actual monochrome100percent detail tiles equal frozen full-export reference for every tile pixel",
+    "New monochrome with existing painted region:250524 brush-zero packed ARGB pixels preserved exactly and44872 selected pixels change",
+    "Font1.3 and landscape representative short runs avoid repeating149/model/export matrices"
+  ],
+  "historicalAttempts": [
+    {
+      "run": "20261030-172250-phone-9876355f",
+      "overallPass": false,
+      "candidateSha256": "1fa780798a476d1f5e2c5547d2ba1ef40162a2cf1891b7c1c4762be84e478715",
+      "actualStage": "owned-transient-read-fault-real-retry",
+      "failure": "java.lang.AssertionError: controlled-editor-card-in-current-library",
+      "recordedChecks": 1328,
+      "screenshots": 5,
+      "includedInSuccessfulTotals": false,
+      "diagnosis": "Harness setup: editor picker defaults to Online, but the initial test searched for a local owned record without selecting Mine. Actual149 template/profile/golden/strength matrix completed before this setup failure.",
+      "report": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172250-phone-9876355f/20261030-172250-phone-9876355f/report.json",
+        "sha256": "6fe80c672ff593e9280229ea982518bbecf065a9d37ea8a812a56fe26ed938ca"
+      },
+      "provenance": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172250-phone-9876355f/provenance.json",
+        "sha256": "72e518ef8f70955e97d176eae2002d56d146921b9cf4ea865a75469f6d5f5bfb"
+      },
+      "cleanup": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172250-phone-9876355f/cleanup.json",
+        "sha256": "797095f19eb968534c2ac66170a631ac1d22c9e2d4a150128608071d24b5810b"
+      },
+      "archivedHarnessProvenance": {
+        "path": ".tooling/qa-ncp/probe-before-mine/provenance.json",
+        "sha256": "9e1b7b8c2d1782b0c6cdc804104e45b56c37745b8364ea7f0476a6179b7b030b"
+      }
+    },
+    {
+      "run": "20261030-172427-phone-7a0a6771",
+      "overallPass": false,
+      "candidateSha256": "1fa780798a476d1f5e2c5547d2ba1ef40162a2cf1891b7c1c4762be84e478715",
+      "actualStage": "owned-transient-read-fault-real-retry",
+      "failure": "java.lang.AssertionError: controlled-editor-card-in-current-library",
+      "recordedChecks": 1330,
+      "screenshots": 5,
+      "includedInSuccessfulTotals": false,
+      "diagnosis": "Harness locator: the probe clicked the editor main-bar mineButton field, while the already-open picker owns separate source Buttons. The source boolean changed but the old popup adapter remained Online. No production change in this attempt.",
+      "report": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172427-phone-7a0a6771/20261030-172427-phone-7a0a6771/report.json",
+        "sha256": "e24299d7bcf7920487c4f7440fd191ab1591d14d95a7c9f787002ae92dfd658e"
+      },
+      "provenance": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172427-phone-7a0a6771/provenance.json",
+        "sha256": "4cc81acce0d41eaa32f01b5d2d383eb0882dd16975adf41602426cd6e3cf2772"
+      },
+      "cleanup": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172427-phone-7a0a6771/cleanup.json",
+        "sha256": "5b53fa0008c66e7eaa85106ef1fb4f64a17405adf88a84b6cb9b0572ed6d8d54"
+      },
+      "archivedHarnessProvenance": {
+        "path": ".tooling/qa-ncp/probe-main-field-mine/provenance.json",
+        "sha256": "52d302cadfcd6e7fdadc449020baa8ce61962b6b565762a3eee453c8ad1c3b7d"
+      }
+    },
+    {
+      "run": "20261030-172541-phone-a6269b15",
+      "overallPass": false,
+      "candidateSha256": "1fa780798a476d1f5e2c5547d2ba1ef40162a2cf1891b7c1c4762be84e478715",
+      "actualStage": "owned-transient-read-fault-real-retry",
+      "failure": "java.lang.AssertionError: native-picker-local-source-selected",
+      "recordedChecks": 1330,
+      "screenshots": 5,
+      "includedInSuccessfulTotals": false,
+      "diagnosis": "Production defect exposed after the actual popup Mine Button was clicked: the old Dialog asynchronous onDismiss listener unconditionally cleared fields of the new popup. Screenshot shows Mine selected with7 entries but empty previews; the current grid reference timed out. Fixed in final123 with synchronous clearPickerState and onDismiss ownership guard; final actual bidirectional source tests pass.",
+      "report": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172541-phone-a6269b15/20261030-172541-phone-a6269b15/report.json",
+        "sha256": "179bc0481b1215f591c8295cc382021105e43ba65abbbb174ab2361975aa2e96"
+      },
+      "provenance": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172541-phone-a6269b15/provenance.json",
+        "sha256": "c6d3c9fdcf633f549e11f5dac2e739683d7bec9919ece35d59fb49cabd8d726c"
+      },
+      "cleanup": {
+        "path": "docs/validation/ncp-preview123/native/1fa78079/20261030-172541-phone-a6269b15/cleanup.json",
+        "sha256": "77769562a428346d29daceae61e0f0e75f6e0fc269191c6636d1231e2d40b047"
+      },
+      "archivedHarnessProvenance": {
+        "path": ".tooling/qa-ncp/probe-popup-mine/provenance.json",
+        "sha256": "380a096ab51e8d2812a1077d4112423ed79fc49b1b37afc64219d47bbc5a4bc6"
+      }
+    }
+  ],
+  "finalProbeProvenance": {
+    "path": "docs/validation/ncp-preview123/PROBE-FINAL-PROVENANCE.json",
+    "sha256": "0a361bdf7c4fc7608dc89134702fb90f4b4f03c5d8e5cecad1c146c241b09244"
+  },
+  "cleanup": {
+    "path": "docs/validation/ncp-preview123/NATIVE-CLEANUP.json",
+    "sha256": "43ce4cda8995c99bab516181eb8e4b4066aba6007e5006ea9a21001da381bc14"
+  },
+  "images": "Built-in synthetic template and owned synthetic JPEGs only; no user photograph was used or published",
+  "limitations": "Dedicated emulator functional/pixel consistency and controlled audited app approximation; no physical-phone performance, camera-import or exact Nikon-camera rendering equivalence claim. All149 profile matrix was completed on initial123 numerical code and bound to final123 by the independently verified UI-only source delta.",
+  "publication": "No upload, commit or push",
+  "visualReview": {
+    "status": "PASS",
+    "reviewer": "root",
+    "reviewedFinalCandidateScreenshots": [
+      "phone03-editor-monochrome-50",
+      "phone04-editor-color-independent",
+      "phone05-monochrome-actual-detail",
+      "font1.3-native-picker-ready",
+      "landscape03-editor-monochrome-50"
+    ],
+    "productionUiFollowupRequired": false
+  },
+  "deviceHandoff": {
+    "serial": "emulator-5588",
+    "adbReturnedTo": "root",
+    "targetStopped": true,
+    "testPackageRemoved": true,
+    "emulatorClosureOwnedBy": "root",
+    "furtherAdbByQaAgent": false
+  }
+}

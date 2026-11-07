@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "buildIdentitySha256": "27764359d069649d7514d6094182ba2b7a1e49772233379f077765cc1350281c",
+  "sourceSets": {
+    "matrix": [
+      "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+      "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+      "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+      "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+      "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+      "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+      "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+      "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+      "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+      "tests/adjustment-region-host/cc/huevia/ncp/AdjustmentRegionTest.java",
+      "tests/adjustment-region-host/cc/huevia/ncp/RegionBoundedMemoryProbe.java"
+    ],
+    "legacy": [
+      "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+      "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+      "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+      "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+      "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+      "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+      "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+      "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+      "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+      "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitGlobalToneTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitLandmarkMaskTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitLandmarksTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitModelTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitPipelineTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitSemanticMaskTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitSkinMaskTest.java",
+      "tests/portrait-host/cc/huevia/ncp/PortraitToneTest.java",
+      "tests/portrait-host/cc/huevia/ncp/SkinBodyRegionsTest.java"
+    ],
+    "platform": [
+      "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java",
+      "app/src/main/java/cc/huevia/album/PhotoDetailSource.java",
+      "app/src/main/java/cc/huevia/album/PhotoExportPreview.java",
+      "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java"
+    ]
+  },
+  "sources": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+      "sha256": "5ae2cc4927c37f0c7c01d2ef4ec928f187d682942ace7c57cc41a4dd59caab63",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDetailSource.java",
+      "sha256": "6509eb4b77c15328d96cf5ef7d7ff4649bb48e1eeaa15e218c77bf3210e62de6",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "sha256": "2f73795905bc943eba3c204e00a7a982f8147edd514db7439987c47ce813d3b3",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExportPreview.java",
+      "sha256": "00be5bbb13e4e84c192f91b1918e5ed82b58d421ea0afda4feaefb171e46b3b4",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java",
+      "sha256": "9622a1afcad557379a6df547df7f7e6c6f95d320bb94b8a70880371117feddd2",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java",
+      "sha256": "3eaba34622576f24d464d474bf1495e80380bab879c41e82fac08ecd74015967",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+      "sha256": "21d59978f3cd21ae11a075d65460be6e8f5f3e6717b47a323e836b582821cd40",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "sha256": "a2162f889b0d84a89dc0c1a87820d1f12136043131469fa2bda3e3972d4487d3",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+      "sha256": "6bde92cf47546fda658c4eade15bab82c74b930ac90e8e2f0cff4e82fd733e5a",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+      "sha256": "27c3d55540cea247357e112a2aaee00605a071a991c93d2d493ec7bf1fda26a9",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+      "sha256": "422d46aa86bd2e4e51cc479100ebe44983ec0727b7eafec4dabc6c803bed524f",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+      "sha256": "28f4a7087f732ec1079e0b9eac13975f5b3e1015c2af14f614ba07013b142a36",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "sha256": "81c4f2b808e7cadc2f8be2dbcbda673a5a7dade36da1b12892f7a615fedd3cd4",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+      "sha256": "26cc16d1b87303333ad6a79d00242e6b8a436ddd99fd956907224bb5ffd16b48",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+      "sha256": "b6ede772ee26f62e68ec5730335bca2fd64b96e2bd45825094cc1ab179d301e7",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+      "sha256": "130c21b2717847c1c980d7499618858b58f7540ada47b46dcfe1b2593c7ae056",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "sha256": "47087569a97eeb09ec8cd0c6e8387f226260b567845b530ccb50981c95bf65f4",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "sha256": "c7bb716430cc634817a700447287a7d7dad404ccf7b6f7d3202c2058a3b9dc4d",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "sha256": "706e16ffc06de4a56f9afb1657cb7022b520fd6a9f12408c6938b4eedbfcb335",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "sha256": "b8dd48f3a3d923a017e6cb26102133ae835bdec6ae7c640218ee10415a5af06d",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "sha256": "26dc2552fa7d6f1981687e418005366584054102d8473984306202601b5d0b61",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "sha256": "8fab6efeada313399292c141c68d644add31275e5f0e499944a7bf8b32337646",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "sha256": "e16df4116a9ac99c82fc68a9d244e8385c02696c665de5fbb00fb3418714c947",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+      "sha256": "cec35aeceb2344b7d4e17f4656001c619102d5352e9ab863763ad3c40f907943",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "sha256": "d3ce185673b5ac0339e7223162fb6795d4d73310490d62141d6cbe1a91ff36ad",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "ff84de58e8533451ee5536fce09bc9a9ba5400a3188b589d2cc618a2b517c0f0",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "sha256": "5fed8840f7e6d00101f8ef20f5cbad354a7fa0425ce7876994f4d2716ce0f0a1",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "sha256": "5ce343321fe55471c7c1d82e78cdaa6110e7267151ae4064ab46d51a9374f421",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+      "sha256": "6e69628bac843c2030d10ffc51b0bbed3724fa7c4509116b3cfd3cca3ed615d8",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "sha256": "e81c6c0e7e8f5ce9ed1c9a85f460cbd64b2fafe195ebe6c3c889b25ce63a9c62",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+      "sha256": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+      "sha256": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "sha256": "331c608ce86d9c38b1df40228a8a860c6d8293dee73a8539ea692fd516bae7fe",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+      "sha256": "e5ec8500a6e51f3bd42c95d13abe60244913a02939fbe1c6027329af12a0b537",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": true
+    },
+    {
+      "path": "tests/adjustment-region-host/cc/huevia/ncp/AdjustmentRegionTest.java",
+      "sha256": "d70d3191d3d47cfb38e8d8f7682cd47a3f595e3fbea07ffcfb424dafd7b8e336",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/adjustment-region-host/cc/huevia/ncp/RegionBoundedMemoryProbe.java",
+      "sha256": "fef2b4e18a852a79073e2fdc9acde566f4b80308bbbe97e2645db809a9b52f2c",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitGlobalToneTest.java",
+      "sha256": "ac61a7c834a6d757f57dcd3122325f1edba06adc9a45ee07d430c27029db86e3",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitLandmarkMaskTest.java",
+      "sha256": "9463d0bd60729d78d8450ff15252ce649a4ae7bf11dcb894cc9a696022d8a132",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitLandmarksTest.java",
+      "sha256": "3e4e387cab1439d07c3b385aefb4c8983ec57465c80d8a7f9d82abe7106eca03",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitModelTest.java",
+      "sha256": "3f1e7ba39b5c8ef3651c219c224a86e976987905817c6daefe31d7b5ea871517",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitPipelineTest.java",
+      "sha256": "91258dd19456d8a45d800f8b4bd6f3e225c313f6263f67cc05a535619635da8f",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitSemanticMaskTest.java",
+      "sha256": "a04a29cde601f4a5bae384cc4b9e2ad3206ee8288797e40ffd7edb672aa31e71",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitSkinMaskTest.java",
+      "sha256": "904a28f5c23910da7369f6537135a971ec8c791d74b72275010c1cb7016e08ba",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitToneTest.java",
+      "sha256": "772f53615c27e97826942d35a6e92d8e84c7c2fee6a76878b44004147c95e29e",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/SkinBodyRegionsTest.java",
+      "sha256": "abc12e7b5ede4bae922dd4bfd5b230d4998d5657c32ac7ecce1594c57ccff77c",
+      "compiledInputAndCurrentMatch": true,
+      "matchesFrozenProductionInput": null
+    }
+  ],
+  "beforeAndAfterMatch": true,
+  "productionInputsMatchFrozen": true,
+  "commands": [
+    {
+      "name": "HOST-MATRIX-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:23.309237+00:00",
+      "arguments": [
+        "C:\\Users\\11621\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\adjustment-region-host\\run.ps1"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/HOST-MATRIX-OUTPUT.txt",
+      "sha256": "09a0262e78d8b910f6dec2ddb15bf014facc35af69284519c7f15761220b58d3"
+    },
+    {
+      "name": "LEGACY-HOST-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:26.890172+00:00",
+      "arguments": [
+        "C:\\Users\\11621\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\portrait-host\\run.ps1"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/LEGACY-HOST-OUTPUT.txt",
+      "sha256": "47379a8ba378639969d430815b6fb558e9b0008c1939d47533783fa8301ba5c1"
+    },
+    {
+      "name": "MEMORY-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:32.662866+00:00",
+      "arguments": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\java.exe",
+        "-Xmx96m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\adjustment-region-host\\.build\\classes",
+        "cc.huevia.ncp.RegionBoundedMemoryProbe"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/MEMORY-OUTPUT.txt",
+      "sha256": "b84af6e0490b070768a1ac01245f4a4aaca7d399826fa338e779e8e0286f52fd"
+    },
+    {
+      "name": "PLATFORM-COMPILE-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:34.278180+00:00",
+      "arguments": [
+        "C:\\Users\\11621\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\adjustment-region-host\\compile-platform.ps1"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/PLATFORM-COMPILE-OUTPUT.txt",
+      "sha256": "6439a534f46cc75e02b6236195d491452785521faeea105113d8581fa0f3b9f2"
+    }
+  ],
+  "note": "Manifest captured before and after these actual compiler/test runs; no inferred provenance from earlier green logs."
+}

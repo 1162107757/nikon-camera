@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-28",
+  "status": "published-verified",
+  "userRequestedUpload": true,
+  "userConfirmedMandatory": true,
+  "channel": "beta",
+  "packageName": "cc.huevia",
+  "versionCode": 111,
+  "versionName": "0.23.0-beta",
+  "minSdk": 26,
+  "bytes": 9519012,
+  "sha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "notesFile": "dist/huevia-0.23.0-beta-RELEASE-NOTES.txt",
+  "notesCharacters": 142,
+  "downloadPage": "https://huevia.cc/preset-library/download/?channel=beta",
+  "publicationRecord": "docs/validation/portrait-tools/publication/PUBLICATION.json"
+}

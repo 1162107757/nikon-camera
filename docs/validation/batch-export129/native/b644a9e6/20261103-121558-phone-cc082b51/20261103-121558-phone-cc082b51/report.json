@@ -1,0 +1,34 @@
+{
+  "pass": false,
+  "stage": "start",
+  "mode": "phone",
+  "scope": "full",
+  "candidateSha256": "b644a9e67aee1082f5b3ce38e644189ac78d51e32dad0fb8fca14c0db5681e3d",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "owned-originals-and-results-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 1,
+  "privateFixtureRemoved": true,
+  "privateResultsRemoved": true,
+  "failure": "java.lang.NoSuchMethodException: cc.huevia.album.DownloadedPhoto.<init> [class java.io.File, class java.lang.String]",
+  "stack": "java.lang.NoSuchMethodException: cc.huevia.album.DownloadedPhoto.<init> [class java.io.File, class java.lang.String]\n\tat java.lang.Class.getConstructor0(Class.java:3391)\n\tat java.lang.Class.getConstructor(Class.java:2484)\n\tat cc.huevia.batchexportqa.BatchExportProbe.photo(BatchExportProbe.java:91)\n\tat cc.huevia.batchexportqa.BatchExportProbe.onStart(BatchExportProbe.java:39)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

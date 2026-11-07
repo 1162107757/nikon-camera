@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": false,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Portrait tools probe failed: java.lang.AssertionError: global-more-native-menu-visible-逐人肤色调节（高级）; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\portrait-tools\\24c82ca0\\20261030-105736-font1.3-2822926c\\20261030-105736-font1.3-2822926c\\report.json",
+  "errors": [],
+  "remoteEvidenceRemovedAfterLocalPull": true
+}

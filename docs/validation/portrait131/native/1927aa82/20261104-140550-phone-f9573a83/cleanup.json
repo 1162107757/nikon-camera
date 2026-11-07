@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Skin smoothing probe failed: java.lang.AssertionError: No flat facial skin fixture location; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\portrait131\\native\\1927aa82\\20261104-140550-phone-f9573a83\\20261104-140550-phone-f9573a83\\report.json",
+  "errors": []
+}

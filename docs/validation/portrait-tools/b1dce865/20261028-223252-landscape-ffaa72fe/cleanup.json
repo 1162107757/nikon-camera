@@ -1,0 +1,18 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Portrait tools probe failed: java.lang.AssertionError: native-pinch-zooms; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\portrait-tools\\b1dce865\\20261028-223252-landscape-ffaa72fe\\20261028-223252-landscape-ffaa72fe\\report.json",
+  "errors": []
+}

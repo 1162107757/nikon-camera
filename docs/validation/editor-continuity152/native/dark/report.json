@@ -1,0 +1,428 @@
+{
+  "pass": true,
+  "stage": "complete-continuity",
+  "candidateSha256": "eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07",
+  "mode": "dark",
+  "scope": "editor-continuity152-distinct",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "visible-circle-tool-滤镜",
+      "pass": true
+    },
+    {
+      "name": "tool-target-滤镜",
+      "pass": true
+    },
+    {
+      "name": "visible-circle-tool-调节",
+      "pass": true
+    },
+    {
+      "name": "tool-target-调节",
+      "pass": true
+    },
+    {
+      "name": "visible-circle-tool-裁切",
+      "pass": true
+    },
+    {
+      "name": "tool-target-裁切",
+      "pass": true
+    },
+    {
+      "name": "visible-circle-tool-人像",
+      "pass": true
+    },
+    {
+      "name": "tool-target-人像",
+      "pass": true
+    },
+    {
+      "name": "visible-circle-tool-边框",
+      "pass": true
+    },
+    {
+      "name": "tool-target-边框",
+      "pass": true
+    },
+    {
+      "name": "filter-default",
+      "pass": true
+    },
+    {
+      "name": "filename-header",
+      "pass": true
+    },
+    {
+      "name": "backdrop-sampled-off-thread",
+      "pass": true
+    },
+    {
+      "name": "bounded-backdrop",
+      "pass": true
+    },
+    {
+      "name": "tools-before-workspace",
+      "pass": true
+    },
+    {
+      "name": "unclipped-editor-top-bar",
+      "pass": true
+    },
+    {
+      "name": "unclipped-editor-save",
+      "pass": true
+    },
+    {
+      "name": "unclipped-editor-back",
+      "pass": true
+    },
+    {
+      "name": "unclipped-editor-photo-stage",
+      "pass": true
+    },
+    {
+      "name": "unclipped-editor-primary-navigation",
+      "pass": true
+    },
+    {
+      "name": "unclipped-compact-editor-panels",
+      "pass": true
+    },
+    {
+      "name": "export-yellow-action",
+      "pass": true
+    },
+    {
+      "name": "rendered-filter-gap-14dp",
+      "pass": true
+    },
+    {
+      "name": "filter-card-name-unclipped",
+      "pass": true
+    },
+    {
+      "name": "native-strength-updates-model",
+      "pass": true
+    },
+    {
+      "name": "undo-restores-strength",
+      "pass": true
+    },
+    {
+      "name": "redo-restores-strength",
+      "pass": true
+    },
+    {
+      "name": "exposure-first",
+      "pass": true
+    },
+    {
+      "name": "native-exposure-updates-settings",
+      "pass": true
+    },
+    {
+      "name": "compare-48dp",
+      "pass": true
+    },
+    {
+      "name": "compare-top-right",
+      "pass": true
+    },
+    {
+      "name": "split-opens",
+      "pass": true
+    },
+    {
+      "name": "split-keeps-effect-frame",
+      "pass": true
+    },
+    {
+      "name": "comparison-aligned-dimensions",
+      "pass": true
+    },
+    {
+      "name": "split-drag-changes-seam",
+      "pass": true
+    },
+    {
+      "name": "split-accessible-progress",
+      "pass": true
+    },
+    {
+      "name": "split-keyboard-progress",
+      "pass": true
+    },
+    {
+      "name": "split-closes",
+      "pass": true
+    },
+    {
+      "name": "crop-grid-visible",
+      "pass": true
+    },
+    {
+      "name": "square-crop-live",
+      "pass": true
+    },
+    {
+      "name": "rotate-keeps-square",
+      "pass": true
+    },
+    {
+      "name": "mirror-state",
+      "pass": true
+    },
+    {
+      "name": "mirror-reverses-real-rendered-pixels",
+      "pass": true
+    },
+    {
+      "name": "mirror-draft-reload",
+      "pass": true
+    },
+    {
+      "name": "mirror-undo",
+      "pass": true
+    },
+    {
+      "name": "crop-reset",
+      "pass": true
+    },
+    {
+      "name": "grid-hides-outside-crop",
+      "pass": true
+    },
+    {
+      "name": "portrait-entry-preserved",
+      "pass": true
+    },
+    {
+      "name": "real-border-tools-preserved",
+      "pass": true
+    },
+    {
+      "name": "preset-picker-preserved",
+      "pass": true
+    },
+    {
+      "name": "real-export-dialog-opens",
+      "pass": true
+    },
+    {
+      "name": "source-file-unchanged",
+      "pass": true
+    },
+    {
+      "name": "more-next-to-close-visible",
+      "pass": true
+    },
+    {
+      "name": "more-preserves-utilities",
+      "pass": true
+    },
+    {
+      "name": "reset-glyph-centered-in-target",
+      "pass": true
+    },
+    {
+      "name": "reset-circle-concentric-state-16842910",
+      "pass": true
+    },
+    {
+      "name": "reset-circle-concentric-state-16842919",
+      "pass": true
+    },
+    {
+      "name": "reset-circle-concentric-state-16842908",
+      "pass": true
+    },
+    {
+      "name": "reset-state-restored-after-geometry-check",
+      "pass": true
+    },
+    {
+      "name": "photo-portrait-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "portrait-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "photo-portrait-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "portrait-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "body-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "body-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "rectangular-body-back-target-has-circular-face",
+      "pass": true
+    },
+    {
+      "name": "body-five-circle-tool-rail",
+      "pass": true
+    },
+    {
+      "name": "body-range-reset-visible-targets",
+      "pass": true
+    },
+    {
+      "name": "body-range-parameters-expand",
+      "pass": true
+    },
+    {
+      "name": "body-range-parameters-collapse",
+      "pass": true
+    },
+    {
+      "name": "body-reset-current-amount",
+      "pass": true
+    },
+    {
+      "name": "body-reset-undo-restores-amount",
+      "pass": true
+    },
+    {
+      "name": "body-apply-reaches-parent",
+      "pass": true
+    },
+    {
+      "name": "close-returns-to-album",
+      "pass": true
+    },
+    {
+      "name": "ordinary-open-restores-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "explicit-saved-version-still-original",
+      "pass": true
+    },
+    {
+      "name": "pending-draft-survives-explicit-version-view",
+      "pass": true
+    },
+    {
+      "name": "app-album-entry-restores-all-edits",
+      "pass": true
+    },
+    {
+      "name": "owned-phone-fixture-inserted",
+      "pass": true
+    },
+    {
+      "name": "real-phone-import-keeps-original-bytes",
+      "pass": true
+    },
+    {
+      "name": "same-phone-photo-cache-restores-all-edits",
+      "pass": true
+    },
+    {
+      "name": "activity-recreated",
+      "pass": true
+    },
+    {
+      "name": "fresh-editor-restores-all-edits",
+      "pass": true
+    },
+    {
+      "name": "photo-colour-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "colour-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "photo-palette-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "cleanup-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "photo-crop-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "crop-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "photo-local-workspace-photo-atmosphere",
+      "pass": true
+    },
+    {
+      "name": "local-apply-yellow-pill",
+      "pass": true
+    },
+    {
+      "name": "local-instruction-separate-from-actions",
+      "pass": true
+    },
+    {
+      "name": "local-creation-guidance-preserved",
+      "pass": true
+    },
+    {
+      "name": "original-and-phone-cache-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 14,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "layout": {
+    "density": 3,
+    "fontScale": 1,
+    "workspaceWidthDp": 390,
+    "workspaceHeightDp": 844,
+    "topInsetDp": 52,
+    "bottomInsetDp": 24,
+    "photoWidthDp": 330.3999938964844,
+    "photoHeightDp": 413,
+    "panelHeightDp": 184,
+    "primaryHeightDp": 67
+  }
+}

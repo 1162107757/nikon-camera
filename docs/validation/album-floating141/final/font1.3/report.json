@@ -1,0 +1,382 @@
+{
+  "access": "FULL",
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "source-summary-and-title-action-present",
+      "pass": true
+    },
+    {
+      "name": "source-row-only-has-two-segments",
+      "pass": true
+    },
+    {
+      "name": "more-source-and-actions-have-separate-rows",
+      "pass": true
+    },
+    {
+      "name": "App-shows-total-count",
+      "pass": true
+    },
+    {
+      "name": "App-has-no-persistent-add-action",
+      "pass": true
+    },
+    {
+      "name": "App-selection-remains-directly-accessible",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-source-app",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-app",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-source-phone",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-phone",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-select",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-select",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-more",
+      "pass": true
+    },
+    {
+      "name": "selection-shares-secondary-count-color",
+      "pass": true
+    },
+    {
+      "name": "first-photo-tile-is-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "selection-opens-batch-actions",
+      "pass": true
+    },
+    {
+      "name": "floating-dock-is56dp-and-fully-inside-safe-content",
+      "pass": true
+    },
+    {
+      "name": "selection-replaces-navigation-and-removes-duplicate-top-controls",
+      "pass": true
+    },
+    {
+      "name": "selection-locks-source-and-keeps-stable-title",
+      "pass": true
+    },
+    {
+      "name": "dock-actions-stay-on-one-row",
+      "pass": true
+    },
+    {
+      "name": "photo-selection-uses-small-circles-not-text-blocks",
+      "pass": true
+    },
+    {
+      "name": "source-specific-save-and-edit-actions-retained",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-cancelButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-cancelButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-batchButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-batchButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-exportButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-exportButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-selection-counter",
+      "pass": true
+    },
+    {
+      "name": "dock-secondary-actions-share-counter-color",
+      "pass": true
+    },
+    {
+      "name": "selection-keeps-thumbnail-size",
+      "pass": true
+    },
+    {
+      "name": "zero-selection-disables-edit-and-save",
+      "pass": true
+    },
+    {
+      "name": "source-click-cannot-discard-active-selection",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "selected-photos-enable-edit-and-save",
+      "pass": true
+    },
+    {
+      "name": "floating-dock-is56dp-and-fully-inside-safe-content",
+      "pass": true
+    },
+    {
+      "name": "selection-replaces-navigation-and-removes-duplicate-top-controls",
+      "pass": true
+    },
+    {
+      "name": "selection-locks-source-and-keeps-stable-title",
+      "pass": true
+    },
+    {
+      "name": "dock-actions-stay-on-one-row",
+      "pass": true
+    },
+    {
+      "name": "photo-selection-uses-small-circles-not-text-blocks",
+      "pass": true
+    },
+    {
+      "name": "source-specific-save-and-edit-actions-retained",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-cancelButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-cancelButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-batchButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-batchButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-exportButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-exportButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-selection-counter",
+      "pass": true
+    },
+    {
+      "name": "dock-secondary-actions-share-counter-color",
+      "pass": true
+    },
+    {
+      "name": "save-settings-cancel-action-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "cancel-save-settings-keeps-selected-photos-and-dock",
+      "pass": true
+    },
+    {
+      "name": "cancel-clears-selection-and-restores-browsing",
+      "pass": true
+    },
+    {
+      "name": "cancel-restores-navigation-and-summary",
+      "pass": true
+    },
+    {
+      "name": "system-back-exits-selection-and-restores-navigation",
+      "pass": true
+    },
+    {
+      "name": "preparing-state-stays-in-single-dock",
+      "pass": true
+    },
+    {
+      "name": "cancel-preparation-invalidates-request-and-restores-navigation",
+      "pass": true
+    },
+    {
+      "name": "title-overflow-keeps-refresh-and-RAW",
+      "pass": true
+    },
+    {
+      "name": "empty-App-offers-source-navigation-not-import",
+      "pass": true
+    },
+    {
+      "name": "empty-App-recovery-label-and-entire-target-visible",
+      "pass": true
+    },
+    {
+      "name": "source-switch-has-no-sideways-animation",
+      "pass": true
+    },
+    {
+      "name": "phone-source-reads-owned-published-media",
+      "pass": true
+    },
+    {
+      "name": "authorized-phone-has-no-persistent-picker",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-app",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-phone",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-select",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "floating-dock-is56dp-and-fully-inside-safe-content",
+      "pass": true
+    },
+    {
+      "name": "selection-replaces-navigation-and-removes-duplicate-top-controls",
+      "pass": true
+    },
+    {
+      "name": "selection-locks-source-and-keeps-stable-title",
+      "pass": true
+    },
+    {
+      "name": "dock-actions-stay-on-one-row",
+      "pass": true
+    },
+    {
+      "name": "photo-selection-uses-small-circles-not-text-blocks",
+      "pass": true
+    },
+    {
+      "name": "source-specific-save-and-edit-actions-retained",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-cancelButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-cancelButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-batchButton",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-batchButton",
+      "pass": true
+    },
+    {
+      "name": "dock-target-stays-inside-material",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-selection-counter",
+      "pass": true
+    },
+    {
+      "name": "dock-secondary-actions-share-counter-color",
+      "pass": true
+    },
+    {
+      "name": "last-phone-photo-scrolls-fully-above-floating-dock",
+      "pass": true
+    },
+    {
+      "name": "real-batch-dispatch-finishes-preparation-once",
+      "pass": true
+    },
+    {
+      "name": "dismiss-batch-menu-restores-normal-gallery-navigation",
+      "pass": true
+    }
+  ]
+}

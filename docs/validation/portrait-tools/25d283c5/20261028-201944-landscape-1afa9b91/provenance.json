@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "25d283c5a1ef09ce8bde29d49975ef56941a12434c800251911431b3a55ebcfa",
+  "versionCode": 111,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "5e7d8d79ac3f935b6c118b120de6a20049537716903d676354538f4a9f58b1bb",
+  "pass": true,
+  "scope": "Actual installed portrait detector/dialog/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank/manual fallback, colour/texture/light controls, add/erase strokes, healing, apply/cancel/history/draft isolation, injected preview failure, simulated owner mismatch, full export reference/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim.",
+  "files": [
+    {
+      "file": "01-auto-two-faces.png",
+      "sha256": "a8a9b2293c64ad01731bca2508da0cd3e2b67d9740275653112d0c9267e7b8c1"
+    },
+    {
+      "file": "02-skin-colour.png",
+      "sha256": "ab0697c4ccdce4d00c0b88b9c21b0cf51b2bd6e3b4fc108bb037def5491c1049"
+    },
+    {
+      "file": "03-skin-texture.png",
+      "sha256": "390104aa1363ac6969df044b7d89bf13a95a90a3bcacd8002053baaac21cbd32"
+    },
+    {
+      "file": "04-face-light.png",
+      "sha256": "b773b7809514eb5010fd6e2f3432bc8829bd5bfbe592a51deaa16a2322811fec"
+    },
+    {
+      "file": "05-mask-corrections.png",
+      "sha256": "85303c242b6b1c8de7af9030b532fd95cb168b1a087eac8b7464f4cfea89ca7d"
+    },
+    {
+      "file": "06-blemish-healing.png",
+      "sha256": "6ca6ba04a9d1fc71dd46111d00b8c04b19058876b8151940b1f0d4aeb2c573b4"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "1b715086634aac90966383b2cf807fac63fac45dd15c7bb96ebdab7d719966b5"
+    },
+    {
+      "file": "report.json",
+      "sha256": "9a383412b525113b82b747f36b70040698936c1d23f4d0c5a24d8bf32ed75587"
+    }
+  ]
+}

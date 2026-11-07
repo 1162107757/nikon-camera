@@ -8,8 +8,9 @@ public final class UiPalette {
     public final int surface, container, text, secondary, primary, onPrimary, primaryContainer, outline, success, error;
     public final int card, glass, rim, action, onAction, actionEnd, onPrimaryContainer, photoAccent, photoTrack;
     public final boolean dark;
-    public UiPalette(Context context) {
-        dark = AppAppearance.isDark(context);
+    public UiPalette(Context context) { this(AppAppearance.isDark(context)); }
+    private UiPalette(boolean dark) {
+        this.dark = dark;
         surface = color(dark ? "#201F1D" : "#FAFAF8");
         container = color(dark ? "#33302C" : "#EFEDE9");
         card = color(dark ? "#292724" : "#FFFFFF");
@@ -29,6 +30,13 @@ public final class UiPalette {
         // The substantial tint keeps navigation labels readable over photographs.
         glass = color(dark ? "#F0292724" : "#F5FAFAF8");
         rim = color(dark ? "#30FFFFFF" : "#CFFFFFFF");
+    }
+    /** Secondary windows retain an explicitly themed editor context. */
+    static UiPalette forTheme(Context context) {
+        android.util.TypedValue value=new android.util.TypedValue();
+        if(context.getTheme().resolveAttribute(android.R.attr.windowLightStatusBar,value,true)
+                &&value.type==android.util.TypedValue.TYPE_INT_BOOLEAN)return new UiPalette(value.data==0);
+        return new UiPalette(context);
     }
     private static int color(String hex) { return Color.parseColor(hex); }
 }

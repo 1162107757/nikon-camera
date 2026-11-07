@@ -39,6 +39,7 @@ public final class UsbPictureControlImportHostTest {
         ncpWriteFailureKeepsConversionMetadata();
         explicitOccupiedOverwriteReadsCapabilityAndClosesTheUsbSession();
         occupiedOverwriteRequiresMatchingConfirmationAndCapability();
+        selectedCameraParametersRunOnlyAfterVerifiedPreset();
         System.out.println("PASS: " + checks + " production empty-slot Picture Control copy checks");
     }
 
@@ -79,6 +80,42 @@ public final class UsbPictureControlImportHostTest {
         equal(1, one.dataPayloads.size());
         once.close();
         lifecycle(one);
+    }
+
+    private static void selectedCameraParametersRunOnlyAfterVerifiedPreset() throws Exception {
+        for (boolean loseResponse : new boolean[] {false, true}) {
+            Camera camera = new Camera(); camera.allowParameters = true; camera.losePropertyResponse = loseResponse;
+            byte[] source = NcpCompatibilityFixtures.ncp(); camera.expectedWrite = NcpCompatibilityFixtures.expectedData(4, 0);
+            boolean[] backup = {false};
+            PresetImportOptions options = new PresetImportOptions(false, hash(camera.expectedWrite),
+                    new CameraParameterRequest(null, null, 333L), snapshot -> {
+                        equal(0L, camera.count(0x1016));
+                        equal(-333L, snapshot.changes().get(0).before);
+                        backup[0] = true;
+                    });
+            UsbPictureControlImport.Result result;
+            try {
+                result = new UsbPictureControlImport().importPreset(camera.device, camera.manager, source, 4, 0, TARGET, null, options);
+                check(!loseResponse, "Lost property response cannot be success");
+            } catch (UsbPictureControlImport.ImportException failure) {
+                if (!loseResponse) throw new AssertionError("Unexpected parameter import failure", failure);
+                check(loseResponse, "Only injected property failure expected"); result = failure.partialResult;
+            }
+            check(backup[0], "Parameter originals backed up");
+            check(result.readbackVerified, "Preset is verified before parameters");
+            equal(1L, camera.count(0x90cd)); equal(1L, camera.count(0x1016));
+            check(result.cameraParameters != null, "Parameter outcome survives failure");
+            if (loseResponse) {
+                check(result.cameraParameters.uncertain && result.protocolPhaseUnconfirmed, "Uncertain parameter blocks protocol reuse");
+                equal(0L, camera.count(0x1003));
+            } else {
+                check(result.completed && result.ncpRegistrationVerified, "Verified preset and parameter import complete");
+                equal(333L, result.cameraParameters.changes().get(0).observed);
+                check(result.cameraParameters.text().contains("已调整并核对"), "Parameter readback retained in result");
+                equal(1L, camera.count(0x1003));
+            }
+            lifecycle(camera);
+        }
     }
 
     private static void strictWriterDataValidationRejectsUnknownFieldsAndEncodings() throws Exception {
@@ -478,6 +515,8 @@ public final class UsbPictureControlImportHostTest {
         boolean closed;
         boolean targetBecomesOccupied;
         boolean advertiseCapability, malformedCapability;
+        boolean allowParameters, losePropertyResponse;
+        int exposureBias = -333;
         boolean normalizeReadback;
         boolean cancelAfterReadback;
         int readbackResponseBoundary = -1;
@@ -519,6 +558,14 @@ public final class UsbPictureControlImportHostTest {
                 PtpContainer container = new PtpContainerReader(new ByteArrayInputStream(
                         Arrays.copyOfRange(bytes, offset, offset + length)), 1024 * 1024).read();
                 if (container.type() == PtpContainer.DATA) {
+                    if (pendingWrite != null && pendingWrite.operation == 0x1016) {
+                        equal(0x1016, container.code()); equal(pendingWrite.transaction, container.transactionId());
+                        equal(new long[] {0x5010}, pendingWrite.parameters);
+                        equal(new byte[] {0x4d,1}, container.payload());
+                        exposureBias = 333;
+                        incoming = losePropertyResponse ? new byte[0] : PtpContainer.response(0x2001, pendingWrite.transaction).toBytes();
+                        incomingOffset = 0; pendingWrite = null; return length;
+                    }
                     check(pendingWrite != null && container.code() == 0x90cd
                             && container.transactionId() == pendingWrite.transaction,
                             "The actual DATA phase matches the unique pending registration");
@@ -538,6 +585,7 @@ public final class UsbPictureControlImportHostTest {
                 equal(PtpContainer.COMMAND, container.type());
                 Command command = new Command(container.code(), container.transactionId(), container.parameters());
                 commands.add(command);
+                if (command.operation == 0x1016 && allowParameters) { pendingWrite = command; return length; }
                 if (command.operation == 0x90cd) {
                     equal(new long[] {TARGET, 0}, command.parameters);
                     pendingWrite = command;
@@ -553,7 +601,12 @@ public final class UsbPictureControlImportHostTest {
             long responseTransaction = command.transaction;
             boolean finalReadback = false;
             switch (command.operation) {
-                case 0x1001: data = deviceInfo(advertiseCapability); break;
+                case 0x1001: data = deviceInfo(advertiseCapability, allowParameters); break;
+                case 0x1014:
+                    check(allowParameters && slotReads.getOrDefault(TARGET, 0) >= 3, "Property reads follow exact preset readback");
+                    equal(new long[] {0x5010}, command.parameters);
+                    data = new byte[] {0x10,0x50,3,0,1,0,0,(byte)exposureBias,(byte)(exposureBias>>8),2,3,0,(byte)0xb3,(byte)0xfe,0,0,0x4d,1}; break;
+                case 0x1015: equal(new long[] {0x5010}, command.parameters); data = new byte[] {(byte)exposureBias,(byte)(exposureBias>>8)}; break;
                 case 0x1002: equal(new long[] {1}, command.parameters); break;
                 case 0x1003: equal(new long[0], command.parameters); response = cleanupResponseCode; break;
                 case 0x90cf: equal(new long[] {1}, command.parameters); data = new byte[malformedCapability ? 29 : 28]; break;
@@ -580,8 +633,12 @@ public final class UsbPictureControlImportHostTest {
         }
     }
     private static byte[] deviceInfo(boolean capability) {
+        return deviceInfo(capability, false);
+    }
+    private static byte[] deviceInfo(boolean capability, boolean parameters) {
         int[] supported = capability ? new int[] {0x1001, 0x1002, 0x1003, 0x90cc, 0x90cd, 0x90cf}
                 : new int[] {0x1001, 0x1002, 0x1003, 0x90cc, 0x90cd};
+        if (parameters) { int length = supported.length; supported = Arrays.copyOf(supported, length + 3); supported[length] = 0x1014; supported[length+1] = 0x1015; supported[length+2] = 0x1016; }
         Writer writer = new Writer().u16(100).u32(10).u16(100).string("").u16(0).u32(supported.length);
         for (int opcode : supported) writer.u16(opcode);
         return writer.u32(0).u32(0).u32(0).u32(0).string("Nikon").string("Z 6_2").string("V1.62").string("private").bytes();

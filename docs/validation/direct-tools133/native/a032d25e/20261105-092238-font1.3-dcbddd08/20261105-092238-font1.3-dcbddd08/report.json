@@ -1,0 +1,428 @@
+{
+  "pass": true,
+  "stage": "ui-complete",
+  "candidateSha256": "a032d25ed9c7cb49c938cb2f34d3aa0daddd122959d04188eb347a350740e0e5",
+  "mode": "font1.3",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "native-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-0",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-1",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-2",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-3",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-4",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-7",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-6",
+      "pass": true
+    },
+    {
+      "name": "advanced-rail-hidden-in-first-view",
+      "pass": true
+    },
+    {
+      "name": "quick-first-view",
+      "pass": true
+    },
+    {
+      "name": "first-frame-save-action-painted",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-0",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-1",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-2",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-3",
+      "pass": true
+    },
+    {
+      "name": "natural-bundle-real-parameters",
+      "pass": true
+    },
+    {
+      "name": "natural-cleanup-frozen",
+      "pass": true
+    },
+    {
+      "name": "quick-gesture-one-undo",
+      "pass": true
+    },
+    {
+      "name": "quick-slider-live",
+      "pass": true
+    },
+    {
+      "name": "quick-undo-restores-slider",
+      "pass": true
+    },
+    {
+      "name": "quick-redo-restores-slider",
+      "pass": true
+    },
+    {
+      "name": "switch-tool-keeps-parameters",
+      "pass": true
+    },
+    {
+      "name": "full-adjustments-directly-visible",
+      "pass": true
+    },
+    {
+      "name": "no-second-basic-panel",
+      "pass": true
+    },
+    {
+      "name": "primary-categories-swipe",
+      "pass": true
+    },
+    {
+      "name": "finger-swipe-reveals-tools",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-CONTRAST",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-HIGHLIGHTS",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-SHADOWS",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-WHITES",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-WHITES",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-BLACKS",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-TEMPERATURE",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-TINT",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-TINT",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-SATURATION",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-VIBRANCE",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-CLARITY",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-SHARPENING",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "direct-parameter-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "parameter-caption-unclipped-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "refresh-keeps-user-tool-scroll",
+      "pass": true
+    },
+    {
+      "name": "single-tap-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "correct-colour-mode-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "cancel-editor-curves-keeps-edit",
+      "pass": true
+    },
+    {
+      "name": "single-tap-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "correct-colour-mode-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "cancel-editor-hsl-keeps-edit",
+      "pass": true
+    },
+    {
+      "name": "single-tap-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "cancel-editor-palette-keeps-edit",
+      "pass": true
+    },
+    {
+      "name": "single-tap-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "cancel-editor-cleanup-keeps-edit",
+      "pass": true
+    },
+    {
+      "name": "local-scope-direct",
+      "pass": true
+    },
+    {
+      "name": "full-rail-controls-production-settings",
+      "pass": true
+    },
+    {
+      "name": "parameter-gesture-one-undo",
+      "pass": true
+    },
+    {
+      "name": "parameter-undo-restores-settings",
+      "pass": true
+    },
+    {
+      "name": "parameter-redo-restores-settings",
+      "pass": true
+    },
+    {
+      "name": "primary-tools-keep-canvas-height",
+      "pass": true
+    },
+    {
+      "name": "header-save-still-visible",
+      "pass": true
+    },
+    {
+      "name": "filter-library-retained",
+      "pass": true
+    },
+    {
+      "name": "crop-entry-retained",
+      "pass": true
+    },
+    {
+      "name": "border-direct-primary",
+      "pass": true
+    },
+    {
+      "name": "recipe-direct-primary",
+      "pass": true
+    },
+    {
+      "name": "full-adjustment-return",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-primary",
+      "pass": true
+    },
+    {
+      "name": "skin-opens-without-extra-group",
+      "pass": true
+    },
+    {
+      "name": "skin-autodetection-prepared",
+      "pass": true
+    },
+    {
+      "name": "skin-back-returns-to-main-editor",
+      "pass": true
+    },
+    {
+      "name": "skin-cancel-keeps-main-settings",
+      "pass": true
+    },
+    {
+      "name": "body-opens-directly",
+      "pass": true
+    },
+    {
+      "name": "body-cancel-keeps-settings",
+      "pass": true
+    },
+    {
+      "name": "natural-portrait-amount",
+      "pass": true
+    },
+    {
+      "name": "portrait-automatic-skin",
+      "pass": true
+    },
+    {
+      "name": "portrait-automatic-faces",
+      "pass": true
+    },
+    {
+      "name": "compound-draft-saved",
+      "pass": true
+    },
+    {
+      "name": "save-sheet-phone-action",
+      "pass": true
+    },
+    {
+      "name": "advanced-export-preserved",
+      "pass": true
+    },
+    {
+      "name": "original-bytes-preserved",
+      "pass": true
+    },
+    {
+      "name": "gallery-fixture-available",
+      "pass": true
+    },
+    {
+      "name": "gallery-responsive-columns",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 6,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true
+}

@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 /** Tentative colour workspace. Cancel/Back never commits; Apply is one editor undo step. */
 public final class PhotoColorDialog extends Dialog {
     public interface Renderer { Bitmap render(PhotoAdjustments settings,boolean interactive)throws Exception; }
-    private static final int TEXT=0xfff4f5f7,MUTED=0xffbab1a7,ACCENT=0xfff2b48c,BG=0xff131110;
+    private static final int TEXT=0xfff4f5f7,MUTED=PhotoPrismaStyle.MUTED,ACCENT=PhotoPrismaStyle.YELLOW,BG=Color.TRANSPARENT;
     private final Activity activity;
     private final Renderer renderer;
     private final Consumer<PhotoAdjustments> commit;
@@ -24,7 +24,7 @@ public final class PhotoColorDialog extends Dialog {
     private final LatestPreviewQueue<PhotoAdjustments,Bitmap> previewQueue;
     private PhotoAdjustments settings;
     private ImageView photo;
-    private Bitmap rendered;
+    private Bitmap rendered;private final Bitmap initial;
     private TextView status,pointValue;
     private Button apply,remove;
     private CurveCanvas graph;
@@ -36,7 +36,7 @@ public final class PhotoColorDialog extends Dialog {
     private AlertDialog exactDialog;
     public PhotoColorDialog(Activity activity,Bitmap initial,PhotoAdjustments settings,boolean curveMode,Renderer renderer,Consumer<PhotoAdjustments> commit){
         super(activity,cc.huevia.R.style.AppThemeDark);this.activity=activity;this.settings=settings;this.curveMode=curveMode;this.renderer=renderer;this.commit=commit;this.bands=new Button[curveMode?4:8];
-        photo=new ImageView(getContext());photo.setScaleType(ImageView.ScaleType.FIT_CENTER);photo.setImageBitmap(initial);photo.setContentDescription("当前调色预览");
+        this.initial=initial;photo=new ImageView(getContext());photo.setScaleType(ImageView.ScaleType.FIT_CENTER);photo.setImageBitmap(initial);photo.setContentDescription("当前调色预览");
         previewQueue=new LatestPreviewQueue<>(worker,task->main.post(task),renderer::render,new LatestPreviewQueue.Listener<PhotoAdjustments,Bitmap>(){
             public void frame(PhotoAdjustments value,Bitmap image,boolean interactive,boolean latest){if(disposed){image.recycle();return;}Bitmap old=rendered;rendered=image;photo.setImageBitmap(image);if(old!=null&&old!=image)old.recycle();if(latest&&!interactive){status.setText("");status.setOnClickListener(null);apply.setEnabled(true);apply.setAlpha(1f);}}
             public void discard(Bitmap image){image.recycle();}
@@ -71,7 +71,7 @@ public final class PhotoColorDialog extends Dialog {
         if(landscape){ScrollView pane=new ScrollView(getContext());pane.addView(controls);body.addView(pane,new LinearLayout.LayoutParams(dp(330),-1));}
         else{ScrollView pane=new ScrollView(getContext());pane.addView(controls);body.addView(pane,new LinearLayout.LayoutParams(-1,dp(curveMode?330:264)));}
         root.setOnApplyWindowInsetsListener((v,insets)->{if(Build.VERSION.SDK_INT>=30){Insets safe=insets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars()|WindowInsets.Type.displayCutout());root.setPadding(safe.left,safe.top,safe.right,safe.bottom);}else root.setPadding(insets.getStableInsetLeft(),insets.getStableInsetTop(),insets.getStableInsetRight(),insets.getStableInsetBottom());return insets;});
-        setContentView(root);if(getWindow()!=null){getWindow().setBackgroundDrawableResource(android.R.color.transparent);getWindow().setLayout(-1,-1);}root.requestApplyInsets();refresh();changed();
+        PhotoPrismaStyle.workspace(root,initial);setContentView(root);if(getWindow()!=null){getWindow().setBackgroundDrawableResource(android.R.color.transparent);getWindow().setLayout(-1,-1);}root.requestApplyInsets();refresh();changed();
     }
     @Override public void show(){super.show();if(getWindow()!=null)getWindow().setLayout(-1,-1);}
     @Override public void dismiss(){dispose();super.dismiss();}
@@ -79,7 +79,7 @@ public final class PhotoColorDialog extends Dialog {
     private void changed(){if(disposed)return;refresh();revision++;status.setText("预览中");apply.setEnabled(false);apply.setAlpha(.45f);previewQueue.offer(settings,dragging);}
     private void refresh(){
         updating=true;
-        for(int i=0;i<bands.length;i++){Button b=bands[i];b.setSelected(channel==i);b.setTextColor(channel==i?ACCENT:TEXT);b.setContentDescription((curveMode?new String[]{"RGB 总曲线","红通道","绿通道","蓝通道"}[i]:PhotoHsl.NAMES[i]+"色")+(channel==i?"，已选择":""));android.graphics.drawable.GradientDrawable face=new android.graphics.drawable.GradientDrawable();face.setColor(channel==i?0x26f2b48c:Color.TRANSPARENT);face.setCornerRadius(dp(8));b.setBackground(new android.graphics.drawable.InsetDrawable(face,dp(2),dp(6),dp(2),dp(6)));if(!curveMode)b.setPadding(dp(4),dp(10),dp(4),dp(4));}
+        for(int i=0;i<bands.length;i++){Button b=bands[i];b.setSelected(channel==i);b.setTextColor(channel==i?ACCENT:TEXT);b.setContentDescription((curveMode?new String[]{"RGB 总曲线","红通道","绿通道","蓝通道"}[i]:PhotoHsl.NAMES[i]+"色")+(channel==i?"，已选择":""));android.graphics.drawable.GradientDrawable face=new android.graphics.drawable.GradientDrawable();face.setColor(channel==i?0x26ffe335:Color.TRANSPARENT);face.setCornerRadius(dp(8));b.setBackground(new android.graphics.drawable.InsetDrawable(face,dp(2),dp(6),dp(2),dp(6)));if(!curveMode)b.setPadding(dp(4),dp(10),dp(4),dp(4));}
         if(curveMode){int[] p=settings.curves.points(channel);point=Math.min(point,p.length/2-1);pointValue.setText(p[point*2]+" → "+p[point*2+1]);pointValue.setContentDescription("控制点输入 "+p[point*2]+"，输出 "+p[point*2+1]+"，点击精确输入");remove.setEnabled(point>0&&point<p.length/2-1);remove.setAlpha(remove.isEnabled()?1:.4f);graph.invalidate();graph.setContentDescription("曲线。点击加点，拖动控制点；也可使用上一点、下一点和精确输入。当前 "+pointValue.getText());}
         else for(int a=0;a<3;a++){int value=settings.hsl.get(channel,a);sliders[a].setProgress(value+100);values[a].setText(value>0?"+"+value:String.valueOf(value));sliders[a].setContentDescription(PhotoHsl.NAMES[channel]+"色"+new String[]{"色相","饱和度","明亮度"}[a]+"，"+value+"，范围负100至100");values[a].setContentDescription(sliders[a].getContentDescription()+"，点击输入数值");}
         updating=false;
@@ -102,5 +102,5 @@ public final class PhotoColorDialog extends Dialog {
     private LinearLayout column(){LinearLayout v=new LinearLayout(getContext());v.setOrientation(LinearLayout.VERTICAL);return v;}
     private LinearLayout row(){LinearLayout v=new LinearLayout(getContext());v.setGravity(Gravity.CENTER_VERTICAL);v.setBaselineAligned(false);return v;}
     private TextView text(String s,int size,int color){TextView v=new TextView(getContext());v.setText(s);v.setTextSize(size);v.setTextColor(color);v.setGravity(Gravity.CENTER_VERTICAL);v.setIncludeFontPadding(false);return v;}
-    private Button button(String s,Runnable run){Button b=new Button(getContext());b.setText(s);b.setTextSize(12);b.setAllCaps(false);b.setTextColor(TEXT);b.setMinWidth(0);b.setMinimumWidth(0);b.setMinHeight(dp(48));b.setMinimumHeight(dp(48));b.setPadding(dp(4),0,dp(4),0);b.setBackground(new android.graphics.drawable.RippleDrawable(ColorStateList.valueOf(0x33f2b48c),null,null));b.setOnClickListener(v->run.run());return b;}
+    private Button button(String s,Runnable run){Button b=new Button(getContext());b.setText(s);b.setTextSize(12);b.setAllCaps(false);b.setTextColor(TEXT);b.setMinWidth(0);b.setMinimumWidth(0);b.setMinHeight(dp(48));b.setMinimumHeight(dp(48));b.setPadding(dp(4),0,dp(4),0);b.setBackground(new android.graphics.drawable.RippleDrawable(ColorStateList.valueOf(0x33ffe335),null,null));b.setOnClickListener(v->run.run());return b;}
 }

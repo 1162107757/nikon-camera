@@ -1,0 +1,65 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "unified-np3-import-action",
+      "pass": true
+    },
+    {
+      "name": "no-format-badge",
+      "pass": true
+    },
+    {
+      "name": "partial-adaptation-needs-explicit-consent",
+      "pass": true
+    },
+    {
+      "name": "loss-disclosure-and-consent-reachable",
+      "pass": true
+    },
+    {
+      "name": "camera-parameters-off-by-default",
+      "pass": true
+    },
+    {
+      "name": "consent-enables-import",
+      "pass": true
+    },
+    {
+      "name": "optional-parameter-dialog",
+      "pass": true
+    },
+    {
+      "name": "kelvin-visible-only-after-choice",
+      "pass": true
+    },
+    {
+      "name": "explicit-choice-saved",
+      "pass": true
+    },
+    {
+      "name": "all-off-resets-choice",
+      "pass": true
+    },
+    {
+      "name": "online-format-filter-retired",
+      "pass": true
+    },
+    {
+      "name": "legacy-format-filter-cleared",
+      "pass": true
+    },
+    {
+      "name": "normal-browser-has-no-format-category",
+      "pass": true
+    }
+  ]
+}

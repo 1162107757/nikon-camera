@@ -13,7 +13,7 @@ public final class AppIcon extends Drawable {
     public enum Kind { PRESETS, ALBUM, CAMERA, FILE, DOWNLOAD, BACK, HELP, CHECK, WIFI, ADJUST, REFRESH,
         SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
         UNDO, REDO, COMPARE, MORE, BRIGHTNESS, EXPOSURE, CONTRAST, HIGHLIGHTS, SHADOWS, WHITES, BLACKS, TEMPERATURE, TINT, SATURATION, VIBRANCE, CLARITY, SHARPENING,
-        CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK }
+        CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK, BRUSH, PALETTE, CLEANUP, BODY, MORE_HORIZONTAL, FILTER, FRAME, FLIP_HORIZONTAL, SPLIT_COMPARE }
     private final Kind kind;
     private final Paint ink = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final int size;
@@ -26,6 +26,19 @@ public final class AppIcon extends Drawable {
         int save = canvas.save(); canvas.translate(getBounds().left, getBounds().top);
         canvas.scale(getBounds().width()/24f, getBounds().height()/24f);
         switch (kind) {
+            case SPLIT_COMPARE: line(canvas,12,3,12,21);Path split=new Path();split.moveTo(9,5);split.lineTo(5,5);split.quadTo(3,5,3,7);split.lineTo(3,17);split.quadTo(3,19,5,19);split.lineTo(9,19);split.moveTo(15,5);split.lineTo(19,5);split.quadTo(21,5,21,7);split.lineTo(21,17);split.quadTo(21,19,19,19);split.lineTo(15,19);canvas.drawPath(split,ink);line(canvas,16,9,19,12,16,15);break;
+            case FILTER: canvas.drawCircle(9,9,5.5f,ink);canvas.drawCircle(15,9,5.5f,ink);canvas.drawCircle(12,15,5.5f,ink);break;
+            case FRAME: canvas.drawRoundRect(new RectF(3,3,21,21),2,2,ink);canvas.drawRect(7,7,17,17,ink);break;
+            case FLIP_HORIZONTAL: line(canvas,12,2,12,22);Path mirror=new Path();mirror.moveTo(8,5);mirror.lineTo(3,19);mirror.lineTo(8,19);mirror.close();canvas.drawPath(mirror,ink);Path reflected=new Path();reflected.moveTo(16,5);reflected.lineTo(21,19);reflected.lineTo(16,19);reflected.close();canvas.drawPath(reflected,ink);break;
+            case BODY:
+                Path body=new Path();body.moveTo(7,3);body.cubicTo(10,8,9,10,7,13);body.cubicTo(5,16,5,19,6,22);body.moveTo(17,3);body.cubicTo(14,8,15,10,17,13);body.cubicTo(19,16,19,19,18,22);canvas.drawPath(body,ink);line(canvas,2,11,5,11);line(canvas,3,9,5,11,3,13);line(canvas,22,11,19,11);line(canvas,21,9,19,11,21,13);break;
+            case CLEANUP:
+                canvas.drawArc(new RectF(8,5,16,13),180,180,false,ink);line(canvas,12,1,12,3);line(canvas,4,5,6,6);line(canvas,18,6,20,5);line(canvas,3,14,21,14);line(canvas,5,18,19,18);line(canvas,8,22,16,22);break;
+            case PALETTE:
+                canvas.drawRoundRect(new RectF(3,3,21,21),3,3,ink);line(canvas,7,12,17,12);line(canvas,12,7,12,17);canvas.drawCircle(15.5f,8.5f,2.5f,ink);break;
+            case BRUSH:
+                line(canvas,10,15,7,12,17,3,21,7,12,17,10,15);
+                Path brush=new Path();brush.moveTo(7,14);brush.cubicTo(2,14,6,20,2,21);brush.cubicTo(8,23,12,19,9,16);canvas.drawPath(brush,ink);break;
             case HISTOGRAM: line(canvas,3,4,3,21,22,21);line(canvas,7,17,7,12);line(canvas,11,17,11,6);line(canvas,15,17,15,3);line(canvas,19,17,19,10);break;
             case CURVE: line(canvas,3,3,3,21,21,21);Path curve=new Path();curve.moveTo(4,19);curve.cubicTo(15,19,9,5,21,4);canvas.drawPath(curve,ink);break;
             case STACK: canvas.drawRoundRect(new RectF(3,3,16,16),1.5f,1.5f,ink);canvas.drawRoundRect(new RectF(8,8,21,21),1.5f,1.5f,ink);break;
@@ -50,10 +63,11 @@ public final class AppIcon extends Drawable {
             case SAVE:
                 line(canvas,3,3,17,3,21,7,21,21,3,21,3,3);
                 line(canvas,7,3,7,9,16,9,16,3); line(canvas,7,21,7,14,17,14,17,21); break;
-            case UNDO: canvas.drawArc(new RectF(5,8,21,21),235,235,false,ink);line(canvas,5,5,5,11,11,11);break;
-            case REDO: canvas.save();canvas.scale(-1,1,12,12);canvas.drawArc(new RectF(5,8,21,21),235,235,false,ink);line(canvas,5,5,5,11,11,11);canvas.restore();break;
+            case UNDO: circularHistory(canvas,false);break;
+            case REDO: circularHistory(canvas,true);break;
             case COMPARE: canvas.drawRect(3,5,21,19,ink);line(canvas,12,2,12,22);break;
             case MORE: for(int y:new int[]{5,12,19})canvas.drawCircle(12,y,1,ink);break;
+            case MORE_HORIZONTAL: for(int x:new int[]{5,12,19})canvas.drawCircle(x,12,1,ink);break;
             case BRIGHTNESS: case EXPOSURE:
                 canvas.drawCircle(12,12,5,ink);for(int i=0;i<8;i++){double a=i*Math.PI/4;line(canvas,12+(float)Math.cos(a)*8,12+(float)Math.sin(a)*8,12+(float)Math.cos(a)*10,12+(float)Math.sin(a)*10);}if(kind==Kind.EXPOSURE){line(canvas,10,12,14,12);line(canvas,12,10,12,14);}break;
             case CONTRAST: case WHITES: case BLACKS:
@@ -107,8 +121,7 @@ public final class AppIcon extends Drawable {
                 line(canvas,3,6,21,6); line(canvas,3,12,21,12); line(canvas,3,18,21,18);
                 canvas.drawCircle(8,6,2,ink); canvas.drawCircle(16,12,2,ink); canvas.drawCircle(9,18,2,ink); break;
             case REFRESH:
-                canvas.drawArc(new RectF(3.5f,3.5f,20.5f,20.5f),20,280,false,ink);
-                line(canvas,16.25f,4.64f,20.5f,9);line(canvas,20.5f,3.5f,20.5f,9,15,9);break;
+                drawRefresh(canvas,ink);break;
             case SETTINGS:
                 gear(canvas); canvas.drawCircle(12,12,3.2f,ink); break;
             case PLUS: line(canvas,12,5,12,19); line(canvas,5,12,19,12); break;
@@ -160,6 +173,18 @@ public final class AppIcon extends Drawable {
             }
         }
         path.close(); canvas.drawPath(path,ink);
+    }
+    /** Shared by primary and secondary photo tools; the head joins the circular arc continuously. */
+    static void drawRefresh(Canvas canvas,Paint stroke){
+        canvas.drawArc(new RectF(3.5f,3.5f,20.5f,20.5f),20,280,false,stroke);
+        Path head=new Path();head.moveTo(16.25f,4.64f);head.lineTo(20.5f,9);head.moveTo(20.5f,3.5f);head.lineTo(20.5f,9);head.lineTo(15,9);canvas.drawPath(head,stroke);
+    }
+    /** Equal radii and a connected tangent arrowhead; redo is the exact horizontal mirror. */
+    private void circularHistory(Canvas canvas,boolean redo){
+        int saved=canvas.save();if(redo)canvas.scale(-1,1,12,12);
+        canvas.drawArc(new RectF(3.5f,3.5f,20.5f,20.5f),225,300,false,ink);
+        line(canvas,5.99f,1.89f,5.99f,5.99f,10.09f,5.99f);
+        canvas.restoreToCount(saved);
     }
     @Override public int getIntrinsicWidth() { return size; }
     @Override public int getIntrinsicHeight() { return size; }

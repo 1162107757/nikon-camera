@@ -1,0 +1,60 @@
+{
+  "candidateSha256": "df17549b2b99e57d8e2668ad60844498008d0dfeab6cb666255b83c22b502e50",
+  "versionCode": 112,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "39f31cbb833117ec0db0ee642637297809b3fdf3e8029c04fead41d31af294a2",
+  "pass": true,
+  "scope": "Actual installed portrait detector/dialog/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank/manual fallback, colour/texture/light controls, add/erase strokes, healing, apply/cancel/history/draft isolation, injected preview failure, simulated owner mismatch, full export reference/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim.",
+  "files": [
+    {
+      "file": "01-auto-two-faces.png",
+      "sha256": "950af2e4e09e15752e1fd73e31d65001ec09f992f046a9c948f36b06ffe2615c"
+    },
+    {
+      "file": "02-skin-colour.png",
+      "sha256": "51578a9b880805b3db41b912bcddc9b7cae2ef1dbe2e6d3151ab80c2c25d9877"
+    },
+    {
+      "file": "03-skin-texture.png",
+      "sha256": "764a9eaea09964c32a624234228d74c33e130a888fc58f5eea9bdbf99f4b315f"
+    },
+    {
+      "file": "04-face-light.png",
+      "sha256": "812be569fd77f02d9469999c9b62f8ba6a580c0a7b0cedad66363e79b80478ef"
+    },
+    {
+      "file": "05-mask-corrections.png",
+      "sha256": "f18fe3beb6c3a16868d4e5123693d6848364b6b4fcc215520e6796531f6d3505"
+    },
+    {
+      "file": "06-blemish-healing.png",
+      "sha256": "ad37ee69d74043a335b753ee991288aa173b85f93bccd148bd70c3a23647031a"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "e376e4872c02a469e97ff88bfd9521ce828bf3808e1fa3e9e00a4ec30f18d843"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "b00080d05b9e79f3a5379f6c51608843f678966feba49defd1964d13ac4a18e9"
+    },
+    {
+      "file": "report.json",
+      "sha256": "77cde0fadeb66f2ef3e723ae7f33052e0cfdfb9e05e80ae3fc9b0ac438a59841"
+    },
+    {
+      "file": "ui-jpeg-analysis-14.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    },
+    {
+      "file": "ui-jpeg-analysis-21.png",
+      "sha256": "e034a3875f10fb584ca35769c509c619ee29634d4de7dc194f26ee9886808c73"
+    },
+    {
+      "file": "ui-jpeg-analysis-9.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    }
+  ]
+}

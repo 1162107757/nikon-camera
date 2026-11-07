@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "ba9fbd5cb20a6710bf377fb74c61cab7255d53d2392f13c4ef24d7757b4e38f2",
+  "versionCode": 119,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "53608e2aa7a4c04e7b3d6ee964bd15edb6c52d63d8dd4c79b9182ad1be2c7776",
+  "pass": true,
+  "scope": "Focused portrait skin/face grouping: default automatic whole-image skin from NONE without face selection; immediate skin-analysis/face-detection race; native two-face refinement; scope visibility, independent skin/face edits and history, remembered face tools, temporary custom cancellation on group switch, live rotation, apply/cancel and reopen. Real installed production dialog/filter and public-domain NASA collage. UI grouping evidence; no new broad segmentation, physical-phone performance or export-pipeline claim.",
+  "files": [
+    {
+      "file": "groups-01-automatic-skin.png",
+      "sha256": "4517863dc764bad55b1a676b5bc5d1b418f68474f1194f5efc3926f7f30476c4"
+    },
+    {
+      "file": "groups-02-face-controls.png",
+      "sha256": "ba6c8dd266de3f28983608a69e85b43a651b08991a5841a3976597186c376167"
+    },
+    {
+      "file": "groups-03-skin-keeps-face-edits.png",
+      "sha256": "e07aa3a716f63fd960aa4926352f1a458e3cee027e964ccdc21f71dcb8d3e5ef"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "9fdd83fa344bebc06a5a00a92d907c5a0b6d6582fad30d21ae4a6b82128290b3"
+    },
+    {
+      "file": "report.json",
+      "sha256": "5c5425498cf8c9c347b25297d960a9570f14df41ce188ce68c8176ce7b34319c"
+    }
+  ]
+}

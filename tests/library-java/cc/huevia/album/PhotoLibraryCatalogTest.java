@@ -24,6 +24,7 @@ public final class PhotoLibraryCatalogTest {
             historicChainsAndOutputAliases(root.resolve("history"));
             cachedPresentationAndStrictReload(root.resolve("cache"));
             cancellationAndBoundaries(root.resolve("boundaries"));
+            groupSelectionAndVersionExports(root.resolve("exports142"));
             System.out.println("PASS: " + checks + " photo-library grouping/version checks");
         } finally {
             try (var paths = Files.walk(root)) { for (Path path : paths.sorted(Comparator.reverseOrder()).toList()) Files.deleteIfExists(path); }
@@ -122,6 +123,54 @@ public final class PhotoLibraryCatalogTest {
         Thread.currentThread().interrupt();
         try { catalog.list(List.of(original), () -> false); throw new AssertionError("interrupt ignored"); } catch (InterruptedIOException expected) { checks++; }
         finally { Thread.interrupted(); }
+    }
+    private static void groupSelectionAndVersionExports(Path root) throws Exception {
+        var selected = new java.util.LinkedHashSet<String>();
+        List<String> day = List.of("phone:1", "phone:2", "phone:2");
+        check(PhotoGroupSelection.state(day, selected) == PhotoGroupSelection.State.NONE, "Empty date starts unchecked");
+        check(PhotoGroupSelection.toggle(day, selected, 100) && selected.size() == 2, "Date entry selects its whole group without duplicate count");
+        check(PhotoGroupSelection.state(day, selected) == PhotoGroupSelection.State.ALL, "Whole date is all-selected");
+        selected.remove("phone:1");
+        check(PhotoGroupSelection.state(day, selected) == PhotoGroupSelection.State.PARTIAL, "Single removal makes date mixed");
+        check(PhotoGroupSelection.toggle(day, selected, 100) && selected.containsAll(day), "Mixed date click completes the selection");
+        selected.add("app:1"); PhotoGroupSelection.toggle(day, selected, 100);
+        check(selected.equals(java.util.Set.of("app:1")), "Deselecting a date preserves another source's scoped key");
+        check(!PhotoGroupSelection.toggle(day, selected, 2) && selected.equals(java.util.Set.of("app:1")), "Over-limit group is rejected atomically, never partially selected");
+        check(!PhotoGroupSelection.toggle(List.of(), selected, 100), "An empty or stale group cannot enter selection");
+        selected.clear();check(PhotoGroupSelection.state(day, selected) == PhotoGroupSelection.State.NONE, "Exit clears date state");
+        Fixture f = new Fixture(root); DownloadedPhoto first=f.photo("first__IMG_001.JPG","IMG_001.JPG",jpeg(480,13));
+        DownloadedPhoto film=f.effect(first,A,"IMG_001_film.JPG","胶片版",jpeg(530,27));
+        DownloadedPhoto film2=f.effect(first,B,"IMG_001_film2.JPG","胶片版",jpeg(570,31));
+        DownloadedPhoto second=f.photo("second__IMG_002.JPG","IMG_002.JPG",jpeg(490,53));
+        DownloadedPhoto blue=f.effect(second,A,"IMG_002_blue.JPG","蓝调",jpeg(610,71));
+        var catalog=f.catalog();var groups=catalog.list(List.of(first,film,film2,second,blue),()->false);
+        catalog.selectDisplay(PhotoLibraryCatalog.groupFor(groups,first),first);
+        catalog.selectDisplay(PhotoLibraryCatalog.groupFor(groups,second),blue);
+        groups=f.catalog().list(List.of(first,film,film2,second,blue),()->false);
+        var currents=new ArrayList<DownloadedPhoto>();for(var group:groups)currents.add(group.display);
+        var plan=PhotoVersionExportPlan.create(groups,currents);
+        check(plan.photoCount==2&&plan.entries.size()==5&&plan.current().size()==2,"Batch keeps two current choices and all five distinct saved versions");
+        var paths=new java.util.HashSet<java.io.File>();for(var entry:plan.current())paths.add(entry.photo.file());
+        check(paths.contains(first.file().getCanonicalFile())&&paths.contains(blue.file().getCanonicalFile())&&!paths.contains(film2.file().getCanonicalFile()),"Defaults use each persisted current version, including original, never globally latest");
+        var single=PhotoVersionExportPlan.create(groups,List.of(film));
+        check(single.current().size()==1&&single.current().get(0).photo.file().equals(film.file().getCanonicalFile()),"Single explicit version wins over the group's remembered current");
+        check(single.entries.stream().map(entry->entry.photo.file()).distinct().count()==3,"All versions retain their actual different source files");
+        check(single.entries.stream().map(entry->entry.label).distinct().count()==3,"Same preset names receive distinguishable version labels");
+        var firstGroup=PhotoLibraryCatalog.groupFor(groups,first);
+        check(single.entries.stream().allMatch(entry->entry.label.equals(firstGroup.versionLabel(entry.photo))),"Gallery, preview and export use the same same-name version disambiguation");
+        check(plan.entries.stream().map(entry->entry.outputFilename.toLowerCase(java.util.Locale.ROOT)).distinct().count()==5,"Named batch outputs cannot overwrite another version's name");
+        check(plan.entries.stream().allMatch(entry->entry.outputFilename.contains("_")&&entry.outputFilename.endsWith(".jpg")),"Multi-version filenames contain their version labels");
+        PhotoPresetBatch.Edit edit=PhotoPresetBatch.Edit.saved(PhotoPresetBatch.Source.local(film),PhotoExportSpec.full(),PhotoEditStore.hashFile(film.file())).withOutputFilename("IMG_001_胶片版.jpg").withAccount("guest142");
+        PhotoPresetBatch.Edit accepted=edit.withSpec(PhotoExportSpec.share()).withDestination(PhotoSaveTarget.APP_ONLY,false);
+        check(accepted.source.localPhoto().file().equals(film.file())&&accepted.draft==null,"Encoding choices and public names never replace the selected saved-version file with its original");
+        check(accepted.outputFilename.equals("IMG_001_胶片版.jpg")&&accepted.accountScope.equals("guest142")&&accepted.expectedSourceSha.equals(edit.expectedSourceSha),"Name, account and byte identity survive settings and destination changes");
+        check(accepted.withOutputFilename("wrong.jpg")==accepted&&accepted.withDestination(PhotoSaveTarget.PHONE_ALBUM,true)==accepted,"Accepted retry cannot silently rename or retarget a publication");
+        var names=new java.util.HashSet<String>();String longBase="这是一个很长很长的原图文件名称重复重复重复.JPG";
+        String name1=PhotoVersionExportPlan.uniqueFilename(longBase,"胶片/版",names),name2=PhotoVersionExportPlan.uniqueFilename(longBase,"胶片\\版",names);
+        check(!name1.equalsIgnoreCase(name2)&&name2.endsWith("_2.jpg")&&!name1.contains("/")&&!name2.contains("\\"),"Sanitized identical version names get collision suffixes");
+        check(name1.substring(0,name1.length()-4).length()<=32&&name2.substring(0,name2.length()-4).length()<=32,"Long base names preserve room for version and collision suffix");
+        DownloadedPhoto only=f.photo("only.JPG","only.JPG",jpeg(350,99));var oneGroups=f.catalog().list(List.of(only),()->false);
+        check(!PhotoVersionExportPlan.create(oneGroups,List.of(only)).hasVersions(),"One-version photo needs no version-selection step");
     }
     private static final class Fixture {
         final Path files, pictures, originals, records;

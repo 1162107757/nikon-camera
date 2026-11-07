@@ -1,0 +1,108 @@
+{
+  "verifiedAt": "2026-10-28T14:37:47.826Z",
+  "phase": "before",
+  "scope": "Read-only public latest-release JSON; no credentials, online mutations or APK download.",
+  "expected": {
+    "betaVersionCode": 111,
+    "betaMandatory": true,
+    "stable": null
+  },
+  "results": [
+    {
+      "origin": "https://huevia.cc",
+      "case": "beta-before",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "36356cac-43d8-4732-aee3-630e68acd2f0",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.0-beta",
+          "versionCode": 111,
+          "minSdk": 26,
+          "byteLength": 9519012,
+          "sha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "新增自然人像精修：肤色明亮、冷暖与红润，保留纹理的柔肤，融合式点按祛痘，面部光照与眼下阴影调整。\n支持本地自动选脸、多人独立调节、手动选脸、蒙版补选和擦除；人像设置随草稿、撤销、细节预览及完整导出保存。\n优化调色细节图载入，保持100%真实像素；完善人像面板旋转、取消和失败重试体验。",
+          "publishedAt": "2026-10-28T21:13:59.599269+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/36356cac-43d8-4732-aee3-630e68acd2f0/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "stable-before",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=stable&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "stable",
+        "release": null,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "beta-before",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "36356cac-43d8-4732-aee3-630e68acd2f0",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.0-beta",
+          "versionCode": 111,
+          "minSdk": 26,
+          "byteLength": 9519012,
+          "sha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "新增自然人像精修：肤色明亮、冷暖与红润，保留纹理的柔肤，融合式点按祛痘，面部光照与眼下阴影调整。\n支持本地自动选脸、多人独立调节、手动选脸、蒙版补选和擦除；人像设置随草稿、撤销、细节预览及完整导出保存。\n优化调色细节图载入，保持100%真实像素；完善人像面板旋转、取消和失败重试体验。",
+          "publishedAt": "2026-10-28T21:13:59.599269+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/36356cac-43d8-4732-aee3-630e68acd2f0/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current"
+      },
+      "pass": true,
+      "errors": []
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "stable-before",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=stable&packageName=cc.huevia&versionCode=111&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "stable",
+        "release": null,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release"
+      },
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "publicApkDownloads": 0,
+  "pass": true
+}

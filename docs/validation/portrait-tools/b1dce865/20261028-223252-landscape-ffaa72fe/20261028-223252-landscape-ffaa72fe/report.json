@@ -1,0 +1,1050 @@
+{
+  "pass": false,
+  "stage": "portrait-complete-controls",
+  "candidateSha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+  "versionCode": 112,
+  "versionName": "0.23.1-beta",
+  "mode": "landscape",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-public-domain-face-fixture",
+      "pass": true
+    },
+    {
+      "name": "astronaut-decodes",
+      "pass": true
+    },
+    {
+      "name": "real-offline-single-face-detected",
+      "pass": true
+    },
+    {
+      "name": "real-offline-two-person-collage-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "grayscale-single-image-detects-exactly-one-face",
+      "pass": true
+    },
+    {
+      "name": "grayscale-two-person-image-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "dialog-analysis-size-colour-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "dialog-analysis-size-grayscale-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "blank-image-does-not-invent-faces",
+      "pass": true
+    },
+    {
+      "name": "detector-cancellation-is-explicit",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "blank-detection-explains-manual-fallback",
+      "pass": true
+    },
+    {
+      "name": "empty-detection-keeps-empty-selection",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "manual-fallback-adds-real-selection",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "fallback-cancel-does-not-commit",
+      "pass": true
+    },
+    {
+      "name": "preview-failure-visible",
+      "pass": true
+    },
+    {
+      "name": "failed-preview-disables-apply",
+      "pass": true
+    },
+    {
+      "name": "failed-preview-then-no-face-detection-finishes",
+      "pass": true
+    },
+    {
+      "name": "no-face-detection-cannot-certify-failed-preview",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "injected-unavailable-analysis-edge-heal-failure-visible",
+      "pass": true
+    },
+    {
+      "name": "heal-failure-cannot-certify-failed-preview",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "new-selection-still-requires-successful-preview",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "retry-enables-apply-only-after-latest-success",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-keyboard-slider-produces-latest-final-frame",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "failed-and-retried-preview-cancel-cannot-commit",
+      "pass": true
+    },
+    {
+      "name": "private-portrait-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "private-portrait-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-auto-analysis-finished",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owned-ui-analysis-diagnostic-written",
+      "pass": true
+    },
+    {
+      "name": "native-exactly-two-faces-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-staged-not-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-auto-two-faces",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-auto-two-faces",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cancel-keeps-editor-and-draft",
+      "pass": true
+    },
+    {
+      "name": "cancel-no-main-history",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-auto-analysis-finished",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owned-ui-analysis-diagnostic-written",
+      "pass": true
+    },
+    {
+      "name": "native-exactly-two-faces-selected",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-2",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "adjusting-first-face-keeps-second-settings",
+      "pass": true
+    },
+    {
+      "name": "screenshot-02-skin-colour",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-02-skin-colour",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-4",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-03-skin-texture",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-03-skin-texture",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-6",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-04-face-light",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-04-face-light",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-add-and-erase-strokes",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": true
+    },
+    {
+      "name": "pinch-preserves-mask-count",
+      "pass": true
+    },
+    {
+      "name": "native-pinch-zooms",
+      "pass": false
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "raw-RGB565-face-candidates-single",
+      "width": 512,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5182980895042419,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "offline-face-detection",
+      "singleCount": 1,
+      "collageCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-grayscale-single",
+      "width": 512,
+      "height": 512,
+      "count": 1,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5191072225570679,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 100.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-grayscale-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5191072225570679,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 100.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5189751982688904,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 100.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "grayscale-offline-face-detection",
+      "conversion": "Android Canvas ColorMatrix saturation 0",
+      "singleCount": 1,
+      "collageCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-analysis960-two-person",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51909339427948,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5178302526473999,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5052559971809387,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-analysis960-grayscale-two-person",
+      "width": 960,
+      "height": 480,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5180290937423706,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5177146792411804,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "analysis960-offline-face-detection",
+      "width": 960,
+      "height": 480,
+      "colourCount": 2,
+      "grayscaleCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-9",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51783287525177,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5173211693763733,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5074052214622498,
+          "eyesDistance": 40.015625,
+          "midpointX": 848.2109375,
+          "midpointY": 208.0546875,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-9-grayscale",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5187989473342896,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5183793902397156,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5048592686653137,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-9-grayscale-085",
+      "width": 816,
+      "height": 408,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5171442031860352,
+          "eyesDistance": 32.484375,
+          "midpointX": 178.7265625,
+          "midpointY": 81.234375,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5171195268630981,
+          "eyesDistance": 30.3125,
+          "midpointX": 588.1875,
+          "midpointY": 81.859375,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "native-ui-analysis-two-scale-candidate-comparison",
+      "analysis": "ui-jpeg-analysis-9",
+      "primaryWidth": 960,
+      "primaryHeight": 480,
+      "secondaryWidth": 816,
+      "secondaryHeight": 408,
+      "requestedScale": 0.85,
+      "pairs": [
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 477.8977411154579,
+          "centerDistanceInEyeDistances": 11.942778380081728,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 3.8310351962019147,
+          "centerDistanceInEyeDistances": 0.09573848206049299,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 2.2594682876553374,
+          "centerDistanceInEyeDistances": 0.056464650687208746,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 483.9306841283395,
+          "centerDistanceInEyeDistances": 12.093543062949523,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 242.409476897363,
+          "centerDistanceInEyeDistances": 9.844039670958903,
+          "normalizedEyeRatio": 1.5519558077037923
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 471.80340759712595,
+          "centerDistanceInEyeDistances": 19.159529242522883,
+          "normalizedEyeRatio": 1.4481934905942073
+        }
+      ],
+      "scope": "Diagnostic all-pairs geometry only; does not filter candidates or alter strict two-face assertion"
+    },
+    {
+      "case": "native-ui-auto-selection",
+      "faces": 2,
+      "analysisWidth": 960,
+      "analysisHeight": 480,
+      "analysisPng": "ui-jpeg-analysis-9.png"
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-14",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51783287525177,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5173211693763733,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5074052214622498,
+          "eyesDistance": 40.015625,
+          "midpointX": 848.2109375,
+          "midpointY": 208.0546875,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-14-grayscale",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5187989473342896,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5183793902397156,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5048592686653137,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-14-grayscale-085",
+      "width": 816,
+      "height": 408,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5171442031860352,
+          "eyesDistance": 32.484375,
+          "midpointX": 178.7265625,
+          "midpointY": 81.234375,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5171195268630981,
+          "eyesDistance": 30.3125,
+          "midpointX": 588.1875,
+          "midpointY": 81.859375,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "native-ui-analysis-two-scale-candidate-comparison",
+      "analysis": "ui-jpeg-analysis-14",
+      "primaryWidth": 960,
+      "primaryHeight": 480,
+      "secondaryWidth": 816,
+      "secondaryHeight": 408,
+      "requestedScale": 0.85,
+      "pairs": [
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 477.8977411154579,
+          "centerDistanceInEyeDistances": 11.942778380081728,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 3.8310351962019147,
+          "centerDistanceInEyeDistances": 0.09573848206049299,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 2.2594682876553374,
+          "centerDistanceInEyeDistances": 0.056464650687208746,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 483.9306841283395,
+          "centerDistanceInEyeDistances": 12.093543062949523,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 242.409476897363,
+          "centerDistanceInEyeDistances": 9.844039670958903,
+          "normalizedEyeRatio": 1.5519558077037923
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 471.80340759712595,
+          "centerDistanceInEyeDistances": 19.159529242522883,
+          "normalizedEyeRatio": 1.4481934905942073
+        }
+      ],
+      "scope": "Diagnostic all-pairs geometry only; does not filter candidates or alter strict two-face assertion"
+    },
+    {
+      "case": "native-ui-auto-selection",
+      "faces": 2,
+      "analysisWidth": 960,
+      "analysisHeight": 480,
+      "analysisPng": "ui-jpeg-analysis-14.png"
+    },
+    {
+      "case": "native-pinch",
+      "minimumSpanPx": 446,
+      "spanSlopPx": 42,
+      "startSpanPx": 648.8999633789062,
+      "endSpanPx": 1038.239990234375,
+      "zoomBefore": 1,
+      "zoomAfter": 1,
+      "moves": 12
+    }
+  ],
+  "screenshots": 5,
+  "fixturesRemoved": true,
+  "failure": "java.lang.AssertionError: native-pinch-zooms",
+  "scope": "Actual installed portrait detector\/dialog\/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank\/manual fallback, colour\/texture\/light controls, add\/erase strokes, healing, apply\/cancel\/history\/draft isolation, injected preview failure, simulated owner mismatch, full export reference\/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim."
+}

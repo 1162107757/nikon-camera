@@ -1,0 +1,302 @@
+{
+  "verifiedAt": "2026-10-29T01:58:08.591Z",
+  "scope": "Read-only public latest-release JSON on both existing origins.",
+  "expected": {
+    "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+    "packageName": "cc.huevia",
+    "versionCode": 114,
+    "versionName": "0.23.3-beta",
+    "minSdk": 26,
+    "byteLength": 9531300,
+    "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "channel": "beta",
+    "mandatory": true,
+    "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。"
+  },
+  "results": [
+    {
+      "origin": "https://huevia.cc",
+      "case": "old112",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=112&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": true,
+        "updateRequired": true,
+        "reason": "available"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "current114",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=114&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "newer115",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=115&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "client_newer"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "sdk25",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=112&sdk=25",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "incompatible"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://huevia.cc",
+      "case": "stable-unchanged",
+      "url": "https://huevia.cc/preset-library/releases/latest?channel=stable&packageName=cc.huevia&versionCode=112&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "stable",
+        "release": null,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "old112",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=112&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": true,
+        "updateRequired": true,
+        "reason": "available"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "current114",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=114&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "current"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "newer115",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=115&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "client_newer"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "sdk25",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=beta&packageName=cc.huevia&versionCode=112&sdk=25",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "beta",
+        "release": {
+          "id": "749bc041-8143-40ef-a2bb-8a4c0d4336cc",
+          "packageName": "cc.huevia",
+          "versionName": "0.23.3-beta",
+          "versionCode": 114,
+          "minSdk": 26,
+          "byteLength": 9531300,
+          "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+          "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+          "channel": "beta",
+          "notes": "优化人像选脸反馈：点击人脸时用半透明选区蒙版闪两下，随后自动消失；重复点选可再次提示。开始调节、缩放或对比时立即收起提示，保持照片干净。",
+          "publishedAt": "2026-10-29T09:56:54.390687+08:00",
+          "mandatory": true,
+          "revision": 3,
+          "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file"
+        },
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "incompatible"
+      },
+      "errors": [],
+      "pass": true
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "case": "stable-unchanged",
+      "url": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/latest?channel=stable&packageName=cc.huevia&versionCode=112&sdk=35",
+      "httpStatus": 200,
+      "response": {
+        "schemaVersion": 1,
+        "channel": "stable",
+        "release": null,
+        "updateAvailable": false,
+        "updateRequired": false,
+        "reason": "no_release"
+      },
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "stableBaselineUnchanged": true,
+  "publicApkDownloads": 0
+}

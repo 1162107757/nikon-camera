@@ -1,0 +1,59 @@
+{
+  "status": "complete-local-package-not-published",
+  "versionCode": 134,
+  "versionName": "0.27.2-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.27.2-beta-debug.apk",
+  "sha256": "5318b1e52c05628443a0c73b6568f620a6a9bd4fcab8339f2093ce89fb1cbc69",
+  "bytes": 33538828,
+  "productionInputs": 308,
+  "unchangedAssetsAndNativeEntries": 46,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "zipalign16KiB": true,
+  "nativeAssertions": 176,
+  "nativeScreenshots": 12,
+  "successfulRuns": [
+    {
+      "runId": "20261105-095056-phone-d04dd72a",
+      "mode": "phone",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 44,
+      "screenshots": 3,
+      "failure": null,
+      "path": "docs/validation/editor-chrome134/native/5318b1e5/20261105-095056-phone-d04dd72a"
+    },
+    {
+      "runId": "20261105-095117-font1.3-4b412ba1",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 44,
+      "screenshots": 3,
+      "failure": null,
+      "path": "docs/validation/editor-chrome134/native/5318b1e5/20261105-095117-font1.3-4b412ba1"
+    },
+    {
+      "runId": "20261105-095135-landscape-3bfd5de5",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 44,
+      "screenshots": 3,
+      "failure": null,
+      "path": "docs/validation/editor-chrome134/native/5318b1e5/20261105-095135-landscape-3bfd5de5"
+    },
+    {
+      "runId": "20261105-095153-tablet-5583da3e",
+      "mode": "tablet",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 44,
+      "screenshots": 3,
+      "failure": null,
+      "path": "docs/validation/editor-chrome134/native/5318b1e5/20261105-095153-tablet-5583da3e"
+    }
+  ],
+  "historicalFailedRuns": [],
+  "uploaded": false,
+  "published": false
+}

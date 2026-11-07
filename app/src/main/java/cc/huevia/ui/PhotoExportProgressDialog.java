@@ -32,7 +32,7 @@ import java.util.List;
 
 /** Frozen-task progress. Rows come from the batch ledger, never from assumed source order of successes. */
 public final class PhotoExportProgressDialog extends Dialog {
-    private static final int BG=0xff141413,FIELD=0xff292724,TEXT=0xfff4f5f7,MUTED=0xffbab1a7,ACCENT=0xfff3b493,OUTLINE=0xff4c4640,SUCCESS=0xff9ac8ae,ERROR=0xffffb4a7;
+    private static final int BG=0xff141413,FIELD=0xff292724,TEXT=0xfff4f5f7,MUTED=0xffbab1a7,ACCENT=0xffffe335,OUTLINE=0xff4c4640,SUCCESS=0xff9ac8ae,ERROR=0xffffb4a7;
     private final Activity activity;
     private final PhotoPresetBatch batch;
     private final List<PhotoExportDialog.Item> previews;

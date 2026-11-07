@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "tests/palette-device-probe/src/cc/huevia/paletteqa/PaletteProbe.java",
+      "sha256": "44b906f68e183ce908c9d887cd1cb425ef7480ba3f68f2df29398f0fc2c7c474"
+    },
+    {
+      "path": "tests/palette-device-probe/AndroidManifest.xml",
+      "sha256": "1904ea9c53bf3b844af8b27a05808d533d938586083ae72b64f058a00b2d86fd"
+    },
+    {
+      "path": "tests/palette-device-probe/build.ps1",
+      "sha256": "04c3edda1f326fbbc8d9e24ac38436509d64d94befbc8a999f90bcdddeddb38f"
+    },
+    {
+      "path": "tests/palette-device-probe/run.ps1",
+      "sha256": "45cf119a21e513c6e06281adc24b6622ff4198d78d70dcac8f2853172b257fdb"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/paletteqa/PaletteProbe.class",
+    "cc/huevia/paletteqa/PaletteProbe$Condition.class",
+    "cc/huevia/paletteqa/PaletteProbe$Work.class"
+  ],
+  "apkSha256": "7490bc633b99fa70ae1dd92f24a701d8b908764d3105cca5750bc91d2a66c08c"
+}

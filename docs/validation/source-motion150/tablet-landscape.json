@@ -1,0 +1,104 @@
+{
+  "pass": true,
+  "mode": "tablet-landscape",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "preset-left-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "preset-left-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "preset-left-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "sync-live-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "sync-live-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "sync-live-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "album-phone-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "album-phone-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "album-phone-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "capture-album-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "moving-body-tap-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "moving-body-tap-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "moving-body-tap-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "moving-body-does-not-deliver-stale-button-tap",
+      "pass": true
+    },
+    {
+      "name": "settled-body-action-receives-tap",
+      "pass": true
+    }
+  ],
+  "frames": [
+    {
+      "name": "preset-left",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 307,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "sync-live",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 310,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "album-phone",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 268,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "moving-body-tap",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 2512,
+      "anchorBottom": 694,
+      "nativeFrameHeld": true
+    }
+  ]
+}

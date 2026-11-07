@@ -1,0 +1,157 @@
+{
+  "pass": true,
+  "stage": "main-scope-change-hides-button",
+  "mode": "phone",
+  "scope": "core",
+  "candidateSha256": "a873a6226ae1cb5d3cccff20450593f2974915560ead8956adc03d58a5677ce1",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing",
+      "pass": true
+    },
+    {
+      "name": "full-source-metadata-1601x1103",
+      "pass": true
+    },
+    {
+      "name": "full-source-distinct-from-preview-basis",
+      "pass": true
+    },
+    {
+      "name": "main-hold-tag",
+      "pass": true
+    },
+    {
+      "name": "main-global-hold-hidden",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-hold-uses-copy",
+      "pass": true
+    },
+    {
+      "name": "main-normal-preview-pointer-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-underlying-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-viewport-preserved-while-held",
+      "pass": true
+    },
+    {
+      "name": "main-crop-rotate-border-mask-has-selected-pixels",
+      "pass": true
+    },
+    {
+      "name": "full-export-basis-mask-bounded",
+      "pass": true
+    },
+    {
+      "name": "full-export-basis-mask-not-empty",
+      "pass": true
+    },
+    {
+      "name": "main-border-and-outside-protected",
+      "pass": true
+    },
+    {
+      "name": "main-release-clean-immediate",
+      "pass": true
+    },
+    {
+      "name": "main-viewport-preserved-after-release",
+      "pass": true
+    },
+    {
+      "name": "main-cancel-clean-immediate",
+      "pass": true
+    },
+    {
+      "name": "main-worker-blocked",
+      "pass": true
+    },
+    {
+      "name": "main-mask-worker-pending",
+      "pass": true
+    },
+    {
+      "name": "late-worker-result-never-reveals",
+      "pass": true
+    },
+    {
+      "name": "main-accessibility-rest-clean",
+      "pass": true
+    },
+    {
+      "name": "main-global-scope-button-hidden",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-hold-keeps-settings-history-draft",
+      "pass": true
+    },
+    {
+      "name": "owned-jpeg-unchanged",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "saved-export-source-metadata-basis-only",
+      "fullWidth": 1601,
+      "fullHeight": 1103,
+      "decodedBaseWidth": 1280,
+      "savedRestorePathExecuted": false
+    },
+    {
+      "case": "main-crop-rotate-border-mapping",
+      "width": 670,
+      "height": 1099,
+      "changedPixels": 55059,
+      "protectedPixels": 634674,
+      "outsideDifferences": 0
+    }
+  ],
+  "screenshots": 1,
+  "persistentFixturesCreated": true,
+  "privateFixtureRemoved": true
+}

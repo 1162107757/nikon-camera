@@ -1,0 +1,54 @@
+{
+  "scope": "Conservative source-bound wire capacity audit; no production state mutation",
+  "parts": {
+    "magic": 4,
+    "sourceShaUtf": 66,
+    "nameUtfMax": 770,
+    "strengthExportedPresetLength": 9,
+    "adjustmentModelUtf": 33,
+    "adjustmentCountAndValues": 72,
+    "curvesModelAndCountPoints": 429,
+    "hslModelAndValues": 122,
+    "geometryModelAndValues": 61,
+    "borderModelAndFields": 2076,
+    "sha256Footer": 32
+  },
+  "maxMetadataBytes": 3674,
+  "maxPresetBytes": 1048576,
+  "maxCompleteLocalRecipeBytes": 1000000,
+  "maxDraftBytes": 2052250,
+  "readerLimitBytes": 2097152,
+  "remainingBytes": 44902,
+  "completeLocalWireIncludesLegacyPortraitAndMasks": true,
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "sourceInputs": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "sha256": "2f73795905bc943eba3c204e00a7a982f8147edd514db7439987c47ce813d3b3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "sha256": "706e16ffc06de4a56f9afb1657cb7022b520fd6a9f12408c6938b4eedbfcb335"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "sha256": "b8dd48f3a3d923a017e6cb26102133ae835bdec6ae7c640218ee10415a5af06d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "sha256": "26dc2552fa7d6f1981687e418005366584054102d8473984306202601b5d0b61"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "sha256": "e16df4116a9ac99c82fc68a9d244e8385c02696c665de5fbb00fb3418714c947"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "sha256": "d3ce185673b5ac0339e7223162fb6795d4d73310490d62141d6cbe1a91ff36ad"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "ff84de58e8533451ee5536fce09bc9a9ba5400a3188b589d2cc618a2b517c0f0"
+    }
+  ]
+}

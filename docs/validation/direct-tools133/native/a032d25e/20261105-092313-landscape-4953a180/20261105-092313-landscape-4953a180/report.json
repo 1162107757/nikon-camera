@@ -1,0 +1,138 @@
+{
+  "pass": false,
+  "stage": "direct-tool-rail",
+  "candidateSha256": "a032d25ed9c7cb49c938cb2f34d3aa0daddd122959d04188eb347a350740e0e5",
+  "mode": "landscape",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "native-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-0",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-1",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-2",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-3",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-4",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-7",
+      "pass": true
+    },
+    {
+      "name": "primary-entry-6",
+      "pass": true
+    },
+    {
+      "name": "advanced-rail-hidden-in-first-view",
+      "pass": true
+    },
+    {
+      "name": "quick-first-view",
+      "pass": true
+    },
+    {
+      "name": "first-frame-save-action-painted",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-0",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-1",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-2",
+      "pass": true
+    },
+    {
+      "name": "quick-caption-not-clipped-3",
+      "pass": true
+    },
+    {
+      "name": "natural-bundle-real-parameters",
+      "pass": true
+    },
+    {
+      "name": "natural-cleanup-frozen",
+      "pass": true
+    },
+    {
+      "name": "quick-gesture-one-undo",
+      "pass": true
+    },
+    {
+      "name": "quick-slider-live",
+      "pass": true
+    },
+    {
+      "name": "quick-undo-restores-slider",
+      "pass": true
+    },
+    {
+      "name": "quick-redo-restores-slider",
+      "pass": true
+    },
+    {
+      "name": "switch-tool-keeps-parameters",
+      "pass": true
+    },
+    {
+      "name": "full-adjustments-directly-visible",
+      "pass": true
+    },
+    {
+      "name": "no-second-basic-panel",
+      "pass": true
+    },
+    {
+      "name": "primary-categories-swipe",
+      "pass": true
+    },
+    {
+      "name": "finger-swipe-reveals-tools",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 2,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: Timeout reachable editor-parameter-BRIGHTNESS",
+  "stack": "java.lang.AssertionError: Timeout reachable editor-parameter-BRIGHTNESS\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.until(DirectToolsProbe.java:202)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.tapMain(DirectToolsProbe.java:109)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.directTools(DirectToolsProbe.java:131)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.compactFlow(DirectToolsProbe.java:57)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.onStart(DirectToolsProbe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

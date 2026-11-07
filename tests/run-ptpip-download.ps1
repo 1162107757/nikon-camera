@@ -5,7 +5,7 @@ $javaRoot = Join-Path $projectRoot 'app\src\main\java\cc\huevia'
 $classes = Join-Path $PSScriptRoot '.build\ptpip-download'
 New-Item -ItemType Directory -Force -Path $classes | Out-Null
 $sources = @(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'ptp') -Filter '*.java' | ForEach-Object FullName)
-foreach ($name in @('PictureControlData', 'PictureControlWriteValidation')) {
+foreach ($name in @('PictureControlData', 'PictureControlWriteValidation', 'CameraParameterWriteGuard')) {
     $sources += Join-Path $javaRoot ('picturecontrol\' + $name + '.java')
 }
 foreach ($name in @('PhotoCameraClient', 'PtpIpClient', 'ConnectionTrace')) {

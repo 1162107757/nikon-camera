@@ -33,7 +33,7 @@ public final class HoldToCompare {
     private boolean keyDown;
     private boolean unavailable;
     private String buttonLabel = "原图";
-    private boolean iconOnly,photoGlassMode;private PhotoGlassDrawable photoGlass;
+    private boolean iconOnly,photoGlassMode,toolbarMode,splitMode;private PhotoGlassDrawable photoGlass;
 
     public HoldToCompare(FrameLayout frame, ImageView image, TextView badge) {
         this(frame, image, badge, image == null ? null : image::setImageBitmap);
@@ -80,6 +80,10 @@ public final class HoldToCompare {
     public void setButtonLabel(String label) { requireMainThread(); buttonLabel = label; updateButton(); }
     /** Compact editor chrome; semantics and momentary/keyboard behaviour are unchanged. */
     public void setIconOnly(boolean value) {requireMainThread();iconOnly=value;updateButton();}
+    /** A quiet 22dp icon within the same 48dp momentary touch target as other editor actions. */
+    public void setToolbarMode(boolean value) {requireMainThread();toolbarMode=value;updateButton();}
+    /** The approved editor uses a persistent, draggable split; other callers keep momentary comparison. */
+    public void setSplitMode(boolean value){requireMainThread();splitMode=value&&target instanceof PhotoImageView;release();updateButton();}
 
     public void setPhotoGlass(boolean value){requireMainThread();photoGlassMode=value;if(photoGlass!=null){photoGlass.close();photoGlass=null;}updateButton();}
     public void refreshGlass(){if(photoGlass!=null)photoGlass.refresh();}
@@ -134,10 +138,16 @@ public final class HoldToCompare {
         renderCurrent();
         updateButton();
         if (announce && changed) button.announceForAccessibility(
-                showingOriginal ? "已显示原图，点击可返回预设效果" : "已恢复预设效果");
+                splitMode?(showingOriginal?"已开启原图分割对比":"已关闭原图分割对比"):showingOriginal ? "已显示原图，点击可返回预设效果" : "已恢复预设效果");
     }
 
     private void renderCurrent() {
+        if(splitMode){
+            if(usable(effect))display.accept(effect);
+            ((PhotoImageView)target).setSplitComparison(original,showingOriginal&&ready());
+            target.setContentDescription(showingOriginal?"原图与编辑效果分割对比，拖动白色分割线，或使用左右方向键调整位置":"当前编辑效果");
+            return;
+        }
         Bitmap displayed = showingOriginal ? original : effect;
         if (usable(displayed)) display.accept(displayed);
         target.setContentDescription(showingOriginal
@@ -150,8 +160,9 @@ public final class HoldToCompare {
         if (button == null) return;
         boolean enabled = ready();
         button.setEnabled(enabled);
-        button.setText(iconOnly?"":enabled ? buttonLabel : unavailable ? "不可用" : "准备中");
-        if(iconOnly){AppIcon icon=new AppIcon(AppIcon.Kind.COMPARE,Color.WHITE,button.getResources().getDisplayMetrics().density);button.setCompoundDrawablesRelativeWithIntrinsicBounds(icon,null,null,null);button.setPadding(dp(12),0,dp(12),0);}
+        button.setText(iconOnly||toolbarMode||splitMode?"":enabled ? buttonLabel : unavailable ? "不可用" : "准备中");
+        if(toolbarMode){AppIcon icon=new AppIcon(AppIcon.Kind.COMPARE,!enabled?0xff77716b:showingOriginal?PhotoWorkspaceUi.ACCENT:Color.WHITE,button.getResources().getDisplayMetrics().density);icon.setBounds(0,0,dp(22),dp(22));button.setCompoundDrawables(icon,null,null,null);button.setPadding(dp(13),0,dp(13),0);}
+        else if(iconOnly){AppIcon icon=new AppIcon(AppIcon.Kind.COMPARE,Color.WHITE,button.getResources().getDisplayMetrics().density);button.setCompoundDrawablesRelativeWithIntrinsicBounds(icon,null,null,null);button.setPadding(dp(12),0,dp(12),0);}
         button.setTextColor(enabled ? Color.WHITE : Color.rgb(214, 218, 225));
         button.setPressed(activePointer != NO_POINTER && showingOriginal);
         button.setSelected(showingOriginal);
@@ -160,7 +171,14 @@ public final class HoldToCompare {
         surface.setCornerRadius(dp(24));
         surface.setStroke(dp(button.hasFocus() ? 2 : iconOnly?0:1),
                 Color.argb(button.hasFocus() ? 255 : 55, 255, 255, 255));
-        if(photoGlassMode){
+        if(splitMode){
+            button.setBackground(PhotoPrismaStyle.face(button.getContext(),showingOriginal?0xee17231f:0xbd14231d,24,0));button.setBackgroundTintList(null);
+            AppIcon icon=new AppIcon(AppIcon.Kind.SPLIT_COMPARE,enabled?(showingOriginal?PhotoPrismaStyle.YELLOW:Color.WHITE):0xffa2aaa6,button.getResources().getDisplayMetrics().density);icon.setBounds(0,0,dp(20),dp(20));button.setCompoundDrawables(icon,null,null,null);button.setPadding(dp(14),0,dp(14),0);
+        }else if(toolbarMode){
+            GradientDrawable face=new GradientDrawable();face.setColor(showingOriginal?0x24f2b48c:Color.TRANSPARENT);face.setCornerRadius(dp(8));if(button.hasFocus())face.setStroke(dp(1),PhotoWorkspaceUi.ACCENT);
+            GradientDrawable mask=new GradientDrawable();mask.setColor(Color.WHITE);mask.setCornerRadius(dp(8));
+            button.setBackground(new android.graphics.drawable.RippleDrawable(android.content.res.ColorStateList.valueOf(0x22f2b48c),new android.graphics.drawable.InsetDrawable(face,dp(8)),new android.graphics.drawable.InsetDrawable(mask,dp(8))));button.setBackgroundTintList(null);
+        }else if(photoGlassMode){
             if(photoGlass==null)photoGlass=new PhotoGlassDrawable(target,button,button.getResources().getDisplayMetrics().density,12);
             button.setBackground(new android.graphics.drawable.InsetDrawable(photoGlass,dp(8),dp(8),dp(8),dp(8)));button.setBackgroundTintList(null);
             AppIcon compact=new AppIcon(AppIcon.Kind.COMPARE,Color.WHITE,button.getResources().getDisplayMetrics().density);compact.setBounds(0,0,dp(18),dp(18));button.setCompoundDrawables(compact,null,null,null);button.setPadding(dp(15),0,dp(15),0);
@@ -168,8 +186,9 @@ public final class HoldToCompare {
         button.setContentDescription(!enabled ? unavailable ? "预览原图对比暂不可用，原图或效果加载失败" : "预览原图对比，正在准备"
                 : showingOriginal ? "当前显示原图。点击返回预设效果；触摸松开可恢复效果"
                 : "按住看原图，松开恢复预设效果。使用辅助功能或键盘时，点击可切换原图，再次点击恢复");
+        if(splitMode&&enabled)button.setContentDescription(showingOriginal?"关闭原图分割对比":"对比原图，点击后拖动分割线");
         if (Build.VERSION.SDK_INT >= 30) button.setStateDescription(!enabled ? unavailable ? "加载失败" : "正在准备"
-                : showingOriginal ? "原图" : "预设效果");
+                : showingOriginal ? splitMode?"分割对比":"原图" : "预设效果");
     }
 
     private void disallowParentIntercept(boolean disallow) {
@@ -230,6 +249,7 @@ public final class HoldToCompare {
         CompareButton(Context context) { super(context); }
 
         @Override public boolean onTouchEvent(MotionEvent event) {
+            if(splitMode)return super.onTouchEvent(event);
             // Do not call Button's touch handler: it would click-toggle again after ACTION_UP.
             return handleTouch(event);
         }
@@ -268,7 +288,7 @@ public final class HoldToCompare {
 
         @Override protected void onFocusChanged(boolean focused, int direction, Rect previous) {
             super.onFocusChanged(focused, direction, previous);
-            if (!focused) release();
+            if (!focused&&!splitMode) release();
             updateButton();
         }
 

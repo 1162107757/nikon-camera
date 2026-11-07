@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Direct tools probe failed: java.lang.AssertionError: parameter-caption-unclipped-BRIGHTNESS; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\direct-tools133\\native\\a032d25e\\20261105-090246-phone-899a6dd9\\20261105-090246-phone-899a6dd9\\report.json",
+  "errors": []
+}

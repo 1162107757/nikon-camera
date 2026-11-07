@@ -1,0 +1,154 @@
+{
+  "serial": "emulator-5588",
+  "ownedEmulatorPid": 18292,
+  "remoteFilesVerifiedAndRemoved": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121558-phone-cc082b51/failure.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121558-phone-cc082b51/20261103-121558-phone-cc082b51/failure.png",
+      "sha256": "e5c07a3551be0c797b5f02a03653ebfc45b89534a045b002b71c5603468c321c"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121558-phone-cc082b51/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121558-phone-cc082b51/20261103-121558-phone-cc082b51/report.json",
+      "sha256": "37c057ea2d058ceb62f7eb2e05dc8e60eb1bcf1294df31b860d43a4136a17bfc"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121722-phone-1e462db7/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121722-phone-1e462db7/20261103-121722-phone-1e462db7/01-app-album-selection.png",
+      "sha256": "1c57503effc34038629e5617b6edd1d202885e3977f245c44a9a7372e227b6f2"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121722-phone-1e462db7/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121722-phone-1e462db7/20261103-121722-phone-1e462db7/02-batch-export-settings.png",
+      "sha256": "3a5822954b38ba8e251c2d20402f20670ba02ee73f7c1a8d7f32033dc93dc81a"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121722-phone-1e462db7/failure.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121722-phone-1e462db7/20261103-121722-phone-1e462db7/failure.png",
+      "sha256": "2031b4a016e29a00759d202c950fe18f199c08fa08bd0f357a98216a3f9bf815"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121722-phone-1e462db7/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121722-phone-1e462db7/20261103-121722-phone-1e462db7/report.json",
+      "sha256": "86864307271bbe8785f4403105c827b7052013891dc1a56000a1fb8c8261c506"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121823-phone-d78c0ae4/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121823-phone-d78c0ae4/20261103-121823-phone-d78c0ae4/01-app-album-selection.png",
+      "sha256": "107330b0d58759a153c4f681e51086fdfb3702189e8accf521d752344f819bb7"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121823-phone-d78c0ae4/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121823-phone-d78c0ae4/20261103-121823-phone-d78c0ae4/02-batch-export-settings.png",
+      "sha256": "4d82480e51e22f23da0f285f3fdf7c7a95e67519eb1b8d43ea9f6f10056ec3cd"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121823-phone-d78c0ae4/failure.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121823-phone-d78c0ae4/20261103-121823-phone-d78c0ae4/failure.png",
+      "sha256": "f74d9ff7bd0f1ba13cb2ea0617d30d7254afcd8c5975dd6db972133144d666c2"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121823-phone-d78c0ae4/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121823-phone-d78c0ae4/20261103-121823-phone-d78c0ae4/report.json",
+      "sha256": "d9cbc4790787b12881a48d284f6024b3c4079846d956e049e8f2d3100327157f"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121929-phone-e445bf2a/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121929-phone-e445bf2a/20261103-121929-phone-e445bf2a/01-app-album-selection.png",
+      "sha256": "5d5a7bd9212cd620bf38523f0794bf7676249e90aa0929c8175b1bf9b64002c4"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121929-phone-e445bf2a/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121929-phone-e445bf2a/20261103-121929-phone-e445bf2a/02-batch-export-settings.png",
+      "sha256": "15213342dafaa8c4b00f068d2bf462e2382596b7d789f220900a7dba6d02ad2a"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-121929-phone-e445bf2a/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-121929-phone-e445bf2a/20261103-121929-phone-e445bf2a/report.json",
+      "sha256": "b5619c795628025cc0f87b05fc478e2011c0622f7afdfeffbd24b0d4c066b6b9"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122010-font1.3-3f57d4c6/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122010-font1.3-3f57d4c6/20261103-122010-font1.3-3f57d4c6/01-app-album-selection.png",
+      "sha256": "439ce72cbc78707c965c40a3a868eb0fd69c316ed90bc4844597a416e43ed9e8"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122010-font1.3-3f57d4c6/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122010-font1.3-3f57d4c6/20261103-122010-font1.3-3f57d4c6/02-batch-export-settings.png",
+      "sha256": "7f3537d12cf06a79895a48996fb3202de061a8969a17c6e52f5a482180b61830"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122010-font1.3-3f57d4c6/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122010-font1.3-3f57d4c6/20261103-122010-font1.3-3f57d4c6/report.json",
+      "sha256": "28960439441955ada91cb47c70402ff45171d2a7194261c25f6a6ed11b4c1e10"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122022-landscape-2b6d4336/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122022-landscape-2b6d4336/20261103-122022-landscape-2b6d4336/01-app-album-selection.png",
+      "sha256": "4f1c31e14d10011669ff4f2010d44e8eaa4ebbe2b37bb9ad74a4699e138ddce6"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122022-landscape-2b6d4336/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122022-landscape-2b6d4336/20261103-122022-landscape-2b6d4336/02-batch-export-settings.png",
+      "sha256": "4cb479639917094547a276d0b7ae36fa8848d69e0dd60026e363c389953104d3"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122022-landscape-2b6d4336/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122022-landscape-2b6d4336/20261103-122022-landscape-2b6d4336/report.json",
+      "sha256": "881397cb24ca682ceff18768a71fb1c20c12ddc697699017868c8cf50f0e3fe3"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122128-phone-14bdb868/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122128-phone-14bdb868/20261103-122128-phone-14bdb868/01-app-album-selection.png",
+      "sha256": "bb2b50562abcd66677004dfc29e4ce38e20065e6a2c9e4b365d54ef299820efe"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122128-phone-14bdb868/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122128-phone-14bdb868/20261103-122128-phone-14bdb868/02-batch-export-settings.png",
+      "sha256": "a6f37fe2def0dc4534e4234b8cdf082b27b938ef74515a1c8c7d10fc7abf7838"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122128-phone-14bdb868/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122128-phone-14bdb868/20261103-122128-phone-14bdb868/report.json",
+      "sha256": "90e55b11618165e0c64a0b1de8c3a4e750498c3f1ef294fb145593107283a258"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122140-font1.3-173b0b34/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122140-font1.3-173b0b34/20261103-122140-font1.3-173b0b34/01-app-album-selection.png",
+      "sha256": "f88b5dea244e5c2e526e37346c168bd14c23c4b37b84bdd1a89b742ade94fa43"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122140-font1.3-173b0b34/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122140-font1.3-173b0b34/20261103-122140-font1.3-173b0b34/02-batch-export-settings.png",
+      "sha256": "7b9880656dfbc959b27db2f7d75cc8ac456fd3924356b599b69d44f1f70e4cb3"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122140-font1.3-173b0b34/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122140-font1.3-173b0b34/20261103-122140-font1.3-173b0b34/report.json",
+      "sha256": "28960439441955ada91cb47c70402ff45171d2a7194261c25f6a6ed11b4c1e10"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122152-landscape-46d3fbb9/01-app-album-selection.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122152-landscape-46d3fbb9/20261103-122152-landscape-46d3fbb9/01-app-album-selection.png",
+      "sha256": "d6009dde5e9d5e2a9c6d8cd748a92564a2940076c9dccd036b6b586e46dee994"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122152-landscape-46d3fbb9/02-batch-export-settings.png",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122152-landscape-46d3fbb9/20261103-122152-landscape-46d3fbb9/02-batch-export-settings.png",
+      "sha256": "ebcb4b53502437fec0a530d45677a54a0cc9a3582dd28566b31e5f7acf4ddb95"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/batch-export129/20261103-122152-landscape-46d3fbb9/report.json",
+      "local": "docs/validation/batch-export129/native/b644a9e6/20261103-122152-landscape-46d3fbb9/20261103-122152-landscape-46d3fbb9/report.json",
+      "sha256": "881397cb24ca682ceff18768a71fb1c20c12ddc697699017868c8cf50f0e3fe3"
+    }
+  ],
+  "remoteEvidenceFoldersRemoved": 9,
+  "testPackageRemoved": true,
+  "fontScale": "1.0",
+  "airplaneMode": "0",
+  "animatorDuration": "null",
+  "mainDataCleared": false,
+  "mainAppUninstalled": false,
+  "ownedEmulatorClosed": true
+}

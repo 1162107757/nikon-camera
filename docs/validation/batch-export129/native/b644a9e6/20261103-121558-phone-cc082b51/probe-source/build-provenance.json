@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "tests/batch-export-device-probe/src/cc/huevia/batchexportqa/BatchExportProbe.java",
+      "sha256": "833c68a06c8cd778ae11361f24723ad58ac83aab415ddb4e436c654bd25544ae"
+    },
+    {
+      "path": "tests/batch-export-device-probe/AndroidManifest.xml",
+      "sha256": "691473d0e2c75fe7067ea57c1db51cca0bd07d743e0ef984685b90ce7dca25df"
+    },
+    {
+      "path": "tests/batch-export-device-probe/build.ps1",
+      "sha256": "4b4a1e3d8b5e05fee926a2f784bf309723d438c65627e31d7cf1ad4af3048d59"
+    },
+    {
+      "path": "tests/batch-export-device-probe/run.ps1",
+      "sha256": "f13318efc55177c09acbe2c137ef268d35c94c0616ae15f18f3f2c4ec21d33e6"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/batchexportqa/BatchExportProbe.class",
+    "cc/huevia/batchexportqa/BatchExportProbe$Condition.class",
+    "cc/huevia/batchexportqa/BatchExportProbe$Work.class"
+  ],
+  "apkSha256": "10527634a641232ed177a1002e4198d731b80105ee1bf1d04a9bdaa6de2324b9"
+}

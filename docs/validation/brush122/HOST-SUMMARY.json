@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "buildIdentitySha256": "27764359d069649d7514d6094182ba2b7a1e49772233379f077765cc1350281c",
+  "matrixChecks": 1446177,
+  "matrixParameterExifCases": 152,
+  "legacyChecks": 1184,
+  "legacySuites": 9,
+  "heapLimitMiB": 96,
+  "sourceManifest": {
+    "path": "docs/validation/brush122/HOST-SOURCE-INPUTS.json",
+    "sha256": "6be027dca9ea9eef6697ccd4abd281d9fbafcb1bac4e8224e80e759328b3571d",
+    "count": 46,
+    "productionCount": 35
+  },
+  "compiledClasses": {
+    "path": "docs/validation/brush122/HOST-COMPILED-CLASSES.json",
+    "sha256": "52c85136342c3d562b2a1bc0e0f52aee6b0cbf0a309b16ab4fc2504e4088fcfb",
+    "counts": {
+      "matrix": 84,
+      "legacy": 101,
+      "platform": 37
+    }
+  },
+  "memory": {
+    "status": "passed",
+    "syntheticPixels": 24000000,
+    "heapLimitMiB": 96,
+    "threadAllocatedBytes": 747056,
+    "maxTransferRows": 1,
+    "scratchBytes": 96000000,
+    "changedPixels": 50,
+    "outsideMaskChangedPixels": 0,
+    "scratchFilesAfter": 0,
+    "elapsedMs": 1341.935,
+    "scope": "Desktop JVM synthetic grain layer; not phone timing"
+  },
+  "capacity": {
+    "maxDraftBytes": 2052250,
+    "readerLimitBytes": 2097152,
+    "remainingBytes": 44902
+  },
+  "platformCompilePassed": true,
+  "deviceAccessed": false,
+  "networkAccessed": false,
+  "commands": [
+    {
+      "name": "HOST-MATRIX-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:23.309237+00:00",
+      "arguments": [
+        "C:\\Users\\11621\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\adjustment-region-host\\run.ps1"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/HOST-MATRIX-OUTPUT.txt",
+      "sha256": "09a0262e78d8b910f6dec2ddb15bf014facc35af69284519c7f15761220b58d3"
+    },
+    {
+      "name": "LEGACY-HOST-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:26.890172+00:00",
+      "arguments": [
+        "C:\\Users\\11621\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\portrait-host\\run.ps1"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/LEGACY-HOST-OUTPUT.txt",
+      "sha256": "47379a8ba378639969d430815b6fb558e9b0008c1939d47533783fa8301ba5c1"
+    },
+    {
+      "name": "MEMORY-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:32.662866+00:00",
+      "arguments": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\java.exe",
+        "-Xmx96m",
+        "-XX:+UseSerialGC",
+        "-cp",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\adjustment-region-host\\.build\\classes",
+        "cc.huevia.ncp.RegionBoundedMemoryProbe"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/MEMORY-OUTPUT.txt",
+      "sha256": "b84af6e0490b070768a1ac01245f4a4aaca7d399826fa338e779e8e0286f52fd"
+    },
+    {
+      "name": "PLATFORM-COMPILE-OUTPUT",
+      "startedAtUtc": "2026-10-30T06:34:34.278180+00:00",
+      "arguments": [
+        "C:\\Users\\11621\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\dev\\ai-project\\nikon-camera\\tests\\adjustment-region-host\\compile-platform.ps1"
+      ],
+      "exitCode": 0,
+      "output": "docs/validation/brush122/PLATFORM-COMPILE-OUTPUT.txt",
+      "sha256": "6439a534f46cc75e02b6236195d491452785521faeea105113d8581fa0f3b9f2"
+    }
+  ],
+  "limitations": [
+    "Synthetic JVM pixels and Android API compilation; native UI and actual Android IO validation are separate.",
+    "24 MP timing describes a desktop grain layer, not phone timing."
+  ]
+}

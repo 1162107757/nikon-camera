@@ -1,0 +1,127 @@
+{
+  "finalizedAt": "2026-10-28T14:47:37.116Z",
+  "status": "PASS",
+  "candidate": {
+    "path": "dist/huevia-0.23.1-beta-debug.apk",
+    "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+    "bytes": 9531300,
+    "versionCode": 112,
+    "versionName": "0.23.1-beta"
+  },
+  "primaryEvidence": [
+    {
+      "configuration": "phone",
+      "pass": true,
+      "assertions": 265,
+      "screenshots": 8,
+      "report": "docs/validation/photo-tools-109/b1dce865/20261028-223336-phone-b3a8d041/20261028-223336-phone-b3a8d041/report.json",
+      "reportSha256": "14eed89467705284944b91748cf7950e02f6f1f982087c6d06e08c694e481bff",
+      "provenance": "docs/validation/photo-tools-109/b1dce865/20261028-223336-phone-b3a8d041/provenance.json",
+      "probeSha256": "86528fd58b1752890a63374fc7d1f0a998c88c881bc725e8db3cc24f7de41780"
+    },
+    {
+      "configuration": "font1.3",
+      "pass": true,
+      "assertions": 265,
+      "screenshots": 8,
+      "report": "docs/validation/photo-tools-109/b1dce865/20261028-223439-font1.3-8a3930fc/20261028-223439-font1.3-8a3930fc/report.json",
+      "reportSha256": "e3fb703be34860e3be2912393db5fe66086b2b1b90e45677dafd0b4b1e5a9c39",
+      "provenance": "docs/validation/photo-tools-109/b1dce865/20261028-223439-font1.3-8a3930fc/provenance.json",
+      "probeSha256": "86528fd58b1752890a63374fc7d1f0a998c88c881bc725e8db3cc24f7de41780"
+    },
+    {
+      "configuration": "landscape",
+      "pass": true,
+      "assertions": 272,
+      "screenshots": 8,
+      "report": "docs/validation/photo-tools-109/b1dce865/20261028-223530-landscape-a86e356b/20261028-223530-landscape-a86e356b/report.json",
+      "reportSha256": "48e5e31af1824b85fcc65dd16375c6862152c1c61f8202d7f6782e4f9454c9cb",
+      "provenance": "docs/validation/photo-tools-109/b1dce865/20261028-223530-landscape-a86e356b/provenance.json",
+      "probeSha256": "86528fd58b1752890a63374fc7d1f0a998c88c881bc725e8db3cc24f7de41780"
+    },
+    {
+      "configuration": "compact-landscape",
+      "pass": true,
+      "assertions": 280,
+      "screenshots": 8,
+      "report": "docs/validation/photo-tools-109/b1dce865/20261028-224347-landscape-b10d01ae/20261028-224347-landscape-b10d01ae/report.json",
+      "reportSha256": "21c3aa421a0450d9b5e79754e2c5cef063c10b9db4926e66c990f60fb652f0ab",
+      "provenance": "docs/validation/photo-tools-109/b1dce865/20261028-224347-landscape-b10d01ae/provenance.json",
+      "probeSha256": "358d4a1e56844ceb798314226e1d080c6fe05da1902cdb9f08a6b0f180c3865a"
+    }
+  ],
+  "totalAssertionsIncludingConfigurationRepeats": 1082,
+  "totalScreenshots": 32,
+  "probeRevisions": [
+    {
+      "sha256": "86528fd58b1752890a63374fc7d1f0a998c88c881bc725e8db3cc24f7de41780",
+      "scope": "Three ordinary configuration PASS reports; conditional diagonal pinch fallback and original assertions retained.",
+      "archive": "docs/validation/portrait-local-layout-112/probe-revisions/diagonal-86528fd58b17/ARCHIVE.json"
+    },
+    {
+      "sha256": "358d4a1e56844ceb798314226e1d080c6fe05da1902cdb9f08a6b0f180c3865a",
+      "scope": "Latest compact PASS and unobstructed screenshots; capture adds real package-restricted SystemUI Got it accessibility acknowledgement and per-capture absence assertions only.",
+      "archive": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/ARCHIVE.json"
+    }
+  ],
+  "compactBounds": [
+    {
+      "case": "local-layout-observation",
+      "mode": "landscape",
+      "density": 2,
+      "bodyOrientation": "horizontal",
+      "bodyWidthPixels": 1069,
+      "bodyHeightPixels": 384,
+      "safeBodyWidthDp": 534.5,
+      "safeBodyHeightDp": 192,
+      "stageWidthDp": 294.5,
+      "stageHeightDp": 192,
+      "canvasWidthDp": 294.5,
+      "canvasHeightDp": 192,
+      "dockWidthDp": 240,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "local-layout-observation",
+      "mode": "landscape",
+      "density": 2,
+      "bodyOrientation": "vertical",
+      "bodyWidthPixels": 640,
+      "bodyHeightPixels": 880,
+      "safeBodyWidthDp": 320,
+      "safeBodyHeightDp": 440,
+      "stageWidthDp": 320,
+      "stageHeightDp": 264,
+      "canvasWidthDp": 320,
+      "canvasHeightDp": 264,
+      "dockWidthDp": 320,
+      "dockHeightDp": 176
+    }
+  ],
+  "wm": {
+    "record": "docs/validation/photo-tools-109/b1dce865/COMPACT-WM-UNOBSTRUCTED.json",
+    "restored": true,
+    "restoreErrors": [],
+    "before": {
+      "size": "Physical size: 1080x2424",
+      "density": "Physical density: 420",
+      "atUtc": "2026-10-28T14:43:45.622Z"
+    },
+    "after": {
+      "size": "Physical size: 1080x2424",
+      "density": "Physical density: 420",
+      "atUtc": "2026-10-28T14:44:26.510Z"
+    }
+  },
+  "visualReview": {
+    "normalLocalDialogGroups": "Consolidated bounded pass over all formal screenshots; normal local layouts and rotation frames are usable.",
+    "latestCompact": "All eight original PNGs inspected, with no system teaching overlay on the local neutral/radial/gradient/clone or stable-rotation images.",
+    "knownOutsideScope": "Ordinary global-editor 04 images include a system fullscreen teaching overlay; this is outside the two-dialog layout review scope.",
+    "noFurtherChanges": "No production changes, assertion weakening, further device operations or visual polishing after this final handoff."
+  },
+  "retainedPriorEvidence": {
+    "details": "docs/validation/photo-tools-109/b1dce865/LOCAL-VERIFY.json",
+    "sameProbeFunctionalBatch": "Original four b1dc runs (1074 assertions/32 PNGs, probe86528), including visually obscured compact PNGs, remain preserved; primary selection replaces only compact visual evidence with its later independently bound PASS.",
+    "failedCandidates": "938a9648 and f0879a89 failed runs remain in their original directories; no failed report was deleted or reported as a pass."
+  }
+}

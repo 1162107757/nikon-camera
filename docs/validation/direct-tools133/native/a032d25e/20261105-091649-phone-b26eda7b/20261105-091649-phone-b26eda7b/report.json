@@ -1,0 +1,34 @@
+{
+  "pass": false,
+  "stage": "start",
+  "candidateSha256": "a032d25ed9c7cb49c938cb2f34d3aa0daddd122959d04188eb347a350740e0e5",
+  "mode": "phone",
+  "scope": "diagnostic",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 1,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: Timeout reachable editor-primary-6",
+  "stack": "java.lang.AssertionError: Timeout reachable editor-primary-6\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.until(DirectToolsProbe.java:202)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.tapMain(DirectToolsProbe.java:109)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.navigationDiagnostic(DirectToolsProbe.java:96)\n\tat cc.huevia.directtoolsqa.DirectToolsProbe.onStart(DirectToolsProbe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-28",
+  "status": "published-verified",
+  "userRequestedUploadAfterCompletion": true,
+  "userConfirmedMandatory": true,
+  "channel": "beta",
+  "mandatory": true,
+  "versionCode": 112,
+  "versionName": "0.23.1-beta",
+  "packageName": "cc.huevia",
+  "minSdk": 26,
+  "bytes": 9531300,
+  "sha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "notesFile": "dist/huevia-0.23.1-beta-RELEASE-NOTES.txt",
+  "downloadPage": "https://huevia.cc/preset-library/download/?channel=beta"
+}

@@ -1,0 +1,16 @@
+{
+  "status": "complete-local-package-not-published",
+  "completedAtUtc": "2026-11-01T09:53:13.753957+00:00",
+  "versionCode": 127,
+  "versionName": "0.24.5-beta",
+  "apk": {
+    "path": "dist/huevia-0.24.5-beta-debug.apk",
+    "bytes": 33477388,
+    "sha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+    "remainingUploadBytes": 77044
+  },
+  "uploaded": false,
+  "published": false,
+  "automationCreated": false,
+  "ownedEmulatorClosed": true
+}

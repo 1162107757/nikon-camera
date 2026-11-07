@@ -1,0 +1,37 @@
+{
+  "pass": true,
+  "stage": "process-restart-prepared",
+  "candidateSha256": "eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07",
+  "mode": "phone",
+  "scope": "editor-continuity152-distinct-restart",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "closed-draft-written-before-process-stop",
+      "pass": true
+    },
+    {
+      "name": "owned-restart-fixture-retained",
+      "pass": true
+    }
+  ],
+  "screenshots": 0,
+  "privateFixtureRemoved": false,
+  "privateDraftRemoved": false,
+  "layout": {}
+}

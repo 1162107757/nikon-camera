@@ -1,0 +1,34 @@
+{
+  "pass": false,
+  "stage": "start",
+  "candidateSha256": "1927aa8288252455bfb40b801a451605bbcbf42014008f5907ce584a08f2a0b2",
+  "mode": "phone",
+  "scope": "full",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 1,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: No flat facial skin fixture location",
+  "stack": "java.lang.AssertionError: No flat facial skin fixture location\n\tat cc.huevia.portraitupgradeqa.PortraitUpgradeProbe.markRedSpot(PortraitUpgradeProbe.java:75)\n\tat cc.huevia.portraitupgradeqa.PortraitUpgradeProbe.fixture(PortraitUpgradeProbe.java:74)\n\tat cc.huevia.portraitupgradeqa.PortraitUpgradeProbe.onStart(PortraitUpgradeProbe.java:33)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

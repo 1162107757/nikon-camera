@@ -1,0 +1,28 @@
+{
+  "candidateSha256": "bca8223091df1634dcabcc266b804dc4ceb1fec5e9d3ed3bbe6b7e98ba21b01e",
+  "scope": "Local-only reproduction of the reported occlusion case using the actual installed production detector, landmarks, semantic skin helper, final Mask and dialog maskBitmap. This record contains no source image, image-derived preview, path or landmark coordinates.",
+  "sourceDimensions": [6000, 4000],
+  "analysisDimensions": [960, 640],
+  "freshProcessOffline": {"airplane": 1, "wifi": 0, "mobile": 0},
+  "selectedFaces": 1,
+  "landmarksAndSemanticMaskPresent": true,
+  "originalUpperForeheadWeights": [0.8193739351849009, 0.8596434921594217, 0.9866794401895024],
+  "originalContactFingertipWeights": [0, 0, 0],
+  "mirrorContactFingertipWeights": [0, 0, 0],
+  "cheeksNoseChinRetained": true,
+  "eyesMouthHairOuterHandsCollarBackgroundExcluded": true,
+  "actualDialogHint": {
+    "width": 240,
+    "height": 160,
+    "maxAlpha": 38,
+    "nonzeroPixels": 831,
+    "allPixelsMatchSameAlphaPremultipliedFFF1E4Reference": true
+  },
+  "limitations": [
+    "At the fine-hair/skin transition the mirrored semantic boundary shifts by a few analysis pixels. Fixed transition samples vary from 0 to 0.991; visual review found no isolated hole inside the forehead. This is not a claim of pixel-perfect boundary accuracy.",
+    "Bounded verification on this local case, not a broad demographic or occlusion benchmark.",
+    "Private probe initially called a nonexistent cleanup method after inference. Correcting the probe to the actual dismiss method and rerunning produced the recorded result; production code was unchanged."
+  ],
+  "privateAssetsPublished": false,
+  "deviceCleanup": "Confirmed after all three native regression runs: exact private fixture allowlist removed, directory absent, diagnostic and public probe packages absent; font 1.0, rotation 0, airplane 0, Wi-Fi 1 and mobile data 1 restored."
+}

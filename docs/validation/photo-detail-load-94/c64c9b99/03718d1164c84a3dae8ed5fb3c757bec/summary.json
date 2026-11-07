@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-28",
+  "status": "PASS",
+  "appVersion": "0.22.1-beta",
+  "apk": "dist/huevia-0.22.1-beta-detail-load-debug.apk",
+  "apkSha256": "c64c9b991d760d8f37ccfe8bf47363bb119ada4a982960565b3bc9a1b56854d2",
+  "sources": {
+    "app/src/main/java/cc/huevia/album/PhotoDetailSource.java": "f945ed8926ecfd0a997065c64111fdc0fc62845fe992049f52189bf0a2e4649c",
+    "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java": "dbc9878fde549c56650190e858e3aa57a249e3c77b5f257e2f56ee24c9c3562e",
+    "app/src/main/java/cc/huevia/album/PhotoDetailRaster.java": "552e444f59700191684eee47e84f42f872b69f156236108297c77062ded73893"
+  },
+  "change": "Edited and normalized detail surfaces use bounded-row lossless ARGB files instead of PNG compression/decompression. Same-mode pan reuses in-progress preparation; comparison-mode changes cancel obsolete preparation.",
+  "measurement": {
+    "fixture": "4000x3000 deterministic JPEG",
+    "reference": "Copied legacy full-render PNG preparation/fit pipeline; not a baseline APK or physical phone comparison.",
+    "legacyPngCompleteMs": 3993.791,
+    "newSourceCompleteMs": 2137.5847,
+    "newSourcePreviewMs": 200.0561,
+    "completeTimeReductionPercent": 46.47730189186164
+  },
+  "verification": {
+    "androidAssertions": 187,
+    "rasterHostChecks": 426,
+    "viewportHostChecks": 57,
+    "imagePerformanceHostChecks": 12400382,
+    "editedAndExifPixelsCompared": 6291456,
+    "pixelErrors": 0,
+    "fixtureCleanup": true
+  },
+  "build": {
+    "note": "Windows PowerShell native build reached all 12 native library outputs, then stalled at metadata finalization; a temporary copy of the app build script reused those byte-identical existing outputs. APK Java/dex/resources/alignment and v2/v3 signature checks succeeded. The missing Windows PowerShell Get-FileHash at final sidecar generation was replaced by Node SHA-256; repository build scripts were not changed.",
+    "nativeLibrariesMatchExistingBuildIdentity": "12/12"
+  },
+  "tradeoff": "Private transient ARGB surfaces take 4 bytes/pixel plus a 16-byte header and are removed when the detail source closes. Screen-fit point sampling can differ from the previous PNG sampling; 100%/200% use unsampled original rendered pixels."
+}

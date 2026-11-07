@@ -1,0 +1,242 @@
+{
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "runsVerified": 11,
+  "filesVerified": 57,
+  "remoteEvidenceRemoved": true,
+  "displayRestored": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "files": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/00-photo-menu.png",
+      "sha256": "aa8d619be03169209f4b4e7f587965589ed30399d6d3d05606d613795321bffb"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/01-grouped-actions.png",
+      "sha256": "aa8d619be03169209f4b4e7f587965589ed30399d6d3d05606d613795321bffb"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/02-adjust-min.png",
+      "sha256": "e94601abbfc3a6ce52e83ae811306927c90303602a57e138d035699748770aad"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/03-adjust-max.png",
+      "sha256": "f1800234a701af633ae22816aa5261f3012f7ba5e602a1dec2200ac56943bfc1"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/04-quick-min.png",
+      "sha256": "e41877653bf0394a74b7360ecce32f69f5ec6ae21c58918b36f2f9d184580ee4"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/05-quick-max.png",
+      "sha256": "857b7d0eeab0555ffde4b37703b937e7dba03860bd1324d3d8187d8f4c470041"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111207-phone-f9096b0a/report.json",
+      "sha256": "a7456ff7d43776cc5cf888c3bf624f2cb95e83e7cff582c14ba14fe47557b4ab"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/00-photo-menu.png",
+      "sha256": "3ae75e7aed1967e0fb60b7739e184bf2950ca577f9f41915262eae143fc0cc18"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/01-grouped-actions.png",
+      "sha256": "3ae75e7aed1967e0fb60b7739e184bf2950ca577f9f41915262eae143fc0cc18"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/02-adjust-min.png",
+      "sha256": "47907bfbd0fed2327552ff52a0151482c9ac855c30b4dceaa26c49446568e220"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/03-adjust-max.png",
+      "sha256": "403e79e029da96e6a957275ab4a26370e73e5f78f4650d6824e8a284c11987b0"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/04-quick-min.png",
+      "sha256": "ec5357ebdd36578b9201f8c9827d069439346161f876a0d28f0dc3de7f033f04"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/05-quick-max.png",
+      "sha256": "00bb5f8f3f7365bbe889972c7fff6a5c226691988f5b5aaceddb5aff6274c14d"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111232-font1.3-234a1981/report.json",
+      "sha256": "39169ba51eaf41662e628e685b65d42b9ab7c338fd818cc75582e217b6235f42"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/00-photo-menu.png",
+      "sha256": "8b53d9be1cb2584d6ba3492c6101628f3f3e9d6d0472c49e1f0090607002bf5d"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/01-grouped-actions.png",
+      "sha256": "8b53d9be1cb2584d6ba3492c6101628f3f3e9d6d0472c49e1f0090607002bf5d"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/02-adjust-min.png",
+      "sha256": "0cd0dc51b45a4ad03b635231257d1b5756dd38e4bdcd0ae69e43fa7921807993"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/03-adjust-max.png",
+      "sha256": "e0de508443ec05e5b954fcf24d0ddd28c16c1a5cd558b7c7d112d93bcae9824a"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/04-quick-min.png",
+      "sha256": "79713f2c4c2cf959912c1e05070420453f74e7587d3613919c03278e52154554"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/05-quick-max.png",
+      "sha256": "a126b16a15acb9c6b282fdab9cd32716866e47724609c8501f545d5ab4f48901"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111253-font2.0-836b56bb/report.json",
+      "sha256": "cc4ada155a1acba10b1e3ace674b21d8923e94bf96009531fdec49fd34c0a490"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111317-landscape-50a28bb1/00-photo-menu.png",
+      "sha256": "377c1992a171ef15df9bbafb41ff2d9cdbc0f84e75a353bb1620f0fe817ec75f"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111317-landscape-50a28bb1/failure.png",
+      "sha256": "64567e97f81d3028e7a817620eb62659f1d0787fb44270546503c8433d2e3ffc"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111317-landscape-50a28bb1/report.json",
+      "sha256": "b00fba22c9461fe948de337dc4efa3bdec323a9c15ab5e5b7d93d1e887714ff5"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/00-photo-menu.png",
+      "sha256": "adf873430f14455a36d484ca432d04361bff82033bfe517efd08b1ff67ea2a07"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/01-grouped-actions.png",
+      "sha256": "adf873430f14455a36d484ca432d04361bff82033bfe517efd08b1ff67ea2a07"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/02-adjust-min.png",
+      "sha256": "7f944815846e98eee57e75aee413b02ec2750c2fd49fbc0a995009169399c2a0"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/03-adjust-max.png",
+      "sha256": "279a5a84dff251fe61271c41c261255c954514fc6acff768ae2a0f45db277c4f"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/04-quick-min.png",
+      "sha256": "212a1066faf87209166f36ce6814cae3450f149f04a48a3bed2b25662fe621b4"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/05-quick-max.png",
+      "sha256": "1aa62ed6b420300e260b1bc731350930de870cecb6808892f47374c7a6b1ccc6"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111353-tablet-c810fb31/report.json",
+      "sha256": "fc35fd3f064a864a15fc03c9a6b33fbb4006f43673ad5963c83029f1dc4a1401"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/00-photo-menu.png",
+      "sha256": "377c1992a171ef15df9bbafb41ff2d9cdbc0f84e75a353bb1620f0fe817ec75f"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/01-grouped-actions.png",
+      "sha256": "be2bcdfb659b2c89ea32315fd0eb3a9143f6f7e516a88b20047b818da6fafec8"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/02-adjust-min.png",
+      "sha256": "e6bb8f088d42a1cf0907c539583d22581cfd597b5f79113ec22bdf2057218437"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/03-adjust-max.png",
+      "sha256": "291302a1148920fdf3f7005af0af1f768901fb4cc334c8d4c3571801506361c3"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/04-quick-min.png",
+      "sha256": "e3e2d47400826d9a19a94b6dc064a9490b9cd22f318f0788b1d62acf20d2cac0"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/05-quick-max.png",
+      "sha256": "19759ec3b12fd62d18cec442fd3a18111353459e48a299fd09422b170baf149e"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-111640-landscape-aba2fd73/report.json",
+      "sha256": "69d8aa553af15094890604d2c03f7c27df264e8fe29337206e0309350197fb5d"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105513-phone-b115e4d1/00-photo-menu.png",
+      "sha256": "aa8d619be03169209f4b4e7f587965589ed30399d6d3d05606d613795321bffb"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105513-phone-b115e4d1/01-grouped-actions.png",
+      "sha256": "aa8d619be03169209f4b4e7f587965589ed30399d6d3d05606d613795321bffb"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105513-phone-b115e4d1/failure.png",
+      "sha256": "505b49f7b48e99d43125e229fe378a1471cfe0bd33f806942b8f0a98b5a2a77f"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105513-phone-b115e4d1/report.json",
+      "sha256": "10371b6366e0b7b103b9e7d54a17f384cafbf0cc2aa8562fcbdc08c291fc69a6"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105551-font1.3-848ccb8b/00-photo-menu.png",
+      "sha256": "3ae75e7aed1967e0fb60b7739e184bf2950ca577f9f41915262eae143fc0cc18"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105551-font1.3-848ccb8b/01-grouped-actions.png",
+      "sha256": "3ae75e7aed1967e0fb60b7739e184bf2950ca577f9f41915262eae143fc0cc18"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105551-font1.3-848ccb8b/failure.png",
+      "sha256": "88bab2575024e34376ef325bae83c711ea103f6f32d815c6e89b7b5e97ef2a1b"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105551-font1.3-848ccb8b/report.json",
+      "sha256": "5f3980f27f0f2c8c93610dabbf312d6f4cddcea29e5b2a6b7f60e037db553eb1"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105632-font2.0-e2699de1/00-photo-menu.png",
+      "sha256": "8b53d9be1cb2584d6ba3492c6101628f3f3e9d6d0472c49e1f0090607002bf5d"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105632-font2.0-e2699de1/01-grouped-actions.png",
+      "sha256": "8b53d9be1cb2584d6ba3492c6101628f3f3e9d6d0472c49e1f0090607002bf5d"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105632-font2.0-e2699de1/failure.png",
+      "sha256": "2ad78ed5dae9707c8544f32ba6c3815a7e916c0108800ef541dfda41075958c3"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105632-font2.0-e2699de1/report.json",
+      "sha256": "32ba1a1ba686f5f7dfc9cdd49c3755b82711ce81c914873ac21c3341cfbd1c03"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105712-landscape-b0984741/00-photo-menu.png",
+      "sha256": "0ef86fa6efd7c9ab18f891c2103ef5fb36d5e774ac5c86821ce2b237778c1626"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105712-landscape-b0984741/failure.png",
+      "sha256": "c7aaca35ec3b1520f658b1389e114acf40451aa5ffe67bcc6eb97062ff0e2fdb"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105712-landscape-b0984741/report.json",
+      "sha256": "a2f2fa972d75fb3ed101bae9b272c4a8a1798c919fa66c20912938f381b94a50"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105801-tablet-0af27ef3/00-photo-menu.png",
+      "sha256": "adf873430f14455a36d484ca432d04361bff82033bfe517efd08b1ff67ea2a07"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105801-tablet-0af27ef3/01-grouped-actions.png",
+      "sha256": "adf873430f14455a36d484ca432d04361bff82033bfe517efd08b1ff67ea2a07"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105801-tablet-0af27ef3/failure.png",
+      "sha256": "82481235828597a9966da72e95b97b4d56cda4c172261d6ba574c3ab73eea14a"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/photo-menu136/20261105-105801-tablet-0af27ef3/report.json",
+      "sha256": "7752a5729b9654e5f5674cd9ab7b1ab15e5bf38150c6ce6e3a099943c18cfb3b"
+    }
+  ],
+  "ownedEmulatorCloseRequested": true,
+  "ownedEmulatorClosed": true
+}

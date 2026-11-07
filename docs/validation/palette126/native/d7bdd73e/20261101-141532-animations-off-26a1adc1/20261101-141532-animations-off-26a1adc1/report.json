@@ -1,0 +1,101 @@
+{
+  "pass": true,
+  "stage": "system-animations-disabled-static-controls",
+  "mode": "animations-off",
+  "scope": "full",
+  "candidateSha256": "d7bdd73e333cbe39e6bbb0664c5d0c8eb0f1e2b32a039bff344153371e9f9e42",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "system-animations-disabled",
+      "pass": true
+    },
+    {
+      "name": "disabled-panel-starts-at-final-position",
+      "pass": true
+    },
+    {
+      "name": "disabled-no-initial-animation",
+      "pass": true
+    },
+    {
+      "name": "disabled-touch-immediate-coordinate",
+      "pass": true
+    },
+    {
+      "name": "disabled-pressed-feedback-static",
+      "pass": true
+    },
+    {
+      "name": "disabled-move-immediate-coordinate",
+      "pass": true
+    },
+    {
+      "name": "disabled-cancel-retains-start",
+      "pass": true
+    },
+    {
+      "name": "disabled-cancel-clears-halo",
+      "pass": true
+    },
+    {
+      "name": "disabled-cancel-coordinate-exact",
+      "pass": true
+    },
+    {
+      "name": "disabled-release-clears-halo",
+      "pass": true
+    },
+    {
+      "name": "disabled-drag-created-no-animators",
+      "pass": true
+    },
+    {
+      "name": "disabled-reset-immediate-endpoint",
+      "pass": true
+    },
+    {
+      "name": "disabled-reset-created-no-animation",
+      "pass": true
+    },
+    {
+      "name": "disabled-undo-immediate-endpoint",
+      "pass": true
+    },
+    {
+      "name": "disabled-undo-created-no-animation",
+      "pass": true
+    },
+    {
+      "name": "disabled-apply-persists-exact-settings",
+      "pass": true
+    },
+    {
+      "name": "disabled-apply-cancels-all-motion",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 0,
+  "persistentFixturesCreated": false,
+  "privateFixtureRemoved": true
+}

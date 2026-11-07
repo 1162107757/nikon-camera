@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "status": "component-native-validation-passed",
+  "date": "2026-10-29",
+  "apk": {
+    "path": "dist/huevia-0.23.4-beta-debug.apk",
+    "versionCode": 115,
+    "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2",
+    "bytes": 9531300
+  },
+  "probe": {
+    "path": "tests/update-prompt-device-probe/.build/update-prompt-probe.apk",
+    "sha256": "a13f612bc2ec3ab2ddf5636b62973a618dabde37c17684d5deeca41b542b7bb4"
+  },
+  "productionSource": {
+    "path": "app/src/main/java/cc/huevia/ui/UpdatePanel.java",
+    "sha256": "b48b50eaa75482873befd9f2eebed3ac8f81cd85ef1cf057168bcb688736bdcf"
+  },
+  "reports": [
+    {
+      "fontScale": 1,
+      "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/20261029-102431-font-1-0-595573/report.json",
+      "sha256": "b84a29776e62515949a51ce78021407ed92485bd2a80cc21a89ea0f1b5197159",
+      "checks": 404,
+      "screenshots": 7,
+      "provenance": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/provenance.json",
+      "provenanceSha256": "1a3056f6b182f9f79634ed0fd93bd533d73a2afeecbd2d046dd50b5890d47ab0",
+      "cleanup": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/cleanup.json",
+      "cleanupSha256": "b7f799e480b3462f27c7e2583e5688ade3ac64e8d73d4919ed9fb3e5f6744d4d",
+      "pass": true
+    },
+    {
+      "fontScale": 1.2999999523162842,
+      "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/20261029-102446-font-1-3-f62bf9/report.json",
+      "sha256": "e5ca740c4dd01de3bea33ca40cbd20e348040f6a2551d2bfa070fb82db71744a",
+      "checks": 405,
+      "screenshots": 7,
+      "provenance": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/provenance.json",
+      "provenanceSha256": "1cdb7086cc4e2d4f857e0daf395b4846809af892734945ce5be47e32bf375298",
+      "cleanup": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/cleanup.json",
+      "cleanupSha256": "da9c358728e385a12021637128ac32b7b90bbcfdb1652735e1d6a71ff5664bba",
+      "pass": true
+    }
+  ],
+  "checksExecuted": 809,
+  "nativeScreenshots": 14,
+  "visualReview": {
+    "scope": "Implementation subagent personally inspected the download, verification, failure/retry, and verified-install native screenshots in both font scales; not an independent whole-app review.",
+    "reviewed": [
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/20261029-102431-font-1-0-595573/04-downloading.png",
+        "sha256": "eccf24f10d0350460434f4af22608609a8475e293cc84e8e86fd8c9aeac48e8b"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/20261029-102431-font-1-0-595573/06-verifying.png",
+        "sha256": "8bce27f8c90d04ed14e8c717174e5cd412180244d4fc58719ba16be11a549f82"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/20261029-102431-font-1-0-595573/05-download-error.png",
+        "sha256": "68a298b549ab1e3298ebc7c188e4eee5adeff30f94e34ffea496c69446461c0e"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102431-font-1-0-595573/20261029-102431-font-1-0-595573/07-ready-to-install.png",
+        "sha256": "acd5b2f055e21f26e2a6f4d95d93ea7eaf6dcc724124266a66494639834e9c85"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/20261029-102446-font-1-3-f62bf9/04-downloading.png",
+        "sha256": "e86323288b2fdfbd6442ba90f0a752aaadc69cab38b5a2efa317fab9f4a3a2c4"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/20261029-102446-font-1-3-f62bf9/06-verifying.png",
+        "sha256": "079dc033389496ec3df78aa13ae8256402f01d0a467eb5d748271101b078a89a"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/20261029-102446-font-1-3-f62bf9/05-download-error.png",
+        "sha256": "e318e7f2094847ed2b9608bad1ff6d85ad8eff0a3784d02eda2677ecba65fca5"
+      },
+      {
+        "path": "docs/validation/update-prompt-115/ae2f90cf/20261029-102446-font-1-3-f62bf9/20261029-102446-font-1-3-f62bf9/07-ready-to-install.png",
+        "sha256": "210b1e53597f335d96b8ee4c3765be197fee0f7980108c4ba5bedc5213270647"
+      }
+    ],
+    "blockingIssues": [],
+    "finding": "Busy primary action is absent and progress remains clear; retry/install actions return, retain complete labels, and fit in the action row."
+  },
+  "safetyScope": "Production UpdatePanel only, through test Activity. Synthetic validated Release/status callbacks; no real metadata HTTP, DownloadManager, installer, camera, account or main Activity behavior. Fixture version99.0.1-beta is not the installed candidate version.",
+  "ownership": {
+    "serial": "emulator-5588",
+    "releasedToRoot": true,
+    "killed": false
+  },
+  "includesConfigurationRepetitions": true
+}

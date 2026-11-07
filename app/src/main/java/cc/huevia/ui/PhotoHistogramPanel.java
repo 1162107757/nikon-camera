@@ -32,7 +32,7 @@ import java.util.concurrent.CancellationException;
  * Neither statistics nor warning preferences are edit parameters or export inputs. */
 public final class PhotoHistogramPanel extends LinearLayout {
     public interface Listener { void onWarningsChanged(boolean shadows, boolean highlights); }
-    private static final int TEXT=0xffffffff, ACCENT=0xfff2b48c, ACCENT_INK=0xff2a1c12;
+    private static final int TEXT=0xffffffff, ACCENT=0xffffe335, ACCENT_INK=0xff2a1c12;
     private final Listener listener;
     private final ToggleButton luminance, rgb, shadow, highlight;
     private final Chart chart;
@@ -276,7 +276,7 @@ public final class PhotoHistogramPanel extends LinearLayout {
             mode.setLayerInset(1,0,0,0,dp(12));
             content=mode;mask=new ChipFace(Color.WHITE,Color.TRANSPARENT);
         }
-        button.setBackground(new RippleDrawable(ColorStateList.valueOf(0x28f3b493),content,mask));button.setBackgroundTintList(null);
+        button.setBackground(new RippleDrawable(ColorStateList.valueOf(0x28ffe335),content,mask));button.setBackgroundTintList(null);
         // Background replacement can supply drawable padding. Restore the intended content
         // padding last; the 28dp visual face remains centred in its 48dp touch target.
         button.setPadding(button.chip?dp(8):0,0,button.chip?dp(8):0,0);button.setGravity(Gravity.CENTER);button.setClipToOutline(false);button.invalidate();

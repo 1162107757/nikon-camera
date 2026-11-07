@@ -1,0 +1,635 @@
+{
+  "inputs": [
+    {
+      "path": "tests/ncp-preview-device-probe/src/cc/huevia/ncpqa/NcpPreviewProbe.java",
+      "sha256": "00ae72ba434ba38d83f0d5f438477261f81cf1828b1efe13acf7a227a405515f"
+    },
+    {
+      "path": "tests/ncp-preview-device-probe/AndroidManifest.xml",
+      "sha256": "a84c6def842f011c29aa14a2d29509f7683ec0ed9eb7089d4383e7754626cf7b"
+    },
+    {
+      "path": "tests/ncp-preview-device-probe/build.ps1",
+      "sha256": "2bc116e8dc5b730dbef0767fc65320209671f0da5b9918edc1285815c115eaa3"
+    },
+    {
+      "path": "tests/ncp-preview-device-probe/run.ps1",
+      "sha256": "fbf4953c52d96fcb4a04970df0bcc4d287b1924a743b953c71da3bb47e0f3b2f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/ready-manifest.json",
+      "sha256": "675bd723e7a862f9046e3b032c25fe0e3f9157e544aec2afb1f161b6323f8585"
+    },
+    {
+      "path": "docs/validation/ncp-preview123/native-vectors.json",
+      "sha256": "25cd71853f7018725392a301fddefaca61ee17a04a811b82bf8f02a4413f8433"
+    },
+    {
+      "path": "dist/huevia-0.24.0-beta-debug.apk",
+      "sha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/001-agfa-optima.NCP",
+      "sha256": "3fa0c1d848adcbc4ecb60c6bf90feb6c794c3ce0be8c4fccac1da33e54c1b692"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/002-agfa-vista-200.NCP",
+      "sha256": "066766684e911f165ee21ba6199c02027ef6fee8b70053016ca36ea24a94d7bb"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/003-alvaroyus-curve.NCP",
+      "sha256": "1fa591206dc8d82a26297c6acae619221a3f78f9888560777a844048b730428b"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/004-arri-logc---neutral.NCP",
+      "sha256": "3d922cc8e0488ac4601a313fc0661944bc9c75afbc3ca014f5c137ea5203248a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/006-b-w-contrast.NCP",
+      "sha256": "0784441d28e74746a79d25b7e0aea10886d1a0126a5981c0361e32e98f89ca73"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/007-b-w-portrait.NCP",
+      "sha256": "af803d8f3397f49cd4c713ed78d7f0c6f881634bccda215f542077d34b99a24c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/008-b-w-xcontrast.NCP",
+      "sha256": "d2f028a7500c949ded02df9cb5e2e247ced918d02023935fcb8135b3cdd54647"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/009-beatlogii-maxdr.NCP",
+      "sha256": "a3860a8b913b96c90ff4b5a144492a0dfcd38de216e6f631d9d3f37aaba805bb"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/010-beatlogii-widedr.NCP",
+      "sha256": "7f8bdc5de40b29ad2b5ed87943a3b17682b46444b807b47175c2eafe097312f3"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/011-beatlogii-5-neutral.NCP",
+      "sha256": "b65d84daf9cf99adbf8497a008be07623345de8d925027b22a1f2510345e5562"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/013-c1.NCP",
+      "sha256": "d58630cafc83014e1b679f264ef438b21ac34f16c639f5cc12a31f649ae04ca3"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/014-c1.NCP",
+      "sha256": "8ee2602677b483cc8bd481b2e3a4f7ec34324ba75dc1ac3e6244ca3b37c73da8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/015-c1.NCP",
+      "sha256": "28ca3df078eab0d74e9f16b831d56ca78d2bac7051d448345448a77b1f65edaa"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/016-c1-in.NCP",
+      "sha256": "438b5c705fc4f810c329fd0750d9b791bfdfac49384d664ab4c2cfb57d7d4dff"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/017-c1-in_g.NCP",
+      "sha256": "71e9be5652565d35ad1c1b85299cddb4423d6d5d3ca6d01c8c680d7b6a6be4af"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/018-canon-5d-m2.NCP",
+      "sha256": "2deedb83bf93d4b8ee29e74c87b520af3193d7c6792091d83cb409a59f2cd43a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/019-courbe-br1.NCP",
+      "sha256": "9eb5841ae462e8559d5838231ec5c2ccdd01f7dee2b82cabe889ff122ef1ac19"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/020-courbe-br2.NCP",
+      "sha256": "045c037dd9e116e7d9d531c4a6e5d0b17d18b4b95dfc27643285879ccc1fa480"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/021-courbe-br7.NCP",
+      "sha256": "28b172f0260f800fda782d785962cf2398b613f1f2e73530a8474ffd1fe55bed"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/022-courbe-br7-a.NCP",
+      "sha256": "7e6cf785315a5d8cf9323c6490f0c98db6b87c0a0a581c38a1c8859444f00821"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/024-d2xm1sim.NCP",
+      "sha256": "4bc96ff153595a2c210255e288c313558f68f36404feb47f080a92146c582b31"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/025-d3_midtone.NCP",
+      "sha256": "f6d4f12aaec17122805ffddac6583a4ae1070710445af0ce45cdcbe43df5b1b9"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/026-darksepiahc01.NCP",
+      "sha256": "404c3ee51634aee1339417398bcaa4f7d20c37ebe73a2b3d3c8b6cbed3a5737a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/027-fashion.NCP",
+      "sha256": "659d3862fff40e65de03fd62245b756fb9ba0f212f171130a522cf60df68eb0a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/028-ferrania-solaris.NCP",
+      "sha256": "9f30548c9294484d5046f27879f4787e75c69a8dc9cea1dd21e156e18f0bdd8f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/029-film_highiso-6400.NCP",
+      "sha256": "58a3a7e0e9ce16e8b48fda6eee1d26a71183de66aaf768a8139cd19a9802e516"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/030-flaat_10p.NCP",
+      "sha256": "534c3ab5eab559c7225f00076f641bf246110099fa9a7b40cb0166a476d5082b"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/031-flaat_11p.NCP",
+      "sha256": "ee6e1af703f16cea08e8498dc11163e2af27131b01fca866edcced6297fcd489"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/033-flaat_12p.NCP",
+      "sha256": "68be60f9d4b25b229b7ea3f3cdae586565ecbdd21bf4537b88a65a3acc70e529"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/034-flat.NCP",
+      "sha256": "a3f511398dc36df4378745fbdd0585ac68557808df77f70f30e159ac4c2dad8f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/035-fuji-astia.NCP",
+      "sha256": "ed53222f4a2329c3f42a2dd6391b4b62d1214b1e3eac917d9bd11a8f22f9e43f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/036-fuji-astia-200f.NCP",
+      "sha256": "cdeb9690929426dfa31d26b0fdfd464f6bb6c94745154ca172735c1e909d94c0"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/038-fuji-astia-03.NCP",
+      "sha256": "e9a9258da75d76eafe1baf7e5885a44e33daf55a778be8833ba0e7eed244d003"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/039-fuji-provia.NCP",
+      "sha256": "0b695ca17aa37d8240325e4b48bca3e85988a69157af3913adad5fe7f2644678"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/040-fuji-provia-100f.NCP",
+      "sha256": "b68696cfca5756a3795606900bb5cddbcff5e2f97362d5e4cadaab183f7e2d7f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/041-fuji-sreala-skin.NCP",
+      "sha256": "a0a8b5cedd1c0df9aef0a8a895b658988a3ee02febc7e5805530b67d2489009c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/042-fuji-superia-reala.NCP",
+      "sha256": "c561e1a439db412b1755dbbc3c8f9be3345270eb6e4ac1334f9092178050b1bb"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/043-fuji-superia-reala.NCP",
+      "sha256": "371fb6bd65a1c92e26bc40f2fc580d72b048d4688e9a84d03004ca9858b11a16"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/044-fuji-velvia.NCP",
+      "sha256": "1a421da9f5707a717f36a9c78139a6689566e05e8b021a5d630f80f056d17271"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/045-fuji-velvia-100f.NCP",
+      "sha256": "5252c7115867595c7a7f23f1220e59ff16d32e8502322a80d84742235a00ecd7"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/046-fuji-velvia-neutral.NCP",
+      "sha256": "034a6fe830421601ee28a714d4aed20bc208a81d97209f15b5491724728db97d"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/047-fuji-velvia-vivid.NCP",
+      "sha256": "6598f50109250aa2acb6292753fd641d14a5612e5f5bd0166b86556ce6e25778"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/048-fuji-superia.NCP",
+      "sha256": "6cce60fbc2d85ddeb1a0a3a30012b7187dd6c775ba0fb7c7799430fa89e2ef51"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/049-hendrix.NCP",
+      "sha256": "0c1a5776ca41a2bb87529ac516532100cfcc65082cff992105ab969348bbbdd0"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/050-highcontrastcolour1.NCP",
+      "sha256": "184dae2c9f55a1e9653e66259f3b758dccad8dc7f01288f2aadb18e443af448c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/051-highcontrastcolour2.NCP",
+      "sha256": "385ae5e455f0aa4cdc9e5fdb8728c988e14671bb2845f078deaa37470d56c0e4"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/052-kamiyu-pt.NCP",
+      "sha256": "b3e5cb4da6db3a8f86e79c5dc7c771b12d3821f09f1794675e33fb695e0992ef"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/053-kodak-e100-vs.NCP",
+      "sha256": "173d0cc67723b8da2ec4e5cc8e3f36da5787cc8b292e829bd70ffe83416e278c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/054-kodak-ektachrome.NCP",
+      "sha256": "4cb36e4ba69aedd9d27a669ddfa5e5ea10744bbc9f1050f009e8d081fd453c50"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/055-kodak-ektachrome-p.NCP",
+      "sha256": "8b50fca70cb04b942dc92a80381f69f1a84f8474bb035cef1065d49285d2b9ab"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/057-kodak-elitechrome.NCP",
+      "sha256": "dcb8a8a204dbe3451699ed63c3eff83f051bedb7b270e7e40c7c532db593ba04"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/059-kodak-kodachrome-2.NCP",
+      "sha256": "a237f2fda26628180596f890d669996c622edd522f2806b8c3b36918b7d757d9"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/061-kodak-portra-mono.NCP",
+      "sha256": "2347382891126f7227ebbf6c8320c95172d064a13b14f9c3f8e70a49f0328f5b"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/064-kodakelitechrome-g1.NCP",
+      "sha256": "b389214eed6dfa4185078f331ccdbe4f40500b513b873947994867c1e7e012cb"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/065-konica-centuria-100.NCP",
+      "sha256": "acdb1f0a329b6affd60ce4c3482a522d2dfd060822d911f38883f9b10ab65eb8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/066-mash_01.NCP",
+      "sha256": "cfdf2841fb0ff4489db13dd26f0fdf9f9dd0bc99c95e7db7c15e4e8d8e718a53"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/067-mash_02.NCP",
+      "sha256": "c1c3f549f559bba8cfb5115457a89776eb68a1ca7b7ce94cea4ad1de98021b47"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/068-mash_eng.NCP",
+      "sha256": "327be0b520af421270d3146e8b64108fbe57ab04d956f5372e5a0b086b893da0"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/069-microctr.NCP",
+      "sha256": "395c2a8ebb8f066c840eabffd1bd23ae16aa8647426a237a65a7bb0d5a120eea"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/070-milk.NCP",
+      "sha256": "1b6123bdefbb8fddbcc19a1cb0023de146b01ac312587cb7bfbdc78553abc15b"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/071-mono-no_eff-bw.NCP",
+      "sha256": "4afb91f13af119a9c3febd495b45c86112044e7a55e4a9f6d7147a20ba229e26"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/072-mono-no_eff-serp1.NCP",
+      "sha256": "07966191efed021da081138263ca5546513142d456440bad20ecf37bb8f4cf07"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/073-mono-no_eff-serp4.NCP",
+      "sha256": "42833615c73eddce7ee74e0c2dc3a3511abee646e66a55a20a0f49360e636ea2"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/074-mono-no_eff-serp7.NCP",
+      "sha256": "7fe61773d01bb5b60255f0d688574e9f41ae76d64e545afde97ec46aa155e078"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/075-monohc01.NCP",
+      "sha256": "2bd5b64584b2b25434036fb4550f53212610a593e123133d413b1a9cbd4452cd"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/076-movie-tast.NCP",
+      "sha256": "72eba2e44186e415e6d183fabad62cb8b9dd0b3cd249fe3aa2dae4955a2e0ce8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/077-n-rose-curve.NCP",
+      "sha256": "ed94a2289de131025b2729c8400a53aaaeab95298d23e0c336307b440a289c11"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/078-neopan.NCP",
+      "sha256": "8fc18d0182af988a7146153732fe1563c123f102512a92ef7f0b0aaa0b5ceda9"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/079-neutral-gamma-0-4.NCP",
+      "sha256": "c7f099fe9bc94e498e9668c3c6c958a8546025656a8a1b29204956a75b632f3c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/080-neutral-gamma-0-5.NCP",
+      "sha256": "b3e14ee4a3a53f54d69f8bb3355f7fede6fb904ad272568ac7150740c4975269"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/081-neutral-gamma-0-6.NCP",
+      "sha256": "90832ba19fc3c0537efcb0eaa5e7ad7a86267850dae9993368789f3b06f78137"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/082-neutral-gamma-0-7.NCP",
+      "sha256": "66cbc3b3996f8bd1d2f3c652c3cb7122cf2f3499a04f75d46f2d27e9ff7a29c8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/083-neutral-gamma-0-8.NCP",
+      "sha256": "af3b41c8aa1bb03ca34fe6394cf51c78edfaa5e7c63feb1d75149fde8d04860e"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/084-neutral-gamma-0-9.NCP",
+      "sha256": "5fe48f56dcef91d5a7cedf997ad25c173ee1ec59956d602529602a809ba3a244"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/085-neutral-gamma-1-0.NCP",
+      "sha256": "755288e10dd751d497954d482d6b402d294db6be80a32851c6eb53b593e42cc3"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/086-nik1v1-apx100.NCP",
+      "sha256": "cc1c8cb017001b4127e65e18c88e211716de12bbc7e4ecd786761778f7af5817"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/087-nik1v1-hp5.NCP",
+      "sha256": "24e07a8c649dc4943c093fe0f566f9f303a2c154fc189abc7aee7d5d1859b1c5"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/088-nikon_d3s_look.NCP",
+      "sha256": "024b40faf38291e267a11a6899c60e06d91b0c3bc553f6a45a75c8eb235db64c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/089-nl_s0.NCP",
+      "sha256": "a168ab3a2aee6dd56ebba208098e4e9d2726cb56f36569a5374f27fc872a093e"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/090-nl_s1.NCP",
+      "sha256": "d81a49097a97682c8f36c772c13d8ec2d045f3f277d7ec83c0852bc8777f1e79"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/091-nl_s2.NCP",
+      "sha256": "be4dabd442d2c8a8a45a86925c64c1fa259fb8008ae5b38c2a7a535edc003b08"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/092-nl_s3.NCP",
+      "sha256": "21046a4e044bd40777d584e3650217b71469a61dbd1082464da408f66c41996f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/093-nl_s4.NCP",
+      "sha256": "b587dd7da74ff1c53b7ab5ea4daf8f2728f76422b6648336ef338c163ec5d4f1"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/094-nl_s5.NCP",
+      "sha256": "53ba1f18b653335cfde1265ae3d224629684334a04aea98fa1f1c4090c2ccf84"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/095-nl_s6.NCP",
+      "sha256": "a15fbe48f496ecb94133a951c43db549278faed4ca2786781eae52a3ca8b652a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/096-nl_s7.NCP",
+      "sha256": "23b8f1d22b1d6d4ca6b239fc34a466ead546f3485cdcf1b1a5e155d355c84ebc"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/097-nl_s8.NCP",
+      "sha256": "dc72b78d59a842f8e26f37edc3c9119c6f37bded5eb9c068a759bd20e8936285"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/098-nl_s9.NCP",
+      "sha256": "1f29000ab585b6e093b2fd65bd312950775551e332c6525c6d84b9d9fe475f61"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/099-p-s-2.NCP",
+      "sha256": "9bb0f5dc7b52beb135727069e2f5641b813fe6691d44069e0aa427bbf26e4fcf"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/100-pentax-k20d-mode.NCP",
+      "sha256": "225634245bdd987638173e932111aae3dd90fc1aad1d1d055c95c7cf0c747b2b"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/101-photogenic-pns.NCP",
+      "sha256": "8656536cd302acdec60eb9ac34e4f0a864f0c3a9b35e2bb39c49eee394069638"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/102-photoio-cineflat.NCP",
+      "sha256": "72131dbfa6ec37b7e69b02077dcb2c63dd78826ec4195bb3aa56e68a4a9fe1f2"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/103-portd2xm1.NCP",
+      "sha256": "c798aba885a2abedb96e517c05d0f5a1fe60eb99e8462f68c10a3922e0f192ad"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/104-portd2xm1c.NCP",
+      "sha256": "ffede51add1a4d2df8fbda0cfa329bac9559123d54aea49515f35a67d4611931"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/105-portd2xm1h.NCP",
+      "sha256": "9fe669a9695acbbc3c0515079b1d04cfafa5f77d564cd9ead301df3a0cce6597"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/106-portd2xm1s.NCP",
+      "sha256": "6190eac714f85e0ad18d1670cdb59feb8ed7167442dd185af59907b6f68165fa"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/107-portd2xm1v.NCP",
+      "sha256": "d2adbc93b476793beb5b6f71809875bf06f685c63cc92d966c2f2047f933e5e2"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/110-provia.NCP",
+      "sha256": "3d8fa8dbfd17004124d676350113edc8b6005307123968f1d141f09115898880"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/111-pt-mode1.NCP",
+      "sha256": "6f7fb114bdd1e4c3df29037961ecb666c9c1e96df73f13b3e5100c6ca1af3e1f"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/112-pt-mode1n.NCP",
+      "sha256": "b88b935a71dfff63d82150d3e19a9d3a7c1e0d91cafea4c49004113e2a645296"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/113-pt-mode2.NCP",
+      "sha256": "5a4b083b781f59c6bf6f24a65a94fd85c16d4d9c3a038df1b9efc1fd7aafe471"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/114-rose-curve.NCP",
+      "sha256": "624248124fdb56af1f43e6cb7592c78b3864624aae7ba2e609888668974e0037"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/115-rose-curve-s0.NCP",
+      "sha256": "ae663a553b5c24bdbe3566c758ac627466c480d67d0a126fe8106d82e27fdf5b"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/116-s-minus.NCP",
+      "sha256": "e66dc552b27b641ea12a876b5f982fd0cc9089a1aa077f2322076b6dc17582ab"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/117-s-plus.NCP",
+      "sha256": "2c33bad9c2f38d0048a935fa929d92829047f3d9eeb0e8cc94165354063187df"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/118-s-safehi-loboost.NCP",
+      "sha256": "713f94dd11a08c98fa69d98ae0d6050c8302f4acd36037309736301b26c038ac"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/119-s5pro_f1a.NCP",
+      "sha256": "4732e74b789b00fac4992ced198d378ee861ed1aa44dbb7746047f4e365fc86a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/120-shing-fineskintone.NCP",
+      "sha256": "78e5ad3b7db770f7edfa91d4a26c6c59d70a07eb809ff7e9f2951f03d7f90323"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/121-shing-halfgraphic.NCP",
+      "sha256": "9eeaad7493f1e04399a93043d8b2a7e8d5d85ae80515f73b5f5806f6905b277a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/122-shing-negativefilm.NCP",
+      "sha256": "7527e239633fb5594aa5d3a2d504817da05ef1afd6cd3ab6b98e7b01428c70f2"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/123-shing-nostalgia.NCP",
+      "sha256": "482976ef497f74daa02160050293e71d3aeeb9541e2c6b20eb35d732102c6ac6"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/124-shing-titanictone.NCP",
+      "sha256": "a48fff56d83f92a670b1fa2c55ce4f1741970be5e91eeda960ad77df0bac85aa"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/125-shing-tokugawatone.NCP",
+      "sha256": "b97d261b8bc20a208896e2f69b3499135a7f62caf47bed24a028ca4dac0e1434"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/126-shing-tokugawatone1.NCP",
+      "sha256": "07bc5ab5ee4baf397d4e3019ad6ff2d7398d27e5e4c767aa6e209c500fc5aadb"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/127-shing-tokugawatone2.NCP",
+      "sha256": "5a3e2e9a768234f0fa653f1fc50eef3993118788737e57fe4bbd8d219fa8bc12"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/130-shing-tokyotone.NCP",
+      "sha256": "4e79b6ec55f604f48b285496f48b57cdc1d538dc2c0e941889f2e1805292266c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/131-spooji.NCP",
+      "sha256": "749a9ba37ff4b69c8d0c92ab425911e81dc4252a82969e5a46ded19a7357e666"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/132-sreala.NCP",
+      "sha256": "926dc8ccde9954d5a720bf0fd40e65c438b7344f030bbd710cb9e4bee8abe667"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/134-st2p.NCP",
+      "sha256": "e81a81ff86c89b3baf8de1eddd373abc750cb63efcdab7907715f5bde8cae1cb"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/135-st2p.NCP",
+      "sha256": "42c51dc79f514260df4dcd86fa2eaac3e32a5b9a479f3a6583e260e975fbb850"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/136-st3p.NCP",
+      "sha256": "2a086641d6e086b8b87c20cec7f20ecf4582f699b5398c6b65427c2f452e50e4"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/137-st_g1-2.NCP",
+      "sha256": "746ea72ae905009b7b27b488ed2a797a69f4567644820506d09627a90e1c736a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/138-st_g1-47.NCP",
+      "sha256": "05186d23642aa38f5534fcaf12ed0055cca4a97585b80f04f1a9920e56cb3914"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/139-st_ln_s0.NCP",
+      "sha256": "a16e0748ccae42e194a0ce9f4fc2d78bfddba7c286aa9d739259ae251bd3f259"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/140-st_ln_s2.NCP",
+      "sha256": "4041a4b9e15a23f935f4598b3cfa528a798879c0867f8396ee2e3e4d0e2ad68a"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/141-std_1p_63x63.NCP",
+      "sha256": "b9b15421c3f4e1790af4ed630d4d80a49b24aa14844e127d8977a73ce08b4e3d"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/143-tassinflat.NCP",
+      "sha256": "db06fa4544566b2d2cf6a15883ab5d8ab799e6b64d1b518122a74481da58fec8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/144-thommore.NCP",
+      "sha256": "376e84777ad63c99505499b990ff425adf8a37ac0fc632dffd6874d53c7f0f41"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/145-tmax.NCP",
+      "sha256": "d5aa53a316109212afa69573095c3cc62d9f8c5264e5bc82630f08328ecb843d"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/146-top-gear.NCP",
+      "sha256": "c58d63fb9f24f3dca868b645a546575f716cc85f489d029c832b5ddb8a9a96e1"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/147-tri-x.NCP",
+      "sha256": "8f983492b1507b7cbdc8042c522a8e33c05e1447e64dcdf9cbd747835eb9a65d"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/148-tri-x-b-w.NCP",
+      "sha256": "f85f311dc666c1264cbd5f1e720936e91f301f5e4ac8ba39d93a801f2f5c3ce6"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/149-ultralight.NCP",
+      "sha256": "93ed2382de9bdca4a4bd2884448ed9eab143e1478a316a67f89d42c3d7345e83"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/151-v-rose-rose-curve.NCP",
+      "sha256": "f093cc14c1c7e4ebe0c718050aaeb461f0c73a140a9130410b98cd74541401f8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/152-velvet.NCP",
+      "sha256": "cb1772db944dc00e87f1e4a9b8db9c1c99c259b0373cea106bd98e4101598e0c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/153-vh-pseudolog-d700.NCP",
+      "sha256": "11f975c882caf80521e40991ea3f15a936cd214332ac275242135896d763bae8"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/154-vh-pseudolog-d7100.NCP",
+      "sha256": "297fe37e2fa174a914f5ee0541fb2d10de2fa16836b987bd77886428a260a570"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/155-vh-rad-cinelog-d700.NCP",
+      "sha256": "468efe5b17cacc637f59620e9609b770cbe35601cc295491662c6e04316a3b75"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/156-vivid-1.NCP",
+      "sha256": "cefd349f8d3e8e66625b9a67d93eee002177db2796bc5ee8b702d3cd44369005"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/157-whitewedding.NCP",
+      "sha256": "475a35788e6832e275fce5831fd80de929a331466a8210be88b23dcb5371a568"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/158-winda-hr.NCP",
+      "sha256": "cce2d2f972efa90bf11647222a67310e585f543f84ed0b384304eef3909f6cd0"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/159-winda-lr.NCP",
+      "sha256": "d382ed7dea504254290169da64ee5b8913c800cb76ce1d593ba754cdc78a1a35"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/160-winda-mr.NCP",
+      "sha256": "18d37eae5161c36ed35ac6349b716d91249a6c7dee71794928620e27aa664e51"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/161-xpro2.NCP",
+      "sha256": "fc285be253822e3ee5e81f29ce50420e9ac872529d5f43cf9cb90e3abf63b5d4"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/162-xpro2-red.NCP",
+      "sha256": "2780b4bcf33a6618d8281fb79a1994ff79581e4542f329fd82b5de9e94d4b50e"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/163-xpro2-yellow.NCP",
+      "sha256": "de04853d237d2dcae6f2013488e9670a992061755dad081765f456d3d840d3f5"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/164-xt1.NCP",
+      "sha256": "a5e8c67058e1d1f39ec887a7d08dd865bb0a1a98b780ee1d3cbe5a811da4e55c"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/165-xt1-02.NCP",
+      "sha256": "0a9961dab15026f3d4eb07b38f7da165ae50b4296eb3aab8c29ed529f807fdf3"
+    },
+    {
+      "path": ".tooling/nikonpc-import-20261027/exports/166-xt10-01.NCP",
+      "sha256": "54b108f73ac700c763efd846311debb744403a8917f2d1c447c9af720744ed15"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/ncpqa/NcpPreviewProbe.class",
+    "cc/huevia/ncpqa/NcpPreviewProbe$Condition.class",
+    "cc/huevia/ncpqa/NcpPreviewProbe$Work.class"
+  ],
+  "apkSha256": "d0c20c6de89c179208ddc93151bc1cabf58731d5a5d5292c599acd27148c5343"
+}

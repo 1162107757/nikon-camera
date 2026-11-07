@@ -1,0 +1,92 @@
+{
+  "candidateSha256": "24c82ca0d881439960eecf494a10dfbc7cb2f8c35eb0d3a3d27d29b822696604",
+  "versionCode": 120,
+  "versionName": "0.23.9-beta",
+  "buildIdentitySha256": "0e241ca7ef312afc10d9733168d0e4235fefd821cc19e9cf6fd89dd6f47eb250",
+  "pass": true,
+  "workflow": "PortraitGroupsOnly",
+  "totalChecks": 1895,
+  "totalScreenshots": 15,
+  "runs": [
+    {
+      "mode": "phone",
+      "runId": "20261030-105637-phone-1cc44dc3",
+      "pass": true,
+      "checks": 615,
+      "screenshots": 5,
+      "probeSha256": "47bd74ca216c6f610f16ad5c84f1a05dffd25e6d067f10ae9a6bf51eb3e6f305",
+      "report": "docs/validation/portrait-tools/24c82ca0/20261030-105637-phone-1cc44dc3/20261030-105637-phone-1cc44dc3/report.json",
+      "reportSha256": "c535b310752ee882109927e0b44fba19c1aa77944a75d99a824f1adae4453e86",
+      "provenance": "docs/validation/portrait-tools/24c82ca0/20261030-105637-phone-1cc44dc3/provenance.json",
+      "provenanceSha256": "ee726642169c376c62ceaabdd248212906fd3069f253805dd7119df80a5201a0",
+      "cleanup": "docs/validation/portrait-tools/24c82ca0/20261030-105637-phone-1cc44dc3/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "font1.3",
+      "runId": "20261030-105912-font1.3-51644d30",
+      "pass": true,
+      "checks": 615,
+      "screenshots": 5,
+      "probeSha256": "32b28b1ced4663f268e7916deb4d0bf8d26321e0ab0424b066e112949e3a09ce",
+      "report": "docs/validation/portrait-tools/24c82ca0/20261030-105912-font1.3-51644d30/20261030-105912-font1.3-51644d30/report.json",
+      "reportSha256": "d329c1760f0341229cca6427f16e742726d1ebb7dd0537de7de3ceb26331574b",
+      "provenance": "docs/validation/portrait-tools/24c82ca0/20261030-105912-font1.3-51644d30/provenance.json",
+      "provenanceSha256": "842cd355e47fd0f629c34861179c3be7c6a84d545797af290e29006a3ec041ad",
+      "cleanup": "docs/validation/portrait-tools/24c82ca0/20261030-105912-font1.3-51644d30/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261030-110016-landscape-46cfccad",
+      "pass": true,
+      "checks": 665,
+      "screenshots": 5,
+      "probeSha256": "32b28b1ced4663f268e7916deb4d0bf8d26321e0ab0424b066e112949e3a09ce",
+      "report": "docs/validation/portrait-tools/24c82ca0/20261030-110016-landscape-46cfccad/20261030-110016-landscape-46cfccad/report.json",
+      "reportSha256": "20b7e926b150e85cccde6c0241110753569ae6be4ea442e2ccd32843be4264eb",
+      "provenance": "docs/validation/portrait-tools/24c82ca0/20261030-110016-landscape-46cfccad/provenance.json",
+      "provenanceSha256": "d3f1b2e0c04ed30ff9347e082b23b76918bf7a651b6800065c07e545198532c4",
+      "cleanup": "docs/validation/portrait-tools/24c82ca0/20261030-110016-landscape-46cfccad/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    }
+  ],
+  "historicalAttempts": [
+    {
+      "mode": "font1.3",
+      "runId": "20261030-105736-font1.3-2822926c",
+      "pass": false,
+      "checks": 536,
+      "screenshots": 6,
+      "probeSha256": "47bd74ca216c6f610f16ad5c84f1a05dffd25e6d067f10ae9a6bf51eb3e6f305",
+      "report": "docs/validation/portrait-tools/24c82ca0/20261030-105736-font1.3-2822926c/20261030-105736-font1.3-2822926c/report.json",
+      "reportSha256": "98bb51c18f79ce6797817d6a6061049e336ac4bb2de06a9e401a75074312fb3a",
+      "provenance": "docs/validation/portrait-tools/24c82ca0/20261030-105736-font1.3-2822926c/provenance.json",
+      "provenanceSha256": "76e1c0e773534e439f5d2c7804baad70d8348940798c99e85e8e076441464ca8",
+      "cleanup": "docs/validation/portrait-tools/24c82ca0/20261030-105736-font1.3-2822926c/cleanup.json",
+      "cleanupSha256": "64f7e8f1c2379b17586e7fbe43e576c9db6904e778110a6ef1ac0aaf1ed8efa7",
+      "stage": "groups-advanced-person-colour-reopen",
+      "failure": "java.lang.AssertionError: global-more-native-menu-visible-逐人肤色调节（高级）",
+      "diagnosis": "The failure screenshot shows Android Viewing full screen / Got it first-use coaching overlay above the application native popup. The popup itself was visible beneath the system overlay; the accessibility locator could not reach its item. Application package and UI were unchanged for retry.",
+      "testHarnessCorrection": "During the owned-emulator run only, set the already-backed-up immersive_mode_confirmations setting to confirmed, then restore its exact prior value in finally. Rebuilt test probe only; no production change or relaxed application assertion.",
+      "successfulRetry": "20261030-105912-font1.3-51644d30"
+    }
+  ],
+  "scope": "Focused native compact secondary portrait tabs and comparison to the actual first-level editor tabs: 72dp zero-weight centred cells, identical typography/padding/colours/scaled row height/ripple/18x2 underline inset5, offscreen normal-background verification of no filled blocks. Retains automatic full-image skin without selected faces, immediate inference/face-detection race, actual face controls, independent model/history and tool memory, custom/eyedropper cancellation, advanced per-person reopening, fixed group strip, live rotation and apply/cancel. Exact installed production dialog/filter and owned public-domain NASA images. No fresh broad segmentation, physical-phone latency or export pipeline claim.",
+  "cleanup": {
+    "serial": "emulator-5588",
+    "ownedRunRemoteEvidenceDirectoriesRemoved": 4,
+    "runSpecificTransferredFixturesRemoved": 4,
+    "instrumentationPackageRemoved": true,
+    "temporaryPortraitFixturesIncludingPrimaryEditorJpegsAndDraftsRemoved": true,
+    "personalSwatchKeyExactlyRestored": true,
+    "fontScale": "1.0",
+    "airplaneMode": "0",
+    "wifiOn": "1",
+    "mobileData": "1",
+    "immersiveConfirmation": "null",
+    "mainAppStopped": true,
+    "deviceReturnedToRoot": true,
+    "ownedEmulatorClosurePendingRoot": true
+  }
+}

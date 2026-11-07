@@ -1,0 +1,1207 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "f0879a895e5ea9127bd05e554aafce4a1e6c475214dc96cf43c67a52425d7c4c",
+  "versionCode": 112,
+  "versionName": "0.23.1-beta",
+  "mode": "phone",
+  "fontScale": 1,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-0",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-1",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "feather-choice-revealed",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "feather-choice-revealed-after-new-mask",
+      "pass": true
+    },
+    {
+      "name": "feather-selection-kept-after-new-mask",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "slider-refresh-keeps-user-rail-position",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-00-local-neutral-layout",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-00-local-neutral-layout",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-staged-not-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-local-radial",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-local-radial",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "local-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "workspace-disposed",
+      "pass": true
+    },
+    {
+      "name": "workspace-no-rendered-bitmap",
+      "pass": true
+    },
+    {
+      "name": "workspace-queue-closed",
+      "pass": true
+    },
+    {
+      "name": "workspace-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "workspace-owned-frame-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cancel-keeps-editor",
+      "pass": true
+    },
+    {
+      "name": "cancel-keeps-disk",
+      "pass": true
+    },
+    {
+      "name": "cancel-no-main-history",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-1",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-1",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "three-real-ui-mask-types",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": true
+    },
+    {
+      "name": "pinch-preserves-mask-count",
+      "pass": true
+    },
+    {
+      "name": "native-pinch-zooms",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "pinch-does-not-add-mask",
+      "pass": true
+    },
+    {
+      "name": "screenshot-02-local-gradient",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-02-local-gradient",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "local-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "clone-source-alone-not-patch",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "clone-target-adds-patch",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "temporary-undo-removes-clone",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "temporary-redo-restores-exact-settings",
+      "pass": true
+    },
+    {
+      "name": "screenshot-03-clone-repair",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-03-clone-repair",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "local-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "local-open-workspace-reflows-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "local-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "local-open-workspace-reflows-landscape",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "screenshot-local-rotated-open",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-local-rotated-open",
+      "pass": true
+    },
+    {
+      "name": "local-open-workspace-reflows-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-stage-has-space",
+      "pass": true
+    },
+    {
+      "name": "local-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "local-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "local-four-primary-tools",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-0",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-1",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-2",
+      "pass": true
+    },
+    {
+      "name": "tool-target-48dp-3",
+      "pass": true
+    },
+    {
+      "name": "local-active-tool-revealed",
+      "pass": true
+    },
+    {
+      "name": "local-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "local-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "local-rotation-keeps-staged-state",
+      "pass": true
+    },
+    {
+      "name": "workspace-disposed",
+      "pass": true
+    },
+    {
+      "name": "workspace-no-rendered-bitmap",
+      "pass": true
+    },
+    {
+      "name": "workspace-queue-closed",
+      "pass": true
+    },
+    {
+      "name": "workspace-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "workspace-owned-frame-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "apply-commits-all-local-settings",
+      "pass": true
+    },
+    {
+      "name": "apply-one-main-history-step",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-undo-removes-local-settings",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-redo-restores-local-settings",
+      "pass": true
+    },
+    {
+      "name": "parameter-exists-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "parameter-native-input-LUMA_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parameter-exists-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "parameter-native-input-COLOR_DENOISE",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parameter-exists-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "parameter-native-input-GRAIN",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parameter-exists-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "parameter-native-input-VIGNETTE",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "global-controls-keep-local-edits",
+      "pass": true
+    },
+    {
+      "name": "screenshot-04-editor-detail-controls",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-04-editor-detail-controls",
+      "pass": true
+    },
+    {
+      "name": "composition-opened",
+      "pass": true
+    },
+    {
+      "name": "system-fullscreen-guide-real-confirmation",
+      "pass": true
+    },
+    {
+      "name": "horizontal-perspective-native-control",
+      "pass": true
+    },
+    {
+      "name": "vertical-perspective-native-control",
+      "pass": true
+    },
+    {
+      "name": "perspective-tentative",
+      "pass": true
+    },
+    {
+      "name": "screenshot-05-perspective",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-05-perspective",
+      "pass": true
+    },
+    {
+      "name": "dialog-has-real-size",
+      "pass": true
+    },
+    {
+      "name": "primary-action-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "perspective-applied",
+      "pass": true
+    },
+    {
+      "name": "perspective-keeps-local-edits",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "draft-has-local-settings",
+      "pass": true
+    },
+    {
+      "name": "draft-new-format",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-0",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-0",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "simulated-owner-mismatch-rejects-commit",
+      "pass": true
+    },
+    {
+      "name": "owner-scope-dialog-dismissed",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "workspace-disposed",
+      "pass": true
+    },
+    {
+      "name": "workspace-no-rendered-bitmap",
+      "pass": true
+    },
+    {
+      "name": "workspace-queue-closed",
+      "pass": true
+    },
+    {
+      "name": "workspace-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "workspace-owned-frame-recycled",
+      "pass": true
+    },
+    {
+      "name": "close-does-not-commit",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "different-photo-starts-without-local-edits",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "return-restores-local-draft",
+      "pass": true
+    },
+    {
+      "name": "return-restores-perspective",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "local-parameter-choice-0",
+      "pass": true
+    },
+    {
+      "name": "local-selected-slider-visible-0",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-1",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-exif-six-fixture",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-size",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-1",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "local-effect-not-misclassified-unchanged",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-full-one-to-one",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-sample-one-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-06-real-local-detail",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-06-real-local-detail",
+      "pass": true
+    },
+    {
+      "name": "detail-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "detail-view-closed-no-frame",
+      "pass": true
+    },
+    {
+      "name": "detail-temporary-surface-released",
+      "pass": true
+    },
+    {
+      "name": "original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "local-layout-observation",
+      "mode": "phone",
+      "density": 2.625,
+      "bodyOrientation": "vertical",
+      "bodyWidthPixels": 1080,
+      "bodyHeightPixels": 2082,
+      "safeBodyWidthDp": 411.4285583496094,
+      "safeBodyHeightDp": 793.1428833007812,
+      "stageWidthDp": 411.4285583496094,
+      "stageHeightDp": 609.1428833007812,
+      "canvasWidthDp": 411.4285583496094,
+      "canvasHeightDp": 609.1428833007812,
+      "dockWidthDp": 411.4285583496094,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "native-pinch",
+      "minimumSpanPx": 446,
+      "spanSlopPx": 42,
+      "startSpanPx": 530,
+      "endSpanPx": 848,
+      "zoomBefore": 1,
+      "zoomAfter": 1.4545451402664185,
+      "moves": 12
+    },
+    {
+      "case": "local-layout-observation",
+      "mode": "phone",
+      "density": 2.625,
+      "bodyOrientation": "vertical",
+      "bodyWidthPixels": 1080,
+      "bodyHeightPixels": 2082,
+      "safeBodyWidthDp": 411.4285583496094,
+      "safeBodyHeightDp": 793.1428833007812,
+      "stageWidthDp": 411.4285583496094,
+      "stageHeightDp": 609.1428833007812,
+      "canvasWidthDp": 411.4285583496094,
+      "canvasHeightDp": 609.1428833007812,
+      "dockWidthDp": 411.4285583496094,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "local-layout-observation",
+      "mode": "phone",
+      "density": 2.625,
+      "bodyOrientation": "vertical",
+      "bodyWidthPixels": 1080,
+      "bodyHeightPixels": 2082,
+      "safeBodyWidthDp": 411.4285583496094,
+      "safeBodyHeightDp": 793.1428833007812,
+      "stageWidthDp": 411.4285583496094,
+      "stageHeightDp": 609.1428833007812,
+      "canvasWidthDp": 411.4285583496094,
+      "canvasHeightDp": 609.1428833007812,
+      "dockWidthDp": 411.4285583496094,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "local-layout-observation",
+      "mode": "phone",
+      "density": 2.625,
+      "bodyOrientation": "vertical",
+      "bodyWidthPixels": 1080,
+      "bodyHeightPixels": 2082,
+      "safeBodyWidthDp": 411.4285583496094,
+      "safeBodyHeightDp": 793.1428833007812,
+      "stageWidthDp": 411.4285583496094,
+      "stageHeightDp": 609.1428833007812,
+      "canvasWidthDp": 411.4285583496094,
+      "canvasHeightDp": 609.1428833007812,
+      "dockWidthDp": 411.4285583496094,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "local-layout-observation",
+      "mode": "phone",
+      "density": 2.625,
+      "bodyOrientation": "horizontal",
+      "bodyWidthPixels": 2282,
+      "bodyHeightPixels": 743,
+      "safeBodyWidthDp": 869.3333129882812,
+      "safeBodyHeightDp": 283.047607421875,
+      "stageWidthDp": 569.1428833007812,
+      "stageHeightDp": 283.047607421875,
+      "canvasWidthDp": 569.1428833007812,
+      "canvasHeightDp": 283.047607421875,
+      "dockWidthDp": 300.19049072265625,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "local-layout-observation",
+      "mode": "phone",
+      "density": 2.625,
+      "bodyOrientation": "vertical",
+      "bodyWidthPixels": 1080,
+      "bodyHeightPixels": 2082,
+      "safeBodyWidthDp": 411.4285583496094,
+      "safeBodyHeightDp": 793.1428833007812,
+      "stageWidthDp": 411.4285583496094,
+      "stageHeightDp": 609.1428833007812,
+      "canvasWidthDp": 411.4285583496094,
+      "canvasHeightDp": 609.1428833007812,
+      "dockWidthDp": 411.4285583496094,
+      "dockHeightDp": 184
+    },
+    {
+      "case": "system-fullscreen-guide",
+      "package": "com.android.systemui",
+      "action": "Got it accessibility click"
+    },
+    {
+      "case": "full-reference-vs-real-detail-0",
+      "pixels": 614400,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "full-reference-vs-real-detail-1",
+      "pixels": 614400,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "independent-oriented-vs-raw-exif-six",
+      "pixels": 614400,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "actual-detail-tiles-vs-full-reference",
+      "samples": 2262,
+      "pixelErrors": 0
+    }
+  ],
+  "screenshots": 8,
+  "fixturesRemoved": true,
+  "failure": null,
+  "scope": "Actual installed MainActivity\/AlbumPanel\/editor, private generated JPEGs, real native local\/clone gestures, pinch rollback, apply\/cancel\/history\/draft\/global detail controls\/perspective, private full reference\/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+}

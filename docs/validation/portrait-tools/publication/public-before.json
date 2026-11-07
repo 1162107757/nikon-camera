@@ -1,0 +1,35 @@
+[
+  {
+    "channel": "beta",
+    "status": 200,
+    "schemaVersion": 1,
+    "release": {
+      "id": "fdb53c9f-f523-4b0c-a67e-e3e85b68e37d",
+      "packageName": "cc.huevia",
+      "versionName": "0.22.1-beta",
+      "versionCode": 110,
+      "minSdk": 26,
+      "byteLength": 9478052,
+      "sha256": "5f42f3a9733e86bc472ce56cae0e669609828d1a2027e050db39934e27ae0fe8",
+      "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+      "channel": "beta",
+      "notes": "重新设计构图工具栏：裁剪、旋转、拉直、透视四个紧凑入口，缩小重置按钮，增加照片显示空间。\n新增画笔、径向与渐变蒙版、取样修复、明度与彩色降噪、颗粒及暗角。\n新增真实 JPEG 成品预览、完整 RAW 显影与 PNG 保存，并可生成 JPEG 副本继续编辑。\n优化大安装包更新下载。本次旧版请从下载页覆盖安装，无需卸载；本版起支持后续较大的更新包。",
+      "publishedAt": "2026-10-27T23:55:18.333969+08:00",
+      "mandatory": true,
+      "revision": 3,
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/fdb53c9f-f523-4b0c-a67e-e3e85b68e37d/file"
+    },
+    "updateAvailable": false,
+    "updateRequired": false,
+    "reason": "current"
+  },
+  {
+    "channel": "stable",
+    "status": 200,
+    "schemaVersion": 1,
+    "release": null,
+    "updateAvailable": false,
+    "updateRequired": false,
+    "reason": "no_release"
+  }
+]

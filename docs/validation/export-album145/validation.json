@@ -1,0 +1,61 @@
+{
+  "versionCode": 145,
+  "versionName": "0.28.8-beta",
+  "apk": "dist/huevia-0.28.8-beta-debug.apk",
+  "apkSha256": "aa21eb3c9384500c68e1558340ea30a2448113ce2a18ae1cdae13b95b50e347a",
+  "apkBytes": 33567500,
+  "scope": "Fixed phone-album export and default new copy; legacy destination preference ignored in edited export; optional reuse retained",
+  "native": {
+    "device": "owned read-only Pixel_9 emulator API37.2; other sizes are viewport emulations",
+    "modes": [
+      {
+        "mode": "phone",
+        "assertionExecutions": 52
+      },
+      {
+        "mode": "font",
+        "assertionExecutions": 45
+      },
+      {
+        "mode": "narrow",
+        "assertionExecutions": 45
+      },
+      {
+        "mode": "dark",
+        "assertionExecutions": 45
+      },
+      {
+        "mode": "tablet",
+        "assertionExecutions": 45
+      },
+      {
+        "mode": "compact",
+        "assertionExecutions": 45
+      }
+    ],
+    "assertionExecutions": 277,
+    "independentScenarios": false,
+    "actualAdvancedExports": 2,
+    "outcome": "Same source exported twice through advanced default. Two distinct published, non-pending MediaStore JPEG rows; each2400x1600; source bytes unchanged.",
+    "gradeEncodesRerun": false
+  },
+  "review": {
+    "disposition": "ship",
+    "scope": "fresh full review of bounded145 export-flow refinement",
+    "reviewer": "/root/impeccable_finish_reviewer_145",
+    "requiredCaptures": 8,
+    "report": "../../../.impeccable/review/export-album145/review.md",
+    "materialFixes": []
+  },
+  "sourceHashes": {
+    "app/build.gradle": "c531f105512c976d73abdf1046f6e6eb64b64c1409ceb19c3104c263d65578ad",
+    "app/src/main/java/cc/huevia/ui/PhotoExportDialog.java": "3932742af73b6ad268e31922a76c459d4ec44cc25e284941c010e770831143a8",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "d54d370b7460baa0b90b0c3d804223574e9bb478e3dda6ed3d2a46983d758171",
+    "app/src/main/java/cc/huevia/album/PhotoExportQuality.java": "37b711a0a1acc74d5bc6ef7e125848942950d8ae71d9236fdea1f1a40f44d55e",
+    "tests/sync-polish-device-probe/src/cc/huevia/syncpolishqa/BatchQualityProbe.java": "a5cd27fb3c7b6ad54e0ab83e48b0364ab02fa01ed299aa4271c2a471f880f0bd",
+    "tests/run-batch-quality-device.ps1": "4e5808d4fe3aaca65e9f2c256e401f690155f53a7bc729863dead3a9450c7118"
+  },
+  "published": false,
+  "gitCommitOrPush": false,
+  "emulatorCleanup": "Owned emulator-5588 restored size/density/font and closed after verification"
+}

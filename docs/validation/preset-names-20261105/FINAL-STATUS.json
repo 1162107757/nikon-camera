@@ -1,0 +1,28 @@
+{
+  "status": "applied-and-publicly-verified",
+  "environment": "nikon-d8girdjsr252fd90e",
+  "renamed": 390,
+  "snapshotSha256": "5db484b451834761668820dd2a3a291105f0d2705e96892450e2d868ced7288d",
+  "mappingSha256": "72d25480690a1fc366a4769b62eba8b8996937be1883bbd8bd359dcb7348a74b",
+  "sourceFormats": {
+    "NP3": 236,
+    "NCP": 154
+  },
+  "inputSha256": {
+    "online-library/data/preset-names.zh-CN.tsv": "72d25480690a1fc366a4769b62eba8b8996937be1883bbd8bd359dcb7348a74b",
+    "online-library/scripts/prepare-preset-name-files.mjs": "891bc6ee513151be3b46afa7aa766276d15879ea29619470b9e098161f2e3fc9",
+    "online-library/scripts/rename-preset-names.mjs": "18b8431fc5853649fdd8f825b046fb7b5c12389469556b45542371856d9c1884"
+  },
+  "appCodeChanged": false,
+  "appBuilt": false,
+  "apkUploaded": false,
+  "existingLocalNamesMigrated": false,
+  "restorePlan": "online-library/.local/preset-names-20261105/rollback-names.sql",
+  "evidenceSha256": {
+    "names.csv": "f5599a888e99bed14f4e449cc63225504a5c7fb9ca2e8bfde9b6e0c15c8904bd",
+    "name-verification.json": "8284e9d341df519575fd4745dbbd80b6a5aaf16faabb0b6be291181943386c89",
+    "dry-run.json": "45adcbd5683020e0c7b243638b6f6d7652322b0b77fbd3b8525f225ac52e64d9",
+    "admin-chinese-names.png": "510349b3f382442c829aeae11773eb4f199e2a94bf08eddeb7744f86185077f4",
+    "README.md": "1715fd83de877b0c4574bc3abaec237f413ef117c176560e6eaad55e57783a1f"
+  }
+}

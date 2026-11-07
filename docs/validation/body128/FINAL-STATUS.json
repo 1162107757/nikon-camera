@@ -1,0 +1,85 @@
+{
+  "status": "complete-local-package-not-published",
+  "versionCode": 128,
+  "versionName": "0.25.0-beta",
+  "apk": "dist/huevia-0.25.0-beta-debug.apk",
+  "sha256": "4ccb53a991b00dfc9875362b243ec9e5b2cd8d54f384b08b2e41abefb8db6d82",
+  "bytes": 33497868,
+  "productionInputsVerified": 302,
+  "hostTestsPassed": 10,
+  "nativeChecks": 183,
+  "nativeScreenshots": 14,
+  "sourceFixtures": "synthetic only",
+  "physicalDeviceTested": false,
+  "userPhotoVisualAcceptance": false,
+  "emulatorClosed": true,
+  "uploaded": false,
+  "published": false,
+  "commitCreated": false,
+  "refs": [
+    {
+      "path": "docs/validation/body128/IDENTITY.json",
+      "sha256": "6317f3ad5d76781eb8cbc52b648692b116377449e3f735197ea5996af6697f0c"
+    },
+    {
+      "path": "docs/validation/body128/NATIVE-SUMMARY.json",
+      "sha256": "c9581fe3bbdfcdb47e6a4d8620075ecc310cdb9dd51a8c5eb00366a902de1303"
+    },
+    {
+      "path": "docs/validation/body128/NATIVE-CLEANUP.json",
+      "sha256": "75b118a42b908100f22b75d941068d7a244efc37031853b5b8fe5e77fb54310a"
+    },
+    {
+      "path": "docs/validation/body128/DEVICE-CLEANUP.json",
+      "sha256": "8f969086ac7a1283ef56261ba37b7791c42aca7896c6a6d57a7a0bc77ade6489"
+    },
+    {
+      "path": "docs/validation/body128/PACKAGE-AUDIT.json",
+      "sha256": "6f264bf3a63d9e7bb078b8d5193b4184cf19babbc1b210d60dc76e2545e4b8ba"
+    },
+    {
+      "path": "docs/validation/body128/CHANGED-INPUTS.json",
+      "sha256": "03cbb0e1daf8d5cbb9139ff70feca4f5a5ebc6f8121b1e5799b58b1bb9bbcabe"
+    },
+    {
+      "path": "docs/validation/body128/host/result.json",
+      "sha256": "38e39e1f49cac534aa7dcc18150711d93acdb55f05429528c79bff27e340e529"
+    },
+    {
+      "path": "docs/validation/body128/README.md",
+      "sha256": "d134e785b6306266848109f512c112c4afec91fa1dfead284a803213ec91c15c"
+    },
+    {
+      "path": "tests/body-shape-device-probe/src/cc/huevia/bodyqa/BodyProbe.java",
+      "sha256": "b8491e674f4a6b93b44326c320750272668d7c259f6092699b8e05b78cf688c2"
+    },
+    {
+      "path": "tests/body-shape-device-probe/build.ps1",
+      "sha256": "2b2f4f6f459ff24abef5a46081265f263e89674d7b30b0cb0f6720ead7e7c01a"
+    },
+    {
+      "path": "tests/body-shape-device-probe/run.ps1",
+      "sha256": "7ec226e4bde7b858feecdde079d31c4309935afe739fc5131ca20e2339cdf94a"
+    },
+    {
+      "path": "tests/body-shape-device-probe/AndroidManifest.xml",
+      "sha256": "79edd9d217e27d328366d01098a81876a2f7de78195c0a8f829f401bbec22d60"
+    },
+    {
+      "path": "docs/photo-body-shaping.md",
+      "sha256": "9fab8ba16078f6ae442db8a592fca4a98bf5af97e3d15db3deb3a39963888ac8"
+    },
+    {
+      "path": "dist/huevia-0.25.0-beta-RELEASE-NOTES.txt",
+      "sha256": "dd2a75631d030caf5823d713c2870add9a7c9279969fc2017ea338a1f524bbb3"
+    },
+    {
+      "path": "tests/cleanup-host/legacy-vectors.txt",
+      "sha256": "8c2b8d083a28c7983824e1fdc289157558dead18690996a5525c9828ad33628d"
+    },
+    {
+      "path": "tests/palette-host/legacy-vectors.txt",
+      "sha256": "fe092426c7ffaaeaa9951a30a856e55d91d73621582bf9d72dae926e8b33c3f5"
+    }
+  ]
+}

@@ -1,0 +1,451 @@
+{
+  "schemaVersion": 1,
+  "checkedAtUtc": "2026-10-29T07:44:45.454398+00:00",
+  "status": "passed",
+  "deliveryScope": "Local candidate validation",
+  "scope": "Independent read-only APK packaging review and archive of source-bound synthetic JVM regressions. No device or user image access.",
+  "apk": {
+    "path": "dist/huevia-0.23.7-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+    "limitBytes": 33554432,
+    "remainingBytes": 150772
+  },
+  "manifest": {
+    "applicationId": "cc.huevia",
+    "versionCode": 118,
+    "versionName": "0.23.7-beta",
+    "minSdk": 26,
+    "targetSdk": 35,
+    "extractNativeLibs": true
+  },
+  "signer": {
+    "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "matches117": true
+  },
+  "toolVerification": {
+    "aapt2BadgingExitCode": 0,
+    "aapt2ManifestXmlExitCode": 0,
+    "apksignerVerifyExitCode": 0,
+    "apkSignatureV2": true,
+    "apkSignatureV3": true,
+    "zipalignArguments": [
+      "-c",
+      "-P",
+      "16",
+      "4"
+    ],
+    "zipalignExitCode": 0
+  },
+  "duplicateZipNames": false,
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "nativeEntrySetMatches117": true,
+  "modelEntrySetMatches117": true,
+  "reference117Audit": {
+    "path": "docs/validation/skin-tone117/PACKAGING-AUDIT.json",
+    "sha256": "0101094f03eab57b91e2520c4f5b2d28408eaf219013df5feffaf1ba4a04ff4b",
+    "apkSha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2"
+  },
+  "rawEntriesCompared": 22,
+  "allRawEntriesMatch117": true,
+  "rawEntries": [
+    {
+      "path": "assets/portrait/face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "zipBytes": 2284263,
+      "zipMethod": 8,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "reference117Sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "matches117": true
+    },
+    {
+      "path": "assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "bytes": 13881786,
+      "zipBytes": 13881786,
+      "zipMethod": 0,
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "reference117Sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "matches117": true
+    },
+    {
+      "path": "assets/third-party/litert/BUILD-IDENTITY.json",
+      "bytes": 7520,
+      "zipBytes": 2911,
+      "zipMethod": 8,
+      "sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "reference117Sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "matches117": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-LiteRT.txt",
+      "bytes": 13575,
+      "zipBytes": 4871,
+      "zipMethod": 8,
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "reference117Sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "matches117": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "bytes": 12331,
+      "zipBytes": 4310,
+      "zipMethod": 8,
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "reference117Sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "matches117": true
+    },
+    {
+      "path": "assets/third-party/litert/README.md",
+      "bytes": 5407,
+      "zipBytes": 2553,
+      "zipMethod": 8,
+      "sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "reference117Sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "matches117": true
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "zipBytes": 393490,
+      "zipMethod": 8,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "reference117Sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "matches117": true
+    },
+    {
+      "path": "lib/arm64-v8a/libhuevia_raw.so",
+      "bytes": 49960,
+      "zipBytes": 22922,
+      "zipMethod": 8,
+      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "reference117Sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "matches117": true
+    },
+    {
+      "path": "lib/arm64-v8a/libraw.so",
+      "bytes": 1207392,
+      "zipBytes": 440321,
+      "zipMethod": 8,
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "reference117Sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "matches117": true
+    },
+    {
+      "path": "lib/arm64-v8a/libtensorflowlite_jni.so",
+      "bytes": 4320528,
+      "zipBytes": 1737501,
+      "zipMethod": 8,
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "reference117Sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "matches117": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libc++_shared.so",
+      "bytes": 850380,
+      "zipBytes": 344387,
+      "zipMethod": 8,
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "reference117Sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "matches117": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libhuevia_raw.so",
+      "bytes": 19904,
+      "zipBytes": 9977,
+      "zipMethod": 8,
+      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "reference117Sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "matches117": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libraw.so",
+      "bytes": 1146600,
+      "zipBytes": 430970,
+      "zipMethod": 8,
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "reference117Sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "matches117": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libtensorflowlite_jni.so",
+      "bytes": 2572124,
+      "zipBytes": 1324637,
+      "zipMethod": 8,
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "reference117Sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86/libc++_shared.so",
+      "bytes": 1143240,
+      "zipBytes": 414850,
+      "zipMethod": 8,
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "reference117Sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86/libhuevia_raw.so",
+      "bytes": 46564,
+      "zipBytes": 22177,
+      "zipMethod": 8,
+      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "reference117Sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86/libraw.so",
+      "bytes": 1265240,
+      "zipBytes": 474673,
+      "zipMethod": 8,
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "reference117Sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86/libtensorflowlite_jni.so",
+      "bytes": 6323728,
+      "zipBytes": 2390211,
+      "zipMethod": 8,
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "reference117Sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "zipBytes": 409160,
+      "zipMethod": 8,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "reference117Sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86_64/libhuevia_raw.so",
+      "bytes": 50184,
+      "zipBytes": 23269,
+      "zipMethod": 8,
+      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "reference117Sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86_64/libraw.so",
+      "bytes": 1284728,
+      "zipBytes": 453736,
+      "zipMethod": 8,
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "reference117Sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "matches117": true
+    },
+    {
+      "path": "lib/x86_64/libtensorflowlite_jni.so",
+      "bytes": 6053584,
+      "zipBytes": 2355831,
+      "zipMethod": 8,
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "reference117Sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "matches117": true
+    }
+  ],
+  "requiredClassDefinitions": [
+    {
+      "descriptor": "Lcc/huevia/ncp/PhotoPortrait;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PhotoPortrait$Tone;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PhotoPortrait$BodySkinMask;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/SkinTone;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PortraitPreviewFilter$GlobalTone;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PortraitPreviewFilter$GlobalMask;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PortraitPreviewFilter$GlobalFeature;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/album/PhotoExposedSkin;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ui/SkinTonePicker;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ui/SkinToneSwatches;",
+      "definedIn": "classes.dex",
+      "present": true
+    }
+  ],
+  "declaredGlobalFields": [
+    {
+      "name": "globalSkinMask",
+      "owner": "Lcc/huevia/ncp/PhotoPortrait;",
+      "type": "Lcc/huevia/ncp/PhotoPortrait$BodySkinMask;",
+      "kind": "instance",
+      "accessFlags": 17,
+      "public": true,
+      "final": true,
+      "definedIn": "classes.dex"
+    },
+    {
+      "name": "globalTone",
+      "owner": "Lcc/huevia/ncp/PhotoPortrait;",
+      "type": "Lcc/huevia/ncp/PhotoPortrait$Tone;",
+      "kind": "instance",
+      "accessFlags": 17,
+      "public": true,
+      "final": true,
+      "definedIn": "classes.dex"
+    }
+  ],
+  "declaredGlobalMethods": [
+    {
+      "name": "withFaces",
+      "signature": "(Ljava/util/List;)Lcc/huevia/ncp/PhotoPortrait;",
+      "public": true,
+      "implemented": true,
+      "definedIn": "classes.dex"
+    },
+    {
+      "name": "withGlobalSkinMask",
+      "signature": "(Lcc/huevia/ncp/PhotoPortrait$BodySkinMask;)Lcc/huevia/ncp/PhotoPortrait;",
+      "public": true,
+      "implemented": true,
+      "definedIn": "classes.dex"
+    },
+    {
+      "name": "withGlobalTone",
+      "signature": "(Lcc/huevia/ncp/PhotoPortrait$Tone;)Lcc/huevia/ncp/PhotoPortrait;",
+      "public": true,
+      "implemented": true,
+      "definedIn": "classes.dex"
+    }
+  ],
+  "exposedSkinDetectMethods": [
+    {
+      "name": "detect",
+      "signature": "(Landroid/content/Context;Landroid/graphics/Bitmap;Ljava/util/List;Ljava/util/function/BooleanSupplier;)Lcc/huevia/ncp/PhotoPortrait$BodySkinMask;",
+      "public": true,
+      "implemented": true,
+      "definedIn": "classes.dex"
+    }
+  ],
+  "dexes": [
+    {
+      "path": "classes.dex",
+      "bytes": 3002536,
+      "classDefinitions": 2752,
+      "sha256": "a7c738a1dc67ae3a061e8d0d7fd241a0a765e49bc74fed20a52804a33c0624de"
+    }
+  ],
+  "modelDecodedAgain": false,
+  "buildIdentity": {
+    "path": "docs/validation/skin-tone118/BUILD-IDENTITY.json",
+    "sha256": "440f7f84f75fdc557803467e978e679bfe4910b11183389a63cb9559455c341e",
+    "productionInputCount": 288,
+    "currentInputsMatchRecordedHashes": true,
+    "mismatchCount": 0
+  },
+  "host": {
+    "status": "passed",
+    "total": 1184,
+    "checks": {
+      "PortraitModelTest": 286,
+      "PortraitLandmarksTest": 62,
+      "PortraitSkinMaskTest": 82,
+      "PortraitLandmarkMaskTest": 114,
+      "PortraitSemanticMaskTest": 115,
+      "PortraitPipelineTest": 67,
+      "PortraitToneTest": 236,
+      "PortraitGlobalToneTest": 208,
+      "SkinBodyRegionsTest": 14
+    },
+    "inputCount": 39,
+    "currentInputsMatchRecordedHashes": true,
+    "rerunForPackagingOnly": false,
+    "maximumState": {
+      "portraitBytes": 636686,
+      "fullDraftBytes": 772557,
+      "maxRecipeBytes": 1048576,
+      "draftCapBytes": 2097152
+    }
+  },
+  "performance": {
+    "schemaVersion": 1,
+    "status": "measured",
+    "width": 6000,
+    "height": 4000,
+    "elapsedMs": 1349.1323,
+    "allocatedBytes": 318616,
+    "gcCollections": 0,
+    "checksum": 60234480000,
+    "faces": 0,
+    "scope": "Single warmed-up desktop JDK17 -Xmx128m / SerialGC 24MP full-coverage streaming pass, including bounded global reference compile. Not Android latency. No image materialization and no per-pixel object allocations.",
+    "runtime": "Desktop OpenJDK 17.0.19; -Xmx128m -XX:+UseSerialGC; one warmed-up synthetic streaming pass",
+    "source": {
+      "path": "docs/validation/skin-tone118/GlobalTonePerformanceProbe.java",
+      "sha256": "437271a2f49f33a68335e0905ab612fe3270c7a2c7b7fd5dc3decf812f721762"
+    },
+    "notAndroidLatency": true,
+    "userImagesUsed": false
+  },
+  "archives": [
+    {
+      "path": "docs/validation/skin-tone118/HOST-RESULT.json",
+      "bytes": 8857,
+      "sha256": "6eb55f74c377b7083a259fcf37c12acbfda793891b94eb45a52dede5b84cb462"
+    },
+    {
+      "path": "docs/validation/skin-tone118/HOST-OUTPUT.txt",
+      "bytes": 478,
+      "sha256": "47379a8ba378639969d430815b6fb558e9b0008c1939d47533783fa8301ba5c1"
+    },
+    {
+      "path": "docs/validation/skin-tone118/PERFORMANCE-RESULT.json",
+      "bytes": 786,
+      "sha256": "60008f3e7c07195761bd65928dc7e52ac4620946e368c6eeabb6af02eda8f125"
+    },
+    {
+      "path": "docs/validation/skin-tone118/GlobalTonePerformanceProbe.java",
+      "bytes": 1758,
+      "sha256": "437271a2f49f33a68335e0905ab612fe3270c7a2c7b7fd5dc3decf812f721762"
+    }
+  ],
+  "sanitization": {
+    "repositoryRelativePathsOnly": true,
+    "userImagePathsIncluded": false,
+    "userImagesUsed": false,
+    "privateTempPathsIncluded": false
+  },
+  "deviceAccessed": false,
+  "networkAccessed": false
+}

@@ -14,13 +14,31 @@ android
 
 让用户浏览预设与真实样片，从应用提供的统一在线预设库下载，或从手机文件中选择 NCP，再通过 USB 或受支持的 Wi-Fi 连接导入相机，不需要拔出存储卡。成功的主要表现是用户能理解所选预设、完成导入，并知道它保存到了相机哪个槽位。
 
-同时提供“同步”与本地“相册”流程：同步保留无线相机照片、边拍边传和已下载；相册汇集正式 App 内照片及用户授权或明确选择的手机 JPEG／PNG，复用单张编辑与批量处理。相机接收首次默认仅 App 内，编辑导出默认手机相册，由用户确认保存位置。
+同时提供“同步”与本地“相册”流程：同步保留无线相机照片、边拍边传和已下载；相册汇集应用相册照片及用户授权或明确选择的手机 JPEG／PNG，复用单张编辑与批量处理。相机接收首次默认仅应用相册；每次主动导出固定保存到手机相册并另存新副本。
 
 ## Positioning
 
 用户以尼康云创的预设获取与使用体验为参考，希望为尚未支持该功能的机型提供手机端预设管理和导入方式。当前实现提供 USB 和标准 PTP/IP 无线通道；没有接入尼康云创服务，也未建立通用机型支持。
 
 ## Operating Context
+
+- 2026-11-07：153／`0.29.2-beta` 按用户要求降低肤色卡选择反差，并检查滤镜、快速预览与边框模板；共享 1dp 柔和灰金框，肤色／大卡片用轻透底和中性白字，保留勾选、色值、选择语义与主操作黄色。六项生产输入改变，本地 APK SHA-256 `10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e`；七模式各 10 项共 70 次有界断言及 42 张原生图，完整[独立复核](.impeccable/review/selection-soft153/review.md)为 FIX，仅小字对比度；白字修正后当前精确包重跑 70 次／42 图，[评分 verdict](.impeccable/review/selection-soft153/verdict.md)为限定 ship，仅关闭卡片文字对比度修正及直接回归，不构成全表面通过。见[153 实施及验证](docs/selection-soft153.md)。未改布局／模型／渲染／草稿／导出，未将 152 的 723 次记为重跑；本地交付，无实体机／公开发布结论。
+
+- 2026-11-07（历史 152）：152／`0.29.1-beta` 本地交付普通打开照片的草稿续接、关闭旁三点菜单、同心重置及共享 Prisma 工具；人像／塑形历史行透明，塑形范围／当前项重置并入五个圆工具，并区分上方显示／视口与下方参数／重置的图标。最终包 SHA-256 `eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07`，305 项生产输入冻结（相对 151 改变 24 项）；七模式 708 次／98 图，独立强停重开 15 次／1 图，共 723 次含重复断言／99 图。实际 MediaStore JPEG 导入已验证，手动人脸／覆盖蒙版和预设仅 QA。见[152 实施及验证](docs/editor-continuity152.md)；完整[独立复核](.impeccable/review/editor-continuity152/final-review.md)为 fix，唯一图标歧义修正已落地，[评分 verdict](.impeccable/review/editor-continuity152/verdict.md)为限定 ship，仅关闭该图标歧义及直接回归，不构成全表面通过。未公开发布、未实体机验收，未新增端到端相册导出，既有公开发布状态不变。
+
+- 2026-11-07（历史 151）：151／`0.29.0-beta` 按用户确认的 Prisma 原型及间距反馈完成原生编辑页，追加修正撤销／重做圆弧、连续圆头箭头与镜像。当时本地候选 `2eda2c2c…` 通过手机／1.3 字号各 57 次检查，共 114 次含重复断言；[圆箭头专项 review](.impeccable/review/prisma-editor151-round/review.md) 为 ship、无修正项。相对 `5a39…` 仅 `AppIcon.java` 改变，其他 304 项 UI 输入一致；此前七配置 400 次与六组核心回归仍归属原候选。见[151 实施及完整包身份](docs/prisma-editor151.md)。151 当时仅本地交付，未公开发布，未新增实体手机／真实相机或完整 MediaStore 保存验收。
+
+- 2026-10-29 115／`0.23.4-beta`优化背景误检与近似重复候选，采用镜像与缩放位置／角度复核，保留多人独立调整；更新弹窗忙碌阶段只展示状态与进度，重试和安装时显示可操作按钮。已有照片需重新自动选脸，弹窗样式在安装 115 后生效。见[115 验证及发布记录](docs/validation/portrait-detection-update115/README.md)。
+
+- 2026-10-29 114／`0.23.3-beta`按用户后续反馈改为短暂蒙版提示：每次点选人脸时实际半透明选区闪两下后消失，重复点同一脸也重播；调节、缩放、对比立即收起，不常驻圆圈和编号。选择按钮和菜单标记同步，沿用九工具布局，见[114 验证及发布记录](docs/validation/portrait-face-selection-114/README.md)。113 保留为未发布的历史草稿。
+
+- 2026-10-28 112／`0.23.1-beta`本地候选按用户参考重排人像与局部工作区，照片优先；人像按进一步反馈移除三分类及二级参数标签，采用九个直达工具。见[112 本地包](dist/huevia-0.23.1-beta-debug.apk)与[验证记录](docs/validation/portrait-local-layout-112/README.md)。112 待发布，下方111保留原交付及发布历史。
+
+- 112 发布补记：2026-10-28 22:54 +08:00 已上架 [beta 下载页](https://huevia.cc/preset-library/download/?channel=beta)，发布 revision 3、mandatory=true；此前“待发布”为本地交付阶段记录。公开 APK 的 9,531,300 字节及 SHA-256 精确匹配冻结本地包，双域 10 项元数据核对通过，stable 通道保持，见[112 发布回执](docs/validation/portrait-local-layout-112/publication/PUBLICATION.json)。
+
+- 2026-10-28 111／`0.23.0-beta`本地测试包增加自然人像精修，入口为「调节 → 人像」或更多菜单「人像精修」。本轮未上架更新通道；见[111 本地安装包](dist/huevia-0.23.0-beta-debug.apk)与[操作说明](docs/portrait-processing.md)。
+
+- 111 发布补记：2026-10-28 21:13 +08:00 已上架 [beta 下载页](https://huevia.cc/preset-library/download/?channel=beta)，revision 3、mandatory=true；此前“未上架”为本地交付阶段记录。公开下载的 9,519,012 字节与同一最终 APK 的 SHA-256 一致，双域 10 项元数据核对通过，见[发布回执](docs/validation/portrait-tools/publication/PUBLICATION.json)。
 
 - 2026-10-25 103／`0.21.4-beta`按反馈将在线格式筛选底色收至 32dp、保留 48dp 点击范围，缩小左右留白及箭头。[103 本地包记录](docs/validation/online-format-pill-103/IMPLEMENTATION.md)，未上架更新通道。
 - 2026-10-25 102／`0.21.3-beta`本地版本增加在线预设格式筛选：全部格式/NCP/NP3，可与分类组合，接口先筛选再计算总数和分页；缓存明确来源，格式在返回/旋转后保留。015及必要服务已部署，102未上架，100线上强制策略与101本地制品保持。见[102记录](docs/validation/online-format-filter-102/IMPLEMENTATION.md)。
@@ -98,8 +116,12 @@ android
 
 ## Capabilities and Constraints
 
+- 112 人像直达提亮／冷暖／红润／柔肤／纹理／光照／眼下阴影／祛痘／选区，效果工具区132dp、大字号144dp，选区按需增加48dp。局部保留四工具，只展示当前一个参数，通常184／192dp；320×440dp主体中压缩上下留白后工具区176dp、照片264dp（60%），触控尺寸不减。可用宽大于高且至少480dp时使用侧栏，否则底部工具区受半高上限约束。当前选中项自动水平揭示且不抢用户横滚；两处应用按钮统一暖杏，品牌及处理模型沿用。
+
+- 111 支持肤色明亮／冷暖／红润、保留纹理的柔肤、融合式点按祛痘、面部光照／眼下阴影及自动面部皮肤蒙版。多人可独立调整，支持手动添加、补选／擦除；应用记为主编辑器的一次撤销，取消保留原草稿。自动选区使用本地 FaceDetector、双尺度亮度图稳定性核对和每脸肤色采样，范围是面部皮肤；侧脸、遮挡和小脸可能需要手动修正。详见[人像操作与边界](docs/portrait-processing.md)。
+
 - 当前 83 将相机接收与手机本地处理分为“同步”和“相册”，共享原有连接和处理控制器。授权拒绝、部分照片、撤销、原图不可读及存储失败均保留明确恢复入口；仅明确选中的 JPEG／PNG 导入正式私有存储，PNG 转白底须确认。手机来源记录是只读来源证据，不产生系统原图删除权。
-- 当前保存策略覆盖旧版“每次导出新副本”的默认行为：相机／直播首次仅 App 内，编辑首次手机相册；记忆明确选择并冻结任务目标，有效同版本复用，明确勾选“另存新副本”才生成按本次时间排序的额外副本。旧公有照片、原文件与草稿保留。
+- 当前照片导出策略（148）：每次主动导出均固定保存到手机相册并生成按本次时间排序的新副本，不提供复用或保存方式选项。单张、批量、已保存版本和当前编辑使用相同规则；相机接收／边拍边传的保存目标继续独立设置。同一次导出任务的失败重试保留冻结目标及已完成发布回执，避免重复保存；旧公有照片、原文件与草稿保留。
 - 0.9.4-beta（43）与后台 1.2.0 新增普通用户账号密码注册、登录、资料与退出。用户名 3–32 位 ASCII、英文字母开头、其余字母数字下划线，统一小写；密码 8–128 个字符且保留空格，无需短信或邮箱，注册自动登录。普通会话有效 7 天、每用户最多 10 条；离线缓存身份显示待联网核验，服务端失效 / 停用后要求重新登录。退出清除本机身份并请求撤销当前会话，远端失败明确提示。后台展示用户名及账号密码 / QQ 来源，管理员独立。后台已部署同一环境，003 迁移完成；63 Node、24 模块语法检查、28 真实 PG 回滚断言与 32 项生产账号密码流程检查通过，32 项包含 host 实际 Java HTTPS 9 项，该生产流程随机账号已删除。客户端 host 107 项通过，两项注销安全问题已修复关闭，APK 构建及 v2 / v3 签名通过。Pixel 9 / Android 17（API 37）已验证游客入口、真实临时账号注册 / 资料、强停恢复、离线待核验、错误密码与后台清空密码、再次登录、退出回游客且保留两个测试预设，浅深色均已检查。同证书隔离 Instrumentation 在不可调试产品包真实私有目录 / AndroidKeyStore 验证登录态 24 项与退出后 6 项通过，覆盖不可导出 AES-256-GCM、实际解密、无明文凭据及退出清理；这是模拟器 runtime 证据。未在真实手机安装或验证真机相机连接；QQ 尚未申请且 Android SDK 未接入。见 [交付记录](dist/nikon-usb-0.9.4-beta-VALIDATION.txt)、[账号说明](docs/account-login.md)与 [QQ 说明](docs/qq-login.md)。
 - 后台 1.1.0 已独立上线，函数状态 Active / Nodejs20.19 / HTTP；左侧“预设管理 / 用户管理”、右侧内容，窄屏使用顶部导航，支持普通用户搜索、筛选、分页、详情和启停确认。普通用户与管理员身份 / 会话独立，停用同事务撤销全部用户会话，重新启用不恢复旧 token；QQ 原始 access token 不保存，普通 Bearer 有效 7 天、每用户最多 10 会话。QQ 尚未申请、配置或启用，界面保持“待接入”，无真实 AppID、Android QQ SDK 或登录改动，腾讯响应仅属 mock 测试，后续见 [QQ 登录说明](docs/qq-login.md)。本轮 50 Node 测试、23 模块语法检查、24 项真实用户数据库回滚断言、线上用户 API 16 项和重跑的完整预设流程 76 项通过；JDK 17 生产 Java HTTPS 探针 11 项通过，未执行 Android 图片解码。001 / 002 迁移完成，合成数据与私有文件已清理，线上用户真实为空，未创建 QQ 用户或 App 会话。Web 独立复核 SHIP 限审阅界面，本地合成用户的搜索、停用及退出检查通过且错误日志为空，临时页面 / 服务停止、视口和主题恢复。Android 0.9.3-beta（42）APK 与已有交付记录不变，未新增手机安装或真实 QQ 授权验收。见 [后台说明](online-library/README.md)和 [Web 复核](docs/design-review/admin-management-2026-10-18.md)。
 - 0.9.3-beta（42）新增并上线自有在线预设管理后台，具备管理员登录、文件/效果图上传、草稿、版本与显式上下架。CloudBase PG 和私有存储保存管理数据及文件；公开目录仅导出发布快照，未发布文件仅管理员可读，曾发布文件在下架后继续供旧目录引用。Android 仅对从未配置过的安装初始化默认 HTTPS 地址，保留自定义、明确关闭及坏配置。`/preset-library` 经用户明确授权公开，真实公网基础 HTTP 12 项与完整上传发布下载流程 76 项检查通过；JDK 17 运行生产 Android Java 数据层的真实 HTTPS 探针 11 项通过。本轮另有 Android 库 176 检查、完整 APK 编译签名、后台本地 33 测试、21 模块语法检查、PG 24 回滚断言及私有存储验证。全部合成预设与文件已清理，未发布真实预设；未执行 Android 图片解码、手机安装或真实相机验收。见 [在线后台](online-library/README.md)及 [0.9.3 交付记录](dist/nikon-usb-0.9.3-beta-VALIDATION.txt)。
@@ -153,6 +175,10 @@ android
 - 照片下载至应用图片目录，可另存到用户所选位置。RAW、视频和压缩尺寸下载未纳入已实现功能。
 
 ## Evidence on Hand
+
+- 112 的[最终身份](docs/validation/portrait-local-layout-112/FINAL-IDENTITY.json)对应冻结的本地候选；[验证记录](docs/validation/portrait-local-layout-112/README.md)及[完成复核](docs/validation/portrait-local-layout-112/FINISH-REVIEW.md)记录普通字号／大字号／横屏、小屏及旋转等原生验证。范围为两处布局与既有交互的 Android 模拟器确认，不扩大为实体手机性能或112线上发布证明。
+
+- 111 的[最终身份](docs/validation/portrait-tools/FINAL-IDENTITY.json)绑定同一最终 APK 与生产输入；[本地验证与完成复核](docs/validation/portrait-tools/README.md)记录普通／实际 1.3 字号／横屏 220／220／228 次断言执行，共 668 次含配置重复执行和 24 张正式 UI 截图，同包细节加载另通过 187 次断言。复核 SHIP 仅限该 SHA 的人像编辑范围；验证使用本地 Android 模拟器实际编解码与控件，不认证实体手机／相机性能、广泛人群检测准确率、MediaStore 新发布或 RAW 解码。
 
 - 83 的当前依据为 [native-matrix](docs/validation/photo-local-album-83/native-matrix.json)、[189 输入稳定记录](docs/validation/photo-local-album-83/final-source-pins.json)、[最终聚焦 host 来源](docs/validation/photo-local-album-83/host-gallery-final-provenance.json)、[构建后源码快照](docs/validation/photo-local-album-83/source-snapshot.json)、[完成复核](.impeccable/review/local-album-83/FIX-VERDICT.md)及[83 发布回执](docs/validation/photo-local-album-83/publication.json)。300 项检查在四配置重复执行；旧候选、历史测试和授权不作为最终包或发布证明。
 - 0.7.0 完整 core **10,595**（controller **626**、项目 store **106**）、probe **12,089**、合成服务 **238**，共 **22,922 项**通过。最终 Android 17 / Pixel 9 模拟器以 10,000 旧照、首槽持续 `0x2013` 验证准备仅 1 次 StorageIDs＋2 次 Handles，ready 前零旧 metadata / 预览 / 原图；新事件、漏事件、HOME 关屏及强制深度 Doze `IDLE` 接收均通过。本轮状态是 OFF / Asleep / IDLE，keyguard showing=false，不写成安全锁屏验证。Studio_A 4 张、Studio_B 3 张，项目切换不抢页，三列网格、项目内查看及强停后离线恢复通过；7 份 MediaStore 原图按项目分目录、pending=0 且 SHA 匹配源。停止后不收新图，明确断开后服务及 CPU 锁释放；单次握手 / Open，零 CloseSession / 写入。见 [0.7.0 功能记录](docs/device-review/live-0.7.0-functional.log)、[基线](docs/device-review/live-0.7.0-baseline.log)、[Doze 状态](docs/device-review/live-0.7.0-doze.log)及[原图核对](docs/device-review/live-0.7.0-originals.log)。
@@ -225,3 +251,7 @@ android
 005 / 006 云端迁移和后台部署已完成，首评送审补丁已上线，旧表升级、迁移重复执行及 91 项服务测试通过。真实公网 QA 覆盖注册 201、验证码重放拒绝、私有上传与公开 404、幂等保存、重复内容拒绝、待审隔离、退回消息及已读；精确 QA 账号和稿件已清理，未公开测试投稿。最终 55 包为 3,257,885 字节，SHA-256 `81021bfc4d7468dd8181d899f9ae5f4a260fbf30b95ac0eefc2be18ffaf9cca6`，公网元数据及 APK 字节已核对，见 [发布摘要](docs/validation/community-release-0.10.1.json)。
 
 独立 DownloadManager 正向验收已在全新隔离模拟器 5562 通过：以生产 54 更新器逻辑构造仅本地较低 code53 基线，实际从 HTTPS 获取公开 55，覆盖取消、强停恢复同一下载任务 13、完整校验、只读 provider、未知来源授权返回、系统安装器及正常 Play Protect 扫描后安装；已装版本／完整哈希一致，firstInstallTime 与自有私有标记保持，标记移除且该模拟器已关闭。此证据不等于历史已发布 53 或所有 OEM；用户手机未安装本轮更新，也未触碰真实相机连接。原生 `ee597f…` 候选的浅色／深色／深色横屏各 41 项与真实验证码 GET／PNG 11 项仍保留原 SHA 和范围；独立 UI 的 SHIP 仅限原审阅九图。生产下载页另有游客 GET 的桌面、手机浅深色检查，见 [更新验收](.impeccable/review/update-native/README.md)、[公网页面记录](.impeccable/review/download-final/report.json)及 [社区与更新说明](docs/community-and-updates.md)。
+
+- 114 发布补记：2026-10-29 09:56 +08:00，双闪蒙版选脸反馈已上架 beta、mandatory=true、revision 3，公网 APK 与本地冻结包精确匹配；见[114 发布回执](docs/validation/portrait-face-selection-114/publication/PUBLICATION.json)。
+
+- 115 发布补记：2026-10-29 11:03 +08:00 已上架 beta、mandatory=true、revision 3；双域公开元数据及完整 APK 校验通过，见[115 发布回执](docs/validation/portrait-detection-update115/publication/PUBLICATION.json)。

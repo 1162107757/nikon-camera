@@ -1,0 +1,104 @@
+{
+  "pass": true,
+  "stage": "ui-complete",
+  "candidateSha256": "47aa61913d3416ed71a6c541b7ff3c8b597350469bb498ff7b79d5a3dda7ab06",
+  "mode": "landscape",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "skin-texture-stored",
+      "pass": true
+    },
+    {
+      "name": "skin-evenness-stored",
+      "pass": true
+    },
+    {
+      "name": "skin-shine-stored",
+      "pass": true
+    },
+    {
+      "name": "cropped-faces-prepared-for-evenness",
+      "pass": true
+    },
+    {
+      "name": "automatic-mask-visible-scope",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_detail-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_detail-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_white-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_white-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-teeth-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-teeth-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-under_eye-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-under_eye-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-fill-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-fill-stored",
+      "pass": true
+    },
+    {
+      "name": "light-pad-saves-direction",
+      "pass": true
+    },
+    {
+      "name": "light-pad-one-history-item",
+      "pass": true
+    },
+    {
+      "name": "light-pad-undo",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 2,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true
+}

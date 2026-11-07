@@ -1,0 +1,15 @@
+{
+  "status": "implementation-and-validation-complete-upload-blocked",
+  "versionCode": 116,
+  "versionName": "0.23.5-beta",
+  "candidateSha256": "bca8223091df1634dcabcc266b804dc4ceb1fec5e9d3ed3bbe6b7e98ba21b01e",
+  "validation": "VALIDATION-RESULT.json",
+  "publication": "publication/UPLOAD-BLOCKED.json",
+  "sourceIdentity": "BUILD-IDENTITY.json",
+  "all282ProductionInputsStillMatch": true,
+  "bothPublicOriginsStillReturnVersion115": true,
+  "publicCheckDateUtc": "2026-10-29",
+  "mandatory116NotYetApplied": true,
+  "ownedEmulator5588": "exact private fixture allowlist removed, private and public test packages uninstalled, settings restored; emulator killed and adb devices confirmed empty",
+  "scheduledRetry": "none; user explicitly chose to retain the APK and continue manually later"
+}

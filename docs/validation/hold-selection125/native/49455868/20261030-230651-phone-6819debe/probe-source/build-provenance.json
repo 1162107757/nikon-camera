@@ -1,0 +1,28 @@
+{
+  "inputs": [
+    {
+      "path": "tests/hold-selection-device-probe/src/cc/huevia/holdselectionqa/SelectionProbe.java",
+      "sha256": "284808e6dae63156cb94f5cd3bc4d110880d0ed1c0a81a1eb3b3e70313207c58"
+    },
+    {
+      "path": "tests/hold-selection-device-probe/AndroidManifest.xml",
+      "sha256": "f9d9efbee1984990190b7c8120a1939368c445f8b6173141e2b48426cc4dadfd"
+    },
+    {
+      "path": "tests/hold-selection-device-probe/build.ps1",
+      "sha256": "f8f00f3fdcacdd1aa94415e58d26a70bb4e2bd6e8b56011e8371ec5a7623f90d"
+    },
+    {
+      "path": "tests/hold-selection-device-probe/run.ps1",
+      "sha256": "e0002be9ec7d1fd5b043a5754d0cd0084f0428e2def528e80eac6e369713bb44"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/holdselectionqa/SelectionProbe.class",
+    "cc/huevia/holdselectionqa/SelectionProbe$Condition.class",
+    "cc/huevia/holdselectionqa/SelectionProbe$Frame.class",
+    "cc/huevia/holdselectionqa/SelectionProbe$Work.class"
+  ],
+  "apkSha256": "35315cccc0fd3cb82640f0dbcaa2cc5ecbfbddab5ca74704c452694fe5dd9528"
+}

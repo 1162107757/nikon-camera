@@ -1,0 +1,11 @@
+{
+  "portrait.jpg": {
+    "origin": "D:\\dev\\ai-project\\nikon-camera\\docs\\design-review\\photo-detail-export-histogram-20261024\\assets\\sample.png",
+    "use": "Existing illustrative project sample, cropped to 4:5 for this prototype only; not a camera output or an AI retouch claim."
+  },
+  "reference-prisma.png": {
+    "origin": "https://cdn.dribbble.com/userupload/37212909/file/original-0b2f84c71e9f2a2a1be52509f95e653f.png",
+    "author": "Daria Bugrowskaia / Prisma Labs",
+    "use": "Reference inspection only; not displayed in the prototype."
+  }
+}

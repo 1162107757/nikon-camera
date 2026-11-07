@@ -1,0 +1,50 @@
+{
+  "archivedAt": "2026-10-28T14:23:25.794Z",
+  "scope": "Before the compact-only diagonal pinch fixture compatibility change; production APK and original threshold/zoom assertions unchanged.",
+  "candidateSha256": "f0879a895e5ea9127bd05e554aafce4a1e6c475214dc96cf43c67a52425d7c4c",
+  "probeApkSha256": "7b400da9083a27f7ea1fdc358a13f8dfd61752b6fdf6c3858e482284d7ebb921",
+  "files": [
+    {
+      "original": "tests/photo-tools-109-device-probe/src/cc/huevia/phototoolsqa/PhotoToolsProbe.java",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/axis-7b400da9083a/PhotoToolsProbe.java",
+      "sha256": "c7b20416afec594c0a6f004e7af14c541799bb216ca793f5defc77a12f95017e",
+      "bytes": 44482
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/.build/provenance.json",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/axis-7b400da9083a/provenance.json",
+      "sha256": "d7792349e92b39a53d2fdcdb1a487964e3ffa06b7e0e2b1a016a8f3932375fcf",
+      "bytes": 1034
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/.build/photo-tools-probe.apk",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/axis-7b400da9083a/photo-tools-probe.apk",
+      "sha256": "7b400da9083a27f7ea1fdc358a13f8dfd61752b6fdf6c3858e482284d7ebb921",
+      "bytes": 41363
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/AndroidManifest.xml",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/axis-7b400da9083a/AndroidManifest.xml",
+      "sha256": "114c9d7a2463494412a3868ab84e8ac13655f0777f0a7f4b42e6651d5a61666f",
+      "bytes": 380
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/build.ps1",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/axis-7b400da9083a/build.ps1",
+      "sha256": "9924da75914e553e678e2af0da64699de6f0854cd6cd44ae4180281c619dfcef",
+      "bytes": 3606
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/run.ps1",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/axis-7b400da9083a/run.ps1",
+      "sha256": "8ff626b92aae8a7e649d52c1d3cfcb645953eacb0c203af6757506a2b4a2d991",
+      "bytes": 8049
+    }
+  ],
+  "normalPassRuns": [
+    "20261028-221608-font1.3-3c00e905",
+    "20261028-221713-phone-3a178657",
+    "20261028-221748-landscape-e92b5422"
+  ],
+  "preservedCompactFailure": "20261028-221924-landscape-d58c2c01"
+}

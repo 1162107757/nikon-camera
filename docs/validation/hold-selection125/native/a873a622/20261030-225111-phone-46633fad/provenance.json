@@ -1,0 +1,36 @@
+{
+  "candidateSha256": "a873a6226ae1cb5d3cccff20450593f2974915560ead8956adc03d58a5677ce1",
+  "versionCode": 125,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "1985d3ec7a9e398f756c77561c5c21a7db6dc29a634b541f2b36903f9a8c5c52",
+  "pass": false,
+  "scope": null,
+  "files": [
+    {
+      "file": "01-live-before-up.png",
+      "sha256": "075af7796e232c9779ba210a13e12f06c7bb294308ee27307aea07eb9e247b96"
+    },
+    {
+      "file": "02-pressed-mask.png",
+      "sha256": "075af7796e232c9779ba210a13e12f06c7bb294308ee27307aea07eb9e247b96"
+    },
+    {
+      "file": "03-dialog-right-button.png",
+      "sha256": "5660e2301c185928f9915e3ba0ebb764cfdd4c1cc07409414ed03dcd04c2a0f2"
+    },
+    {
+      "file": "04-release-clean.png",
+      "sha256": "2435b226e9ee30c7d3b8b96107a3ebfcabe2f43fe6e09dc1486a5577612bcb96"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "8a6c3165d600a8ea234285b25057cf0e88b340e65dd4087f877e6850e2e9096c"
+    },
+    {
+      "file": "report.json",
+      "sha256": "255d40de7e68de083777ed725900e4e3f4289af85afe5a35670e76b95bdd6cc8"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "archivedAt": "2026-10-28T14:46:41.202Z",
+  "probeApkSha256": "358d4a1e56844ceb798314226e1d080c6fe05da1902cdb9f08a6b0f180c3865a",
+  "candidateSha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+  "scope": "Capture-only real system tutorial acknowledgement; all functional assertions preserved.",
+  "nativeReport": "docs/validation/photo-tools-109/b1dce865/20261028-224347-landscape-b10d01ae/20261028-224347-landscape-b10d01ae/report.json",
+  "files": [
+    {
+      "original": "tests/photo-tools-109-device-probe/src/cc/huevia/phototoolsqa/PhotoToolsProbe.java",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/PhotoToolsProbe.java",
+      "sha256": "a38e6006fce300911524fd3eed7a993a2997193a322c6c83c5a494505d1c6f88"
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/.build/provenance.json",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/provenance.json",
+      "sha256": "a6908f3c4007d9de4cedc1fbb603f2f1ae9e3e45ccd6e678cfc3910b9be60549"
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/.build/photo-tools-probe.apk",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/photo-tools-probe.apk",
+      "sha256": "358d4a1e56844ceb798314226e1d080c6fe05da1902cdb9f08a6b0f180c3865a"
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/AndroidManifest.xml",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/AndroidManifest.xml",
+      "sha256": "114c9d7a2463494412a3868ab84e8ac13655f0777f0a7f4b42e6651d5a61666f"
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/build.ps1",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/build.ps1",
+      "sha256": "9924da75914e553e678e2af0da64699de6f0854cd6cd44ae4180281c619dfcef"
+    },
+    {
+      "original": "tests/photo-tools-109-device-probe/run.ps1",
+      "archived": "docs/validation/portrait-local-layout-112/probe-revisions/guide-358d4a1e5684/run.ps1",
+      "sha256": "8ff626b92aae8a7e649d52c1d3cfcb645953eacb0c203af6757506a2b4a2d991"
+    }
+  ]
+}

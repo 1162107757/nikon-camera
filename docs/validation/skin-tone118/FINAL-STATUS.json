@@ -1,0 +1,18 @@
+{
+  "status": "complete-local-package-not-published",
+  "versionCode": 118,
+  "versionName": "0.23.7-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.7-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "validation": "VALIDATION-RESULT.json",
+  "sourceIdentity": "BUILD-IDENTITY.json",
+  "publicationAttempted": false,
+  "automationCreated": false,
+  "nextAction": "Retain local APK; user requested manual upload later."
+}

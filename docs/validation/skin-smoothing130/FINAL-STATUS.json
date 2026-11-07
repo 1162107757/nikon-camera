@@ -1,0 +1,44 @@
+{
+  "versionCode": 130,
+  "versionName": "0.25.2-beta",
+  "sha256": "bfd723aa10bd1fcaacd148d7440b311db6a87a490849c3497c38e83064193b38",
+  "bytes": 33501964,
+  "productionInputs": 297,
+  "changedAfterBuildStart": [],
+  "nativeAndAssetEntriesComparedTo129": 46,
+  "nativeAndAssetChanges": [],
+  "published": false,
+  "status": "complete-local-package-not-published",
+  "nativeRuns": [
+    {
+      "runId": "20261103-130508-phone-fd8ff20e",
+      "mode": "phone",
+      "scope": "full",
+      "checks": 23,
+      "screenshots": 2
+    },
+    {
+      "runId": "20261103-130738-font1.3-54d3c87e",
+      "mode": "font1.3",
+      "scope": "ui",
+      "checks": 16,
+      "screenshots": 2
+    },
+    {
+      "runId": "20261103-130811-landscape-20982a86",
+      "mode": "landscape",
+      "scope": "ui",
+      "checks": 16,
+      "screenshots": 2
+    }
+  ],
+  "uiReview": "Bounded single batch; reviewed phone zero/66 and large-font/landscape adjusted frames; no correction needed.",
+  "sourcePinsReverified": true,
+  "signatureV2V3": true,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "zipalign16KiB": true,
+  "apk": "dist/huevia-0.25.2-beta-debug.apk",
+  "newProductionRasters": 0,
+  "ownedEmulatorClosed": true,
+  "sourcePinsReverifiedAtHandoff": true
+}

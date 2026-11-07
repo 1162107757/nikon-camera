@@ -1,0 +1,13 @@
+{
+  "serial": "emulator-5588",
+  "ownership": "Disposable Layout112 emulator started for this task",
+  "nativeRunCleanup": "All three final focused-run cleanup records passed",
+  "savedSwatchPreference": "Exact single-key restoration passed",
+  "privateRemoteFixturesRemoved": true,
+  "privateProbeUninstalled": true,
+  "publicProbeUninstalled": true,
+  "targetProcessStopped": true,
+  "settingsRestored": {"fontScale": "1.0", "airplane": "0", "wifi": "1", "mobile": "1", "immersiveConfirmation": "null"},
+  "emulatorKillReturnedOk": true,
+  "adbDevicesConfirmedEmpty": true
+}

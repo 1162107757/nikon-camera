@@ -41,13 +41,13 @@ public final class AdjustedPreviewProfile implements PresetPreviewProfile {
     public String registrationName(){return base==null?"基础调节":base.registrationName();}
     public String modelVersion(){
         String value=(base==null?ORIGINAL.modelVersion():base.modelVersion())+":"+settings.identity();
-        if(settings.curves.isNeutral()&&settings.hsl.isNeutral())return value;
+        if(settings.curves.isNeutral()&&settings.hsl.isNeutral()&&!settings.cleanup.hasStoredState())return value;
         try{byte[] digest=java.security.MessageDigest.getInstance("SHA-256").digest(value.getBytes(java.nio.charset.StandardCharsets.UTF_8));StringBuilder key=new StringBuilder("photo-colour-v2:");for(byte b:digest)key.append(Character.forDigit((b>>>4)&15,16)).append(Character.forDigit(b&15,16));return key.toString();}catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
     }
     public double mapTone(double value){return value;}
-    public int applyArgb(int input){return manual(base==null?input:base.applyArgb(input));}
+    public int applyArgb(int input){int clean=settings.cleanup.applyArgb(input);return manual(base==null?clean:base.applyArgb(clean));}
     private int manual(int input){
-        if(colourNeutral)return input;
+        if(colourNeutral)return settings.palette.applyArgb(input);
         double r=channels[0][(input>>>16)&255],g=channels[1][(input>>>8)&255],b=channels[2][input&255];
         double y=.2126*r+.7152*g+.0722*b;
         double next=.5+(y-.5)*contrastGain;
@@ -65,9 +65,16 @@ public final class AdjustedPreviewProfile implements PresetPreviewProfile {
             r=settings.curves.map(1,settings.curves.map(0,r));g=settings.curves.map(2,settings.curves.map(0,g));b=settings.curves.map(3,settings.curves.map(0,b));
         }
         if(hasHsl){double[] work=rgb.get();work[0]=r;work[1]=g;work[2]=b;settings.hsl.apply(work);r=work[0];g=work[1];b=work[2];}
-        return (input&0xff000000)|(channel(r)<<16)|(channel(g)<<8)|channel(b);
+        return settings.palette.applyArgb((input&0xff000000)|(channel(r)<<16)|(channel(g)<<8)|channel(b));
     }
     @Override public void renderPixels(SpatialPreviewFilter.Pixels pixels,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        if(!settings.cleanup.isNeutral()){
+            PhotoCleanupRenderer.apply(pixels,settings.cleanup,cancel,segment(progress,0,.35));
+            renderLegacy(pixels,cancel,segment(progress,.35,.65));return;
+        }
+        renderLegacy(pixels,cancel,progress);
+    }
+    private void renderLegacy(SpatialPreviewFilter.Pixels pixels,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         boolean noise=settings.get(LUMA_DENOISE)!=0||settings.get(COLOR_DENOISE)!=0,finish=settings.get(GRAIN)!=0||settings.get(VIGNETTE)!=0;
         if(noise||finish){renderExtended(pixels,cancel,progress,noise,finish);return;}
         if(base!=null)base.renderPixels(pixels,cancel,progress==null?null:v->progress.accept(v*.5));

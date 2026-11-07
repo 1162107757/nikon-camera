@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": false,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.AssertionError: radius-and-feather-affect-stored-stroke; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\a8c765ec\\20261030-143339-phone-2a2da1a2\\20261030-143339-phone-2a2da1a2\\report.json",
+  "errors": [],
+  "remoteEvidenceRemovedAfterLocalPull": true
+}

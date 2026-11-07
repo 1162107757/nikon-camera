@@ -1,0 +1,43 @@
+{
+  "pass": false,
+  "stage": "close-reopen-draft",
+  "candidateSha256": "2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad",
+  "mode": "phone",
+  "scope": "editor-continuity152-baseline",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "close-returns-to-album",
+      "pass": true
+    },
+    {
+      "name": "ordinary-open-restores-pending-draft",
+      "pass": false
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 1,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "layout": {},
+  "failure": "java.lang.AssertionError: ordinary-open-restores-pending-draft",
+  "stack": "java.lang.AssertionError: ordinary-open-restores-pending-draft\n\tat cc.huevia.prismaqa.PrismaEditorProbe.check(PrismaEditorProbe.java:189)\n\tat cc.huevia.prismaqa.PrismaEditorProbe.resumeFlow(PrismaEditorProbe.java:111)\n\tat cc.huevia.prismaqa.PrismaEditorProbe.onStart(PrismaEditorProbe.java:36)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

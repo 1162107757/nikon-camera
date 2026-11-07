@@ -322,7 +322,7 @@ public final class AccountPanel implements AutoCloseable {
     private void showLoginHelp() {
         if (destroyed || !isOpen() || !host.isVisible() || loginHelpDialog != null) return;
         clearSecrets(); hideKeyboard();
-        loginHelpDialog = new AlertDialog.Builder(activity).setTitle("登录帮助")
+        loginHelpDialog = new AppDialog.Builder(activity).setTitle("登录帮助")
                 .setMessage("登录需要可上网的网络。\n\n连接相机 Wi-Fi 时可能无法上网，可先切换至手机网络完成登录，再连接相机。\n\n暂时无法登录时，仍可选择游客使用。")
                 .setPositiveButton("知道了", null).create();
         loginHelpDialog.setOnDismissListener(dialog -> loginHelpDialog = null); loginHelpDialog.show();
@@ -404,7 +404,7 @@ public final class AccountPanel implements AutoCloseable {
         Button official = button("查看腾讯 QQ 互联 SDK 隐私声明", false, this::openQqPrivacy);
         LinearLayout.LayoutParams officialParams = new LinearLayout.LayoutParams(-1, -2); officialParams.topMargin = dp(12); body.addView(official, officialParams);
         ScrollView scroll = new ScrollView(activity); scroll.addView(body);
-        AlertDialog.Builder dialog = new AlertDialog.Builder(activity).setTitle("QQ 登录与隐私说明").setView(scroll)
+        AlertDialog.Builder dialog = new AppDialog.Builder(activity).setTitle("QQ 登录与隐私说明").setView(scroll)
                 .setNegativeButton(continueLogin ? "暂不使用" : "关闭", null);
         if (continueLogin) dialog.setPositiveButton("同意并继续", (view, which) -> {
             if (!destroyed && epoch == consentEpoch && screen == Screen.LOGIN && host.isVisible() && !working && !restoring) startQqLogin();
@@ -496,7 +496,7 @@ public final class AccountPanel implements AutoCloseable {
         if (destroyed || working || restoring || screen != Screen.PROFILE || session == null || !host.isVisible() || repository.isLogoutPending()) return;
         final AccountRepository.Session owner = repository.cachedSession(); final long attempt = epoch;
         String restoreLabel = owner != null && "qq".equals(owner.user.provider) ? "恢复 QQ 头像" : "恢复默认头像";
-        avatarDialog = new AlertDialog.Builder(activity).setTitle("修改头像")
+        avatarDialog = new AppDialog.Builder(activity).setTitle("修改头像")
                 .setItems(new String[]{"从相册选择", restoreLabel}, (dialog, which) -> {
                     avatarDialog = null;
                     if (!avatarOwnerMatches(owner, attempt)) return;
@@ -526,7 +526,7 @@ public final class AccountPanel implements AutoCloseable {
         body.addView(preview, new LinearLayout.LayoutParams(dp(160), dp(160)));
         TextView note = text("照片已居中裁为正方形，确认后用于账号与社区展示。", 14, false);
         note.setTextColor(colors.secondary); note.setPadding(0, dp(16), 0, 0); note.setGravity(Gravity.CENTER); body.addView(note);
-        avatarDialog = new AlertDialog.Builder(activity).setTitle("确认新头像").setView(body).setNegativeButton("取消", null)
+        avatarDialog = new AppDialog.Builder(activity).setTitle("确认新头像").setView(body).setNegativeButton("取消", null)
                 .setPositiveButton("保存头像", (dialog, which) -> {
                     if (!avatarOwnerMatches(owner, attempt) || working) return;
                     avatarDraft = null; avatarOwner = null; saveAvatar(owner, attempt, draft);
@@ -540,7 +540,7 @@ public final class AccountPanel implements AutoCloseable {
 
     private void confirmDefaultAvatar(AccountRepository.Session owner, long attempt) {
         boolean qq = "qq".equals(owner.user.provider);
-        avatarDialog = new AlertDialog.Builder(activity).setTitle(qq ? "恢复 QQ 头像？" : "恢复默认头像？")
+        avatarDialog = new AppDialog.Builder(activity).setTitle(qq ? "恢复 QQ 头像？" : "恢复默认头像？")
                 .setMessage(qq ? "将使用最近一次 QQ 登录时验证的头像。" : "将使用统一的默认用户头像。")
                 .setNegativeButton("取消", null).setPositiveButton("恢复", (dialog, which) -> {
                     if (avatarOwnerMatches(owner, attempt) && !working) saveAvatar(owner, attempt, null);
@@ -635,7 +635,7 @@ public final class AccountPanel implements AutoCloseable {
     private void confirmLogout() {
         if (working || session == null || !host.isVisible()) return;
         final long requestEpoch = epoch;
-        logoutDialog = new AlertDialog.Builder(activity).setTitle("退出当前账号？")
+        logoutDialog = new AppDialog.Builder(activity).setTitle("退出当前账号？")
                 .setMessage("手机中的预设、照片和拍摄项目会保留，您可以继续以游客使用。")
                 .setNegativeButton("取消", null).setPositiveButton("退出登录", (dialog, which) -> {
                     if (!destroyed && epoch == requestEpoch && isOpen() && !working) logout();
@@ -838,7 +838,7 @@ public final class AccountPanel implements AutoCloseable {
             picture.setScaleType(ImageView.ScaleType.FIT_CENTER); form.addView(picture, new LinearLayout.LayoutParams(-1, dp(90)));
             EditText answer = input(form, "验证码", "输入图片中的字符", false, "");
             answer.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-            challengeDialog = new AlertDialog.Builder(activity).setTitle("完成验证后创建账号").setView(form)
+            challengeDialog = new AppDialog.Builder(activity).setTitle("完成验证后创建账号").setView(form)
                     .setNegativeButton("取消", (dialog, which) -> pendingQqToken = null).setNeutralButton("换一张", (dialog, which) -> showQqChallenge())
                     .setPositiveButton("继续", null).create();
             challengeDialog.setOnCancelListener(dialog -> pendingQqToken = null);

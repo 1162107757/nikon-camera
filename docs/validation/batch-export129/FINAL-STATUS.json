@@ -1,0 +1,50 @@
+{
+  "versionCode": 129,
+  "versionName": "0.25.1-beta",
+  "sha256": "b644a9e67aee1082f5b3ce38e644189ac78d51e32dad0fb8fca14c0db5681e3d",
+  "bytes": 33497868,
+  "frozenProductionInputs": 296,
+  "productionInputsChangedAfterBuildStart": [],
+  "nativeAndAssetEntriesComparedTo128": 46,
+  "nativeAndAssetChanges": [],
+  "uploaded": false,
+  "status": "complete-local-package-not-published",
+  "nativeFullAndFinalUiRuns": [
+    {
+      "runId": "20261103-121929-phone-e445bf2a",
+      "mode": "phone",
+      "scope": "full",
+      "checks": 25,
+      "screenshots": 2
+    },
+    {
+      "runId": "20261103-122128-phone-14bdb868",
+      "mode": "phone",
+      "scope": "ui",
+      "checks": 14,
+      "screenshots": 2
+    },
+    {
+      "runId": "20261103-122140-font1.3-173b0b34",
+      "mode": "font1.3",
+      "scope": "ui",
+      "checks": 14,
+      "screenshots": 2
+    },
+    {
+      "runId": "20261103-122152-landscape-46d3fbb9",
+      "mode": "landscape",
+      "scope": "ui",
+      "checks": 14,
+      "screenshots": 2
+    }
+  ],
+  "uiReview": "Bounded first batch and one capture confirmation; native system window animation required capture-only waits. Production APK unchanged throughout.",
+  "apk": "dist/huevia-0.25.1-beta-debug.apk",
+  "signatureV2V3": true,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "zipalign16KiB": true,
+  "sourcePinsReverifiedAtHandoff": true,
+  "ownEmulatorClosed": true,
+  "newProductionRasters": 0
+}

@@ -1,0 +1,128 @@
+{
+  "visible": true,
+  "rect": "[1074,2235][1080,2361]",
+  "width": 179,
+  "height": 126,
+  "parents": [
+    {
+      "class": "android.widget.Button",
+      "tag": "editor-primary-6",
+      "left": 1074,
+      "top": 0,
+      "width": 179,
+      "height": 126,
+      "scrollX": 524210,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.LinearLayout",
+      "tag": "null",
+      "left": 0,
+      "top": 0,
+      "width": 1253,
+      "height": 126,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.HorizontalScrollView",
+      "tag": "editor-primary-navigation",
+      "left": 0,
+      "top": 662,
+      "width": 1080,
+      "height": 126,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "cc.huevia.ui.PhotoCompactDock",
+      "tag": "compact-editor-dock",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 788,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.LinearLayout",
+      "tag": "editor-side-rail",
+      "left": 0,
+      "top": 1289,
+      "width": 1080,
+      "height": 788,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.LinearLayout",
+      "tag": "null",
+      "left": 0,
+      "top": 284,
+      "width": 1080,
+      "height": 2077,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.LinearLayout",
+      "tag": "prototype-editor-workspace",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 2424,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.LinearLayout",
+      "tag": "null",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 2424,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.LinearLayout",
+      "tag": "null",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 2424,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.FrameLayout",
+      "tag": "null",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 2424,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "android.widget.FrameLayout",
+      "tag": "null",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 2424,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    {
+      "class": "com.android.internal.policy.DecorView",
+      "tag": "null",
+      "left": 0,
+      "top": 0,
+      "width": 1080,
+      "height": 2424,
+      "scrollX": 0,
+      "scrollY": 0
+    }
+  ]
+}

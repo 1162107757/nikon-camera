@@ -1,0 +1,356 @@
+{
+  "serial": "emulator-5588",
+  "ownedEmulatorPid": 29212,
+  "allPrivateFixturesAndDraftsRemoved": true,
+  "filesVerified": 67,
+  "runsVerified": 10,
+  "systemSettings": {
+    "fontScale": "1.0",
+    "airplaneMode": "0",
+    "animatorDuration": "null",
+    "immersiveConfirmation": "null",
+    "probePackage": ""
+  },
+  "files": [
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-214931-phone-34559008/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/58a35642/20261104-214931-phone-34559008/20261104-214931-phone-34559008/01-quick-editor.png",
+      "sha256": "e2668b328aa5c9eb99490036ad3e86acd45e1f31e742e07cc37bb2b2d3ea8d66"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-214931-phone-34559008/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/58a35642/20261104-214931-phone-34559008/20261104-214931-phone-34559008/02-basic-adjustment.png",
+      "sha256": "5f5b05552c4620d4c754b0b547bd1f918b8f8b5d2a2da2806c1a8861f36e5bed"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-214931-phone-34559008/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/58a35642/20261104-214931-phone-34559008/20261104-214931-phone-34559008/03-portrait-main.png",
+      "sha256": "aa69a1aa0b8bd36bb28713df45299c4473821d0a0ac9368250f6e76b3ff48462"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-214931-phone-34559008/failure.png",
+      "local": "docs/validation/compact132/native/58a35642/20261104-214931-phone-34559008/20261104-214931-phone-34559008/failure.png",
+      "sha256": "8c185a21908e125fd29921acc687251a6c5cfc3ad4d8f085924ca20b89473258"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-214931-phone-34559008/report.json",
+      "local": "docs/validation/compact132/native/58a35642/20261104-214931-phone-34559008/20261104-214931-phone-34559008/report.json",
+      "sha256": "c37012fed844be1e706cbfc31835da3392ca3a7028709699fd076c6f6ec11aeb"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/01-quick-editor.png",
+      "sha256": "9449fa34b55663658179f2fb83d75fa8e029ac83aa653d689af1c7423e54de03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/02-basic-adjustment.png",
+      "sha256": "cddf916aa457fe3ffe61fa069b8da8d3d308c94bca9cb531ea966f769447226a"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/03-portrait-main.png",
+      "sha256": "0783a3ba47c0bdb49833aaa7c6a90ba9be46bfa84f624d03f80a9b672109db03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/04-save-sheet.png",
+      "sha256": "f491062a7daba608187fd29c84d65e2f6a45fff896284ed11fee7610c6ef7c04"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/reference.png",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/reference.png",
+      "sha256": "79e01657a4760118fa2fde3e6a803447478e03dd480a27af8702ecd767428886"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/full.jpg",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/full.jpg",
+      "sha256": "7f4f3806a7fb9c7fb043237f0f49a22487e5c63ef067b1e23b680a3860511cec"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/failure.png",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/failure.png",
+      "sha256": "bfc5dd44c4d1c8dd5dc568e72462e51f3e543537beac5eb0a814c6a88cd90419"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-220213-phone-7cde84bc/report.json",
+      "local": "docs/validation/compact132/native/9fe38173/20261104-220213-phone-7cde84bc/20261104-220213-phone-7cde84bc/report.json",
+      "sha256": "f897fffd72c2e70342bbc863fcaad3f67c9484e690d18fda9f8aedae103ec0c8"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/01-quick-editor.png",
+      "sha256": "9449fa34b55663658179f2fb83d75fa8e029ac83aa653d689af1c7423e54de03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/02-basic-adjustment.png",
+      "sha256": "cddf916aa457fe3ffe61fa069b8da8d3d308c94bca9cb531ea966f769447226a"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/03-portrait-main.png",
+      "sha256": "0783a3ba47c0bdb49833aaa7c6a90ba9be46bfa84f624d03f80a9b672109db03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/04-save-sheet.png",
+      "sha256": "c25970415d5fb94daf1c81d5e07ee03ddcba33fa6f60f43d0b597baf0d36d553"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/reference.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/reference.png",
+      "sha256": "79e01657a4760118fa2fde3e6a803447478e03dd480a27af8702ecd767428886"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/full.jpg",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/full.jpg",
+      "sha256": "7f4f3806a7fb9c7fb043237f0f49a22487e5c63ef067b1e23b680a3860511cec"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/05-photo-list.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/05-photo-list.png",
+      "sha256": "e252cf5f3388baae61c8863a956ab801a321ef252253f9be126b20ece85d0e8b"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221728-phone-61734c8e/report.json",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221728-phone-61734c8e/20261104-221728-phone-61734c8e/report.json",
+      "sha256": "3370aea198139412250cd1096f71875def79b7eeb45ec9e4f9e4884aa7ddf1f9"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221751-font1.3-5b12c26f/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221751-font1.3-5b12c26f/20261104-221751-font1.3-5b12c26f/01-quick-editor.png",
+      "sha256": "efb0628c1d94c88365b91118910683381503c07094b8b857fc433adb599f1de6"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221751-font1.3-5b12c26f/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221751-font1.3-5b12c26f/20261104-221751-font1.3-5b12c26f/02-basic-adjustment.png",
+      "sha256": "1bdf639918436ea6842eeb480422c20a69f81cb2e0ad258fecd656dd8f060996"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221751-font1.3-5b12c26f/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221751-font1.3-5b12c26f/20261104-221751-font1.3-5b12c26f/03-portrait-main.png",
+      "sha256": "a7b36fd2359534cdfcc0f842b50eb0917c58358f298d83ec8373274fc3cc50e3"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221751-font1.3-5b12c26f/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221751-font1.3-5b12c26f/20261104-221751-font1.3-5b12c26f/04-save-sheet.png",
+      "sha256": "cbbcb72d986aaec2b1e827755ea23b15f0a8f4c86b11f3ee5b14930d4bc45f68"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221751-font1.3-5b12c26f/05-photo-list.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221751-font1.3-5b12c26f/20261104-221751-font1.3-5b12c26f/05-photo-list.png",
+      "sha256": "cd25d150dcb74871b29b62fec925d065d61c15582d0019e362439b4594012124"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221751-font1.3-5b12c26f/report.json",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221751-font1.3-5b12c26f/20261104-221751-font1.3-5b12c26f/report.json",
+      "sha256": "32a7fc2840afc8796c8b86dc1763e39564449b4183ed31162fa80aa3d94d1fc1"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221810-landscape-917f7c28/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221810-landscape-917f7c28/20261104-221810-landscape-917f7c28/01-quick-editor.png",
+      "sha256": "c7123795f273a7625f91101c290e2c21a1fab2067853a1c9b92f835fa4c49a5f"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221810-landscape-917f7c28/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221810-landscape-917f7c28/20261104-221810-landscape-917f7c28/02-basic-adjustment.png",
+      "sha256": "7ea3976883faa18098acc470215eb58492d987b90caa383bc58858fdcf37dbe5"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221810-landscape-917f7c28/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221810-landscape-917f7c28/20261104-221810-landscape-917f7c28/03-portrait-main.png",
+      "sha256": "f30f54ec6aed954d46b274a54fcfc49aaa53c436bdcbb58eb321c6b7722c7ad6"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221810-landscape-917f7c28/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221810-landscape-917f7c28/20261104-221810-landscape-917f7c28/04-save-sheet.png",
+      "sha256": "b3d3843c56bd7acbc66456b382183f0a933b79f231f42d519f59dc66507ad43c"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221810-landscape-917f7c28/05-photo-list.png",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221810-landscape-917f7c28/20261104-221810-landscape-917f7c28/05-photo-list.png",
+      "sha256": "babe2e9ecc65df0a375dc856e3f11d42ae64b7b5c7e299147bb9bc23f13831e7"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-221810-landscape-917f7c28/report.json",
+      "local": "docs/validation/compact132/native/623f120d/20261104-221810-landscape-917f7c28/20261104-221810-landscape-917f7c28/report.json",
+      "sha256": "cace85116f45dfdeefccfe809650e4738f08a42d7c27248f19e539539f5d57f3"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/01-quick-editor.png",
+      "sha256": "9449fa34b55663658179f2fb83d75fa8e029ac83aa653d689af1c7423e54de03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/02-basic-adjustment.png",
+      "sha256": "cddf916aa457fe3ffe61fa069b8da8d3d308c94bca9cb531ea966f769447226a"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/03-portrait-main.png",
+      "sha256": "0783a3ba47c0bdb49833aaa7c6a90ba9be46bfa84f624d03f80a9b672109db03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/04-save-sheet.png",
+      "sha256": "f491062a7daba608187fd29c84d65e2f6a45fff896284ed11fee7610c6ef7c04"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/reference.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/reference.png",
+      "sha256": "79e01657a4760118fa2fde3e6a803447478e03dd480a27af8702ecd767428886"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/full.jpg",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/full.jpg",
+      "sha256": "7f4f3806a7fb9c7fb043237f0f49a22487e5c63ef067b1e23b680a3860511cec"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/05-photo-list.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/05-photo-list.png",
+      "sha256": "08e0c755b0bae8d1f2cb885d1d802361b86f790016e921514179e81bed1bc41b"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222447-phone-96eda1c4/report.json",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222447-phone-96eda1c4/20261104-222447-phone-96eda1c4/report.json",
+      "sha256": "a856be28b7ccb50725203dc84844fa178b90b1b60ee515dd7fb471f080f0384c"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222509-font1.3-0331c64b/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222509-font1.3-0331c64b/20261104-222509-font1.3-0331c64b/01-quick-editor.png",
+      "sha256": "efb0628c1d94c88365b91118910683381503c07094b8b857fc433adb599f1de6"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222509-font1.3-0331c64b/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222509-font1.3-0331c64b/20261104-222509-font1.3-0331c64b/02-basic-adjustment.png",
+      "sha256": "1bdf639918436ea6842eeb480422c20a69f81cb2e0ad258fecd656dd8f060996"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222509-font1.3-0331c64b/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222509-font1.3-0331c64b/20261104-222509-font1.3-0331c64b/03-portrait-main.png",
+      "sha256": "a7b36fd2359534cdfcc0f842b50eb0917c58358f298d83ec8373274fc3cc50e3"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222509-font1.3-0331c64b/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222509-font1.3-0331c64b/20261104-222509-font1.3-0331c64b/04-save-sheet.png",
+      "sha256": "cbbcb72d986aaec2b1e827755ea23b15f0a8f4c86b11f3ee5b14930d4bc45f68"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222509-font1.3-0331c64b/failure.png",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222509-font1.3-0331c64b/20261104-222509-font1.3-0331c64b/failure.png",
+      "sha256": "87bc6f512da00cf06f2aed56cfc9ac5db1daf9933a083772a1bbbb26d5d2973b"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-222509-font1.3-0331c64b/report.json",
+      "local": "docs/validation/compact132/native/721bbce9/20261104-222509-font1.3-0331c64b/20261104-222509-font1.3-0331c64b/report.json",
+      "sha256": "d6b16895131457c565de6f97abc326aa740895a1927c177943a10af99fcf383d"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/01-quick-editor.png",
+      "sha256": "9449fa34b55663658179f2fb83d75fa8e029ac83aa653d689af1c7423e54de03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/02-basic-adjustment.png",
+      "sha256": "cddf916aa457fe3ffe61fa069b8da8d3d308c94bca9cb531ea966f769447226a"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/03-portrait-main.png",
+      "sha256": "0783a3ba47c0bdb49833aaa7c6a90ba9be46bfa84f624d03f80a9b672109db03"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/04-save-sheet.png",
+      "sha256": "c25970415d5fb94daf1c81d5e07ee03ddcba33fa6f60f43d0b597baf0d36d553"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/reference.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/reference.png",
+      "sha256": "79e01657a4760118fa2fde3e6a803447478e03dd480a27af8702ecd767428886"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/full.jpg",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/full.jpg",
+      "sha256": "7f4f3806a7fb9c7fb043237f0f49a22487e5c63ef067b1e23b680a3860511cec"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/05-photo-list.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/05-photo-list.png",
+      "sha256": "9e7de9d2c1220cb7f4f5fb10ddb49cced2c429f151eee11c17464cf621c858b3"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223414-phone-0fdfd1a3/report.json",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223414-phone-0fdfd1a3/20261104-223414-phone-0fdfd1a3/report.json",
+      "sha256": "a9e5f8d92c35d5364939478aec7382d7587778510a6f58c92621e561371db36c"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223437-font1.3-a904f3ec/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223437-font1.3-a904f3ec/20261104-223437-font1.3-a904f3ec/01-quick-editor.png",
+      "sha256": "efb0628c1d94c88365b91118910683381503c07094b8b857fc433adb599f1de6"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223437-font1.3-a904f3ec/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223437-font1.3-a904f3ec/20261104-223437-font1.3-a904f3ec/02-basic-adjustment.png",
+      "sha256": "1bdf639918436ea6842eeb480422c20a69f81cb2e0ad258fecd656dd8f060996"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223437-font1.3-a904f3ec/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223437-font1.3-a904f3ec/20261104-223437-font1.3-a904f3ec/03-portrait-main.png",
+      "sha256": "a7b36fd2359534cdfcc0f842b50eb0917c58358f298d83ec8373274fc3cc50e3"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223437-font1.3-a904f3ec/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223437-font1.3-a904f3ec/20261104-223437-font1.3-a904f3ec/04-save-sheet.png",
+      "sha256": "cbbcb72d986aaec2b1e827755ea23b15f0a8f4c86b11f3ee5b14930d4bc45f68"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223437-font1.3-a904f3ec/05-photo-list.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223437-font1.3-a904f3ec/20261104-223437-font1.3-a904f3ec/05-photo-list.png",
+      "sha256": "10443271f10b86a48879a74dd6a28865f63d05b1ec335ea6f34f36cf359bd443"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223437-font1.3-a904f3ec/report.json",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223437-font1.3-a904f3ec/20261104-223437-font1.3-a904f3ec/report.json",
+      "sha256": "d25f73c3af70e2c17aab867e99e7d8aaf22008dceaa26955faf6341e95c3c456"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223457-landscape-44f3e4ed/01-quick-editor.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223457-landscape-44f3e4ed/20261104-223457-landscape-44f3e4ed/01-quick-editor.png",
+      "sha256": "c7123795f273a7625f91101c290e2c21a1fab2067853a1c9b92f835fa4c49a5f"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223457-landscape-44f3e4ed/02-basic-adjustment.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223457-landscape-44f3e4ed/20261104-223457-landscape-44f3e4ed/02-basic-adjustment.png",
+      "sha256": "7ea3976883faa18098acc470215eb58492d987b90caa383bc58858fdcf37dbe5"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223457-landscape-44f3e4ed/03-portrait-main.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223457-landscape-44f3e4ed/20261104-223457-landscape-44f3e4ed/03-portrait-main.png",
+      "sha256": "f30f54ec6aed954d46b274a54fcfc49aaa53c436bdcbb58eb321c6b7722c7ad6"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223457-landscape-44f3e4ed/04-save-sheet.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223457-landscape-44f3e4ed/20261104-223457-landscape-44f3e4ed/04-save-sheet.png",
+      "sha256": "b3d3843c56bd7acbc66456b382183f0a933b79f231f42d519f59dc66507ad43c"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223457-landscape-44f3e4ed/05-photo-list.png",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223457-landscape-44f3e4ed/20261104-223457-landscape-44f3e4ed/05-photo-list.png",
+      "sha256": "c588b6d43f30451e9568b8d142442f5978c58f9498ef60c08b77283e3e3a3a93"
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/compact132/20261104-223457-landscape-44f3e4ed/report.json",
+      "local": "docs/validation/compact132/native/22b60c1d/20261104-223457-landscape-44f3e4ed/20261104-223457-landscape-44f3e4ed/report.json",
+      "sha256": "c72062d160f5dea8d3bf98e19be937192f5596afa67a9208bdd7078465b1bc86"
+    }
+  ],
+  "remoteFilesRemoved": true,
+  "ownedEmulatorClosed": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "remoteDirectoriesRemoved": true
+}

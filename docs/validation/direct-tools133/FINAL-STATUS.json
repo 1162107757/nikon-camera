@@ -1,0 +1,140 @@
+{
+  "status": "complete-local-package-not-published",
+  "versionCode": 133,
+  "versionName": "0.27.1-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.27.1-beta-debug.apk",
+  "sha256": "a032d25ed9c7cb49c938cb2f34d3aa0daddd122959d04188eb347a350740e0e5",
+  "bytes": 33538828,
+  "productionInputs": 308,
+  "unchangedAssetsAndNativeEntries": 46,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "zipalign16KiB": true,
+  "nativeAssertions": 436,
+  "nativeScreenshots": 24,
+  "successfulRuns": [
+    {
+      "runId": "20261105-091845-phone-e65d5eff",
+      "mode": "phone",
+      "scope": "full",
+      "pass": true,
+      "assertions": 119,
+      "screenshots": 6,
+      "failure": null,
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-091845-phone-e65d5eff"
+    },
+    {
+      "runId": "20261105-092238-font1.3-dcbddd08",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 104,
+      "screenshots": 6,
+      "failure": null,
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-092238-font1.3-dcbddd08"
+    },
+    {
+      "runId": "20261105-092534-landscape-c7eb7779",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 103,
+      "screenshots": 6,
+      "failure": null,
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-092534-landscape-c7eb7779"
+    },
+    {
+      "runId": "20261105-092353-tablet-d94c4741",
+      "mode": "tablet",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 110,
+      "screenshots": 6,
+      "failure": null,
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-092353-tablet-d94c4741"
+    }
+  ],
+  "historicalFailedRuns": [
+    {
+      "runId": "20261105-090246-phone-899a6dd9",
+      "mode": "phone",
+      "scope": "full",
+      "pass": false,
+      "assertions": 32,
+      "screenshots": 2,
+      "failure": "java.lang.AssertionError: parameter-caption-unclipped-BRIGHTNESS",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-090246-phone-899a6dd9"
+    },
+    {
+      "runId": "20261105-090418-phone-1a26b2f5",
+      "mode": "phone",
+      "scope": "full",
+      "pass": false,
+      "assertions": 32,
+      "screenshots": 2,
+      "failure": "java.lang.AssertionError: parameter-caption-unclipped-BRIGHTNESS",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-090418-phone-1a26b2f5"
+    },
+    {
+      "runId": "20261105-090515-phone-d7eae4ca",
+      "mode": "phone",
+      "scope": "full",
+      "pass": false,
+      "assertions": 88,
+      "screenshots": 4,
+      "failure": "java.lang.AssertionError: Timeout reachable editor-primary-6",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-090515-phone-d7eae4ca"
+    },
+    {
+      "runId": "20261105-090815-phone-57f8f856",
+      "mode": "phone",
+      "scope": "diagnostic",
+      "pass": false,
+      "assertions": 5,
+      "screenshots": 1,
+      "failure": "java.lang.AssertionError: Timeout reachable editor-primary-6",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-090815-phone-57f8f856"
+    },
+    {
+      "runId": "20261105-091456-phone-21eefadf",
+      "mode": "phone",
+      "scope": "full",
+      "pass": false,
+      "assertions": 89,
+      "screenshots": 4,
+      "failure": "java.lang.AssertionError: Timeout reachable editor-primary-6",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-091456-phone-21eefadf"
+    },
+    {
+      "runId": "20261105-091649-phone-b26eda7b",
+      "mode": "phone",
+      "scope": "diagnostic",
+      "pass": false,
+      "assertions": 5,
+      "screenshots": 1,
+      "failure": "java.lang.AssertionError: Timeout reachable editor-primary-6",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-091649-phone-b26eda7b"
+    },
+    {
+      "runId": "20261105-091958-font1.3-c754b4f2",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 103,
+      "screenshots": 6,
+      "failure": "java.lang.AssertionError: gallery-fixture-available",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-091958-font1.3-c754b4f2"
+    },
+    {
+      "runId": "20261105-092313-landscape-4953a180",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": false,
+      "assertions": 31,
+      "screenshots": 2,
+      "failure": "java.lang.AssertionError: Timeout reachable editor-parameter-BRIGHTNESS",
+      "path": "docs/validation/direct-tools133/native/a032d25e/20261105-092313-landscape-4953a180"
+    }
+  ],
+  "uploaded": false,
+  "published": false
+}

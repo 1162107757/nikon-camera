@@ -1,0 +1,18 @@
+{
+  "verifiedAt": "2026-10-29T01:58:13.979Z",
+  "pass": true,
+  "url": "https://huevia.cc/preset-library/releases/749bc041-8143-40ef-a2bb-8a4c0d4336cc/file",
+  "httpStatus": 200,
+  "bytes": 9531300,
+  "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+  "contentDisposition": "attachment; filename=Huevia-114-beta.apk; filename*=UTF-8''Huevia-114-beta.apk",
+  "expected": {
+    "path": "dist/huevia-0.23.3-beta-debug.apk",
+    "bytes": 9531300,
+    "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "publicApkDownloads": 1
+}

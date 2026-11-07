@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "024332082067562fabbcd113db591747b8f63b93f0e95a9fae9501f13d7e5f42",
+  "versionCode": 123,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "d0c20c6de89c179208ddc93151bc1cabf58731d5a5d5292c599acd27148c5343",
+  "pass": true,
+  "scope": "Short UI batch: original149 matrix, golden vectors, brush integration and full/detail export are covered only by the separate full run; this run covers representative existing-record gallery/picker/editor and two-photo drafts. Original149 SHA-bound files parsed and rendered via installed Android profile and native template; all19 legacy monochrome gray/toning, frozen independent vectors and exact completed-effect strengths0/50/100. Existing-record gallery old unsupported keys remain isolated from new model key without reimport; actual native picker/editor selection, two synthetic JPEG drafts, representative monochrome/color full+detail/EXIF1+6. No user image or physical-phone/Nikon pipeline equivalence claim.",
+  "files": [
+    {
+      "file": "01-gallery-black-white.png",
+      "sha256": "3b136dfd4c70b3c3b15777cf700564238a49bb1d9617612a3979e082b043639f"
+    },
+    {
+      "file": "01-gallery-sepia.png",
+      "sha256": "062246676967dc21832af7b905e0250010f195cb5e69dd0ed2c09a31cf0829d0"
+    },
+    {
+      "file": "01-gallery-yellow-green.png",
+      "sha256": "76998d61cdc3cc8e221c12ed410d31c00e8e28e62582d99c5d43195272dfa45e"
+    },
+    {
+      "file": "02-native-picker-ready.png",
+      "sha256": "270063ace40f4686eb14c5d688c253ba358d19cc55c6705f739574007fe4ea5e"
+    },
+    {
+      "file": "03-editor-monochrome-50.png",
+      "sha256": "ef898be870e6e9d1009395fbfc558f8e51f7f2d6bc6ab854300c0d24a4a6d018"
+    },
+    {
+      "file": "04-editor-color-independent.png",
+      "sha256": "d55f021cd3e190ff85c63c2211c61347a9fb359062927ae2083b4cea26f3f678"
+    },
+    {
+      "file": "report.json",
+      "sha256": "ab99d4cec879249d65cb0b8bf0aff155c9ea3e5c0e7935d8365193726ffcf49b"
+    }
+  ]
+}

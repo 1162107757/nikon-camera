@@ -1,0 +1,136 @@
+{
+  "candidateSha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2",
+  "versionCode": 117,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "0657a083489e1a2fdb27ce4961722aa4df7f4ec69e6e549a592c4571e42719d3",
+  "pass": true,
+  "scope": "Actual installed portrait detector/dialog/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank/manual fallback, nine skin-tone presets and original/zero-strength identity, temporary colour preview/cancel/confirm, palette/analysis eyedropper, personal swatch reopening and exact preference-key restoration, face/body scope, colour/texture/light controls, add/erase strokes, healing, apply/cancel/history/draft isolation, injected preview failure, simulated owner mismatch, full export reference/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim.",
+  "files": [
+    {
+      "file": "01-auto-two-faces.png",
+      "sha256": "26db4ff90f445a3b174ce5c422334b5e05d3b68da491d53de1643a9ebdcb3550"
+    },
+    {
+      "file": "02-skin-colour.png",
+      "sha256": "427a04d2a0d9e08b891fad36cab2d8aeed8450a7819c9b17718c50081cd5e170"
+    },
+    {
+      "file": "03-skin-texture.png",
+      "sha256": "29e582f024d2ff2b22e62c35109ce4aafb290ad5f663526882bbb369138acb40"
+    },
+    {
+      "file": "04-face-light.png",
+      "sha256": "5cf7463dc4708fe85dafd126bb3b76f27348dc4c0fd182648e23ec5b8a8eff2b"
+    },
+    {
+      "file": "05-mask-corrections.png",
+      "sha256": "0e25a5069df0dfe0a2aadd50a2d8b8d3513295e96dd102435ccea4bac069bbdc"
+    },
+    {
+      "file": "06-blemish-healing.png",
+      "sha256": "e5e911f4694c46bdeecc81d88e6ca3b1269e564e5a11610af4fd835e694df670"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "504452628ed07d4a260870885bbbd6673765a56537c733dedfcccd9886768508"
+    },
+    {
+      "file": "08-first-face-selected-canvas.png",
+      "sha256": "a2d95f54d997f70508e526eb284a8baec6bef613f664d9d243d9a8baeb5b6275"
+    },
+    {
+      "file": "08-first-face-selected.png",
+      "sha256": "2a968c697782b56801ec9c78209a6a28b14af2ad3601135fe15ce62a4a0f5034"
+    },
+    {
+      "file": "09-second-face-selected-canvas.png",
+      "sha256": "08d796018f4008660f0564b9b296924475dc546c1ea2ffe2c4a1593442ac5656"
+    },
+    {
+      "file": "09-second-face-selected.png",
+      "sha256": "28c261e0776e92771d14ee69233fcf378e8d7cae3068b6987705815fdd1b6ac2"
+    },
+    {
+      "file": "10-clean-hold-comparison.png",
+      "sha256": "62ad016265e153596343f095c133193ff065abd7407c64c6bd487151f7ad105c"
+    },
+    {
+      "file": "11-face-picker-current.png",
+      "sha256": "c9659c070fad703debac2fd9a5bd320a39069439b4fdbb5ce090ac0fc342f819"
+    },
+    {
+      "file": "12-feedback-ended-clean.png",
+      "sha256": "fd7250ecae9f5217e0336ffd09ff746284f0feae8b2553966e48ec9d86d655a3"
+    },
+    {
+      "file": "13-nine-skin-tone-presets.png",
+      "sha256": "cf0193b38983f438d1e9c0ec0edecbbbea63a8695fc0d1e5e0b92b759a75e950"
+    },
+    {
+      "file": "14-custom-skin-tone-picker.png",
+      "sha256": "bd609cf5bc65adf399c54459eb35c5e6950bfaa42df58d34e9693a88e607540f"
+    },
+    {
+      "file": "15-full-body-skin-tone.png",
+      "sha256": "bdf8d2fa01745ceb3bfebb84d7290b2991ae8c6d03618b95b4cc8a7a0ae0f962"
+    },
+    {
+      "file": "16-custom-tone-photo-preview.png",
+      "sha256": "8a31a5356e966cf6c5f230bc6c9037f41d4da6c079dfb0c37f356b2ebc56766b"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "ff4d1557f0db495cfc2769cd140133c4d53be1cd55eedd7f888f3912cc0e12b0"
+    },
+    {
+      "file": "report.json",
+      "sha256": "d4e96e926eb3a31c83c6dafbf774cd6156ea712fd2deabcdf674ab368517470c"
+    },
+    {
+      "file": "tap-first-ended-clean.png",
+      "sha256": "e73655382cb3b7f703c67d8a8bf665d5dac5d1310b843424538eaf6402701bf4"
+    },
+    {
+      "file": "tap-first-first-pulse.png",
+      "sha256": "a2d95f54d997f70508e526eb284a8baec6bef613f664d9d243d9a8baeb5b6275"
+    },
+    {
+      "file": "tap-first-off-gap.png",
+      "sha256": "e73655382cb3b7f703c67d8a8bf665d5dac5d1310b843424538eaf6402701bf4"
+    },
+    {
+      "file": "tap-first-second-pulse.png",
+      "sha256": "a2d95f54d997f70508e526eb284a8baec6bef613f664d9d243d9a8baeb5b6275"
+    },
+    {
+      "file": "tap-second-ended-clean.png",
+      "sha256": "e73655382cb3b7f703c67d8a8bf665d5dac5d1310b843424538eaf6402701bf4"
+    },
+    {
+      "file": "tap-second-first-pulse.png",
+      "sha256": "08d796018f4008660f0564b9b296924475dc546c1ea2ffe2c4a1593442ac5656"
+    },
+    {
+      "file": "tap-second-off-gap.png",
+      "sha256": "e73655382cb3b7f703c67d8a8bf665d5dac5d1310b843424538eaf6402701bf4"
+    },
+    {
+      "file": "tap-second-second-pulse.png",
+      "sha256": "08d796018f4008660f0564b9b296924475dc546c1ea2ffe2c4a1593442ac5656"
+    },
+    {
+      "file": "ui-jpeg-analysis-14.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    },
+    {
+      "file": "ui-jpeg-analysis-75.png",
+      "sha256": "e034a3875f10fb584ca35769c509c619ee29634d4de7dc194f26ee9886808c73"
+    },
+    {
+      "file": "ui-jpeg-analysis-9.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    }
+  ]
+}

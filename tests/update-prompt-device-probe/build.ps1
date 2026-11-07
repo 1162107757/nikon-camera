@@ -23,7 +23,7 @@ try{foreach($file in Get-ChildItem -LiteralPath $dex -Filter '*.dex'){[IO.Compre
 $aligned=Join-Path $work 'aligned.apk';$final=Join-Path $output 'update-prompt-probe.apk'
 Checked (Join-Path $buildTools 'zipalign.exe') @('-f','4',$unsigned,$aligned)
 Checked (Join-Path $JdkRoot 'bin/java.exe') @('-jar',(Join-Path $buildTools 'lib/apksigner.jar'),'sign','--ks',(Join-Path $root '.tooling/debug.keystore'),'--ks-pass','pass:android','--key-pass','pass:android','--ks-key-alias','androiddebugkey','--out',$final,$aligned)
-$inputs=@($source,(Join-Path $PSScriptRoot 'AndroidManifest.xml'),$PSCommandPath)|ForEach-Object{[ordered]@{path=[IO.Path]::GetRelativePath($root,$_).Replace('\','/');sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $_).Hash.ToLowerInvariant()}}
+$inputs=@($source,(Join-Path $PSScriptRoot 'AndroidManifest.xml'),(Join-Path $PSScriptRoot 'run.ps1'),$PSCommandPath)|ForEach-Object{[ordered]@{path=[IO.Path]::GetRelativePath($root,$_).Replace('\','/');sha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $_).Hash.ToLowerInvariant()}}
 [IO.File]::WriteAllText((Join-Path $output 'provenance.json'),([ordered]@{inputs=@($inputs);apkSha256=(Get-FileHash -Algorithm SHA256 -LiteralPath $final).Hash.ToLowerInvariant()}|ConvertTo-Json -Depth 5),[Text.UTF8Encoding]::new($false))
 Write-Output $final
 

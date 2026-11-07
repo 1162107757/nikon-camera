@@ -1,0 +1,207 @@
+{
+  "candidate": {
+    "versionCode": 117,
+    "versionName": "0.23.6-beta",
+    "sha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2",
+    "bytes": 33395468
+  },
+  "probe": {
+    "sha256": "0657a083489e1a2fdb27ce4961722aa4df7f4ec69e6e549a592c4571e42719d3",
+    "classpath": "Android API35 only",
+    "inputs": [
+      {
+        "path": "tests/portrait-device-probe/src/cc/huevia/portraitqa/PortraitProbe.java",
+        "sha256": "5a9d1f6ef1000b9d7b013ab9ae3358719476caf7cda39ddec6482423c9721323"
+      },
+      {
+        "path": "tests/portrait-device-probe/AndroidManifest.xml",
+        "sha256": "36beadea570e7daf803df35e9095fcf8d09ac1bc6c5d8569212d5f8027e58972"
+      },
+      {
+        "path": "tests/portrait-device-probe/build.ps1",
+        "sha256": "59bb80534a6173699a52bda2b3abbca71aa38009468d9fdf5d77ecdf0fc655c5"
+      },
+      {
+        "path": "tests/portrait-device-probe/run.ps1",
+        "sha256": "24fa906cb18458480dad59aa8d76571991404db72994b25605c69760714b8090"
+      }
+    ]
+  },
+  "pass": true,
+  "assertionExecutions": 2627,
+  "screenshots": 51,
+  "countScope": "Assertion executions include repeated workflow and configuration checks; they are not independent accuracy cases.",
+  "runs": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "assertionExecutions": 872,
+      "screenshots": 17,
+      "report": "docs/validation/portrait-tools/bc68248f/20261029-142645-phone-654dd03e/20261029-142645-phone-654dd03e/report.json",
+      "provenance": "docs/validation/portrait-tools/bc68248f/20261029-142645-phone-654dd03e/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/bc68248f/20261029-142645-phone-654dd03e/cleanup.json",
+      "preferencesRestored": true,
+      "fixturesRemoved": true,
+      "cleanupErrors": [],
+      "originalIdentity": {
+        "case": "native-original-tone-exact-preview",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "zeroStrengthIdentity": {
+        "case": "native-zero-tone-strength-exact-preview",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "cancelColourIdentity": {
+        "case": "cancel-custom-preview-exact-pixels",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "faceIsolation": {
+        "case": "native-tone-real-preview-face-isolation",
+        "selectedFaceDifferentPixels": 6310,
+        "otherFaceDifferentPixels": 0
+      },
+      "bodyScope": {
+        "case": "native-face-versus-body-tone-scope",
+        "bodyGridPixels": 16384,
+        "bodyPixelsAbove16": 106,
+        "otherFaceEditsUnchanged": true,
+        "scope": "Owned NASA collage; semantic coverage existence, editable-state isolation and real render continuity. Automatic body masks may enrich both faces' caches. Host tests separately isolate body-only versus legacy face controls."
+      },
+      "detailTiles": {
+        "case": "actual-detail-tiles-vs-full-reference",
+        "samples": 1922,
+        "pixelErrors": 0
+      }
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "assertionExecutions": 872,
+      "screenshots": 17,
+      "report": "docs/validation/portrait-tools/bc68248f/20261029-143109-font1.3-e156b162/20261029-143109-font1.3-e156b162/report.json",
+      "provenance": "docs/validation/portrait-tools/bc68248f/20261029-143109-font1.3-e156b162/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/bc68248f/20261029-143109-font1.3-e156b162/cleanup.json",
+      "preferencesRestored": true,
+      "fixturesRemoved": true,
+      "cleanupErrors": [],
+      "originalIdentity": {
+        "case": "native-original-tone-exact-preview",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "zeroStrengthIdentity": {
+        "case": "native-zero-tone-strength-exact-preview",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "cancelColourIdentity": {
+        "case": "cancel-custom-preview-exact-pixels",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "faceIsolation": {
+        "case": "native-tone-real-preview-face-isolation",
+        "selectedFaceDifferentPixels": 6310,
+        "otherFaceDifferentPixels": 0
+      },
+      "bodyScope": {
+        "case": "native-face-versus-body-tone-scope",
+        "bodyGridPixels": 16384,
+        "bodyPixelsAbove16": 106,
+        "otherFaceEditsUnchanged": true,
+        "scope": "Owned NASA collage; semantic coverage existence, editable-state isolation and real render continuity. Automatic body masks may enrich both faces' caches. Host tests separately isolate body-only versus legacy face controls."
+      },
+      "detailTiles": {
+        "case": "actual-detail-tiles-vs-full-reference",
+        "samples": 1922,
+        "pixelErrors": 0
+      }
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "assertionExecutions": 883,
+      "screenshots": 17,
+      "report": "docs/validation/portrait-tools/bc68248f/20261029-143339-landscape-2f3bfaf2/20261029-143339-landscape-2f3bfaf2/report.json",
+      "provenance": "docs/validation/portrait-tools/bc68248f/20261029-143339-landscape-2f3bfaf2/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/bc68248f/20261029-143339-landscape-2f3bfaf2/cleanup.json",
+      "preferencesRestored": true,
+      "fixturesRemoved": true,
+      "cleanupErrors": [],
+      "originalIdentity": {
+        "case": "native-original-tone-exact-preview",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "zeroStrengthIdentity": {
+        "case": "native-zero-tone-strength-exact-preview",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "cancelColourIdentity": {
+        "case": "cancel-custom-preview-exact-pixels",
+        "pixels": 524288,
+        "differentPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "faceIsolation": {
+        "case": "native-tone-real-preview-face-isolation",
+        "selectedFaceDifferentPixels": 6310,
+        "otherFaceDifferentPixels": 0
+      },
+      "bodyScope": {
+        "case": "native-face-versus-body-tone-scope",
+        "bodyGridPixels": 16384,
+        "bodyPixelsAbove16": 106,
+        "otherFaceEditsUnchanged": true,
+        "scope": "Owned NASA collage; semantic coverage existence, editable-state isolation and real render continuity. Automatic body masks may enrich both faces' caches. Host tests separately isolate body-only versus legacy face controls."
+      },
+      "detailTiles": {
+        "case": "actual-detail-tiles-vs-full-reference",
+        "samples": 1922,
+        "pixelErrors": 0
+      }
+    }
+  ],
+  "visualReview": {
+    "method": "One bounded screenshot confirmation batch after the SDK<28 software-layer fix.",
+    "capturesPerMode": [
+      "13-nine-skin-tone-presets.png",
+      "14-custom-skin-tone-picker.png",
+      "15-full-body-skin-tone.png",
+      "16-custom-tone-photo-preview.png"
+    ],
+    "findings": "No blocking clipping, overlap or inaccessible primary action observed in phone, actual font1.3 and landscape. Landscape picker content scrolls within a bounded native dialog; primary buttons stay visible. Colour-preview screenshots deliberately exercise arbitrary HSV colours.",
+    "scope": "Owned emulator only; not a full TalkBack, device-performance, tablet or broad segmentation certification."
+  },
+  "localBodyQuality": "LOCAL-BODY-QUALITY.json",
+  "handoff": {
+    "serial": "emulator-5588",
+    "hardware": "ranchu",
+    "sdk": "37",
+    "abi": "x86_64",
+    "mainProcessStopped": true,
+    "publicProbeInstalled": false,
+    "privateProbeInstalled": false,
+    "restoredSettings": {
+      "fontScale": "1.0",
+      "airplane": "0",
+      "wifi": "1",
+      "mobile": "1",
+      "immersiveConfirmation": "null"
+    },
+    "emulatorLeftRunning": true,
+    "returnedToParentForShutdown": true
+  }
+}

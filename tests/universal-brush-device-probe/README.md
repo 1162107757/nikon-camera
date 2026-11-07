@@ -1,0 +1,13 @@
+# Universal brush native probe
+
+Reflection-only instrumentation targeting the exact installed production APK. The UI/model contracts are connected to the universal adjustment-region workflow; the test package contains no production model, filter or dialog classes.
+
+The runner verifies the candidate SHA, installed package bytes, test source/probe provenance, emulator hardware and exact NASA fixture bytes. It temporarily disables network and Android's first-fullscreen coaching prompt, restores the exact prior font/airplane/immersive settings, uninstalls only its test package, and removes only its newly transferred fixture. Evidence is written to `docs/validation/universal-brush/<candidate prefix>/<run ID>/`.
+
+The workflow uses real brush/erase strokes and live masks, radius/feather, two-finger navigation and disabled single-pointer anchored scaling. Completion captures the actual first illuminated canvas, clean gap and second illuminated canvas before PNG encoding; both illuminated frames must match the generated vector mask over the source, maximum alpha is 38 with warm-white RGB, the gap is exact clean source and the completion commits one editor history entry.
+
+Every one of the 17 native adjustment controls and the real curves/HSL dialogs is exercised inside the same painted mask. A sampler from the actual installed model classifies every zero-mask pixel, and all those packed ARGB values must remain exact in the actual final preview. Matrix cases are undone to the same baseline so earlier parameters cannot hide a later failure. The workflow then keeps multiple parameters in one region, creates a second independent region, switches scopes without history changes, reopens and cancels/edits/clears masks, undoes deletion, rejects an owner mismatch and checks global/local isolation, real draft/photo switching, full-reference/detail pixels and an independent EXIF6 integer-pixel oracle.
+
+On a separate owned NASA portrait, the same real brush covers face and clothing. Ordinary brightness must change painted non-skin pixels; five skin controls and a skin-tone preset must leave zero semantic-mask pixels exact. The region context is visible in the portrait title, parameter editing has no persistent mask overlay, nested mask cancel/finish/undo/redo retains the full region payload, outer cancel discards the transaction, and outer apply creates one main history entry. Host tests separately own the exhaustive parameter × all-eight-EXIF matrix and alpha0 boundary invariants. The recorded report defines what actually passed.
+
+Do not run until the root agent hands off an owned emulator and a frozen candidate APK. No physical-device or broad image-recognition accuracy claim is made by this probe.

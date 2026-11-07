@@ -1,0 +1,138 @@
+{
+  "access": "NONE",
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "source-summary-and-title-action-present",
+      "pass": true
+    },
+    {
+      "name": "source-row-only-has-two-segments",
+      "pass": true
+    },
+    {
+      "name": "more-source-and-actions-have-separate-rows",
+      "pass": true
+    },
+    {
+      "name": "App-shows-total-count",
+      "pass": true
+    },
+    {
+      "name": "App-has-no-persistent-add-action",
+      "pass": true
+    },
+    {
+      "name": "App-selection-remains-directly-accessible",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-source-app",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-app",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-source-phone",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-phone",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-select",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-select",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-local-album-more",
+      "pass": true
+    },
+    {
+      "name": "selection-shares-secondary-count-color",
+      "pass": true
+    },
+    {
+      "name": "first-photo-tile-is-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "selection-opens-batch-actions",
+      "pass": true
+    },
+    {
+      "name": "owned-photo-tile-is-reachable",
+      "pass": true
+    },
+    {
+      "name": "selected-photo-enables-edit-and-export",
+      "pass": true
+    },
+    {
+      "name": "cancel-clears-selection-and-restores-browsing",
+      "pass": true
+    },
+    {
+      "name": "title-overflow-keeps-refresh-and-RAW",
+      "pass": true
+    },
+    {
+      "name": "empty-App-offers-source-navigation-not-import",
+      "pass": true
+    },
+    {
+      "name": "empty-App-recovery-label-and-entire-target-visible",
+      "pass": true
+    },
+    {
+      "name": "source-switch-has-no-sideways-animation",
+      "pass": true
+    },
+    {
+      "name": "phone-source-has-small-picker-action",
+      "pass": true
+    },
+    {
+      "name": "48dp-click-target-phone-picker",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-phone-picker",
+      "pass": true
+    },
+    {
+      "name": "denied-phone-access-keeps-explicit-authorization-and-picker",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-app",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-source-phone",
+      "pass": true
+    },
+    {
+      "name": "single-line-label-fits-local-album-picker",
+      "pass": true
+    },
+    {
+      "name": "small-picker-dispatches-openable-multiple-JPEG-PNG-intent",
+      "pass": true
+    },
+    {
+      "name": "cancelled-picker-imports-nothing-and-keeps-access",
+      "pass": true
+    }
+  ]
+}

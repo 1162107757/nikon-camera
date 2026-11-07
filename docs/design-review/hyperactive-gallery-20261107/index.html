@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Huevia · 轻玻璃图库原型</title><link rel="icon" href="data:,">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3e9e2;color:#282521;font-family:"Segoe UI Variable","PingFang SC","Microsoft YaHei UI",sans-serif;background-image:radial-gradient(ellipse at 8% 25%,#eed0c0 0,transparent 47%),radial-gradient(ellipse at 89% 74%,#eac7c4 0,transparent 51%)}
+header{max-width:1230px;padding:32px 30px 24px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:25px;font-weight:650;letter-spacing:-.04em}.brand small{font-size:12px;letter-spacing:0;font-weight:400;margin-left:16px;color:#65574e}h1{font-size:16px;font-weight:500;margin:9px 0 0;letter-spacing:-.015em}a{color:inherit;text-underline-offset:4px}header>a{background:#fff9;padding:11px 19px;border-radius:23px;text-decoration:none;font-size:12px;white-space:nowrap}
+.board{max-width:1540px;margin:auto;padding:0 26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}.column{min-width:0}.device{aspect-ratio:390/844;position:relative;overflow:hidden;border-radius:30px;background:#fafaf8;box-shadow:0 22px 55px -32px #6e403c80}.device iframe{border:0;width:390px;height:844px;display:block;position:absolute;left:0;top:0;transform-origin:top left}.caption{font-size:13px;font-weight:550;margin:18px 0 7px}.caption span{display:block;font-weight:400;color:#6a5b54;font-size:11px;margin-top:6px}
+footer{max-width:1230px;margin:auto;padding:23px 30px 26px;display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:11px;color:#675951}footer p{margin:0;line-height:1.8}footer a{white-space:nowrap}a:focus-visible{outline:2px solid #926249;outline-offset:4px}::selection{background:#ecc4b0}
+header,footer{max-width:1540px}@media(min-width:1450px){header{padding-top:42px}.board{gap:30px}}
+@media(max-width:1000px) and (min-width:601px){.board{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:24px;gap:24px}.column{flex:0 0 320px;scroll-snap-align:center}header{padding:24px 26px 22px}.brand small{display:none}footer{padding-top:0}}
+@media(max-width:600px){header,footer,.caption{display:none}.board{display:block;padding:0}.column:not(:first-child){display:none}.device{border-radius:0;box-shadow:none;height:100dvh;aspect-ratio:auto}.column{width:100%}}
+</style></head>
+<body>
+<!-- THESIS: Reference-pinned photographic gallery translated into ONLY Huevia's four home tabs.
+OWN-WORLD: warm white, peach atmosphere, compact white/charcoal glass controls and photographic masonry.
+STORY: browse presets, monitor sync, browse albums and find settings.
+FIRST VIEWPORT: four equal 390x844 home-tab previews. No photo-processing design is included.
+FORM: user-pinned Hyperactive direction overrides edc4baaf index7; code-native review prototype.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance. -->
+<header><div><div class="brand">Huevia<small>四个主页 · 交互原型</small></div><h1>照片是主角，操作轻一点。</h1></div><a href="app.html#presets">进入单屏体验 ↗</a></header>
+<main class="board">
+<section class="column"><div class="device"><iframe src="app.html#presets" title="预设交互原型"></iframe></div><p class="caption">预设<span>先看色彩，再选择喜欢的效果</span></p></section>
+<section class="column"><div class="device"><iframe src="app.html#sync" title="同步交互原型"></iframe></div><p class="caption">同步<span>轻量状态，传输进度清楚可见</span></p></section>
+<section class="column"><div class="device"><iframe src="app.html#album" title="相册交互原型"></iframe></div><p class="caption">相册<span>更大的照片，轻盈的悬浮操作</span></p></section>
+<section class="column"><div class="device"><iframe src="app.html#settings" title="设置交互原型"></iframe></div><p class="caption">设置<span>入口清晰，层次更轻</span></p></section>
+</main>
+<footer><p>仅设计预设、同步、相册、设置四个主页，支持顶部分类和底部导航切换。<br>图片处理沿用现有界面 · 照片与状态为演示数据 · 不连接真实相机</p><a href="https://dribbble.com/shots/27683076--Product-design-for-photo-gallery-mobile-app-Hyperactive" target="_blank" rel="noreferrer">视觉参考 / Hyperactive ↗</a></footer>
+<script>
+const capture=new URLSearchParams(location.search).has("capture");
+const observer=new ResizeObserver(entries=>entries.forEach(({target,contentRect})=>{const f=target.querySelector("iframe");const single=innerWidth<=600;f.style.width=single?"100%":"390px";f.style.height=single?"100%":"844px";f.style.transform=single?"none":"scale("+(contentRect.width/390)+")";}));
+document.querySelectorAll(".device").forEach(d=>{observer.observe(d);if(capture){const f=d.querySelector("iframe"),u=new URL(f.src);u.searchParams.set("capture","1");f.src=u.href;}});
+</script></body></html>

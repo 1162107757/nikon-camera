@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "4ccb53a991b00dfc9875362b243ec9e5b2cd8d54f384b08b2e41abefb8db6d82",
+  "versionCode": 128,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "f8a29ae63a1d2517629d918765f2913771108205bc20977225625b7fa4f72a84",
+  "pass": false,
+  "scope": "full",
+  "files": [
+    {
+      "file": "01-portrait-entries.png",
+      "sha256": "777b01b91de7e31ad910f1a79602a4b3d01079e8c097ae61f5e3b69b6b462ee9"
+    },
+    {
+      "file": "02-body-range.png",
+      "sha256": "6b8c84116dbee2a07d21e3c63a81986c1d966f11cc962305bc8e7359022fb159"
+    },
+    {
+      "file": "03-body-adjusted.png",
+      "sha256": "f8d6ca85c8c9a0b6af2ab37c4f81c7cf16c759e443aed6fc4e3c89578567a5f4"
+    },
+    {
+      "file": "04-legs.png",
+      "sha256": "607df39545707222aa18f886cf8717a0687dcc9f3110383d0905291f475a2e29"
+    },
+    {
+      "file": "05-leg-length.png",
+      "sha256": "9c8634bbc5cd21caef0a98437906f51aee2344944292e1a417f8cdae97e40e22"
+    },
+    {
+      "file": "06-range-controls.png",
+      "sha256": "dab13f67b01c8c762ea218b4b6c6f306ee57ef5c3751a74d5341d56464426906"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "4f6fcf1009a17d4871ee2ca898415a2f000429c0b5115a8e982d35131ae7009b"
+    },
+    {
+      "file": "report.json",
+      "sha256": "0b491b6f8fd1e9ee8624e83e7cde8e3b00cfc5e432fda204798f26e26bd265a4"
+    }
+  ]
+}

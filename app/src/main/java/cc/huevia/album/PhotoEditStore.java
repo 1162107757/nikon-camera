@@ -2,6 +2,8 @@ package cc.huevia.album;
 
 import cc.huevia.ncp.PresetPreviewProfiles;
 import cc.huevia.ncp.PhotoAdjustments;
+import cc.huevia.ncp.PhotoColorPalette;
+import cc.huevia.ncp.PhotoCleanup;
 import cc.huevia.ncp.PresetPreviewProfile;
 import cc.huevia.ncp.StrengthPreviewProfile;
 import cc.huevia.ncp.AdjustedPreviewProfile;
@@ -19,7 +21,7 @@ import java.util.Arrays;
 
 /** Worker-only, account-scoped drafts, indexed by verified original bytes rather than a filename. */
 public final class PhotoEditStore {
-    private static final int LEGACY_MAGIC = 0x50454431, ADJUSTMENT_MAGIC = 0x50454432, GEOMETRY_MAGIC = 0x50454433, BORDER_MAGIC = 0x50454434, ADVANCED_MAGIC = 0x50454435, MAGIC = 0x50454436, LIMIT = 1024 * 1024;
+    private static final int LEGACY_MAGIC = 0x50454431, ADJUSTMENT_MAGIC = 0x50454432, GEOMETRY_MAGIC = 0x50454433, BORDER_MAGIC = 0x50454434, ADVANCED_MAGIC = 0x50454435, MAGIC = 0x50454436, PALETTE_MAGIC = 0x50454437, CLEANUP_MAGIC = 0x50454438, LIMIT = 1024 * 1024;
     private static final Object LOCK = new Object();
     private final File root;
     public static final class Draft {
@@ -56,13 +58,13 @@ public final class PhotoEditStore {
         }
         public byte[] presetBytes() { return bytes.clone(); }
         public boolean hasEffect() { return !presetSha.isEmpty() && strength > 0 || !adjustments.isNeutral() || !geometry.isNeutral() || !border.isNone() || !localEdits.isNeutral(); }
-        public String identity() { return sourceSha + ":" + presetSha + ":" + strength + (adjustments.isNeutral()?"":":"+adjustments.identity())+(geometry.isNeutral()?"":":"+geometry.identity())+(border.equals(PhotoBorder.NONE)?"":":"+border.identity())+(localEdits.isNeutral()?"":":"+localEdits.identity()); }
+        public String identity() { return sourceSha + ":" + presetSha + ":" + strength + (adjustments.isNeutral()&&!adjustments.palette.hasStoredState()&&!adjustments.cleanup.hasStoredState()?"":":"+adjustments.identity())+(geometry.isNeutral()?"":":"+geometry.identity())+(border.equals(PhotoBorder.NONE)?"":":"+border.identity())+(localEdits.isNeutral()&&!localEdits.hasStoredCleanupState()&&!localEdits.hasStoredBodyState()&&!localEdits.hasStoredSkinSmoothingState()?"":":"+localEdits.identity()); }
         public String effectPresetSha(){return presetSha.isEmpty()?hash("huevia-manual-original-v1".getBytes(StandardCharsets.UTF_8)):presetSha;}
         public PresetPreviewProfile profile() throws IOException {
             PresetPreviewProfile preset=bytes.length==0?null:StrengthPreviewProfile.of(PresetPreviewProfiles.fromPreset(bytes),strength);
             return BorderPreviewProfile.of(GeometryPreviewProfile.of(LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(preset,adjustments),localEdits),geometry),border);
         }
-        public String label(){return name+(presetSha.isEmpty()?"":" · "+strength+"%")+(adjustments.isNeutral()?"":" · 调节 "+adjustments.count()+" 项")+(geometry.isNeutral()?"":" · 已构图")+(localEdits.isNeutral()?"":" · 局部")+(border.isNone()?"":" · "+PhotoBorder.TEMPLATES[border.template]);}
+        public String label(){return name+(presetSha.isEmpty()?"":" · "+strength+"%")+(adjustments.isNeutral()?"":" · 调节 "+adjustments.count()+" 项")+(geometry.isNeutral()?"":" · 已构图")+(localEdits.hasLocalEffects()?" · 局部":"")+(localEdits.portrait.isNeutral()?"":" · 人像")+(border.isNone()?"":" · "+PhotoBorder.TEMPLATES[border.template]);}
     }
     public PhotoEditStore(File files, String owner) throws IOException {
         File base = files.getCanonicalFile();
@@ -72,13 +74,14 @@ public final class PhotoEditStore {
     public Draft read(String sourceSha) throws IOException {
         synchronized (LOCK) {
             File file = file(sourceSha); if (!file.exists()) return null;
-            if (file.length() < 40 || file.length() > LIMIT + 512 * 1024) throw new IOException("照片编辑草稿损坏。");
+            if (file.length() < 40 || file.length() > LIMIT + 1024 * 1024) throw new IOException("照片编辑草稿损坏。");
             byte[] all = Files.readAllBytes(file.toPath()); int size = all.length - 32;
             byte[] body = Arrays.copyOf(all, size);
             if (!MessageDigest.isEqual(digest(body), Arrays.copyOfRange(all, size, all.length))) throw new IOException("照片编辑草稿校验失败。");
             try (DataInputStream in = new DataInputStream(new ByteArrayInputStream(body))) {
                 int magic=in.readInt();
-                if ((magic != MAGIC && magic != ADVANCED_MAGIC && magic != BORDER_MAGIC && magic != GEOMETRY_MAGIC && magic != ADJUSTMENT_MAGIC && magic != LEGACY_MAGIC) || !in.readUTF().equals(sourceSha)) throw new IOException("草稿与原图不符。");
+                boolean current=magic==MAGIC||magic==PALETTE_MAGIC||magic==CLEANUP_MAGIC;
+                if ((!current && magic != ADVANCED_MAGIC && magic != BORDER_MAGIC && magic != GEOMETRY_MAGIC && magic != ADJUSTMENT_MAGIC && magic != LEGACY_MAGIC) || !in.readUTF().equals(sourceSha)) throw new IOException("草稿与原图不符。");
                 String name = in.readUTF(); int strength = in.readInt(); boolean exported = in.readBoolean(); int length = in.readInt();
                 if (length < 0 || length > LIMIT || length > in.available()) throw new IOException("草稿预设数据不完整。");
                 byte[] bytes = new byte[length]; in.readFully(bytes);
@@ -86,18 +89,19 @@ public final class PhotoEditStore {
                 if(magic!=LEGACY_MAGIC){
                     if(!PhotoAdjustments.MODEL.equals(in.readUTF()))throw new IOException("无法读取此版本的基础调整。");
                     int count=in.readInt();
-                    if(count!=PhotoAdjustments.LEGACY_PARAMETER_COUNT&&(magic!=MAGIC||count!=PhotoAdjustments.Parameter.values().length))throw new IOException("无法读取此版本的基础调整。");
+                    if(count!=PhotoAdjustments.LEGACY_PARAMETER_COUNT&&(!current||count!=PhotoAdjustments.Parameter.values().length))throw new IOException("无法读取此版本的基础调整。");
                     int[] values=new int[count];for(int i=0;i<values.length;i++)values[i]=in.readInt();
                     try{adjustments=new PhotoAdjustments(values);}catch(IllegalArgumentException invalid){throw new IOException("基础调整草稿损坏。",invalid);}
                 }
-                if(magic==MAGIC||magic==ADVANCED_MAGIC)adjustments=adjustments.readAdvanced(in);
+                if(current||magic==ADVANCED_MAGIC)adjustments=adjustments.readAdvanced(in);
+                if(magic==PALETTE_MAGIC||magic==CLEANUP_MAGIC)adjustments=adjustments.withPalette(PhotoColorPalette.read(in));if(magic==CLEANUP_MAGIC)adjustments=adjustments.withCleanup(PhotoCleanup.read(in));
                 PhotoGeometry geometry=PhotoGeometry.NONE;
-                if(magic==MAGIC||magic==ADVANCED_MAGIC||magic==BORDER_MAGIC||magic==GEOMETRY_MAGIC){
-                    if(!PhotoGeometry.MODEL.equals(in.readUTF()))throw new IOException("无法读取此版本的构图。");
-                    try{int turns=in.readInt(),angle=in.readInt(),left=in.readInt(),top=in.readInt(),right=in.readInt(),bottom=in.readInt();geometry=magic==MAGIC?new PhotoGeometry(turns,angle,left,top,right,bottom,in.readInt(),in.readInt()):new PhotoGeometry(turns,angle,left,top,right,bottom);}catch(IllegalArgumentException invalid){throw new IOException("构图草稿损坏。",invalid);}
+                if(current||magic==ADVANCED_MAGIC||magic==BORDER_MAGIC||magic==GEOMETRY_MAGIC){
+                    String geometryModel=in.readUTF();boolean mirrorModel=PhotoGeometry.MIRROR_MODEL.equals(geometryModel);if(!PhotoGeometry.MODEL.equals(geometryModel)&&!mirrorModel||mirrorModel&&!current)throw new IOException("无法读取此版本的构图。");
+                    try{int turns=in.readInt(),angle=in.readInt(),left=in.readInt(),top=in.readInt(),right=in.readInt(),bottom=in.readInt();geometry=current?new PhotoGeometry(turns,angle,left,top,right,bottom,in.readInt(),in.readInt(),mirrorModel&&in.readBoolean()):new PhotoGeometry(turns,angle,left,top,right,bottom);}catch(IllegalArgumentException invalid){throw new IOException("构图草稿损坏。",invalid);}
                 }
-                PhotoBorder border=magic==MAGIC||magic==ADVANCED_MAGIC||magic==BORDER_MAGIC?PhotoBorder.read(in):PhotoBorder.NONE;
-                PhotoLocalEdits localEdits=magic==MAGIC?PhotoLocalEdits.read(in):PhotoLocalEdits.NONE;
+                PhotoBorder border=current||magic==ADVANCED_MAGIC||magic==BORDER_MAGIC?PhotoBorder.read(in):PhotoBorder.NONE;
+                PhotoLocalEdits localEdits=current?PhotoLocalEdits.read(in):PhotoLocalEdits.NONE;
                 if(in.available()!=0)throw new IOException("草稿包含未知数据。");
                 return new Draft(sourceSha, bytes, name, strength, adjustments, geometry, border, localEdits, exported);
             }
@@ -107,11 +111,12 @@ public final class PhotoEditStore {
         synchronized (LOCK) {
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             try (DataOutputStream out = new DataOutputStream(bytes)) {
-                out.writeInt(MAGIC); out.writeUTF(draft.sourceSha); out.writeUTF(draft.name);
+                boolean cleanup=draft.adjustments.cleanup.hasStoredState(),palette=cleanup||draft.adjustments.palette.hasStoredState();out.writeInt(cleanup?CLEANUP_MAGIC:palette?PALETTE_MAGIC:MAGIC); out.writeUTF(draft.sourceSha); out.writeUTF(draft.name);
                 out.writeInt(draft.strength); out.writeBoolean(draft.exported); out.writeInt(draft.bytes.length); out.write(draft.bytes);
                 out.writeUTF(PhotoAdjustments.MODEL);int[] values=draft.adjustments.values();out.writeInt(values.length);for(int value:values)out.writeInt(value);
                 draft.adjustments.writeAdvanced(out);
-                PhotoGeometry g=draft.geometry;out.writeUTF(PhotoGeometry.MODEL);out.writeInt(g.turns);out.writeInt(g.angle);out.writeInt(g.left);out.writeInt(g.top);out.writeInt(g.right);out.writeInt(g.bottom);out.writeInt(g.horizontalPerspective);out.writeInt(g.verticalPerspective);
+                if(palette)draft.adjustments.palette.write(out);if(cleanup)draft.adjustments.cleanup.write(out);
+                PhotoGeometry g=draft.geometry;out.writeUTF(g.mirrored?PhotoGeometry.MIRROR_MODEL:PhotoGeometry.MODEL);out.writeInt(g.turns);out.writeInt(g.angle);out.writeInt(g.left);out.writeInt(g.top);out.writeInt(g.right);out.writeInt(g.bottom);out.writeInt(g.horizontalPerspective);out.writeInt(g.verticalPerspective);if(g.mirrored)out.writeBoolean(true);
                 draft.border.write(out);
                 draft.localEdits.write(out);
             }

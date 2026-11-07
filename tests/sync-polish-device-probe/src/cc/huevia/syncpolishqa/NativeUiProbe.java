@@ -1,0 +1,72 @@
+package cc.huevia.syncpolishqa;
+
+import android.app.*;
+import android.content.*;
+import android.graphics.*;
+import android.os.*;
+import android.view.*;
+import android.view.accessibility.AccessibilityNodeInfo;
+import android.widget.*;
+import java.io.*;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import org.json.*;
+
+/** Actual installed shared controls, real album labels/category validation, and native callback semantics. */
+public final class NativeUiProbe extends Instrumentation {
+    private Activity activity;private ClassLoader loader;private Bundle args;private File output;
+    private final JSONArray checks=new JSONArray();private String mode;private AlertDialog dialog;
+    @Override public void onCreate(Bundle args){this.args=args==null?new Bundle():args;start();}
+    @Override public void onStart(){JSONObject report=new JSONObject();Bundle result=new Bundle();try{
+        check(Build.HARDWARE.equals("ranchu")||Build.HARDWARE.equals("goldfish"),"emulator-only");loader=getTargetContext().getClassLoader();mode=args.getString("mode","phone");
+        stat("ui.AppAppearance","setMode",getTargetContext(),mode.equals("dark")?"dark":"light");
+        output=new File(getTargetContext().getExternalFilesDir(null),"native-ui146/"+mode);output.mkdirs();
+        activity=startActivitySync(new Intent(Intent.ACTION_MAIN).setComponent(new ComponentName("cc.huevia","cc.huevia.MainActivity")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK));until(()->(Boolean)get(activity,"ready"),"main ready");
+        ui(()->{set(activity,"busy",false);set(activity,"catalogLoaded",true);call(activity,"switchRoot",3);});settle();
+        TextView app=(TextView)find(activity.getWindow().getDecorView(),"local-album-source-app"),phone=(TextView)find(activity.getWindow().getDecorView(),"local-album-source-phone");
+        check(app!=null&&"应用相册".contentEquals(app.getText())&&phone!=null&&"手机相册".contentEquals(phone.getText()),"actual-album-source-names");
+        for(TextView label:new TextView[]{app,phone})check(label.getLayout().getLineCount()==1&&label.getLayout().getEllipsisCount(0)==0,"album-label-fits");capture("01-album");
+        AtomicInteger clicked=new AtomicInteger();
+        ui(()->dialog=builder(activity).setTitle("继续处理照片？").setMessage("界面验证：三个操作应完整显示，原有点击回调保持有效。")
+                .setNeutralButton("查看处理设置",(d,w)->clicked.set(3)).setNegativeButton("保留当前编辑",(d,w)->clicked.set(2)).setPositiveButton("继续处理照片",(d,w)->clicked.set(1)).show());settle();
+        checkBounds(dialog,"three-action-dialog");for(int which:new int[]{-1,-2,-3}){Button b=dialog.getButton(which);Rect r=new Rect();check(b.getGlobalVisibleRect(r)&&r.height()>=b.getHeight()-1&&b.getHeight()>=48*density()-.5,"native-action-full-touch-target");check(b.getElevation()==0&&b.getTranslationZ()==0,"action-no-clipped-native-shadow");}
+        capture("02-confirm");ui(()->dialog.getButton(-3).performClick());settle();check(clicked.get()==3&&!dialog.isShowing(),"neutral-callback-and-dismiss");
+        ui(()->dialog=builder(activity).setTitle("删除应用相册副本？").setMessage("界面验证：仅检查确认样式，不删除实际照片。")
+                .setNegativeButton("取消",null).setPositiveButton("删除",(d,w)->clicked.set(-1)).show());settle();capture("02b-danger");ui(()->dialog.getButton(-2).performClick());settle();check(clicked.get()==3&&!dialog.isShowing(),"destructive-cancel-does-not-dispatch-action");
+        ui(()->call(activity,"newPresetCategory","qa-native-ui146"));settle();check(activeText("新建分类"),"real-category-form-opens");clickText("保存");check(activeError("请输入分类名称"),"real-onShow-validation-is-preserved");check(activeText("新建分类"),"invalid-form-does-not-auto-dismiss");capture("03-input");clickText("取消");
+        AtomicInteger choice=new AtomicInteger(-1);String[] choices={"跟随系统","浅色","深色"};
+        ui(()->dialog=builder(activity).setTitle("外观").setSingleChoiceItems(choices,1,(d,i)->choice.set(i)).setNegativeButton("取消",null).show());settle();capture("04-single-choice");
+        ui(()->{ListView list=dialog.getListView();list.performItemClick(list.getChildAt(2),2,list.getAdapter().getItemId(2));});check(choice.get()==2&&dialog.getListView().isItemChecked(2),"single-choice-model-and-callback");ui(()->dialog.dismiss());
+        boolean[] selected={true,false};AtomicInteger confirmed=new AtomicInteger();
+        ui(()->dialog=builder(activity).setTitle("选择照片版本").setMultiChoiceItems(new String[]{"当前编辑","原图"},selected,(d,i,on)->selected[i]=on).setPositiveButton("确定",(d,w)->{if(selected[0]&&selected[1])confirmed.incrementAndGet();}).setNegativeButton("取消",null).show());settle();
+        ui(()->{ListView list=dialog.getListView();list.performItemClick(list.getChildAt(1),1,list.getAdapter().getItemId(1));});check(selected[0]&&selected[1],"multi-choice-retains-other-selection");capture("05-multi-choice");ui(()->dialog.getButton(-1).performClick());settle();check(confirmed.get()==1&&!dialog.isShowing(),"multi-choice-accepts-once");
+        AtomicInteger storage=new AtomicInteger();Class<?> selectedType=cls("ui.PhotoSaveChoice$Selected");Object callback=Proxy.newProxyInstance(loader,new Class<?>[]{selectedType},(proxy,method,values)->{if(method.getName().equals("chosen")&&values[0].toString().equals("PHONE_ALBUM")&&Boolean.TRUE.equals(values[1]))storage.incrementAndGet();return null;});
+        Object appOnly=Enum.valueOf((Class)cls("album.PhotoSaveTarget"),"APP_ONLY");ui(()->stat("ui.PhotoSaveChoice","show",activity,"照片保存位置","qa:native146",appOnly,true,callback));settle();clickText("保存到手机相册");clickText("另存新副本");capture("06-storage-choice");clickText("保存");check(storage.get()==1,"existing-import-location-callback-preserved");
+        AtomicInteger menuAction=new AtomicInteger();AtomicReference<PopupMenu> popup=new AtomicReference<>();
+        ui(()->{PopupMenu menu=new PopupMenu(activity,app);menu.getMenu().add("按日期分组").setOnMenuItemClickListener(i->{menuAction.set(1);return true;});menu.getMenu().add("按文件名排列").setOnMenuItemClickListener(i->{menuAction.set(2);return true;});popup.set(menu);menu.show();});settle();capture("07-popup");clickText("按文件名排列");check(menuAction.get()==2,"native-popup-duplicate-auto-ids-still-dispatch-correct-item");
+        AtomicReference<Spinner> spinner=new AtomicReference<>();AtomicReference<Switch> toggle=new AtomicReference<>(),offToggle=new AtomicReference<>();AtomicInteger toggles=new AtomicInteger();ui(()->{LinearLayout form=new LinearLayout(activity);form.setOrientation(LinearLayout.VERTICAL);spinner.set((Spinner)call(activity,"spinner",form,new String[]{"跟随预设","保留原尺寸","自定义"},0));Switch first=new Switch(activity);first.setText("自动接收照片");first.setOnCheckedChangeListener((v,on)->toggles.incrementAndGet());toggle.set(first);form.addView(first,new LinearLayout.LayoutParams(-1,-2));Switch second=new Switch(activity);second.setText("节省流量");offToggle.set(second);form.addView(second,new LinearLayout.LayoutParams(-1,-2));dialog=builder(activity).setTitle("控件样式").setView(form).setNegativeButton("关闭",null).show();});settle();ui(()->spinner.get().performClick());settle();capture("08-spinner");clickText("自定义");check(spinner.get().getSelectedItemPosition()==2,"native-spinner-retains-adapter-selection");ui(()->toggle.get().performClick());check(toggle.get().isChecked()&&!offToggle.get().isChecked()&&toggles.get()==1,"native-switch-states-and-callback");checkBounds(dialog,"compound-controls");capture("08b-controls");ui(()->dialog.dismiss());
+        ui(()->dialog=builder(activity).setTitle("需要更新").setMessage("界面验证：强制更新的取消限制应保持不变。")
+                .setNeutralButton("重新检查",null).setNegativeButton("退出应用",null).setPositiveButton("下载更新",null).setCancelable(false).show());ui(()->dialog.setCanceledOnTouchOutside(false));settle();ui(()->dialog.onBackPressed());check(dialog.isShowing(),"mandatory-style-dialog-is-not-back-cancelled");ui(()->dialog.getButton(-1).setEnabled(false));check(!dialog.getButton(-1).isEnabled(),"disabled-action-state-retained");checkBounds(dialog,"mandatory-style-dialog");capture("09-required");ui(()->dialog.dismiss());
+        Class<?> skinListener=cls("ui.SkinTonePicker$Listener");Object skinCallback=Proxy.newProxyInstance(loader,new Class<?>[]{skinListener},(proxy,method,values)->null);Constructor<?> skinConstructor=cls("ui.SkinTonePicker").getDeclaredConstructors()[0];skinConstructor.setAccessible(true);Object skin=skinConstructor.newInstance(activity,0xd6ae93,null,skinCallback);ui(()->call(skin,"save"));settle();AlertDialog editorDialog=(AlertDialog)get(skin,"nameDialog");EditText editorField=(EditText)find(editorDialog.getWindow().getDecorView(),"skin-tone-name");android.graphics.drawable.Drawable fieldBackground=editorField.getBackground().getCurrent();check(fieldBackground instanceof android.graphics.drawable.GradientDrawable&&((android.graphics.drawable.GradientDrawable)fieldBackground).getColor().getDefaultColor()==0xff33302c,"actual-editor-dark-field-background-in-light-app");check(editorField.getCurrentTextColor()==0xfff6f1eb,"editor-field-readable-dark-text-role");capture("08c-editor-context");ui(()->editorDialog.dismiss());
+        ui(()->stat("ui.AppNotice","show",activity,"提示样式预览",false));settle();View notice=find(activity.getWindow().getDecorView(),"huevia-notice");check(notice!=null&&notice.isShown(),"foreground-feedback-uses-themed-notice");capture("10-notice");
+        report.put("pass",true);
+    }catch(Throwable error){try{StringWriter trace=new StringWriter();error.printStackTrace(new PrintWriter(trace));report.put("pass",false).put("failure",trace.toString());if(activity!=null)capture("failure");}catch(Exception ignored){}}
+    finally{try{report.put("checks",checks);if(output!=null)try(OutputStream out=new FileOutputStream(new File(output,"report.json"))){out.write(report.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));}result.putString("report",report.toString());}catch(Exception ignored){}finish(report.optBoolean("pass")?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);}}
+    private AlertDialog.Builder builder(Context context)throws Exception{return(AlertDialog.Builder)cls("ui.AppDialog$Builder").getConstructor(Context.class).newInstance(context);}
+    private void checkBounds(AlertDialog alert,String label)throws Exception{View decor=alert.getWindow().getDecorView();int[] xy=new int[2];decor.getLocationOnScreen(xy);int width=activity.getResources().getDisplayMetrics().widthPixels,height=activity.getResources().getDisplayMetrics().heightPixels;check(xy[0]>=0&&xy[1]>=0&&xy[0]+decor.getWidth()<=width+1&&xy[1]+decor.getHeight()<=height+1,label+"-inside-window");check(decor.getWidth()<=520*density()+1,label+"-bounded-width");}
+    private boolean activeText(String text){AccessibilityNodeInfo root=getUiAutomation().getRootInActiveWindow();return root!=null&&!root.findAccessibilityNodeInfosByText(text).isEmpty();}
+    private boolean activeError(String text){AccessibilityNodeInfo root=getUiAutomation().getRootInActiveWindow();return errorTree(root,text);}
+    private boolean errorTree(AccessibilityNodeInfo node,String text){if(node==null)return false;if(node.getError()!=null&&node.getError().toString().contains(text))return true;for(int i=0;i<node.getChildCount();i++)if(errorTree(node.getChild(i),text))return true;return false;}
+    private void clickText(String text)throws Exception{AccessibilityNodeInfo root=getUiAutomation().getRootInActiveWindow();if(root!=null)for(AccessibilityNodeInfo node:root.findAccessibilityNodeInfosByText(text)){if(node.getText()!=null&&text.contentEquals(node.getText())){while(node!=null&&!node.isClickable())node=node.getParent();if(node!=null&&node.performAction(AccessibilityNodeInfo.ACTION_CLICK)){settle();return;}}}throw new AssertionError("Missing active action: "+text);}
+    private View find(View v,String tag){if(tag.equals(v.getTag()))return v;if(v instanceof ViewGroup)for(int i=0;i<((ViewGroup)v).getChildCount();i++){View hit=find(((ViewGroup)v).getChildAt(i),tag);if(hit!=null)return hit;}return null;}
+    private void capture(String name)throws Exception{settle();Bitmap image=getUiAutomation().takeScreenshot();try(OutputStream out=new FileOutputStream(new File(output,name+".png"))){image.compress(Bitmap.CompressFormat.PNG,100,out);}finally{image.recycle();}}
+    private interface Work{void run()throws Exception;}private interface Condition{boolean test()throws Exception;}
+    private void settle()throws Exception{waitForIdleSync();SystemClock.sleep(220);}private void until(Condition test,String label)throws Exception{long end=SystemClock.uptimeMillis()+35000;while(SystemClock.uptimeMillis()<end){if(test.test())return;SystemClock.sleep(40);}throw new AssertionError("Timeout "+label);}
+    private float density(){return activity.getResources().getDisplayMetrics().density;}
+    private void check(boolean pass,String label)throws Exception{checks.put(new JSONObject().put("name",label).put("pass",pass));if(!pass)throw new AssertionError(label);}
+    private void ui(Work work)throws Exception{AtomicReference<Throwable> failure=new AtomicReference<>();runOnMainSync(()->{try{work.run();}catch(Throwable error){failure.set(error);}});if(failure.get()!=null)throw new RuntimeException(failure.get());}
+    private Class<?>cls(String name)throws Exception{return loader.loadClass("cc.huevia."+name);}private Field field(Class<?>type,String name)throws Exception{for(Class<?>c=type;c!=null;c=c.getSuperclass())try{Field f=c.getDeclaredField(name);f.setAccessible(true);return f;}catch(NoSuchFieldException ignored){}throw new NoSuchFieldException(name);}
+    private Object get(Object target,String name)throws Exception{return field(target.getClass(),name).get(target);}private void set(Object target,String name,Object value)throws Exception{field(target.getClass(),name).set(target,value);}private Object call(Object target,String name,Object...values)throws Exception{return invoke(target.getClass(),target,name,values);}private Object stat(String type,String name,Object...values)throws Exception{return invoke(cls(type),null,name,values);}
+    private Object invoke(Class<?>type,Object target,String name,Object[]values)throws Exception{for(Method m:type.getDeclaredMethods())if(m.getName().equals(name)&&m.getParameterCount()==values.length){m.setAccessible(true);try{return m.invoke(target,values);}catch(IllegalArgumentException mismatch){continue;}catch(InvocationTargetException error){throw new RuntimeException(error.getCause());}}throw new NoSuchMethodException(name);}
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "status": "measured",
+  "width": 6000,
+  "height": 4000,
+  "elapsedMs": 1349.1323,
+  "allocatedBytes": 318616,
+  "gcCollections": 0,
+  "checksum": 60234480000,
+  "faces": 0,
+  "scope": "Single warmed-up desktop JDK17 -Xmx128m / SerialGC 24MP full-coverage streaming pass, including bounded global reference compile. Not Android latency. No image materialization and no per-pixel object allocations.",
+  "runtime": "Desktop OpenJDK 17.0.19; -Xmx128m -XX:+UseSerialGC; one warmed-up synthetic streaming pass",
+  "source": {
+    "path": "docs/validation/skin-tone118/GlobalTonePerformanceProbe.java",
+    "sha256": "437271a2f49f33a68335e0905ab612fe3270c7a2c7b7fd5dc3decf812f721762"
+  },
+  "notAndroidLatency": true,
+  "userImagesUsed": false
+}

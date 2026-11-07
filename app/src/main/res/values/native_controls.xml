@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="huevia_dialog_styled" type="id" />
+    <item name="huevia_dialog_buttons" type="id" />
+    <attr name="hueSurface" format="color" />
+    <attr name="hueContainer" format="color" />
+    <attr name="hueText" format="color" />
+    <attr name="hueMuted" format="color" />
+    <attr name="hueAccent" format="color" />
+    <attr name="hueAccentContainer" format="color" />
+    <attr name="hueOnAccentContainer" format="color" />
+    <attr name="hueOutline" format="color" />
+</resources>

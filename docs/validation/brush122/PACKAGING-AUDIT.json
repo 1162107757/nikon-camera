@@ -1,0 +1,5089 @@
+{
+  "schemaVersion": 1,
+  "checkedAtUtc": "2026-10-30T06:36:08.587936+00:00",
+  "status": "passed",
+  "scope": "Independent APK, DEX and frozen-source provenance audit for painted adjustment regions. Actual focused/legacy host runs, synthetic 24MP bounded-memory probe and Android API compile are archived separately. No device, network, model inference or user image access.",
+  "apk": {
+    "path": "dist/huevia-0.24.0-beta-debug.apk",
+    "bytes": 33432332,
+    "sha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+    "limitBytes": 33554432,
+    "remainingBytes": 122100
+  },
+  "reference121Apk": {
+    "path": "dist/huevia-0.23.10-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "2d21da748e5ee70bc411d1813d9bfca9f06548844758f801339c92a1d84177e3"
+  },
+  "manifest": {
+    "applicationId": "cc.huevia",
+    "versionCode": 122,
+    "versionName": "0.24.0-beta",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "signer": {
+    "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "matches121": true
+  },
+  "checks": {
+    "engineAndHostChecksPassed": true,
+    "apkIdentityMatches": true,
+    "frozenIdentityMatches": true,
+    "all291ProductionInputsMatch": true,
+    "onlyExpectedProductionInputsChangedVersus121": true,
+    "manifestMatches": true,
+    "signerMatches": true,
+    "signatureV2AndV3": true,
+    "allToolsPassed": true,
+    "noDuplicateEntries": true,
+    "nativeAndModelSetsMatch121": true,
+    "allRawEntriesMatch121": true,
+    "oldPortraitTabTagsAbsentInDex": true,
+    "sourceEntryNavigationChecksPassed": true,
+    "newGroupStringsInDex": true,
+    "bothCallersInvokeSharedToolEntry": true,
+    "sharedEntryHelperDefinitionsPresent": true,
+    "newGroupMethodsDefinedInDialogDex": true
+  },
+  "toolCommandsAndResults": {
+    "aapt2Badging": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\aapt2.exe",
+        "dump",
+        "badging",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.0-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "package: name='cc.huevia' versionCode='122' versionName='0.24.0-beta' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'\nminSdkVersion:'26'\ntargetSdkVersion:'35'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\nuses-permission: name='android.permission.ACCESS_NETWORK_STATE'\nuses-permission: name='android.permission.CHANGE_NETWORK_STATE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING'\nuses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='32'\nuses-permission: name='android.permission.READ_MEDIA_IMAGES'\nuses-permission: name='android.permission.READ_MEDIA_VISUAL_USER_SELECTED'\nuses-permission: name='android.permission.CHANGE_WIFI_STATE'\nuses-permission: name='android.permission.ACCESS_WIFI_STATE'\nuses-permission: name='android.permission.NEARBY_WIFI_DEVICES' usesPermissionFlags='neverForLocation'\nuses-permission: name='android.permission.ACCESS_FINE_LOCATION' maxSdkVersion='32'\nuses-permission: name='android.permission.ACCESS_COARSE_LOCATION' maxSdkVersion='32'\nuses-permission: name='android.permission.WAKE_LOCK'\nuses-permission: name='android.permission.POST_NOTIFICATIONS'\nuses-permission: name='android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS'\napplication-label:'Huevia'\napplication-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication-icon-65535:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication: label='Huevia' icon='res/mipmap-anydpi-v26/ic_launcher.xml'\nlaunchable-activity: name='cc.huevia.MainActivity'  label='' icon=''\nfeature-group: label=''\n  uses-feature: name='android.hardware.usb.host'\n  uses-feature: name='android.hardware.faketouch'\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\n  uses-feature: name='android.hardware.location'\n  uses-implied-feature: name='android.hardware.location' reason='requested android.permission.ACCESS_COARSE_LOCATION permission, and requested android.permission.ACCESS_FINE_LOCATION permission'\n  uses-feature: name='android.hardware.wifi'\n  uses-implied-feature: name='android.hardware.wifi' reason='requested android.permission.ACCESS_WIFI_STATE permission, and requested android.permission.CHANGE_WIFI_STATE permission'\nmain\nother-activities\nother-services\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\nsupports-any-density: 'true'\nlocales: '--_--'\ndensities: '160' '65534' '65535'\nnative-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'",
+      "stderr": ""
+    },
+    "aapt2ManifestXml": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\aapt2.exe",
+        "dump",
+        "xmltree",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.0-beta-debug.apk",
+        "--file",
+        "AndroidManifest.xml"
+      ],
+      "exitCode": 0,
+      "stdout": "N: android=http://schemas.android.com/apk/res/android (line=2)\n  E: manifest (line=2)\n    A: http://schemas.android.com/apk/res/android:versionCode(0x0101021b)=122\n    A: http://schemas.android.com/apk/res/android:versionName(0x0101021c)=\"0.24.0-beta\" (Raw: \"0.24.0-beta\")\n    A: http://schemas.android.com/apk/res/android:compileSdkVersion(0x01010572)=35\n    A: http://schemas.android.com/apk/res/android:compileSdkVersionCodename(0x01010573)=\"15\" (Raw: \"15\")\n    A: package=\"cc.huevia\" (Raw: \"cc.huevia\")\n    A: platformBuildVersionCode=35\n    A: platformBuildVersionName=15\n      E: uses-sdk (line=0)\n        A: http://schemas.android.com/apk/res/android:minSdkVersion(0x0101020c)=26\n        A: http://schemas.android.com/apk/res/android:targetSdkVersion(0x01010270)=35\n      E: uses-permission (line=3)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.INTERNET\" (Raw: \"android.permission.INTERNET\")\n      E: uses-permission (line=4)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.REQUEST_INSTALL_PACKAGES\" (Raw: \"android.permission.REQUEST_INSTALL_PACKAGES\")\n      E: uses-permission (line=5)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_NETWORK_STATE\" (Raw: \"android.permission.ACCESS_NETWORK_STATE\")\n      E: uses-permission (line=6)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.CHANGE_NETWORK_STATE\" (Raw: \"android.permission.CHANGE_NETWORK_STATE\")\n      E: uses-permission (line=7)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE\" (Raw: \"android.permission.FOREGROUND_SERVICE\")\n      E: uses-permission (line=8)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE\" (Raw: \"android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE\")\n      E: uses-permission (line=9)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE_DATA_SYNC\" (Raw: \"android.permission.FOREGROUND_SERVICE_DATA_SYNC\")\n      E: uses-permission (line=10)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING\" (Raw: \"android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING\")\n      E: uses-permission (line=11)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.WRITE_EXTERNAL_STORAGE\" (Raw: \"android.permission.WRITE_EXTERNAL_STORAGE\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=28\n      E: uses-permission (line=12)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.READ_EXTERNAL_STORAGE\" (Raw: \"android.permission.READ_EXTERNAL_STORAGE\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=32\n      E: uses-permission (line=13)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.READ_MEDIA_IMAGES\" (Raw: \"android.permission.READ_MEDIA_IMAGES\")\n      E: uses-permission (line=14)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.READ_MEDIA_VISUAL_USER_SELECTED\" (Raw: \"android.permission.READ_MEDIA_VISUAL_USER_SELECTED\")\n      E: uses-permission (line=15)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.CHANGE_WIFI_STATE\" (Raw: \"android.permission.CHANGE_WIFI_STATE\")\n      E: uses-permission (line=16)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_WIFI_STATE\" (Raw: \"android.permission.ACCESS_WIFI_STATE\")\n      E: uses-permission (line=17)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.NEARBY_WIFI_DEVICES\" (Raw: \"android.permission.NEARBY_WIFI_DEVICES\")\n        A: http://schemas.android.com/apk/res/android:usesPermissionFlags(0x01010644)=0x00010000\n      E: uses-permission (line=18)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_FINE_LOCATION\" (Raw: \"android.permission.ACCESS_FINE_LOCATION\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=32\n      E: uses-permission (line=19)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_COARSE_LOCATION\" (Raw: \"android.permission.ACCESS_COARSE_LOCATION\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=32\n      E: uses-permission (line=20)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.WAKE_LOCK\" (Raw: \"android.permission.WAKE_LOCK\")\n      E: uses-permission (line=21)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.POST_NOTIFICATIONS\" (Raw: \"android.permission.POST_NOTIFICATIONS\")\n      E: uses-permission (line=22)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS\" (Raw: \"android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS\")\n      E: uses-feature (line=23)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.hardware.usb.host\" (Raw: \"android.hardware.usb.host\")\n        A: http://schemas.android.com/apk/res/android:required(0x0101028e)=true\n      E: queries (line=24)\n          E: package (line=25)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.mobileqq\" (Raw: \"com.tencent.mobileqq\")\n          E: package (line=26)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.tim\" (Raw: \"com.tencent.tim\")\n          E: package (line=27)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.minihd.qq\" (Raw: \"com.tencent.minihd.qq\")\n      E: application (line=29)\n        A: http://schemas.android.com/apk/res/android:theme(0x01010000)=@0x7f050000\n        A: http://schemas.android.com/apk/res/android:label(0x01010001)=@0x7f040000\n        A: http://schemas.android.com/apk/res/android:icon(0x01010002)=@0x7f030000\n        A: http://schemas.android.com/apk/res/android:allowBackup(0x01010280)=false\n        A: http://schemas.android.com/apk/res/android:supportsRtl(0x010103af)=true\n        A: http://schemas.android.com/apk/res/android:extractNativeLibs(0x010104ea)=true\n        A: http://schemas.android.com/apk/res/android:usesCleartextTraffic(0x010104ec)=false\n        A: http://schemas.android.com/apk/res/android:roundIcon(0x0101052c)=@0x7f030000\n          E: activity (line=30)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.tauth.AuthActivity\" (Raw: \"com.tencent.tauth.AuthActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=true\n            A: http://schemas.android.com/apk/res/android:launchMode(0x0101001d)=2\n            A: http://schemas.android.com/apk/res/android:noHistory(0x0101022d)=true\n              E: intent-filter (line=31)\n                  E: action (line=32)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.action.VIEW\" (Raw: \"android.intent.action.VIEW\")\n                  E: category (line=33)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.category.DEFAULT\" (Raw: \"android.intent.category.DEFAULT\")\n                  E: category (line=34)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.category.BROWSABLE\" (Raw: \"android.intent.category.BROWSABLE\")\n                  E: data (line=35)\n                    A: http://schemas.android.com/apk/res/android:scheme(0x01010027)=\"tencent1105984855\" (Raw: \"tencent1105984855\")\n          E: activity (line=38)\n            A: http://schemas.android.com/apk/res/android:theme(0x01010000)=@0x01030010\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.connect.common.AssistActivity\" (Raw: \"com.tencent.connect.common.AssistActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:screenOrientation(0x0101001e)=3\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x000004a0\n          E: service (line=39)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.connection.CameraConnectionService\" (Raw: \"cc.huevia.connection.CameraConnectionService\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:stopWithTask(0x0101036a)=false\n            A: http://schemas.android.com/apk/res/android:foregroundServiceType(0x01010599)=0x00002011\n          E: provider (line=40)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.updates.UpdatePackageProvider\" (Raw: \"cc.huevia.updates.UpdatePackageProvider\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:authorities(0x01010018)=\"cc.huevia.updates\" (Raw: \"cc.huevia.updates\")\n            A: http://schemas.android.com/apk/res/android:grantUriPermissions(0x0101001b)=true\n          E: activity (line=41)\n            A: http://schemas.android.com/apk/res/android:theme(0x01010000)=@0x7f050003\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.DiagnosticsActivity\" (Raw: \"cc.huevia.DiagnosticsActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n          E: activity (line=42)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.RawDevelopActivity\" (Raw: \"cc.huevia.RawDevelopActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x40000680\n          E: activity (line=43)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.RemoteCaptureActivity\" (Raw: \"cc.huevia.RemoteCaptureActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x40000680\n          E: activity (line=44)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.MainActivity\" (Raw: \"cc.huevia.MainActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=true\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x40000680\n              E: intent-filter (line=45)\n                  E: action (line=46)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.action.MAIN\" (Raw: \"android.intent.action.MAIN\")\n                  E: category (line=47)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.category.LAUNCHER\" (Raw: \"android.intent.category.LAUNCHER\")\n              E: intent-filter (line=49)\n                  E: action (line=50)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.hardware.usb.action.USB_DEVICE_ATTACHED\" (Raw: \"android.hardware.usb.action.USB_DEVICE_ATTACHED\")\n              E: meta-data (line=52)\n                A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.hardware.usb.action.USB_DEVICE_ATTACHED\" (Raw: \"android.hardware.usb.action.USB_DEVICE_ATTACHED\")\n                A: http://schemas.android.com/apk/res/android:resource(0x01010025)=@0x7f060000",
+      "stderr": ""
+    },
+    "apksignerVerify": {
+      "arguments": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\java.exe",
+        "-jar",
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\lib\\apksigner.jar",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.0-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): true\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: CN=Nikon USB Debug, OU=Development, O=Local, C=CN\nSigner #1 certificate SHA-256 digest: 04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31\nSigner #1 certificate SHA-1 digest: f867798b3814ab374d0234148e50c5e8477d7d2a\nSigner #1 certificate MD5 digest: 945aa44a13dd8c10155ad0078edf698e\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 11a7f998a2df77f4622355408d4764ba9349f1c6e36241702bf2d9d0f37ec72c\nSigner #1 public key SHA-1 digest: 30757f8481e4bfbd3cad3b2d46ddfeaeee08c026\nSigner #1 public key MD5 digest: 757136592c1c45370cd6828fee14702a",
+      "stderr": ""
+    },
+    "zipalign": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\zipalign.exe",
+        "-c",
+        "-P",
+        "16",
+        "4",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.24.0-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "buildIdentity": {
+    "path": "docs/validation/brush122/BUILD-IDENTITY.json",
+    "sha256": "27764359d069649d7514d6094182ba2b7a1e49772233379f077765cc1350281c",
+    "productionInputCount": 291,
+    "currentMismatches": [],
+    "changedInputsVersus121": [
+      {
+        "path": "app/build.gradle",
+        "reference121Sha256": "e5017c6f7615276e406c9e4c78971c2d937722f4909f9510c01b35d876eeb75e",
+        "candidateSha256": "58fe11fb92864622cc1520e0aa138a15c4c757ebf1f60f603ed71d365f68dd33"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/album/PhotoDetailSource.java",
+        "reference121Sha256": "f945ed8926ecfd0a997065c64111fdc0fc62845fe992049f52189bf0a2e4649c",
+        "candidateSha256": "6509eb4b77c15328d96cf5ef7d7ff4649bb48e1eeaa15e218c77bf3210e62de6"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/album/PhotoExportPreview.java",
+        "reference121Sha256": "b9d87a0aefd6c6dd8b225b42c227406ebd8651aa0461970e5300b203d44555d2",
+        "candidateSha256": "00be5bbb13e4e84c192f91b1918e5ed82b58d421ea0afda4feaefb171e46b3b4"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java",
+        "reference121Sha256": "51246d85320158949e2ee3961abf39e0015189807eeed2c30068af3ec22ecd94",
+        "candidateSha256": "9622a1afcad557379a6df547df7f7e6c6f95d320bb94b8a70880371117feddd2"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java",
+        "reference121Sha256": "dbc9878fde549c56650190e858e3aa57a249e3c77b5f257e2f56ee24c9c3562e",
+        "candidateSha256": "3eaba34622576f24d464d474bf1495e80380bab879c41e82fac08ecd74015967"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+        "reference121Sha256": null,
+        "candidateSha256": "6bde92cf47546fda658c4eade15bab82c74b930ac90e8e2f0cff4e82fd733e5a"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+        "reference121Sha256": null,
+        "candidateSha256": "27c3d55540cea247357e112a2aaee00605a071a991c93d2d493ec7bf1fda26a9"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+        "reference121Sha256": "d6341f32962d08b01b38cea4ff0fc02a6ff6da66d5cd52fb86f54045b424f62b",
+        "candidateSha256": "81c4f2b808e7cadc2f8be2dbcbda673a5a7dade36da1b12892f7a615fedd3cd4"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+        "reference121Sha256": "84c2883c6b810546798dc15a9dd7ccb47082b5664b2bb19eaa4d255c146caff5",
+        "candidateSha256": "ff84de58e8533451ee5536fce09bc9a9ba5400a3188b589d2cc618a2b517c0f0"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+        "reference121Sha256": "7d0dd22d127cd3d45f15511818f7c27525ab9ff6acdeb36da5d2dfddc7bc7f19",
+        "candidateSha256": "331c608ce86d9c38b1df40228a8a860c6d8293dee73a8539ea692fd516bae7fe"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+        "reference121Sha256": "3b361c08aeab49ec019c0433777767f6d995475c3f4c58b12782fdbaf82f219e",
+        "candidateSha256": "f6a5d000c83c496579350e55bab11fc03e0b13caf3e0a4f322c02ab2a5278658"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+        "reference121Sha256": null,
+        "candidateSha256": "eb44b22f05898893589685a856f442f9173b082972ef3109922627dfb15d683c"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+        "reference121Sha256": "0e48987dfd606cfaf0c60fa2edea66e5a739eb2815d18a5f5a5a129035c84460",
+        "candidateSha256": "e517c45b08cfb13266e62b2754f0b1070886a31082c8cd5c3050acec6165d968"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+        "reference121Sha256": "923a210403802207246d299fa582caf96884d1ebd542aa07911ec49af8c08cbf",
+        "candidateSha256": "e3a7d5d5071c2d6e50c2a720a0f0f50e869b5c3c26c54b2dd4a5f26164173ced"
+      }
+    ],
+    "addedInputsVersus121": [
+      "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+      "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+      "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java"
+    ],
+    "removedInputsVersus121": []
+  },
+  "archiveComparison": {
+    "duplicateNames": [],
+    "addedEntriesVersus121": [],
+    "removedEntriesVersus121": [],
+    "differentEntriesVersus121": [
+      "AndroidManifest.xml",
+      "classes.dex",
+      "META-INF/ANDROIDD.SF",
+      "META-INF/ANDROIDD.RSA",
+      "META-INF/MANIFEST.MF"
+    ],
+    "rawEntriesCompared": 55,
+    "nativeEntryCount": 16,
+    "modelEntryCount": 2,
+    "litertNoticeEntryCount": 4,
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "rawEntries": [
+    {
+      "path": "res/drawable/ic_account_password_hidden.xml",
+      "bytes": 864,
+      "zipBytes": 441,
+      "zipMethod": 8,
+      "sha256": "c210db264468602667c0e8b15bb1c64c6c46071c2ab338ff2d362018eb016c07",
+      "reference121Sha256": "c210db264468602667c0e8b15bb1c64c6c46071c2ab338ff2d362018eb016c07",
+      "matches121": true
+    },
+    {
+      "path": "res/drawable/ic_account_password_visible.xml",
+      "bytes": 852,
+      "zipBytes": 432,
+      "zipMethod": 8,
+      "sha256": "6a0c4d6cf62e41703b89e8b0672e67772db9f5b647e5c8ced807d30ea3229f56",
+      "reference121Sha256": "6a0c4d6cf62e41703b89e8b0672e67772db9f5b647e5c8ced807d30ea3229f56",
+      "matches121": true
+    },
+    {
+      "path": "res/drawable/ic_camera.xml",
+      "bytes": 844,
+      "zipBytes": 392,
+      "zipMethod": 8,
+      "sha256": "4f8bff7ab07da63650379864b320c5301e623b0c7de32004b3a48b993aef5b29",
+      "reference121Sha256": "4f8bff7ab07da63650379864b320c5301e623b0c7de32004b3a48b993aef5b29",
+      "matches121": true
+    },
+    {
+      "path": "res/drawable/ic_huevia_foreground.xml",
+      "bytes": 488,
+      "zipBytes": 243,
+      "zipMethod": 8,
+      "sha256": "578b54fd67d754b505755f173513bf6bf8b43b88659b2ec7c7f40d9642d31551",
+      "reference121Sha256": "578b54fd67d754b505755f173513bf6bf8b43b88659b2ec7c7f40d9642d31551",
+      "matches121": true
+    },
+    {
+      "path": "res/drawable/ic_qq_login.png",
+      "bytes": 922,
+      "zipBytes": 922,
+      "zipMethod": 0,
+      "sha256": "46b86da6aa75b0c4913082401b06d33430e0d11ed725f68bcf5c1c5d00314f9a",
+      "reference121Sha256": "46b86da6aa75b0c4913082401b06d33430e0d11ed725f68bcf5c1c5d00314f9a",
+      "matches121": true
+    },
+    {
+      "path": "res/drawable-nodpi-v4/huevia_launcher.png",
+      "bytes": 8748,
+      "zipBytes": 8748,
+      "zipMethod": 0,
+      "sha256": "cc4dac0f9428bb1b363bf065cd8283a669d989e595e751ffc9c8d06dae72289d",
+      "reference121Sha256": "cc4dac0f9428bb1b363bf065cd8283a669d989e595e751ffc9c8d06dae72289d",
+      "matches121": true
+    },
+    {
+      "path": "res/drawable-nodpi-v4/preset_template.png",
+      "bytes": 2450514,
+      "zipBytes": 2450514,
+      "zipMethod": 0,
+      "sha256": "fbb13fd57ca7d657e807b7c5cf902d24f9167c727bb49498df52c1fd2aaf7906",
+      "reference121Sha256": "fbb13fd57ca7d657e807b7c5cf902d24f9167c727bb49498df52c1fd2aaf7906",
+      "matches121": true
+    },
+    {
+      "path": "res/mipmap-anydpi-v26/ic_launcher.xml",
+      "bytes": 448,
+      "zipBytes": 221,
+      "zipMethod": 8,
+      "sha256": "bd05fa2e7b0e797f310cef3f1d8df9c6fcf15fd9138e6cb5f139e17aca0b551e",
+      "reference121Sha256": "bd05fa2e7b0e797f310cef3f1d8df9c6fcf15fd9138e6cb5f139e17aca0b551e",
+      "matches121": true
+    },
+    {
+      "path": "res/xml/device_filter.xml",
+      "bytes": 236,
+      "zipBytes": 126,
+      "zipMethod": 8,
+      "sha256": "e6500ccdd4e0201a2210e500fe8496e18a37078d8aa4d46eff8fcb39f795dde1",
+      "reference121Sha256": "e6500ccdd4e0201a2210e500fe8496e18a37078d8aa4d46eff8fcb39f795dde1",
+      "matches121": true
+    },
+    {
+      "path": "assets/photo-borders/nikon-wordmark-black.png",
+      "bytes": 58098,
+      "zipBytes": 57422,
+      "zipMethod": 8,
+      "sha256": "93ef2b678d1bd74cf80ff93ff51edc37cb2d12f068db783b49c426087198c7c3",
+      "reference121Sha256": "93ef2b678d1bd74cf80ff93ff51edc37cb2d12f068db783b49c426087198c7c3",
+      "matches121": true
+    },
+    {
+      "path": "assets/photo-borders/nikon-wordmark-white.png",
+      "bytes": 62728,
+      "zipBytes": 62074,
+      "zipMethod": 8,
+      "sha256": "dc7068dd1a1dac737fadb04036744560aaed5e062c6c653d88b2abacd5599303",
+      "reference121Sha256": "dc7068dd1a1dac737fadb04036744560aaed5e062c6c653d88b2abacd5599303",
+      "matches121": true
+    },
+    {
+      "path": "assets/photo-borders/nikon-yellow-square.png",
+      "bytes": 122746,
+      "zipBytes": 121253,
+      "zipMethod": 8,
+      "sha256": "1f5c351a9248cb8f1ae038be59f0bc8e36ffedb5b81ed3e1b0ca8fe829f8a519",
+      "reference121Sha256": "1f5c351a9248cb8f1ae038be59f0bc8e36ffedb5b81ed3e1b0ca8fe829f8a519",
+      "matches121": true
+    },
+    {
+      "path": "assets/photo-borders/parameters-OFL.txt",
+      "bytes": 4477,
+      "zipBytes": 2000,
+      "zipMethod": 8,
+      "sha256": "1dd4eaacd1da1bfb7e1d14dd5af0279c17d4503fde55abc628bdaccc63ae9eca",
+      "reference121Sha256": "1dd4eaacd1da1bfb7e1d14dd5af0279c17d4503fde55abc628bdaccc63ae9eca",
+      "matches121": true
+    },
+    {
+      "path": "assets/photo-borders/parameters.ttf",
+      "bytes": 65032,
+      "zipBytes": 28200,
+      "zipMethod": 8,
+      "sha256": "f7fe4bed14aaec1e25b1173c4eed35c3c5537e836c47db67b06189ec4adc7b19",
+      "reference121Sha256": "f7fe4bed14aaec1e25b1173c4eed35c3c5537e836c47db67b06189ec4adc7b19",
+      "matches121": true
+    },
+    {
+      "path": "assets/photo-borders/source-manifest.json",
+      "bytes": 7604,
+      "zipBytes": 2671,
+      "zipMethod": 8,
+      "sha256": "417cc7c8a1b5d9164ad12b007863ff0b18e818666e9619b3a8131b4e7b41a518",
+      "reference121Sha256": "417cc7c8a1b5d9164ad12b007863ff0b18e818666e9619b3a8131b4e7b41a518",
+      "matches121": true
+    },
+    {
+      "path": "assets/portrait/face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "zipBytes": 2284263,
+      "zipMethod": 8,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "reference121Sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "matches121": true
+    },
+    {
+      "path": "assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "bytes": 13881786,
+      "zipBytes": 13881786,
+      "zipMethod": 0,
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "reference121Sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libfuji-MIT.txt",
+      "bytes": 1609,
+      "zipBytes": 938,
+      "zipMethod": 8,
+      "sha256": "62b8331c35d76305e3badac3d886b9b1ebdbea5d7019876c0caafdc8e95cbf1e",
+      "reference121Sha256": "62b8331c35d76305e3badac3d886b9b1ebdbea5d7019876c0caafdc8e95cbf1e",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/BUILD-IDENTITY.json",
+      "bytes": 66191,
+      "zipBytes": 13805,
+      "zipMethod": 8,
+      "sha256": "1f312298f8be5eaa3e2183775cf7edd39d5215411e4ba2277e2a8d132fb58de6",
+      "reference121Sha256": "1f312298f8be5eaa3e2183775cf7edd39d5215411e4ba2277e2a8d132fb58de6",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/COPYRIGHT",
+      "bytes": 1153,
+      "zipBytes": 620,
+      "zipMethod": 8,
+      "sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509",
+      "reference121Sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/LICENSE.CDDL",
+      "bytes": 16906,
+      "zipBytes": 5827,
+      "zipMethod": 8,
+      "sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f",
+      "reference121Sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/LICENSE.LGPL",
+      "bytes": 24389,
+      "zipBytes": 8659,
+      "zipMethod": 8,
+      "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+      "reference121Sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/LLVM-NOTICE.txt",
+      "bytes": 130424,
+      "zipBytes": 12279,
+      "zipMethod": 8,
+      "sha256": "f96f763beb66a7ba7a667647fc64c0226ace875e590c831fdd9579ec1c1d91e1",
+      "reference121Sha256": "f96f763beb66a7ba7a667647fc64c0226ace875e590c831fdd9579ec1c1d91e1",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/LibRaw-0.22.3-source.zip",
+      "bytes": 1828805,
+      "zipBytes": 1787636,
+      "zipMethod": 8,
+      "sha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
+      "reference121Sha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/NOTICE.txt",
+      "bytes": 2193,
+      "zipBytes": 1198,
+      "zipMethod": 8,
+      "sha256": "2fc943117833261917f070cea1398901fd4be8f108a1d690f2bec181a4d7c55e",
+      "reference121Sha256": "2fc943117833261917f070cea1398901fd4be8f108a1d690f2bec181a4d7c55e",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/RawDeveloper.java",
+      "bytes": 12479,
+      "zipBytes": 4033,
+      "zipMethod": 8,
+      "sha256": "327af007aa07e8a26a028b034b6dbe29f3dcd55b20f5e53df0ddc969016513c2",
+      "reference121Sha256": "327af007aa07e8a26a028b034b6dbe29f3dcd55b20f5e53df0ddc969016513c2",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/RawDevelopmentSettings.java",
+      "bytes": 4184,
+      "zipBytes": 1239,
+      "zipMethod": 8,
+      "sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814",
+      "reference121Sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/build-raw-native.ps1",
+      "bytes": 9795,
+      "zipBytes": 3527,
+      "zipMethod": 8,
+      "sha256": "7f51d3333ed098f0c3fb19962013a1d9a5cd1470ae40a1fd200b8b919ba732a5",
+      "reference121Sha256": "7f51d3333ed098f0c3fb19962013a1d9a5cd1470ae40a1fd200b8b919ba732a5",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/libraw/huevia_raw.cpp",
+      "bytes": 14630,
+      "zipBytes": 4618,
+      "zipMethod": 8,
+      "sha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae",
+      "reference121Sha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/litert/BUILD-IDENTITY.json",
+      "bytes": 7520,
+      "zipBytes": 2911,
+      "zipMethod": 8,
+      "sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "reference121Sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-LiteRT.txt",
+      "bytes": 13575,
+      "zipBytes": 4871,
+      "zipMethod": 8,
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "reference121Sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "bytes": 12331,
+      "zipBytes": 4310,
+      "zipMethod": 8,
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "reference121Sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "matches121": true
+    },
+    {
+      "path": "assets/third-party/litert/README.md",
+      "bytes": 5407,
+      "zipBytes": 2553,
+      "zipMethod": 8,
+      "sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "reference121Sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "matches121": true
+    },
+    {
+      "path": "lib/arm64-v8a/libraw.so",
+      "bytes": 1207392,
+      "zipBytes": 440321,
+      "zipMethod": 8,
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "reference121Sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "matches121": true
+    },
+    {
+      "path": "lib/arm64-v8a/libhuevia_raw.so",
+      "bytes": 49960,
+      "zipBytes": 22922,
+      "zipMethod": 8,
+      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "reference121Sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "matches121": true
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "zipBytes": 393490,
+      "zipMethod": 8,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "reference121Sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "matches121": true
+    },
+    {
+      "path": "lib/arm64-v8a/libtensorflowlite_jni.so",
+      "bytes": 4320528,
+      "zipBytes": 1737501,
+      "zipMethod": 8,
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "reference121Sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "matches121": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libraw.so",
+      "bytes": 1146600,
+      "zipBytes": 430970,
+      "zipMethod": 8,
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "reference121Sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "matches121": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libhuevia_raw.so",
+      "bytes": 19904,
+      "zipBytes": 9977,
+      "zipMethod": 8,
+      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "reference121Sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "matches121": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libc++_shared.so",
+      "bytes": 850380,
+      "zipBytes": 344387,
+      "zipMethod": 8,
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "reference121Sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "matches121": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libtensorflowlite_jni.so",
+      "bytes": 2572124,
+      "zipBytes": 1324637,
+      "zipMethod": 8,
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "reference121Sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86_64/libraw.so",
+      "bytes": 1284728,
+      "zipBytes": 453736,
+      "zipMethod": 8,
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "reference121Sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86_64/libhuevia_raw.so",
+      "bytes": 50184,
+      "zipBytes": 23269,
+      "zipMethod": 8,
+      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "reference121Sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "zipBytes": 409160,
+      "zipMethod": 8,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "reference121Sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86_64/libtensorflowlite_jni.so",
+      "bytes": 6053584,
+      "zipBytes": 2355831,
+      "zipMethod": 8,
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "reference121Sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86/libraw.so",
+      "bytes": 1265240,
+      "zipBytes": 474673,
+      "zipMethod": 8,
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "reference121Sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86/libhuevia_raw.so",
+      "bytes": 46564,
+      "zipBytes": 22177,
+      "zipMethod": 8,
+      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "reference121Sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86/libc++_shared.so",
+      "bytes": 1143240,
+      "zipBytes": 414850,
+      "zipMethod": 8,
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "reference121Sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "matches121": true
+    },
+    {
+      "path": "lib/x86/libtensorflowlite_jni.so",
+      "bytes": 6323728,
+      "zipBytes": 2390211,
+      "zipMethod": 8,
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "reference121Sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "matches121": true
+    },
+    {
+      "path": "assets/com.tencent.open.config.json",
+      "bytes": 56,
+      "zipBytes": 49,
+      "zipMethod": 8,
+      "sha256": "18d68d491240549e0034c88879accc51744f8b43a8bde7ee0113bbf78a3a646a",
+      "reference121Sha256": "18d68d491240549e0034c88879accc51744f8b43a8bde7ee0113bbf78a3a646a",
+      "matches121": true
+    },
+    {
+      "path": "assets/h5_qr_back.png",
+      "bytes": 116,
+      "zipBytes": 121,
+      "zipMethod": 8,
+      "sha256": "6c17717d5a34c2e1555c481577bdc8bec602244339df953bc217e74bba2d6224",
+      "reference121Sha256": "6c17717d5a34c2e1555c481577bdc8bec602244339df953bc217e74bba2d6224",
+      "matches121": true
+    },
+    {
+      "path": "assets/libwbsafeedit",
+      "bytes": 12132,
+      "zipBytes": 6670,
+      "zipMethod": 8,
+      "sha256": "8325ae4b974dc5a4d25be95159d792b5dd9ace4620b0a54ac83ff3d2a245466c",
+      "reference121Sha256": "8325ae4b974dc5a4d25be95159d792b5dd9ace4620b0a54ac83ff3d2a245466c",
+      "matches121": true
+    },
+    {
+      "path": "assets/libwbsafeedit_64",
+      "bytes": 18344,
+      "zipBytes": 8926,
+      "zipMethod": 8,
+      "sha256": "5713d3c0c4bb45490a0fa54cf0fb32cb798ccd0be74dab47572f68ce97931f27",
+      "reference121Sha256": "5713d3c0c4bb45490a0fa54cf0fb32cb798ccd0be74dab47572f68ce97931f27",
+      "matches121": true
+    },
+    {
+      "path": "assets/libwbsafeedit_x86",
+      "bytes": 15672,
+      "zipBytes": 8366,
+      "zipMethod": 8,
+      "sha256": "91bb72d194805aa8c5e6e6efd71331a2fedce79fa5b1b7db4c35a84b47abf4be",
+      "reference121Sha256": "91bb72d194805aa8c5e6e6efd71331a2fedce79fa5b1b7db4c35a84b47abf4be",
+      "matches121": true
+    },
+    {
+      "path": "assets/libwbsafeedit_x86_64",
+      "bytes": 18168,
+      "zipBytes": 8955,
+      "zipMethod": 8,
+      "sha256": "da0a59edb4c5e6c79d9dff83f458bee1a0336c510aa2de4cf4c317a353b38b51",
+      "reference121Sha256": "da0a59edb4c5e6c79d9dff83f458bee1a0336c510aa2de4cf4c317a353b38b51",
+      "matches121": true
+    }
+  ],
+  "dexes": [
+    {
+      "path": "classes.dex",
+      "bytes": 3067108,
+      "sha256": "0634464bfdaef27ce88e9ac76bb97f990cb384aba55ebd2362790d3f9c9f29c1",
+      "definedClasses": 2811,
+      "dialogDefinitionPresent": true
+    }
+  ],
+  "entryNavigationDexEvidence": {
+    "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+    "tags": [
+      {
+        "text": "portrait-entry-tools",
+        "present": true
+      },
+      {
+        "text": "portrait-entry-skin",
+        "present": true
+      },
+      {
+        "text": "portrait-entry-face",
+        "present": true
+      },
+      {
+        "text": "portrait-back",
+        "present": true
+      },
+      {
+        "text": "portrait-dock-panel",
+        "present": true
+      }
+    ],
+    "labels": [
+      {
+        "text": "皮肤",
+        "present": true
+      },
+      {
+        "text": "面部",
+        "present": true
+      },
+      {
+        "text": "皮肤，自动识别全部露出皮肤并调整肤色",
+        "present": true
+      },
+      {
+        "text": "面部，选择人脸进行面部修饰",
+        "present": true
+      }
+    ],
+    "definedMethods": [
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "refresh",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "onBackPressed",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "refresh",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "chooseFaceGroup",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "chooseTone",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "ensureGlobalSkin",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "layoutWorkspace",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "refresh",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "showGroupEntries",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "onBackPressed",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": []
+      }
+    ],
+    "limitation": "DEX definitions and constant presence establish packaged implementation identity, not runtime behavior; focused native UI probe validates interaction."
+  },
+  "sharedEntryDexEvidence": {
+    "definedHelperMethods": [
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "entryCaption",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 55,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "entryHeight",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "entryWidth",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 19,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "toolEntry",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 24,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 54,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 59,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabShape"
+          },
+          {
+            "codeUnitOffset": 104,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 108,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 139,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 147,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 153,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryCaption"
+          }
+        ]
+      }
+    ],
+    "callers": [
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoDetailSource;",
+        "name": "prepare",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 193,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "forContext"
+          },
+          {
+            "codeUnitOffset": 245,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderDetailRaster"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoDetailSource;",
+        "name": "preparePreview",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 89,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "applyRows"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoExportPreview;",
+        "name": "lambda$start$6",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 79,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "forContext"
+          },
+          {
+            "codeUnitOffset": 110,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderWithReference"
+          },
+          {
+            "codeUnitOffset": 336,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "canPreserveFullEffect",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 264,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 292,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 302,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "derive",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 28,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          },
+          {
+            "codeUnitOffset": 346,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 434,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "forContext"
+          },
+          {
+            "codeUnitOffset": 470,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "render"
+          },
+          {
+            "codeUnitOffset": 483,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "hash",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 23,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 34,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "matchesSavedDraft",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 19,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          },
+          {
+            "codeUnitOffset": 81,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 99,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "exportModel"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "processUnique",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 12,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "runEdits",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 81,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 246,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 355,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 369,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "runLegacy",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 112,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 198,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 214,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "findResult",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 111,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 125,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "-$$Nest$smorientation",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "orientation"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 1,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 1,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "applyRows",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 38,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "dimensions",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "bounds"
+          },
+          {
+            "codeUnitOffset": 13,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "orientation"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "forContext",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 21,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "lambda$renderDetail$1",
+        "accessFlags": 4104,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 12,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "lambda$renderInternal$0",
+        "accessFlags": 4104,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 12,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "modelVersion",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 4,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          },
+          {
+            "codeUnitOffset": 15,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "exportModel"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "renderDetail",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 28,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 33,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 45,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "bounds"
+          },
+          {
+            "codeUnitOffset": 62,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "orientation"
+          },
+          {
+            "codeUnitOffset": 88,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "space"
+          },
+          {
+            "codeUnitOffset": 180,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 197,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "applyRows"
+          },
+          {
+            "codeUnitOffset": 202,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 210,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 225,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 262,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 270,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 356,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 361,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "renderInternal",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 73,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 78,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 81,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "bounds"
+          },
+          {
+            "codeUnitOffset": 96,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 128,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "space"
+          },
+          {
+            "codeUnitOffset": 146,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "space"
+          },
+          {
+            "codeUnitOffset": 157,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 248,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 262,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "applyRows"
+          },
+          {
+            "codeUnitOffset": 265,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 304,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "orientation"
+          },
+          {
+            "codeUnitOffset": 325,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 370,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 426,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 460,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 512,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 520,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 629,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          },
+          {
+            "codeUnitOffset": 632,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 665,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 670,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "progress"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "render",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderInternal"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "render",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 10,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "render"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "renderDetail",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderDetail"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "renderDetailRaster",
+        "accessFlags": 0,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderDetail"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+        "name": "renderWithReference",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderInternal"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "copy",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 20,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "create",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 26,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "read",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 10,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "bool"
+          },
+          {
+            "codeUnitOffset": 24,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "count"
+          },
+          {
+            "codeUnitOffset": 45,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "bool"
+          },
+          {
+            "codeUnitOffset": 55,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "count"
+          },
+          {
+            "codeUnitOffset": 178,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "bool"
+          },
+          {
+            "codeUnitOffset": 207,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "addStroke",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withStrokes"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "hasEffect",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 37,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "effectiveSkinMask"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withAdjustments",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withAmount",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withEnabled",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withName",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withPortrait",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withSkinMask",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withSkinSettings",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "withStrokes",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "copy"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$$ExternalSyntheticLambda0;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 6,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lambda$apply$0"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$$ExternalSyntheticLambda1;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lambda$render$1"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$$ExternalSyntheticLambda2;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lambda$render$2"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$$ExternalSyntheticLambda3;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lambda$render$3"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "name": "-$$Nest$smcheck",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "name": "apply",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 48,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "hasEffect"
+          },
+          {
+            "codeUnitOffset": 73,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 76,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "hasEffect"
+          },
+          {
+            "codeUnitOffset": 95,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "render"
+          },
+          {
+            "codeUnitOffset": 100,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "name": "blend",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 39,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "channel"
+          },
+          {
+            "codeUnitOffset": 59,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "channel"
+          },
+          {
+            "codeUnitOffset": 75,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "channel"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "name": "render",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 29,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "compileBrush"
+          },
+          {
+            "codeUnitOffset": 51,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "effectiveSkinMask"
+          },
+          {
+            "codeUnitOffset": 64,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "needsSpatial"
+          },
+          {
+            "codeUnitOffset": 97,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 111,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 137,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "weight"
+          },
+          {
+            "codeUnitOffset": 152,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "blend"
+          },
+          {
+            "codeUnitOffset": 212,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 223,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 240,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "weight"
+          },
+          {
+            "codeUnitOffset": 297,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "copyOf"
+          },
+          {
+            "codeUnitOffset": 319,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "effectiveSkinMask"
+          },
+          {
+            "codeUnitOffset": 323,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "skin"
+          },
+          {
+            "codeUnitOffset": 351,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PortraitPreviewFilter;",
+            "method": "apply"
+          },
+          {
+            "codeUnitOffset": 362,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 368,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "read"
+          },
+          {
+            "codeUnitOffset": 379,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 414,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "weight"
+          },
+          {
+            "codeUnitOffset": 429,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "blend"
+          },
+          {
+            "codeUnitOffset": 507,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "close"
+          },
+          {
+            "codeUnitOffset": 516,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "close"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "name": "skin",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 187,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 232,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 289,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedX"
+          },
+          {
+            "codeUnitOffset": 293,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedY"
+          },
+          {
+            "codeUnitOffset": 630,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lift"
+          },
+          {
+            "codeUnitOffset": 657,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lift"
+          },
+          {
+            "codeUnitOffset": 685,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "lift"
+          },
+          {
+            "codeUnitOffset": 717,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "channel"
+          },
+          {
+            "codeUnitOffset": 726,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "channel"
+          },
+          {
+            "codeUnitOffset": 735,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "channel"
+          },
+          {
+            "codeUnitOffset": 744,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "blend"
+          },
+          {
+            "codeUnitOffset": 794,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "check"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "name": "weight",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 10,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedX"
+          },
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedY"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile$$ExternalSyntheticLambda0;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "lambda$renderPixels$0"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile$$ExternalSyntheticLambda1;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "lambda$renderPixels$1"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile$$ExternalSyntheticLambda2;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "lambda$renderLegacy$4"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile$$ExternalSyntheticLambda3;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "lambda$renderLocal$2"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile$$ExternalSyntheticLambda4;",
+        "name": "accept",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "lambda$renderLocal$3"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile$CompiledMask;",
+        "name": "apply",
+        "accessFlags": 0,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 76,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "-$$Nest$sfgetLINEAR"
+          },
+          {
+            "codeUnitOffset": 86,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "-$$Nest$sfgetLINEAR"
+          },
+          {
+            "codeUnitOffset": 96,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "-$$Nest$sfgetLINEAR"
+          },
+          {
+            "codeUnitOffset": 162,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "-$$Nest$smencode"
+          },
+          {
+            "codeUnitOffset": 175,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "-$$Nest$smencode"
+          },
+          {
+            "codeUnitOffset": 188,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "-$$Nest$smencode"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits$Clone;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 9,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 20,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 33,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 44,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 61,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 75,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits$Mask;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 30,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 38,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 46,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 61,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 73,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          },
+          {
+            "codeUnitOffset": 93,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$sminteger"
+          },
+          {
+            "codeUnitOffset": 105,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$sminteger"
+          },
+          {
+            "codeUnitOffset": 113,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$sminteger"
+          },
+          {
+            "codeUnitOffset": 217,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smvalue"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits$Mask;",
+        "name": "falloff",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "smooth"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits$Mask;",
+        "name": "read",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 61,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "-$$Nest$smcount"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits$Mask;",
+        "name": "weight",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 100,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "smooth"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "-$$Nest$smcount",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "count"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "-$$Nest$sminteger",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "integer"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "-$$Nest$smvalue",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "value"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "<clinit>",
+        "accessFlags": 65544,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 10,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 4,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "<init>",
+        "accessFlags": 65537,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 181,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "write"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "read",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "count"
+          },
+          {
+            "codeUnitOffset": 45,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "count"
+          },
+          {
+            "codeUnitOffset": 88,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "count"
+          },
+          {
+            "codeUnitOffset": 94,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "read"
+          },
+          {
+            "codeUnitOffset": 133,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "add",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "add",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "addRegion",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "hasLocalEffects",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 69,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "hasEffect"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "identity",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 10,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "write"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "isNeutral",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "hasLocalEffects"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "removeClone",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "removeMask",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "removeRegion",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 10,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "withClone",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "withMask",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "withPortrait",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "withRegion",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "withRegions",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "name": "write",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 124,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "write"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog$PhotoCanvas;",
+        "name": "onTouchEvent",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 482,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "addStroke"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "canComplete",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 20,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "clear",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withStrokes"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "rebuildMask",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "compileBrush"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "remember",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoBrushDialog;",
+        "name": "onCreate",
+        "accessFlags": 4,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 59,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 450,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 471,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 492,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 513,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 539,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor$EditState;",
+        "name": "same",
+        "accessFlags": 0,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 50,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "activeRegion",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 12,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "currentProfile",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "finishDrag",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 30,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$openPortraitBrush$71",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          },
+          {
+            "codeUnitOffset": 20,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$openPortraitBrush$72",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 23,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$openPortraitBrush$74",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 63,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 69,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "addRegion"
+          },
+          {
+            "codeUnitOffset": 73,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$refreshExportStatus$127",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 44,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          },
+          {
+            "codeUnitOffset": 98,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$refreshManualThumbnails$114",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 12,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "isNeutral"
+          },
+          {
+            "codeUnitOffset": 24,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$request$122",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 69,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showBrushSelection$35",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 33,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "addRegion"
+          },
+          {
+            "codeUnitOffset": 40,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          },
+          {
+            "codeUnitOffset": 46,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showBrushSelection$39",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 7,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showColor$54",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 21,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 31,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withAdjustments"
+          },
+          {
+            "codeUnitOffset": 35,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          },
+          {
+            "codeUnitOffset": 57,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showComposition$85",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showExport$146",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 33,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showLocal$75",
+        "accessFlags": 4104,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 4,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showLocal$76",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showLocal$80",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 6,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortrait$57",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          },
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortrait$58",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 25,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortrait$60",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortrait$61",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 39,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withPortrait"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortrait$64",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 58,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortrait$66",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 18,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 23,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 35,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 41,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withSkinSettings"
+          },
+          {
+            "codeUnitOffset": 45,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          },
+          {
+            "codeUnitOffset": 51,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showPortraitPaint$69",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 7,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 13,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "lambda$showRegionScope$34",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 34,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 83,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "removeRegion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "nextRegionName",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 27,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "openPortraitBrush",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 21,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "create"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "parameterCaption",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryCaption"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "regionIndex",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 11,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 21,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "restoreHistory",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 67,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "setEditingAdjustments",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 27,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 37,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withAdjustments"
+          },
+          {
+            "codeUnitOffset": 41,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "withRegion"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "showBrushSelection",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 41,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "create"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "showPortraitPaint",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 40,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "showRegionScope",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 74,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 86,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 140,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "styleCategory",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 42,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "styleTab"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "createDock",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 1177,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "toolEntry"
+          },
+          {
+            "codeUnitOffset": 1196,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryWidth"
+          },
+          {
+            "codeUnitOffset": 1219,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "toolEntry"
+          },
+          {
+            "codeUnitOffset": 1238,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryWidth"
+          },
+          {
+            "codeUnitOffset": 2527,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabHeight"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "matches",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 119,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "equals"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor;",
+        "name": "showDetails",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 187,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "isNeutral"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog$PhotoCanvas;",
+        "name": "onTouchEvent",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 949,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/PortraitPreviewFilter;",
+            "method": "faceContains"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "<init>",
+        "accessFlags": 65538,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 163,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "effectiveSkinMask"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "adjust",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 144,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withSkinSettings"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "dockHeight",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryHeight"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "maskBitmap",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 75,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PortraitPreviewFilter;",
+            "method": "mask"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "replaceRegion",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withSkinMask"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "revealActiveChoice",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 37,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "revealChoice"
+          },
+          {
+            "codeUnitOffset": 68,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "revealChoice"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "snapshot",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 20,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 42,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withSkinMask"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "stageAction",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 4,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "withPreparedSkin",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withPortrait"
+          },
+          {
+            "codeUnitOffset": 26,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+            "method": "withSkinMask"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+        "name": "onCreate",
+        "accessFlags": 4,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 68,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 100,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 487,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 522,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 1329,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "icon"
+          },
+          {
+            "codeUnitOffset": 1758,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tool"
+          },
+          {
+            "codeUnitOffset": 1838,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tool"
+          },
+          {
+            "codeUnitOffset": 2014,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tool"
+          },
+          {
+            "codeUnitOffset": 2071,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tool"
+          },
+          {
+            "codeUnitOffset": 2113,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tool"
+          },
+          {
+            "codeUnitOffset": 2252,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "toolEntry"
+          },
+          {
+            "codeUnitOffset": 2267,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryWidth"
+          },
+          {
+            "codeUnitOffset": 2293,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "toolEntry"
+          },
+          {
+            "codeUnitOffset": 2308,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryWidth"
+          },
+          {
+            "codeUnitOffset": 2325,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryHeight"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi$$ExternalSyntheticLambda0;",
+        "name": "onClick",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "lambda$tool$1"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi$$ExternalSyntheticLambda1;",
+        "name": "onClick",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "lambda$toolEntry$0"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi$$ExternalSyntheticLambda2;",
+        "name": "onClick",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "lambda$icon$2"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi$RevealRequest;",
+        "name": "onGlobalLayout",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 24,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$sfgetREVEALS"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi$WorkspaceButton;",
+        "name": "<init>",
+        "accessFlags": 65536,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 68,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 75,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 84,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 96,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 100,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 108,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 131,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi$WorkspaceButton;",
+        "name": "onDraw",
+        "accessFlags": 4,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 16,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 79,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 102,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 120,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 136,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 172,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 210,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          },
+          {
+            "codeUnitOffset": 219,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "-$$Nest$smdp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "-$$Nest$smdp",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "entryCaption",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 55,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "entryHeight",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 22,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "entryWidth",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 19,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "styleTab",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 43,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 50,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 63,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabShape"
+          },
+          {
+            "codeUnitOffset": 76,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 81,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabShape"
+          },
+          {
+            "codeUnitOffset": 92,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 98,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 113,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 126,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 134,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabShape"
+          },
+          {
+            "codeUnitOffset": 138,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 159,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 165,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 200,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 206,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabShape"
+          },
+          {
+            "codeUnitOffset": 210,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 215,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 231,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 235,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "tabHeight",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 19,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+        "name": "toolEntry",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 24,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 54,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 59,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "tabShape"
+          },
+          {
+            "codeUnitOffset": 104,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 108,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 139,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 147,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "dp"
+          },
+          {
+            "codeUnitOffset": 153,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ui/PhotoWorkspaceUi;",
+            "method": "entryCaption"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$$ExternalSyntheticLambda0;",
+        "name": "update",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "lambda$renderInternal$0"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$$ExternalSyntheticLambda2;",
+        "name": "update",
+        "accessFlags": 17,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "lambda$renderDetail$1"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+        "name": "copyOf",
+        "accessFlags": 8,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 105,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "-$$Nest$smcheck"
+          },
+          {
+            "codeUnitOffset": 136,
+            "opcode": "0x76",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "<init>"
+          },
+          {
+            "codeUnitOffset": 144,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "-$$Nest$smcheck"
+          },
+          {
+            "codeUnitOffset": 151,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "write"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+        "name": "read",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "range"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+        "name": "write",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+            "method": "range"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "-$$Nest$smencode",
+        "accessFlags": 4168,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "encode"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "clone",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 75,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "rawX"
+          },
+          {
+            "codeUnitOffset": 92,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "rawY"
+          },
+          {
+            "codeUnitOffset": 109,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "rawX"
+          },
+          {
+            "codeUnitOffset": 119,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "rawY"
+          },
+          {
+            "codeUnitOffset": 266,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 285,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 301,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 306,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedPixelX"
+          },
+          {
+            "codeUnitOffset": 312,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedPixelY"
+          },
+          {
+            "codeUnitOffset": 418,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "rawPixelX"
+          },
+          {
+            "codeUnitOffset": 422,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "rawPixelY"
+          },
+          {
+            "codeUnitOffset": 494,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "encode"
+          },
+          {
+            "codeUnitOffset": 514,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "encode"
+          },
+          {
+            "codeUnitOffset": 532,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "encode"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "of",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 4,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "isNeutral"
+          },
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "of",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 11,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "isNeutral"
+          },
+          {
+            "codeUnitOffset": 20,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "renderLegacy",
+        "accessFlags": 10,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 40,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "isNeutral"
+          },
+          {
+            "codeUnitOffset": 48,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 73,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "masks"
+          },
+          {
+            "codeUnitOffset": 124,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 137,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 154,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedX"
+          },
+          {
+            "codeUnitOffset": 158,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "orientedY"
+          },
+          {
+            "codeUnitOffset": 277,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "clones"
+          },
+          {
+            "codeUnitOffset": 288,
+            "opcode": "0x77",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 305,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "clone"
+          },
+          {
+            "codeUnitOffset": 397,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/PortraitPreviewFilter;",
+            "method": "apply"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "renderLocal",
+        "accessFlags": 9,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 11,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 21,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "renderLegacy"
+          },
+          {
+            "codeUnitOffset": 35,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "renderLegacy"
+          },
+          {
+            "codeUnitOffset": 38,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "regions"
+          },
+          {
+            "codeUnitOffset": 50,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+            "method": "apply"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "modelVersion",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 8,
+            "opcode": "0x6e",
+            "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+            "method": "identity"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "renderPixels",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 0,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 39,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "renderLocal"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "name": "withExifOrientation",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 13,
+            "opcode": "0x70",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "<init>"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ui/PhotoFilterEditor$6;",
+        "name": "colour",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 42,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+            "method": "of"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$1;",
+        "name": "exifOrientation",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "-$$Nest$smorientation"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$1;",
+        "name": "scratchDirectory",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "-$$Nest$fgetscratchDirectory"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$2;",
+        "name": "scratchDirectory",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "-$$Nest$fgetscratchDirectory"
+          }
+        ]
+      }
+    ]
+  },
+  "sourceEntryNavigationEvidence": {
+    "oldPortraitTabTagsAbsentInSource": true,
+    "portraitDoesNotCallTabStyleOrGroupButton": true,
+    "rootEntriesUseSharedHelperTwice": true,
+    "entriesHiddenInChildPage": true,
+    "backFinishesActiveSliderPreview": true,
+    "healingMarkersHiddenOnEntryPage": true
+  },
+  "oldTabDexEvidence": [
+    {
+      "text": "portrait-groups",
+      "absent": true
+    },
+    {
+      "text": "portrait-group-skin",
+      "absent": true
+    },
+    {
+      "text": "portrait-group-face",
+      "absent": true
+    }
+  ],
+  "engineDexAndSourceChecks": {
+    "newEngineAndBrushClassesDefined": true,
+    "regionPublicFinalApiFieldsDefined": true,
+    "oldPortraitPipelinePrecedesRegionsInDex": true,
+    "regionWireReadAndWriteInDex": true,
+    "wireV3SourceAndLegacyPreservationBound": true,
+    "twoFullSizePixelsDeclarePrivateScratchOverride": true,
+    "allThreeProductionCallersUsePrivateContextFactory": true,
+    "brushAndRegionalPortraitApisDefined": true,
+    "hostCurrentSourcesMatchActualCompileInputManifest": true,
+    "hostSourcesBindFrozenCandidate": true,
+    "allHostSuitesAndBounded24MPPassed": true
+  },
+  "engineDexEvidence": {
+    "requiredClassDefinitions": [
+      "Lcc/huevia/ncp/AdjustmentRegion;",
+      "Lcc/huevia/ncp/AdjustmentRegion$Brush;",
+      "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+      "Lcc/huevia/ncp/AdjustmentRegionRenderer$Scratch;",
+      "Lcc/huevia/ui/PhotoBrushDialog;"
+    ],
+    "declaredRegionFields": [
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "MAX_POINTS",
+        "type": "I",
+        "accessFlags": 25
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "MAX_STROKES",
+        "type": "I",
+        "accessFlags": 25
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "adjustments",
+        "type": "Lcc/huevia/ncp/PhotoAdjustments;",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "amount",
+        "type": "D",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "enabled",
+        "type": "Z",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "id",
+        "type": "Ljava/lang/String;",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "name",
+        "type": "Ljava/lang/String;",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "portrait",
+        "type": "Lcc/huevia/ncp/PhotoPortrait;",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "skinMask",
+        "type": "Lcc/huevia/ncp/PhotoPortrait$BodySkinMask;",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "skinSettings",
+        "type": "Lcc/huevia/ncp/PhotoPortrait$Settings;",
+        "accessFlags": 17
+      },
+      {
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegion;",
+        "name": "strokes",
+        "type": "Ljava/util/List;",
+        "accessFlags": 17
+      }
+    ],
+    "stackCalls": [
+      {
+        "codeUnitOffset": 11,
+        "opcode": "0x6e",
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "method": "regions"
+      },
+      {
+        "codeUnitOffset": 21,
+        "opcode": "0x71",
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "method": "renderLegacy"
+      },
+      {
+        "codeUnitOffset": 35,
+        "opcode": "0x71",
+        "classDescriptor": "Lcc/huevia/ncp/LocalEditsPreviewProfile;",
+        "method": "renderLegacy"
+      },
+      {
+        "codeUnitOffset": 38,
+        "opcode": "0x6e",
+        "classDescriptor": "Lcc/huevia/ncp/PhotoLocalEdits;",
+        "method": "regions"
+      },
+      {
+        "codeUnitOffset": 50,
+        "opcode": "0x71",
+        "classDescriptor": "Lcc/huevia/ncp/AdjustmentRegionRenderer;",
+        "method": "apply"
+      }
+    ],
+    "scratchOverrides": [
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$1;",
+        "name": "scratchDirectory",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "-$$Nest$fgetscratchDirectory"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer$2;",
+        "name": "scratchDirectory",
+        "accessFlags": 1,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 2,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "-$$Nest$fgetscratchDirectory"
+          }
+        ]
+      }
+    ],
+    "contextFactoryCallers": [
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoDetailSource;",
+        "name": "prepare",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 193,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "forContext"
+          },
+          {
+            "codeUnitOffset": 245,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderDetailRaster"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoExportPreview;",
+        "name": "lambda$start$6",
+        "accessFlags": 4098,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 79,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "forContext"
+          },
+          {
+            "codeUnitOffset": 110,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "renderWithReference"
+          },
+          {
+            "codeUnitOffset": 336,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          }
+        ]
+      },
+      {
+        "classDescriptor": "Lcc/huevia/album/PhotoPresetBatch;",
+        "name": "derive",
+        "accessFlags": 2,
+        "hasCode": true,
+        "sharedEntryInvocations": [
+          {
+            "codeUnitOffset": 14,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "dimensions"
+          },
+          {
+            "codeUnitOffset": 28,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "modelVersion"
+          },
+          {
+            "codeUnitOffset": 346,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          },
+          {
+            "codeUnitOffset": 434,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "forContext"
+          },
+          {
+            "codeUnitOffset": 470,
+            "opcode": "0x74",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "render"
+          },
+          {
+            "codeUnitOffset": 483,
+            "opcode": "0x71",
+            "classDescriptor": "Lcc/huevia/album/PhotoPresetRenderer;",
+            "method": "check"
+          }
+        ]
+      }
+    ]
+  },
+  "hostProvenance": {
+    "summary": {
+      "path": "docs/validation/brush122/HOST-SUMMARY.json",
+      "sha256": "d1924d9615b9b5a051137b6fc90f612347c7bce59025d9cd9b396e9de517c649"
+    },
+    "sourceManifest": {
+      "path": "docs/validation/brush122/HOST-SOURCE-INPUTS.json",
+      "sha256": "6be027dca9ea9eef6697ccd4abd281d9fbafcb1bac4e8224e80e759328b3571d"
+    },
+    "currentMismatches": [],
+    "matrixChecks": 1446177,
+    "parameterExifCases": 152,
+    "legacyChecks": 1184,
+    "productionSourceCount": 35,
+    "sourceCount": 46
+  },
+  "deviceAccessed": false,
+  "networkAccessed": false,
+  "unchangedModelInferenceBenchmarksRerun": false
+}

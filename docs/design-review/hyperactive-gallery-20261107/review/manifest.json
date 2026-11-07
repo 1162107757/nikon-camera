@@ -1,0 +1,86 @@
+{
+  "scope": "ONLY four home tabs; no picture-processing designs",
+  "captures": [
+    {
+      "file": "review/four-home-board.jpg",
+      "width": 1264,
+      "height": 887,
+      "sha256": "76e93cfeaee09899850caea6c0106d39eb48406315e0b740bf79f8821ef74d2b"
+    },
+    {
+      "file": "review/mobile-presets.jpg",
+      "width": 390,
+      "height": 843,
+      "sha256": "c3556e688e53ec22d4381c324542a236ab6a5d853d0c7e12a86945a8de459be1"
+    },
+    {
+      "file": "review/mobile-sync.jpg",
+      "width": 390,
+      "height": 843,
+      "sha256": "5b6aa0c5254edefab3229a941bd791228bd22541c999ac3b40e3a743024222b6"
+    },
+    {
+      "file": "review/mobile-album.jpg",
+      "width": 390,
+      "height": 843,
+      "sha256": "38f4570b7293515dd105b0de32e491116d3366ba310a32fdc1ab56a95759d4f6"
+    },
+    {
+      "file": "review/mobile-settings.jpg",
+      "width": 390,
+      "height": 843,
+      "sha256": "9a5b0bc31f21af1778427260c7576ea0783b698f92e40024ab8e46895695221c"
+    },
+    {
+      "file": "review/mobile-live.jpg",
+      "width": 390,
+      "height": 843,
+      "sha256": "9f7ccc98e8268b5bd395ee38ecbc4b10cbc06d813ffc8c907e8640fabae6c9fd"
+    },
+    {
+      "file": "review/mobile-selection.jpg",
+      "width": 390,
+      "height": 843,
+      "sha256": "df805fc9bad281194df5937f6df816f5b771d00719b773a6665a5c922dfa98a2"
+    },
+    {
+      "file": "review/narrow-album.jpg",
+      "width": 320,
+      "height": 720,
+      "sha256": "6c9b80a9617932de44c9ec137b703a4277bdc41ed352e1219108b91e33f9cf12"
+    }
+  ],
+  "sourceHashes": {
+    "index.html": "ed2e06418213c2f31a6af4171acd5635733f699c42360a8537117727eeb2ead0",
+    "app.html": "c3892963356cdc6e722e51b24a0094cfe8847154b2140b525351e5bd7c6cfc10",
+    "app.css": "fbee0a8f2de9146425ea9bf0dfb9e36fadb24bd213b8a5d0b13faf68d841d42e",
+    "app.js": "6eb49b7b1940ee70376c7e5f696829a84580f82997f6b77a02c78be18b631330",
+    "serve.mjs": "3350a7de2d771beae6184321419d61e8dc01c317ca883c79eed7b303f0ac18aa"
+  },
+  "captureMode": "Static evidence uses capture=1 to disable CSS entrance transitions. Single-screen shots use viewport capture because full-page capture offsets fixed layers in this browser. Desktop board uses full-page capture.",
+  "deviceClasses": [
+    "390x844 web phone",
+    "320x720 narrow web phone",
+    "default desktop1265x720 with full document board"
+  ],
+  "prototypeOnly": true,
+  "nativeAppBuilt": false,
+  "fix": "Only inactive source/category, transfer-size/rate and settings-footer ink colors changed. Geometry and type sizes preserved.",
+  "review": {
+    "initial": "review/finish-review.md",
+    "initialDisposition": "fix",
+    "materialItems": 1,
+    "verdict": "review/verdict.md",
+    "scoredFix": "secondary-text contrast resolved",
+    "verdictScope": "Scored contrast fix only; not a new whole-surface approval",
+    "userDesignApproval": "pending"
+  },
+  "delivery": {
+    "url": "http://127.0.0.1:8792/",
+    "tabKept": true,
+    "viewportOverrideReset": true,
+    "temporaryInteractionTabClosed": true,
+    "nativeBuild": false,
+    "nativeInstall": false
+  }
+}

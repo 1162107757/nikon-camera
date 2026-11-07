@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "complete-local-package-not-published",
+  "versionCode": 123,
+  "versionName": "0.24.1-beta",
+  "apk": {
+    "path": "dist/huevia-0.24.1-beta-debug.apk",
+    "bytes": 33436428,
+    "sha256": "024332082067562fabbcd113db591747b8f63b93f0e95a9fae9501f13d7e5f42",
+    "remainingUploadBytes": 118004
+  },
+  "evidence": {
+    "BUILD-IDENTITY.json": {
+      "path": "docs/validation/ncp-preview123/BUILD-IDENTITY.json",
+      "sha256": "ed694c6f7fb5be03e41652a0b7cd387118d9f01350edc027320f59be85da21c5"
+    },
+    "PACKAGING-AUDIT.json": {
+      "path": "docs/validation/ncp-preview123/PACKAGING-AUDIT.json",
+      "sha256": "dedb7915a5c0b83415a432509c91b050b7e37e8b9ba1f9faff647d7b75fd80a8"
+    },
+    "HOST-SUMMARY.json": {
+      "path": "docs/validation/ncp-preview123/HOST-SUMMARY.json",
+      "sha256": "7e14ab3672345e1993921dc3bc3770b0ca3fb5ca08604232b61010cdefce563c"
+    },
+    "NATIVE-SUMMARY.json": {
+      "path": "docs/validation/ncp-preview123/NATIVE-SUMMARY.json",
+      "sha256": "8dee61ab8396e5501224fda4dd55f36642cda1043ed533e21cc9259c0c092e67"
+    },
+    "DEVICE-CLEANUP.json": {
+      "path": "docs/validation/ncp-preview123/DEVICE-CLEANUP.json",
+      "sha256": "8479f0cabbff08a39b39b8421b713273cd8cb9d7a3007dc6b08ecbaba328548a"
+    }
+  },
+  "inheritedBrush122": {
+    "path": "docs/validation/brush122/VALIDATION-RESULT.json",
+    "sha256": "99e95dbc0955f14b42ced1ef6213344eae1b4f3f0be9f52c7b365454e796b901"
+  },
+  "checks": {
+    "frozenProductionInputs": 292,
+    "nativeEvidenceReferencesVerified": 25,
+    "actualOriginalBatchSupported": 149,
+    "newMonochromes": 19,
+    "oldColorOutputsUnchanged": 130,
+    "hostUnitChecks": 5287,
+    "actualStrengthAlphaChecks": 512000,
+    "finalAndroidCoreAndUiChecks": 453,
+    "finalAndroidScreenshots": 19,
+    "oldMatrixSeparateFromFinalCore": true,
+    "sourceFreezeStillMatches": true,
+    "signerAndManifestPassed": true,
+    "privateReferencesExcludedFromApk": true
+  },
+  "limitations": "Dedicated emulator functional/pixel consistency and controlled audited app approximation; no physical-phone performance, camera-import or exact Nikon-camera rendering equivalence claim. All149 profile matrix was completed on initial123 numerical code and bound to final123 by the independently verified UI-only source delta.",
+  "publication": {
+    "uploaded": false,
+    "automationCreated": false,
+    "commitCreated": false,
+    "pushed": false,
+    "preference": "Retain local package; user will resume uploading manually."
+  }
+}

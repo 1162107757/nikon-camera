@@ -1,0 +1,9 @@
+{
+  "emulator": "emulator-5596",
+  "state": "stopped",
+  "fixtures": "Per-run production reports assert removal of test-owned images and drafts; imported MediaStore rows deleted by the probe.",
+  "dataDirectory": "D:/dev/ai-project/nikon-camera/.tooling/prisma-editor151/emulator-data",
+  "dataDirectoryRemoved": false,
+  "note": "Retained without another deletion attempt; a recursive cleanup was blocked in an earlier turn.",
+  "adbDevicesAfter": "empty"
+}

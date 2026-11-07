@@ -1,0 +1,103 @@
+{
+  "baselineSha256": "2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad",
+  "candidateSha256": "82a7872f39d8a7cb733d42640fd410f0fdd3736d19c1faa31346789518f919a0",
+  "totalInputs": 305,
+  "changed": [
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "a09526c6a4c347074df5a8d947b517f42c4eae9aa4d6443864e79d5a59cd52b1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "1caa28f730056464a200b9f204e46383529757138c6be4968e264d27c33e862b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoActionsMenu.java",
+      "sha256": "eb0247371a173abc1fa68f8f276f7712136e919c37e8d8c322cb0138f1399deb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBodyDialog.java",
+      "sha256": "2ff271c90b15dd9604fc29047eb3129d64848ed937020f77394d64640976391c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBorderPanel.java",
+      "sha256": "2fe1a620ee7103e7715330130ab6b861afce749c81f706709b7623cf7b85783c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+      "sha256": "c42a1998957867f75be600ffb58df51460759ba87ff222d72dc46e21d4a935ab"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCleanupDialog.java",
+      "sha256": "d8857cc006e76ae021a73b6f323de56d7a1faef7e31393da9502184896091484"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+      "sha256": "9a321697a62220a5d26c54f087c129b88f9457eaf0ced7ec8e8abeb3fe410325"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCompactDock.java",
+      "sha256": "5c5f648143c6e453cfd62379f8d923553366ff117c0a973fbd9ac0a383a23905"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java",
+      "sha256": "7014b2026199e1d1e69b1c62318782f5c16a4b57ff38ae04f6a6a2074254a7a7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoDetailDialog.java",
+      "sha256": "f61591940126491c3907082d73f8e690cb572daf0cf48e7af12caa209b49f583"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoDetailView.java",
+      "sha256": "2002aeafd7f8cc896b6c8b46961a4d69badcbc6c3451def5bdf9fdc7e961be59"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportPreviewDialog.java",
+      "sha256": "8fb8b5691adfd9fe87c8a9da9da49b83fff1993e3bf6d5d5d249b84713b3b39d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportProgressDialog.java",
+      "sha256": "66df3496fc068505230ff073b6dc19f8fe5ec6edf7cf31a8fb8a7f184da4feb7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "76929fa3417328cb59c353323b2093de308d0e3e55fd9147993731b57ea35a46"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoHistogramPanel.java",
+      "sha256": "1f977e2c4636261ce6187d4491fe3f6fb64325674676cc096a791dfc17d2be8c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java",
+      "sha256": "ad5546ea891151a1d6c1236d67cab4d869062b9ffcb2787786d29a1d0738d0d8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPaletteDialog.java",
+      "sha256": "2ba9e4e2ff2e2510bfb4f53c2c0d735578e2891778af4c5975fc3a6bbbb59f36"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+      "sha256": "c2b717eca0bd9e3f3d7641d2bc30964b9dcb0c23bb05a7761139db56d946240a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+      "sha256": "42472597973c79199d1a0004d1a83b850aad3df012c12bf5761a603f8fa3a5e3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "5a39ef9211ee93d27946295c2f0d901f801b66481f5bd4164b35d141660f7dc2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PortraitLightPad.java",
+      "sha256": "ece99e0f1a70115afd7096f17b793779ee0521b8b24c66e93fb712555dca6a82"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/SkinTonePicker.java",
+      "sha256": "50f31843d8a4a0a2bc629ab0c150a03fab212b9c16f49626591ff8a52425be2a"
+    },
+    {
+      "path": "app/build.gradle",
+      "sha256": "a5ebdb16bdfdf76a0e86cdd5b3b79e2ff4e5bf754d705d1219fe44d8a66f4742"
+    }
+  ]
+}

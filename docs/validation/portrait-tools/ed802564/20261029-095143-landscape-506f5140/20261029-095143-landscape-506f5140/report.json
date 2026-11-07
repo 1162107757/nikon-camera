@@ -1,0 +1,3306 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb",
+  "versionCode": 114,
+  "versionName": "0.23.3-beta",
+  "mode": "landscape",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-public-domain-face-fixture",
+      "pass": true
+    },
+    {
+      "name": "astronaut-decodes",
+      "pass": true
+    },
+    {
+      "name": "real-offline-single-face-detected",
+      "pass": true
+    },
+    {
+      "name": "real-offline-two-person-collage-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "grayscale-single-image-detects-exactly-one-face",
+      "pass": true
+    },
+    {
+      "name": "grayscale-two-person-image-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "dialog-analysis-size-colour-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "dialog-analysis-size-grayscale-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "blank-image-does-not-invent-faces",
+      "pass": true
+    },
+    {
+      "name": "detector-cancellation-is-explicit",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "blank-detection-explains-manual-fallback",
+      "pass": true
+    },
+    {
+      "name": "empty-detection-keeps-empty-selection",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "manual-fallback-adds-real-selection",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "fallback-cancel-does-not-commit",
+      "pass": true
+    },
+    {
+      "name": "preview-failure-visible",
+      "pass": true
+    },
+    {
+      "name": "failed-preview-disables-apply",
+      "pass": true
+    },
+    {
+      "name": "failed-preview-then-no-face-detection-finishes",
+      "pass": true
+    },
+    {
+      "name": "no-face-detection-cannot-certify-failed-preview",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "injected-unavailable-analysis-edge-heal-failure-visible",
+      "pass": true
+    },
+    {
+      "name": "heal-failure-cannot-certify-failed-preview",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "new-selection-still-requires-successful-preview",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "retry-enables-apply-only-after-latest-success",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-keyboard-slider-produces-latest-final-frame",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "failed-and-retried-preview-cancel-cannot-commit",
+      "pass": true
+    },
+    {
+      "name": "private-portrait-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "private-portrait-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-auto-analysis-finished",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owned-ui-analysis-diagnostic-written",
+      "pass": true
+    },
+    {
+      "name": "native-exactly-two-faces-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-staged-not-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-auto-two-faces",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-auto-two-faces",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cancel-keeps-editor-and-draft",
+      "pass": true
+    },
+    {
+      "name": "cancel-no-main-history",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-auto-analysis-finished",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owned-ui-analysis-diagnostic-written",
+      "pass": true
+    },
+    {
+      "name": "native-exactly-two-faces-selected",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "initial-clean-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "initial-clean-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "initial-clean-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "initial-clean-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "tap-first-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "tap-first-observed-step-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "tap-first-observed-step-2",
+      "pass": true
+    },
+    {
+      "name": "tap-first-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "tap-first-selected-face",
+      "pass": true
+    },
+    {
+      "name": "tap-first-first-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "tap-first-first-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-first-gap-is-clean-size",
+      "pass": true
+    },
+    {
+      "name": "tap-first-gap-is-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-first-second-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "tap-first-second-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-first-ends-entirely-clean-size",
+      "pass": true
+    },
+    {
+      "name": "tap-first-ends-entirely-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-first-selected-skin-visibly-flashes",
+      "pass": true
+    },
+    {
+      "name": "tap-first-other-face-unaffected",
+      "pass": true
+    },
+    {
+      "name": "tap-first-does-not-edit-model",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-first-first-pulse",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-first-off-gap",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-first-second-pulse",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-first-ended-clean",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "08-first-face-selected-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "screenshot-08-first-face-selected",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-08-first-face-selected",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-08-first-face-selected-canvas",
+      "pass": true
+    },
+    {
+      "name": "08-first-face-selected-finished-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "tap-second-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "tap-second-observed-step-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "tap-second-observed-step-2",
+      "pass": true
+    },
+    {
+      "name": "tap-second-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "tap-second-selected-face",
+      "pass": true
+    },
+    {
+      "name": "tap-second-first-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "tap-second-first-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-second-gap-is-clean-size",
+      "pass": true
+    },
+    {
+      "name": "tap-second-gap-is-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-second-second-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "tap-second-second-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-second-ends-entirely-clean-size",
+      "pass": true
+    },
+    {
+      "name": "tap-second-ends-entirely-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "tap-second-selected-skin-visibly-flashes",
+      "pass": true
+    },
+    {
+      "name": "tap-second-other-face-unaffected",
+      "pass": true
+    },
+    {
+      "name": "tap-second-does-not-edit-model",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-second-first-pulse",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-second-off-gap",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-second-second-pulse",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-tap-second-ended-clean",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "09-second-face-selected-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "screenshot-09-second-face-selected",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-09-second-face-selected",
+      "pass": true
+    },
+    {
+      "name": "canvas-frame-written-09-second-face-selected-canvas",
+      "pass": true
+    },
+    {
+      "name": "09-second-face-selected-finished-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "face-picker-menu-visible",
+      "pass": true
+    },
+    {
+      "name": "face-picker-unselected-item-unchecked",
+      "pass": true
+    },
+    {
+      "name": "face-picker-current-item-checked",
+      "pass": true
+    },
+    {
+      "name": "screenshot-11-face-picker-current",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-11-face-picker-current",
+      "pass": true
+    },
+    {
+      "name": "face-picker-real-accessibility-click",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "menu-first-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "menu-first-observed-step-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "menu-first-observed-step-2",
+      "pass": true
+    },
+    {
+      "name": "menu-first-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "menu-first-selected-face",
+      "pass": true
+    },
+    {
+      "name": "menu-first-first-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "menu-first-first-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-first-gap-is-clean-size",
+      "pass": true
+    },
+    {
+      "name": "menu-first-gap-is-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-first-second-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "menu-first-second-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-first-ends-entirely-clean-size",
+      "pass": true
+    },
+    {
+      "name": "menu-first-ends-entirely-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-first-selected-skin-visibly-flashes",
+      "pass": true
+    },
+    {
+      "name": "menu-first-other-face-unaffected",
+      "pass": true
+    },
+    {
+      "name": "menu-first-does-not-edit-model",
+      "pass": true
+    },
+    {
+      "name": "face-picker-menu-visible",
+      "pass": true
+    },
+    {
+      "name": "face-picker-same-face-real-click",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-observed-step-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-observed-step-2",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-selected-face",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-first-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-first-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-gap-is-clean-size",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-gap-is-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-second-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-second-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-ends-entirely-clean-size",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-ends-entirely-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-selected-skin-visibly-flashes",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-other-face-unaffected",
+      "pass": true
+    },
+    {
+      "name": "menu-same-face-replay-does-not-edit-model",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-observed-step-1",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-observed-step-2",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-observed-step--1",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-selected-face",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-first-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-first-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-gap-is-clean-size",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-gap-is-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-second-pulse-is-actual-mask-size",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-second-pulse-is-actual-mask-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-ends-entirely-clean-size",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-ends-entirely-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-selected-skin-visibly-flashes",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-other-face-unaffected",
+      "pass": true
+    },
+    {
+      "name": "rapid-latest-face-does-not-edit-model",
+      "pass": true
+    },
+    {
+      "name": "face-selection-and-replay-do-not-edit-model",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "compare-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "compare-cancels-flash-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "compare-cancels-flash-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "compare-cancels-flash-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "compare-cancels-flash-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-10-clean-hold-comparison",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-10-clean-hold-comparison",
+      "pass": true
+    },
+    {
+      "name": "compare-release-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "compare-release-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "compare-release-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "compare-release-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "compare-release-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "compare-release-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "compare-release-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "compare-release-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "effect-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "effect-selection-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "keyboard-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "parameter-keyboard-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "feedback-test-restores-adjustment",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "drag-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "parameter-drag-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "feedback-test-restores-adjustment",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "fit-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "fit-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "fit-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "fit-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "fit-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "fit-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "fit-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "fit-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "fit-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "flash-real-photo-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "zoom-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": true
+    },
+    {
+      "name": "pinch-preserves-mask-count",
+      "pass": true
+    },
+    {
+      "name": "native-pinch-zooms",
+      "pass": true
+    },
+    {
+      "name": "zoom-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "zoom-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "zoom-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "zoom-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "zoom-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "zoom-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "zoom-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "zoom-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "face-picker-menu-visible",
+      "pass": true
+    },
+    {
+      "name": "flash-real-menu-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "size-keyboard-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "face-picker-menu-visible",
+      "pass": true
+    },
+    {
+      "name": "flash-real-menu-selects-0",
+      "pass": true
+    },
+    {
+      "name": "flash-real-mask-ready",
+      "pass": true
+    },
+    {
+      "name": "size-touch-visible-flash-observed-step-0",
+      "pass": true
+    },
+    {
+      "name": "size-touch-immediate-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "size-touch-immediate-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "size-touch-immediate-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "size-touch-immediate-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "size-touch-after-old-callbacks-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "size-touch-after-old-callbacks-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "size-touch-after-old-callbacks-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "size-touch-after-old-callbacks-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "feedback-cancellation-restores-model",
+      "pass": true
+    },
+    {
+      "name": "final-idle-clean-flash-stopped",
+      "pass": true
+    },
+    {
+      "name": "final-idle-clean-explicit-overlay-off",
+      "pass": true
+    },
+    {
+      "name": "final-idle-clean-full-canvas-clean-size",
+      "pass": true
+    },
+    {
+      "name": "final-idle-clean-full-canvas-clean-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-12-feedback-ended-clean",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-12-feedback-ended-clean",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-2",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "adjusting-first-face-keeps-second-settings",
+      "pass": true
+    },
+    {
+      "name": "screenshot-02-skin-colour",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-02-skin-colour",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-4",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-03-skin-texture",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-03-skin-texture",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-6",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-04-face-light",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-04-face-light",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-add-and-erase-strokes",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": true
+    },
+    {
+      "name": "pinch-preserves-mask-count",
+      "pass": true
+    },
+    {
+      "name": "native-pinch-zooms",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-05-mask-corrections",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-05-mask-corrections",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-blemish-heal-added",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "dialog-undo-removes-heal",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "dialog-redo-restores-complete-portrait",
+      "pass": true
+    },
+    {
+      "name": "screenshot-06-blemish-healing",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-06-blemish-healing",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "portrait-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-landscape",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "screenshot-portrait-rotated-open",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-portrait-rotated-open",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-portrait",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-priority",
+      "pass": true
+    },
+    {
+      "name": "portrait-compact-dock",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "open-dialog-rotation-preserves-complete-staged-state",
+      "pass": true
+    },
+    {
+      "name": "modified-open-dialog-reflows-landscape",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-action-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-photo-stage-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-nine-direct-tools",
+      "pass": true
+    },
+    {
+      "name": "portrait-no-category-tabs",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-1",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-2",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-4",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-5",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-6",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-7",
+      "pass": true
+    },
+    {
+      "name": "portrait-selected-primary-tool-visible",
+      "pass": true
+    },
+    {
+      "name": "portrait-primary-tool-touch-8",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-primary-tool-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-one-context-slider",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "apply-commits-portrait",
+      "pass": true
+    },
+    {
+      "name": "apply-one-main-history-step",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-undo-restores-portrait-before",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-redo-restores-portrait",
+      "pass": true
+    },
+    {
+      "name": "saved-draft-keeps-portrait",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-does-not-leak-to-other-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "return-restores-portrait-draft",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owner-mismatch-rejects-portrait-commit",
+      "pass": true
+    },
+    {
+      "name": "owner-mismatch-dialog-dismissed",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-0",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-0-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-auto-analysis-finished",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owned-ui-analysis-diagnostic-written",
+      "pass": true
+    },
+    {
+      "name": "native-exactly-two-faces-selected",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-0",
+      "pass": true
+    },
+    {
+      "name": "portrait-direct-effect-binding-3",
+      "pass": true
+    },
+    {
+      "name": "portrait-active-tool-revealed-3",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-portrait-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "portrait-disposed",
+      "pass": true
+    },
+    {
+      "name": "portrait-rendered-frame-released",
+      "pass": true
+    },
+    {
+      "name": "portrait-preview-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-worker-closed",
+      "pass": true
+    },
+    {
+      "name": "portrait-analysis-bitmap-recycled",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "full-reference-dimensions-1",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-size",
+      "pass": true
+    },
+    {
+      "name": "full-reference-vs-real-detail-1-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-exif-six-fixture",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-size",
+      "pass": true
+    },
+    {
+      "name": "independent-oriented-vs-raw-exif-six-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "export-source-unchanged-1",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "portrait-effect-not-misclassified-unchanged",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-full-one-to-one",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "actual-detail-sample-one-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "screenshot-07-real-portrait-detail",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-07-real-portrait-detail",
+      "pass": true
+    },
+    {
+      "name": "detail-worker-terminated",
+      "pass": true
+    },
+    {
+      "name": "detail-view-closed-no-frame",
+      "pass": true
+    },
+    {
+      "name": "detail-temporary-surface-released",
+      "pass": true
+    },
+    {
+      "name": "original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "raw-RGB565-face-candidates-single",
+      "width": 512,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5182980895042419,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "offline-face-detection",
+      "singleCount": 1,
+      "collageCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-grayscale-single",
+      "width": 512,
+      "height": 512,
+      "count": 1,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5191072225570679,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 100.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-grayscale-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5191072225570679,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 100.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5189751982688904,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 100.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "grayscale-offline-face-detection",
+      "conversion": "Android Canvas ColorMatrix saturation 0",
+      "singleCount": 1,
+      "collageCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-analysis960-two-person",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51909339427948,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5178302526473999,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5052559971809387,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-analysis960-grayscale-two-person",
+      "width": 960,
+      "height": 480,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5180290937423706,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5177146792411804,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "analysis960-offline-face-detection",
+      "width": 960,
+      "height": 480,
+      "colourCount": 2,
+      "grayscaleCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-9",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51783287525177,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5173211693763733,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5074052214622498,
+          "eyesDistance": 40.015625,
+          "midpointX": 848.2109375,
+          "midpointY": 208.0546875,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-9-grayscale",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5187989473342896,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5183793902397156,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5048592686653137,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-9-grayscale-085",
+      "width": 816,
+      "height": 408,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5171442031860352,
+          "eyesDistance": 32.484375,
+          "midpointX": 178.7265625,
+          "midpointY": 81.234375,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5171195268630981,
+          "eyesDistance": 30.3125,
+          "midpointX": 588.1875,
+          "midpointY": 81.859375,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "native-ui-analysis-two-scale-candidate-comparison",
+      "analysis": "ui-jpeg-analysis-9",
+      "primaryWidth": 960,
+      "primaryHeight": 480,
+      "secondaryWidth": 816,
+      "secondaryHeight": 408,
+      "requestedScale": 0.85,
+      "pairs": [
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 477.8977411154579,
+          "centerDistanceInEyeDistances": 11.942778380081728,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 3.8310351962019147,
+          "centerDistanceInEyeDistances": 0.09573848206049299,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 2.2594682876553374,
+          "centerDistanceInEyeDistances": 0.056464650687208746,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 483.9306841283395,
+          "centerDistanceInEyeDistances": 12.093543062949523,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 242.409476897363,
+          "centerDistanceInEyeDistances": 9.844039670958903,
+          "normalizedEyeRatio": 1.5519558077037923
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 471.80340759712595,
+          "centerDistanceInEyeDistances": 19.159529242522883,
+          "normalizedEyeRatio": 1.4481934905942073
+        }
+      ],
+      "scope": "Diagnostic all-pairs geometry only; does not filter candidates or alter strict two-face assertion"
+    },
+    {
+      "case": "native-ui-auto-selection",
+      "faces": 2,
+      "analysisWidth": 960,
+      "analysisHeight": 480,
+      "analysisPng": "ui-jpeg-analysis-9.png"
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-14",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51783287525177,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5173211693763733,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5074052214622498,
+          "eyesDistance": 40.015625,
+          "midpointX": 848.2109375,
+          "midpointY": 208.0546875,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-14-grayscale",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5187989473342896,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5183793902397156,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5048592686653137,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-14-grayscale-085",
+      "width": 816,
+      "height": 408,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5171442031860352,
+          "eyesDistance": 32.484375,
+          "midpointX": 178.7265625,
+          "midpointY": 81.234375,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5171195268630981,
+          "eyesDistance": 30.3125,
+          "midpointX": 588.1875,
+          "midpointY": 81.859375,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "native-ui-analysis-two-scale-candidate-comparison",
+      "analysis": "ui-jpeg-analysis-14",
+      "primaryWidth": 960,
+      "primaryHeight": 480,
+      "secondaryWidth": 816,
+      "secondaryHeight": 408,
+      "requestedScale": 0.85,
+      "pairs": [
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 477.8977411154579,
+          "centerDistanceInEyeDistances": 11.942778380081728,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5187989473342896,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 3.8310351962019147,
+          "centerDistanceInEyeDistances": 0.09573848206049299,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 2.2594682876553374,
+          "centerDistanceInEyeDistances": 0.056464650687208746,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5183793902397156,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 483.9306841283395,
+          "centerDistanceInEyeDistances": 12.093543062949523,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171442031860352,
+          "centerDistanceInPrimaryPixels": 242.409476897363,
+          "centerDistanceInEyeDistances": 9.844039670958903,
+          "normalizedEyeRatio": 1.5519558077037923
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5048592686653137,
+          "secondaryConfidence": 0.5171195268630981,
+          "centerDistanceInPrimaryPixels": 471.80340759712595,
+          "centerDistanceInEyeDistances": 19.159529242522883,
+          "normalizedEyeRatio": 1.4481934905942073
+        }
+      ],
+      "scope": "Diagnostic all-pairs geometry only; does not filter candidates or alter strict two-face assertion"
+    },
+    {
+      "case": "native-ui-auto-selection",
+      "faces": 2,
+      "analysisWidth": 960,
+      "analysisHeight": 480,
+      "analysisPng": "ui-jpeg-analysis-14.png"
+    },
+    {
+      "case": "initial-clean-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-first-first-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-first-gap-is-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-first-second-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-first-ends-entirely-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "transient-face-mask-tap-first",
+      "selected": 0,
+      "firstPulseToGapMs": 210,
+      "gapToSecondPulseMs": 181,
+      "secondPulseToIdleMs": 211,
+      "selectedSkinChangedPixels": 5111,
+      "otherFaceChangedPixels": 0,
+      "scope": "Actual main-thread canvas frames at asynchronous-mask-ready step 0, step 1 gap, step 2 and idle; full-canvas exact mask composite\/clean pixel assertions. No timing measured from touch."
+    },
+    {
+      "case": "tap-second-first-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-second-gap-is-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-second-second-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "tap-second-ends-entirely-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "transient-face-mask-tap-second",
+      "selected": 1,
+      "firstPulseToGapMs": 220,
+      "gapToSecondPulseMs": 162,
+      "secondPulseToIdleMs": 235,
+      "selectedSkinChangedPixels": 5112,
+      "otherFaceChangedPixels": 0,
+      "scope": "Actual main-thread canvas frames at asynchronous-mask-ready step 0, step 1 gap, step 2 and idle; full-canvas exact mask composite\/clean pixel assertions. No timing measured from touch."
+    },
+    {
+      "case": "menu-first-first-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "menu-first-gap-is-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "menu-first-second-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "menu-first-ends-entirely-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "transient-face-mask-menu-first",
+      "selected": 0,
+      "firstPulseToGapMs": 262,
+      "gapToSecondPulseMs": 150,
+      "secondPulseToIdleMs": 214,
+      "selectedSkinChangedPixels": 5111,
+      "otherFaceChangedPixels": 0,
+      "scope": "Actual main-thread canvas frames at asynchronous-mask-ready step 0, step 1 gap, step 2 and idle; full-canvas exact mask composite\/clean pixel assertions. No timing measured from touch."
+    },
+    {
+      "case": "menu-same-face-replay-first-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "menu-same-face-replay-gap-is-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "menu-same-face-replay-second-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "menu-same-face-replay-ends-entirely-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "transient-face-mask-menu-same-face-replay",
+      "selected": 0,
+      "firstPulseToGapMs": 223,
+      "gapToSecondPulseMs": 156,
+      "secondPulseToIdleMs": 260,
+      "selectedSkinChangedPixels": 5111,
+      "otherFaceChangedPixels": 0,
+      "scope": "Actual main-thread canvas frames at asynchronous-mask-ready step 0, step 1 gap, step 2 and idle; full-canvas exact mask composite\/clean pixel assertions. No timing measured from touch."
+    },
+    {
+      "case": "rapid-latest-face-first-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "rapid-latest-face-gap-is-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "rapid-latest-face-second-pulse-is-actual-mask",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "rapid-latest-face-ends-entirely-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "transient-face-mask-rapid-latest-face",
+      "selected": 1,
+      "firstPulseToGapMs": 223,
+      "gapToSecondPulseMs": 150,
+      "secondPulseToIdleMs": 231,
+      "selectedSkinChangedPixels": 5112,
+      "otherFaceChangedPixels": 0,
+      "scope": "Actual main-thread canvas frames at asynchronous-mask-ready step 0, step 1 gap, step 2 and idle; full-canvas exact mask composite\/clean pixel assertions. No timing measured from touch."
+    },
+    {
+      "case": "compare-cancels-flash-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "compare-release-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "compare-release-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "effect-selection-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "effect-selection-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "parameter-keyboard-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "parameter-keyboard-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "parameter-drag-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "parameter-drag-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "fit-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "fit-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-pinch",
+      "minimumSpanPx": 446,
+      "spanSlopPx": 42,
+      "startSpanPx": 648.8999633789062,
+      "endSpanPx": 1038.239990234375,
+      "zoomBefore": 1,
+      "zoomAfter": 1.4545459747314453,
+      "moves": 12
+    },
+    {
+      "case": "zoom-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "zoom-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "size-keyboard-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "size-keyboard-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "size-touch-immediate-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "size-touch-after-old-callbacks-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "final-idle-clean-full-canvas-clean",
+      "pixels": 1071406,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "native-pinch",
+      "minimumSpanPx": 446,
+      "spanSlopPx": 42,
+      "startSpanPx": 648.8999633789062,
+      "endSpanPx": 1038.239990234375,
+      "zoomBefore": 1,
+      "zoomAfter": 1.4545459747314453,
+      "moves": 12
+    },
+    {
+      "case": "full-reference-vs-real-detail-0",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-66",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5180063247680664,
+          "eyesDistance": 37.34375,
+          "midpointX": 690.59375,
+          "midpointY": 97.0625,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.516581118106842,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5071900486946106,
+          "eyesDistance": 40.015625,
+          "midpointX": 848.2109375,
+          "midpointY": 208.0546875,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-66-grayscale",
+      "width": 960,
+      "height": 480,
+      "count": 4,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5183420777320862,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5183319449424744,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.506441056728363,
+          "eyesDistance": 40.015625,
+          "midpointX": 848.2109375,
+          "midpointY": 208.0546875,
+          "roll": 0
+        },
+        {
+          "index": 3,
+          "confidence": 0.505050778388977,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-ui-jpeg-analysis-66-grayscale-085",
+      "width": 816,
+      "height": 408,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5178204774856567,
+          "eyesDistance": 30.3125,
+          "midpointX": 588.1875,
+          "midpointY": 81.859375,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5173547863960266,
+          "eyesDistance": 32.484375,
+          "midpointX": 178.7265625,
+          "midpointY": 81.234375,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "native-ui-analysis-two-scale-candidate-comparison",
+      "analysis": "ui-jpeg-analysis-66",
+      "primaryWidth": 960,
+      "primaryHeight": 480,
+      "secondaryWidth": 816,
+      "secondaryHeight": 408,
+      "requestedScale": 0.85,
+      "pairs": [
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5183420777320862,
+          "secondaryConfidence": 0.5178204774856567,
+          "centerDistanceInPrimaryPixels": 483.9306841283395,
+          "centerDistanceInEyeDistances": 12.093543062949523,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 0,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5183420777320862,
+          "secondaryConfidence": 0.5173547863960266,
+          "centerDistanceInPrimaryPixels": 2.2594682876553374,
+          "centerDistanceInEyeDistances": 0.056464650687208746,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.5183319449424744,
+          "secondaryConfidence": 0.5178204774856567,
+          "centerDistanceInPrimaryPixels": 3.8310351962019147,
+          "centerDistanceInEyeDistances": 0.09573848206049299,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 1,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.5183319449424744,
+          "secondaryConfidence": 0.5173547863960266,
+          "centerDistanceInPrimaryPixels": 477.8977411154579,
+          "centerDistanceInEyeDistances": 11.942778380081728,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.506441056728363,
+          "secondaryConfidence": 0.5178204774856567,
+          "centerDistanceInPrimaryPixels": 192.07918012904014,
+          "centerDistanceInEyeDistances": 4.800104462420371,
+          "normalizedEyeRatio": 0.8911959942118198
+        },
+        {
+          "primaryIndex": 2,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.506441056728363,
+          "secondaryConfidence": 0.5173547863960266,
+          "centerDistanceInPrimaryPixels": 647.7853711328345,
+          "centerDistanceInEyeDistances": 16.18831071944608,
+          "normalizedEyeRatio": 0.9550497278177184
+        },
+        {
+          "primaryIndex": 3,
+          "secondaryIndex": 0,
+          "primaryConfidence": 0.505050778388977,
+          "secondaryConfidence": 0.5178204774856567,
+          "centerDistanceInPrimaryPixels": 471.80340759712595,
+          "centerDistanceInEyeDistances": 19.159529242522883,
+          "normalizedEyeRatio": 1.4481934905942073
+        },
+        {
+          "primaryIndex": 3,
+          "secondaryIndex": 1,
+          "primaryConfidence": 0.505050778388977,
+          "secondaryConfidence": 0.5173547863960266,
+          "centerDistanceInPrimaryPixels": 242.409476897363,
+          "centerDistanceInEyeDistances": 9.844039670958903,
+          "normalizedEyeRatio": 1.5519558077037923
+        }
+      ],
+      "scope": "Diagnostic all-pairs geometry only; does not filter candidates or alter strict two-face assertion"
+    },
+    {
+      "case": "native-ui-auto-selection",
+      "faces": 2,
+      "analysisWidth": 960,
+      "analysisHeight": 480,
+      "analysisPng": "ui-jpeg-analysis-66.png"
+    },
+    {
+      "case": "full-reference-vs-real-detail-1",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "independent-oriented-vs-raw-exif-six",
+      "pixels": 524288,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "actual-detail-tiles-vs-full-reference",
+      "samples": 1922,
+      "pixelErrors": 0
+    }
+  ],
+  "screenshots": 13,
+  "fixturesRemoved": true,
+  "failure": null,
+  "scope": "Actual installed portrait detector\/dialog\/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank\/manual fallback, colour\/texture\/light controls, add\/erase strokes, healing, apply\/cancel\/history\/draft isolation, injected preview failure, simulated owner mismatch, full export reference\/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim."
+}

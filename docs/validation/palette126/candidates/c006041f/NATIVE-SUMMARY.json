@@ -1,0 +1,213 @@
+{
+  "status": "passed-first-batched-native-validation",
+  "candidateSha256": "c006041f7380620a55db0d50bef0fd1146867ebe1e3b3c9cbd5eed98af88704c",
+  "versionCode": 126,
+  "versionName": "0.24.4-beta",
+  "serial": "emulator-5588",
+  "completedAtUtc": "2026-11-01T05:58:26.390Z",
+  "runs": [
+    {
+      "runId": "20261101-135256-phone-78bab899",
+      "mode": "phone",
+      "checks": 84,
+      "screenshots": 5,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1553][1048,1973]",
+          "photo": "[0,268][1080,1542]",
+          "fontScale": 1
+        },
+        {
+          "case": "native-region-final-image",
+          "width": 1280,
+          "height": 882,
+          "protectedPixels": 1029980,
+          "outsideDifferences": 0,
+          "changedPixels": 86522
+        }
+      ],
+      "report": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/report.json",
+      "probeSha256": "815c16b9ff5437a0436af40502b7126669a814f4c288ce4cb8d8732949f9b406"
+    },
+    {
+      "runId": "20261101-135409-font1.3-bcecfa42",
+      "mode": "font1.3",
+      "checks": 84,
+      "screenshots": 0,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][1080,2424]",
+          "pad": "[32,1553][1048,1973]",
+          "photo": "[0,268][1080,1542]",
+          "fontScale": 1.2999999523162842
+        },
+        {
+          "case": "native-region-final-image",
+          "width": 1280,
+          "height": 882,
+          "protectedPixels": 1029980,
+          "outsideDifferences": 0,
+          "changedPixels": 86522
+        }
+      ],
+      "report": "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/20261101-135409-font1.3-bcecfa42/report.json",
+      "probeSha256": "815c16b9ff5437a0436af40502b7126669a814f4c288ce4cb8d8732949f9b406"
+    },
+    {
+      "runId": "20261101-135519-landscape-c6e2814d",
+      "mode": "landscape",
+      "checks": 84,
+      "screenshots": 5,
+      "pass": true,
+      "privateFixtureRemoved": true,
+      "measurements": [
+        {
+          "case": "native-layout",
+          "window": "[0,0][2424,1080]",
+          "pad": "[1616,274][2392,694]",
+          "photo": "[142,263][1584,1017]",
+          "fontScale": 1
+        },
+        {
+          "case": "native-region-final-image",
+          "width": 1280,
+          "height": 882,
+          "protectedPixels": 1029980,
+          "outsideDifferences": 0,
+          "changedPixels": 86522
+        }
+      ],
+      "report": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/report.json",
+      "probeSha256": "815c16b9ff5437a0436af40502b7126669a814f4c288ce4cb8d8732949f9b406"
+    }
+  ],
+  "checks": 252,
+  "screenshots": 10,
+  "failedNativeRuns": 0,
+  "confirmationRoundUsed": false,
+  "protectedRegionPixels": 3089940,
+  "outsideRegionDifferences": 0,
+  "probeDoesNotPackageProductionClasses": true,
+  "networkPublicationPerformed": false,
+  "privateUserImagesUsed": false,
+  "scopeNotes": [
+    "Real touch DOWN/MOVE preview verified before UP, complete gesture internal undo, CANCEL rollback, strength zero and exact numeric controls.",
+    "Keyboard and TalkBack actions plus actual Dialog window-focus callback exercised.",
+    "Main editor entry, transaction apply/cancel, private draft unchanged on cancel, one outer undo/redo, selected brush region and zero-strength stored coordinate reset/undo verified.",
+    "Font 1.3 has native bounds and complete functional assertions; screenshots are phone/landscape only.",
+    "Target-process cleanup verifies its synthetic JPEG and SHA-named private draft are gone; no run-as claim."
+  ],
+  "evidence": [
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/01-palette-open.png",
+      "sha256": "0d14160050c1f1cb8032f85f9ad5999256b88430b6af250d97c18120e816e418"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/02-live-drag-before-up.png",
+      "sha256": "3a77bcf8446ee5a690a05de1712b9a4e5580e157b3df1cccad09cfab291b373a"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/03-reset-clean-preview.png",
+      "sha256": "a6fabe0a71a133da807b7f89489ef1bf9bb31ffddf9868c1bff3467577fbe1f5"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/04-main-palette-before-apply.png",
+      "sha256": "59684c8d5264e049cb8039a9862cb0b4714c77e114aa39ada17c199000e59928"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/05-region-applied-clean-photo.png",
+      "sha256": "d18cb165090812cb48e57925b96bcafb822ac350b7fb622b4100c03b63d70d90"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/20261101-135256-phone-78bab899/report.json",
+      "sha256": "b8e6cb3988eeb4e7e52dc9ca67b1991330840fa33c5f8dda222f08181b50136e"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/provenance.json",
+      "sha256": "a3725671344b072effc58a988607aa6d9dc0bb1218743ee832f843cb7bc97a71"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/instrumentation.txt",
+      "sha256": "493ffe2e681fa2ba221f7a0347a30a719a16b378111d43113c8581c18d4f54cb"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135256-phone-78bab899/probe-source/build-provenance.json",
+      "sha256": "0b8ad160b63521b432905d7ee704c20bdd7442e826cd28dc0bb07a039e3c3bfa"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/20261101-135409-font1.3-bcecfa42/report.json",
+      "sha256": "c7626ec8b6f8f0b8ef8e17c455187a4dc834a9df37a95f653415d0a6dca68688"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/provenance.json",
+      "sha256": "e6b20cb0af584bfe6d790aabd37cb3d8036bfb98db1e45ccfb6f32c92de2d4d7"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/instrumentation.txt",
+      "sha256": "493ffe2e681fa2ba221f7a0347a30a719a16b378111d43113c8581c18d4f54cb"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135409-font1.3-bcecfa42/probe-source/build-provenance.json",
+      "sha256": "0b8ad160b63521b432905d7ee704c20bdd7442e826cd28dc0bb07a039e3c3bfa"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/01-palette-open.png",
+      "sha256": "796991d4d560e2e579e2b52ed6ca2852b7200de12e664446582a56e7a284aa0f"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/02-live-drag-before-up.png",
+      "sha256": "e8336c7594801df3db5452aa3ae6d444233881665edb7cd8eda7dee26e282091"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/03-reset-clean-preview.png",
+      "sha256": "75d14582c9e2fa8abf2fa9d391b20b50db03519897a6a738504bd4181f9665e2"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/04-main-palette-before-apply.png",
+      "sha256": "36f0b025de4cd734ee96d6d20dfc8da2c65b53b5f0ffd16a8e93f05654c08f73"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/05-region-applied-clean-photo.png",
+      "sha256": "c05062b34bfdc08e2ff6dbad397a361c1aa2e34a6d41f8a46c7b5fd3f2b6f851"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/20261101-135519-landscape-c6e2814d/report.json",
+      "sha256": "6fd0362e182ca3661a4cf08d2f0f30f001181e0172a08da15fc6fffc6d016402"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/provenance.json",
+      "sha256": "44ab437de65fc10e66ba3b76e5b62e3fa9d16acd53845d29c0419c66c278a58a"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/cleanup.json",
+      "sha256": "c29404963bc36169983195d0ec76b628d13eb508839df148599b710477108106"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/instrumentation.txt",
+      "sha256": "493ffe2e681fa2ba221f7a0347a30a719a16b378111d43113c8581c18d4f54cb"
+    },
+    {
+      "path": "docs/validation/palette126/native/c006041f/20261101-135519-landscape-c6e2814d/probe-source/build-provenance.json",
+      "sha256": "0b8ad160b63521b432905d7ee704c20bdd7442e826cd28dc0bb07a039e3c3bfa"
+    },
+    {
+      "path": "docs/validation/palette126/NATIVE-CLEANUP.json",
+      "sha256": "1650790ee74bb87d1fd1faeb1709d2cc34277dd2a633c2342b34548199da36d0"
+    }
+  ]
+}

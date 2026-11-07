@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-28",
+  "serial": "emulator-5586",
+  "ownedHeadlessReadOnlyEmulator": true,
+  "shutdownCommand": "adb -s emulator-5586 emu kill",
+  "shutdownResult": "OK: killing emulator, bye bye / OK",
+  "serialAbsentFromAdbDevices": true,
+  "deviceOutput": "List of devices attached",
+  "physicalDevicesUsed": false,
+  "cleanupScope": "Each portrait runner restored font scale, airplane mode and immersive confirmations and removed its owned fixture/test package; local evidence retained."
+}

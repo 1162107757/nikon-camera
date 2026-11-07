@@ -41,19 +41,19 @@ public final class PersonalPresetPanel {
     public void offerConsent(){final String owner=owner();if(destroyed||checkingConsent||owner.isEmpty()||offered.contains(owner)||!host.canPrompt())return;checkingConsent=true;
         worker.execute(()->{boolean needed=false;int count=0;try{needed=sync.consentNeeded(owner);count=sync.unclaimed().size();}catch(IOException ignored){}final boolean ask=needed;final int amount=count;
             post(()->{checkingConsent=false;if(!ask||!owner.equals(owner())||!host.canPrompt())return;offered.add(owner);
-                new AlertDialog.Builder(activity).setTitle("同步本机预设到账号？").setMessage("有 "+amount+" 份本机预设可保存到个人云端，仅你可见。换手机登录后可恢复，当前手机仍能离线使用。\n\n同步预设文件、名称和分类；自选样片与模板图片保留在本机。")
+                new AppDialog.Builder(activity).setTitle("同步本机预设到账号？").setMessage("有 "+amount+" 份本机预设可保存到个人云端，仅你可见。换手机登录后可恢复，当前手机仍能离线使用。\n\n同步预设文件、名称和分类；自选样片与模板图片保留在本机。")
                     .setNegativeButton("暂不同步",(d,w)->enqueue(owner,()->sync.consent(owner,false),false))
                     .setPositiveButton("同步到我的账号",(d,w)->enqueue(owner,()->sync.consent(owner,true),true)).show();});});
     }
     public void openActions(){final String owner=owner();if(owner.isEmpty()){host.login();return;}if(running)return;
         worker.execute(()->{int count=0;try{count=sync.conflicts(owner);}catch(IOException ignored){}final int conflicts=count;post(()->{if(!owner.equals(owner()))return;
-            if(conflicts>0)new AlertDialog.Builder(activity).setTitle("处理云端信息差异").setMessage("其他设备更新了同一预设的名称、分类或删除状态。预设原文件内容相同，请选择保留哪一份信息。")
+            if(conflicts>0)new AppDialog.Builder(activity).setTitle("处理云端信息差异").setMessage("其他设备更新了同一预设的名称、分类或删除状态。预设原文件内容相同，请选择保留哪一份信息。")
                 .setNegativeButton("使用云端信息",(d,w)->enqueue(owner,()->sync.resolveConflicts(owner,false),true))
                 .setPositiveButton("保留本机更改",(d,w)->enqueue(owner,()->sync.resolveConflicts(owner,true),true)).show();
-            else new AlertDialog.Builder(activity).setTitle("我的预设 · 个人云端").setItems(new String[]{"立即同步","同步已有本机预设","存储说明"},(d,w)->{
-                if(w==0)requestSync();else if(w==1){offered.remove(owner);new AlertDialog.Builder(activity).setTitle("同步本机预设？").setMessage("将尚未归属账号的本机预设保存到当前账号，仅你可见。不会上传其他账号的离线副本。")
+            else new AppDialog.Builder(activity).setTitle("我的预设 · 个人云端").setItems(new String[]{"立即同步","同步已有本机预设","存储说明"},(d,w)->{
+                if(w==0)requestSync();else if(w==1){offered.remove(owner);new AppDialog.Builder(activity).setTitle("同步本机预设？").setMessage("将尚未归属账号的本机预设保存到当前账号，仅你可见。不会上传其他账号的离线副本。")
                     .setNegativeButton("取消",null).setPositiveButton("同步",(dialog,which)->enqueue(owner,()->sync.consent(owner,true),true)).show();}
-                else new AlertDialog.Builder(activity).setTitle("云端与离线使用").setMessage("预设文件、名称和分类保存在个人账号，登录后自动同步；手机保留离线副本。未联网时更改会排队，恢复网络后可重试。\n\n模板和自选样片保留在本机。删除已同步预设会同时删除个人云端记录；已生成照片与相机中的预设保留。").setPositiveButton("知道了",null).show();}).show();
+                else new AppDialog.Builder(activity).setTitle("云端与离线使用").setMessage("预设文件、名称和分类保存在个人账号，登录后自动同步；手机保留离线副本。未联网时更改会排队，恢复网络后可重试。\n\n模板和自选样片保留在本机。删除已同步预设会同时删除个人云端记录；已生成照片与相机中的预设保留。").setPositiveButton("知道了",null).show();}).show();
         });});
     }
     private int dp(int value){return Math.round(activity.getResources().getDisplayMetrics().density*value);}

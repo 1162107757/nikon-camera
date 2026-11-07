@@ -1,0 +1,28 @@
+{
+  "candidateSha256": "a032d25ed9c7cb49c938cb2f34d3aa0daddd122959d04188eb347a350740e0e5",
+  "versionCode": 133,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "c171471b85ef0a3e19aff340ab0ab372824ef58121ea060c098db5043d5137bc",
+  "pass": false,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "01-quick-editor.png",
+      "sha256": "7ab3f72392e0b402f44038299ea62e961abcd8e07fd133e25fcb2e2cae411167"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "d1923f4f306b7eae750dbdc45b968f87952962f79f515104426b54743e10469e"
+    },
+    {
+      "file": "reach-editor-parameter-BRIGHTNESS.json",
+      "sha256": "564d16e24f103ba7e360b42f52c5f01b0ebecfd90cdd2f29ccf04c491281cd2c"
+    },
+    {
+      "file": "report.json",
+      "sha256": "81f3d50ab5e924d5e3b2415e21fd06cf45cac03c1cac3e5c34073245f0e474ad"
+    }
+  ]
+}

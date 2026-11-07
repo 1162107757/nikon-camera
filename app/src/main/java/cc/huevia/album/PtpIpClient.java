@@ -386,7 +386,8 @@ public final class PtpIpClient implements PhotoCameraClient {
             throws IOException {
         requireMode(Mode.PICTURE_CONTROL);
         requirePictureControlConnection();
-        validatePictureControlRead(operation, parameters);
+        if (!(pictureControlReadbackVerified && cc.huevia.picturecontrol.CameraParameterWriteGuard.propertyRead(operation, parameters)))
+            validatePictureControlRead(operation, parameters);
         validateTransaction(transaction);
         if (operation == 0x1001) {
             if (sessionOpen) requirePictureControlSession(transaction);
@@ -436,22 +437,38 @@ public final class PtpIpClient implements PhotoCameraClient {
     }
 
     /** Sends at most one validated registration per instance, including rejected/uncertain attempts. */
+    private final cc.huevia.picturecontrol.CameraParameterWriteGuard cameraParameterWrites = new cc.huevia.picturecontrol.CameraParameterWriteGuard();
+
+    public synchronized void authorizeCameraParameters(java.util.Map<Integer, byte[]> values) throws IOException {
+        requireMode(Mode.PICTURE_CONTROL); requirePictureControlConnection();
+        if (!pictureControlReadbackVerified || !pictureControlWriteAcknowledged)
+            throw new IOException("仅在预设精确读回后允许拍摄参数授权。");
+        cameraParameterWrites.authorize(values);
+    }
+
     public synchronized PtpContainer sendPictureControlData(int operation, long transaction, byte[] data,
                                                            long... parameters) throws IOException {
         requireMode(Mode.PICTURE_CONTROL);
         requirePictureControlConnection();
         requirePictureControlSession(transaction);
-        if (operation != 0x90cd || parameters == null || parameters.length != 2
-                || parameters[0] < 201 || parameters[0] > 209 || parameters[1] != 0) {
+        boolean property = operation == 0x1016;
+        if (!property && (operation != 0x90cd || parameters == null || parameters.length != 2
+                || parameters[0] < 201 || parameters[0] > 209 || parameters[1] != 0)) {
             throw new IOException("无线登记仅允许 SetPicCtrlData(C1–C9, new=0)。");
         }
         byte[] bytes = data == null ? null : data.clone();
-        PictureControlWriteValidation.validateConvertedData(bytes);
-        if (pictureControlWriteAttempted) throw new IOException("本次无线连接已尝试一次登记，请先重新只读扫描。");
-        pictureControlWriteAttempted = true;
-        pictureControlWrittenData = bytes.clone();
-        pictureControlWrittenTarget = (int) parameters[0];
-        pictureControlWriteTransaction = transaction;
+        if (property) {
+            if (!pictureControlReadbackVerified || !pictureControlWriteAcknowledged)
+                throw new IOException("预设尚未核对，不能修改拍摄参数。");
+            cameraParameterWrites.consume(bytes, parameters);
+        } else {
+            PictureControlWriteValidation.validateConvertedData(bytes);
+            if (pictureControlWriteAttempted) throw new IOException("本次无线连接已尝试一次登记，请先重新只读扫描。");
+            pictureControlWriteAttempted = true;
+            pictureControlWrittenData = bytes.clone();
+            pictureControlWrittenTarget = (int) parameters[0];
+            pictureControlWriteTransaction = transaction;
+        }
         lastPictureControlTransaction = Math.max(lastPictureControlTransaction, transaction);
         long traceStart = ConnectionTrace.operationStarted(ownership.traceId, operation, transaction);
         try {
@@ -467,7 +484,7 @@ public final class PtpIpClient implements PhotoCameraClient {
             checkClosed();
             send(output, 12, end.toByteArray());
             PtpContainer result = response(nextControl(deadline(CONTROL_TIMEOUT)), transaction);
-            pictureControlWriteAcknowledged = true;
+            if (!property) pictureControlWriteAcknowledged = true;
             ConnectionTrace.operationFinished(ownership.traceId, operation, transaction, traceStart, null);
             return result;
         } catch (PtpResponseException error) {

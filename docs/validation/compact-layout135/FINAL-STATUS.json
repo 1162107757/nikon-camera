@@ -1,0 +1,109 @@
+{
+  "status": "complete-local-package-not-published",
+  "versionCode": 135,
+  "versionName": "0.27.3-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.27.3-beta-debug.apk",
+  "sha256": "9baf7a1fa9fd4b14769d79b660976d14c66300dba5eee286863b21940ae327b3",
+  "bytes": 33538828,
+  "productionInputs": 308,
+  "unchangedAssetsAndNativeEntries": 46,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "zipalign16KiB": true,
+  "nativeAssertions": 565,
+  "nativeScreenshots": 32,
+  "successfulRuns": [
+    {
+      "runId": "20261105-101800-phone-9304e065",
+      "mode": "phone",
+      "scope": "full",
+      "pass": true,
+      "assertions": 151,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "9baf7a1fa9fd4b14769d79b660976d14c66300dba5eee286863b21940ae327b3",
+      "path": "docs/validation/compact-layout135/native/9baf7a1f/20261105-101800-phone-9304e065"
+    },
+    {
+      "runId": "20261105-101829-font1.3-7309a05f",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 136,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "9baf7a1fa9fd4b14769d79b660976d14c66300dba5eee286863b21940ae327b3",
+      "path": "docs/validation/compact-layout135/native/9baf7a1f/20261105-101829-font1.3-7309a05f"
+    },
+    {
+      "runId": "20261105-101903-landscape-695f0423",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 136,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "9baf7a1fa9fd4b14769d79b660976d14c66300dba5eee286863b21940ae327b3",
+      "path": "docs/validation/compact-layout135/native/9baf7a1f/20261105-101903-landscape-695f0423"
+    },
+    {
+      "runId": "20261105-101941-tablet-7f2275a7",
+      "mode": "tablet",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 142,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "9baf7a1fa9fd4b14769d79b660976d14c66300dba5eee286863b21940ae327b3",
+      "path": "docs/validation/compact-layout135/native/9baf7a1f/20261105-101941-tablet-7f2275a7"
+    }
+  ],
+  "priorCandidateRuns": [
+    {
+      "runId": "20261105-101017-phone-5b0b8c26",
+      "mode": "phone",
+      "scope": "full",
+      "pass": true,
+      "assertions": 151,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "7e8376857572a56e615d51b15d8cc3e0e8ae9dabb0e97c3f0427cd8e08c5439b",
+      "path": "docs/validation/compact-layout135/native/7e837685/20261105-101017-phone-5b0b8c26"
+    },
+    {
+      "runId": "20261105-101111-font1.3-9357458e",
+      "mode": "font1.3",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 136,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "7e8376857572a56e615d51b15d8cc3e0e8ae9dabb0e97c3f0427cd8e08c5439b",
+      "path": "docs/validation/compact-layout135/native/7e837685/20261105-101111-font1.3-9357458e"
+    },
+    {
+      "runId": "20261105-101157-landscape-2202b1d7",
+      "mode": "landscape",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 135,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "7e8376857572a56e615d51b15d8cc3e0e8ae9dabb0e97c3f0427cd8e08c5439b",
+      "path": "docs/validation/compact-layout135/native/7e837685/20261105-101157-landscape-2202b1d7"
+    },
+    {
+      "runId": "20261105-101239-tablet-1285f103",
+      "mode": "tablet",
+      "scope": "ui",
+      "pass": true,
+      "assertions": 142,
+      "screenshots": 8,
+      "failure": null,
+      "candidateSha256": "7e8376857572a56e615d51b15d8cc3e0e8ae9dabb0e97c3f0427cd8e08c5439b",
+      "path": "docs/validation/compact-layout135/native/7e837685/20261105-101239-tablet-1285f103"
+    }
+  ],
+  "failedFinalRuns": [],
+  "uploaded": false,
+  "published": false
+}

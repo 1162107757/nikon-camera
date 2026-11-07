@@ -1,0 +1,306 @@
+{
+  "pass": true,
+  "stage": "main-scope-change-hides-button",
+  "mode": "landscape",
+  "scope": "ui",
+  "candidateSha256": "49455868c4b03c5feb8669252a6b850847c8ab1f5314fb29035680077b72aa36",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "empty-mask-inspection-disabled",
+      "pass": true
+    },
+    {
+      "name": "live-stroke-tracking",
+      "pass": true
+    },
+    {
+      "name": "live-overlay-before-up-visible",
+      "pass": true
+    },
+    {
+      "name": "live-no-preview-timer",
+      "pass": true
+    },
+    {
+      "name": "unreleased-stroke-not-committed",
+      "pass": true
+    },
+    {
+      "name": "previewFlashStep-expected-0",
+      "pass": true
+    },
+    {
+      "name": "stroke-release-committed-once",
+      "pass": true
+    },
+    {
+      "name": "live-matches-first-confirmation",
+      "pass": true
+    },
+    {
+      "name": "two-strong-pulses-match",
+      "pass": true
+    },
+    {
+      "name": "idle-after-pulses-is-clean",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-mutate-region",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-add-history",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-rewrite-mask",
+      "pass": true
+    },
+    {
+      "name": "strong-overlay-more-visible",
+      "pass": true
+    },
+    {
+      "name": "outside-overlay-unchanged",
+      "pass": true
+    },
+    {
+      "name": "actual-right-hold-button-tag",
+      "pass": true
+    },
+    {
+      "name": "right-hold-button-visible",
+      "pass": true
+    },
+    {
+      "name": "right-hold-target-48dp",
+      "pass": true
+    },
+    {
+      "name": "right-hold-within-stage",
+      "pass": true
+    },
+    {
+      "name": "right-hold-on-right",
+      "pass": true
+    },
+    {
+      "name": "right-hold-above-status",
+      "pass": true
+    },
+    {
+      "name": "button-down-holds-mask",
+      "pass": true
+    },
+    {
+      "name": "held-shows-full-mask",
+      "pass": true
+    },
+    {
+      "name": "button-release-hides-immediately",
+      "pass": true
+    },
+    {
+      "name": "button-cancel-hides",
+      "pass": true
+    },
+    {
+      "name": "button-moving-out-hides",
+      "pass": true
+    },
+    {
+      "name": "moving-back-does-not-stick",
+      "pass": true
+    },
+    {
+      "name": "a11y-click-temporarily-shows",
+      "pass": true
+    },
+    {
+      "name": "a11y-rest-is-clean",
+      "pass": true
+    },
+    {
+      "name": "mask-inspection-keeps-region-and-history",
+      "pass": true
+    },
+    {
+      "name": "flashStep-expected-0",
+      "pass": true
+    },
+    {
+      "name": "completion-calls-consumer-once",
+      "pass": true
+    },
+    {
+      "name": "completion-pulses-match-live",
+      "pass": true
+    },
+    {
+      "name": "completion-gap-clean",
+      "pass": true
+    },
+    {
+      "name": "completion-removes-preview-callback",
+      "pass": true
+    },
+    {
+      "name": "reopen-settles-to-clean",
+      "pass": true
+    },
+    {
+      "name": "reopen-button-shows-existing-mask",
+      "pass": true
+    },
+    {
+      "name": "reopen-button-release-clean",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing",
+      "pass": true
+    },
+    {
+      "name": "full-source-metadata-1601x1103",
+      "pass": true
+    },
+    {
+      "name": "full-source-distinct-from-preview-basis",
+      "pass": true
+    },
+    {
+      "name": "main-hold-tag",
+      "pass": true
+    },
+    {
+      "name": "main-global-hold-hidden",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-hold-uses-copy",
+      "pass": true
+    },
+    {
+      "name": "main-normal-preview-pointer-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-underlying-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-viewport-preserved-while-held",
+      "pass": true
+    },
+    {
+      "name": "main-crop-rotate-border-mask-has-selected-pixels",
+      "pass": true
+    },
+    {
+      "name": "full-export-basis-mask-bounded",
+      "pass": true
+    },
+    {
+      "name": "full-export-basis-mask-not-empty",
+      "pass": true
+    },
+    {
+      "name": "main-border-and-outside-protected",
+      "pass": true
+    },
+    {
+      "name": "main-release-clean-immediate",
+      "pass": true
+    },
+    {
+      "name": "main-viewport-preserved-after-release",
+      "pass": true
+    },
+    {
+      "name": "main-cancel-clean-immediate",
+      "pass": true
+    },
+    {
+      "name": "main-global-scope-button-hidden",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-hold-keeps-settings-history-draft",
+      "pass": true
+    },
+    {
+      "name": "owned-jpeg-unchanged",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "strong-versus-existing-soft",
+      "changedPixels": 34994,
+      "protectedPixels": 1004476,
+      "outsideDifferences": 0,
+      "strongToSoftTotalDeltaRatio": 2.8507520778624595
+    },
+    {
+      "case": "live-and-confirmation",
+      "firstToGapMs": 231,
+      "gapToSecondMs": 154,
+      "secondToHiddenMs": 242
+    },
+    {
+      "case": "saved-export-source-metadata-basis-only",
+      "fullWidth": 1601,
+      "fullHeight": 1103,
+      "decodedBaseWidth": 1280,
+      "savedRestorePathExecuted": false
+    },
+    {
+      "case": "main-crop-rotate-border-mapping",
+      "width": 670,
+      "height": 1099,
+      "changedPixels": 55059,
+      "protectedPixels": 634674,
+      "outsideDifferences": 0
+    }
+  ],
+  "screenshots": 6,
+  "persistentFixturesCreated": true,
+  "privateFixtureRemoved": true
+}

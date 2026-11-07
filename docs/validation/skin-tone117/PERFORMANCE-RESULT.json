@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "status": "measured",
+  "width": 6000,
+  "height": 4000,
+  "elapsedMs": 2222.4034,
+  "allocatedBytes": 56344,
+  "gcCollections": 0,
+  "checksum": 59755307565,
+  "scope": "Single warmed-up desktop JDK17, -Xmx128m / SerialGC, synthetic full-body 24MP streaming pixels. Not Android latency. Render-thread allocation excludes setup and LUT initialization.",
+  "runtime": "Desktop OpenJDK 17.0.19; -Xmx128m -XX:+UseSerialGC; one warmed-up synthetic streaming pass",
+  "source": {
+    "path": "docs/validation/skin-tone117/TonePerformanceProbe.java",
+    "sha256": "67d3020fdf5f6bdebc47e5686b4b040931b77e834cdc6e99d92bb6e9f48eed3a"
+  },
+  "notAndroidLatency": true,
+  "userImagesUsed": false
+}

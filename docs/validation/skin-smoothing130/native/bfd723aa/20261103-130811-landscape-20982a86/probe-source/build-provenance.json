@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/skin-smoothing-device-probe/src/cc/huevia/skinsmoothingqa/SkinSmoothingProbe.java",
+      "sha256": "05cafacd3236e38818f6b421fe8313b806eeabdf76a5d020f54ab1a752b2b7bb"
+    },
+    {
+      "path": ".tooling/portrait-qa/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "path": "tests/skin-smoothing-device-probe/AndroidManifest.xml",
+      "sha256": "9f99a452a48ff6d3963881e040b39eb6ad925aaa3eb1daf1a1594efb97ada068"
+    },
+    {
+      "path": "tests/skin-smoothing-device-probe/build.ps1",
+      "sha256": "6bf768aa6f5c8d4c357fa45613336a129e10e3f19438aec1fc568e5f4a410352"
+    },
+    {
+      "path": "tests/skin-smoothing-device-probe/run.ps1",
+      "sha256": "dd527d3d04e2650ca216281a64620a187488234b9dfade1580a1dd7b3b0994e6"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/skinsmoothingqa/SkinSmoothingProbe.class",
+    "cc/huevia/skinsmoothingqa/SkinSmoothingProbe$Condition.class",
+    "cc/huevia/skinsmoothingqa/SkinSmoothingProbe$Work.class"
+  ],
+  "apkSha256": "bb8bd60db5ce9f43da0cbba3583ae3c5448f0da7b708440dbb84aec171b7e3c7"
+}

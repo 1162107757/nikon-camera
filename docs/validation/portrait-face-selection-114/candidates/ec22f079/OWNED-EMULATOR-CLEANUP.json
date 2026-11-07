@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-29",
+  "serial": "emulator-5588",
+  "scope": "Owned read-only Layout112 emulator only; no physical device touched.",
+  "restored": {
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "font": "1.0"
+  },
+  "shutdownCommand": "adb -s emulator-5588 emu kill",
+  "shutdownResponse": "OK: killing emulator, bye bye\r\r\nOK",
+  "closed": true,
+  "transportCheck": "List of devices attached"
+}

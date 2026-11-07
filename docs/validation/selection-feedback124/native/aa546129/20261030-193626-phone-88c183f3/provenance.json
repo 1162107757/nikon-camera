@@ -1,0 +1,36 @@
+{
+  "candidateSha256": "aa5461290742af6f2afcabbad89ab7805e9b75b7bcdda25ec411256955ed3dfd",
+  "versionCode": 124,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "1155b183eb75841cd59fd2d4e4fe2f5039990acec19fb17d73807000b642c22f",
+  "pass": true,
+  "scope": null,
+  "files": [
+    {
+      "file": "01-strong-first.png",
+      "sha256": "075af7796e232c9779ba210a13e12f06c7bb294308ee27307aea07eb9e247b96"
+    },
+    {
+      "file": "02-soft-gap.png",
+      "sha256": "8c1a29324cf45461a48e1793636a1be0dc6b63282fe39e5ea72e12731b18f9d6"
+    },
+    {
+      "file": "03-strong-second.png",
+      "sha256": "075af7796e232c9779ba210a13e12f06c7bb294308ee27307aea07eb9e247b96"
+    },
+    {
+      "file": "04-soft-rest.png",
+      "sha256": "8c1a29324cf45461a48e1793636a1be0dc6b63282fe39e5ea72e12731b18f9d6"
+    },
+    {
+      "file": "05-completion-clean-gap.png",
+      "sha256": "2435b226e9ee30c7d3b8b96107a3ebfcabe2f43fe6e09dc1486a5577612bcb96"
+    },
+    {
+      "file": "report.json",
+      "sha256": "fd115a039797a1a7000e618598c0e4400aa0a757b90e0b31a6f186b53d568f26"
+    }
+  ]
+}

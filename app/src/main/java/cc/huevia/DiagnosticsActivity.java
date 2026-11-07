@@ -1,5 +1,7 @@
 package cc.huevia;
 
+import cc.huevia.ui.AppDialog;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -184,7 +186,7 @@ public class DiagnosticsActivity extends Activity {
         transferButton = button(files, "原通道：试传到存储卡", false);
         transferButton.setOnClickListener(v -> {
             if (!requirePreset()) return;
-            new AlertDialog.Builder(this)
+            new AppDialog.Builder(this)
                 .setTitle("试传 NCP 文件")
                 .setMessage("将通过 USB 尝试写入相机卡的 NIKON/CUSTOMPC，使用目录列表中未占用的编号。可能创建文件夹；不请求覆盖或删除。\n\n普通模式遇到只读标志会停止。这条路径尚未完成 Z6II 真机验证，传输后仍需在相机菜单中载入预设。")
                 .setNegativeButton("取消", null)
@@ -195,7 +197,7 @@ public class DiagnosticsActivity extends Activity {
         directoryExperimentButton = button(files, "指定目录实测", false);
         directoryExperimentButton.setOnClickListener(v -> {
             if (!requirePreset()) return;
-            new AlertDialog.Builder(this)
+            new AppDialog.Builder(this)
                 .setTitle("实测现存的 NIKON/CUSTOMPC")
                 .setMessage("此入口会在 Z6II 报告“只读，可删除”时，仍向已存在且可被 USB 读取到的 NIKON/CUSTOMPC 尝试新增 NCP，记录相机真实返回码。目录不可见时停止，不会创建目录。\n\n使用目录列表中未占用的编号，不请求覆盖、删除或修改机内预设槽。相机若只显示部分文件，列表未占用不等于卡上一定没有同名文件。连接中断可能留下空文件或未完成文件，失败后请先查看报告。")
                 .setNegativeButton("取消", null)
@@ -216,7 +218,7 @@ public class DiagnosticsActivity extends Activity {
         saveButton.setOnClickListener(v -> {
             if (busy) return;
             if (report == null) {
-                new AlertDialog.Builder(this).setTitle("先生成诊断报告")
+                new AppDialog.Builder(this).setTitle("先生成诊断报告")
                         .setMessage("请先连接 USB 相机并完成一次检测，生成报告后再保存。检测仅用于读取能力，不会自动继续导入或试传。")
                         .setNegativeButton("取消", null)
                         .setPositiveButton("检测相机", (dialog, which) -> detectCamera(UsbAction.CAPABILITIES)).show();
@@ -228,7 +230,7 @@ public class DiagnosticsActivity extends Activity {
             intent.putExtra(Intent.EXTRA_TITLE, "nikon-usb-report.json");
             try { startActivityForResult(intent, SAVE_REPORT); }
             catch (RuntimeException unavailable) {
-                new AlertDialog.Builder(this).setTitle("无法选择报告保存位置")
+                new AppDialog.Builder(this).setTitle("无法选择报告保存位置")
                         .setMessage("手机未提供可用的文件保存界面，请检查系统文件应用后重试。当前报告仍保留在本机。")
                         .setPositiveButton("好", null).show();
             }
@@ -244,7 +246,7 @@ public class DiagnosticsActivity extends Activity {
         intent.setType("*/*");
         try { startActivityForResult(intent, OPEN_NCP); }
         catch (RuntimeException unavailable) {
-            new AlertDialog.Builder(this).setTitle("无法选择文件")
+            new AppDialog.Builder(this).setTitle("无法选择文件")
                     .setMessage("手机未提供可用的文件选择器，请检查系统文件应用后重试。")
                     .setPositiveButton("好", null).show();
         }
@@ -253,7 +255,7 @@ public class DiagnosticsActivity extends Activity {
     private boolean requirePreset() {
         if (busy) return false;
         if (preset != null) return true;
-        new AlertDialog.Builder(this).setTitle("先选择 NCP 文件")
+        new AppDialog.Builder(this).setTitle("先选择 NCP 文件")
                 .setMessage("选择并检查 NCP 文件后，再点击这项操作。选择文件不会自动导入或试传。")
                 .setNegativeButton("取消", null)
                 .setPositiveButton("选择 NCP 文件", (dialog, which) -> chooseNcpFile()).show();
@@ -262,13 +264,13 @@ public class DiagnosticsActivity extends Activity {
 
     private void showUsbPrerequisite(String title, String message) {
         statusText.setText(message);
-        new AlertDialog.Builder(this).setTitle(title).setMessage(message)
+        new AppDialog.Builder(this).setTitle(title).setMessage(message)
                 .setNegativeButton("取消", null)
                 .setPositiveButton("检测相机", (dialog, which) -> detectCamera(UsbAction.CAPABILITIES)).show();
     }
 
     private void showPictureControlPrerequisite(String title, Exception error) {
-        new AlertDialog.Builder(this).setTitle(title)
+        new AppDialog.Builder(this).setTitle(title)
                 .setMessage(error.getMessage() + "\n\n先只读获取完整的机内预设与空槽报告，再重新点击原操作。读取不会自动复制或导入预设。")
                 .setNegativeButton("取消", null)
                 .setPositiveButton("读取机内优化校准", (dialog, which) -> detectCamera(UsbAction.PICTURE_CONTROL_READ)).show();
@@ -290,7 +292,7 @@ public class DiagnosticsActivity extends Activity {
                 UsbDevice device = devices.get(i);
                 choices[i] = "Nikon USB " + String.format(Locale.ROOT, "%04X", device.getProductId());
             }
-            new AlertDialog.Builder(this).setTitle("选择相机")
+            new AppDialog.Builder(this).setTitle("选择相机")
                     .setItems(choices, (dialog, which) -> requestProbe(devices.get(which), action)).show();
         }
     }
@@ -339,12 +341,12 @@ public class DiagnosticsActivity extends Activity {
             if (sources.isEmpty()) throw new IllegalStateException("没有本次实验支持的机内自定义预设，请先读取并检查结果。");
             String[] sourceNames = new String[sources.size()];
             for (int i = 0; i < sources.size(); i++) sourceNames[i] = sources.get(i).displayName();
-            new AlertDialog.Builder(this).setTitle("选择要复制的机内预设")
+            new AppDialog.Builder(this).setTitle("选择要复制的机内预设")
                     .setItems(sourceNames, (dialog, which) -> {
                         PictureControlChoice source = sources.get(which);
                         String[] targetNames = new String[targets.size()];
                         for (int i = 0; i < targets.size(); i++) targetNames[i] = slotLabel(targets.get(i)) + " · 读取时为空";
-                        new AlertDialog.Builder(this).setTitle("选择目标空槽")
+                        new AppDialog.Builder(this).setTitle("选择目标空槽")
                                 .setItems(targetNames, (targetDialog, targetWhich) -> confirmPictureControlCopy(source, targets.get(targetWhich)))
                                 .setNegativeButton("取消", null).show();
                     }).setNegativeButton("取消", null).show();
@@ -415,7 +417,7 @@ public class DiagnosticsActivity extends Activity {
             Spinner middle = choiceSpinner(options, quarterStepLabels(0, 20), 4);
             addText(options, "清晰度（默认适配值 0）", 14, foreground, false);
             Spinner clarity = choiceSpinner(options, quarterStepLabels(-20, 20), 20);
-            new AlertDialog.Builder(this).setTitle("NCP 兼容适配参数").setView(options)
+            new AppDialog.Builder(this).setTitle("NCP 兼容适配参数").setView(options)
                     .setNegativeButton("取消", null)
                     .setPositiveButton("生成预览", (dialog, which) -> prepareNcpImport(
                             targets.get(target.getSelectedItemPosition()), middle.getSelectedItemPosition(),
@@ -457,7 +459,7 @@ public class DiagnosticsActivity extends Activity {
                 onUi(() -> {
                     setBusy(false);
                     statusText.setText("兼容预览已生成，请检查目标与适配参数后确认。");
-                    new AlertDialog.Builder(this).setTitle("确认向 " + slotLabel(targetItem) + " 导入")
+                    new AppDialog.Builder(this).setTitle("确认向 " + slotLabel(targetItem) + " 导入")
                             .setMessage("文件：" + plan.fileName + "\n目标：" + slotLabel(targetItem)
                                     + "\n\n" + conversion.toDisplayText()
                                     + "\n\n这是兼容适配，尚未验证与相机原生载入效果一致。确认后会复查目标连续两次为空，再登记一次并读回核对。"
@@ -548,7 +550,7 @@ public class DiagnosticsActivity extends Activity {
     }
 
     private void showImportError(String title, Exception error) {
-        new AlertDialog.Builder(this).setTitle(title).setMessage(error.getMessage()).setPositiveButton("好", null).show();
+        new AppDialog.Builder(this).setTitle(title).setMessage(error.getMessage()).setPositiveButton("好", null).show();
     }
 
     private static final class NcpImportPlan {
@@ -569,7 +571,7 @@ public class DiagnosticsActivity extends Activity {
     }
 
     private void confirmPictureControlCopy(PictureControlChoice source, int targetItem) {
-        new AlertDialog.Builder(this).setTitle("确认向 " + slotLabel(targetItem) + " 登记预设")
+        new AppDialog.Builder(this).setTitle("确认向 " + slotLabel(targetItem) + " 登记预设")
                 .setMessage("来源：" + source.displayName() + "\n目标：" + slotLabel(targetItem)
                         + "\n\nApp 会重新读取槽位，确认来源未变，且目标连续两次报告为空，再发送一次登记请求并读回核对。"
                         + "\n\n此步骤会实际修改目标槽。操作期间请勿在相机或其他应用中更改这些槽位，也不要断开数据线。若出现写入或读回错误，先保存报告并重新只读检查，不要重复写入。"
@@ -881,7 +883,7 @@ public class DiagnosticsActivity extends Activity {
                 } catch (Exception error) {
                     onUi(() -> {
                         statusText.setText("NCP 文件检查未完成，请重新选择。");
-                        new AlertDialog.Builder(this).setTitle("文件未导入")
+                        new AppDialog.Builder(this).setTitle("文件未导入")
                                 .setMessage(error.getMessage()).setPositiveButton("好", null).show();
                     });
                 } finally { onUi(() -> setBusy(false)); }

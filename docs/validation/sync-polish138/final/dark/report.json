@@ -1,0 +1,113 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "old-star-only-filter-retired",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-preset-source-我的预设",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-preset-source-在线预设",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-preset-source-我的预设",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-preset-source-在线预设",
+      "pass": true
+    },
+    {
+      "name": "remote-entry-present-and-clickable",
+      "pass": true
+    },
+    {
+      "name": "connect-action-present-and-clickable",
+      "pass": true
+    },
+    {
+      "name": "remote-uses-theme-container",
+      "pass": true
+    },
+    {
+      "name": "connect-uses-soft-accent",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-sync-live",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-sync-camera",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-sync-downloads",
+      "pass": true
+    },
+    {
+      "name": "downloads-show-only-count",
+      "pass": true
+    },
+    {
+      "name": "download-count-small-normal-weight",
+      "pass": true
+    },
+    {
+      "name": "all-downloads-visible-with-existing-star-record",
+      "pass": true
+    },
+    {
+      "name": "download-list-has-no-star-filter",
+      "pass": true
+    },
+    {
+      "name": "three-native-photo-tiles",
+      "pass": true
+    },
+    {
+      "name": "download-thumbnail-no-star",
+      "pass": true
+    },
+    {
+      "name": "download-thumbnail-no-star",
+      "pass": true
+    },
+    {
+      "name": "download-thumbnail-no-star",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-download-photo-open",
+      "pass": true
+    },
+    {
+      "name": "download-detail-no-star-action",
+      "pass": true
+    },
+    {
+      "name": "download-menu-no-favourite-action",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-album-phone-source",
+      "pass": true
+    },
+    {
+      "name": "instant-internal-switch-album-app-source",
+      "pass": true
+    },
+    {
+      "name": "project-star-context-retained",
+      "pass": true
+    }
+  ]
+}

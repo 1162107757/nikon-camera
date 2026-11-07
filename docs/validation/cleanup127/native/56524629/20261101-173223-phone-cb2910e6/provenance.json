@@ -1,0 +1,16 @@
+{
+  "candidateSha256": "56524629b4b4e58d49ab4b8d80610382e0b596efff38ebfdd1d36fd02d39971c",
+  "versionCode": 127,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "342850c27011f3678fbbca3b2ecc4521a40b3ce6bbdb44d049b93d397262ced7",
+  "pass": true,
+  "scope": "diagnostic",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "e6f2d2fc3d903a45dc9f967441b7d4cd1dbea7dc15bc34278604bd0939fb53bb"
+    }
+  ]
+}

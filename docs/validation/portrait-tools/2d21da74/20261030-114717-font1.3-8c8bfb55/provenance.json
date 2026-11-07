@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "2d21da748e5ee70bc411d1813d9bfca9f06548844758f801339c92a1d84177e3",
+  "versionCode": 121,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "10fd398063faab4bae4db5370f7446f3f542a81252e5c7b484bc99bd9ff810da",
+  "pass": true,
+  "scope": "Focused hierarchical portrait tool entries matching actual Adjust Portrait/Local icon-caption controls. Landing contains two entry tools and no editing fields; skin/face children contain no persistent bottom switcher and return through a single back action. Automatic whole-image skin from NONE without selected faces, inference/detection navigation race, native two-face edits, independent model/history and remembered tools, system Back hierarchy, top-back eyedropper/custom cancellation, advanced person-colour reopening, live rotation and apply/cancel. Real installed production dialog/filter and public-domain NASA collage. UI navigation evidence; no fresh broad segmentation, physical-phone performance or export-pipeline claim.",
+  "files": [
+    {
+      "file": "hierarchy-00-adjustment-tools.png",
+      "sha256": "92a82328692ac60e84ea3bb879f495fc9025a891d97cbe7e89efc7bb639cf25e"
+    },
+    {
+      "file": "hierarchy-01-portrait-entry-tools.png",
+      "sha256": "2978cbb23d8b7b1a4a4bcb6a1f18a20ca0d6776340fbb9f517b4a825df6f150b"
+    },
+    {
+      "file": "hierarchy-02-skin-child.png",
+      "sha256": "31f23768e2b39ad1b3c3f13cf2eaa0a698306bcca1cb133fc2c3e5c444404957"
+    },
+    {
+      "file": "hierarchy-03-face-child.png",
+      "sha256": "e377f88aac075358a099a6b31d1537bd4eb79a2ebee7a3d8a2c5477f6c30d706"
+    },
+    {
+      "file": "hierarchy-04-edits-retained-at-entry.png",
+      "sha256": "8c63841faf5119ac11ce34d84f3ff98a5e5036b9e52afa36b1f6012b8620be45"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "0e6ff6675c66bae963644dec4d8b2f0515dec556fddc2d20d3dc8217bd3e8f49"
+    },
+    {
+      "file": "report.json",
+      "sha256": "c7f6361a161de92c7878e9bdea95690a77b3b61229dc6da1ffe388eab4197c2e"
+    }
+  ]
+}

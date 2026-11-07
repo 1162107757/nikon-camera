@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+  "versionCode": 127,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "7365bfec5ef45f01f57e0208613b565ea3713e1b40c26583c93aa0d2c5cd82ca",
+  "pass": true,
+  "scope": "full",
+  "files": [
+    {
+      "file": "01-palette-v2-layout.png",
+      "sha256": "ca15d67abc3cf55921b822a29aed57d181ba8f07de9e08ae547875aa58e64d73"
+    },
+    {
+      "file": "02-palette-v2-idle-field.png",
+      "sha256": "0130a2b688cb730eec525dc97fbd213ea8ea42b19a7ed30c6f116d543d796f50"
+    },
+    {
+      "file": "03-palette-v2-pressed-field.png",
+      "sha256": "479894502b7001830bc346228b10deda55d3a5b6a671bd3e13228d202a3ddee6"
+    },
+    {
+      "file": "04-palette-v2-released-field.png",
+      "sha256": "4c6afc6136dc4bef7f78322750002d035229900a0af185cd5d3e16905748d8a9"
+    },
+    {
+      "file": "05-cleanup-default-layout.png",
+      "sha256": "0f0aa5a34c30484410fe3e096e1d7c407a4669fe43d62d80812e11f14e516cf5"
+    },
+    {
+      "file": "06-cleanup-advanced-layout.png",
+      "sha256": "ab5f3e95e2acb6c539c271fd2ee4f83d3e458bc5bab980fa7e490bf279ae8e7e"
+    },
+    {
+      "file": "07-cleanup-region-applied-photo.png",
+      "sha256": "d1b2fe3b57261bc68d79f9683b0a880b3400ef821441e09e226e386467b3361f"
+    },
+    {
+      "file": "report.json",
+      "sha256": "dd55d907ddd9f928bf118df29acda5a4782339f14aaab3ca4d1821b3cfb9964a"
+    }
+  ]
+}

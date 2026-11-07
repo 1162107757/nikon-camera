@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "versionCode": 122,
+  "versionName": "0.24.0-beta",
+  "apk": {
+    "path": "dist/huevia-0.24.0-beta-debug.apk",
+    "bytes": 33432332,
+    "sha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "buildIdentitySha256": "27764359d069649d7514d6094182ba2b7a1e49772233379f077765cc1350281c",
+  "productionInputsVerified": 291,
+  "hostSummarySha256": "d1924d9615b9b5a051137b6fc90f612347c7bce59025d9cd9b396e9de517c649",
+  "hostSourceInputsSha256": "6be027dca9ea9eef6697ccd4abd281d9fbafcb1bac4e8224e80e759328b3571d",
+  "hostMatrixChecks": 1446177,
+  "hostParameterExifCases": 152,
+  "legacyChecks": 1184,
+  "packagingAuditSha256": "5f269b0697111277364281d02524ac271f8c74a7b0eee3661121c599a37e6cc2",
+  "nativeSummarySha256": "42806e7642a0346c688fa2786883c32ca13c57f45b48abbea57272d9dbf3c379",
+  "nativeChecks": 3216,
+  "nativeScreenshots": 18,
+  "nativeCanvasFrames": 9,
+  "protectedPackedArgbComparisons": 27285072,
+  "protectedDifferentPixels": 0,
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "checks": 1072,
+      "screenshots": 6,
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-143540-phone-14dc2959/20261030-143540-phone-14dc2959/report.json",
+      "reportSha256": "23b4b2fa54d22f939f6eeb47a385fc2a66de12035851a3048c05c223628ac36d",
+      "cleanupPath": "docs/validation/universal-brush/a8c765ec/20261030-143540-phone-14dc2959/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "font1.3",
+      "checks": 1072,
+      "screenshots": 6,
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-143743-font1.3-ac7643cd/20261030-143743-font1.3-ac7643cd/report.json",
+      "reportSha256": "6bc3f20150fc6945f5c791882f823f836f1452e3f72d4601b7ea001060477693",
+      "cleanupPath": "docs/validation/universal-brush/a8c765ec/20261030-143743-font1.3-ac7643cd/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "landscape",
+      "checks": 1072,
+      "screenshots": 6,
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-145037-landscape-eda111a4/20261030-145037-landscape-eda111a4/report.json",
+      "reportSha256": "580ac186d82cb75e68907f5824c2d639635a2df1aa81d06057dc3164cc9c7479",
+      "cleanupPath": "docs/validation/universal-brush/a8c765ec/20261030-145037-landscape-eda111a4/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    }
+  ],
+  "excludedHistoricalHarnessAttempts": [
+    {
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-142920-phone-56cf1ac0/20261030-142920-phone-56cf1ac0/report.json",
+      "sha256": "6939b12b2c8ac6c1e0c93a4a0dfbcfd654a58d730902da3036756ac2d9fd28a9",
+      "stage": "brush-new-cancel"
+    },
+    {
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-143339-phone-2a2da1a2/20261030-143339-phone-2a2da1a2/report.json",
+      "sha256": "86a7f7b9b88a3510267e155d88677767fe5590f600f2e94c813fcce4ef9831fa",
+      "stage": "brush-real-live-paint-erase-feather-navigation"
+    },
+    {
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-144015-landscape-25560bfa/20261030-144015-landscape-25560bfa/report.json",
+      "sha256": "596d3450dd8026642747ef76b73c60bad4530c08d8275cbd53a15a1b976437f7",
+      "stage": "delete-region-is-undoable"
+    },
+    {
+      "reportPath": "docs/validation/universal-brush/a8c765ec/20261030-144506-landscape-abec58fc/20261030-144506-landscape-abec58fc/report.json",
+      "sha256": "6ee176bcacc7638b7fde66e86a1c6889b55e7d7ec096535f18d387a351d927b0",
+      "stage": "independent-regions-and-multiple-parameters"
+    }
+  ],
+  "visualReview": "Root reviewed ordinary/large-font/landscape live paint, clean parameter and regional skin states, real first/gap/second flash Canvas frames and stable scope menu in one batch. No production revision after testing began.",
+  "limitations": [
+    "Owned emulator verification, not a physical-phone latency benchmark.",
+    "Public/synthetic fixtures, not a general segmentation-accuracy claim.",
+    "Outside-brush ARGB identity refers to the input of this regional adjustment before output encoding; existing global/other-region effects remain."
+  ],
+  "publication": "local-package-not-published",
+  "automationCreated": false
+}

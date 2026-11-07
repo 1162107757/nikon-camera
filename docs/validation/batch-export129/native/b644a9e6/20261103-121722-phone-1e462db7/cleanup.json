@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Batch export probe failed: java.lang.AssertionError: actual-jpeg-keeps-crop-and-orientation; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\batch-export129\\native\\b644a9e6\\20261103-121722-phone-1e462db7\\20261103-121722-phone-1e462db7\\report.json",
+  "errors": []
+}

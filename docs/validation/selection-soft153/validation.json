@@ -1,0 +1,77 @@
+{
+  "versionCode": 153,
+  "versionName": "0.29.2-beta",
+  "apk": "dist/huevia-0.29.2-beta-debug.apk",
+  "apkSha256": "10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e",
+  "apkBytes": 33606103,
+  "pass": true,
+  "device": "Owned Pixel_9 emulator-5596; Android17/API37. Display classes emulated.",
+  "runs": [
+    {
+      "mode": "phone",
+      "runId": "20261107-184703-phone-dcec97",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/phone/report.json"
+    },
+    {
+      "mode": "font",
+      "runId": "20261107-184717-font-09b121",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/font/report.json"
+    },
+    {
+      "mode": "narrow",
+      "runId": "20261107-184728-narrow-3ad86d",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/narrow/report.json"
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261107-184738-landscape-f1f420",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/landscape/report.json"
+    },
+    {
+      "mode": "tablet",
+      "runId": "20261107-184748-tablet-da306b",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/tablet/report.json"
+    },
+    {
+      "mode": "tablet-landscape",
+      "runId": "20261107-184804-tablet-landscape-dfbfc0",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/tablet-landscape/report.json"
+    },
+    {
+      "mode": "dark",
+      "runId": "20261107-184816-dark-d15884",
+      "checks": 10,
+      "screenshots": 6,
+      "evidence": "native/dark/report.json"
+    }
+  ],
+  "totalAssertions": 70,
+  "totalScreenshots": 42,
+  "scope": "Bounded selection-style capture and native selection switching only. Source image hash/fixture cleanup checked.",
+  "fixtures": "Existing illustrative photo, hand-authored QA presets, synthetic global skin mask. No inference accuracy claim.",
+  "limits": "No model/renderer/export/persistence changes; their broader152 runs were not repeated or reattributed to153. No physical-device or public-release acceptance.",
+  "productionInputs": "UI-INPUTS.json",
+  "changes": "production-changes.json",
+  "captionCorrection": "Selected captions are neutralwhite#FFFFFF; muted1dp frame and translucent plate unchanged.",
+  "priorCandidate": "first-candidate/validation.json",
+  "review": {
+    "fullReview": ".impeccable/review/selection-soft153/review.md",
+    "initialDisposition": "fix",
+    "verdict": ".impeccable/review/selection-soft153/verdict.md",
+    "disposition": "ship",
+    "scope": "Scored selected-caption contrast fix and direct regressions; initial full matrix retains other refinements.",
+    "landscapeCaptionContrast": 4.82
+  }
+}

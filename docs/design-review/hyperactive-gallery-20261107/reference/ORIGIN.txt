@@ -1,0 +1,3 @@
+User-supplied visual reference: https://dribbble.com/shots/27683076--Product-design-for-photo-gallery-mobile-app-Hyperactive
+Observed image URL: https://cdn.dribbble.com/userupload/48843912/file/300753b2272d2f26a7b12f140e5bc43a.png?resize=1024x768&vertical=center
+Downloaded through observed pageAssets capability. Study/reference only; not used as app imagery. Hyperactive owns the reference design.

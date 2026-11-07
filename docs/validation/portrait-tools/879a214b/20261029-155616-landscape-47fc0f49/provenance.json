@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+  "versionCode": 118,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "cd136621eda6de166936b366a2c21908e8d90e3df44233b00f3e370acecc8b57",
+  "pass": true,
+  "scope": "Focused 118 global exposed-skin workflow from PhotoPortrait.NONE and empty face lists, standalone production filter and actual editor, automatic skin inference without probe detection or Auto/Add Face UI prerequisites, pixel identity/background preservation, custom preview/eyedropper/personal cards, cancel/apply/history/draft/owner/full export/detail/EXIF6. Owned public-domain NASA fixture; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "0ae8f070c64514fe2c7ba4c0926dbc6c513a6110b820aeedf219a59e0f00fbb9"
+    },
+    {
+      "file": "global-01-NONE-automatic-skin.png",
+      "sha256": "a0ed6d678c9ba48924532397339cd885e88862f7c2828e0ae76c08058e631e0c"
+    },
+    {
+      "file": "global-02-whole-image-skin.png",
+      "sha256": "0a55ceb04a0a62eedb3e2e96e76b1d6f3c3d2d502c7d43818ad2198cb2bbb634"
+    },
+    {
+      "file": "global-03-custom-photo-preview.png",
+      "sha256": "1e6c993b561edfb2f92fd061a2069ffd136f8e3bfe19314287c507bb797848e1"
+    },
+    {
+      "file": "global-04-custom-picker.png",
+      "sha256": "7dd2ba0e556e11f64cdd6bf239b9082a063a91d46e8e0b8b1fa4c1dd28e11c45"
+    },
+    {
+      "file": "portrait-rotated-open.png",
+      "sha256": "22343482fb4708c9a997819b4df82a2c8c45c63a90b6e02dac0af2a4744f50eb"
+    },
+    {
+      "file": "report.json",
+      "sha256": "32f1d4481619e9ca633af0291a4a31789f78206dd9c5cd9d1695269538e6a469"
+    }
+  ]
+}

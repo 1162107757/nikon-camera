@@ -1,0 +1,13 @@
+{
+  "serial": "emulator-5596",
+  "ownedEmulatorStopped": true,
+  "temporaryDataRetained": true,
+  "baseAvdLaunchReadOnly": true,
+  "physicalDeviceTouched": false,
+  "automaticCleanupReview": {
+    "rejected": true,
+    "action": "Recursively remove only the task-owned emulator-data directory",
+    "reason": "Blocked by policy; no more specific reason was supplied",
+    "retryAttempted": false
+  }
+}

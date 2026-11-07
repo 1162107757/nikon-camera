@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Direct tools probe failed: java.lang.AssertionError: Timeout reachable editor-primary-6; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\direct-tools133\\native\\a032d25e\\20261105-090515-phone-d7eae4ca\\20261105-090515-phone-d7eae4ca\\report.json",
+  "errors": []
+}

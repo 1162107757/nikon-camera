@@ -1,0 +1,96 @@
+{
+  "versionCode": 141,
+  "versionName": "0.28.4-beta",
+  "apk": "dist/huevia-0.28.4-beta-debug.apk",
+  "apkSha256": "027e321d9b47e9d2a038b7e886aafd8f8a05b4f345fcb76889b14640ef9e92d3",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "published": false,
+  "source": {
+    "app/src/main/java/cc/huevia/MainActivity.java": "b8266796fecf275bbc51407b88dd8ec27342cf93ce96d1f6ac66941daee76834",
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "76c2b2090b1a69fbe6b5115952bd30a059f94dbec13cd1b460e2d2e5e97798e6",
+    "app/build.gradle": "02c21491b48a573e99b9195eb6387982c22987aa821aac592188e0d46fc10f31",
+    "tests/sync-polish-device-probe/src/cc/huevia/syncpolishqa/AlbumOverviewProbe.java": "a8713333f76b66f03b97aa840d41d5bdca7578eb4def500b0528931416c76589",
+    "tests/orange-ui-device-probe/src/cc/huevia/orangeqa/OrangeNativeProbe.java": "61cc42c76d5a148745de23a8fba935169b610de706a24ed523bce36a745324d0"
+  },
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 94,
+      "access": "FULL",
+      "report": "final/phone/report.json"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 94,
+      "access": "FULL",
+      "report": "final/font1.3/report.json"
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 94,
+      "access": "FULL",
+      "report": "final/dark/report.json"
+    },
+    {
+      "mode": "tablet",
+      "pass": true,
+      "checks": 94,
+      "access": "FULL",
+      "report": "final/tablet/report.json"
+    },
+    {
+      "mode": "compact",
+      "pass": true,
+      "checks": 94,
+      "access": "FULL",
+      "report": "final/compact/report.json"
+    },
+    {
+      "mode": "denied",
+      "pass": true,
+      "checks": 77,
+      "access": "NONE",
+      "report": "final/denied/report.json"
+    },
+    {
+      "mode": "partial",
+      "pass": true,
+      "checks": 95,
+      "access": "PARTIAL",
+      "report": "final/partial/report.json"
+    },
+    {
+      "mode": "narrow",
+      "pass": true,
+      "checks": 94,
+      "access": "FULL",
+      "report": "final/narrow/report.json"
+    }
+  ],
+  "review": {
+    "status": "ship",
+    "disposition": "ship",
+    "materialFixes": [],
+    "record": ".impeccable/review/album-floating141/review.md",
+    "scope": "Fresh full review of the approved native album selection refinement, not whole-product or physical-device certification."
+  },
+  "limitations": [
+    "Owned read-only Android emulator; no physical phone or camera acceptance.",
+    "Tablet/compact/narrow are viewport emulation. API26–32 fallback not tested on a legacy device.",
+    "External system picker UI not certified; native intent dispatch and cancellation were tested."
+  ],
+  "preflight": "Initial save-staging navigation issue fixed; final system-back evidence uses actual edge gesture rather than legacy key injection.",
+  "assertionExecutions": 736,
+  "installedApkSha256": "027e321d9b47e9d2a038b7e886aafd8f8a05b4f345fcb76889b14640ef9e92d3",
+  "installedApkMatches": true,
+  "legacyProbeCompilation": {
+    "pass": true,
+    "fullSuiteRun": false
+  }
+}

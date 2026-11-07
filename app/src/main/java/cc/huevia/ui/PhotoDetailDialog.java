@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 /** Frozen, full-screen detail surface; closing it never mutates drafts, history or exports. */
 public final class PhotoDetailDialog extends Dialog implements AutoCloseable {
-    private static final int BG=0xff0a0908,TEXT=0xfff6f1eb,ACCENT=0xfff2b48c;
+    private static final int BG=0xff0a0908,TEXT=0xfff6f1eb,ACCENT=0xffffe335;
     private final Activity activity;private final PhotoDetailSource source;private final boolean canCompare;
     private final String displayName;
     private PhotoDetailView detail;private TextView status,metric,filename,savedReason;private Button current,before,fit,one,two,retry;
@@ -85,7 +85,7 @@ public final class PhotoDetailDialog extends Dialog implements AutoCloseable {
                 enabledIfChanged(fit,dimensionsReady);enabledIfChanged(one,dimensionsReady);enabledIfChanged(two,dimensionsReady);
                 if(layoutChanged)positionControls();refreshGlass();
             }
-            public void invalidated(){if(!released){Toast.makeText(activity,"照片或编辑状态已变化，请重新打开细节。",Toast.LENGTH_SHORT).show();dismiss();}}
+            public void invalidated(){if(!released){AppNotice.show(activity,"照片或编辑状态已变化，请重新打开细节。",false);dismiss();}}
         });
         stage.addView(detail,new FrameLayout.LayoutParams(-1,-1));
 

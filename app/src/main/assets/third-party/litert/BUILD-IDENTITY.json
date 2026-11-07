@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "runtime": "com.google.ai.edge.litert:litert:1.4.1 + litert-api:1.4.1",
+  "model": "MediaPipe Face mesh detection model v2, bundle version 1; 478 landmarks",
+  "modelSourcePage": "https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker",
+  "sources": [
+    {
+      "name": "litert-1.4.1.aar",
+      "url": "https://dl.google.com/dl/android/maven2/com/google/ai/edge/litert/litert/1.4.1/litert-1.4.1.aar",
+      "sha256": "815ef39f7d40f579adda1c7bcb7ce090685fb286777ffd8283f33202f67da1b4"
+    },
+    {
+      "name": "litert-api-1.4.1.aar",
+      "url": "https://dl.google.com/dl/android/maven2/com/google/ai/edge/litert/litert-api/1.4.1/litert-api-1.4.1.aar",
+      "sha256": "ce5f6cc1924f0b9eb0fc339e0d3a3e6c9d041b9deb5e99f800fd6a42150f1875"
+    },
+    {
+      "name": "face_landmarker.task",
+      "url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+      "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff"
+    },
+    {
+      "name": "selfie_multiclass_256x256.tflite",
+      "url": "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/1/selfie_multiclass_256x256.tflite",
+      "bytes": 16371837,
+      "sha256": "c6748b1253a99067ef71f7e26ca71096cd449baefa8f101900ea23016507e0e0"
+    },
+    {
+      "name": "MEDIAPIPE-LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/google-ai-edge/mediapipe/v0.10.32/LICENSE",
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "app/libs/litert-1.4.1.jar",
+      "bytes": 28765,
+      "sha256": "c817a911a50d5c88f63ae6b31b131826198c96bedf72671cd32872d15a35d264"
+    },
+    {
+      "path": "app/libs/litert-api-1.4.1.jar",
+      "bytes": 21392,
+      "sha256": "fcdbe3f4eec7a8632fb4793a95b6e585f297db40701b27e6c20bbdaead21f4de"
+    },
+    {
+      "path": "app/src/main/assets/portrait/face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"
+    },
+    {
+      "path": "app/src/main/assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "bytes": 13881786,
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+    },
+    {
+      "path": "app/src/main/assets/third-party/litert/LICENSE-LiteRT.txt",
+      "bytes": 13575,
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65"
+    },
+    {
+      "path": "app/src/main/assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "bytes": 12331,
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    },
+    {
+      "path": "app/src/main/jniLibs/arm64-v8a/libtensorflowlite_jni.so",
+      "bytes": 4320528,
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "elfLoadAlignmentBytes": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "app/src/main/jniLibs/armeabi-v7a/libtensorflowlite_jni.so",
+      "bytes": 2572124,
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "elfLoadAlignmentBytes": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "app/src/main/jniLibs/x86_64/libtensorflowlite_jni.so",
+      "bytes": 6053584,
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "elfLoadAlignmentBytes": [
+        16384,
+        16384,
+        16384
+      ]
+    },
+    {
+      "path": "app/src/main/jniLibs/x86/libtensorflowlite_jni.so",
+      "bytes": 6323728,
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "elfLoadAlignmentBytes": [
+        16384,
+        16384,
+        16384
+      ]
+    }
+  ],
+  "inference": {
+    "input": "FLOAT32 [1,256,256,3] RGB / 255",
+    "landmarksOutput": "0: FLOAT32 [1,1,1,1434], 478 * xyz; divide xy by 256 before crop inverse projection",
+    "presenceOutput": "1: FLOAT32 [1,1,1,1] raw logit; apply sigmoid",
+    "unusedOutput": "2: FLOAT32 [1,1] (not used as presence)",
+    "operators": "CONV_2D, PRELU, DEPTHWISE_CONV_2D, ADD, MAX_POOL_2D, PAD, LOGISTIC, RESHAPE, DEQUANTIZE; no CUSTOM/Flex",
+    "cpuOnly": true
+  },
+  "semanticModel": {
+    "name": "MediaPipe Selfie Multiclass 256x256, float32/version 1",
+    "sourcePage": "https://developers.google.com/edge/mediapipe/solutions/vision/image_segmenter",
+    "modelCard": "https://storage.googleapis.com/mediapipe-assets/Model%20Card%20Multiclass%20Segmentation.pdf",
+    "license": "Apache License, Version 2.0, explicitly identified by the official model card; Adel Ahmadyan (Google), May 10, 2023. LICENSE-MediaPipe.txt is preserved.",
+    "originalBytes": 16371837,
+    "originalSha256": "c6748b1253a99067ef71f7e26ca71096cd449baefa8f101900ea23016507e0e0",
+    "packedAsset": "portrait/face_skin_multiclass.shuffle4.zlib",
+    "packedBytes": 13881786,
+    "packedSha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+    "packing": "Headerless zlib stream of four byte planes: N=floor(16371837/4)=4092959; decoded[p*N+i]=original[4*i+p], p=0..3, i=0..N-1; final one trailing byte unchanged. .NET 10 ZLibStream SmallestSize. No weights or model metadata are modified.",
+    "input": "FLOAT32 [1,256,256,3] RGB / 127.5 - 1 (embedded mean 127.5, std 127.5)",
+    "output": "0: FLOAT32 [1,256,256,6] raw logits; per pixel apply stable softmax once across 6 labels to obtain probabilities. Output producer is CONV_2D, not SOFTMAX.",
+    "postprocessing": "Embedded SEGMENTER_METADATA (V001) ImageSegmenterOptions.activation=2 (SOFTMAX); official MediaPipe v0.10.32 image_segmenter_graph.cc reads this metadata and TensorsToSegmentationCalculator applies StableSoftmax.",
+    "postprocessingSource": "https://github.com/google-ai-edge/mediapipe/blob/v0.10.32/mediapipe/tasks/cc/vision/image_segmenter/calculators/tensors_to_segmentation_calculator.cc",
+    "labels": [
+      "background",
+      "hair",
+      "body-skin",
+      "face-skin",
+      "clothes",
+      "others"
+    ],
+    "operators": "CONV_2D, DEPTHWISE_CONV_2D, ADD, RESHAPE, TRANSPOSE, MUL, SOFTMAX, SUM, RESIZE_BILINEAR, RESIZE_NEAREST_NEIGHBOR, TRANSPOSE_CONV; no CUSTOM/Flex",
+    "runtimeLoading": "Bundled asset only, streamed through InflaterInputStream into a direct native-order buffer; exact decoded/packed lengths and both SHA-256 hashes verified before caching. No runtime download."
+  },
+  "packaging": "Four ABI bundled JNI, ELF LOAD alignment >= 16 KiB; extractNativeLibs=true; native/dex ZIP CompressionLevel.SmallestSize; precompressed face skin model asset ZIP NoCompression; other assets retain their existing compression rules.",
+  "runtimeDependencies": "Only Android system libc, libm, libdl and liblog. No Tasks SDK, Play Services, data transport, GPU or network/model-download provider.",
+  "licensing": "Preserve complete LiteRT AAR LICENSE (Apache-2.0 plus bundled third-party notices) and upstream MediaPipe LICENSE with official model source attribution. The official Face Mesh V2 model card explicitly states Apache License, Version 2.0. This app uses only the model file, not MediaPipe Tasks runtime.",
+  "modelCard": "https://storage.googleapis.com/mediapipe-assets/Model%20Card%20MediaPipe%20Face%20Mesh%20V2.pdf"
+}

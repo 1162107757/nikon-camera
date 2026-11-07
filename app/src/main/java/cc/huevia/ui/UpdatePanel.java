@@ -128,13 +128,13 @@ public final class UpdatePanel implements AutoCloseable {
     private void chooseChannel() {
         if (updates.mandatory()) { maybePrompt(); return; }
         if (updates.downloading || updates.checking || updates.verifying) { host.onFeedback("请稍后切换", "请先完成检查、取消下载或等待校验完成。"); return; }
-        new AlertDialog.Builder(activity).setTitle("更新通道").setSingleChoiceItems(new String[]{"正式版", "测试版"}, "beta".equals(updates.channel()) ? 1 : 0,
+        new AppDialog.Builder(activity).setTitle("更新通道").setSingleChoiceItems(new String[]{"正式版", "测试版"}, "beta".equals(updates.channel()) ? 1 : 0,
                 (dialog, which) -> { dialog.dismiss(); updates.channel(which == 1 ? "beta" : "stable"); }).setNegativeButton("取消", null).show();
     }
     private void primaryAction() {
         if (updates.release == null) { updates.check(false); return; }
         if (updates.verified) { install(); return; }
-        if (updates.metered()) new AlertDialog.Builder(activity).setTitle("使用流量下载？")
+        if (updates.metered()) new AppDialog.Builder(activity).setTitle("使用流量下载？")
                 .setMessage("安装包约 " + size() + "，可能产生移动数据费用。")
                 .setNegativeButton("稍后", null).setPositiveButton("继续下载", (d,w) -> updates.download(true)).show();
         else updates.download(false);
@@ -148,7 +148,7 @@ public final class UpdatePanel implements AutoCloseable {
     }
     private void openInstaller() {
         if (!activity.getPackageManager().canRequestPackageInstalls()) {
-            new AlertDialog.Builder(activity).setTitle("允许安装 Huevia 更新")
+            new AppDialog.Builder(activity).setTitle("允许安装 Huevia 更新")
                     .setMessage("请在系统设置中允许此来源，返回后继续安装。")
                     .setNegativeButton("稍后", null).setPositiveButton("前往设置", (d,w) -> {
                         waitingPermission = true;
@@ -210,7 +210,7 @@ public final class UpdatePanel implements AutoCloseable {
             if (required && !open) { open = true; host.onChanged(); }
             final String key = releaseKey();
             LinearLayout body = new LinearLayout(activity); body.setOrientation(LinearLayout.VERTICAL); body.setPadding(dp(24), dp(4), dp(24), dp(8));
-            promptVersion = label("", 24, true); promptVersion.setTag("update-prompt-version"); body.addView(promptVersion);
+            promptVersion = label("", 18, true); promptVersion.setTag("update-prompt-version"); body.addView(promptVersion);
             promptMeta = label("", 13, false); promptMeta.setTextColor(colors.secondary); promptMeta.setPadding(0, dp(6), 0, dp(2)); body.addView(promptMeta);
             promptStatus = label("", 13, false); promptStatus.setTag("update-required-message"); promptStatus.setPadding(0, dp(10), 0, dp(8)); body.addView(promptStatus);
             promptProgress = new ProgressBar(activity, null, android.R.attr.progressBarStyleHorizontal); promptProgress.setTag("update-prompt-progress"); promptProgress.setMax(100); promptProgress.setProgressTintList(ColorStateList.valueOf(colors.primary)); body.addView(promptProgress, new LinearLayout.LayoutParams(-1, dp(5)));
@@ -223,7 +223,7 @@ public final class UpdatePanel implements AutoCloseable {
                 }
             };
             scroll.setFillViewport(false); scroll.addView(body);
-            AlertDialog dialog = new AlertDialog.Builder(activity).setTitle(required ? "需要更新" : "发现新版本").setView(scroll)
+            AlertDialog dialog = new AppDialog.Builder(activity).setTitle(required ? "需要更新" : "发现新版本").setView(scroll)
                     .setPositiveButton(required ? "下载更新" : "立即更新", null)
                     .setNegativeButton(required ? "退出应用" : "稍后", null)
                     .setCancelable(!required).create();
@@ -234,12 +234,8 @@ public final class UpdatePanel implements AutoCloseable {
                 if (prompt == dialog) { prompt = null; main.post(this::maybePrompt); }
             });
             dialog.show(); PhotoEditorTypography.apply(dialog);
-            dialog.getWindow().setBackgroundDrawable(shape(colors.card, 22));
-            dialog.getWindow().getDecorView().setClipToOutline(true);
             dialog.getWindow().getDecorView().setTag("update-prompt-dialog");
             Button updateAction = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-            updateAction.setTextColor(colors.onAction); updateAction.setBackgroundTintList(null); updateAction.setBackground(shape(colors.action, 24));
-            updateAction.setPadding(dp(18), dp(8), dp(18), dp(8)); updateAction.setMinHeight(dp(48));
             updateAction.setOnClickListener(v -> {
                 if (!key.equals(releaseKey())) { refresh(); return; }
                 if (!required) { dismissPrompt(); open(); }
@@ -263,7 +259,9 @@ public final class UpdatePanel implements AutoCloseable {
         promptProgress.setVisibility(locked ? View.VISIBLE : View.GONE); promptProgress.setIndeterminate(updates.checking || updates.verifying); promptProgress.setProgress(updates.progress);
         promptDetail.setText(updates.error); promptDetail.setTextColor(colors.error); promptDetail.setVisibility(updates.error.isEmpty() ? View.GONE : View.VISIBLE);
         Button positive = prompt.getButton(AlertDialog.BUTTON_POSITIVE);
-        positive.setText(updates.verified ? "安装更新" : updates.downloading ? "正在下载" : updates.verifying ? "正在校验" : updates.error.isEmpty() ? (promptMandatory ? "下载更新" : "立即更新") : "重试下载"); positive.setEnabled(!locked);
+        // Busy phases already have a status and progress bar. Keep the action row for actions.
+        positive.setText(updates.verified ? "安装更新" : updates.error.isEmpty() ? (promptMandatory ? "下载更新" : "立即更新") : "重试下载");
+        positive.setEnabled(!locked); positive.setVisibility(locked ? View.GONE : View.VISIBLE);
         if (promptMandatory) prompt.getButton(AlertDialog.BUTTON_NEUTRAL).setEnabled(!updates.checking);
     }
     private void dismissPrompt() {

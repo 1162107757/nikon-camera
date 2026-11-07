@@ -1,0 +1,59 @@
+{
+  "serial": "emulator-5588",
+  "ownedEmulatorPid": 3704,
+  "remoteFilesVerifiedAndRemoved": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130508-phone-fd8ff20e/01-skin-smoothing.png",
+      "sha256": "e7b0f1b8a9e5a2fba973905a1dd1c1517e2b41fe2d3c0c9c0a197b43aaf2c5be"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130508-phone-fd8ff20e/02-adjusted-skin.png",
+      "sha256": "e24a444ed136ae88d0f28682225ce2e76630e8e74d3636778b9c427e4d3fddc7"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130508-phone-fd8ff20e/reference.png",
+      "sha256": "7d3644c400727c4f3994f2d726c56c339543a9f1536bb3582cc61cb3f6b8bd36"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130508-phone-fd8ff20e/full.jpg",
+      "sha256": "9458768412d1cdea1ab6e7bcd79d9e101e5a207bb35cf34bdc35982670c29042"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130508-phone-fd8ff20e/report.json",
+      "sha256": "acd36675295c8d018967e27edad48930c0996910ca259cc7e13dcb333b031184"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130738-font1.3-54d3c87e/01-skin-smoothing.png",
+      "sha256": "2479757b7747f11b6bbfe2dc65534ae3ea22e675d7e9cc8a9ece66bd7f9c1cde"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130738-font1.3-54d3c87e/02-adjusted-skin.png",
+      "sha256": "332c1b7a81e08be7e85fbb1640cab3b27a8bf4c8552d95fc57dbd1a0a0ae25e7"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130738-font1.3-54d3c87e/report.json",
+      "sha256": "9a7c308e3167a8f20fdc1e0a6b7b28deaa692d05e2289ed24457ad27058fd42b"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130811-landscape-20982a86/01-skin-smoothing.png",
+      "sha256": "c8c8fee6e572ae14714a615c2b195527e8fb454afbf9199d6a0440c4d389f05e"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130811-landscape-20982a86/02-adjusted-skin.png",
+      "sha256": "9c57f186ecac3281a4fbf3f3eb1fee03c22baf9a413422b0b0161c0977e3e27c"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/skin-smoothing130/20261103-130811-landscape-20982a86/report.json",
+      "sha256": "fe224fd53cfb849a83c2402a02cf7832ae8d15d2c277b6969ea6a188462ed866"
+    }
+  ],
+  "remoteEvidenceFoldersRemoved": 3,
+  "testPackageRemoved": true,
+  "fontScale": "1.0",
+  "airplaneMode": "0",
+  "animatorDuration": "null",
+  "mainDataCleared": false,
+  "mainAppUninstalled": false,
+  "ownedEmulatorClosed": true,
+  "localCompiledHostClassesRetained": true
+}

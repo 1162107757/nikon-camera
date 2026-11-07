@@ -1,0 +1,395 @@
+{
+  "prototypeOnly": true,
+  "productionAppChanged": false,
+  "pass": true,
+  "modes": [
+    {
+      "mode": "desktop",
+      "pass": true,
+      "metrics": [
+        {
+          "selected": false,
+          "width": 405,
+          "dockHeight": 0,
+          "buttons": [],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 405,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 66,
+              "height": 48,
+              "left": 539.328125,
+              "right": 605.328125,
+              "dockLeft": 533.328125,
+              "dockRight": 906.65625,
+              "overflow": false
+            },
+            {
+              "text": "批量编辑",
+              "width": 96,
+              "height": 48,
+              "left": 804.65625,
+              "right": 900.65625,
+              "dockLeft": 533.328125,
+              "dockRight": 906.65625,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 405,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 66,
+              "height": 48,
+              "left": 972.65625,
+              "right": 1038.65625,
+              "dockLeft": 966.65625,
+              "dockRight": 1340,
+              "overflow": false
+            },
+            {
+              "text": "保存",
+              "width": 64,
+              "height": 48,
+              "left": 1206,
+              "right": 1270,
+              "dockLeft": 966.65625,
+              "dockRight": 1340,
+              "overflow": false
+            },
+            {
+              "text": "编辑",
+              "width": 60,
+              "height": 48,
+              "left": 1274,
+              "right": 1334,
+              "dockLeft": 966.65625,
+              "dockRight": 1340,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "mobile",
+      "pass": true,
+      "metrics": [
+        {
+          "selected": false,
+          "width": 358,
+          "dockHeight": 0,
+          "buttons": [],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 358,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 66,
+              "height": 48,
+              "left": 38,
+              "right": 104,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            },
+            {
+              "text": "批量编辑",
+              "width": 96,
+              "height": 48,
+              "left": 256,
+              "right": 352,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 358,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 66,
+              "height": 48,
+              "left": 38,
+              "right": 104,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            },
+            {
+              "text": "保存",
+              "width": 64,
+              "height": 48,
+              "left": 224,
+              "right": 288,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            },
+            {
+              "text": "编辑",
+              "width": 60,
+              "height": 48,
+              "left": 292,
+              "right": 352,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "mobile-large-dark",
+      "pass": true,
+      "metrics": [
+        {
+          "selected": false,
+          "width": 358,
+          "dockHeight": 0,
+          "buttons": [],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 358,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 68.8125,
+              "height": 48,
+              "left": 38,
+              "right": 106.8125,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            },
+            {
+              "text": "批量编辑",
+              "width": 97.609375,
+              "height": 48,
+              "left": 254.390625,
+              "right": 352,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 358,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 68.8125,
+              "height": 48,
+              "left": 38,
+              "right": 106.8125,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            },
+            {
+              "text": "保存",
+              "width": 71.8125,
+              "height": 48,
+              "left": 214.375,
+              "right": 286.1875,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            },
+            {
+              "text": "编辑",
+              "width": 61.8125,
+              "height": 48,
+              "left": 290.1875,
+              "right": 352,
+              "dockLeft": 32,
+              "dockRight": 358,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "narrow-large",
+      "pass": true,
+      "metrics": [
+        {
+          "selected": false,
+          "width": 288,
+          "dockHeight": 0,
+          "buttons": [],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 288,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 48,
+              "height": 48,
+              "left": 38,
+              "right": 86,
+              "dockLeft": 32,
+              "dockRight": 288,
+              "overflow": false
+            },
+            {
+              "text": "批量编辑",
+              "width": 87.609375,
+              "height": 48,
+              "left": 194.390625,
+              "right": 282,
+              "dockLeft": 32,
+              "dockRight": 288,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        },
+        {
+          "selected": true,
+          "width": 288,
+          "dockHeight": 56,
+          "buttons": [
+            {
+              "text": "取消",
+              "width": 48,
+              "height": 48,
+              "left": 38,
+              "right": 86,
+              "dockLeft": 32,
+              "dockRight": 288,
+              "overflow": false
+            },
+            {
+              "text": "保存",
+              "width": 48,
+              "height": 48,
+              "left": 170.1875,
+              "right": 218.1875,
+              "dockLeft": 32,
+              "dockRight": 288,
+              "overflow": false
+            },
+            {
+              "text": "编辑",
+              "width": 61.8125,
+              "height": 48,
+              "left": 220.1875,
+              "right": 282,
+              "dockLeft": 32,
+              "dockRight": 288,
+              "overflow": false
+            }
+          ],
+          "countOverflow": false,
+          "sourceTargets": [
+            48,
+            48
+          ]
+        }
+      ]
+    }
+  ],
+  "interactionChecks": [
+    "no-normal-picker",
+    "cancel-restores-navigation",
+    "zero-selection-disables-edit",
+    "thumbnail-selection-updates-count",
+    "phone-has-only-batch-edit",
+    "app-retains-save",
+    "permission-only-picker-fallback"
+  ],
+  "pageErrors": [],
+  "review": {
+    "initialDisposition": "fix",
+    "finding": "Review-board heading eyebrow",
+    "finalDisposition": "ship",
+    "verdict": "resolved",
+    "regressions": [],
+    "scope": "Scored heading fix and design-draft readiness; not user approval or native implementation.",
+    "record": ".impeccable/review/album-floating-design-20261105/review.md"
+  },
+  "detector": {
+    "mode": "degraded-regex",
+    "findings": 0,
+    "limitation": "HTML parser dependencies unavailable; no computed CSS/contrast certification."
+  }
+}

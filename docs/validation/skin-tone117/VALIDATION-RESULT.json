@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "candidateSha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2",
+  "hostChecks": 958,
+  "nativeChecks": 2627,
+  "nativeScreenshots": 51,
+  "runs": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 872,
+      "screenshots": 17,
+      "report": "docs/validation/portrait-tools/bc68248f/20261029-142645-phone-654dd03e/20261029-142645-phone-654dd03e/report.json",
+      "provenance": "docs/validation/portrait-tools/bc68248f/20261029-142645-phone-654dd03e/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/bc68248f/20261029-142645-phone-654dd03e/cleanup.json",
+      "reportSha256": "934f561ab4566eacf923b3564715eae56722012ed18923692b042ad372d31425",
+      "cleanupSha256": "5b98fc3d738fc9cf61cb8bf193ea1bd9fa792d19b5024507984644dd86cd7114"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 872,
+      "screenshots": 17,
+      "report": "docs/validation/portrait-tools/bc68248f/20261029-143109-font1.3-e156b162/20261029-143109-font1.3-e156b162/report.json",
+      "provenance": "docs/validation/portrait-tools/bc68248f/20261029-143109-font1.3-e156b162/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/bc68248f/20261029-143109-font1.3-e156b162/cleanup.json",
+      "reportSha256": "d4e96e926eb3a31c83c6dafbf774cd6156ea712fd2deabcdf674ab368517470c",
+      "cleanupSha256": "5b98fc3d738fc9cf61cb8bf193ea1bd9fa792d19b5024507984644dd86cd7114"
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "checks": 883,
+      "screenshots": 17,
+      "report": "docs/validation/portrait-tools/bc68248f/20261029-143339-landscape-2f3bfaf2/20261029-143339-landscape-2f3bfaf2/report.json",
+      "provenance": "docs/validation/portrait-tools/bc68248f/20261029-143339-landscape-2f3bfaf2/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/bc68248f/20261029-143339-landscape-2f3bfaf2/cleanup.json",
+      "reportSha256": "8365df197cf30a53387b917b535da2d65646b446b9f72e7d9893c89d2d881d13",
+      "cleanupSha256": "5b98fc3d738fc9cf61cb8bf193ea1bd9fa792d19b5024507984644dd86cd7114"
+    }
+  ],
+  "hostResultSha256": "121a56d61a716406c26386c49cc0b5a88d9853e0d100806b4f2298256d742251",
+  "packagingAuditSha256": "0101094f03eab57b91e2520c4f5b2d28408eaf219013df5feffaf1ba4a04ff4b",
+  "buildIdentitySha256": "4df977a9675c8d4774f52c19532893c73375f9c4e2009436a4804efc52d689dd",
+  "localBodyQualitySha256": "63f514dd3c129bc2b501cff0857f4b0d500f1ee2f6ea537d552727756593d3ef",
+  "uiScreenshot": "skin-tone-presets.png",
+  "uiScreenshotSha256": "780ef59373dfa470779dd134130aaa7c0cbb1d46bb3fc281d18ec3c139420728",
+  "scope": "Final signed installed APK: real skin-tone controls, custom picker/photo sampling/preview transaction, saved swatches and cleanup, separate faces, face/body scope, legacy portrait feedback, history/drafts and exact full/detail/EXIF6 output. Private quality record is metrics-only; no user photo or derived image is published."
+}

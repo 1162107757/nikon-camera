@@ -1,0 +1,141 @@
+{
+  "pass": true,
+  "stage": "reopen-existing-selection-pulses-then-soft",
+  "mode": "landscape",
+  "candidateSha256": "aa5461290742af6f2afcabbad89ab7805e9b75b7bcdda25ec411256955ed3dfd",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "empty-selection-no-flash",
+      "pass": true
+    },
+    {
+      "name": "live-paint-still-soft",
+      "pass": true
+    },
+    {
+      "name": "unreleased-stroke-not-committed",
+      "pass": true
+    },
+    {
+      "name": "previewFlashStep-expected-0",
+      "pass": true
+    },
+    {
+      "name": "stroke-release-committed-once",
+      "pass": true
+    },
+    {
+      "name": "first-and-second-strong-identical",
+      "pass": true
+    },
+    {
+      "name": "gap-and-rest-old-soft-identical",
+      "pass": true
+    },
+    {
+      "name": "released-rest-equals-live-soft",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-mutate-region",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-add-history",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-rewrite-mask",
+      "pass": true
+    },
+    {
+      "name": "first-strong-window",
+      "pass": true
+    },
+    {
+      "name": "soft-gap-window",
+      "pass": true
+    },
+    {
+      "name": "second-strong-window",
+      "pass": true
+    },
+    {
+      "name": "strong-overlay-more-visible",
+      "pass": true
+    },
+    {
+      "name": "outside-overlay-unchanged",
+      "pass": true
+    },
+    {
+      "name": "flashStep-expected-0",
+      "pass": true
+    },
+    {
+      "name": "completion-calls-real-consumer",
+      "pass": true
+    },
+    {
+      "name": "completion-first-second-match",
+      "pass": true
+    },
+    {
+      "name": "completion-gap-clean-original",
+      "pass": true
+    },
+    {
+      "name": "completion-strong-matches-preview",
+      "pass": true
+    },
+    {
+      "name": "completion-removes-preview-callback",
+      "pass": true
+    },
+    {
+      "name": "reopen-uses-same-strong-feedback",
+      "pass": true
+    },
+    {
+      "name": "reopen-rest-is-original-soft",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "strong-versus-existing-soft",
+      "changedPixels": 34994,
+      "protectedPixels": 1004476,
+      "outsideDifferences": 0,
+      "strongToSoftTotalDeltaRatio": 2.8507520778624595
+    },
+    {
+      "case": "actual-preview-flash",
+      "firstToSoftMs": 253,
+      "softToSecondMs": 103,
+      "secondToRestMs": 229
+    }
+  ],
+  "screenshots": 5,
+  "persistentFixturesCreated": false
+}

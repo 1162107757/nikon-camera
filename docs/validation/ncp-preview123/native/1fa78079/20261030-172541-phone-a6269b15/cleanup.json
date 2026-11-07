@@ -1,0 +1,22 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": false,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "NCP preview probe failed: java.lang.AssertionError: native-picker-local-source-selected; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\ncp-preview123\\native\\1fa78079\\20261030-172541-phone-a6269b15\\20261030-172541-phone-a6269b15\\report.json",
+  "errors": [],
+  "remoteExactDirectoryRemoved": true,
+  "privateOwnedFixtureDirectoryAbsent": true,
+  "ownedSourceJpegsAbsent": true,
+  "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+}

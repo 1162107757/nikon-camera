@@ -1,0 +1,49 @@
+{
+  "candidateSha256": "d7bdd73e333cbe39e6bbb0664c5d0c8eb0f1e2b32a039bff344153371e9f9e42",
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "completedAtUtc": "2026-11-01T06:17:15.708Z",
+  "testPackageRemoved": true,
+  "targetProcessFixtureAndDraftCleanupVerifiedByEachRun": true,
+  "exactRemoteEvidenceDirectoriesRemoved": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-141313-phone-fbe8378b",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 9
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-141419-font1.3-959ba878",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 1
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-141448-landscape-b3117c6f",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 6
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/palette126/20261101-141532-animations-off-26a1adc1",
+      "verifiedAbsent": true,
+      "filesMatchedLocalHashes": 1
+    }
+  ],
+  "mainAppStopped": true,
+  "mainAppDataCleared": false,
+  "mainAppUninstalled": false,
+  "observedFinalSettings": {
+    "fontScale": "1.0",
+    "animatorDurationScale": "null",
+    "airplaneMode": "0",
+    "immersiveConfirmation": "null",
+    "wifiOn": "1",
+    "mobileData": "1"
+  },
+  "settingsRestorationEvidence": [
+    "docs/validation/palette126/native/d7bdd73e/20261101-141313-phone-fbe8378b/cleanup.json",
+    "docs/validation/palette126/native/d7bdd73e/20261101-141419-font1.3-959ba878/cleanup.json",
+    "docs/validation/palette126/native/d7bdd73e/20261101-141448-landscape-b3117c6f/cleanup.json",
+    "docs/validation/palette126/native/d7bdd73e/20261101-141532-animations-off-26a1adc1/cleanup.json"
+  ],
+  "emulatorRetainedForRootFinalShutdown": true,
+  "errors": []
+}

@@ -1,0 +1,24 @@
+{
+  "candidateSha256": "a8318b4893a0579c341c5fbd432773a943a74ad97899988949f60c030affb730",
+  "versionCode": 111,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "d00d1e64a75a063bb011d7915f35d283bc1ed1cb73cc0845f1c06ff4a41eac51",
+  "pass": false,
+  "scope": "Actual installed portrait detector/dialog/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank/manual fallback, colour/texture/light controls, add/erase strokes, healing, apply/cancel/history/draft isolation, injected preview failure, simulated owner mismatch, full export reference/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "59639164d87f04c586443257bb3d34910c0b858439d2da8b5d93b0a0a8902cb0"
+    },
+    {
+      "file": "report.json",
+      "sha256": "17c2a6ed844040ab781d3daba84d2c3b3ddb03ca17012c6cbf7dfbae04ae7c16"
+    },
+    {
+      "file": "ui-jpeg-analysis-9.png",
+      "sha256": "e5b1afcac015d3311364840f7d701c13302aeba4d1793b6489bfb5ea7018a236"
+    }
+  ]
+}

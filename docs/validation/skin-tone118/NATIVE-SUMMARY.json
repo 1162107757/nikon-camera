@@ -1,0 +1,319 @@
+{
+  "candidate": {
+    "versionCode": 118,
+    "versionName": "0.23.7-beta",
+    "sha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+    "bytes": 33403660
+  },
+  "probe": {
+    "sha256": "cd136621eda6de166936b366a2c21908e8d90e3df44233b00f3e370acecc8b57",
+    "classpath": "Android API35 only",
+    "inputs": [
+      {
+        "path": "tests/portrait-device-probe/src/cc/huevia/portraitqa/PortraitProbe.java",
+        "sha256": "c039d511933162abcb57fd512e80e5ac8f2cd67d6b3977f3df3b8ac6ecdc0442"
+      },
+      {
+        "path": "tests/portrait-device-probe/AndroidManifest.xml",
+        "sha256": "36beadea570e7daf803df35e9095fcf8d09ac1bc6c5d8569212d5f8027e58972"
+      },
+      {
+        "path": "tests/portrait-device-probe/build.ps1",
+        "sha256": "59bb80534a6173699a52bda2b3abbca71aa38009468d9fdf5d77ecdf0fc655c5"
+      },
+      {
+        "path": "tests/portrait-device-probe/run.ps1",
+        "sha256": "47967c976461f90d179a2b04be8a0a01177e7cb8df5f91d2710f88702c9ace58"
+      }
+    ]
+  },
+  "productionSourceSha256": {
+    "PhotoExposedSkin": "d30bf1e978ce5636d999f430e19c73bc9a612999c482f3245d2ca39709294b4b",
+    "FaceSkinModel": "ae7c2dd18e47964da07c601160b52d5b82e0f362f04e49f294211d58c30a1b09",
+    "PhotoPortrait": "5fed8840f7e6d00101f8ef20f5cbad354a7fa0425ce7876994f4d2716ce0f0a1",
+    "PortraitPreviewFilter": "5ce343321fe55471c7c1d82e78cdaa6110e7267151ae4064ab46d51a9374f421",
+    "SkinTone": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a",
+    "PhotoPortraitDetection": "1f40455e024bcfa71c24b0f3d4431fbc0ec5ed35269d3441a12c8ad9fd4ab03d",
+    "PhotoFaceLandmarks": "f9e643389eea846712e66f42beab4d9e8283943daf7e1ac95dd78558b4d09d40"
+  },
+  "pass": true,
+  "assertionExecutions": 1339,
+  "screenshots": 18,
+  "countScope": "Repeated workflow/configuration assertion executions, not independent accuracy samples. The old 117 broad detector/face-scope regression was not repeated.",
+  "runs": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "globalSkinToneOnly": true,
+      "assertionExecutions": 440,
+      "screenshots": 6,
+      "report": "docs/validation/portrait-tools/879a214b/20261029-154408-phone-ff302ba6/20261029-154408-phone-ff302ba6/report.json",
+      "provenance": "docs/validation/portrait-tools/879a214b/20261029-154408-phone-ff302ba6/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/879a214b/20261029-154408-phone-ff302ba6/cleanup.json",
+      "preferencesRestored": true,
+      "fixturesRemoved": true,
+      "cleanupErrors": [],
+      "coreMeasurements": [
+        {
+          "case": "standalone-no-faces-real-global-pixels",
+          "skinGridSamples": 465,
+          "changedLeftHalf": 417,
+          "changedRightHalf": 48,
+          "zeroMaskSamples": 15664,
+          "zeroMaskDifferentPixels": 0
+        },
+        {
+          "case": "global-two-person-without-faces-real-global-pixels",
+          "skinGridSamples": 501,
+          "changedLeftHalf": 245,
+          "changedRightHalf": 252,
+          "zeroMaskSamples": 15544,
+          "zeroMaskDifferentPixels": 0
+        },
+        {
+          "case": "global-original-exact-preview",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "global-zero-strength-exact-preview",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "global-custom-cancel-exact-pixels",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-0",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-1",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "actual-detail-tiles-vs-full-reference",
+          "samples": 1922,
+          "pixelErrors": 0
+        }
+      ],
+      "advancedMenuChecks": [
+        {
+          "name": "global-more-native-menu-click-逐人肤色调节（高级）",
+          "pass": true
+        },
+        {
+          "name": "global-more-native-menu-click-全图肤色调节",
+          "pass": true
+        },
+        {
+          "name": "advanced-roundtrip-keeps-neutral-global-model",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "globalSkinToneOnly": true,
+      "assertionExecutions": 440,
+      "screenshots": 6,
+      "report": "docs/validation/portrait-tools/879a214b/20261029-155347-font1.3-de95ef1c/20261029-155347-font1.3-de95ef1c/report.json",
+      "provenance": "docs/validation/portrait-tools/879a214b/20261029-155347-font1.3-de95ef1c/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/879a214b/20261029-155347-font1.3-de95ef1c/cleanup.json",
+      "preferencesRestored": true,
+      "fixturesRemoved": true,
+      "cleanupErrors": [],
+      "coreMeasurements": [
+        {
+          "case": "standalone-no-faces-real-global-pixels",
+          "skinGridSamples": 465,
+          "changedLeftHalf": 417,
+          "changedRightHalf": 48,
+          "zeroMaskSamples": 15664,
+          "zeroMaskDifferentPixels": 0
+        },
+        {
+          "case": "global-two-person-without-faces-real-global-pixels",
+          "skinGridSamples": 501,
+          "changedLeftHalf": 245,
+          "changedRightHalf": 252,
+          "zeroMaskSamples": 15544,
+          "zeroMaskDifferentPixels": 0
+        },
+        {
+          "case": "global-original-exact-preview",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "global-zero-strength-exact-preview",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "global-custom-cancel-exact-pixels",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-0",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-1",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "actual-detail-tiles-vs-full-reference",
+          "samples": 1922,
+          "pixelErrors": 0
+        }
+      ],
+      "advancedMenuChecks": [
+        {
+          "name": "global-more-native-menu-click-逐人肤色调节（高级）",
+          "pass": true
+        },
+        {
+          "name": "global-more-native-menu-click-全图肤色调节",
+          "pass": true
+        },
+        {
+          "name": "advanced-roundtrip-keeps-neutral-global-model",
+          "pass": true
+        }
+      ]
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "globalSkinToneOnly": true,
+      "assertionExecutions": 459,
+      "screenshots": 6,
+      "report": "docs/validation/portrait-tools/879a214b/20261029-155616-landscape-47fc0f49/20261029-155616-landscape-47fc0f49/report.json",
+      "provenance": "docs/validation/portrait-tools/879a214b/20261029-155616-landscape-47fc0f49/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/879a214b/20261029-155616-landscape-47fc0f49/cleanup.json",
+      "preferencesRestored": true,
+      "fixturesRemoved": true,
+      "cleanupErrors": [],
+      "coreMeasurements": [
+        {
+          "case": "standalone-no-faces-real-global-pixels",
+          "skinGridSamples": 465,
+          "changedLeftHalf": 417,
+          "changedRightHalf": 48,
+          "zeroMaskSamples": 15664,
+          "zeroMaskDifferentPixels": 0
+        },
+        {
+          "case": "global-two-person-without-faces-real-global-pixels",
+          "skinGridSamples": 501,
+          "changedLeftHalf": 245,
+          "changedRightHalf": 252,
+          "zeroMaskSamples": 15544,
+          "zeroMaskDifferentPixels": 0
+        },
+        {
+          "case": "global-original-exact-preview",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "global-zero-strength-exact-preview",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "global-custom-cancel-exact-pixels",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-0",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "full-reference-vs-real-detail-1",
+          "pixels": 524288,
+          "differentPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "case": "actual-detail-tiles-vs-full-reference",
+          "samples": 1922,
+          "pixelErrors": 0
+        }
+      ],
+      "advancedMenuChecks": [
+        {
+          "name": "global-more-native-menu-click-逐人肤色调节（高级）",
+          "pass": true
+        },
+        {
+          "name": "global-more-native-menu-click-全图肤色调节",
+          "pass": true
+        },
+        {
+          "name": "advanced-roundtrip-keeps-neutral-global-model",
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "coreScope": "Exact PhotoPortrait.NONE standalone and new editor with empty faces enter global skin tone directly. Automatic mask completion survives a preset change while busy. Both subjects change through the global mask, zero-mask background remains exact, and Original/zero strength/custom cancel return exact pixels. Empty faces/global tone/global mask persist through apply/main history/draft/owner guard/full export/detail/EXIF6. Optional advanced mode is reachable and returns to global without adding faces.",
+  "faceDependency": "The probe does not require Auto, Add Face or per-person scope. Production may internally detect faces for optional feature protection; the separate real faceless wrist counterexample proves segmentation does not require a detected face.",
+  "visualReview": {
+    "method": "One bounded phone/font1.3/landscape confirmation batch after fixing the global More anchor.",
+    "capturesPerMode": [
+      "global-01-NONE-automatic-skin.png",
+      "global-02-whole-image-skin.png",
+      "global-03-custom-photo-preview.png",
+      "global-04-custom-picker.png"
+    ],
+    "findings": "No blocking clipping/overlap or hidden primary action observed. Global face row is hidden; all-skin label, rescan and More remain visible. Landscape picker content scrolls within a bounded native dialog. Arbitrary HSV colours are intentional in preview tests.",
+    "scope": "Owned emulator; not a full TalkBack, physical-phone performance, tablet or population segmentation certification."
+  },
+  "localSkinQuality": "LOCAL-SKIN-QUALITY.json",
+  "handoff": {
+    "serial": "emulator-5588",
+    "hardware": "ranchu",
+    "sdk": "37",
+    "abi": "x86_64",
+    "mainProcessStopped": true,
+    "publicProbeUninstalled": true,
+    "privateProbeUninstalled": true,
+    "restoredSettings": {
+      "fontScale": "1.0",
+      "airplane": "0",
+      "wifi": "1",
+      "mobile": "1",
+      "immersiveConfirmation": "null"
+    },
+    "privateRemoteFixturesRemoved": true,
+    "privateNetworkRestored": true,
+    "emulatorLeftRunning": true,
+    "returnedToParentForShutdown": true
+  }
+}

@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.selectionqa">
+    <application android:label="Selection feedback QA" android:allowBackup="false" android:debuggable="false" />
+    <instrumentation android:name=".SelectionProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+</manifest>

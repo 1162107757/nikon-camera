@@ -39,6 +39,11 @@ public final class PhotoDateGroups {
     public static List<Group> group(List<DownloadedPhoto> photos) {
         return group(photos, System.currentTimeMillis(), TimeZone.getDefault());
     }
+    /** Same native Chinese date copy for App, phone and Sync headers. */
+    public static String label(long timestamp) {
+        ZoneId zone=TimeZone.getDefault().toZoneId();
+        return label(timestamp<=0?null:Instant.ofEpochMilli(timestamp).atZone(zone).toLocalDate(),Instant.ofEpochMilli(System.currentTimeMillis()).atZone(zone).toLocalDate());
+    }
 
     /** Valid dates descend; missing dates are last. Equal timestamps retain their input order. */
     public static List<Group> group(List<DownloadedPhoto> photos, long nowMillis, TimeZone timeZone) {

@@ -1,0 +1,54 @@
+{
+  "candidateSha256": "bca8223091df1634dcabcc266b804dc4ceb1fec5e9d3ed3bbe6b7e98ba21b01e",
+  "pass": true,
+  "verifiedAt": "2026-10-29T05:33:01.203Z",
+  "host": {
+    "result": "HOST-RESULT.json",
+    "checks": 690,
+    "sha256": "956de83efdb6a80c2ef210b8dbc9c6d6f9f4e48b16ac974557348fd46aee87c9"
+  },
+  "loader": {
+    "checks": 14,
+    "result": "final-apk-sdk-audit.json"
+  },
+  "native": {
+    "checks": 1835,
+    "screenshots": 39,
+    "runs": [
+      {
+        "mode": "phone",
+        "pass": true,
+        "checks": 607,
+        "screenshots": 13,
+        "report": "docs/validation/portrait-tools/bca82230/20261029-132730-phone-56510e57/20261029-132730-phone-56510e57/report.json",
+        "provenance": "docs/validation/portrait-tools/bca82230/20261029-132730-phone-56510e57/provenance.json",
+        "cleanup": "docs/validation/portrait-tools/bca82230/20261029-132730-phone-56510e57/cleanup.json",
+        "reportSha256": "23f2c9bf50047f9dae97cb5fb68fd41bab6ed7701e3af2ec2e0e610ce25ffeef",
+        "cleanupSha256": "5b98fc3d738fc9cf61cb8bf193ea1bd9fa792d19b5024507984644dd86cd7114"
+      },
+      {
+        "mode": "font1.3",
+        "pass": true,
+        "checks": 607,
+        "screenshots": 13,
+        "report": "docs/validation/portrait-tools/bca82230/20261029-132919-font1.3-7d01eeb6/20261029-132919-font1.3-7d01eeb6/report.json",
+        "provenance": "docs/validation/portrait-tools/bca82230/20261029-132919-font1.3-7d01eeb6/provenance.json",
+        "cleanup": "docs/validation/portrait-tools/bca82230/20261029-132919-font1.3-7d01eeb6/cleanup.json",
+        "reportSha256": "6ac239357e8b63246409ef588cc6d093ff4230ef1a599cee8f022b2cd91ecce3",
+        "cleanupSha256": "5b98fc3d738fc9cf61cb8bf193ea1bd9fa792d19b5024507984644dd86cd7114"
+      },
+      {
+        "mode": "landscape",
+        "pass": true,
+        "checks": 621,
+        "screenshots": 13,
+        "report": "docs/validation/portrait-tools/bca82230/20261029-133056-landscape-778280f3/20261029-133056-landscape-778280f3/report.json",
+        "provenance": "docs/validation/portrait-tools/bca82230/20261029-133056-landscape-778280f3/provenance.json",
+        "cleanup": "docs/validation/portrait-tools/bca82230/20261029-133056-landscape-778280f3/cleanup.json",
+        "reportSha256": "6c2cacc896962d7bfc15b40ff89b923d35a9386ff34dbc2924063f0930c0fce0",
+        "cleanupSha256": "5b98fc3d738fc9cf61cb8bf193ea1bd9fa792d19b5024507984644dd86cd7114"
+      }
+    ]
+  },
+  "scope": "Actual installed production dialog, local offline models, saved version-2 masks/landmarks, UI two-pulse and cancellation, draft/history isolation, full/detail/EXIF6 pixel consistency. Public-domain NASA fixture only in these native screenshots. Private-image reproduction is separately sanitized in LOCAL-IMAGE-QUALITY.json."
+}

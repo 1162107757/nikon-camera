@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Cleanup probe failed: java.lang.AssertionError: cleanup-native-denoise-reduces-flat-patch-variance; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\cleanup127\\native\\56524629\\20261101-171714-phone-54557833\\20261101-171714-phone-54557833\\report.json",
+  "errors": []
+}

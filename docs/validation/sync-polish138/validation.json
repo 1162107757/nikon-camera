@@ -1,0 +1,48 @@
+{
+  "versionCode": 138,
+  "versionName": "0.28.1-beta",
+  "apk": "dist/huevia-0.28.1-beta-debug.apk",
+  "apkSha256": "ce58419a78f737b8302e36dbebf7fb95f204f37b0a231c15fc8b18597ecab86d",
+  "apkBytes": 33555212,
+  "installedApkSha256": "ce58419a78f737b8302e36dbebf7fb95f204f37b0a231c15fc8b18597ecab86d",
+  "productionSourceAtValidation": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "edcffbb0ccf30547031da6d7b1c160f874d428fb6b28aeb0670ccf241d6c7e3d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "132f1af57ceff0410128af568551ee2c54bc7c8dfce1b038cfa3a7e45d2e93c0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "6dca8d7a52c7670b0a62df3fe61efc982c940ff7557682e859a3f228f909be08"
+    }
+  ],
+  "nativeMatrix": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "assertions": 27
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "assertions": 27
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "assertions": 27
+    }
+  ],
+  "nativeAssertionExecutions": 81,
+  "hostAlbumRegression": "passed",
+  "review": {
+    "disposition": "SHIP within requested scope",
+    "materialFindings": []
+  },
+  "physicalPhoneConnected": false,
+  "realCameraWritesPerformed": false,
+  "published": false
+}

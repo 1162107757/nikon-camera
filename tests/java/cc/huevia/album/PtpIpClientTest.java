@@ -54,6 +54,7 @@ public final class PtpIpClientTest {
         pictureControlSessionResponsesKeepTheirBoundaries();
         pictureControlWriteFramesAndSingleAttempt();
         pictureControlFailuresNeverRetry();
+        optionalCameraParametersRequireVerifiedRegistrationAndExactAuthorization();
         pictureControlCancellationClosesBothChannels();
         albumHandoffMovesChannelsAndTransactionOwnershipExactlyOnce();
         transferredEventFailuresCloseTheCurrentOwner();
@@ -311,6 +312,42 @@ public final class PtpIpClientTest {
         rejects(() -> client.pictureControlCommand(0x1003, 2));
         check(client.isClosed() && client.isProtocolUnconfirmed(), "An unconfirmed CloseSession closes the underlying connection");
         peer.assertClosed();
+    }
+
+    private static void optionalCameraParametersRequireVerifiedRegistrationAndExactAuthorization() throws Exception {
+        for (Fault fault : new Fault[] {Fault.NONE, Fault.WRITE_REJECTED, Fault.WRITE_TIMEOUT, Fault.WRITE_WRONG_TRANSACTION}) {
+            Peer peer = new Peer(); peer.exactPictureControlReadback = true;
+            PtpIpClient client = peer.connectPictureControl();
+            java.util.Map<Integer, byte[]> approved = java.util.Collections.singletonMap(0x5010, new byte[] {0x4d, 1});
+            rejects(() -> client.authorizeCameraParameters(approved));
+            rejects(() -> client.sendPictureControlData(0x1016, 1, new byte[] {0x4d, 1}, 0x5010));
+            rejects(() -> client.getPictureControlData(0x1015, 1, 0x5010));
+            client.sendPictureControlData(0x90cd, 1, profile(false), 201, 0);
+            equal(profile(false), client.getPictureControlData(0x90cc, 2, 201, 0));
+            client.authorizeCameraParameters(approved);
+            rejects(() -> client.authorizeCameraParameters(approved));
+            rejects(() -> client.sendPictureControlData(0x1016, 3, new byte[] {0, 0}, 0x5010));
+            rejects(() -> client.sendPictureControlData(0x1016, 3, new byte[] {0x4d, 1}, 0x5007));
+            peer.fault = fault;
+            try {
+                client.sendPictureControlData(0x1016, 3, new byte[] {0x4d, 1}, 0x5010);
+                check(fault == Fault.NONE, "Only confirmed property write succeeds");
+            } catch (IOException expected) { check(fault != Fault.NONE, "Only injected property failure expected"); }
+            equal(1L, peer.operations.stream().filter(op -> op == 0x1016).count());
+            rejects(() -> client.sendPictureControlData(0x1016, 4, new byte[] {0x4d, 1}, 0x5010));
+            if (fault == Fault.NONE) {
+                equal(new byte[] {0x4d, 1}, client.getPictureControlData(0x1015, 4, 0x5010));
+                PtpIpClient next = client.transferAfterVerifiedPictureControlImport(5);
+                equal(5L, next.claimTransferredSession());
+                rejects(() -> next.authorizeCameraParameters(approved));
+                rejects(() -> next.sendPictureControlData(0x1016, 5, new byte[] {0x4d, 1}, 0x5010));
+                next.pictureControlCommand(0x1003, 5); next.close();
+            } else if (fault == Fault.WRITE_REJECTED) {
+                check(client.isOpen() && !client.isProtocolUnconfirmed(), "Known property refusal retains protocol boundary");
+                peer.fault = Fault.NONE; client.pictureControlCommand(0x1003, 4); client.close();
+            } else check(client.isClosed() && client.isProtocolUnconfirmed(), "Unknown property result closes both channels");
+            peer.assertClosed();
+        }
     }
 
     private static void pictureControlFailuresNeverRetry() throws Exception {
@@ -1263,6 +1300,9 @@ public final class PtpIpClientTest {
         private byte[] readbackOverride;
         private byte[] deviceInfo=INFO;
         private long lastTransaction;
+        private int lastOperation;
+        private final ByteArrayOutputStream propertyUpload = new ByteArrayOutputStream();
+        private byte[] propertyValue = new byte[] {(byte)0xb3,(byte)0xfe};
         private long[] lastParameters;
 
         PtpIpClient connect() throws Exception {
@@ -1329,15 +1369,17 @@ public final class PtpIpClientTest {
             if (type == 9) {
                 equal(20, packet.length);
                 equal(lastTransaction, u32(packet, 8));
-                check(u32(packet, 12) == 36 || u32(packet, 12) == 614, "Only bounded validated datasets reach the wire");
+                check(lastOperation == 0x1016 ? u32(packet,12) == 2 : u32(packet, 12) == 36 || u32(packet, 12) == 614, "Only bounded validated datasets reach the wire");
                 equal(0L, u32(packet, 16));
                 if (fault == Fault.WRITE_START_FAILED) throw new IOException("synthetic send failure");
                 return;
             }
             if (type == 10 || type == 12) {
                 equal(lastTransaction, u32(packet, 8));
-                uploaded.write(packet, 12, packet.length - 12);
+                if (lastOperation == 0x1016) propertyUpload.write(packet, 12, packet.length - 12);
+                else uploaded.write(packet, 12, packet.length - 12);
                 if (type == 12) {
+                    if (lastOperation == 0x1016) propertyValue = propertyUpload.toByteArray();
                     if (fault == Fault.WRITE_BLOCKED) socket.input.holdOpen = true;
                     else if (fault == Fault.WRITE_TIMEOUT) socket.input.timeoutWhenEmpty = true;
                     else if (fault != Fault.WRITE_DROP) {
@@ -1352,7 +1394,8 @@ public final class PtpIpClientTest {
             equal(6L, type);
             check(packet.length >= 18 && (packet.length - 18) % 4 == 0, "Operation packet has only complete parameters");
             int operation = u16(packet, 12);
-            equal(operation == 0x90cd ? 2L : 1L, u32(packet, 8));
+            equal(operation == 0x90cd || operation == 0x1016 ? 2L : 1L, u32(packet, 8));
+            lastOperation = operation;
             long transaction = u32(packet, 14);
             lastTransaction = transaction;
             lastParameters = new long[(packet.length - 18) / 4];
@@ -1363,6 +1406,8 @@ public final class PtpIpClientTest {
                 equal(new long[] {lastParameters[0], 0}, lastParameters);
                 uploadedTarget = (int) lastParameters[0];
                 uploaded.reset();
+            } else if (operation == 0x1016) {
+                equal(new long[] {0x5010}, lastParameters); propertyUpload.reset();
             } else if (operation == 0x1002) {
                 equal(new long[] {1}, lastParameters);
                 addCommandResponse(socket.input, transaction);
@@ -1378,7 +1423,7 @@ public final class PtpIpClientTest {
                     socket.input.add(frame(10, concat(le32(transaction), Arrays.copyOfRange(SMALL, 0, 3))));
                     return;
                 }
-                byte[] data = exactPictureControlReadback && operation == 0x90cc && lastParameters[0] == uploadedTarget
+                byte[] data = operation == 0x1015 ? propertyValue : exactPictureControlReadback && operation == 0x90cc && lastParameters[0] == uploadedTarget
                         && uploaded.size() > 0 ? (readbackOverride == null ? uploaded.toByteArray() : readbackOverride) : SMALL;
                 addTransfer(socket.input, transaction, data, fault);
             }
@@ -1426,9 +1471,9 @@ public final class PtpIpClientTest {
             if (fault == Fault.MISSING_END) {
                 input.add(frame(10, concat(le32(dataTx), payload)));
             } else {
-                input.add(frame(10, concat(le32(dataTx), Arrays.copyOfRange(payload, 0, 3))));
+                input.add(frame(10, concat(le32(dataTx), Arrays.copyOfRange(payload, 0, Math.min(3, payload.length)))));
                 long endTx = transaction + (fault == Fault.END_WRONG_TRANSACTION ? 1 : 0);
-                byte[] end = frame(12, concat(le32(endTx), Arrays.copyOfRange(payload, 3, payload.length)));
+                byte[] end = frame(12, concat(le32(endTx), Arrays.copyOfRange(payload, Math.min(3, payload.length), payload.length)));
                 input.add(fault == Fault.TRUNCATED_FRAME ? Arrays.copyOf(end, end.length - 1) : end);
                 if (fault == Fault.TRUNCATED_FRAME) return;
             }

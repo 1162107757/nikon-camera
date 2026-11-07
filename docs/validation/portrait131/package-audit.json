@@ -1,0 +1,14 @@
+{
+  "versionCode": 131,
+  "versionName": "0.26.0-beta",
+  "sha256": "d8c84b7b1b65ca9768ebe3f44b2441744f129ebd764affa75384620d16ea72ae",
+  "bytes": 33526540,
+  "fileCapBytes": 33554432,
+  "productionInputs": 304,
+  "productionInputsChangedAfterFreeze": [],
+  "nativeAndAssetEntriesComparedTo130": 46,
+  "nativeAndAssetChanges": [],
+  "newProductionRasters": 0,
+  "newModels": 0,
+  "published": false
+}

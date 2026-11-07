@@ -48,7 +48,7 @@ public final class PhotoDetailView extends View implements AutoCloseable {
         scales=new ScaleGestureDetector(context,new ScaleGestureDetector.SimpleOnScaleGestureListener(){
             @Override public boolean onScale(ScaleGestureDetector detector){viewport.zoom(viewport.scale*detector.getScaleFactor(),detector.getFocusX(),detector.getFocusY());changed();return true;}
         });
-        linePaint.setColor(0xfff2b48c);linePaint.setStrokeWidth(dp(1.5f));linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setColor(0xffffe335);linePaint.setStrokeWidth(dp(1.5f));linePaint.setStyle(Paint.Style.STROKE);
         miniPaint.setFilterBitmap(true);post(validity);
     }
     public int selectedMode(){return mode;}

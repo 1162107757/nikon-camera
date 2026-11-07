@@ -55,7 +55,7 @@ public final class PhotoExportAvailability {
         }
         public String summary(PhotoSaveTarget target) {
             if (entries.isEmpty()) return "暂无法核对已保存照片";
-            if (allSaved(target)) return target == PhotoSaveTarget.APP_ONLY ? "此规格的成品已保存在 App 内" : "已核对此规格的照片仍在手机相册";
+            if (allSaved(target)) return target == PhotoSaveTarget.APP_ONLY ? "此规格的成品已保存在应用相册" : "已核对此规格的照片仍在手机相册";
             if (entries.size() == 1) {
                 switch (entries.get(0).status) {
                     case APP_RESULT: return "已生成，可直接保存";
@@ -99,10 +99,7 @@ public final class PhotoExportAvailability {
         List<PhotoPresetBatch.Edit> edits = new ArrayList<>();
         for (PhotoPresetBatch.Edit edit : frozen) {
             if (edit == null) throw new IllegalArgumentException("edit");
-            PhotoPresetBatch.Edit changed = edit.draft == null
-                    ? PhotoPresetBatch.Edit.saved(edit.source, spec, edit.expectedSourceSha)
-                    : PhotoPresetBatch.Edit.draft(edit.source, edit.draft, edit.owner, spec);
-            if (edit.accountBound) changed = changed.withAccount(edit.accountScope);
+            PhotoPresetBatch.Edit changed = edit.withSpec(spec);
             edits.add(changed);
         }
         return Collections.unmodifiableList(edits);

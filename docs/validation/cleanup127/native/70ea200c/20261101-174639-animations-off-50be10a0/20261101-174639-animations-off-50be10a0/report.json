@@ -1,0 +1,75 @@
+{
+  "pass": true,
+  "stage": "palette-v2-system-animations-disabled",
+  "mode": "animations-off",
+  "scope": "full",
+  "candidateSha256": "70ea200cb3e55bc4bfe6d718c5edc4463212b80fd905f503116704261461f89a",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "system-animations-disabled",
+      "pass": true
+    },
+    {
+      "name": "disabled-panel-static",
+      "pass": true
+    },
+    {
+      "name": "disabled-distant-tap-immediate-coordinate",
+      "pass": true
+    },
+    {
+      "name": "disabled-pressed-light-static",
+      "pass": true
+    },
+    {
+      "name": "disabled-v2-drag-immediate",
+      "pass": true
+    },
+    {
+      "name": "disabled-v2-cancel-restores-start",
+      "pass": true
+    },
+    {
+      "name": "disabled-v2-cancel-immediate-coordinate",
+      "pass": true
+    },
+    {
+      "name": "disabled-release-clears-press",
+      "pass": true
+    },
+    {
+      "name": "disabled-v2-never-creates-marker-animation",
+      "pass": true
+    },
+    {
+      "name": "disabled-v2-apply-correct",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 0,
+  "persistentFixturesCreated": false,
+  "ownedFixtureCount": 0,
+  "ownedDraftCount": 0,
+  "privateFixtureRemoved": true
+}

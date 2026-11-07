@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.ColorSpace;
 import android.media.ExifInterface;
 import android.content.res.AssetManager;
+import android.content.Context;
 import cc.huevia.ncp.PhotoBorder;
 import cc.huevia.ncp.BorderPreviewProfile;
 import cc.huevia.ncp.NcpPreviewProfile;
@@ -22,8 +23,16 @@ import java.util.function.BooleanSupplier;
 /** Full-resolution local JPEG renderer. One mutable sRGB bitmap and bounded row/halo storage. */
 public final class PhotoPresetRenderer {
     private final AssetManager assets;
-    public PhotoPresetRenderer(){this(null);}
-    public PhotoPresetRenderer(AssetManager assets){this.assets=assets;}
+    private final File scratchDirectory;
+    public PhotoPresetRenderer(){this(null,null);}
+    public PhotoPresetRenderer(AssetManager assets){this(assets,null);}
+    public PhotoPresetRenderer(AssetManager assets,File scratchDirectory){this.assets=assets;this.scratchDirectory=scratchDirectory;}
+    /** Production renders keep temporary adjustment branches in this app's private cache. */
+    public static PhotoPresetRenderer forContext(Context context){
+        if(context==null)throw new IllegalArgumentException("context");
+        File cache=context.getCacheDir();if(cache==null)throw new IllegalStateException("照片暂存目录不可用。");
+        return new PhotoPresetRenderer(context.getAssets(),new File(cache,"photo-adjustment-branches"));
+    }
     public static final String MODEL_VERSION = NcpPreviewProfile.MODEL_VERSION + ":full-jpeg95-srgb-v1";
     public static final String NP3_MODEL_VERSION = Np3PreviewProfile.MODEL_VERSION + ":full-jpeg95-srgb-v1";
     public static final String NP3_MONOCHROME_MODEL_VERSION = Np3MonochromePreviewProfile.MODEL_VERSION + ":full-jpeg95-srgb-v1";
@@ -107,6 +116,7 @@ public final class PhotoPresetRenderer {
             applyRows(new Pixels() {
                 public int width() { return working.getWidth(); } public int height() { return working.getHeight(); }
                 public int exifOrientation() { return orientation(original); }
+                public File scratchDirectory() { return PhotoPresetRenderer.this.scratchDirectory; }
                 public void read(int[] pixels, int row, int rows) { working.getPixels(pixels, 0, width(), 0, row, width(), rows); }
                 public void write(int[] pixels, int row, int rows) { working.setPixels(pixels, 0, width(), 0, row, width(), rows); }
             }, profile, cancel, value -> progress(progress, .10 + .70 * value));
@@ -167,6 +177,15 @@ public final class PhotoPresetRenderer {
     /** Lossless, full-resolution, pre-JPEG content. No frame, no export resize, no thumbnail fallback. */
     public DetailResult renderDetail(File source, File target, PresetPreviewProfile profile, boolean before,
                                      BooleanSupplier cancel, Progress progress) throws IOException {
+        return renderDetail(source, target, profile, before, cancel, progress, false);
+    }
+    /** Internal lossless pixels, without PNG compression or repeated PNG region decompression. */
+    DetailResult renderDetailRaster(File source, File target, PresetPreviewProfile profile, boolean before,
+                                    BooleanSupplier cancel, Progress progress) throws IOException {
+        return renderDetail(source, target, profile, before, cancel, progress, true);
+    }
+    private DetailResult renderDetail(File source, File target, PresetPreviewProfile profile, boolean before,
+                                     BooleanSupplier cancel, Progress progress, boolean raster) throws IOException {
         if (profile == null || cancel == null) throw new IllegalArgumentException("profile/cancel");
         if (source.getCanonicalFile().equals(target.getCanonicalFile())) throw new IOException("不能覆盖原图。");
         Bitmap bitmap = null;
@@ -192,6 +211,7 @@ public final class PhotoPresetRenderer {
                 applyRows(new Pixels() {
                     public int width() { return working.getWidth(); } public int height() { return working.getHeight(); }
                     public int exifOrientation() { return exif; }
+                    public File scratchDirectory() { return PhotoPresetRenderer.this.scratchDirectory; }
                     public void read(int[] pixels, int row, int rows) { working.getPixels(pixels, 0, width(), 0, row, width(), rows); }
                     public void write(int[] pixels, int row, int rows) { working.setPixels(pixels, 0, width(), 0, row, width(), rows); }
                 }, profile, cancel, value -> progress(progress, .10 + .70 * value));
@@ -200,15 +220,26 @@ public final class PhotoPresetRenderer {
             Bitmap composed = PhotoComposition.apply(bitmap, geometry, exif);
             if (composed != bitmap) bitmap.recycle(); bitmap = composed; bitmap.setDensity(Bitmap.DENSITY_NONE);
             check(cancel);
-            try (FileOutputStream output = new FileOutputStream(target)) {
-                if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)) throw new IOException("真实细节暂存失败。");
-                output.flush(); output.getFD().sync();
+            if (raster) {
+                PhotoDetailRaster.write(target, bitmap, cancel);
+            } else {
+                try (FileOutputStream output = new FileOutputStream(target)) {
+                    if (!bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)) throw new IOException("真实细节暂存失败。");
+                    output.flush(); output.getFD().sync();
+                }
             }
             check(cancel); progress(progress, .95);
-            BitmapFactory.Options verified = new BitmapFactory.Options(); verified.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(target.getPath(), verified);
-            if (verified.outWidth != plan.width || verified.outHeight != plan.height || !"image/png".equals(verified.outMimeType))
-                throw new IOException("真实细节尺寸核对失败。");
+            if (raster) {
+                try (PhotoDetailRaster verified = new PhotoDetailRaster(target)) {
+                    if (verified.width() != plan.width || verified.height() != plan.height)
+                        throw new IOException("真实细节尺寸核对失败。");
+                }
+            } else {
+                BitmapFactory.Options verified = new BitmapFactory.Options(); verified.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(target.getPath(), verified);
+                if (verified.outWidth != plan.width || verified.outHeight != plan.height || !"image/png".equals(verified.outMimeType))
+                    throw new IOException("真实细节尺寸核对失败。");
+            }
             check(cancel); progress(progress, 1); return new DetailResult(plan.width, plan.height);
         } catch (OutOfMemoryError memory) { throw new IOException("细节暂时无法载入，返回后可重试。", memory); }
         finally { if (bitmap != null) bitmap.recycle(); }

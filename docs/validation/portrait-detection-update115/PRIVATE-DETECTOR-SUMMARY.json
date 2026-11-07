@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-29",
+  "status": "passed-executed-cases",
+  "candidate": {
+    "versionCode": 115,
+    "versionName": "0.23.4-beta",
+    "bytes": 9531300,
+    "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2"
+  },
+  "baseline": {
+    "versionCode": 114,
+    "sha256": "ed802564fcd94c368022e588e2d0584ab3d9b2a97d46dc7d36c6ef0d3aa2aecb"
+  },
+  "scope": {
+    "configurations": 20,
+    "positiveConfigurations": 16,
+    "negativeConfigurations": 4,
+    "expectedTrueFaceObservations": 20,
+    "independentPortraitSubjects": 2,
+    "derivations": "Two supplied screenshots represent the same private portrait subject; the public astronaut photo and duplicated collage represent one further subject. Resolution repeats and duplication are not independent people.",
+    "limits": "Supplied screenshots replace the original camera pixels. The untinted reference at dialog width960 did not reproduce the reported second detection. A reproducible background false detection occurred at width720 in the supplied tinted display screenshot. No claim covers the unavailable original pixels or general face-detection accuracy.",
+    "privateImagesOrPixelDataIncluded": false
+  },
+  "executed": [
+    {
+      "case": "provided-portrait-display-screenshot",
+      "width": 1080,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 444
+    },
+    {
+      "case": "provided-portrait-display-screenshot",
+      "width": 960,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 392.0331
+    },
+    {
+      "case": "provided-portrait-display-screenshot",
+      "width": 720,
+      "expected": 1,
+      "baselineCount": 2,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 193.2849
+    },
+    {
+      "case": "provided-portrait-display-screenshot",
+      "width": 640,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 136.1025
+    },
+    {
+      "case": "provided-reference-screenshot",
+      "width": 1080,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 430.0227
+    },
+    {
+      "case": "provided-reference-screenshot",
+      "width": 960,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 353.7697
+    },
+    {
+      "case": "provided-reference-screenshot",
+      "width": 720,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 228.0843
+    },
+    {
+      "case": "provided-reference-screenshot",
+      "width": 640,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 152.8378
+    },
+    {
+      "case": "public-astronaut-photo",
+      "width": 512,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 125.9463
+    },
+    {
+      "case": "public-astronaut-photo",
+      "width": 960,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 490.1922
+    },
+    {
+      "case": "public-astronaut-photo",
+      "width": 720,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 288.1744
+    },
+    {
+      "case": "public-astronaut-photo",
+      "width": 640,
+      "expected": 1,
+      "baselineCount": 1,
+      "actual": 1,
+      "mappedOneToOne": true,
+      "ms": 215.2137
+    },
+    {
+      "case": "duplicate-public-astronaut-collage",
+      "width": 1024,
+      "expected": 2,
+      "baselineCount": 2,
+      "actual": 2,
+      "mappedOneToOne": true,
+      "ms": 321.2332
+    },
+    {
+      "case": "duplicate-public-astronaut-collage",
+      "width": 960,
+      "expected": 2,
+      "baselineCount": 2,
+      "actual": 2,
+      "mappedOneToOne": true,
+      "ms": 279.4331
+    },
+    {
+      "case": "duplicate-public-astronaut-collage",
+      "width": 720,
+      "expected": 2,
+      "baselineCount": 2,
+      "actual": 2,
+      "mappedOneToOne": true,
+      "ms": 125.487
+    },
+    {
+      "case": "duplicate-public-astronaut-collage",
+      "width": 640,
+      "expected": 2,
+      "baselineCount": 2,
+      "actual": 2,
+      "mappedOneToOne": true,
+      "ms": 97.8264
+    }
+  ],
+  "negativeCases": [
+    {
+      "case": "coffee",
+      "width": 960,
+      "height": 640,
+      "count": 0,
+      "ms": 528.9151,
+      "expected": 0,
+      "pass": true,
+      "source": {
+        "name": "coffee",
+        "url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/coffee.png",
+        "pass": true,
+        "sha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+        "bytes": 466706
+      }
+    },
+    {
+      "case": "brick",
+      "width": 960,
+      "height": 960,
+      "count": 0,
+      "ms": 206.9024,
+      "expected": 0,
+      "pass": true,
+      "source": {
+        "name": "brick",
+        "url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/brick.png",
+        "pass": true,
+        "sha256": "7966caf324f6ba843118d98f7a07746d22f6a343430add0233eca5f6eaaa8fcf",
+        "bytes": 106634
+      }
+    },
+    {
+      "case": "grass",
+      "width": 960,
+      "height": 960,
+      "count": 0,
+      "ms": 193.8625,
+      "expected": 0,
+      "pass": true,
+      "source": {
+        "name": "grass",
+        "url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/grass.png",
+        "pass": true,
+        "sha256": "b6b6022426b38936c43a4ac09635cd78af074e90f42ffa8227ac8b7452d39f89",
+        "bytes": 217893
+      }
+    },
+    {
+      "case": "gravel",
+      "width": 960,
+      "height": 960,
+      "count": 0,
+      "ms": 596.436,
+      "expected": 0,
+      "pass": true,
+      "source": {
+        "name": "gravel",
+        "url": "https://gitlab.com/scikit-image/data/-/raw/5c090b56df3988d988ff97928e2ef2d2cbe38e1b/gravel.png",
+        "pass": true,
+        "sha256": "c48615b451bf1e606fbd72c0aa9f8cc0f068ab7111ef7d93bb9b0f2586440c12",
+        "bytes": 194247
+      }
+    }
+  ],
+  "oneToOneMapping": {
+    "allExpectedFacesRetained": true,
+    "matching": "Distinct output matching to baseline verified true-face centers with normalized image-width distance under0.05; no output reused."
+  },
+  "reproducedFalseDetection": {
+    "case": "provided-portrait-display-screenshot",
+    "width": 720,
+    "baselineCount": 2,
+    "candidateCount": 1,
+    "expected": 1,
+    "correctFaceRetained": true
+  },
+  "probe": {
+    "fullDiagnosticSha256": "b7ea81462e1c70bd39f494a5e73134fd0c9129e58994bd24682c412c14feab15",
+    "singleSizeNegativeDiagnosticSha256": "f2278a2da2e43486256a0d41afbde719dfb4c6bee917aa394cc8d10a7bae8fd1",
+    "fullDiagnosticSourceSha256": "509e9a9fbde9cc7d2b66e75485aa04ea668c34c07eecc66125ae6568f6219878",
+    "negativeDiagnosticSourceSha256": "3ce7d7eb4d9ea893335ef73ab9c81c8f6937db2e9ba58e9f9542e243f1d718fe",
+    "compileClasspath": "Android API35 only; installed production classes resolved by reflection.",
+    "productionCodeModifiedByProbe": false
+  },
+  "publicSources": {
+    "astronaut": "https://scikit-image.org/docs/stable/api/skimage.data.html#skimage.data.astronaut",
+    "negativeDocs": "https://scikit-image.org/docs/stable/api/skimage.data.html",
+    "negativeRegistry": "https://github.com/scikit-image/scikit-image/blob/v0.26.0/src/skimage/data/_registry.py",
+    "negativeLicensing": "CC0 stated in the official data fetchers/docs for coffee, brick, grass and gravel. Downloaded bytes matched the official registry SHA-256."
+  },
+  "notExecuted": [
+    {
+      "case": "NASA Artemis II four-person group",
+      "reason": "Official NASA local download failed TLS. Bounded attempts stopped; no image, baseline count, manual ROI mapping or candidate result is claimed.",
+      "source": "https://www.nasa.gov/news-release/nasa-names-astronauts-to-next-moon-mission-first-crew-under-artemis/"
+    }
+  ],
+  "privacy": {
+    "userFilesPackagedInApk": false,
+    "userFilesUploaded": false,
+    "userImagePathsOrPixelDataInThisSummary": false,
+    "rawPrivateEvidence": "Retained only in ignored local workspace."
+  },
+  "cleanup": {
+    "serial": "emulator-5588",
+    "privateFixturesAndOutputsRemoved": 22,
+    "privateRemoteDirectoryRemoved": true,
+    "testPackageRemoved": true,
+    "appStopped": true,
+    "ownedEmulatorKeptRunning": true,
+    "installedApkSha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2",
+    "errors": []
+  },
+  "pass": true
+}

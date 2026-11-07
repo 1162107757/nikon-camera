@@ -1,0 +1,22 @@
+{
+  "status": "upload-blocked-not-published",
+  "candidateVersionCode": 116,
+  "candidateVersionName": "0.23.5-beta",
+  "candidateSha256": "bca8223091df1634dcabcc266b804dc4ceb1fec5e9d3ed3bbe6b7e98ba21b01e",
+  "candidateBytes": 33374988,
+  "channel": "beta",
+  "intendedMandatory": true,
+  "uiMessage": "请求次数或今日流量达到上限，请稍后重试。",
+  "attempts": 1,
+  "evidence": ["UPLOAD-BLOCKED.png", "UPLOAD-BLOCKED-UI.txt"],
+  "ruleSource": "online-library/database/017-app-release-capacity.sql:31",
+  "actualWriteBudgetBytesPerUtcDay": 67108864,
+  "mutationRequestBudgetPer15Minutes": 256,
+  "singleCandidateChunkAndFinalWritesBytes": 66749976,
+  "interpretation": "The upload flow charges both chunk and final-object writes. A fresh 116 upload nearly consumes a full daily byte budget on its own. Versions 114 and 115 were uploaded earlier on this UTC date; even a fresh request window cannot accommodate another complete 116 upload today. The quota was not changed and the upload was not blindly retried.",
+  "nextDailyReset": "2026-10-30T08:00:00+08:00",
+  "lastVerifiedPublicVersion": 115,
+  "lastVerifiedPublicReleaseId": "7205dc77-3d55-4c1a-95a6-9c8cdf7d3179",
+  "publicationVerification": "Not run for 116 because no draft or publication succeeded.",
+  "futureRetry": "User chose to retain the local APK and continue manually later. No automation has been created."
+}

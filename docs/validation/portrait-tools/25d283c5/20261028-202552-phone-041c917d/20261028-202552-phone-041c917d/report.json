@@ -1,0 +1,100 @@
+{
+  "pass": true,
+  "stage": "candidates-complete",
+  "candidateSha256": "25d283c5a1ef09ce8bde29d49975ef56941a12434c800251911431b3a55ebcfa",
+  "versionCode": 111,
+  "versionName": "0.23.0-beta",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-public-domain-face-fixture",
+      "pass": true
+    },
+    {
+      "name": "astronaut-decodes",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "raw-RGB565-face-candidates-single",
+      "width": 512,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5182980895042419,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    }
+  ],
+  "screenshots": 0,
+  "fixturesRemoved": true,
+  "failure": null,
+  "scope": "Raw RGB565 detector candidate confidence\/eye geometry measurements only; no UI or full feature verdict."
+}

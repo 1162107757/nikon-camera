@@ -1,0 +1,66 @@
+{
+  "parent": "127",
+  "count": 15,
+  "inputs": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "02d4a85856cc2dfe739e0e52eda74dc2dca8571084b481d70962f64184173208"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "sha256": "25c64deb448c794762c026cf17d6b4fb82e1b620ffcc8330d4e9c2043310bf42"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "sha256": "39c370b7c2c946d816e6a0472dc7641ad23c4b51d31c0e05756b0954db113fd7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBodyShape.java",
+      "sha256": "e50f8155162d031453d7b2b2760e07492b1393397dfa044f167d7e45979c45af"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBodyWarp.java",
+      "sha256": "e0594a9f94711ce0991b90b74256aec77eb858558a393d2b51532ea3bc656bf8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "89dccec1408b9b8930884443464cc0e036d51d5fa5b8629bef96c8989e800dd6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "sha256": "b79f65ec8919756dc745e73c3bf1f59630db4e424a4a8fa8976576fe18ca762b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "sha256": "4d5de07e39ce7c1f0358f6d27b1ab4b28fbf9ffd4b62428bd21993e23ec3d3cc"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "fc503831f8493ab157695f367c05cb09d1448072dc08a7e9a8cd268d64e9cd21"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBodyDialog.java",
+      "sha256": "5270085fc4dc54b79070a5d265b6c84e2d79d7592ad26eef85162f48d7a2cf8e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+      "sha256": "0af3dbf005e4122536b1acffaef2596a7d321ff9ebb3d2f0381390313dbb2a12"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "7e1efa1ac6b538799cb153f86b2697dad01541430857c278aecdf0654b6248ef"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java",
+      "sha256": "b83e3463d06173d6a056ff0c109d9f9cc1a47c1810627d100b3105f653e07ffc"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+      "sha256": "3e24f508ca6f14c10f8f5224c5ebb6c6932b02f40e8eb0b0350f083a5c07aa52"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "2521a66ef8f85c93aee1e99316b2b254f82816c4cfad95fd7a0a86de6be716e3"
+    }
+  ]
+}

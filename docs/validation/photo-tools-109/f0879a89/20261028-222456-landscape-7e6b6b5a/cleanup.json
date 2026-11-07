@@ -1,0 +1,18 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Photo tools probe failed: java.lang.AssertionError: local-photo-priority; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\photo-tools-109\\f0879a89\\20261028-222456-landscape-7e6b6b5a\\20261028-222456-landscape-7e6b6b5a\\report.json",
+  "errors": []
+}

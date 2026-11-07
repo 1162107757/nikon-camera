@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Batch export probe failed: java.lang.AssertionError: opposite-adjustments-produce-opposite-brightness; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\batch-export129\\native\\b644a9e6\\20261103-121823-phone-d78c0ae4\\20261103-121823-phone-d78c0ae4\\report.json",
+  "errors": []
+}

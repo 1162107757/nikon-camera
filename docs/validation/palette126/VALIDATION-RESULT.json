@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "status": "complete-local-package-not-published",
+  "completedAtUtc": "2026-11-01T06:23:12.656061+00:00",
+  "versionCode": 126,
+  "versionName": "0.24.4-beta",
+  "apk": {
+    "path": "dist/huevia-0.24.4-beta-debug.apk",
+    "bytes": 33456908,
+    "sha256": "d7bdd73e333cbe39e6bbb0664c5d0c8eb0f1e2b32a039bff344153371e9f9e42",
+    "remainingUploadBytes": 97524
+  },
+  "productionInputsVerified": 294,
+  "hostChecks": 2616642,
+  "legacyPixelsExact": 294912,
+  "nativeChecks": 349,
+  "nativeScreenshots": 13,
+  "nativeEvidenceHashesVerified": 36,
+  "nativeFailures": 0,
+  "uploaded": false,
+  "published": false,
+  "automationCreated": false,
+  "ownedEmulatorClosed": true,
+  "references": [
+    {
+      "path": "docs/validation/palette126/BUILD-IDENTITY.json",
+      "sha256": "f90af2a946de74249f83cab1edb386bb3fc7ecacfff2eced88824d18fb94cf20"
+    },
+    {
+      "path": "docs/validation/palette126/SOURCE-FREEZE.json",
+      "sha256": "4dc911b1f3507c9a77d9cc6eca2c0d41db110cf5a58b197c7b28a30c8455f8f2"
+    },
+    {
+      "path": "docs/validation/palette126/PACKAGING-AUDIT.json",
+      "sha256": "3806c2d45ce87574829f8c0df42f253156d3e902e2b2835d79d2a6c8724c6cf8"
+    },
+    {
+      "path": "docs/validation/palette126/ENGINE-HOST.json",
+      "sha256": "b1893bb34cd49289f86a0a7065dda5d10c01603209308390124c58c871f5b941"
+    },
+    {
+      "path": "docs/validation/palette126/NATIVE-SUMMARY.json",
+      "sha256": "86a910c77a46ddba0e9abcb9886f8474ad8d3b9cca0e7cb4909f7be7f6a8ab83"
+    },
+    {
+      "path": "docs/validation/palette126/NATIVE-CLEANUP.json",
+      "sha256": "bd3f17be496f6d76925ea9c86ec7a2936e2bcfc9d5e7e688040a0f57406d2111"
+    },
+    {
+      "path": "docs/validation/palette126/DEVICE-CLEANUP.json",
+      "sha256": "b82cd0b03e15de4e33f68536e3b83bd589087d499ef38b3e33413c04c09fdd2a"
+    }
+  ],
+  "historicalCandidateExcludedFromFinalCounts": "c006041f"
+}

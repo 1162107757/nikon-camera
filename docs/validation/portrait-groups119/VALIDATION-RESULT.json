@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "versionCode": 119,
+  "versionName": "0.23.8-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.8-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "ba9fbd5cb20a6710bf377fb74c61cab7255d53d2392f13c4ef24d7757b4e38f2",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "buildIdentitySha256": "205fee31f3e10783dd1a406740f2d8641268f3c4dda11bf156d318ac4b812129",
+  "allProductionInputsVerified": 288,
+  "packagingAuditSha256": "6006c7fc4a85bdc03dad551e2b6883be91fde1b3c1d18706a007a30e2a509b34",
+  "nativeSummarySha256": "807bd02d9462abcb73aff1111c1589c7adfe066822396b2bffafa1d632a69bc4",
+  "nativeChecks": 1123,
+  "nativeScreenshots": 12,
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "checks": 369,
+      "screenshots": 4,
+      "path": "docs/validation/portrait-tools/ba9fbd5c/20261030-101152-phone-9dadb208/20261030-101152-phone-9dadb208/report.json",
+      "sha256": "ae9f9181f2f19740dd5ce08c292e538c59fafa38d32cb66d70034bdce71e87b6",
+      "cleanupPath": "docs/validation/portrait-tools/ba9fbd5c/20261030-101152-phone-9dadb208/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "font1.3",
+      "checks": 369,
+      "screenshots": 4,
+      "path": "docs/validation/portrait-tools/ba9fbd5c/20261030-101233-font1.3-2c621106/20261030-101233-font1.3-2c621106/report.json",
+      "sha256": "5c5425498cf8c9c347b25297d960a9570f14df41ce188ce68c8176ce7b34319c",
+      "cleanupPath": "docs/validation/portrait-tools/ba9fbd5c/20261030-101233-font1.3-2c621106/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "landscape",
+      "checks": 385,
+      "screenshots": 4,
+      "path": "docs/validation/portrait-tools/ba9fbd5c/20261030-101311-landscape-75fca855/20261030-101311-landscape-75fca855/report.json",
+      "sha256": "9b4d9fdd6a582d57fef92b759ba4b7e267126eff9a64a5f5da243db47ef47ccb",
+      "cleanupPath": "docs/validation/portrait-tools/ba9fbd5c/20261030-101311-landscape-75fca855/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    }
+  ],
+  "visualReview": "Root inspected native phone, font1.3 and landscape skin/face screenshots and live rotation state in one batch. No UI correction required.",
+  "unchangedModelsAndRenderer": "Exact production hashes unchanged from 118. Existing 118 host/model/export results were not rerun or claimed as new119 evidence.",
+  "publication": "local-package-not-published",
+  "automationCreated": false
+}

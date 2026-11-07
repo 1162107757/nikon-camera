@@ -1,0 +1,40 @@
+{
+  "candidateSha256": "49455868c4b03c5feb8669252a6b850847c8ab1f5314fb29035680077b72aa36",
+  "versionCode": 125,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "0f109ff6e60f34aea6856c2f80226a3bd90187a4ad1842a720d274bb3c6a4836",
+  "pass": true,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "01-live-before-up.png",
+      "sha256": "05980a1b0bfd0e1f4f90cd75729b5c0c305e7876af88d26dfee209681ec7c5c6"
+    },
+    {
+      "file": "02-pressed-mask.png",
+      "sha256": "05980a1b0bfd0e1f4f90cd75729b5c0c305e7876af88d26dfee209681ec7c5c6"
+    },
+    {
+      "file": "03-dialog-right-button.png",
+      "sha256": "73f9e593c51efb3f24bfac91d5296e600ab91b7e52dc3b5c5d251036b4636217"
+    },
+    {
+      "file": "04-release-clean.png",
+      "sha256": "319544fc7cb7630b81657b1dca150f8e1877cbf8d108fdaaaec41f6e26db9838"
+    },
+    {
+      "file": "05-completion-clean-gap.png",
+      "sha256": "319544fc7cb7630b81657b1dca150f8e1877cbf8d108fdaaaec41f6e26db9838"
+    },
+    {
+      "file": "06-main-right-hold.png",
+      "sha256": "1e1feb1d7343a57cd639d84ac1607c31a2652768742a4c3b28489c53c89c9bd4"
+    },
+    {
+      "file": "report.json",
+      "sha256": "c773385f2ec59e31a390e9f5c7c0968705f280fb66ba993710f8b61483ad8a72"
+    }
+  ]
+}

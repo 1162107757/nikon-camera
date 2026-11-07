@@ -1,0 +1,11 @@
+PASS PortraitModelTest 286 checks
+PASS PortraitLandmarksTest 62 checks
+PASS PortraitSkinMaskTest 82 checks
+PASS PortraitLandmarkMaskTest 114 checks
+PASS PortraitSemanticMaskTest 115 checks
+PASS PortraitPipelineTest 67 checks
+PASS PortraitToneTest 236 checks
+DETAIL maximalPortraitBytes=620302 maximalDraftBytes=756173
+PASS PortraitGlobalToneTest 208 checks
+DETAIL globalMaximumPortraitBytes=636686 globalMaximumDraftBytes=772557
+SkinBodyRegionsTest: 14 checks passed

@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.syncpolishqa">
+    <application android:label="Sync UI QA" android:allowBackup="false" />
+    <instrumentation android:name=".SyncPolishProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+    <instrumentation android:name=".AlbumOverviewProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+    <instrumentation android:name=".AlbumVersionsProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+    <instrumentation android:name=".BatchQualityProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+    <instrumentation android:name=".NativeUiProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+    <instrumentation android:name=".EditorInteractionProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+    <instrumentation android:name=".SourceMotionProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+</manifest>

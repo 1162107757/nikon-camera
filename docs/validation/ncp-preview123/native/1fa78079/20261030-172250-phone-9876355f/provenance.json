@@ -1,0 +1,36 @@
+{
+  "candidateSha256": "1fa780798a476d1f5e2c5547d2ba1ef40162a2cf1891b7c1c4762be84e478715",
+  "versionCode": 123,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "f4a7bd941f462222ffe561fa77251ac0f092584783a927ae034de7170d3f8759",
+  "pass": false,
+  "scope": "Full matrix; Original149 SHA-bound files parsed and rendered via installed Android profile and native template; all19 legacy monochrome gray/toning, frozen independent vectors and exact completed-effect strengths0/50/100. Existing-record gallery old unsupported keys remain isolated from new model key without reimport; actual native picker/editor selection, two synthetic JPEG drafts, representative monochrome/color full+detail/EXIF1+6. No user image or physical-phone/Nikon pipeline equivalence claim.",
+  "files": [
+    {
+      "file": "01-gallery-black-white.png",
+      "sha256": "4573d8f0384a2d486e51b45f30a59e620dd92ea9eb1f10bc51f90e288fc93bec"
+    },
+    {
+      "file": "01-gallery-sepia.png",
+      "sha256": "2f270ce9d83a20c2df656e76b15d826b021f77f8caa0206c0701dd56f8d3a1e4"
+    },
+    {
+      "file": "01-gallery-yellow-green.png",
+      "sha256": "541d64572bc77f25efefd63e1609d87ea382a650d60d30eb5f3d1559238fbd26"
+    },
+    {
+      "file": "02-native-picker-ready.png",
+      "sha256": "0f2a2117a399158e8a868d59af84312c3ca54dbf9e1496c09154168c55dbdcdc"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "e1a23068cda8266ab0c8a8f724610336f31ef1c32bbc0607db61d3a2900e3526"
+    },
+    {
+      "file": "report.json",
+      "sha256": "6fe80c672ff593e9280229ea982518bbecf065a9d37ea8a812a56fe26ed938ca"
+    }
+  ]
+}

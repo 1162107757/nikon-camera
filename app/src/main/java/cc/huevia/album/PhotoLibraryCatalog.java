@@ -171,6 +171,11 @@ public final class PhotoLibraryCatalog {
             if (file == null) return null;
             return byPath.get(file.getAbsolutePath());
         }
+        public String versionLabel(DownloadedPhoto photo) {
+            Version target=photo==null?null:findByFile(photo.file());if(target==null)return "已保存版本";
+            int occurrence=0;for(Version version:versions)if(version.label().equals(target.label())){occurrence++;if(version==target)return target.label()+(occurrence>1?" "+occurrence:"");}
+            return target.label();
+        }
     }
     private static final class MutableGroup {
         final String id;

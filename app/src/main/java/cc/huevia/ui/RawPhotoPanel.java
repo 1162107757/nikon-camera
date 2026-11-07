@@ -421,14 +421,14 @@ public final class RawPhotoPanel implements AutoCloseable {
     private void completeAppOnly(Operation next) {
         if (!current(next)) return;
         if (!next.validatedSnapshot) {
-            next.stage = "核对 App 内原文件"; updateProgress();
+            next.stage = "核对 应用相册原文件"; updateProgress();
             controller.findRawDownload(next.saved.sourceIdentity(), new AlbumController.Callback<RawPhotoDownload>() {
                 public void onSuccess(RawPhotoDownload verified) {
                     if (!current(next)) return;
                     RawPhotoDownload expected = next.saved;
                     if (verified == null || !verified.file().equals(expected.file()) || verified.byteSize() != expected.byteSize()
                             || !verified.sha256().equals(expected.sha256()) || !verified.filename().equals(expected.filename()) || verified.savedAt() != expected.savedAt()) {
-                        failed(next, "App 内原文件已移除或变化，请重新核对后重试。"); return;
+                        failed(next, "应用相册原文件已移除或变化，请重新核对后重试。"); return;
                     }
                     next.validatedSnapshot = true; completeAppOnly(next);
                 }
@@ -436,18 +436,18 @@ public final class RawPhotoPanel implements AutoCloseable {
             });
             return;
         }
-        next.busy = false; next.complete = true; next.progress = 1; next.stage = "已保存在 App 内";
+        next.busy = false; next.complete = true; next.progress = 1; next.stage = "已保存在应用相册";
         if (next.batch != null) { batchFinishedInput(next, true); return; }
         releasePhotoWork(); updateProgress();
         if (closed) return;
         if (adapter != null) adapter.notifyDataSetChanged();
         if (open && local && !loading) loadPage(true);
-        host.onChanged(); feedback("RAW 已保存在 App 内", "完整 NEF 原文件已保留，手机相册未新增文件。可稍后再保存到手机相册。");
+        host.onChanged(); feedback("RAW 已保存在应用相册", "完整 NEF 原文件已保留，手机相册未新增文件。可稍后再保存到手机相册。");
     }
     private boolean current(Operation expected) { return operation == expected && expected.busy; }
     private void failed(Operation next, String error) {
         if (!current(next)) return;
-        next.busy = false; next.error = clean(error); next.stage = next.saved != null ? next.saveTarget == PhotoSaveTarget.PHONE_ALBUM ? "原文件已保留，保存相册待重试" : "App 内原文件待核对" : "RAW 未完成"; updateProgress();
+        next.busy = false; next.error = clean(error); next.stage = next.saved != null ? next.saveTarget == PhotoSaveTarget.PHONE_ALBUM ? "原文件已保留，保存相册待重试" : "应用相册原文件待核对" : "RAW 未完成"; updateProgress();
         if (next.batch != null) { batchFinishedInput(next, false); return; }
         releasePhotoWork();
         if (closed) return;
@@ -503,7 +503,7 @@ public final class RawPhotoPanel implements AutoCloseable {
         Operation last = operation;
         int remaining = current.inputs.size() - current.index;
         boolean appOnly = current.inputs.stream().allMatch(input -> input.saveTarget == PhotoSaveTarget.APP_ONLY);
-        String summary = (appOnly ? "App 内已保留 " : "已存入手机相册 ") + current.completed + " 份" + (current.failed > 0 ? " · " + current.failed + " 份待重试" : "") + (remaining > 0 ? " · " + remaining + " 份未开始" : "");
+        String summary = (appOnly ? "应用相册已保留 " : "已存入手机相册 ") + current.completed + " 份" + (current.failed > 0 ? " · " + current.failed + " 份待重试" : "") + (remaining > 0 ? " · " + remaining + " 份未开始" : "");
         if (last != null) {
             last.busy = false; last.complete = current.failed == 0 && remaining == 0;
             last.stage = summary;
@@ -682,7 +682,7 @@ public final class RawPhotoPanel implements AutoCloseable {
     }
     private LinearLayout vertical() { LinearLayout result = new LinearLayout(activity); result.setOrientation(LinearLayout.VERTICAL); return result; }
     private GradientDrawable shape(int color, int radius) { GradientDrawable drawable = new GradientDrawable(); drawable.setColor(color); drawable.setCornerRadius(dp(radius)); return drawable; }
-    private AlertDialog.Builder dialog() { ensurePalette(); return new AlertDialog.Builder(new ContextThemeWrapper(activity,
+    private AlertDialog.Builder dialog() { ensurePalette(); return new AppDialog.Builder(new ContextThemeWrapper(activity,
             palette.dark ? android.R.style.Theme_Material_Dialog_Alert : android.R.style.Theme_Material_Light_Dialog_Alert)); }
     private void show(AlertDialog next) {
         try { next.show(); } catch (android.view.WindowManager.BadTokenException | IllegalStateException unavailable) {

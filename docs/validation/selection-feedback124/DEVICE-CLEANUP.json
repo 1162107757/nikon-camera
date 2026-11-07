@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "checkedAtUtc": "2026-10-30T11:49:23.311933+00:00",
+  "nativeCleanup": {
+    "path": "docs/validation/selection-feedback124/NATIVE-CLEANUP.json",
+    "sha256": "292e0ff6cccde53f2ede4c2c825f0284a74b6b3ebc81dc81d8ee630804f4ae03"
+  },
+  "ownedEmulator": "emulator-5588",
+  "rootClosedOwnedEmulator": true,
+  "adbDevicesAfter": "List of devices attached",
+  "physicalDevicesAccessed": false
+}

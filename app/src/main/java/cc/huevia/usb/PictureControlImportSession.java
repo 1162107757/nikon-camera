@@ -20,6 +20,9 @@ public final class PictureControlImportSession {
         byte[] getData(int operation, long transactionId, long... parameters) throws IOException;
         PtpContainer command(int operation, long transactionId, long... parameters) throws IOException;
         PtpContainer sendData(int operation, long transactionId, byte[] bytes, long... parameters) throws IOException;
+        default void authorizeCameraParameters(java.util.Map<Integer, byte[]> values) throws IOException {
+            throw new IOException("此连接暂不支持拍摄参数调整。");
+        }
     }
 
     /** Immutable evidence of the occupied target shown in an explicit overwrite confirmation. */
@@ -83,6 +86,12 @@ public final class PictureControlImportSession {
     private boolean abortRequired;
     private boolean registrationComplete;
     private byte[] freshCapability;
+    private PresetImportOptions importOptions;
+
+    void configure(PresetImportOptions options) {
+        if (started) throw new IllegalStateException("不能修改已开始的导入。");
+        importOptions = options;
+    }
 
     public PictureControlImportSession(Operations operations, UsbPictureControlImport.Result result,
                                        byte[] data, int sourceItem, int targetItem) {
@@ -299,6 +308,30 @@ public final class PictureControlImportSession {
             result.diagnostics.add("只验证兼容适配数据的登记与读回；未验证与相机原生载入等效或实际拍摄效果。");
         } else result.diagnostics.add("这次只验证机内优化校准复制，不验证 NCP 转换或所有拍摄效果。");
         registrationComplete = true;
+        if (importOptions != null && !importOptions.parameters.isEmpty()) {
+            result.cameraParameters = CameraParameterController.prepare(importOptions.parameters);
+            CameraParameterController.apply(result.cameraParameters,
+                    info.supportsOperation(0x1014) && info.supportsOperation(0x1015) && info.supportsOperation(0x1016),
+                    new CameraParameterController.Access() {
+                        public byte[] get(int op, int code) throws IOException {
+                            return query(op, nextTransactionId++, code);
+                        }
+                        public void authorize(java.util.Map<Integer, byte[]> values) throws IOException {
+                            result.phase = "CameraParameterAuthorization";
+                            operations.authorizeCameraParameters(values);
+                        }
+                        public void set(int code, byte[] value) throws IOException {
+                            long transaction = nextTransactionId++;
+                            recordStep(0x1016, transaction, code);
+                            PtpValidation.requireOkResponse(operations.sendData(0x1016, transaction, value, code), transaction);
+                        }
+                    }, snapshot -> {
+                        result.phase = "CameraParameterBackup";
+                        if (importOptions.audit == null) throw new IOException("无法保存拍摄参数原值，未调整参数。");
+                        importOptions.audit.beforeWrites(snapshot);
+                    });
+            result.phase = "RegistrationVerified";
+        }
     }
 
     private void observe(int itemCode, int kind) throws IOException {
@@ -374,6 +407,9 @@ public final class PictureControlImportSession {
     static String label(int item) { return item >= 201 && item <= 209 ? "C" + (item - 200) : "未指定"; }
     static String operationName(int op) {
         if (op == 0x90cd) return "SetPicCtrlData (0x90CD)";
+        if (op == 0x1014) return "GetDevicePropDesc (0x1014)";
+        if (op == 0x1015) return "GetDevicePropValue (0x1015)";
+        if (op == 0x1016) return "SetDevicePropValue (0x1016)";
         return PictureControlReadSession.operationName(op);
     }
 }

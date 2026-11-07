@@ -1,0 +1,28 @@
+{
+  "candidateSha256": "f0879a895e5ea9127bd05e554aafce4a1e6c475214dc96cf43c67a52425d7c4c",
+  "versionCode": 112,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "7b400da9083a27f7ea1fdc358a13f8dfd61752b6fdf6c3858e482284d7ebb921",
+  "pass": false,
+  "scope": "Actual installed MainActivity/AlbumPanel/editor, private generated JPEGs, real native local/clone gestures, pinch rollback, apply/cancel/history/draft/global detail controls/perspective, private full reference/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification.",
+  "files": [
+    {
+      "file": "00-local-neutral-layout.png",
+      "sha256": "b95d228627808322d0f495d27bc3237bdb2760e17370db672a213fca453052cd"
+    },
+    {
+      "file": "01-local-radial.png",
+      "sha256": "50c428b2aaac3ceb4ca87873ebfd005b70eeccc718f6c36b56c9bbfc4e44066c"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "0152379b4e72d2fce15d2ebd611e81331738af103304f6eec081357af44db907"
+    },
+    {
+      "file": "report.json",
+      "sha256": "a1f3388c13591d0795831cdca79ab4292bc5cb0a8b92db9226b9aa3873954e1e"
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-29T06:12:18.817Z",
+  "status": "passed",
+  "command": "tests/portrait-host/run.ps1",
+  "checks": {
+    "PortraitModelTest": 268,
+    "PortraitLandmarksTest": 62,
+    "PortraitSkinMaskTest": 82,
+    "PortraitLandmarkMaskTest": 114,
+    "PortraitSemanticMaskTest": 115,
+    "PortraitPipelineTest": 67,
+    "PortraitToneTest": 236,
+    "SkinBodyRegionsTest": 14
+  },
+  "total": 958,
+  "maximumState": {
+    "portraitBytes": 620284,
+    "fullDraftBytes": 756155,
+    "maxRecipeBytes": 1048576,
+    "draftCapBytes": 2097152
+  },
+  "scope": "Full synthetic JVM model/pipeline suite. No Android inference, UI or photographic quality claim. Rerun if fingerprints change.",
+  "colourReference": "https://bottosson.github.io/posts/oklab/",
+  "androidApiReference": "https://developer.android.com/reference/java/util/List.html",
+  "performance": {
+    "width": 6000,
+    "height": 4000,
+    "elapsedMs": 2222.4034,
+    "allocatedBytes": 56344,
+    "gcCollections": 0,
+    "checksum": 59755307565,
+    "scope": "Single warmed-up desktop JDK17, -Xmx128m / SerialGC, synthetic full-body 24MP streaming pixels. Not Android latency. Render-thread allocation excludes setup and LUT initialization.",
+    "source": {
+      "path": "tests/portrait-host/.build/TonePerformanceProbe.java",
+      "sha256": "67d3020fdf5f6bdebc47e5686b4b040931b77e834cdc6e99d92bb6e9f48eed3a"
+    }
+  },
+  "readOnlyAudit": {
+    "files": [
+      {
+        "path": "app/src/main/java/cc/huevia/album/PhotoFaceBodySkin.java",
+        "sha256": "dd582ea470eaa1ad81f4ec22067578074935a8f3eef8ed45f0f6b9e0df73c504"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+        "sha256": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5"
+      }
+    ],
+    "finding": "Letterbox forward/back pixel-center geometry and confidence-owner interpolation consistent. Connected foreground multi-source assignment cannot guarantee photographic instance attribution for overlapping people or detached skin components."
+  },
+  "inputs": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+      "sha256": "5ae2cc4927c37f0c7c01d2ef4ec928f187d682942ace7c57cc41a4dd59caab63"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "sha256": "2f73795905bc943eba3c204e00a7a982f8147edd514db7439987c47ce813d3b3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+      "sha256": "21d59978f3cd21ae11a075d65460be6e8f5f3e6717b47a323e836b582821cd40"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "sha256": "a2162f889b0d84a89dc0c1a87820d1f12136043131469fa2bda3e3972d4487d3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+      "sha256": "422d46aa86bd2e4e51cc479100ebe44983ec0727b7eafec4dabc6c803bed524f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+      "sha256": "28f4a7087f732ec1079e0b9eac13975f5b3e1015c2af14f614ba07013b142a36"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "sha256": "d6341f32962d08b01b38cea4ff0fc02a6ff6da66d5cd52fb86f54045b424f62b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+      "sha256": "26cc16d1b87303333ad6a79d00242e6b8a436ddd99fd956907224bb5ffd16b48"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+      "sha256": "b6ede772ee26f62e68ec5730335bca2fd64b96e2bd45825094cc1ab179d301e7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+      "sha256": "130c21b2717847c1c980d7499618858b58f7540ada47b46dcfe1b2593c7ae056"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "sha256": "47087569a97eeb09ec8cd0c6e8387f226260b567845b530ccb50981c95bf65f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "sha256": "c7bb716430cc634817a700447287a7d7dad404ccf7b6f7d3202c2058a3b9dc4d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "sha256": "706e16ffc06de4a56f9afb1657cb7022b520fd6a9f12408c6938b4eedbfcb335"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "sha256": "b8dd48f3a3d923a017e6cb26102133ae835bdec6ae7c640218ee10415a5af06d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "sha256": "26dc2552fa7d6f1981687e418005366584054102d8473984306202601b5d0b61"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "sha256": "8fab6efeada313399292c141c68d644add31275e5f0e499944a7bf8b32337646"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "sha256": "e16df4116a9ac99c82fc68a9d244e8385c02696c665de5fbb00fb3418714c947"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+      "sha256": "cec35aeceb2344b7d4e17f4656001c619102d5352e9ab863763ad3c40f907943"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "sha256": "d3ce185673b5ac0339e7223162fb6795d4d73310490d62141d6cbe1a91ff36ad"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "84c2883c6b810546798dc15a9dd7ccb47082b5664b2bb19eaa4d255c146caff5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "sha256": "322236433e1626aa3693aa5c0229d5cd4167294981e26620b4586578f5f8d5eb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "sha256": "c0ad4b2f29e3739751f1c921949b6aa15ce61b07cacf5288324107645a65abf1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+      "sha256": "6e69628bac843c2030d10ffc51b0bbed3724fa7c4509116b3cfd3cca3ed615d8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "sha256": "e81c6c0e7e8f5ce9ed1c9a85f460cbd64b2fafe195ebe6c3c889b25ce63a9c62"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+      "sha256": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+      "sha256": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "sha256": "7d0dd22d127cd3d45f15511818f7c27525ab9ff6acdeb36da5d2dfddc7bc7f19"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+      "sha256": "e5ec8500a6e51f3bd42c95d13abe60244913a02939fbe1c6027329af12a0b537"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitLandmarkMaskTest.java",
+      "sha256": "9463d0bd60729d78d8450ff15252ce649a4ae7bf11dcb894cc9a696022d8a132"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitLandmarksTest.java",
+      "sha256": "872beb569663f95f8fc665f9726c0b2e1e7fa1f548281197fbb09f806836976e"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitModelTest.java",
+      "sha256": "3f1e7ba39b5c8ef3651c219c224a86e976987905817c6daefe31d7b5ea871517"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitPipelineTest.java",
+      "sha256": "91258dd19456d8a45d800f8b4bd6f3e225c313f6263f67cc05a535619635da8f"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitSemanticMaskTest.java",
+      "sha256": "a04a29cde601f4a5bae384cc4b9e2ad3206ee8288797e40ffd7edb672aa31e71"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitSkinMaskTest.java",
+      "sha256": "2a4552d951785009d718f022a6609ef173306ccf775875d195489d33160a4caa"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/PortraitToneTest.java",
+      "sha256": "22da1719e3188213086d5e847c2779c3ad1acd0a4b27a12a6cd2aac2623a9140"
+    },
+    {
+      "path": "tests/portrait-host/cc/huevia/ncp/SkinBodyRegionsTest.java",
+      "sha256": "abc12e7b5ede4bae922dd4bfd5b230d4998d5657c32ac7ecce1594c57ccff77c"
+    },
+    {
+      "path": "tests/portrait-host/run.ps1",
+      "sha256": "3787b49a96bc73e134c44e61976ed3f580d59131bc2cf36876acdb83031d8005"
+    }
+  ]
+}

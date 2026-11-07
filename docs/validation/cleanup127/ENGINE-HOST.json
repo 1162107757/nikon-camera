@@ -1,0 +1,207 @@
+{
+  "newCleanupChecks": 84227,
+  "checks": 2700869,
+  "bounded24MP": {
+    "cancelledRegionalScratchClean": true,
+    "width": 6000,
+    "height": 4000,
+    "changedHazePixels": 23226114,
+    "hostElapsedMs": 11579,
+    "heapLimitBytes": 100663296,
+    "changedNoisePixels": 20544828,
+    "completedNoisePixels": 24000000,
+    "maxObservedHeapBytes": 2433376,
+    "completedHazePixels": 24000000,
+    "measurement": "Synthetic JVM diagnostic, not phone performance."
+  },
+  "noiseFixture": {
+    "afterSquaredError": 5718079,
+    "beforeSquaredError": 7337969,
+    "sharpEdgeContrastRetainedAbove": 0.92
+  },
+  "nativeDeviceTest": false,
+  "coverage": [
+    "Strict control and Analysis bounds, unknown/truncated wire, cancellation",
+    "Authenticated malformed draft/recipe and invalid regional fields",
+    "Noise analyzed from full-resolution patches rather than small preview",
+    "Known latent atmospheric fixture improves; clear blacks/high-key/featureless mist confidence gates",
+    "Original-size noise scaling; zero intensity and transparent packed ARGB exact",
+    "Independent sliders/curves/HSL/palette, copy and undo, draft/recipe/reopen state",
+    "Haze output exact at matching normalized positions in 80x60 and 240x180",
+    "Denoise phase order and full profile integration, spatial regional scratch cleanup",
+    "All-global-and-regional-zero-effect state: one CAS change succeeds once, one new version identity, repeat/read deduplicates, both analyses retained"
+  ],
+  "wire": {
+    "globalCleanup": "PED8",
+    "unchangedWhenAbsent": true,
+    "frozenAnalysisAndControlsBytes": 30,
+    "regionalCleanup": "v5",
+    "recipeCleanup": "PRC5"
+  },
+  "logs": [
+    {
+      "status": "pass",
+      "sha256": "8c2b8d083a28c7983824e1fdc289157558dead18690996a5525c9828ad33628d",
+      "path": ".tooling/cleanup127/engine/CleanupLegacyVectors.log",
+      "name": "CleanupLegacyVectors"
+    },
+    {
+      "status": "pass",
+      "sha256": "7a1d98de852eb2905eb68a7ca8a1cd3f0cfc9b8912795cc0a1e0d2fc811bf9c1",
+      "path": ".tooling/cleanup127/engine/PaletteLegacyVectors.log",
+      "name": "PaletteLegacyVectors"
+    },
+    {
+      "status": "pass",
+      "sha256": "971ba0474cc4717124eb8684e25504ef5a2793d85828c21cf5691299bb7c2c73",
+      "path": ".tooling/cleanup127/engine/PhotoCleanupTest.log",
+      "name": "PhotoCleanupTest"
+    },
+    {
+      "status": "pass",
+      "sha256": "23fe2a6634262f4532434a61a6ee94d6bfcb02d6dd0a47c517626fc79b003573",
+      "path": ".tooling/cleanup127/engine/PhotoCleanupBoundedTest.log",
+      "name": "PhotoCleanupBoundedTest"
+    },
+    {
+      "status": "pass",
+      "sha256": "d0696cc35e2c96aada73681960eb7b9059bd922a61240ebd604d195a3ae4c82f",
+      "path": ".tooling/cleanup127/engine/PhotoColorPaletteTest.log",
+      "name": "PhotoColorPaletteTest"
+    },
+    {
+      "status": "pass",
+      "sha256": "65128707430e7cfe1210bacc9e39d6db84ebb647b0581e654375d14b3abf33e1",
+      "path": ".tooling/cleanup127/engine/PhotoAdjustmentsTest.log",
+      "name": "PhotoAdjustmentsTest"
+    },
+    {
+      "status": "pass",
+      "sha256": "a35a73b7060faf28a92d90c7964a8011a3aa5ece43994f7280021edcb73696c4",
+      "path": ".tooling/cleanup127/engine/PhotoToolsPersistenceTest.log",
+      "name": "PhotoToolsPersistenceTest"
+    },
+    {
+      "status": "pass",
+      "sha256": "3f81db24721bc62677a290001733f89eb1e3c1760f1342a6f31c4d95dc73d28c",
+      "path": ".tooling/cleanup127/engine/PhotoColorAdjustmentsTest.log",
+      "name": "PhotoColorAdjustmentsTest"
+    },
+    {
+      "status": "pass",
+      "sha256": "09a0262e78d8b910f6dec2ddb15bf014facc35af69284519c7f15761220b58d3",
+      "path": ".tooling/cleanup127/engine/AdjustmentRegionTest.log",
+      "name": "AdjustmentRegionTest"
+    }
+  ],
+  "olderLegacyPixelCount": 294912,
+  "model": "photo-cleanup-veil-noise-v1",
+  "status": "host-pass",
+  "newRegionOutsidePixels": 8180,
+  "olderLegacyPixelsWireIdentityExact": true,
+  "newRegionOutsideChanges": 0,
+  "inputs": [
+    {
+      "sha256": "5e45eb10fb628195b5997fdebe668319238373b9d6ec4d4e8db7cda15a95cc7a",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCleanup.java"
+    },
+    {
+      "sha256": "9d85458c2fe812ac9ad2c96ac51761f7d050d6d029ec45ce917a31e57e080cc3",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCleanupEstimator.java"
+    },
+    {
+      "sha256": "75a6b8715daa9b5ad31b0f4dee63e1acb18044aa7ba3504dbd231b8022119321",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCleanupRenderer.java"
+    },
+    {
+      "sha256": "11110782c4c8772b38989fc0824e3aa70a6e328e6c3548d4ef076097caf43f9c",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java"
+    },
+    {
+      "sha256": "c4fdee844edcf57f254abcc13d9a78ab7feda68597f51d6e2e38f986e95945e1",
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java"
+    },
+    {
+      "sha256": "a21f3d1cb786960059bf1cdbff5e86ea35b73dfd128434dd9c9e48933bb61847",
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java"
+    },
+    {
+      "sha256": "4942b2a67fccc83b45c7c223a3a4198b1e2ab250f8bc0909989f7883419224a4",
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java"
+    },
+    {
+      "sha256": "f55f6e2d82f39243b19e574fa1f4687bedf848b385e2d45a01d670e980017d60",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+    },
+    {
+      "sha256": "8f8f47894ad58b17e9f9d87f95f429a7426033a6b4a8ae52768b9f4185f8617a",
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java"
+    },
+    {
+      "sha256": "0a2b373acd19476fdd7f9453e7c907cde1658ffa5c043029fee333115b55661a",
+      "path": "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java"
+    },
+    {
+      "sha256": "650f787dc61be454b2af2ddac52c017b849492feec5d1c9a1af819d9352e1b95",
+      "path": "tests/cleanup-host/cc/huevia/ncp/CleanupLegacyVectors.java"
+    },
+    {
+      "sha256": "df9dae19d871591b6ad2f15a900e69b2a1af6c6614f2b6ea3d0e42c8dafb5bad",
+      "path": "tests/cleanup-host/cc/huevia/ncp/PhotoCleanupTest.java"
+    },
+    {
+      "sha256": "1cb36e9f77edd0eb4add57671dc5e9930e6da656847be9eb5e76610b599e64b6",
+      "path": "tests/cleanup-host/cc/huevia/ncp/PhotoCleanupBoundedTest.java"
+    },
+    {
+      "sha256": "8c2b8d083a28c7983824e1fdc289157558dead18690996a5525c9828ad33628d",
+      "path": "tests/cleanup-host/legacy-vectors.txt"
+    },
+    {
+      "sha256": "a06f1e5e4f0133d03e21adcbf6fd117dd7179bc6aaf43d134783b9656a913ff0",
+      "path": "tests/cleanup-host/run-host.ps1"
+    }
+  ],
+  "limitations": [
+    "Statistical heuristics, no semantic sky/skin recognition or new AI model.",
+    "Fixed effects are reused by recipes/copy; explicit re-analysis estimates another source.",
+    "Denoising cannot reliably distinguish all fine texture from noise.",
+    "Native Android source/patch decoding is covered separately by native QA."
+  ],
+  "order": "Original noise -> atmospheric restoration -> existing preset/manual/colour/detail/grain -> regional single mask composite",
+  "syntheticFixturesOnly": true,
+  "legacy126PixelCount": 65536,
+  "legacy126PixelsWireIdentityExact": true,
+  "dataOnlyIdentityFixProvenance": {
+    "files": [
+      "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "app/src/main/java/cc/huevia/album/PhotoEditStore.java"
+    ],
+    "reuseBasis": "Only two data identity gates changed. All renderer/estimator/model numerical source hashes are unchanged; bounded 24MP and prior regressions retain pre-fix data-source provenance.",
+    "priorDataInputHashes": [
+      {
+        "sha256": "819433af7d90607de76446467c5057a3e72abd3c0e56ff2db65e79b0871d7c02",
+        "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java"
+      },
+      {
+        "sha256": "71e1501e874b4aebd051d51a077dabcee75eaab4f3317992012398ca7dc17dc2",
+        "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+      }
+    ],
+    "confirmationOnFinalInputs": [
+      "CleanupLegacyVectors",
+      "PaletteLegacyVectors",
+      "PhotoCleanupTest"
+    ],
+    "reason": "Preserve stored analysis in the draft identity when a regional cleanup is visually neutral",
+    "reusedEvidence": [
+      "PhotoCleanupBoundedTest",
+      "PhotoColorPaletteTest",
+      "PhotoAdjustmentsTest",
+      "PhotoToolsPersistenceTest",
+      "PhotoColorAdjustmentsTest",
+      "AdjustmentRegionTest"
+    ],
+    "archivedSourceFreeze": "docs/validation/cleanup127/candidates/56524629/SOURCE-FREEZE.json"
+  }
+}

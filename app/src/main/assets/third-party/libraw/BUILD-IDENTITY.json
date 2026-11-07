@@ -3,7 +3,7 @@
   "sourceUrl": "https://www.libraw.org/data/LibRaw-0.22.3.zip",
   "officialArchiveSha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
   "bundledSourceSha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
-  "sourceFingerprint": "72baacc8af4e647b9e6fe7c89b724d3a7fcadb4f63452a90bda65a8c17e5842c",
+  "sourceFingerprint": "a6f1264c442cd2329a9e8bd02c908792eb44b8196b0a9542b7a565c2e0281eaa",
   "modifiedSource": false,
   "ndk": "Pkg.Desc = Android NDK\nPkg.Revision = 28.2.13676358\nPkg.BaseRevision = 28.2.13676358\nPkg.ReleaseName = r28c\n",
   "minimumAndroidApi": 26,

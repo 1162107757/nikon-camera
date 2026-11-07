@@ -54,6 +54,8 @@ public final class PhotoPresetBatch {
         public final PhotoExportSpec exportSpec;
         /** Byte identity frozen during the caller's worker preparation; draft inputs carry their own root identity. */
         public final String expectedSourceSha;
+        /** Frozen public name. Source identity, private results and retry receipts remain unchanged. */
+        public final String outputFilename;
         /** Empty is a legitimate guest scope; accountBound distinguishes it from legacy unbound callers. */
         public final String accountScope;
         public final boolean accountBound;
@@ -65,12 +67,17 @@ public final class PhotoPresetBatch {
             this(source, draft, owner, target, forceNewCopy, spec, expectedSha, "", false);
         }
         private Edit(Source source, PhotoEditStore.Draft draft, String owner, PhotoSaveTarget target, boolean forceNewCopy, PhotoExportSpec spec, String expectedSha, String accountScope, boolean accountBound) {
+            this(source,draft,owner,target,forceNewCopy,spec,expectedSha,accountScope,accountBound,"");
+        }
+        private Edit(Source source, PhotoEditStore.Draft draft, String owner, PhotoSaveTarget target, boolean forceNewCopy, PhotoExportSpec spec, String expectedSha, String accountScope, boolean accountBound, String outputFilename) {
             if (source == null || owner == null || spec == null || expectedSha == null || !expectedSha.isEmpty() && !expectedSha.matches("[0-9a-f]{64}")) throw new IllegalArgumentException("source/owner/spec/sha");
             if (accountScope == null) throw new IllegalArgumentException("accountScope");
             this.source = source; this.draft = draft; this.owner = owner;
             this.saveTarget = target; this.forceNewCopy = forceNewCopy;
             this.exportSpec = spec; this.expectedSourceSha = expectedSha;
             this.accountScope = accountScope; this.accountBound = accountBound;
+            if (outputFilename == null || outputFilename.contains("/") || outputFilename.contains("\\")) throw new IllegalArgumentException("outputFilename");
+            this.outputFilename = outputFilename;
         }
         public static Edit saved(Source source) { return new Edit(source, null, ""); }
         public static Edit saved(Source source, PhotoExportSpec spec) { return saved(source, spec, ""); }
@@ -95,9 +102,17 @@ public final class PhotoPresetBatch {
             return copy(saveTarget, forceNewCopy, scope, true);
         }
         private Edit copy(PhotoSaveTarget target, boolean force, String scope, boolean bound) {
-            Edit result = new Edit(source, draft, owner, target, force, exportSpec, expectedSourceSha, scope, bound);
+            Edit result = new Edit(source, draft, owner, target, force, exportSpec, expectedSourceSha, scope, bound, outputFilename);
             result.publicationCompleted = publicationCompleted; return result;
         }
+        public Edit withOutputFilename(String name) {
+            if (saveTarget != null) return this;
+            return new Edit(source,draft,owner,null,false,exportSpec,expectedSourceSha,accountScope,accountBound,name);
+        }
+        public Edit withSpec(PhotoExportSpec spec) {
+            return new Edit(source,draft,owner,null,false,spec,expectedSourceSha,accountScope,accountBound,outputFilename);
+        }
+        public String exportFilename() { return outputFilename.isEmpty() ? source.filename() : outputFilename; }
         private Edit freeze(PhotoSaveTarget target, boolean forceNewCopy) {
             return saveTarget == null ? copy(target, forceNewCopy, accountScope, accountBound) : this;
         }
@@ -289,6 +304,7 @@ public final class PhotoPresetBatch {
             job = new Job(Collections.unmodifiableList(sources), "", lease, finished, null, target, forceNewCopy);
             List<Edit> frozen = new ArrayList<>(); for (Edit edit : edits) frozen.add(edit.freeze(target, forceNewCopy));
             job.edits = Collections.unmodifiableList(frozen); job.presetName = "各照片独立设置";
+            for(int i=0;i<frozen.size();i++){PhotoPresetBatchState.Item item=job.items.get(i);job.items.set(i,new PhotoPresetBatchState.Item(i,item.key,frozen.get(i).exportFilename(),item.status,item.error,item.width,item.height,item.quality));}
             job.currentAccount = currentAccount;
             retryEdits = Collections.emptyList(); current = job; publish(job, true);
         }
@@ -318,7 +334,7 @@ public final class PhotoPresetBatch {
         try {
             for (; job.index < job.edits.size(); job.index++, job.fraction = 0) {
                 if (job.cancel.get()) break;
-                Edit edit = job.edits.get(job.index); job.filename = edit.source.filename(); job.stage = "准备照片"; beginItem(job); publish(job, true);
+                Edit edit = job.edits.get(job.index); job.filename = edit.exportFilename(); job.stage = "准备照片"; beginItem(job); publish(job, true);
                 try {
                     checkAccount(job, edit);
                     PhotoPresetRenderer.check(job.cancel::get);
@@ -335,7 +351,7 @@ public final class PhotoPresetBatch {
                         progress(job, .95, edit.saveTarget == PhotoSaveTarget.APP_ONLY ? "保留在应用" : "保存到系统相册");
                         PhotoPresetRenderer.Dimensions dimensions = PhotoPresetRenderer.dimensions(owned(original), neutralProfile());
                         checkAccount(job, edit);
-                        if (edit.saveTarget == PhotoSaveTarget.PHONE_ALBUM) new PhotoLiveGallery(context).publish(original, edit.forceNewCopy && !edit.publicationCompleted);
+                        if (edit.saveTarget == PhotoSaveTarget.PHONE_ALBUM) new PhotoLiveGallery(context).publish(namedOutput(edit, original), edit.forceNewCopy && !edit.publicationCompleted);
                         edit.publicationCompleted = true; job.results.add(original);
                         outcome = new Outcome("", true, dimensions.width, dimensions.height, 95);
                     } else {
@@ -343,7 +359,7 @@ public final class PhotoPresetBatch {
                         String effectSha = edit.draft == null ? neutralPresetSha() : edit.draft.effectPresetSha();
                         PhotoPresetRenderer.Dimensions dimensions = PhotoPresetRenderer.dimensions(owned(original), profile);
                         PhotoExportSpec.Resolved resolved = edit.exportSpec.resolve(dimensions.width, dimensions.height);
-                        String key = key(sha, effectSha, PhotoPresetRenderer.modelVersion(profile, resolved)) + ":" + edit.saveTarget + ":" + edit.forceNewCopy;
+                        String key = key(sha, effectSha, PhotoPresetRenderer.modelVersion(profile, resolved)) + ":" + edit.saveTarget + ":" + edit.forceNewCopy + ":" + edit.outputFilename;
                         outcome = job.outcomes.get(key);
                         if (outcome == null) {
                             outcome = processUnique(job, original, sha, effectSha, edit.draft == null ? "已保存照片" : edit.draft.label(), profile, edit.exportSpec, edit.saveTarget, edit.forceNewCopy && !edit.publicationCompleted, edit);
@@ -449,13 +465,14 @@ public final class PhotoPresetBatch {
         checkAccount(job, edit);
         progress(job, .96, target == PhotoSaveTarget.APP_ONLY ? "保留在应用" : "保存到相册");
         checkAccount(job, edit);
-        try { if (target == PhotoSaveTarget.PHONE_ALBUM) new PhotoLiveGallery(context).publish(derived.photo, forceNewCopy); }
+        try { if (target == PhotoSaveTarget.PHONE_ALBUM) new PhotoLiveGallery(context).publish(namedOutput(edit,derived.photo), forceNewCopy); }
         catch (IOException failure) {
             if (cancelled(job, failure)) throw failure;
             warning += (warning.isEmpty() ? "" : "；") + "效果图已保留，系统相册保存待重试：" + message(failure);
         }
         return new Outcome(warning, derived.reused, derived.spec.width, derived.spec.height, derived.spec.quality);
     }
+    private static DownloadedPhoto namedOutput(Edit edit, DownloadedPhoto photo) { return edit == null || edit.outputFilename.isEmpty() ? photo : photo.withFilename(edit.outputFilename); }
     private static void checkAccount(Job job, Edit edit) throws AccountChanged {
         if (edit == null || !edit.accountBound) return;
         if (job.stoppedAccounts.contains(edit.accountScope)) throw new AccountChanged();
@@ -564,7 +581,7 @@ public final class PhotoPresetBatch {
         }
         File temporary = File.createTempFile("effect-processing-", ".part", directory);
         try {
-            new PhotoPresetRenderer(context.getAssets()).render(source, temporary, profile, spec, job.cancel::get, value -> progress(job, .25 + .60 * value, value < .80 ? "套用预设" : "生成效果图"));
+            PhotoPresetRenderer.forContext(context).render(source, temporary, profile, spec, job.cancel::get, value -> progress(job, .25 + .60 * value, value < .80 ? "套用预设" : "生成效果图"));
             PhotoPresetRenderer.check(job.cancel::get);
             progress(job, .86, "校验效果图");
             if (!sourceSha.equals(hash(source, job.cancel::get))) throw new IOException("原图在处理时发生变化，未发布效果图。");

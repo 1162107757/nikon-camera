@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "candidateSha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+  "hostChecks": 1184,
+  "nativeChecks": 1339,
+  "nativeScreenshots": 18,
+  "runs": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 440,
+      "screenshots": 6,
+      "report": "docs/validation/portrait-tools/879a214b/20261029-154408-phone-ff302ba6/20261029-154408-phone-ff302ba6/report.json",
+      "provenance": "docs/validation/portrait-tools/879a214b/20261029-154408-phone-ff302ba6/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/879a214b/20261029-154408-phone-ff302ba6/cleanup.json",
+      "reportSha256": "293d9798fc4cb45ce7d5e18763dc5c096f875400f42a8c966eea965e25923b5d"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 440,
+      "screenshots": 6,
+      "report": "docs/validation/portrait-tools/879a214b/20261029-155347-font1.3-de95ef1c/20261029-155347-font1.3-de95ef1c/report.json",
+      "provenance": "docs/validation/portrait-tools/879a214b/20261029-155347-font1.3-de95ef1c/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/879a214b/20261029-155347-font1.3-de95ef1c/cleanup.json",
+      "reportSha256": "228d0c572ccb6ead4ac98d7e95336d10495f890ccfb7355d51e899224ec8b680"
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "checks": 459,
+      "screenshots": 6,
+      "report": "docs/validation/portrait-tools/879a214b/20261029-155616-landscape-47fc0f49/20261029-155616-landscape-47fc0f49/report.json",
+      "provenance": "docs/validation/portrait-tools/879a214b/20261029-155616-landscape-47fc0f49/provenance.json",
+      "cleanup": "docs/validation/portrait-tools/879a214b/20261029-155616-landscape-47fc0f49/cleanup.json",
+      "reportSha256": "32f1d4481619e9ca633af0291a4a31789f78206dd9c5cd9d1695269538e6a469"
+    }
+  ],
+  "hostResultSha256": "6eb55f74c377b7083a259fcf37c12acbfda793891b94eb45a52dede5b84cb462",
+  "packagingAuditSha256": "95f8247c3a293c7b6bb7bbd8d0b75f15c25ffc8ec03ed9d7427ed981ed63cfbe",
+  "buildIdentitySha256": "440f7f84f75fdc557803467e978e679bfe4910b11183389a63cb9559455c341e",
+  "localQualitySha256": "749903dbe598927e5e7f33e1a5b0c023d72488d33f2ff4ccdcaed0a04aab8e7b",
+  "uiScreenshot": "automatic-skin-tone.png",
+  "scope": "Focused correction: an actual NONE portrait with no face records automatically obtains a full-image skin mask, changes exposed skin in both subjects and preserves mask-zero background. No manual face selection or body-scope step. Original/zero/custom cancellation, picker/photo sampling/swatch persistence, history/draft/owner/full/detail/EXIF6 validated. Local metrics additionally cover a truly face-free hand/wrist crop. Prior 117 broad portrait regression remains separate."
+}

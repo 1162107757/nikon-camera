@@ -1,0 +1,133 @@
+{
+  "candidate": {
+    "versionCode": 118,
+    "versionName": "0.23.7-beta",
+    "sha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920",
+    "bytes": 33403660
+  },
+  "productionSourceSha256": {
+    "PhotoExposedSkin": "d30bf1e978ce5636d999f430e19c73bc9a612999c482f3245d2ca39709294b4b",
+    "FaceSkinModel": "ae7c2dd18e47964da07c601160b52d5b82e0f362f04e49f294211d58c30a1b09",
+    "PhotoPortrait": "5fed8840f7e6d00101f8ef20f5cbad354a7fa0425ce7876994f4d2716ce0f0a1",
+    "PortraitPreviewFilter": "5ce343321fe55471c7c1d82e78cdaa6110e7267151ae4064ab46d51a9374f421",
+    "SkinTone": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a",
+    "PhotoPortraitDetection": "1f40455e024bcfa71c24b0f3d4431fbc0ec5ed35269d3441a12c8ad9fd4ab03d",
+    "PhotoFaceLandmarks": "f9e643389eea846712e66f42beab4d9e8283943daf7e1ac95dd78558b4d09d40"
+  },
+  "scope": "Two fixed private inputs: one whole scene and one only-hand/wrist counterexample. Numerical-only record; no private image identifiers, locations or pixels.",
+  "inferenceOffline": true,
+  "wholeScene": {
+    "knownFacesPassed": 0,
+    "storedFaces": 0,
+    "explicitFaceDetectorCount": null,
+    "nonzeroGridPixels": 630,
+    "strongGridPixels": 533,
+    "elapsedMs": 1436.9559,
+    "weights": [
+      {
+        "category": "forehead-skin",
+        "weight": 1
+      },
+      {
+        "category": "cheek-skin",
+        "weight": 1
+      },
+      {
+        "category": "nose-skin",
+        "weight": 1
+      },
+      {
+        "category": "chin-skin",
+        "weight": 1
+      },
+      {
+        "category": "contact-finger-left",
+        "weight": 1
+      },
+      {
+        "category": "contact-finger-right-upper",
+        "weight": 1
+      },
+      {
+        "category": "contact-finger-right-lower",
+        "weight": 1
+      },
+      {
+        "category": "hair",
+        "weight": 0
+      },
+      {
+        "category": "collar",
+        "weight": 0
+      },
+      {
+        "category": "background",
+        "weight": 0
+      },
+      {
+        "category": "garment",
+        "weight": 0
+      }
+    ],
+    "outputImagesWritten": 0
+  },
+  "facelessHandAndWrist": {
+    "knownFacesPassed": 0,
+    "storedFaces": 0,
+    "explicitFaceDetectorCount": 0,
+    "nonzeroGridPixels": 9602,
+    "strongGridPixels": 9380,
+    "elapsedMs": 495.3376,
+    "weights": [
+      {
+        "category": "finger-skin",
+        "weight": 1
+      },
+      {
+        "category": "palm-skin",
+        "weight": 1
+      },
+      {
+        "category": "wrist-skin",
+        "weight": 1
+      },
+      {
+        "category": "garment",
+        "weight": 0
+      },
+      {
+        "category": "background",
+        "weight": 0
+      }
+    ],
+    "outputImagesWritten": 0
+  },
+  "faceDependency": "A detected or selected face is not a prerequisite. The production global skin helper may use internal face detection for optional feature protection; this record does not claim the complete absence of face algorithms.",
+  "pass": true,
+  "cleanup": {
+    "remoteFixturesRemoved": true,
+    "privateProbeUninstalled": true,
+    "targetAndPrivateProcessesStopped": true,
+    "networkRestored": true,
+    "errors": []
+  },
+  "network": {
+    "before": {
+      "airplane": "0",
+      "wifi": "1",
+      "mobile": "1"
+    },
+    "during": {
+      "airplane": "1",
+      "wifi": "0",
+      "mobile": "0"
+    },
+    "after": {
+      "airplane": "0",
+      "wifi": "1",
+      "mobile": "1"
+    }
+  },
+  "limits": "One scene and one fixed crop, not a population accuracy test or physical-phone latency benchmark.",
+  "weightsMeaning": "Category labels describe manually fixed anatomical or excluded regions. Weights are the installed production merged exposed-skin mask after optional feature protection, not separate six-class predictions."
+}

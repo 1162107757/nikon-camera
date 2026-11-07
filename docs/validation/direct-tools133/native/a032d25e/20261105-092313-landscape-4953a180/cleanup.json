@@ -1,0 +1,20 @@
+{
+  "serial": "emulator-5588",
+  "animatorDurationRestoredTo": "null",
+  "animatorDurationRestored": true,
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Direct tools probe failed: java.lang.AssertionError: Timeout reachable editor-parameter-BRIGHTNESS; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\direct-tools133\\native\\a032d25e\\20261105-092313-landscape-4953a180\\20261105-092313-landscape-4953a180\\report.json",
+  "errors": []
+}

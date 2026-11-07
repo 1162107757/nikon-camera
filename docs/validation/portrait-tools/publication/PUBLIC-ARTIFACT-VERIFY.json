@@ -1,0 +1,22 @@
+{
+  "pass": true,
+  "releaseId": "36356cac-43d8-4732-aee3-630e68acd2f0",
+  "canonicalUrl": "https://huevia.cc/preset-library/releases/36356cac-43d8-4732-aee3-630e68acd2f0/file",
+  "startedAtUtc": "2026-10-28T13:16:27.493Z",
+  "verifiedAtUtc": "2026-10-28T13:16:31.791Z",
+  "initialStatus": 307,
+  "signedTarget": {
+    "host": "nikon-d8girdjsr252fd90e.api.tcloudbasegateway.com",
+    "pathname": "/v1/storages/object/sign/nikon-presets/app-releases/f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f.bin"
+  },
+  "finalStatus": 200,
+  "contentType": "application/octet-stream",
+  "contentDisposition": "attachment; filename=Huevia-111-beta.apk; filename*=UTF-8''Huevia-111-beta.apk",
+  "contentLength": "9519012",
+  "byteLength": 9519012,
+  "sha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+  "expectedApkMatched": true,
+  "fullDownloadsInThisVerification": 1,
+  "signatureVerification": "Downloaded bytes SHA-256 exactly matches the locally apksigner-verified v2/v3 candidate and its 110-compatible signer.",
+  "localDownloadedCopy": "app/build/portrait-qa/publication/Huevia-111-beta.apk"
+}

@@ -1,0 +1,7 @@
+{
+  "ownedSerial": "emulator-5588",
+  "emulatorKillAcknowledged": true,
+  "ownedEmulatorAbsentFromAdb": true,
+  "physicalDeviceAccessed": false,
+  "perRunCleanup": "NATIVE-SUMMARY.json"
+}

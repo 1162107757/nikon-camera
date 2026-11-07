@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "versionCode": 121,
+  "versionName": "0.23.10-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.10-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "2d21da748e5ee70bc411d1813d9bfca9f06548844758f801339c92a1d84177e3",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "buildIdentitySha256": "e638b4afef11776a2cf0f2606d1f357fc18f146d187815d81c59c01e2a00f6af",
+  "productionInputsVerified": 288,
+  "packagingAuditSha256": "388b25ab3b94e236dc34c3c6434002d1d9dd1c37630f1230ffaa020fe5b28314",
+  "nativeSummarySha256": "f006242cd69f46bfa9ffd981270e6c28cf50f1721ec77a0c874bc0d536f82371",
+  "nativeChecks": 2207,
+  "nativeScreenshots": 18,
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "checks": 730,
+      "screenshots": 6,
+      "reportPath": "docs/validation/portrait-tools/2d21da74/20261030-114638-phone-f9b17a72/20261030-114638-phone-f9b17a72/report.json",
+      "reportSha256": "42ecba7db57ca56e578320b5be362eb56dc8154e13a210aa528cf1dca46fa008",
+      "cleanupPath": "docs/validation/portrait-tools/2d21da74/20261030-114638-phone-f9b17a72/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "font1.3",
+      "checks": 730,
+      "screenshots": 6,
+      "reportPath": "docs/validation/portrait-tools/2d21da74/20261030-114717-font1.3-8c8bfb55/20261030-114717-font1.3-8c8bfb55/report.json",
+      "reportSha256": "c7f6361a161de92c7878e9bdea95690a77b3b61229dc6da1ffe388eab4197c2e",
+      "cleanupPath": "docs/validation/portrait-tools/2d21da74/20261030-114717-font1.3-8c8bfb55/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "landscape",
+      "checks": 747,
+      "screenshots": 6,
+      "reportPath": "docs/validation/portrait-tools/2d21da74/20261030-114833-landscape-d3cf43e8/20261030-114833-landscape-d3cf43e8/report.json",
+      "reportSha256": "6ace22bd39abc4f7979a8a0c26faf09692d249c3a1c6c99e5c720f3be108b657",
+      "cleanupPath": "docs/validation/portrait-tools/2d21da74/20261030-114833-landscape-d3cf43e8/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    }
+  ],
+  "visualReview": "Root inspected actual landing icon entries and child layouts across phone, large font and landscape in one batch; no UI revision required.",
+  "scope": "Navigation and appearance; model, segmentation and export code unchanged and broad suites not rerun.",
+  "publication": "local-package-not-published",
+  "automationCreated": false
+}

@@ -1,0 +1,52 @@
+{
+  "candidateSha256": "a8c765ec68debe11611011bb77a890ef695b2bef38f109bdc2657a56ecb60e47",
+  "versionCode": 122,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "51dbadc017827a635c6ea9446cd0acbbefcbd5a252765615b8b774601e8d9bd3",
+  "pass": true,
+  "scope": "Exact installed universal brush and scoped adjustment UI: real live paint/erase, size/feather, two-finger navigation, clear/reopen/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing/deletion, owner rejection, real drafts/photo switching and representative full/detail export EXIF1/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "01-live-brush-mask.png",
+      "sha256": "a705001bd8fb07e09085f3b1cfa364694fa85a49db88777cd662a89ac3829680"
+    },
+    {
+      "file": "02-masked-curve-preview.png",
+      "sha256": "3061dd94fd3be2bf6a1cc2a6be55f929d7e04afb5cc5aabc9432e7b5346359ac"
+    },
+    {
+      "file": "03-clean-local-parameter-editing.png",
+      "sha256": "baed73eb66fec568972dc8ecf9e065fec469c84f22aeaeb458093a74da52e474"
+    },
+    {
+      "file": "04-independent-region-scope-picker.png",
+      "sha256": "2ffb764bbce69e606d885ad4ec9621b49a423b3ab7a6eb3051557e52ce9368e0"
+    },
+    {
+      "file": "05-regional-skin-parameters-clean-photo.png",
+      "sha256": "b415d719abbfb7a7fcfb6425fa8b9d4bb992d964c9ec6883094decc0e9fbbacb"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "34e5658d6bc4fb661770eb0d797499cf6a776c23aa6473b2e6864ab762e7f6c6"
+    },
+    {
+      "file": "flash-01-first-warm-white.png",
+      "sha256": "3f1206f87642cb90765856abbdd235cbf5be017627e37479c24473154cbc1e07"
+    },
+    {
+      "file": "flash-02-clean-gap.png",
+      "sha256": "598ffbfbac45a0f574af04584c07aa22dba3ec4c6af0b06aa0cbc4470cd23107"
+    },
+    {
+      "file": "flash-03-second-warm-white.png",
+      "sha256": "3f1206f87642cb90765856abbdd235cbf5be017627e37479c24473154cbc1e07"
+    },
+    {
+      "file": "report.json",
+      "sha256": "6bc3f20150fc6945f5c791882f823f836f1452e3f72d4601b7ea001060477693"
+    }
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "pass": false,
+  "stage": "cleanup-original-exif6-region-patch-mapping",
+  "mode": "phone",
+  "scope": "full",
+  "candidateSha256": "56524629b4b4e58d49ab4b8d80610382e0b596efff38ebfdd1d36fd02d39971c",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "pad-inside-window",
+      "pass": true
+    },
+    {
+      "name": "photo-visible",
+      "pass": true
+    },
+    {
+      "name": "pad-reaches-useful-touch-size",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-cancel-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-cancel-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-undo-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-undo-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-redo-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-redo-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-near-square-field",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-press-has-visible-optical-feedback",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-press-does-not-alter-photo",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-cross-slop-enters-direct-drag",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-drag-follows-pointer-without-delay",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-drag-has-no-marker-animation",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-release-keeps-exact-position",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-distant-tap-logical-target-immediate",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-distant-tap-has-short-movement",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-distant-tap-endpoint-exact",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-tap-one-undo",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-other-sliders-unchanged",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-zero-strength-retains-target",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-zero-strength-photo-identical",
+      "pass": true
+    },
+    {
+      "name": "palette-v2-cancel-not-committed",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing-A",
+      "pass": true
+    },
+    {
+      "name": "original-analysis-cooperative-cancel",
+      "pass": true
+    },
+    {
+      "name": "cancelled-analysis-keeps-original-file",
+      "pass": true
+    },
+    {
+      "name": "original-analysis-rejects-wrong-source-sha",
+      "pass": true
+    },
+    {
+      "name": "owned-exif-fixture-not-existing",
+      "pass": true
+    },
+    {
+      "name": "exif6-upper-cleanup-analysis-present",
+      "pass": true
+    },
+    {
+      "name": "exif6-upper-analysis-original-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "exif6-upper-analysis-real-patches-bounded",
+      "pass": true
+    },
+    {
+      "name": "exif6-upper-analysis-has-real-flat-noise-samples",
+      "pass": true
+    },
+    {
+      "name": "exif6-lower-cleanup-analysis-present",
+      "pass": true
+    },
+    {
+      "name": "exif6-lower-analysis-original-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "exif6-lower-analysis-real-patches-bounded",
+      "pass": true
+    },
+    {
+      "name": "exif6-lower-analysis-has-real-flat-noise-samples",
+      "pass": true
+    },
+    {
+      "name": "exif6-oriented-mask-selects-raw-left-noise-versus-right-flat",
+      "pass": true
+    },
+    {
+      "name": "exif6-original-file-unchanged",
+      "pass": true
+    },
+    {
+      "name": "cleanup-source-preview-smaller-than-original",
+      "pass": true
+    },
+    {
+      "name": "cleanup-workspace-tag",
+      "pass": true
+    },
+    {
+      "name": "global-cleanup-analysis-present",
+      "pass": true
+    },
+    {
+      "name": "global-analysis-original-oriented-dimensions",
+      "pass": true
+    },
+    {
+      "name": "global-analysis-real-patches-bounded",
+      "pass": true
+    },
+    {
+      "name": "global-analysis-has-real-flat-noise-samples",
+      "pass": true
+    },
+    {
+      "name": "cleanup-analysis-is-tentative",
+      "pass": true
+    },
+    {
+      "name": "cleanup-photo-visible",
+      "pass": true
+    },
+    {
+      "name": "cleanup-apply-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-cancel-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-advanced-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-undo-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-redo-48dp",
+      "pass": true
+    },
+    {
+      "name": "cleanup-native-denoise-reduces-flat-patch-variance",
+      "pass": false
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-layout",
+      "window": "[0,0][1080,2424]",
+      "pad": "[32,1301][1048,2099]",
+      "photo": "[0,268][1080,1164]",
+      "fontScale": 1
+    },
+    {
+      "case": "palette-v2-press-field-only",
+      "aspect": 1.1500000953674316,
+      "outsideProtectedPixels": 291984,
+      "outsideDifferences": 0,
+      "pressedChangedPixels": 15996
+    },
+    {
+      "case": "exif6-upper-original-analysis",
+      "sourceWidth": 600,
+      "sourceHeight": 800,
+      "patchCount": 9,
+      "patchPixels": 82944,
+      "noiseSamples": 52505,
+      "hazeConfidence": 3,
+      "noiseConfidence": 100,
+      "lumaNoise": 13
+    },
+    {
+      "case": "exif6-lower-original-analysis",
+      "sourceWidth": 600,
+      "sourceHeight": 800,
+      "patchCount": 9,
+      "patchPixels": 82944,
+      "noiseSamples": 61634,
+      "hazeConfidence": 0,
+      "noiseConfidence": 100,
+      "lumaNoise": 0
+    },
+    {
+      "case": "exif6-original-region-mapping",
+      "rawWidth": 800,
+      "rawHeight": 600,
+      "orientedWidth": 600,
+      "orientedHeight": 800,
+      "upperRegionLumaNoise": 13,
+      "lowerRegionLumaNoise": 0
+    },
+    {
+      "case": "global-original-analysis",
+      "sourceWidth": 3200,
+      "sourceHeight": 2400,
+      "patchCount": 9,
+      "patchPixels": 82944,
+      "noiseSamples": 67381,
+      "hazeConfidence": 69,
+      "noiseConfidence": 100,
+      "lumaNoise": 13
+    }
+  ],
+  "screenshots": 6,
+  "persistentFixturesCreated": true,
+  "ownedFixtureCount": 2,
+  "ownedDraftCount": 1,
+  "privateFixtureRemoved": true,
+  "failure": "java.lang.AssertionError: cleanup-native-denoise-reduces-flat-patch-variance",
+  "stack": "java.lang.AssertionError: cleanup-native-denoise-reduces-flat-patch-variance\n\tat cc.huevia.cleanupqa.CleanupProbe.check(CleanupProbe.java:435)\n\tat cc.huevia.cleanupqa.CleanupProbe.cleanupCase(CleanupProbe.java:186)\n\tat cc.huevia.cleanupqa.CleanupProbe.onStart(CleanupProbe.java:66)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

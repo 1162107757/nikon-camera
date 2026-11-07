@@ -1,0 +1,18 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Photo tools probe failed: java.lang.AssertionError: feather-choice-revealed; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\photo-tools-109\\938a9648\\20261028-220938-landscape-71a58366\\20261028-220938-landscape-71a58366\\report.json",
+  "errors": []
+}

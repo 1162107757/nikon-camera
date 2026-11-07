@@ -1,0 +1,27 @@
+{
+  "inputs": [
+    {
+      "path": "tests/photo-tools-109-device-probe/src/cc/huevia/phototoolsqa/PhotoToolsProbe.java",
+      "sha256": "050b4019a85173b5b13dc37860a5a544dfbd4183e55a6f8f2c78ca87ff0b113e"
+    },
+    {
+      "path": "tests/photo-tools-109-device-probe/AndroidManifest.xml",
+      "sha256": "114c9d7a2463494412a3868ab84e8ac13655f0777f0a7f4b42e6651d5a61666f"
+    },
+    {
+      "path": "tests/photo-tools-109-device-probe/build.ps1",
+      "sha256": "9924da75914e553e678e2af0da64699de6f0854cd6cd44ae4180281c619dfcef"
+    },
+    {
+      "path": "tests/photo-tools-109-device-probe/run.ps1",
+      "sha256": "8ff626b92aae8a7e649d52c1d3cfcb645953eacb0c203af6757506a2b4a2d991"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/phototoolsqa/PhotoToolsProbe.class",
+    "cc/huevia/phototoolsqa/PhotoToolsProbe$Condition.class",
+    "cc/huevia/phototoolsqa/PhotoToolsProbe$Work.class"
+  ],
+  "apkSha256": "86528fd58b1752890a63374fc7d1f0a998c88c881bc725e8db3cc24f7de41780"
+}

@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/direct-tools-device-probe/src/cc/huevia/directtoolsqa/DirectToolsProbe.java",
+      "sha256": "2bb0b0c91280af76014bad56165cf3dd9818f2844df65eab466bad4df36cab7a"
+    },
+    {
+      "path": ".tooling/portrait-qa/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "path": "tests/direct-tools-device-probe/AndroidManifest.xml",
+      "sha256": "e31ba1fedbf0523dcc86d8a21248d6cb53c79ef1a472ebbf91653b62bb88a85e"
+    },
+    {
+      "path": "tests/direct-tools-device-probe/build.ps1",
+      "sha256": "fe32bc0f5e9f85a1e550635aa38a1f7671a51138224215b6ef85002c669e5ab8"
+    },
+    {
+      "path": "tests/direct-tools-device-probe/run.ps1",
+      "sha256": "d3ba47fc71bc5a448cc2ff8ab6b582be67fb4293f60bc70d9a10de25ea1d7ba4"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/directtoolsqa/DirectToolsProbe.class",
+    "cc/huevia/directtoolsqa/DirectToolsProbe$Condition.class",
+    "cc/huevia/directtoolsqa/DirectToolsProbe$Work.class"
+  ],
+  "apkSha256": "69a168af1b2a90a8502a54429cecd57d43a243b82af217461306dd432b6095a4"
+}

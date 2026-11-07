@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/editor-chrome-device-probe/src/cc/huevia/editorchromeqa/EditorChromeProbe.java",
+      "sha256": "bf0f6a4aa3e5cb7c47d537ecbd9a5532f83c8c48089f3d93e81746f33f8809a1"
+    },
+    {
+      "path": ".tooling/portrait-qa/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "path": "tests/editor-chrome-device-probe/AndroidManifest.xml",
+      "sha256": "46f1f4f1a7fe5963b5cae05eb381fbd04643a0626e2590579d8f20a283877d51"
+    },
+    {
+      "path": "tests/editor-chrome-device-probe/build.ps1",
+      "sha256": "d27b9b0ea624d156dc63cc8bf9d6bf64632125d99566cc3dfdbe370772dd1ee0"
+    },
+    {
+      "path": "tests/editor-chrome-device-probe/run.ps1",
+      "sha256": "153f94dfa57b9e7985d9672478cfe046ce0196e580a04f88e7203c27731ca56b"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/editorchromeqa/EditorChromeProbe.class",
+    "cc/huevia/editorchromeqa/EditorChromeProbe$Condition.class",
+    "cc/huevia/editorchromeqa/EditorChromeProbe$Work.class"
+  ],
+  "apkSha256": "c94e2064acf1f803416113c539195441446cbbdbcc69cd839cd002fa481502cf"
+}

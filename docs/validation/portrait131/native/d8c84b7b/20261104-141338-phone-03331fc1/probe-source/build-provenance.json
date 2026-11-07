@@ -1,0 +1,31 @@
+{
+  "inputs": [
+    {
+      "path": "tests/portrait-upgrade-device-probe/src/cc/huevia/portraitupgradeqa/PortraitUpgradeProbe.java",
+      "sha256": "9617553174d11be5990139dc35a56639a21c4fc258b89a2dcfb1de68427fbc37"
+    },
+    {
+      "path": ".tooling/portrait-qa/astronaut.png",
+      "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5"
+    },
+    {
+      "path": "tests/portrait-upgrade-device-probe/AndroidManifest.xml",
+      "sha256": "16896ead503e6594149fe31c46877282fc3a6e97efd654d801eedbef6e94aa07"
+    },
+    {
+      "path": "tests/portrait-upgrade-device-probe/build.ps1",
+      "sha256": "4ee8f2cbaf11d0c697bb3e3e32c1b3a951547092298f8acd8ed53d7c566a0b79"
+    },
+    {
+      "path": "tests/portrait-upgrade-device-probe/run.ps1",
+      "sha256": "b043d8ac4d3eb6404a7eeb4fd3640f41be520101881bb734ac1fdb6137386479"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/portraitupgradeqa/PortraitUpgradeProbe.class",
+    "cc/huevia/portraitupgradeqa/PortraitUpgradeProbe$Condition.class",
+    "cc/huevia/portraitupgradeqa/PortraitUpgradeProbe$Work.class"
+  ],
+  "apkSha256": "66ba605169e4c275f837a3d0034f607b62133be7dbee62eb820f686de1c3a9ab"
+}

@@ -1,0 +1,62 @@
+{
+  "runs": [
+    {
+      "run": "20261030-173259-phone-41355851",
+      "remoteAbsent": true,
+      "privateFixturesAbsent": true,
+      "sourceJpegsAbsent": true,
+      "errors": [],
+      "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+    },
+    {
+      "run": "20261030-173349-font1.3-2ce5fa40",
+      "remoteAbsent": true,
+      "privateFixturesAbsent": true,
+      "sourceJpegsAbsent": true,
+      "errors": [],
+      "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+    },
+    {
+      "run": "20261030-173430-landscape-3b553cda",
+      "remoteAbsent": true,
+      "privateFixturesAbsent": true,
+      "sourceJpegsAbsent": true,
+      "errors": [],
+      "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+    },
+    {
+      "run": "20261030-172250-phone-9876355f",
+      "remoteAbsent": true,
+      "privateFixturesAbsent": true,
+      "sourceJpegsAbsent": true,
+      "errors": [],
+      "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+    },
+    {
+      "run": "20261030-172427-phone-7a0a6771",
+      "remoteAbsent": true,
+      "privateFixturesAbsent": true,
+      "sourceJpegsAbsent": true,
+      "errors": [],
+      "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+    },
+    {
+      "run": "20261030-172541-phone-a6269b15",
+      "remoteAbsent": true,
+      "privateFixturesAbsent": true,
+      "sourceJpegsAbsent": true,
+      "errors": [],
+      "privateFixtureVerification": "Target-process instrumentation: fixturesRemoved=true and owned-fixtures-and-drafts-removed PASS; run-as unavailable because package is not debuggable, not used as absence evidence."
+    }
+  ],
+  "finalState": {
+    "fontScale": "1.0",
+    "airplaneMode": "0",
+    "wifiOn": "1",
+    "mobileData": "1",
+    "immersiveConfirmation": "null",
+    "probePackageAbsent": true,
+    "targetStopped": true,
+    "serial": "emulator-5588"
+  }
+}

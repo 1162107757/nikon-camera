@@ -303,7 +303,7 @@ public final class CommunityPanel implements AutoCloseable {
         actions.addView(action("我的投稿",false,this::openSubmissions),new LinearLayout.LayoutParams(0,-2,1)); content.addView(actions);
         Button filter = action(category.isEmpty()?"全部分类":"分类 · "+category,false,()->{
             String[] choices={"全部","人像","风景","胶片","黑白","日常","夜景"};
-            dialog=new AlertDialog.Builder(activity).setTitle("选择分类").setItems(choices,(d,which)->{
+            dialog=new AppDialog.Builder(activity).setTitle("选择分类").setItems(choices,(d,which)->{
                 category=which==0?"":choices[which];feed.clear();page=1;loadFeed(false);
             }).create();dialog.show();
         });content.addView(filter);
@@ -411,7 +411,7 @@ public final class CommunityPanel implements AutoCloseable {
         String recipient=targetName.isEmpty()?"这条评论":targetName;
         LinearLayout form=vertical();form.setPadding(dp(24),dp(8),dp(24),0);EditText input=field(form,"内容",parent.isEmpty()?"分享使用感受":"回复 "+recipient,commentText,500,true);
         input.addTextChangedListener(new TextWatcher(){public void beforeTextChanged(CharSequence s,int start,int count,int after){}public void onTextChanged(CharSequence s,int start,int before,int count){String value=s.toString();if(!value.equals(commentText)){commentText=value;commentKey=UUID.randomUUID().toString();}}public void afterTextChanged(Editable text){}});
-        dialog=new AlertDialog.Builder(activity).setTitle(parent.isEmpty()?"发表评论":"回复 "+recipient).setView(form).setNegativeButton("取消",null).setPositiveButton("发送",null).create();
+        dialog=new AppDialog.Builder(activity).setTitle(parent.isEmpty()?"发表评论":"回复 "+recipient).setView(form).setNegativeButton("取消",null).setPositiveButton("发送",null).create();
         dialog.setOnShowListener(d->dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
             AccountRepository.Session sending=accounts.cachedSession();
             if(sending==null||accounts.isLogoutPending()){pendingCommentResume=true;dismissDialog();requireLogin();return;}
@@ -424,12 +424,12 @@ public final class CommunityPanel implements AutoCloseable {
         }));dialog.show();
     }
     private void confirmDeleteComment(String id) {
-        if(writing)return;dialog=new AlertDialog.Builder(activity).setTitle("删除这条评论？").setMessage("删除后其他用户将无法查看这条内容。").setNegativeButton("取消",null)
+        if(writing)return;dialog=new AppDialog.Builder(activity).setTitle("删除这条评论？").setMessage("删除后其他用户将无法查看这条内容。").setNegativeButton("取消",null)
                 .setPositiveButton("删除",(d,w)->write(()->api.write("DELETE","/community/comments/"+id(id),body()),r->loadComments(false))).create();dialog.show();
     }
     private void reportComment(String id) {
         if(!requireLogin()||writing)return;String[] reasons={"广告或垃圾信息","辱骂或骚扰","涉嫌侵权","其他不当内容"};
-        dialog=new AlertDialog.Builder(activity).setTitle("举报原因").setItems(reasons,(d,w)->write(()->api.write("POST","/community/comments/"+id(id)+"/report",body("reason",reasons[w],"idempotencyKey",UUID.randomUUID().toString())),r->feedback("举报已收到，管理员会进行核查。"))).setNegativeButton("取消",null).create();dialog.show();
+        dialog=new AppDialog.Builder(activity).setTitle("举报原因").setItems(reasons,(d,w)->write(()->api.write("POST","/community/comments/"+id(id)+"/report",body("reason",reasons[w],"idempotencyKey",UUID.randomUUID().toString())),r->feedback("举报已收到，管理员会进行核查。"))).setNegativeButton("取消",null).create();dialog.show();
     }
     private void loadSubmissions() {
         load(()->api.get("/community/submissions?page="+page+"&pageSize=20",true),result->{try{submissions.clear();submissions.addAll(items(result));hasMore=submissions.size()<number(result,"total",submissions.size());}catch(IOException e){message=e.getMessage();}changed();});

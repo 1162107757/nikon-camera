@@ -94,6 +94,18 @@ public final class NcpPictureControlConverter {
                 sharpening, saturation, hue, sha256(source), sha256(curve), sha256(data));
     }
 
+    /** Package-only projection builder; transport entry points independently validate the full dataset. */
+    static Conversion adapted(byte[] original, byte[] wire, String explanation) throws IOException {
+        if (original == null || wire == null || wire.length != WIRE_HEADER_BYTES + CURVE_BYTES
+                || wire[0] < 1 || wire[0] > 6 || wire[1] != 0) throw unsupported("适配数据结构无效。");
+        validateCurve(Arrays.copyOfRange(wire, WIRE_HEADER_BYTES, wire.length));
+        Conversion result = new Conversion(wire, readName(wire, 2), wire[0],
+                wire[26], wire[27], wire[25] / 4, wire[30] / 4, wire[31] / 4,
+                sha256(original), sha256(Arrays.copyOfRange(wire, 36, wire.length)), sha256(wire));
+        result.explanation = explanation;
+        return result;
+    }
+
     private static String readName(byte[] source, int offset) throws IOException {
         int end = offset;
         int limit = offset + 20;
@@ -218,7 +230,10 @@ public final class NcpPictureControlConverter {
         public String curveSha256() { return curveSha256; }
         public String dataSha256() { return dataSha256; }
 
+        private String explanation;
+
         public String toDisplayText() {
+            if (explanation != null) return explanation;
             return "NCP 兼容适配预览\n名称：" + name + "，base=" + base
                     + "\n保留：锐化 " + sharpening + "、饱和度 " + saturation + "、色相 " + hue
                     + "；578 字节自定义曲线原样保留。"

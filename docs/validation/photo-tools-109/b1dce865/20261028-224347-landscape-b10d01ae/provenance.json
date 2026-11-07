@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "b1dce865a5f81bfcc6c73a6fc4ab6d8207d3a5f77ae28139394736d2c07536c0",
+  "versionCode": 112,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "358d4a1e56844ceb798314226e1d080c6fe05da1902cdb9f08a6b0f180c3865a",
+  "pass": true,
+  "scope": "Actual installed MainActivity/AlbumPanel/editor, private generated JPEGs, real native local/clone gestures, pinch rollback, apply/cancel/history/draft/global detail controls/perspective, private full reference/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification.",
+  "files": [
+    {
+      "file": "00-local-neutral-layout.png",
+      "sha256": "dc750ad4bdbc7128d5f74b6c9fd48d8f01512afd750465ad72a0a4673df3955a"
+    },
+    {
+      "file": "01-local-radial.png",
+      "sha256": "58b0124122766f461b5e2701837e9cccd2f910b39ca9226565f84f2f3f5bb6b3"
+    },
+    {
+      "file": "02-local-gradient.png",
+      "sha256": "d32f9c5cc8de76867874e0557ea3e652ecb8ba7012e3943ede4d3a4a4f48516e"
+    },
+    {
+      "file": "03-clone-repair.png",
+      "sha256": "e4cd6d20b9fd422e584d5293a7870cb2135913e93c6ecbc1d8726d50d58b214c"
+    },
+    {
+      "file": "04-editor-detail-controls.png",
+      "sha256": "707fabb47369cea79ded42c55607e546408df852b1654055b1ad57e648fbe84c"
+    },
+    {
+      "file": "05-perspective.png",
+      "sha256": "2da6a383193b07a99fda9c76f732351cb98d16ead961a4361a8d8189f789565f"
+    },
+    {
+      "file": "06-real-local-detail.png",
+      "sha256": "c0073718cb1597e2fb0e3c9f2f817d0ada3148173adbda558f82863e6fbdd16b"
+    },
+    {
+      "file": "local-rotated-open.png",
+      "sha256": "e4cd6d20b9fd422e584d5293a7870cb2135913e93c6ecbc1d8726d50d58b214c"
+    },
+    {
+      "file": "report.json",
+      "sha256": "21c3aa421a0450d9b5e79754e2c5cef063c10b9db4926e66c990f60fb652f0ab"
+    }
+  ]
+}

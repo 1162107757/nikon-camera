@@ -1,0 +1,55 @@
+{
+  "pass": true,
+  "serial": "emulator-5588",
+  "folders": [
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/body128/20261102-202810-phone-21ccbce1",
+      "local": "docs/validation/body128/native/34dcaa26/20261102-202810-phone-21ccbce1",
+      "verifiedFiles": 2,
+      "removed": true
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/body128/20261102-203108-phone-650c7124",
+      "local": "docs/validation/body128/native/34dcaa26/20261102-203108-phone-650c7124",
+      "verifiedFiles": 4,
+      "removed": true
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/body128/20261102-204651-phone-954c0f39",
+      "local": "docs/validation/body128/native/4ccb53a9/20261102-204651-phone-954c0f39",
+      "verifiedFiles": 8,
+      "removed": true
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/body128/20261102-205022-phone-474d87c1",
+      "local": "docs/validation/body128/native/4ccb53a9/20261102-205022-phone-474d87c1",
+      "verifiedFiles": 8,
+      "removed": true
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/body128/20261102-205040-font1.3-d38d9d82",
+      "local": "docs/validation/body128/native/4ccb53a9/20261102-205040-font1.3-d38d9d82",
+      "verifiedFiles": 1,
+      "removed": true
+    },
+    {
+      "remote": "/sdcard/Android/data/cc.huevia/files/body128/20261102-205057-landscape-99e97f5f",
+      "local": "docs/validation/body128/native/4ccb53a9/20261102-205057-landscape-99e97f5f",
+      "verifiedFiles": 8,
+      "removed": true
+    }
+  ],
+  "settings": {
+    "system.font_scale": "1.0",
+    "global.animator_duration_scale": "null",
+    "global.airplane_mode_on": "0",
+    "secure.immersive_mode_confirmations": "null",
+    "global.wifi_on": "1",
+    "global.mobile_data": "1"
+  },
+  "testPackageRemoved": true,
+  "mainAppStopped": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "physicalDevicesTouched": false
+}

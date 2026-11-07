@@ -1,0 +1,130 @@
+{
+  "pass": false,
+  "stage": "polished-photo-menu",
+  "candidateSha256": "01c04c8b2fc005c54e7d569b89860b94dee3d90180cde43d6d52d797cde78653",
+  "mode": "landscape",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "custom-photo-menu",
+      "pass": true
+    },
+    {
+      "name": "menu-stays-on-screen",
+      "pass": true
+    },
+    {
+      "name": "short-title-11",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-11",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-11",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-11",
+      "pass": true
+    },
+    {
+      "name": "short-title-10",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-10",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-10",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-10",
+      "pass": true
+    },
+    {
+      "name": "short-title-12",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-12",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-12",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-12",
+      "pass": true
+    },
+    {
+      "name": "short-title-20",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-20",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-20",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-20",
+      "pass": true
+    },
+    {
+      "name": "short-title-30",
+      "pass": true
+    },
+    {
+      "name": "menu-title-visible-30",
+      "pass": true
+    },
+    {
+      "name": "menu-row-touch-target-30",
+      "pass": true
+    },
+    {
+      "name": "menu-icon-30",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-visible-30",
+      "pass": true
+    },
+    {
+      "name": "menu-hint-not-truncated-30",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 2,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: Timeout menu row reachable",
+  "stack": "java.lang.AssertionError: Timeout menu row reachable\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.until(PhotoMenuProbe.java:111)\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.reveal(PhotoMenuProbe.java:82)\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.menuSliderFlow(PhotoMenuProbe.java:53)\n\tat cc.huevia.photomenuqa.PhotoMenuProbe.onStart(PhotoMenuProbe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

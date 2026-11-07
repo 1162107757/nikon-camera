@@ -1,0 +1,9 @@
+{
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "candidateApk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.23.0-beta-debug.apk",
+  "candidateApkSha256": "f7087e3aae08ccc166e591ae198e470f76ce5c622ab57c78b4e53e59eac1085f",
+  "runId": "084d5647671e49ee9a1b29e24ea34863",
+  "startedAtUtc": "2026-10-28T12:51:08.3441701Z",
+  "scope": "Private generated 12 MP JPEG and production codecs/source; no phone, camera, network, account state, gallery publication, or system setting changes."
+}

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="HueviaDialogLight" parent="AppThemeLight">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@drawable/huevia_dialog</item>
+        <item name="android:windowMinWidthMajor">88%</item>
+        <item name="android:windowMinWidthMinor">88%</item>
+    </style>
+    <style name="HueviaDialogDark" parent="AppThemeDark">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@drawable/huevia_dialog</item>
+        <item name="android:windowMinWidthMajor">88%</item>
+        <item name="android:windowMinWidthMinor">88%</item>
+    </style>
+    <style name="HueviaButton" parent="android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/huevia_button</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">@color/huevia_action_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+    <style name="HueviaEditText" parent="android:style/Widget.Material.EditText">
+        <item name="android:background">@drawable/huevia_field</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:textColor">?attr/hueText</item>
+        <item name="android:textColorHint">?attr/hueMuted</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:padding">12dp</item>
+    </style>
+    <style name="HueviaPopupText" parent="android:style/TextAppearance.Material.Body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/huevia_text</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="HueviaPopupMenu" parent="android:style/Widget.Material.PopupMenu">
+        <item name="android:popupBackground">@drawable/huevia_popup</item>
+        <item name="android:dropDownListViewStyle">@style/HueviaDropDownList</item>
+    </style>
+    <style name="HueviaListPopup" parent="android:style/Widget.Material.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/huevia_popup</item>
+    </style>
+    <style name="HueviaDropDownList" parent="android:style/Widget.Material.ListView.DropDown">
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:listSelector">?android:attr/selectableItemBackground</item>
+    </style>
+    <style name="HueviaSpinner" parent="android:style/Widget.Material.Spinner">
+        <item name="android:background">@drawable/huevia_spinner</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:popupBackground">@drawable/huevia_popup</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">36dp</item>
+    </style>
+    <style name="HueviaSpinnerItem" parent="android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/huevia_text</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="HueviaSpinnerDropDown" parent="android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/huevia_text</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:checkMark">@drawable/huevia_radio</item>
+        <item name="android:checkMarkTint">@null</item>
+    </style>
+    <style name="HueviaCheckedText" parent="android:style/Widget.Material.CheckedTextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/huevia_text</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:checkMark">@null</item>
+        <item name="android:checkMarkTint">@null</item>
+    </style>
+    <style name="HueviaCheckBox" parent="android:style/Widget.Material.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/huevia_check_button</item>
+        <item name="android:buttonTint">@null</item>
+        <item name="android:textColor">@color/huevia_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+    <style name="HueviaRadio" parent="android:style/Widget.Material.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/huevia_radio_button</item>
+        <item name="android:buttonTint">@null</item>
+        <item name="android:textColor">@color/huevia_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+    <style name="HueviaSwitch" parent="android:style/Widget.Material.CompoundButton.Switch">
+        <item name="android:thumb">@drawable/huevia_switch_thumb</item>
+        <item name="android:track">@drawable/huevia_switch_track</item>
+        <item name="android:thumbTint">@color/huevia_switch_thumb</item>
+        <item name="android:trackTint">@color/huevia_switch_track</item>
+        <item name="android:switchMinWidth">40dp</item>
+        <item name="android:switchPadding">10dp</item>
+        <item name="android:showText">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+    <style name="HueviaSeekBar" parent="android:style/Widget.Material.SeekBar">
+        <item name="android:thumb">@drawable/huevia_thumb</item>
+        <item name="android:thumbTint">?attr/hueAccent</item>
+        <item name="android:progressTint">?attr/hueAccent</item>
+        <item name="android:progressBackgroundTint">?attr/hueOutline</item>
+    </style>
+    <style name="HueviaProgress" parent="android:style/Widget.Material.ProgressBar">
+        <item name="android:indeterminateTint">?attr/hueAccent</item>
+        <item name="android:progressTint">?attr/hueAccent</item>
+    </style>
+</resources>

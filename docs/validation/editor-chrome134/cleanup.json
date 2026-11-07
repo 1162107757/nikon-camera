@@ -1,0 +1,78 @@
+{
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "runsVerified": 4,
+  "filesVerified": 16,
+  "remoteEvidenceRemoved": true,
+  "displayRestored": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "files": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095056-phone-d04dd72a/01-editor.png",
+      "sha256": "03aa8efe2d85d923212a577a4c1d923c561d340146fba6c69d13836cc55faaae"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095056-phone-d04dd72a/02-held-original.png",
+      "sha256": "5b23b2313c940aa44c124f4287133f1553dd8604ab0c81ac21343112375ed8f4"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095056-phone-d04dd72a/03-more-menu.png",
+      "sha256": "d5dce6e795f7960700c184cbf75d69b5686f143b00aa1987703ae17016eca3b8"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095056-phone-d04dd72a/report.json",
+      "sha256": "53664cc3e45835e15ec8c899ad5a52c17cb409c39d92fdbb0c443feb028e2f2b"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095117-font1.3-4b412ba1/01-editor.png",
+      "sha256": "8aff38009916b9090b2879c6f498aae40e0c1f38b09f27569be6ebdfd4776b00"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095117-font1.3-4b412ba1/02-held-original.png",
+      "sha256": "4b9d6775c2f436179593bf335477bcb6da7fe71d504362b7267e228243eca51a"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095117-font1.3-4b412ba1/03-more-menu.png",
+      "sha256": "32bad0f768c60b73e4699a5c440b9e538b53675f6c284de4b22b18eef661e9af"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095117-font1.3-4b412ba1/report.json",
+      "sha256": "634a5f85a3263528359e19bcbabb92ae612067a42046a567a8d86aa3bf3f01a6"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095135-landscape-3bfd5de5/01-editor.png",
+      "sha256": "2237b8aa012c6dba9f9bb0ca7903d1be6eecf5a515f6ae9f10483cf611f105a9"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095135-landscape-3bfd5de5/02-held-original.png",
+      "sha256": "1cb854c946891b1a622fdf12aced60bc9b8099381a98e73e0f4ce9748dc9ff22"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095135-landscape-3bfd5de5/03-more-menu.png",
+      "sha256": "2c1637eccdfc45e754aba04780368eebf86647a7eb4daeb2065a4363c8775348"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095135-landscape-3bfd5de5/report.json",
+      "sha256": "2b0e24f3d7fc4019a1509b049ea8d682ff6efd5e594df0176cd7e687f058fa01"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095153-tablet-5583da3e/01-editor.png",
+      "sha256": "e86a5aeadfa689ae988cef8f528efaaae1c4c9abb6a1a6e6e6da57f186fbf3b6"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095153-tablet-5583da3e/02-held-original.png",
+      "sha256": "af2da48d92e7f8bb8567bc2eca5a69aee1255847a7260993effa68b37a85ec70"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095153-tablet-5583da3e/03-more-menu.png",
+      "sha256": "cdf9341a3d56f26e8838bf2ee49df9d3eb480e00ea67f1d25a7d28176cb905be"
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/editor-chrome134/20261105-095153-tablet-5583da3e/report.json",
+      "sha256": "2183e0bb15647d87229a3e74a5ee2edb1e198c9b4642a811987f86f84128f29d"
+    }
+  ],
+  "ownedEmulatorCloseRequested": true,
+  "ownedEmulatorClosed": true
+}

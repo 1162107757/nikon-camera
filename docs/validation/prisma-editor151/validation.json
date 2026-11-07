@@ -1,0 +1,253 @@
+{
+  "versionCode": 151,
+  "versionName": "0.29.0-beta",
+  "apk": "dist/huevia-0.29.0-beta-debug.apk",
+  "sha256": "2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad",
+  "bytes": 33606103,
+  "uiInputs": 305,
+  "inputsStable": true,
+  "filmstripGapDp": 14,
+  "installedMatches": true,
+  "signature": {
+    "v2": true,
+    "v3": true
+  },
+  "matrix": [
+    {
+      "mode": "phone",
+      "checks": 57,
+      "pass": true,
+      "runId": "20261107-132107-phone-e00731",
+      "captures": 3,
+      "layout": {
+        "density": 3,
+        "fontScale": 1,
+        "workspaceWidthDp": 390,
+        "workspaceHeightDp": 844,
+        "topInsetDp": 52,
+        "bottomInsetDp": 24,
+        "photoWidthDp": 330.3999938964844,
+        "photoHeightDp": 413,
+        "panelHeightDp": 184,
+        "primaryHeightDp": 67
+      },
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "font",
+      "checks": 57,
+      "pass": true,
+      "runId": "20261107-132119-font-d8660f",
+      "captures": 3,
+      "layout": {
+        "density": 3,
+        "fontScale": 1.2999999523162842,
+        "workspaceWidthDp": 390,
+        "workspaceHeightDp": 844,
+        "topInsetDp": 52,
+        "bottomInsetDp": 24,
+        "photoWidthDp": 270.1333312988281,
+        "photoHeightDp": 337.6666564941406,
+        "panelHeightDp": 239.3333282470703,
+        "primaryHeightDp": 87
+      },
+      "fixtureCleaned": true
+    }
+  ],
+  "totalAssertionExecutions": 114,
+  "assertionsRepeatAcrossModes": true,
+  "coreSuites": 6,
+  "scope": "Native editor design, prototype spacing correction, split comparison, inline composition and existing editing entry regressions",
+  "historicalFailures": [
+    {
+      "kind": "fixture",
+      "detail": "Fixture initially outside committed camera-album directory; fixture corrected, no product change"
+    },
+    {
+      "kind": "fixture",
+      "detail": "A synthetic preset hue exceeded the existing supported range; fixture corrected, no product relaxation"
+    },
+    {
+      "kind": "product",
+      "candidate": "59b21acc7c38dd05cce4c703a14408f4067f4f648ab811b5497139a5efcfe6be",
+      "detail": "Seam drag incorrectly triggered photo single-tap chrome hiding; fixed and verified on final candidate"
+    }
+  ],
+  "notClaimed": [
+    "physical phone acceptance",
+    "real camera connectivity",
+    "new production preset library content",
+    "public release",
+    "full end-to-end MediaStore export in this UI pass"
+  ],
+  "nativeCaptureDirectory": "round/native",
+  "reviewFixes": [
+    "compact portrait panel160dp and primary67dp recover narrow photo area",
+    "inline crop transform text white",
+    "current Prisma design and surface rules recorded"
+  ],
+  "previousCandidate": {
+    "sha256": "44416a1d563eaadfc91667943ab8cf3dcddbfd2d8b85395317a340b72ff55ba5",
+    "captures": "native",
+    "records": "first-candidate/validation.json"
+  },
+  "refinement": "User requested rounder undo/redo circular arrows",
+  "productionDelta": [
+    "app/src/main/java/cc/huevia/ui/AppIcon.java"
+  ],
+  "layoutRegressionReference": {
+    "sha256": "5a39e634482924c5719a2e62f1ffae6f7c3acdf6232f1476000a4a727e26e5ac",
+    "modes": [
+      {
+        "mode": "phone",
+        "runId": "20261107-125142-phone-928425",
+        "pass": true,
+        "checks": 57,
+        "captures": 3,
+        "layout": {
+          "density": 3,
+          "fontScale": 1,
+          "workspaceWidthDp": 390,
+          "workspaceHeightDp": 844,
+          "topInsetDp": 52,
+          "bottomInsetDp": 24,
+          "photoWidthDp": 330.3999938964844,
+          "photoHeightDp": 413,
+          "panelHeightDp": 184,
+          "primaryHeightDp": 67
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      },
+      {
+        "mode": "font",
+        "runId": "20261107-125153-font-cefe2b",
+        "pass": true,
+        "checks": 57,
+        "captures": 3,
+        "layout": {
+          "density": 3,
+          "fontScale": 1.2999999523162842,
+          "workspaceWidthDp": 390,
+          "workspaceHeightDp": 844,
+          "topInsetDp": 52,
+          "bottomInsetDp": 24,
+          "photoWidthDp": 270.1333312988281,
+          "photoHeightDp": 337.6666564941406,
+          "panelHeightDp": 239.3333282470703,
+          "primaryHeightDp": 87
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      },
+      {
+        "mode": "narrow",
+        "runId": "20261107-125204-narrow-7e2b86",
+        "pass": true,
+        "checks": 58,
+        "captures": 3,
+        "layout": {
+          "density": 3,
+          "fontScale": 1.2999999523162842,
+          "workspaceWidthDp": 320,
+          "workspaceHeightDp": 640,
+          "topInsetDp": 52,
+          "bottomInsetDp": 24,
+          "photoWidthDp": 186.3999786376953,
+          "photoHeightDp": 233,
+          "panelHeightDp": 160,
+          "primaryHeightDp": 67
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      },
+      {
+        "mode": "landscape",
+        "runId": "20261107-125213-landscape-05148c",
+        "pass": true,
+        "checks": 57,
+        "captures": 3,
+        "layout": {
+          "density": 3,
+          "fontScale": 1,
+          "workspaceWidthDp": 844,
+          "workspaceHeightDp": 390,
+          "topInsetDp": 23,
+          "bottomInsetDp": 0,
+          "photoWidthDp": 293.6000061035156,
+          "photoHeightDp": 367,
+          "panelHeightDp": 184,
+          "primaryHeightDp": 67
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      },
+      {
+        "mode": "tablet",
+        "runId": "20261107-125223-tablet-4a34e9",
+        "pass": true,
+        "checks": 57,
+        "captures": 3,
+        "layout": {
+          "density": 1.5,
+          "fontScale": 1,
+          "workspaceWidthDp": 1066.6666259765625,
+          "workspaceHeightDp": 1706.6666259765625,
+          "topInsetDp": 100,
+          "bottomInsetDp": 32,
+          "photoWidthDp": 975.4666137695312,
+          "photoHeightDp": 1219.3333740234375,
+          "panelHeightDp": 184,
+          "primaryHeightDp": 67.33333587646484
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      },
+      {
+        "mode": "tablet-landscape",
+        "runId": "20261107-125236-tablet-landscape-983f51",
+        "pass": true,
+        "checks": 57,
+        "captures": 3,
+        "layout": {
+          "density": 1.5,
+          "fontScale": 1,
+          "workspaceWidthDp": 1706.6666259765625,
+          "workspaceHeightDp": 1066.6666259765625,
+          "topInsetDp": 62.66666793823242,
+          "bottomInsetDp": 32,
+          "photoWidthDp": 777.5999145507812,
+          "photoHeightDp": 972,
+          "panelHeightDp": 184,
+          "primaryHeightDp": 67.33333587646484
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      },
+      {
+        "mode": "dark",
+        "runId": "20261107-125246-dark-e20a7e",
+        "pass": true,
+        "checks": 57,
+        "captures": 3,
+        "layout": {
+          "density": 3,
+          "fontScale": 1,
+          "workspaceWidthDp": 390,
+          "workspaceHeightDp": 844,
+          "topInsetDp": 52,
+          "bottomInsetDp": 24,
+          "photoWidthDp": 330.3999938964844,
+          "photoHeightDp": 413,
+          "panelHeightDp": 184,
+          "primaryHeightDp": 67
+        },
+        "sourceUnchanged": true,
+        "fixtureCleaned": true
+      }
+    ],
+    "captures": "final/native",
+    "sourceEquivalence": "All304other production UI inputs unchanged; only the shared undo/redo glyph geometry changed"
+  },
+  "historicalFullLayoutAssertionExecutions": 400
+}

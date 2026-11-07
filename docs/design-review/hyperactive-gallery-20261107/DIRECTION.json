@@ -1,0 +1,21 @@
+{
+  "scope": "ONLY four home tabs, per user clarification. No image processing/editor/detail/export design.",
+  "reference": "https://dribbble.com/shots/27683076--Product-design-for-photo-gallery-mobile-app-Hyperactive",
+  "direction": "User-pinned warm-white photographic gallery, peach atmosphere, white/charcoal floating controls and compact translucent home navigation. Main four home tabs only.",
+  "mode": "Operate",
+  "workflow": "Code-native clickable prototype consistent with existing project prototype workflow; one pinned design requested, no alternate selection round",
+  "seed": {
+    "key": "edc4baaf",
+    "index": 7,
+    "status": "degraded without catalog challengers; explicit user visual reference overrides roll"
+  },
+  "surfaces": [
+    "presets home",
+    "sync home with camera/live/downloaded modes",
+    "album home with application/phone sources",
+    "settings home"
+  ],
+  "truth": "Current downstream workflows retain their existing design; homepage prototype demonstrates navigation, classification, selection, menus and transmission state only.",
+  "limits": "Design review prototype, no native build/install/publication/real camera/photo export",
+  "qualityBar": "User reference main gallery image and current app functional constraints; compact type and even concentric selection insets."
+}

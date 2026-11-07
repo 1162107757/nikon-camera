@@ -1,0 +1,28 @@
+{
+  "candidateSha256": "df4840be660ba759da3fd737462fd8a54806d67732ef67bb668ebba8d3bc06c6",
+  "versionCode": 136,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font2.0",
+  "probeSha256": "b7b1fcec67b1992b4d98743e7eddf0e48714ee4664e6410c7d2d37ba8ef3fe2c",
+  "pass": false,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "00-photo-menu.png",
+      "sha256": "8b53d9be1cb2584d6ba3492c6101628f3f3e9d6d0472c49e1f0090607002bf5d"
+    },
+    {
+      "file": "01-grouped-actions.png",
+      "sha256": "8b53d9be1cb2584d6ba3492c6101628f3f3e9d6d0472c49e1f0090607002bf5d"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "2ad78ed5dae9707c8544f32ba6c3815a7e916c0108800ef541dfda41075958c3"
+    },
+    {
+      "file": "report.json",
+      "sha256": "32ba1a1ba686f5f7dfc9cdd49c3755b82711ce81c914873ac21c3341cfbd1c03"
+    }
+  ]
+}

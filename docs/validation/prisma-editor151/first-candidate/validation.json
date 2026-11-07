@@ -1,0 +1,106 @@
+{
+  "versionCode": 151,
+  "versionName": "0.29.0-beta",
+  "apk": "dist/huevia-0.29.0-beta-debug.apk",
+  "sha256": "44416a1d563eaadfc91667943ab8cf3dcddbfd2d8b85395317a340b72ff55ba5",
+  "bytes": 33606103,
+  "uiInputs": 305,
+  "inputsStable": true,
+  "filmstripGapDp": 14,
+  "installedMatches": true,
+  "signature": {
+    "v2": true,
+    "v3": true
+  },
+  "matrix": [
+    {
+      "mode": "phone",
+      "runId": "20261107-122738-phone-6189af",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "font",
+      "runId": "20261107-122936-font-892196",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "narrow",
+      "runId": "20261107-122947-narrow-44d61d",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261107-122956-landscape-2792c2",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "tablet",
+      "runId": "20261107-123005-tablet-31d062",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "tablet-landscape",
+      "runId": "20261107-123018-tablet-landscape-ae75b2",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    },
+    {
+      "mode": "dark",
+      "runId": "20261107-123029-dark-a29f29",
+      "checks": 57,
+      "pass": true,
+      "captures": 3,
+      "sourceUnchanged": true,
+      "fixtureCleaned": true
+    }
+  ],
+  "totalAssertionExecutions": 399,
+  "assertionsRepeatAcrossModes": true,
+  "coreSuites": 6,
+  "scope": "Native editor design, prototype spacing correction, split comparison, inline composition and existing editing entry regressions",
+  "historicalFailures": [
+    {
+      "kind": "fixture",
+      "detail": "Fixture initially outside committed camera-album directory; fixture corrected, no product change"
+    },
+    {
+      "kind": "fixture",
+      "detail": "A synthetic preset hue exceeded the existing supported range; fixture corrected, no product relaxation"
+    },
+    {
+      "kind": "product",
+      "candidate": "59b21acc7c38dd05cce4c703a14408f4067f4f648ab811b5497139a5efcfe6be",
+      "detail": "Seam drag incorrectly triggered photo single-tap chrome hiding; fixed and verified on final candidate"
+    }
+  ],
+  "notClaimed": [
+    "physical phone acceptance",
+    "real camera connectivity",
+    "new production preset library content",
+    "public release",
+    "full end-to-end MediaStore export in this UI pass"
+  ]
+}

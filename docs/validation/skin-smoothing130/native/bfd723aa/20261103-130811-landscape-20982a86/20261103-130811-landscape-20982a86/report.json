@@ -1,0 +1,76 @@
+{
+  "pass": true,
+  "stage": "ui-complete",
+  "candidateSha256": "bfd723aa10bd1fcaacd148d7440b311db6a87a490849c3497c38e83064193b38",
+  "mode": "landscape",
+  "scope": "ui",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "automatic-skin-nonempty",
+      "pass": true
+    },
+    {
+      "name": "no-selected-face-required",
+      "pass": true
+    },
+    {
+      "name": "skin-colour-and-smoothing-peers",
+      "pass": true
+    },
+    {
+      "name": "smoothing-default-zero",
+      "pass": true
+    },
+    {
+      "name": "face-controls-hidden",
+      "pass": true
+    },
+    {
+      "name": "native-slider-enabled-after-detection",
+      "pass": true
+    },
+    {
+      "name": "native-gesture-adjusts-smoothing",
+      "pass": true
+    },
+    {
+      "name": "single-gesture-history",
+      "pass": true
+    },
+    {
+      "name": "only-detected-skin-pixels-changed",
+      "pass": true
+    },
+    {
+      "name": "undo-restores-zero",
+      "pass": true
+    },
+    {
+      "name": "redo-restores-strength",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 2,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true
+}

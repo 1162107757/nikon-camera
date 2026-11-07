@@ -1,0 +1,22 @@
+{
+  "pass": true,
+  "ownedSerial": "emulator-5588",
+  "startedProcessId": 37024,
+  "devicesBefore": "List of devices attached\r\nemulator-5588\tdevice",
+  "emulatorClosed": true,
+  "observations": [
+    {
+      "poll": 1,
+      "ownedPresent": true
+    },
+    {
+      "poll": 2,
+      "ownedPresent": true
+    },
+    {
+      "poll": 3,
+      "ownedPresent": false
+    }
+  ],
+  "otherDevicesTouched": false
+}

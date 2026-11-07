@@ -1,0 +1,7 @@
+{
+  "status": "exact-hash-reproduced-from-original-aligned-APK",
+  "originalWorkDirectory": "b7853d7861ec4867963596def3187c28",
+  "probeSha256": "1985d3ec7a9e398f756c77561c5c21a7db6dc29a634b541f2b36903f9a8c5c52",
+  "sourceTextRetained": false,
+  "bytecodeRetained": true
+}

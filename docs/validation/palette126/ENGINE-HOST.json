@@ -1,0 +1,119 @@
+{
+  "checkCount": 2616642,
+  "legacyPixelCount": 294912,
+  "nativeDeviceTest": false,
+  "wire": {
+    "storedPaletteRecipe": "PRC4",
+    "storedPaletteRegion": "v4",
+    "defaultGlobalDraft": "PED6 (unchanged)",
+    "paletteFieldBytes": 13,
+    "defaultRegions": "v1/v2/v3 (unchanged)",
+    "defaultRecipe": "PRC3 (unchanged)",
+    "storedGlobalPalette": "PED7"
+  },
+  "inputs": [
+    {
+      "sha256": "15938e1dd8592960dad70feb4a9f3a2a29089425d41febb586604fbfd010ddcb",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoColorPalette.java"
+    },
+    {
+      "sha256": "51e927b44cb45b7b5710f8380823d4d8476d89a1ed12c0e084c68558e95b6043",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java"
+    },
+    {
+      "sha256": "b34ec2d4b409c847d91527de1ec79c239b4646f1dffed3839f2d9db031bd68bb",
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java"
+    },
+    {
+      "sha256": "a128c20fe4284fe3c9df7b7b7917260a2356dfa1e96815b9c9d474bda476ab11",
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java"
+    },
+    {
+      "sha256": "e024c5a5e9071b3ed6e0f3c44b52a10701336197a1f1227f9564febf8712db05",
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+    },
+    {
+      "sha256": "3825812e310ac0612e67b3aebe9b9b75fc329006da929b0752d23f47f56c511c",
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java"
+    },
+    {
+      "sha256": "dd4fc1be0d0385674062c04d7e57b8d561896dcd06b5a846b186461bbcba9100",
+      "path": "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java"
+    },
+    {
+      "sha256": "f96eca8acdbe6863213380ac9078ce912c23b2f09c79256e9acd0f344f7535fc",
+      "path": "tests/palette-host/cc/huevia/ncp/PaletteLegacyVectors.java"
+    },
+    {
+      "sha256": "5a1cf6112fdebb47201e62183e8e6a4ac9058cbed24e2b4ec619c4f53390aebb",
+      "path": "tests/palette-host/cc/huevia/ncp/PhotoColorPaletteTest.java"
+    },
+    {
+      "sha256": "fe092426c7ffaaeaa9951a30a856e55d91d73621582bf9d72dae926e8b33c3f5",
+      "path": "tests/palette-host/legacy-vectors.txt"
+    },
+    {
+      "sha256": "fdb57888a1fbb2ea38c79137d1fc20b11054a18c5cd27b7845f08b15e7234329",
+      "path": "tests/palette-host/run-host.ps1"
+    }
+  ],
+  "newPaletteCheckCount": 513748,
+  "tests": [
+    {
+      "name": "cc.huevia.ncp.PaletteLegacyVectors",
+      "exitCode": 0,
+      "sha256": "fe092426c7ffaaeaa9951a30a856e55d91d73621582bf9d72dae926e8b33c3f5",
+      "log": ".tooling/palette126/engine/PaletteLegacyVectors.log"
+    },
+    {
+      "name": "cc.huevia.ncp.PhotoColorPaletteTest",
+      "exitCode": 0,
+      "sha256": "5023c8035afb9fb3923485e7d3ffc3cf919d107782db4e9961a747798db5325c",
+      "log": ".tooling/palette126/engine/PhotoColorPaletteTest.log"
+    },
+    {
+      "name": "cc.huevia.album.PhotoAdjustmentsTest",
+      "exitCode": 0,
+      "sha256": "c406f48c663732c678fc2c40035cc3528f6f795cad2943d0b6eb7f70cf697256",
+      "log": ".tooling/palette126/engine/PhotoAdjustmentsTest.log"
+    },
+    {
+      "name": "cc.huevia.album.PhotoToolsPersistenceTest",
+      "exitCode": 0,
+      "sha256": "7b775916bfab7d14edfcda94c3b8fa6a44e6986008505f9d15c07c61cd14ee20",
+      "log": ".tooling/palette126/engine/PhotoToolsPersistenceTest.log"
+    },
+    {
+      "name": "cc.huevia.album.PhotoColorAdjustmentsTest",
+      "exitCode": 0,
+      "sha256": "5bd5a66d52d5e0ed96b2ea77a672c2c4d3f399d2a7a0e71e23d5f4c75bb512b9",
+      "log": ".tooling/palette126/engine/PhotoColorAdjustmentsTest.log"
+    },
+    {
+      "name": "cc.huevia.ncp.AdjustmentRegionTest",
+      "exitCode": 0,
+      "sha256": "14b59fe534d257c8889590fea2801f1ed01225500ef4f9d24382fc5f1bff038b",
+      "log": ".tooling/palette126/engine/AdjustmentRegionTest.log"
+    }
+  ],
+  "syntheticDataOnly": true,
+  "status": "host-pass",
+  "legacyPixelAndWireExact": true,
+  "limitations": [
+    "Warm hue protection is a smooth colour heuristic, not semantic skin segmentation.",
+    "No claim of matching proprietary vivo or Apple image algorithms."
+  ],
+  "model": "photo-colour-tone-palette-v1",
+  "coverage": [
+    "Strict limits, unknown versions, truncated data, authenticated invalid global/region/recipe fields",
+    "Zero intensity packed ARGB, alpha and hidden transparent RGB",
+    "Tone monotonicity, fixed black/white endpoints, opposite shadow/highlight movement",
+    "Independent 17 sliders, curves/HSL, cache/version identity",
+    "Draft, recipe, rename, apply, colour copy, copy undo",
+    "Legacy PED1-6 and PRC1-3 readers",
+    "Per-pixel and streaming global output equivalence",
+    "Exact mask-exterior preservation, 80x54 versus 240x162 normalized coordinates"
+  ],
+  "protectedOutsidePixels": 3801,
+  "protectedOutsideChanges": 0
+}

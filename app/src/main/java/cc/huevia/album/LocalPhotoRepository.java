@@ -140,7 +140,7 @@ public final class LocalPhotoRepository {
             check(cancel);
             if (!directory.exists()) continue;
             File[] files = directory.listFiles(file -> file.isFile() && jpeg(file.getName()));
-            if (files == null) throw new IOException("无法读取 App 内照片，请刷新重试。");
+            if (files == null) throw new IOException("无法读取 应用相册照片，请刷新重试。");
             for (File file : files) {
                 check(cancel); String name = file.getName(); int marker = name.indexOf("__");
                 completed.add(new DownloadedPhoto(file, marker < 0 ? name : name.substring(marker + 2)));
@@ -148,6 +148,10 @@ public final class LocalPhotoRepository {
         }
         if (catalog == null) catalog = new PhotoLibraryCatalog(context.getFilesDir(), context.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
         return catalog.list(dates.read(completed, cancel), cancel);
+    }
+    public void selectVersion(PhotoLibraryCatalog.PhotoGroup group, DownloadedPhoto photo) throws IOException {
+        if (catalog == null) throw new IOException("照片列表已变化，请刷新后重试。");
+        catalog.selectDisplay(group, photo);
     }
     /** Exact JPEG bytes are copied; PNG source bytes are retained beside a white-flattened JPEG working copy. */
     public DownloadedPhoto importPhoto(PhonePhoto selected, BooleanSupplier cancel) throws IOException {
@@ -209,7 +213,7 @@ public final class LocalPhotoRepository {
             if (target.exists()) {
                 PhotoPreviewCache.validateJpeg(target, target.length());
                 if (before.png()) verifyPngWorkingCopy(key, before, sha, target, cancel);
-                else if (!sha.equals(hashFile(target, cancel))) throw new IOException("App 内工作副本已变化，请移除该副本后重试。");
+                else if (!sha.equals(hashFile(target, cancel))) throw new IOException("应用相册工作副本已变化，请移除该副本后重试。");
                 return new DownloadedPhoto(target, filename, "", "", before.date > 0 ? before.date : target.lastModified());
             }
             File retained = null;
@@ -225,7 +229,7 @@ public final class LocalPhotoRepository {
             File working = before.png() ? normalized : temporary;
             writeSourceRecord(key, before, sha, retained == null ? "" : retained.getName(), hashFile(working, cancel), working.length());
             if (before.png()) {
-                if (!normalized.renameTo(target)) throw new IOException("无法保存 App 内工作副本。"); normalized = null;
+                if (!normalized.renameTo(target)) throw new IOException("无法保存 应用相册工作副本。"); normalized = null;
             } else atomicCopy(temporary, target, cancel);
             long date = before.date > 0 ? before.date : System.currentTimeMillis(); target.setLastModified(date);
             return new DownloadedPhoto(target, filename, "", "", date);
@@ -382,6 +386,6 @@ public final class LocalPhotoRepository {
         return value + (png ? "_PNG白底.jpg" : ".jpg");
     }
     private static boolean jpeg(String name) { String lower = name.toLowerCase(Locale.ROOT); return lower.endsWith(".jpg") || lower.endsWith(".jpeg"); }
-    private static void mkdir(File directory) throws IOException { if (!directory.isDirectory() && !directory.mkdirs()) throw new IOException("无法创建 App 内照片目录。"); }
+    private static void mkdir(File directory) throws IOException { if (!directory.isDirectory() && !directory.mkdirs()) throw new IOException("无法创建 应用相册照片目录。"); }
     private static void check(BooleanSupplier cancel) throws InterruptedIOException { if (cancel.getAsBoolean() || Thread.currentThread().isInterrupted()) throw new InterruptedIOException("照片读取已取消。"); }
 }

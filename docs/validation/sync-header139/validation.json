@@ -1,0 +1,69 @@
+{
+  "versionCode": 139,
+  "versionName": "0.28.2-beta",
+  "apk": "dist/huevia-0.28.2-beta-debug.apk",
+  "apkSha256": "0a3595a0793060439e1e980c8abc02e199375163a64350c0bd98cda5ce083de2",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "published": false,
+  "device": {
+    "type": "owned read-only Pixel_9 emulator",
+    "serial": "emulator-5588",
+    "size": "1080x2424",
+    "density": 420,
+    "physicalPhoneConnected": false
+  },
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 37,
+      "report": "native/phone/report.json"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 37,
+      "report": "native/font1.3/report.json"
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 37,
+      "report": "native/dark/report.json"
+    },
+    {
+      "mode": "tablet",
+      "pass": true,
+      "checks": 37,
+      "report": "native/tablet/report.json",
+      "viewport": {
+        "width": 1600,
+        "height": 2560,
+        "density": 240,
+        "type": "expanded/tablet viewport emulated on the owned Pixel_9 Android emulator"
+      }
+    }
+  ],
+  "source": {
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "a4628bd31ce8f13cf2e1b02ae43fcfaeb4236563547ee8c8a417e5b12c7e9383",
+    "app/build.gradle": "eedc05be25c95f6d4b7f60f8ca18b9328599771e589b5f59411c98ac9cdf2c3f",
+    "tests/sync-polish-device-probe/src/cc/huevia/syncpolishqa/SyncPolishProbe.java": "9cf04005fdbea6e353cae0db6c75c7a2bd3029b2a57aaa5011c588404ec78d5c"
+  },
+  "limitations": [
+    "Emulator visual/functional evidence only; no physical phone or camera acceptance."
+  ],
+  "review": {
+    "status": "ship",
+    "initialDisposition": "recapture",
+    "reason": "Tablet captures were missing from the first packet; added actual expanded-viewport list and selection captures without source changes.",
+    "finalDisposition": "ship",
+    "materialFixes": [],
+    "record": ".impeccable/review/sync-header139/review.md"
+  },
+  "installedApkSha256": "0a3595a0793060439e1e980c8abc02e199375163a64350c0bd98cda5ce083de2",
+  "installedApkMatches": true,
+  "nativeExecutions": 148
+}

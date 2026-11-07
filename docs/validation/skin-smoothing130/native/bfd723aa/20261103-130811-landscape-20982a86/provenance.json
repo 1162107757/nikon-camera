@@ -1,0 +1,24 @@
+{
+  "candidateSha256": "bfd723aa10bd1fcaacd148d7440b311db6a87a490849c3497c38e83064193b38",
+  "versionCode": 130,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "bb8bd60db5ce9f43da0cbba3583ae3c5448f0da7b708440dbb84aec171b7e3c7",
+  "pass": true,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "01-skin-smoothing.png",
+      "sha256": "c8c8fee6e572ae14714a615c2b195527e8fb454afbf9199d6a0440c4d389f05e"
+    },
+    {
+      "file": "02-adjusted-skin.png",
+      "sha256": "9c57f186ecac3281a4fbf3f3eb1fee03c22baf9a413422b0b0161c0977e3e27c"
+    },
+    {
+      "file": "report.json",
+      "sha256": "fe224fd53cfb849a83c2402a02cf7832ae8d15d2c277b6969ea6a188462ed866"
+    }
+  ]
+}

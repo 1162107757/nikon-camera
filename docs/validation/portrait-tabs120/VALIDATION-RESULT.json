@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "versionCode": 120,
+  "versionName": "0.23.9-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.9-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "24c82ca0d881439960eecf494a10dfbc7cb2f8c35eb0d3a3d27d29b822696604",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "buildIdentitySha256": "0e241ca7ef312afc10d9733168d0e4235fefd821cc19e9cf6fd89dd6f47eb250",
+  "productionInputsVerified": 288,
+  "packagingAuditSha256": "4d21071d4f3d8e4e12d38e7b739d4dbf63ae5d362dd5cab76e17d25ee893c754",
+  "nativeSummarySha256": "99c818b90edfdb0d425239e75da52435fd834c50ffad62c8502ce41edc78c09d",
+  "nativeChecks": 1895,
+  "nativeScreenshots": 15,
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "checks": 615,
+      "screenshots": 5,
+      "reportPath": "docs/validation/portrait-tools/24c82ca0/20261030-105637-phone-1cc44dc3/20261030-105637-phone-1cc44dc3/report.json",
+      "reportSha256": "c535b310752ee882109927e0b44fba19c1aa77944a75d99a824f1adae4453e86",
+      "cleanupPath": "docs/validation/portrait-tools/24c82ca0/20261030-105637-phone-1cc44dc3/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "font1.3",
+      "checks": 615,
+      "screenshots": 5,
+      "reportPath": "docs/validation/portrait-tools/24c82ca0/20261030-105912-font1.3-51644d30/20261030-105912-font1.3-51644d30/report.json",
+      "reportSha256": "d329c1760f0341229cca6427f16e742726d1ebb7dd0537de7de3ceb26331574b",
+      "cleanupPath": "docs/validation/portrait-tools/24c82ca0/20261030-105912-font1.3-51644d30/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    },
+    {
+      "mode": "landscape",
+      "checks": 665,
+      "screenshots": 5,
+      "reportPath": "docs/validation/portrait-tools/24c82ca0/20261030-110016-landscape-46cfccad/20261030-110016-landscape-46cfccad/report.json",
+      "reportSha256": "20b7e926b150e85cccde6c0241110753569ae6be4ea442e2ccd32843be4264eb",
+      "cleanupPath": "docs/validation/portrait-tools/24c82ca0/20261030-110016-landscape-46cfccad/cleanup.json",
+      "cleanupSha256": "2ea3afafade77972de0d115aebfc3209aabe331202dcb4a417c40b311236c3ba"
+    }
+  ],
+  "excludedInfrastructureAttempt": [
+    {
+      "reportPath": "docs/validation/portrait-tools/24c82ca0/20261030-105736-font1.3-2822926c/20261030-105736-font1.3-2822926c/report.json",
+      "sha256": "98bb51c18f79ce6797817d6a6061049e336ac4bb2de06a9e401a75074312fb3a",
+      "reason": "Android first-use fullscreen coach overlay blocked menu locator; successful retry retained separately."
+    }
+  ],
+  "visualReview": "Root compared actual primary menu and secondary skin/face native screenshots across phone, large font and landscape. One batched visual assessment; no UI revision required.",
+  "scope": "UI appearance and menu interaction only. Unchanged model/host/export tests not rerun.",
+  "publication": "local-package-not-published",
+  "automationCreated": false
+}

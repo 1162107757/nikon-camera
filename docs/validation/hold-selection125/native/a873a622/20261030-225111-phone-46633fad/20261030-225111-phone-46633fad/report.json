@@ -1,0 +1,168 @@
+{
+  "pass": false,
+  "stage": "hold-interruption-and-readonly-state",
+  "mode": "phone",
+  "candidateSha256": "a873a6226ae1cb5d3cccff20450593f2974915560ead8956adc03d58a5677ce1",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "empty-mask-inspection-disabled",
+      "pass": true
+    },
+    {
+      "name": "live-stroke-tracking",
+      "pass": true
+    },
+    {
+      "name": "live-overlay-before-up-visible",
+      "pass": true
+    },
+    {
+      "name": "live-no-preview-timer",
+      "pass": true
+    },
+    {
+      "name": "unreleased-stroke-not-committed",
+      "pass": true
+    },
+    {
+      "name": "previewFlashStep-expected-0",
+      "pass": true
+    },
+    {
+      "name": "stroke-release-committed-once",
+      "pass": true
+    },
+    {
+      "name": "live-matches-first-confirmation",
+      "pass": true
+    },
+    {
+      "name": "two-strong-pulses-match",
+      "pass": true
+    },
+    {
+      "name": "idle-after-pulses-is-clean",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-mutate-region",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-add-history",
+      "pass": true
+    },
+    {
+      "name": "pulse-does-not-rewrite-mask",
+      "pass": true
+    },
+    {
+      "name": "strong-overlay-more-visible",
+      "pass": true
+    },
+    {
+      "name": "outside-overlay-unchanged",
+      "pass": true
+    },
+    {
+      "name": "actual-right-hold-button-tag",
+      "pass": true
+    },
+    {
+      "name": "right-hold-button-visible",
+      "pass": true
+    },
+    {
+      "name": "right-hold-target-48dp",
+      "pass": true
+    },
+    {
+      "name": "right-hold-within-stage",
+      "pass": true
+    },
+    {
+      "name": "right-hold-on-right",
+      "pass": true
+    },
+    {
+      "name": "right-hold-above-status",
+      "pass": true
+    },
+    {
+      "name": "button-down-holds-mask",
+      "pass": true
+    },
+    {
+      "name": "held-shows-full-mask",
+      "pass": true
+    },
+    {
+      "name": "button-release-hides-immediately",
+      "pass": true
+    },
+    {
+      "name": "button-cancel-hides",
+      "pass": true
+    },
+    {
+      "name": "button-moving-out-hides",
+      "pass": true
+    },
+    {
+      "name": "moving-back-does-not-stick",
+      "pass": true
+    },
+    {
+      "name": "a11y-click-temporarily-shows",
+      "pass": true
+    },
+    {
+      "name": "a11y-rest-is-clean",
+      "pass": true
+    },
+    {
+      "name": "mask-inspection-keeps-region-and-history",
+      "pass": true
+    },
+    {
+      "name": "new-stroke-cancels-held-mask",
+      "pass": false
+    }
+  ],
+  "measurements": [
+    {
+      "case": "strong-versus-existing-soft",
+      "changedPixels": 41622,
+      "protectedPixels": 1725836,
+      "outsideDifferences": 0,
+      "strongToSoftTotalDeltaRatio": 2.847386674614572
+    },
+    {
+      "case": "live-and-confirmation",
+      "firstToGapMs": 222,
+      "gapToSecondMs": 188,
+      "secondToHiddenMs": 223
+    }
+  ],
+  "screenshots": 5,
+  "persistentFixturesCreated": false,
+  "privateFixtureRemoved": true,
+  "failure": "java.lang.AssertionError: new-stroke-cancels-held-mask",
+  "stack": "java.lang.AssertionError: new-stroke-cancels-held-mask\n\tat cc.huevia.holdselectionqa.SelectionProbe.check(SelectionProbe.java:101)\n\tat cc.huevia.holdselectionqa.SelectionProbe.edgeCases(SelectionProbe.java:59)\n\tat cc.huevia.holdselectionqa.SelectionProbe.onStart(SelectionProbe.java:48)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

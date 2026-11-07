@@ -1,0 +1,18 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Portrait tools probe failed: java.lang.AssertionError: native-exactly-two-faces-selected; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\portrait-tools\\a8318b48\\20261028-204556-phone-7cf0c8cd\\20261028-204556-phone-7cf0c8cd\\report.json",
+  "errors": []
+}

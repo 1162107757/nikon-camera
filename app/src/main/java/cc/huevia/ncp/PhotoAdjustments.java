@@ -50,27 +50,38 @@ public final class PhotoAdjustments {
     private final int[] values;
     public final PhotoCurves curves;
     public final PhotoHsl hsl;
+    public final PhotoColorPalette palette;
+    public final PhotoCleanup cleanup;
     public PhotoAdjustments(int[] values) {
         this(values,PhotoCurves.NONE,PhotoHsl.NONE);
     }
     public PhotoAdjustments(int[] values,PhotoCurves curves,PhotoHsl hsl) {
+        this(values,curves,hsl,PhotoColorPalette.NONE);
+    }
+    public PhotoAdjustments(int[] values,PhotoCurves curves,PhotoHsl hsl,PhotoColorPalette palette) {
+        this(values,curves,hsl,palette,PhotoCleanup.NONE);
+    }
+    public PhotoAdjustments(int[] values,PhotoCurves curves,PhotoHsl hsl,PhotoColorPalette palette,PhotoCleanup cleanup) {
         if(values==null||(values.length!=Parameter.values().length&&values.length!=LEGACY_PARAMETER_COUNT))throw new IllegalArgumentException("基础调整数据不完整。");
         this.values=Arrays.copyOf(values,Parameter.values().length);
-        if(curves==null||hsl==null)throw new IllegalArgumentException("调色数据不完整。");
-        this.curves=curves;this.hsl=hsl;
+        if(curves==null||hsl==null||palette==null||cleanup==null)throw new IllegalArgumentException("调色数据不完整。");
+        this.curves=curves;this.hsl=hsl;this.palette=palette;this.cleanup=cleanup;
         for(Parameter p:Parameter.values())if(get(p)<p.min||get(p)>p.max)throw new IllegalArgumentException(p.label+"数值超出范围。");
     }
     public int get(Parameter p){return values[p.ordinal()];}
     public int[] values(){return values.clone();}
-    public PhotoAdjustments with(Parameter p,int value){int[] next=values();next[p.ordinal()]=value;return new PhotoAdjustments(next,curves,hsl);}
-    public PhotoAdjustments withCurves(PhotoCurves next){return new PhotoAdjustments(values,next,hsl);}
-    public PhotoAdjustments withHsl(PhotoHsl next){return new PhotoAdjustments(values,curves,next);}
-    public PhotoAdjustments copyFrom(PhotoAdjustments source,boolean basic,boolean curve,boolean colour){return new PhotoAdjustments(basic?source.values:values,curve?source.curves:curves,colour?source.hsl:hsl);}
-    public int count(){int count=curves.count()+hsl.count();for(int value:values)if(value!=0)count++;return count;}
+    public PhotoAdjustments with(Parameter p,int value){int[] next=values();next[p.ordinal()]=value;return new PhotoAdjustments(next,curves,hsl,palette,cleanup);}
+    public PhotoAdjustments withCurves(PhotoCurves next){return new PhotoAdjustments(values,next,hsl,palette,cleanup);}
+    public PhotoAdjustments withHsl(PhotoHsl next){return new PhotoAdjustments(values,curves,next,palette,cleanup);}
+    public PhotoAdjustments withPalette(PhotoColorPalette next){return new PhotoAdjustments(values,curves,hsl,next,cleanup);}
+    public PhotoAdjustments withCleanup(PhotoCleanup next){return new PhotoAdjustments(values,curves,hsl,palette,next);}
+    /** Palette belongs to the colour category, together with HSL. */
+    public PhotoAdjustments copyFrom(PhotoAdjustments source,boolean basic,boolean curve,boolean colour){return new PhotoAdjustments(basic?source.values:values,curve?source.curves:curves,colour?source.hsl:hsl,colour?source.palette:palette,basic?source.cleanup:cleanup);}
+    public int count(){int count=curves.count()+hsl.count()+(palette.isNeutral()?0:1)+(cleanup.isNeutral()?0:1);for(int value:values)if(value!=0)count++;return count;}
     public boolean isNeutral(){return count()==0;}
-    public String identity(){boolean extended=false;for(int i=LEGACY_PARAMETER_COUNT;i<values.length;i++)if(values[i]!=0)extended=true;StringBuilder s=new StringBuilder(extended?"photo-manual-detail-effects-v2":MODEL);int length=extended?values.length:LEGACY_PARAMETER_COUNT;for(int i=0;i<length;i++)s.append(':').append(values[i]);if(!curves.isNeutral())s.append(':').append(curves.identity());if(!hsl.isNeutral())s.append(':').append(hsl.identity());return s.toString();}
+    public String identity(){boolean extended=false;for(int i=LEGACY_PARAMETER_COUNT;i<values.length;i++)if(values[i]!=0)extended=true;StringBuilder s=new StringBuilder(extended?"photo-manual-detail-effects-v2":MODEL);int length=extended?values.length:LEGACY_PARAMETER_COUNT;for(int i=0;i<length;i++)s.append(':').append(values[i]);if(!curves.isNeutral())s.append(':').append(curves.identity());if(!hsl.isNeutral())s.append(':').append(hsl.identity());if(palette.hasStoredState())s.append(':').append(palette.identity());if(cleanup.hasStoredState())s.append(':').append(cleanup.identity());return s.toString();}
     public void writeAdvanced(DataOutput out)throws IOException{curves.write(out);hsl.write(out);}
-    public PhotoAdjustments readAdvanced(DataInput in)throws IOException{return new PhotoAdjustments(values,PhotoCurves.read(in),PhotoHsl.read(in));}
-    @Override public boolean equals(Object other){return other instanceof PhotoAdjustments&&Arrays.equals(values,((PhotoAdjustments)other).values)&&curves.equals(((PhotoAdjustments)other).curves)&&hsl.equals(((PhotoAdjustments)other).hsl);}
-    @Override public int hashCode(){return Arrays.hashCode(values)*31+curves.hashCode()*17+hsl.hashCode();}
+    public PhotoAdjustments readAdvanced(DataInput in)throws IOException{return new PhotoAdjustments(values,PhotoCurves.read(in),PhotoHsl.read(in),palette,cleanup);}
+    @Override public boolean equals(Object other){return other instanceof PhotoAdjustments&&Arrays.equals(values,((PhotoAdjustments)other).values)&&curves.equals(((PhotoAdjustments)other).curves)&&hsl.equals(((PhotoAdjustments)other).hsl)&&palette.equals(((PhotoAdjustments)other).palette)&&cleanup.equals(((PhotoAdjustments)other).cleanup);}
+    @Override public int hashCode(){int old=Arrays.hashCode(values)*31+curves.hashCode()*17+hsl.hashCode();if(palette.hasStoredState())old=old*31+palette.hashCode();return cleanup.hasStoredState()?old*31+cleanup.hashCode():old;}
 }

@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checks": 87,
+  "command": "tests/portrait-detection-java/run.ps1",
+  "result": "PortraitDetectionGeometryTest: 87 checks passed",
+  "scope": "Production pure-geometry methods on JVM with real Android35.jar classes available but no Bitmap/Canvas/FaceDetector execution.",
+  "inputs": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPortraitDetection.java",
+      "sha256": "1f40455e024bcfa71c24b0f3d4431fbc0ec5ed35269d3441a12c8ad9fd4ab03d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "sha256": "73cd592bcc0949a389994e6fb276f2ece7f72c7a310398bbf9037ee4e968edfe"
+    },
+    {
+      "path": "tests/portrait-detection-java/cc/huevia/album/PortraitDetectionGeometryTest.java",
+      "sha256": "4d3731c8e151ae3fe5966b6839eba5801222a143ae72f747df41e81dd3dbb05c"
+    },
+    {
+      "path": "tests/portrait-detection-java/run.ps1",
+      "sha256": "9189f0c5a9fd8439d6b4434cfba0de25bb2f616c13f904b8621482027402effa"
+    }
+  ],
+  "androidJar": {
+    "path": "D:/dev/android-sdk/platforms/android-35/android.jar",
+    "sha256": "4566663c3876e022b4fa4ced8c8697c4ab1688267f090114fd92d027b32e619b"
+  }
+}

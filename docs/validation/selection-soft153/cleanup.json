@@ -1,0 +1,8 @@
+{
+  "serial": "emulator-5596",
+  "state": "stopped",
+  "ownedFixturesRemoved": true,
+  "dataDirectoryRetained": true,
+  "note": "Existing task-owned data directory retained; no retry of previously blocked recursive cleanup.",
+  "adbDevicesAfter": "empty"
+}

@@ -1,0 +1,36 @@
+{
+  "candidateSha256": "d8c84b7b1b65ca9768ebe3f44b2441744f129ebd764affa75384620d16ea72ae",
+  "versionCode": 131,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "12b0e9cecf29a6b8d2f9bfc3f44e56b662e2366bbba96e2b51076b50129b54b5",
+  "pass": true,
+  "scope": "full",
+  "files": [
+    {
+      "file": "01-skin-upgrade.png",
+      "sha256": "af5db14b66caebba474154a1172870cb9a3eb3cdef3651ee228f03afad23175e"
+    },
+    {
+      "file": "02-directional-face-light.png",
+      "sha256": "27d6386bb934af0e0cbb35abdbd5a5a18eb3751c708636de5e0033dfa7046b85"
+    },
+    {
+      "file": "03-body-auto-position.png",
+      "sha256": "ab594c3da3b3c48072e2cd71d79b7b83492d7c38dafade0768fba9501823f0de"
+    },
+    {
+      "file": "full.jpg",
+      "sha256": "3167bb0794684790f33dca678e604d16032823140f8cb7c393a9251f08ccf56f"
+    },
+    {
+      "file": "reference.png",
+      "sha256": "2c9fa7fc9fb7b41953c66c772639418301a536dbadc033123fd787dd467c2c6d"
+    },
+    {
+      "file": "report.json",
+      "sha256": "8447d15469087001031ff39647cc153367831ad2ff617f50e6e0cd3a3dd906fd"
+    }
+  ]
+}

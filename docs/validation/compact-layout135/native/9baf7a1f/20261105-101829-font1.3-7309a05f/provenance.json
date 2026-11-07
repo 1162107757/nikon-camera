@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "9baf7a1fa9fd4b14769d79b660976d14c66300dba5eee286863b21940ae327b3",
+  "versionCode": 135,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "03afaa9310cf210ac782432cbb32357d8b1f58b271585cb04072e778ceece98e",
+  "pass": true,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "00-compact-adjustment.png",
+      "sha256": "35978265e7b48c0787fa943cb6d69b6f6b93b4a4f3312efdb1af31ec6a09b8ae"
+    },
+    {
+      "file": "00-dark-more-menu.png",
+      "sha256": "d58a63342a4dc25572f1bd942159be4e93639de323998a535bd2cb6ea3ff4090"
+    },
+    {
+      "file": "01-quick-editor.png",
+      "sha256": "6de36025dc9c2d9c7427c7189bde38d9969169aab0e3eb43f2ec534bb1a7688a"
+    },
+    {
+      "file": "02-direct-adjustment.png",
+      "sha256": "25b288740bfd53e4d6d905bbe33d822e57bce30ab00ef8e905bc8b5a35ce47c1"
+    },
+    {
+      "file": "03-portrait-main.png",
+      "sha256": "4d4c7bc5fe5549bed192ccc57b0609e966074e2924ed6b1c35ac8bda173bed32"
+    },
+    {
+      "file": "04-save-sheet.png",
+      "sha256": "b1b4801d8d541513e6b387aacc447cd14cb80e1ef542e764774bd9aee45f5b45"
+    },
+    {
+      "file": "05-photo-list.png",
+      "sha256": "26ba27f991f6d350a7fbedd6088c16535edb4191d5f69c18932414b19f7d1e81"
+    },
+    {
+      "file": "06-curve-workspace.png",
+      "sha256": "cd74cf713656824275a2f878dc60c77ab6c6ace4d7ddfe061ffcf8c0e18bf10e"
+    },
+    {
+      "file": "report.json",
+      "sha256": "65039d7487ba43bdc63999ec1fead0997fe2165eed3d2ea8cd590925d9dce511"
+    }
+  ]
+}

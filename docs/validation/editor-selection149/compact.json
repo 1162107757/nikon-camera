@@ -1,0 +1,378 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "preset-left-selects-my",
+      "pass": true
+    },
+    {
+      "name": "preset-right-selects-online",
+      "pass": true
+    },
+    {
+      "name": "preset-start-edge-does-not-wrap",
+      "pass": true
+    },
+    {
+      "name": "vertical-scroll-does-not-switch-source",
+      "pass": true
+    },
+    {
+      "name": "small-drag-does-not-switch-source",
+      "pass": true
+    },
+    {
+      "name": "sync-left-selects-live",
+      "pass": true
+    },
+    {
+      "name": "sync-left-selects-downloaded",
+      "pass": true
+    },
+    {
+      "name": "sync-end-edge-does-not-wrap",
+      "pass": true
+    },
+    {
+      "name": "sync-right-selects-live",
+      "pass": true
+    },
+    {
+      "name": "sync-right-selects-camera",
+      "pass": true
+    },
+    {
+      "name": "album-left-selects-phone",
+      "pass": true
+    },
+    {
+      "name": "album-right-selects-app",
+      "pass": true
+    },
+    {
+      "name": "selection-disables-album-source-tabs",
+      "pass": true
+    },
+    {
+      "name": "selection-dock-blocks-source-swipe",
+      "pass": true
+    },
+    {
+      "name": "source-click-switching-retained",
+      "pass": true
+    },
+    {
+      "name": "slider-owns-horizontal-drag",
+      "pass": true
+    },
+    {
+      "name": "horizontal-rail-does-not-switch-source",
+      "pass": true
+    },
+    {
+      "name": "horizontal-rail-scrolls",
+      "pass": true
+    },
+    {
+      "name": "vertical-scroll-retains-input",
+      "pass": true
+    },
+    {
+      "name": "editor-top-action-is-export",
+      "pass": true
+    },
+    {
+      "name": "status-refresh-keeps-export-label",
+      "pass": true
+    },
+    {
+      "name": "export-icon-and-accessible-name-retained",
+      "pass": true
+    },
+    {
+      "name": "photo-editor-not-a-source-swipe-surface",
+      "pass": true
+    },
+    {
+      "name": "quick-action-is-export-to-phone-album",
+      "pass": true
+    },
+    {
+      "name": "quick-heading-is-export",
+      "pass": true
+    },
+    {
+      "name": "portrait-overview-has-no-orphan-slider",
+      "pass": true
+    },
+    {
+      "name": "original-skin-tone-hides-inactive-strength",
+      "pass": true
+    },
+    {
+      "name": "chosen-skin-tone-shows-associated-strength",
+      "pass": true
+    },
+    {
+      "name": "hidden-strength-reclaims-dock-height",
+      "pass": true
+    },
+    {
+      "name": "return-to-original-hides-strength-again",
+      "pass": true
+    },
+    {
+      "name": "face-entry-has-selected-default-adjustment",
+      "pass": true
+    },
+    {
+      "name": "face-selection-follows-parameter",
+      "pass": true
+    },
+    {
+      "name": "face-selection-has-no-adjustment-slider",
+      "pass": true
+    },
+    {
+      "name": "brush-range-belongs-to-selected-brush",
+      "pass": true
+    },
+    {
+      "name": "light-axis-has-explicit-selected-option",
+      "pass": true
+    },
+    {
+      "name": "natural-retouch-has-associated-selected-tool",
+      "pass": true
+    },
+    {
+      "name": "portrait-cancel-does-not-commit-fixture",
+      "pass": true
+    }
+  ],
+  "gestureTraces": [
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": false,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 1,
+      "enabledAfter": true
+    },
+    {
+      "dx": 0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": false,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 1,
+      "selectedAfter": 0,
+      "enabledAfter": true
+    },
+    {
+      "dx": 0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": true,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 0,
+      "enabledAfter": true
+    },
+    {
+      "dx": 0,
+      "dy": -0.4000000059604645,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": true,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 0,
+      "enabledAfter": true
+    },
+    {
+      "dx": -0.03500000014901161,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 0,
+      "enabledAfter": true
+    },
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": false,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 1,
+      "enabledAfter": true
+    },
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": false,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 1,
+      "selectedAfter": 2,
+      "enabledAfter": true
+    },
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": true,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 2,
+      "selectedAfter": 2,
+      "enabledAfter": true
+    },
+    {
+      "dx": 0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": false,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 2,
+      "selectedAfter": 1,
+      "enabledAfter": true
+    },
+    {
+      "dx": 0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": false,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 1,
+      "selectedAfter": 0,
+      "enabledAfter": true
+    },
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 1,
+      "enabledAfter": true
+    },
+    {
+      "dx": 0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 1,
+      "selectedAfter": 0,
+      "enabledAfter": true
+    },
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1709,
+      "height": 754,
+      "screenX": 210,
+      "screenY": 263,
+      "attachedAfter": true,
+      "trackingAfter": false,
+      "blocked": false,
+      "capturedAfter": false,
+      "initial": 0,
+      "selectedAfter": 0,
+      "enabledAfter": false
+    },
+    {
+      "fixture": "horizontal-rail",
+      "index": 0,
+      "width": 1836,
+      "childWidth": 4200,
+      "scrollX": 2364,
+      "blocked": true,
+      "tracking": true
+    },
+    {
+      "dx": -0.5799999833106995,
+      "dy": 0,
+      "width": 1920,
+      "height": 1080,
+      "screenX": 0,
+      "screenY": 0,
+      "attachedAfter": true,
+      "trackingAfter": false,
+      "blocked": true,
+      "capturedAfter": false,
+      "initial": 2,
+      "selectedAfter": 2,
+      "enabledAfter": false
+    }
+  ]
+}

@@ -1,0 +1,397 @@
+{
+  "pass": false,
+  "stage": "local-cancel",
+  "candidateSha256": "938a96481c6eae320e598e74465edacaa273fedcfb5a5b6f296c8ac29205e151",
+  "versionCode": 112,
+  "versionName": "0.23.1-beta",
+  "mode": "font1.3",
+  "fontScale": 1.2999999523162842,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-0",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "shipping-image-fixture-1",
+      "pass": true
+    },
+    {
+      "name": "jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "local-opened",
+      "pass": true
+    },
+    {
+      "name": "latest-local-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "feather-choice-revealed",
+      "pass": false
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "local-visibility-failure",
+      "label": "feather-choice-revealed",
+      "target": {
+        "class": "cc.huevia.ui.PhotoLocalEditDialog$4",
+        "tag": "local-parameter-4",
+        "width": 205,
+        "height": 126,
+        "left": 820,
+        "top": 0,
+        "right": 1025,
+        "bottom": 126,
+        "scrollX": 524197,
+        "scrollY": 0,
+        "paddingLeft": 11,
+        "paddingRight": 11,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "shown": true,
+        "visibility": 0,
+        "screenX": 852,
+        "screenY": 1877,
+        "hasGlobalVisibleRect": true,
+        "globalVisibleRect": "[852,1877][1048,2003]"
+      },
+      "ancestors": [
+        {
+          "class": "android.widget.LinearLayout",
+          "tag": "null",
+          "width": 1025,
+          "height": 126,
+          "left": 0,
+          "top": 0,
+          "right": 1025,
+          "bottom": 126,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 32,
+          "screenY": 1877,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[32,1877][1048,2003]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "android.widget.HorizontalScrollView",
+          "tag": "null",
+          "width": 1016,
+          "height": 126,
+          "left": 32,
+          "top": 21,
+          "right": 1048,
+          "bottom": 147,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 32,
+          "screenY": 1877,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[32,1877][1048,2003]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "android.widget.LinearLayout",
+          "tag": "local-dock",
+          "width": 1080,
+          "height": 505,
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 505,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 32,
+          "paddingRight": 32,
+          "paddingTop": 21,
+          "paddingBottom": 21,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 1856,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,1856][1080,2361]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "android.widget.ScrollView",
+          "tag": "null",
+          "width": 1080,
+          "height": 505,
+          "left": 0,
+          "top": 1577,
+          "right": 1080,
+          "bottom": 2082,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 1856,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,1856][1080,2361]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "cc.huevia.ui.PhotoLocalEditDialog$2",
+          "tag": "local-body",
+          "width": 1080,
+          "height": 2082,
+          "left": 0,
+          "top": 279,
+          "right": 1080,
+          "bottom": 2361,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 279,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,279][1080,2361]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "android.widget.LinearLayout",
+          "tag": "photo-local-workspace",
+          "width": 1080,
+          "height": 2424,
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 2424,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 142,
+          "paddingBottom": 63,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 0,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,0][1080,2424]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "android.widget.FrameLayout",
+          "tag": "null",
+          "width": 1080,
+          "height": 2424,
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 2424,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 0,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,0][1080,2424]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "android.widget.FrameLayout",
+          "tag": "null",
+          "width": 1080,
+          "height": 2424,
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 2424,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 0,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,0][1080,2424]",
+          "clipChildren": true,
+          "clipToPadding": true
+        },
+        {
+          "class": "com.android.internal.policy.DecorView",
+          "tag": "null",
+          "width": 1080,
+          "height": 2424,
+          "left": 0,
+          "top": 0,
+          "right": 1080,
+          "bottom": 2424,
+          "scrollX": 0,
+          "scrollY": 0,
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "paddingTop": 0,
+          "paddingBottom": 0,
+          "shown": true,
+          "visibility": 0,
+          "screenX": 0,
+          "screenY": 0,
+          "hasGlobalVisibleRect": true,
+          "globalVisibleRect": "[0,0][1080,2424]",
+          "clipChildren": true,
+          "clipToPadding": true
+        }
+      ],
+      "parameterScroll": {
+        "class": "android.widget.HorizontalScrollView",
+        "tag": "null",
+        "width": 1016,
+        "height": 126,
+        "left": 32,
+        "top": 21,
+        "right": 1048,
+        "bottom": 147,
+        "scrollX": 0,
+        "scrollY": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "shown": true,
+        "visibility": 0,
+        "screenX": 32,
+        "screenY": 1877,
+        "hasGlobalVisibleRect": true,
+        "globalVisibleRect": "[32,1877][1048,2003]",
+        "clipChildren": true,
+        "clipToPadding": true
+      },
+      "parameterContent": {
+        "class": "android.widget.LinearLayout",
+        "tag": "null",
+        "width": 1025,
+        "height": 126,
+        "left": 0,
+        "top": 0,
+        "right": 1025,
+        "bottom": 126,
+        "scrollX": 0,
+        "scrollY": 0,
+        "paddingLeft": 0,
+        "paddingRight": 0,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "shown": true,
+        "visibility": 0,
+        "screenX": 32,
+        "screenY": 1877,
+        "hasGlobalVisibleRect": true,
+        "globalVisibleRect": "[32,1877][1048,2003]",
+        "clipChildren": true,
+        "clipToPadding": true
+      }
+    }
+  ],
+  "screenshots": 1,
+  "fixturesRemoved": true,
+  "failure": "java.lang.AssertionError: feather-choice-revealed",
+  "scope": "Actual installed MainActivity\/AlbumPanel\/editor, private generated JPEGs, real native local\/clone gestures, pinch rollback, apply\/cancel\/history\/draft\/global detail controls\/perspective, private full reference\/detail renders and EXIF6 pixel oracle. Simulated editor owner mismatch only; no real account transition, physical phone, camera, MediaStore publication, RAW decoder or full export-preview-dialog certification."
+}

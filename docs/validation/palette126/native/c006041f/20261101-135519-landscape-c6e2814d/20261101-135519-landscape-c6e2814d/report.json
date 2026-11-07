@@ -1,0 +1,365 @@
+{
+  "pass": true,
+  "stage": "selected-region-palette-and-clean-final-photo",
+  "mode": "landscape",
+  "scope": "full",
+  "candidateSha256": "c006041f7380620a55db0d50bef0fd1146867ebe1e3b3c9cbd5eed98af88704c",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "palette-pad-visible",
+      "pass": true
+    },
+    {
+      "name": "pad-inside-window",
+      "pass": true
+    },
+    {
+      "name": "photo-visible",
+      "pass": true
+    },
+    {
+      "name": "pad-reaches-useful-touch-size",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-apply-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-cancel-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-cancel-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-undo-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-undo-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "palette-redo-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-redo-touch-48dp",
+      "pass": true
+    },
+    {
+      "name": "live-drag-color-updates-before-up",
+      "pass": true
+    },
+    {
+      "name": "live-drag-tone-updates-before-up",
+      "pass": true
+    },
+    {
+      "name": "live-drag-old-sliders-preserved",
+      "pass": true
+    },
+    {
+      "name": "touch-cancel-restores-full-gesture-start",
+      "pass": true
+    },
+    {
+      "name": "cancel-does-not-commit",
+      "pass": true
+    },
+    {
+      "name": "one-complete-drag-one-undo",
+      "pass": true
+    },
+    {
+      "name": "completed-drag-keeps-color-and-tone",
+      "pass": true
+    },
+    {
+      "name": "dialog-undo-restores-baseline",
+      "pass": true
+    },
+    {
+      "name": "dialog-redo-restores-drag",
+      "pass": true
+    },
+    {
+      "name": "strength-control-keyboard-focusable",
+      "pass": true
+    },
+    {
+      "name": "strength-zero-retains-color",
+      "pass": true
+    },
+    {
+      "name": "strength-zero-retains-tone",
+      "pass": true
+    },
+    {
+      "name": "strength-zero-value",
+      "pass": true
+    },
+    {
+      "name": "strength-full-value",
+      "pass": true
+    },
+    {
+      "name": "strength-restores-axes",
+      "pass": true
+    },
+    {
+      "name": "exact-color-applied",
+      "pass": true
+    },
+    {
+      "name": "keyboard-pad-adjusts-tone",
+      "pass": true
+    },
+    {
+      "name": "keyboard-keeps-color",
+      "pass": true
+    },
+    {
+      "name": "talkback-tone-action-adjusts-five",
+      "pass": true
+    },
+    {
+      "name": "window-focus-loss-rolls-back-unfinished-stroke",
+      "pass": true
+    },
+    {
+      "name": "palette-reset-only-palette",
+      "pass": true
+    },
+    {
+      "name": "reset-preserves-original-basic-values",
+      "pass": true
+    },
+    {
+      "name": "dismiss-cancels-without-commit",
+      "pass": true
+    },
+    {
+      "name": "standalone-apply-exact-settings",
+      "pass": true
+    },
+    {
+      "name": "apply-retains-other-manual-tools",
+      "pass": true
+    },
+    {
+      "name": "dialog-borrowed-source-unmodified",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-not-existing",
+      "pass": true
+    },
+    {
+      "name": "main-palette-entry-present",
+      "pass": true
+    },
+    {
+      "name": "main-transaction-initial-settings",
+      "pass": true
+    },
+    {
+      "name": "main-dialog-not-mutating-live-editor",
+      "pass": true
+    },
+    {
+      "name": "main-dialog-no-history-before-apply",
+      "pass": true
+    },
+    {
+      "name": "main-cancel-retains-settings",
+      "pass": true
+    },
+    {
+      "name": "main-cancel-retains-preview",
+      "pass": true
+    },
+    {
+      "name": "main-cancel-retains-history",
+      "pass": true
+    },
+    {
+      "name": "main-apply-persists-palette",
+      "pass": true
+    },
+    {
+      "name": "main-apply-one-undo",
+      "pass": true
+    },
+    {
+      "name": "main-final-preview-changed",
+      "pass": true
+    },
+    {
+      "name": "main-undo-whole-palette-transaction",
+      "pass": true
+    },
+    {
+      "name": "main-redo-whole-palette-transaction",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-draft-created",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "cancel-does-not-rewrite-draft",
+      "pass": true
+    },
+    {
+      "name": "global-zero-strength-settings-neutral",
+      "pass": true
+    },
+    {
+      "name": "global-zero-strength-coordinates-stored",
+      "pass": true
+    },
+    {
+      "name": "global-main-reset-clears-zero-strength-coordinates",
+      "pass": true
+    },
+    {
+      "name": "global-main-reset-one-undo",
+      "pass": true
+    },
+    {
+      "name": "global-main-reset-undo-restores-zero-strength-coordinates",
+      "pass": true
+    },
+    {
+      "name": "region-dialog-starts-region-settings",
+      "pass": true
+    },
+    {
+      "name": "region-palette-applied-to-selected-region",
+      "pass": true
+    },
+    {
+      "name": "region-palette-keeps-global-settings",
+      "pass": true
+    },
+    {
+      "name": "region-apply-one-undo",
+      "pass": true
+    },
+    {
+      "name": "region-final-preview-same-dimensions",
+      "pass": true
+    },
+    {
+      "name": "region-palette-has-visible-selected-effect",
+      "pass": true
+    },
+    {
+      "name": "region-final-preview-has-no-selection-overlay",
+      "pass": true
+    },
+    {
+      "name": "region-undo-restores-palette-neutral",
+      "pass": true
+    },
+    {
+      "name": "region-undo-restores-pixels",
+      "pass": true
+    },
+    {
+      "name": "region-zero-strength-settings-neutral",
+      "pass": true
+    },
+    {
+      "name": "region-zero-strength-coordinates-stored",
+      "pass": true
+    },
+    {
+      "name": "region-main-reset-clears-zero-strength-coordinates",
+      "pass": true
+    },
+    {
+      "name": "region-main-reset-one-undo",
+      "pass": true
+    },
+    {
+      "name": "region-main-reset-undo-restores-zero-strength-coordinates",
+      "pass": true
+    },
+    {
+      "name": "owned-jpeg-unchanged",
+      "pass": true
+    },
+    {
+      "name": "borrowed-source-pixels-unchanged",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "main-saves-drained",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-layout",
+      "window": "[0,0][2424,1080]",
+      "pad": "[1616,274][2392,694]",
+      "photo": "[142,263][1584,1017]",
+      "fontScale": 1
+    },
+    {
+      "case": "native-region-final-image",
+      "width": 1280,
+      "height": 882,
+      "protectedPixels": 1029980,
+      "outsideDifferences": 0,
+      "changedPixels": 86522
+    }
+  ],
+  "screenshots": 5,
+  "persistentFixturesCreated": true,
+  "privateFixtureRemoved": true
+}

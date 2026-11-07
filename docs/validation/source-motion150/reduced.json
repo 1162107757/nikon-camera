@@ -1,0 +1,43 @@
+{
+  "pass": true,
+  "mode": "reduced",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "system-disabled-animation-observed",
+      "pass": true
+    },
+    {
+      "name": "disabled-motion-has-no-drag-translation",
+      "pass": true
+    },
+    {
+      "name": "disabled-motion-preserves-swipe-source-change",
+      "pass": true
+    },
+    {
+      "name": "reduced-preset-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "disabled-motion-preserves-sync-click",
+      "pass": true
+    },
+    {
+      "name": "reduced-sync-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "disabled-motion-preserves-album-click",
+      "pass": true
+    },
+    {
+      "name": "reduced-album-settles-without-snapshot-or-offset",
+      "pass": true
+    }
+  ],
+  "frames": []
+}

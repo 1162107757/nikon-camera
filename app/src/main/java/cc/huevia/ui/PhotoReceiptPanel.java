@@ -352,7 +352,7 @@ public final class PhotoReceiptPanel implements AutoCloseable {
         if (detailsDialog != null) detailsDialog.dismiss();
         ScrollView scroll = new ScrollView(activity); TextView detail = text(message, 14, palette.text, false);
         detail.setPadding(dp(24), dp(10), dp(24), dp(16)); detail.setTextIsSelectable(true); scroll.addView(detail);
-        AlertDialog next = new AlertDialog.Builder(activity).setTitle(title).setView(scroll).setPositiveButton("关闭", null).create();
+        AlertDialog next = new AppDialog.Builder(activity).setTitle(title).setView(scroll).setPositiveButton("关闭", null).create();
         detailsDialog = next; next.setOnDismissListener(ignored -> { if (detailsDialog == next) detailsDialog = null; }); next.show();
         next.getButton(AlertDialog.BUTTON_POSITIVE).setMinHeight(dp(44)); next.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(palette.primary);
         if (next.getWindow() != null) next.getWindow().setBackgroundDrawable(shape(palette.card, 24));

@@ -1,0 +1,16 @@
+{
+  "candidateSha256": "4ccb53a991b00dfc9875362b243ec9e5b2cd8d54f384b08b2e41abefb8db6d82",
+  "versionCode": 128,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "5bda9ef35504a6d07bb2082af57aab520a3938bb38f4eb72b7327498fd249f20",
+  "pass": true,
+  "scope": "full",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "3ea8a451835653fb75771b3a6ea132b9cc8bed96b565603885b47d1572cf8e69"
+    }
+  ]
+}

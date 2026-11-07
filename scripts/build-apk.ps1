@@ -35,6 +35,7 @@ if (-not (Test-Path -LiteralPath $androidJar) -or -not (Test-Path -LiteralPath $
     throw 'Install Android platform 35 and build-tools 35.0.0, then pass -SdkRoot.'
 }
 $env:JAVA_HOME = $JdkRoot
+& (Join-Path $PSScriptRoot 'prepare-face-landmarks.ps1')
 & (Join-Path $PSScriptRoot 'build-raw-native.ps1') -NdkRoot (Join-Path $SdkRoot 'ndk\28.2.13676358')
 if ($LASTEXITCODE -ne 0) { throw 'RAW native build failed.' }
 $outputRoot = Join-Path $projectRoot 'app\build\manual'
@@ -110,8 +111,16 @@ $apkArchive = [IO.Compression.ZipFile]::Open($unsignedApk, [IO.Compression.ZipAr
 try {
     # Windows aapt2 can leave backslashes in nested asset names. Android assets use '/'.
     foreach ($resource in @($apkArchive.Entries)) {
-        if (-not $resource.FullName.StartsWith('assets/') -or -not $resource.FullName.Contains('\')) { continue }
+        if (-not $resource.FullName.StartsWith('assets/')) { continue }
         $assetName = $resource.FullName.Replace('\', '/')
+        if ($assetName -eq 'assets/portrait/face_skin_multiclass.shuffle4.zlib') {
+            # This SHA-pinned zlib stream is already compressed; a second deflate only adds work.
+            $resource.Delete()
+            $skinAsset = Join-Path $projectRoot 'app/src/main/assets/portrait/face_skin_multiclass.shuffle4.zlib'
+            [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($apkArchive, $skinAsset, $assetName, [IO.Compression.CompressionLevel]::NoCompression) | Out-Null
+            continue
+        }
+        if (-not $resource.FullName.Contains('\')) { continue }
         if ($apkArchive.GetEntry($assetName)) { throw ('Duplicate application asset: ' + $assetName) }
         $apkEntry = $apkArchive.CreateEntry($assetName, [IO.Compression.CompressionLevel]::Optimal)
         $sourceStream = $resource.Open()
@@ -122,14 +131,14 @@ try {
         $resource.Delete()
     }
     foreach ($dexFile in Get-ChildItem -LiteralPath $dexRoot -Filter '*.dex') {
-        [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($apkArchive, $dexFile.FullName, $dexFile.Name, [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+        [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($apkArchive, $dexFile.FullName, $dexFile.Name, [IO.Compression.CompressionLevel]::SmallestSize) | Out-Null
     }
     $nativeRoot = Join-Path $projectRoot 'app\src\main\jniLibs'
     foreach ($nativeAbi in @('arm64-v8a','armeabi-v7a','x86_64','x86')) {
-        foreach ($nativeName in @('libraw.so','libhuevia_raw.so','libc++_shared.so')) {
+        foreach ($nativeName in @('libraw.so','libhuevia_raw.so','libc++_shared.so','libtensorflowlite_jni.so')) {
             $nativeFile = Join-Path (Join-Path $nativeRoot $nativeAbi) $nativeName
             if (-not (Test-Path -LiteralPath $nativeFile -PathType Leaf)) { throw ('Missing native library; run scripts/build-raw-native.ps1: ' + $nativeFile) }
-            [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($apkArchive, $nativeFile, ('lib/' + $nativeAbi + '/' + $nativeName), [IO.Compression.CompressionLevel]::Optimal) | Out-Null
+            [IO.Compression.ZipFileExtensions]::CreateEntryFromFile($apkArchive, $nativeFile, ('lib/' + $nativeAbi + '/' + $nativeName), [IO.Compression.CompressionLevel]::SmallestSize) | Out-Null
         }
     }
     # QQ SDK's H5 assets/native helpers live inside its jar and must accompany its dex classes.

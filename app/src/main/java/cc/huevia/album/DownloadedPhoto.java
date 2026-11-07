@@ -28,4 +28,9 @@ public final class DownloadedPhoto {
     public DownloadedPhoto withPhotoDate(long date) {
         return new DownloadedPhoto(file, filename, projectId, projectName, date);
     }
+    /** Changes only the public export label, never the file used for rendering or validation. */
+    public DownloadedPhoto withFilename(String name) {
+        if (name == null || name.trim().isEmpty() || name.contains("/") || name.contains("\\")) throw new IllegalArgumentException("filename");
+        return new DownloadedPhoto(file, name, projectId, projectName, photoDate);
+    }
 }

@@ -1,0 +1,1178 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate-under-validation",
+  "versionCode": 117,
+  "versionName": "0.23.6-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.6-beta-debug.apk",
+    "bytes": 33395468,
+    "sha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "productionInputs": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "c3714246df1fc6327d3ae2413aab677bf75407eb3b68d50fbabf56d5404aeec9"
+    },
+    {
+      "path": "app/libs/README.md",
+      "sha256": "e0f9fee131e0ef3f7f959ee8c25e4fd0c1fb5b05cf9cdab5c787fbf68eb8c23a"
+    },
+    {
+      "path": "app/libs/compile-only/LICENSE-support-fragment.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "app/libs/compile-only/support-fragment-28.0.0.jar",
+      "sha256": "b16d6f097e58557d795d47120cdea459daa3cd25375fffce2e0e9d7fbfb41add"
+    },
+    {
+      "path": "app/libs/litert-1.4.1.jar",
+      "sha256": "c817a911a50d5c88f63ae6b31b131826198c96bedf72671cd32872d15a35d264"
+    },
+    {
+      "path": "app/libs/litert-api-1.4.1.jar",
+      "sha256": "fcdbe3f4eec7a8632fb4793a95b6e585f297db40701b27e6c20bbdaead21f4de"
+    },
+    {
+      "path": "app/libs/open_sdk_3.5.19_r9483ffc7_lite.jar",
+      "sha256": "9d57fe61ff9026d34ac84bc63dc719f61da6aa40533a299cc6f73d4ce9df7af8"
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "sha256": "b686dc377fc754031f7cfa70f014671d954fbc8e8bb801abc169e04f70c52491"
+    },
+    {
+      "path": "app/src/main/assets/photo-borders/nikon-wordmark-black.png",
+      "sha256": "93ef2b678d1bd74cf80ff93ff51edc37cb2d12f068db783b49c426087198c7c3"
+    },
+    {
+      "path": "app/src/main/assets/photo-borders/nikon-wordmark-white.png",
+      "sha256": "dc7068dd1a1dac737fadb04036744560aaed5e062c6c653d88b2abacd5599303"
+    },
+    {
+      "path": "app/src/main/assets/photo-borders/nikon-yellow-square.png",
+      "sha256": "1f5c351a9248cb8f1ae038be59f0bc8e36ffedb5b81ed3e1b0ca8fe829f8a519"
+    },
+    {
+      "path": "app/src/main/assets/photo-borders/parameters-OFL.txt",
+      "sha256": "1dd4eaacd1da1bfb7e1d14dd5af0279c17d4503fde55abc628bdaccc63ae9eca"
+    },
+    {
+      "path": "app/src/main/assets/photo-borders/parameters.ttf",
+      "sha256": "f7fe4bed14aaec1e25b1173c4eed35c3c5537e836c47db67b06189ec4adc7b19"
+    },
+    {
+      "path": "app/src/main/assets/photo-borders/source-manifest.json",
+      "sha256": "417cc7c8a1b5d9164ad12b007863ff0b18e818666e9619b3a8131b4e7b41a518"
+    },
+    {
+      "path": "app/src/main/assets/portrait/face_landmarks_detector.tflite",
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"
+    },
+    {
+      "path": "app/src/main/assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libfuji-MIT.txt",
+      "sha256": "62b8331c35d76305e3badac3d886b9b1ebdbea5d7019876c0caafdc8e95cbf1e"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/BUILD-IDENTITY.json",
+      "sha256": "1f312298f8be5eaa3e2183775cf7edd39d5215411e4ba2277e2a8d132fb58de6"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/COPYRIGHT",
+      "sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/LICENSE.CDDL",
+      "sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/LICENSE.LGPL",
+      "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/LLVM-NOTICE.txt",
+      "sha256": "f96f763beb66a7ba7a667647fc64c0226ace875e590c831fdd9579ec1c1d91e1"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/LibRaw-0.22.3-source.zip",
+      "sha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/NOTICE.txt",
+      "sha256": "2fc943117833261917f070cea1398901fd4be8f108a1d690f2bec181a4d7c55e"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/RawDeveloper.java",
+      "sha256": "327af007aa07e8a26a028b034b6dbe29f3dcd55b20f5e53df0ddc969016513c2"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/RawDevelopmentSettings.java",
+      "sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/build-raw-native.ps1",
+      "sha256": "7f51d3333ed098f0c3fb19962013a1d9a5cd1470ae40a1fd200b8b919ba732a5"
+    },
+    {
+      "path": "app/src/main/assets/third-party/libraw/huevia_raw.cpp",
+      "sha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae"
+    },
+    {
+      "path": "app/src/main/assets/third-party/litert/BUILD-IDENTITY.json",
+      "sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac"
+    },
+    {
+      "path": "app/src/main/assets/third-party/litert/LICENSE-LiteRT.txt",
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65"
+    },
+    {
+      "path": "app/src/main/assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    },
+    {
+      "path": "app/src/main/assets/third-party/litert/README.md",
+      "sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1"
+    },
+    {
+      "path": "app/src/main/cpp/huevia_raw.cpp",
+      "sha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/DiagnosticsActivity.java",
+      "sha256": "ebd7790f07f98a06d102000d585c115692f407c52015301b78b9f3c86de35704"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "96fc3ad8c0394fb556008f817aaf05bb797c8fa69c3f3364fa8e9aa89fe82da8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/RawDevelopActivity.java",
+      "sha256": "c9a11454c5378ba6a8bb649128a4394550a5f713697a52ba7dec146e90e769a2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/RemoteCaptureActivity.java",
+      "sha256": "8520e4c9a4833a5b367caab2eebe5420cc85011e0816f75958e42b4c216044da"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountException.java",
+      "sha256": "7243fe67296b7704040d1acf8e6a6f0f928833de8745b4b7f74b899e789daf9e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountHttpTransport.java",
+      "sha256": "61142f0719ffefc29db435d348491bbea4734578de4d2f8b1991fb4003bb7721"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountInstallation.java",
+      "sha256": "ac9f5c2eaa20a495840815a7029b14266f146c3bcd17c33605d14ed2e167d2ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountJson.java",
+      "sha256": "70ddaaff6b8a10c8aba3fcd3ee94205528bb391940170decff0b34da6c4dbedc"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountRepository.java",
+      "sha256": "5999d4ff6daac85c295dc5f79a0f5c3ca4c40356d427e3d8fbc1c97fc63dd460"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AccountRepositoryProvider.java",
+      "sha256": "2e4ba7bdf65f0642024ff32ca8c0af13de96e412b75c97a40c7e64a9ef8044e3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AndroidAccountStore.java",
+      "sha256": "2bc768e2b7c5b7a6af18a9a78691c6b21f4cece35ba38f1784d632a03667a24f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AndroidAccounts.java",
+      "sha256": "21bc4b16d5288474550e84180c7e2cb0f4873403c4a8c5211f071dde77205686"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AvatarImages.java",
+      "sha256": "b329dea32cde1644ac07df3ab75a1125a7c779fdae9266210bec851c164b6388"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/AvatarUrlPolicy.java",
+      "sha256": "d4aa68ef6c011342c2711d10bda1a1dd35d9eb73e191f1509885041844c631ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/QqAuthorizationGate.java",
+      "sha256": "89dc16c0efd004501c9fca2cfbb52f06b3a29457934dc18a1d4363c06d37897d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/account/QqLoginController.java",
+      "sha256": "6ce091b3519895a3e8785fe31dddf3177615318d33f931543c8719658183aeb7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+      "sha256": "d2e1d1a6470998179a0a9edbe6de02f143ad36055444c4eb5e493cdf10927b08"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/CameraProtocol.java",
+      "sha256": "5df55e1b6e78c79de2ae240bb522bafca9f38bc336d6f3cdfc6ce46aea22701f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/CameraWifiNetwork.java",
+      "sha256": "05d9fdbec00eccd23351c3f1f43fad4f91167edf9fbe1430de089f739e868810"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/ConnectionInfo.java",
+      "sha256": "835738c1c83e9d45cfd43099e6ecb2fe45f48f3f147bcde13df5a756b36c4429"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/ConnectionTrace.java",
+      "sha256": "7d4ca5aefeadd4a0bf383b8d8b6e0b4e982614c3d0c7edf0bfced2949e88ebbd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/DownloadedPhoto.java",
+      "sha256": "297074318eb3fa54032f79634673c4e7158a47f4a1d68b06903c624292b81ddd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/FaceSkinModel.java",
+      "sha256": "ae7c2dd18e47964da07c601160b52d5b82e0f362f04e49f294211d58c30a1b09"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/FujifilmPhotoClient.java",
+      "sha256": "0594716c728553259e54114f1614345013562e9026fbf062ac1f4e57ba53c9b6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/LocalPhotoOrigin.java",
+      "sha256": "1117310dcaae06c5d6bae8fd076d340f784ef9da832504f4fe5b03cd28ec56fa"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java",
+      "sha256": "097a8ca2bb26a688a0c62046eaaa8fb17d0cd786f5b05f3b81d15b27dca775a7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+      "sha256": "5ae2cc4927c37f0c7c01d2ef4ec928f187d682942ace7c57cc41a4dd59caab63"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAlbumDeletion.java",
+      "sha256": "2c341873d9165c9602622675d1b0b209e9f9402ec20b878e74a3f739ecd9ea5e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAlbumSaver.java",
+      "sha256": "d2130a5c687abd6bcb91a43eeaf4e7fdf797abf4e4b07036eada927c93ee243b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoBorderRenderer.java",
+      "sha256": "7348bb3ac48b21983ca68a4440eb35f72c5133443fc6889c9181dbb443cc281a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoCameraClient.java",
+      "sha256": "fdd717a02a30b844037f15567d5239b40d04f02dc0a305bd5a08dff2d9cc195b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoCaptureInfo.java",
+      "sha256": "df2d74cf3cb88b6e97ca814f83e8bda4a1b7284cf10b7f1d40262eeb7d839ad9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoComposition.java",
+      "sha256": "ec8da609dbd2e22349bc501854378610944844511a3f92931567e703d9c78a2c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDateGroups.java",
+      "sha256": "8dd2e28e6c06bc4f7e717646ca452c88344a5c31503b1a63770cfb65d0ca6bad"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDateReader.java",
+      "sha256": "36c8ce583bd824b28e52acea589d29187c08cd86f076826114ea1f37972162bc"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDeleteResult.java",
+      "sha256": "8b7874ac64343d276a8198a36efaa19e38945b0dbbf3570af3a8acd4a6d6bf77"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDetailRaster.java",
+      "sha256": "4f69737c169f28077e75569a31b890dc133bb80b131370f0afcd09bcd030ec63"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDetailSource.java",
+      "sha256": "f945ed8926ecfd0a997065c64111fdc0fc62845fe992049f52189bf0a2e4649c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDownloadRecovery.java",
+      "sha256": "7b5997c19650763fce0a9e0af675bdcc33497350b63b93bde49d57db73c90bdd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+      "sha256": "2f73795905bc943eba3c204e00a7a982f8147edd514db7439987c47ce813d3b3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoEffectGallery.java",
+      "sha256": "109d1ae495315d55596c846ff0442ae424f52125134787c45060f53f8d581b4b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExifRationals.java",
+      "sha256": "b9731ec145fe142d725f97d688f21c91728aebf712b6f4d025cdb73598476925"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExportPreview.java",
+      "sha256": "b9d87a0aefd6c6dd8b225b42c227406ebd8651aa0461970e5300b203d44555d2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoExportSpec.java",
+      "sha256": "c22c03cdd2368000b5690e310c89a126691badb6f5cfa4602dda0eca5558552f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoFaceBodySkin.java",
+      "sha256": "dd582ea470eaa1ad81f4ec22067578074935a8f3eef8ed45f0f6b9e0df73c504"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoFaceLandmarks.java",
+      "sha256": "f9e643389eea846712e66f42beab4d9e8283943daf7e1ac95dd78558b4d09d40"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoFaceSkinMask.java",
+      "sha256": "8f71111afa65f907d2ae13aca4e029a935db8c72c36a148c58c9f9fe5b3b164e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoFormat.java",
+      "sha256": "68147b8c15af41b6a4f0956dab2f6ad1970a44b5a3db9fee3982512443631a20"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoItem.java",
+      "sha256": "1407b375fcc0df8744b7d9547bac90944d20845f736cdfd40c942ffb61e5fd6f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLibraryCatalog.java",
+      "sha256": "55300347acd7a1fb07da5272e56d49d8217fd9ae1f9fd977adbfbb1e57db0862"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveGallery.java",
+      "sha256": "5a6eca58329eb8a2bca2c3bc0eac2ccc41fb37ed46399343e4e7fe77baf08a3b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveLedger.java",
+      "sha256": "b9a48c22de2a87678da87454c9260d4e0bc5a5e54de0da5ed4bf4d48cd519644"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProject.java",
+      "sha256": "3a689e4302282b0eb24732a17da2453e50b05c37b109327e507b5205b80c4899"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProjectFolders.java",
+      "sha256": "860f140d3e1af7cea10bfe432e51494bc646703dd71a55c319da7d51495193ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveProjectStore.java",
+      "sha256": "9a529535e2e16cc0ff273444514da299be94fbbbedc03871e2ce255fe58718d3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveReceipt.java",
+      "sha256": "2306977c6374eb6d6215183413195e7f02074c7374d05bbe54470663c069fa81"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveReceiptStore.java",
+      "sha256": "0489fe653df78481bcc326d928d4595818e9fffd84cdcfab40ddc630dfd34d90"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveState.java",
+      "sha256": "f1c8a4e70df9a178b90b821ea96d2eb2ba695d8170e755f1883e1a90280152b8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLocalTasks.java",
+      "sha256": "e75e9f14cb68ee508f49c8ffc11ad9cf725d00c59974c5a8437cbeea0fe03eca"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoOriginalStore.java",
+      "sha256": "1732cdfe8181b98f5566a21f18b28fe8b0dac1acaad5d3dc6b0d61c7c8f55ad9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPage.java",
+      "sha256": "85d2f9544b8f522dd615849e994787b462093dae1a9a34978cf54f8ecb90ba1c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPortraitDetection.java",
+      "sha256": "1f40455e024bcfa71c24b0f3d4431fbc0ec5ed35269d3441a12c8ad9fd4ab03d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java",
+      "sha256": "51246d85320158949e2ee3961abf39e0015189807eeed2c30068af3ec22ecd94"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatchState.java",
+      "sha256": "72e5e91f8d2152220c9efdb275d9e5687913229dc9b7963e16761dd23d4e69ca"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java",
+      "sha256": "dbc9878fde549c56650190e858e3aa57a249e3c77b5f257e2f56ee24c9c3562e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetSources.java",
+      "sha256": "baca7b9f1648421cc02a17cdc60ac4ea75a5d403dcb1fd9d7d59121a5f50a8e5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPreview.java",
+      "sha256": "ce5c0a1c4f6c7b1c6c825da61e5eaa0962cbf5940665a01d075a4bc63c77794e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPreviewCache.java",
+      "sha256": "db1bed3aa6dc4b71ba933584c19a047ee657dfe90f1e80e3e6ba662fdfc7f2e4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoProjectPresetStore.java",
+      "sha256": "b58212f54781d1ea400544e8cdb837db895169d776c8677fbee2b51dfa8961ae"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoProjectPresets.java",
+      "sha256": "eef458aaef3fbb0a3d9d15669d97b86f0a511b2e60a151ec1f09704f6994fb8d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+      "sha256": "21d59978f3cd21ae11a075d65460be6e8f5f3e6717b47a323e836b582821cd40"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSaveTarget.java",
+      "sha256": "7a1b35ce163a6713d5cb96e2fdf561f221f2bd5e5ea70b7f7cfd06eb0f895efa"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSavedVersion.java",
+      "sha256": "4f6109cf9bf712551d7f384058e499f68cdd549bfde0b1de67e013d5e3f8ae1c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoStarStore.java",
+      "sha256": "0c84a132c4fc45ef1d561ff9361dc3661aea4530a822ff61278f1f6c3a6a0338"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoStars.java",
+      "sha256": "2bdec5d74ac560050254dc4f3625e2fa6cc2086dfe861553ab8950ae1a65dc7e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoTransferProgress.java",
+      "sha256": "04d529c5f5ebdb1ba35278c55fcdd19316cda1f598d5ef0f3c1e4b82a632d884"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+      "sha256": "f92ad1d5270673c4342284b6a8a1983e8eb331edca86a382f76fb5cd28aa163b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawDeveloper.java",
+      "sha256": "327af007aa07e8a26a028b034b6dbe29f3dcd55b20f5e53df0ddc969016513c2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawJpegReferenceStore.java",
+      "sha256": "889a58db39789c6c3651e42ba3d1581ee756d5f3db7b66285341421d8b940cf2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoDownload.java",
+      "sha256": "2e664d1f89c8f4dbc4720e3e91e976a5c2bcf02ea8e2b9f20a905ed6e5a9e92b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoPairing.java",
+      "sha256": "927a1d97586f70cddc5739b52982da20e1e941d9b815c3fcd6568490fe18ad35"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoPublisher.java",
+      "sha256": "9ef7ac286c10337e1d184be4f0bcafc54e8b23e4010d6d1f0aa0e0509a830de4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawPhotoStore.java",
+      "sha256": "5e8706a7e7422222911ea7388370e5783f761042a0e8c3b7cf208fd1db596068"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommentReplyPages.java",
+      "sha256": "8c62295c01f47612ae7c361519a8a026f9347c00a44152d9514f285581288257"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommentReplyTarget.java",
+      "sha256": "53a5740a568da7cc762630b2a6096fb1f8e5e44f886b9032b47ea13a9aa650f9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityException.java",
+      "sha256": "7c3e5d06e595dbb3467c97361b9463cfdcbd6a5b8b5cfd7ab3a7aa4b82cce9de"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityHttpTransport.java",
+      "sha256": "df497e122631f5c810c254173a2fb0904b25179b43db6e8454398f8d008a3ce8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityRepository.java",
+      "sha256": "0013c1e5a2b99ba14ac7e1036e910751bfc19ee41378b8c8eb69120d4b960a35"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/SubmissionDraftStore.java",
+      "sha256": "8e1e637106dc99a408ff9ede822f003be17dc9e2d84844aa2e2508daee009113"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/SubmissionFlow.java",
+      "sha256": "d9131b479a2079e8756f9fe9cf6a6f25c1ea631aa45f2f5d2a9dc08391a050d5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraConnectionPreferences.java",
+      "sha256": "f2f6edc41c494282cf17b834418d06fc9a3adcb5bd0c2803ac9e8ca7f34bce75"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraConnectionRuntime.java",
+      "sha256": "c45490c6031aabd64d4a9b8502c61b7d9d672a67971069144e11d5e07bc65d83"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraConnectionService.java",
+      "sha256": "1fc9384b725761d9d8364e0174f872b4a227f8f076529ec1ae6a5fd8682a4e23"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraWifiRetention.java",
+      "sha256": "9848358385dfed641f45ecb76f8290bf45a7544846f74432f2506ceb18fdf7cc"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraWifiSession.java",
+      "sha256": "23adf87644955d9bb52755ecac07ed3adb32107e61df0b57e2b4dedaf7aa2fc7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/ConnectionProtection.java",
+      "sha256": "cb5638491fdf5ef56d4e78243bdc93ac5d5cfe4a4c3b1cd1cc5a7b11bc1cc69c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/PhotoLiveContinuation.java",
+      "sha256": "8b343e9073b4874c76fa6ba44579255c2a898403d1614d25713b006b4fff2161"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/EditorPresetCatalog.java",
+      "sha256": "db27357d63ba75f22a684913573f96a585231f9baf769dbadc8235be1709fdfa"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/LibraryFiles.java",
+      "sha256": "f5808acb857c5ff78f2076a5fb87c97bf9ee46421ff64dc4434db13666ddff36"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/LibraryJson.java",
+      "sha256": "57702d1c3db2409873a12600ce1428001056b61765f569d1c5cf23e2b659ea80"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePreset.java",
+      "sha256": "60472f63950269fbb4554083a49e36a9108b0b49f39e0a005ba0d4072e296c51"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+      "sha256": "cbc12e67d759d73fd24ce2ad9535a1218b9168c0fda18f311aaabc66697d6979"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PersonalPresetApi.java",
+      "sha256": "45360d588734d8e678b9b57f9df8ec0403968696150e8d490ab7c6e6d7acfbd5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PersonalPresetSync.java",
+      "sha256": "bbd904d96d5bf154000857dfddfdb4071d546404fb932a6d2a822d4884ea1c1f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetCategories.java",
+      "sha256": "c8096106c927f95b64794d9d17a228f47b81441b4ca64fb349d3c7fca8fd7df5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetDownloadTasks.java",
+      "sha256": "737974b7159b8a2d8e707bbec2abb7a0faced0505135df45cca162181862f8d2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetFile.java",
+      "sha256": "be8a5759c89c0ac990f7290102a1968c9a5463720cf4087ac115adc3a80f1d96"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetLibrary.java",
+      "sha256": "5b4e8a6262d765983a882d55cf11410b96087b9159b2136c2f702b0d0fd8423b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetRecord.java",
+      "sha256": "679d9d734b61764b9d9fcdfb0f83394ede0f59795b49cad59065473449f217d8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PreviewImages.java",
+      "sha256": "9d5464b7c24b2e6cced85bc583b843ed42c03be69af81d47713728134ab1276a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/SecureHttpClient.java",
+      "sha256": "ded7880595633f10b14357835901231edf6566031cac392c98d5b174e543b7be"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+      "sha256": "a2162f889b0d84a89dc0c1a87820d1f12136043131469fa2bda3e3972d4487d3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+      "sha256": "422d46aa86bd2e4e51cc479100ebe44983ec0727b7eafec4dabc6c803bed524f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+      "sha256": "28f4a7087f732ec1079e0b9eac13975f5b3e1015c2af14f614ba07013b142a36"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "sha256": "d6341f32962d08b01b38cea4ff0fc02a6ff6da66d5cd52fb86f54045b424f62b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+      "sha256": "26cc16d1b87303333ad6a79d00242e6b8a436ddd99fd956907224bb5ffd16b48"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+      "sha256": "b6ede772ee26f62e68ec5730335bca2fd64b96e2bd45825094cc1ab179d301e7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+      "sha256": "130c21b2717847c1c980d7499618858b58f7540ada47b46dcfe1b2593c7ae056"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "sha256": "47087569a97eeb09ec8cd0c6e8387f226260b567845b530ccb50981c95bf65f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "sha256": "c7bb716430cc634817a700447287a7d7dad404ccf7b6f7d3202c2058a3b9dc4d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+      "sha256": "706e16ffc06de4a56f9afb1657cb7022b520fd6a9f12408c6938b4eedbfcb335"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+      "sha256": "b8dd48f3a3d923a017e6cb26102133ae835bdec6ae7c640218ee10415a5af06d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+      "sha256": "26dc2552fa7d6f1981687e418005366584054102d8473984306202601b5d0b61"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+      "sha256": "8fab6efeada313399292c141c68d644add31275e5f0e499944a7bf8b32337646"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+      "sha256": "e16df4116a9ac99c82fc68a9d244e8385c02696c665de5fbb00fb3418714c947"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+      "sha256": "cec35aeceb2344b7d4e17f4656001c619102d5352e9ab863763ad3c40f907943"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+      "sha256": "d3ce185673b5ac0339e7223162fb6795d4d73310490d62141d6cbe1a91ff36ad"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "84c2883c6b810546798dc15a9dd7ccb47082b5664b2bb19eaa4d255c146caff5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+      "sha256": "322236433e1626aa3693aa5c0229d5cd4167294981e26620b4586578f5f8d5eb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+      "sha256": "c0ad4b2f29e3739751f1c921949b6aa15ce61b07cacf5288324107645a65abf1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+      "sha256": "6e69628bac843c2030d10ffc51b0bbed3724fa7c4509116b3cfd3cca3ed615d8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "sha256": "e81c6c0e7e8f5ce9ed1c9a85f460cbd64b2fafe195ebe6c3c889b25ce63a9c62"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+      "sha256": "a3c16eaaf4389387f782840d74822805963f0eb6ab390a31e255f3992c366fa5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+      "sha256": "33bb84e4dfdba1b11dccb68247537cca9702d4418f78b10c0d451e5188959e7a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+      "sha256": "7d0dd22d127cd3d45f15511818f7c27525ab9ff6acdeb36da5d2dfddc7bc7f19"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+      "sha256": "e5ec8500a6e51f3bd42c95d13abe60244913a02939fbe1c6027329af12a0b537"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/PictureControlCapability.java",
+      "sha256": "de24317a13c8684dfece33ccc1d5e93dcdfa056c8d1ea5076468baa0a55e16f3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/PictureControlData.java",
+      "sha256": "db1288ea5af2dac9b0d5d4b676593e28dc71af7fd435149b1ee56ccd9d5b9d2e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/picturecontrol/PictureControlWriteValidation.java",
+      "sha256": "88edd36326df22170034a6e073e76b1fb63e32007dab8e30890097d2e19e5d9b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpConstants.java",
+      "sha256": "e41f154027f4b2a212285a029e453ecb89797ee6d529fa3daa78a0f41a799cc5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpContainer.java",
+      "sha256": "ee610de3e590e4a742b114c82093b30a2742c845cc4f67b142a49455c388971a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpContainerReader.java",
+      "sha256": "d2c8a7210a23ee85a732cf9f5a52410cbb58771371cbc503ace5f2bad52098d1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpDatasetReader.java",
+      "sha256": "36b063d3c5a940c60520796a8488442132b10dc473973ffac34f7309438be890"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpDeviceInfo.java",
+      "sha256": "39d27f2593bab61d7f88a50a466be301a61429e3274e8ec46ae67e04106a5b17"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpObjectHandles.java",
+      "sha256": "49c381396b75c4aecb4136e0681af5641b2f81a65d33d36acf7b717713044072"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpObjectInfo.java",
+      "sha256": "8522a709851cbb8ba749ebf1b3ac4be18bb9469b71dce9ff715caf3631bb8595"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpProtocolException.java",
+      "sha256": "c8b9547d46479c8f05c077d92d476b325913eb544c19711d0fb334968803a1c8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpResponseException.java",
+      "sha256": "5a3fa31bc51f3591b6850fe7c85cb33b4bc6e297694101a98619da16ec4902f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpStorageIds.java",
+      "sha256": "d7724761abeda3aa95f098461e3f53a06e0232dea4c84ec059cc2a730de84e91"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpStorageInfo.java",
+      "sha256": "f018a791f8a81d533084dd9d15fcc29f2e5629bb6ba1d7919cfc20e7ddc3765d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ptp/PtpValidation.java",
+      "sha256": "5f25adbe508920f6d61c8afc216dbc5afe981423c0daea9192f36b0979663e7c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/NikonRemoteCamera.java",
+      "sha256": "7ff81f02ada20239953aaa6f664dfdf45868e476bcdefc56d24e76d4f33c356d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteCaptureController.java",
+      "sha256": "2e0c8b2c8e625404cd38e51e6759efface33b0990b3f66dc640901bd72fb3266"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteLiveFrame.java",
+      "sha256": "f84cd171b58bdc3093523c8bcf4b596f798dd4c8a2f37468fb6d762f06bb1e95"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteProperty.java",
+      "sha256": "638ef43656e93ea9d353745a9768cfb6f1e52e72df30607ad39639279abef3c2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/remote/RemoteTransport.java",
+      "sha256": "e775570ff69207296dc5f3c5ffa30de6f89b9f31dfeef67c43f9cc3cae5d8858"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AccountPanel.java",
+      "sha256": "c707245fde6c72a423e96d3f698b9187525498123de153b6ec54cd119870c1d9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPaging.java",
+      "sha256": "c5542a027f77444217488e6b162c7041ae775a324939a897271438b31d32c0f7"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "f40f64616975cf628d9e6e0b0fb87af8183a789497db099ec5fcdede1d08a74c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppAppearance.java",
+      "sha256": "8f05fb5f91f45b72936bb708f0ba71e402f214ef97082f91495b8328af688216"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "3b361c08aeab49ec019c0433777767f6d995475c3f4c58b12782fdbaf82f219e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/CatalogLoadingView.java",
+      "sha256": "0bf41e68c9e8ad148f761c1791a578593dd76ddc37c88ad932ebbca4faf13c74"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/CommunityPanel.java",
+      "sha256": "a726f9fefe487dd665b6e863b309fcebc48992787a41b845566fd53bee71c0b6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/EditorGlassDrawable.java",
+      "sha256": "3f40c247110a32bf46edd541e2d30701e6efa36834c0e6ccb71555842ea061f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/GlassBar.java",
+      "sha256": "c7d64c0720d7be05dbbf247cd3f552c0ca4a4efb40c37aa98f54aaceee682b3e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/HoldToCompare.java",
+      "sha256": "3eb1e519b930b425aecb677eadd809b3c2b628f9db6b6d13ad35d40244199aed"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/HueTheme.java",
+      "sha256": "f0635e117c147d64384e39df109804a4dc66d64af2ec18dffc12f679a3473151"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/LatestPreviewQueue.java",
+      "sha256": "633d4cdbd450b56f24a475e0206e2a46d3b04f2f93a2aebe39a6097adb02e0c8"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+      "sha256": "ce7315e2380028802d7ef29a7eded13ed2c3ca5d3b0d5e5c75bf3f41789eb666"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PageTransitions.java",
+      "sha256": "79d1127cc23367ac7e23da66d396d6efe1001ee7bc8d5f4824fec25976b1fe92"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PersonalPresetPanel.java",
+      "sha256": "3fb3d35cb35c271dfb27b72c48b9de6ac1ebdabd438d418cfa54388d77109313"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBorderPanel.java",
+      "sha256": "2f8faa0300bfe8d74db13a9a02c7c94b5a26f1a2488d857a362503e6eefff23a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+      "sha256": "d124df8e670eabd8b7834fd6fbb38cb17be4400538d9b9528f2ef751d1c72577"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java",
+      "sha256": "655bfabdcf826a9043717e617e6994e97aa2242801543d6cb71806c03d6c004e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoDetailDialog.java",
+      "sha256": "9f12f6efeb6c7d8c92ca79c30b1470b4dc33291ef713e2ca4c318fec3c6fea50"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoDetailView.java",
+      "sha256": "c41fa536f926a65170bf2412c36c2c7706fede57ac8510040893b5204180c833"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoDetailViewport.java",
+      "sha256": "7fe6a635d083f3bcf0576182a065103010ef18a148c0b8666979b81da37582f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoEditorTypography.java",
+      "sha256": "0dc477f2dc05573171c1edafeba163c55a64d32a752e3f5e7968704100ea81d4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportAvailability.java",
+      "sha256": "98df261731b6bcb38111d4d676403f7bacb96524dafa48ae70f316afce746ad0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportDialog.java",
+      "sha256": "20486e88940df246c43947760956011a50db9034eb4fe4af39cff005d69a0cfc"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportPreviewDialog.java",
+      "sha256": "a992ab3f2df4717759ff2f5e5112685d50c26e0a9ee7cb7a917be91b739abfa4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportProgressDialog.java",
+      "sha256": "1385dd0b286956afac5055357051e6c737ae468dfe01230d3f3dea7a12b34f79"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "b7e137c59b9711d7b16ec25c619cd8744d5179c81b64febb72349b5aeaed2b5f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoGlassDrawable.java",
+      "sha256": "e06a9ef7b65878bb2c6cd1f3d71888637143b13b8a1ee002a1e4a86a984854b4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoHistogramPanel.java",
+      "sha256": "6f629e5bace21e35b853a45b75cd80db6f9f0b9d09db475487744d3187bee694"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoImageView.java",
+      "sha256": "6fe5005a00edb03812b2d86f0d5de336ffca2fcfa14a906edf95200ba05ad44e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java",
+      "sha256": "fae353d355ec4366951a0325360004724f9d50f9f09a5216631ca73622ce682e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPagerMotion.java",
+      "sha256": "fc30af906648057ab00227dfed03cb8cc935cbd3e97dffc0b34077bc419cb1b5"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPlaceholder.java",
+      "sha256": "34448b769fbf89d564b3a58f7c219bae81d926dea2a9b0ad078fa62c27187e56"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+      "sha256": "40c95809ec3ba678820d4ce9db0dbfa8ddbc8322c5c31cd435e294fd742cef02"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoReceiptPanel.java",
+      "sha256": "42effe7dc0e8a53ba3d9b6e897594887883ccab3634fdc4ea5072f675d32ec32"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoSaveChoice.java",
+      "sha256": "ad644de1e98b46d89a472341475176f6c9fc4abfbe2926274ec3f06a2300214e"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoSwipeGesture.java",
+      "sha256": "ea6a7125733e35988da3d9797c20e0869346f82d5fe5aa7945959d3f10fa9c0d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoVersionBadge.java",
+      "sha256": "ae958034b72f3bd90be5ab17297f1c030aae9ead18fa8d528929c9c3c487ee07"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "214b81eff48190602445a2e9e4eed6d8c4608855bc48b399f99bc4319c4fed65"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PresetPreviewRenderer.java",
+      "sha256": "aa74fd286fe247fe176143920c59ee856337f89e61c893f30448a2c185f76a48"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PresetSelectionPage.java",
+      "sha256": "7d2000f9b35e84e4d0912593b7a14c2c72893958701d4290e6faa62b8e183315"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PullRefreshLayout.java",
+      "sha256": "52581a32dad806169e3200501c1ec6f10028a3e5f1d29adbffeb7c9d7e48d94d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/RawPhotoPanel.java",
+      "sha256": "8694ab6725466ed37813701e038e225cb22814a9cc2c486252cd3d38807adff9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/RemoteCaptureView.java",
+      "sha256": "2827f3acec82937198f95788c1a07eb5ee355784b9f29896b9c142ffdc1cb44d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/SkinTonePicker.java",
+      "sha256": "2f8042344044a3a5bac52a4b8830dea6f3218c2f3468e2e71b849585ef055ff1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/SkinToneSwatches.java",
+      "sha256": "fdbfa3a1e2c55b66bd5d9e912218dfda107e0dfcc3466e6fb551456025c813bb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/ToneCurveView.java",
+      "sha256": "f60252e50317f03766bd973cfba10085467832e6fbdfc15a410fe2ba61fe5d52"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/TopNotice.java",
+      "sha256": "71127932f08135f250e968d80ddf92579b9455ce412ea8e13b729a9ba47eda82"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/UiPalette.java",
+      "sha256": "0b5f0035bca5fb7e3694e04da18fc2f31307002c26efaf0c75e0e42b55cb933b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/UpdatePanel.java",
+      "sha256": "b48b50eaa75482873befd9f2eebed3ac8f81cd85ef1cf057168bcb688736bdcf"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/UserAvatarView.java",
+      "sha256": "90b38f2ac39557957d3e5cf39c213e435865f70107f95a67db7a30f4730584b3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/updates/AppUpdateManager.java",
+      "sha256": "5adaf18dfd3d12e36846f72cf023ef5abf00ccb5bccd23f69b607fc06b9cd840"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/updates/UpdatePackageProvider.java",
+      "sha256": "57e8bd01bb0581987329926ef9954590deb2dcd54a39e9b7885f20c860a3baaf"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/updates/UpdatePolicy.java",
+      "sha256": "d6a5e10944d60259097064f32084ea7cda1dad05fa60b9ea72d8a2cdd8d1da33"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/NcpTransferSession.java",
+      "sha256": "908013e6aacb00e53695294bd5981ac5bac0ea43a1e1543299555567db436d44"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlImportSession.java",
+      "sha256": "9be412bfd977977511475737901fea9741557f3f85fc7f87767f09ba59aa228d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlReadSession.java",
+      "sha256": "088bf7aa21013933471fe6e17702970572a12859020ee7f6f1eb66ace024840a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PtpDirectorySurvey.java",
+      "sha256": "4b4eaa618cfdc7d3ba620b2084ceb6c3d07a2c470baec2ab4b03b2cb1dbccef3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PtpUsbTransport.java",
+      "sha256": "2c4f4058bfac2553f2c648b093158a2889ee6cfdf4071ac988b241097a96e25c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/StorageAssessment.java",
+      "sha256": "2d7e674a7e09bbb4cae688a023a592fb95777f118c5a6b43f1ca9fc9afdcf3ef"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/UsbNcpTransfer.java",
+      "sha256": "71b9ee01f299fe5c1ef17179122f2dd3535562db406b6706602c8bbfb45e91c3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/UsbPictureControlImport.java",
+      "sha256": "a2f0ce678d337f2445e5afbab48293cc4ff6abc1af3d09780755adbcc4b61e73"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/UsbPictureControlProbe.java",
+      "sha256": "dea0800aa82923d9e3684baa3f22da869c30187bdcf64158e7733095b28d7c65"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/UsbProbe.java",
+      "sha256": "6106e1e934d4da3fbfdbeff02f5eb99c71ac4161c038b6a7546a219632a5e2b6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/WirelessPictureControl.java",
+      "sha256": "f904feda09163e667df0d389072f741169c4e49c34906b7a1110690ac24eae85"
+    },
+    {
+      "path": "app/src/main/jniLibs/arm64-v8a/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    },
+    {
+      "path": "app/src/main/jniLibs/arm64-v8a/libhuevia_raw.so",
+      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48"
+    },
+    {
+      "path": "app/src/main/jniLibs/arm64-v8a/libraw.so",
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9"
+    },
+    {
+      "path": "app/src/main/jniLibs/arm64-v8a/libtensorflowlite_jni.so",
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8"
+    },
+    {
+      "path": "app/src/main/jniLibs/armeabi-v7a/libc++_shared.so",
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1"
+    },
+    {
+      "path": "app/src/main/jniLibs/armeabi-v7a/libhuevia_raw.so",
+      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce"
+    },
+    {
+      "path": "app/src/main/jniLibs/armeabi-v7a/libraw.so",
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9"
+    },
+    {
+      "path": "app/src/main/jniLibs/armeabi-v7a/libtensorflowlite_jni.so",
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86/libc++_shared.so",
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86/libhuevia_raw.so",
+      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86/libraw.so",
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86/libtensorflowlite_jni.so",
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86_64/libc++_shared.so",
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86_64/libhuevia_raw.so",
+      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86_64/libraw.so",
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3"
+    },
+    {
+      "path": "app/src/main/jniLibs/x86_64/libtensorflowlite_jni.so",
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8"
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/huevia_launcher.png",
+      "sha256": "cc4dac0f9428bb1b363bf065cd8283a669d989e595e751ffc9c8d06dae72289d"
+    },
+    {
+      "path": "app/src/main/res/drawable-nodpi/preset_template.png",
+      "sha256": "067e391dcb5a61c20021dc9a4a7eb4c324829592a5de747dd1f4a958ce44c8d9"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_account_password_hidden.xml",
+      "sha256": "34c5cbbf6224f1082d67c1d243f8f765328f56a461aad53f62527f9d82805e72"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_account_password_visible.xml",
+      "sha256": "06a24723e0d764f7f31eab8c700763d261fb2b4001c58831c6249daaa0fa4df4"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_camera.xml",
+      "sha256": "8e38c196f4c366e40fd2e6f7f2f774fe7be25d6f708c4ae50801ca8246961daa"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_huevia_foreground.xml",
+      "sha256": "1cf0f44bde4ab9cf94aa5adfb4e02c39b98507bc12ec0d73d1c2718f3ea5f401"
+    },
+    {
+      "path": "app/src/main/res/drawable/ic_qq_login.png",
+      "sha256": "24281ae0688269d8888fb96b92095ad868a6e48e530ebcdff4af720c4ff34d48"
+    },
+    {
+      "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "05b81f647dd3f1462290c0195761f152f3c46e72c20911d34a013c7e977478c8"
+    },
+    {
+      "path": "app/src/main/res/values-night/styles.xml",
+      "sha256": "1800e01da86f9c822b084b465e5839032a241c1a20194481fc16995411e1e38f"
+    },
+    {
+      "path": "app/src/main/res/values/colors.xml",
+      "sha256": "1f3855b1cd323ce59de1d6651b33571ea622380c4df3bbb16f3130b45cd7c267"
+    },
+    {
+      "path": "app/src/main/res/values/strings.xml",
+      "sha256": "aa5966d485facd7d9f4241c2e37b40faf85e25c8b43f91821176e8e45205db77"
+    },
+    {
+      "path": "app/src/main/res/values/styles.xml",
+      "sha256": "62e099fd5fe352c7a63eda8bf7dbdbc190a6ff445a0e70eec7cae12020ebd0c1"
+    },
+    {
+      "path": "app/src/main/res/xml/device_filter.xml",
+      "sha256": "aee9ac8cc06338e4ec8509b563c32be702d6dcfc01a82697835e92c5330f589b"
+    },
+    {
+      "path": "scripts/build-apk.ps1",
+      "sha256": "cea5a97eebd8d4c5362b7d9c2746a175a0893fc8ccc91ccf8c348e52f2443c2c"
+    },
+    {
+      "path": "scripts/build-raw-native.ps1",
+      "sha256": "7f51d3333ed098f0c3fb19962013a1d9a5cd1470ae40a1fd200b8b919ba732a5"
+    },
+    {
+      "path": "scripts/prepare-face-landmarks.ps1",
+      "sha256": "dd093962191e8003e2552e242e0d1ee30523e3d996197311e9dbff46d7898995"
+    }
+  ],
+  "parentIdentity": "docs/validation/portrait-mask116/BUILD-IDENTITY.json",
+  "changedFrom116": [
+    "app/build.gradle",
+    "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoFaceBodySkin.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+    "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+    "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+    "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+    "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+    "app/src/main/java/cc/huevia/ui/SkinTonePicker.java",
+    "app/src/main/java/cc/huevia/ui/SkinToneSwatches.java"
+  ],
+  "publication": "Not attempted; user requested retaining the local APK and manual upload later."
+}

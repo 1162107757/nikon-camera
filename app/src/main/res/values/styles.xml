@@ -4,6 +4,7 @@
     <style name="AppThemeLight" parent="android:style/Theme.Material.Light.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:colorAccent">#B3432D</item>
+        <item name="android:colorError">#AD3B30</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:statusBarColor">#FAFAF8</item>
@@ -11,10 +12,44 @@
         <item name="android:windowBackground">#FAFAF8</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:forceDarkAllowed">false</item>
+
+        <item name="android:alertDialogTheme">@style/HueviaDialogLight</item>
+        <item name="android:buttonStyle">@style/HueviaButton</item>
+        <item name="android:editTextStyle">@style/HueviaEditText</item>
+        <item name="android:checkboxStyle">@style/HueviaCheckBox</item>
+        <item name="android:radioButtonStyle">@style/HueviaRadio</item>
+        <item name="android:switchStyle">@style/HueviaSwitch</item>
+        <item name="android:seekBarStyle">@style/HueviaSeekBar</item>
+        <item name="android:progressBarStyle">@style/HueviaProgress</item>
+        <item name="android:popupMenuStyle">@style/HueviaPopupMenu</item>
+        <item name="android:listPopupWindowStyle">@style/HueviaListPopup</item>
+        <item name="android:dropDownListViewStyle">@style/HueviaDropDownList</item>
+        <item name="android:spinnerStyle">@style/HueviaSpinner</item>
+        <item name="android:spinnerItemStyle">@style/HueviaSpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/HueviaSpinnerDropDown</item>
+        <item name="android:checkedTextViewStyle">@style/HueviaCheckedText</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/huevia_radio</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/huevia_check</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/HueviaPopupText</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/HueviaPopupText</item>
+        <item name="android:listPreferredItemHeightSmall">48dp</item>
+        <item name="hueSurface">#FFFFFF</item>
+        <item name="hueContainer">#EFEDE9</item>
+        <item name="hueText">#262320</item>
+        <item name="hueMuted">#706A63</item>
+        <item name="hueAccent">#B3432D</item>
+        <item name="hueAccentContainer">#F4D6C0</item>
+        <item name="hueOnAccentContainer">#85311F</item>
+        <item name="hueOutline">#E4DFD8</item>
+        <item name="android:colorControlActivated">#B3432D</item>
+        <item name="android:colorControlNormal">#706A63</item>
+        <item name="android:colorControlHighlight">#22B3432D</item>
+        <item name="android:textColorHighlight">#33B3432D</item>
     </style>
     <style name="AppThemeDark" parent="android:style/Theme.Material.NoActionBar">
         <item name="android:fontFamily">sans</item>
         <item name="android:colorAccent">#F3B493</item>
+        <item name="android:colorError">#FFB4A7</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:statusBarColor">#201F1D</item>
@@ -22,8 +57,41 @@
         <item name="android:windowBackground">#201F1D</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:forceDarkAllowed">false</item>
+
+        <item name="android:alertDialogTheme">@style/HueviaDialogDark</item>
+        <item name="android:buttonStyle">@style/HueviaButton</item>
+        <item name="android:editTextStyle">@style/HueviaEditText</item>
+        <item name="android:checkboxStyle">@style/HueviaCheckBox</item>
+        <item name="android:radioButtonStyle">@style/HueviaRadio</item>
+        <item name="android:switchStyle">@style/HueviaSwitch</item>
+        <item name="android:seekBarStyle">@style/HueviaSeekBar</item>
+        <item name="android:progressBarStyle">@style/HueviaProgress</item>
+        <item name="android:popupMenuStyle">@style/HueviaPopupMenu</item>
+        <item name="android:listPopupWindowStyle">@style/HueviaListPopup</item>
+        <item name="android:dropDownListViewStyle">@style/HueviaDropDownList</item>
+        <item name="android:spinnerStyle">@style/HueviaSpinner</item>
+        <item name="android:spinnerItemStyle">@style/HueviaSpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/HueviaSpinnerDropDown</item>
+        <item name="android:checkedTextViewStyle">@style/HueviaCheckedText</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/huevia_radio</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/huevia_check</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/HueviaPopupText</item>
+        <item name="android:textAppearanceSmallPopupMenu">@style/HueviaPopupText</item>
+        <item name="android:listPreferredItemHeightSmall">48dp</item>
+        <item name="hueSurface">#292724</item>
+        <item name="hueContainer">#33302C</item>
+        <item name="hueText">#F6F1EB</item>
+        <item name="hueMuted">#BAB1A7</item>
+        <item name="hueAccent">#F3B493</item>
+        <item name="hueAccentContainer">#51382D</item>
+        <item name="hueOnAccentContainer">#F3B493</item>
+        <item name="hueOutline">#4C4640</item>
+        <item name="android:colorControlActivated">#F3B493</item>
+        <item name="android:colorControlNormal">#BAB1A7</item>
+        <item name="android:colorControlHighlight">#33F3B493</item>
+        <item name="android:textColorHighlight">#44F3B493</item>
     </style>
-    <style name="DiagnosticTheme" parent="android:style/Theme.Material.NoActionBar">
+    <style name="DiagnosticTheme" parent="AppThemeDark">
         <item name="android:fontFamily">sans</item>
         <item name="android:colorAccent">#FFD43B</item>
         <item name="android:windowLightStatusBar">false</item>

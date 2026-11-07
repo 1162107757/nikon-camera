@@ -1,0 +1,138 @@
+{
+  "pass": false,
+  "stage": "natural-acne-and-body",
+  "candidateSha256": "d8c84b7b1b65ca9768ebe3f44b2441744f129ebd764affa75384620d16ea72ae",
+  "mode": "phone",
+  "scope": "full",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "red-micro-blemish-proposed",
+      "pass": true
+    },
+    {
+      "name": "neutral-dark-beauty-mark-preserved",
+      "pass": true
+    },
+    {
+      "name": "skin-texture-stored",
+      "pass": true
+    },
+    {
+      "name": "skin-evenness-stored",
+      "pass": true
+    },
+    {
+      "name": "skin-shine-stored",
+      "pass": true
+    },
+    {
+      "name": "cropped-faces-prepared-for-evenness",
+      "pass": true
+    },
+    {
+      "name": "automatic-mask-visible-scope",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_detail-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_detail-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_white-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-eye_white-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-teeth-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-teeth-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-under_eye-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-under_eye-stored",
+      "pass": true
+    },
+    {
+      "name": "feature-fill-enabled",
+      "pass": true
+    },
+    {
+      "name": "feature-fill-stored",
+      "pass": true
+    },
+    {
+      "name": "light-pad-saves-direction",
+      "pass": true
+    },
+    {
+      "name": "light-pad-one-history-item",
+      "pass": true
+    },
+    {
+      "name": "light-pad-undo",
+      "pass": true
+    },
+    {
+      "name": "light-marker-constrained-to-disk",
+      "pass": true
+    },
+    {
+      "name": "axis-edit-keeps-light-pad-visible",
+      "pass": true
+    },
+    {
+      "name": "both-light-axes-reachable",
+      "pass": true
+    },
+    {
+      "name": "natural-retouch-amount",
+      "pass": true
+    },
+    {
+      "name": "conservative-no-auto-acne-keeps-state",
+      "pass": true
+    },
+    {
+      "name": "synthetic-acne-review-commits-record",
+      "pass": false
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 3,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "failure": "java.lang.AssertionError: synthetic-acne-review-commits-record",
+  "stack": "java.lang.AssertionError: synthetic-acne-review-commits-record\n\tat cc.huevia.portraitupgradeqa.PortraitUpgradeProbe.check(PortraitUpgradeProbe.java:86)\n\tat cc.huevia.portraitupgradeqa.PortraitUpgradeProbe.upgradeFlow(PortraitUpgradeProbe.java:53)\n\tat cc.huevia.portraitupgradeqa.PortraitUpgradeProbe.onStart(PortraitUpgradeProbe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n"
+}

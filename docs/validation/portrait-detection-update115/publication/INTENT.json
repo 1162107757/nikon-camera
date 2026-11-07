@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "status": "published-verified",
+  "authorization": {
+    "upload": "User instruction: 完成后上传; task resumed after interruption.",
+    "mandatory": "User preference: 沿用强制更新"
+  },
+  "versionCode": 115,
+  "versionName": "0.23.4-beta",
+  "channel": "beta",
+  "mandatory": true,
+  "apk": {
+    "path": "dist/huevia-0.23.4-beta-debug.apk",
+    "bytes": 9531300,
+    "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "notesFile": "dist/huevia-0.23.4-beta-RELEASE-NOTES.txt",
+  "localValidationIdentity": "docs/validation/portrait-detection-update115/FINAL-IDENTITY.json",
+  "releaseId": "7205dc77-3d55-4c1a-95a6-9c8cdf7d3179",
+  "serverVerified": {
+    "versionCode": 115,
+    "bytes": 9531300,
+    "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31"
+  },
+  "publishedAt": "2026-10-29T11:03:41.482695+08:00"
+}

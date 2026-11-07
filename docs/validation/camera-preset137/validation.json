@@ -1,0 +1,53 @@
+{
+  "versionCode": 137,
+  "versionName": "0.28.0-beta",
+  "apk": "dist/huevia-0.28.0-beta-debug.apk",
+  "apkSha256": "61a9eaa0ffa733e1d9bbf5fb4066090dc933a3e9089615d7d8e6d37e3737dd5a",
+  "apkBytes": 33555212,
+  "installedApkSha256": "61a9eaa0ffa733e1d9bbf5fb4066090dc933a3e9089615d7d8e6d37e3737dd5a",
+  "sourceInputsVerified": 256,
+  "apkSignatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "hostChecks": {
+    "unifiedPresetAndOptionalParameters": 323,
+    "usbImport": 1393,
+    "wirelessImportWrapper": 9698,
+    "ptpipClient": 5291,
+    "fullCoreRegressionExitCode": 0
+  },
+  "native": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "assertions": 36,
+      "report": "native/verdict/phone/report.json"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "assertions": 36,
+      "report": "native/verdict/font1.3/report.json"
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "assertions": 36,
+      "report": "native/verdict/landscape/report.json"
+    }
+  ],
+  "review": {
+    "disposition": "ship",
+    "scope": "M1 immediate result detail and M2 48dp touch targets",
+    "M1": "resolved",
+    "M2": "resolved"
+  },
+  "realCameraTested": false,
+  "published": false,
+  "limitations": [
+    "Controlled import supports Z6II only",
+    "Lossy projection is not Nikon native colour equivalence",
+    "No one-key restore; original values are retained in reports"
+  ]
+}

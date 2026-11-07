@@ -1,0 +1,185 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "date-check-visible-before-selection",
+      "pass": true
+    },
+    {
+      "name": "date-checkbox-has-48dp-target-false",
+      "pass": true
+    },
+    {
+      "name": "date-click-enters-selection-and-selects-group-false",
+      "pass": true
+    },
+    {
+      "name": "date-entry-retains-approved-floating-dock-false",
+      "pass": true
+    },
+    {
+      "name": "date-all-state-false",
+      "pass": true
+    },
+    {
+      "name": "single-removal-makes-date-indeterminate-false",
+      "pass": true
+    },
+    {
+      "name": "mixed-date-click-restores-whole-group-false",
+      "pass": true
+    },
+    {
+      "name": "whole-date-can-be-deselected-false",
+      "pass": true
+    },
+    {
+      "name": "version-menu-opens-exact-chosen-file",
+      "pass": true
+    },
+    {
+      "name": "single-default-is-selected-saved-version-not-original-or-draft",
+      "pass": true
+    },
+    {
+      "name": "single-sheet-lists-three-versions-with-thumbnails",
+      "pass": true
+    },
+    {
+      "name": "single-sheet-names-current-version",
+      "pass": true
+    },
+    {
+      "name": "quality-caption-fits-one-line-on-narrow-large-text",
+      "pass": true
+    },
+    {
+      "name": "version-row-has-full-touch-height",
+      "pass": true
+    },
+    {
+      "name": "version-row-has-full-touch-height",
+      "pass": true
+    },
+    {
+      "name": "version-row-has-full-touch-height",
+      "pass": true
+    },
+    {
+      "name": "single-switch-changes-real-export-source",
+      "pass": true
+    },
+    {
+      "name": "multi-select-freezes-two-different-saved-files",
+      "pass": true
+    },
+    {
+      "name": "advanced-previews-correspond-to-both-selected-versions",
+      "pass": true
+    },
+    {
+      "name": "advanced-return-keeps-version-checks",
+      "pass": true
+    },
+    {
+      "name": "selected-version-persists-on-gallery-card",
+      "pass": true
+    },
+    {
+      "name": "gallery-card-names-current-version",
+      "pass": true
+    },
+    {
+      "name": "batch-defaults-each-photos-own-current-file",
+      "pass": true
+    },
+    {
+      "name": "batch-all-versions-is-opt-in",
+      "pass": true
+    },
+    {
+      "name": "batch-all-versions-includes-every-current-catalog-result",
+      "pass": true
+    },
+    {
+      "name": "saved-version-does-not-load-latest-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "saved-version-does-not-load-latest-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "saved-version-does-not-load-latest-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "saved-version-does-not-load-latest-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "saved-version-does-not-load-latest-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "all-versions-have-distinct-files-and-names",
+      "pass": true
+    },
+    {
+      "name": "sync-completed-owned-photo-snapshot",
+      "pass": true
+    },
+    {
+      "name": "sync-date-entry-visible-in-browse",
+      "pass": true
+    },
+    {
+      "name": "sync-date-entry-selects-whole-current-group",
+      "pass": true
+    },
+    {
+      "name": "sync-single-removal-shows-mixed-date",
+      "pass": true
+    },
+    {
+      "name": "date-selection-starts-no-download-or-export",
+      "pass": true
+    },
+    {
+      "name": "sync-exit-clears-all-selection",
+      "pass": true
+    },
+    {
+      "name": "date-checkbox-has-48dp-target-true",
+      "pass": true
+    },
+    {
+      "name": "date-click-enters-selection-and-selects-group-true",
+      "pass": true
+    },
+    {
+      "name": "date-entry-retains-approved-floating-dock-true",
+      "pass": true
+    },
+    {
+      "name": "date-all-state-true",
+      "pass": true
+    },
+    {
+      "name": "single-removal-makes-date-indeterminate-true",
+      "pass": true
+    },
+    {
+      "name": "mixed-date-click-restores-whole-group-true",
+      "pass": true
+    },
+    {
+      "name": "whole-date-can-be-deselected-true",
+      "pass": true
+    }
+  ]
+}

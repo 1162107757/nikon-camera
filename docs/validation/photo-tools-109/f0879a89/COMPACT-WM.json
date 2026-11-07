@@ -1,0 +1,24 @@
+{
+  "serial": "emulator-5588",
+  "candidateSha256": "f0879a895e5ea9127bd05e554aafce4a1e6c475214dc96cf43c67a52425d7c4c",
+  "before": {
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "capturedAtUtc": "2026-10-28T14:16:06.703Z"
+  },
+  "override": {
+    "requestedSize": "640x1136",
+    "requestedDensity": 320,
+    "size": "Physical size: 1080x2424\r\nOverride size: 640x1136",
+    "density": "Physical density: 420\r\nOverride density: 320",
+    "atUtc": "2026-10-28T14:19:23.599Z"
+  },
+  "after": {
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "atUtc": "2026-10-28T14:19:35.292Z"
+  },
+  "runnerExit": 1,
+  "restoreErrors": [],
+  "restored": true
+}

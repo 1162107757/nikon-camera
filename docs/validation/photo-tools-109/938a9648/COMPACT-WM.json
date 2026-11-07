@@ -1,0 +1,26 @@
+{
+  "serial": "emulator-5588",
+  "candidateSha256": "938a96481c6eae320e598e74465edacaa273fedcfb5a5b6f296c8ac29205e151",
+  "before": {
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "capturedAtUtc": "2026-10-28T14:04:55.457Z"
+  },
+  "override": {
+    "requestedSize": "640x1136",
+    "requestedDensity": 320,
+    "size": "Physical size: 1080x2424\r\nOverride size: 640x1136",
+    "density": "Physical density: 420\r\nOverride density: 320",
+    "atUtc": "2026-10-28T14:09:36.988Z"
+  },
+  "after": {
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "atUtc": "2026-10-28T14:10:07.005Z"
+  },
+  "activity-topDiagnostic": "app/build/layout112/compact-activity-top.txt",
+  "windowDiagnostic": "app/build/layout112/compact-window.txt",
+  "runnerExit": 1,
+  "restoreErrors": [],
+  "restored": true
+}

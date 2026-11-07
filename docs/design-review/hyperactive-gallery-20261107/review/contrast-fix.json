@@ -1,0 +1,9 @@
+{
+  "fix": "Scoped secondary text contrast; geometry and font sizes unchanged",
+  "ratios": {
+    "source": 5.52,
+    "category": 5.52,
+    "transferWorstWhite88OverBlack": 5.33,
+    "footer": 5.44
+  }
+}

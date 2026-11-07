@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleConsumer;
 
-/** Global colour -> local linear-light colour masks -> ordered feathered clone patches. */
+/** Global colour -> local masks/clone patches -> frozen portrait skin, light and healing. */
 public final class LocalEditsPreviewProfile implements PresetPreviewProfile {
     private static final int MAX_PATCH_PIXELS=8*1024*1024;
     private static final double[] LINEAR=new double[256];
@@ -32,15 +32,27 @@ public final class LocalEditsPreviewProfile implements PresetPreviewProfile {
     }
     public static void renderLocal(SpatialPreviewFilter.Pixels pixels,PhotoLocalEdits edits,int exif,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         if(pixels==null||edits==null||exif<1||exif>8)throw new IllegalArgumentException("局部编辑照片无效。");
+        if(!edits.portrait.bodyShape.isNeutral()){
+            PhotoLocalEdits beforeWarp=edits.withPortrait(edits.portrait.withBodyShape(PhotoBodyShape.NONE));
+            renderLocal(pixels,beforeWarp,exif,cancel,progress==null?null:v->progress.accept(v*.6));
+            PhotoBodyWarp.apply(pixels,edits.portrait.bodyShape,exif,cancel,progress==null?null:v->progress.accept(.6+.4*v));return;
+        }
+        if(edits.regions().isEmpty()){renderLegacy(pixels,edits,exif,cancel,progress);return;}
+        renderLegacy(pixels,edits,exif,cancel,progress==null?null:v->progress.accept(v*.35));
+        AdjustmentRegionRenderer.apply(pixels,edits.regions(),exif,cancel,progress==null?null:v->progress.accept(.35+.65*v));
+    }
+    private static void renderLegacy(SpatialPreviewFilter.Pixels pixels,PhotoLocalEdits edits,int exif,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        if(pixels==null||edits==null||exif<1||exif>8)throw new IllegalArgumentException("局部编辑照片无效。");
         int width=pixels.width(),height=pixels.height();if(width<1||height<1||width>65535||height>65535)throw new IllegalArgumentException("照片尺寸无效。");
         if(edits.isNeutral()){check(cancel);if(progress!=null)progress.accept(1);return;}
         int orientedWidth=exif>=5?height:width,orientedHeight=exif>=5?width:height;
         ArrayList<CompiledMask> masks=new ArrayList<>();for(PhotoLocalEdits.Mask mask:edits.masks())if(mask.hasEffect())masks.add(new CompiledMask(mask,orientedWidth,orientedHeight));
         if(!masks.isEmpty()){
             int[] row=new int[width];
-            for(int y=0;y<height;y++){check(cancel);pixels.read(row,y,1);for(int x=0;x<width;x++){if((x&255)==0)check(cancel);double nx=(x+.5)/width,ny=(y+.5)/height,ox=orientedX(nx,ny,exif),oy=orientedY(nx,ny,exif);int value=row[x];if((value>>>24)==0)continue;for(CompiledMask mask:masks)value=mask.apply(value,ox,oy);row[x]=value;}pixels.write(row,y,1);if(progress!=null)progress.accept(.65*(y+1)/(double)height);}
-        }else if(progress!=null)progress.accept(.65);
-        List<PhotoLocalEdits.Clone> patches=edits.clones();for(int i=0;i<patches.size();i++){check(cancel);PhotoLocalEdits.Clone clone=patches.get(i);if(clone.hasEffect())clone(pixels,clone,exif,cancel);if(progress!=null)progress.accept(.65+.35*(i+1)/(double)patches.size());}
+            for(int y=0;y<height;y++){check(cancel);pixels.read(row,y,1);for(int x=0;x<width;x++){if((x&255)==0)check(cancel);double nx=(x+.5)/width,ny=(y+.5)/height,ox=orientedX(nx,ny,exif),oy=orientedY(nx,ny,exif);int value=row[x];if((value>>>24)==0)continue;for(CompiledMask mask:masks)value=mask.apply(value,ox,oy);row[x]=value;}pixels.write(row,y,1);if(progress!=null)progress.accept((edits.portrait.isNeutral()?.65:.26)*(y+1)/(double)height);}
+        }else if(progress!=null)progress.accept(edits.portrait.isNeutral()?.65:.26);
+        List<PhotoLocalEdits.Clone> patches=edits.clones();for(int i=0;i<patches.size();i++){check(cancel);PhotoLocalEdits.Clone clone=patches.get(i);if(clone.hasEffect())clone(pixels,clone,exif,cancel);if(progress!=null)progress.accept(edits.portrait.isNeutral()?.65+.35*(i+1)/(double)patches.size():.26+.14*(i+1)/(double)patches.size());}
+        if(!edits.portrait.isNeutral())PortraitPreviewFilter.apply(pixels,edits.portrait,exif,cancel,progress==null?null:v->progress.accept(.4+.6*v));
         if(progress!=null)progress.accept(1);
     }
     public static double orientedX(double x,double y,int exif){switch(exif){case 2:case 3:return 1-x;case 5:case 8:return y;case 6:case 7:return 1-y;default:return x;}}

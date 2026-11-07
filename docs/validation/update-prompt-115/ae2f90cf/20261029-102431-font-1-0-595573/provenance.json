@@ -1,0 +1,72 @@
+{
+  "candidateApk": "dist/huevia-0.23.4-beta-debug.apk",
+  "candidateSha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2",
+  "versionCode": 115,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "fontScale": 1.0,
+  "runId": "20261029-102431-font-1-0-595573",
+  "probeSha256": "a13f612bc2ec3ab2ddf5636b62973a618dabde37c17684d5deeca41b542b7bb4",
+  "compiledInputs": [
+    {
+      "path": "tests/update-prompt-device-probe/src/cc/huevia/updateqa/UpdatePromptProbe.java",
+      "sha256": "bd926327db6da8fb1c5338cf65ed62afc74e6bb6716e3c722abdfa39cda10b85"
+    },
+    {
+      "path": "tests/update-prompt-device-probe/AndroidManifest.xml",
+      "sha256": "fbe75e936870388e5bfde8de97826797d0d97b997049ba94dcb8138db6531c12"
+    },
+    {
+      "path": "tests/update-prompt-device-probe/run.ps1",
+      "sha256": "5d3557a92e281abb88b0f406d9525f99ef67fa934bd602829813448d1a89ac47"
+    },
+    {
+      "path": "tests/update-prompt-device-probe/build.ps1",
+      "sha256": "749055235645628e90e8a94174bc015f9d07cef93e67a206cdc22058333e2ad6"
+    }
+  ],
+  "scope": "Production UpdatePanel component UI with validated synthetic Release and state callbacks; no metadata HTTP, DownloadManager or installer",
+  "files": [
+    {
+      "file": "01-ordinary.png",
+      "bytes": 76996,
+      "sha256": "325aa5d8bec239fe4d564854ee802b4900bff2f81dc224165a9a63a3830fec47"
+    },
+    {
+      "file": "02-required.png",
+      "bytes": 318992,
+      "sha256": "6bd15e5b61fb14862afa7b555610b354678c01ed6e7d02e15f1cff29546408e6"
+    },
+    {
+      "file": "03-required-notes-end.png",
+      "bytes": 347907,
+      "sha256": "65f26646f0b8d6187460a61612994da929ea12e1924babf9874cd0cb1442f7c1"
+    },
+    {
+      "file": "04-downloading.png",
+      "bytes": 309824,
+      "sha256": "eccf24f10d0350460434f4af22608609a8475e293cc84e8e86fd8c9aeac48e8b"
+    },
+    {
+      "file": "05-download-error.png",
+      "bytes": 325449,
+      "sha256": "68a298b549ab1e3298ebc7c188e4eee5adeff30f94e34ffea496c69446461c0e"
+    },
+    {
+      "file": "06-verifying.png",
+      "bytes": 324196,
+      "sha256": "8bce27f8c90d04ed14e8c717174e5cd412180244d4fc58719ba16be11a549f82"
+    },
+    {
+      "file": "07-ready-to-install.png",
+      "bytes": 319843,
+      "sha256": "acd5b2f055e21f26e2a6f4d95d93ea7eaf6dcc724124266a66494639834e9c85"
+    },
+    {
+      "file": "report.json",
+      "bytes": 43317,
+      "sha256": "b84a29776e62515949a51ce78021407ed92485bd2a80cc21a89ea0f1b5197159"
+    }
+  ],
+  "pass": true
+}

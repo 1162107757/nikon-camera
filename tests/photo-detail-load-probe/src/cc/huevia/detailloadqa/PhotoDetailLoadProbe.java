@@ -28,7 +28,7 @@ public final class PhotoDetailLoadProbe extends Instrumentation {
         String runId=args.getString("runId","");require(runId.matches("[a-f0-9]{32}"),"run-identity");
         output=new File(context.getExternalFilesDir(null),"photo-detail-load-94/"+apkSha.substring(0,8)+"/"+runId);require(output.mkdirs(),"own-evidence-directory");
         work=new File(context.getCacheDir(),"detail-load-probe-"+runId);require(work.mkdirs(),"own-fixture-directory");
-        report.put("apkSha256",apkSha).put("runId",runId).put("hardware",Build.HARDWARE).put("scope","Production Android JPEG/PNG codecs and PhotoDetailSource; private deterministic 4000x3000 JPEG. Cold means a new page/source without surfaces; OS disk cache is not flushed. Warm means same source/tile cache. Timings are emulator observations, not a physical phone claim.");
+        report.put("apkSha256",apkSha).put("runId",runId).put("hardware",Build.HARDWARE).put("scope","Production Android JPEG/PNG codecs, lossless ARGB surfaces and PhotoDetailSource; private deterministic 4000x3000 JPEG. Cold means a new page/source without surfaces; OS disk cache is not flushed. Warm means same source/tile cache. Timings are emulator observations, not a physical phone claim. PNG oracle generation is outside measured source-frame timings.");
         fixture();photoSha=sha(photo);report.put("fixture",new JSONObject().put("width",4000).put("height",3000).put("bytes",photo.length()).put("sha256",photoSha));
         Object original=profile(false),effect=profile(true);
         oddEdgeProof(original);
@@ -56,11 +56,18 @@ public final class PhotoDetailLoadProbe extends Instrumentation {
         Object edited=source(effect,true,new AtomicBoolean(true));Observation current=frame(edited,0,0);timings.put(current.json("effect-optimized-cold"));
         require(current.preview!=null&&current.previewMs<current.completeMs,"edited-fit-preview-arrives-before-full-pixel-surface");
         require(bool(((Object[])field(edited,"surfaces"))[0],"temporary"),"edited-final-frame-retains-lossless-full-resolution-surface");
+        requireRaster(edited,0,"edited");
         Observation editedOne=frame(edited,0,1);require(integer(editedOne.frame,"sample")==1,"edited-100-percent-unsampled-regions");timings.put(editedOne.json("effect-optimized-warm-100"));
-        Observation before=frame(edited,1,1);timings.put(before.json("before-optimized-cold-100"));require(!bool(((Object[])field(edited,"surfaces"))[1],"temporary"),"neutral-before-direct-JPEG-path");require(integer(before.frame,"width")==integer(editedOne.frame,"width")&&integer(before.frame,"height")==integer(editedOne.frame,"height"),"before-current-same-full-geometry");close(edited);
+        Observation before=frame(edited,1,1);timings.put(before.json("before-optimized-cold-100"));require(!bool(((Object[])field(edited,"surfaces"))[1],"temporary"),"neutral-before-direct-JPEG-path");require(integer(before.frame,"width")==integer(editedOne.frame,"width")&&integer(before.frame,"height")==integer(editedOne.frame,"height"),"before-current-same-full-geometry");
+        require(integer(before.frame,"mode")==1,"before-request-retains-before-mode");pixelProof(before.frame,photo,"beforePhysicalPixelProof");
+        Observation currentAgain=frame(edited,0,1);require(integer(currentAgain.frame,"mode")==0,"comparison-returns-to-current-mode");
+        require(sameTiles(editedOne.frame,currentAgain.frame),"comparison-return-retains-current-raster-tiles");renderedPixelProof(currentAgain.frame,photo,effect,false,"editedRasterPixelProof");close(edited);
         // Nonneutral EXIF must retain normalized full surfaces, never mislabeled raw JPEG coordinates.
         File rotated=new File(work,"rotated.jpg");Files.copy(photo.toPath(),rotated.toPath());ExifInterface exif=new ExifInterface(rotated.getPath());exif.setAttribute(ExifInterface.TAG_ORIENTATION,"6");exif.saveAttributes();
-        Object rotatedSource=source(rotated,sha(rotated),original,false,new AtomicBoolean(true));Observation rotatedFrame=frame(rotatedSource,0,0);require(integer(rotatedFrame.frame,"width")==3000&&integer(rotatedFrame.frame,"height")==4000,"rotated-EXIF-full-dimensions-preserved");require(bool(((Object[])field(rotatedSource,"surfaces"))[0],"temporary"),"rotated-source-uses-normalized-lossless-surface");close(rotatedSource);
+        String rotatedSha=sha(rotated);Object rotatedSource=source(rotated,rotatedSha,original,false,new AtomicBoolean(true));Observation rotatedFrame=frame(rotatedSource,0,0);require(integer(rotatedFrame.frame,"width")==3000&&integer(rotatedFrame.frame,"height")==4000,"rotated-EXIF-full-dimensions-preserved");require(bool(((Object[])field(rotatedSource,"surfaces"))[0],"temporary"),"rotated-source-uses-normalized-lossless-surface");
+        requireRaster(rotatedSource,0,"rotated-EXIF");Observation rotatedOne=frame(rotatedSource,0,1);renderedPixelProof(rotatedOne.frame,rotated,original,true,"rotatedRasterPixelProof");close(rotatedSource);require(rotatedSha.equals(sha(rotated)),"rotated-EXIF-source-bytes-preserved");
+        switchFromPreviewProof(effect,false);switchFromPreviewProof(effect,true);
+        closeFromPreviewProof(effect);
         AtomicBoolean ownerValid=new AtomicBoolean(true);Object guarded=source(original,false,ownerValid);frame(guarded,0,0);ownerValid.set(false);Observation invalid=frameAllowInvalid(guarded);require(invalid.invalidated,"owner-invalidation-rejects-cache-and-preview");close(guarded);
         require(photoSha.equals(sha(photo)),"all-read-and-close-paths-preserve-original");passed=true;
     }catch(Throwable failure){try{report.put("failure",failure.toString());StringWriter stack=new StringWriter();failure.printStackTrace(new PrintWriter(stack));report.put("stack",stack.toString());}catch(Exception ignored){}result.putString("failure",failure.toString());}
@@ -125,6 +132,85 @@ public final class PhotoDetailLoadProbe extends Instrumentation {
     private void pixelProof(Object frame,File input,String key)throws Exception{
         Bitmap oracle=BitmapFactory.decodeFile(input.getPath(),options(1));int count=0,errors=0;try{for(Object tile:(List<?>)field(frame,"tiles")){Rect bounds=(Rect)field(tile,"bounds");Bitmap pixels=(Bitmap)field(tile,"bitmap");for(int y=0;y<pixels.getHeight();y+=37)for(int x=0;x<pixels.getWidth();x+=41){count++;if(pixels.getPixel(x,y)!=oracle.getPixel(bounds.left+x,bounds.top+y))errors++;}}}finally{oracle.recycle();}
         require(count>1000&&errors==0,"direct-region-pixels-equal-full-JPEG-decode");report.put(key,new JSONObject().put("count",count).put("errors",errors).put("sample",integer(frame,"sample")));
+    }
+    private void requireRaster(Object source,int mode,String name)throws Exception{
+        Object surface=((Object[])field(source,"surfaces"))[mode];
+        require(bool(surface,"temporary")&&field(surface,"raster")!=null&&field(surface,"decoder")==null,name+"-uses-uncompressed-lossless-raster");
+    }
+    /** Compare every returned sample-1 tile pixel with the unchanged full-render PNG path. */
+    private void renderedPixelProof(Object frame,File input,Object profile,boolean before,String key)throws Exception{
+        require(integer(frame,"sample")==1,key+"-checks-unsampled-production-tiles");
+        File target=new File(work,"oracle-"+key+".png");Bitmap oracle=null;long count=0,errors=0;
+        try{
+            Object renderer=type("album.PhotoPresetRenderer").getConstructor(android.content.res.AssetManager.class).newInstance(context.getAssets());
+            type("album.PhotoPresetRenderer").getMethod("renderDetail",File.class,File.class,type("ncp.PresetPreviewProfile"),boolean.class,BooleanSupplier.class,type("album.PhotoPresetRenderer$Progress")).invoke(renderer,input,target,profile,before,(BooleanSupplier)()->false,null);
+            oracle=BitmapFactory.decodeFile(target.getPath(),options(1));require(oracle!=null,key+"-full-PNG-oracle-decodes");
+            require(oracle.getWidth()==integer(frame,"width")&&oracle.getHeight()==integer(frame,"height"),key+"-full-render-geometry-equal");
+            for(Object tile:(List<?>)field(frame,"tiles")){
+                Rect bounds=(Rect)field(tile,"bounds");Bitmap pixels=(Bitmap)field(tile,"bitmap");int width=pixels.getWidth(),height=pixels.getHeight();
+                require(width==bounds.width()&&height==bounds.height(),key+"-tile-has-one-pixel-per-source-coordinate");
+                int[] actual=new int[width],expected=new int[width];
+                for(int y=0;y<height;y++){
+                    pixels.getPixels(actual,0,width,0,y,width,1);oracle.getPixels(expected,0,width,bounds.left,bounds.top+y,width,1);
+                    for(int x=0;x<width;x++){count++;if(actual[x]!=expected[x])errors++;}
+                }
+            }
+            report.put(key,new JSONObject().put("count",count).put("errors",errors).put("sample",1).put("oracle","full renderDetail PNG decode").put("coverage","every pixel of returned visible 100% tiles"));
+            require(count>1_000_000&&errors==0,key+"-all-visible-raster-pixels-equal-full-PNG-render");
+        }finally{if(oracle!=null)oracle.recycle();target.delete();}
+    }
+    private boolean sameTiles(Object first,Object second)throws Exception{
+        List<?> a=(List<?>)field(first,"tiles"),b=(List<?>)field(second,"tiles");if(a.size()!=b.size()||a.isEmpty())return false;
+        for(int i=0;i<a.size();i++)if(!field(a.get(i),"bounds").equals(field(b.get(i),"bounds"))||!((Bitmap)field(a.get(i),"bitmap")).sameAs((Bitmap)field(b.get(i),"bitmap")))return false;
+        return true;
+    }
+    private void switchFromPreviewProof(Object profile,boolean cancelFirst)throws Exception{
+        String name=cancelFirst?"cancel-then-before":"switch-to-before";Object source=source(profile,true,new AtomicBoolean(true));
+        CountDownLatch done=new CountDownLatch(1);AtomicInteger currentPreviews=new AtomicInteger(),staleCompletions=new AtomicInteger();AtomicReference<Throwable> failure=new AtomicReference<>();Observation before=new Observation();AtomicLong switchedAt=new AtomicLong();
+        Object beforeCallback=Proxy.newProxyInstance(loader,new Class<?>[]{type("album.PhotoDetailSource$Callback")},(proxy,method,args)->{
+            switch(method.getName()){
+                case "preview":if(before.preview==null){before.preview=args[0];before.previewMs=elapsed(switchedAt.get());}break;
+                case "loaded":before.frame=args[0];before.completeMs=elapsed(switchedAt.get());done.countDown();break;
+                case "failed":failure.set(new AssertionError(String.valueOf(args[0])));done.countDown();break;
+                case "invalidated":failure.set(new AssertionError("Unexpected BEFORE invalidation"));done.countDown();break;
+                case "toString":return "Replacement BEFORE request";
+            }return null;
+        });
+        Object currentCallback=Proxy.newProxyInstance(loader,new Class<?>[]{type("album.PhotoDetailSource$Callback")},(proxy,method,args)->{
+            switch(method.getName()){
+                case "preview":if(currentPreviews.incrementAndGet()==1)try{
+                    switchedAt.set(System.nanoTime());if(cancelFirst)type("album.PhotoDetailSource").getMethod("cancelFrames").invoke(source);
+                    type("album.PhotoDetailSource").getMethod("frame",int.class,int.class,int.class,double.class,double.class,double.class,type("album.PhotoDetailSource$Callback")).invoke(source,1,1080,1920,1d,.5d,.5d,beforeCallback);
+                }catch(Throwable problem){failure.set(problem);done.countDown();}break;
+                case "loaded":staleCompletions.incrementAndGet();done.countDown();break;
+                case "failed":failure.set(new AssertionError(String.valueOf(args[0])));done.countDown();break;
+                case "invalidated":failure.set(new AssertionError("Unexpected CURRENT invalidation"));done.countDown();break;
+                case "toString":return "Replace CURRENT from provisional preview";
+            }return null;
+        });
+        type("album.PhotoDetailSource").getMethod("frame",int.class,int.class,int.class,double.class,double.class,double.class,type("album.PhotoDetailSource$Callback")).invoke(source,0,1080,1920,0d,.5d,.5d,currentCallback);
+        require(done.await(30,TimeUnit.SECONDS),name+"-replacement-completes");require(failure.get()==null&&before.frame!=null,name+"-replacement-has-no-callback-failure");
+        require(currentPreviews.get()==1&&staleCompletions.get()==0,name+"-suppresses-stale-current-completion");require(integer(before.frame,"mode")==1&&integer(before.frame,"sample")==1,name+"-returns-unsampled-before-mode");
+        require(((Object[])field(source,"surfaces"))[0]==null&&!new File((File)field(source,"directory"),"current.argb").exists(),name+"-abandons-current-surface-and-partial-raster");
+        timings.put(before.json(name+"-from-current-preview"));pixelProof(before.frame,photo,name+"PhysicalPixelProof");close(source);
+    }
+    private void closeFromPreviewProof(Object profile)throws Exception{
+        Object source=source(profile,true,new AtomicBoolean(true));CountDownLatch stopped=new CountDownLatch(1);AtomicInteger completions=new AtomicInteger();AtomicReference<Throwable> failure=new AtomicReference<>();
+        Object callback=Proxy.newProxyInstance(loader,new Class<?>[]{type("album.PhotoDetailSource$Callback")},(proxy,method,args)->{
+            switch(method.getName()){
+                case "preview":try{type("album.PhotoDetailSource").getMethod("close").invoke(source);}catch(Throwable problem){failure.set(problem);}finally{stopped.countDown();}break;
+                case "loaded":completions.incrementAndGet();stopped.countDown();break;
+                case "failed":failure.set(new AssertionError(String.valueOf(args[0])));stopped.countDown();break;
+                case "invalidated":failure.set(new AssertionError("Unexpected invalidation before close"));stopped.countDown();break;
+                case "toString":return "Close detail source from provisional preview";
+            }return null;
+        });
+        type("album.PhotoDetailSource").getMethod("frame",int.class,int.class,int.class,double.class,double.class,double.class,type("album.PhotoDetailSource$Callback")).invoke(source,0,1080,1920,0d,.5d,.5d,callback);
+        require(stopped.await(20,TimeUnit.SECONDS),"preview-close-callback-completes");require(failure.get()==null,"preview-close-has-no-callback-failure");
+        require(bool(source,"closed"),"provisional-preview-can-close-source");close(source);
+        CountDownLatch mainDrained=new CountDownLatch(1);new Handler(Looper.getMainLooper()).post(mainDrained::countDown);
+        require(mainDrained.await(10,TimeUnit.SECONDS)&&completions.get()==0,"closing-from-preview-suppresses-stale-complete-frame");
+        require(photoSha.equals(sha(photo)),"closing-preparation-preserves-source-bytes");
     }
     private void close(Object source)throws Exception{type("album.PhotoDetailSource").getMethod("close").invoke(source);ThreadPoolExecutor worker=(ThreadPoolExecutor)field(source,"worker");require(worker.awaitTermination(10,TimeUnit.SECONDS),"source-worker-closed-and-surfaces-released");require(!((File)field(source,"directory")).exists(),"source-owned-temporary-directory-removed");sources.remove(source);}
     private void require(boolean pass,String name)throws Exception{checks.put(new JSONObject().put("name",name).put("passed",pass));if(!pass)throw new AssertionError(name);}

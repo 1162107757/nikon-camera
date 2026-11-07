@@ -1,0 +1,17 @@
+{
+  "status": "uploaded-draft-only",
+  "releaseId": "485954a2-dff9-4fbc-a176-d5798f4623e8",
+  "channel": "beta",
+  "mandatory": false,
+  "reason": "Superseded by corrected 114 before publication. Version codes are immutable after upload.",
+  "versionCode": 113,
+  "versionName": "0.23.2-beta",
+  "apk": {
+    "path": "dist/huevia-0.23.2-beta-debug.apk",
+    "bytes": 9531300,
+    "sha256": "f47b00dc462d4f10d090adb3169ee3c1a8a780e9167df8b7bd569b3882a5ec5e",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "minSdk": 26,
+    "targetSdk": 35
+  }
+}

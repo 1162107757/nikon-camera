@@ -72,6 +72,7 @@ public final class LocalAlbumPanel implements AutoCloseable {
         void changed();
         void open(DownloadedPhoto photo);
         void batch(List<DownloadedPhoto> photos);
+        void export(List<DownloadedPhoto> photos);
         void feedback(String title, String message);
         default void addFilters() { }
     }
@@ -100,9 +101,11 @@ public final class LocalAlbumPanel implements AutoCloseable {
     private final Runnable presetChanged = () -> main.post(this::refreshApp);
     private final Runnable thumbnailChanged = this::thumbnailsChanged;
     private UiPalette palette;
-    private LinearLayout root, toolbar, accessActions, selectionBar;
-    private Button phoneTab, appTab, permissionButton, batchButton, selectButton;
-    private ImageView pickerFab, moreButton;
+    private LinearLayout root, selectionBar, summaryRow;
+    private GlassBar selectionDock;
+    private Boolean narrowDock;
+    private Button phoneTab, appTab, permissionButton, batchButton, exportButton, selectButton, pickerButton, cancelButton;
+    private ImageView moreButton;
     private TextView scope, status, selectionCount;
     private ProgressBar progress;
     private ListView list;
@@ -111,15 +114,29 @@ public final class LocalAlbumPanel implements AutoCloseable {
     private View emptyContainer;
     private TextView emptyTitle, emptyText;
     private PhotoAdapter adapter;
-    private boolean phone, selecting, closed, active, loadingPhone, loadingApp, importing, phoneMore, phoneLoaded, appLoaded, compactLayout;
+    private boolean phone, selecting, closed, active, loadingPhone, loadingApp, importing, phoneMore, phoneLoaded, appLoaded, compactLayout, dockUsingList;
     private int phoneOffset, phoneRequest, appRequest, importRequest, imageEpoch, gridColumns = 3;
     private String phoneError = "", appError = "", workStatus = "";
+    private String pendingDateSelection;
 
     public LocalAlbumPanel(Activity activity, PhotoPresetBatch photoPresets, Host host) {
         this.activity = activity; this.photoPresets = photoPresets; this.host = host; repository = new LocalPhotoRepository(activity);
         if (photoPresets != null) photoPresets.addObserver(presetChanged);
     }
-    public String title() { return selecting ? "已选 " + selected.size() + " 张" : "相册"; }
+    public String title() { return "相册"; }
+    public boolean hasSelectionDock() { return selecting || importing; }
+    public View createHeaderAction() {
+        UiPalette colors = new UiPalette(activity);
+        moreButton = new ImageView(activity);
+        moreButton.setImageDrawable(new AppIcon(AppIcon.Kind.MORE_HORIZONTAL, colors.secondary, density()));
+        moreButton.setPadding(dp(12), dp(12), dp(12), dp(12));
+        moreButton.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer), null, shape(colors.card, dp(24))));
+        moreButton.setContentDescription("相册更多操作"); moreButton.setTag("local-album-more");
+        moreButton.setFocusable(true); moreButton.setEnabled(!importing);
+        moreButton.setOnClickListener(view -> showMoreActions());
+        moreButton.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(48)));
+        return moreButton;
+    }
     public void saveState(Bundle state) {
         savePosition(); state.putBoolean("localAlbumPhone", phone);
         state.putParcelable("localAlbumAppPosition", positions[0]); state.putParcelable("localAlbumPhonePosition", positions[1]);
@@ -138,45 +155,33 @@ public final class LocalAlbumPanel implements AutoCloseable {
         }
         compactLayout = compact;
         palette = new UiPalette(activity);
-        root = new LinearLayout(activity); root.setOrientation(LinearLayout.VERTICAL); root.setBackgroundColor(palette.surface);
-        LinearLayout tabs = new LinearLayout(activity); tabs.setGravity(Gravity.CENTER_VERTICAL); tabs.setPadding(dp(compactLayout ? 8 : 16), dp(compactLayout ? 0 : 4), dp(8), dp(compactLayout ? 0 : 4));
-        appTab = button("App 内", () -> switchTab(false)); phoneTab = button("手机", () -> switchTab(true));
-        LinearLayout track=new LinearLayout(activity);track.setGravity(Gravity.CENTER_VERTICAL);track.setPadding(dp(3),0,dp(3),0);track.setBackground(shape(palette.container,dp(25)));
-        track.addView(appTab, compactLayout ? new LinearLayout.LayoutParams(dp(88), -2) : new LinearLayout.LayoutParams(0, -2, 1));
-        track.addView(phoneTab, compactLayout ? new LinearLayout.LayoutParams(dp(72), -2) : new LinearLayout.LayoutParams(0, -2, 1));
-        tabs.addView(track,compactLayout?new LinearLayout.LayoutParams(-2,dp(48)):new LinearLayout.LayoutParams(0,dp(48),1));
+        root = new SubcategorySwipeLayout(activity,()->phone?1:0,2,index->{(index==1?phoneTab:appTab).performClick();},()->!closed&&appTab!=null&&phoneTab!=null&&appTab.isEnabled()&&phoneTab.isEnabled()); root.setBackgroundColor(palette.surface); root.setTag("local-album-root");
+        LinearLayout tabs = new LinearLayout(activity); tabs.setGravity(Gravity.CENTER_VERTICAL); tabs.setPadding(dp(compactLayout ? 12 : 20), 0, dp(compactLayout ? 12 : 20), dp(4));
+        tabs.setTag("local-album-sources");
+        appTab = button("应用相册", () -> switchTab(false)); phoneTab = button("手机相册", () -> switchTab(true));
+        appTab.setTag("local-album-source-app"); phoneTab.setTag("local-album-source-phone");
+        appTab.setTextSize(14); phoneTab.setTextSize(14); appTab.setSingleLine(true); phoneTab.setSingleLine(true);
+        LinearLayout track=new LinearLayout(activity);track.setGravity(Gravity.CENTER_VERTICAL);track.setPadding(dp(4),0,dp(4),0);track.setBackground(shape(palette.container,dp(24)));track.setTag("local-album-source-track");
+        track.addView(appTab, new LinearLayout.LayoutParams(0, dp(48), 1));
+        track.addView(phoneTab, new LinearLayout.LayoutParams(0, dp(48), 1));
+        tabs.addView(track,new LinearLayout.LayoutParams(-1,dp(48)));
         root.addView(tabs);
-        scope = text("", 13, palette.secondary); scope.setMaxLines(1); scope.setEllipsize(TextUtils.TruncateAt.END);
-        status = text("", 13, palette.secondary); status.setMaxLines(1); status.setEllipsize(TextUtils.TruncateAt.END);
+        ((SubcategorySwipeLayout)root).setMotionAnchor(tabs);
+        scope = text("", 12, palette.secondary); scope.setMaxLines(1); scope.setEllipsize(TextUtils.TruncateAt.END); scope.setTag("local-album-count");
+        status = text("", 12, palette.secondary); status.setMaxLines(1); status.setEllipsize(TextUtils.TruncateAt.END); status.setMaxWidth(dp(116));
         status.setGravity(Gravity.CENTER_VERTICAL); status.setPadding(dp(8), 0, dp(8), 0);
         progress = new ProgressBar(activity);
-        if (compactLayout) {
-            tabs.addView(scope, new LinearLayout.LayoutParams(0, -2, 1));
-            tabs.addView(progress, new LinearLayout.LayoutParams(dp(20), dp(20)));
-            tabs.addView(status, new LinearLayout.LayoutParams(-2, -2));
-        }
-        moreButton = new ImageView(activity); moreButton.setImageDrawable(new AppIcon(AppIcon.Kind.MORE, palette.primary, density())); moreButton.setPadding(dp(12), dp(12), dp(12), dp(12));
-        moreButton.setBackground(new RippleDrawable(ColorStateList.valueOf(palette.primaryContainer), null, shape(palette.card, dp(12))));
-        moreButton.setContentDescription("相册更多操作"); moreButton.setTag("local-album-more"); moreButton.setFocusable(true); moreButton.setOnClickListener(view -> showMoreActions());
-        tabs.addView(moreButton, new LinearLayout.LayoutParams(dp(48), dp(48)));
-        if (!compactLayout) {
-            LinearLayout summary = new LinearLayout(activity); summary.setGravity(Gravity.CENTER_VERTICAL); summary.setPadding(dp(20), 0, dp(12), dp(4)); summary.setMinimumHeight(dp(32));
-            summary.addView(scope, new LinearLayout.LayoutParams(0, -2, 1)); summary.addView(progress, new LinearLayout.LayoutParams(dp(20), dp(20))); summary.addView(status, new LinearLayout.LayoutParams(-2, -2)); root.addView(summary);
-        }
-        // Kept as a compatibility mount; visible actions live in the native overflow menu and FAB.
-        toolbar = new LinearLayout(activity); toolbar.setGravity(Gravity.CENTER_VERTICAL); toolbar.setPadding(dp(12), 0, dp(12), 0);
-        Button refresh = button("刷新", this::refresh); icon(refresh, AppIcon.Kind.REFRESH);
-        selectButton = button("选择", () -> { selecting = !selecting; selected.clear(); updateSelection(); });
-        Button picker = button("选择照片", this::pickPhotos); icon(picker, AppIcon.Kind.PLUS);
-        toolbar.addView(refresh); toolbar.addView(selectButton); toolbar.addView(picker, new LinearLayout.LayoutParams(0, -2, 1)); toolbar.setVisibility(View.GONE); root.addView(toolbar);
-        accessActions = new LinearLayout(activity); accessActions.setPadding(dp(12), 0, dp(12), dp(4)); accessActions.setGravity(Gravity.CENTER_VERTICAL);
-        accessActions.setVisibility(View.GONE); root.addView(accessActions);
+        summaryRow = new LinearLayout(activity); summaryRow.setGravity(Gravity.CENTER_VERTICAL); summaryRow.setPadding(dp(compactLayout ? 12 : 24), 0, dp(compactLayout ? 12 : 20), dp(4)); summaryRow.setTag("local-album-summary");
+        summaryRow.addView(scope, new LinearLayout.LayoutParams(0, -2, 1)); summaryRow.addView(progress, new LinearLayout.LayoutParams(dp(20), dp(20))); summaryRow.addView(status, new LinearLayout.LayoutParams(-2, -2));
+        selectButton = smallAction("选择", () -> { selecting = true; selected.clear(); updateSelection(); }); selectButton.setTag("local-album-select"); selectButton.setContentDescription("选择照片进行批量操作");
+        LinearLayout.LayoutParams selectParams = new LinearLayout.LayoutParams(-2, dp(48)); selectParams.leftMargin = dp(8); summaryRow.addView(selectButton, selectParams);
+        root.addView(summaryRow, new LinearLayout.LayoutParams(-1, dp(52)));
         body = new FrameLayout(activity); root.addView(body, new LinearLayout.LayoutParams(-1, 0, 1));
         positionRestorePending = false; positionRestoreApplied = false; positionRestoreRequest++;
         list = new ListView(activity) {
             @Override protected void onLayout(boolean changed, int left, int top, int right, int bottom) { super.onLayout(changed, left, top, right, bottom); if (!positionRestorePending || positionRestoreApplied) { positionRestorePending = false; positionRestoreApplied = false; savePosition(); } }
             @Override protected void onDetachedFromWindow() { savePosition(); super.onDetachedFromWindow(); }
-        }; list.setDivider(null); list.setClipToPadding(false); list.setPadding(dp(compactLayout ? 8 : 12), 0, dp(compactLayout ? 80 : 12), dp(navReserve() + 8));
+        }; list.setDivider(null); list.setClipToPadding(false); list.setPadding(dp(compactLayout ? 8 : 12), 0, dp(compactLayout ? 8 : 12), dp(navReserve() + 8));
         list.setSelector(android.R.color.transparent); list.setCacheColorHint(palette.surface); adapter = new PhotoAdapter(); list.setAdapter(adapter); body.addView(list, new FrameLayout.LayoutParams(-1, -1));
         list.setOnScrollListener(new AbsListView.OnScrollListener() {
             public void onScrollStateChanged(AbsListView view, int state) { if (state == SCROLL_STATE_IDLE) adapter.notifyDataSetChanged(); }
@@ -187,26 +192,36 @@ public final class LocalAlbumPanel implements AutoCloseable {
         if (compactLayout) emptyIcon.setVisibility(View.GONE);
         emptyTitle = text("", 20, palette.text); emptyTitle.setGravity(Gravity.CENTER); emptyTitle.setTypeface(null, Typeface.BOLD); emptyTitle.setPadding(0, dp(compactLayout ? 0 : 20), 0, dp(8)); empty.addView(emptyTitle);
         emptyText = text("", 15, palette.secondary); emptyText.setGravity(Gravity.CENTER); emptyText.setLineSpacing(dp(3), 1); empty.addView(emptyText);
-        permissionButton = button("点击获取授权", this::requestAccess); permissionButton.setTag("local-album-permission"); HueTheme.styleAction(permissionButton,palette,true);
+        permissionButton = button("允许访问照片", () -> { if (phone) requestAccess(); else switchTab(true); }); permissionButton.setTag("local-album-permission"); HueTheme.styleAction(permissionButton,palette,true);
         LinearLayout.LayoutParams permissionParams = new LinearLayout.LayoutParams(-2, -2); permissionParams.topMargin = dp(compactLayout ? 8 : 16); empty.addView(permissionButton, permissionParams);
+        pickerButton = dockAction("选择指定照片", false, this::pickPhotos); pickerButton.setTag("local-album-picker"); pickerButton.setContentDescription("通过系统选择器选择指定照片");
+        pickerButton.setTextSize(12); pickerButton.setPaintFlags(pickerButton.getPaintFlags() | android.graphics.Paint.UNDERLINE_TEXT_FLAG);
+        empty.addView(pickerButton, new LinearLayout.LayoutParams(-2, dp(48)));
         ScrollView guidance = new ScrollView(activity); guidance.setFillViewport(true); guidance.addView(empty, new ScrollView.LayoutParams(-1, -2)); emptyContainer = guidance;
         FrameLayout.LayoutParams guidanceParams = new FrameLayout.LayoutParams(-1, -1); guidanceParams.bottomMargin = dp(navReserve()); body.addView(guidance, guidanceParams);
-        pickerFab = new ImageView(activity); pickerFab.setImageDrawable(new AppIcon(AppIcon.Kind.PLUS, palette.onAction, density())); pickerFab.setPadding(dp(16), dp(16), dp(16), dp(16));
-        pickerFab.setBackground(HueTheme.action(activity,palette,28)); pickerFab.setElevation(dp(4));
-        pickerFab.setContentDescription("选择照片"); pickerFab.setTag("local-album-picker"); pickerFab.setFocusable(true); pickerFab.setOnClickListener(view -> pickPhotos());
-        FrameLayout.LayoutParams pickerParams = new FrameLayout.LayoutParams(dp(56), dp(56), Gravity.BOTTOM | Gravity.END); pickerParams.rightMargin = dp(12); pickerParams.bottomMargin = dp(navReserve() + 12); body.addView(pickerFab, pickerParams);
-        selectionBar = new LinearLayout(activity); selectionBar.setGravity(Gravity.CENTER_VERTICAL); selectionBar.setPadding(dp(12), dp(8), dp(12), dp(8)); selectionBar.setBackgroundColor(palette.card);
-        selectionCount = text("", 14, palette.text); selectionBar.addView(selectionCount, new LinearLayout.LayoutParams(0, -2, 1));
-        Button cancel = button("取消", () -> { selecting = false; selected.clear(); updateSelection(); }); selectionBar.addView(cancel);
-        batchButton = button("批量编辑", () -> prepareSelected(false)); HueTheme.styleAction(batchButton,palette,true); selectionBar.addView(batchButton); root.addView(selectionBar);
+        selectionDock = new GlassBar(activity); selectionDock.setTag("local-album-selection-dock"); selectionDock.setBackdrop(list); dockUsingList = true; narrowDock = null;
+        selectionBar = new LinearLayout(activity); selectionBar.setOrientation(LinearLayout.HORIZONTAL); selectionBar.setGravity(Gravity.CENTER_VERTICAL); selectionBar.setPadding(dp(6), dp(4), dp(6), dp(4)); selectionBar.setTag("local-album-selection-actions");
+        cancelButton = dockAction("取消", false, this::cancelSelection); cancelButton.setTag("local-album-cancel-selection"); cancelButton.setContentDescription("取消选择");
+        selectionBar.addView(cancelButton, new LinearLayout.LayoutParams(-2, dp(48)));
+        selectionCount = text("", 12, palette.secondary); selectionCount.setGravity(Gravity.CENTER); selectionCount.setSingleLine(true); selectionCount.setEllipsize(TextUtils.TruncateAt.END); selectionCount.setIncludeFontPadding(false); selectionCount.setTag("local-album-selection-count"); selectionCount.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+        selectionBar.addView(selectionCount, new LinearLayout.LayoutParams(0, -2, 1));
+        exportButton = dockAction("保存", false, this::exportSelected); exportButton.setTag("local-album-batch-export"); exportButton.setContentDescription("按每张照片当前修图设置保存到手机相册");
+        LinearLayout.LayoutParams exportParams = new LinearLayout.LayoutParams(-2, dp(48)); exportParams.leftMargin = dp(4); selectionBar.addView(exportButton, exportParams);
+        batchButton = dockAction("批量编辑", true, () -> prepareSelected(false)); batchButton.setTag("local-album-batch-edit"); batchButton.setContentDescription("批量编辑所选照片");
+        LinearLayout.LayoutParams editParams = new LinearLayout.LayoutParams(-2, dp(48)); editParams.leftMargin = dp(4); selectionBar.addView(batchButton, editParams);
+        selectionDock.addView(selectionBar, new FrameLayout.LayoutParams(-1, -1));
+        FrameLayout.LayoutParams dockParams = new FrameLayout.LayoutParams(-1, dp(56), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL); dockParams.leftMargin = dockParams.rightMargin = dp(16); dockParams.bottomMargin = dp(14); body.addView(selectionDock, dockParams);
         body.addOnLayoutChangeListener((view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            layoutSelectionDock();
             if (compactLayout && resolvedColumns() != gridColumns) { savePosition(); rebuildRows(); restorePosition(); }
         });
         rebuildRows(); restorePosition(); updateState(); refreshApp(); return root;
     }
     private int navReserve() {
+        if (hasSelectionDock()) return 80;
         boolean floating = activity.getResources().getConfiguration().screenWidthDp < 600;
-        return (floating ? 104 : 92) + Math.round(Math.max(0f, activity.getResources().getConfiguration().fontScale - 1.2f) * (floating ? 24f : 20f));
+        if (!floating) return 0;
+        return 104 + Math.round(Math.max(0f, activity.getResources().getConfiguration().fontScale - 1.2f) * 24f);
     }
     private boolean compactHeight() {
         android.content.res.Configuration config = activity.getResources().getConfiguration();
@@ -221,9 +236,13 @@ public final class LocalAlbumPanel implements AutoCloseable {
     public void pause() { active = false; savePosition(); }
     public boolean canGoBack() { return selecting || importing; }
     public boolean goBack() {
-        if (importing) { importRequest++; importing = false; workStatus = ""; updateState(); return true; }
-        if (selecting) { selecting = false; selected.clear(); updateSelection(); return true; }
+        if (hasSelectionDock()) { cancelSelection(); return true; }
         return false;
+    }
+    private void cancelSelection() {
+        pendingDateSelection = null;
+        if (importing) { importRequest++; importing = false; workStatus = ""; }
+        selecting = false; selected.clear(); updateSelection();
     }
     public void refresh() {
         if (closed || importing) return;
@@ -245,6 +264,7 @@ public final class LocalAlbumPanel implements AutoCloseable {
         });
     }
     private void invalidatePhone() {
+        pendingDateSelection = null;
         phoneRequest++; loadingPhone = false; phonePhotos.clear(); phoneOffset = 0; phoneMore = false; phoneLoaded = false; phoneError = "";
         imageEpoch++; thumbnails.evictAll(); failedThumbs.clear();
         if (phone) { selected.clear(); rebuildRows(); }
@@ -264,14 +284,21 @@ public final class LocalAlbumPanel implements AutoCloseable {
                     phoneOffset = result.nextOffset; phoneMore = result.hasMore;
                 } else if (repository.access() == LocalPhotoRepository.Access.NONE) phonePhotos.clear();
                 if (phone) { preserveSelection(); rebuildRows(); if (replace) restorePosition(); } updateState();
+                if (pendingDateSelection != null) {
+                    String date = pendingDateSelection; pendingDateSelection = null;
+                    if (phone && failure.isEmpty()) for (Row row : rows) if (date.equals(row.header)) { toggleDate(row); break; }
+                }
             });
         });
     }
     private void switchTab(boolean value) {
-        if (phone == value || importing) return; savePosition(); phone = value; selecting = false; selected.clear();
-        rebuildRows(); restorePosition(); updateState(); host.changed();
-        if (phone && !phoneLoaded && repository.access() != LocalPhotoRepository.Access.NONE) loadPhone(true);
-        if (!phone && !appLoaded) refreshApp();
+        if (phone == value || importing || selecting) return;
+        SubcategorySwipeLayout.changeSource(root,phone?1:0,value?1:0,()->{
+            pendingDateSelection = null; savePosition(); phone = value; selected.clear();
+            rebuildRows(); restorePosition(); updateState(); host.changed();
+            if (phone && !phoneLoaded && repository.access() != LocalPhotoRepository.Access.NONE) loadPhone(true);
+            if (!phone && !appLoaded) refreshApp();
+        },()->root);
     }
     private void requestAccess() {
         if (Build.VERSION.SDK_INT >= 34) activity.requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}, REQUEST_PHONE_ACCESS);
@@ -281,13 +308,11 @@ public final class LocalAlbumPanel implements AutoCloseable {
     private void showMoreActions() {
         PopupMenu menu = new PopupMenu(activity, moreButton);
         menu.getMenu().add(0, 1, 0, "刷新").setEnabled(!importing);
-        menu.getMenu().add(0, 2, 1, selecting ? "完成选择" : "选择").setEnabled(!importing && !current().isEmpty());
         menu.getMenu().add(0, 5, 2, "RAW 显影").setEnabled(!importing);
         if (phone && repository.access() == LocalPhotoRepository.Access.PARTIAL) menu.getMenu().add(0, 3, 2, "重新选择可访问照片").setEnabled(!importing);
         if (phone) menu.getMenu().add(0, 4, 3, "权限设置");
         menu.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == 1) refresh();
-            else if (item.getItemId() == 2) { selecting = !selecting; selected.clear(); updateSelection(); }
             else if (item.getItemId() == 3) requestAccess();
             else if (item.getItemId() == 5) activity.startActivityForResult(cc.huevia.RawDevelopActivity.intent(activity,null,PhotoFilterEditor.accountOwner(activity)),7319);
             else if (item.getItemId() == 4) {
@@ -307,7 +332,7 @@ public final class LocalAlbumPanel implements AutoCloseable {
     }
     public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode != REQUEST_PHONE_ACCESS) return false;
-        invalidatePhone(); if (repository.access() != LocalPhotoRepository.Access.NONE) loadPhone(true); else { phoneError = "未获得手机照片访问权限。仍可使用「选择照片」，App 内照片可继续编辑。"; updateState(); } return true;
+        invalidatePhone(); if (repository.access() != LocalPhotoRepository.Access.NONE) loadPhone(true); else { phoneError = "未获得手机照片访问权限。仍可使用「选择照片」，应用相册照片可继续编辑。"; updateState(); } return true;
     }
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode != REQUEST_PICK_PHOTOS) return false;
@@ -367,15 +392,42 @@ public final class LocalAlbumPanel implements AutoCloseable {
         }
         selecting = true; updateSelection();
     }
+    private List<String> dateKeys(Row row) {
+        List<String> keys = new ArrayList<>();
+        for (Item item : row.items) if (current().contains(item)) keys.add(item.key);
+        return keys;
+    }
+    private void toggleDate(Row row) {
+        if (closed || importing) return;
+        List<String> keys = dateKeys(row); if (keys.isEmpty()) return;
+        // The last loaded date may continue on the next MediaStore page. Read metadata first,
+        // so a small tail never masquerades as the complete date group. No photo is imported.
+        boolean all = cc.huevia.album.PhotoGroupSelection.state(keys, selected) == cc.huevia.album.PhotoGroupSelection.State.ALL;
+        if (!all && phone && phoneMore && !current().isEmpty() && row.items.contains(current().get(current().size()-1)) && keys.size() <= LocalPhotoRepository.MAX_BATCH) {
+            pendingDateSelection = row.header; loadPhone(false); return;
+        }
+        if (!cc.huevia.album.PhotoGroupSelection.toggle(keys, selected, LocalPhotoRepository.MAX_BATCH)) {
+            host.feedback("整组超过选择上限", "每次最多选择 100 张，可长按照片后逐张选择。"); return;
+        }
+        savePosition(); selecting = true; updateSelection(); restorePosition();
+    }
     private void prepareSelected(boolean single) {
         if (importing || selected.isEmpty()) return; List<Item> items = new ArrayList<>();
         for (Item item : current()) if (selected.contains(item.key)) items.add(item);
         confirmPng(items, single);
     }
+    private void exportSelected() {
+        if (closed || importing || phone || selected.isEmpty()) return;
+        List<DownloadedPhoto> photos = new ArrayList<>();
+        for (Item item : appPhotos) if (selected.contains(item.key) && item.photo != null) photos.add(item.photo);
+        if (photos.size() != selected.size()) { host.feedback("照片暂不可用", "部分所选照片已变化，请刷新后重新选择。"); return; }
+        // Keep selection on dismissal; export freezes exactly each card's current saved version.
+        host.export(Collections.unmodifiableList(photos));
+    }
     private void confirmPng(List<Item> items, boolean single) {
         if (items.stream().noneMatch(item -> item.phone != null && item.phone.png())) { beginImport(); runImport(items, single, importRequest); return; }
-        new AlertDialog.Builder(activity).setTitle("以白底编辑 PNG")
-                .setMessage("PNG 源文件会完整保留在 App 内。编辑使用白底 JPEG 工作副本，透明区域会变白。手机原图保持原样。")
+        new AppDialog.Builder(activity).setTitle("以白底编辑 PNG")
+                .setMessage("PNG 源文件会完整保留在应用相册。编辑使用白底 JPEG 工作副本，透明区域会变白。手机原图保持原样。")
                 .setNegativeButton("取消", null).setPositiveButton("继续编辑", (dialog, which) -> { beginImport(); runImport(items, single, importRequest); }).show();
     }
     private void beginImport() { importing = true; importRequest++; workStatus = "正在准备照片…"; updateState(); host.changed(); }
@@ -387,11 +439,11 @@ public final class LocalAlbumPanel implements AutoCloseable {
                 for (int i = 0; i < items.size(); i++) {
                     if (cancelImport(request)) return; Item item = items.get(i); final int index = i + 1;
                     main.post(() -> { if (!cancelImport(request)) { workStatus = "正在准备 " + index + " / " + items.size() + " 张"; updateState(); } });
-                    if (item.phone != null && item.phone.bytes > 0 && total + item.phone.bytes > 1024L * 1024 * 1024) throw new IOException("一次处理的手机照片总量不能超过 1 GB。已完成的工作副本保留在 App 内。");
+                    if (item.phone != null && item.phone.bytes > 0 && total + item.phone.bytes > 1024L * 1024 * 1024) throw new IOException("一次处理的手机照片总量不能超过 1 GB。已完成的工作副本保留在应用相册。");
                     DownloadedPhoto photo = item.photo == null ? repository.importPhoto(item.phone, () -> cancelImport(request)) : item.photo;
                     if (item.phone != null) {
                         total += Math.max(photo.byteSize(), Math.max(0, item.phone.bytes));
-                        if (total > 1024L * 1024 * 1024) throw new IOException("一次处理的手机照片总量不能超过 1 GB。已完成的工作副本保留在 App 内。");
+                        if (total > 1024L * 1024 * 1024) throw new IOException("一次处理的手机照片总量不能超过 1 GB。已完成的工作副本保留在应用相册。");
                     }
                     // Same strict source boundary as the existing editor and batch renderer.
                     if (photoPresets != null) photoPresets.processingOriginalFor(photo, () -> cancelImport(request));
@@ -402,7 +454,7 @@ public final class LocalAlbumPanel implements AutoCloseable {
             List<DownloadedPhoto> result = ready; String failure = error;
             main.post(() -> {
                 if (cancelImport(request)) return; finishImport(); refreshApp();
-                if (!failure.isEmpty()) { host.feedback("未开始编辑", failure + (result.isEmpty() ? "" : "\n已准备的 " + result.size() + " 张副本保留在 App 内。")); return; }
+                if (!failure.isEmpty()) { host.feedback("未开始编辑", failure + (result.isEmpty() ? "" : "\n已准备的 " + result.size() + " 张副本保留在应用相册。")); return; }
                 selecting = false; selected.clear(); updateSelection();
                 if (single && !result.isEmpty()) host.open(result.get(0)); else if (!result.isEmpty()) host.batch(Collections.unmodifiableList(result));
             });
@@ -441,22 +493,23 @@ public final class LocalAlbumPanel implements AutoCloseable {
     private static boolean matchesPositionKey(Row row, String key) { if (row.header != null) return key.equals("date:" + row.header); for (Item item : row.items) if (key.equals("photo:" + item.key)) return true; return false; }
     private void rebuildRows() {
         gridColumns = resolvedColumns();
-        rows.clear(); String lastDate = ""; Row row = null;
-        DateFormat format = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault());
+        rows.clear(); String lastDate = ""; Row row = null, header = null;
         for (Item item : current()) {
-            String date = item.date <= 0 ? "日期未知" : format.format(new Date(item.date));
-            if (!date.equals(lastDate)) { rows.add(Row.header(date)); lastDate = date; row = null; }
+            String date = cc.huevia.album.PhotoDateGroups.label(item.date);
+            if (!date.equals(lastDate)) { header = Row.header(date); rows.add(header); lastDate = date; row = null; }
+            header.items.add(item);
             if (row == null || row.items.size() == columns()) { row = new Row(); rows.add(row); } row.items.add(item);
         }
         if (adapter != null) adapter.notifyDataSetChanged();
     }
     private int columns() { return gridColumns; }
     private int resolvedColumns() {
-        if (!compactLayout) return activity.getResources().getConfiguration().screenWidthDp >= 600 ? 5 : 3;
+        if (!compactLayout) return activity.getResources().getConfiguration().screenWidthDp >= 600 ? 4 : 2;
+        if (hasSelectionDock()) return gridColumns;
         float scale = activity.getResources().getConfiguration().fontScale;
         int width = body != null && body.getWidth() > 0 ? Math.round(body.getWidth() / density()) : Math.min(720, activity.getResources().getConfiguration().screenWidthDp);
         int height = body != null && body.getHeight() > 0 ? Math.round(body.getHeight() / density()) : activity.getResources().getConfiguration().screenHeightDp - 140;
-        int availableWidth = Math.max(48, width - 88);
+        int availableWidth = Math.max(48, width - 16);
         int edge = Math.max(48, Math.min(120, height - navReserve() - Math.round(48 * scale)));
         int maximum = Math.max(1, availableWidth / 54);
         return Math.min(maximum, Math.max(3, (availableWidth + edge + 5) / (edge + 6)));
@@ -465,27 +518,52 @@ public final class LocalAlbumPanel implements AutoCloseable {
     private void updateState() {
         if (root == null) return;
         LocalPhotoRepository.Access access = repository.access(); boolean loading = phone ? loadingPhone : loadingApp;
+        phoneTab.setText("手机相册");
         phoneTab.setTextColor(phone ? palette.text : palette.secondary); appTab.setTextColor(phone ? palette.secondary : palette.text);
         phoneTab.setSelected(phone); appTab.setSelected(!phone);
-        phoneTab.setBackground(new android.graphics.drawable.InsetDrawable(shape(phone ? palette.card : android.graphics.Color.TRANSPARENT,dp(22)),0,dp(4),0,dp(4)));
-        appTab.setBackground(new android.graphics.drawable.InsetDrawable(shape(!phone ? palette.card : android.graphics.Color.TRANSPARENT,dp(22)),0,dp(4),0,dp(4)));
-        phoneTab.setTypeface(null, phone ? Typeface.BOLD : Typeface.NORMAL); appTab.setTypeface(null, phone ? Typeface.NORMAL : Typeface.BOLD);
-        scope.setText(phone ? (access == LocalPhotoRepository.Access.PARTIAL ? "已授权 JPEG / PNG · 按添加时间" : access == LocalPhotoRepository.Access.FULL ? "JPEG / PNG · 按添加时间" : "仅在授权或选择后读取") : "原图与效果版本 · 按照片日期");
-        accessActions.setVisibility(View.GONE);
-        permissionButton.setText(access == LocalPhotoRepository.Access.PARTIAL ? "选择更多照片" : "点击获取授权");
-        permissionButton.setVisibility(phone && access != LocalPhotoRepository.Access.FULL ? View.VISIBLE : View.GONE);
-        selectButton.setText(selecting ? "完成选择" : "选择"); selectButton.setEnabled(!current().isEmpty() && !importing);
-        phoneTab.setEnabled(!importing); appTab.setEnabled(!importing); permissionButton.setEnabled(!importing);
-        pickerFab.setVisibility(selecting || importing ? View.GONE : View.VISIBLE); pickerFab.setEnabled(!importing); moreButton.setEnabled(!importing);
+        phoneTab.setBackground(new android.graphics.drawable.InsetDrawable(shape(phone ? palette.card : android.graphics.Color.TRANSPARENT,dp(20)),0,dp(4),0,dp(4)));
+        appTab.setBackground(new android.graphics.drawable.InsetDrawable(shape(!phone ? palette.card : android.graphics.Color.TRANSPARENT,dp(20)),0,dp(4),0,dp(4)));
+        phoneTab.setTypeface(Typeface.create(phone ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL)); appTab.setTypeface(Typeface.create(phone ? "sans-serif" : "sans-serif-medium", Typeface.NORMAL));
+        scope.setText(phone && access == LocalPhotoRepository.Access.NONE ? "未授权" : (phone && access == LocalPhotoRepository.Access.PARTIAL ? "已授权 · " : "") + "共 " + current().size() + (phone && phoneMore ? "+" : "") + " 张");
+        scope.setContentDescription(phone ? (access == LocalPhotoRepository.Access.PARTIAL ? "仅浏览已授权照片，" : "手机照片，") + scope.getText() : "应用相册照片，" + scope.getText());
+        permissionButton.setText(!phone ? "浏览手机照片" : access == LocalPhotoRepository.Access.PARTIAL ? "选择更多照片" : "允许访问照片");
+        permissionButton.setVisibility(phone ? (access != LocalPhotoRepository.Access.FULL ? View.VISIBLE : View.GONE) : (current().isEmpty() && !loading && appError.isEmpty() ? View.VISIBLE : View.GONE));
+        selectButton.setVisibility(!current().isEmpty() && !selecting && !importing ? View.VISIBLE : View.GONE); selectButton.setEnabled(!importing);
+        boolean dockVisible = hasSelectionDock();
+        phoneTab.setEnabled(!dockVisible); appTab.setEnabled(!dockVisible); phoneTab.setAlpha(dockVisible ? .68f : 1f); appTab.setAlpha(dockVisible ? .68f : 1f); permissionButton.setEnabled(!dockVisible);
+        pickerButton.setVisibility(phone && access == LocalPhotoRepository.Access.NONE && !dockVisible ? View.VISIBLE : View.GONE); pickerButton.setEnabled(!dockVisible); if (moreButton != null) moreButton.setEnabled(!dockVisible);
+        summaryRow.setVisibility(dockVisible ? View.GONE : View.VISIBLE);
         progress.setVisibility(loading || importing ? View.VISIBLE : View.GONE);
         String error = phone ? phoneError : appError;
-        status.setText(importing ? workStatus : loading ? "读取中…" : phone && access == LocalPhotoRepository.Access.NONE ? "未授权" : !error.isEmpty() ? "读取失败" : current().size() + " 张");
+         status.setText(importing ? workStatus : loading ? "读取中…" : !error.isEmpty() ? "读取失败" : "");
+        status.setVisibility(status.getText().length() == 0 ? View.GONE : View.VISIBLE);
         status.setTextColor(!error.isEmpty() && !importing ? palette.error : palette.secondary);
         boolean showEmpty = current().isEmpty(); emptyContainer.setVisibility(showEmpty ? View.VISIBLE : View.GONE); list.setVisibility(showEmpty ? View.GONE : View.VISIBLE);
-        emptyTitle.setText(loading ? "正在整理照片" : phone && access == LocalPhotoRepository.Access.NONE ? "选择你想编辑的照片" : !error.isEmpty() ? "照片暂时无法读取" : phone ? "没有可显示的照片" : "App 内还没有照片");
-        emptyText.setText(loading ? "照片将在这里按日期排列。" : phone && access == LocalPhotoRepository.Access.NONE ? "授权后即可浏览手机照片。\n也可点击 + 只选择要编辑的照片。" : !error.isEmpty() ? error + "\n可在更多操作中刷新重试。" : phone ? "这里只显示已授权的 JPEG 和 PNG。\n可重新选择授权范围，或点击 + 选择照片。" : "点击 + 选择照片，或从同步接收开始。\n原图和编辑后的效果版本都会保留在这里。");
-        selectionBar.setVisibility(selecting || importing ? View.VISIBLE : View.GONE); selectionCount.setText(importing ? "准备照片中" : "已选 " + selected.size() + " / 100");
+        emptyTitle.setText(loading ? "正在整理照片" : phone && access == LocalPhotoRepository.Access.NONE ? "浏览手机照片" : !error.isEmpty() ? "照片暂时无法读取" : phone ? "没有可显示的照片" : "这里还没有照片");
+        emptyText.setText(loading ? "" : phone && access == LocalPhotoRepository.Access.NONE ? "允许访问后，即可在这里浏览照片。" : !error.isEmpty() ? error + "\n可在更多操作中刷新。" : phone ? "仅显示已授权的 JPEG / PNG 照片。" : "编辑或同步保存的照片会出现在这里。");
+        selectionDock.setVisibility(dockVisible ? View.VISIBLE : View.GONE); selectionBar.setVisibility(dockVisible ? View.VISIBLE : View.GONE); selectionCount.setText(importing ? "准备中" : selected.isEmpty() ? "未选择" : "已选 " + selected.size() + " 张"); selectionCount.setContentDescription(importing ? workStatus : selectionCount.getText());
+        batchButton.setText(phone ? "批量编辑" : "编辑"); batchButton.setMinWidth(dp(phone ? 96 : 60)); batchButton.setMinimumWidth(dp(phone ? 96 : 60));
         batchButton.setEnabled(!selected.isEmpty() && !importing);
+        exportButton.setVisibility(phone ? View.GONE : View.VISIBLE);
+        exportButton.setEnabled(!selected.isEmpty() && !importing && photoPresets != null && !photoPresets.isActive());
+        exportButton.setAlpha(exportButton.isEnabled() ? 1f : .45f);
+        list.setPadding(list.getPaddingLeft(), 0, list.getPaddingRight(), dp(navReserve() + 8));
+        FrameLayout.LayoutParams guidanceParams = (FrameLayout.LayoutParams) emptyContainer.getLayoutParams(); if (guidanceParams.bottomMargin != dp(navReserve())) { guidanceParams.bottomMargin = dp(navReserve()); emptyContainer.setLayoutParams(guidanceParams); }
+        if (dockUsingList == showEmpty) { dockUsingList = !showEmpty; selectionDock.setBackdrop(dockUsingList ? list : null); }
+        layoutSelectionDock();
+    }
+    private void layoutSelectionDock() {
+        if (selectionDock == null || body.getWidth() <= 0) return;
+        int available = Math.max(dp(48), body.getWidth() - dp(32));
+        int width = Math.min(dp(420), available);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) selectionDock.getLayoutParams(); if (params.width != width) { params.width = width; selectionDock.setLayoutParams(params); }
+        boolean narrow = body.getWidth() < dp(350);
+        if (narrowDock != null && narrowDock == narrow) return;
+        narrowDock = narrow;
+        cancelButton.setMinWidth(dp(narrow ? 48 : 66)); cancelButton.setMinimumWidth(dp(narrow ? 48 : 66)); cancelButton.setPadding(dp(narrow ? 6 : 8), 0, dp(narrow ? 6 : 8), 0);
+        selectionCount.setTextSize(narrow ? 11 : 12);
+        dockIcon(cancelButton, narrow ? null : AppIcon.Kind.CLOSE, 15);
+        dockIcon(exportButton, narrow ? null : AppIcon.Kind.DOWNLOAD, 16);
     }
     private final class PhotoAdapter extends BaseAdapter {
         public int getCount() { return rows.size(); }
@@ -498,8 +576,12 @@ public final class LocalAlbumPanel implements AutoCloseable {
         public View getView(int position, View recycled, ViewGroup parent) {
             Row row = rows.get(position);
             if (row.header != null) {
-                TextView label = recycled instanceof TextView ? (TextView) recycled : text("", 14, palette.text);
-                label.setText(row.header); label.setTextSize(compactLayout ? 12 : 14); label.setTypeface(null, Typeface.BOLD); label.setPadding(dp(8), dp(compactLayout ? 4 : 20), dp(8), dp(compactLayout ? 4 : 10)); return label;
+                LocalDateHeader header = recycled instanceof LocalDateHeader ? (LocalDateHeader) recycled : new LocalDateHeader();
+                header.label.setText(row.header); header.label.setTextSize(compactLayout ? 12 : 14);
+                List<String> keys = dateKeys(row);
+                header.check.bind(row.header, cc.huevia.album.PhotoGroupSelection.state(keys, selected), keys.size());
+                header.check.setEnabled(!importing && !keys.isEmpty()); header.check.setOnClickListener(v -> toggleDate(row));
+                return header;
             }
             LinearLayout strip = recycled instanceof LinearLayout ? (LinearLayout) recycled : new LinearLayout(activity); strip.removeAllViews(); strip.setBaselineAligned(false);
             int count = columns();
@@ -507,21 +589,26 @@ public final class LocalAlbumPanel implements AutoCloseable {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, -2, 1); params.setMargins(dp(3), 0, dp(3), dp(8));
                 if (column >= row.items.size()) { strip.addView(new View(activity), params); continue; }
                 Item item = row.items.get(column); LinearLayout tile = new LinearLayout(activity); tile.setOrientation(LinearLayout.VERTICAL);
-                FrameLayout frame = new FrameLayout(activity) { @Override protected void onMeasure(int width, int height) { super.onMeasure(width, View.MeasureSpec.makeMeasureSpec(View.MeasureSpec.getSize(width), View.MeasureSpec.EXACTLY)); } };
-                frame.setBackground(shape(palette.container,dp(14)));frame.setClipToOutline(true); ImageView image = new ImageView(activity); image.setScaleType(ImageView.ScaleType.CENTER_CROP); frame.addView(image, new FrameLayout.LayoutParams(-1, -1));
+                FrameLayout frame = new FrameLayout(activity) { @Override protected void onMeasure(int width, int height) { super.onMeasure(width, View.MeasureSpec.makeMeasureSpec(Math.round(View.MeasureSpec.getSize(width)*(compactLayout?1f:1.13f)), View.MeasureSpec.EXACTLY)); } };
+                frame.setBackground(shape(palette.container,dp(11)));frame.setClipToOutline(true); ImageView image = new ImageView(activity); image.setScaleType(ImageView.ScaleType.CENTER_CROP); frame.addView(image, new FrameLayout.LayoutParams(-1, -1));
                 String key = item.thumbKey(); image.setTag(key); Bitmap cached = thumbnails.get(key); if (cached != null) image.setImageBitmap(cached); else { image.setImageDrawable(new PhotoPlaceholder(activity, palette, failedThumbs.contains(key))); requestThumbnail(item, image); }
                 if (selecting) {
-                    TextView check = text(selected.contains(item.key) ? "已选" : "选择", 12, selected.contains(item.key) ? palette.onPrimary : palette.text); check.setGravity(Gravity.CENTER); check.setPadding(dp(6), dp(4), dp(6), dp(4)); check.setBackground(shape(selected.contains(item.key) ? palette.primary : palette.card, dp(8)));
-                    FrameLayout.LayoutParams mark = new FrameLayout.LayoutParams(-2, -2, Gravity.TOP | Gravity.END); mark.setMargins(dp(4), dp(4), dp(4), 0); frame.addView(check, mark);
+                    boolean picked = selected.contains(item.key);
+                    int accent = palette.dark ? palette.primary : palette.primaryContainer;
+                    ImageView check = new ImageView(activity); check.setTag("local-album-selection-indicator"); check.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO); check.setPadding(dp(3.5f), dp(3.5f), dp(3.5f), dp(3.5f));
+                    GradientDrawable circle = new GradientDrawable(); circle.setShape(GradientDrawable.OVAL); circle.setColor(picked ? accent : 0x80141412); if (!picked) circle.setStroke(dp(1.5f), 0xE6FFFFFF); check.setBackground(circle);
+                    if (picked) check.setImageDrawable(new AppIcon(AppIcon.Kind.CHECK, 0xff37291f, density()));
+                    FrameLayout.LayoutParams mark = new FrameLayout.LayoutParams(dp(22), dp(22), Gravity.TOP | Gravity.END); mark.setMargins(0, dp(10), dp(10), 0); frame.addView(check, mark);
+                    if (picked) { GradientDrawable ring = shape(android.graphics.Color.TRANSPARENT, dp(11)); ring.setStroke(dp(2), palette.dark ? palette.primary : 0xffF1B793); frame.setForeground(ring); }
                 }
                 tile.addView(frame, new LinearLayout.LayoutParams(-1, -2));
-                TextView filename = text(item.name(), 12, palette.text); filename.setMaxLines(1); filename.setEllipsize(TextUtils.TruncateAt.END); filename.setPadding(dp(2), dp(compactLayout ? 4 : 6), dp(2), dp(compactLayout ? 2 : 4)); tile.addView(filename);
-                tile.setContentDescription(item.name() + (item.group == null ? "" : "，" + item.group.versions.size() + " 个版本") + (cached != null ? "" : failedThumbs.contains(key) ? "，预览暂不可用" : "，预览加载中") + (selected.contains(item.key) ? "，已选择" : ""));
+                TextView filename = text(item.name(), 12, palette.text); filename.setMaxLines(1); filename.setEllipsize(TextUtils.TruncateAt.END); filename.setPadding(dp(2), dp(compactLayout ? 4 : 6), dp(2), dp(compactLayout ? 2 : 4));if(compactLayout)tile.addView(filename);
+                tile.setContentDescription(item.name() + (item.group == null ? "" : "，当前版本 " + currentVersionName(item.group) + "，" + item.group.versions.size() + " 个版本") + (cached != null ? "" : failedThumbs.contains(key) ? "，预览暂不可用" : "，预览加载中") + (selected.contains(item.key) ? "，已选择" : ""));
                 tile.setBackground(new RippleDrawable(ColorStateList.valueOf(palette.primaryContainer), null, shape(palette.card, 0)));
                 tile.setOnClickListener(view -> clicked(item)); tile.setOnLongClickListener(view -> { if (!importing) toggle(item); return true; });
                 if (item.group != null && item.group.versions.size() > 1) {
-                    PhotoVersionBadge versions=new PhotoVersionBadge(activity,item.group.versions.size(),()->chooseVersion(item.group));versions.setEnabled(!selecting&&!importing);versions.setClickable(!selecting&&!importing);versions.setFocusable(!selecting&&!importing);
-                    FrameLayout.LayoutParams badge=new FrameLayout.LayoutParams(-2,dp(48),Gravity.BOTTOM|Gravity.END);badge.setMargins(0,0,dp(6),dp(6));frame.addView(versions,badge);
+                    PhotoVersionBadge versions=new PhotoVersionBadge(activity,item.group.versions.size(),currentVersionName(item.group),()->chooseVersion(item.group));versions.setEnabled(!selecting&&!importing);versions.setClickable(!selecting&&!importing);versions.setFocusable(!selecting&&!importing);
+                    FrameLayout.LayoutParams badge=new FrameLayout.LayoutParams(-2,dp(48),Gravity.BOTTOM|Gravity.END);badge.setMargins(dp(6),0,dp(6),dp(6));frame.addView(versions,badge);
                 }
                 strip.addView(tile, params);
             }
@@ -530,8 +617,24 @@ public final class LocalAlbumPanel implements AutoCloseable {
     }
     private void chooseVersion(PhotoLibraryCatalog.PhotoGroup group) {
         if (selecting || importing) return; String[] labels = new String[group.versions.size()];
-        for (int i = 0; i < labels.length; i++) labels[i] = group.versions.get(i).label();
-        new AlertDialog.Builder(activity).setTitle("选择照片版本").setItems(labels, (dialog, which) -> { savePosition(); host.open(group.versions.get(which).photo); }).setNegativeButton("取消", null).show();
+        for (int i = 0; i < labels.length; i++) labels[i] = group.versionLabel(group.versions.get(i).photo);
+        new AppDialog.Builder(activity).setTitle("选择照片版本").setItems(labels, (dialog, which) -> {
+            savePosition(); DownloadedPhoto chosen = group.versions.get(which).photo;
+            worker.execute(() -> { try { repository.selectVersion(group, chosen); main.post(() -> { if (!closed) { refreshApp(); host.open(chosen); } }); }
+                catch (IOException error) { main.post(() -> { if (!closed) host.feedback("未切换版本", message(error)); }); } });
+        }).setNegativeButton("取消", null).show();
+    }
+    private String currentVersionName(PhotoLibraryCatalog.PhotoGroup group) { return group.versionLabel(group.display); }
+    private final class LocalDateHeader extends LinearLayout {
+        final TextView label; final PhotoGroupCheck check;
+        LocalDateHeader() {
+            super(activity); setTag("local-album-date-header"); setGravity(Gravity.CENTER_VERTICAL); setPadding(dp(8), dp(compactLayout ? 0 : 6), 0, 0);
+            label = text("",14,palette.text); label.setTypeface(null,Typeface.BOLD); label.setSingleLine(true); label.setEllipsize(TextUtils.TruncateAt.END);
+            if (android.os.Build.VERSION.SDK_INT >= 28) label.setAccessibilityHeading(true);
+            addView(label,new LinearLayout.LayoutParams(0,-2,1));
+            check = new PhotoGroupCheck(activity,palette.dark?palette.primary:palette.primaryContainer,0xff37291f,palette.secondary);
+            addView(check,new LinearLayout.LayoutParams(dp(48),dp(48)));
+        }
     }
     private void requestThumbnail(Item item, ImageView view) {
         String key = item.thumbKey(); if (closed || pendingThumbs.contains(key) || failedThumbs.contains(key)) return;
@@ -564,6 +667,30 @@ public final class LocalAlbumPanel implements AutoCloseable {
         button.setMinHeight(dp(48)); button.setMinimumHeight(dp(48)); button.setMinWidth(dp(48)); button.setMinimumWidth(dp(48)); button.setPadding(dp(12), 0, dp(12), 0);
         HueTheme.styleAction(button,palette,false);
         button.setOnClickListener(view -> action.run()); return button;
+    }
+    private Button smallAction(String label, Runnable action) {
+        Button result = button(label, action); result.setTextSize(13); result.setSingleLine(true);
+        result.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL)); result.setTextColor(palette.secondary);
+        result.setStateListAnimator(null); result.setElevation(0); result.setTranslationZ(0);
+        result.setBackgroundTintList(null); result.setBackground(new android.graphics.drawable.InsetDrawable(new RippleDrawable(ColorStateList.valueOf(palette.primaryContainer), shape(palette.container, dp(16)), null), 0, dp(8), 0, dp(8)));
+        result.setPadding(dp(12), 0, dp(12), 0); return result;
+    }
+    private Button dockAction(String label, boolean primary, Runnable action) {
+        Button result = button(label, action); result.setTextSize(13); result.setSingleLine(true); result.setIncludeFontPadding(false); result.setLetterSpacing(0);
+        result.setTypeface(Typeface.create(primary ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
+        result.setMinHeight(dp(48)); result.setMinimumHeight(dp(48)); result.setStateListAnimator(null); result.setElevation(0); result.setTranslationZ(0); result.setBackgroundTintList(null);
+        result.setTextColor(new ColorStateList(new int[][]{new int[]{-android.R.attr.state_enabled}, new int[]{}}, new int[]{palette.secondary, primary ? palette.onPrimaryContainer : palette.secondary}));
+        android.graphics.drawable.StateListDrawable fill = new android.graphics.drawable.StateListDrawable();
+        fill.addState(new int[]{-android.R.attr.state_enabled}, shape(primary ? palette.container : android.graphics.Color.TRANSPARENT, dp(22)));
+        fill.addState(new int[]{}, shape(primary ? palette.primaryContainer : android.graphics.Color.TRANSPARENT, dp(22)));
+        result.setBackground(new android.graphics.drawable.InsetDrawable(new RippleDrawable(ColorStateList.valueOf(palette.dark ? 0x33FFFFFF : 0x15000000), fill, shape(palette.card, dp(22))), 0, dp(2), 0, dp(2)));
+        result.setPadding(dp(primary ? 14 : 8), 0, dp(primary ? 14 : 8), 0);
+        return result;
+    }
+    private void dockIcon(Button button, AppIcon.Kind kind, int size) {
+        AppIcon drawable = kind == null ? null : new AppIcon(kind, palette.secondary, density());
+        if (drawable != null) drawable.setBounds(0, 0, dp(size), dp(size));
+        button.setCompoundDrawables(drawable, null, null, null); button.setCompoundDrawablePadding(dp(4));
     }
     private void icon(Button button, AppIcon.Kind kind) { AppIcon icon = new AppIcon(kind, palette.primary, density()); icon.setBounds(0, 0, dp(18), dp(18)); button.setCompoundDrawables(icon, null, null, null); button.setCompoundDrawablePadding(dp(6)); }
     private TextView text(String value, int size, int color) { TextView text = new TextView(activity); text.setText(value); text.setTextSize(size); text.setTextColor(color); return text; }

@@ -41,6 +41,18 @@ colors:
   editor-tools: "#0B0B0B"
   editor-divider: "#292929"
   editor-text: "#F4F5F7"
+  prisma-yellow: "#FFE335"
+  prisma-white: "#FFFFFF"
+  prisma-ink: "#191E17"
+  prisma-text: "#F4F5F7"
+  prisma-label-ink: "#1F2B29"
+  prisma-canvas: "#242B27"
+  prisma-tool: "rgba(16, 20, 18, 0.6117647059)"
+  prisma-tool-selected: "rgba(17, 23, 19, 0.9019607843)"
+  prisma-muted: "#C8CDCA"
+  prisma-selection-frame: "#BBB9A1"
+  prisma-selection-label: "#FFFFFF"
+  prisma-selection-fill: "rgba(18, 28, 23, 0.0941176471)"
 typography:
   page-title:
     fontFamily: "sans-serif-medium"
@@ -68,6 +80,26 @@ typography:
     fontFamily: "sans-serif"
     fontSize: "11sp"
     fontWeight: 400
+  prisma-filename:
+    fontFamily: "sans-serif-medium"
+    fontSize: "13sp"
+    fontWeight: 500
+  prisma-caption:
+    fontFamily: "sans-serif"
+    fontSize: "10sp"
+    fontWeight: 400
+  prisma-label:
+    fontFamily: "sans-serif"
+    fontSize: "10.5sp"
+    fontWeight: 400
+  prisma-category:
+    fontFamily: "sans-serif"
+    fontSize: "11.5sp"
+    fontWeight: 400
+  prisma-auxiliary:
+    fontFamily: "sans-serif"
+    fontSize: "11sp"
+    fontWeight: 400
 rounded:
   field: "14dp"
   photo: "14dp"
@@ -79,12 +111,16 @@ rounded:
   source-track: "25dp"
   button: "26dp"
   fab: "28dp"
+  prisma-thumbnail: "7dp"
+  prisma-circle: "50%"
 spacing:
   gap: "8dp"
   grid-horizontal: "12dp"
   grid-vertical: "14dp"
   page: "20dp"
   touch-target: "48dp"
+  prisma-filter-gap: "14dp"
+  prisma-rail-inset: "18dp"
 components:
   primary-button:
     backgroundColor: "{colors.action}"
@@ -136,9 +172,92 @@ components:
     textColor: "{colors.editor-text}"
     padding: "0dp 10dp"
     height: "224dp"
+  prisma-export:
+    backgroundColor: "{colors.prisma-yellow}"
+    textColor: "{colors.prisma-ink}"
+    height: "42dp"
+    width: "68dp"
+  prisma-tool:
+    backgroundColor: "{colors.prisma-tool}"
+    textColor: "{colors.prisma-text}"
+    rounded: "{rounded.prisma-circle}"
+    height: "39dp"
+    width: "39dp"
+  prisma-tool-selected:
+    backgroundColor: "{colors.prisma-tool-selected}"
+    textColor: "{colors.prisma-yellow}"
+    rounded: "{rounded.prisma-circle}"
+    height: "39dp"
+    width: "39dp"
+  prisma-filter-card:
+    backgroundColor: "{colors.prisma-white}"
+    textColor: "{colors.prisma-label-ink}"
+    typography: "{typography.prisma-label}"
+    rounded: "{rounded.prisma-thumbnail}"
+    height: "83dp"
+    width: "66dp"
+  prisma-secondary-history:
+    backgroundColor: "transparent"
+    textColor: "{colors.prisma-text}"
+    height: "48dp"
 ---
 
 # Design System: Huevia
+
+## 柔和卡片选择当前规则（153 / 0.29.2-beta）
+
+153 是用户指定的卡片选中态细化，继续采用已批准 Prisma 世界与下方 152 的布局／共享工具。当前规则来自 `PhotoPrismaStyle` 的共享 selection 角色与实际卡片构造；主按钮和圆形工具继续使用原有黄色。
+
+- 原肤、内置、个人与自定义肤色卡共用 1dp 柔和灰金框、轻透选中底和中性白选中文字；对应 `prisma-selection-frame`／`prisma-selection-fill`／`prisma-selection-label`。勾选、实际颜色、选中语义和点击行为保留。
+- 滤镜条／完整滤镜选择器、快速预览和边框模板共享卡片边框角色。轻透填充仅用于肤色与大卡片；白底滤镜条名称仍使用深色，避免把浅色选中文字套到白底上。
+- 原 2dp 饱和黄框与不透明肤色选中底是本次移除的高反差缺陷，不再作为卡片规则。编辑范围线、色盘游标和键盘焦点各自保留操作语义，布局、模型、渲染、草稿与导出不变。
+
+**The Quiet Card Selection Rule.** 卡片选择使用 1dp 柔和边框，并保留勾选与原生 selected 语义；中性白字和轻透底按卡片材料使用。主操作／工具强调与编辑范围、游标、焦点不随卡片角色一同弱化。
+
+当前本地 APK 为 153／0.29.2-beta，33,606,103 字节，SHA-256 `10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e`。六项生产输入改变；Android 17／API 37 所属模拟器七模式各 10 项，共 70 次有界选择切换／文件／夹具保护断言与 42 张当前原生图。152 的 723 次广泛检查保持历史，不计为 153 重跑。见[实施](docs/selection-soft153.md)、[验证](docs/validation/selection-soft153/validation.json)与[完整复核](.impeccable/review/selection-soft153/review.md)（FIX，仅小字对比度）；选中文字已改为中性白，[评分 verdict](.impeccable/review/selection-soft153/verdict.md)为限定 ship：卡片文字对比度修正 resolved（横屏约 4.82:1），无直接回归，仅覆盖该评分修正；未作实体机或公开发布结论。
+
+## 编辑续接与共享工具历史规则（152 / 0.29.1-beta）
+
+152 延伸已批准的 Prisma 编辑原型，不更换视觉世界。本节覆盖下方 151 及更早主编辑／专用工作区中冲突的菜单、材料和控制规则；其他产品页面保持原有世界。实际代码权威为 `PhotoPrismaStyle`、`PhotoWorkspaceUi`、`PhotoFilterEditor`、`AlbumPanel` 和各原生编辑面板。
+
+- 主编辑及皮肤／面部／塑形、曲线、HSL、调色盘、去灰、局部、涂抹和精细裁切共用有界、后台生成的照片氛围、半透明炭黑圆形工具、黄色选择／主操作和白色滑块。工具可见圆盘为 39dp，滑块圆点为白色 14dp；系统 sans 与 sp 缩放保留。照片及色卡的真实颜色不改成强调色。
+- 圆形状态材料按矩形目标的短边定半径，图标与普通／按下／焦点／选中圆盘共享中心；重置使用共用 `AppIcon.drawRefresh`，原生操作目标至少 48dp。二级撤销／重做沿用正圆弧与精确水平镜像。
+- 皮肤／面部／塑形的历史行透明，连续显示照片氛围；对比度只由各个圆形控件承载，不恢复整条深色底带。
+- 塑形为等宽的瘦身／瘦腿／拉长／范围／重置五个圆形工具。范围切换参数，重置只影响当前项并可撤销；双腿／单腿紧随所属瘦腿强度。工具区折叠 180dp、展开 372dp，加 `72dp × (max(1, fontScale) − 1)` 后不超过可用主体半高。自动定位／背景保护用 `prisma-auxiliary` 与 `prisma-muted` 降为次级操作。
+- 局部新建说明只在顶部原生选择行出现一次，保持与底部历史工具栏分离。
+- 关闭旁常显三点菜单，保留既有实际能力、条件及处理事件；通用原生确认／输入框保持平台结构，各子编辑器保留应用／返回事务。
+
+**The Shared Photo Family Rule.** `prisma-*` 的共同材料与控件规则用于主编辑和已列明的二级工作区；具体参数、色卡和算法保持各自语义。圆形控件承担状态对比，二级历史行不以全宽深色带替代照片氛围。
+
+**The Distinct Body Action Rule.** 塑形同时出现辅助视口与参数操作时，上方范围可见性用眼睛、适应照片用四角框；下方范围参数用滑块图标，当前项重置保留带文案的圆箭头。不同作用不以重复图形暗示同一操作。
+
+**The Resumable Draft Rule.** 普通打开照片恢复当前账号与原图身份的 pending draft，关闭仍保存编辑参数；只有明确选择已保存版本时走 `bindSavedVersion`。照片从手机相册重新导入仍保留相同草稿身份，不用显式版本查看替代正常编辑续接。
+
+本地制品为 152／0.29.1-beta，SHA-256 `eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07`。同一包七模式 708 次含重复断言／98 张图，独立强停准备 6 项与重开 9 项／1 张图，共 723 次／99 张。305 项生产输入冻结，其中相对 151 有 24 项改变。实际 MediaStore JPEG 导入已覆盖，未新增端到端相册导出、实体机或公开发布验收；人脸／覆盖蒙版与预设为明确 QA 数据。
+
+见 [152 实施](docs/editor-continuity152.md)与[验证](docs/validation/editor-continuity152/validation.json)。完整[最终复核](.impeccable/review/editor-continuity152/final-review.md)为 fix，仅余辅助视口／显示范围与参数操作的图标歧义；区分图标的修正已落地并完成同包验证，[评分 verdict](.impeccable/review/editor-continuity152/verdict.md)将唯一塑形图标歧义判为 resolved、remaining clear、ship，仅覆盖该项修正及直接回归，不是整页或全应用通过。当前环境经直接读取系统属性确认为 Android 17／API 37（sdk 37、release 17、previewSdk 0）。
+
+## 图片编辑页历史规则（151 / 0.29.0-beta）
+
+以下保留 151 当时的实现与验证；其已批准的 [Prisma 原型](docs/design-review/prisma-editor-20261107/prototype.html) 和滤镜间距仍是沿用基础，冲突处以上方 152 当前规则为准。
+
+- 照片按实际比例完整显示，后台生成的小尺寸模糊采样延伸至编辑背景；绘制过程中不解码。
+- 顶部居中文件名、关闭圆钮与黄色 `#FFE335` 导出胶囊；真实系统安全区和原生字号保留。
+- 照片右上圆钮切换分割对比；白色分割线支持拖动、方向键和辅助功能进度操作。
+- 照片下方依次为历史行、五个圆形工具（滤镜／调节／裁切／人像／边框）、当前工作区。白色滑杆圆点、白底滤镜名称、黄色选中边线。
+- 撤销／重做使用等宽高 17×17 图标坐标边界内的 300° 正圆弧与连续圆头箭头，重做为精确水平镜像；位置、命中范围与历史语义保持原有实现。
+- 滤镜卡片采用明确的 **14dp 外间距**，列表两侧 18dp 内缩；名称不得被缩略图或容器裁切。
+- 调节标题与数值位于滑杆上方。裁切比例选中为黄色，旋转、翻转与重置文字为白色，禁用态降低透明度。
+- 短窄竖屏使用 160dp 工作区与 67dp 主工具行，减少容器留白以保留照片主体；字体跟随系统，输入行保留 48dp 操作范围。横屏保留工具先于面板的顺序。
+- 常规工作区为 184dp、主工具行为 67dp，随 `max(1, fontScale)` 增长；短窄竖屏（宽 <600dp 且高 <720dp）两者固定为上述紧凑高度，sp 仍跟随系统。历史行和分类／输入行为 48dp，顶部行为 56dp。
+- 机器 tokens 中滤镜卡片为常规基础尺寸，随 `max(1, fontScale)` 增长；紧凑卡片固定为 66×59dp，其中缩略图 39dp、白色名称区 20dp。常规图／名称区分别为 62dp／21dp，黄色选中边线为 2dp。导出可见胶囊处于 80×48dp 原生命中范围；照片本身不加圆角或遮罩。
+- 预设、曝光单位、系统栏和既有专用工具按真实能力显示；示意 CSS 滤镜和人像算法不进入生产。
+
+实现与验证见 [151 实施](docs/prisma-editor151.md)。本轮未新增生产栅格图片。
+
+**The Editor Scope Rule.** 本节及 `prisma-*` tokens 只约束当前主图片编辑页；下方 `editor-*` 的固定炭黑材料与旧面板尺寸保留为专用工作区／历史记录，不能覆盖本节。照片本身和系统字号、安全区是布局输入，不复制原型中的假系统栏或示意效果。
+
+当前 [圆箭头专项复核](.impeccable/review/prisma-editor151-round/review.md) 为 ship，覆盖圆度、镜像、箭头连接、裁切及原位置／语义。当前 SHA `2eda2c2cfec6ada7af1abdd29f03034c91888ed5476de97d39d5e3c5fc9f2dad` 完成手机与 1.3 字号各 57 次检查；此前七配置 400 次布局验证及三项修正 [verdict](.impeccable/review/prisma-editor151/verdict.md) 仍归属 `5a39…` 候选，不能标为本次重跑。以上均不代表全应用或硬件验收。
 
 ## Overview
 
@@ -429,3 +548,117 @@ Android 在线预设页提供“发布预设”和消息入口，设置增加“
 独立 UI 复核的 **SHIP 仅限审阅的九张截图**。[Web 操作记录](.impeccable/review/releases-community-ui-qa.json)使用隔离 localhost、内存记录与真实既有 APK 元数据；其中早期测试账号名称不是当前版本管理权限规则。原生候选 `ee597f811e370e42e71e9af5faeca6fc1edbca191a7b0799106c72cbd8308963` 的 [final 证据目录](.impeccable/review/community-native/final/)包含浅色、深色、深色横屏各 41 项合成界面检查，以及独立真实公网验证码 GET／PNG 显示 11 项，SHA 与检查范围不改写为后续包。
 
 最终 55 / `0.10.1-beta` 已发布至 beta，3,257,885 字节、SHA-256 `81021bfc4d7468dd8181d899f9ae5f4a260fbf30b95ac0eefc2be18ffaf9cca6`。新号首评送审及 Android 反馈已实施，独立 [真实更新验收](.impeccable/review/update-native/README.md)覆盖隔离新模拟器 5562 的取消／强停恢复、校验、未知来源授权、系统安装器和正常 Play Protect 扫描后升级至公开 55，并核对包哈希及保留自有私有标记；该证据不由旧截图推断，不涉及用户手机或相机。新增下载画廊的 [生产页面检查](.impeccable/review/download-final/report.json)为游客 GET，覆盖桌面、手机浅深色、三张预览、公开 55 及无页面溢出；不扩展原九图 SHIP。当前网址是 CloudBase 测试域名，首次浏览器访问可能有平台确认，正式商业域名未配置。完整流程、限制、基线来源及证据分类见 [社区与更新说明](docs/community-and-updates.md)。
+
+## Native Android controls · 146（原生控件范围复核通过）
+
+本附录仅记录 146 共享原生控件的已验证实施，不改写前言 tokens、既有配色、历史版本元数据或 Web 规范。[原生控件表面](.impeccable/surfaces/native-controls.md)、[146 实施与证据](docs/native-ui146.md)、[验证](docs/validation/native-ui146/validation.json)及[最终复核](.impeccable/review/native-ui146/review.md)记录范围。146 本轮完整范围复核为 **SHIP**，无实质修改项，25 张必要截图均有效。
+
+**保留原生契约。** AppDialog.Builder 创建真实 Android AlertDialog；附着后的样式装饰保留调用方的按钮回调、选择适配器、取消规则和 OnShow 输入校验。共享弹窗采用 16sp 标题、14sp 正文／选择文字、13sp 操作文字、至少 48dp 操作目标、24dp 卡面圆角和最大 520dp 宽度；长标签或三按钮组纵向排列，操作保持平面 Ripple。
+
+**边界与标记各留一层。** 裸表单使用 12dp 外侧留白，已有自定义输入内距保持原样；标题与正文均衡折行。选择行保留一个指示标记，直接 RadioButton／CheckBox 图形采用对称 8dp 间距。删除／清空操作使用卡面上的错误色文字与描边，浅色组合约 6.1:1；普通主操作保持柔和底色。
+
+**从绘制窗口取主题。** 浅深色主题为原生按钮、输入、菜单、Spinner、勾选／单选／开关、滑杆和进度提供默认样式；UiPalette.forTheme 尊重编辑器包装上下文的明暗角色。现有 UiPalette 色值不变，不建立第二套配色。PhotoEditorTypography 复用共享 builder／样式。SkinTonePicker 名称输入与弹窗同用 AppThemeDark；实际生产视图在两种应用主题下打开后取消，验证深色输入角色，不执行色卡保存。更新提示版本字号收至 18sp，原有强制更新回调与不可取消规则保留。
+
+**只装饰应用拥有的界面。** 三处前台 Toast 调用迁移至 AppNotice：13sp 短文、16dp 圆角、边界与顶部安全区留白。后台服务 Toast、系统权限、外部文件选择与 Android 安装器沿用平台界面。相册来源保持用户确认的四字标签 应用相册 / 手机相册；部分授权在既有计数区显示“已授权 · 共 x 张”。内部枚举、偏好键和存储路径保持既有身份。
+
+当前同包原生七配置各 33 次检查，共 231 次重复断言执行；另有 52 次导出回归并实际发布两个独立 JPEG，以及 45 次保存版本选择回归且不新增导出。三个测试范围分别记录，四档编码未重跑。真实相册／分类／名称输入视图与其他组件夹具分别限定证据；强制更新夹具不认证真实 OTA、下载或安装。源码审计数量不等于运行场景数。不认证实体设备、TalkBack、相机／RAW、传输、旧系统或性能。微信停留在认证界面，文件传输助手交付待用户进入微信后进行，尚未发送。
+
+## Advanced export settings · 147
+
+### Overview
+
+本附录仅记录 147 导出更多设置的局部整理。沿用现有原生摄影界面，不改写全局 tokens、侧车、历史元数据或既有世界。[实施与证据](docs/export-settings147.md)、[表面契约](.impeccable/surfaces/photo-filter-editor.md)及[复核材料](.impeccable/review/export-settings147/)限定范围。
+
+### Colors
+
+导出页继续由 UiPalette 的 surface、container、card、text、secondary 与 primaryContainer／onPrimaryContainer 提供浅深色角色。正文卡组和原始文件的柔和底色区分信息层级，主导出保持既有动作色；不建立新色值或固定深色导出页。
+
+### Typography
+
+使用系统 sp 字体，沿用 18sp 页面标题、14sp 文件摘要与主操作、12–13sp 说明／格式文字；单张成品尺寸收为 20sp。原始文件格式名紧凑单行，完整含义由分区说明与无障碍名称承载。原始文件标题／说明、自定义质量标签／输入在各自行中垂直居中。
+
+### Layout
+
+**The One Export Rail Rule.** 高级导出滚动正文与固定底部动作共享最大 680dp 轨道，保留系统安全区。尺寸、格式及质量同组，副本选项另组；短横屏仍可滚动查看全部设置。
+
+### Elevation & Depth
+
+以既有卡面和柔和底色建立层级，按钮保持平面 Ripple，不继承原生按钮阴影。
+
+### Shapes
+
+设置卡组沿用 16dp 圆角；原始文件按钮沿用 12dp 圆角。两种格式均可用时等宽排列，中间留 8dp 间距。
+
+### Components
+
+**The Primary Footer Rule.** 固定底栏仅放 52dp 编辑成品导出主操作。JPEG／NEF 原始文件动作放入滚动正文的“原始文件”区，标明“不应用编辑”，采用至少 48dp 的格式下载按钮和现有 AppIcon。常规快捷保存的“更多设置”采用柔和底色与箭头，紧凑横屏保留标题行入口。按钮样式不改变 PHONE_ALBUM、默认新副本、显式复用、原始文件确认／哈希或回调身份。
+
+### Do's and Don'ts
+
+- **Do** 将成品导出与原始文件下载以位置、层级和说明区分，并保留各自真实动作与完整无障碍名称。
+- **Do** 让正文与主操作在宽屏使用同一内容轨道，在短屏保留滚动与可达主操作。
+- **Don't** 将修正前首候选的验证次数、夹具回调或历史评分当作最终包／实际原始文件存储验收。
+
+147 最终本地包 SHA-256 为 `efb8ee80416a36af4c0f2d91c0ea0bb48953965b6959ab55bded78604d5a24c7`（33,589,719 字节），构建及 v2／v3 签名验证通过。[最终矩阵](docs/validation/export-settings147/validation.json)手机 76 次，其余六配置各 69 次，共 490 次重复断言执行全部 PASS；29 张最终必要截图经重新打开全部有效。实际生成两个独立、已完成的 2400×1600 MediaStore JPEG 且源哈希不变。[最终修正复核](.impeccable/review/export-settings147/review.md)为 **SHIP**：M1／M2 均 resolved，未观察到直接回归，remaining clear，最终 APK 哈希已核对；verdict-pass 仅对这两项对齐修正评分，不构成整个表面或全应用批准，不借用首候选次数或历史 SHIP。JPEG／NEF 原始文件夹具只分发回调，未实际存储原始文件；四档编码未重跑。不认证实体设备、相机／RAW、TalkBack、OTA、旧系统或性能。仅本地交付，未上传、发布或 Git 提交／推送；微信仍待手动认证，未发送文件。
+
+## Only new gallery copies · 148
+
+### Overview
+
+本附录记录“导出只能是另存新副本”的局部原生精简，取代 145–147 中“默认新副本、允许显式复用”的规则。保留已建立的摄影界面与历史记录，只追加当前行为；不重新生成全局 tokens 或侧车。[实施与证据](docs/export-new-copy148.md)及[表面契约](.impeccable/surfaces/photo-filter-editor.md)限定范围。
+
+### Colors
+
+沿用 UiPalette 的浅深色表面、文字与柔和动作色角色，不增加颜色或替代信息卡。
+
+### Typography
+
+沿用 147 的系统 sp 层级：页面标题、摘要、尺寸、细节与主操作保持各自原有角色。删除控件后不以新说明文字填补空位。
+
+### Layout
+
+保留正文与固定主操作共用的 680dp 内容轨道、安全区与滚动行为。移除保存方式整组后，尺寸／格式／质量直接接后续预览及原始文件区；固定底栏仍只放成品导出主操作。
+
+### Elevation & Depth
+
+继续使用既有卡面层级与平面 Ripple，不增加按钮阴影。
+
+### Shapes
+
+设置卡、格式按钮、固定主操作的既有圆角与触控尺寸保持不变。
+
+### Components
+
+**The Fresh Export Is a New Copy Rule.** 每次新发起的快捷／高级、单张／批量、保存版本／当前编辑导出都请求手机相册新副本。界面不再显示保存方式、额外副本勾选、复用结果入口或已保存文件可用性等待。选择的文件与编辑身份、预览、校验、命名和队列仍使用既有流程。
+
+**Keep Retry Identity.** 新请求创建新副本，同一失败任务沿用冻结回执及 publicationCompleted 逻辑，避免对该任务已完成项目重复发布。JPEG 原始文件确认／源哈希校验与 NEF 回调继续保留；相机接收保存位置流程不由此改变。
+
+### Do's and Don'ts
+
+- **Do** 保留“原始文件／不应用编辑”与紧凑 JPEG／NEF 格式按钮，区分原始文件和编辑成品。
+- **Do** 删除失去意义的整组设置，让原有内容自然上移。
+- **Don't** 从“新副本”推导为重试已完成项目时再次发布，也不以旧版本可选复用规则覆盖本轮明确政策。
+
+148 本地冻结包为 33,585,623 字节、SHA-256 `322c145964cbad9102172fc607f0f6c2a7ac2defbfaf69689aa2b792d5c6dd05`，构建、v2／v3 签名及已安装哈希核对通过。[七配置矩阵](docs/validation/export-new-copy148/validation.json)共 506 次重复断言执行全部 PASS；实际重复单张及三张批量导出生成八个独立、已完成的 2400×1600 MediaStore JPEG，三个源哈希不变。同包保存版本选择回归另行通过 45 次检查且不新增导出。[最终独立复核](.impeccable/review/export-new-copy148/review.md)为 **SHIP**，九张必要截图全部有效，没有实质修改项；完整覆盖 148 的控件移除、新副本政策及直接相关布局，当前 PRODUCT、DESIGN 附录与表面契约一致，不构成全应用或硬件认证。原始文件夹具仅分发回调，四档编码未重跑。不认证实体设备、相机／RAW、TalkBack、OTA、旧系统或性能；仅本地交付，未上传、发布、提交／推送，微信仍待认证且未发送文件。
+
+## Editor selection and source gestures appendix (149 / 0.28.12-beta)
+
+本附录只记录导出命名、人像参数所有权与顶部来源手势的原生 Operate 精修。沿用 adaptive UiPalette、石墨／桃色摄影工作区、系统 sp 层级、既有材料与 Ripple；不重新生成全局 tokens 或侧车。[实施与证据](docs/editor-selection149.md)及[表面契约](.impeccable/surfaces/photo-filter-editor.md)限定本轮范围，历史验证按所属版本保留。
+
+**The Control Has an Owner Rule.** 人像主强度条只有在对应工具真实选中时显示。原始肤色和无参数状态隐藏整行并收回 48dp；面部保留默认选中的“提亮”项，自然精修在既有皮肤横向轨中有选中项，精确光照轴也显式选中。画笔／祛痘大小条仍属于当前工具，预览、提交／取消与渲染链路保持原样。
+
+编辑页初次与动态刷新统一使用“导出／导出中…”，快捷对话框使用“导出照片／导出到手机相册”，图标及无障碍描述同步。148 的每次新导出产生手机相册新副本与同一失败任务身份规则继续有效。
+
+149 历史来源动效记录（“即时更新、无横向动效”已由下方 150 附录取代，手势与输入边界保留）：左右手势仅补充在线预设／我的预设、相机照片／边拍边传／已下载、应用相册／手机相册的既有点击入口。完成一次横向手势只切换相邻一项，边界不循环；同根页面仍通过 PageTransitions.cancel 即时更新，不加入横向页面动效。横向轨、输入框、滑杆、纵向滚动和多指输入保留边界；选择／导入、编辑／详情及 RAW 工作区不切来源。在线风格分类、设置和底部根导航没有新增此行为。
+
+149 冻结 APK 为 33,589,719 字节、SHA-256 `ebd82fef4eb7db6319457d119ee6ec065a04026d70a1b45f1da696f8b2dfb4d6`，构建、v2／v3 签名及安装哈希一致。[七配置矩阵](docs/validation/editor-selection149/validation.json)各 38 次检查，共 266 次重复断言执行全部 PASS；同一产品 APK 的前六配置／平板横屏探针夹具代次分别记录，最后一项只修正夹具宽度。[最终独立复核](.impeccable/review/editor-selection149/review.md)为 **SHIP**，[21 张必要截图](.impeccable/review/editor-selection149/required-captures.json)全部打开且有效，无实质修改项，TYPE／MATERIAL／GROUND 与现有工作区一致；结论仅覆盖本轮三项改动及直接相关回归。自有 Pixel 9 API 37.2 上验证实际来源手势与编辑／导出入口；人像仅用生产对话框和合成蒙版／手动人脸／不执行处理 Renderer 验证状态，自然精修准备时取消，不认证完整推理或修图效果。本轮无实际 JPEG 发布、原始文件实际保存测试或四档编码；148 的八张 JPEG 保留为历史证明。无全应用、实体设备、相机／RAW、TalkBack、OTA、旧系统或性能验收；仅本地交付，未上传、发布、提交／推送或微信发文件。
+
+## Source motion appendix (150 / 0.28.13-beta, current)
+
+用户“要加左右滑动的过渡效果，太生硬了”仅取代上述三组顶部来源在 149 的即时／无横向位移规则。保留既有 native Operate 世界、UiPalette、系统 sp 层级、静止几何和材料；不新增全局 tokens、侧车 schema 或持久图片。[实施与证据](docs/source-motion150.md)、[方向契约](.impeccable/review/source-motion150/contract.md)限定范围。
+
+**The Fixed Context Rule.** 标题、来源条、预设浮动按钮及根导航／展开导航栏保持固定；来源条下方内容跟手，阻力 0.65，位移上限为视口宽度的 0.35。完成手势仍只切相邻一项且不循环；点击按来源索引决定方向，跨项点击直接到目标而不激活中间来源。完成过渡为 240ms、回位为 170ms，缓动为 `[0.22, 1, 0.36, 1]`。系统禁用动画时来源切换无空间位移。
+
+**The Moving Body Owns Touch Rule.** 画布移动时正文点击由容器拦截，固定来源条保持可点；横向轨、输入框／滑杆、纵向与多指输入以及选择／导入、编辑／详情／RAW 门禁继承 149。支持快速反向、缓存／重建根视图交接；离开页面、来源上下文禁用或视口改变时清理。仅暂存一张最多 2MP 的出场 UI 位图，中断重截合成画面时短暂与旧图重叠，随后回收；不逐帧截图、不用于照片处理。风格分类、设置与根导航没有新增滑动，导出和人像规则保留原版本归属。
+
+[最终独立复核](.impeccable/review/source-motion150/review.md)为限定范围 **SHIP**，25 张必要原生截图有效且哈希匹配，无实质修改项。[验证](docs/validation/source-motion150/validation.json)为 phone 70、六种其他配置各 16、关闭动画 9，共 175 次动效重复断言；另有未改编辑器探针的 phone 38 次直接回归，合计 213 次。其他配置只覆盖三组来源截图及实际正文点击夹具，未重复完整 70 项。中间截图暂停实际动画并等待渲染，不能认证 FPS／触感；证据仅来自 Pixel 9 API 37.2 模拟器，不扩大为全应用、硬件、完整人像处理或实际公共 JPEG 导出验收。149 及更早冻结记录保持其版本边界。

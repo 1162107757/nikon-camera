@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "serial": "emulator-5588",
+  "exactRemoteDirectories": [
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/hold-selection125/20261030-225111-phone-46633fad",
+      "removeExitCode": 0,
+      "absenceTestExitCode": 1
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/hold-selection125/20261030-225656-phone-6a2dcd14",
+      "removeExitCode": 0,
+      "absenceTestExitCode": 1
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/hold-selection125/20261030-230651-phone-6819debe",
+      "removeExitCode": 0,
+      "absenceTestExitCode": 1
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/hold-selection125/20261030-231218-font1.3-8b293f2c",
+      "removeExitCode": 0,
+      "absenceTestExitCode": 1
+    },
+    {
+      "path": "/sdcard/Android/data/cc.huevia/files/hold-selection125/20261030-231449-landscape-1794d100",
+      "removeExitCode": 0,
+      "absenceTestExitCode": 1
+    }
+  ],
+  "pidofTarget": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "testPackageList": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "settings": {
+    "font": {
+      "exitCode": 0,
+      "stdout": "1.0",
+      "stderr": ""
+    },
+    "animator": {
+      "exitCode": 0,
+      "stdout": "null",
+      "stderr": ""
+    },
+    "airplane": {
+      "exitCode": 0,
+      "stdout": "0",
+      "stderr": ""
+    },
+    "immersive": {
+      "exitCode": 0,
+      "stdout": "null",
+      "stderr": ""
+    },
+    "wifi": {
+      "exitCode": 0,
+      "stdout": "1",
+      "stderr": ""
+    },
+    "mobile": {
+      "exitCode": 0,
+      "stdout": "1",
+      "stderr": ""
+    }
+  },
+  "privateCleanupEvidence": "Target-process finally assertions in every report; nondebuggable run-as failure is not used as absence evidence.",
+  "physicalDevicesAccessed": false,
+  "errors": []
+}

@@ -1,0 +1,36 @@
+{
+  "candidateSha256": "22b60c1d0037602c5f3a03c45c218998d98e3fc8c712da91076c825c0a870839",
+  "versionCode": 132,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "89a9e1e21b5670dabbdb78f42174bb6dcdbbd70a4ad2b4b1db64265414791a88",
+  "pass": true,
+  "scope": "ui",
+  "files": [
+    {
+      "file": "01-quick-editor.png",
+      "sha256": "efb0628c1d94c88365b91118910683381503c07094b8b857fc433adb599f1de6"
+    },
+    {
+      "file": "02-basic-adjustment.png",
+      "sha256": "1bdf639918436ea6842eeb480422c20a69f81cb2e0ad258fecd656dd8f060996"
+    },
+    {
+      "file": "03-portrait-main.png",
+      "sha256": "a7b36fd2359534cdfcc0f842b50eb0917c58358f298d83ec8373274fc3cc50e3"
+    },
+    {
+      "file": "04-save-sheet.png",
+      "sha256": "cbbcb72d986aaec2b1e827755ea23b15f0a8f4c86b11f3ee5b14930d4bc45f68"
+    },
+    {
+      "file": "05-photo-list.png",
+      "sha256": "10443271f10b86a48879a74dd6a28865f63d05b1ec335ea6f34f36cf359bd443"
+    },
+    {
+      "file": "report.json",
+      "sha256": "d25f73c3af70e2c17aab867e99e7d8aaf22008dceaa26955faf6341e95c3c456"
+    }
+  ]
+}

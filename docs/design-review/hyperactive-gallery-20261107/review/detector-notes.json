@@ -1,0 +1,17 @@
+{
+  "degraded": true,
+  "total": 88,
+  "byRule": {
+    "design-system-color": 43,
+    "design-system-radius": 43,
+    "layout-transition": 1,
+    "design-system-font": 1
+  },
+  "resolution": {
+    "layout-transition": "Changed progress animation from width to scaleX in batch.",
+    "design-system-font": "Intentional system UI fallback for standalone web prototype; local design record only.",
+    "design-system-color": "Intentional user-pinned reference proposal; production DESIGN.md and native palette not changed.",
+    "design-system-radius": "Intentional reference glass/masonry corner family in isolated proposal, not a native system migration."
+  },
+  "notClaimed": "Parser modules unavailable; regex fallback does not compute contrast or certify clean UI. One detector pass only."
+}

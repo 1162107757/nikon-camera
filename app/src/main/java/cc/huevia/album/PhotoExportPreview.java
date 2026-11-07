@@ -112,7 +112,7 @@ public final class PhotoExportPreview implements AutoCloseable {
                 check();if(!request.sha.equalsIgnoreCase(PhotoEditStore.hashFile(request.source)))throw new IOException("原图已变化，请返回后重新打开。");
                 pruneOrphans();if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("成品预览暂存空间不可用。");
                 AtomicInteger lastPercent=new AtomicInteger(-1);
-                new PhotoPresetRenderer(request.context.getAssets()).renderWithReference(request.source,encodedFile(),referenceFile(),request.profile,spec,()->!valid(),value->{int percent=Math.max(0,Math.min(100,(int)Math.round(value*100)));if(lastPercent.getAndSet(percent)!=percent)main.post(()->{if(valid())listener.progress(percent/100.0);});});
+                PhotoPresetRenderer.forContext(request.context).renderWithReference(request.source,encodedFile(),referenceFile(),request.profile,spec,()->!valid(),value->{int percent=Math.max(0,Math.min(100,(int)Math.round(value*100)));if(lastPercent.getAndSet(percent)!=percent)main.post(()->{if(valid())listener.progress(percent/100.0);});});
                 check();if(!request.sha.equalsIgnoreCase(PhotoEditStore.hashFile(request.source)))throw new IOException("原图已变化，请返回后重新打开。");
                 PhotoPreviewCache.validateJpeg(encodedFile(),encodedFile().length());
                 int orientation=new ExifInterface(encodedFile().getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(orientation<1||orientation>8)orientation=1;

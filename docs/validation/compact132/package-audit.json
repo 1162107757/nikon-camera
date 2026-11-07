@@ -1,0 +1,19 @@
+{
+  "versionCode": 132,
+  "versionName": "0.27.0-beta",
+  "sha256": "22b60c1d0037602c5f3a03c45c218998d98e3fc8c712da91076c825c0a870839",
+  "bytes": 33538828,
+  "fileCapBytes": 33554432,
+  "productionInputs": 308,
+  "productionInputsChangedAfterFreeze": [],
+  "nativeAndAssetEntriesComparedTo131": 46,
+  "nativeAndAssetChanges": [],
+  "newAssetEntries": [],
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "v2Verified": true,
+  "v3Verified": true,
+  "zipalign16KiB": true,
+  "hostSuitesPassed": 11,
+  "published": false,
+  "uploaded": false
+}

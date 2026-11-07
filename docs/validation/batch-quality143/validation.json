@@ -1,0 +1,136 @@
+{
+  "versionCode": 143,
+  "versionName": "0.28.6-beta",
+  "apk": "dist/huevia-0.28.6-beta-debug.apk",
+  "apkSha256": "6e7033811f924c6ebba63da9ddf66a15383b6ca3e00a8bb1cdd269d0aae5f5de",
+  "apkBytes": 33567500,
+  "scope": "batch action sheet, four-stop export quality, and theme-adaptive save/export/version surfaces",
+  "device": "owned read-only Pixel_9 emulator API37.2; other sizes viewport emulations",
+  "native": {
+    "results": [
+      {
+        "mode": "phone",
+        "pass": true,
+        "assertions": 60
+      },
+      {
+        "mode": "font",
+        "pass": true,
+        "assertions": 44
+      },
+      {
+        "mode": "narrow",
+        "pass": true,
+        "assertions": 44
+      },
+      {
+        "mode": "dark",
+        "pass": true,
+        "assertions": 44
+      },
+      {
+        "mode": "tablet",
+        "pass": true,
+        "assertions": 44
+      },
+      {
+        "mode": "compact",
+        "pass": true,
+        "assertions": 44
+      }
+    ],
+    "assertionExecutions": 280,
+    "independentScenarios": false,
+    "actualJpegGradeExports": 4,
+    "sourceDimensions": [
+      2400,
+      1600
+    ],
+    "grades": [
+      {
+        "label": "省空间",
+        "ceiling": 1280,
+        "quality": 80,
+        "actualDimensions": [
+          1280,
+          853
+        ]
+      },
+      {
+        "label": "均衡",
+        "ceiling": 2048,
+        "quality": 85,
+        "actualDimensions": [
+          2048,
+          1365
+        ]
+      },
+      {
+        "label": "高清",
+        "ceiling": 4096,
+        "quality": 92,
+        "actualDimensions": [
+          2400,
+          1600
+        ]
+      },
+      {
+        "label": "原画",
+        "ceiling": "full",
+        "quality": 95,
+        "actualDimensions": [
+          2400,
+          1600
+        ]
+      }
+    ],
+    "versionSelectionRegression": {
+      "pass": true,
+      "assertions": 45,
+      "actualExports": false,
+      "report": "versions-regression.json",
+      "apkSha256": "6e7033811f924c6ebba63da9ddf66a15383b6ca3e00a8bb1cdd269d0aae5f5de"
+    }
+  },
+  "review": {
+    "fullReviewCandidate": "4b4c08b6e8454317a1354f3fa8ff1a2692317cff29f0f26220f45dce6487fe23",
+    "fullDisposition": "fix",
+    "materialFindings": 1,
+    "finalCandidate": "6e7033811f924c6ebba63da9ddf66a15383b6ca3e00a8bb1cdd269d0aae5f5de",
+    "finalDisposition": "ship",
+    "coverage": "verdict-only scoring of the single clipped quick-save shadow finding; full review found no other material issue",
+    "requiredCaptures": 14,
+    "optionalCaptures": [
+      "versions.png"
+    ],
+    "report": "../../../.impeccable/review/batch-quality143/review.md",
+    "remaining": []
+  },
+  "sourceHashes": {
+    "app/build.gradle": "779523fc961697021c3b94fabf29e3231d3224fcacd07177ef2d5a9eb52e4de9",
+    "app/src/main/java/cc/huevia/ui/PhotoBatchActionsDialog.java": "c38bcb391256d58eae93415f0a9d52bbcb04b57e723400ec99ced55282117a34",
+    "app/src/main/java/cc/huevia/ui/PhotoQuickSaveDialog.java": "be8d2b5d761af52a7f9aa945a85b734f420638b867b7d16b0dffdc3f6dfaa145",
+    "app/src/main/java/cc/huevia/ui/PhotoChoiceCheck.java": "5748d6e896b2879bc39b40cbb427880d32da61a00bb905559d7d2ef58f44d7a7",
+    "app/src/main/java/cc/huevia/ui/PhotoExportDialog.java": "aa4e655ac1a87887c472c73a73b71c834569f128fbb1e98bd853fdf949c595a4",
+    "app/src/main/java/cc/huevia/ui/PhotoVersionExport.java": "43956ecd0e389881587f848cf61e7907ffb5596ab891bbfefd834c8661f2155b",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "52cc1e3775cd3f30b120f90b028a175486a946afccc894d6fb2f6e2ab83778ee",
+    "app/src/main/java/cc/huevia/album/PhotoExportQuality.java": "6bfb9780739fd403df9b2f5134b278ef0179957542b8908491e7eeccd945f67a",
+    "tests/sync-polish-device-probe/src/cc/huevia/syncpolishqa/BatchQualityProbe.java": "34768b617f1d8768bf5c67241f6499be4624ffdb3b08f65f15116d80de34c638"
+  },
+  "published": false,
+  "gitCommitOrPush": false,
+  "themeCorrection": {
+    "source": "UiPalette with AppAppearance",
+    "fullScreenTheme": "explicit nonfloating AppThemeLight/Dark",
+    "selectedSurface": "neutral card",
+    "primaryAction": "primaryContainer / onPrimaryContainer",
+    "systemBars": "surface ground with matching icon brightness",
+    "nativeCaptures": [
+      "phone-export.png",
+      "phone-destination.png",
+      "dark-export.png",
+      "dark-quality.png"
+    ]
+  },
+  "quickActionFinish": "No stateListAnimator, elevation or translationZ; Ripple retained"
+}

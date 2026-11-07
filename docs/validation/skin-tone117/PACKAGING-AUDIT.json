@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "checkedAtUtc": "2026-10-29T06:28:32.116870+00:00",
+  "status": "passed",
+  "scope": "Independent read-only local candidate APK packaging review plus archive of source-bound synthetic host results. No device access, user photographs, production modifications, upload or publication.",
+  "apk": {
+    "path": "dist/huevia-0.23.6-beta-debug.apk",
+    "bytes": 33395468,
+    "sha256": "bc68248f6ee593491c8bc121dfa6ab7d8424f15af57953333b41e5e7db9ad2b2",
+    "limitBytes": 33554432,
+    "remainingBytes": 158964
+  },
+  "manifest": {
+    "applicationId": "cc.huevia",
+    "versionCode": 117,
+    "versionName": "0.23.6-beta",
+    "minSdk": 26,
+    "targetSdk": 35,
+    "extractNativeLibs": true
+  },
+  "signer": {
+    "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "matches116": true,
+    "referencePath": "docs/validation/portrait-mask116/BUILD-IDENTITY.json"
+  },
+  "toolVerification": {
+    "aapt2BadgingExitCode": 0,
+    "aapt2ManifestXmlExitCode": 0,
+    "apksignerVerifyExitCode": 0,
+    "apkSignatureV2": true,
+    "apkSignatureV3": true,
+    "zipalignArguments": [
+      "-c",
+      "-P",
+      "16",
+      "4"
+    ],
+    "zipalignExitCode": 0
+  },
+  "duplicateZipNames": false,
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "nativeEntrySetMatches116": true,
+  "modelEntrySetMatches116": true,
+  "reference116Audit": {
+    "path": "docs/validation/portrait-mask116/final-apk-sdk-audit.json",
+    "sha256": "a13073e0bb211492ed96472b179e0084cd67980be1e278dce4845670a211316b"
+  },
+  "rawEntriesCompared": 22,
+  "allRawEntriesMatch116": true,
+  "rawEntries": [
+    {
+      "path": "assets/portrait/face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "zipBytes": 2284263,
+      "zipMethod": 8,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "reference116Sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "matches116": true
+    },
+    {
+      "path": "assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "bytes": 13881786,
+      "zipBytes": 13881786,
+      "zipMethod": 0,
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "reference116Sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "matches116": true
+    },
+    {
+      "path": "assets/third-party/litert/BUILD-IDENTITY.json",
+      "bytes": 7520,
+      "zipBytes": 2911,
+      "zipMethod": 8,
+      "sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "reference116Sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "matches116": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-LiteRT.txt",
+      "bytes": 13575,
+      "zipBytes": 4871,
+      "zipMethod": 8,
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "reference116Sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "matches116": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "bytes": 12331,
+      "zipBytes": 4310,
+      "zipMethod": 8,
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "reference116Sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "matches116": true
+    },
+    {
+      "path": "assets/third-party/litert/README.md",
+      "bytes": 5407,
+      "zipBytes": 2553,
+      "zipMethod": 8,
+      "sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "reference116Sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "matches116": true
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "zipBytes": 393490,
+      "zipMethod": 8,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "reference116Sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "matches116": true
+    },
+    {
+      "path": "lib/arm64-v8a/libhuevia_raw.so",
+      "bytes": 49960,
+      "zipBytes": 22922,
+      "zipMethod": 8,
+      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "reference116Sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "matches116": true
+    },
+    {
+      "path": "lib/arm64-v8a/libraw.so",
+      "bytes": 1207392,
+      "zipBytes": 440321,
+      "zipMethod": 8,
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "reference116Sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "matches116": true
+    },
+    {
+      "path": "lib/arm64-v8a/libtensorflowlite_jni.so",
+      "bytes": 4320528,
+      "zipBytes": 1737501,
+      "zipMethod": 8,
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "reference116Sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "matches116": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libc++_shared.so",
+      "bytes": 850380,
+      "zipBytes": 344387,
+      "zipMethod": 8,
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "reference116Sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "matches116": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libhuevia_raw.so",
+      "bytes": 19904,
+      "zipBytes": 9977,
+      "zipMethod": 8,
+      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "reference116Sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "matches116": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libraw.so",
+      "bytes": 1146600,
+      "zipBytes": 430970,
+      "zipMethod": 8,
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "reference116Sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "matches116": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libtensorflowlite_jni.so",
+      "bytes": 2572124,
+      "zipBytes": 1324637,
+      "zipMethod": 8,
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "reference116Sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86/libc++_shared.so",
+      "bytes": 1143240,
+      "zipBytes": 414850,
+      "zipMethod": 8,
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "reference116Sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86/libhuevia_raw.so",
+      "bytes": 46564,
+      "zipBytes": 22177,
+      "zipMethod": 8,
+      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "reference116Sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86/libraw.so",
+      "bytes": 1265240,
+      "zipBytes": 474673,
+      "zipMethod": 8,
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "reference116Sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86/libtensorflowlite_jni.so",
+      "bytes": 6323728,
+      "zipBytes": 2390211,
+      "zipMethod": 8,
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "reference116Sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "zipBytes": 409160,
+      "zipMethod": 8,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "reference116Sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86_64/libhuevia_raw.so",
+      "bytes": 50184,
+      "zipBytes": 23269,
+      "zipMethod": 8,
+      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "reference116Sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86_64/libraw.so",
+      "bytes": 1284728,
+      "zipBytes": 453736,
+      "zipMethod": 8,
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "reference116Sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "matches116": true
+    },
+    {
+      "path": "lib/x86_64/libtensorflowlite_jni.so",
+      "bytes": 6053584,
+      "zipBytes": 2355831,
+      "zipMethod": 8,
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "reference116Sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "matches116": true
+    }
+  ],
+  "requiredClassDefinitions": [
+    {
+      "descriptor": "Lcc/huevia/ncp/SkinTone;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/SkinTone$Transform;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PhotoPortrait$Tone;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/PhotoPortrait$BodySkinMask;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ncp/SkinBodyRegions;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/album/PhotoFaceBodySkin;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ui/SkinTonePicker;",
+      "definedIn": "classes.dex",
+      "present": true
+    },
+    {
+      "descriptor": "Lcc/huevia/ui/SkinToneSwatches;",
+      "definedIn": "classes.dex",
+      "present": true
+    }
+  ],
+  "dexes": [
+    {
+      "path": "classes.dex",
+      "bytes": 2989144,
+      "classDefinitions": 2742,
+      "sha256": "2a087c80705f3ddbbc3e05d7e17d2569a9133d09bd71da0277f22a232bc239cc"
+    }
+  ],
+  "modelDecodedAgain": false,
+  "host": {
+    "status": "passed",
+    "total": 958,
+    "checks": {
+      "PortraitModelTest": 268,
+      "PortraitLandmarksTest": 62,
+      "PortraitSkinMaskTest": 82,
+      "PortraitLandmarkMaskTest": 114,
+      "PortraitSemanticMaskTest": 115,
+      "PortraitPipelineTest": 67,
+      "PortraitToneTest": 236,
+      "SkinBodyRegionsTest": 14
+    },
+    "inputCount": 38,
+    "currentInputsMatchRecordedHashes": true,
+    "maximumState": {
+      "portraitBytes": 620284,
+      "fullDraftBytes": 756155,
+      "maxRecipeBytes": 1048576,
+      "draftCapBytes": 2097152
+    },
+    "rerunForPackagingOnlyChange": false
+  },
+  "performance": {
+    "schemaVersion": 1,
+    "status": "measured",
+    "width": 6000,
+    "height": 4000,
+    "elapsedMs": 2222.4034,
+    "allocatedBytes": 56344,
+    "gcCollections": 0,
+    "checksum": 59755307565,
+    "scope": "Single warmed-up desktop JDK17, -Xmx128m / SerialGC, synthetic full-body 24MP streaming pixels. Not Android latency. Render-thread allocation excludes setup and LUT initialization.",
+    "runtime": "Desktop OpenJDK 17.0.19; -Xmx128m -XX:+UseSerialGC; one warmed-up synthetic streaming pass",
+    "source": {
+      "path": "docs/validation/skin-tone117/TonePerformanceProbe.java",
+      "sha256": "67d3020fdf5f6bdebc47e5686b4b040931b77e834cdc6e99d92bb6e9f48eed3a"
+    },
+    "notAndroidLatency": true,
+    "userImagesUsed": false
+  },
+  "archives": [
+    {
+      "path": "docs/validation/skin-tone117/HOST-RESULT.json",
+      "bytes": 8495,
+      "sha256": "121a56d61a716406c26386c49cc0b5a88d9853e0d100806b4f2298256d742251"
+    },
+    {
+      "path": "docs/validation/skin-tone117/HOST-OUTPUT.txt",
+      "bytes": 365,
+      "sha256": "63eb81b7e8bf09431a1feb218f88c822399351f59e71ea0b3bdaad11c8b7a5c3"
+    },
+    {
+      "path": "docs/validation/skin-tone117/PERFORMANCE-RESULT.json",
+      "bytes": 732,
+      "sha256": "770fa7fcc8d701d69828c5d3f794e83f10a7a9bd3a43db8c9ae07f8c1697d167"
+    },
+    {
+      "path": "docs/validation/skin-tone117/TonePerformanceProbe.java",
+      "bytes": 1793,
+      "sha256": "67d3020fdf5f6bdebc47e5686b4b040931b77e834cdc6e99d92bb6e9f48eed3a"
+    }
+  ],
+  "sanitization": {
+    "repositoryRelativePathsOnly": true,
+    "userImagePathsIncluded": false,
+    "userImagesUsed": false,
+    "privateTempPathsIncluded": false
+  },
+  "deviceAccessed": false,
+  "networkAccessed": false,
+  "publicationPerformed": false,
+  "supersedes": {
+    "path": "docs/validation/skin-tone117/PACKAGING-AUDIT-initial-df8d75b7.json",
+    "sha256": "5d727d73fd9e653f45fa69362a82f7ae9b5f4e9f80698fb4d0f7f58a106ca216",
+    "apkSha256": "df8d75b78c21eacbb65b6a6e08e65ff75b262dc68ad666917251e3e7b4d6d756"
+  },
+  "buildIdentity": {
+    "path": "docs/validation/skin-tone117/BUILD-IDENTITY.json",
+    "sha256": "4df977a9675c8d4774f52c19532893c73375f9c4e2009436a4804efc52d689dd",
+    "productionInputCount": 287,
+    "currentInputsMatchRecordedHashes": true,
+    "mismatchCount": 0
+  }
+}

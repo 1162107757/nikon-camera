@@ -68,8 +68,10 @@ public final class PhotoDetailSource implements AutoCloseable {
         public String registrationName(){return "已保存版本";}public String modelVersion(){return "saved-file-pixels-v1";}
         public double mapTone(double v){return v;}public int applyArgb(int v){return v;}
     };
-    private static final class Surface {final File file;final BitmapRegionDecoder decoder;final Bitmap overview;final int width,height;final boolean temporary;
-        Surface(File file,BitmapRegionDecoder decoder,Bitmap overview,boolean temporary){this.file=file;this.decoder=decoder;this.overview=overview;this.width=decoder.getWidth();this.height=decoder.getHeight();this.temporary=temporary;}}
+    private static final class Surface {final File file;final BitmapRegionDecoder decoder;final PhotoDetailRaster raster;final Bitmap overview;final int width,height;final boolean temporary;
+        Surface(File file,BitmapRegionDecoder decoder,Bitmap overview,boolean temporary){this.file=file;this.decoder=decoder;this.raster=null;this.overview=overview;this.width=decoder.getWidth();this.height=decoder.getHeight();this.temporary=temporary;}
+        Surface(File file,PhotoDetailRaster raster,Bitmap overview){this.file=file;this.decoder=null;this.raster=raster;this.overview=overview;this.width=raster.width();this.height=raster.height();this.temporary=true;}
+        void close(){if(decoder!=null)decoder.recycle();if(raster!=null)try{raster.close();}catch(IOException ignored){}if(temporary)file.delete();}}
     private static final class Pending {final long token;final int mode;final Callback callback;Pending(long token,int mode,Callback callback){this.token=token;this.mode=mode;this.callback=callback;}}
     private final Request request;private final File directory;private final Handler main=new Handler(Looper.getMainLooper());
     private final long sourceLength,sourceModified;private final FileObserver observer;
@@ -153,42 +155,42 @@ public final class PhotoDetailSource implements AutoCloseable {
                 public int exifOrientation(){return orientation;}
                 public void read(int[] pixels,int row,int rows){working.getPixels(pixels,0,width(),0,row,width(),rows);}
                 public void write(int[] pixels,int row,int rows){working.setPixels(pixels,0,width(),0,row,width(),rows);}
-            },request.profile,()->!preparationValid(),null);}
-            checkPreparation();Bitmap composed=PhotoComposition.apply(bitmap,geometry(),orientation);if(composed!=bitmap)bitmap.recycle();bitmap=composed;bitmap.setDensity(Bitmap.DENSITY_NONE);
-            PhotoGeometry.Plan full=geometry().plan(sourceBounds.outWidth,sourceBounds.outHeight,orientation);checkPreparation();
+            },request.profile,()->!preparationValid(mode),null);}
+            checkPreparation(mode);Bitmap composed=PhotoComposition.apply(bitmap,geometry(),orientation);if(composed!=bitmap)bitmap.recycle();bitmap=composed;bitmap.setDensity(Bitmap.DENSITY_NONE);
+            PhotoGeometry.Plan full=geometry().plan(sourceBounds.outWidth,sourceBounds.outHeight,orientation);checkPreparation(mode);
             Frame preview=new Frame(mode,full.width,full.height,sample,bitmap,Collections.emptyList(),true);
             if(mode==CURRENT)currentPreview=preview;else beforePreview=preview;bitmap=null;
         }finally{if(bitmap!=null)bitmap.recycle();}
     }
     private Surface prepare(int mode)throws IOException{
         Surface existing=surfaces[mode];if(existing!=null)return existing;
-        verifySource();checkPreparation();if(!pruned){pruned=true;pruneOrphans();}
+        verifySource();checkPreparation(mode);if(!pruned){pruned=true;pruneOrphans();}
         // Saved JPEGs and neutral 'before' content already contain the exact pixels we need.
         // Region decoding them directly avoids a full-size decode + PNG encode + reread.
         if(orientation==1&&geometry().isNeutral()&&(!request.canCompare||mode==BEFORE||request.currentUnchanged)){
             BitmapRegionDecoder decoder=BitmapRegionDecoder.newInstance(request.file.getPath(),false);
             if(decoder==null)throw new IOException("无法读取完整细节。");
-            try{checkPreparation();Surface created=new Surface(request.file,decoder,previewFor(mode).overview,false);surfaces[mode]=created;return created;}
+            try{checkPreparation(mode);Surface created=new Surface(request.file,decoder,previewFor(mode).overview,false);surfaces[mode]=created;return created;}
             catch(IOException|RuntimeException|OutOfMemoryError failure){decoder.recycle();throw failure;}
         }
         if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("细节暂存目录不可用，请检查存储空间。");
-        File target=new File(directory,mode==CURRENT?"current.png":"before.png");
-        BitmapRegionDecoder decoder=null;Bitmap overview=null;
+        File target=new File(directory,mode==CURRENT?"current.argb":"before.argb");
+        PhotoDetailRaster raster=null;
         try{
-            long workingDisk=(long)sourceBounds.outWidth*sourceBounds.outHeight*4+8L*1024*1024;
+            PhotoGeometry.Plan plan=geometry().plan(sourceBounds.outWidth,sourceBounds.outHeight,orientation);
+            long workingDisk=(long)plan.width*plan.height*4+8L*1024*1024;
             if(directory.getUsableSpace()<workingDisk)throw new IOException("存储空间不足，无法准备完整细节。原图已保留。");
-            new PhotoPresetRenderer(request.context.getAssets()).renderDetail(request.file,target,request.canCompare?request.profile:UNCHANGED,mode==BEFORE||!request.canCompare||request.currentUnchanged,()->!preparationValid(),null);
-            checkPreparation();if(!request.sha.equalsIgnoreCase(PhotoEditStore.hashFile(request.file)))throw new IOException("照片文件已变化，请返回后重新打开。");
-            decoder=BitmapRegionDecoder.newInstance(target.getPath(),false);if(decoder==null)throw new IOException("无法读取完整细节。");
-            Surface other=surfaces[1-mode];if(other!=null&&(decoder.getWidth()!=other.width||decoder.getHeight()!=other.height))throw new IOException("前后构图尺寸不一致，未显示错误对比。");
+            PhotoPresetRenderer.forContext(request.context).renderDetailRaster(request.file,target,request.canCompare?request.profile:UNCHANGED,mode==BEFORE||!request.canCompare||request.currentUnchanged,()->!preparationValid(mode),null);
+            checkPreparation(mode);if(!request.sha.equalsIgnoreCase(PhotoEditStore.hashFile(request.file)))throw new IOException("照片文件已变化，请返回后重新打开。");
+            raster=new PhotoDetailRaster(target);
+            Surface other=surfaces[1-mode];if(other!=null&&(raster.width()!=other.width||raster.height()!=other.height))throw new IOException("前后构图尺寸不一致，未显示错误对比。");
             // The provisional overview has the same frozen colour/geometry; only unsampled
-            // region tiles certify final detail. Do not decode the full PNG yet again for it.
-            overview=previewFor(mode).overview;
-            Surface created=new Surface(target,decoder,overview,true);surfaces[mode]=created;return created;
-        }catch(IOException|RuntimeException|OutOfMemoryError failure){if(decoder!=null)decoder.recycle();target.delete();throw failure;}
+            // region tiles certify final detail. Reuse it without another full-image decode.
+            Surface created=new Surface(target,raster,previewFor(mode).overview);surfaces[mode]=created;return created;
+        }catch(IOException|RuntimeException|OutOfMemoryError failure){if(raster!=null)try{raster.close();}catch(IOException ignored){}target.delete();throw failure;}
     }
     private Bitmap decodeTile(Surface surface,Rect region,int sample)throws IOException{
-        if(surface.temporary){Bitmap bitmap=surface.decoder.decodeRegion(region,options(sample));if(bitmap==null)throw new IOException("细节区域解码失败。");return bitmap;}
+        if(surface.raster!=null)return surface.raster.decodeRegion(region,sample);
         // JPEG chroma interpolation needs neighbours across tile edges. Decode a
         // sample-aligned halo, then crop without resampling so 1:1 pixels agree
         // with a whole-file decode rather than treating each tile as an image edge.
@@ -207,20 +209,21 @@ public final class PhotoDetailSource implements AutoCloseable {
     }
     private static BitmapFactory.Options options(int sample){BitmapFactory.Options o=new BitmapFactory.Options();o.inScaled=false;o.inSampleSize=sample;o.inPreferredConfig=Bitmap.Config.ARGB_8888;o.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);return o;}
     private void check()throws IOException{if(!valid()||Thread.currentThread().isInterrupted())throw new IOException("细节页面已失效。");}
-    private boolean preparationValid(){return !releasePending&&valid()&&!Thread.currentThread().isInterrupted();}
-    private void checkPreparation()throws IOException{if(!preparationValid())throw new IOException("细节页面已暂停。");}
+    // Panning can reuse a surface in progress; changing comparison mode drops obsolete work.
+    private boolean preparationValid(int mode){Pending latest=pending;return latest!=null&&latest.mode==mode&&!releasePending&&valid()&&!Thread.currentThread().isInterrupted();}
+    private void checkPreparation(int mode)throws IOException{if(!preparationValid(mode))throw new IOException("细节页面已暂停。");}
     private void put(String key,Bitmap bitmap){
         cache.put(key,bitmap);cacheBytes+=bitmap.getAllocationByteCount();
         while(cacheBytes>CACHE_BYTES&&!cache.isEmpty()){Map.Entry<String,Bitmap> first=cache.entrySet().iterator().next();cacheBytes-=first.getValue().getAllocationByteCount();cache.remove(first.getKey());}
         // Removed bitmaps can still be drawn by the current immutable frame; GC owns their final release.
     }
-    private void release(){cache.clear();cacheBytes=0;currentPreview=null;beforePreview=null;for(int i=0;i<surfaces.length;i++){Surface s=surfaces[i];surfaces[i]=null;if(s!=null){s.decoder.recycle();if(s.temporary)s.file.delete();}}File[] rest=directory.listFiles();if(rest!=null)for(File file:rest)file.delete();directory.delete();}
+    private void release(){cache.clear();cacheBytes=0;currentPreview=null;beforePreview=null;for(int i=0;i<surfaces.length;i++){Surface s=surfaces[i];surfaces[i]=null;if(s!=null)s.close();}File[] rest=directory.listFiles();if(rest!=null)for(File file:rest)file.delete();directory.delete();}
     /** Only our flat UUID directories, never arbitrary cache children or another live page. */
     private void pruneOrphans(){
         File[] children=request.context.getCacheDir().listFiles();if(children==null)return;
         synchronized(LIVE_DIRECTORIES){for(File child:children){
             if(!child.isDirectory()||!child.getName().matches("photo-detail-[a-f0-9-]{36}")||LIVE_DIRECTORIES.contains(child.getName()))continue;
-            File[] files=child.listFiles();if(files!=null)for(File file:files)if(file.isFile()&&(file.getName().equals("current.png")||file.getName().equals("before.png")))file.delete();child.delete();
+            File[] files=child.listFiles();if(files!=null)for(File file:files)if(file.isFile()&&(file.getName().equals("current.png")||file.getName().equals("before.png")||file.getName().equals("current.argb")||file.getName().equals("before.argb")))file.delete();child.delete();
         }}
     }
     @Override public void close(){if(closed)return;closed=true;observer.stopWatching();serial++;worker.getQueue().clear();worker.execute(()->{release();LIVE_DIRECTORIES.remove(directory.getName());});worker.shutdown();}

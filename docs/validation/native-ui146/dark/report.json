@@ -1,0 +1,137 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    },
+    {
+      "name": "actual-album-source-names",
+      "pass": true
+    },
+    {
+      "name": "album-label-fits",
+      "pass": true
+    },
+    {
+      "name": "album-label-fits",
+      "pass": true
+    },
+    {
+      "name": "three-action-dialog-inside-window",
+      "pass": true
+    },
+    {
+      "name": "three-action-dialog-bounded-width",
+      "pass": true
+    },
+    {
+      "name": "native-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "action-no-clipped-native-shadow",
+      "pass": true
+    },
+    {
+      "name": "native-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "action-no-clipped-native-shadow",
+      "pass": true
+    },
+    {
+      "name": "native-action-full-touch-target",
+      "pass": true
+    },
+    {
+      "name": "action-no-clipped-native-shadow",
+      "pass": true
+    },
+    {
+      "name": "neutral-callback-and-dismiss",
+      "pass": true
+    },
+    {
+      "name": "destructive-cancel-does-not-dispatch-action",
+      "pass": true
+    },
+    {
+      "name": "real-category-form-opens",
+      "pass": true
+    },
+    {
+      "name": "real-onShow-validation-is-preserved",
+      "pass": true
+    },
+    {
+      "name": "invalid-form-does-not-auto-dismiss",
+      "pass": true
+    },
+    {
+      "name": "single-choice-model-and-callback",
+      "pass": true
+    },
+    {
+      "name": "multi-choice-retains-other-selection",
+      "pass": true
+    },
+    {
+      "name": "multi-choice-accepts-once",
+      "pass": true
+    },
+    {
+      "name": "existing-import-location-callback-preserved",
+      "pass": true
+    },
+    {
+      "name": "native-popup-duplicate-auto-ids-still-dispatch-correct-item",
+      "pass": true
+    },
+    {
+      "name": "native-spinner-retains-adapter-selection",
+      "pass": true
+    },
+    {
+      "name": "native-switch-states-and-callback",
+      "pass": true
+    },
+    {
+      "name": "compound-controls-inside-window",
+      "pass": true
+    },
+    {
+      "name": "compound-controls-bounded-width",
+      "pass": true
+    },
+    {
+      "name": "mandatory-style-dialog-is-not-back-cancelled",
+      "pass": true
+    },
+    {
+      "name": "disabled-action-state-retained",
+      "pass": true
+    },
+    {
+      "name": "mandatory-style-dialog-inside-window",
+      "pass": true
+    },
+    {
+      "name": "mandatory-style-dialog-bounded-width",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-dark-field-background-in-light-app",
+      "pass": true
+    },
+    {
+      "name": "editor-field-readable-dark-text-role",
+      "pass": true
+    },
+    {
+      "name": "foreground-feedback-uses-themed-notice",
+      "pass": true
+    }
+  ]
+}

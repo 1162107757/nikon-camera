@@ -1,0 +1,11 @@
+{
+  "versionCode": 129,
+  "versionName": "0.25.1-beta",
+  "sha256": "b644a9e67aee1082f5b3ce38e644189ac78d51e32dad0fb8fca14c0db5681e3d",
+  "bytes": 33497868,
+  "frozenProductionInputs": 296,
+  "productionInputsChangedAfterBuildStart": [],
+  "nativeAndAssetEntriesComparedTo128": 46,
+  "nativeAndAssetChanges": [],
+  "uploaded": false
+}

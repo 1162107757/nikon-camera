@@ -1,0 +1,72 @@
+[
+  {
+    "name": "only-home-routes",
+    "heading": "相册",
+    "editorSurfaces": 0
+  },
+  {
+    "name": "phone-album",
+    "selected": "true",
+    "photos": 12
+  },
+  {
+    "name": "floating-selection",
+    "text": "取消\n已选 2 张\n批量编辑",
+    "sourceDisabled": true
+  },
+  {
+    "name": "processing-scope-retained",
+    "editorSurfaces": 0
+  },
+  {
+    "name": "category",
+    "visible": 2
+  },
+  {
+    "name": "source-filter-independent",
+    "visible": 2
+  },
+  {
+    "name": "online-filter-restored",
+    "visible": 2
+  },
+  {
+    "name": "camera-home",
+    "photos": 24,
+    "progressGap": 15.000007629394531
+  },
+  {
+    "name": "live-home",
+    "receiving": true
+  },
+  {
+    "name": "downloaded-home",
+    "photos": 12,
+    "count": "共 12 张\nRAW选择"
+  },
+  {
+    "name": "settings-home",
+    "heading": "设置"
+  },
+  {
+    "name": "source-drag",
+    "phoneSelected": "true"
+  },
+  {
+    "name": "concentric-source-and-nav",
+    "geometry": {
+      "navBottom": 4,
+      "navTop": 4,
+      "sourceBottom": 3,
+      "sourceTop": 3
+    }
+  },
+  {
+    "name": "narrow-home",
+    "viewport": {
+      "appTop": 0,
+      "scrollWidth": 320,
+      "width": 320
+    }
+  }
+]

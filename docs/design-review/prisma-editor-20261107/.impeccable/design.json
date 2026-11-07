@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T10:56:00Z",
+  "title": "Design System: Huevia Prisma editor prototype",
+  "extensions": {
+    "scope": "This directory's interactive web concept only; DESIGN.md frontmatter owns primitives. No root or native design-system authority.",
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Board ink",
+        "tonalRamp": [
+          "oklch(15% .015 195)",
+          "oklch(26% .015 195)",
+          "oklch(38% .015 195)",
+          "oklch(49% .015 195)",
+          "oklch(61% .015 195)",
+          "oklch(72% .015 195)",
+          "oklch(84% .015 195)",
+          "oklch(95% .015 195)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Quiet board text",
+        "tonalRamp": [
+          "oklch(15% .018 200)",
+          "oklch(26% .018 200)",
+          "oklch(38% .018 200)",
+          "oklch(49% .018 200)",
+          "oklch(61% .018 200)",
+          "oklch(72% .018 200)",
+          "oklch(84% .018 200)",
+          "oklch(95% .018 200)"
+        ]
+      },
+      "yellow": {
+        "role": "primary",
+        "displayName": "Export yellow",
+        "tonalRamp": [
+          "oklch(15% .16 100)",
+          "oklch(26% .16 100)",
+          "oklch(38% .16 100)",
+          "oklch(49% .16 100)",
+          "oklch(61% .16 100)",
+          "oklch(72% .16 100)",
+          "oklch(84% .16 100)",
+          "oklch(95% .16 100)"
+        ]
+      },
+      "photo-white": {
+        "role": "neutral",
+        "displayName": "Photo white",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(26% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "tool-dark": {
+        "role": "neutral",
+        "displayName": "Translucent tool dark",
+        "tonalRamp": [
+          "oklch(15% .009 155)",
+          "oklch(26% .009 155)",
+          "oklch(38% .009 155)",
+          "oklch(49% .009 155)",
+          "oklch(61% .009 155)",
+          "oklch(72% .009 155)",
+          "oklch(84% .009 155)",
+          "oklch(95% .009 155)"
+        ]
+      }
+    },
+    "tonalRampNote": "Ramps are synthesized panel previews, not implemented colors or approved palette variants; they do not preserve translucent source alpha and may need gamut mapping.",
+    "typographyMeta": {
+      "title": {
+        "displayName": "Filename",
+        "purpose": "Centered photo title."
+      },
+      "label": {
+        "displayName": "Compact label",
+        "purpose": "Tools, thumbnails and comparison labels."
+      },
+      "control": {
+        "displayName": "Control text",
+        "purpose": "Categories, range values and choices."
+      }
+    },
+    "shadows": [
+      {
+        "name": "desktop-frame",
+        "value": "0 18px 50px -24px #223c4c60",
+        "purpose": "Presentation device frame only; removed on mobile."
+      },
+      {
+        "name": "comparison-handle",
+        "value": "0 2px 10px #0003",
+        "purpose": "Lift the draggable seam handle over the photograph."
+      },
+      {
+        "name": "range-thumb",
+        "value": "0 1px 4px #0004",
+        "purpose": "Separate the white range thumb from the image-colored backdrop."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-state",
+        "value": "background .18s, color .18s, transform .18s cubic-bezier(.16,1,.3,1)",
+        "purpose": "Hover and press feedback; disabled under reduced-motion preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wrapped-board",
+        "value": "(max-width:1100px) and (min-width:701px)"
+      },
+      {
+        "name": "phone",
+        "value": "(max-width:700px)"
+      },
+      {
+        "name": "short-phone",
+        "value": "(max-height:690px) and (max-width:700px)"
+      }
+    ],
+    "evidence": {
+      "sources": [
+        "index.html direction contract",
+        "style.css",
+        "app.js",
+        "README.md",
+        "assets/provenance.json",
+        ".impeccable/review/review.md",
+        ".impeccable/review/verdict.md"
+      ],
+      "reference": "https://dribbble.com/shots/15854036-Prisma-Photo-Editor",
+      "referenceAuthor": "Daria Bugrowskaia / Prisma Labs",
+      "sampleOrigin": "../photo-detail-export-histogram-20261024/assets/sample.png",
+      "sampleUse": "Illustrative project sample cropped to 4:5; not camera output or an AI retouch claim.",
+      "captures": {
+        "desktop.png": "1264x1052",
+        "mobile.png": "390x844",
+        "narrow.png": "320x640"
+      },
+      "limits": [
+        "Ship verdict covers the named comparison-label fix only.",
+        "Local HTTP interaction checks passed; offline HTML received resource-embedding and extracted-script syntax checks only.",
+        "Direct file:// browser testing was blocked by browser URL policy and was not bypassed.",
+        "Regex detector fallback is not computed-contrast certification.",
+        "CSS looks and portrait controls are demonstrations, not production presets or portrait processing."
+      ]
+    },
+    "filterRail": {
+      "gapToken": "spacing.filter-gap",
+      "meaning": "14px exterior separation between adjacent cards, updated after user feedback.",
+      "scope": "Web concept in this directory only; native uses its own dp tokens."
+    },
+    "historySymbols": {
+      "arc": "300-degree circle",
+      "arrowhead": "Connected and rounded",
+      "redo": "Horizontal mirror of undo",
+      "synchronized": [
+        "SVG symbols",
+        "offline prototype.html"
+      ],
+      "scope": "This web concept only. Current native153 full review remains FIX history; the separate verdict ships only the scored caption-contrast correction and direct regressions. Earlier native152 verdict and browser evidence keep their original scope."
+    },
+    "currentNativeReference": {
+      "path": "docs/selection-soft153.md",
+      "version": "153 / 0.29.2-beta",
+      "sha256": "10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e",
+      "review": ".impeccable/review/selection-soft153/review.md",
+      "reviewStatus": "Full review remains FIX history; separate verdict is ship limited to the scored caption-contrast correction and direct regressions, not whole-surface acceptance.",
+      "scope": "Native pointer only. The approved prototype implementation/materials and previous browser proof are unchanged.",
+      "verdict": ".impeccable/review/selection-soft153/verdict.md"
+    },
+    "nativeReferenceHistory": [
+      {
+        "path": "docs/editor-continuity152.md",
+        "version": "152 / 0.29.1-beta",
+        "scope": "Repository-relative pointer only; this prototype remains the approved web concept, not the native global design system.",
+        "finalReviewStatus": "Full review remains FIX history; separate verdict is ship limited to the sole body-glyph correction and direct regressions, not whole-surface acceptance.",
+        "sha256": "eb36fb3f174c52e55fd6f8b417ec0f9af95d755e5fea4c9e17bc8a8011d50b07",
+        "verdict": ".impeccable/review/editor-continuity152/verdict.md"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Export action",
+      "kind": "button",
+      "refersTo": "button-export",
+      "description": "The editor's upper-right new-copy export action.",
+      "html": "<button class=\"ds-export\">导出</button>",
+      "css": ".ds-export{font:700 13px -apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',sans-serif;background:var(--yellow,#ffe335);color:#191e17;border:0;border-radius:24px;min-width:68px;min-height:42px;padding:10px 17px;cursor:pointer;transition:background .18s,color .18s,transform .18s cubic-bezier(.16,1,.3,1)}.ds-export:hover{background:#ffec6b}.ds-export:focus-visible{outline:3px solid #9bc5ed;outline-offset:4px}.ds-export:active:not(:disabled){transform:scale(.96)}.ds-export:disabled{opacity:.32;cursor:default}@media(prefers-reduced-motion:reduce){.ds-export{transition:none}}"
+    },
+    {
+      "name": "Selected circular tool",
+      "kind": "button",
+      "refersTo": "tool-circle",
+      "description": "Round dark SVG tool with a small label and yellow selected state.",
+      "html": "<button class=\"ds-tool\" aria-pressed=\"true\"><span class=\"ds-disc\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.65\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"9\" cy=\"9\" r=\"5.5\"/><circle cx=\"15\" cy=\"9\" r=\"5.5\"/><circle cx=\"12\" cy=\"15\" r=\"5.5\"/></svg></span>滤镜</button>",
+      "css": ".ds-tool{font:10px -apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',sans-serif;min-width:48px;height:62px;border:0;background:transparent;color:#fff;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .18s cubic-bezier(.16,1,.3,1)}.ds-disc{display:grid;place-items:center;width:39px;height:39px;flex-shrink:0;border-radius:50%;background:#1014129c}.ds-tool[aria-pressed=true]{color:var(--yellow,#ffe335)}.ds-tool[aria-pressed=true] .ds-disc{background:#111713e6}.ds-tool:hover .ds-disc{background:#101412ed}.ds-tool:focus-visible{outline:3px solid #9bc5ed;outline-offset:4px}.ds-tool:active{transform:scale(.96)}@media(prefers-reduced-motion:reduce){.ds-tool{transition:none}}"
+    },
+    {
+      "name": "Category navigation",
+      "kind": "nav",
+      "description": "Compact text categories with an underline for selection.",
+      "html": "<nav class=\"ds-categories\" aria-label=\"滤镜分类\"><button aria-pressed=\"true\">全部</button><button aria-pressed=\"false\">人像</button></nav>",
+      "css": ".ds-categories{display:flex;gap:21px;align-items:center;padding:0 20px 4px;min-height:44px;background:#25312a}.ds-categories button{font:11px -apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',sans-serif;position:relative;border:0;padding:8px 0;min-height:40px;background:transparent;color:#ffffffbe;cursor:pointer;transition:color .18s,transform .18s cubic-bezier(.16,1,.3,1)}.ds-categories button:before{content:'';position:absolute;inset:-3px -8px}.ds-categories button[aria-pressed=true]{color:#fff;font-weight:600}.ds-categories button[aria-pressed=true]:after{content:'';position:absolute;width:13px;height:2px;border-radius:2px;background:var(--yellow,#ffe335);bottom:0;left:calc(50% - 6.5px)}.ds-categories button:hover{color:var(--yellow,#ffe335)}.ds-categories button:focus-visible{outline:3px solid #9bc5ed;outline-offset:4px}.ds-categories button:active{transform:scale(.96)}@media(prefers-reduced-motion:reduce){.ds-categories button{transition:none}}"
+    },
+    {
+      "name": "Strength range",
+      "kind": "input",
+      "description": "Thin progress track and white thumb; static preview starts at 70 percent.",
+      "html": "<input class=\"ds-range\" type=\"range\" min=\"0\" max=\"100\" value=\"70\" aria-label=\"滤镜强度\">",
+      "css": ".ds-range{appearance:none;-webkit-appearance:none;width:220px;height:42px;padding:0;margin:0;border:0;background:transparent;cursor:pointer;accent-color:var(--yellow,#ffe335)}.ds-range::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:linear-gradient(to right,var(--yellow,#ffe335) 0 70%,#ffffff42 70% 100%)}.ds-range::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;background:#fff;width:13px;height:13px;border-radius:50%;margin-top:-5.5px;box-shadow:0 1px 4px #0004}.ds-range::-moz-range-track{height:2px;background:#ffffff54}.ds-range::-moz-range-progress{height:2px;background:var(--yellow,#ffe335)}.ds-range::-moz-range-thumb{border:0;width:13px;height:13px;background:#fff;border-radius:50%}.ds-range:focus-visible{outline:3px solid #9bc5ed;outline-offset:4px}"
+    },
+    {
+      "name": "Frame choice",
+      "kind": "button",
+      "refersTo": "choice",
+      "description": "Compact dark selection button used for crop and frame choices.",
+      "html": "<button class=\"ds-choice\" aria-pressed=\"true\">留白</button>",
+      "css": ".ds-choice{font:11px -apple-system,BlinkMacSystemFont,'Segoe UI','Microsoft YaHei',sans-serif;min-height:48px;min-width:58px;padding:9px 11px;border:0;border-radius:10px;background:#111b18a1;color:#fff;cursor:pointer;transition:background .18s,color .18s,transform .18s cubic-bezier(.16,1,.3,1)}.ds-choice[aria-pressed=true]{color:var(--yellow,#ffe335);outline:1px solid #ffe335af;outline-offset:-1px}.ds-choice:focus-visible{outline:3px solid #9bc5ed;outline-offset:4px}.ds-choice:active{transform:scale(.96)}@media(prefers-reduced-motion:reduce){.ds-choice{transition:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The photograph owns the editor",
+    "overview": "The photograph supplies both the focal image and the blurred surrounding atmosphere. Compact controls sit beneath it; dark round tools, small image thumbnails and a saturated yellow export action carry the pinned Prisma vocabulary. This records only the built concept in this directory. It does not establish a global Huevia identity or a production Android implementation.",
+    "keyCharacteristics": [
+      "Photo-derived color and depth.",
+      "Circular dark tools with inline SVG line icons.",
+      "Yellow export and selected-state signals.",
+      "Direct original/effect comparison and new-copy JPEG export."
+    ],
+    "rules": [
+      {
+        "name": "The Photo Atmosphere Rule",
+        "body": "Derive the editor backdrop from the active photograph; retain the dark overlay that separates controls from its colors.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve the photo-first hierarchy and its image-derived backdrop.",
+      "Do pair selected color with a check, underline or visible control state.",
+      "Do keep original/effect labels clear of the compare control and retain the movable seam.",
+      "Do label demonstration behavior honestly and preserve new-copy export."
+    ],
+    "donts": [
+      "Don't promote this bounded concept into the native app's global design system.",
+      "Don't treat CSS looks, illustrative imagery or portrait controls as production processing claims.",
+      "Don't present the scoped review or detector fallback as comprehensive accessibility or native acceptance certification."
+    ]
+  }
+}

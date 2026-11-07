@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "024332082067562fabbcd113db591747b8f63b93f0e95a9fae9501f13d7e5f42",
+  "versionCode": 123,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "d0c20c6de89c179208ddc93151bc1cabf58731d5a5d5292c599acd27148c5343",
+  "pass": true,
+  "scope": "Core continuation after sealed profile-identical earlier all149 matrix: no149/template/vector rerun; current APK covers brush integration, actual popup source roundtrip, readretry/parser classification, same-record gallery, picker/editor, two-photo drafts, mono/color full/detail export EXIF1/6. Original149 SHA-bound files parsed and rendered via installed Android profile and native template; all19 legacy monochrome gray/toning, frozen independent vectors and exact completed-effect strengths0/50/100. Existing-record gallery old unsupported keys remain isolated from new model key without reimport; actual native picker/editor selection, two synthetic JPEG drafts, representative monochrome/color full+detail/EXIF1+6. No user image or physical-phone/Nikon pipeline equivalence claim.",
+  "files": [
+    {
+      "file": "01-gallery-black-white.png",
+      "sha256": "25a66d0f587f86c65df61c50f36a925682a7db1e4a8d7a945e52b4d854ec425a"
+    },
+    {
+      "file": "01-gallery-sepia.png",
+      "sha256": "c36aa770f086ec93500241d28dcf28486a2f624a5fe1b0196c156eb61d0a65ea"
+    },
+    {
+      "file": "01-gallery-yellow-green.png",
+      "sha256": "94f69a3983f88a69b527f6467ee488e44b79cc2aec5e4b8f44c07453277c4c71"
+    },
+    {
+      "file": "02-native-picker-ready.png",
+      "sha256": "307d0872a536462f957d0034f92e9f53df4cc47b1f481e850945e24ef37d240f"
+    },
+    {
+      "file": "03-editor-monochrome-50.png",
+      "sha256": "00ee0224a1a12180d3d3a720ccf1b8336aca64b3378a08040328857a6e2ec223"
+    },
+    {
+      "file": "04-editor-color-independent.png",
+      "sha256": "48f72754207d12d7e2cf8caf3a72c242b44503a688dec73f2afdc9e3167e647d"
+    },
+    {
+      "file": "05-monochrome-actual-detail.png",
+      "sha256": "c0d19a54b32d42397d8a45aa0948b154c23cfb344acef204602e114b3ca199db"
+    },
+    {
+      "file": "report.json",
+      "sha256": "7a37b5e42a532e3d5d65d992c03845de231b805e3a2bce1d35aa1df59b382e47"
+    }
+  ]
+}

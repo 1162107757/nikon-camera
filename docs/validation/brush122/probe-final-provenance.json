@@ -1,0 +1,34 @@
+{
+  "inputs": [
+    {
+      "path": "tests/universal-brush-device-probe/src/cc/huevia/brushqa/BrushPixelOracle.java",
+      "sha256": "b9c629edb065e7bb345a0ccbad748d19e18cdf808bb1ba8630b2243093994c64"
+    },
+    {
+      "path": "tests/universal-brush-device-probe/src/cc/huevia/brushqa/BrushProbe.java",
+      "sha256": "8851426258c4a72f37d0d2c3b3bbf9d0bbe301438671ff9b3d46796dddfda64e"
+    },
+    {
+      "path": "tests/universal-brush-device-probe/AndroidManifest.xml",
+      "sha256": "5944664d939d5004b19ce8a158885ecd22d0b17c4d3603993b42fc91e97b759c"
+    },
+    {
+      "path": "tests/universal-brush-device-probe/build.ps1",
+      "sha256": "bb808e1d5a75844ffb4545815f34ca6869ccc99b68fc1d9e6faa6734cc18e0ff"
+    },
+    {
+      "path": "tests/universal-brush-device-probe/run.ps1",
+      "sha256": "dd5060f67bcf0c9f3527c9c9f6372ee80d2ec28ac0d811ef76ebec5641dfa202"
+    }
+  ],
+  "classpath": "Android API35 only",
+  "classes": [
+    "cc/huevia/brushqa/BrushPixelOracle.class",
+    "cc/huevia/brushqa/BrushPixelOracle$Assertion.class",
+    "cc/huevia/brushqa/BrushProbe.class",
+    "cc/huevia/brushqa/BrushProbe$BrushFrame.class",
+    "cc/huevia/brushqa/BrushProbe$Condition.class",
+    "cc/huevia/brushqa/BrushProbe$Work.class"
+  ],
+  "apkSha256": "79984473e4cc0b69cb91106092f75949bbded9d32f1b8ac3742131b0cb59fb75"
+}

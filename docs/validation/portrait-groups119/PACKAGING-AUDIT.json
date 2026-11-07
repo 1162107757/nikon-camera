@@ -1,0 +1,720 @@
+{
+  "schemaVersion": 1,
+  "checkedAtUtc": "2026-10-30T02:12:25.068837+00:00",
+  "status": "passed",
+  "scope": "Focused independent APK packaging audit for UI grouping only; unchanged host/model benchmarks were not rerun. No device, network, or user image access.",
+  "apk": {
+    "path": "dist/huevia-0.23.8-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "ba9fbd5cb20a6710bf377fb74c61cab7255d53d2392f13c4ef24d7757b4e38f2",
+    "limitBytes": 33554432,
+    "remainingBytes": 150772
+  },
+  "reference118Apk": {
+    "path": "dist/huevia-0.23.7-beta-debug.apk",
+    "bytes": 33403660,
+    "sha256": "879a214ba0fe85f991e8792e4f1683380df4c8c74fd9ac9141602ad5af24e920"
+  },
+  "manifest": {
+    "applicationId": "cc.huevia",
+    "versionCode": 119,
+    "versionName": "0.23.8-beta",
+    "minSdk": 26,
+    "targetSdk": 35
+  },
+  "signer": {
+    "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "matches118": true
+  },
+  "checks": {
+    "apkIdentityMatches": true,
+    "frozenIdentityMatches": true,
+    "all288ProductionInputsMatch": true,
+    "onlyDialogAndVersionChangedVersus118": true,
+    "manifestMatches": true,
+    "signerMatches": true,
+    "signatureV2AndV3": true,
+    "allToolsPassed": true,
+    "noDuplicateEntries": true,
+    "nativeAndModelSetsMatch118": true,
+    "allRawEntriesMatch118": true,
+    "newGroupStringsInDex": true,
+    "newGroupMethodsDefinedInDialogDex": true
+  },
+  "toolCommandsAndResults": {
+    "aapt2Badging": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\aapt2.exe",
+        "dump",
+        "badging",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.23.8-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "package: name='cc.huevia' versionCode='119' versionName='0.23.8-beta' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'\nminSdkVersion:'26'\ntargetSdkVersion:'35'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\nuses-permission: name='android.permission.ACCESS_NETWORK_STATE'\nuses-permission: name='android.permission.CHANGE_NETWORK_STATE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_DATA_SYNC'\nuses-permission: name='android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING'\nuses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' maxSdkVersion='28'\nuses-permission: name='android.permission.READ_EXTERNAL_STORAGE' maxSdkVersion='32'\nuses-permission: name='android.permission.READ_MEDIA_IMAGES'\nuses-permission: name='android.permission.READ_MEDIA_VISUAL_USER_SELECTED'\nuses-permission: name='android.permission.CHANGE_WIFI_STATE'\nuses-permission: name='android.permission.ACCESS_WIFI_STATE'\nuses-permission: name='android.permission.NEARBY_WIFI_DEVICES' usesPermissionFlags='neverForLocation'\nuses-permission: name='android.permission.ACCESS_FINE_LOCATION' maxSdkVersion='32'\nuses-permission: name='android.permission.ACCESS_COARSE_LOCATION' maxSdkVersion='32'\nuses-permission: name='android.permission.WAKE_LOCK'\nuses-permission: name='android.permission.POST_NOTIFICATIONS'\nuses-permission: name='android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS'\napplication-label:'Huevia'\napplication-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication-icon-65535:'res/mipmap-anydpi-v26/ic_launcher.xml'\napplication: label='Huevia' icon='res/mipmap-anydpi-v26/ic_launcher.xml'\nlaunchable-activity: name='cc.huevia.MainActivity'  label='' icon=''\nfeature-group: label=''\n  uses-feature: name='android.hardware.usb.host'\n  uses-feature: name='android.hardware.faketouch'\n  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'\n  uses-feature: name='android.hardware.location'\n  uses-implied-feature: name='android.hardware.location' reason='requested android.permission.ACCESS_COARSE_LOCATION permission, and requested android.permission.ACCESS_FINE_LOCATION permission'\n  uses-feature: name='android.hardware.wifi'\n  uses-implied-feature: name='android.hardware.wifi' reason='requested android.permission.ACCESS_WIFI_STATE permission, and requested android.permission.CHANGE_WIFI_STATE permission'\nmain\nother-activities\nother-services\nsupports-screens: 'small' 'normal' 'large' 'xlarge'\nsupports-any-density: 'true'\nlocales: '--_--'\ndensities: '160' '65534' '65535'\nnative-code: 'arm64-v8a' 'armeabi-v7a' 'x86' 'x86_64'",
+      "stderr": ""
+    },
+    "aapt2ManifestXml": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\aapt2.exe",
+        "dump",
+        "xmltree",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.23.8-beta-debug.apk",
+        "--file",
+        "AndroidManifest.xml"
+      ],
+      "exitCode": 0,
+      "stdout": "N: android=http://schemas.android.com/apk/res/android (line=2)\n  E: manifest (line=2)\n    A: http://schemas.android.com/apk/res/android:versionCode(0x0101021b)=119\n    A: http://schemas.android.com/apk/res/android:versionName(0x0101021c)=\"0.23.8-beta\" (Raw: \"0.23.8-beta\")\n    A: http://schemas.android.com/apk/res/android:compileSdkVersion(0x01010572)=35\n    A: http://schemas.android.com/apk/res/android:compileSdkVersionCodename(0x01010573)=\"15\" (Raw: \"15\")\n    A: package=\"cc.huevia\" (Raw: \"cc.huevia\")\n    A: platformBuildVersionCode=35\n    A: platformBuildVersionName=15\n      E: uses-sdk (line=0)\n        A: http://schemas.android.com/apk/res/android:minSdkVersion(0x0101020c)=26\n        A: http://schemas.android.com/apk/res/android:targetSdkVersion(0x01010270)=35\n      E: uses-permission (line=3)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.INTERNET\" (Raw: \"android.permission.INTERNET\")\n      E: uses-permission (line=4)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.REQUEST_INSTALL_PACKAGES\" (Raw: \"android.permission.REQUEST_INSTALL_PACKAGES\")\n      E: uses-permission (line=5)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_NETWORK_STATE\" (Raw: \"android.permission.ACCESS_NETWORK_STATE\")\n      E: uses-permission (line=6)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.CHANGE_NETWORK_STATE\" (Raw: \"android.permission.CHANGE_NETWORK_STATE\")\n      E: uses-permission (line=7)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE\" (Raw: \"android.permission.FOREGROUND_SERVICE\")\n      E: uses-permission (line=8)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE\" (Raw: \"android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE\")\n      E: uses-permission (line=9)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE_DATA_SYNC\" (Raw: \"android.permission.FOREGROUND_SERVICE_DATA_SYNC\")\n      E: uses-permission (line=10)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING\" (Raw: \"android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING\")\n      E: uses-permission (line=11)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.WRITE_EXTERNAL_STORAGE\" (Raw: \"android.permission.WRITE_EXTERNAL_STORAGE\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=28\n      E: uses-permission (line=12)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.READ_EXTERNAL_STORAGE\" (Raw: \"android.permission.READ_EXTERNAL_STORAGE\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=32\n      E: uses-permission (line=13)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.READ_MEDIA_IMAGES\" (Raw: \"android.permission.READ_MEDIA_IMAGES\")\n      E: uses-permission (line=14)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.READ_MEDIA_VISUAL_USER_SELECTED\" (Raw: \"android.permission.READ_MEDIA_VISUAL_USER_SELECTED\")\n      E: uses-permission (line=15)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.CHANGE_WIFI_STATE\" (Raw: \"android.permission.CHANGE_WIFI_STATE\")\n      E: uses-permission (line=16)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_WIFI_STATE\" (Raw: \"android.permission.ACCESS_WIFI_STATE\")\n      E: uses-permission (line=17)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.NEARBY_WIFI_DEVICES\" (Raw: \"android.permission.NEARBY_WIFI_DEVICES\")\n        A: http://schemas.android.com/apk/res/android:usesPermissionFlags(0x01010644)=0x00010000\n      E: uses-permission (line=18)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_FINE_LOCATION\" (Raw: \"android.permission.ACCESS_FINE_LOCATION\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=32\n      E: uses-permission (line=19)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.ACCESS_COARSE_LOCATION\" (Raw: \"android.permission.ACCESS_COARSE_LOCATION\")\n        A: http://schemas.android.com/apk/res/android:maxSdkVersion(0x01010271)=32\n      E: uses-permission (line=20)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.WAKE_LOCK\" (Raw: \"android.permission.WAKE_LOCK\")\n      E: uses-permission (line=21)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.POST_NOTIFICATIONS\" (Raw: \"android.permission.POST_NOTIFICATIONS\")\n      E: uses-permission (line=22)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS\" (Raw: \"android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS\")\n      E: uses-feature (line=23)\n        A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.hardware.usb.host\" (Raw: \"android.hardware.usb.host\")\n        A: http://schemas.android.com/apk/res/android:required(0x0101028e)=true\n      E: queries (line=24)\n          E: package (line=25)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.mobileqq\" (Raw: \"com.tencent.mobileqq\")\n          E: package (line=26)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.tim\" (Raw: \"com.tencent.tim\")\n          E: package (line=27)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.minihd.qq\" (Raw: \"com.tencent.minihd.qq\")\n      E: application (line=29)\n        A: http://schemas.android.com/apk/res/android:theme(0x01010000)=@0x7f050000\n        A: http://schemas.android.com/apk/res/android:label(0x01010001)=@0x7f040000\n        A: http://schemas.android.com/apk/res/android:icon(0x01010002)=@0x7f030000\n        A: http://schemas.android.com/apk/res/android:allowBackup(0x01010280)=false\n        A: http://schemas.android.com/apk/res/android:supportsRtl(0x010103af)=true\n        A: http://schemas.android.com/apk/res/android:extractNativeLibs(0x010104ea)=true\n        A: http://schemas.android.com/apk/res/android:usesCleartextTraffic(0x010104ec)=false\n        A: http://schemas.android.com/apk/res/android:roundIcon(0x0101052c)=@0x7f030000\n          E: activity (line=30)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.tauth.AuthActivity\" (Raw: \"com.tencent.tauth.AuthActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=true\n            A: http://schemas.android.com/apk/res/android:launchMode(0x0101001d)=2\n            A: http://schemas.android.com/apk/res/android:noHistory(0x0101022d)=true\n              E: intent-filter (line=31)\n                  E: action (line=32)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.action.VIEW\" (Raw: \"android.intent.action.VIEW\")\n                  E: category (line=33)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.category.DEFAULT\" (Raw: \"android.intent.category.DEFAULT\")\n                  E: category (line=34)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.category.BROWSABLE\" (Raw: \"android.intent.category.BROWSABLE\")\n                  E: data (line=35)\n                    A: http://schemas.android.com/apk/res/android:scheme(0x01010027)=\"tencent1105984855\" (Raw: \"tencent1105984855\")\n          E: activity (line=38)\n            A: http://schemas.android.com/apk/res/android:theme(0x01010000)=@0x01030010\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"com.tencent.connect.common.AssistActivity\" (Raw: \"com.tencent.connect.common.AssistActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:screenOrientation(0x0101001e)=3\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x000004a0\n          E: service (line=39)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.connection.CameraConnectionService\" (Raw: \"cc.huevia.connection.CameraConnectionService\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:stopWithTask(0x0101036a)=false\n            A: http://schemas.android.com/apk/res/android:foregroundServiceType(0x01010599)=0x00002011\n          E: provider (line=40)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.updates.UpdatePackageProvider\" (Raw: \"cc.huevia.updates.UpdatePackageProvider\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:authorities(0x01010018)=\"cc.huevia.updates\" (Raw: \"cc.huevia.updates\")\n            A: http://schemas.android.com/apk/res/android:grantUriPermissions(0x0101001b)=true\n          E: activity (line=41)\n            A: http://schemas.android.com/apk/res/android:theme(0x01010000)=@0x7f050003\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.DiagnosticsActivity\" (Raw: \"cc.huevia.DiagnosticsActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n          E: activity (line=42)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.RawDevelopActivity\" (Raw: \"cc.huevia.RawDevelopActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x40000680\n          E: activity (line=43)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.RemoteCaptureActivity\" (Raw: \"cc.huevia.RemoteCaptureActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=false\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x40000680\n          E: activity (line=44)\n            A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"cc.huevia.MainActivity\" (Raw: \"cc.huevia.MainActivity\")\n            A: http://schemas.android.com/apk/res/android:exported(0x01010010)=true\n            A: http://schemas.android.com/apk/res/android:configChanges(0x0101001f)=0x40000680\n              E: intent-filter (line=45)\n                  E: action (line=46)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.action.MAIN\" (Raw: \"android.intent.action.MAIN\")\n                  E: category (line=47)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.intent.category.LAUNCHER\" (Raw: \"android.intent.category.LAUNCHER\")\n              E: intent-filter (line=49)\n                  E: action (line=50)\n                    A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.hardware.usb.action.USB_DEVICE_ATTACHED\" (Raw: \"android.hardware.usb.action.USB_DEVICE_ATTACHED\")\n              E: meta-data (line=52)\n                A: http://schemas.android.com/apk/res/android:name(0x01010003)=\"android.hardware.usb.action.USB_DEVICE_ATTACHED\" (Raw: \"android.hardware.usb.action.USB_DEVICE_ATTACHED\")\n                A: http://schemas.android.com/apk/res/android:resource(0x01010025)=@0x7f060000",
+      "stderr": ""
+    },
+    "apksignerVerify": {
+      "arguments": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\java.exe",
+        "-jar",
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\lib\\apksigner.jar",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.23.8-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): true\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: CN=Nikon USB Debug, OU=Development, O=Local, C=CN\nSigner #1 certificate SHA-256 digest: 04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31\nSigner #1 certificate SHA-1 digest: f867798b3814ab374d0234148e50c5e8477d7d2a\nSigner #1 certificate MD5 digest: 945aa44a13dd8c10155ad0078edf698e\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 11a7f998a2df77f4622355408d4764ba9349f1c6e36241702bf2d9d0f37ec72c\nSigner #1 public key SHA-1 digest: 30757f8481e4bfbd3cad3b2d46ddfeaeee08c026\nSigner #1 public key MD5 digest: 757136592c1c45370cd6828fee14702a",
+      "stderr": ""
+    },
+    "zipalign": {
+      "arguments": [
+        "D:\\dev\\android-sdk\\build-tools\\35.0.0\\zipalign.exe",
+        "-c",
+        "-P",
+        "16",
+        "4",
+        "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.23.8-beta-debug.apk"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "buildIdentity": {
+    "path": "docs/validation/portrait-groups119/BUILD-IDENTITY.json",
+    "sha256": "205fee31f3e10783dd1a406740f2d8641268f3c4dda11bf156d318ac4b812129",
+    "productionInputCount": 288,
+    "currentMismatches": [],
+    "changedInputsVersus118": [
+      {
+        "path": "app/build.gradle",
+        "reference118Sha256": "f5689c914a21cc30ca2005cf5007c7a9267f133135d7a0a0b79db75c5975de96",
+        "candidateSha256": "a864c9e21bbd77efc2b2848954c92996f86d2b3ebc5f39b0c3c2ebd4c8422621"
+      },
+      {
+        "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+        "reference118Sha256": "e4404fd445c9b9bd64868a2370b18f769eba2abb9e29e48408449a74aab8684b",
+        "candidateSha256": "300a6e40722341ee10f875dc75d75ccbe0e976a3e0c108993513d9f24cb93dd9"
+      }
+    ],
+    "addedInputsVersus118": [],
+    "removedInputsVersus118": []
+  },
+  "archiveComparison": {
+    "duplicateNames": [],
+    "addedEntriesVersus118": [],
+    "removedEntriesVersus118": [],
+    "differentEntriesVersus118": [
+      "AndroidManifest.xml",
+      "classes.dex",
+      "META-INF/ANDROIDD.SF",
+      "META-INF/ANDROIDD.RSA",
+      "META-INF/MANIFEST.MF"
+    ],
+    "rawEntriesCompared": 55,
+    "nativeEntryCount": 16,
+    "modelEntryCount": 2,
+    "litertNoticeEntryCount": 4,
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86",
+      "x86_64"
+    ]
+  },
+  "rawEntries": [
+    {
+      "path": "res/drawable/ic_account_password_hidden.xml",
+      "bytes": 864,
+      "zipBytes": 441,
+      "zipMethod": 8,
+      "sha256": "c210db264468602667c0e8b15bb1c64c6c46071c2ab338ff2d362018eb016c07",
+      "reference118Sha256": "c210db264468602667c0e8b15bb1c64c6c46071c2ab338ff2d362018eb016c07",
+      "matches118": true
+    },
+    {
+      "path": "res/drawable/ic_account_password_visible.xml",
+      "bytes": 852,
+      "zipBytes": 432,
+      "zipMethod": 8,
+      "sha256": "6a0c4d6cf62e41703b89e8b0672e67772db9f5b647e5c8ced807d30ea3229f56",
+      "reference118Sha256": "6a0c4d6cf62e41703b89e8b0672e67772db9f5b647e5c8ced807d30ea3229f56",
+      "matches118": true
+    },
+    {
+      "path": "res/drawable/ic_camera.xml",
+      "bytes": 844,
+      "zipBytes": 392,
+      "zipMethod": 8,
+      "sha256": "4f8bff7ab07da63650379864b320c5301e623b0c7de32004b3a48b993aef5b29",
+      "reference118Sha256": "4f8bff7ab07da63650379864b320c5301e623b0c7de32004b3a48b993aef5b29",
+      "matches118": true
+    },
+    {
+      "path": "res/drawable/ic_huevia_foreground.xml",
+      "bytes": 488,
+      "zipBytes": 243,
+      "zipMethod": 8,
+      "sha256": "578b54fd67d754b505755f173513bf6bf8b43b88659b2ec7c7f40d9642d31551",
+      "reference118Sha256": "578b54fd67d754b505755f173513bf6bf8b43b88659b2ec7c7f40d9642d31551",
+      "matches118": true
+    },
+    {
+      "path": "res/drawable/ic_qq_login.png",
+      "bytes": 922,
+      "zipBytes": 922,
+      "zipMethod": 0,
+      "sha256": "46b86da6aa75b0c4913082401b06d33430e0d11ed725f68bcf5c1c5d00314f9a",
+      "reference118Sha256": "46b86da6aa75b0c4913082401b06d33430e0d11ed725f68bcf5c1c5d00314f9a",
+      "matches118": true
+    },
+    {
+      "path": "res/drawable-nodpi-v4/huevia_launcher.png",
+      "bytes": 8748,
+      "zipBytes": 8748,
+      "zipMethod": 0,
+      "sha256": "cc4dac0f9428bb1b363bf065cd8283a669d989e595e751ffc9c8d06dae72289d",
+      "reference118Sha256": "cc4dac0f9428bb1b363bf065cd8283a669d989e595e751ffc9c8d06dae72289d",
+      "matches118": true
+    },
+    {
+      "path": "res/drawable-nodpi-v4/preset_template.png",
+      "bytes": 2450514,
+      "zipBytes": 2450514,
+      "zipMethod": 0,
+      "sha256": "fbb13fd57ca7d657e807b7c5cf902d24f9167c727bb49498df52c1fd2aaf7906",
+      "reference118Sha256": "fbb13fd57ca7d657e807b7c5cf902d24f9167c727bb49498df52c1fd2aaf7906",
+      "matches118": true
+    },
+    {
+      "path": "res/mipmap-anydpi-v26/ic_launcher.xml",
+      "bytes": 448,
+      "zipBytes": 221,
+      "zipMethod": 8,
+      "sha256": "bd05fa2e7b0e797f310cef3f1d8df9c6fcf15fd9138e6cb5f139e17aca0b551e",
+      "reference118Sha256": "bd05fa2e7b0e797f310cef3f1d8df9c6fcf15fd9138e6cb5f139e17aca0b551e",
+      "matches118": true
+    },
+    {
+      "path": "res/xml/device_filter.xml",
+      "bytes": 236,
+      "zipBytes": 126,
+      "zipMethod": 8,
+      "sha256": "e6500ccdd4e0201a2210e500fe8496e18a37078d8aa4d46eff8fcb39f795dde1",
+      "reference118Sha256": "e6500ccdd4e0201a2210e500fe8496e18a37078d8aa4d46eff8fcb39f795dde1",
+      "matches118": true
+    },
+    {
+      "path": "assets/photo-borders/nikon-wordmark-black.png",
+      "bytes": 58098,
+      "zipBytes": 57422,
+      "zipMethod": 8,
+      "sha256": "93ef2b678d1bd74cf80ff93ff51edc37cb2d12f068db783b49c426087198c7c3",
+      "reference118Sha256": "93ef2b678d1bd74cf80ff93ff51edc37cb2d12f068db783b49c426087198c7c3",
+      "matches118": true
+    },
+    {
+      "path": "assets/photo-borders/nikon-wordmark-white.png",
+      "bytes": 62728,
+      "zipBytes": 62074,
+      "zipMethod": 8,
+      "sha256": "dc7068dd1a1dac737fadb04036744560aaed5e062c6c653d88b2abacd5599303",
+      "reference118Sha256": "dc7068dd1a1dac737fadb04036744560aaed5e062c6c653d88b2abacd5599303",
+      "matches118": true
+    },
+    {
+      "path": "assets/photo-borders/nikon-yellow-square.png",
+      "bytes": 122746,
+      "zipBytes": 121253,
+      "zipMethod": 8,
+      "sha256": "1f5c351a9248cb8f1ae038be59f0bc8e36ffedb5b81ed3e1b0ca8fe829f8a519",
+      "reference118Sha256": "1f5c351a9248cb8f1ae038be59f0bc8e36ffedb5b81ed3e1b0ca8fe829f8a519",
+      "matches118": true
+    },
+    {
+      "path": "assets/photo-borders/parameters-OFL.txt",
+      "bytes": 4477,
+      "zipBytes": 2000,
+      "zipMethod": 8,
+      "sha256": "1dd4eaacd1da1bfb7e1d14dd5af0279c17d4503fde55abc628bdaccc63ae9eca",
+      "reference118Sha256": "1dd4eaacd1da1bfb7e1d14dd5af0279c17d4503fde55abc628bdaccc63ae9eca",
+      "matches118": true
+    },
+    {
+      "path": "assets/photo-borders/parameters.ttf",
+      "bytes": 65032,
+      "zipBytes": 28200,
+      "zipMethod": 8,
+      "sha256": "f7fe4bed14aaec1e25b1173c4eed35c3c5537e836c47db67b06189ec4adc7b19",
+      "reference118Sha256": "f7fe4bed14aaec1e25b1173c4eed35c3c5537e836c47db67b06189ec4adc7b19",
+      "matches118": true
+    },
+    {
+      "path": "assets/photo-borders/source-manifest.json",
+      "bytes": 7604,
+      "zipBytes": 2671,
+      "zipMethod": 8,
+      "sha256": "417cc7c8a1b5d9164ad12b007863ff0b18e818666e9619b3a8131b4e7b41a518",
+      "reference118Sha256": "417cc7c8a1b5d9164ad12b007863ff0b18e818666e9619b3a8131b4e7b41a518",
+      "matches118": true
+    },
+    {
+      "path": "assets/portrait/face_landmarks_detector.tflite",
+      "bytes": 2553590,
+      "zipBytes": 2284263,
+      "zipMethod": 8,
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "reference118Sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+      "matches118": true
+    },
+    {
+      "path": "assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "bytes": 13881786,
+      "zipBytes": 13881786,
+      "zipMethod": 0,
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "reference118Sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libfuji-MIT.txt",
+      "bytes": 1609,
+      "zipBytes": 938,
+      "zipMethod": 8,
+      "sha256": "62b8331c35d76305e3badac3d886b9b1ebdbea5d7019876c0caafdc8e95cbf1e",
+      "reference118Sha256": "62b8331c35d76305e3badac3d886b9b1ebdbea5d7019876c0caafdc8e95cbf1e",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/BUILD-IDENTITY.json",
+      "bytes": 66191,
+      "zipBytes": 13805,
+      "zipMethod": 8,
+      "sha256": "1f312298f8be5eaa3e2183775cf7edd39d5215411e4ba2277e2a8d132fb58de6",
+      "reference118Sha256": "1f312298f8be5eaa3e2183775cf7edd39d5215411e4ba2277e2a8d132fb58de6",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/COPYRIGHT",
+      "bytes": 1153,
+      "zipBytes": 620,
+      "zipMethod": 8,
+      "sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509",
+      "reference118Sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/LICENSE.CDDL",
+      "bytes": 16906,
+      "zipBytes": 5827,
+      "zipMethod": 8,
+      "sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f",
+      "reference118Sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/LICENSE.LGPL",
+      "bytes": 24389,
+      "zipBytes": 8659,
+      "zipMethod": 8,
+      "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+      "reference118Sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/LLVM-NOTICE.txt",
+      "bytes": 130424,
+      "zipBytes": 12279,
+      "zipMethod": 8,
+      "sha256": "f96f763beb66a7ba7a667647fc64c0226ace875e590c831fdd9579ec1c1d91e1",
+      "reference118Sha256": "f96f763beb66a7ba7a667647fc64c0226ace875e590c831fdd9579ec1c1d91e1",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/LibRaw-0.22.3-source.zip",
+      "bytes": 1828805,
+      "zipBytes": 1787636,
+      "zipMethod": 8,
+      "sha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
+      "reference118Sha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/NOTICE.txt",
+      "bytes": 2193,
+      "zipBytes": 1198,
+      "zipMethod": 8,
+      "sha256": "2fc943117833261917f070cea1398901fd4be8f108a1d690f2bec181a4d7c55e",
+      "reference118Sha256": "2fc943117833261917f070cea1398901fd4be8f108a1d690f2bec181a4d7c55e",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/RawDeveloper.java",
+      "bytes": 12479,
+      "zipBytes": 4033,
+      "zipMethod": 8,
+      "sha256": "327af007aa07e8a26a028b034b6dbe29f3dcd55b20f5e53df0ddc969016513c2",
+      "reference118Sha256": "327af007aa07e8a26a028b034b6dbe29f3dcd55b20f5e53df0ddc969016513c2",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/RawDevelopmentSettings.java",
+      "bytes": 4184,
+      "zipBytes": 1239,
+      "zipMethod": 8,
+      "sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814",
+      "reference118Sha256": "14f42604f77814e0bec04426a8a52b9ed9d7b7953231c5620142fba5b282f814",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/build-raw-native.ps1",
+      "bytes": 9795,
+      "zipBytes": 3527,
+      "zipMethod": 8,
+      "sha256": "7f51d3333ed098f0c3fb19962013a1d9a5cd1470ae40a1fd200b8b919ba732a5",
+      "reference118Sha256": "7f51d3333ed098f0c3fb19962013a1d9a5cd1470ae40a1fd200b8b919ba732a5",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/libraw/huevia_raw.cpp",
+      "bytes": 14630,
+      "zipBytes": 4618,
+      "zipMethod": 8,
+      "sha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae",
+      "reference118Sha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/litert/BUILD-IDENTITY.json",
+      "bytes": 7520,
+      "zipBytes": 2911,
+      "zipMethod": 8,
+      "sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "reference118Sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-LiteRT.txt",
+      "bytes": 13575,
+      "zipBytes": 4871,
+      "zipMethod": 8,
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "reference118Sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "bytes": 12331,
+      "zipBytes": 4310,
+      "zipMethod": 8,
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "reference118Sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "matches118": true
+    },
+    {
+      "path": "assets/third-party/litert/README.md",
+      "bytes": 5407,
+      "zipBytes": 2553,
+      "zipMethod": 8,
+      "sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "reference118Sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1",
+      "matches118": true
+    },
+    {
+      "path": "lib/arm64-v8a/libraw.so",
+      "bytes": 1207392,
+      "zipBytes": 440321,
+      "zipMethod": 8,
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "reference118Sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+      "matches118": true
+    },
+    {
+      "path": "lib/arm64-v8a/libhuevia_raw.so",
+      "bytes": 49960,
+      "zipBytes": 22922,
+      "zipMethod": 8,
+      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "reference118Sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "matches118": true
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "bytes": 1253544,
+      "zipBytes": 393490,
+      "zipMethod": 8,
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "reference118Sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c",
+      "matches118": true
+    },
+    {
+      "path": "lib/arm64-v8a/libtensorflowlite_jni.so",
+      "bytes": 4320528,
+      "zipBytes": 1737501,
+      "zipMethod": 8,
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "reference118Sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8",
+      "matches118": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libraw.so",
+      "bytes": 1146600,
+      "zipBytes": 430970,
+      "zipMethod": 8,
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "reference118Sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9",
+      "matches118": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libhuevia_raw.so",
+      "bytes": 19904,
+      "zipBytes": 9977,
+      "zipMethod": 8,
+      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "reference118Sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "matches118": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libc++_shared.so",
+      "bytes": 850380,
+      "zipBytes": 344387,
+      "zipMethod": 8,
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "reference118Sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1",
+      "matches118": true
+    },
+    {
+      "path": "lib/armeabi-v7a/libtensorflowlite_jni.so",
+      "bytes": 2572124,
+      "zipBytes": 1324637,
+      "zipMethod": 8,
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "reference118Sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86_64/libraw.so",
+      "bytes": 1284728,
+      "zipBytes": 453736,
+      "zipMethod": 8,
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "reference118Sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86_64/libhuevia_raw.so",
+      "bytes": 50184,
+      "zipBytes": 23269,
+      "zipMethod": 8,
+      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "reference118Sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "bytes": 1229808,
+      "zipBytes": 409160,
+      "zipMethod": 8,
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "reference118Sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86_64/libtensorflowlite_jni.so",
+      "bytes": 6053584,
+      "zipBytes": 2355831,
+      "zipMethod": 8,
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "reference118Sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86/libraw.so",
+      "bytes": 1265240,
+      "zipBytes": 474673,
+      "zipMethod": 8,
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "reference118Sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86/libhuevia_raw.so",
+      "bytes": 46564,
+      "zipBytes": 22177,
+      "zipMethod": 8,
+      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "reference118Sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86/libc++_shared.so",
+      "bytes": 1143240,
+      "zipBytes": 414850,
+      "zipMethod": 8,
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "reference118Sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "matches118": true
+    },
+    {
+      "path": "lib/x86/libtensorflowlite_jni.so",
+      "bytes": 6323728,
+      "zipBytes": 2390211,
+      "zipMethod": 8,
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "reference118Sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "matches118": true
+    },
+    {
+      "path": "assets/com.tencent.open.config.json",
+      "bytes": 56,
+      "zipBytes": 49,
+      "zipMethod": 8,
+      "sha256": "18d68d491240549e0034c88879accc51744f8b43a8bde7ee0113bbf78a3a646a",
+      "reference118Sha256": "18d68d491240549e0034c88879accc51744f8b43a8bde7ee0113bbf78a3a646a",
+      "matches118": true
+    },
+    {
+      "path": "assets/h5_qr_back.png",
+      "bytes": 116,
+      "zipBytes": 121,
+      "zipMethod": 8,
+      "sha256": "6c17717d5a34c2e1555c481577bdc8bec602244339df953bc217e74bba2d6224",
+      "reference118Sha256": "6c17717d5a34c2e1555c481577bdc8bec602244339df953bc217e74bba2d6224",
+      "matches118": true
+    },
+    {
+      "path": "assets/libwbsafeedit",
+      "bytes": 12132,
+      "zipBytes": 6670,
+      "zipMethod": 8,
+      "sha256": "8325ae4b974dc5a4d25be95159d792b5dd9ace4620b0a54ac83ff3d2a245466c",
+      "reference118Sha256": "8325ae4b974dc5a4d25be95159d792b5dd9ace4620b0a54ac83ff3d2a245466c",
+      "matches118": true
+    },
+    {
+      "path": "assets/libwbsafeedit_64",
+      "bytes": 18344,
+      "zipBytes": 8926,
+      "zipMethod": 8,
+      "sha256": "5713d3c0c4bb45490a0fa54cf0fb32cb798ccd0be74dab47572f68ce97931f27",
+      "reference118Sha256": "5713d3c0c4bb45490a0fa54cf0fb32cb798ccd0be74dab47572f68ce97931f27",
+      "matches118": true
+    },
+    {
+      "path": "assets/libwbsafeedit_x86",
+      "bytes": 15672,
+      "zipBytes": 8366,
+      "zipMethod": 8,
+      "sha256": "91bb72d194805aa8c5e6e6efd71331a2fedce79fa5b1b7db4c35a84b47abf4be",
+      "reference118Sha256": "91bb72d194805aa8c5e6e6efd71331a2fedce79fa5b1b7db4c35a84b47abf4be",
+      "matches118": true
+    },
+    {
+      "path": "assets/libwbsafeedit_x86_64",
+      "bytes": 18168,
+      "zipBytes": 8955,
+      "zipMethod": 8,
+      "sha256": "da0a59edb4c5e6c79d9dff83f458bee1a0336c510aa2de4cf4c317a353b38b51",
+      "reference118Sha256": "da0a59edb4c5e6c79d9dff83f458bee1a0336c510aa2de4cf4c317a353b38b51",
+      "matches118": true
+    }
+  ],
+  "dexes": [
+    {
+      "path": "classes.dex",
+      "bytes": 3004848,
+      "sha256": "f6b86a77e4fb9f541fc1c7f872f1f0c9e260f12fc44fa79c52ca166828d8db12",
+      "definedClasses": 2755,
+      "dialogDefinitionPresent": true
+    }
+  ],
+  "groupingDexEvidence": {
+    "classDescriptor": "Lcc/huevia/ui/PhotoPortraitDialog;",
+    "tags": [
+      {
+        "text": "portrait-groups",
+        "present": true
+      },
+      {
+        "text": "portrait-group-skin",
+        "present": true
+      },
+      {
+        "text": "portrait-group-face",
+        "present": true
+      },
+      {
+        "text": "portrait-dock-panel",
+        "present": true
+      }
+    ],
+    "labels": [
+      {
+        "text": "皮肤",
+        "present": true
+      },
+      {
+        "text": "面部",
+        "present": true
+      },
+      {
+        "text": "皮肤，自动识别全部露出皮肤并调整肤色",
+        "present": true
+      },
+      {
+        "text": "面部，选择人脸进行面部修饰",
+        "present": true
+      }
+    ],
+    "definedMethods": [
+      {
+        "name": "chooseFaceGroup",
+        "accessFlags": 2,
+        "hasCode": true
+      },
+      {
+        "name": "chooseTone",
+        "accessFlags": 2,
+        "hasCode": true
+      },
+      {
+        "name": "ensureGlobalSkin",
+        "accessFlags": 2,
+        "hasCode": true
+      },
+      {
+        "name": "groupButton",
+        "accessFlags": 2,
+        "hasCode": true
+      },
+      {
+        "name": "layoutWorkspace",
+        "accessFlags": 2,
+        "hasCode": true
+      },
+      {
+        "name": "refresh",
+        "accessFlags": 2,
+        "hasCode": true
+      }
+    ],
+    "limitation": "DEX definitions and constant presence establish packaged implementation identity, not runtime behavior; focused native UI probe validates interaction."
+  },
+  "deviceAccessed": false,
+  "networkAccessed": false,
+  "unchangedHostOrModelBenchmarksRerun": false
+}

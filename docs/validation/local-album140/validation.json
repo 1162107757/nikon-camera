@@ -1,0 +1,105 @@
+{
+  "versionCode": 140,
+  "versionName": "0.28.3-beta",
+  "apk": "dist/huevia-0.28.3-beta-debug.apk",
+  "apkSha256": "bd0a25e10c6134897828666b8b1e83193c3e039a984b88e7bd48fa8f606063d7",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "published": false,
+  "source": {
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "178b29d09270f9859529b708e8f50dd9864ebcc6dad577656eaa8140771205a1",
+    "app/src/main/java/cc/huevia/MainActivity.java": "7f91622b14eb3c18bd68e108880c1f0b8e541751976e354471ce3032a3a291b7",
+    "app/build.gradle": "a2a790f8538cd584e0514d39baa590889c03519e01a8dbb6723445a32136aa6a",
+    "tests/sync-polish-device-probe/src/cc/huevia/syncpolishqa/AlbumOverviewProbe.java": "5a6301c544acf74ea5e5a9a4c50ba76bf76d0b8fb08c7ea8512d748be993242e",
+    "tests/sync-polish-device-probe/AndroidManifest.xml": "97baf040dfb0239affb2efd87bbf7f66c3ca58b0caff81a213ffc1ce91e5e8f0",
+    "tests/orange-ui-device-probe/src/cc/huevia/orangeqa/OrangeNativeProbe.java": "29adc2c97e71988fe52ddddc08310e9acce95183cf6be1df0001b57e12beea7e"
+  },
+  "nativeRuns": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 34,
+      "access": "FULL",
+      "report": "final/phone/report.json"
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 34,
+      "access": "FULL",
+      "report": "final/font1.3/report.json"
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 34,
+      "access": "FULL",
+      "report": "final/dark/report.json"
+    },
+    {
+      "mode": "tablet",
+      "pass": true,
+      "checks": 34,
+      "access": "FULL",
+      "report": "final/tablet/report.json"
+    },
+    {
+      "mode": "compact",
+      "pass": true,
+      "checks": 34,
+      "access": "FULL",
+      "report": "final/compact/report.json"
+    },
+    {
+      "mode": "denied",
+      "pass": true,
+      "checks": 33,
+      "access": "NONE",
+      "report": "final/denied/report.json"
+    },
+    {
+      "mode": "partial",
+      "pass": true,
+      "checks": 35,
+      "access": "PARTIAL",
+      "report": "final/partial/report.json"
+    }
+  ],
+  "device": "Owned read-only Pixel_9 Android emulator; viewport overrides for compact/tablet. No physical phone connected.",
+  "review": {
+    "status": "ship",
+    "initialDisposition": "fix",
+    "finding": "Compact empty recovery action clipped by extra bottom reserve in side-navigation layout.",
+    "fix": "No bottom reserve for side navigation; retain floating-bottom-navigation reserve.",
+    "scorePacket": ".impeccable/review/local-album140/",
+    "finalDisposition": "ship",
+    "scoredFixes": [
+      {
+        "finding": "Compact empty recovery action clipped by unneeded side-navigation bottom reserve",
+        "verdict": "resolved"
+      }
+    ],
+    "regressions": [],
+    "scope": "Verdict pass scores the single compact empty-action fix and direct compact-grid regression; not a new full-surface or whole-product certification.",
+    "record": ".impeccable/review/local-album140/review.md"
+  },
+  "limitations": [
+    "Native framework picker dispatch and cancellation validated; external picker rendering not certified.",
+    "No physical phone, tablet or camera acceptance.",
+    "Legacy OrangeNativeProbe contract maintained and compilation checked; its full suite is outside this run."
+  ],
+  "preflight": {
+    "result": "Test harness fixture placement failed catalog ownership validation; only test setup corrected, production code unchanged.",
+    "frozenReport": "native/phone/report.json"
+  },
+  "assertionExecutions": 238,
+  "installedApkSha256": "bd0a25e10c6134897828666b8b1e83193c3e039a984b88e7bd48fa8f606063d7",
+  "installedApkMatches": true,
+  "legacyProbeCompilation": {
+    "pass": true,
+    "fixtureDependency": "tests/java/cc/huevia/ncp/NcpCompatibilityFixtures.java",
+    "fullSuiteRun": false
+  }
+}

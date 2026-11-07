@@ -1,0 +1,37 @@
+[
+  {
+    "name": "lake",
+    "url": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=85",
+    "bytes": 251957,
+    "usage": "Illustrative photography in local review prototype; not user library data."
+  },
+  {
+    "name": "mountain",
+    "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85",
+    "bytes": 269651,
+    "usage": "Illustrative photography in local review prototype; not user library data."
+  },
+  {
+    "name": "coast",
+    "url": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85",
+    "bytes": 234632,
+    "usage": "Illustrative photography in local review prototype; not user library data."
+  },
+  {
+    "name": "forest",
+    "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=85",
+    "bytes": 335325,
+    "usage": "Illustrative photography in local review prototype; not user library data."
+  },
+  {
+    "name": "coffee",
+    "url": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
+    "bytes": 379107,
+    "usage": "Illustrative photography in local review prototype; not user library data."
+  },
+  {
+    "name": "portrait",
+    "origin": "Pre-existing docs/design-review/prisma-editor-20261107/assets/portrait.jpg",
+    "usage": "Reused illustrative photo asset; see source prototype provenance."
+  }
+]

@@ -1,0 +1,242 @@
+{
+  "pass": false,
+  "stage": "actual-detection",
+  "candidateSha256": "1d8aae1cb631482a75b71695528b5b00903f151f969b7585ec638b1c304b5b43",
+  "versionCode": 111,
+  "versionName": "0.23.0-beta",
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-public-domain-face-fixture",
+      "pass": true
+    },
+    {
+      "name": "astronaut-decodes",
+      "pass": true
+    },
+    {
+      "name": "real-offline-single-face-detected",
+      "pass": true
+    },
+    {
+      "name": "real-offline-two-person-collage-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "grayscale-single-image-detects-exactly-one-face",
+      "pass": true
+    },
+    {
+      "name": "grayscale-two-person-image-detects-exactly-two-faces",
+      "pass": true
+    },
+    {
+      "name": "dialog-analysis-size-colour-detects-exactly-two-faces",
+      "pass": false
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "raw-RGB565-face-candidates-single",
+      "width": 512,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.518797755241394,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5182980895042419,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 104.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5051147937774658,
+          "eyesDistance": 42.875,
+          "midpointX": 398.8125,
+          "midpointY": 223,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "offline-face-detection",
+      "singleCount": 1,
+      "collageCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-grayscale-single",
+      "width": 512,
+      "height": 512,
+      "count": 1,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5191072225570679,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 100.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-grayscale-two-person",
+      "width": 1024,
+      "height": 512,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5191072225570679,
+          "eyesDistance": 40.015625,
+          "midpointX": 224.0546875,
+          "midpointY": 100.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5189751982688904,
+          "eyesDistance": 40.015625,
+          "midpointX": 736.1796875,
+          "midpointY": 100.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "grayscale-offline-face-detection",
+      "conversion": "Android Canvas ColorMatrix saturation 0",
+      "singleCount": 1,
+      "collageCount": 2
+    },
+    {
+      "case": "raw-RGB565-face-candidates-analysis960-two-person",
+      "width": 960,
+      "height": 480,
+      "count": 3,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.51909339427948,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5178302526473999,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 2,
+          "confidence": 0.5052559971809387,
+          "eyesDistance": 24.625,
+          "midpointX": 280.71875,
+          "midpointY": 327.515625,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "raw-RGB565-face-candidates-analysis960-grayscale-two-person",
+      "width": 960,
+      "height": 480,
+      "count": 2,
+      "candidates": [
+        {
+          "index": 0,
+          "confidence": 0.5180290937423706,
+          "eyesDistance": 40.015625,
+          "midpointX": 208.0546875,
+          "midpointY": 96.03125,
+          "roll": 0
+        },
+        {
+          "index": 1,
+          "confidence": 0.5177146792411804,
+          "eyesDistance": 40.015625,
+          "midpointX": 688.1640625,
+          "midpointY": 96.03125,
+          "roll": 0
+        }
+      ]
+    },
+    {
+      "case": "analysis960-offline-face-detection",
+      "width": 960,
+      "height": 480,
+      "colourCount": 3,
+      "grayscaleCount": 2
+    }
+  ],
+  "screenshots": 1,
+  "fixturesRemoved": true,
+  "failure": "java.lang.AssertionError: dialog-analysis-size-colour-detects-exactly-two-faces",
+  "scope": "Actual installed portrait detector\/dialog\/editor, public-domain NASA fixture and private owned JPEGs, two-face selection, blank\/manual fallback, colour\/texture\/light controls, add\/erase strokes, healing, apply\/cancel\/history\/draft isolation, injected preview failure, simulated owner mismatch, full export reference\/detail and independent EXIF6 pixels. No physical phone, camera, MediaStore publication, RAW decoder or broad demographic detection accuracy claim."
+}

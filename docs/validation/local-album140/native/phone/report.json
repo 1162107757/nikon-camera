@@ -1,0 +1,10 @@
+{
+  "pass": false,
+  "failure": "java.lang.AssertionError: Timeout owned App fixture scan\n\tat cc.huevia.syncpolishqa.AlbumOverviewProbe.until(AlbumOverviewProbe.java:105)\n\tat cc.huevia.syncpolishqa.AlbumOverviewProbe.onStart(AlbumOverviewProbe.java:36)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "pass": true
+    }
+  ]
+}
