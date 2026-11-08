@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>CFBundleDevelopmentRegion</key><string>zh_CN</string>
+    <key>CFBundleDisplayName</key><string>Huevia</string>
+    <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>$(MARKETING_VERSION)</string>
+    <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>LSRequiresIPhoneOS</key><true/>
+    <key>UILaunchScreen</key><dict/>
+    <key>UIApplicationSceneManifest</key><dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
+    <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
+    <key>NSLocalNetworkUsageDescription</key><string>Huevia 需要访问本地网络，与已连接 Wi-Fi 的尼康相机读取槽位并导入您确认的预设。</string>
+    <key>UIFileSharingEnabled</key><true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key><true/>
+    <key>CFBundleDocumentTypes</key><array><dict>
+        <key>CFBundleTypeName</key><string>摄影预设</string>
+        <key>CFBundleTypeRole</key><string>Editor</string>
+        <key>LSHandlerRank</key><string>Alternate</string>
+        <key>LSItemContentTypes</key><array><string>cc.huevia.ncp</string><string>cc.huevia.np3</string></array>
+    </dict></array>
+    <key>UTImportedTypeDeclarations</key><array>
+        <dict><key>UTTypeIdentifier</key><string>cc.huevia.ncp</string><key>UTTypeConformsTo</key><array><string>public.data</string></array><key>UTTypeDescription</key><string>Nikon NCP preset</string><key>UTTypeTagSpecification</key><dict><key>public.filename-extension</key><array><string>ncp</string></array></dict></dict>
+        <dict><key>UTTypeIdentifier</key><string>cc.huevia.np3</string><key>UTTypeConformsTo</key><array><string>public.data</string></array><key>UTTypeDescription</key><string>Nikon NP3 preset</string><key>UTTypeTagSpecification</key><dict><key>public.filename-extension</key><array><string>np3</string></array></dict></dict>
+    </array>
+</dict></plist>

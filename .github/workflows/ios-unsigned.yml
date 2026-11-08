@@ -1,0 +1,33 @@
+name: iOS unsigned IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/ios-unsigned-*']
+    paths: ['ios/**', '.github/workflows/ios-unsigned.yml']
+permissions:
+  contents: read
+concurrency:
+  group: ios-unsigned-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Core protocol and conversion checks
+        run: swift test --package-path ios
+      - name: Build real unsigned iPhone IPA
+        run: bash ios/scripts/build-unsigned.sh "$RUNNER_TEMP/huevia-artifacts"
+      - name: Build simulator app for launch verification
+        run: |
+          xcodebuild -project ios/Huevia.xcodeproj -scheme Huevia -configuration Debug -destination 'generic/platform=iOS Simulator' -derivedDataPath ios/build/simulator CODE_SIGNING_ALLOWED=NO build
+          python3 ios/scripts/simulator_check.py ios/build/simulator/Build/Products/Debug-iphonesimulator/Huevia.app "$RUNNER_TEMP/huevia-artifacts"
+      - name: Save IPA and validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Huevia-iOS-unsigned
+          path: ${{ runner.temp }}/huevia-artifacts/
+          if-no-files-found: error
+          retention-days: 7
