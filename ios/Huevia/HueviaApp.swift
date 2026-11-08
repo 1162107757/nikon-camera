@@ -66,11 +66,14 @@ struct PresetsView: View {
             Spacer(); VStack(spacing: 16) { Image(systemName: "wifi.exclamationmark").font(.largeTitle); Text(error).foregroundStyle(.secondary).multilineTextAlignment(.center); Button("重试") { Task { await model.refreshCatalog() } }.buttonStyle(.borderedProminent).foregroundStyle(Color("OnAccent")) }.padding(32); Spacer()
         } else {
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 14)], spacing: 20) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 14, alignment: .top)], alignment: .leading, spacing: 20) {
                     ForEach(filtered) { preset in
                         NavigationLink { PresetDetail(preset: preset) } label: {
                             VStack(alignment: .leading, spacing: 8) {
-                                Image(preset.sample, bundle: .main).renderingMode(.original).resizable().scaledToFill().frame(height: 192).clipped().clipShape(RoundedRectangle(cornerRadius: 12))
+                                GeometryReader { geometry in
+                                    Image(preset.sample, bundle: .main).renderingMode(.original).resizable().scaledToFill()
+                                        .frame(width: geometry.size.width, height: geometry.size.height).clipped()
+                                }.frame(height: 192).clipShape(RoundedRectangle(cornerRadius: 12))
                                 Text(preset.name).font(.headline).foregroundStyle(.primary).lineLimit(2)
                                 Text([preset.category ?? "", preset.format].filter { !$0.isEmpty }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
                             }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
