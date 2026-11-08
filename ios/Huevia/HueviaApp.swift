@@ -70,7 +70,7 @@ struct PresetsView: View {
                     ForEach(filtered) { preset in
                         NavigationLink { PresetDetail(preset: preset) } label: {
                             VStack(alignment: .leading, spacing: 8) {
-                                Image(preset.sample + ".jpg").resizable().scaledToFill().frame(height: 192).clipped().clipShape(RoundedRectangle(cornerRadius: 12))
+                                Image(preset.sample, bundle: .main).renderingMode(.original).resizable().scaledToFill().frame(height: 192).clipped().clipShape(RoundedRectangle(cornerRadius: 12))
                                 Text(preset.name).font(.headline).foregroundStyle(.primary).lineLimit(2)
                                 Text([preset.category ?? "", preset.format].filter { !$0.isEmpty }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
                             }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
@@ -105,7 +105,7 @@ struct PresetDetail: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Image(preset.sample + ".jpg").resizable().scaledToFit().clipShape(RoundedRectangle(cornerRadius: 16))
+                Image(preset.sample, bundle: .main).renderingMode(.original).resizable().scaledToFit().clipShape(RoundedRectangle(cornerRadius: 16))
                 VStack(alignment: .leading, spacing: 8) {
                     Text(preset.name).font(.title2.bold())
                     Text(preset.description ?? "").foregroundStyle(.secondary)

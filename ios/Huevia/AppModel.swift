@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
+import UIKit
 
 struct OnlinePreset: Decodable, Identifiable {
     let id: String
@@ -50,6 +51,16 @@ struct AppMessage: Identifiable { let id = UUID(); let title: String; let detail
         // Launch verification only chooses a real screen; it never substitutes camera or catalog data.
         if ProcessInfo.processInfo.arguments.contains("--qa-camera") { tab = 1 }
         if ProcessInfo.processInfo.arguments.contains("--qa-settings") { tab = 2 }
+        if ProcessInfo.processInfo.arguments.contains("--qa-image-audit") {
+            let names = ["alpine-lake", "breakfast", "city-skyline", "coastal-water", "neon-street", "pink-tulips", "portrait-man", "portrait-smile", "rainy-tokyo", "sunlit-forest"]
+            let checks: [[String: Any]] = names.map { name in
+                let image = UIImage(named: name, in: .main, compatibleWith: nil)
+                return ["name": name, "decoded": image?.cgImage != nil, "width": image?.cgImage?.width ?? 0, "height": image?.cgImage?.height ?? 0]
+            }
+            if let data = try? JSONSerialization.data(withJSONObject: checks, options: .prettyPrinted) {
+                try? data.write(to: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("qa-image-audit.json"), options: .atomic)
+            }
+        }
     }
     func showError(_ error: Error) { message = AppMessage(title: "操作未完成", detail: error.localizedDescription) }
     func refreshCatalog() async {

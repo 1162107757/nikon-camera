@@ -10,6 +10,13 @@ sips -z 1024 1024 "$IOS_ROOT/Huevia/icon-source.png" --out "$ICON/AppIcon.png" >
 cat > "$ICON/Contents.json" <<'JSON'
 {"images":[{"filename":"AppIcon.png","idiom":"universal","platform":"ios","size":"1024x1024"}],"info":{"author":"xcode","version":1}}
 JSON
+for SOURCE in "$IOS_ROOT"/Huevia/Resources/*.jpg; do
+  NAME="$(basename "$SOURCE" .jpg)"
+  SET="$IOS_ROOT/Huevia/Assets.xcassets/$NAME.imageset"
+  mkdir -p "$SET"
+  sips -s format png "$SOURCE" --out "$SET/$NAME.png" >/dev/null
+  printf '{"images":[{"filename":"%s.png","idiom":"universal"}],"info":{"author":"xcode","version":1}}\n' "$NAME" > "$SET/Contents.json"
+done
 python3 "$IOS_ROOT/scripts/generate_project.py"
 xcodebuild -project "$IOS_ROOT/Huevia.xcodeproj" -scheme Huevia -configuration Release \
   -destination 'generic/platform=iOS' -derivedDataPath "$IOS_ROOT/build/device" \

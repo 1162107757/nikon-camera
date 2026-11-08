@@ -29,12 +29,16 @@ try:
         subprocess.run(["xcrun", "simctl", "terminate", udid, "cc.huevia.ios"], capture_output=True)
         run("xcrun", "simctl", "ui", udid, "appearance", appearance)
         run("xcrun", "simctl", "ui", udid, "content_size", size)
-        args = ["xcrun", "simctl", "launch", udid, "cc.huevia.ios"] + ([argument] if argument else [])
+        args = ["xcrun", "simctl", "launch", udid, "cc.huevia.ios", "--qa-image-audit"] + ([argument] if argument else [])
         launched = run(*args)
         pid = int(launched.rsplit(":", 1)[1].strip())
         time.sleep(12 if argument in (None, "--qa-detail") else 3)
         os.kill(pid, 0)
         run("xcrun", "simctl", "io", udid, "screenshot", str(output / (name + ".png")))
+        container = Path(run("xcrun", "simctl", "get_app_container", udid, "cc.huevia.ios", "data"))
+        audit = json.loads((container / "Documents" / "qa-image-audit.json").read_text())
+        (output / "image-audit.json").write_text(json.dumps(audit, indent=2))
+        assert len(audit) == 10 and all(x["decoded"] and x["width"] > 0 and x["height"] > 0 for x in audit), "Bundled image catalog did not decode on iOS"
         records.append({"screen": name, "processAlive": True, "appearance": appearance, "contentSize": size})
     (output / "simulator-verification.json").write_text(json.dumps({"pass": True, "device": template["name"], "runtime": runtime, "udid": udid, "checks": records, "scope": "Real simulator launch and screenshots; camera hardware and user re-signing not tested"}, indent=2))
 finally:
