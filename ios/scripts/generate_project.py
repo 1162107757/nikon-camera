@@ -46,7 +46,7 @@ def configs(name, target=False):
                 INFOPLIST_FILE="Huevia/Info.plist", GENERATE_INFOPLIST_FILE="NO", CODE_SIGN_STYLE="Manual",
                 CODE_SIGNING_ALLOWED="NO", CODE_SIGNING_REQUIRED="NO", DEVELOPMENT_TEAM="",
                 TARGETED_DEVICE_FAMILY="1", SUPPORTED_PLATFORMS="iphoneos iphonesimulator", SUPPORTS_MACCATALYST="NO",
-                ASSETCATALOG_COMPILER_APPICON_NAME="AppIcon", MARKETING_VERSION="0.1.0", CURRENT_PROJECT_VERSION="1",
+                ASSETCATALOG_COMPILER_APPICON_NAME="AppIcon", MARKETING_VERSION="0.1.0", CURRENT_PROJECT_VERSION="2",
                 SWIFT_EMIT_LOC_STRINGS="YES", ENABLE_PREVIEWS="YES")
         fields = ' '.join(f'{k} = {quoted(v)};' for k, v in settings.items())
         items.append(obj(name + mode, f"isa = XCBuildConfiguration; buildSettings = {{ {fields} }}; name = {mode};"))

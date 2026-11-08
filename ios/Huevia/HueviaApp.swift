@@ -7,7 +7,7 @@ import UniformTypeIdentifiers
     var body: some Scene {
         WindowGroup {
             RootView().environmentObject(model)
-                .tint(Color(red: 0.66, green: 0.26, blue: 0.18))
+                .tint(Color("AccentColor"))
                 .onOpenURL { model.addFile($0); model.tab = 0 }
                 .onChange(of: scenePhase) { phase in if phase == .background { model.disconnect() } }
         }
@@ -32,6 +32,7 @@ struct PresetsView: View {
     @State private var source = 0
     @State private var query = ""
     @State private var choosingFile = false
+    @State private var showingDetailForVerification = false
     private var filtered: [OnlinePreset] {
         model.catalog.filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) || ($0.category ?? "").localizedCaseInsensitiveContains(query) }
     }
@@ -46,7 +47,13 @@ struct PresetsView: View {
             .navigationTitle("预设")
             .toolbar { ToolbarItem(placement: .navigationBarTrailing) { Button { choosingFile = true } label: { Image(systemName: "plus") }.accessibilityLabel("添加本地预设") } }
             .searchable(text: $query, prompt: "搜索预设")
-            .task { if model.catalog.isEmpty { await model.refreshCatalog() } }
+            .task {
+                if model.catalog.isEmpty { await model.refreshCatalog() }
+                if ProcessInfo.processInfo.arguments.contains("--qa-detail"), !model.catalog.isEmpty { showingDetailForVerification = true }
+            }
+            .navigationDestination(isPresented: $showingDetailForVerification) {
+                if let first = model.catalog.first { PresetDetail(preset: first) }
+            }
             .fileImporter(isPresented: $choosingFile, allowedContentTypes: [.data]) { result in
                 switch result { case .success(let url): model.addFile(url); source = 1; case .failure(let error): model.showError(error) }
             }
@@ -56,14 +63,14 @@ struct PresetsView: View {
         if model.catalogBusy && model.catalog.isEmpty {
             Spacer(); ProgressView("正在加载预设…"); Spacer()
         } else if let error = model.catalogError, model.catalog.isEmpty {
-            Spacer(); VStack(spacing: 16) { Image(systemName: "wifi.exclamationmark").font(.largeTitle); Text(error).foregroundStyle(.secondary).multilineTextAlignment(.center); Button("重试") { Task { await model.refreshCatalog() } }.buttonStyle(.borderedProminent) }.padding(32); Spacer()
+            Spacer(); VStack(spacing: 16) { Image(systemName: "wifi.exclamationmark").font(.largeTitle); Text(error).foregroundStyle(.secondary).multilineTextAlignment(.center); Button("重试") { Task { await model.refreshCatalog() } }.buttonStyle(.borderedProminent).foregroundStyle(Color("OnAccent")) }.padding(32); Spacer()
         } else {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 14)], spacing: 20) {
                     ForEach(filtered) { preset in
                         NavigationLink { PresetDetail(preset: preset) } label: {
                             VStack(alignment: .leading, spacing: 8) {
-                                Image(preset.sample).resizable().scaledToFill().frame(height: 192).clipped().clipShape(RoundedRectangle(cornerRadius: 12))
+                                Image(preset.sample + ".jpg").resizable().scaledToFill().frame(height: 192).clipped().clipShape(RoundedRectangle(cornerRadius: 12))
                                 Text(preset.name).font(.headline).foregroundStyle(.primary).lineLimit(2)
                                 Text([preset.category ?? "", preset.format].filter { !$0.isEmpty }.joined(separator: " · ")).font(.caption).foregroundStyle(.secondary)
                             }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
@@ -98,19 +105,19 @@ struct PresetDetail: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Image(preset.sample).resizable().scaledToFit().clipShape(RoundedRectangle(cornerRadius: 16))
+                Image(preset.sample + ".jpg").resizable().scaledToFit().clipShape(RoundedRectangle(cornerRadius: 16))
                 VStack(alignment: .leading, spacing: 8) {
                     Text(preset.name).font(.title2.bold())
                     Text(preset.description ?? "").foregroundStyle(.secondary)
                     Text("摄影参考样片，不代表该预设的相机实拍效果。").font(.caption).foregroundStyle(.secondary)
                 }
                 if let local {
-                    Button { dismiss(); model.requestImport(local) } label: { Label("导入相机", systemImage: "camera").frame(maxWidth: .infinity).padding(.vertical, 8) }.buttonStyle(.borderedProminent)
+                    Button { dismiss(); model.requestImport(local) } label: { Label("导入相机", systemImage: "camera").frame(maxWidth: .infinity).padding(.vertical, 8) }.buttonStyle(.borderedProminent).foregroundStyle(Color("OnAccent"))
                     ShareLink(item: local.url) { Label("分享预设文件", systemImage: "square.and.arrow.up").frame(maxWidth: .infinity).padding(.vertical, 8) }.buttonStyle(.bordered)
                 } else {
                     Button { Task { local = await model.download(preset) } } label: {
-                        HStack { if model.downloadID == preset.id { ProgressView() } else { Image(systemName: "arrow.down") }; Text(model.downloadID == preset.id ? "正在下载…" : "下载预设") }.frame(maxWidth: .infinity).padding(.vertical, 8)
-                    }.buttonStyle(.borderedProminent).disabled(model.downloadID != nil)
+                        HStack { if model.downloadID == preset.id { ProgressView().tint(Color("OnAccent")) } else { Image(systemName: "arrow.down") }; Text(model.downloadID == preset.id ? "正在下载…" : "下载预设") }.frame(maxWidth: .infinity).padding(.vertical, 8)
+                    }.buttonStyle(.borderedProminent).foregroundStyle(Color("OnAccent")).disabled(model.downloadID != nil)
                 }
             }.padding()
         }.navigationTitle("预设详情").navigationBarTitleDisplayMode(.inline)
@@ -129,8 +136,8 @@ struct CameraView: View {
                 if model.snapshot == nil {
                     Section("连接相机") {
                         Text("先在相机打开“连接至电脑”无线连接，再到 iPhone 设置加入相机 Wi‑Fi；返回后点连接。首次连接需允许本地网络访问。").foregroundStyle(.secondary)
-                        TextField("相机 IP", text: $model.host).keyboardType(.numbersAndPunctuation).textInputAutocapitalization(.never).autocorrectionDisabled().disabled(model.cameraBusy)
-                        TextField("端口", text: $model.port).keyboardType(.numberPad).disabled(model.cameraBusy)
+                        LabeledContent("相机 IP") { TextField("IP 地址", text: $model.host).keyboardType(.numbersAndPunctuation).textInputAutocapitalization(.never).autocorrectionDisabled().multilineTextAlignment(.trailing).accessibilityLabel("相机 IP").disabled(model.cameraBusy) }
+                        LabeledContent("端口") { TextField("端口", text: $model.port).keyboardType(.numberPad).multilineTextAlignment(.trailing).accessibilityLabel("端口").disabled(model.cameraBusy) }
                         Button { Task { await model.connect() } } label: { HStack { if model.cameraBusy { ProgressView() }; Text(model.cameraBusy ? "连接中…" : "连接并读取槽位") } }.disabled(model.cameraBusy)
                         if model.cameraBusy { Button("取消连接", role: .cancel) { model.disconnect() } }
                     }

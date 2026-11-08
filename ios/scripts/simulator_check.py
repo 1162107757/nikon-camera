@@ -24,6 +24,7 @@ try:
         ("presets-dark-large", None, "dark", "extra-extra-extra-large"),
         ("camera-light", "--qa-camera", "light", "large"),
         ("settings-light", "--qa-settings", "light", "large"),
+        ("preset-detail-light", "--qa-detail", "light", "large"),
     ]:
         subprocess.run(["xcrun", "simctl", "terminate", udid, "cc.huevia.ios"], capture_output=True)
         run("xcrun", "simctl", "ui", udid, "appearance", appearance)
@@ -31,7 +32,7 @@ try:
         args = ["xcrun", "simctl", "launch", udid, "cc.huevia.ios"] + ([argument] if argument else [])
         launched = run(*args)
         pid = int(launched.rsplit(":", 1)[1].strip())
-        time.sleep(12 if argument is None else 3)
+        time.sleep(12 if argument in (None, "--qa-detail") else 3)
         os.kill(pid, 0)
         run("xcrun", "simctl", "io", udid, "screenshot", str(output / (name + ".png")))
         records.append({"screen": name, "processAlive": True, "appearance": appearance, "contentSize": size})

@@ -1,4 +1,5 @@
 import Foundation
+@preconcurrency import Dispatch
 import Network
 
 private final class CompletionGate<T>: @unchecked Sendable {
