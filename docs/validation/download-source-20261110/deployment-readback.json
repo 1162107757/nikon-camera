@@ -1,0 +1,24 @@
+{
+  "configuration": {
+    "at": "2026-11-10T13:20:33.524Z",
+    "status": "Active",
+    "configurationOnlyAddedExactWebsiteProxy": true,
+    "rolePreserved": true,
+    "sqlLimitsUnchanged": true,
+    "usageReset": false,
+    "appVersionChanged": false
+  },
+  "archive": {
+    "allEntriesMatch": true,
+    "entries": 50,
+    "changedSourceFiles": [
+      "server/abuse.mjs",
+      "server/app.mjs",
+      "server/index.mjs",
+      "server/releases.mjs",
+      "server/release-download-error.mjs"
+    ],
+    "unchangedEntries": 45,
+    "deployedZipSha256": "f67dc95aa5ef2052e794b942903159c6cfdc8bdefadcf1ef286ea24fda2ca988"
+  }
+}

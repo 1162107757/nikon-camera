@@ -67,10 +67,10 @@ export function selectRelease(row, { channel = 'stable', versionCode = 0, sdk = 
   return { schemaVersion: 1, channel, release, updateAvailable: reason === 'available',
     updateRequired: reason === 'available' && release.mandatory, reason };
 }
-export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = '/preset-library', trustedProxyHops = 0, trustedProxyAddresses,
+export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = '/preset-library', trustedProxyHops = 0, trustedProxyAddresses, trustedForwardedProxyAddresses,
   readBundledApk = name => readFile(new URL(`./bundled-apks/${name}`, import.meta.url)) }) {
   const releases = new ReleaseStore(store), prefix = basePath.replace(/\/$/, ''), base = new URL(publicBaseUrl).origin + prefix;
-  const source = createAbuseContext({ store, secret: store.serviceKey || 'app-releases-local-source-budget-v1', trustedProxyHops, trustedProxyAddresses });
+  const source = createAbuseContext({ store, secret: store.serviceKey || 'app-releases-local-source-budget-v1', trustedProxyHops, trustedProxyAddresses, trustedForwardedProxyAddresses });
   const staticFiles = { 'index.html': 'text/html; charset=utf-8', 'download.js': 'text/javascript; charset=utf-8', 'download.css': 'text/css; charset=utf-8', 'tokens.css': 'text/css; charset=utf-8', 'icon.png': 'image/png', 'qr.js': 'text/javascript; charset=utf-8', 'preview-community.png':'image/png', 'preview-submission.png':'image/png', 'preview-messages.png':'image/png' };
   async function budget(req, kind, bytes = 0, sha256) {
     // Proxy identity is used only with explicitly configured trusted hops; IPv6 rotates within a /64 bucket.

@@ -1,0 +1,100 @@
+{
+  "before": {
+    "distinctSources": 2,
+    "requests": [
+      {
+        "host": "nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "spoofed": false,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 1,
+            "delta": 1
+          }
+        ]
+      },
+      {
+        "host": "nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "spoofed": true,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 1,
+            "delta": 1
+          }
+        ]
+      },
+      {
+        "host": "huevia.cc",
+        "spoofed": false,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 2,
+            "delta": 1
+          }
+        ]
+      },
+      {
+        "host": "huevia.cc",
+        "spoofed": true,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 2,
+            "delta": 1
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "distinctSources": 1,
+    "requests": [
+      {
+        "host": "nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "spoofed": false,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 1,
+            "delta": 1
+          }
+        ]
+      },
+      {
+        "host": "nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "spoofed": true,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 1,
+            "delta": 1
+          }
+        ]
+      },
+      {
+        "host": "huevia.cc",
+        "spoofed": false,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 1,
+            "delta": 1
+          }
+        ]
+      },
+      {
+        "host": "huevia.cc",
+        "spoofed": true,
+        "status": 200,
+        "sourceLabels": [
+          {
+            "source": 1,
+            "delta": 1
+          }
+        ]
+      }
+    ]
+  }
+}

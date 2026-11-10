@@ -14,11 +14,13 @@ function sourceBucket(ip) {
   const normalized = normalizedAddress(ip);
   return isIP(normalized) === 6 ? normalized.split(':').slice(0,4).join(':') + '::/64' : normalized;
 }
-export function createAbuseContext({ store, secret, trustedProxyHops = 0, trustedProxyAddresses = ['127.0.0.1', '::1'] }) {
+export function createAbuseContext({ store, secret, trustedProxyHops = 0, trustedProxyAddresses = ['127.0.0.1', '::1'], trustedForwardedProxyAddresses = [] }) {
   const key = secret || store.serviceKey;
   if (!Number.isInteger(trustedProxyHops) || trustedProxyHops < 0 || trustedProxyHops > 8) throw new Error('Invalid trusted proxy configuration');
   if (!Array.isArray(trustedProxyAddresses) || trustedProxyAddresses.some(ip => typeof ip !== 'string' || !isIP(ip))) throw new Error('Invalid trusted proxy address allowlist');
+  if (!Array.isArray(trustedForwardedProxyAddresses) || trustedForwardedProxyAddresses.some(ip => typeof ip !== 'string' || !isIP(ip))) throw new Error('Invalid trusted forwarded proxy address allowlist');
   const trusted = new Set(trustedProxyAddresses.map(normalizedAddress));
+  const forwardedProxies = new Set(trustedForwardedProxyAddresses.map(normalizedAddress));
   const hash = value => {
     if (typeof key !== 'string' || key.length < 24) throw new ServiceError(503, 'CHALLENGE_NOT_CONFIGURED', '注册验证尚未配置，请稍后重试。');
     return createHmac('sha256', key).update(value).digest('hex');
@@ -30,7 +32,15 @@ export function createAbuseContext({ store, secret, trustedProxyHops = 0, truste
       const forwarded = String(req.headers['x-forwarded-for'] || '').split(',').map(x => x.trim());
       const chain = [...forwarded, ip];
       if (chain.length <= trustedProxyHops || chain.some(x => !isIP(x))) throw new ServiceError(400, 'INVALID_PROXY_SOURCE', '请求来源无法验证。');
-      ip = chain[chain.length - 1 - trustedProxyHops];
+      let index = chain.length - 1 - trustedProxyHops;
+      // The verified gateway chain can be preceded by our own website proxy.
+      // Skip only explicitly allowlisted proxy addresses, then stop at the first
+      // client address. Never choose a hop using Host or caller-supplied XFF length.
+      while (forwardedProxies.has(normalizedAddress(chain[index]))) {
+        if (index === 0) throw new ServiceError(400, 'INVALID_PROXY_SOURCE', '请求来源无法验证。');
+        index--;
+      }
+      ip = chain[index];
     }
     // IPv6 allocations commonly rotate host addresses. Bucket the /64 rather than treating each host as new.
     ip = sourceBucket(ip);

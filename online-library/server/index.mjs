@@ -14,6 +14,7 @@ const handler = createHandler({ store, storage, releaseStorage, environmentId, p
   basePath: process.env.BASE_PATH || '/preset-library', secureCookies: new URL(publicBaseUrl).protocol === 'https:',
   challengeSecret: process.env.CHALLENGE_SECRET, trustedProxyHops: Number(process.env.TRUSTED_PROXY_HOPS || 0),
   trustedProxyAddresses: process.env.TRUSTED_PROXY_ADDRESSES ? process.env.TRUSTED_PROXY_ADDRESSES.split(',').map(value=>value.trim()).filter(Boolean) : undefined,
+  trustedForwardedProxyAddresses: process.env.TRUSTED_FORWARDED_PROXY_ADDRESSES ? process.env.TRUSTED_FORWARDED_PROXY_ADDRESSES.split(',').map(value=>value.trim()).filter(Boolean) : undefined,
   qqVerifier: createQqVerifier({ appId: process.env.QQ_APP_ID }) });
 const server = createServer((req, res) => withReleaseCredentials(req, () => handler(req, res)));
 server.headersTimeout = 15000;
