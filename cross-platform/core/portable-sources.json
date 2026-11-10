@@ -1,0 +1,256 @@
+{
+  "sourceLevel": 11,
+  "sources": [
+    "app/src/main/java/cc/huevia/account/AccountException.java",
+    "app/src/main/java/cc/huevia/account/AccountHttpTransport.java",
+    "app/src/main/java/cc/huevia/account/AccountJson.java",
+    "app/src/main/java/cc/huevia/account/AccountRepository.java",
+    "app/src/main/java/cc/huevia/account/AccountRepositoryProvider.java",
+    "app/src/main/java/cc/huevia/account/AvatarUrlPolicy.java",
+    "app/src/main/java/cc/huevia/account/QqAuthorizationGate.java",
+    "app/src/main/java/cc/huevia/album/CameraProtocol.java",
+    "app/src/main/java/cc/huevia/album/ConnectionInfo.java",
+    "app/src/main/java/cc/huevia/album/ConnectionTrace.java",
+    "app/src/main/java/cc/huevia/album/DownloadedPhoto.java",
+    "app/src/main/java/cc/huevia/album/FujifilmPhotoClient.java",
+    "app/src/main/java/cc/huevia/album/PhotoAdjustmentCopy.java",
+    "app/src/main/java/cc/huevia/album/PhotoCameraClient.java",
+    "app/src/main/java/cc/huevia/album/PhotoDateGroups.java",
+    "app/src/main/java/cc/huevia/album/PhotoDeleteResult.java",
+    "app/src/main/java/cc/huevia/album/PhotoDownloadRecovery.java",
+    "app/src/main/java/cc/huevia/album/PhotoEditStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoExifRationals.java",
+    "app/src/main/java/cc/huevia/album/PhotoExportQuality.java",
+    "app/src/main/java/cc/huevia/album/PhotoExportSpec.java",
+    "app/src/main/java/cc/huevia/album/PhotoFormat.java",
+    "app/src/main/java/cc/huevia/album/PhotoGroupSelection.java",
+    "app/src/main/java/cc/huevia/album/PhotoItem.java",
+    "app/src/main/java/cc/huevia/album/PhotoLiveLedger.java",
+    "app/src/main/java/cc/huevia/album/PhotoLiveProject.java",
+    "app/src/main/java/cc/huevia/album/PhotoLiveProjectFolders.java",
+    "app/src/main/java/cc/huevia/album/PhotoLiveProjectStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoLiveReceipt.java",
+    "app/src/main/java/cc/huevia/album/PhotoLiveState.java",
+    "app/src/main/java/cc/huevia/album/PhotoLocalTasks.java",
+    "app/src/main/java/cc/huevia/album/PhotoPage.java",
+    "app/src/main/java/cc/huevia/album/PhotoPresetBatchState.java",
+    "app/src/main/java/cc/huevia/album/PhotoPreview.java",
+    "app/src/main/java/cc/huevia/album/PhotoPreviewCache.java",
+    "app/src/main/java/cc/huevia/album/PhotoProjectPresetStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoRecipeStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoSaveTarget.java",
+    "app/src/main/java/cc/huevia/album/PhotoSort.java",
+    "app/src/main/java/cc/huevia/album/PhotoSourceFormat.java",
+    "app/src/main/java/cc/huevia/album/PhotoStarStore.java",
+    "app/src/main/java/cc/huevia/album/PhotoTransferProgress.java",
+    "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+    "app/src/main/java/cc/huevia/album/RawPhotoDownload.java",
+    "app/src/main/java/cc/huevia/album/RawPhotoPairing.java",
+    "app/src/main/java/cc/huevia/album/RawPhotoStore.java",
+    "app/src/main/java/cc/huevia/community/CommunityException.java",
+    "app/src/main/java/cc/huevia/community/CommunityHttpTransport.java",
+    "app/src/main/java/cc/huevia/connection/PhotoLiveContinuation.java",
+    "app/src/main/java/cc/huevia/library/LibraryFiles.java",
+    "app/src/main/java/cc/huevia/library/LibraryJson.java",
+    "app/src/main/java/cc/huevia/library/PresetCategories.java",
+    "app/src/main/java/cc/huevia/library/PresetFile.java",
+    "app/src/main/java/cc/huevia/library/PresetHomeFilter.java",
+    "app/src/main/java/cc/huevia/library/PresetRecord.java",
+    "app/src/main/java/cc/huevia/library/PreviewImageCache.java",
+    "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+    "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+    "app/src/main/java/cc/huevia/ncp/BorderPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/CameraPresetAdapter.java",
+    "app/src/main/java/cc/huevia/ncp/GeometryPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/NcpFile.java",
+    "app/src/main/java/cc/huevia/ncp/NcpMonochromePreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/NcpPictureControlConverter.java",
+    "app/src/main/java/cc/huevia/ncp/NcpPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/Np3PresetDetails.java",
+    "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoAdjustments.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoBodyShape.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoBodyWarp.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoBorder.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoCleanup.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoCleanupEstimator.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoCleanupRenderer.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoColorPalette.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoCurves.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoDetailEffects.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoGeometry.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoHistogram.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoHsl.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoPortrait.java",
+    "app/src/main/java/cc/huevia/ncp/PhotoQuickPreset.java",
+    "app/src/main/java/cc/huevia/ncp/PortraitPreviewFilter.java",
+    "app/src/main/java/cc/huevia/ncp/PortraitRetouch.java",
+    "app/src/main/java/cc/huevia/ncp/PortraitRetouchFilter.java",
+    "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+    "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+    "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+    "app/src/main/java/cc/huevia/ncp/RawJpegColorMatch.java",
+    "app/src/main/java/cc/huevia/ncp/SelectionShape.java",
+    "app/src/main/java/cc/huevia/ncp/SkinBodyRegions.java",
+    "app/src/main/java/cc/huevia/ncp/SkinSmoothingFilter.java",
+    "app/src/main/java/cc/huevia/ncp/SkinTone.java",
+    "app/src/main/java/cc/huevia/ncp/SpatialPreviewFilter.java",
+    "app/src/main/java/cc/huevia/ncp/StrengthPreviewProfile.java",
+    "app/src/main/java/cc/huevia/picturecontrol/CameraParameterWriteGuard.java",
+    "app/src/main/java/cc/huevia/picturecontrol/PictureControlCapability.java",
+    "app/src/main/java/cc/huevia/picturecontrol/PictureControlData.java",
+    "app/src/main/java/cc/huevia/picturecontrol/PictureControlWriteValidation.java",
+    "app/src/main/java/cc/huevia/ptp/PtpConstants.java",
+    "app/src/main/java/cc/huevia/ptp/PtpContainer.java",
+    "app/src/main/java/cc/huevia/ptp/PtpContainerReader.java",
+    "app/src/main/java/cc/huevia/ptp/PtpDatasetReader.java",
+    "app/src/main/java/cc/huevia/ptp/PtpDeviceInfo.java",
+    "app/src/main/java/cc/huevia/ptp/PtpObjectHandles.java",
+    "app/src/main/java/cc/huevia/ptp/PtpObjectInfo.java",
+    "app/src/main/java/cc/huevia/ptp/PtpProtocolException.java",
+    "app/src/main/java/cc/huevia/ptp/PtpResponseException.java",
+    "app/src/main/java/cc/huevia/ptp/PtpStorageIds.java",
+    "app/src/main/java/cc/huevia/ptp/PtpStorageInfo.java",
+    "app/src/main/java/cc/huevia/ptp/PtpValidation.java",
+    "app/src/main/java/cc/huevia/remote/NikonRemoteCamera.java",
+    "app/src/main/java/cc/huevia/remote/RemoteLiveFrame.java",
+    "app/src/main/java/cc/huevia/remote/RemoteProperty.java",
+    "app/src/main/java/cc/huevia/remote/RemoteTransport.java",
+    "app/src/main/java/cc/huevia/ui/AlbumPaging.java",
+    "app/src/main/java/cc/huevia/ui/LatestPreviewQueue.java",
+    "app/src/main/java/cc/huevia/ui/PhotoDetailViewport.java",
+    "app/src/main/java/cc/huevia/ui/PhotoPagerMotion.java",
+    "app/src/main/java/cc/huevia/ui/PhotoSwipeGesture.java",
+    "app/src/main/java/cc/huevia/updates/UpdatePolicy.java",
+    "app/src/main/java/cc/huevia/usb/CameraParameterController.java",
+    "app/src/main/java/cc/huevia/usb/CameraParameterDescriptor.java",
+    "app/src/main/java/cc/huevia/usb/CameraParameterRequest.java",
+    "app/src/main/java/cc/huevia/usb/PresetImportOptions.java",
+    "app/src/main/java/cc/huevia/usb/PtpDirectorySurvey.java",
+    "app/src/main/java/cc/huevia/usb/StorageAssessment.java"
+  ],
+  "excluded": [
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoOriginalStore.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSavedVersion.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoVersionExportPlan.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportAvailability.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/NcpTransferSession.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlDeleteSession.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlImportSession.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlReadSession.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLiveReceiptStore.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/EditorPresetCatalog.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetSearch.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetDownloadTasks.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/SecureHttpClient.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePreset.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-2.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityRepository.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-3.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetLibrary.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-3.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommentReplyPages.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommentReplyTarget.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/SubmissionDraftStore.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/SubmissionFlow.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PersonalPresetSync.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PersonalPresetApi.java",
+      "reason": "Requires a class/API outside the current portable Java closure",
+      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-5.log"
+    }
+  ]
+}

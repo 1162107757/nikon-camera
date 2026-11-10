@@ -1,0 +1,31 @@
+name: Cross-platform core parity
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cross-platform-migration']
+    paths:
+      - 'cross-platform/core/**'
+      - 'cross-platform/tool/**'
+      - '.github/workflows/cross-platform-core.yml'
+permissions:
+  contents: read
+concurrency:
+  group: shared-core-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apple-core:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Build and compare the original Java core on Apple
+        run: bash cross-platform/tool/core_ios.sh
+      - name: Save exact translation and parity evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: huevia-shared-core-apple
+          path: |
+            cross-platform/.build/core-ios/
+            cross-platform/.build/core-jvm/
+          retention-days: 7

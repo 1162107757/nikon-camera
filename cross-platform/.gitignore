@@ -1,0 +1,9 @@
+build/
+.build/
+.gradle/
+.dart_tool/
+.DS_Store
+*.keystore
+*.jks
+key.properties
+local.properties

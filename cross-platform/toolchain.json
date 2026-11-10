@@ -1,0 +1,11 @@
+{
+  "flutter": "3.47.9",
+  "flutterRevision": "c197ca5199e9ee5661e865596c9c07294dfab51c",
+  "engineRevision": "89c39edfdfae2949f6806e4a315c0c08522238b7",
+  "dart": "3.13.7",
+  "javaSourceLevel": 11,
+  "j2objc": "3.1",
+  "j2objcSourceUrl": "https://codeload.github.com/google/j2objc/zip/refs/tags/3.1",
+  "j2objcSourceSha256": "8116d3accee27ec83aec69cfd738bf75b632a226af7f0f736f00ae60cc2c70d5",
+  "baselineCommit": "6fb5003d8be85fcbb0fa3b4d99aef63cc1751f3c"
+}
