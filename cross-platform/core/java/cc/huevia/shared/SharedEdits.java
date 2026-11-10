@@ -70,6 +70,7 @@ public final class SharedEdits {
         value.put("border",SharedRuntime.map("template",b.template,"automatic",b.automatic,"brand",b.brand,"model",b.model,"fields",fields,"visible",b.visible,"logo",b.logo,"margin",b.margin,"corner",b.corner,"shadow",b.shadow,"blur",b.blur));
         if(d.adjustments.cleanup.hasStoredState()){
             ByteArrayOutputStream bytes=new ByteArrayOutputStream();d.adjustments.cleanup.write(new DataOutputStream(bytes));value.put("cleanupData",Base64.getEncoder().encodeToString(bytes.toByteArray()));
+            value.put("cleanup",SharedRuntime.map("amount",d.adjustments.cleanup.amount,"haze",d.adjustments.cleanup.haze,"noise",d.adjustments.cleanup.noise));
         }
         if(!d.localEdits.isEmpty()){
             ByteArrayOutputStream bytes=new ByteArrayOutputStream();d.localEdits.write(new DataOutputStream(bytes));value.put("localData",Base64.getEncoder().encodeToString(bytes.toByteArray()));

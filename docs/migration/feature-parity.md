@@ -14,7 +14,7 @@
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
 | 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | 私有原图导入与索引已接线；系统图库待接入 | 待完成 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
-| 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道控制点曲线、八色 HSL、调色盘已接线；自动去灰分析待迁移 | 待完成 |
+| 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；两端应用集成待复跑 |
 | 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 待应用像素验收 |
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 待迁移编辑交互及原生表面 | 核心 JVM / Apple 原测试通过；应用待完成 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
@@ -55,6 +55,8 @@
 - iOS 设备应用已成功编译至 RAW 控制版本；模拟器初始化已通过，首次图片导出在 `Files.isSymbolicLink` 的 JRE 路径触发空指针，正在修复运行库接入。完整 iOS 应用级验收和新版 IPA 交付仍未完成。
 - `2524f4355ad6ce2ea581826a72c4f268154d7bd7` 的 Apple 共享核心验证通过（Actions `42823580601`），包含 69 项共享边界与原有全部图像指纹；`77230cb3ec080485fb7d983697a0b38e82de6e2d` 的 Apple 应用分析、14 项界面测试和 iPhoneOS 编译通过（Actions `42825950954`），应用集成仍被上述文件接口异常阻塞。
 - 新增账户配方保存/列表/重命名/删除/跨照片应用，直接使用原 `PhotoRecipeStore` 格式。应用配方保留目标照片的构图、边框与局部编辑；原生侧按照片和账户保存校验后的预设快照，确保从无滤镜撤销回已移除的预设。JVM 共享边界检查增至 89 项并通过；新增 2 项大字体横竖屏配方界面测试通过。Windows 全套测试仍偶发宿主 `flutter_tester.exe` 访问异常，单独运行导航文件通过，Apple 全套复测待完成。
+- `e5d3781458a7552fcab775c96e546f8199ab6720` 在 Apple 的 16 项界面测试及 iPhoneOS 编译通过（Actions `42828335962`）。文件系统异常已进一步确认：J2ObjC 3.1 的 `UnixFileSystem.provider` 使用 `@Weak`，默认文件系统独立存活，而默认 provider 会在初始化任务的 autorelease pool 排空后释放。主程序现保留该 provider，并将 Apple 核心测试改为初始化后先排空 pool、再运行核心检查，复现应用任务边界。[固定版本源码](https://github.com/google/j2objc/blob/3.1/jre_emul/Classes/sun/nio/fs/UnixFileSystem.java)
+- 自动去灰/降噪复用原 `PhotoCleanupEstimator`，Android 使用原 `PhotoCleanupAnalyzer`；iOS 从原生完整表面抽取最多 9 个 96×96 真正原像素样本及不超过 512 边长的小样。分析结果随原草稿冻结，强度调整不重新分析。新增 10 项核心检查（含 EXIF 方向、取样范围、取消、独立参数及原图不变），JVM 共享边界总数为 99 项；横竖屏编辑及配方 4 项针对测试通过。上述新增功能尚待 Apple 和 Android 原生应用集成复跑。
 
 ## 保留和交付规则
 

@@ -27,6 +27,7 @@ class _EditorPageState extends State<EditorPage> {
   String? preview, error, activeJob;
   bool exporting = false, rendering = false, compare = false, restored = false;
   bool managingRecipes = false;
+  bool analyzingCleanup = false;
   double progress = 0;
   int tab = 0, revision = 0, hslBand = 0;
   late final String owner =
@@ -104,7 +105,7 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   void change(void Function() mutation, {bool snapshot = true}) {
-    if (exporting || managingRecipes || !restored) return;
+    if (exporting || managingRecipes || analyzingCleanup || !restored) return;
     if (snapshot) checkpoint();
     setState(() {
       mutation();
@@ -177,7 +178,7 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   Future<void> openRecipes() async {
-    if (exporting || managingRecipes || !restored) return;
+    if (exporting || managingRecipes || analyzingCleanup || !restored) return;
     debounce?.cancel();
     revision++;
     setState(() => managingRecipes = true);
@@ -206,6 +207,46 @@ class _EditorPageState extends State<EditorPage> {
       if (mounted) {
         setState(() => managingRecipes = false);
         unawaited(render());
+      }
+    }
+  }
+
+  Future<void> analyzeCleanup() async {
+    if (exporting || managingRecipes || analyzingCleanup || !restored) return;
+    debounce?.cancel();
+    revision++;
+    final job = 'cleanup-${DateTime.now().microsecondsSinceEpoch}';
+    final oldJob = activeJob;
+    var succeeded = false;
+    setState(() {
+      analyzingCleanup = true;
+      activeJob = job;
+      progress = 0;
+      error = null;
+    });
+    try {
+      if (oldJob != null) await widget.state.core.cancel(oldJob);
+      final result = await widget.state.core.call('media.cleanupAnalyze', {
+        'path': widget.photo.path,
+        'owner': owner,
+      }, job);
+      if (!mounted || activeJob != job) return;
+      checkpoint();
+      setState(() {
+        recipe.data['cleanupData'] = result['cleanupData'];
+        recipe.data['cleanup'] = {'amount': 100, 'haze': 100, 'noise': 100};
+      });
+      succeeded = true;
+    } catch (failure) {
+      if (mounted && activeJob == job) setState(() => error = '$failure');
+    } finally {
+      if (mounted && activeJob == job) {
+        setState(() {
+          analyzingCleanup = false;
+          rendering = false;
+          activeJob = null;
+        });
+        if (succeeded) unawaited(render());
       }
     }
   }
@@ -479,7 +520,8 @@ class _EditorPageState extends State<EditorPage> {
         children: [
           IconButton(
             tooltip: '减小$label',
-            onPressed: exporting || value <= min
+            onPressed:
+                exporting || managingRecipes || analyzingCleanup || value <= min
                 ? null
                 : () {
                     checkpoint();
@@ -492,13 +534,18 @@ class _EditorPageState extends State<EditorPage> {
               value: value.clamp(min, max),
               min: min,
               max: max,
-              onChangeStart: exporting ? null : (_) => (start ?? checkpoint)(),
-              onChanged: exporting ? null : changed,
+              onChangeStart: exporting || managingRecipes || analyzingCleanup
+                  ? null
+                  : (_) => (start ?? checkpoint)(),
+              onChanged: exporting || managingRecipes || analyzingCleanup
+                  ? null
+                  : changed,
             ),
           ),
           IconButton(
             tooltip: '增大$label',
-            onPressed: exporting || value >= max
+            onPressed:
+                exporting || managingRecipes || analyzingCleanup || value >= max
                 ? null
                 : () {
                     checkpoint();
@@ -512,6 +559,63 @@ class _EditorPageState extends State<EditorPage> {
   );
   Widget controls() {
     switch (tab) {
+      case 7:
+        final settings = object(
+          recipe.data['cleanup'] ?? {'amount': 100, 'haze': 100, 'noise': 100},
+        );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text('自动分析原图中的灰雾和噪点，可分别调整两种效果。'),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              onPressed: exporting || analyzingCleanup || !restored
+                  ? null
+                  : analyzeCleanup,
+              icon: const Icon(Icons.auto_fix_high_rounded),
+              label: Text(
+                analyzingCleanup
+                    ? '正在分析原图…'
+                    : recipe.data['cleanupData'] == null
+                    ? '分析并应用'
+                    : '重新分析原图',
+              ),
+            ),
+            if (analyzingCleanup)
+              TextButton(
+                onPressed: activeJob == null
+                    ? null
+                    : () => widget.state.core.cancel(activeJob!),
+                child: const Text('取消分析'),
+              ),
+            if (recipe.data['cleanupData'] != null) ...[
+              for (final entry in [
+                ('amount', '总强度'),
+                ('haze', '去灰'),
+                ('noise', '降噪'),
+              ])
+                slider(
+                  entry.$2,
+                  (settings[entry.$1] as int? ?? 100).toDouble(),
+                  0,
+                  100,
+                  (value) => change(() {
+                    settings[entry.$1] = value.round();
+                    recipe.data['cleanup'] = settings;
+                  }, snapshot: false),
+                ),
+              TextButton(
+                onPressed: exporting || analyzingCleanup
+                    ? null
+                    : () => change(() {
+                        recipe.data.remove('cleanupData');
+                        recipe.data.remove('cleanup');
+                      }),
+                child: const Text('重置自动去灰'),
+              ),
+            ],
+          ],
+        );
       case 0:
         return Column(
           children: [
@@ -930,7 +1034,7 @@ class _EditorPageState extends State<EditorPage> {
           )
         else
           const Center(child: CircularProgressIndicator()),
-        if (rendering || exporting)
+        if (rendering || exporting || analyzingCleanup)
           Positioned(
             left: 0,
             right: 0,
@@ -949,12 +1053,12 @@ class _EditorPageState extends State<EditorPage> {
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
           child: Row(
             children: [
-              for (var i = 0; i < 7; i++)
+              for (var i = 0; i < 8; i++)
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: ChoiceChip(
                     label: Text(
-                      ['滤镜', '调节', '调色盘', '构图', '边框', '曲线', 'HSL'][i],
+                      ['滤镜', '调节', '调色盘', '构图', '边框', '曲线', 'HSL', '去灰'][i],
                     ),
                     selected: tab == i,
                     onSelected: (_) => setState(() => tab = i),
@@ -976,7 +1080,11 @@ class _EditorPageState extends State<EditorPage> {
                   style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
                 TextButton(
-                  onPressed: rendering || exporting
+                  onPressed:
+                      rendering ||
+                          exporting ||
+                          analyzingCleanup ||
+                          managingRecipes
                       ? null
                       : restored
                       ? render
@@ -995,7 +1103,8 @@ class _EditorPageState extends State<EditorPage> {
         actions: [
           IconButton(
             tooltip: '撤销',
-            onPressed: undo.isEmpty || exporting || managingRecipes
+            onPressed:
+                undo.isEmpty || exporting || managingRecipes || analyzingCleanup
                 ? null
                 : () {
                     redo.add(recipe.clone());
@@ -1006,7 +1115,8 @@ class _EditorPageState extends State<EditorPage> {
           ),
           IconButton(
             tooltip: '重做',
-            onPressed: redo.isEmpty || exporting || managingRecipes
+            onPressed:
+                redo.isEmpty || exporting || managingRecipes || analyzingCleanup
                 ? null
                 : () {
                     undo.add(recipe.clone());
@@ -1024,14 +1134,19 @@ class _EditorPageState extends State<EditorPage> {
           ),
           IconButton(
             tooltip: '导出照片',
-            onPressed: exporting || managingRecipes || preview == null
+            onPressed:
+                exporting ||
+                    managingRecipes ||
+                    analyzingCleanup ||
+                    preview == null
                 ? null
                 : export,
             icon: const Icon(Icons.ios_share_rounded),
           ),
           PopupMenuButton<String>(
             tooltip: '编辑选项',
-            enabled: restored && !exporting && !managingRecipes,
+            enabled:
+                restored && !exporting && !managingRecipes && !analyzingCleanup,
             onSelected: (_) => openRecipes(),
             itemBuilder: (_) => const [
               PopupMenuItem(value: 'recipes', child: Text('我的配方')),

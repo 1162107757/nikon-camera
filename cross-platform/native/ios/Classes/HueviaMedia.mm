@@ -7,6 +7,7 @@
 #import "cc/huevia/shared/SharedRecipe.h"
 #import "cc/huevia/shared/SharedCaptureInfo.h"
 #import "cc/huevia/shared/SharedRawSettings.h"
+#import "cc/huevia/shared/SharedCleanup.h"
 #import "cc/huevia/ncp/RawDevelopmentSettings.h"
 #import "cc/huevia/ncp/PhotoGeometry.h"
 #import "cc/huevia/ncp/PhotoBorder.h"
@@ -153,6 +154,17 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
     @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,preview?.98:1.0));check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sourceSha];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存 RAW 编辑副本。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
     NSDictionary *settings=[NSJSONSerialization JSONObjectWithData:[[CcHueviaSharedSharedRawSettings jsonWithCcHueviaNcpRawDevelopmentSettings:controls] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];return @{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"sourceSha":sourceSha,@"settings":settings,@"rawColorStatus":status};
+  }
+  if([operation isEqualToString:@"media.cleanupAnalyze"]){
+    NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class])fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
+    NSString *sha=[_runtime sourceIdentityWithNSString:path withBoolean:true],*status=@"";
+    HueviaRaster *source=raw?[self raw:path owner:owner settings:[CcHueviaSharedSharedRawSettings parseWithNSString:@"{}"] task:task status:&status]:load(path,_root,0);
+    int sample=1;while((std::max(source.pixelWidth,source.pixelHeight)+sample-1)/sample>512)sample*=2;
+    HueviaRaster *small=scaled(source,(source.pixelWidth+sample-1)/sample,(source.pixelHeight+sample-1)/sample,_root);
+    HueviaRaster *overview=compose(small,CcHueviaNcpPhotoGeometry_get_NONE(),_root,task);
+    NSString *value=[CcHueviaSharedSharedCleanup analyzeWithCcHueviaNcpSpatialPreviewFilter_Pixels:source withCcHueviaNcpSpatialPreviewFilter_Pixels:overview withJavaUtilFunctionBooleanSupplier:task];
+    check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sha];
+    return [NSJSONSerialization JSONObjectWithData:[value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
   }
   BOOL preview=[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"])fail(@"未知的照片操作。");
   if(![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");

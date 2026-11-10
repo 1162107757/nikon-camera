@@ -74,6 +74,25 @@ void main() {
         expect(exported['width'], 256);
         expect(exported['height'], 192);
         expect(exported['model'], isNotEmpty);
+        final cleanup = await render('media.cleanupAnalyze', {
+          'path': source.path,
+          'owner': '',
+        });
+        expect(cleanup['sourceWidth'], 256);
+        expect(cleanup['sourceHeight'], 192);
+        expect(cleanup['patchCount'], greaterThan(0));
+        expect(cleanup['cleanupData'], isNotEmpty);
+        final cleaned = await render('media.export', {
+          'path': source.path,
+          'owner': '',
+          'size': 'full',
+          'recipe': {
+            'cleanupData': cleanup['cleanupData'],
+            'cleanup': {'amount': 50, 'haze': 80, 'noise': 60},
+          },
+        });
+        expect(cleaned['width'], 256);
+        expect(cleaned['height'], 192);
         final crop = await render('media.export', {
           'path': source.path,
           'owner': '',

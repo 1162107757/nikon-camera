@@ -44,6 +44,9 @@ class DraftCore extends HueviaCore {
     if (operation == 'media.preview') {
       return {'path': '$root/previews/preview.png'};
     }
+    if (operation == 'media.cleanupAnalyze') {
+      return {'cleanupData': 'AWRkZAA='};
+    }
     if (operation == 'draft.save') {
       return {'recipe': payload['recipe']};
     }
@@ -145,6 +148,17 @@ void main() {
             .$2['recipe'];
         expect(newRecipe['presetId'], 'available');
         expect(newRecipe['strength'], 100);
+        await tapLabel('去灰');
+        await tapLabel('分析并应用');
+        await tester.ensureVisible(find.byTooltip('减小总强度'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byTooltip('减小总强度'));
+        await tester.pumpAndSettle();
+        final cleaned = core.calls
+            .lastWhere((call) => call.$1 == 'media.preview')
+            .$2['recipe'];
+        expect(cleaned['cleanupData'], 'AWRkZAA=');
+        expect(cleaned['cleanup']['amount'], 99);
         await tester.pumpWidget(const SizedBox());
         await tester.pump();
         expect(core.calls.last.$1, 'draft.save');

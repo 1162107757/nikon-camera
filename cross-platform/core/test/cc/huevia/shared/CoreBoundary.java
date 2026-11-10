@@ -71,6 +71,7 @@ public final class CoreBoundary {
             rejects(()->runtime.request("personal.status","{\"owner\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\"}"));
             checks+=PersonalSyncBoundaryTest.run(temporary);
             checks+=RecipeBoundaryTest.run(temporary);
+            checks+=CleanupBoundaryTest.run();
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

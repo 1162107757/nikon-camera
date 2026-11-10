@@ -24,6 +24,15 @@ final class NativeMedia {
             BitmapFactory.Options bounds=bounds(source);return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1)));
         }
         if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop"))return rawDevelop(operation,p,source,cancel,progress);
+        if(operation.equals("media.cleanupAnalyze")){
+            String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
+            String sha=runtime.sourceIdentity(source.getPath(),true);File pixels=source;
+            if(raw(source))pixels=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,progress).workingFile;
+            String pixelSha=PhotoEditStore.hashFile(pixels);
+            PhotoCleanup.Analysis analysis=PhotoCleanupAnalyzer.analyze(pixels,pixelSha,null,cancel);
+            runtime.guardOwner(owner);runtime.validateSource(source.getPath(),sha);
+            return SharedCleanup.result(analysis);
+        }
         if(!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
         boolean preview=operation.equals("media.preview");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();

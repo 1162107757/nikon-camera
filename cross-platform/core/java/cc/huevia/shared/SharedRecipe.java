@@ -25,6 +25,7 @@ public final class SharedRecipe {
             Map<String,Object> palette=obj(p,"palette"),g=obj(p,"geometry"),b=obj(p,"border");
             PhotoCleanup cleanup=PhotoCleanup.NONE;String encoded=SharedRuntime.text(p,"cleanupData",1024);
             if(!encoded.isEmpty()){try(DataInputStream in=stream(encoded,512)){cleanup=PhotoCleanup.read(in);if(in.available()!=0)throw new IOException("去灰数据含多余字节。");}}
+            if(p.get("cleanup")!=null){Map<String,Object> settings=obj(p,"cleanup");cleanup=new PhotoCleanup(n(settings,"amount",cleanup.amount),n(settings,"haze",cleanup.haze),n(settings,"noise",cleanup.noise),cleanup.analysis);}
             adjustments=new PhotoAdjustments(p.get("values")==null?new int[PhotoAdjustments.Parameter.values().length]:ints(p.get("values"),PhotoAdjustments.Parameter.values().length),curves,hsl,new PhotoColorPalette(n(palette,"color",0),n(palette,"tone",0),n(palette,"amount",100)),cleanup);
             geometry=new PhotoGeometry(n(g,"turns",0),n(g,"angle",0),n(g,"left",0),n(g,"top",0),n(g,"right",PhotoGeometry.UNIT),n(g,"bottom",PhotoGeometry.UNIT),n(g,"horizontalPerspective",0),n(g,"verticalPerspective",0),Boolean.TRUE.equals(g.get("mirrored")));
             String[] fields=new String[5];for(int i=0;i<5;i++)fields[i]="";
