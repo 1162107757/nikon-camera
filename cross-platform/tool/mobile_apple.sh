@@ -17,6 +17,7 @@ if [[ ! -x "$SDK/bin/flutter" ]]; then
   git -C "$SDK" -c http.version=HTTP/1.1 fetch --depth 1 origin refs/tags/3.47.9:refs/tags/3.47.9
 fi
 export PATH="$SDK/bin:$JAVA_HOME/bin:$PATH"
+flutter --version > "$WORK/flutter-bootstrap.log" 2>&1
 flutter --version --machine > "$WORK/flutter-version.json"
 python3 - "$WORK/flutter-version.json" "$REVISION" <<'PY'
 import json,sys

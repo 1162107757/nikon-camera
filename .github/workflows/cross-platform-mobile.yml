@@ -25,6 +25,7 @@ jobs:
       - name: Show actionable build errors
         if: failure()
         run: |
+          shopt -s nullglob
           for f in cross-platform/.build/mobile-apple/*.log; do
             echo "Log: $f"
             tail -n 35 "$f"
