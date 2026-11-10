@@ -1,0 +1,15 @@
+{
+  "unchanged181Files": [
+    {
+      "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+      "sha256": "96ef267a70d66e77561abc1efd1e2e66602ba5eb3e0e28952ab76289abfe5ace",
+      "unchanged": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "9f7c23d88c3f2e6764a33139497c3247b40dd0c07d7bdd577be3d6b7f9b792d2",
+      "unchanged": true
+    }
+  ],
+  "mainSelectionHeaderExactLinePreserved": true
+}

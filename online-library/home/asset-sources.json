@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-11-07T13:26:47.340Z",
+  "photos": [
+    {
+      "file": "assets/portrait-smile.jpg",
+      "author": "Andrea Piacquadio",
+      "pageUrl": "https://www.pexels.com/photo/woman-in-collared-shirt-774909/",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "sha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58"
+    },
+    {
+      "file": "assets/alpine-lake.jpg",
+      "author": "James Wheeler",
+      "pageUrl": "https://www.pexels.com/photo/lake-and-mountain-417074/",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "sha256": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3"
+    },
+    {
+      "file": "assets/neon-street.jpg",
+      "author": "Piotr Wojnowski",
+      "pageUrl": "https://www.pexels.com/photo/quiet-urban-street-at-night-with-neon-signs-40512875/",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "sha256": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2"
+    },
+    {
+      "file": "assets/coastal-water.jpg",
+      "author": "Pok Rie",
+      "pageUrl": "https://www.pexels.com/photo/transparent-sea-water-on-bright-sandy-beach-in-daylight-4103594/",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "sha256": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28"
+    },
+    {
+      "file": "assets/pink-tulips.jpg",
+      "author": "Nika Benedictova",
+      "pageUrl": "https://www.pexels.com/photo/close-up-of-tulip-flowers-15802403/",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "sha256": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580"
+    },
+    {
+      "file": "assets/breakfast.jpg",
+      "author": "Ash Craig",
+      "pageUrl": "https://www.pexels.com/photo/pancake-with-sliced-strawberry-376464/",
+      "licenseUrl": "https://www.pexels.com/license/",
+      "sha256": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648"
+    }
+  ],
+  "screenshot": {
+    "source": "docs/validation/preset-showcase/native/phone/01-gallery.png",
+    "versionCode": 155,
+    "purpose": "Labelled development-build UI preview; not proof of currently published release UI.",
+    "transform": "Resized to540×1212 and WebP compressed; generated NCP fixture names remain visible and are labelled demo presets."
+  },
+  "font": {
+    "source": "https://github.com/google/fonts/tree/main/ofl/outfit",
+    "license": "SIL OFL 1.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "apkSha256": "09f1368649c724520c1ad955da89334d8add18b2fba7ba3dd5ec05ab849f7741",
+  "purpose": "The 12 screenshots opened for the initial review before the F1 settings-viewer fix.",
+  "captures": [
+    "phone/01-gallery.png",
+    "font/01-gallery.png",
+    "narrow/01-gallery.png",
+    "landscape/01-gallery.png",
+    "tablet/01-gallery.png",
+    "tablet-landscape/01-gallery.png",
+    "dark/01-gallery.png",
+    "phone/02-detail-effect.png",
+    "phone/03-detail-original.png",
+    "dark/02-detail-effect.png",
+    "live/01-live-online-gallery.png",
+    "live/02-live-online-detail.png"
+  ]
+}

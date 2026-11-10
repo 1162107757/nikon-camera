@@ -1,0 +1,115 @@
+{
+  "versionCode": 172,
+  "sdk": 37,
+  "baseline": false,
+  "hardware-bitmapError": null,
+  "software-canvas-runtimeError": null,
+  "memory-pressureError": null,
+  "ordinary-software-bitmapError": null,
+  "actualOnlineTabError": null,
+  "scope": "Installed shared source-tab component and actual MainActivity online source button. Real Bitmap.Config.HARDWARE cannot be drawn by a software Canvas; runtime-only and OOM fixtures are explicitly injected. Baseline reproduces missing protection; fixed candidate changes pages without an optional snapshot. Normal software capture retains animation. No physical HarmonyOS device or user crash trace obtained.",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "expected-baseline-or-fixed-version",
+      "pass": true
+    },
+    {
+      "name": "actual-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "no-uncaught-error-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "source-change-completes-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "failed-snapshot-skips-only-animation-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "no-uncaught-error-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "source-change-completes-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "failed-snapshot-skips-only-animation-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "no-uncaught-error-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "source-change-completes-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "failed-snapshot-skips-only-animation-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "no-uncaught-error-ordinary-software-bitmap",
+      "pass": true
+    },
+    {
+      "name": "source-change-completes-ordinary-software-bitmap",
+      "pass": true
+    },
+    {
+      "name": "ordinary-source-retains-animation",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-ordinary-software-bitmap",
+      "pass": true
+    },
+    {
+      "name": "actual-online-tab-button-found",
+      "pass": true
+    },
+    {
+      "name": "actual-online-tab-no-uncaught-error",
+      "pass": true
+    },
+    {
+      "name": "actual-online-tab-switch-completes",
+      "pass": true
+    },
+    {
+      "name": "actual-main-remains-alive",
+      "pass": true
+    }
+  ],
+  "candidateSha256": "6712f7513eb35b5e9d9e7c3ce797fcd7fc0395b2400fffbc436a2d017dbe5d83"
+}

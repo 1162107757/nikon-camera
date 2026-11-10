@@ -1,0 +1,24 @@
+diff --git a/.tooling/sort183/final-source/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java b/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
+index 3362780..3c2a61e 100644
+--- a/.tooling/sort183/final-source/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
++++ b/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
+@@ -389,7 +389,7 @@ public final class LocalAlbumPanel implements AutoCloseable {
+             else if (item.getItemId() == 5) activity.startActivityForResult(cc.huevia.RawDevelopActivity.intent(activity,null,PhotoFilterEditor.accountOwner(activity)),7319);
+             else if (item.getItemId() == 4) {
+                 try { activity.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + activity.getPackageName()))); }
+-                catch (ActivityNotFoundException unavailable) { host.feedback("无法打开设置", "请在系统设置中找到本应用，调整照片访问权限。"); }
++                catch (ActivityNotFoundException | SecurityException unavailable) { host.feedback("无法打开设置", "请在系统设置中找到本应用，调整照片访问权限。"); }
+             }
+             return true;
+         }); menu.show();
+@@ -401,8 +401,8 @@ public final class LocalAlbumPanel implements AutoCloseable {
+         Collections.addAll(formats, cc.huevia.album.PhotoSourceFormat.RAW_MIMES);
+         intent.putExtra(Intent.EXTRA_MIME_TYPES, formats.toArray(new String[0])); intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+-        try { activity.startActivityForResult(intent, REQUEST_PICK_PHOTOS); }
+-        catch (ActivityNotFoundException unavailable) { host.feedback("无法选择照片", "系统未提供照片文件选择器。请授权浏览手机照片后重试。"); }
++        cc.huevia.SystemActivityLauncher.document(activity, intent, REQUEST_PICK_PHOTOS,
++                error -> host.feedback("无法选择照片", error));
+     }
+     public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+         if (requestCode != REQUEST_PHONE_ACCESS) return false;

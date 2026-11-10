@@ -1,0 +1,44 @@
+{
+  "pass": false,
+  "stage": "pressed-containment-mine",
+  "candidateSha256": "d728b77adba6062e0cb34e5325df219f3c9089a5abf68b27e58864cad4c0f2a2",
+  "mode": "phone",
+  "scope": "editor-sources186-pressed-repro",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "pressed-paint-remains-inside-capsule-false",
+      "pass": false
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 2,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "layout": {
+    "pressed-false": {
+      "changedOutsideCapsule": 455,
+      "changedInsideCapsule": 156
+    }
+  },
+  "failure": "java.lang.AssertionError: pressed-paint-remains-inside-capsule-false",
+  "stack": "java.lang.AssertionError: pressed-paint-remains-inside-capsule-false\n\tat cc.huevia.editorsourceqa.PrismaEditorProbe.check(PrismaEditorProbe.java:314)\n\tat cc.huevia.editorsourceqa.PrismaEditorProbe.pressedContainment186(PrismaEditorProbe.java:118)\n\tat cc.huevia.editorsourceqa.PrismaEditorProbe.onStart(PrismaEditorProbe.java:36)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\n"
+}

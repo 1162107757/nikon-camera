@@ -1,0 +1,28 @@
+{
+  "devices": [
+    {
+      "serial": "emulator-5586",
+      "fontScale": "1.3",
+      "airplaneMode": "1",
+      "nightMode": "Night mode: no",
+      "wmSize": "Physical size: 1080x2424",
+      "appRunning": false,
+      "testPackageRemoved": true,
+      "ownedAvd": "Huevia_Raw157_API36",
+      "closedByTask": true,
+      "closeResponse": "OK: killing emulator, bye bye\n\nOK"
+    },
+    {
+      "serial": "emulator-5588",
+      "fontScale": "1.0",
+      "airplaneMode": "0",
+      "nightMode": "Night mode: no",
+      "wmSize": "Physical size: 1080x2424",
+      "appRunning": false,
+      "testPackageRemoved": true,
+      "closedByTask": false
+    }
+  ],
+  "captureCleanup": "All four cleanup.json reports passed; owned fixture/drafts removed; no app-data clear/uninstall",
+  "physicalDeviceUsed": false
+}

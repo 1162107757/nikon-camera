@@ -1,0 +1,49 @@
+{
+  "verifiedAt": "2026-11-09T10:10:25.595Z",
+  "function": {
+    "name": "huevia-data-backup",
+    "id": "lam-kkffj9wt",
+    "status": "Active",
+    "runtime": "Nodejs20.19",
+    "type": "Event",
+    "memoryMB": 512,
+    "timeoutSeconds": 900,
+    "role": "HueviaDataBackupRole",
+    "logset": "ae4d30f6-aad2-44c7-aa52-fca7d7ebe513",
+    "topic": "b542b8c6-ab56-40fa-a14d-c81cd050fb18"
+  },
+  "roleId": "4611686018450260348",
+  "policies": [
+    {
+      "name": "HueviaDataBackupStorage",
+      "id": 293266107
+    },
+    {
+      "name": "HueviaFunctionLogWrite",
+      "id": 293251244
+    }
+  ],
+  "timer": {
+    "name": "huevia-daily-backup",
+    "type": "timer",
+    "enabled": 1,
+    "description": "{\"cron\":\"0 0 3 * * * *\"}",
+    "qualifier": "$LATEST",
+    "dispatchTokenMatches": true,
+    "intendedTimeZone": "Asia/Shanghai",
+    "nextDailyRunBeijing": "2026-11-10 03:00:00+08:00"
+  },
+  "backup": {
+    "complete": true,
+    "manifest": "huevia-backups/daily/2026-11-09/2026-11-09T10-04-21-151Z-99851b0c-c57c-49ea-9255-4419ccdec4da/COMPLETE.json",
+    "files": 773,
+    "databaseSha256": "57ff4246d38e1e040345ea458446fdc0d548d538885ab91d4a64518ec8e7b54f",
+    "tables": 35,
+    "completedAt": "2026-11-09T10:06:07.733Z"
+  },
+  "package": {
+    "sha256": "1831ff635c5fa4b79137c8d9e32a2e60952b8c97a1bdc790365a5f7233a112ba",
+    "bytes": 280705
+  },
+  "scope": "First real full backup and byte/hash readbacks completed; real daily schedule enabled and read back. Future executions not yet observed."
+}

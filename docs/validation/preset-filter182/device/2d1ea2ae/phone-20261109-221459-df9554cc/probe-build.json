@@ -1,0 +1,13 @@
+{
+  "builtAt": "2026-11-09T14:14:58.5073482Z",
+  "inputs": [
+    {
+      "path": "tests/preset-filter182-device-probe/src/PresetFilter182Probe.java",
+      "sha256": "4ae691d8f45ad8e3602362ccaf0115dc07747f0267004fc733405b555b749c17"
+    }
+  ],
+  "probeSha256": "23a96e3750d7a6edef39afce3ce534aac984b2d44772e3c6cc15304520e35de0",
+  "manifestSha256": "9cba8fdee9e77ea3534603e6adefe4ebd239b0e6ce9cdc7039d9142417657719",
+  "buildSha256": "20c365a059bc73f5fad39f542644f41abfcbf802168f6fba32a7d3fc6d981127",
+  "runSha256": "583f6120638bf86c57d596e7c012e3b5e03e72d64aac6950d6a0140e6b7b8813"
+}

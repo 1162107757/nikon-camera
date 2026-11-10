@@ -76,13 +76,13 @@ public final class PhotoFilterEditor implements AutoCloseable {
     private PhotoGeometry displayedGeometry=PhotoGeometry.NONE;
     private PhotoBorder displayedBorder=PhotoBorder.NONE;
     private PhotoBodyShape displayedBodyShape=PhotoBodyShape.NONE;
-    private boolean regionMaskHeld,regionMaskPreparing;
+    private boolean regionMaskHeld,regionMaskPreparing,regionMaskVisible=true;
     private String regionMaskRegionId="";
     private volatile long regionMaskRequest;
     private final Runnable endRegionMaskClick=()->stopRegionMaskPeek();
     private final ArrayList<Dialog> linkedPaintDialogs=new ArrayList<>();
     private boolean closingPaintDialogs;
-    private LinearLayout localControl,portraitControl,paletteControl,cleanupControl;
+    private LinearLayout localControl,portraitControl,paletteControl,cleanupControl,patchControl;
     private boolean localLoading,portraitLoading;
     private long portraitRequest;
     private PhotoBorder border=PhotoBorder.NONE;private PhotoCaptureInfo captureInfo=PhotoCaptureInfo.EMPTY;
@@ -90,7 +90,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
     private boolean recipeMode,compositionMode,compositionLoading;
     private double inlineRatio=0;
     private final java.util.List<Button> inlineRatios=new ArrayList<>();
-    private static final double[] INLINE_RATIOS={0,1,2.0/3,1.5,9.0/16};
+    private static final double[] INLINE_RATIOS={0,1,2.0/3,1.5,9.0/16,2.35};
     private LinearLayout compositionPanel;private TextView compositionSummary,adjustmentCaption;
     private FrameLayout toolPanels;private Button compositionReset;
     private final java.util.List<View> compositionTools=new ArrayList<>();
@@ -139,7 +139,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
     private final Map<String, Button> categoryButtons = new LinkedHashMap<>();
     private View addFiltersAction;
     private boolean onlineSource=true,catalogLoading;private String catalogMessage="正在加载在线滤镜…",catalogDiagnostic="";
-    private EditorPresetCatalog onlineCatalog;private Button onlineButton,mineButton;private TextView sourceStatus;
+    private EditorPresetCatalog onlineCatalog;private Button onlineButton,mineButton;private TextView sourceStatus;private PhotoPresetSourceTabs sourceTabs;
     private final java.util.List<OnlinePreset> catalogMetadata=new ArrayList<>();private long catalogLoadedAt;private String cachedCatalogMessage="",cachedCatalogDiagnostic="";
     private LinearLayout pickerCategories;private TextView pickerStatus,pickerTitle,pickerCount;
     private static final Map<String,Boolean> KNOWN=Collections.synchronizedMap(new LinkedHashMap<String,Boolean>(64,.75f,true){protected boolean removeEldestEntry(Map.Entry<String,Boolean> entry){return size()>512;}});
@@ -168,35 +168,44 @@ public final class PhotoFilterEditor implements AutoCloseable {
         cc.huevia.account.AccountRepository.Session session=repository.cachedSession(); return session==null||repository.isLogoutPending()?"":session.user.id;
     }
     public static void invalidateDraftCache(){KNOWN.clear();}
-    public Bitmap preview(){return ready?(regionMaskPreview==null?normalPreview():regionMaskPreview):null;} public Bitmap original(){return ready&&!unrecoverableSaved?(comparisonPreview==null?original:comparisonPreview):null;}
+    public Bitmap preview(){return ready?normalPreview():null;}
+    public Bitmap selectionMask(){return ready&&regionMaskHeld&&regionMaskVisible&&trackingSlider==null?regionMaskPreview:null;} public Bitmap original(){return ready&&!unrecoverableSaved?(comparisonPreview==null?original:comparisonPreview):null;}
     public Bitmap backdrop(){return ready?glass:null;}
     private Bitmap normalPreview(){return diagnosticPreview==null?current:diagnosticPreview;}
-    /** A momentary display-only mask; the original preview, draft and exported pixels are untouched. */
+    /** Toggle display-only selection coverage; exported and preview pixels stay untouched. */
     public Button createRegionMaskHoldButton(){
-        stopRegionMaskPeek();
-        final Button button=PhotoWorkspaceUi.icon(activity,"mask","按住显示当前涂抹选区，松开隐藏","editor-region-mask-hold",()->{});
-        regionMaskHoldButton=button;button.setMinWidth(dp(48));button.setMinimumWidth(dp(48));button.setMinHeight(dp(48));button.setMinimumHeight(dp(48));button.setPadding(0,0,0,0);
-        GradientDrawable face=shape(0xb80c0b0a,24);face.setStroke(dp(1),0x38ffffff);button.setBackgroundTintList(null);button.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),face,null));
-        button.setOnTouchListener((v,event)->{int action=event.getActionMasked();if(action==MotionEvent.ACTION_DOWN){if(button.isEnabled())beginRegionMaskPeek();return true;}if(action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_CANCEL||action==MotionEvent.ACTION_OUTSIDE||event.getPointerCount()>1||action==MotionEvent.ACTION_MOVE&&(event.getX()<0||event.getY()<0||event.getX()>v.getWidth()||event.getY()>v.getHeight())){stopRegionMaskPeek();return true;}return true;});
-        button.setOnClickListener(v->{beginRegionMaskPeek();main.removeCallbacks(endRegionMaskClick);if(regionMaskHeld)main.postDelayed(endRegionMaskClick,650);});
-        button.setOnFocusChangeListener((v,focused)->{if(!focused&&regionMaskHoldButton==button)stopRegionMaskPeek();});
-        final ViewTreeObserver.OnWindowFocusChangeListener focus=focused->{if(!focused&&regionMaskHoldButton==button)stopRegionMaskPeek();};
-        button.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener(){public void onViewAttachedToWindow(View v){v.getViewTreeObserver().addOnWindowFocusChangeListener(focus);}public void onViewDetachedFromWindow(View v){if(v.getViewTreeObserver().isAlive())v.getViewTreeObserver().removeOnWindowFocusChangeListener(focus);if(regionMaskHoldButton==button)stopRegionMaskPeek();}});
-        updateRegionMaskHoldButton();return button;
+        final Button button=PhotoWorkspaceUi.icon(activity,"eye","隐藏选区，保留调整","editor-region-mask-hold",()->{
+            regionMaskVisible=!regionMaskVisible;if(regionMaskVisible)beginRegionMaskPeek();else stopRegionMaskPeek();updateRegionMaskHoldButton();
+        });
+        regionMaskHoldButton=button;updateRegionMaskHoldButton();return button;
     }
-    private boolean canPeekRegionMask(){AdjustmentRegion region=activeRegion();Bitmap base=normalPreview();return ready&&!closed&&!unrecoverableSaved&&region!=null&&!region.strokes.isEmpty()&&base!=null&&!base.isRecycled()&&Math.max(base.getWidth(),base.getHeight())<=2048&&displayedSourceWidth>0&&displayedSourceHeight>0&&displayedGeometry.equals(geometry)&&displayedBorder.equals(border)&&displayedBodyShape.equals(localEdits.portrait.bodyShape)&&original!=null&&!original.isRecycled();}
-    private void updateRegionMaskHoldButton(){if(regionMaskHoldButton==null)return;boolean available=canPeekRegionMask();if(regionMaskHeld&&(!available||!selectedRegionId.equals(regionMaskRegionId)))stopRegionMaskPeek();regionMaskHoldButton.setVisibility(available?View.VISIBLE:View.GONE);regionMaskHoldButton.setEnabled(available);}
-    private void beginRegionMaskPeek(){stopRegionMaskPeek();if(!canPeekRegionMask())return;regionMaskHeld=true;regionMaskRegionId=selectedRegionId;if(regionMaskHoldButton!=null){regionMaskHoldButton.setSelected(true);regionMaskHoldButton.setPressed(true);}prepareRegionMaskPeek();}
-    private void stopRegionMaskPeek(){main.removeCallbacks(endRegionMaskClick);regionMaskRequest++;regionMaskHeld=false;regionMaskRegionId="";boolean shown=regionMaskPreview!=null;regionMaskPreview=null;if(regionMaskHoldButton!=null){regionMaskHoldButton.setSelected(false);regionMaskHoldButton.setPressed(false);}if(shown)host.changed();}
-    /** At most one owned preview copy/job. A newer hold is admitted only after an old job returns. */
+    private boolean canPeekRegionMask(){AdjustmentRegion region=activeRegion();Bitmap base=normalPreview();return ready&&!closed&&!unrecoverableSaved&&region!=null&&region.hasSelection()&&base!=null&&!base.isRecycled()&&displayedSourceWidth>0&&displayedSourceHeight>0&&displayedGeometry.equals(geometry)&&displayedBorder.equals(border)&&displayedBodyShape.equals(localEdits.portrait.bodyShape)&&original!=null&&!original.isRecycled();}
+    private void updateRegionMaskHoldButton(){
+        boolean available=canPeekRegionMask();
+        if(regionMaskHeld&&(!available||!selectedRegionId.equals(regionMaskRegionId)||!regionMaskVisible||trackingSlider!=null))stopRegionMaskPeek();
+        if(regionMaskHoldButton!=null){regionMaskHoldButton.setVisibility(available?View.VISIBLE:View.GONE);regionMaskHoldButton.setEnabled(available);regionMaskHoldButton.setSelected(regionMaskVisible);regionMaskHoldButton.setContentDescription(regionMaskVisible?"隐藏选区，保留调整":"显示选区");regionMaskHoldButton.setTooltipText(regionMaskHoldButton.getContentDescription());}
+        if(available&&regionMaskVisible&&trackingSlider==null&&!regionMaskHeld)beginRegionMaskPeek();
+    }
+    private void beginRegionMaskPeek(){
+        if(!regionMaskVisible||trackingSlider!=null||!canPeekRegionMask())return;
+        if(!regionMaskHeld){regionMaskHeld=true;regionMaskRegionId=selectedRegionId;}
+        prepareRegionMaskPeek();
+    }
+    private void stopRegionMaskPeek(){
+        main.removeCallbacks(endRegionMaskClick);regionMaskRequest++;regionMaskHeld=false;regionMaskRegionId="";
+        Bitmap old=regionMaskPreview;regionMaskPreview=null;if(old!=null){host.changed();if(!old.isRecycled())old.recycle();}
+    }
+    /** At most one small mask job. The result is a separate display layer, never a photo copy. */
     private void prepareRegionMaskPeek(){
-        if(regionMaskPreparing||!regionMaskHeld||!canPeekRegionMask())return;
-        final long request=regionMaskRequest;final int token=generation;final String account=owner;final AdjustmentRegion region=activeRegion();final PhotoGeometry composition=displayedGeometry;final PhotoBorder frame=displayedBorder;final PhotoBodyShape bodyShape=displayedBodyShape;final Bitmap source=normalPreview();final int sourceWidth=displayedSourceWidth,sourceHeight=displayedSourceHeight;
-        final Bitmap copy;try{copy=source.copy(Bitmap.Config.ARGB_8888,true);if(copy==null)throw new IllegalStateException("selection preview copy");}catch(RuntimeException|OutOfMemoryError unavailable){stopRegionMaskPeek();return;}
-        regionMaskPreparing=true;
-        try{io.execute(()->{boolean complete=false;Bitmap mask=null;try{mask=regionMaskBitmap(region,composition,frame,sourceWidth,sourceHeight,copy.getWidth(),copy.getHeight(),bodyShape,()->closed||request!=regionMaskRequest||Thread.currentThread().isInterrupted());if(closed||request!=regionMaskRequest)throw new CancellationException();drawRegionMaskOverlay(copy,mask,composition,frame,sourceWidth,sourceHeight);complete=true;}catch(Exception|OutOfMemoryError ignored){}finally{if(mask!=null&&!mask.isRecycled())mask.recycle();}
-            final boolean built=complete;main.post(()->{regionMaskPreparing=false;boolean same=regionMaskHeld&&request==regionMaskRequest&&canPeekRegionMask()&&valid(token,account)&&source==normalPreview()&&sourceWidth==displayedSourceWidth&&sourceHeight==displayedSourceHeight&&composition.equals(displayedGeometry)&&frame.equals(displayedBorder)&&bodyShape.equals(displayedBodyShape)&&region==activeRegion()&&composition.equals(geometry)&&frame.equals(border)&&region.id.equals(selectedRegionId);if(built&&same){regionMaskPreview=copy;host.changed();}else{copy.recycle();if(request==regionMaskRequest)stopRegionMaskPeek();else if(regionMaskHeld)prepareRegionMaskPeek();}});
-        });}catch(RejectedExecutionException unavailable){regionMaskPreparing=false;copy.recycle();stopRegionMaskPeek();}
+        if(regionMaskPreparing||regionMaskPreview!=null||!regionMaskHeld||!canPeekRegionMask())return;
+        final long request=regionMaskRequest;final int token=generation;final String account=owner;final AdjustmentRegion region=activeRegion();
+        final PhotoGeometry composition=displayedGeometry;final PhotoBorder frame=displayedBorder;final PhotoBodyShape bodyShape=displayedBodyShape;
+        final Bitmap source=normalPreview();final int sourceWidth=displayedSourceWidth,sourceHeight=displayedSourceHeight,width=source.getWidth(),height=source.getHeight();regionMaskPreparing=true;
+        try{io.execute(()->{Bitmap result=null;try{result=regionMaskBitmap(region,composition,frame,sourceWidth,sourceHeight,width,height,bodyShape,()->closed||request!=regionMaskRequest||Thread.currentThread().isInterrupted());}catch(Exception|OutOfMemoryError ignored){}
+            final Bitmap mask=result;main.post(()->{regionMaskPreparing=false;boolean same=regionMaskHeld&&request==regionMaskRequest&&regionMaskVisible&&trackingSlider==null&&canPeekRegionMask()&&valid(token,account)&&source==normalPreview()&&region==activeRegion()&&composition.equals(displayedGeometry)&&frame.equals(displayedBorder)&&bodyShape.equals(displayedBodyShape);
+                if(mask!=null&&same){regionMaskPreview=mask;host.changed();}else{if(mask!=null)mask.recycle();if(request==regionMaskRequest)stopRegionMaskPeek();else if(regionMaskHeld)prepareRegionMaskPeek();}
+            });
+        });}catch(RejectedExecutionException unavailable){regionMaskPreparing=false;stopRegionMaskPeek();}
     }
     private static void drawRegionMaskOverlay(Bitmap copy,Bitmap mask,PhotoGeometry composition,PhotoBorder frame,int sourceWidth,int sourceHeight){
         PhotoGeometry.Plan plan=composition.plan(sourceWidth,sourceHeight,1);int[] framed=frame.dimensions(plan.width,plan.height);RectF photo=regionMaskPhotoRect(plan,frame,framed);float radius=regionMaskCorner(plan,frame);Canvas canvas=new Canvas(copy);int save=canvas.save();canvas.scale(copy.getWidth()/(float)framed[0],copy.getHeight()/(float)framed[1]);Path clip=new Path();clip.addRoundRect(photo,radius,radius,Path.Direction.CW);canvas.clipPath(clip);canvas.drawBitmap(mask,null,new RectF(0,0,framed[0],framed[1]),new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG));canvas.restoreToCount(save);
@@ -209,7 +218,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
         PhotoGeometry.Plan plan=composition.plan(sourceWidth,sourceHeight,1);int[] framed=frame.dimensions(plan.width,plan.height);double scale=Math.min(1,320.0/Math.max(outputWidth,outputHeight));int w=Math.max(1,(int)Math.round(outputWidth*scale)),h=Math.max(1,(int)Math.round(outputHeight*scale));int[] pixels=new int[w*h];
         RectF photo=regionMaskPhotoRect(plan,frame,framed);double left=photo.left,top=photo.top,radius=regionMaskCorner(plan,frame);
         radius=Math.min(radius,Math.min(plan.width,plan.height)/2.0);AdjustmentRegion.Brush brush=region.compileBrush(sourceWidth,sourceHeight);
-        for(int y=0;y<h;y++){if(cancel.getAsBoolean())throw new CancellationException();for(int x=0;x<w;x++){double px=(x+.5)*framed[0]/w-left,py=(y+.5)*framed[1]/h-top;if(px<0||py<0||px>=plan.width||py>=plan.height)continue;if(radius>0){double dx=px-Math.max(radius,Math.min(plan.width-radius,px)),dy=py-Math.max(radius,Math.min(plan.height-radius,py));if(dx*dx+dy*dy>radius*radius)continue;}double[] source=plan.inverse(px,py);if(source[0]<0||source[1]<0||source[0]>=sourceWidth||source[1]>=sourceHeight)continue;PhotoBodyWarp.source(bodyShape,source[0]/sourceWidth,source[1]/sourceHeight,source);int alpha=(int)Math.round(104*brush.weight(source[0],source[1]));pixels[y*w+x]=(alpha<<24)|0x00fff1e4;}}
+        for(int y=0;y<h;y++){if(cancel.getAsBoolean())throw new CancellationException();for(int x=0;x<w;x++){double px=(x+.5)*framed[0]/w-left,py=(y+.5)*framed[1]/h-top;if(px<0||py<0||px>=plan.width||py>=plan.height)continue;if(radius>0){double dx=px-Math.max(radius,Math.min(plan.width-radius,px)),dy=py-Math.max(radius,Math.min(plan.height-radius,py));if(dx*dx+dy*dy>radius*radius)continue;}double[] source=plan.inverse(px,py);if(source[0]<0||source[1]<0||source[0]>=sourceWidth||source[1]>=sourceHeight)continue;PhotoBodyWarp.source(bodyShape,source[0]/sourceWidth,source[1]/sourceHeight,source);int alpha=(int)Math.round(38*brush.weight(source[0],source[1]));pixels[y*w+x]=(alpha<<24)|0x00fff1e4;}}
         return Bitmap.createBitmap(pixels,w,h,Bitmap.Config.ARGB_8888);
     }
     public boolean isReady(){return ready;}public boolean isQuickProcessing(){return quickBusy;} public String label(){return hasDraft?contextLabel()+(adjustments.isNeutral()?"":" · 调节 "+adjustments.count()+" 项")+(localEdits.portrait.isNeutral()?"":" · 人像")+(border.isNone()?"":" · "+PhotoBorder.TEMPLATES[border.template])+(exported?"":" · 未导出"):parkedDraft?"已保存版本 · 未导出草稿已保留":"当前已保存版本";}
@@ -280,11 +289,11 @@ public final class PhotoFilterEditor implements AutoCloseable {
         gridButton.setCompoundDrawablesRelative(null,null,null,null);gridButton.setCompoundDrawablePadding(0);
         AppIcon gridIcon=new AppIcon(AppIcon.Kind.GRID,TEXT,activity.getResources().getDisplayMetrics().density);
         LayerDrawable gridFace=new LayerDrawable(new Drawable[]{sourceFace(outline(0x0fffffff,10,0x33ffffff),36,6),gridIcon});gridFace.setLayerSize(1,dp(19),dp(19));gridFace.setLayerGravity(1,Gravity.CENTER);
-        gridButton.setBackground(gridFace);gridButton.setPadding(0,0,0,0);heading.addView(gridButton,new LinearLayout.LayoutParams(dp(48),-1));gridButton.setVisibility(View.GONE);heading.setOnLongClickListener(v->{showAll();return true;});
-        LinearLayout sources=sourceToggle();onlineButton=button("在线",false,()->setOnlineSource(true));mineButton=button("我的",false,()->setOnlineSource(false));
-        onlineButton.setTag("editor-source-online");mineButton.setTag("editor-source-mine");sources.addView(onlineButton,new LinearLayout.LayoutParams(dp(46),-1));sources.addView(mineButton,new LinearLayout.LayoutParams(dp(46),-1));heading.addView(sources,new LinearLayout.LayoutParams(-2,-1));sources.setVisibility(View.GONE);
+        gridButton.setBackground(gridFace);gridButton.setPadding(0,0,0,0);gridButton.setTag("editor-all-presets");heading.setOnLongClickListener(v->{showAll();return true;});
+        sourceTabs=new PhotoPresetSourceTabs(activity,()->setOnlineSource(false),()->setOnlineSource(true));
+        mineButton=sourceTabs.mine;onlineButton=sourceTabs.online;heading.addView(sourceTabs,new LinearLayout.LayoutParams(-2,-1));
         categoryStatus=text("",10,MUTED);categoryStatus.setGravity(Gravity.CENTER);categoryStatus.setMaxWidth(dp(42));categoryStatus.setSingleLine(true);categoryStatus.setPadding(dp(4),0,dp(4),0);categoryStatus.setOnClickListener(v->{if(!ready)retryPreparation();else if(onlineSource&&!catalogLoading)loadOnlineCatalog();});heading.addView(categoryStatus,new LinearLayout.LayoutParams(-2,-1));
-        categoryScroll=new HorizontalScrollView(activity);categoryScroll.setHorizontalScrollBarEnabled(false);categoryScroll.setOverScrollMode(View.OVER_SCROLL_NEVER);categoryScroll.addView(categories);heading.addView(categoryScroll,new LinearLayout.LayoutParams(0,-1,1));filterPanel.addView(heading,new LinearLayout.LayoutParams(-1,dp(48)));
+        categoryScroll=new HorizontalScrollView(activity);categoryScroll.setTag("editor-preset-categories");categoryScroll.setHorizontalScrollBarEnabled(false);categoryScroll.setOverScrollMode(View.OVER_SCROLL_NEVER);categoryScroll.addView(categories);LinearLayout.LayoutParams categorySpace=new LinearLayout.LayoutParams(0,-1,1);categorySpace.leftMargin=dp(8);heading.addView(categoryScroll,categorySpace);heading.addView(gridButton,new LinearLayout.LayoutParams(dp(48),-1));filterPanel.addView(heading,new LinearLayout.LayoutParams(-1,dp(48)));
         onlineButton.setOnLongClickListener(v->{if(!catalogLoading)loadOnlineCatalog();return true;});
         filterScroll=new HorizontalScrollView(activity);filterScroll.setHorizontalScrollBarEnabled(false);filterScroll.setOverScrollMode(View.OVER_SCROLL_NEVER);strip=row();strip.setGravity(Gravity.CENTER_VERTICAL);strip.setPadding(dp(18),dp(2),dp(18),dp(3));filterScroll.addView(strip);filterPanel.addView(filterScroll,new LinearLayout.LayoutParams(-1,0,1));
         filterScroll.getViewTreeObserver().addOnScrollChangedListener(this::requestVisible);
@@ -306,12 +315,13 @@ public final class PhotoFilterEditor implements AutoCloseable {
         controls.removeView(adjustmentSlider);controls.removeView(brushScopeButton);
         controls.setPadding(dp(21),0,dp(21),0);adjustmentCaption.setTextColor(TEXT);adjustmentValue.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);
         adjustmentCaption.setLayoutParams(new LinearLayout.LayoutParams(0,-1,1));adjustmentValue.setLayoutParams(new LinearLayout.LayoutParams(fp(64),-1));
-        LinearLayout sliderLine=row();sliderLine.setPadding(dp(8),0,dp(8),0);sliderLine.addView(adjustmentSlider,new LinearLayout.LayoutParams(-1,dp(48)));adjustmentPanel.addView(sliderLine);
-        HorizontalScrollView parameters=new HorizontalScrollView(activity);parameters.setTag("editor-adjustment-tools");parameters.setContentDescription("调节工具，左右滑动选择；曲线、HSL、调色盘、去灰和局部可直接打开");parameters.setHorizontalScrollBarEnabled(false);parameters.setOverScrollMode(View.OVER_SCROLL_NEVER);LinearLayout options=row();options.setGravity(Gravity.CENTER_VERTICAL);options.setPadding(dp(8),0,dp(8),0);parameters.addView(options);parameterControls.clear();
-        paletteControl=PhotoWorkspaceUi.toolEntry(activity,"调色盘","editor-palette",AppIcon.Kind.PALETTE,this::showPalette);paletteControl.setContentDescription("调色盘，拖动白点调整颜色与影调");options.addView(paletteControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
-        cleanupControl=PhotoWorkspaceUi.toolEntry(activity,"去灰","editor-cleanup",AppIcon.Kind.CLEANUP,this::showCleanup);cleanupControl.setContentDescription("去灰，自动分析灰雾与噪点");options.addView(cleanupControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
+        LinearLayout sliderLine=row();sliderLine.setPadding(dp(8),0,dp(8),0);sliderLine.addView(adjustmentSlider,new LinearLayout.LayoutParams(0,dp(48),1));sliderLine.addView(brushScopeButton,new LinearLayout.LayoutParams(dp(48),dp(48)));adjustmentPanel.addView(sliderLine);
+        HorizontalScrollView parameters=new HorizontalScrollView(activity);parameters.setTag("editor-adjustment-tools");parameters.setContentDescription("调节工具，左右滑动选择；曲线、HSL、调色盘、去灰、局部和修补可直接打开");parameters.setHorizontalScrollBarEnabled(false);parameters.setOverScrollMode(View.OVER_SCROLL_NEVER);LinearLayout options=row();options.setGravity(Gravity.CENTER_VERTICAL);options.setPadding(dp(8),0,dp(8),0);parameters.addView(options);parameterControls.clear();
+        paletteControl=PhotoWorkspaceUi.adjustmentEntry(activity,"调色盘","editor-palette",AppIcon.Kind.PALETTE,this::showPalette);paletteControl.setContentDescription("调色盘，拖动白点调整颜色与影调");options.addView(paletteControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
+        cleanupControl=PhotoWorkspaceUi.adjustmentEntry(activity,"去灰","editor-cleanup",AppIcon.Kind.CLEANUP,this::showCleanup);cleanupControl.setContentDescription("去灰，自动分析灰雾与噪点");options.addView(cleanupControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
         portraitControl=PhotoWorkspaceUi.toolEntry(activity,"人像","editor-portrait",AppIcon.Kind.PERSON,this::showPortrait);portraitControl.setContentDescription("人像精修，肤色、面部修饰、瘦身、瘦腿与腿部拉长");options.addView(portraitControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
-        localControl=PhotoWorkspaceUi.toolEntry(activity,"局部","editor-local",AppIcon.Kind.ADJUST,this::showRegionScope);localControl.setContentDescription("局部调节，涂抹范围与区域管理");options.addView(localControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
+        localControl=PhotoWorkspaceUi.adjustmentEntry(activity,"局部","editor-local",AppIcon.Kind.ADJUST,this::showRegionScope);localControl.setContentDescription("局部调节，涂抹范围与区域管理");options.addView(localControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
+        patchControl=PhotoWorkspaceUi.adjustmentEntry(activity,"修补","editor-patch",AppIcon.Kind.PATCH,this::showPatch);patchControl.setContentDescription("修补，涂抹后松手自动消除");options.addView(patchControl,new LinearLayout.LayoutParams(PhotoWorkspaceUi.entryWidth(activity),-1));
         advancedControls.clear();for(boolean curve:new boolean[]{true,false}){
             LinearLayout advanced=column();advanced.setGravity(Gravity.CENTER_HORIZONTAL);advanced.setPadding(0,dp(6),0,0);advanced.setFocusable(true);advanced.setClickable(true);advanced.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),shape(Color.TRANSPARENT,4),null));advanced.setTag(curve?"editor-curves":"editor-hsl");
             ImageView image=new ImageView(activity);image.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);image.setImageDrawable(new AppIcon(curve?AppIcon.Kind.CURVE:AppIcon.Kind.SATURATION,0x99ffffff,activity.getResources().getDisplayMetrics().density));advanced.addView(image,new LinearLayout.LayoutParams(dp(26),dp(26)));
@@ -328,21 +338,21 @@ public final class PhotoFilterEditor implements AutoCloseable {
         PhotoAdjustments.Parameter[] everyday={PhotoAdjustments.Parameter.EXPOSURE,PhotoAdjustments.Parameter.CONTRAST,PhotoAdjustments.Parameter.SATURATION,PhotoAdjustments.Parameter.TEMPERATURE};
         for(PhotoAdjustments.Parameter p:everyday){LinearLayout item=parameterControls.get(p);options.addView(item,item.getLayoutParams());}
         for(boolean curve:new boolean[]{true,false}){LinearLayout item=advancedControls.get(curve);options.addView(item,item.getLayoutParams());}
-        for(View item:new View[]{paletteControl,cleanupControl,localControl})options.addView(item,item.getLayoutParams());
+        for(View item:new View[]{paletteControl,cleanupControl,localControl,patchControl})options.addView(item,item.getLayoutParams());
         for(PhotoAdjustments.Parameter p:PhotoAdjustments.Parameter.values()){boolean included=false;for(PhotoAdjustments.Parameter common:everyday)if(p==common)included=true;if(!included){LinearLayout item=parameterControls.get(p);options.addView(item,item.getLayoutParams());}}
         adjustmentPanel.addView(new View(activity),new LinearLayout.LayoutParams(1,0,1));
         adjustmentPanel.addView(parameters,new LinearLayout.LayoutParams(-1,PhotoPrismaStyle.compact(activity)?dp(66):PhotoWorkspaceUi.entryHeight(activity)+dp(4)));
         parameters.addOnLayoutChangeListener((v,l,t,r,b,ol,ot,or,ob)->{int width=Math.max(dp(48),(parameters.getWidth()-options.getPaddingLeft()-options.getPaddingRight())/4);for(int i=0;i<options.getChildCount();i++){View child=options.getChildAt(i);if(child.getLayoutParams().width!=width){child.getLayoutParams().width=width;child.requestLayout();}}});
         TextView parameterHint=text("长按参数图标，恢复此项",10,0xb8ffffff);parameterHint.setPadding(dp(21),0,dp(21),0);adjustmentPanel.addView(parameterHint,new LinearLayout.LayoutParams(-1,PhotoPrismaStyle.compact(activity)?dp(20):fp(22)));
         compositionPanel=column();compositionPanel.setTag("editor-composition-panel");compositionPanel.setPadding(dp(14),0,dp(14),0);modes.addView(compositionPanel,new FrameLayout.LayoutParams(-1,-1));
-        compositionTools.clear();inlineRatios.clear();LinearLayout ratios=row();String[] ratioNames={"原比例","1:1","2:3","3:2","9:16"};
-        for(int i=0;i<INLINE_RATIOS.length;i++){final double ratio=INLINE_RATIOS[i];Button item=button(ratioNames[i],false,()->chooseInlineRatio(ratio));item.setTag("editor-crop-ratio-"+i);item.setContentDescription("裁切比例，"+ratioNames[i]);item.setTextSize(10.5f);item.setGravity(Gravity.CENTER);item.setPadding(0,dp(7),0,0);item.setCompoundDrawablePadding(dp(5));ratios.addView(item,new LinearLayout.LayoutParams(0,PhotoPrismaStyle.compact(activity)?dp(64):fp(76),1));inlineRatios.add(item);compositionTools.add(item);}compositionPanel.addView(ratios);
+        compositionTools.clear();inlineRatios.clear();LinearLayout ratios=row();String[] ratioNames={"原比例","1:1","2:3","3:2","9:16","2.35:1"};HorizontalScrollView ratioScroll=new HorizontalScrollView(activity);ratioScroll.setHorizontalScrollBarEnabled(false);ratioScroll.setFillViewport(true);ratioScroll.addView(ratios);
+        for(int i=0;i<INLINE_RATIOS.length;i++){final double ratio=INLINE_RATIOS[i];Button item=button(ratioNames[i],false,()->chooseInlineRatio(ratio));item.setTag("editor-crop-ratio-"+i);item.setContentDescription("裁切比例，"+(ratio==2.35?"电影 · ":"")+ratioNames[i]);item.setTextSize(10.5f);item.setGravity(Gravity.CENTER);item.setPadding(0,dp(7),0,0);item.setCompoundDrawablePadding(dp(5));ratios.addView(item,new LinearLayout.LayoutParams(dp(56),PhotoPrismaStyle.compact(activity)?dp(64):fp(76),1));inlineRatios.add(item);compositionTools.add(item);}compositionPanel.addView(ratioScroll);
         LinearLayout transforms=row();transforms.setGravity(Gravity.CENTER);compositionPanel.addView(transforms,new LinearLayout.LayoutParams(-1,dp(48)));
         Button rotate=inlineCompositionAction("旋转 90°",AppIcon.Kind.ROTATE,"editor-composition-rotate",this::rotateInline);
         Button flip=inlineCompositionAction("水平翻转",AppIcon.Kind.FLIP_HORIZONTAL,"editor-composition-flip",()->changeComposition(geometry.flipHorizontal()));
         compositionReset=inlineCompositionAction("重置",AppIcon.Kind.REFRESH,"editor-composition-reset",this::resetComposition);
         transforms.addView(rotate,new LinearLayout.LayoutParams(0,-1,1));transforms.addView(flip,new LinearLayout.LayoutParams(0,-1,1));transforms.addView(compositionReset,new LinearLayout.LayoutParams(0,-1,1));
-        compositionSummary=text("切换比例，预览居中裁切效果",10,0xbdffffff);compositionSummary.setTag("editor-composition-summary");compositionSummary.setGravity(Gravity.CENTER);compositionSummary.setSingleLine(true);compositionSummary.setEllipsize(TextUtils.TruncateAt.END);compositionSummary.setContentDescription("切换比例预览居中裁切，点击打开精细裁切、拉直与透视");compositionSummary.setOnClickListener(v->showComposition());compositionPanel.addView(compositionSummary,new LinearLayout.LayoutParams(-1,PhotoPrismaStyle.compact(activity)?dp(40):fp(40)));
+        compositionSummary=text("选择比例，拖动选框或双指缩放",10,0xbdffffff);compositionSummary.setTag("editor-composition-summary");compositionSummary.setGravity(Gravity.CENTER);compositionSummary.setSingleLine(true);compositionSummary.setEllipsize(TextUtils.TruncateAt.END);compositionSummary.setContentDescription("切换比例预览居中裁切，点击打开精细裁切、拉直与透视");compositionSummary.setOnClickListener(v->showComposition());compositionPanel.addView(compositionSummary,new LinearLayout.LayoutParams(-1,PhotoPrismaStyle.compact(activity)?dp(40):fp(40)));
         recipePanel=column();recipePanel.setTag("editor-recipe-panel");recipePanel.setPadding(dp(16),0,dp(16),0);modes.addView(recipePanel,new FrameLayout.LayoutParams(-1,-1));LinearLayout recipeHeader=row();TextView recipeTitle=text("配方",12,TEXT);recipeTitle.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));recipeHeader.addView(recipeTitle,new LinearLayout.LayoutParams(0,-1,1));recipePanel.addView(recipeHeader,new LinearLayout.LayoutParams(-1,fp(36)));
         saveRecipeButton=button("保存当前",false,this::saveRecipeDialog);saveRecipeButton.setTextSize(12);AppIcon plus=new AppIcon(AppIcon.Kind.PLUS,BLUE,activity.getResources().getDisplayMetrics().density);plus.setBounds(0,0,dp(15),dp(15));saveRecipeButton.setCompoundDrawables(null,null,null,null);GradientDrawable dashed=shape(Color.TRANSPARENT,10);dashed.setStroke(dp(1),0x42ffffff,dp(4),dp(3));saveRecipeButton.setBackground(new InsetDrawable(dashed,0,dp(5),0,dp(5)));recipePanel.addView(saveRecipeButton,new LinearLayout.LayoutParams(-1,Math.max(dp(48),fp(38))));
         ScrollView recipeScroll=new ScrollView(activity);recipeRows=column();recipeScroll.addView(recipeRows);recipePanel.addView(recipeScroll,new LinearLayout.LayoutParams(-1,0,1));recipeStatus=text("",10,0x70ffffff);recipeStatus.setGravity(Gravity.CENTER);recipeStatus.setSingleLine(true);recipeStatus.setEllipsize(TextUtils.TruncateAt.END);recipeStatus.setTooltipText("保存滤镜与调节，仅存本机当前账号");recipeStatus.setVisibility(View.GONE);recipePanel.addView(recipeStatus,new LinearLayout.LayoutParams(-1,fp(20)));updateRecipeRows();
@@ -428,7 +438,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
     private void refresh(){
         if(dock==null)return;updating=true;slider.setProgress(selected.isEmpty()?0:strength);slider.setEnabled(ready&&!selected.isEmpty());value.setText(String.valueOf(selected.isEmpty()?0:strength));value.setTextColor(selected.isEmpty()?0x99ffffff:TEXT);value.setEnabled(ready&&!selected.isEmpty());updating=false;
         note.setText(!ready?(bound==null?"下载完整原图后即可使用滤镜 · 点按下载":"正在准备当前照片的滤镜…"):label()+(parkedDraft?" · 点按恢复编辑":" · 手机近似效果"));note.setTooltipText(note.getText());note.setOnClickListener(parkedDraft?v->{DownloadedPhoto photo=bound;unbind();bind(photo,false);}:!ready&&bound==null?v->host.download():null);
-        title.setText("滤镜");styleSource(onlineButton,onlineSource);styleSource(mineButton,!onlineSource);
+        title.setText("滤镜");if(sourceTabs!=null)sourceTabs.setOnline(onlineSource);
         updateCatalogStatus(sourceStatus);
         buildCategories();buildStrip();updateAdjustmentControls();updateModes();
         String status=!ready?(preparationError.isEmpty()?"准备中":"准备失败 · 重试"):onlineSource&&!catalogMessage.isEmpty()?(catalogLoading?"加载中":catalogMessage.startsWith("离线")?"离线缓存":catalogMessage.contains("失败")?"加载失败":"") :"";
@@ -442,7 +452,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
         filterPanel.setVisibility(plain&&!adjustmentMode?View.VISIBLE:View.INVISIBLE);adjustmentPanel.setVisibility(plain&&adjustmentMode?View.VISIBLE:View.INVISIBLE);compositionPanel.setVisibility(compositionMode?View.VISIBLE:View.INVISIBLE);recipePanel.setVisibility(!compositionMode&&!borderMode&&recipeMode?View.VISIBLE:View.INVISIBLE);if(borderPanel!=null)borderPanel.setVisibility(!compositionMode&&borderMode?View.VISIBLE:View.INVISIBLE);
         styleCategory(filterModeButton,plain&&!adjustmentMode);styleCategory(adjustmentModeButton,plain&&adjustmentMode);
         Button recipe=dock.findViewWithTag("recipe-mode"),frame=dock.findViewWithTag("border-mode"),compose=dock.findViewWithTag("composition-mode");if(recipe!=null)styleCategory(recipe,recipeMode&&!compositionMode&&!borderMode);if(frame!=null)styleCategory(frame,borderMode&&!compositionMode);if(compose!=null)styleCategory(compose,compositionMode);
-        if(original!=null&&!original.isRecycled()){PhotoGeometry.Plan plan=geometry.plan(original.getWidth(),original.getHeight(),1),full=geometry.fullFrame().plan(original.getWidth(),original.getHeight(),1);double actual=plan.width/(double)plan.height,frameRatio=full.width/(double)full.height;if(inlineRatio<0||Math.abs(actual-(inlineRatio==0?frameRatio:inlineRatio))>.01){inlineRatio=-1;for(double ratio:INLINE_RATIOS)if(Math.abs(actual-(ratio==0?frameRatio:ratio))<.01){inlineRatio=ratio;break;}}}
+        if(original!=null&&!original.isRecycled()){PhotoGeometry.Plan full=geometry.fullFrame().plan(original.getWidth(),original.getHeight(),1);double frameRatio=full.frameWidth/(double)full.frameHeight,actual=frameRatio*(geometry.right-geometry.left)/(geometry.bottom-geometry.top);if(inlineRatio<0||Math.abs(actual-(inlineRatio==0?frameRatio:inlineRatio))>.01){inlineRatio=-1;for(double ratio:INLINE_RATIOS)if(Math.abs(actual-(ratio==0?frameRatio:ratio))<.01){inlineRatio=ratio;break;}}}
         compositionSummary.setTooltipText(geometry.label()+"，点击精细构图");for(int i=0;i<inlineRatios.size();i++){Button item=inlineRatios.get(i);boolean selected=inlineRatio==INLINE_RATIOS[i];item.setSelected(selected);item.setTextColor(selected?BLUE:0xc9ffffff);Drawable ratioIcon=PhotoPrismaStyle.ratio(activity,INLINE_RATIOS[i],selected);ratioIcon.setBounds(0,0,dp(30),dp(30));item.setCompoundDrawables(null,ratioIcon,null,null);item.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),null,shape(Color.WHITE,4)));}
         boolean compositionReady=ready&&!unrecoverableSaved;for(View tool:compositionTools){tool.setEnabled(compositionReady);tool.setAlpha(compositionReady?1:.35f);}compositionReset.setEnabled(compositionReady&&!geometry.isNeutral());compositionReset.setAlpha(compositionReset.isEnabled()?1:.3f);if(borderControls!=null)borderControls.refresh();
     }
@@ -457,11 +467,8 @@ public final class PhotoFilterEditor implements AutoCloseable {
         Drawable icon=new AppIcon(kind,TEXT,activity.getResources().getDisplayMetrics().density);icon.setBounds(0,0,dp(17),dp(17));button.setCompoundDrawables(icon,null,null,null);button.setCompoundDrawablePadding(dp(4));compositionTools.add(button);return button;
     }
     private void chooseInlineRatio(double ratio){
-        if(!readableSettings()||original==null)return;inlineRatio=ratio;
-        PhotoGeometry.Plan frame=geometry.fullFrame().plan(original.getWidth(),original.getHeight(),1);
-        double normalized=ratio==0?1:ratio*frame.frameHeight/frame.frameWidth,w=Math.min(1,normalized),h=w/normalized;
-        changeComposition(geometry.crop((1-w)/2,(1-h)/2,(1+w)/2,(1+h)/2));
-        updateModes();
+        if(!readableSettings()||original==null)return;
+        showComposition(PhotoCropDialog.TOOL_CROP,ratio);
     }
     private void changeComposition(PhotoGeometry next){if(!readableSettings()||geometry.equals(next))return;finishDrag(true);EditState before=snapshot();geometry=next;remember(before);edited();refreshManualThumbnails();}
     private void rotateInline(){
@@ -487,6 +494,7 @@ public final class PhotoFilterEditor implements AutoCloseable {
         for(Map.Entry<Boolean,LinearLayout> item:advancedControls.entrySet()){LinearLayout option=item.getValue();option.setEnabled(ready&&!unrecoverableSaved);option.setSelected(false);option.setAlpha(option.isEnabled()?1:.35f);}
         if(paletteControl!=null){paletteControl.setEnabled(ready&&!unrecoverableSaved);paletteControl.setAlpha(paletteControl.isEnabled()?1:.35f);boolean active=!target.palette.isNeutral();((ImageView)paletteControl.getChildAt(0)).setImageDrawable(new AppIcon(AppIcon.Kind.PALETTE,active?BLUE:0x99ffffff,activity.getResources().getDisplayMetrics().density));((TextView)paletteControl.getChildAt(1)).setTextColor(active?BLUE:0x99ffffff);paletteControl.setContentDescription("调色盘，"+scopeLabel()+"，颜色 "+target.palette.color+"，影调 "+target.palette.tone+"，强度 "+target.palette.amount+"%"+(active?"，已调整":""));}
         if(cleanupControl!=null){cleanupControl.setEnabled(ready&&!unrecoverableSaved);cleanupControl.setAlpha(cleanupControl.isEnabled()?1:.35f);boolean active=!target.cleanup.isNeutral();((ImageView)cleanupControl.getChildAt(0)).setImageDrawable(new AppIcon(AppIcon.Kind.CLEANUP,active?BLUE:0x99ffffff,activity.getResources().getDisplayMetrics().density));((TextView)cleanupControl.getChildAt(1)).setTextColor(active?BLUE:0x99ffffff);cleanupControl.setContentDescription("去灰，"+scopeLabel()+"，强度 "+target.cleanup.amount+"%"+(active?"，已调整":""));}
+        if(patchControl!=null){patchControl.setEnabled(ready&&!unrecoverableSaved&&!localLoading);patchControl.setAlpha(patchControl.isEnabled()?1:.35f);boolean active=!localEdits.patches().isEmpty();((ImageView)patchControl.getChildAt(0)).setImageDrawable(new AppIcon(AppIcon.Kind.PATCH,active?BLUE:0x99ffffff,activity.getResources().getDisplayMetrics().density));((TextView)patchControl.getChildAt(1)).setTextColor(active?BLUE:0x99ffffff);patchControl.setContentDescription("修补，涂抹后松手自动消除，已有"+localEdits.patches().size()+"处修补");}
         if(portraitControl!=null){portraitControl.setEnabled(ready&&!unrecoverableSaved&&!portraitLoading);portraitControl.setAlpha(portraitControl.isEnabled()?1:.35f);boolean active=!localEdits.portrait.isNeutral();((ImageView)portraitControl.getChildAt(0)).setImageDrawable(new AppIcon(AppIcon.Kind.PERSON,active?BLUE:0x99ffffff,activity.getResources().getDisplayMetrics().density));((TextView)portraitControl.getChildAt(1)).setTextColor(active?BLUE:0x99ffffff);portraitControl.setContentDescription("人像精修，肤色、柔肤、面部光影与祛痘"+(active?"，已调整":""));}
         for(Map.Entry<PhotoAdjustments.Parameter,LinearLayout> item:parameterControls.entrySet()){PhotoAdjustments.Parameter p=item.getKey();LinearLayout option=item.getValue();boolean active=p==parameter;((ImageView)option.getChildAt(0)).setImageDrawable(new AppIcon(parameterIcon(p),active?BLUE:0x99ffffff,activity.getResources().getDisplayMetrics().density));TextView label=(TextView)option.getChildAt(1);label.setText(p.label);label.setTextColor(active?BLUE:0x99ffffff);GradientDrawable dot=shape(target.get(p)==0?Color.TRANSPARENT:BLUE,3);LayerDrawable mark=new LayerDrawable(new Drawable[]{shape(Color.TRANSPARENT,0),dot});mark.setLayerSize(1,dp(5),dp(5));mark.setLayerGravity(1,Gravity.TOP|Gravity.RIGHT);mark.setLayerInset(1,0,dp(3),dp(10),0);option.setForeground(mark);option.setSelected(active);option.setEnabled(ready);option.setContentDescription(p.label+"，"+p.format(target.get(p))+"，"+scopeLabel()+(active?"，当前参数":"")+"，长按重置");}
     }
@@ -520,12 +528,13 @@ public final class PhotoFilterEditor implements AutoCloseable {
         if(!readableSettings()||brushLoading)return;finishDrag(true);if(!adjustmentMode||compositionMode||recipeMode||borderMode)setAdjustmentMode(true);normalizeRegionScope();PopupMenu menu=new PopupMenu(activity,brushScopeButton);
         menu.getMenu().add(0,0,0,"全图").setCheckable(true).setChecked(selectedRegionId.isEmpty());
         for(int i=0;i<localEdits.regions().size();i++){AdjustmentRegion region=localEdits.regions().get(i);menu.getMenu().add(0,100+i,i+1,region.name).setCheckable(true).setChecked(region.id.equals(selectedRegionId));}
-        menu.getMenu().add(0,1,1000,"新增涂抹区域").setEnabled(localEdits.regions().size()<16);
+        menu.getMenu().add(0,1,1000,"新增选区").setEnabled(localEdits.regions().size()<16);
         menu.getMenu().add(0,2,1001,"编辑当前选区").setEnabled(activeRegion()!=null);
         menu.getMenu().add(0,5,1001,"查看选区").setEnabled(activeRegion()!=null);
         menu.getMenu().add(0,3,1002,"删除当前区域").setEnabled(activeRegion()!=null);
-        menu.getMenu().add(0,4,1003,"渐变与取样修复");
-        menu.setOnMenuItemClickListener(item->{int id=item.getItemId();if(id==0){selectedRegionId="";updateAdjustmentControls();return true;}if(id>=100){int index=id-100;if(index<localEdits.regions().size()){selectedRegionId=localEdits.regions().get(index).id;updateAdjustmentControls();}return true;}if(id==1){showBrushSelection(null,null);return true;}if(id==2||id==5){showBrushSelection(activeRegion(),null);return true;}if(id==3){int index=regionIndex(selectedRegionId);if(index>=0){EditState before=snapshot();localEdits=localEdits.removeRegion(index);selectedRegionId="";remember(before);edited();refreshManualThumbnails();}return true;}if(id==4){showLocal();return true;}return false;});
+        menu.getMenu().add(0,6,1003,"修补当前选区").setEnabled(activeRegion()!=null);
+        menu.getMenu().add(0,4,1004,"渐变与取样修复");
+        menu.setOnMenuItemClickListener(item->{int id=item.getItemId();if(id==0){selectedRegionId="";updateAdjustmentControls();return true;}if(id>=100){int index=id-100;if(index<localEdits.regions().size()){selectedRegionId=localEdits.regions().get(index).id;updateAdjustmentControls();}return true;}if(id==1){showBrushSelection(null,null);return true;}if(id==2||id==5){showBrushSelection(activeRegion(),null);return true;}if(id==3){int index=regionIndex(selectedRegionId);if(index>=0){EditState before=snapshot();localEdits=localEdits.removeRegion(index);selectedRegionId="";remember(before);edited();refreshManualThumbnails();}return true;}if(id==4){showLocal();return true;}if(id==6){showPatch(true);return true;}return false;});
         if(brushScopeButton.isShown()&&brushScopeButton.getWidth()>0)menu.show();else{final int token=generation;final long request=portraitRequest;final String account=owner;final Button anchor=brushScopeButton;final android.view.ViewTreeObserver observer=anchor.getViewTreeObserver();observer.addOnGlobalLayoutListener(new android.view.ViewTreeObserver.OnGlobalLayoutListener(){public void onGlobalLayout(){if(observer.isAlive())observer.removeOnGlobalLayoutListener(this);if(valid(token,account)&&request==portraitRequest&&anchor==brushScopeButton&&popup==null&&linkedPaintDialogs.isEmpty()&&anchor.isShown()&&anchor.getWidth()>0)menu.show();}});}
     }
     private void showBrushSelection(AdjustmentRegion existing,Runnable afterCommit){
@@ -562,36 +571,99 @@ public final class PhotoFilterEditor implements AutoCloseable {
         if(parkedDraft)PhotoActionsMenu.item(activity,menu,1,PhotoActionsMenu.RESTORE_DRAFT,12,"继续编辑","恢复这张照片的草稿",AppIcon.Kind.RECEIPTS,()->{DownloadedPhoto photo=bound;unbind();bind(photo,false);});
     }
     private boolean readableSettings(){if(!ready)return false;if(unrecoverableSaved||!hasDraft&&bound!=null&&originalPhoto!=null&&!bound.file().equals(originalPhoto.file())){host.error("此保存版本的编辑参数暂不可恢复。仍可查看完整文件像素或调整导出尺寸；编辑请先选择原图。");return false;}return true;}
-    public void showCleanup(){
-        if(!readableSettings())return;finishDrag(true);dismissPopup();
-        if(originalPhoto==null||!originalPhoto.file().isFile()){host.error("无法读取原图，请重新选择照片。");return;}
-        final int token=generation;final String scope=owner,regionId=selectedRegionId,originalSha=sourceSha;final EditState starting=snapshot();final Bitmap base=original,fast=fastOriginal==null?base:fastOriginal;final PhotoCaptureInfo capture=captureInfo;final File source=originalPhoto.file();final int index=regionIndex(starting.localEdits,regionId);final AdjustmentRegion analysisRegion=index<0?null:starting.localEdits.regions().get(index);
-        PhotoCleanupDialog dialog=new PhotoCleanupDialog(activity,current,editingAdjustments(),scopeLabel(),cancelled->PhotoCleanupAnalyzer.analyze(source,originalSha,analysisRegion,()->cancelled.getAsBoolean()||closed||generation!=token), (manual,interactive)->{
-            PhotoAdjustments full=index<0?manual:starting.manual;PhotoLocalEdits locals=index<0?starting.localEdits:starting.localEdits.withRegion(index,starting.localEdits.regions().get(index).withAdjustments(manual));
-            PresetPreviewProfile profile=BorderPreviewProfile.of(GeometryPreviewProfile.of(LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),full),locals),starting.geometry),starting.border);
-            return renderFramed(interactive?fast:base,profile,capture,activity);
-        },next->{if(!valid(token,scope)||!regionId.equals(selectedRegionId)||!starting.same(snapshot()))return;EditState before=snapshot();if(!setEditingAdjustments(next))return;remember(before);edited();refreshManualThumbnails();});
-        popup=dialog;dialog.setOnDismissListener(v->{if(popup==dialog)popup=null;});dialog.show();PhotoEditorTypography.apply(dialog);
+    private enum AdjustmentTool { PALETTE, CLEANUP, CURVES, HSL }
+    private interface AdjustmentRenderer { Bitmap render(PhotoAdjustments settings,boolean interactive)throws Exception; }
+    public void showCleanup(){showAdjustmentTool(AdjustmentTool.CLEANUP);}
+    public void showPalette(){showAdjustmentTool(AdjustmentTool.PALETTE);}
+    public void showColor(boolean curves){showAdjustmentTool(curves?AdjustmentTool.CURVES:AdjustmentTool.HSL);}
+    private void showAdjustmentTool(AdjustmentTool tool){
+        if(!readableSettings()||brushLoading)return;finishDrag(true);dismissPopup();normalizeRegionScope();
+        if(tool==AdjustmentTool.CLEANUP&&(originalPhoto==null||!originalPhoto.file().isFile())){host.error("无法读取原图，请重新选择照片。");return;}
+        openAdjustmentTool(tool,snapshot(),adjustments,localEdits,selectedRegionId,current,false,null,null,generation,owner,portraitRequest);
     }
-    public void showPalette(){
-        if(!readableSettings())return;finishDrag(true);dismissPopup();
-        final int token=generation;final String scope=owner,regionId=selectedRegionId;final EditState starting=snapshot();final Bitmap base=original,fast=fastOriginal==null?base:fastOriginal;final PhotoCaptureInfo capture=captureInfo;
-        PhotoPaletteDialog dialog=new PhotoPaletteDialog(activity,current,editingAdjustments(),scopeLabel(),(manual,interactive)->{
-            int index=regionIndex(starting.localEdits,regionId);PhotoAdjustments full=index<0?manual:starting.manual;PhotoLocalEdits locals=index<0?starting.localEdits:starting.localEdits.withRegion(index,starting.localEdits.regions().get(index).withAdjustments(manual));
-            PresetPreviewProfile profile=BorderPreviewProfile.of(GeometryPreviewProfile.of(LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),full),locals),starting.geometry),starting.border);
-            return renderFramed(interactive?fast:base,profile,capture,activity);
-        },next->{if(!valid(token,scope)||!regionId.equals(selectedRegionId)||!starting.same(snapshot()))return;EditState before=snapshot();if(!setEditingAdjustments(next))return;remember(before);edited();refreshManualThumbnails();});
-        popup=dialog;dialog.setOnDismissListener(v->{if(popup==dialog)popup=null;});dialog.show();PhotoEditorTypography.apply(dialog);
+    private Dialog adjustmentDialog(AdjustmentTool tool,Bitmap initial,PhotoAdjustments values,String label,AdjustmentRegion analysisRegion,AdjustmentRenderer renderer,Consumer<PhotoAdjustments> commit,int token,String account,long request){
+        final Dialog dialog;
+        switch(tool){
+            case PALETTE:dialog=new PhotoPaletteDialog(activity,initial,values,label,renderer::render,commit);break;
+            case CLEANUP:{final File source=originalPhoto.file();final String sha=sourceSha;dialog=new PhotoCleanupDialog(activity,initial,values,label,cancel->PhotoCleanupAnalyzer.analyze(source,sha,analysisRegion,()->cancel.getAsBoolean()||!valid(token,account)||request!=portraitRequest),renderer::render,commit);break;}
+            default:dialog=new PhotoColorDialog(activity,initial,values,tool==AdjustmentTool.CURVES,renderer::render,commit);
+        }
+        if(analysisRegion!=null){
+            Bitmap mask=regionMaskBitmap(analysisRegion,geometry,border,original.getWidth(),original.getHeight(),initial.getWidth(),initial.getHeight(),localEdits.portrait.bodyShape,()->closed);
+            if(dialog instanceof PhotoPaletteDialog)((PhotoPaletteDialog)dialog).setSelectionMask(mask);
+            else if(dialog instanceof PhotoCleanupDialog)((PhotoCleanupDialog)dialog).setSelectionMask(mask);
+            else ((PhotoColorDialog)dialog).setSelectionMask(mask);
+        }
+        return dialog;
     }
-    public void showColor(boolean curves){
-        if(!readableSettings())return;finishDrag(true);dismissPopup();
-        final int token=generation;final String scope=owner,regionId=selectedRegionId;final EditState starting=snapshot();final Bitmap base=original,fast=fastOriginal==null?base:fastOriginal;final PhotoCaptureInfo capture=captureInfo;
-        PhotoColorDialog dialog=new PhotoColorDialog(activity,current,editingAdjustments(),curves,(manual,interactive)->{
-            int index=regionIndex(starting.localEdits,regionId);PhotoAdjustments full=index<0?manual:starting.manual;PhotoLocalEdits locals=index<0?starting.localEdits:starting.localEdits.withRegion(index,starting.localEdits.regions().get(index).withAdjustments(manual));
-            PresetPreviewProfile profile=BorderPreviewProfile.of(GeometryPreviewProfile.of(LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),full),locals),starting.geometry),starting.border);
-            return renderFramed(interactive?fast:base,profile,capture,activity);
-        },next->{if(!valid(token,scope)||!regionId.equals(selectedRegionId)||!starting.same(snapshot()))return;EditState before=snapshot();if(!setEditingAdjustments(next))return;remember(before);edited();refreshManualThumbnails();});
-        popup=dialog;dialog.setOnDismissListener(v->{if(popup==dialog)popup=null;});dialog.show();PhotoEditorTypography.apply(dialog);
+    private static PhotoAdjustments adjustmentSettings(Dialog dialog){
+        if(dialog instanceof PhotoPaletteDialog)return ((PhotoPaletteDialog)dialog).settings();
+        if(dialog instanceof PhotoCleanupDialog)return ((PhotoCleanupDialog)dialog).settings();
+        return ((PhotoColorDialog)dialog).settings();
+    }
+    private static void adjustmentPaint(Dialog dialog,String label,Runnable request){
+        if(dialog instanceof PhotoPaletteDialog)((PhotoPaletteDialog)dialog).setPaintRequest(label,request);
+        else if(dialog instanceof PhotoCleanupDialog)((PhotoCleanupDialog)dialog).setPaintRequest(label,request);
+        else ((PhotoColorDialog)dialog).setPaintRequest(label,request);
+    }
+    private PresetPreviewProfile adjustmentProfile(EditState starting,PhotoAdjustments full,PhotoLocalEdits locals,boolean framed){
+        PresetPreviewProfile profile=LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),full),framed?locals:withoutBody(locals));
+        return framed?BorderPreviewProfile.of(GeometryPreviewProfile.of(profile,starting.geometry),starting.border):profile;
+    }
+    /** A modal and all nested mask changes are one transaction until the innermost Apply. */
+    private void openAdjustmentTool(AdjustmentTool tool,EditState starting,PhotoAdjustments full,PhotoLocalEdits locals,String regionId,Bitmap initial,boolean ownsInitial,Dialog parent,Runnable acceptParent,int token,String account,long request){
+        int index=regionIndex(locals,regionId);AdjustmentRegion region=index<0?null:locals.regions().get(index);String label=region==null?"全图":region.name;
+        final Bitmap base=original,fast=fastOriginal==null?base:fastOriginal;final PhotoCaptureInfo capture=captureInfo;final boolean[] accepted={false};
+        Dialog dialog=adjustmentDialog(tool,initial,region==null?full:region.adjustments,label,region,(manual,interactive)->{
+            if(!valid(token,account)||request!=portraitRequest)throw new IOException("照片已切换，请重新打开调节。");
+            PhotoAdjustments global=index<0?manual:full;PhotoLocalEdits local=index<0?locals:locals.withRegion(index,region.withAdjustments(manual));
+            return renderFramed(interactive?fast:base,adjustmentProfile(starting,global,local,true),capture,activity);
+        },next->{
+            if(!valid(token,account)||request!=portraitRequest||!starting.same(snapshot()))return;
+            try{PhotoAdjustments global=index<0?next:full;PhotoLocalEdits local=index<0?locals:locals.withRegion(index,region.withAdjustments(next));
+                EditState before=snapshot();adjustments=global;localEdits=local;selectedRegionId=regionId;remember(before);accepted[0]=true;edited();refreshManualThumbnails();
+            }catch(IllegalArgumentException limit){host.error(message(limit));}
+        },token,account,request);
+        Runnable acceptChain=()->{accepted[0]=true;dialog.dismiss();};
+        adjustmentPaint(dialog,label,()->showAdjustmentPaint(tool,dialog,starting,full,locals,regionId,acceptChain,token,account,request));
+        linkedPaintDialogs.add(dialog);popup=dialog;dialog.setOnDismissListener(v->{
+            linkedPaintDialogs.remove(dialog);if(popup==dialog)popup=null;if(ownsInitial&&!initial.isRecycled())initial.recycle();
+            if(parent==null){brushLoading=false;portraitRequest++;updateAdjustmentControls();}
+            if(closingPaintDialogs)return;
+            if(accepted[0]&&acceptParent!=null)acceptParent.run();
+            else if(parent!=null&&parent.isShowing()&&valid(token,account)&&request==portraitRequest)popup=parent;
+        });dialog.show();PhotoEditorTypography.apply(dialog);
+    }
+    private void showAdjustmentPaint(AdjustmentTool tool,Dialog parent,EditState starting,PhotoAdjustments full,PhotoLocalEdits locals,String regionId,Runnable acceptParent,int token,String account,long request){
+        if(!valid(token,account)||request!=portraitRequest||!parent.isShowing()||!starting.same(snapshot())||closingPaintDialogs||brushLoading)return;
+        final int index=regionIndex(locals,regionId);
+        if(index<0&&locals.regions().size()>=16){host.error("局部区域已达上限，请先删除一处。");return;}
+        // A new local scope starts neutral over the committed global settings. In particular,
+        // automatic cleanup analysis in the parent must not become a hidden whole-image edit.
+        final PhotoAdjustments staged=adjustmentSettings(parent),global=full;
+        final PhotoLocalEdits stagedLocals=index<0?locals:locals.withRegion(index,locals.regions().get(index).withAdjustments(staged));
+        final AdjustmentRegion seed=index<0?AdjustmentRegion.create(nextRegionName()):stagedLocals.regions().get(index);final Bitmap base=original;
+        brushLoading=true;io.execute(()->{try{Bitmap image=render(base,adjustmentProfile(starting,global,stagedLocals,false));main.post(()->{
+            if(!valid(token,account)||request!=portraitRequest||!parent.isShowing()){image.recycle();return;}
+            brushLoading=false;if(!starting.same(snapshot())||!staged.equals(adjustmentSettings(parent))){image.recycle();return;}
+            final AdjustmentRegion[] painted={null};PhotoBrushDialog brush=new PhotoBrushDialog(activity,image,seed,next->{if(valid(token,account)&&request==portraitRequest&&starting.same(snapshot()))painted[0]=next;});
+            brush.setSourcePositioning(!stagedLocals.portrait.bodyShape.isNeutral());linkedPaintDialogs.add(brush);popup=brush;brush.setOnDismissListener(v->{
+                linkedPaintDialogs.remove(brush);if(popup==brush)popup=null;image.recycle();
+                if(closingPaintDialogs||!valid(token,account)||request!=portraitRequest||!parent.isShowing())return;
+                popup=parent;if(painted[0]==null)return;
+                try{PhotoLocalEdits changed=index<0?stagedLocals.addRegion(painted[0]):stagedLocals.withRegion(index,painted[0]);
+                    preparePaintedAdjustment(tool,parent,starting,global,changed,painted[0].id,staged,acceptParent,token,account,request);
+                }catch(IllegalArgumentException limit){host.error(message(limit));}
+            });brush.show();
+        });}catch(Exception|OutOfMemoryError failure){main.post(()->{if(valid(token,account)&&request==portraitRequest){brushLoading=false;updateAdjustmentControls();host.error(message(failure));}});}});
+    }
+    private void preparePaintedAdjustment(AdjustmentTool tool,Dialog parent,EditState starting,PhotoAdjustments full,PhotoLocalEdits locals,String regionId,PhotoAdjustments parentSettings,Runnable acceptParent,int token,String account,long request){
+        brushLoading=true;final Bitmap base=original;final PhotoCaptureInfo capture=captureInfo;
+        io.execute(()->{try{Bitmap initial=renderFramed(base,adjustmentProfile(starting,full,locals,true),capture,activity);main.post(()->{
+            if(!valid(token,account)||request!=portraitRequest||!parent.isShowing()){initial.recycle();return;}brushLoading=false;
+            if(!starting.same(snapshot())||!parentSettings.equals(adjustmentSettings(parent))){initial.recycle();return;}
+            openAdjustmentTool(tool,starting,full,locals,regionId,initial,true,parent,acceptParent,token,account,request);
+        });}catch(Exception|OutOfMemoryError failure){main.post(()->{if(valid(token,account)&&request==portraitRequest){brushLoading=false;updateAdjustmentControls();host.error(message(failure));}});}});
     }
     /** A copied target must discard stale editor memory and reload its account-scoped draft. */
     public void reloadDraft(){if(bound==null)return;DownloadedPhoto photo=bound;unbind();bind(photo,false);}
@@ -657,6 +729,21 @@ public final class PhotoFilterEditor implements AutoCloseable {
         });brush.show();
     }
     private static PhotoLocalEdits withoutBody(PhotoLocalEdits edits){return edits.portrait.bodyShape.isNeutral()?edits:edits.withPortrait(edits.portrait.withBodyShape(PhotoBodyShape.NONE));}
+    public void showPatch(){showPatch(false);}
+    private void showPatch(boolean useSelection){
+        if(!readableSettings()||localLoading)return;
+        finishDrag(true);dismissPopup();localLoading=true;
+        final int token=generation;final String scope=owner;final EditState starting=snapshot();final Bitmap base=original,fast=fastOriginal==null?base:fastOriginal;
+        final PresetPreviewProfile global=AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),starting.manual);
+        AdjustmentRegion active=useSelection?activeRegion():null;final AdjustmentRegion seed=active==null?null:active.withAdjustments(PhotoAdjustments.NONE).withPortrait(PhotoPortrait.NONE).withSkinSettings(PhotoPortrait.Settings.NONE).withSkinMask(null).withEnabled(true).withAmount(1);
+        io.execute(()->{try{Bitmap image=render(base,LocalEditsPreviewProfile.of(global,withoutBody(starting.localEdits)));main.post(()->{
+            if(!valid(token,scope)){image.recycle();return;}localLoading=false;if(!starting.same(snapshot())){image.recycle();return;}
+            PhotoEraseDialog dialog=new PhotoEraseDialog(activity,image,starting.localEdits,seed,(next,interactive)->render(interactive?fast:base,LocalEditsPreviewProfile.of(global,withoutBody(next))),next->{
+                if(!valid(token,scope)||!starting.same(snapshot())||localEdits.equals(next))return;
+                EditState before=snapshot();localEdits=next;remember(before);edited();refreshManualThumbnails();
+            });popup=dialog;dialog.setOnDismissListener(v->{if(popup==dialog)popup=null;image.recycle();});dialog.show();PhotoEditorTypography.apply(dialog);
+        });}catch(Exception|OutOfMemoryError failure){main.post(()->{if(valid(token,scope)){localLoading=false;host.error(message(failure));}});}});
+    }
     private void showLocal(){
         if(!readableSettings()||localLoading)return;
         finishDrag(true);dismissPopup();localLoading=true;
@@ -677,9 +764,12 @@ public final class PhotoFilterEditor implements AutoCloseable {
     }
     public void showComposition(){showComposition(PhotoCropDialog.TOOL_CROP);}
     private void showComposition(int tool){
+        showComposition(tool,-1);
+    }
+    private void showComposition(int tool,double initialRatio){
         if(!readableSettings()||compositionLoading)return;finishDrag(true);compositionLoading=true;
         final int token=generation;final String scope=owner;final EditState starting=snapshot();final Bitmap base=original;
-        io.execute(()->{try{PresetPreviewProfile colour=LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),starting.manual),starting.localEdits);Bitmap image=render(base,colour);main.post(()->{if(!valid(token,scope)){image.recycle();return;}compositionLoading=false;if(!starting.same(snapshot())){image.recycle();host.error("照片设置已变化，请重新打开构图。");return;}dismissPopup();PhotoCropDialog dialog=new PhotoCropDialog(activity,image,geometry,tool,next->{if(!valid(token,scope)||!ready||next.equals(geometry))return;EditState before=snapshot();geometry=next;remember(before);edited();refreshManualThumbnails();});popup=dialog;dialog.setOnDismissListener(v->{if(popup==dialog)popup=null;image.recycle();});dialog.show();PhotoEditorTypography.apply(dialog);});}catch(Exception|OutOfMemoryError failure){main.post(()->{if(valid(token,scope)){compositionLoading=false;host.error(message(failure));}});}});
+        io.execute(()->{try{PresetPreviewProfile colour=LocalEditsPreviewProfile.of(AdjustedPreviewProfile.of(starting.profile==null?null:StrengthPreviewProfile.of(starting.profile,starting.strength),starting.manual),starting.localEdits);Bitmap image=render(base,colour);main.post(()->{if(!valid(token,scope)){image.recycle();return;}compositionLoading=false;if(!starting.same(snapshot())){image.recycle();host.error("照片设置已变化，请重新打开构图。");return;}dismissPopup();PhotoCropDialog dialog=new PhotoCropDialog(activity,image,geometry,tool,initialRatio,next->{if(!valid(token,scope)||!ready||next.equals(geometry))return;EditState before=snapshot();geometry=next;remember(before);edited();refreshManualThumbnails();});popup=dialog;dialog.setOnDismissListener(v->{if(popup==dialog)popup=null;image.recycle();});dialog.show();PhotoEditorTypography.apply(dialog);});}catch(Exception|OutOfMemoryError failure){main.post(()->{if(valid(token,scope)){compositionLoading=false;host.error(message(failure));}});}});
     }
     private void loadRecipes(){
         final int token=generation;final String scope=owner;

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="下载 Huevia Android 安装包，查看版本信息与更新说明。">
+  <meta name="description" content="下载 Huevia Android 安装包，查看版本信息与更新说明。iOS 版本正在准备中。">
   <title>下载 Huevia</title>
   <link rel="icon" type="image/png" href="./icon.png">
   <link rel="stylesheet" href="./tokens.css">
@@ -14,7 +14,7 @@
 </head>
 <body>
   <a class="skip-link" href="#download">跳到下载</a>
-  <header class="topbar"><a class="brand" href="./" aria-label="Huevia 下载首页"><img src="./icon.png" width="32" height="32" alt=""><span>Huevia</span></a><span class="top-note">Android App</span></header>
+  <header class="topbar"><a class="brand" href="./" aria-label="Huevia 下载首页"><img src="./icon.png" width="32" height="32" alt=""><span>Huevia</span></a><span class="top-note">Android / iOS</span></header>
   <main id="download">
     <section class="intro" aria-labelledby="title">
       <img class="app-icon" src="./icon.png" width="100" height="100" alt="Huevia 应用图标">
@@ -26,9 +26,13 @@
       <div id="empty" class="empty" hidden><h2 id="empty-title">暂未发布正式版</h2><p id="empty-copy">安装包上架后，会显示在这里。</p><button id="retry" type="button" class="text-button">重新检查</button></div>
       <div id="release" hidden>
         <p class="version-line"><strong id="version"></strong><span id="channel-label"></span></p>
-        <a id="download-button" class="download-button" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span>下载 Android 安装包</span></a>
+        <a id="download-button" class="download-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span>下载 Android 安装包</span></a>
         <p id="metadata" class="metadata"></p>
         <p class="free-note">无需登录，即可下载。</p>
+      </div>
+      <div class="ios-download">
+        <button type="button" class="ios-download-button" disabled aria-describedby="ios-preparation-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17h2"/></svg><span>iOS 版下载</span><span class="ios-preparation-status">正在准备中</span></button>
+        <p id="ios-preparation-note">我们正在准备 iOS 版本，开放下载后会在这里更新。</p>
       </div>
     </section>
     <section id="details" class="details" hidden aria-label="版本详情">

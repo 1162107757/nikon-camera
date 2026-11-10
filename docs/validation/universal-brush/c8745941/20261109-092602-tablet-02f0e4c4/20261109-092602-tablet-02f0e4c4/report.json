@@ -1,0 +1,664 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "versionCode": 173,
+  "versionName": "0.30.19-beta",
+  "mode": "tablet",
+  "flow": "erase173",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "default-has-no-selection-sample-step",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-ready",
+      "pass": true
+    },
+    {
+      "name": "paint-down-move-do-not-commit",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-painting",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-painting",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "release-creates-one-auto-repair",
+      "pass": true
+    },
+    {
+      "name": "repair-real-final-bitmap",
+      "pass": true
+    },
+    {
+      "name": "rendered-repair-leaves-zero-mask-pixels-exact",
+      "pass": true
+    },
+    {
+      "name": "rendered-repair-changes-covered-photo",
+      "pass": true
+    },
+    {
+      "name": "rendered-repair-preserves-destination-alpha",
+      "pass": true
+    },
+    {
+      "name": "inner-stroke-keeps-parent-history",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-first-result",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-first-result",
+      "pass": true
+    },
+    {
+      "name": "selection-remains-visible",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-overlay",
+      "pass": true
+    },
+    {
+      "name": "eye-display-only",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-result-hidden",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-result-hidden",
+      "pass": true
+    },
+    {
+      "name": "brush-size-drag-hides-mask",
+      "pass": true
+    },
+    {
+      "name": "size-release-keeps-explicit-hidden",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-overlay",
+      "pass": true
+    },
+    {
+      "name": "size-release-restores-selected-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-undo",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "undo-removes-whole-stroke",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-undone",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-undone",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-redo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-redo",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "redo-restores-frozen-donor",
+      "pass": true
+    },
+    {
+      "name": "cancelled-touch-no-edit-history",
+      "pass": true
+    },
+    {
+      "name": "focus-loss-discards-unreleased-stroke",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": true
+    },
+    {
+      "name": "pinch-preserves-mask-count",
+      "pass": true
+    },
+    {
+      "name": "native-pinch-zooms",
+      "pass": true
+    },
+    {
+      "name": "pinch-navigates-without-erasing",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "failed-render-keeps-model-history",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "next-stroke-after-error-works",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-second-result",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-second-result",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-more",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-more",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-删除上一处修补",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "delete-is-one-undoable-change",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-undo",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "delete-undo-retains-two",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-more",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-more",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-手动取样修补",
+      "pass": true
+    },
+    {
+      "name": "legacy-manual-reachable",
+      "pass": true
+    },
+    {
+      "name": "legacy-data-same-in-manual",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "manual-cancel-closes",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "outer-cancel-discards-all-strokes",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-apply",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "outer-complete-one-parent-history",
+      "pass": true
+    },
+    {
+      "name": "auto-repair-real-draft",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-applied-main",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-applied-main",
+      "pass": true
+    },
+    {
+      "name": "auto-draft-reloaded",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "auto-repair-reopened-with-frozen-donor",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-erase173-reopened",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-erase173-reopened",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "auto-repair-original-bytes-preserved",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "actual-repair-pixels",
+      "changed": 962,
+      "exteriorErrors": 0,
+      "alphaErrors": 0
+    },
+    {
+      "case": "native-pinch",
+      "minimumSpanPx": 529,
+      "spanSlopPx": 42,
+      "startSpanPx": 720,
+      "endSpanPx": 1152,
+      "zoomBefore": 1,
+      "zoomAfter": 1.4545451402664185,
+      "moves": 12
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "删除上一处修补",
+      "windowId": 46,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "手动取样修补",
+      "windowId": 47,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    }
+  ],
+  "screenshots": 8,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Actual installed brush-down\/no-commit and release\/automatic repair, real rendered pixels and exterior\/alpha, one inner undo per stroke, multi-touch\/cancel\/focus\/size-slider display, explicit overlay visibility, render-failure injection atomicity, parent apply\/cancel and saved v7 draft, legacy manual access and unchanged source. Four native layout captures; no physical-device, generative AI, large-object quality or new full-export matrix claim."
+}

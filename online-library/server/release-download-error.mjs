@@ -1,0 +1,15 @@
+const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/** Browser navigations get a readable error page; API and Android clients keep JSON errors. */
+export function renderReleaseDownloadError(req, res, { status, message, prefix = '/preset-library' }) {
+  const path = String(req.url || '').split('?')[0];
+  const html = String(req.headers?.accept || '').split(',').some(part => {
+    const [type, ...params] = part.split(';');
+    return type.trim().toLowerCase() === 'text/html' && !params.some(p => /^\s*q\s*=\s*0(?:\.0*)?\s*$/.test(p));
+  });
+  if (req.method !== 'GET' || !/\/releases\/[a-f0-9-]{36}\/file$/i.test(path) || !html) return false;
+  const title = status === 429 ? '下载请求较多，请稍后再试' : '暂时无法下载安装包';
+  const page = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${title} · Huevia</title><link rel="stylesheet" href="${escape(prefix)}/download/tokens.css"><link rel="stylesheet" href="${escape(prefix)}/download/download.css"></head><body><main><section class="intro"><h1>${title}</h1><p class="intro-copy">${escape(message)}</p><p class="channel-note">请返回下载页重试，当前未下载安装包。</p><p class="version-line"><a class="download-button" href="${escape(prefix)}/download/?channel=beta">返回下载页</a></p></section></main></body></html>`;
+  res.writeHead(status, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': Buffer.byteLength(page), 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  res.end(page); return true;
+}

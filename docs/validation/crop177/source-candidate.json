@@ -1,0 +1,15 @@
+{
+  "versionCode": 177,
+  "versionName": "0.30.23-beta",
+  "files": {
+    "app/build.gradle": "2fdd5d756766b71326bee164d8e419e9b6d68645a3b6cc8f94d224e8f604f394",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java": "bab72ec5be3fd0129a3eafb558624af8a44c03f53956d8b2740ffc05c5d3c693",
+    "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java": "9ff7731344ee0017258e057ed3ea6ea672ece6ea4de64cb6cfdcfe08140990b6"
+  },
+  "baselineFiles": {
+    "app/build.gradle": "a6911f4d9dbd8bf06dee5142eed6d28d087ea8be75bc78f018d49653f818823c",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java": "e418e160b5bba4a3026afdb6e0f83ef77d50c021f0fcabf67af40a52d0e55fe3",
+    "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java": "7014b2026199e1d1e69b1c62318782f5c16a4b57ff38ae04f6a6a2074254a7a7"
+  },
+  "unchangedGeometrySourceSha256": "b8bc0ed1a283549d3e71d99a6a6d16f63be6f87422e10ab4e032e166699d09d4"
+}

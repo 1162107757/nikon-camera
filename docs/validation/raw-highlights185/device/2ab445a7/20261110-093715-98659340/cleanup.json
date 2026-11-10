@@ -1,0 +1,7 @@
+{
+  "mainFailure": "Probe failed: java.lang.AssertionError: licensed NEF missing/changed\n\tat cc.huevia.rawhighlights185qa.RawHighlights185Probe.onStart(RawHighlights185Probe.java:39)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\n",
+  "errors": [],
+  "ownRemoteFixtureRemoved": true,
+  "testPackageRemoved": true,
+  "airplaneRestored": true
+}

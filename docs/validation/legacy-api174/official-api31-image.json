@@ -1,0 +1,8 @@
+{
+    "source":  "https://dl.google.com/android/repository/sys-img/android/sys-img2-1.xml",
+    "archive":  "x86_64-31_r05.zip",
+    "size":  657246510,
+    "checksumXml":  null,
+    "checksum":  "58bff3cb182c79bbfe3980fe77b87b51b9f7ad71",
+    "license":  "android-sdk-license"
+}

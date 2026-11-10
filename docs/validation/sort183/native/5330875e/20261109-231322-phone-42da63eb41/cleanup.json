@@ -1,0 +1,13 @@
+{
+  "serial": "emulator-5586",
+  "testPackageRemoved": true,
+  "permissionRestored": true,
+  "fontRestored": true,
+  "sizeRestored": true,
+  "airplaneRestored": true,
+  "remoteFixtureRemoved": true,
+  "privateUniqueFixtureRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainFailure": "Album sort probe failed: java.lang.AssertionError: Missing group /data/user/0/cc.huevia/files/pictures/camera-album/QA183-20261109-231322-phone-42da63eb41-A.jpg\n\tat cc.huevia.rawdevelopmentqa.AlbumTimeSortChecks.group(AlbumTimeSortChecks.java:32)\n\tat cc.huevia.rawdevelopmentqa.AlbumTimeSortChecks.run(AlbumTimeSortChecks.java:11)\n\tat cc.huevia.rawdevelopmentqa.RawDevelopmentProbe.onStart(RawDevelopmentProbe.java:11)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2627)\n; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\sort183\\native\\5330875e\\20261109-231322-phone-42da63eb41\\20261109-231322-phone-42da63eb41\\report.json",
+  "errors": []
+}

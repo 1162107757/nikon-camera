@@ -1,0 +1,68 @@
+{
+  "versionCode": 166,
+  "versionName": "0.30.12-beta",
+  "published": false,
+  "fullApk": {
+    "path": "dist/huevia-0.30.12-beta-debug.apk",
+    "sha256": "185a10b54cd09fe515d7edf04c23a0ba44346d755ad9143d359941d8c5c32d46"
+  },
+  "uploadApk": {
+    "path": "dist/upload166/huevia-0.30.12-beta-update.apk",
+    "sha256": "b4a87c12008e79a469d4ca954fe4ce8c476a12fa7d39e18f63ca742c1803fba5",
+    "bytes": 31333565
+  },
+  "installedSha256": "b4a87c12008e79a469d4ca954fe4ce8c476a12fa7d39e18f63ca742c1803fba5",
+  "probeSha256": "ddcf4ee0274bd874a550826f20cd2c7bb9ed7c155e034e238b923a7d5caa719f",
+  "sourceInputs": {
+    "app/build.gradle": "9a782405f3ab526837d9cd308357fc32c6a614dee8f7a4de8c1410548bff5b65",
+    "app/src/main/java/cc/huevia/MainActivity.java": "4262d25dcddf430cdb3cff8f6e7a102f4bf75e14e324bdc3cc416ab28b28054b",
+    "tests/album-search165-device-probe/src/AlbumSearch165Probe.java": "8b799d608cb513fd6868bb303ed63786e84bf4d281e4f952e294fcf5059b2684"
+  },
+  "nativeRuns": [
+    {
+      "run": "phone-light166",
+      "pass": true,
+      "sdk": 37,
+      "dark": false,
+      "screenshots": {
+        "presets-collapsed.png": "17505e14f254f9e9a5e50e9daf66001f761601482bd54144c53af07e8840b22e",
+        "presets-search-keyboard.png": "372ef803dfffc9b67764aa9c02d4008dedd35aa67af8ee405bb5b940666b838c",
+        "presets-search-submitted.png": "6c3a5adc0f755010fe43bb5a3e86a8b2e95e210721c71afbeb374a750398a261"
+      }
+    },
+    {
+      "run": "phone-dark130-166",
+      "pass": true,
+      "sdk": 37,
+      "dark": true,
+      "screenshots": {
+        "presets-collapsed.png": "9bed1304f1da9dbf9c17f51cad4fb910ab52fd85e73695d4d4c83ad7d8bda6f1",
+        "presets-search-keyboard.png": "68f21e5bdd5cf2b30165fc3dd94e541fff2036dee0ba3e26b2072f63242317ed",
+        "presets-search-submitted.png": "dc835419d3104cf41d85d254b96bda0bb89c884562e3317ba594852127fe2567"
+      }
+    },
+    {
+      "run": "wide-dark130-166",
+      "pass": true,
+      "sdk": 37,
+      "dark": true,
+      "screenshots": {
+        "presets-collapsed.png": "f7fd31a9f6e5c86de3940adf65d4c066d5a732c9c105ba41882af9ecd812bf8b",
+        "presets-search-keyboard.png": "b6f632ec042aea5da7eab43709f6fb4325eb20b31944a915e1778a7b98623483",
+        "presets-search-submitted.png": "b6f632ec042aea5da7eab43709f6fb4325eb20b31944a915e1778a7b98623483"
+      }
+    },
+    {
+      "run": "landscape-dark130-166",
+      "pass": true,
+      "sdk": 37,
+      "dark": true,
+      "screenshots": {
+        "presets-collapsed.png": "478f57aadc1a5a3780fb4cc7e5e5f813196b088b78194c639ceb74491df235c2",
+        "presets-search-keyboard.png": "93b5b406d0c9a39952ddb2886a9e47db84c0f6aec687890b8c74ffa8d9328737",
+        "presets-search-submitted.png": "8f1a9988f4e0a7692082c0c0a889e9e53bf69a1c16479836b8a5dd9c05202c90"
+      }
+    }
+  ],
+  "visualReview": "Scoped pass: requested empty message centered; removed footer actions absent; existing header controls visible."
+}

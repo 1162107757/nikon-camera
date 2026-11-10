@@ -1,0 +1,10 @@
+{
+  "displayRestored": true,
+  "nightRestored": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "testPackageRemoved": true,
+  "mainAppStopped": true,
+  "mainFailure": "PresetFilter182 failed: java.lang.AssertionError: full-filter-result-first-page20\n\tat cc.huevia.presetfilter182qa.PresetFilter182Probe.check(PresetFilter182Probe.java:179)\n\tat cc.huevia.presetfilter182qa.PresetFilter182Probe.onStart(PresetFilter182Probe.java:85)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\preset-filter182\\device\\5a356511\\tablet-20261109-220517-1ac69e77",
+  "errors": []
+}

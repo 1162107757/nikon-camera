@@ -1,0 +1,200 @@
+{
+  "versionCode": 156,
+  "versionName": "0.30.2-beta",
+  "pass": true,
+  "apk": {
+    "path": "dist/huevia-0.30.2-beta-debug.apk",
+    "sha256": "b2e88b46e8932aba3abba15f663a1282a3179bc48bb77adb3e272e489d8d5fef",
+    "bytes": 34581880,
+    "zipCrc": "PASS",
+    "signature": "V2/V3 verified by build; same project debug signer"
+  },
+  "nativeChecks": 248,
+  "nativeModes": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 62,
+      "reportSha256": "d3fe8e92060c02686e1488563bf656a56e99819f143286975b79eb6ef1e05a43",
+      "screenshots": [
+        {
+          "path": "docs/validation/camera-connection156/phone/01-disconnected-guide.png",
+          "sha256": "270c49984042bcf87455960cf73acaff743b82df4fc8bea54c7c3ef17af0d344"
+        },
+        {
+          "path": "docs/validation/camera-connection156/phone/02-connected-return.png",
+          "sha256": "b71601c757e3f185cf867ce9178fa068a936d2c4e629b2a8d247c36c446cf869"
+        },
+        {
+          "path": "docs/validation/camera-connection156/phone/03-returned-raw.png",
+          "sha256": "17ff35646a76057aed5f37503254f677c2fc4c6b104f13f2981db67dbeac97ec"
+        },
+        {
+          "path": "docs/validation/camera-connection156/phone/04-remote-reconnect-guide.png",
+          "sha256": "f1c1ad254376082fff1acb10179fc19a7fe83de3016b62bf7bd8e8e438019ad4"
+        },
+        {
+          "path": "docs/validation/camera-connection156/phone/05-usb-guide.png",
+          "sha256": "f923c616c4e6d04ac0ae6c779544566128efa9656e489adf669f7a53e65fc463"
+        }
+      ]
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 62,
+      "reportSha256": "d3fe8e92060c02686e1488563bf656a56e99819f143286975b79eb6ef1e05a43",
+      "screenshots": [
+        {
+          "path": "docs/validation/camera-connection156/dark/01-disconnected-guide.png",
+          "sha256": "20e7bb6f2ea3ea124c790dc2fac0a81973f7eb19722defca781d5ef6b65549f7"
+        },
+        {
+          "path": "docs/validation/camera-connection156/dark/02-connected-return.png",
+          "sha256": "2a6b50f93507cb9e09d3fad2c8bf1130d6db11ba64748ef9ff8b4ba8aef1b399"
+        },
+        {
+          "path": "docs/validation/camera-connection156/dark/03-returned-raw.png",
+          "sha256": "68ef4ad5ca7ba2ff5e421058bddb76b645831809ca17f1709e6be899cd0f712b"
+        },
+        {
+          "path": "docs/validation/camera-connection156/dark/04-remote-reconnect-guide.png",
+          "sha256": "99515efb445e99a367f7df5e2a9538dfa02a163ed3a8deacaf7937cfd64cbd8b"
+        },
+        {
+          "path": "docs/validation/camera-connection156/dark/05-usb-guide.png",
+          "sha256": "c42820bb02e9baecda14666d285a42376985b4d7643ecaf61efd234e14e8fe1f"
+        }
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "pass": true,
+      "checks": 62,
+      "reportSha256": "d3fe8e92060c02686e1488563bf656a56e99819f143286975b79eb6ef1e05a43",
+      "screenshots": [
+        {
+          "path": "docs/validation/camera-connection156/font1.3/01-disconnected-guide.png",
+          "sha256": "c69249be3f4ec6cb2ce3d513950aa1b4b5d8044021c54defdd92f4827acebf94"
+        },
+        {
+          "path": "docs/validation/camera-connection156/font1.3/02-connected-return.png",
+          "sha256": "39be902af2532f0392dab5e462ad45860ffe964d83659a5607661027f7458d4e"
+        },
+        {
+          "path": "docs/validation/camera-connection156/font1.3/03-returned-raw.png",
+          "sha256": "ca8dd844a20dba852b25ecec836ca50e2750ce0f38d77f17951f430ba4647531"
+        },
+        {
+          "path": "docs/validation/camera-connection156/font1.3/04-remote-reconnect-guide.png",
+          "sha256": "9af13e44baa7ac066a8da311c27d81e8f550542040bda2af4b03d878316acab4"
+        },
+        {
+          "path": "docs/validation/camera-connection156/font1.3/05-usb-guide.png",
+          "sha256": "2a6e5bd7add2c1dd2bfc3d2e4c1ef56ed1d0666651d8ce8975005ea25d7aeeaf"
+        }
+      ]
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "checks": 62,
+      "reportSha256": "d3fe8e92060c02686e1488563bf656a56e99819f143286975b79eb6ef1e05a43",
+      "screenshots": [
+        {
+          "path": "docs/validation/camera-connection156/landscape/01-disconnected-guide.png",
+          "sha256": "972aec960b4e012edaebc6d8cbfe6f43108d9ee0df8c1c4c1b7e1a2e5ad6c496"
+        },
+        {
+          "path": "docs/validation/camera-connection156/landscape/02-connected-return.png",
+          "sha256": "f5bfd1d50b11660566ac42a034e3d8c39d6962547d92589826afdfc50d853e32"
+        },
+        {
+          "path": "docs/validation/camera-connection156/landscape/03-returned-raw.png",
+          "sha256": "c67d203b8b0baaef423222f7259a6ddf3e6b87145253db1aa367fc8baaf746a6"
+        },
+        {
+          "path": "docs/validation/camera-connection156/landscape/04-remote-reconnect-guide.png",
+          "sha256": "92f54d729bfa6886ee2c525eb129c3f8a012f860680431b00c3e072c9dfe4af0"
+        },
+        {
+          "path": "docs/validation/camera-connection156/landscape/05-usb-guide.png",
+          "sha256": "236250fdb53a2c63e5c948c661926f2351eb5d618b3909855475eb9974dfee99"
+        }
+      ]
+    }
+  ],
+  "hostChecks": {
+    "photoLiveContinuation": 18,
+    "connectionPreferences": 71,
+    "rawStructureAndPairing": 60,
+    "rawProvenance": 8,
+    "rawControllerPtp": 41,
+    "rawPairingTransport": 19
+  },
+  "scope": "Real production navigation and Activity results. Success uses in-process PTP fixture. No physical camera/USB, whole-process restoration or public deployment claim.",
+  "inputs": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "6fe8745e849bdce6587a1cf9176f01343c4efdd4e2f3855ec039ddd3b9b78772"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "9e1c4577dd62108f709f815c0dd286306bb19e67499b9d01291ceb5b518123d9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/DiagnosticsActivity.java",
+      "sha256": "c008e24f116ec49836abbaef660985f5f5df9303c09ebfce7e6829029d8e212f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraConnectionRequest.java",
+      "sha256": "2806f680ff78942dde268c13d65b8e0feb9bc01db32486148a36f45fd526e74a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "7fcbae2ed06d10bf2f6d72f1edf7659635506cb0be3170c85149b383a9e58d60"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/RawPhotoPanel.java",
+      "sha256": "130fa4580adc00ccf6590d9d28715aefaac4f8d925ea736f353ce8ad37c16a35"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/RemoteCaptureView.java",
+      "sha256": "09e57d7c85d88ecb1b7f679c25aca941c6f75f97ca4a1d541785e76557a85646"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+      "sha256": "fc0d14400ebef3bff24b4d6e93541989712e167b8472c090e6331c441ead0fc2"
+    },
+    {
+      "path": "tests/raw-controller-java/cc/huevia/album/RawControllerHostTest.java",
+      "sha256": "99d90256a02f542109785395b4d89fc3bcad37d7b41c0c7b8f0a167a3e1ffbce"
+    },
+    {
+      "path": "tests/connection-return-device-probe/src/ConnectionReturnProbe.java",
+      "sha256": "58deb2b631a400c103179440ca8efbe29651bfb1ca358b0f691697c066ed35a2"
+    },
+    {
+      "path": "tests/connection-return-device-probe/AndroidManifest.xml",
+      "sha256": "d680d3858a85566e1f6fdb43ee304c448cca393f1ae52d58e0ee84660b8d7710"
+    },
+    {
+      "path": "tests/connection-return-device-probe/build.ps1",
+      "sha256": "4c42da06b30baa1e52ced2f6780cb7a8bba6bf5f0b5e4e04edf0dd578b2e6f7f"
+    },
+    {
+      "path": "tests/connection-return-device-probe/run.ps1",
+      "sha256": "638274489f059d1c14c391497591a8411e8ca9416257ca3f19c5464e0daac7a3"
+    }
+  ],
+  "preservedApks": [
+    {
+      "path": "dist/huevia-0.30.0-beta-debug.apk",
+      "sha256": "9636cfe8dde97c1af3863754b16557ddf1620b75e2e6d3b9230a6705cc34b8b9"
+    },
+    {
+      "path": "dist/huevia-0.30.1-beta-debug.apk",
+      "sha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb"
+    }
+  ]
+}

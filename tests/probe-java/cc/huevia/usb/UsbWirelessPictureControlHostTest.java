@@ -29,6 +29,8 @@ public final class UsbWirelessPictureControlHostTest {
     private static int checks;
 
     public static void main(String[] args) throws Exception {
+        customSlotDeletionUsesOneCommandAndKeepsVerifiedSession();
+        capableModelsUseGuardedWirelessRegistration();
         snapshotUsesTheSameReadPlanAndClosesItsSession();
         snapshotFailureKeepsReceivedEvidenceAndKnownProtocolBoundaries();
         confirmationRetainsTheOwnedCameraSessionUntilAValidatedImport();
@@ -77,6 +79,20 @@ public final class UsbWirelessPictureControlHostTest {
         closedInstanceCannotConnect();
         mainThreadCannotStartEitherFlow();
         System.out.println("PASS: " + checks + " wireless Picture Control wrapper checks");
+    }
+
+    private static void capableModelsUseGuardedWirelessRegistration() throws Exception {
+        for (String model : List.of("NIKON Z 7II", "Z 7_2", "Z7II", "NIKON Z 6")) {
+            Camera camera = new Camera(); camera.model = model;
+            WirelessPictureControl service = new WirelessPictureControl(camera::connect);
+            UsbPictureControlProbe.Result snapshot = service.prepareImport(HOST, PORT, GUID);
+            check(snapshot.completed && snapshot.capabilityParsed && snapshot.items.size() == 10,
+                    "The wireless reader uses declared operations and actual datasets for " + model);
+            UsbPictureControlImport.Result result = service.importPreparedNcpPreset(NcpCompatibilityFixtures.ncp(), 4, -4, TARGET);
+            check(result.completed && result.freshCapabilityVerified && result.recheckTargetEmpty && result.readbackVerified,
+                    "Every model retains fresh capability, target and exact readback checks");
+            equal(model, result.model); equal(1L, camera.count(0x90cd)); camera.assertClosed();
+        }
     }
 
     private static void snapshotFailureKeepsReceivedEvidenceAndKnownProtocolBoundaries() throws Exception {
@@ -256,7 +272,7 @@ public final class UsbWirelessPictureControlHostTest {
 
     private static void confirmationRechecksChangedSlotsAndCapabilitiesBeforeAnyWrite() throws Exception {
         for (String change : List.of("occupied_during_confirmation", "occupied_at_last_recheck",
-                "write_operation_removed", "malformed_capability", "model")) {
+                "write_operation_removed", "malformed_capability", "identity")) {
             Camera camera = new Camera();
             WirelessPictureControl service = new WirelessPictureControl(camera::connect);
             service.prepareImport(HOST, PORT, GUID);
@@ -266,7 +282,7 @@ public final class UsbWirelessPictureControlHostTest {
                 camera.race = true;
                 camera.raceAtTargetRead = 3;
             } else if (change.equals("write_operation_removed")) camera.missingOperation = 0x90cd;
-            else if (change.equals("model")) camera.model = "Another camera";
+            else if (change.equals("identity")) camera.manufacturer = "Canon";
             else camera.fault = change;
             UsbPictureControlImport.Result result = expectPreparedImportFailure(service).partialResult;
             check(!result.completed && !result.writeAttempted, "Changes after confirmation cannot register a preset");
@@ -1379,9 +1395,9 @@ public final class UsbWirelessPictureControlHostTest {
     }
 
     private static void unsupportedCamerasAndOccupiedSlotsNeverWrite() throws Exception {
-        for (String fault : List.of("model", "operation", "occupied", "raced")) {
+        for (String fault : List.of("identity", "operation", "occupied", "raced")) {
             Camera camera = new Camera();
-            if (fault.equals("model")) camera.model = "Another camera";
+            if (fault.equals("identity")) camera.manufacturer = "Canon";
             if (fault.equals("operation")) camera.missingOperation = 0x90cd;
             if (fault.equals("occupied")) camera.slots.put(TARGET, NcpCompatibilityFixtures.expectedData(0, 0));
             camera.race = fault.equals("raced");
@@ -1389,7 +1405,7 @@ public final class UsbWirelessPictureControlHostTest {
             equal(0L, camera.count(0x90cd));
             equal(0, camera.uploads.size());
             check(!result.completed && !result.writeAttempted, "Unsupported or occupied targets never register");
-            if (fault.equals("model") || fault.equals("operation")) {
+            if (fault.equals("identity") || fault.equals("operation")) {
                 equal(1, camera.commands.size());
                 check(!result.sessionOpened && !result.sessionClosed, "Preflight cannot take over another session");
             } else {
@@ -1585,6 +1601,24 @@ public final class UsbWirelessPictureControlHostTest {
         }
     }
 
+    private static void customSlotDeletionUsesOneCommandAndKeepsVerifiedSession()throws Exception{
+        for(String fault:List.of("ok","unsupported","changed","race","reject","lost","occupied","neighbor","wrong-tx","lost-readback")){
+            Camera camera=new Camera();camera.advertiseDelete=!fault.equals("unsupported");camera.deleteFault=fault;camera.slots.put(TARGET,occupiedPreset("DELETE ME"));
+            WirelessPictureControl wrapper=new WirelessPictureControl(camera::connect);
+            UsbPictureControlProbe.Result snapshot=wrapper.prepareReadOnly(HOST,PORT,GUID);UsbPictureControlProbe.ItemRecord target=null;
+            for(UsbPictureControlProbe.ItemRecord item:snapshot.items)if(item.itemCode==TARGET)target=item;
+            PictureControlDeleteSession.Confirmation confirmation=new PictureControlDeleteSession.Confirmation(target,snapshot.model);
+            if(fault.equals("changed"))camera.slots.put(TARGET,occupiedPreset("NEW OWNER"));
+            if(fault.equals("race")){camera.replaceAtTargetRead=3;camera.replacementTarget=occupiedPreset("NEW OWNER");}
+            PictureControlDeleteSession.Result result=new PictureControlDeleteSession.Result();boolean success=false;
+            try{wrapper.deletePreparedCustomPreset(confirmation,result);success=true;}catch(Exception expected){}
+            check(success==fault.equals("ok")&&result.verified==fault.equals("ok"),"Wireless deletion verification boundary "+fault);
+            equal(List.of("unsupported","changed","race").contains(fault)?0L:1L,camera.count(0x90ce));equal(0,camera.uploads.size());equal(2,camera.connectionAttempts);
+            if(success){check(wrapper.isPrepared()&&result.sessionRetained,"Verified delete retains live session");wrapper.keepPreparedAlive();equal(0L,camera.count(0x1003));wrapper.releasePrepared();equal(1L,camera.count(0x1003));}
+            else{check(!wrapper.isPrepared(),"Failed deletion cannot rearm destructive access");long attempts=camera.count(0x90ce);try{wrapper.deletePreparedCustomPreset(confirmation,new PictureControlDeleteSession.Result());throw new AssertionError("retry accepted");}catch(IOException expected){}equal(attempts,camera.count(0x90ce));}
+            wrapper.close();equal(0L,camera.count(0x100b));equal(0L,camera.count(0x1016));equal(0L,camera.count(0x90cd));
+        }
+    }
     private static final class Camera {
         final List<FakeSocket> sockets = new ArrayList<>();
         final List<Command> commands = new ArrayList<>();
@@ -1593,7 +1627,10 @@ public final class UsbWirelessPictureControlHostTest {
         final Map<Integer, Integer> reads = new HashMap<>();
         final CountDownLatch blocked = new CountDownLatch(1);
         String model = "NIKON Z 6II";
+        String manufacturer = "Nikon";
         boolean advertiseAlbum;
+        boolean advertiseDelete,deleted;
+        String deleteFault="";
         final byte[] albumThumbnail = {(byte) 0xff, (byte) 0xd8, 1, 2, 3, 4, (byte) 0xff, (byte) 0xd9};
         int missingOperation = -1, writeResponse = 0x2001, cleanupResponse = 0x2001, openResponse = 0x2001;
         String fault = "";
@@ -1690,13 +1727,21 @@ public final class UsbWirelessPictureControlHostTest {
 
         void respond(FakeSocket socket, Command command) {
             int operation = command.operation;
+            if(operation==0x90ce){
+                equal(1,command.parameters.length);equal((long)TARGET,command.parameters[0]);deleted=true;
+                if(deleteFault.equals("reject")){socket.input.add(response(0x2019,command.transaction));return;}
+                if(!deleteFault.equals("occupied"))slots.put(TARGET,new byte[36]);
+                if(deleteFault.equals("neighbor"))slots.put(201,occupiedPreset("CHANGED NEIGHBOR"));
+                if(deleteFault.equals("lost"))return;
+                socket.input.add(response(0x2001,command.transaction+(deleteFault.equals("wrong-tx")?1:0)));return;
+            }
             if (operation == 0x1002 || operation == 0x1003) {
                 if (operation == 0x1003) wirelessSessionEnded = true;
                 socket.input.add(response(operation == 0x1002 ? openResponse : cleanupResponse, command.transaction));
                 return;
             }
             byte[] bytes;
-            if (operation == 0x1001) bytes = deviceInfo(model, missingOperation, advertiseAlbum);
+            if (operation == 0x1001) bytes = deviceInfo(model, manufacturer, missingOperation, advertiseAlbum,advertiseDelete);
             else if (operation == 0x1004) bytes = le32(0);
             else if (operation == 0x1007) bytes = concat(le32(1), le32(42));
             else if (operation == 0x100a || operation == 0x90c4) bytes = albumThumbnail.clone();
@@ -1706,6 +1751,7 @@ public final class UsbWirelessPictureControlHostTest {
                 bytes = new byte[fault.equals("malformed_capability") ? 29 : 28];
             }
             else if (operation == 0x90cc) {
+                if(deleted&&deleteFault.equals("lost-readback"))return;
                 int item = (int) command.parameters[0];
                 int count = reads.getOrDefault(item, 0) + 1;
                 reads.put(item, count);
@@ -1825,15 +1871,16 @@ public final class UsbWirelessPictureControlHostTest {
     }
 
     private static byte[] standard() { byte[] bytes = new byte[36]; bytes[0] = 1; return bytes; }
-    private static byte[] deviceInfo(String model, int missing, boolean album) {
+    private static byte[] deviceInfo(String model, String manufacturer, int missing, boolean album,boolean deletion) {
         int[] supported = album ? new int[] {0x1001, 0x1002, 0x1003, 0x90ca, 0x90cc, 0x90cd, 0x90cf, 0x1004, 0x1007, 0x1008, 0x1009, 0x100a, 0x90c4}
                 : new int[] {0x1001, 0x1002, 0x1003, 0x90ca, 0x90cc, 0x90cd, 0x90cf};
+        if(deletion){supported=Arrays.copyOf(supported,supported.length+1);supported[supported.length-1]=0x90ce;}
         Writer writer = new Writer().u16(100).u32(10).u16(100).string("").u16(0);
         int count = 0;
         for (int operation : supported) if (operation != missing) count++;
         writer.u32(count);
         for (int operation : supported) if (operation != missing) writer.u16(operation);
-        return writer.u32(0).u32(0).u32(0).u32(0).string("Nikon").string(model)
+        return writer.u32(0).u32(0).u32(0).u32(0).string(manufacturer).string(model)
                 .string("1.62").string("serial-not-collected").bytes();
     }
     private static final class Writer {

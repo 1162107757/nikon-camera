@@ -1,0 +1,17 @@
+{
+  "builtAt": "2026-11-08T08:42:56.5558683Z",
+  "inputs": [
+    {
+      "path": "tests/connection164-device-probe/src/Connection164Probe.java",
+      "sha256": "cc7c4b2bf97eec588e9981a61359bfcffa7a71fb56c701d35263d9fdf9559186"
+    },
+    {
+      "path": "tests/connection164-device-probe/src/FakeNikonPeer.java",
+      "sha256": "c1f6e56edaff238353defb5076337ec45e96bfd88d9dac264f1ce6ad88514033"
+    }
+  ],
+  "probeSha256": "33f063c9fcc0ce3a387f43de7286cf6c0fbe64054c3d775a42e9b62179972933",
+  "manifestSha256": "5a74b67ffcae75671a81d78bd24c029abed21a83f9a7e4e5cdbe434c57f7205f",
+  "buildSha256": "ef82fff85678706db95949ecade3a2d551a5738844b8f2358f1c0150791ac424",
+  "runSha256": "f219e879b24ecb531c0a2c097d04d3e756c59e0654857fe7e4e7270b838f7a6c"
+}

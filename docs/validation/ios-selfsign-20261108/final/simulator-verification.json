@@ -1,0 +1,39 @@
+{
+  "pass": true,
+  "device": "iPhone 17 Pro",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-2",
+  "udid": "27DA436F-1A9D-471E-BFF0-41B24AAB285D",
+  "checks": [
+    {
+      "screen": "presets-light",
+      "processAlive": true,
+      "appearance": "light",
+      "contentSize": "large"
+    },
+    {
+      "screen": "presets-dark-large",
+      "processAlive": true,
+      "appearance": "dark",
+      "contentSize": "extra-extra-extra-large"
+    },
+    {
+      "screen": "camera-light",
+      "processAlive": true,
+      "appearance": "light",
+      "contentSize": "large"
+    },
+    {
+      "screen": "settings-light",
+      "processAlive": true,
+      "appearance": "light",
+      "contentSize": "large"
+    },
+    {
+      "screen": "preset-detail-light",
+      "processAlive": true,
+      "appearance": "light",
+      "contentSize": "large"
+    }
+  ],
+  "scope": "Real simulator launch and screenshots; camera hardware and user re-signing not tested"
+}

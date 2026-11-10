@@ -1,0 +1,120 @@
+{
+  "candidateSha256": "57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3",
+  "versionCode": 168,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "83d569a5f03b486a1c7d95965e30fa69e1f3ca28948c50b1fec08d541f3327d9",
+  "pass": true,
+  "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim.",
+  "files": [
+    {
+      "file": "fix168-face-chooser-hidden.png",
+      "sha256": "2dc30d6ef41945a556657a04bbf2fb7025bdeae158273f149c89ad7e991c0c20"
+    },
+    {
+      "file": "fix168-face-chooser-shown.png",
+      "sha256": "b0cfe930aa87d1123093a176e0425844243635f4384140bd33b202c5979ffcf2"
+    },
+    {
+      "file": "fix168-palette-shown-drag.png",
+      "sha256": "b39e56ab05609b5eb400bd569d004656c75105bbb5cb8475d8ee8dc59a7a59a9"
+    },
+    {
+      "file": "fix168-palette-shown-release.png",
+      "sha256": "901699ffe78aa57f7256070116af20ffc0073b2a7be8e20ecf73481e3989d8fd"
+    },
+    {
+      "file": "fix168-skin-chooser-hidden.png",
+      "sha256": "2dc30d6ef41945a556657a04bbf2fb7025bdeae158273f149c89ad7e991c0c20"
+    },
+    {
+      "file": "fix168-skin-chooser-shown.png",
+      "sha256": "4aba18d6a3ebf1e35ec478df13d0a568a42bc7bebcad26743c39b33ff7c68d7a"
+    },
+    {
+      "file": "fix168-skin-shown-drag.png",
+      "sha256": "57f5b40318f93944516d15fe24643e7a9052badb6b73618d6d21c54629f35d58"
+    },
+    {
+      "file": "fix168-skin-shown-release.png",
+      "sha256": "91c0f26e57b22962a1e189a8da3d61fddec17676eaf0739f28158122460d02a0"
+    },
+    {
+      "file": "report.json",
+      "sha256": "c52f4253d99d22432c6f852eb09797b0b3874770fd1216fe241bcb739e9f5149"
+    },
+    {
+      "file": "selection168-auto-face-drag-hidden.png",
+      "sha256": "6c16ca1cdd4e808506309a541bb1e55e5469859b264e47be8c03b78f65b20892"
+    },
+    {
+      "file": "selection168-auto-face-persistent.png",
+      "sha256": "86342e7ffbc8d590bc9286ab32e19767e094133e7f717c23c05ced359aaab948"
+    },
+    {
+      "file": "selection168-auto-skin-persistent.png",
+      "sha256": "a33c240700aa805fcc39e1565370dfca204c0a26b4d32da74cc7f32effa32dac"
+    },
+    {
+      "file": "selection168-body-persistent.png",
+      "sha256": "43257befed99b5787e9accb1785f0420cd092e5fa9f943d295b7a6ec3a4a1ae9"
+    },
+    {
+      "file": "selection168-circle-drag-hidden.png",
+      "sha256": "37a9a23d4ca288dbd48bf6d7be1ce243aafdf937898cee37288faecd561eaf86"
+    },
+    {
+      "file": "selection168-circle-persistent.png",
+      "sha256": "48024a573f1b7628f000bff8cd4cae07ce8745be42d335d56c8e81b706849efe"
+    },
+    {
+      "file": "selection168-circle-release-restored.png",
+      "sha256": "cea59dc4d29f567d21114616b00bea760d2a0a07b6bab234ef1b44e7a8b5bff0"
+    },
+    {
+      "file": "selection168-cleanup-persistent.png",
+      "sha256": "cd266cfb81ff0432edeebf386ece119e6cefee46feeedf60eb5545fa11c4c02c"
+    },
+    {
+      "file": "selection168-curves-persistent.png",
+      "sha256": "fa1bd7961348103fc591b5a657f31798b486d0d31de12b11d9068abd53624576"
+    },
+    {
+      "file": "selection168-hsl-persistent.png",
+      "sha256": "f209679e6bbfe621cb03f32ac1abf32fdea73309a1ee728a57359c4770ffd326"
+    },
+    {
+      "file": "selection168-inverse.png",
+      "sha256": "654f4fb5090ee6d9f02ab7f87f32413d2fb8afd2be430f978b9a9e6175b9d2d3"
+    },
+    {
+      "file": "selection168-legacy-radial-persistent.png",
+      "sha256": "128b7fbd7327d9fceead6413c67c6dd606170b0f444b5f6c1dc9cb5b96159cdf"
+    },
+    {
+      "file": "selection168-main-drag-hidden.png",
+      "sha256": "78a031d43c4e470518b19f5d8f75ea438b94b9d1f30522ff4e2110f843429dc1"
+    },
+    {
+      "file": "selection168-main-regional.png",
+      "sha256": "8184214310d2b3b30b63d0319ce99e0fbcfa79c64bdda856f1efaa4c914e9ed9"
+    },
+    {
+      "file": "selection168-manual-brush-persistent.png",
+      "sha256": "ac93c579c8092c4ebc25726765c1321d6681961bb4861d0163835c1fe908ee0d"
+    },
+    {
+      "file": "selection168-manual-face-persistent.png",
+      "sha256": "6827ac9f90cc69b304e32e433b4c3819df86a97e3961d7993f94ca0fb46a9f98"
+    },
+    {
+      "file": "selection168-palette-persistent.png",
+      "sha256": "39620885cacb6f337d28f66c032cb947ba1a31e1378a65e07c06b4d4526a3ba4"
+    },
+    {
+      "file": "selection168-rectangle-added.png",
+      "sha256": "95d579b72e34efef5dae1ae3a3d7e7dd3206389326cc1f826a29249fd62486a9"
+    }
+  ]
+}

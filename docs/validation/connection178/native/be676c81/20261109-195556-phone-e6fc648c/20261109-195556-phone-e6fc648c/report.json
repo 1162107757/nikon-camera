@@ -1,0 +1,121 @@
+{
+  "pass": false,
+  "stage": "wifi178",
+  "candidateSha256": "be676c81ebe471104889d4b190c4efa3e1cd4a55154f044bf5ae571d2b399cb4",
+  "versionCode": 178,
+  "versionName": "0.30.24-beta",
+  "mode": "phone",
+  "flow": "connection178",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-page",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-page",
+      "pass": true
+    },
+    {
+      "name": "camera-type-native-row",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "system-selector-auto-opens-once",
+      "pass": true
+    },
+    {
+      "name": "selection-dialog-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-wifi-checking",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-wifi-checking",
+      "pass": true
+    },
+    {
+      "name": "one-primary-and-quiet-retry",
+      "pass": false
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 3,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": "java.lang.AssertionError: one-primary-and-quiet-retry",
+  "scope": "Capture-only connection178 flow on the exact installed APK: native camera guide and Wi-Fi automatic\/intercepted system selection, return, retry and cancellation; quick-ratio entry, two-finger events dispatched to the real crop View, native inner-frame movement, photo bounds, apply and actual draft readback, plus free-crop cancellation. Other inherited flows were not run. No real network selection, camera handshake, physical-device, edge-corner, full TalkBack, performance or publication certification."
+}

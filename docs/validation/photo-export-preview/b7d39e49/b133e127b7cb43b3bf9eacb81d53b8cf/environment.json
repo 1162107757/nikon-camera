@@ -1,0 +1,21 @@
+{
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "candidateApk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.30.1-beta-debug.apk",
+  "candidateSha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb",
+  "runId": "b133e127b7cb43b3bf9eacb81d53b8cf",
+  "probe": {
+    "schemaVersion": 1,
+    "builtAtUtc": "2026-11-08T04:42:36.7775679Z",
+    "probeSource": "tests/export-preview-device-probe/src/cc/huevia/exportpreviewqa/ExportPreviewProbe.java",
+    "inputs": {
+      "probeJavaSha256": "bce9d500155b21d9827d6c772481d121a4b5ec3cea14c07460386f7bac1caeb3",
+      "manifestSha256": "aceafc2aad0748714078f03777896c40da967d5b4e73a1da23495dc72c8afafe",
+      "buildScriptSha256": "0f51e41a5d00d9cf1e6334b6e7e5a242adf8692e378f2ac284055458cc52221d",
+      "runScriptSha256": "cef1ffd84c827a44938f7df32f92dbf6a94611e5a198d63ba689437150ec9192"
+    },
+    "probeApkSha256": "9462984e7c4e49e31cbee65fe167494cb29bd19fd90829b857acc47bed46f4e2"
+  },
+  "pass": false,
+  "scope": "Actual installed export-preview source and dialog; generated JPEG, JPEG/reference pixel oracle, EXIF6, crop/frame, normal-font emulator, account invalidation and pending close. No physical handset, camera or gallery publishing."
+}

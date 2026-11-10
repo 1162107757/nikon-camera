@@ -1,0 +1,17 @@
+[
+  {
+    "path": "app/build.gradle",
+    "bytes": 806,
+    "sha256": "b0ddf1521c2b8061dda37a05de144f3b3d1e5e1e4542c547ca21fdf51a72978e"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+    "bytes": 170522,
+    "sha256": "a357ae778ddee5eb64d61c81b46399b0f19874f6ede239ce92100c1d2b131052"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoPresetSourceTabs.java",
+    "bytes": 6293,
+    "sha256": "878cfe43113a5a4b14e2180675ccc20b26ec1a3e0edee54e4e9c58df7f1f7188"
+  }
+]

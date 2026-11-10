@@ -1,0 +1,72 @@
+{
+  "candidateSha256": "57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3",
+  "versionCode": 168,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "b0051bf176cabf9ad910125d2c3d81aeca9ebc0bfa0e776fa7ceba7170dec9a1",
+  "pass": false,
+  "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "7d2ad2e44a7ebd4e74d63032508b109348ec280f8f84d83da377a69de536f7bd"
+    },
+    {
+      "file": "fix168-palette-shown-drag.png",
+      "sha256": "cad86b35f438f0d7b1b07167e3a94187bb87c87ba493918afb1664b60bb141bf"
+    },
+    {
+      "file": "fix168-palette-shown-release.png",
+      "sha256": "f4a4b34b04e9d7d3f57d1a78ed4f426bd4c5ab8c387933c4d117c023f1e42762"
+    },
+    {
+      "file": "report.json",
+      "sha256": "20767c9dc28904fd852b768b32a67f0d62eac6f242113d858d5a824b8303d38b"
+    },
+    {
+      "file": "selection168-circle-drag-hidden.png",
+      "sha256": "6c9c14627c00898f6ae18392574a43b7a9dcad6f87b795de9e1faf5919d15bc9"
+    },
+    {
+      "file": "selection168-circle-persistent.png",
+      "sha256": "7aa3fefa6f6d62a0f6419d307f1f5e10c15f45ea7a47658aaf9b1e1fd7e42ef5"
+    },
+    {
+      "file": "selection168-circle-release-restored.png",
+      "sha256": "5573ba1c28b7f819d0ca8042be39f26e889b09ca1e56848d9ba4cfe22cfeca0c"
+    },
+    {
+      "file": "selection168-curves-persistent.png",
+      "sha256": "d2a85d7d9063eb543ca4b05b2fa65a3c986f9c11d43154e2347766fe916ffadc"
+    },
+    {
+      "file": "selection168-hsl-persistent.png",
+      "sha256": "00bb73e00c11c4a8d0c410faa4b179ae794f3bc0e2f5a48eb10e69afe645861b"
+    },
+    {
+      "file": "selection168-inverse.png",
+      "sha256": "2a3439bff03b691e814cb4f85c1913f058d60424f37ae0bab65a9f83326ed1c9"
+    },
+    {
+      "file": "selection168-main-drag-hidden.png",
+      "sha256": "7812d320da7ba4ec92a11ef4853d01aef8f5aff29485841795541c2929202cc0"
+    },
+    {
+      "file": "selection168-main-regional.png",
+      "sha256": "b53cd6e5ac594d0a3cea7335c362c9848ebbae453c9b703dc81435268769971a"
+    },
+    {
+      "file": "selection168-manual-brush-persistent.png",
+      "sha256": "f0a13e44d9e1edd954c0da4f2cf408fd190d228cf30426032c4450bc8f283376"
+    },
+    {
+      "file": "selection168-palette-persistent.png",
+      "sha256": "63814c93eb71637855adb27f41093339aefd984d23bc2a2bf03a0cd96f0e6d83"
+    },
+    {
+      "file": "selection168-rectangle-added.png",
+      "sha256": "ca5df461a829e2d2e222967c06b10b8cf4476df2281eb6e15a4ae35feadef4de"
+    }
+  ]
+}

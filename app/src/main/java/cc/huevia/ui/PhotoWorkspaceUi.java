@@ -56,12 +56,22 @@ final class PhotoWorkspaceUi {
         return dp(context, 48 + 20 * Math.max(1, context.getResources().getConfiguration().fontScale));
     }
 
-    /** The same icon-and-caption entry used by the adjustment menu. */
+    /** Larger circular entries belong to portrait workspaces. */
     static LinearLayout toolEntry(Context context, String label, String tag, AppIcon.Kind icon, Runnable action) {
+        return iconCaptionEntry(context, label, tag, icon, action, true);
+    }
+
+    /** Match the 26dp line icons, spacing and caption baseline of adjustment parameters. */
+    static LinearLayout adjustmentEntry(Context context, String label, String tag, AppIcon.Kind icon, Runnable action) {
+        return iconCaptionEntry(context, label, tag, icon, action, false);
+    }
+
+    private static LinearLayout iconCaptionEntry(Context context, String label, String tag,
+                                                AppIcon.Kind icon, Runnable action, boolean circular) {
         LinearLayout entry = new LinearLayout(context);
         entry.setOrientation(LinearLayout.VERTICAL);
         entry.setGravity(Gravity.CENTER_HORIZONTAL);
-        entry.setPadding(0, dp(context, 3), 0, 0);
+        entry.setPadding(0, dp(context, circular ? 3 : 6), 0, 0);
         entry.setMinimumHeight(dp(context, 48));
         entry.setFocusable(true);
         entry.setClickable(true);
@@ -70,8 +80,10 @@ final class PhotoWorkspaceUi {
         entry.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335), tabShape(Color.TRANSPARENT, dp(context, 4)), null));
         ImageView image = new ImageView(context);
         image.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
-        image.setImageDrawable(PhotoPrismaStyle.circle(context,icon,false));
-        entry.addView(image, new LinearLayout.LayoutParams(dp(context, 39), dp(context, 39)));
+        image.setImageDrawable(circular ? PhotoPrismaStyle.circle(context,icon,false)
+                : new AppIcon(icon, 0x99ffffff, context.getResources().getDisplayMetrics().density));
+        int iconSize = dp(context, circular ? 39 : 26);
+        entry.addView(image, new LinearLayout.LayoutParams(iconSize, iconSize));
         LinearLayout.LayoutParams captionSize = new LinearLayout.LayoutParams(-1,
                 dp(context, 20 * Math.max(1, context.getResources().getConfiguration().fontScale)));
         captionSize.topMargin = dp(context, 4);
@@ -379,6 +391,10 @@ final class PhotoWorkspaceUi {
                     canvas.drawOval(new RectF(4, 6, 20, 18), paint);
                     line(canvas, 12, 3, 12, 7); line(canvas, 12, 17, 12, 21);
                     line(canvas, 2, 12, 6, 12); line(canvas, 18, 12, 22, 12); break;
+                case "selection-circle":
+                    canvas.drawCircle(12,12,8,paint);break;
+                case "selection-rectangle":
+                    canvas.drawRect(4,4,20,20,paint);break;
                 case "linear":
                     line(canvas, 4, 4, 20, 4); line(canvas, 4, 20, 20, 20);
                     line(canvas, 12, 7, 12, 17); canvas.drawCircle(12, 12, 2.5f, paint); break;

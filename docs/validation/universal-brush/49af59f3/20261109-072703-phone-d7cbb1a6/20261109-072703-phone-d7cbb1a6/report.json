@@ -1,0 +1,113 @@
+{
+  "pass": false,
+  "stage": "patch169-fixture",
+  "candidateSha256": "49af59f3dce46e904a3df3674f2a74951943737f5cfab2fbe1b438f28818f9c9",
+  "versionCode": 169,
+  "versionName": "0.30.15-beta",
+  "mode": "phone",
+  "flow": "patch169",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 1,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": "java.lang.AssertionError: Missing real editor control editor-patch",
+  "scope": "Exact installed repair destination\/source drag, real circle\/ellipse and rectangle selection, feather\/blend, persistent display and slider\/focus cancellation, undo\/redo and clearing, outer apply\/cancel\/history, actual v7 saved draft reopening and original bytes. Native masked pixels and unchanged exterior checked; independent full EXIF\/alpha\/ordered-overlap and 24MP host oracle separate. No physical-device, full-export matrix, AI or public-release acceptance claim."
+}

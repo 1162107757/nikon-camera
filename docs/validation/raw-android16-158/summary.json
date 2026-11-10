@@ -1,0 +1,84 @@
+{
+  "versionCode": 158,
+  "versionName": "0.30.4-beta",
+  "published": false,
+  "matchedEnvironmentReproduced": {
+    "os": 16,
+    "versionCode": 155,
+    "versionName": "0.30.1-beta",
+    "trigger": "Actual album menu RAW development",
+    "cause": "PhoneWindow.getInsetsController called before DecorView creation",
+    "evidence": "docs/validation/raw-picker157/android16/155-crash.txt"
+  },
+  "apk": {
+    "path": "dist/huevia-0.30.4-beta-debug.apk",
+    "sha256": "31a5be2a9818fa1b859753d702078ec0a13d8971a274b08d5446c538f8767971",
+    "bytes": 34581880,
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signature": "V2/V3 verified"
+  },
+  "deviceChecks": 366,
+  "manualChecks": 14,
+  "totalChecks": 380,
+  "runs": [
+    {
+      "os": 16,
+      "kind": "raw",
+      "checks": 128,
+      "path": "docs/validation/photo-image-suite/raw-development/31a5be2a/20261108-124456-23d411bb8e/20261108-124456-23d411bb8e/report.json",
+      "pass": true,
+      "reportSha256": "72746606460329221030ba0278e1680971792ad8e8b7a0769b735fe95ef7a3a9"
+    },
+    {
+      "os": 17,
+      "kind": "raw",
+      "checks": 128,
+      "path": "docs/validation/photo-image-suite/raw-development/31a5be2a/20261108-124521-99ed1dc066/20261108-124521-99ed1dc066/report.json",
+      "pass": true,
+      "reportSha256": "8a16a10ba052d5ecee12e5a97cc91947df80c20450252021440563fc3b704a87"
+    },
+    {
+      "os": 16,
+      "kind": "export-preview",
+      "checks": 55,
+      "path": "docs/validation/photo-export-preview/31a5be2a/e8d966dedcd540bf81b7beee404e286e/report.json",
+      "pass": true,
+      "reportSha256": "851fa09d64c3723a170e39be5394033ed39eddd7a835d6e1fceec005e4138635"
+    },
+    {
+      "os": 17,
+      "kind": "export-preview",
+      "checks": 55,
+      "path": "docs/validation/photo-export-preview/31a5be2a/152f84cfe1b4483db880619095c971b7/report.json",
+      "pass": true,
+      "reportSha256": "851fa09d64c3723a170e39be5394033ed39eddd7a835d6e1fceec005e4138635"
+    }
+  ],
+  "physicalPhoneAttached": false,
+  "inputs": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "bdf44f30a7412cad4fd914a3800513ec786f5859f03d458c1d459604e413a2df"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/RawDevelopActivity.java",
+      "sha256": "42371478fea907ae62710698b5874390f91e4623658e939b503ea6b767532012"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportPreviewDialog.java",
+      "sha256": "71ccb2349d892b1a857385462289c485639294146325d08054433a17ac8c03cb"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawDocumentPickerChecks.java",
+      "sha256": "a6db8acc5b7e22ff2a699ea5b9d2ab063aae18c95ea156b56ad88894f4ee85e8"
+    },
+    {
+      "path": "tests/export-preview-device-probe/src/cc/huevia/exportpreviewqa/ExportPreviewProbe.java",
+      "sha256": "da0ab55b5c15bf55b331ad9417a5246919eddf19564987628baeed7a5cd611d2"
+    },
+    {
+      "path": "docs/validation/raw-android16-158/entry-check.ps1",
+      "sha256": "1bde85da71f61fae5d297fa02487e5efbfdbe5cea2d8b06a2b16fea9e596e98e"
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "pass": true,
+  "ipa": {
+    "path": "dist/Huevia-0.1.0-ios-unsigned.ipa",
+    "pass": true,
+    "bundleIdentifier": "cc.huevia.ios",
+    "version": "0.1.0",
+    "build": "4",
+    "minimumOS": "16.0",
+    "platform": "iPhoneOS",
+    "architecture": "arm64",
+    "machOSignatureCommandPresent": false,
+    "provisioningProfilePresent": false,
+    "requiresUserSigning": true,
+    "bytes": 8828024,
+    "sha256": "eb6e5fc1619c11a2f420d07127b896dbb9d440273bbe2ab803badbf442628716"
+  },
+  "privateBuild": {
+    "runId": 42454680061,
+    "url": "https://github.com/1162107757/nikon-camera/actions/runs/42454680061",
+    "branch": "codex/ios-unsigned-20261108t055033",
+    "headSha": "02edb9878c10428e41f5aa9be9fe7916b4edebb8",
+    "defaultBranchUnchanged": true
+  },
+  "coreTests": {
+    "count": 7,
+    "failures": 0,
+    "scope": "Packet bounds, NCP conversion, model/host allowlist, stale slot rejection, exact readback, no implicit retry; scripted camera only"
+  },
+  "simulator": {
+    "pass": true,
+    "device": "iPhone 17 Pro",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-26-2",
+    "udid": "27DA436F-1A9D-471E-BFF0-41B24AAB285D",
+    "checks": [
+      {
+        "screen": "presets-light",
+        "processAlive": true,
+        "appearance": "light",
+        "contentSize": "large"
+      },
+      {
+        "screen": "presets-dark-large",
+        "processAlive": true,
+        "appearance": "dark",
+        "contentSize": "extra-extra-extra-large"
+      },
+      {
+        "screen": "camera-light",
+        "processAlive": true,
+        "appearance": "light",
+        "contentSize": "large"
+      },
+      {
+        "screen": "settings-light",
+        "processAlive": true,
+        "appearance": "light",
+        "contentSize": "large"
+      },
+      {
+        "screen": "preset-detail-light",
+        "processAlive": true,
+        "appearance": "light",
+        "contentSize": "large"
+      }
+    ],
+    "scope": "Real simulator launch and screenshots; camera hardware and user re-signing not tested"
+  },
+  "bundledPhotosDecoded": 10,
+  "physicalCameraTested": false,
+  "userSigningTested": false,
+  "livePresetRead": {
+    "httpStatus": 200,
+    "bytes": 638,
+    "sha256": "2bab29630bbc537025c5daf68f6b7ab90a866e5c97e6dc7430dd4fe4ad547eb6"
+  },
+  "compilerWarnings": [
+    "Metadata extraction skipped. No AppIntents.framework dependency found."
+  ],
+  "inputs": [
+    {
+      "path": "ios/Core/Binary.swift",
+      "bytes": 4799,
+      "sha256": "9bf65ac04cda4f4769d2cf982e8fdc4c31ee27502f2025094ffb0b6fcc5e1ad6"
+    },
+    {
+      "path": "ios/Core/NCPConverter.swift",
+      "bytes": 3571,
+      "sha256": "5c558a6a211fead5f1b439d13cedf540b151eee7f55d4d3f72f986f78bb54a9f"
+    },
+    {
+      "path": "ios/Core/NikonCamera.swift",
+      "bytes": 13856,
+      "sha256": "9afabd48e6c79be47e168b8874650b1a946a88744fd527fbcebf62247523024e"
+    },
+    {
+      "path": "ios/Huevia/Assets.xcassets/Contents.json",
+      "bytes": 41,
+      "sha256": "72c7d24704014fc43418caf0de10610912623033478dc1cfe1a4f8458970f0db"
+    },
+    {
+      "path": "ios/Huevia/icon-source.png",
+      "bytes": 1442739,
+      "sha256": "42fd5603b474e3b7affabad19588a510526566b06be2edac7186a0cb7bcd6cbd"
+    },
+    {
+      "path": "ios/Huevia/Info.plist",
+      "bytes": 2545,
+      "sha256": "774509b9807bbf9391571464e1663a85c9fea6bd82f0d3666b69e1c63dd94118"
+    },
+    {
+      "path": "ios/Huevia/Resources/alpine-lake.jpg",
+      "bytes": 103191,
+      "sha256": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3"
+    },
+    {
+      "path": "ios/Huevia/Resources/breakfast.jpg",
+      "bytes": 76119,
+      "sha256": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648"
+    },
+    {
+      "path": "ios/Huevia/Resources/city-skyline.jpg",
+      "bytes": 159137,
+      "sha256": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486"
+    },
+    {
+      "path": "ios/Huevia/Resources/coastal-water.jpg",
+      "bytes": 107309,
+      "sha256": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28"
+    },
+    {
+      "path": "ios/Huevia/Resources/neon-street.jpg",
+      "bytes": 95366,
+      "sha256": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2"
+    },
+    {
+      "path": "ios/Huevia/Resources/pink-tulips.jpg",
+      "bytes": 41800,
+      "sha256": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580"
+    },
+    {
+      "path": "ios/Huevia/Resources/portrait-man.jpg",
+      "bytes": 48125,
+      "sha256": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182"
+    },
+    {
+      "path": "ios/Huevia/Resources/portrait-smile.jpg",
+      "bytes": 93210,
+      "sha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58"
+    },
+    {
+      "path": "ios/Huevia/Resources/rainy-tokyo.jpg",
+      "bytes": 129907,
+      "sha256": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe"
+    },
+    {
+      "path": "ios/Huevia/Resources/showcase-provenance.json",
+      "bytes": 8436,
+      "sha256": "c2830dda189454474cdab4ff94feda83f7419b1e1ce657c7793d74658e9d50c6"
+    },
+    {
+      "path": "ios/Huevia/Resources/sunlit-forest.jpg",
+      "bytes": 110831,
+      "sha256": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+    },
+    {
+      "path": "ios/Huevia.xcodeproj/xcshareddata/xcschemes/Huevia.xcscheme",
+      "bytes": 1995,
+      "sha256": "31197ff6e5598f10530915aa2da7ddbe8c3b37cf6d6f1aaf26c0c7516149322b"
+    },
+    {
+      "path": "ios/Package.swift",
+      "bytes": 414,
+      "sha256": "9d4641d97f9a0209d9dee94a2da19d19784f0e0911f8496a27739cf210534dfb"
+    },
+    {
+      "path": "ios/Tests/HueviaCoreTests.swift",
+      "bytes": 9326,
+      "sha256": "96ba8e898f76255c0e45889c8fa3999ec433c925007c26da7be53f22c5b56678"
+    },
+    {
+      "path": ".github/workflows/ios-unsigned.yml",
+      "bytes": 1362,
+      "sha256": "af2b24a5bc8061962f957cd099035ccada769d2629c33581f17a5d514c561ceb"
+    },
+    {
+      "path": "ios/Huevia/Assets.xcassets/AccentColor.colorset/Contents.json",
+      "bytes": 407,
+      "sha256": "73cbadf8c69b69898d3af205f81f4105de2342e404497159b6ebd910cdea56e3"
+    },
+    {
+      "path": "ios/Huevia/Assets.xcassets/OnAccent.colorset/Contents.json",
+      "bytes": 398,
+      "sha256": "058eb5729616b539914b052d56228e6ad7ec95483efb96edf31e81f9733998b7"
+    },
+    {
+      "path": "ios/Core/TCPChannel.swift",
+      "bytes": 4617,
+      "sha256": "ef483e15dd5be599e4b5091e97cec87b1864dbc59336bebd846f3184bfea90ef"
+    },
+    {
+      "path": "ios/scripts/verify_ipa.py",
+      "bytes": 2400,
+      "sha256": "d283a54260201fff16541d6745f7f4c3589d848edc428bccad552413303c62ed"
+    },
+    {
+      "path": "ios/Huevia/AppModel.swift",
+      "bytes": 11337,
+      "sha256": "a23893948d7460575bc073622607f43c9adda5cb0c08d279f5289002090acf33"
+    },
+    {
+      "path": "ios/scripts/build-unsigned.sh",
+      "bytes": 1648,
+      "sha256": "48156a4b6db638e5d030c84801fd74854ba02dbc202177034afc90fe21483a5a"
+    },
+    {
+      "path": "ios/scripts/simulator_check.py",
+      "bytes": 2962,
+      "sha256": "0741c29ea2772792efd1b713d47b10d8af7c8cdc5fc0ccd430c48f7172d63f15"
+    },
+    {
+      "path": "ios/README.md",
+      "bytes": 2265,
+      "sha256": "880865419fde56b6b699215df558e6c1af37d2d4f1d3a425cf7e87516bac66d8"
+    },
+    {
+      "path": "ios/Huevia/HueviaApp.swift",
+      "bytes": 14508,
+      "sha256": "c93f842041167d2b54daa41703ebd215d1028bbab67168c915e9227acdb704ec"
+    },
+    {
+      "path": "ios/scripts/generate_project.py",
+      "bytes": 6536,
+      "sha256": "13851bceb5fb003e343c29ffc8bbdf7cd2646c86bc43412fa2bb35e4b7fb82e7"
+    },
+    {
+      "path": "ios/Huevia.xcodeproj/project.pbxproj",
+      "bytes": 9879,
+      "sha256": "d90ea501b2ba22aee2fee0a5f90deda51657297db68f719b309d63239a1b78d8"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "camera-light.png",
+      "sha256": "b2ab6c7584aed8e7e4d74d31fd3e1bd9c5618800ece551faddf522dc811840c3"
+    },
+    {
+      "path": "preset-detail-light.png",
+      "sha256": "dba2680e890a3c5b22c0b637415c353087aa950a57200d74dbd1245cb36c86be"
+    },
+    {
+      "path": "presets-dark-large.png",
+      "sha256": "7b6eb61d60f6ce458d414b860b02f7bca5aec29569415e6ce2b0eeb17fd78cea"
+    },
+    {
+      "path": "presets-light.png",
+      "sha256": "587343d8b1f123e77d3c69d5673ad1cb62e6293e9b768041b5545f2e84be6a4b"
+    },
+    {
+      "path": "settings-light.png",
+      "sha256": "6390e61beba3b306340c4b701b114273d7f9c05ea83e37c7902a977fd0ab4f9d"
+    }
+  ],
+  "notPublishedToWebsiteOrAppStore": true,
+  "visualFixVerdict": {
+    "disposition": "ship",
+    "scope": "Scored M1/R1 photography and column containment corrections, with prior M2/M3 resolved; not a whole-product or hardware certification",
+    "report": "docs/validation/ios-selfsign-20261108/verdict-delivery.md"
+  }
+}

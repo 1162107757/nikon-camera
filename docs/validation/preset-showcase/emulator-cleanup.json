@@ -1,0 +1,13 @@
+{
+  "serial": "emulator-5588",
+  "source": "Explicitly handed off by four-home154 task; see .tooling/four-home154/emulator-handoff.json",
+  "appForceStopped": true,
+  "ownProbeUninstalled": true,
+  "wmSizeOverrideRemoved": true,
+  "wmDensityOverrideRemoved": true,
+  "fontScaleRestored": 1,
+  "animatorScalePreserved": 1,
+  "emulatorLeftRunning": true,
+  "baseAvdWiped": false,
+  "physicalDeviceUsed": false
+}

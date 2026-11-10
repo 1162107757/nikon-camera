@@ -1,0 +1,56 @@
+{
+  "mobile": [
+    {
+      "height": 844,
+      "navH": 64,
+      "overflow": false,
+      "selected": "预设",
+      "title": "预设",
+      "width": 390
+    },
+    {
+      "height": 844,
+      "navH": 64,
+      "overflow": false,
+      "selected": "同步",
+      "title": "同步",
+      "width": 390
+    },
+    {
+      "height": 844,
+      "navH": 64,
+      "overflow": false,
+      "selected": "相册",
+      "title": "相册",
+      "width": 390
+    },
+    {
+      "height": 844,
+      "navH": 64,
+      "overflow": false,
+      "selected": "设置",
+      "title": "设置",
+      "width": 390
+    }
+  ],
+  "narrow": {
+    "h": 64,
+    "overflow": false,
+    "viewport": 320,
+    "w": 290
+  },
+  "inFlight": {
+    "animation": "water-rise",
+    "transform": "matrix(1, 0, 0, 1, -1.41941, 27.4515)"
+  },
+  "rapid": {
+    "animated": 0,
+    "selected": "相册"
+  },
+  "keyboard": {
+    "focused": "设置",
+    "selected": "设置"
+  },
+  "reducedMotion": "CSS and JS paths present; not OS-emulated in this browser capability",
+  "detector": "Single degraded-regex scan: no computed contrast/selector analysis"
+}

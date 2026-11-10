@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="preset_filter_material" />
+    <style name="PresetFilterDialogLight" parent="HueviaDialogLight">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:hardwareAccelerated">true</item>
+    </style>
+    <style name="PresetFilterDialogDark" parent="HueviaDialogDark">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:hardwareAccelerated">true</item>
+    </style>
+</resources>

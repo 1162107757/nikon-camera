@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-08T02:47:08.668Z",
+  "hourlyRequests": 20,
+  "hourlySourceBytes": 268435456,
+  "globalDailyRequests": 1000,
+  "globalDailyBytes": 2147483648,
+  "usageReset": false,
+  "onlyChanged": "source hourly byte allowance: 80MiB to 256MiB",
+  "beforeSha256": "f60cc9720541d57cc318d4485438242d08c3af5a13dee3597dc7ccecb4402376",
+  "afterSha256": "f9bf1288a40fd44a38d1ee8d58b62929158100849ce1aa075a64e130106339c6"
+}

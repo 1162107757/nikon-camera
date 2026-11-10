@@ -22,8 +22,10 @@ public final class OnlinePresetRepository {
     private static final int MAX_RECIPE_CACHE_FILES = 256;
     private static final Object CONFIGURATION_LOCK = new Object();
     private static final Object RECIPE_CACHE_LOCK = new Object();
-    private final Object[] recipeLocks = new Object[16];
+    private static final Object[] RECIPE_LOCKS = createRecipeLocks();
+    private static final Object PREVIEW_SAVE_LOCK = new Object();
     private final File root;
+    private final PreviewImageCache previewCache;
     private final PresetLibrary library;
     private final SecureHttpClient http;
     private String endpoint = "";
@@ -79,7 +81,7 @@ public final class OnlinePresetRepository {
         if (!path.endsWith("/catalog.json")) throw new IOException("在线预设分页地址无效。");
         String normalized = PresetCategories.normalize(category);
         String address = endpointUri.resolve(path.substring(0,path.length()-"catalog.json".length()) + "community/feed").toString()
-                + "?page=" + page + "&pageSize=" + pageSize + "&category=" + java.net.URLEncoder.encode(normalized, StandardCharsets.UTF_8);
+                + "?page=" + page + "&pageSize=" + pageSize + "&category=" + java.net.URLEncoder.encode(normalized, StandardCharsets.UTF_8.name());
         if (!requestedFormat.isEmpty()) address += "&fileFormat=" + requestedFormat;
         Map<String,Object> result = LibraryJson.object(LibraryJson.parse(LibraryFiles.utf8(http.get(address,MAX_MANIFEST_BYTES,-1,"application/json",null))));
         // An older service can ignore unknown query parameters. Require its explicit acknowledgement
@@ -105,9 +107,16 @@ public final class OnlinePresetRepository {
     }
     OnlinePresetRepository(File appFilesDir, PresetLibrary library, SecureHttpClient http) throws IOException {
         this.library = library; this.http = http; root = new File(appFilesDir, "online-presets");
-        for (int index = 0; index < recipeLocks.length; index++) recipeLocks[index] = new Object();
         if (!root.isDirectory() && !root.mkdirs()) throw new IOException("无法创建在线目录缓存。");
+        previewCache = new PreviewImageCache(new File(root, "image-cache"), new File(root, "previews"),
+                MAX_PREVIEW_BYTES, PreviewImages::validate);
         synchronized (CONFIGURATION_LOCK) { readConfiguration(); }
+    }
+
+    private static Object[] createRecipeLocks() {
+        Object[] locks = new Object[16];
+        for (int index = 0; index < locks.length; index++) locks[index] = new Object();
+        return locks;
     }
 
     private void readConfiguration() {
@@ -241,10 +250,7 @@ public final class OnlinePresetRepository {
             if (listener != null) listener.onProgress(preset.byteLength, preset.byteLength);
             return new PresetLibrary.AddResult(existing, false);
         }
-        byte[] bytes = readCachedRecipe(preset);
-        if (bytes == null) bytes = http.get(preset.fileUrl, NcpFile.MAX_BYTES, preset.byteLength,
-                "application/octet-stream", listener);
-        else if (listener != null) listener.onProgress(bytes.length, bytes.length);
+        byte[] bytes = readForPreview(preset, listener);
         // Validate the complete response, digest and declared container before writing the commit marker.
         return library.addDownloaded(preset, bytes);
     }
@@ -257,7 +263,7 @@ public final class OnlinePresetRepository {
 
     public byte[] readForPreview(OnlinePreset preset, ProgressListener listener) throws IOException {
         if (preset == null) throw new IOException("尚未选择在线预设。");
-        Object lock = recipeLocks[(preset.sha256.hashCode() & Integer.MAX_VALUE) % recipeLocks.length];
+        Object lock = RECIPE_LOCKS[(preset.sha256.hashCode() & Integer.MAX_VALUE) % RECIPE_LOCKS.length];
         synchronized (lock) {
             if (listener != null) listener.onProgress(0, preset.byteLength);
             PresetRecord existing = library.findBySha256(preset.sha256);
@@ -320,23 +326,28 @@ public final class OnlinePresetRepository {
         }
     }
 
-    /** Optional sample download. Failure must not be interpreted as an NCP download/import failure. */
-    public File downloadPreview(OnlinePreset preset) throws IOException {
+    /** Browsing samples never creates a user-library record or pins cache files. Worker-thread API. */
+    public byte[] readPreview(OnlinePreset preset) throws IOException {
         if (preset == null || preset.previewUrl.isEmpty()) throw new IOException("此预设暂无配套样片。");
+        return previewCache.read(preset.previewUrl, () -> http.get(preset.previewUrl, MAX_PREVIEW_BYTES,
+                -1, "image/png,image/jpeg,image/webp,image/gif", null));
+    }
+
+    /** Optional durable sample download; these user-library files are excluded from cache eviction. */
+    public File downloadPreview(OnlinePreset preset) throws IOException {
+        byte[] bytes = readPreview(preset);
         String key = LibraryFiles.sha256(preset.previewUrl.getBytes(StandardCharsets.UTF_8));
         File file = new File(root, "previews/" + key + ".image");
-        boolean validCache = false;
-        if (file.isFile()) {
-            try { PreviewImages.validate(LibraryFiles.read(file, MAX_PREVIEW_BYTES)); validCache = true; }
-            catch (IOException ignored) { /* Fetch again; do not expose a corrupt cache. */ }
+        synchronized (PREVIEW_SAVE_LOCK) {
+            boolean valid = false;
+            if (file.isFile()) {
+                try { PreviewImages.validate(LibraryFiles.read(file, MAX_PREVIEW_BYTES)); valid = true; }
+                catch (IOException ignored) { /* Repair a corrupt durable sample. */ }
+            }
+            if (!valid) LibraryFiles.atomicWrite(file, bytes);
+            PresetRecord record = library.findBySha256(preset.sha256);
+            if (record != null && record.previewUri.isEmpty()) library.attachPreview(record.id, file.toURI().toString());
         }
-        if (!validCache) {
-            byte[] bytes = http.get(preset.previewUrl, MAX_PREVIEW_BYTES, -1, "image/png,image/jpeg,image/webp,image/gif", null);
-            PreviewImages.validate(bytes);
-            LibraryFiles.atomicWrite(file, bytes);
-        }
-        PresetRecord record = library.findBySha256(preset.sha256);
-        if (record != null && record.previewUri.isEmpty()) library.attachPreview(record.id, file.toURI().toString());
         return file;
     }
 

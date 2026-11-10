@@ -1,0 +1,414 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "apkSha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "performance-progress-monotonic-cold",
+      "passed": true
+    },
+    {
+      "name": "performance-cache-state-cold",
+      "passed": true
+    },
+    {
+      "name": "performance-progress-monotonic-warm",
+      "passed": true
+    },
+    {
+      "name": "performance-cache-state-warm",
+      "passed": true
+    },
+    {
+      "name": "performance-progress-monotonic-exposure",
+      "passed": true
+    },
+    {
+      "name": "performance-cache-state-exposure",
+      "passed": true
+    },
+    {
+      "name": "performance-editor-full-size-0",
+      "passed": true
+    },
+    {
+      "name": "performance-editor-full-size-1",
+      "passed": true
+    },
+    {
+      "name": "performance-source-unchanged",
+      "passed": true
+    },
+    {
+      "name": "PNG-progress-1x1",
+      "passed": true
+    },
+    {
+      "name": "PNG-native-decoder-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-exact-all-pixels-1x1",
+      "passed": true
+    },
+    {
+      "name": "PNG-signature-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-complete-sRGB-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-mid-stream-cancel-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-I\/O-failure-propagates-1",
+      "passed": true
+    },
+    {
+      "name": "PNG-progress-7x33",
+      "passed": true
+    },
+    {
+      "name": "PNG-native-decoder-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-exact-all-pixels-7x33",
+      "passed": true
+    },
+    {
+      "name": "PNG-signature-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-complete-sRGB-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-mid-stream-cancel-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-I\/O-failure-propagates-7",
+      "passed": true
+    },
+    {
+      "name": "PNG-progress-401x97",
+      "passed": true
+    },
+    {
+      "name": "PNG-native-decoder-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-exact-all-pixels-401x97",
+      "passed": true
+    },
+    {
+      "name": "PNG-signature-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-complete-sRGB-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-mid-stream-cancel-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-I\/O-failure-propagates-401",
+      "passed": true
+    },
+    {
+      "name": "PNG-progress-6064x35",
+      "passed": true
+    },
+    {
+      "name": "PNG-native-decoder-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-exact-all-pixels-6064x35",
+      "passed": true
+    },
+    {
+      "name": "PNG-signature-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-complete-sRGB-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-mid-stream-cancel-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-I\/O-failure-propagates-6064",
+      "passed": true
+    },
+    {
+      "name": "PNG-progress-57x64",
+      "passed": true
+    },
+    {
+      "name": "PNG-native-decoder-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-exact-all-pixels-57x64",
+      "passed": true
+    },
+    {
+      "name": "PNG-signature-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-every-chunk-CRC-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-complete-sRGB-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-mid-stream-cancel-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-I\/O-failure-propagates-57",
+      "passed": true
+    },
+    {
+      "name": "PNG-refuses-unexpected-alpha-rather-than-dropping-it",
+      "passed": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "raw-speed-cold",
+      "totalMs": 3506.4996,
+      "pixelsMs": 2550.0789,
+      "writeAndVerifyMs": 956.4207,
+      "progressEvents": 408,
+      "savePercentValues": [
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+      "fileBytes": 31119634
+    },
+    {
+      "case": "raw-speed-warm",
+      "totalMs": 73.057,
+      "pixelsMs": 73.0246,
+      "writeAndVerifyMs": 0.0324,
+      "progressEvents": 1,
+      "savePercentValues": [],
+      "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+      "fileBytes": 31119634
+    },
+    {
+      "case": "raw-speed-exposure",
+      "totalMs": 3325.6613,
+      "pixelsMs": 2380.3368,
+      "writeAndVerifyMs": 945.3245,
+      "progressEvents": 407,
+      "savePercentValues": [
+        95,
+        96,
+        97,
+        98,
+        99
+      ],
+      "rasterSha256": "bc75d1fbda3fb1fb2b715a9baf0ebc94afb5dde4aff22d54885884b93895da91",
+      "fileBytes": 32290928
+    },
+    {
+      "case": "raw-editor-cold",
+      "totalMs": 4659.8745,
+      "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+      "bytes": 11873269
+    },
+    {
+      "case": "raw-editor-warm",
+      "totalMs": 110.1827,
+      "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+      "bytes": 11873269
+    }
+  ],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+}

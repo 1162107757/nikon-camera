@@ -1,0 +1,173 @@
+{
+  "apkSha256": "7a889c7496a822609f6f076dc3c666616061e03c98331670e79f210be9c08c92",
+  "originalPngs": [
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214448-phone-cd25c12b0a/20261109-214448-phone-cd25c12b0a/A-phone-selection.png",
+      "sha256": "3e8e0897669e2b419203eef102884019dcdb424ffe9145c18dcfc41d23ab77d2",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214448-phone-cd25c12b0a/20261109-214448-phone-cd25c12b0a/A-three-selected.png",
+      "sha256": "99dff8eb214e172ee81bda05df5f920566d3bf59882965cbf2ca25471d917fea",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214448-phone-cd25c12b0a/20261109-214448-phone-cd25c12b0a/app-delete-complete.png",
+      "sha256": "dc54956f895d0a696fcf77fa8b0e95396da44a23d2611b758534ee4a9a324a60",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214448-phone-cd25c12b0a/20261109-214448-phone-cd25c12b0a/app-delete-confirmation.png",
+      "sha256": "4acc15d3147e184f6a2e02fd842d2807da1e92cc430b494e53d21ada2385a6aa",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214448-phone-cd25c12b0a/20261109-214448-phone-cd25c12b0a/app-delete-selection.png",
+      "sha256": "49cfaa682046a8a3c6935de9db26dc56b04108bebbf1cdbcf5164fb2ad3f5490",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214448-phone-cd25c12b0a/20261109-214448-phone-cd25c12b0a/app-delete-working.png",
+      "sha256": "f4de12bcf83d95fff8787ac27104567b35bffe24e3b8a443509ad9847e23e5b1",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214606-large-text-3a392842bb/20261109-214606-large-text-3a392842bb/A-phone-selection.png",
+      "sha256": "4868a0c8785a84ead727d596b3e0e9a5c33235a85db171acd63745dbd71522a9",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214606-large-text-3a392842bb/20261109-214606-large-text-3a392842bb/A-three-selected.png",
+      "sha256": "5859113e95a86d51faecc03f8c2481fec0efccfe51e20e3dfc9f6adbcc77cea2",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214606-large-text-3a392842bb/20261109-214606-large-text-3a392842bb/app-delete-complete.png",
+      "sha256": "0945513ceed2f8192d4aa1a074d268835d0402ed0aa8ca3ede72db891fad83d7",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214606-large-text-3a392842bb/20261109-214606-large-text-3a392842bb/app-delete-confirmation.png",
+      "sha256": "d418322398a87216fcf78859d55af99cd48591a580158e657e1048bd2f00ca57",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214606-large-text-3a392842bb/20261109-214606-large-text-3a392842bb/app-delete-selection.png",
+      "sha256": "3caaec615f5d2745568b56aebd395d2f8ce3e78a79a64c58339251d9e1ea4bae",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214606-large-text-3a392842bb/20261109-214606-large-text-3a392842bb/app-delete-working.png",
+      "sha256": "1a3df0b0a578c25c08ec7126e6464d1c445d028e9f406d5c780769057bbfed29",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214618-tablet-e5ef467478/20261109-214618-tablet-e5ef467478/A-phone-selection.png",
+      "sha256": "1bc7486d7667258ab2211e514133549bfa10b610633c411ceff7828c5391ae4d",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214618-tablet-e5ef467478/20261109-214618-tablet-e5ef467478/A-three-selected.png",
+      "sha256": "887c1f246212429aa1009528a19aebd3b9963eb4929d267b2774e9af9358b34c",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214618-tablet-e5ef467478/20261109-214618-tablet-e5ef467478/app-delete-complete.png",
+      "sha256": "56cf691f1aae603eb04ef7a45eb50a8e2a65fbfd7e376b24a346bf78adc7dff8",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214618-tablet-e5ef467478/20261109-214618-tablet-e5ef467478/app-delete-confirmation.png",
+      "sha256": "64b460e37434eb6ed401b2b6605dcbed21aa69a236e18e12ee1ea049efac3876",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214618-tablet-e5ef467478/20261109-214618-tablet-e5ef467478/app-delete-selection.png",
+      "sha256": "fde1a4e5aa18a5ff7308bf4a4375a2db78b9372ad3f655e418874d87b6e18002",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214618-tablet-e5ef467478/20261109-214618-tablet-e5ef467478/app-delete-working.png",
+      "sha256": "d43b2e999b6da397683a00339b40c73e26b386e9c3d053c67319ff4fbe720d37",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214637-landscape-96ff4d39b8/20261109-214637-landscape-96ff4d39b8/A-phone-selection.png",
+      "sha256": "096bd176613be72549a5e3bf0eb4b3d23fcfd2e28223be6ff501cdc631383c2a",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214637-landscape-96ff4d39b8/20261109-214637-landscape-96ff4d39b8/A-three-selected.png",
+      "sha256": "8335487dfac1a72518b8be28baf1f949e1870bd2fd23008a11fa5d18b8eb5074",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214637-landscape-96ff4d39b8/20261109-214637-landscape-96ff4d39b8/app-delete-complete.png",
+      "sha256": "d89b356b79800b21f8efe9a5dffad82e0dad9df38dfd3e507bece380f036ea9f",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214637-landscape-96ff4d39b8/20261109-214637-landscape-96ff4d39b8/app-delete-confirmation.png",
+      "sha256": "a87c8b74fb552dfaa218cddbdac0a5b74f9771155427a02f9c2391573e7813bd",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214637-landscape-96ff4d39b8/20261109-214637-landscape-96ff4d39b8/app-delete-selection.png",
+      "sha256": "b4c91829724880efe3415ff958a7fedfc69a0668ee23d51ffcddff09b6fea4dd",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/7a889c74/20261109-214637-landscape-96ff4d39b8/20261109-214637-landscape-96ff4d39b8/app-delete-working.png",
+      "sha256": "889c5c6a88da5284d623737847908b99b946aaa19f7d7a8bb6c0a3d5a659e11a",
+      "width": 1890,
+      "height": 840
+    }
+  ]
+}

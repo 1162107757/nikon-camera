@@ -1,0 +1,41 @@
+{
+  "versionCode": "183",
+  "candidateSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "uiMode": "phone",
+  "probeSha256": "77cf51f543fdb003f588dbfa2ea00619abf8a7244ec4589e42d44f9bd8aabbec",
+  "sampleNefSha256": "",
+  "pass": false,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims.",
+  "files": [
+    {
+      "file": "01-album-default.png",
+      "sha256": "2bd9a656fd869a3fc2bfac33a2fe3edf63c5a542b07e07727e33abf75ca814a0"
+    },
+    {
+      "file": "02-sheet-default.png",
+      "sha256": "6b0ee7b5bc45cf360706be612b4825c7968d3c0ea35cb8c3a133c08aa01f47b7"
+    },
+    {
+      "file": "03-sheet-draft.png",
+      "sha256": "30d55713c9893fa1b4f75c6a08154247423c82f7b5704375f31151982cd63e98"
+    },
+    {
+      "file": "failure.png",
+      "sha256": "55fc4117411adc42a03d7911c2a54c03c976067cfae0d5710f3cf89ded1d46bd"
+    },
+    {
+      "file": "owned-fixtures.json",
+      "sha256": "c23e9eb02f2ca3054ea28f995880867523b40636b814fc787070221b45376dae"
+    },
+    {
+      "file": "report.json",
+      "sha256": "1697b937e8a4ce3df6b8a33987d3de8efc8a20c29350d9538004462a1a286a57"
+    },
+    {
+      "file": "sort-preferences-backup.json",
+      "sha256": "9160f25f23fb609fed4a1d2b70664fb61bbd581b837f2107e76ee0c9a871a881"
+    }
+  ]
+}

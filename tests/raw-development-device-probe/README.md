@@ -13,6 +13,10 @@ SyntheticDng.java 生成 96×64、12bit 白点／16bit 容器、真实未压缩 
 
 同一运行还启动真实 RAW Activity，验证实际控件、PNG 写出和全尺寸 JPEG 编辑副本交接，保留两张截图。UI 夹具是合成图案，仅用于布局及交互检查，不能当成照片审美评价。
 
+157 回归另外执行空白入口自动选文件，以及实际“选择”“保存 PNG”按钮的系统选择器异常：`ACTION_OPEN_DOCUMENT` 不可用时改用 `ACTION_GET_CONTENT`，两种入口均不可用、系统拒绝启动、保存入口不可用、失败后重试与取消。通过 instrumentation 的 ActivityMonitor 注入 Android 框架启动异常，不修改系统文件应用；确认异常不逃出主线程，选择状态释放、错误提示可读，现有显影预览和结果保留。这是兼容故障回归，不代表已经确认任意实体手机的实际崩溃原因。
+
+默认 NEF 路径从当前项目根目录计算；显式传入 `-SampleNef ''` 可跳过真实 NEF，报告会标记跳过，不向 `adb shell` 传空参数。
+
 默认额外读取 `.tooling/raw-native/samples/nikon-z6-lossless-14bit.NEF`，其来源与 CC0 许可在同目录 SAMPLE.json。固定 SHA 为 `c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31`，来自 raw.pixls.us Nikon Z6 14bit 无损压缩样本；实际处理完整有效尺寸，并确认原文件不变。没有提供 NEF 时明确记录 skipped，不把合成 DNG 成绩当成真实 NEF 成绩。
 
 证据保存在 `docs/validation/photo-image-suite/raw-development/<APK前缀>/<runId>/`；输出明确是 8bit sRGB PNG，不能认证 16bit Java 编辑链、所有 RAW 压缩模式、实体手机速度或峰值内存。

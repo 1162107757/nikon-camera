@@ -1,0 +1,187 @@
+{
+  "candidate": {
+    "versionCode": 154,
+    "versionName": "0.30.0-beta",
+    "apkSha256": "9636cfe8dde97c1af3863754b16557ddf1620b75e2e6d3b9230a6705cc34b8b9",
+    "productFiles": {
+      "app/src/main/java/cc/huevia/MainActivity.java": "04d7358e35142453e7133dae6e790596d69c8eeb401f4bf32630b803a98a1b8a",
+      "app/src/main/java/cc/huevia/ui/UiPalette.java": "6aab2e0082fcfea615d076a4a54ec6f8e5e7a030b6e3ab044e44140d56549556",
+      "app/src/main/java/cc/huevia/ui/GlassBar.java": "b328cd875d31dfd84fe3d90a28f0df0550a238d09ff31859b865933555939c79",
+      "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "6d4b110d5b9653831c44506f644bfca74bf98ed0e0984d247dab965d4b69d2e8",
+      "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "c327f17e5e913eceb5c245e0cb1baff91ef55217e155434043d0dc44f3cfd000",
+      "app/build.gradle": "7e55be6ee4408d5840ebac49564925c4b342f65fc683c35864c6f615a132cd7b"
+    }
+  },
+  "initialReviewCandidateSha256": "e89be8d56a4a8ba568d4d59d48dadda9e6bf22ed60e75c4fc68dc2a6f1d12f43",
+  "initialCaptures": ".tooling/four-home154/pre-review-native",
+  "nativeModes": {
+    "phone": {
+      "pass": true,
+      "checks": 50
+    },
+    "font": {
+      "pass": true,
+      "checks": 50
+    },
+    "narrow": {
+      "pass": true,
+      "checks": 50
+    },
+    "dark": {
+      "pass": true,
+      "checks": 50
+    },
+    "tablet": {
+      "pass": true,
+      "checks": 44
+    },
+    "compact": {
+      "pass": true,
+      "checks": 45
+    },
+    "tablet-landscape": {
+      "pass": true,
+      "checks": 44
+    }
+  },
+  "files": {
+    "native/phone/01-presets.png": "e286cca8cb824920be1154ec568e7dd9290483dd52c3054d801d46fbca371510",
+    "native/phone/02-album.png": "86a2382a250d3cf783376f57146b0c2c3d98e0ca290f1a7102d11e138d08fd9b",
+    "native/phone/03-selection.png": "2dc854ea4fa6f6e4df1cff761c70a7250a4d489f100fda646b6dcd6b97ef750c",
+    "native/phone/04-phone-album.png": "d961b1d710c10d7f2104195e19d634fe20ffa058b5e135e406894ef566a3d742",
+    "native/phone/05-downloaded.png": "4a4e27c290c9812950b2d76afae5061b48215672489c6a3775976c10c9ad5580",
+    "native/phone/06-camera-ui-fixture.png": "12bd8d8baba369da851717b62524a901f012111687f35fc16e3dc44f9a905c67",
+    "native/phone/07-transfer-ui-fixture.png": "a90f364b6430f892594ff5e43c72d106450d9e5502a359634c249df1b7f79be8",
+    "native/phone/08-settings.png": "ee784f59c476cec0e54354b9a5acb111ab098d4b28d71778f06fcd5b6b5bbf12",
+    "native/phone/09-settings-bottom.png": "2710b92139b5ff585a93cccf353a96f2cb3409d7e4c0b028f52f2744eb144847",
+    "native/phone/report.json": "6c1f99a8eec1f3525ad29e727c793c54c164bc46fe78caa964e52eef5b7b72e7",
+    "native/font/01-presets.png": "60c04bb9b2be7274263f7c04d244c2166608cb26634143f9e1259ef99f3af058",
+    "native/font/02-album.png": "67ffdf6cb82becdc7c95e079ed8293672f4b643a92b8413cef780f2fd2bfa540",
+    "native/font/03-selection.png": "f9212590486acef6b9e2310902a72a4815b5a452348e5c08613daadfdeb89d32",
+    "native/font/04-phone-album.png": "b67e1e13c232170ddad20523096b8d11783e4779774ee448a34b9410f5f7ffc9",
+    "native/font/05-downloaded.png": "3f82bc7a9c071ab470d5766fbc7dd261d72b703c7560d2ca8dfcbf9e6c4360a7",
+    "native/font/06-camera-ui-fixture.png": "488da3055357cff54f1b178aa97359273584d94a29a0636142e2ac34864b0e45",
+    "native/font/07-transfer-ui-fixture.png": "cf9538190343838d7e430d2304c0e7c4442ccbd663bfa625fdaf3e5983f5ad16",
+    "native/font/08-settings.png": "97b09755694cbefb9b72df8fe5711626bdb1b734500731427b2f87a13259037c",
+    "native/font/09-settings-bottom.png": "10368cba2a949d1930c27445bf4dd7d1a8f9e944fc7a7832d744bfe84c23a705",
+    "native/font/report.json": "b0e1bee6b5edb6b4fcfdffe7ba6293058cf3e62fa0569b11c0106516d66fc00f",
+    "native/narrow/01-presets.png": "3a7fe0950733329b625ae699fa69dc494307a46269d9e4b831117c0560347156",
+    "native/narrow/02-album.png": "e461f902165c6015ac5c6290c8db766404944b26863b0967a75143b49e0e4e32",
+    "native/narrow/03-selection.png": "af91caae638804cee1b596ce17b6cd8928073f876438eb4816e9ddf0eaf34abc",
+    "native/narrow/04-phone-album.png": "4892434b7119483b220ec2fd3448d7566619a33d37faa9a653e9383bf121d0ad",
+    "native/narrow/05-downloaded.png": "37aed9be6d3cb8f2b8f147c8f915111aa23b31166262cc99b02766766656da8e",
+    "native/narrow/06-camera-ui-fixture.png": "f26b735681b038de40cdb5f19fe38e0be2f2ab2711ab59f79c6b738f6e746ced",
+    "native/narrow/07-transfer-ui-fixture.png": "c78e329c6b6e57e5cfe2e9f100039d85557a1667ee62d89132f84a2ed2dd5154",
+    "native/narrow/08-settings.png": "7519df6cad0fd3b79838df8c1d16187764acbf9f48c99893cb7358fa5786c1ee",
+    "native/narrow/09-settings-bottom.png": "40be215a3eb15c2368173207adb5fa67fa35b3dc10bd54f49434e05f61aff92e",
+    "native/narrow/report.json": "387421864fbb6f2f011f6129e5084d18c3c0e45401d7b03f169e4d960091ffb5",
+    "native/dark/01-presets.png": "8928b282d13c7a1899dd20dcd8ae804e03c91977230bb81eb5f869eacfcd3a96",
+    "native/dark/02-album.png": "a1b39a4f39e4b3f4b142d1faf9015c0bf10c3993fc8771fb0a30ac7c0684f104",
+    "native/dark/03-selection.png": "4f52d58e0976154763868ee35a693fcd1ab7c63eca1392392dea14af3ddf9a35",
+    "native/dark/04-phone-album.png": "db7b8cc57b103bd7d07814bd40ab30345dc8f443a39459809479ed687ceb79a6",
+    "native/dark/05-downloaded.png": "117ad468e60afc9888ca10e69f9d6de153fac6c903798000e74b7d45ba1ea6ee",
+    "native/dark/06-camera-ui-fixture.png": "3acc34482668b90099209408cb965c0961d54e14cc58d768ed0c1a03b986a5b2",
+    "native/dark/07-transfer-ui-fixture.png": "71ef732a95f918ae4927ede57323c2bd3c16b76752a83591c3bb14de8509a238",
+    "native/dark/08-settings.png": "57d30b3d9dadcdc41e521c4894d4b0d4a3e68eab1d4ca5c97e013c8f4deb813c",
+    "native/dark/09-settings-bottom.png": "327a815285814460bd2fd6c8be188231947cfe05e0daf7cafbf63435c103eff3",
+    "native/dark/report.json": "916933343411b68178554306e1d4b29383263eb56bf82144d7efc8a8eef753a0",
+    "native/tablet/01-presets.png": "65b02a809a300b4491d8fb2b3d113d8e624038c8d9b13060e9077c6190ee0e23",
+    "native/tablet/02-album.png": "324e3db35477e14ce0a4dcbdf419d0d901c1cc74a4aa9f1625af2a12acc5b24a",
+    "native/tablet/03-selection.png": "9b3b38940bb48a9593c559721f5ae8b0dd0587263af26bdd83150718cbcab73b",
+    "native/tablet/04-phone-album.png": "6c11e68f955bb30a88624ae7940f1301ab87fdb899f8a13dd27d45956adeabe2",
+    "native/tablet/05-downloaded.png": "4475e39344d281393afd42985846b7a29b7f1a088566ec6f5b493b47f54a3414",
+    "native/tablet/06-camera-ui-fixture.png": "d728e1717169ff43e1274fa1db390876e87a3a174ba18ab03f7bfe9bb517e167",
+    "native/tablet/07-transfer-ui-fixture.png": "30b11e2fcebdcc0f687329917aeca1ea0ab5c9925e26aaa5c01a4470018d5fe2",
+    "native/tablet/08-settings.png": "8f95106cdb3aee50c837b50309b4d31dbc31b0c3d3d7f64f15d13897253502e4",
+    "native/tablet/09-settings-bottom.png": "8f95106cdb3aee50c837b50309b4d31dbc31b0c3d3d7f64f15d13897253502e4",
+    "native/tablet/report.json": "472b01a96676305d7459eb9da04e2797f5bb5710ee6e79824595880436108290",
+    "native/compact/01-presets.png": "de7f872959c31fba48c061037c1b6e78ca1b3371aa269e24c28f16564f8dd885",
+    "native/compact/02-album.png": "49b4c2a157fd059b9d856553e7f23447115681d6e161ed0add501b8909cef541",
+    "native/compact/03-selection.png": "7725e1b84bc6232dfa98954ead68c409b1f0e719da947266f0c1e387555f8acd",
+    "native/compact/04-phone-album.png": "fb74a709ff6b3d3f2d4810ab7a46b01eb25380e14463d1a18f372159a8d97c13",
+    "native/compact/05-downloaded.png": "af7ca8e177375e4c6ff6bb5b0fd041f567ade5a5b4cd49783ff0c8845c589f5d",
+    "native/compact/06-camera-ui-fixture.png": "df45529c61d1efeccf7eca8a7484202ad646cda1379f45a51e9fb624c1449ba6",
+    "native/compact/07-transfer-ui-fixture.png": "e9ab4cfe11c8c8cc2dc0cf0e38539b81398557caabe18422efc059267a92c532",
+    "native/compact/08-settings.png": "5eda3274ffa2a41e4a04c6ab1e47937d25a34e4e6bdc92c43cd4730366280938",
+    "native/compact/09-settings-bottom.png": "7e88a3ba68650ccecb992c2ce79ac7a96a51257447506e2b703d924b71594ca1",
+    "native/compact/report.json": "97d9b2207fad6b35d7bb265de606b8813066ffe126605d1a4b1a63e6fa2a0d84",
+    "native/tablet-landscape/01-presets.png": "1c13b8daa3105a37976997a47916cb2c1438fabbe933dc1736c14209d2bccf59",
+    "native/tablet-landscape/02-album.png": "20aadf76e2fd0918ae0044c2deede7b04024fd7ef271e7e0e59389cc970c8033",
+    "native/tablet-landscape/03-selection.png": "85f1b13c085526221acc84166fcea768712ec82926052773875aa9171519cf0b",
+    "native/tablet-landscape/04-phone-album.png": "6f81ef20fefe7a5e35afb1e8b8986f9536b6fb20d8bd981c574c7deccf89dd00",
+    "native/tablet-landscape/05-downloaded.png": "13e9265e8539509691f6749b353cec2ac0630279154086d07f55265ae4e8dcf7",
+    "native/tablet-landscape/06-camera-ui-fixture.png": "f7371daac5e98a21d05e80ca4bf2059bdad1d8a7c5bdbb049b1ba35fc38b579e",
+    "native/tablet-landscape/07-transfer-ui-fixture.png": "79d704c7d5f0cc7707c6e555eac712b787b7c708f17282cd3c87a2d45661ce7e",
+    "native/tablet-landscape/08-settings.png": "2ed1975839653a073b5d05fe673bc4ad7408c2979911f56abbcb9f1cdc939c96",
+    "native/tablet-landscape/09-settings-bottom.png": "2ed1975839653a073b5d05fe673bc4ad7408c2979911f56abbcb9f1cdc939c96",
+    "native/tablet-landscape/report.json": "6665ea51330ae731702875937ae199bd74ba489a731730877b52485bbe141fcb",
+    "regression/editor/home154-final-continuity-20261107-202414/01-filters.png": "c6800775d6c9d4b801f189ef1393e4eda4f7bf2415a5d124034b32a17870b893",
+    "regression/editor/home154-final-continuity-20261107-202414/02-adjust-compare.png": "8ea6d1609aa2df2aa249cf1b01f650043917a77ba6227f41cb0ec74900197c24",
+    "regression/editor/home154-final-continuity-20261107-202414/03-crop.png": "dca12397d721e729572c1ab5d9e47eb64cd6520274acaddd9e61f57bf6481b4f",
+    "regression/editor/home154-final-continuity-20261107-202414/04-more-menu.png": "38921b99cd5fa8ae948f00249ac8bf9d59b39ad6e859c65f58e40aaea4fc8035",
+    "regression/editor/home154-final-continuity-20261107-202414/05-portrait-controls.png": "8d2ce8c625397dcae55cd366679c6e3b33f229d54f2f8f682cacbb31c9344a3d",
+    "regression/editor/home154-final-continuity-20261107-202414/06-skin.png": "a27ac0c8b185bfaef50dba097166842a288b57d16eac4d37d395d200fd8f216b",
+    "regression/editor/home154-final-continuity-20261107-202414/07-face.png": "7ab35c216cf65e67894c671b9132c15b6aedded06a7335995b5af2adf953f6b6",
+    "regression/editor/home154-final-continuity-20261107-202414/08-body.png": "c997cb72b170f44ba8512cee1693071221baa98c5248c154b679d9a52dce044b",
+    "regression/editor/home154-final-continuity-20261107-202414/09-resumed-edits.png": "9aca5a611fa6c43919b666353b45bac474f91cff6aced7c21276f2b6f592d2bd",
+    "regression/editor/home154-final-continuity-20261107-202414/10-curves.png": "2a9dfd040bad5f1740639187214734db5cb94fbddda6095b032e99e1f2231c14",
+    "regression/editor/home154-final-continuity-20261107-202414/11-palette.png": "890b29a0d40dbd8bfde8992858e16c8f4ac2e8243d6d5928c5e6dc7c2edfbaf3",
+    "regression/editor/home154-final-continuity-20261107-202414/12-cleanup.png": "00ce0d771be7ce00a1b105dfb18d991f3072caff859f031081fc87b0a0470ec6",
+    "regression/editor/home154-final-continuity-20261107-202414/13-precision-crop.png": "50921e03b7c527738b11bd7de7954b94c98bfb02012dc4bc2c9726c3e9e0d3ea",
+    "regression/editor/home154-final-continuity-20261107-202414/14-local.png": "73867df57715400b5b9b35a11387a5513555434fc3dc921bbf89894226224792",
+    "regression/editor/home154-final-continuity-20261107-202414/report.json": "ee855ef6a51c5d3dd924cccdd54a3a3feb4decb08a178faef61be1ff9a219789",
+    "regression/editor/selection-soft153-final154-20261107-202402/01-filter-selected.png": "d3bd2d8e55b9afa9a0fa7abba445cf82e65b180eb6ebfcac758d004f8fba9d83",
+    "regression/editor/selection-soft153-final154-20261107-202402/02-filter-picker.png": "8af2e590f0cda98ef010e26768f3c774f18c92d060811f6499319d1ef7039eef",
+    "regression/editor/selection-soft153-final154-20261107-202402/03-quick-selected.png": "a75231b517726be76cb8e37604c7b8622dd31792311d6e486b88219d72e820e3",
+    "regression/editor/selection-soft153-final154-20261107-202402/04-border-selected.png": "1ff1206a44ad2be5b9222d0132fa886bc2c261dcfbbebd603c3c2cd71ae4e4c6",
+    "regression/editor/selection-soft153-final154-20261107-202402/05-skin-original.png": "8ba0c6139dd58cb5ed6c212f9983d170f3f34789a566d101619d67c6424e08ff",
+    "regression/editor/selection-soft153-final154-20261107-202402/06-skin-selected.png": "f1b4183b6debd5b96d2efcb50450edb850d8598f75ed62dd16f381a9f703588d",
+    "regression/editor/selection-soft153-final154-20261107-202402/report.json": "96d8d7fdd097106c31d8f73e907a1eb0f98e686bd83713ee7069a1507867ddba",
+    "regression/home154-final-continuity-20261107-202414.log": "c9e2f04cb605e4b8249e36d6b095d459f46a0f69cacbd3c2201f570d267dc1ee",
+    "regression/motion/native-phone.log": "241d8e0394aa078e2f26a9ab89f9ffe7dd54f2c3be171e557bdf801983d8d789",
+    "regression/motion/native-reduced.log": "5584bba0d625abd89d22d4a74fa12460eb17af488d34e20ae45471d48475da7b",
+    "regression/motion/phone/01-short-return.png": "a2b56518bd9631e046470ea81e7bc7ef35491550de16c3e3156ce1d3f2e8fff1",
+    "regression/motion/phone/02-preset-follow.png": "719df0951749b7e78c1e3967588e2c6af88423dde9ab5c39f25a96a47658e060",
+    "regression/motion/phone/03-preset-slide-left.png": "72e73fe6ec3da66a2517b635bfc0b105ee182ec0c6394a02215b2946a1cc6d18",
+    "regression/motion/phone/04-preset-click-right.png": "ccbf00327c825c4303cacc66bca827986dad891ce73ded3c5b39df447d20b5f5",
+    "regression/motion/phone/05-rapid-reverse.png": "75d4639769dcde403e1af52f2011a2cbb3bfa0d7700d96ae356b0fc73fb54a39",
+    "regression/motion/phone/06-sync-live.png": "ed5ec13c3f64c68dcfd3df136ad647d2e10ba04a88a282b7afe8971d01fbec2c",
+    "regression/motion/phone/07-sync-rebound-root.png": "0145617701f27aea494d74d8c087c0de5f9628e3c2a61e546f3537a0eaaf0af4",
+    "regression/motion/phone/08-sync-right.png": "9a878431a6012bb60d9ef6bd39d4364b98743f9431d6975b6b93a1e7bbefdeb1",
+    "regression/motion/phone/09-album-phone.png": "7eaf78ed6a6a050ed0c418a64848eb5f6ed26e1c0f152e32de3872145efeaccd",
+    "regression/motion/phone/10-album-right.png": "9c4739cd3ccddaad2e790191c834af57219d31a0db0cdd3760ba214606acc701",
+    "regression/motion/phone/report.json": "f7c9e83ded2023c712a6d64d613863dcad8c056c4614317b8a48e8df4af53def",
+    "regression/motion/reduced/11-reduced-motion.png": "3f652d3152f93e3df54baceff4eeca5625338266b127ce25105e80fedee7dfa6",
+    "regression/motion/reduced/report.json": "9532c39251a69d398f9ebc8dda1c8da98a918d1f1eb15d48379a92f5749ee3a6",
+    "regression/motion.log": "51c2221b334a475f718d0cf4498ee22293dbf000fce76fd2f1b077e32bded56f",
+    "regression/selection-soft153-final154-20261107-202402.log": "25c696ebe3a699211cc8145452fb286dc9cb674532cdf48ec2fce337a7e48e32",
+    "native-four-home-board.jpg": "b4e7ea3be7802be0d8acf3f25e9e8db0b5d767666dad22d6d74d3d1ab81195e9"
+  },
+  "regression": {
+    "motionPhone": {
+      "pass": true,
+      "checks": 70,
+      "report": "regression/motion/phone/report.json"
+    },
+    "motionReduced": {
+      "pass": true,
+      "checks": 9,
+      "report": "regression/motion/reduced/report.json"
+    },
+    "editorSelection": {
+      "pass": true,
+      "checks": 10,
+      "report": "regression/editor/selection-soft153-final154-20261107-202402/report.json"
+    },
+    "editorContinuity": {
+      "pass": true,
+      "checks": 101,
+      "report": "regression/editor/home154-final-continuity-20261107-202414/report.json"
+    }
+  },
+  "delivery": {
+    "apk": "dist/huevia-0.30.0-beta-debug.apk",
+    "wechat": "Canceled by user before attachment/upload; no file sent",
+    "physicalPhone": "No physical device connected during this task"
+  }
+}

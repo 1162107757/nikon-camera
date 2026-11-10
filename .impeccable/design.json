@@ -1,9 +1,375 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-07T10:56:00Z",
+  "generatedAt": "2026-11-09T03:29:39.145Z",
   "title": "Design System: Huevia",
   "extensions": {
     "nativeActualBuiltWorlds": [
+      {
+        "id": "native-live-context-repair-175",
+        "date": "2026-11-09",
+        "status": "current-local-default-repair-only",
+        "version": "175 / 0.30.21-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "User override: actual repair while finger moves, no default highlight; softer exterior and clean-context color match. Existing Prisma world, no new global tokens or raster assets.",
+        "surfaceBrief": ".impeccable/surfaces/photo-filter-editor.md",
+        "authorities": [
+          "app/build.gradle",
+          "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+        ],
+        "nativeBehavior": [
+          "Default repair DOWN/MOVE displays actual backend frames; one running and one latest pending request, UP precise completion",
+          "Photo canvas draws only actual frame, no stroke/completed mask or eye button; other local/portrait/manual workflows retain their own display rules",
+          "One inner undo per successful stroke, one Done parent transaction; cancel/focus/pinch/failure/stale result rollback",
+          "Opaque painted core plus soft exterior; robust clean exterior context fit and premultiplied linear bilinear sampling",
+          "Per-patch contextBlend and v8 opt-in; old v7 bytes/pixels preserved, read v1–v8"
+        ],
+        "evidence": {
+          "summary": "docs/validation/live-erase175/README.md",
+          "identity": "docs/validation/live-erase175/package-candidate.json",
+          "inputs": "docs/validation/live-erase175/source-inputs.json",
+          "captures": "docs/validation/live-erase175/capture-index.json",
+          "candidateSha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+          "sourceSha256": "a9eb73310d8ae98ef06530469c2576dab65c2a4f7187cf740b47f0f15ccba437",
+          "configurations": [
+            "phone",
+            "font1.3",
+            "landscape",
+            "tablet"
+          ],
+          "repeatedAssertions": 628,
+          "originalScreenshots": 28,
+          "newContextHostAssertions": 973393,
+          "review": "Author scoped native/quality inspection, no whole-surface independent approval",
+          "published": false
+        },
+        "limits": [
+          "No physical HarmonyOS/phone acceptance",
+          "Local real-texture repair; not generative AI or large-object reconstruction",
+          "No new full-export workflow matrix; common renderer and shared streaming path tested",
+          "No upload, public release, git commit/push or WeChat action"
+        ]
+      },
+      {
+        "id": "native-paint-release-repair-173",
+        "date": "2026-11-09",
+        "status": "historical-default-live-and-overlay-rules-superseded-by-175",
+        "version": "173 / 0.30.19-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "173 按用户要求将修补默认简化为手指涂抹、松手自动进行本地小范围纹理修补；更多 → 手动取样修补保留169工作流与旧修补。继承Prisma照片工作区及170调节横轨规则，不新增视觉世界或全局tokens。",
+        "surfaceBrief": ".impeccable/surfaces/photo-filter-editor.md",
+        "authorities": [
+          ".impeccable/review/erase173/contract.md",
+          "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPatchDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+        ],
+        "nativeBehavior": [
+          "当前默认：修补 → 涂抹 → 松手自动匹配／渲染 → 继续涂抹。默认dock只有历史、眼睛、更多、画笔大小与简短状态；取消／标题／完成在照片上方，横屏使用侧控。",
+          "沿用prisma-*照片采样模糊材料、安静白色原生sans／sp与黄色主操作；48dp原生命中、安全区及字号缩放保留。170的26dp无圆底调节线图标与39dp人像圆形入口分别保留。",
+          "打开修补即可涂抹，按住期间照片结果不变；松手才启动自动纹理匹配和渲染，成功的最新结果才写入暂存模型与内部历史，每笔只增加一次内部撤销。处理期间暂时禁用相冲突的编辑操作。",
+          "完成只提交一次主编辑事务并沿用草稿／版本保存；取消不改父模型、主历史或源文件。早期导引图分配失败和后续渲染失败都保留原模型／历史，立即恢复有效控件并允许重试；既有 16 项修补上限提供可恢复提示，仍可撤销或在更多中删除。",
+          "持久软覆盖仅用于显示；大小滑块期间暂隐后恢复明确眼睛偏好。指针取消、失焦或第二指丢弃未完成轨迹；双指只导航。",
+          "最长边≤384px的不可变定向导引图，以未选中周边上下文匹配整个标记区及安全边外的真实不透明来源，归一化位移冻结到现有v7配方；原有共享preview／export renderer语义不变。"
+        ],
+        "evidence": {
+          "summary": "docs/validation/erase173/README.md",
+          "sourceIdentity": "docs/validation/erase173/source-candidate.json",
+          "captures": "docs/validation/erase173/capture-index.json",
+          "packageIdentity": "docs/validation/erase173/package-candidate.json",
+          "smoke": "docs/validation/erase173/upload-smoke.json",
+          "restoration": "docs/validation/erase173/device-restoration.json",
+          "initialReview": ".impeccable/review/erase173/review-initial.md",
+          "review": ".impeccable/review/erase173/review.md",
+          "reviewDisposition": "ship for F1 and its direct regression batch only; initial review retains the full scoped visual assessment. Not whole-surface/app approval.",
+          "sourceSha256": "909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92",
+          "configurations": [
+            "phone/API36",
+            "narrow/font1.3/API36 Android16",
+            "tablet/API36",
+            "landscape/dark/API36"
+          ],
+          "checksPerConfiguration": 162,
+          "screenshotsPerConfiguration": 9,
+          "totalRepeatedChecks": 648,
+          "originalScreenshots": 36,
+          "countMeaning": "Includes repeated native assertions and pixel checks, not independent scenarios; host automatic matching and existing local/renderer regressions retain separate scopes.",
+          "failureChecks": "Actual early guide-allocation OOM and later renderer IOException independently injected per mode; atomic model/history, immediately restored valid controls and subsequent real-stroke retry.",
+          "uploaded": false,
+          "published": false
+        },
+        "limits": [
+          "能力限确定性本地小范围纹理修补，不是生成式／语义AI、大物体重建或通用消除保证。",
+          "NASA QA照片与不适合的大笔画只证明像素／事务行为；不作实体Samsung／鸿蒙、帧率、新full-export矩阵、全应用或公网OTA结论。",
+          "173仅本地签名交付，未上传／发布；初始c874及168–172冻结记录保留原归属。"
+        ],
+        "notCanonized": "未将QA照片／大笔画、初审F1控件恢复缺陷、导引尺寸或覆盖透明度推广为生产素材／全局tokens；原生Java无HTML／CSS detector，也不新增伪web组件片段。"
+      },
+      {
+        "id": "native-adjustment-rail-icons-170",
+        "date": "2026-11-09",
+        "status": "current-local-icons-only",
+        "version": "170 / 0.30.16-beta",
+        "platform": "Android Java / Views / Canvas",
+        "scope": "170／`0.30.16-beta` 仅细化既有 Prisma 调节横轨中的调色盘、去灰、局部和修补入口，使其与相邻参数同属一个紧凑线图标家族。实际权威为 `PhotoWorkspaceUi.adjustmentEntry`、共享 `entryCaption`、`PhotoFilterEditor` 的入口及刷新路径和 `AppIcon`；151／152／153／163／168／169 的工作区规则与冻结证据保留原范围。",
+        "surfaceBrief": ".impeccable/surfaces/photo-filter-editor.md",
+        "authorities": [
+          ".impeccable/review/icons170/contract.md",
+          "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/AppIcon.java"
+        ],
+        "nativeBehavior": [
+          "沿用既有照片采样氛围、安静白色图标／字幕与黄色 active；不新增或改写全局配色 tokens。",
+          "沿用原生 Android sans／sp 与系统字号缩放。调节入口与普通参数共用 `entryCaption`，保持相同字幕基线；完整动作和状态继续由入口的辅助描述承载。",
+          "调色盘、去灰、局部、修补与普通参数、曲线及 HSL 共用 26dp 正方形无圆底 AppIcon、6dp 顶部内边距和字幕基线。人像分类保留原有 39dp 圆形入口与 3dp 顶部内边距；本次不把它们改成调节参数。入口宽度、至少 48dp 命中范围、焦点及 ripple 语义保持既有实现。",
+          "调节轨的局部入口不再另加圆底；照片氛围、主工具与人像分类的圆形材料仍按既有角色使用。",
+          "继续使用既有 AppIcon Canvas 线图标、圆端点与圆连接；26dp 调节图标和 39dp 人像圆形入口是不同角色，不形成新的全局尺寸或容器 tokens。"
+        ],
+        "evidence": {
+          "summary": "docs/validation/icons170/README.md",
+          "sourceIdentity": "docs/validation/icons170/source-candidate.json",
+          "captures": "docs/validation/icons170/capture-index.json",
+          "packageIdentity": "docs/validation/icons170/package-candidate.json",
+          "apkInspection": "docs/validation/icons170/apk-inspection.json",
+          "smoke": "docs/validation/icons170/upload-smoke.json",
+          "restoration": "docs/validation/icons170/device-restoration.json",
+          "review": ".impeccable/review/icons170/review.md",
+          "reviewDisposition": "ship; no material fixes; icon consistency and direct regressions only.",
+          "configurations": [
+            "phone/API37",
+            "narrow/font1.3/API36 Android16",
+            "tablet/API36",
+            "landscape/dark/API37"
+          ],
+          "originalScreenshots": 12,
+          "measuredEntriesPerConfiguration": 9,
+          "checksPerConfiguration": 51,
+          "countMeaning": "Capture/bootstrap checks repeated in four modes; not 204 new algorithm tests.",
+          "modelHistoryAndSourceUnchanged": true,
+          "uploaded": false,
+          "published": false
+        },
+        "limits": [
+          "170 仅为本地签名候选，未上传或发布；精确 full／交付 APK 身份、签名、大小及安装冷启动见冻结记录。不涉及渲染、选区或修补算法，不新增实体 Samsung、帧率、full-export 或公网 OTA 结论；不包含在线搜索改动。"
+        ],
+        "notCanonized": "QA portrait and captures are evidence only; no web reproduction, new raster, global token or algorithm rule is inferred."
+      },
+      {
+        "id": "native-photo-patch-169",
+        "date": "2026-11-09",
+        "status": "current-local-repair-only",
+        "version": "169 / 0.30.15-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "User-confirmed fixed-target, dragged-source repair within the retained Prisma Operate editor. No new visual world, comp, production raster or global token.",
+        "surfaceBrief": ".impeccable/surfaces/photo-filter-editor.md",
+        "authorities": [
+          ".impeccable/review/patch169/contract.md",
+          "app/src/main/java/cc/huevia/ui/PhotoPatchDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+          "app/src/main/java/cc/huevia/ui/AppIcon.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+          "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+          "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java"
+        ],
+        "apk": {
+          "bytes": 34647510,
+          "sha256": "201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273",
+          "published": false
+        },
+        "nativeBehavior": [
+          "Retain photo-sampled Prisma atmosphere, Android sans/sp, white sliders, yellow primary/active and circular controls with at least 48dp native targets; PATCH uses the incumbent Canvas vector family.",
+          "Adjustment rail Repair and explicit Repair current selection entry route to a staged native workspace. Reuse brush, one circle/ellipse and rectangle selection tools.",
+          "The stored target coverage stays fixed while dragging moves only the source, clamped to photo bounds. Actual soft coverage, white target and yellow dashed sample extents, connector and readable Repair area/Sample labels explain both ranges.",
+          "Cancel/title/apply above photo; history/visibility/more, select/sample/add, feather and colour blend below. Portrait bottom dock and compact landscape scrollable side dock respect actual system-bar/cutout insets and font scaling. Empty and whole-photo selection hints state the next action.",
+          "Persistent coverage shares the existing display-only eye policy. Sliders temporarily suppress coverage and release/cancellation/focus interruption restore chosen visibility; hidden preference retains the effect. Clear through reselection and delete are separate undoable actions.",
+          "Add, switch, reselect and delete multiple repairs with internal undo/redo. Cancel leaves the main model/history unchanged. Latest precise preview and no pending sample gate one main Apply transaction; failures expose retry.",
+          "PhotoLocalEdits v7 stores actual patches in drafts/versions and reads v1-v6; without patches it retains the previous format selection. Source bytes remain unchanged and display masks never enter exported photo pixels.",
+          "Shared preview/export pipeline runs repair after legacy masks/clones and before portrait, regional, body and composition steps. Each patch samples its immutable disk snapshot; later patches see prior results. Bounded row memory preserves target alpha and zero-mask exterior pixels. User-selected real texture with adjustable feather/edge colour blend is not generation or recognition."
+        ],
+        "evidence": {
+          "summary": "docs/validation/patch169/README.md",
+          "sourceIdentity": "docs/validation/patch169/source-candidate.json",
+          "captures": "docs/validation/patch169/capture-index.json",
+          "review": ".impeccable/review/patch169/review.md",
+          "reviewDisposition": "ship; no material fixes; limited to 169 Prisma repair and direct regressions, not whole-app or public-release acceptance.",
+          "configurations": [
+            {
+              "mode": "phone",
+              "api": 37,
+              "pixels": "1080x2424"
+            },
+            {
+              "mode": "tablet",
+              "api": 36,
+              "pixels": "1600x2560"
+            },
+            {
+              "mode": "narrow-font1.3",
+              "api": 36,
+              "android": "16",
+              "pixels": "840x1890"
+            },
+            {
+              "mode": "landscape-dark",
+              "api": 36,
+              "pixels": "2424x1080"
+            }
+          ],
+          "checksPerConfiguration": 278,
+          "screenshotsPerConfiguration": 13,
+          "totalRepeatedChecks": 1112,
+          "originalScreenshots": 52,
+          "sameFullApkSelection168Regression": {
+            "checks": 412,
+            "screenshots": 26
+          },
+          "hostChecks": {
+            "repair": 153740,
+            "localEdits": 43230,
+            "adjustmentRegion": 1520101,
+            "library": 548,
+            "catalog": 53,
+            "cache": 36
+          },
+          "uploadVariant": {
+            "identity": "docs/validation/patch169/package-candidate.json",
+            "smoke": "docs/validation/patch169/upload-smoke.json",
+            "bytes": 31358141,
+            "sha256": "ef06853b8025936ce7c972e682855ee7ac1fc55ebda2776864be6bdf94fdaa10",
+            "retainedPayloads": 88,
+            "delta": "Only four obsolete x86 libraries removed; all 88 retained payloads byte-identical; ARM32/ARM64/x86_64 retained.",
+            "checks": "Existing-certificate v2/v3 signature, 16KiB alignment, backend offline inspection, exact-byte API36 install and 1772ms cold launch.",
+            "uploaded": false,
+            "published": false
+          },
+          "restoration": "docs/validation/patch169/device-restoration.json",
+          "deviceState": "All settings restored; task-owned 5586 closed."
+        },
+        "limits": [
+          "Native check repetitions, separate host suites and selection168 regression retain their own counts; no new full-export matrix.",
+          "No physical Samsung/phone, real camera, general segmentation accuracy, whole-app or public OTA certification.",
+          "No new or replaced production raster; QA photographs and copies are sampling fixtures, not successful blemish-removal or camera demonstrations. Native Java has no HTML/CSS detector.",
+          "Initial 38f candidate was superseded after system-bar/cutout correction and final four-configuration recapture; earlier candidates and 168 evidence retain their historical identity.",
+          "Local only; no upload, public release, commit or push."
+        ],
+        "notCanonized": "Initial header/inset overlap and unsuitable initial copying examples are defects/QA evidence, not reusable materials, global tokens or successful-retouch claims."
+      },
+      {
+        "id": "native-selection-workspace-168",
+        "date": "2026-11-09",
+        "status": "current-local-selection-only",
+        "version": "168 / 0.30.14-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "Local selection geometry and persistent display feedback within the retained Prisma editor; filters unchanged. Existing 151/152/153 materials and 163 staged adjustment transactions retain their scopes.",
+        "surfaceBrief": ".impeccable/surfaces/photo-filter-editor.md",
+        "authorities": [
+          ".impeccable/review/selection168/contract.md",
+          "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoSelectionOverlay.java",
+          "app/src/main/java/cc/huevia/ui/PhotoImageView.java",
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPaletteDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoCleanupDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoBodyDialog.java",
+          "app/src/main/java/cc/huevia/ui/SkinTonePicker.java",
+          "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+          "app/src/main/java/cc/huevia/ncp/SelectionShape.java",
+          "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+          "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java"
+        ],
+        "apk": {
+          "path": "dist/huevia-0.30.14-beta-debug.apk",
+          "bytes": 34635222,
+          "sha256": "57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3",
+          "published": false
+        },
+        "nativeBehavior": [
+          "Reuse existing prisma-* primitives, photo-sampled atmosphere, Android sans/sp, white sliders, circular controls with 48dp targets and yellow primary/active state. No new global visual tokens.",
+          "Cancel/name/done, photo, undo/redo and visibility, brush/circle/rectangle, replace/add/subtract and inverse, then feather; brush mode also exposes size. Portrait uses a scrollable bottom dock, compact wide layouts a scrollable side dock with real insets and font scaling.",
+          "One bounds-driven circle tool produces circles or ellipses; rectangle is separate. Existing geometry can move and resize. Inverse applies to final combined coverage.",
+          "Use actual stored brush, geometry, detected face and skin masks for persistent feedback. Main/child regional adjustments, manual face, automatic face/skin, body range and legacy local masks share display policy.",
+          "Adjustment gestures temporarily suppress coverage. Release, cancellation, nested input dismissal and native focus interruption restore chosen visibility; explicitly hidden preference remains hidden after temporary suppression.",
+          "Existing eye vocabulary controls display only; selection workspace also labels Hide/Show selection. Face/skin coverage retains a usable eye after returning to the portrait group chooser. Clear coverage and delete region are independent undoable edits.",
+          "Palette precision and HSV sliders suppress display while held, but retain deferred Apply/Preview model updates; they are not live photo edits.",
+          "The 12sp stage hint has bounded width, at most two lines, padding and a dark translucent rounded scrim, retaining photo priority across bright and dark detail.",
+          "SelectionShape and AdjustmentRegion store source-coordinate geometry. PhotoLocalEdits v6 reads versions 1-5 and retains old write formats without new geometry. Display masks never replace source, rendered or exported photo pixels."
+        ],
+        "evidence": {
+          "summary": "docs/validation/selection168/README.md",
+          "sourceIdentity": "docs/validation/selection168/source-candidate.json",
+          "captures": "docs/validation/selection168/capture-index.json",
+          "initialReview": ".impeccable/review/selection168/review.md",
+          "verdict": ".impeccable/review/selection168/verdict.md",
+          "reviewDisposition": "ship limited to F1-F4 and direct repair regressions; all four resolved. Original full-review FIX retained, not whole-surface or whole-application approval.",
+          "configurations": [
+            {
+              "mode": "phone",
+              "api": 37
+            },
+            {
+              "mode": "tablet",
+              "api": 36
+            },
+            {
+              "mode": "narrow-font1.3",
+              "api": 36,
+              "android": "16"
+            },
+            {
+              "mode": "landscape-dark",
+              "api": 37
+            }
+          ],
+          "checksPerConfiguration": 412,
+          "screenshotsPerConfiguration": 26,
+          "totalRepeatedChecks": 1648,
+          "originalScreenshots": 104,
+          "hostChecks": {
+            "adjustmentRegion": 1520101,
+            "localEdits": 43230,
+            "library": 548,
+            "catalog": 53,
+            "cache": 36
+          },
+          "hostCoreUnchangedByDisplayFixes": true,
+          "uploadVariant": {
+            "path": "dist/upload168/huevia-0.30.14-beta-update.apk",
+            "identity": "docs/validation/selection168/package-candidate.json",
+            "smoke": "docs/validation/selection168/upload-smoke.json",
+            "bytes": 31341757,
+            "sha256": "d278209b8cd921dddb11e84429cdfe375ff7604c12b34e31e34951010067dd03",
+            "retainedPayloads": 88,
+            "delta": "Only four obsolete x86 libraries removed; retained payloads byte-identical to full APK.",
+            "checks": "Signature v2/v3, 16KiB alignment, backend offline inspection, exact-byte API36 install and cold launch.",
+            "uploaded": false,
+            "published": false
+          }
+        },
+        "limits": [
+          "Repeated native assertions and separate host suites are not independent scenes or a new full-export matrix.",
+          "No physical Samsung/phone, real camera, general segmentation accuracy, whole-app or public OTA certification.",
+          "No production raster added or replaced; QA captures and NASA fixture remain evidence only. Native Java does not run HTML/CSS detectors.",
+          "Initial 6cf549b0 candidate and prior 151/152/153/163 validation remain historical and are not recounted as 168."
+        ],
+        "notCanonized": "Initial F1-F4 omissions, historical blinking selection feedback, prototype browser chrome and QA imagery are not reusable system rules or production assets."
+      },
       {
         "id": "native-photo-borders-and-thumbnail-placeholder-89",
         "date": "2026-10-24",
@@ -377,6 +743,94 @@
             "disposition": "FIX"
           }
         ]
+      },
+      {
+        "id": "native-adjustment-brush-163",
+        "date": "2026-11-08",
+        "status": "current-adjustments-only",
+        "version": "163 / 0.30.9-beta",
+        "platform": "Android Java / Views / Bitmap Canvas",
+        "scope": "Direct brush entry and nested staged transactions within the adjustment page only. Existing17 scalar regional processing is retained; filters excluded and portrait workflow unchanged.",
+        "surfaceBrief": ".impeccable/surfaces/photo-filter-editor.md",
+        "authorities": [
+          "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPaletteDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoCleanupDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+          "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+          "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+          ".impeccable/review/local-brush163/contract.md"
+        ],
+        "apk": {
+          "path": "dist/huevia-0.30.9-beta-debug.apk",
+          "bytes": 34622934,
+          "sha256": "f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b",
+          "published": false
+        },
+        "nativeBehavior": [
+          "Retain Prisma photo-derived atmosphere, system-sp hierarchy, incumbent brush/circular icons, white slider thumbs and yellow primary actions. No new visual tokens, identity, comp or raster.",
+          "Expose48x48dp brush targets beside the basic adjustment slider and in palette/cleanup/curves/HSL headers. Regional titles identify the selected region, keep one line with end ellipsis and expose complete scope descriptions.",
+          "New local scope starts neutral over committed global edits. Unapplied automatic cleanup in the parent never silently becomes a global edit. Existing-region repaint preserves all regional parameters.",
+          "Mask and child adjustment remain staged until the innermost Apply. Cancel returns to the parent without model/history/draft writes; final Apply commits one main undo entry and closes ancestors.",
+          "Reuse oriented-source masks, regional renderer, EXIF mapping, geometry/border/body positioning and draft/export pipeline, with account/generation/request/snapshot guards. Constrained controls scroll within the existing photograph-first layout."
+        ],
+        "evidence": {
+          "featureManifest": "docs/local-brush163.json",
+          "validation": "docs/validation/local-brush163/summary.json",
+          "requiredCaptures": ".impeccable/review/local-brush163/capture-index.json",
+          "review": ".impeccable/review/local-brush163/review.md",
+          "disposition": "ship",
+          "materialFixes": 0,
+          "requiredFramesExamined": 21,
+          "mainRepeatedChecks": 2406,
+          "supplementalRepeatedChecks": 970,
+          "totalRepeatedChecks": 3376,
+          "retainedRawChecksSeparate": 159,
+          "environment": "Owned emulator; phone,320dp narrow,font1.3,landscape,tablet",
+          "historicalCaptureGate": ".impeccable/review/local-brush163/review-capture-gate.md",
+          "landscapeCurvesRecapture": "Exact-APK screenshot replaced, hash/index verified and reopened at original resolution; visible title is 曲线 · 区域 1.",
+          "productApkUnchangedDuringReview": true
+        },
+        "limits": [
+          "Host matrices remain distinct from repeated native checks;159 retained RAW checks are not added to the3376 brush checks.",
+          "151/152/153 evidence and their scoped review dispositions retain their original version identities.",
+          "No new regional processing approximation, portrait acceptance, physical-device/camera or whole-app certification; no public release. RAW162 feature manifest is unchanged.",
+          "Native documentation pass only; no web detector, source/build/test/emulator mutation."
+        ],
+        "notCanonized": "No new visual defect was found by the final scoped review. Earlier invalid landscape capture is retained as an evidence-gate record, never as a valid regional viewport or a design rule."
+      },
+      {
+        "id": "native-preset-showcase-155",
+        "date": "2026-11-07",
+        "status": "current-gallery-only",
+        "version": "155 / 0.30.1-beta",
+        "platform": "Android Java / Views / Bitmap",
+        "scope": "Preset browsing list/detail and settings source viewer only; no current-photo processing-preview changes.",
+        "surfaceBrief": ".impeccable/surfaces/native-preset-showcase.md",
+        "authorities": [
+          "app/src/main/java/cc/huevia/ui/PresetShowcaseRenderer.java",
+          "app/src/main/java/cc/huevia/MainActivity.java",
+          "app/src/main/assets/preset-showcase/manifest.json",
+          "docs/preset-showcase155.md"
+        ],
+        "apk": {
+          "path": "dist/huevia-0.30.1-beta-debug.apk",
+          "bytes": 34581880,
+          "sha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb",
+          "delivery": "Local APK only; no public APK publication or physical phone/camera-output claim"
+        },
+        "evidence": {
+          "summary": "docs/validation/preset-showcase/summary.json",
+          "apkIntegrity": "docs/validation/preset-showcase/apk-integrity.json",
+          "editorScope": "docs/validation/preset-showcase/editor-scope.json",
+          "initialReview": ".impeccable/review/preset-showcase155/review.md",
+          "verdict": ".impeccable/review/preset-showcase155/verdict.md",
+          "assertionExecutions": 171,
+          "sevenModeAssertions": 167,
+          "nativeScreenshots": 37,
+          "additionalEffectThumbnails": 10,
+          "reviewDisposition": "Initial FIX retained; limited ship closes F1 settings default/source viewer/restore copy and direct regressions, including landscape Close/custom-template/gallery. No whole-app/154/editor approval."
+        }
       }
     ],
     "colorMeta": {
@@ -1105,6 +1559,201 @@
           "oklch(84% 0.015 155)",
           "oklch(95% 0.015 155)"
         ]
+      },
+      "home-paper": {
+        "role": "neutral",
+        "displayName": "首页暖纸",
+        "canonical": "#F8F7F4",
+        "tonalRamp": [
+          "oklch(15.0% 0.0041 91.45)",
+          "oklch(26.4% 0.0041 91.45)",
+          "oklch(37.9% 0.0041 91.45)",
+          "oklch(49.3% 0.0041 91.45)",
+          "oklch(60.7% 0.0041 91.45)",
+          "oklch(72.1% 0.0041 91.45)",
+          "oklch(83.6% 0.0041 91.45)",
+          "oklch(95.0% 0.0041 91.45)"
+        ]
+      },
+      "home-container": {
+        "role": "neutral",
+        "displayName": "首页浅砂容器",
+        "canonical": "#EEECE6",
+        "tonalRamp": [
+          "oklch(15.0% 0.0083 91.49)",
+          "oklch(26.4% 0.0083 91.49)",
+          "oklch(37.9% 0.0083 91.49)",
+          "oklch(49.3% 0.0083 91.49)",
+          "oklch(60.7% 0.0083 91.49)",
+          "oklch(72.1% 0.0083 91.49)",
+          "oklch(83.6% 0.0083 91.49)",
+          "oklch(95.0% 0.0083 91.49)"
+        ]
+      },
+      "home-text": {
+        "role": "neutral",
+        "displayName": "首页暖墨",
+        "canonical": "#242320",
+        "tonalRamp": [
+          "oklch(15.0% 0.0057 91.59)",
+          "oklch(26.4% 0.0057 91.59)",
+          "oklch(37.9% 0.0057 91.59)",
+          "oklch(49.3% 0.0057 91.59)",
+          "oklch(60.7% 0.0057 91.59)",
+          "oklch(72.1% 0.0057 91.59)",
+          "oklch(83.6% 0.0057 91.59)",
+          "oklch(95.0% 0.0057 91.59)"
+        ]
+      },
+      "home-secondary": {
+        "role": "neutral",
+        "displayName": "首页辅助暖灰",
+        "canonical": "#635D53",
+        "tonalRamp": [
+          "oklch(15.0% 0.0174 80.64)",
+          "oklch(26.4% 0.0174 80.64)",
+          "oklch(37.9% 0.0174 80.64)",
+          "oklch(49.3% 0.0174 80.64)",
+          "oklch(60.7% 0.0174 80.64)",
+          "oklch(72.1% 0.0174 80.64)",
+          "oklch(83.6% 0.0174 80.64)",
+          "oklch(95.0% 0.0174 80.64)"
+        ]
+      },
+      "home-charcoal": {
+        "role": "neutral",
+        "displayName": "首页炭黑",
+        "canonical": "#242420",
+        "tonalRamp": [
+          "oklch(15.0% 0.0073 106.90)",
+          "oklch(26.4% 0.0073 106.90)",
+          "oklch(37.9% 0.0073 106.90)",
+          "oklch(49.3% 0.0073 106.90)",
+          "oklch(60.7% 0.0073 106.90)",
+          "oklch(72.1% 0.0073 106.90)",
+          "oklch(83.6% 0.0073 106.90)",
+          "oklch(95.0% 0.0073 106.90)"
+        ]
+      },
+      "home-on-charcoal": {
+        "role": "neutral",
+        "displayName": "首页操作白字",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 89.88)",
+          "oklch(26.4% 0.0000 89.88)",
+          "oklch(37.9% 0.0000 89.88)",
+          "oklch(49.3% 0.0000 89.88)",
+          "oklch(60.7% 0.0000 89.88)",
+          "oklch(72.1% 0.0000 89.88)",
+          "oklch(83.6% 0.0000 89.88)",
+          "oklch(95.0% 0.0000 89.88)"
+        ]
+      },
+      "home-glass": {
+        "role": "neutral",
+        "displayName": "首页白色轻透导航",
+        "canonical": "rgba(255, 255, 255, 0.9333333333)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 89.88)",
+          "oklch(26.4% 0.0000 89.88)",
+          "oklch(37.9% 0.0000 89.88)",
+          "oklch(49.3% 0.0000 89.88)",
+          "oklch(60.7% 0.0000 89.88)",
+          "oklch(72.1% 0.0000 89.88)",
+          "oklch(83.6% 0.0000 89.88)",
+          "oklch(95.0% 0.0000 89.88)"
+        ]
+      },
+      "home-dark-container": {
+        "role": "neutral",
+        "displayName": "首页深色容器",
+        "canonical": "#34312D",
+        "tonalRamp": [
+          "oklch(15.0% 0.0082 75.27)",
+          "oklch(26.4% 0.0082 75.27)",
+          "oklch(37.9% 0.0082 75.27)",
+          "oklch(49.3% 0.0082 75.27)",
+          "oklch(60.7% 0.0082 75.27)",
+          "oklch(72.1% 0.0082 75.27)",
+          "oklch(83.6% 0.0082 75.27)",
+          "oklch(95.0% 0.0082 75.27)"
+        ]
+      },
+      "home-dark-secondary": {
+        "role": "neutral",
+        "displayName": "首页深色辅助字",
+        "canonical": "#CAC2B8",
+        "tonalRamp": [
+          "oklch(15.0% 0.0165 73.65)",
+          "oklch(26.4% 0.0165 73.65)",
+          "oklch(37.9% 0.0165 73.65)",
+          "oklch(49.3% 0.0165 73.65)",
+          "oklch(60.7% 0.0165 73.65)",
+          "oklch(72.1% 0.0165 73.65)",
+          "oklch(83.6% 0.0165 73.65)",
+          "oklch(95.0% 0.0165 73.65)"
+        ]
+      },
+      "home-dark-action": {
+        "role": "neutral",
+        "displayName": "首页深色浅米动作",
+        "canonical": "#F1ECE4",
+        "tonalRamp": [
+          "oklch(15.0% 0.0120 79.78)",
+          "oklch(26.4% 0.0120 79.78)",
+          "oklch(37.9% 0.0120 79.78)",
+          "oklch(49.3% 0.0120 79.78)",
+          "oklch(60.7% 0.0120 79.78)",
+          "oklch(72.1% 0.0120 79.78)",
+          "oklch(83.6% 0.0120 79.78)",
+          "oklch(95.0% 0.0120 79.78)"
+        ]
+      },
+      "home-dark-on-action": {
+        "role": "neutral",
+        "displayName": "首页深色动作墨字",
+        "canonical": "#29251F",
+        "tonalRamp": [
+          "oklch(15.0% 0.0123 78.07)",
+          "oklch(26.4% 0.0123 78.07)",
+          "oklch(37.9% 0.0123 78.07)",
+          "oklch(49.3% 0.0123 78.07)",
+          "oklch(60.7% 0.0123 78.07)",
+          "oklch(72.1% 0.0123 78.07)",
+          "oklch(83.6% 0.0123 78.07)",
+          "oklch(95.0% 0.0123 78.07)"
+        ]
+      },
+      "home-dark-source-selected": {
+        "role": "neutral",
+        "displayName": "首页深色来源内衬",
+        "canonical": "#4B4640",
+        "tonalRamp": [
+          "oklch(15.0% 0.0120 72.48)",
+          "oklch(26.4% 0.0120 72.48)",
+          "oklch(37.9% 0.0120 72.48)",
+          "oklch(49.3% 0.0120 72.48)",
+          "oklch(60.7% 0.0120 72.48)",
+          "oklch(72.1% 0.0120 72.48)",
+          "oklch(83.6% 0.0120 72.48)",
+          "oklch(95.0% 0.0120 72.48)"
+        ]
+      },
+      "home-dark-glass": {
+        "role": "neutral",
+        "displayName": "首页深色轻透导航",
+        "canonical": "rgba(44, 42, 38, 0.9333333333)",
+        "tonalRamp": [
+          "oklch(15.0% 0.0077 84.59)",
+          "oklch(26.4% 0.0077 84.59)",
+          "oklch(37.9% 0.0077 84.59)",
+          "oklch(49.3% 0.0077 84.59)",
+          "oklch(60.7% 0.0077 84.59)",
+          "oklch(72.1% 0.0077 84.59)",
+          "oklch(83.6% 0.0077 84.59)",
+          "oklch(95.0% 0.0077 84.59)"
+        ]
       }
     },
     "typographyMeta": {
@@ -1151,6 +1800,14 @@
       "prisma-auxiliary": {
         "displayName": "Secondary photo operation",
         "purpose": "11sp native regular body automation and background-protection actions, with prisma-muted."
+      },
+      "home-preset-name": {
+        "displayName": "首页预设名称",
+        "purpose": "13sp bold, single-line real preset name below the preview."
+      },
+      "home-category-label": {
+        "displayName": "首页分类",
+        "purpose": "12sp native category label; actual selected state changes weight."
       }
     },
     "shadows": [
@@ -1228,7 +1885,31 @@
         "value": "orientation PORTRAIT && screenWidthDp < 600 && screenHeightDp < 720"
       }
     ],
-    "currentPhotoWorkspace": "native-selection-soft-153",
+    "currentPhotoWorkspace": "native-paint-release-repair-173",
+    "nativeSelectionWorkspace": {
+      "version": "168 / 0.30.14-beta",
+      "scope": "Local geometry and persistent selection display only; filters unchanged.",
+      "record": "native-selection-workspace-168",
+      "material": "Retained Prisma system sans/sp, photo-sampled atmosphere, circular 48dp targets and yellow active state; no new global tokens.",
+      "visibility": "Display-only eye; temporarily suppress during adjustment then restore chosen visibility. Clear/delete stay separately undoable.",
+      "deferredInputs": "Precision palette and HSV retain Apply/Preview updates.",
+      "sourceAndExport": "Display masks are separate; source/render/export photo pixels retained."
+    },
+    "nativeAdjustmentBrush": {
+      "version": "163 / 0.30.9-beta",
+      "scope": "Adjustment-page scalar row and palette/cleanup/curves/HSL; filters excluded, portrait separate.",
+      "brushTarget": "48x48dp",
+      "headerOrder": [
+        "Cancel",
+        "brush",
+        "tool / scope",
+        "Apply"
+      ],
+      "regionalTitle": "Single line with end ellipsis; complete scope in accessibility description.",
+      "material": "Existing Prisma photo-derived atmosphere, AppIcon family and yellow actions; primitives unchanged.",
+      "transaction": "Neutral new region over committed global settings; retain parameters on repaint; cancel returns to parent without writes; innermost Apply commits one main undo and closes ancestors.",
+      "record": "native-adjustment-brush-163"
+    },
     "nativeCardSelection": {
       "version": "153 / 0.29.2-beta",
       "frame": "{colors.prisma-selection-frame}",
@@ -1238,6 +1919,366 @@
       "scope": "Shared tone-card builder, filter strip/full picker, quick previews and border templates. White filmstrip captions keep their dark ink; translucent fill is limited to tone/large cards.",
       "retained": "Checkmarks, actual colour values, native selected semantics, click/render behavior, primary yellow and distinct focus/manipulation cues.",
       "notCanonized": "Former2dp saturated-yellow card frame and opaque#272019 selected tone plate were removed as excessive-contrast defects."
+    },
+    "nativeFourHomes": {
+      "id": "native-four-homes-154",
+      "version": "154 / 0.30.0-beta",
+      "scope": "Only native 预设/同步/相册/设置 roots and source controls; UiPalette.home is isolated from the base palette and all photo workspaces.",
+      "approvedArtifact": "docs/design-review/hyperactive-gallery-20261107/review/four-home-board.jpg",
+      "surfaceBrief": ".impeccable/surfaces/native-four-homes.md",
+      "candidate": ".tooling/four-home154/reviewed-candidate.json",
+      "apkSha256": "9636cfe8dde97c1af3863754b16557ddf1620b75e2e6d3b9230a6705cc34b8b9",
+      "geometry": {
+        "navigationBase": "65dp + round(max(0, fontScale − 1.2) × 24)dp",
+        "navigationInset": "4dp, height-derived concentric whole-item corners on phones",
+        "source": "48dp target / 40dp paint",
+        "category": "48dp target / 36dp paint",
+        "headerAction": "48dp target / 36dp paint",
+        "versionBadge": "48dp target / 23dp paint",
+        "download": "host navigation obstruction + at least 15dp; bytes on a separate row",
+        "presetMasonry": "3 cards per column per recyclable row; compact layout keeps GridView",
+        "localMasonry": "6/12 bounded items per recyclable row; selection freezes columns"
+      },
+      "evidence": {
+        "contract": "docs/validation/four-home154/contract.md",
+        "scopePreservation": "docs/validation/four-home154/scope-preservation.json",
+        "contrast": "docs/validation/four-home154/contrast.json",
+        "initialReview": "docs/validation/four-home154/finish-review.md",
+        "verdict": "docs/validation/four-home154/verdict.md",
+        "validation": "docs/validation/four-home154/README.md",
+        "status": "Seven corrected modes pass333 repeated home assertions; initial F1/F2 resolved with ship limited to the scored fixes and direct regressions. No full-surface/app/hardware/publication acceptance.",
+        "native": {
+          "assertionExecutions": 333,
+          "modes": {
+            "phone": 50,
+            "font": 50,
+            "narrow": 50,
+            "dark": 50,
+            "tablet": 44,
+            "compact": 45,
+            "tablet-landscape": 44
+          },
+          "manifest": "docs/validation/four-home154/manifest.json",
+          "captures": "docs/validation/four-home154/native/"
+        },
+        "regression": {
+          "sourceMotion": {
+            "phone": 70,
+            "disabledAnimation": 9
+          },
+          "prisma": {
+            "selection": 10,
+            "continuity": 101
+          },
+          "root": "docs/validation/four-home154/regression/",
+          "scope": "All passed on exact154 APK; kept separate from home matrix and historical151/152/153 evidence."
+        },
+        "reviewDisposition": "ship limited to scored F1/F2 fixes and direct regressions; original full-review FIX retained"
+      },
+      "retained": [
+        "Base UiPalette, PhotoPrismaStyle and Prisma151/152/153 persistence",
+        "Source motion150 and guarded gestures149",
+        "Real handlers, cached data, permissions, connection/queue state, date grouping, version selection and100-photo limit"
+      ],
+      "assets": "Current real template simulation only; no new demo photography asset. Showcase samples are a separate authorized workstream for a later build.",
+      "notCanonized": "Collapsed category paint and artificial passive-caption gaps were corrected review defects. Prototype/demo processing, QA fixtures and unshipped photography are not system materials.",
+      "followUp155": {
+        "brief": ".impeccable/surfaces/native-preset-showcase.md",
+        "record": "docs/preset-showcase155.md",
+        "boundary": "154asset statement and frozen evidence remain historical154facts;155adds photography inputs only after write-window handoff, preserving154layout and editor isolation."
+      }
+    },
+    "nativePresetShowcase": {
+      "id": "native-preset-showcase-155",
+      "version": "155 / 0.30.1-beta",
+      "scope": "Preset browsing list/detail and settings source viewer only; no current-photo processing-preview changes.",
+      "surfaceBrief": ".impeccable/surfaces/native-preset-showcase.md",
+      "artifact": "dist/huevia-0.30.1-beta-debug.apk",
+      "apkSha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb",
+      "photography": {
+        "pack": "photography-v1",
+        "manifest": "app/src/main/assets/preset-showcase/manifest.json",
+        "sourceCount": 10,
+        "jpegBytes": 964995,
+        "provenance": "Exact source page, author, Pexels License URL, acquisition time, download and packed hashes in manifest; origin embedded in each JPEG; no preset baked into sources."
+      },
+      "behavior": [
+        "Fixed scene from original preset SHA and category; existing custom template takes priority.",
+        "Frozen Source pairs effect and original; model/template/pack/photo identity participates in caching.",
+        "Settings lists actual ten sources or one custom source, credits the selected original, and limits image height to retain Close in compact landscape.",
+        "Existing PresetPreviewProfiles approximate model and template-simulation label retained; real reference previewUrl/previewUri remain separate.",
+        "Worker-only bounded decode/render; at most three cached unmodified source-pixel entries, longest edge960px."
+      ],
+      "upload": {
+        "receipt": "docs/validation/preset-showcase/upload-verification.json",
+        "independentPrivateAssets": 10,
+        "existingPresetCountUnchanged": 390,
+        "presetBindingChanged": false,
+        "publicCatalogChanged": false
+      },
+      "evidence": {
+        "summary": "docs/validation/preset-showcase/summary.json",
+        "apkIntegrity": "docs/validation/preset-showcase/apk-integrity.json",
+        "editorScope": "docs/validation/preset-showcase/editor-scope.json",
+        "initialReview": ".impeccable/review/preset-showcase155/review.md",
+        "verdict": ".impeccable/review/preset-showcase155/verdict.md",
+        "assertionExecutions": 171,
+        "sevenModeAssertions": 167,
+        "nativeScreenshots": 37,
+        "additionalEffectThumbnails": 10,
+        "reviewDisposition": "Initial FIX retained; limited ship closes F1 settings default/source viewer/restore copy and direct regressions, including landscape Close/custom-template/gallery. No whole-app/154/editor approval."
+      },
+      "retained": [
+        "Frozen154home layout and home-* isolation.",
+        "PhotoFilterEditor, PresetSelectionPage, PresetPreviewRenderer and HoldToCompare source hashes unchanged.",
+        "Prisma151/152/153 behavior and previously scoped review records."
+      ],
+      "notCanonized": "Generated NCP test fixtures and stock inputs are not preset-specific camera results. Upload is independent private asset storage, not public catalog binding or APK publication. No physical-phone/camera-output certification."
+    },
+    "nativePatchWorkspace": {
+      "version": "169 / 0.30.15-beta",
+      "scope": "User-confirmed fixed-target, dragged-source repair within the retained Prisma Operate editor. No new visual world, comp, production raster or global token.",
+      "record": "native-photo-patch-169",
+      "material": "Retained prisma-* primitives and native authority; no new global tokens.",
+      "rules": [
+        {
+          "name": "The Fixed Repair Target Rule",
+          "body": "修补目标使用用户确认的真实覆盖并保持固定；拖动只移动受照片边界约束的取样来源。目标与来源分别以“修补区”和“取样”标识，范围框表达编辑／取样边界，不冒充主体轮廓。",
+          "section": "components"
+        },
+        {
+          "name": "The Repair Transaction Rule",
+          "body": "选区、取样、羽化、融合、新增、切换、删除与内部撤销重做留在修补暂存工作区；取消不改主模型或主历史，应用在最新精确预览完成且无待取样项后只提交一次主编辑事务。",
+          "section": "components"
+        }
+      ],
+      "visibility": "Persistent real coverage; sliders temporarily suppress, then restore preference. Eye display-only; clear/delete independently undoable.",
+      "persistence": "PhotoLocalEdits v7 reads v1-v6; no patches retains previous write-format selection. Source bytes unchanged.",
+      "pipeline": "Immutable per-patch disk snapshots, bounded rows; real sampling after legacy masks/clones and before portrait/regional/body/composition.",
+      "currentAccess": "More -> manual sample repair; the169 record remains the manual-workflow and frozen-history authority. Default superseded by native-paint-release-repair-173."
+    },
+    "nativeAdjustmentRail": {
+      "version": "170 / 0.30.16-beta",
+      "record": "native-adjustment-rail-icons-170",
+      "scope": "170／`0.30.16-beta` 仅细化既有 Prisma 调节横轨中的调色盘、去灰、局部和修补入口，使其与相邻参数同属一个紧凑线图标家族。实际权威为 `PhotoWorkspaceUi.adjustmentEntry`、共享 `entryCaption`、`PhotoFilterEditor` 的入口及刷新路径和 `AppIcon`；151／152／153／163／168／169 的工作区规则与冻结证据保留原范围。",
+      "material": "沿用既有照片采样氛围、安静白色图标／字幕与黄色 active；不新增或改写全局配色 tokens。",
+      "typography": "沿用原生 Android sans／sp 与系统字号缩放。调节入口与普通参数共用 `entryCaption`，保持相同字幕基线；完整动作和状态继续由入口的辅助描述承载。",
+      "layout": "调色盘、去灰、局部、修补与普通参数、曲线及 HSL 共用 26dp 正方形无圆底 AppIcon、6dp 顶部内边距和字幕基线。人像分类保留原有 39dp 圆形入口与 3dp 顶部内边距；本次不把它们改成调节参数。入口宽度、至少 48dp 命中范围、焦点及 ripple 语义保持既有实现。",
+      "depth": "调节轨的局部入口不再另加圆底；照片氛围、主工具与人像分类的圆形材料仍按既有角色使用。",
+      "shapes": "继续使用既有 AppIcon Canvas 线图标、圆端点与圆连接；26dp 调节图标和 39dp 人像圆形入口是不同角色，不形成新的全局尺寸或容器 tokens。",
+      "rules": [
+        {
+          "name": "The Adjustment Rail Peer Rule",
+          "body": "调节横轨中的调色盘、去灰、局部和修补与普通参数共用 26dp 无圆底 AppIcon、6dp 顶部内边距及字幕基线；人像分类保留 39dp 圆形入口。",
+          "section": "components"
+        }
+      ],
+      "dos": [
+        "**Do** 让四个专用调节入口与相邻参数保持同一图标盒、字幕基线及 AppIcon 风格，并保留原有标签、状态、回调与可访问语义。"
+      ],
+      "donts": [
+        "**Don't** 把调节轨的无圆底规则推广到人像分类或其他照片圆形控件，也不把静态布局检查写成帧率、算法或整应用验收。"
+      ],
+      "evidenceSummary": "[170 冻结记录](docs/validation/icons170/README.md)及[独立 finish review](.impeccable/review/icons170/review.md)为 ship、无 material fixes，范围仅为图标一致性与直接回归。四种原生配置共 12 张 PNG，每种九个入口的图标盒、顶部内边距与字幕基线一致；每组 51 项含夹具／启动检查，不是 204 项新算法测试。打开／关闭工具及刷新后的模型、历史与源照片保持不变。",
+      "limits": "170 仅为本地签名候选，未上传或发布；精确 full／交付 APK 身份、签名、大小及安装冷启动见冻结记录。不涉及渲染、选区或修补算法，不新增实体 Samsung、帧率、full-export 或公网 OTA 结论；不包含在线搜索改动。"
+    },
+    "nativeOnlinePresetSearch": {
+      "version": "171 /0.30.17-beta",
+      "record": "docs/validation/online-search171/summary.json",
+      "surfaceBrief": ".impeccable/surfaces/native-four-homes.md",
+      "scope": "Full validated online catalog metadata, separate from browse pages; existing home visuals retained.",
+      "state": "Loading/cache/error/zero-match distinct; index reuse and category match.",
+      "evidence": "Four exact-public-variant configurations,37 repeated checks each and24 PNG; owner review only; no physical HarmonyOS certification.",
+      "published": false
+    },
+    "nativeSourceSnapshotRecovery": {
+      "version": "172 /0.30.18-beta",
+      "scope": "Optional source transition snapshot failure handling only; retain incumbent source motion.",
+      "record": "docs/validation/source-tab172/README.md",
+      "source": "app/src/main/java/cc/huevia/ui/SubcategorySwipeLayout.java",
+      "principle": "Capture RuntimeException or OOM from optional screenshot, release the temporary bitmap and complete source change; ordinary capture retains animation. Actual page operation errors are not swallowed.",
+      "limits": "Controlled hardware-bitmap baseline; physical HarmonyOS4.3.0.208 original crash trace unavailable. No publication."
+    },
+    "nativePaintRepairWorkspace": {
+      "version": "173 / 0.30.19-beta",
+      "record": "native-paint-release-repair-173",
+      "scope": "173 按用户要求将修补默认简化为手指涂抹、松手自动进行本地小范围纹理修补；更多 → 手动取样修补保留169工作流与旧修补。继承Prisma照片工作区及170调节横轨规则，不新增视觉世界或全局tokens。",
+      "material": "Retained Prisma photograph-derived blurred ground, native white sans/sp, yellow primary/active and existing drawn icons; no new global primitives or production raster.",
+      "typography": "Native sans/sp compact workspace hierarchy and font scaling; direct instruction names paint/release.",
+      "layout": "Photo-first; cancel/title/Complete above, compact scrollable bottom dock or landscape side dock with undo/redo, eye, More, one size slider and status; actual safe insets and 48dp targets.",
+      "defaultFlow": "打开修补 → 涂抹 → 松手自动处理 → 继续涂抹；成功一笔一次内部撤销，完成一次主事务／草稿保存，取消隔离。",
+      "manualFallback": "更多 → 手动取样修补 retains169 selection/source-drag/feather/blend and old saved repairs under the outer session boundary.",
+      "rules": [
+        {
+          "name": "The Paint Release Repair Rule",
+          "body": "打开修补即可涂抹，按住期间照片结果不变；松手才启动自动纹理匹配和渲染，成功的最新结果才写入暂存模型与内部历史，每笔只增加一次内部撤销。处理期间暂时禁用相冲突的编辑操作。",
+          "section": "components"
+        },
+        {
+          "name": "The Recoverable Repair Session Rule",
+          "body": "完成只提交一次主编辑事务并沿用草稿／版本保存；取消不改父模型、主历史或源文件。早期导引图分配失败和后续渲染失败都保留原模型／历史，立即恢复有效控件并允许重试；既有 16 项修补上限提供可恢复提示，仍可撤销或在更多中删除。",
+          "section": "components"
+        }
+      ],
+      "visibility": "Persistent real display-only soft coverage; brush-size dragging temporarily hides and then respects explicit eye preference.",
+      "failureRecovery": "Early guide-allocation OOM and later rendering failure retain model/history, immediately restore valid controls and allow retry; inherited16-repair cap remains recoverable.",
+      "processing": "Deterministic matching of unselected context to actual opaque donor outside the whole mask and safety rim using an immutable oriented guide<=384px. Freeze normalized translation into existingv7; shared preview/export renderer unchanged.",
+      "dos": [
+        "**Do** 将涂抹／松手处理作为默认，手动取样留在更多，保留一笔一撤销及完成／取消事务边界。",
+        "**Do** 区分真实修补数据、显示覆盖、暂时手势抑制与用户显隐偏好，失败后立即恢复有效控件。"
+      ],
+      "donts": [
+        "**Don't** 将确定性局部纹理取样写成生成式消除、语义识别或大物体重建保证。",
+        "**Don't** 将 NASA QA 照片及不适合的大涂抹写成成功去物示范，或把静态模拟器证据扩大为实体 Samsung／鸿蒙、帧率、新 full-export 或全应用验收。"
+      ],
+      "evidence": {
+        "summary": "docs/validation/erase173/README.md",
+        "sourceIdentity": "docs/validation/erase173/source-candidate.json",
+        "captures": "docs/validation/erase173/capture-index.json",
+        "packageIdentity": "docs/validation/erase173/package-candidate.json",
+        "smoke": "docs/validation/erase173/upload-smoke.json",
+        "restoration": "docs/validation/erase173/device-restoration.json",
+        "initialReview": ".impeccable/review/erase173/review-initial.md",
+        "review": ".impeccable/review/erase173/review.md",
+        "reviewDisposition": "ship for F1 and its direct regression batch only; initial review retains the full scoped visual assessment. Not whole-surface/app approval.",
+        "sourceSha256": "909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92",
+        "configurations": [
+          "phone/API36",
+          "narrow/font1.3/API36 Android16",
+          "tablet/API36",
+          "landscape/dark/API36"
+        ],
+        "checksPerConfiguration": 162,
+        "screenshotsPerConfiguration": 9,
+        "totalRepeatedChecks": 648,
+        "originalScreenshots": 36,
+        "countMeaning": "Includes repeated native assertions and pixel checks, not independent scenarios; host automatic matching and existing local/renderer regressions retain separate scopes.",
+        "failureChecks": "Actual early guide-allocation OOM and later renderer IOException independently injected per mode; atomic model/history, immediately restored valid controls and subsequent real-stroke retry.",
+        "uploaded": false,
+        "published": false
+      },
+      "notCanonized": "未将QA照片／大笔画、初审F1控件恢复缺陷、导引尺寸或覆盖透明度推广为生产素材／全局tokens；原生Java无HTML／CSS detector，也不新增伪web组件片段。"
+    },
+    "nativeLibraryApiCompatibility174": {
+      "version": "174 /0.30.20-beta",
+      "record": "docs/validation/legacy-api174/README.md",
+      "scope": "Online repository and community-name UTF8 encoding; no visual changes.",
+      "baseline": "Actual172 top-online-tab tap onAPI31 throws NoSuchMethodError; unbackported Charset overload present in oldDEX.",
+      "verification": "Exact174 API31/API37 native20 each; API31 full-search37. Physical HarmonyOS4.3.0.208 pending.",
+      "published": false
+    },
+    "nativeBrushSize176": {
+      "platform": "android",
+      "versionCode": 176,
+      "versionName": "0.30.22-beta",
+      "target": "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java",
+      "contract": "Show a window-centred projected brush circle and value only during size adjustment; hide on release, focus cancellation or dismissal. Window overlay never affects photo pixels or edit history.",
+      "preserved": "175 live painting without mask, one stroke/undo entry and v8 draft semantics",
+      "evidence": "docs/validation/brush-size176/README.md",
+      "apkSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+      "captures": 16,
+      "modes": [
+        "phone",
+        "font1.3",
+        "tablet",
+        "landscape-dark"
+      ],
+      "validation": "208 records including bootstrap/repetition plus existing175 phone flow 157 records/7 captures",
+      "published": false
+    },
+    "nativeCinemaCrop177": {
+      "platform": "android",
+      "versionCode": 177,
+      "versionName": "0.30.23-beta",
+      "targets": [
+        "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+        "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java"
+      ],
+      "scope": "Native composition ratio addition within the inherited Prisma workspace; no new global tokens or visual world.",
+      "contract": "Append quick 2.35:1 and precision 电影 · 2.35:1, both numeric 2.35. The six quick choices use a horizontally scrollable fillViewport rail with 56dp minimum items. Recognize selection from normalized crop bounds and full frameWidth/frameHeight before integer output rounding, retaining the existing 0.01 tolerance.",
+      "preserved": "Existing crop/export algorithm, edit transactions and version-scoped 176/175/prior behavior and evidence",
+      "evidence": "docs/validation/crop177/README.md",
+      "apkSha256": "f972d48b012545e4f3a4f8de53bbefe48151e6b9d133f38ac587553adec037e8",
+      "captures": 16,
+      "modes": [
+        "phone",
+        "font1.3-narrow",
+        "tablet",
+        "landscape-dark"
+      ],
+      "validation": "API36 emulators: 73 records per configuration, 292 including bootstrap/repetition; both input orientations retain quick selection; existing accessibility resize, native inner-frame movement, visible precision dialog at capture, applied parent geometry, actual draft readback and unchanged original bytes",
+      "review": ".impeccable/review/crop177/review.md",
+      "reviewScope": "Ship only for resolved portrait selected-state and evidence-scope findings plus direct observed regressions; not independent whole-surface approval",
+      "limitations": "No edge-corner gesture certification, complete TalkBack, physical phone, FPS, whole-app or full-export validation; superseded 4dd38a90 and first-review evidence excluded from current acceptance",
+      "published": false
+    },
+    "nativeConnectionCrop178": {
+      "platform": "android",
+      "versionCode": 178,
+      "versionName": "0.30.24-beta",
+      "palette": "Inherited home paper/charcoal for connection, inherited Prisma for crop; no global token change.",
+      "behavior": "Single primary Wi-Fi choice, quiet retry and 48dp close; tentative ratio entry, movable selection and pointer-span zoom bounded to photo; apply/cancel semantics.",
+      "evidence": "docs/validation/connection178/README.md",
+      "apkSha256": "755bd4e854eb65316813e5c4f0c270020bcd90899b621262232c78f79b8ae2e7",
+      "checksIncludingRepetition": 648,
+      "originalPngs": 28,
+      "limitations": "No real network or camera handshake, physical phone, edge-corner certification, full TalkBack, FPS, whole-app or end-to-end export validation.",
+      "published": false
+    },
+    "nativeAlbumSelection181": {
+      "platform": "android",
+      "versionCode": 181,
+      "versionName": "0.30.27-beta",
+      "authority": "User selected A-balanced-toolbar.png and requested native implementation.",
+      "targets": [
+        "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+        "app/src/main/java/cc/huevia/MainActivity.java",
+        "app/src/main/java/cc/huevia/ui/AppIcon.java"
+      ],
+      "geometry": "Live count/cancel/select-all header; equal24dp icons and12sp labels in white/dark24dp corner dock;76dp normal/64dp compact with48dp minimum targets.",
+      "preserved": "180 group/version deletion, mutual exclusion, delete-in-progress Back and shared-library callbacks; existing phone-source capability.",
+      "evidence": "docs/validation/selection181/README.md",
+      "apkSha256": "66eb368ef073a5b29502d3ce57935366c883f0d155cf38f59fa14099be91102c",
+      "checksIncludingRepetition": 173,
+      "originalPngs": 24,
+      "published": false,
+      "reviewScope": "Parent bounded native visual/function review, not independent whole-app approval."
+    },
+    "nativeAlbumTimeSort183": {
+      "platform": "android",
+      "versionCode": 183,
+      "versionName": "0.30.29-beta",
+      "authority": "docs/design-review/album-time-sort-20261109/approved.md; user-approved album-time-sort-v2-arrows.png local extension.",
+      "targets": [
+        "app/src/main/java/cc/huevia/ui/AlbumSortSheet.java",
+        "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+        "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java",
+        "app/src/main/java/cc/huevia/album/PhotoSort.java",
+        "app/src/main/java/cc/huevia/album/PhotoArrivalDates.java",
+        "app/src/main/java/cc/huevia/album/PhotoDateReader.java"
+      ],
+      "geometry": "Icon-only drawn arrows before Select in the count row: 48dp target and 8dp gap. B sheet: 28dp corner, maximum 520dp width; 16sp title, 12sp group labels/note, 14sp choices/actions, minimum 48dp controls. Centered label/check, fixed actions and constrained option scrolling.",
+      "material": "Inherited UiPalette.home paper/charcoal, native window blur where enabled and nearly opaque fallback; no new global tokens or shipping raster assets.",
+      "behavior": "Capture/arrival and newest/oldest drafts; Reset restores capture/newest in the draft, Close/Back/outside dismiss discard it, Apply alone persists each source independently. Sort is unavailable during selection/import; visible photo anchor is restored where scroll limits permit.",
+      "metadata": "Worker builds the full accessible phone metadata snapshot before sorting/paging. Private EXIF or MediaStore capture date falls back to arrival; app arrival journal falls back to file modification time for old photos, disclosed only in the app-arrival draft. Date headers share the effective time basis; unknown dates last, stable ID ties, original/effect/alias groups retain original dates.",
+      "preserved": "181 selection A header/dock, 180 deletion/RAW behavior and 182 preset-filter files; no promotion of historical validation to new acceptance.",
+      "evidence": "docs/validation/sort183/README.md",
+      "finishReview": "docs/validation/sort183/finish-review.md",
+      "finishDisposition": "ship",
+      "apkSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+      "checksIncludingRepetition": 977,
+      "originalPngs": 35,
+      "requiredReviewPngs": 21,
+      "hostChecks": {
+        "gallery": 486,
+        "dates": 122,
+        "library": 59
+      },
+      "recapture": "Phone/tablet full runs recaptured after a stale exit-animation frame; same APK and production source, then a fresh full finish review. First recapture review/index retained.",
+      "limitations": "No physical Samsung/OEM, full TalkBack, full RAW decode/performance, camera interaction or end-to-end export retest. Native counts include repeated assertions, not distinct scenarios.",
+      "designWorldSha256": "3257e70b6c05f01f7881134300c6f67e67aeff8bc83c361d5b894c12791a4a23",
+      "designWorldUnchanged": true,
+      "published": false
     }
   },
   "components": [
@@ -1266,51 +2307,12 @@
       "css": ".ds-field-label{display:block;margin:0 0 8px;color:#262320;font:700 13px system-ui,sans-serif}.ds-field{box-sizing:border-box;display:block;max-width:100%;min-height:52px;padding:12px 14px;border:0;border-radius:14px;background:#EFEDE9;color:#262320;font:400 16px system-ui,sans-serif}.ds-field::placeholder{color:#706A63;opacity:1}.ds-field:focus-visible{outline:2px solid #B3432D;outline-offset:2px}.ds-field:hover{filter:brightness(.99)}.ds-field:disabled{color:#706A63}@media(prefers-color-scheme:dark){.ds-field-label{color:#F6F1EB}.ds-field{background:#33302C;color:#F6F1EB}.ds-field::placeholder{color:#BAB1A7}.ds-field:focus-visible{outline-color:#F3B493}}"
     },
     {
-      "name": "Four Destinations",
-      "kind": "nav",
-      "refersTo": "navigation",
-      "description": "当前四入口导航的手机悬浮标本：外栏圆角为实际栏高的一半、最大宽 360dp 且左右至少各 24dp，基础高 68dp，安全区内底距 14dp；选中项以实际单元高度一半为圆角的杏色底完整包住 54×26dp 图标槽和下方 11sp 名称，图标槽没有独立底色。水平导航填满外栏、四边均内缩 5dp；四项等宽并填满内侧高度，单元左右外边距为 0，首尾内外弧线同心。各项上下内边距 4dp、最小高 58dp，名称上间距 2dp，图标和名称居中。原生在宽度≥600dp 保持 80dp 侧栏及 16dp 圆角图标选中底；字号增长和材料降级见 DESIGN.md。CSS 的背景模糊与阴影仅近似原生 GlassBar。 相册导航留位在宽度<600dp 时为 104dp 加 24 倍字号增量，≥600dp 为 92dp 加 20 倍增量；增量基数为 max(0, fontScale−1.2)。预设加号仅紧凑且≥600dp 时用 16dp 底距，其余为 104dp 加 24 倍增量；预设列表同条件用 76dp，其余为 108dp 加 24 倍增量，增量均取整。",
-      "html": "<nav class=\"ds-nav\" aria-label=\"主导航\"><button class=\"ds-nav-item\" aria-current=\"page\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"2\"/><circle cx=\"9\" cy=\"8\" r=\"1.5\"/><path d=\"m5 17 5-6 4 4 3-3 3 4\"/></svg></span><span>预设</span></button><button class=\"ds-nav-item\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7h4l2-3h6l2 3h4v13H3z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/></svg></span><span>同步</span></button><button class=\"ds-nav-item\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 4H3v14\"/><rect x=\"7\" y=\"8\" width=\"14\" height=\"13\" rx=\"1\"/><path d=\"m8 18 4-4 3 3 3-4 3 5\"/></svg></span><span>相册</span></button><button class=\"ds-nav-item\"><span class=\"ds-nav-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m10 3-.6 2.4-2 .9L5 5.6 3.6 8l1.7 1.7-.2 2.2L3 13l1 2.7 2.5.1 1.5 1.6-.1 2.4 2.8.8 1.4-2 2.2-.3 1.9 1.5 2.2-1.8-.8-2.3.6-2.1 2.4-.8-.2-2.9-2.3-.6-1.1-1.9.4-2.4-2.6-1.2L13.2 5l-2.2-.2z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg></span><span>设置</span></button></nav>",
-      "css": ".ds-nav{box-sizing:border-box;display:flex;align-items:stretch;gap:0;width:360px;max-width:calc(100% - 48px);height:68px;margin:0 auto 14px;padding:5px;border:0;border-radius:999px;background:rgba(250,250,248,.9607843137);box-shadow:inset 0 0 0 .5px rgba(48,43,35,.0941176471),0 8px 16px rgba(48,43,35,.1882352941);backdrop-filter:blur(18px)}.ds-nav-item{box-sizing:border-box;display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:54px;height:100%;min-height:58px;margin:0;padding:4px 8px;border:0;border-radius:999px;background:transparent;color:#706A63;font:400 11px system-ui,sans-serif;cursor:pointer}.ds-nav-icon{display:grid;place-items:center;width:54px;height:26px;border-radius:16px}.ds-nav-item[aria-current]{background:#F4D6C0;color:#262320;font-weight:700}.ds-nav-item:hover,.ds-nav-item:active{background:#F4D6C0}.ds-nav-item:focus-visible{outline:2px solid #B3432D;outline-offset:1px}@media(prefers-color-scheme:dark){.ds-nav{background:rgba(41,39,36,.9411764706);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.2078431373),0 8px 16px rgba(0,0,0,.3764705882)}.ds-nav-item{color:#BAB1A7}.ds-nav-item[aria-current]{background:#51382D;color:#F6F1EB}.ds-nav-item:hover,.ds-nav-item:active{background:#51382D}.ds-nav-item:focus-visible{outline-color:#F3B493}}"
-    },
-    {
-      "name": "Selected Category",
-      "kind": "chip",
-      "refersTo": "category-selected",
-      "description": "分类的杏底／深陶土选中字配对；标本采用原生 48dp 目标与 13sp 字号，selected 状态必须和颜色共同表达。",
-      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">全部</button><button class=\"ds-chip\" aria-pressed=\"false\">风景</button>",
-      "css": ".ds-chip{min-height:48px;margin-right:4px;padding:9px 14px;border:0;border-radius:24px;background:#EFEDE9;color:#262320;font:400 13px system-ui,sans-serif;cursor:pointer}.ds-chip[aria-pressed=true]{background:#F4D6C0;color:#85311F;font-weight:700}.ds-chip:focus-visible{outline:2px solid #B3432D;outline-offset:3px}.ds-chip:hover{filter:brightness(.98)}.ds-chip:active{filter:brightness(.92)}@media(prefers-color-scheme:dark){.ds-chip{background:#33302C;color:#F6F1EB}.ds-chip[aria-pressed=true]{background:#51382D;color:#F3B493}}"
-    },
-    {
-      "name": "Settings Group",
-      "kind": "card",
-      "refersTo": "settings-group",
-      "description": "22dp 设置分组与 66dp 行；浅色 2dp 原生 elevation 用柔和 CSS 影子作视觉近似，深色平面。示例未连接状态不代表真实硬件状态。",
-      "html": "<section class=\"ds-settings\"><button class=\"ds-settings-row\"><span class=\"ds-settings-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 7h4l2-3h6l2 3h4v13H3z\"/><circle cx=\"12\" cy=\"13\" r=\"4\"/></svg></span><span class=\"ds-settings-copy\"><strong>Wi-Fi 无线连接</strong><small>尼康相机 / 富士</small></span><span aria-hidden=\"true\">›</span></button><button class=\"ds-settings-row\"><span class=\"ds-settings-icon\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 4H3v14\"/><rect x=\"7\" y=\"8\" width=\"14\" height=\"13\" rx=\"1\"/><path d=\"m8 18 4-4 3 3 3-4 3 5\"/></svg></span><span class=\"ds-settings-copy\"><strong>预览模板</strong><small>内置照片 · 模板模拟</small></span><span aria-hidden=\"true\">›</span></button></section>",
-      "css": ".ds-settings{width:320px;max-width:100%;overflow:hidden;border-radius:22px;background:#FFFFFF;box-shadow:0 2px 4px rgba(48,43,35,.07);color:#262320;font-family:system-ui,sans-serif}.ds-settings-row{box-sizing:border-box;display:flex;align-items:center;gap:11px;width:100%;min-height:66px;padding:11px 14px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.ds-settings-row+.ds-settings-row{border-top:1px solid #E4DFD8}.ds-settings-icon{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#EFEDE9}.ds-settings-icon svg{width:18px;height:18px}.ds-settings-copy{flex:1}.ds-settings-copy strong{display:block;font-size:14px;font-weight:400}.ds-settings-copy small{display:block;margin-top:3px;color:#706A63;font-size:11px}.ds-settings-row:hover,.ds-settings-row:active{background:#F4D6C0}.ds-settings-row:focus-visible{outline:2px solid #B3432D;outline-offset:-3px}@media(prefers-color-scheme:dark){.ds-settings{background:#292724;color:#F6F1EB;box-shadow:none}.ds-settings-icon{background:#33302C}.ds-settings-copy small{color:#BAB1A7}.ds-settings-row+.ds-settings-row{border-color:#4C4640}.ds-settings-row:hover,.ds-settings-row:active{background:#51382D}}"
-    },
-    {
-      "name": "Preset Source",
-      "kind": "nav",
-      "refersTo": "source-pill",
-      "description": "48dp 来源目标内的 40dp 卡片胶囊、13sp 文字与 1dp 轻抬升；浏览器标本只展示当前来源，不加载列表。",
-      "html": "<div class=\"ds-source\" role=\"group\" aria-label=\"预设来源\"><button class=\"ds-source-button\" aria-pressed=\"false\">在线预设</button><button class=\"ds-source-button\" aria-pressed=\"true\">我的预设</button></div>",
-      "css": ".ds-source{box-sizing:border-box;display:flex;align-items:center;width:320px;max-width:100%;min-height:48px;padding:0 3px;border-radius:25px;background:rgba(255,255,255,.4392156863);font-family:system-ui,sans-serif}.ds-source-button{box-sizing:border-box;flex:1;min-height:40px;margin:4px 2px;padding:0 12px;border:0;border-radius:19px;background:transparent;color:#706A63;font:400 13px system-ui,sans-serif;cursor:pointer}.ds-source-button[aria-pressed=true]{background:#FFFFFF;color:#262320;font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.1)}.ds-source-button:focus-visible{outline:2px solid #B3432D;outline-offset:3px}.ds-source-button:hover{filter:brightness(.98)}.ds-source-button:active{filter:brightness(.92)}@media(prefers-color-scheme:dark){.ds-source{background:rgba(81,56,45,.3764705882)}.ds-source-button{color:#BAB1A7}.ds-source-button[aria-pressed=true]{background:#292724;color:#F6F1EB}}"
-    },
-    {
       "name": "Photo Overlay Controls",
       "kind": "custom",
       "refersTo": "photo-control",
       "description": "照片上收藏／更多／图标对比的 48dp 目标与共享 #B8262320 Android ARGB 衬底。标本白底刻意演示最差背景，收藏与更多间隔 8dp；不含照片或原生手势实现。",
       "html": "<div class=\"ds-photo-controls\"><button class=\"ds-photo-control\" aria-label=\"收藏照片\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z\"/></svg></button><button class=\"ds-photo-control\" aria-label=\"更多照片操作和重置\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"5\" r=\"1\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"12\" r=\"1\" fill=\"currentColor\"/><circle cx=\"12\" cy=\"19\" r=\"1\" fill=\"currentColor\"/></svg></button><button class=\"ds-photo-control\" aria-label=\"按住看原图，松开恢复预设效果\"><svg viewBox=\"0 0 24 24\" width=\"23\" height=\"23\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 3v18M4 6h16v13H4z\"/></svg></button></div>",
       "css": ".ds-photo-controls{display:flex;align-items:center;gap:8px;padding:12px;background:#FFFFFF}.ds-photo-control{box-sizing:border-box;display:grid;place-items:center;width:48px;height:48px;padding:12px;border:0;border-radius:24px;background:rgba(38,35,32,.7215686275);color:#FFFFFF;cursor:pointer}.ds-photo-control:hover{background:rgba(38,35,32,.80)}.ds-photo-control:active{background:rgba(38,35,32,.93)}.ds-photo-control:focus-visible{outline:2px solid #FFFFFF;outline-offset:-3px;box-shadow:0 0 0 2px #262320}"
-    },
-    {
-      "name": "Orange Light",
-      "kind": "custom",
-      "description": "HueTheme.orangeLight 的叠加 shader 以 CSS 渐变翻译的视觉标本，保留浅深色四层材料与218dp正常高度；原生按实际边界缓存 shader，紧凑高度为168dp。此 CSS 不替代 Android 绘制坐标。",
-      "html": "<div class=\"ds-orange-light\"><strong>预设</strong><p>把喜欢的色彩，带进相机</p></div>",
-      "css": ".ds-orange-light{box-sizing:border-box;height:218px;min-width:280px;padding:20px;color:#262320;font-family:system-ui,sans-serif;background:linear-gradient(to bottom,transparent 65%,#FAFAF8 100%),radial-gradient(circle at 96% 2%,#FFE5AC 0,rgba(255,229,172,0) 82%),radial-gradient(circle at 38% 45%,#E96C40 0,rgba(233,108,64,0) 72%),linear-gradient(135deg,#BEB5BC,#E6653C,#F2AB67,#FAFAF8)}.ds-orange-light strong{display:block;font-size:26px;font-weight:500;letter-spacing:-.02em}.ds-orange-light p{margin-top:12px;color:#5B3025;font-size:13px}@media(prefers-color-scheme:dark){.ds-orange-light{color:#F6F1EB;background:linear-gradient(to bottom,transparent 65%,#201F1D 100%),radial-gradient(circle at 96% 2%,rgba(124,103,71,.4666666667) 0,rgba(255,229,172,0) 82%),radial-gradient(circle at 38% 45%,rgba(125,48,36,.5333333333) 0,rgba(233,108,64,0) 72%),linear-gradient(135deg,#423636,#7C3B29,#6D4B30,#201F1D)}.ds-orange-light p{color:#F2D6C4}}"
     },
     {
       "name": "Prisma Export Action",
@@ -1327,28 +2329,161 @@
       "description": "Current153 main-editor filmstrip:14dp exterior gaps,18dp side insets, white captions with dark ink and a1dp muted olive-gold selected frame. Browser specimen shows blank thumbnail geometry; actual cards use the edited photograph. Native layout/fontScale behavior is unchanged.",
       "html": "<div class=\"ds-prisma-rail\" aria-label=\"滤镜标本\"><button class=\"ds-prisma-card\" aria-pressed=\"true\"><span class=\"ds-prisma-thumb\" aria-hidden=\"true\"></span><span class=\"ds-prisma-label\">原图</span></button><button class=\"ds-prisma-card\" aria-pressed=\"false\"><span class=\"ds-prisma-thumb\" aria-hidden=\"true\"></span><span class=\"ds-prisma-label\">滤镜</span></button></div>",
       "css": ".ds-prisma-rail{display:flex;gap:14px;max-width:100%;overflow-x:auto;padding:6px 18px;background:#242B27}.ds-prisma-card{display:flex;flex:0 0 66px;flex-direction:column;width:66px;height:83px;overflow:hidden;padding:0;border:0;border-radius:7px;background:#FFFFFF;color:#1F2B29;cursor:pointer}.ds-prisma-thumb{display:block;flex:0 0 62px;width:100%;background:#242B27}.ds-prisma-label{display:grid;place-items:center;width:100%;height:21px;color:#1F2B29;font:400 10.5px system-ui,sans-serif;white-space:nowrap;overflow:hidden}.ds-prisma-card[aria-pressed=true]{outline:1px solid #BBB9A1;outline-offset:-1px}.ds-prisma-card:hover{filter:brightness(1.06)}.ds-prisma-card:active{opacity:.8}.ds-prisma-card:focus-visible{outline:2px solid #FFE335;outline-offset:2px}"
+    },
+    {
+      "name": "Home Charcoal Action",
+      "kind": "button",
+      "refersTo": "home-primary-action",
+      "description": "Scoped native home primary action; ordinary and photo actions retain their own material.",
+      "html": "<button class=\"ds-home-action\">添加预设</button>",
+      "css": ".ds-home-action{background:#242420;color:#fff;border:0;border-radius:26px;min-height:48px;padding:10px 16px;font:14px system-ui;cursor:pointer}.ds-home-action:hover{filter:brightness(1.15)}.ds-home-action:focus-visible{outline:2px solid #635d53;outline-offset:3px}.ds-home-action:active{filter:brightness(.9)}"
+    },
+    {
+      "name": "Home Four Destinations",
+      "kind": "nav",
+      "refersTo": "home-navigation",
+      "description": "65dp phone bar with 4dp concentric inset and whole icon-label selection. CSS is a documentation analogue; native Views own focus and semantics.",
+      "html": "<nav class=\"ds-home-nav\" aria-label=\"主导航\"><button class=\"ds-home-nav-item\" aria-current=\"page\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><rect x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M8 4v16M8 11h12\"/></svg><span>预设</span></button><button class=\"ds-home-nav-item\">同步</button><button class=\"ds-home-nav-item\">相册</button><button class=\"ds-home-nav-item\">设置</button></nav>",
+      "css": ".ds-home-nav{display:flex;width:336px;height:65px;padding:4px;background:rgba(255,255,255,.9333);border-radius:40px;box-shadow:0 4px 18px #302b2326}.ds-home-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;background:transparent;color:#635d53;border-radius:40px;font:11px system-ui;cursor:pointer}.ds-home-nav-item[aria-current]{background:#242420;color:white;font-weight:700}.ds-home-nav-item:hover{filter:brightness(1.15)}.ds-home-nav-item:focus-visible{outline:2px solid #635d53;outline-offset:1px}.ds-home-nav-item:active{opacity:.8}"
+    },
+    {
+      "name": "Home Category Capsule",
+      "kind": "chip",
+      "refersTo": "home-category-selected",
+      "description": "36dp painted capsule inside a 48dp target. Active labels keep native selected state.",
+      "html": "<button class=\"ds-home-category\" aria-pressed=\"true\"><span>人像</span></button>",
+      "css": ".ds-home-category{height:48px;min-width:48px;padding:6px 0;border:0;background:transparent;color:#fff;font:700 12px system-ui;cursor:pointer}.ds-home-category span{display:flex;align-items:center;height:36px;padding:0 12px;border-radius:18px;background:#242420}.ds-home-category:hover span{filter:brightness(1.15)}.ds-home-category:focus-visible{outline:2px solid #635d53;outline-offset:2px;border-radius:18px}.ds-home-category:active span{opacity:.8}"
+    },
+    {
+      "name": "Home Source Inset",
+      "kind": "nav",
+      "refersTo": "home-source-selected",
+      "description": "48dp source track with a 40dp white inset; dark selected inset is independently paired.",
+      "html": "<div class=\"ds-home-sources\"><button aria-pressed=\"true\">在线预设</button><button aria-pressed=\"false\">我的预设</button></div>",
+      "css": ".ds-home-sources{display:flex;align-items:center;height:48px;width:288px;padding:0 4px;background:#eeece6;border-radius:24px}.ds-home-sources button{flex:1;height:40px;border:0;border-radius:20px;background:transparent;color:#635d53;font:13px system-ui;cursor:pointer}.ds-home-sources button[aria-pressed=\"true\"]{background:#fff;color:#242320;font-weight:500}.ds-home-sources button:hover{filter:brightness(.96)}.ds-home-sources button:focus-visible{outline:2px solid #635d53;outline-offset:1px}.ds-home-sources button:active{opacity:.75}"
+    },
+    {
+      "name": "Home Settings Group",
+      "kind": "card",
+      "refersTo": "home-settings-group",
+      "description": "Light 16dp group with real native settings handlers and rows at least56dp high.",
+      "html": "<section class=\"ds-home-settings\"><button>外观 <span>跟随系统 ›</span></button><button>预览模板 <span>内置模板 ›</span></button></section>",
+      "css": ".ds-home-settings{width:300px;background:#fff;border-radius:16px;overflow:hidden}.ds-home-settings button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:56px;padding:8px 12px;border:0;background:transparent;color:#242320;font:14px system-ui;text-align:left;cursor:pointer}.ds-home-settings button+button{border-top:1px solid #e4dfd8}.ds-home-settings span{font-size:12px;color:#635d53}.ds-home-settings button:hover{background:#eeece6}.ds-home-settings button:focus-visible{outline:2px solid #635d53;outline-offset:-3px}.ds-home-settings button:active{background:#e4dfd8}"
+    },
+    {
+      "name": "Home Photo Card",
+      "kind": "card",
+      "refersTo": "home-photo-card",
+      "description": "17dp native photo corner with natural-height metadata. The documentation plate is not a shipped photo or simulated effect.",
+      "html": "<article class=\"ds-home-photo\"><div role=\"img\" aria-label=\"照片占位；非随包素材\"></div><strong>真实预设名称</strong><small>人像</small></article>",
+      "css": ".ds-home-photo{width:150px;color:#242320;font:13px system-ui}.ds-home-photo div{height:170px;border-radius:17px;background:#eeece6}.ds-home-photo strong{display:block;padding:7px 1px 0}.ds-home-photo small{display:block;padding:3px 1px 2px;font-size:11px;color:#635d53}"
     }
   ],
   "narrative": {
     "northStar": "橙光进入照片",
-    "overview": "Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白层次、橙杏光晕、炭黑胶囊与系统无衬线字。光晕为发现预设建立气氛，照片仍是内容；编辑时让位于完整比例画布、黑色工具区与杏色控制。\n\n本文件记录 0.17.4-beta（88）的实际实现；本次按用户参考图将手机悬浮底栏四边统一为 5dp 内缩，让首尾选中项与外栏弧线同心、等距，保留 87 的 68dp 基础高度、86 的整项选中态、85 的悬浮位置与内容留位，以及 84 的暖色设计与四个根入口，全面取代原生界面此前的云白／蓝色声明。当前代码权威为 [UiPalette](app/src/main/java/cc/huevia/ui/UiPalette.java) 与 [HueTheme](app/src/main/java/cc/huevia/ui/HueTheme.java)，布局取自 [MainActivity](app/src/main/java/cc/huevia/MainActivity.java)、[LocalAlbumPanel](app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java)、[AlbumPanel](app/src/main/java/cc/huevia/ui/AlbumPanel.java)、[PhotoFilterEditor](app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java) 及其原生面板。批准的 [详细交互稿](docs/design-review/insurance-inspired-20261023/detailed/index.html) 与 [84 需求](docs/design-review/orange-ui-84/REQUIREMENTS.md) 解释意图，发生差异时以本版实际颜色、布局与截图为准。\n\n浅色与深色是完整配对的语义系统，设置中的跟随系统／浅色／深色保持持久化。保留现有 Huevia 标识、代码绘制图标族和有来源的照片模板；本轮新增生产栅格为零。下方 Web 管理后台和旧社区／版本 Web 记录保留独立作用域，不能反向覆盖当前原生规则。\n\n**89 局部实际落地（2026-10-24）：** [照片边框](docs/design-review/photo-borders-20261024/IMPLEMENTATION.md)沿用以上橙光全局世界与原生黑色编辑区；标题、根导航和全局布局未重设计。三款边框与小机型栏以用户批准的 [v3 稿](docs/design-review/photo-borders-20261024/border-templates-v3.png)及其[批准记录](docs/design-review/photo-borders-20261024/border-templates-v3.json)为方向，实际 Android Views／Canvas 产物为当前局部规则。协调加入的[相册缩略图占位](docs/design-review/thumbnail-placeholder-20261024/IMPLEMENTATION.md)只定义加载／不可用／真实照片状态，不改变边框及全局世界。最终 89 / 0.18.0-beta 本地 APK 的 SHA-256 为 `1f74ece275423198208750b804e7dad8e72c443b881c02eccb85eea9c4cd2ba0`；[边框最终 SHIP](docs/validation/photo-borders-89/FIX-VERDICT.md)只关闭初审两个 P2 及横屏可达性补证，[占位 PASS](docs/validation/thumbnail-placeholder/FINISH-REVIEW.md)保持独立组件范围。边框 282 次重复／配置断言与 76 个产物、占位 150 次重复／配置检查与 9 张 PNG 分别记录，不合并为独立场景；本轮未实体安装或公开发布，没有 HTML／CSS 检测适用面。",
+    "overview": "Huevia 的原生 Android Java / Views 保留既有橙光摄影工作流，并以用户批准的纸白相册方向更新四个首页：暖纸页面、真实照片、白色来源内衬与炭黑整项选择。首页减少装饰与说明的占位，保持照片和实际操作清楚；照片编辑继续采用独立的 Prisma 照片氛围与黄色工具，不随首页改色。\n\n154 的界面权威是 `UiPalette.home`、`MainActivity`、`LocalAlbumPanel`、`AlbumPanel` 的首页分支和 `GlassBar`。批准的[四首页图板](docs/design-review/hyperactive-gallery-20261107/review/four-home-board.jpg)给出方向；实际 native Views 决定 token、尺寸、交互和响应行为。专用[首页 brief](.impeccable/surfaces/native-four-homes.md)记录表面策略和边界，现有 151／152／153 编辑续接、共享工具及柔和选择规则保持原范围。\n\n浅色／深色、系统 sp 缩放、安全区、紧凑高度和宽屏侧栏保留。154 使用现有真实模板模拟，未打包新的演示摄影图片。155／0.30.1-beta 在该冻结布局上增量接入十张有来源的摄影样片，仅用于预设浏览列表、预设详情和设置中的实源查看；处理照片时的预设预览继续原有路径。原型图板、QA 夹具和摄影源素材不构成相机效果证明。下方 Web、社区、更新与旧原生记录保留各自的版本及表面范围。",
     "keyCharacteristics": [
-      "暖白页面、白色分组与暖石墨深色。",
-      "橙杏光区只承担预设发现页的光感，照片与真实状态保持清楚。",
-      "炭黑渐变主动作、杏色选择态与可读的深陶土选中文字。",
-      "四个根入口、紧凑高度重排、宽屏侧栏和原生 48dp 操作目标。",
-      "系统 sans-serif 与 sp 字号；编辑工具保留黑底、杏色强调和完整比例照片。"
+      "暖纸首页、白色来源内衬、炭黑整项选择；深色采用配对暖石墨与浅米色操作。",
+      "首页以真实预设模板模拟、照片和紧凑计数为主；加载、权限、版本和连接仍显示真实状态。",
+      "视觉胶囊可以收紧，主要原生命中范围仍保留 48dp。",
+      "四个根入口、可回收的小批瀑布流、紧凑高度重排与宽屏侧栏。",
+      "系统 sans-serif／sp；照片处理、编辑、细节、导出和 RAW 保持独立既有设计。"
     ],
     "rules": [
       {
+        "name": "The Paint Release Repair Rule",
+        "body": "打开修补即可涂抹，按住期间照片结果不变；松手才启动自动纹理匹配和渲染，成功的最新结果才写入暂存模型与内部历史，每笔只增加一次内部撤销。处理期间暂时禁用相冲突的编辑操作。",
+        "section": "components"
+      },
+      {
+        "name": "The Recoverable Repair Session Rule",
+        "body": "完成只提交一次主编辑事务并沿用草稿／版本保存；取消不改父模型、主历史或源文件。早期导引图分配失败和后续渲染失败都保留原模型／历史，立即恢复有效控件并允许重试；既有 16 项修补上限提供可恢复提示，仍可撤销或在更多中删除。",
+        "section": "components"
+      },
+      {
+        "name": "The Adjustment Rail Peer Rule",
+        "body": "调节横轨中的调色盘、去灰、局部和修补与普通参数共用 26dp 无圆底 AppIcon、6dp 顶部内边距及字幕基线；人像分类保留 39dp 圆形入口。",
+        "section": "components"
+      },
+      {
+        "name": "The Fixed Repair Target Rule",
+        "body": "修补目标使用用户确认的真实覆盖并保持固定；拖动只移动受照片边界约束的取样来源。目标与来源分别以“修补区”和“取样”标识，范围框表达编辑／取样边界，不冒充主体轮廓。",
+        "section": "components"
+      },
+      {
+        "name": "The Repair Transaction Rule",
+        "body": "选区、取样、羽化、融合、新增、切换、删除与内部撤销重做留在修补暂存工作区；取消不改主模型或主历史，应用在最新精确预览完成且无待取样项后只提交一次主编辑事务。",
+        "section": "components"
+      },
+      {
+        "name": "The Persistent Selection Feedback Rule",
+        "body": "选区使用实际储存的画笔、几何、人脸或皮肤覆盖持续显示；调节手势期间临时收起，释放、取消、关闭子输入或焦点中断后恢复用户选择的显示状态。手动画笔、自动脸／肤、手动人脸、塑形范围与 legacy 局部蒙版遵循此显示政策，不恢复完成时闪两下即消失的旧反馈。",
+        "section": "components"
+      },
+      {
+        "name": "The Display Only Eye Rule",
+        "body": "眼睛只切换选区显示，不清除覆盖或移除调整效果；沿用既有 eye 图形，选区工作区同时显示“隐藏选区／显示选区”。已存在可用脸／肤选区时返回人像组选择页仍可操作眼睛。真实清空选区与删除区域是独立且可撤销的操作，不能借隐藏动作执行。",
+        "section": "components"
+      },
+      {
+        "name": "The Deferred Input Boundary Rule",
+        "body": "精确调色盘与 HSV 子输入拖动时同样临时隐藏覆盖，但照片设置仍由其既有“应用／预览”动作更新；临时显示抑制不把这些输入改为实时编辑。",
+        "section": "components"
+      },
+      {
+        "name": "The Visible Adjustment Scope Rule",
+        "body": "区域生效时，基本调节标题与四个专用工具标题显示当前区域名；标题保持单行，长名末尾省略，辅助描述保留完整工具与范围。专用工具的标题行按取消、画笔、工具／范围、应用排列，受限横屏保留照片与可滚动的右侧控制区，不挤压操作目标。",
+        "section": "components"
+      },
+      {
+        "name": "The Final Apply Rule",
+        "body": "从专用工具新建区域时，局部参数在已提交的全图设置之上从中性开始；未应用父面板的自动去灰不得成为隐式全图修改。重涂已有区域保留全部参数。画笔和后续调节暂存为同一事务：取消返回父面板且不写入模型、主历史或草稿；最内层应用才提交一条主撤销记录并关闭祖先面板。保留账号、照片身份与异步请求守卫，以及原有定向蒙版、几何／边框／塑形定位、草稿和导出链路。",
+        "section": "components"
+      },
+      {
+        "name": "The Quiet Card Selection Rule",
+        "body": "卡片选择使用 1dp 柔和边框，并保留勾选与原生 selected 语义；中性白字和轻透底按卡片材料使用。主操作／工具强调与编辑范围、游标、焦点不随卡片角色一同弱化。",
+        "section": "柔和卡片选择当前规则（153 / 0.29.2-beta）"
+      },
+      {
+        "name": "The Shared Photo Family Rule",
+        "body": "`prisma-*` 的共同材料与控件规则用于主编辑和已列明的二级工作区；具体参数、色卡和算法保持各自语义。圆形控件承担状态对比，二级历史行不以全宽深色带替代照片氛围。",
+        "section": "编辑续接与共享工具历史规则（152 / 0.29.1-beta）"
+      },
+      {
+        "name": "The Distinct Body Action Rule",
+        "body": "塑形同时出现辅助视口与参数操作时，上方范围可见性用眼睛、适应照片用四角框；下方范围参数用滑块图标，当前项重置保留带文案的圆箭头。不同作用不以重复图形暗示同一操作。",
+        "section": "编辑续接与共享工具历史规则（152 / 0.29.1-beta）"
+      },
+      {
+        "name": "The Resumable Draft Rule",
+        "body": "普通打开照片恢复当前账号与原图身份的 pending draft，关闭仍保存编辑参数；只有明确选择已保存版本时走 `bindSavedVersion`。照片从手机相册重新导入仍保留相同草稿身份，不用显式版本查看替代正常编辑续接。",
+        "section": "编辑续接与共享工具历史规则（152 / 0.29.1-beta）"
+      },
+      {
+        "name": "The Editor Scope Rule",
+        "body": "本节及 `prisma-*` tokens 只约束当前主图片编辑页；下方 `editor-*` 的固定炭黑材料与旧面板尺寸保留为专用工作区／历史记录，不能覆盖本节。照片本身和系统字号、安全区是布局输入，不复制原型中的假系统栏或示意效果。",
+        "section": "图片编辑页历史规则（151 / 0.29.0-beta）"
+      },
+      {
         "name": "The Native Authority Rule",
-        "body": "新增原生页面从 UiPalette 和 HueTheme 取值；历史蓝色记录及浏览器原型不再定义本版原生全局样式。",
+        "body": "原生页面从所属范围的 UiPalette / HueTheme 或 PhotoPrismaStyle 取值；四首页显式使用 UiPalette.home，二级界面和照片工作区保留原有上下文。历史蓝色记录及浏览器原型不定义当前原生样式。",
+        "section": "colors"
+      },
+      {
+        "name": "The Home Boundary Rule",
+        "body": "纸白与炭黑整项选择只属于四首页。进入预设详情、连接引导、照片处理／编辑／细节、导出或 RAW 后，恢复既有语义色与工作区材料；不把首页 tokens 全局化。",
         "section": "colors"
       },
       {
         "name": "The Selected Text Rule",
-        "body": "杏色选择底必须配 onPrimaryContainer，不能直接把 primary 当作小字颜色。",
+        "body": "杏色选择底必须配 onPrimaryContainer，不能直接把 primary 当作小字颜色。 最终独立计算中，浅色选中配对为 6.1986:1、深色为 6.0206:1；这两个结果限相应实色配对。",
         "section": "colors"
+      },
+      {
+        "name": "The Reachable Action Rule",
+        "body": "自有主要操作保留至少 48dp 命中区域，紧凑高度通过合并信息、滚动与重排节省空间。 内建系统对话框保持 Android 自身排布；48dp 是本版自有主要操作的设计基线，不宣称所有系统生成子控件都完成逐项测量。",
+        "section": "typography"
       },
       {
         "name": "The Photograph Rule",
@@ -1356,13 +2491,18 @@
         "section": "elevation"
       },
       {
-        "name": "The Reachable Action Rule",
-        "body": "自有主要操作保留至少 48dp 命中区域，紧凑高度通过合并信息、滚动与重排节省空间。",
-        "section": "typography"
+        "name": "The Painted Target Rule",
+        "body": "首页缩小的是可见材料，来源／分类／版本与图标动作仍保留 48dp 原生目标。被动说明按文字内容排版，只有实际操作保留操作行。",
+        "section": "components"
       },
       {
         "name": "The Border Space Rule",
         "body": "品牌按真实绘制字形测量并约束在明确槽位内；品牌／机型组合留出间隔，白底品牌不越过分隔或参数，长文字在各自分配范围内缩放。保持 Nikon 官方标志的原始比例，不用中性文字的宽度估算代替真实绘制尺寸。字段、自定义机型及 Logo 子弹窗随当前编辑绑定关闭，旧 owner／绑定代次／原图身份的回调不能写入新草稿。",
+        "section": "components"
+      },
+      {
+        "name": "The Export State Rule",
+        "body": "“尚未生成”“App 内已有”“手机相册仍存在”“明确缺失”“上次未完成”“暂无法核对”由真实成品与回执核对决定；默认操作随状态变为导出、查看、重新保存或核对继续，未知不等于缺失。非法输入清除核对中文字，禁用主动作说明修正输入。“另存新副本”必须明确选择。主编码成品标明保留拍摄信息、不含定位；独立的“保存 JPEG 原始文件”另行确认忽略编辑与规格且可能保留定位。进度按真实逐项状态显示，进度条仅表达已完成／总数，取消项目不填成成功；进度页使用不透明系统栏。关闭面板与明确停止分开，接受后快照不随继续调图或重绑而变化。",
         "section": "components"
       },
       {
@@ -1371,43 +2511,78 @@
         "section": "components"
       },
       {
-        "name": "The Shared Photo Family Rule",
-        "body": "`prisma-*` 的共同材料与控件规则用于主编辑和已列明的二级工作区；具体参数、色卡和算法保持各自语义。圆形控件承担状态对比，二级历史行不以全宽深色带替代照片氛围。",
-        "section": "components"
+        "name": "The Semantic Status Rule",
+        "body": "绿色、警示色和圆点必须配合文字标签。QQ 是否配置、用户是否启用和预设是否上架使用各自的真实服务端状态；占位提示沿用不透明的次要文字色（`opacity: 1`）。外观提供跟随系统、浅色与深色，并在当前浏览器持久保存。",
+        "section": "web 管理后台（2026-10-18）"
       },
       {
-        "name": "The Resumable Draft Rule",
-        "body": "普通打开照片恢复当前账号与原图身份的 pending draft，关闭仍保存编辑参数；只有明确选择已保存版本时走 `bindSavedVersion`。照片从手机相册重新导入仍保留相同草稿身份，不用显式版本查看替代正常编辑续接。",
-        "section": "components"
+        "name": "The One Export Rail Rule",
+        "body": "高级导出滚动正文与固定底部动作共享最大 680dp 轨道，保留系统安全区。尺寸、格式及质量同组，副本选项另组；短横屏仍可滚动查看全部设置。",
+        "section": "advanced export settings · 147"
       },
       {
-        "name": "The Distinct Body Action Rule",
-        "body": "塑形同时出现辅助视口与参数操作时，上方范围可见性用眼睛、适应照片用四角框；下方范围参数用滑块图标，当前项重置保留带文案的圆箭头。不同作用不以重复图形暗示同一操作。",
-        "section": "components"
+        "name": "The Primary Footer Rule",
+        "body": "固定底栏仅放 52dp 编辑成品导出主操作。JPEG／NEF 原始文件动作放入滚动正文的“原始文件”区，标明“不应用编辑”，采用至少 48dp 的格式下载按钮和现有 AppIcon。常规快捷保存的“更多设置”采用柔和底色与箭头，紧凑横屏保留标题行入口。按钮样式不改变 PHONE_ALBUM、默认新副本、显式复用、原始文件确认／哈希或回调身份。",
+        "section": "advanced export settings · 147"
       },
       {
-        "name": "The Quiet Card Selection Rule",
-        "body": "卡片选择使用 1dp 柔和边框，并保留勾选与原生 selected 语义；中性白字和轻透底按卡片材料使用。主操作／工具强调与编辑范围、游标、焦点不随卡片角色一同弱化。",
+        "name": "The Fresh Export Is a New Copy Rule",
+        "body": "每次新发起的快捷／高级、单张／批量、保存版本／当前编辑导出都请求手机相册新副本。界面不再显示保存方式、额外副本勾选、复用结果入口或已保存文件可用性等待。选择的文件与编辑身份、预览、校验、命名和队列仍使用既有流程。",
+        "section": "only new gallery copies · 148"
+      },
+      {
+        "name": "The Control Has an Owner Rule",
+        "body": "人像主强度条只有在对应工具真实选中时显示。原始肤色和无参数状态隐藏整行并收回 48dp；面部保留默认选中的“提亮”项，自然精修在既有皮肤横向轨中有选中项，精确光照轴也显式选中。画笔／祛痘大小条仍属于当前工具，预览、提交／取消与渲染链路保持原样。",
+        "section": "editor selection and source gestures appendix (149 / 0.28.12-beta)"
+      },
+      {
+        "name": "The Fixed Context Rule",
+        "body": "标题、来源条、预设浮动按钮及根导航／展开导航栏保持固定；来源条下方内容跟手，阻力 0.65，位移上限为视口宽度的 0.35。完成手势仍只切相邻一项且不循环；点击按来源索引决定方向，跨项点击直接到目标而不激活中间来源。完成过渡为 240ms、回位为 170ms，缓动为 `[0.22, 1, 0.36, 1]`。系统禁用动画时来源切换无空间位移。",
+        "section": "source motion appendix (150 / 0.28.13-beta, current)"
+      },
+      {
+        "name": "The Moving Body Owns Touch Rule",
+        "body": "画布移动时正文点击由容器拦截，固定来源条保持可点；横向轨、输入框／滑杆、纵向与多指输入以及选择／导入、编辑／详情／RAW 门禁继承 149。支持快速反向、缓存／重建根视图交接；离开页面、来源上下文禁用或视口改变时清理。仅暂存一张最多 2MP 的出场 UI 位图，中断重截合成画面时短暂与旧图重叠，随后回收；不逐帧截图、不用于照片处理。风格分类、设置与根导航没有新增滑动，导出和人像规则保留原版本归属。",
+        "section": "source motion appendix (150 / 0.28.13-beta, current)"
+      },
+      {
+        "name": "The Same Showcase Source Rule",
+        "body": "摄影展示与原图比较使用同一份冻结的照片身份；选择或恢复模板后重新生成，不能把旧效果与新原图配对。",
         "section": "components"
       }
     ],
     "dos": [
-      "Do 从 UiPalette / HueTheme 和本版原生截图提取规则，维护浅深色完整对应。",
-      "Do 在分类、槽位选择等杏色小字区域使用 onPrimaryContainer，并同时保留选中语义。",
-      "Do 为连接、权限、下载、保存、加载和失败提供真实文字状态；圆点与颜色只作辅助。",
-      "Do 保留 sp 字号缩放、系统返回、WindowInsets 安全区、48dp 主要操作与完整比例照片。",
-      "Do 保留现有标识与模板溯源；模板模拟、发布者样片和用户照片分别标识。",
-      "Do 将边框品牌／机型／参数约束在各自槽位，原图内容、字节和自动／手动来源保持清楚。",
-      "Do 以固定小占位符号表达真实加载或不可用状态，就绪后显示真实 CENTER_CROP 照片。"
+      "**Do** 将 home-* 限定到四首页；保留普通 UiPalette、Prisma 151／152／153 及下游照片工作区规则。",
+      "**Do** 区分 48dp 原生命中与 36dp 分类／40dp 来源的可见材料，并让被动说明按内容排版。",
+      "**Do** 从 UiPalette / HueTheme 和本版原生截图提取规则，维护浅深色完整对应。",
+      "**Do** 在分类、槽位选择等杏色小字区域使用 onPrimaryContainer，并同时保留选中语义。",
+      "**Do** 为连接、权限、下载、保存、加载和失败提供真实文字状态；圆点与颜色只作辅助。",
+      "**Do** 保留 sp 字号缩放、系统返回、WindowInsets 安全区、48dp 主要操作与完整比例照片。",
+      "**Do** 保留现有标识与模板溯源；模板模拟、发布者样片和用户照片分别标识。",
+      "**Do** 将 155 摄影源图限定到预设浏览及设置实源查看；原图比较与效果共用照片身份，处理图片预览保持原有路径。",
+      "**Do** 将边框品牌／机型／参数约束在各自槽位，原图内容、字节和自动／手动来源保持清楚。",
+      "**Do** 以固定小占位符号表达真实加载或不可用状态，就绪后显示真实 CENTER_CROP 照片。",
+      "**Do** 保持修补目标固定，明确标出来源和目标；取样、显示偏好与模型结果各自保留真实含义。",
+      "**Do** 延续持续覆盖、手势暂隐、独立清空／删除及取消隔离／一次应用事务。",
+      "**Do** 让四个专用调节入口与相邻参数保持同一图标盒、字幕基线及 AppIcon 风格，并保留原有标签、状态、回调与可访问语义。",
+      "**Do** 将涂抹／松手处理作为默认，手动取样留在更多，保留一笔一撤销及完成／取消事务边界。",
+      "**Do** 区分真实修补数据、显示覆盖、暂时手势抑制与用户显隐偏好，失败后立即恢复有效控件。"
     ],
     "donts": [
-      "Don't 把旧原生蓝色或原型示例数据当作当前实现；恢复悬浮导航时仍使用现有暖色 tokens 与真实四个入口。",
-      "Don't 用橙色铺满所有表面；编辑画布与工具保持黑色材料，局部操作使用杏色。",
-      "Don't 用无底白图标直接覆盖任意照片；收藏、更多和图标对比使用共享照片控件衬底。",
-      "Don't 将模拟、下载、导入读回、实际拍摄与已发布／已安装混称同一种成功。",
-      "Don't 把重复断言次数或限定 UI 复核写成真实相机、生产网络、FPS、颜色标定或 TalkBack 认证。",
-      "Don't 将参考字体近似匹配或其他品牌的中性文字称为相同字体／官方 Logo，也不把边框材料推广为全局材料。",
-      "Don't 用会被 CENTER_CROP 放大的导航图形或设计稿切片代替原生占位，也不将不同专项的重复断言相加为独立场景。"
+      "**Don't** 把四首页图板、QA 夹具或另一工作流的新摄影样片当作 154 已打包的真实内容。",
+      "**Don't** 用首页炭黑／纸白替换照片编辑、详情、导出或 RAW 的既有材料。",
+      "**Don't** 把旧原生蓝色或原型示例数据当作当前实现；恢复悬浮导航时仍使用现有暖色 tokens 与真实四个入口。",
+      "**Don't** 用橙色铺满所有表面；编辑画布与工具保持黑色材料，局部操作使用杏色。",
+      "**Don't** 用无底白图标直接覆盖任意照片；收藏、更多和图标对比使用共享照片控件衬底。",
+      "**Don't** 将模拟、下载、导入读回、实际拍摄与已发布／已安装混称同一种成功。",
+      "**Don't** 把重复断言次数或限定 UI 复核写成真实相机、生产网络、FPS、颜色标定或 TalkBack 认证。",
+      "**Don't** 将参考字体近似匹配或其他品牌的中性文字称为相同字体／官方 Logo，也不把边框材料推广为全局材料。",
+      "**Don't** 用会被 CENTER_CROP 放大的导航图形或设计稿切片代替原生占位，也不将不同专项的重复断言相加为独立场景。",
+      "**Don't** 把手动取样修补写成生成式移除、自动识别或通用祛瑕保证。",
+      "**Don't** 将初始安全区缺陷、QA 复制示例、原型图或截图 canonize 为生产材料／全局 tokens；原生 Java 无 HTML／CSS detector。",
+      "**Don't** 把调节轨的无圆底规则推广到人像分类或其他照片圆形控件，也不把静态布局检查写成帧率、算法或整应用验收。",
+      "**Don't** 将确定性局部纹理取样写成生成式消除、语义识别或大物体重建保证。",
+      "**Don't** 将 NASA QA 照片及不适合的大涂抹写成成功去物示范，或把静态模拟器证据扩大为实体 Samsung／鸿蒙、帧率、新 full-export 或全应用验收。"
     ]
   }
 }

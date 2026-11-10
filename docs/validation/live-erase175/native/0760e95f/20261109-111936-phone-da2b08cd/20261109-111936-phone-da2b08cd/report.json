@@ -1,0 +1,61 @@
+{
+  "pass": false,
+  "stage": "erase175-live-stroke",
+  "candidateSha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+  "versionCode": 175,
+  "versionName": "0.30.21-beta",
+  "mode": "phone",
+  "flow": "erase175",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": 0,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": "java.lang.IllegalStateException: Immutable bitmap passed to Canvas constructor",
+  "scope": "Exact installed175 renderer during held DOWN\/MOVE before release, no-overlay full-canvas pixel oracle; latest-only100-move queue, one undo per stroke, cancel\/focus\/pinch, guide OOM and precision failure rollback, parent transaction, real v8 draft and original bytes. Owned emulator synthetic texture; host independently covers blend quality, EXIF and alpha. No physical device or all-photo quality claim."
+}

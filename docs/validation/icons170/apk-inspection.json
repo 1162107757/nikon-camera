@@ -1,0 +1,13 @@
+{
+  "packageName": "cc.huevia",
+  "versionName": "0.30.16-beta",
+  "versionCode": 170,
+  "minSdk": 26,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "signatureSchemes": [
+    2,
+    3
+  ],
+  "byteLength": 31358141,
+  "sha256": "5814e69b63df75c265edf75ce197faaef67bcf4c3068651af2b73be8c1411805"
+}

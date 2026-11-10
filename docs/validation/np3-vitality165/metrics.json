@@ -1,0 +1,33 @@
+{
+  "space": "encoded RGB, 0..255",
+  "size": [
+    900,
+    599
+  ],
+  "blurRadius": 2,
+  "scope": "point-colour approximation on one CC0 RAW exported by NX Studio 1.11; not full Nikon RAW equivalence",
+  "app-v3": {
+    "meanAbsoluteRgb": [
+      33.45451864218141,
+      27.15459654980523,
+      26.70765164162493
+    ],
+    "meanAbsolute": 29.105588944537192
+  },
+  "app-v4": {
+    "meanAbsoluteRgb": [
+      11.668360230012985,
+      6.264464848822111,
+      7.120235577814877
+    ],
+    "meanAbsolute": 8.351020218883324
+  },
+  "inputs": {
+    "nx-neutral.png": "61f41bf07d2f356d69057b111397199ce420c96e592582c5c098689a222d2319",
+    "nx-vitality.png": "4af3ece2e7b3a7b9d8698a97f2d6c0b1935b1be49ad0be5ed67372b82d41d324",
+    "nx-nograde.png": "20758b491a4a5078a04d4b531f6a4aa1f0c742edc432c6a7bdf493fdac3d0208",
+    "nx-bright.png": "4e713b90357064314f328ef05d4c85466ad4a1545b1d6663d2219af700e13a69",
+    "app-v3.png": "b2e144b1f01541e5b85d8663765229e8aee3942b4a3f4fe4caa0a02da9d475f9",
+    "app-v4.png": "6480a4845b3843c59a72a8640b0292d47864a1b230495d1a271aaa1b2b1e44e9"
+  }
+}

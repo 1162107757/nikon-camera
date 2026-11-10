@@ -1,0 +1,116 @@
+{
+  "date": "2026-11-09",
+  "versionCode": 172,
+  "versionName": "0.30.18-beta",
+  "status": "local verified; unpublished",
+  "reportedEnvironment": {
+    "system": "HarmonyOS4.3.0.208",
+    "deviceModel": null,
+    "androidSdk": null,
+    "trigger": "Top online preset source tab",
+    "originalCrashTraceObtained": false
+  },
+  "fixedScope": "Only optional shared source-transition screenshot captures RuntimeException/OOM, releases scratch frame and proceeds with actual source selection. Ordinary software-canvas transition remains animated; actual page operation failures are not swallowed.",
+  "baseline": {
+    "candidateVersion": 171,
+    "candidateSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef",
+    "pass": true,
+    "checks": 23,
+    "evidence": "device/71de10a2/phone-20261109-091806-403eb121",
+    "observedError": "java.lang.IllegalArgumentException: Software rendering doesn't support hardware bitmaps",
+    "actualTopButtonReproduced": true
+  },
+  "final": {
+    "sourceSha256": "6bf21f11d28a66a2b9926a58f1c03176309271a3c61c6bd2cb8a8397f17a1c4c",
+    "uploadSha256": "6712f7513eb35b5e9d9e7c3ce797fcd7fc0395b2400fffbc436a2d017dbe5d83",
+    "uploadPath": "dist/upload172/huevia-0.30.18-beta-update.apk",
+    "bytes": 31358141,
+    "runs": [
+      {
+        "run": "font-dark-20261109-092247-7c0f8b52",
+        "pass": true,
+        "checks": 25,
+        "cleanup": {
+          "animatorRestored": true,
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "landscape-dark-20261109-092351-b314ef4d",
+        "pass": true,
+        "checks": 25,
+        "cleanup": {
+          "animatorRestored": true,
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "phone-20261109-092211-a95e3624",
+        "pass": true,
+        "checks": 25,
+        "cleanup": {
+          "animatorRestored": true,
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "tablet-20261109-092454-92310961",
+        "pass": true,
+        "checks": 25,
+        "cleanup": {
+          "animatorRestored": true,
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      }
+    ],
+    "searchRegression": {
+      "pass": true,
+      "checks": 37,
+      "evidence": "../online-search172/device/6712f751/phone-20261109-092551-18b66748"
+    }
+  },
+  "harnessCorrections": [
+    "Click the clickable source-tab wrapper rather than its non-clickable text child. Failed initial baseline record retained.",
+    "Baseline provenance constant172 version label corrected to actual immutable report171; original writer file retained. Fixed runner now writes actual report version."
+  ],
+  "limits": [
+    "Controlled hardware-bitmap, software-only RuntimeException and OOM fixtures; no physical HarmonyOS verification or original user crash stack.",
+    "No single-root-cause claim: subsequent inspection found unbackported API33 URLEncoder Charset invocation in repository/community code, to be addressed separately174.",
+    "No public upload, release, commit or push.",
+    "Repeated native checks retain counts per configuration. Search host/library results remain171;37 search native checks are direct regression on the exact172 variant."
+  ],
+  "visualReview": {
+    "captures": "capture-index.json",
+    "board": "capture-board.png",
+    "opened": true,
+    "scope": "Source-change recovery only. Device night configurations were exercised; prior manual app appearance remained light in these captures. Actual dark home styling was separately exercised171; no172 theme certification."
+  }
+}

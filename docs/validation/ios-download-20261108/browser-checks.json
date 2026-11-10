@@ -1,0 +1,55 @@
+{
+  "heroDesktop": {
+    "controls": [
+      {
+        "disabled": false,
+        "height": 54,
+        "text": "下载 Android 版",
+        "width": 198.46250915527344
+      },
+      {
+        "disabled": true,
+        "height": 54,
+        "text": "iOS 版正在准备中",
+        "width": 182.96250915527344
+      }
+    ],
+    "scrollWidth": 2033,
+    "width": 2048
+  },
+  "heroMobile": {
+    "controls": [
+      {
+        "disabled": false,
+        "height": 54,
+        "text": "下载 Android 版",
+        "width": 335.20001220703125
+      },
+      {
+        "disabled": true,
+        "height": 54,
+        "text": "iOS 版正在准备中",
+        "width": 335.20001220703125
+      }
+    ],
+    "scrollWidth": 375,
+    "width": 390
+  },
+  "fullDesktop": {
+    "disabled": true,
+    "height": 54,
+    "href": null,
+    "scrollWidth": 2033,
+    "width": 2048
+  },
+  "fullMobile": {
+    "disabled": true,
+    "display": "flex",
+    "height": 54,
+    "href": null,
+    "note": "我们正在准备 iOS 版本，开放下载后会在这里更新。",
+    "scrollWidth": 375,
+    "width": 390
+  },
+  "note": "Hero mobile geometry verified at 390px; optional mobile screenshot timed out. Desktop hero and download screenshots saved."
+}

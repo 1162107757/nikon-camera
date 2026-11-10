@@ -1,0 +1,8 @@
+{
+  "serial": "emulator-5588",
+  "avd": "Pixel_9",
+  "dataCleared": false,
+  "snapshotLoaded": false,
+  "restartPid": 39440,
+  "reason": "Android system_server absent; package/input Binder services unavailable"
+}

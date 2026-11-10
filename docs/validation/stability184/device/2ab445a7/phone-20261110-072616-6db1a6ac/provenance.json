@@ -1,0 +1,22 @@
+{
+  "versionCode": 184,
+  "candidateSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "probeSha256": "777a8b8ed988a550829e277c366a8ecbcee8b027f965f282c5ab04e3ec3cef9d",
+  "serial": "emulator-5588",
+  "pass": true,
+  "scope": "Actual installed MainActivity/root navigation/source/filter and PhotoPresetBatch, real synthetic JPEG codecs, simple/full and local+crop+border full/share. Baseline183 must reproduce its own model-limit error;184 must commit/reuse exact outputs. No physical Honor/camera or memory-pressure certification.",
+  "files": [
+    {
+      "file": "01-filter-open.png",
+      "sha256": "b612ee832c8f22a7f6871ef44422a120b6f80f91ea1d6053d8aaad4d8833af01"
+    },
+    {
+      "file": "02-after-exports.png",
+      "sha256": "dc2d5ac45d31ba7760ba069c5825c77334c3bd635355391dc1f4b4f7b965651f"
+    },
+    {
+      "file": "report.json",
+      "sha256": "f81c322754a1178a1b9b3eaaad1b086cca79d76171f578dfd5dda3dc90ca9720"
+    }
+  ]
+}

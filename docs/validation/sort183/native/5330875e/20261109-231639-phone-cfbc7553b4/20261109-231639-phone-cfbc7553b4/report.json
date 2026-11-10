@@ -1,0 +1,37 @@
+{
+  "pass": false,
+  "apkSha256": "5330875ea261e9138d8ac8b89340bc21e48752d7369b3d3678026f99c3d7cfb8",
+  "checks": [
+    {
+      "name": "native-EXIF-capture-differs-from-arrival",
+      "passed": true
+    },
+    {
+      "name": "missing-capture-falls-back-to-arrival",
+      "passed": true
+    },
+    {
+      "name": "aliases-share-original-group-earliest-arrival",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-false-false",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-false-true",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-true-false",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-true-true",
+      "passed": true
+    }
+  ],
+  "fixtureCleanup": true,
+  "failure": "java.lang.Exception: phonePage\n\tat cc.huevia.rawdevelopmentqa.AlbumTimeSortChecks.call(AlbumTimeSortChecks.java:37)\n\tat cc.huevia.rawdevelopmentqa.AlbumTimeSortChecks.run(AlbumTimeSortChecks.java:15)\n\tat cc.huevia.rawdevelopmentqa.RawDevelopmentProbe.onStart(RawDevelopmentProbe.java:11)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2627)\nCaused by: java.io.IOException: 尚未授权读取手机照片。\n\tat cc.huevia.album.LocalPhotoRepository.phonePage(LocalPhotoRepository.java:141)\n\tat cc.huevia.album.LocalPhotoRepository.phonePage(LocalPhotoRepository.java:139)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\t... 4 more\n",
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF\/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims."
+}

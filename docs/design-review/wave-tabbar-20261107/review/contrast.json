@@ -1,0 +1,38 @@
+[
+  {
+    "name": "preset label",
+    "foreground": "#276478",
+    "background": "#e5f3f8",
+    "ratio": 5.82
+  },
+  {
+    "name": "sync label",
+    "foreground": "#35664c",
+    "background": "#e8f3e9",
+    "ratio": 5.84
+  },
+  {
+    "name": "album label",
+    "foreground": "#8c4b43",
+    "background": "#f9e9e5",
+    "ratio": 5.56
+  },
+  {
+    "name": "settings label",
+    "foreground": "#605084",
+    "background": "#ede8f7",
+    "ratio": 5.87
+  },
+  {
+    "name": "inactive name",
+    "foreground": "#706b63",
+    "background": "#ffffff",
+    "ratio": 5.29
+  },
+  {
+    "name": "review annotations",
+    "foreground": "#675f55",
+    "background": "#eae8e2",
+    "ratio": 5.12
+  }
+]

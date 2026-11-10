@@ -1,0 +1,16 @@
+{
+  "version": 175,
+  "files": [
+    {
+      "path": "D:/dev/ai-project/nikon-camera/dist/huevia-0.30.21-beta-debug.apk",
+      "sha256": "a9eb73310d8ae98ef06530469c2576dab65c2a4f7187cf740b47f0f15ccba437",
+      "bytes": 34667990
+    },
+    {
+      "path": "D:/dev/ai-project/nikon-camera/dist/upload175/huevia-0.30.21-beta-update.apk",
+      "sha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+      "bytes": 31374525
+    }
+  ],
+  "published": false
+}

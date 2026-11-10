@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.3",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "1",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.AssertionError: actual-two-finger-shrink-landscape-photo; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\connection178\\native\\d3c3a21d\\20261109-195832-phone-66170f98\\20261109-195832-phone-66170f98\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

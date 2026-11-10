@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "versionCode": 173,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "5b162c54c03f448fd7ae83fa0ec5b1906764cd501a13d7a60671d24a5727276a",
+  "pass": true,
+  "scope": "Actual installed brush-down/no-commit and release/automatic repair, real rendered pixels and exterior/alpha, one inner undo per stroke, multi-touch/cancel/focus/size-slider display, explicit overlay visibility, render-failure injection atomicity, parent apply/cancel and saved v7 draft, legacy manual access and unchanged source. Four native layout captures; no physical-device, generative AI, large-object quality or new full-export matrix claim.",
+  "files": [
+    {
+      "file": "erase173-applied-main.png",
+      "sha256": "7b29e0e5db5bf5ae75b6795a59eb359b9d2ed0dd6e919b3e84b34cc871f5dde8"
+    },
+    {
+      "file": "erase173-first-result.png",
+      "sha256": "3296e413f4ec95cf2911e86b62125b8e2ad0f8be4b9902095a02fb8b6c0eff9c"
+    },
+    {
+      "file": "erase173-painting.png",
+      "sha256": "a47726c6c294a4958dd2589afb41a75b43951d29f1e693912993d42f3df86f19"
+    },
+    {
+      "file": "erase173-ready.png",
+      "sha256": "a0149f74686a32ddc5e03219ee0605682b6c1fe1396dd578958f7e92beb7e41f"
+    },
+    {
+      "file": "erase173-reopened.png",
+      "sha256": "0acb2f8f5ff146527f95ad8aad2f68a272a2c3b79666b159f09000137ca3014b"
+    },
+    {
+      "file": "erase173-result-hidden.png",
+      "sha256": "98bf0e7c3f5939821b8b0e97e33092fd9f0f75a84c94113f277696b78c3bf660"
+    },
+    {
+      "file": "erase173-second-result.png",
+      "sha256": "679e4032fa72fc7ac7d155329ee9b5a7da6e8c30055d93bdea7dbe8d94bfbf00"
+    },
+    {
+      "file": "erase173-undone.png",
+      "sha256": "e4a08c2ae85d42cff0a9a545d81a2012a27ff099da098c723169cb5288ab4348"
+    },
+    {
+      "file": "report.json",
+      "sha256": "0bf4ad9f9211eec9e6d1d397fe24142c1a9d6c40eb0e504af1ef96b61a24529c"
+    }
+  ]
+}

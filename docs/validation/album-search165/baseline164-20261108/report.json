@@ -1,0 +1,24 @@
+{
+  "versionCode": 164,
+  "sdk": 37,
+  "stationaryTileReplacements": 108,
+  "readyToPlaceholderRegressions": 161,
+  "observations": 324,
+  "readyKeys": 6,
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    }
+  ],
+  "failure": null
+}

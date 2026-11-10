@@ -1,0 +1,21 @@
+{
+  "version": "2.0",
+  "statement": [
+    {
+      "effect": "allow",
+      "action": ["name/cos:GetObject", "name/cos:PutObject", "name/cos:DeleteObject"],
+      "resource": ["qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-backups/daily/*"]
+    },
+    {
+      "effect": "allow",
+      "action": ["name/cos:GetObject"],
+      "resource": ["qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/app-releases/*"]
+    },
+    {
+      "effect": "allow",
+      "action": ["name/cos:GetBucket"],
+      "resource": ["qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/*"],
+      "condition": {"string_equal": {"cos:prefix": ["huevia-backups%2Fdaily%2F"]}}
+    }
+  ]
+}

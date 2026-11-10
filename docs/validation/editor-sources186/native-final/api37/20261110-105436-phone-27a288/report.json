@@ -1,0 +1,49 @@
+{
+  "pass": true,
+  "stage": "close-reopen-draft",
+  "candidateSha256": "ca6262e510e9c751cd5b40eb93e2a90e5b3b7a3ae6229cc794878960ea6b2b15",
+  "mode": "phone",
+  "scope": "editor-continuity186-final-baseline",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "close-returns-to-album",
+      "pass": true
+    },
+    {
+      "name": "ordinary-open-restores-pending-draft",
+      "pass": true
+    },
+    {
+      "name": "explicit-saved-version-still-original",
+      "pass": true
+    },
+    {
+      "name": "pending-draft-survives-explicit-version-view",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 0,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "layout": {}
+}

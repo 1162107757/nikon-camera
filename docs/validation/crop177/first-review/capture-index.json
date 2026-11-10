@@ -1,0 +1,618 @@
+{
+  "apkSha256": "4dd38a90ae45e06c8dfcef0a8a2e3c519841933f98d2e0dc26b22ee73ad52f54",
+  "runs": [
+    {
+      "mode": "phone",
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/20261109-181734-phone-12c035b3/report.json",
+      "provenance": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/provenance.json",
+      "cleanup": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/cleanup.json",
+      "recordsIncludingBootstrapAndRepetition": 71,
+      "measurements": [
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 168,
+          "height": 200,
+          "screenX": 875,
+          "screenY": 1887,
+          "visibleInWindow": "[875,1889][1043,2090]"
+        },
+        {
+          "case": "inline-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 512,
+          "outputHeight": 217,
+          "ratio": 2.359447004608295,
+          "widthErrorPixels": 2.0499999999999545
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 244,
+          "height": 126,
+          "screenX": 794,
+          "screenY": 1904,
+          "visibleInWindow": "[794,1904][1038,2030]"
+        },
+        {
+          "case": "precision-resized-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 912,
+          "screenY": 150,
+          "visibleInWindow": "[912,150][1080,276]"
+        },
+        {
+          "case": "saved-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 168,
+          "height": 200,
+          "screenX": 875,
+          "screenY": 1890,
+          "visibleInWindow": "[875,1890][1043,2091]"
+        },
+        {
+          "case": "inline-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 341,
+          "outputHeight": 146,
+          "ratio": 2.335616438356164,
+          "widthErrorPixels": 2.1000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 244,
+          "height": 126,
+          "screenX": 794,
+          "screenY": 1904,
+          "visibleInWindow": "[794,1904][1038,2030]"
+        },
+        {
+          "case": "precision-resized-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 912,
+          "screenY": 150,
+          "visibleInWindow": "[912,150][1080,276]"
+        },
+        {
+          "case": "saved-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/20261109-181734-phone-12c035b3/crop177-inline-landscape-photo.png",
+          "sha256": "7d4de1dc944209c7757126d23ad5e14026b4348a732c02b636d340c46802ea2f",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/20261109-181734-phone-12c035b3/crop177-precision-landscape-photo.png",
+          "sha256": "96ba33131583bc8eccb0d5cf2765ce7c06e1f5105d3fd9164ee5a55a55a52559",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/20261109-181734-phone-12c035b3/crop177-inline-portrait-photo.png",
+          "sha256": "586d9b9858993ccae0b8bf7d41cbc26909d001c999eedfa5e36c5aa9eb3b46a2",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181734-phone-12c035b3/20261109-181734-phone-12c035b3/crop177-precision-portrait-photo.png",
+          "sha256": "a5c0f8e5006c0d30acf25d3498f2f470efb2f8d068535b0e394c7b94705b67ec",
+          "width": 1080,
+          "height": 2424
+        }
+      ],
+      "contactSheet": ".impeccable/review/crop177/phone-states.png"
+    },
+    {
+      "mode": "font1.3",
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/20261109-181904-font1.3-5c8f4028/report.json",
+      "provenance": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/provenance.json",
+      "cleanup": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/cleanup.json",
+      "recordsIncludingBootstrapAndRepetition": 71,
+      "measurements": [
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 147,
+          "height": 259,
+          "screenX": 656,
+          "screenY": 1208,
+          "visibleInWindow": "[656,1211][803,1471]"
+        },
+        {
+          "case": "inline-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 512,
+          "outputHeight": 217,
+          "ratio": 2.359447004608295,
+          "widthErrorPixels": 2.0499999999999545
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 293,
+          "height": 126,
+          "screenX": 505,
+          "screenY": 1370,
+          "visibleInWindow": "[505,1370][798,1496]"
+        },
+        {
+          "case": "precision-resized-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 672,
+          "screenY": 145,
+          "visibleInWindow": "[672,145][840,271]"
+        },
+        {
+          "case": "saved-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 147,
+          "height": 259,
+          "screenX": 656,
+          "screenY": 1212,
+          "visibleInWindow": "[656,1211][803,1471]"
+        },
+        {
+          "case": "inline-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 341,
+          "outputHeight": 146,
+          "ratio": 2.335616438356164,
+          "widthErrorPixels": 2.1000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 293,
+          "height": 126,
+          "screenX": 505,
+          "screenY": 1370,
+          "visibleInWindow": "[505,1370][798,1496]"
+        },
+        {
+          "case": "precision-resized-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 672,
+          "screenY": 145,
+          "visibleInWindow": "[672,145][840,271]"
+        },
+        {
+          "case": "saved-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/20261109-181904-font1.3-5c8f4028/crop177-inline-landscape-photo.png",
+          "sha256": "8703b1462a540e109368ce6035463b54d787b786062629c5e1f347d5ee0d91be",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/20261109-181904-font1.3-5c8f4028/crop177-precision-landscape-photo.png",
+          "sha256": "c7793913439f0a7ad6d2eecd8cf635daed1bf725b9d97e31844db8b95ba440e7",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/20261109-181904-font1.3-5c8f4028/crop177-inline-portrait-photo.png",
+          "sha256": "633efa35928c6e8655edee19a18414e0db22c67c97a81cdbecfc87c17a562897",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181904-font1.3-5c8f4028/20261109-181904-font1.3-5c8f4028/crop177-precision-portrait-photo.png",
+          "sha256": "39e21b0be219a2fca27d1041901dd4bde76bcfa7abf052b43dcf7c10aed5c550",
+          "width": 840,
+          "height": 1890
+        }
+      ],
+      "contactSheet": ".impeccable/review/crop177/font1.3-states.png"
+    },
+    {
+      "mode": "tablet",
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/20261109-181916-tablet-16723639/report.json",
+      "provenance": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/provenance.json",
+      "cleanup": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/cleanup.json",
+      "recordsIncludingBootstrapAndRepetition": 71,
+      "measurements": [
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 255,
+          "height": 200,
+          "screenX": 1308,
+          "screenY": 1998,
+          "visibleInWindow": "[1308,2005][1563,2206]"
+        },
+        {
+          "case": "inline-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 512,
+          "outputHeight": 217,
+          "ratio": 2.359447004608295,
+          "widthErrorPixels": 2.0499999999999545
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 244,
+          "height": 126,
+          "screenX": 848,
+          "screenY": 2019,
+          "visibleInWindow": "[848,2019][1092,2145]"
+        },
+        {
+          "case": "precision-resized-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 1432,
+          "screenY": 158,
+          "visibleInWindow": "[1432,158][1600,284]"
+        },
+        {
+          "case": "saved-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 255,
+          "height": 200,
+          "screenX": 1308,
+          "screenY": 2006,
+          "visibleInWindow": "[1308,2005][1563,2206]"
+        },
+        {
+          "case": "inline-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 341,
+          "outputHeight": 146,
+          "ratio": 2.335616438356164,
+          "widthErrorPixels": 2.1000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 244,
+          "height": 126,
+          "screenX": 848,
+          "screenY": 2019,
+          "visibleInWindow": "[848,2019][1092,2145]"
+        },
+        {
+          "case": "precision-resized-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 1432,
+          "screenY": 158,
+          "visibleInWindow": "[1432,158][1600,284]"
+        },
+        {
+          "case": "saved-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/20261109-181916-tablet-16723639/crop177-inline-landscape-photo.png",
+          "sha256": "c3bbb22ba82e395472e8f431ea033e0a742dcedb086b316094284c67f8ab9525",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/20261109-181916-tablet-16723639/crop177-precision-landscape-photo.png",
+          "sha256": "af52a7cf1e8b077c70f9ed67d2b2c401e4e7c1c9f7f30df5f71fe1df80630280",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/20261109-181916-tablet-16723639/crop177-inline-portrait-photo.png",
+          "sha256": "b0fe4d876e8be7b007c1149c5b6b555dc3074fd986a30b8f32b54cae7b4fd021",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181916-tablet-16723639/20261109-181916-tablet-16723639/crop177-precision-portrait-photo.png",
+          "sha256": "dc606666ba0a887d52cd2f655047c34ca96d87b0717b86e6914c3ed1d981ca73",
+          "width": 1600,
+          "height": 2560
+        }
+      ],
+      "contactSheet": ".impeccable/review/crop177/tablet-states.png"
+    },
+    {
+      "mode": "landscape",
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/20261109-181932-landscape-3628acb8/report.json",
+      "provenance": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/provenance.json",
+      "cleanup": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/cleanup.json",
+      "recordsIncludingBootstrapAndRepetition": 71,
+      "measurements": [
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 147,
+          "height": 200,
+          "screenX": 2240,
+          "screenY": 460,
+          "visibleInWindow": "[2240,461][2387,662]"
+        },
+        {
+          "case": "inline-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 512,
+          "outputHeight": 217,
+          "ratio": 2.359447004608295,
+          "widthErrorPixels": 2.0499999999999545
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 244,
+          "height": 126,
+          "screenX": 2138,
+          "screenY": 137,
+          "visibleInWindow": "[2138,137][2382,263]"
+        },
+        {
+          "case": "precision-resized-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 1468,
+          "screenY": 145,
+          "visibleInWindow": "[1468,145][1636,271]"
+        },
+        {
+          "case": "saved-landscape-photo",
+          "sourceWidth": 512,
+          "sourceHeight": 341,
+          "outputWidth": 460,
+          "outputHeight": 196,
+          "ratio": 2.3469387755102042,
+          "widthErrorPixels": 0.6000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "2.35:1",
+          "width": 147,
+          "height": 200,
+          "screenX": 2240,
+          "screenY": 461,
+          "visibleInWindow": "[2240,461][2387,662]"
+        },
+        {
+          "case": "inline-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 341,
+          "outputHeight": 146,
+          "ratio": 2.335616438356164,
+          "widthErrorPixels": 2.1000000000000227
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u7535\u5f71 \u00b7 2.35:1",
+          "width": 244,
+          "height": 126,
+          "screenX": 2138,
+          "screenY": 137,
+          "visibleInWindow": "[2138,137][2382,263]"
+        },
+        {
+          "case": "precision-resized-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        },
+        {
+          "case": "native-choice-bounds",
+          "label": "\u5e94\u7528",
+          "width": 168,
+          "height": 126,
+          "screenX": 1468,
+          "screenY": 145,
+          "visibleInWindow": "[1468,145][1636,271]"
+        },
+        {
+          "case": "saved-portrait-photo",
+          "sourceWidth": 341,
+          "sourceHeight": 512,
+          "outputWidth": 307,
+          "outputHeight": 130,
+          "ratio": 2.3615384615384616,
+          "widthErrorPixels": 1.5
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/20261109-181932-landscape-3628acb8/crop177-inline-landscape-photo.png",
+          "sha256": "52713076f1abe384918a42eb8081365275e2a88ac57bd71d356e285bcc4ace84",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/20261109-181932-landscape-3628acb8/crop177-precision-landscape-photo.png",
+          "sha256": "27e209a790d285c82b8e55791561aed9b5610568d60b917a313202a1684f73c8",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/20261109-181932-landscape-3628acb8/crop177-inline-portrait-photo.png",
+          "sha256": "b268e500c1f9eaf5677e23d7057ae1aada119586c5ff7b6ac13eb6ad7c534b39",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/crop177/native/4dd38a90/20261109-181932-landscape-3628acb8/20261109-181932-landscape-3628acb8/crop177-precision-portrait-photo.png",
+          "sha256": "50c85705464e6337d156fbdb391185bd6a08799e8302a3b08d0efca659350ab2",
+          "width": 2424,
+          "height": 1080
+        }
+      ],
+      "contactSheet": ".impeccable/review/crop177/landscape-states.png"
+    }
+  ],
+  "rejectedCaptureRuns": [
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-175942-phone-0f9d3f9e/20261109-175942-phone-0f9d3f9e/report.json",
+      "failure": "java.lang.AssertionError: crop177-native-choice-visible",
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    },
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-180241-phone-139cf332/20261109-180241-phone-139cf332/report.json",
+      "failure": "java.lang.AssertionError: crop177-precision-opens-landscape-photo",
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    },
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-180552-phone-a986208d/20261109-180552-phone-a986208d/report.json",
+      "failure": null,
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    },
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-180749-font1.3-3618faa2/20261109-180749-font1.3-3618faa2/report.json",
+      "failure": null,
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    },
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-180801-tablet-69e638e1/20261109-180801-tablet-69e638e1/report.json",
+      "failure": null,
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    },
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-180816-landscape-c9cbd6a5/20261109-180816-landscape-c9cbd6a5/report.json",
+      "failure": null,
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    },
+    {
+      "report": "docs/validation/crop177/native/4dd38a90/20261109-181314-phone-e99eedc5/20261109-181314-phone-e99eedc5/report.json",
+      "failure": "java.lang.AssertionError: crop177-precision-dialog-visible-landscape-photo",
+      "scope": "rejected/superseded capture helper run without active precision-window guard; not acceptance evidence"
+    }
+  ]
+}

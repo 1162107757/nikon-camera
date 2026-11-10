@@ -1,0 +1,339 @@
+{
+  "pass": true,
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "ten-bundled-licensed-photos",
+      "pass": true
+    },
+    {
+      "name": "all-ten-scenes-reachable-from-real-recipe-hashes",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-0",
+      "pass": true
+    },
+    {
+      "name": "source-identity-0",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-0",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-0",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-0",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-0",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-1",
+      "pass": true
+    },
+    {
+      "name": "source-identity-1",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-1",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-1",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-1",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-1",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-2",
+      "pass": true
+    },
+    {
+      "name": "source-identity-2",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-2",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-2",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-2",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-2",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-3",
+      "pass": true
+    },
+    {
+      "name": "source-identity-3",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-3",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-3",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-3",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-3",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-4",
+      "pass": true
+    },
+    {
+      "name": "source-identity-4",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-4",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-4",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-4",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-4",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-5",
+      "pass": true
+    },
+    {
+      "name": "source-identity-5",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-5",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-5",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-5",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-5",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-6",
+      "pass": true
+    },
+    {
+      "name": "source-identity-6",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-6",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-6",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-6",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-6",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-7",
+      "pass": true
+    },
+    {
+      "name": "source-identity-7",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-7",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-7",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-7",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-7",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-8",
+      "pass": true
+    },
+    {
+      "name": "source-identity-8",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-8",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-8",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-8",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-8",
+      "pass": true
+    },
+    {
+      "name": "bundled-photo-sha-9",
+      "pass": true
+    },
+    {
+      "name": "source-identity-9",
+      "pass": true
+    },
+    {
+      "name": "bounded-decode-9",
+      "pass": true
+    },
+    {
+      "name": "uses-existing-preset-colour-model-9",
+      "pass": true
+    },
+    {
+      "name": "effect-is-not-raw-stock-photo-9",
+      "pass": true
+    },
+    {
+      "name": "original-pixels-remain-unchanged-9",
+      "pass": true
+    },
+    {
+      "name": "ten-distinct-photographic-inputs",
+      "pass": true
+    },
+    {
+      "name": "source-pixel-cache-bounded-to-three",
+      "pass": true
+    },
+    {
+      "name": "custom-template-invalidates-old-source",
+      "pass": true
+    },
+    {
+      "name": "settings-current-source-set-respects-custom-template",
+      "pass": true
+    },
+    {
+      "name": "gallery-respects-user-custom-template",
+      "pass": true
+    },
+    {
+      "name": "custom-template-effects-preserved",
+      "pass": true
+    },
+    {
+      "name": "stale-source-never-pairs-with-new-original",
+      "pass": true
+    },
+    {
+      "name": "reset-invalidates-custom-source",
+      "pass": true
+    },
+    {
+      "name": "legacy-template-renderer-still-available-for-editor-selection",
+      "pass": true
+    },
+    {
+      "name": "settings-gallery-source-set-matches-ten-photos",
+      "pass": true
+    },
+    {
+      "name": "settings-restore-names-photography-set",
+      "pass": true
+    },
+    {
+      "name": "settings-lists-current-gallery-sources",
+      "pass": true
+    },
+    {
+      "name": "settings-photo-credit-matches-selected-source",
+      "pass": true
+    },
+    {
+      "name": "ten-source-fixtures-in-real-gallery",
+      "pass": true
+    },
+    {
+      "name": "gallery-renders-photographic-previews",
+      "pass": true
+    },
+    {
+      "name": "detail-original-is-matching-frozen-scene",
+      "pass": true
+    },
+    {
+      "name": "comparison-dimensions-match",
+      "pass": true
+    },
+    {
+      "name": "comparison-shows-original",
+      "pass": true
+    },
+    {
+      "name": "comparison-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "returning-keeps-same-scene-and-key",
+      "pass": true
+    }
+  ],
+  "scope": "Installed production gallery only; generated valid NCP recipes and an owned custom-template PNG. No physical phone or camera-output claim."
+}

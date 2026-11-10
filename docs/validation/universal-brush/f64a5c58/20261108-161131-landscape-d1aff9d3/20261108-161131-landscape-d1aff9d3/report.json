@@ -1,0 +1,2074 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b",
+  "versionCode": 163,
+  "versionName": "0.30.9-beta",
+  "mode": "landscape",
+  "flow": "modal-only",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-accessible-palette",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-restores-parent-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-no-model-history-palette",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-direct-palette-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-direct-palette-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "direct-regional-preview-not-committed-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-restores-parent-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-keeps-draft-palette",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-child-apply-closes-ancestors-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-one-region-one-history-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-preserves-global-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-palette-zero-mask-pixels-exact-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "direct-palette-zero-mask-pixels-exact-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "direct-palette-zero-mask-pixels-exact-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "direct-palette-zero-mask-pixels-exact-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-draft-retains-mask-settings-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-keeps-settings-palette",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-keeps-committed-payload-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-palette-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-keeps-tool-settings-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-closes-parents-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-one-history-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-keeps-id-values-global-palette",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-full-payload-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-palette-size",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-palette-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-redo-full-payload-palette",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-removes-transaction-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-palette-size",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-palette-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-redo-retains-transaction-palette",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-accessible-cleanup",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-restores-parent-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-no-model-history-cleanup",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-direct-cleanup-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-direct-cleanup-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "direct-regional-preview-not-committed-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-restores-parent-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-keeps-draft-cleanup",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-child-apply-closes-ancestors-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-one-region-one-history-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-preserves-global-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-cleanup-zero-mask-pixels-exact-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "direct-cleanup-zero-mask-pixels-exact-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "direct-cleanup-zero-mask-pixels-exact-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "direct-cleanup-zero-mask-pixels-exact-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-draft-retains-mask-settings-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-keeps-settings-cleanup",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-keeps-committed-payload-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-cleanup-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-keeps-tool-settings-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-closes-parents-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-one-history-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-keeps-id-values-global-cleanup",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-full-payload-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-cleanup-size",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-cleanup-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-redo-full-payload-cleanup",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-removes-transaction-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-cleanup-size",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-cleanup-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-redo-retains-transaction-cleanup",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-accessible-curves",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-restores-parent-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-no-model-history-curves",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-direct-curves-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-direct-curves-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "direct-regional-preview-not-committed-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-restores-parent-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-keeps-draft-curves",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-child-apply-closes-ancestors-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-one-region-one-history-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-preserves-global-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-curves-zero-mask-pixels-exact-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "direct-curves-zero-mask-pixels-exact-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "direct-curves-zero-mask-pixels-exact-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "direct-curves-zero-mask-pixels-exact-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-draft-retains-mask-settings-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-keeps-settings-curves",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-keeps-committed-payload-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-keeps-tool-settings-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-closes-parents-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-one-history-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-keeps-id-values-global-curves",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-full-payload-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-curves-size",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-curves-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-redo-full-payload-curves",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-removes-transaction-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-curves-size",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-curves-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-redo-retains-transaction-curves",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-accessible-hsl",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-restores-parent-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-brush-cancel-no-model-history-hsl",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-direct-hsl-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-direct-hsl-regional-preview",
+      "pass": true
+    },
+    {
+      "name": "direct-regional-preview-not-committed-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-restores-parent-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-child-cancel-keeps-draft-hsl",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-child-apply-closes-ancestors-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-one-region-one-history-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-preserves-global-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-hsl-zero-mask-pixels-exact-matching-oriented-preview-size",
+      "pass": true
+    },
+    {
+      "name": "direct-hsl-zero-mask-pixels-exact-real-partial-painted-mask",
+      "pass": true
+    },
+    {
+      "name": "direct-hsl-zero-mask-pixels-exact-zero-mask-packed-ARGB-exact",
+      "pass": true
+    },
+    {
+      "name": "direct-hsl-zero-mask-pixels-exact-painted-pixels-really-change",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-draft-retains-mask-settings-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-keeps-settings-hsl",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-region-repaint-cancel-keeps-committed-payload-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-final-preview-copied",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-colour-brush",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-region-opens-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-same-tool",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-painted-child-has-local-scope",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-keeps-tool-settings-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-closes-parents-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-one-history-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-apply-keeps-id-values-global-hsl",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-full-payload-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-hsl-size",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-undo-exact-pixels-hsl-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-existing-mask-redo-full-payload-hsl",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-removes-transaction-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-hsl-size",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-undo-pixels-hsl-exact-pixels",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-redo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-redo-retains-transaction-hsl",
+      "pass": true
+    },
+    {
+      "name": "actual-editor-undo-visible-and-enabled",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "direct-palette-zero-mask-pixels-exact",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 291940,
+      "coveredPixels": 15260,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 13463
+    },
+    {
+      "case": "direct-existing-mask-undo-exact-pixels-palette",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-tool-undo-pixels-palette",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-cleanup-zero-mask-pixels-exact",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 291940,
+      "coveredPixels": 15260,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 12140
+    },
+    {
+      "case": "direct-existing-mask-undo-exact-pixels-cleanup",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-tool-undo-pixels-cleanup",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-curves-zero-mask-pixels-exact",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 291940,
+      "coveredPixels": 15260,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 14414
+    },
+    {
+      "case": "direct-existing-mask-undo-exact-pixels-curves",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-tool-undo-pixels-curves",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-hsl-zero-mask-pixels-exact",
+      "width": 640,
+      "height": 480,
+      "zeroMaskPixels": 291940,
+      "coveredPixels": 15260,
+      "zeroMaskDifferentPixels": 0,
+      "paintedDifferentPixels": 4462
+    },
+    {
+      "case": "direct-existing-mask-undo-exact-pixels-hsl",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    },
+    {
+      "case": "direct-tool-undo-pixels-hsl",
+      "pixels": 307200,
+      "differentPixels": 0,
+      "maxChannelDelta": 0
+    }
+  ],
+  "screenshots": 4,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Actual installed direct palette\/cleanup\/curves\/HSL brush buttons, add\/cancel\/repaint\/apply transactions, zero-mask pixel invariants, one main undo, redo and persisted draft payloads. Generated texture only; no universal 17-parameter, portrait, EXIF or full-export workflow run in this modal-only mode."
+}

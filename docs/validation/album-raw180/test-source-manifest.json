@@ -1,0 +1,46 @@
+[
+  {
+    "path": "tests/raw-development-device-probe/run.ps1",
+    "sha256": "aa8264b7beca4bf74b8c4c72c5d44286673b6e859f61f074b09ab8cb52533c7a"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/AlbumDeleteChecks.java",
+    "sha256": "cffaadb2c40ba23c862f7f9b056528cff1d279637e3d634079f35272670ed396"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawActivityChecks.java",
+    "sha256": "e071731865562524873435277285e9ff38ef8fc0e517975f23072dcc04e69314"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawColorChecks.java",
+    "sha256": "77aa185082bc2c30ab41071f66adc4e3ddc8a0f549cde333074101234ef5e2d4"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawDevelopmentProbe.java",
+    "sha256": "abd8975e6b741346a185810ae9fcb7ee5382282eaaa7037fd351f4a2e6a3c93d"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawDocumentPickerChecks.java",
+    "sha256": "a6db8acc5b7e22ff2a699ea5b9d2ab063aae18c95ea156b56ad88894f4ee85e8"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawEditorChecks.java",
+    "sha256": "4b0d33ae51b9e869262bd4cbfe5a93515457ec4443f4ec75fca3199b013edb66"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawPerformanceChecks.java",
+    "sha256": "583865c5cdc800ff7090c89dfd3e9cf5c3fde77a87fafdaf2f26c08abb19cc9f"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawPngWriterChecks.java",
+    "sha256": "de1018eeaff7b15bea7a57904cfefdca4fefd4664cb25e4de0ef620b8b012992"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RealRawEditorChecks.java",
+    "sha256": "bebe521cda7129885a8d380a9783d557536f730863fe6f7de687c55a46d91c3a"
+  },
+  {
+    "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/SyntheticDng.java",
+    "sha256": "255b5c4ee334cf6630bbfc8749e9bdc3af663a6300d277342a54e690803599ab"
+  }
+]

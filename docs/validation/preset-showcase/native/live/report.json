@@ -1,0 +1,23 @@
+{
+  "pass": true,
+  "mode": "live",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "real-online-catalog-populated",
+      "pass": true
+    },
+    {
+      "name": "real-online-recipes-render-photographic-gallery",
+      "pass": true
+    },
+    {
+      "name": "live-remote-detail-holds-matching-source",
+      "pass": true
+    }
+  ],
+  "scope": "Installed production gallery only; generated valid NCP recipes and an owned custom-template PNG. No physical phone or camera-output claim."
+}

@@ -1,0 +1,337 @@
+diff --git a/.tooling/preset-filter182/MainActivity.181.java b/app/src/main/java/cc/huevia/MainActivity.java
+index 3691903..4c5ced9 100644
+--- a/.tooling/preset-filter182/MainActivity.181.java
++++ b/app/src/main/java/cc/huevia/MainActivity.java
+@@ -70,6 +70,7 @@ import cc.huevia.library.OnlinePresetSearch;
+ import cc.huevia.library.PresetLibrary;
+ import cc.huevia.library.PresetRecord;
+ import cc.huevia.library.PresetCategories;
++import cc.huevia.library.PresetHomeFilter;
+ import cc.huevia.library.PresetFile;
+ import cc.huevia.library.PresetDownloadTasks;
+ import cc.huevia.album.PhotoProjectPresets;
+@@ -446,6 +447,7 @@ public final class MainActivity extends Activity {
+             wirelessSettingsProbe = state.getBoolean("wirelessSettingsProbe");
+             wirelessAddress = state.getString("wirelessAddress", ""); wirelessPortText = state.getString("wirelessPort", "15740");
+         }
++        restorePresetHomeFilters(state);
+         album = new AlbumPanel(this, new AlbumPanel.Host() {
+             @Override public int bottomNavigationInset() { return albumBottomNavigationInset(); }
+             @Override public AutoCloseable beginPhotoWork() { return connections.beginPhotoOperation(); }
+@@ -762,6 +764,7 @@ public final class MainActivity extends Activity {
+             }
+             bounded.addView(material, destination);
+             material.setTag("root-floating-navigation");
++            if (presetFilterSheet != null && presetFilterSheet.isShowing()) material.setVisibility(View.INVISIBLE);
+             if (rail) {
+                 int safeWidth=dp(getResources().getConfiguration().screenWidthDp);
+                 paneParams.width=Math.min(dp(720),safeWidth-dp(80));
+@@ -834,7 +837,10 @@ public final class MainActivity extends Activity {
+ 
+     private boolean homePresetMatches(Object value) {
+         String name = value instanceof PresetRecord ? ((PresetRecord)value).displayName : ((OnlinePreset)value).name;
+-        return OnlinePresetSearch.matchesName(name, homePresetQuery);
++        String type = value instanceof PresetRecord ? ((PresetRecord)value).fileFormat : ((OnlinePreset)value).fileFormat;
++        boolean saved = value instanceof PresetRecord || library.findBySha256(((OnlinePreset)value).sha256) != null;
++        return currentPresetHomeFilter().matches(presetCategory(value), type, saved, localTab)
++                && OnlinePresetSearch.matchesName(name, homePresetQuery);
+     }
+     private void searchHomePresets() {
+         if (waitForCurrentTask()) return;
+@@ -863,7 +869,7 @@ public final class MainActivity extends Activity {
+         input.addTextChangedListener(new android.text.TextWatcher() {
+             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+             public void onTextChanged(CharSequence s, int start, int before, int count) {
+-                homePresetQuery = s.toString(); clear.setVisibility(s.length() == 0 ? View.GONE : View.VISIBLE);
++                homePresetQuery = s.toString(); homeIndexLimit = 20; clear.setVisibility(s.length() == 0 ? View.GONE : View.VISIBLE);
+                 homePresetSearchHandler.removeCallbacks(homePresetSearchRefresh);
+                 homePresetSearchHandler.postDelayed(homePresetSearchRefresh, 160);
+             }
+@@ -906,13 +912,18 @@ public final class MainActivity extends Activity {
+             if (keyboard != null) keyboard.hideSoftInputFromWindow(homePresetSearchInput.getWindowToken(), 0);
+         }
+         homePresetSearchExpanded = false; homePresetSearchRequestFocus = false; homePresetQuery = "";
+-        onlineSearchSnapshot = null; onlineSearchAttempted = false;
++        homeIndexLimit = 20;
+         render();
+         if (!localTab && !catalogLoaded && !loadingCatalog) loadCatalog(false);
+     }
+ 
+     private boolean searchingOnlinePresets() { return !localTab && !homePresetQuery.trim().isEmpty(); }
+ 
++    private boolean fullCatalogHome() {
++        return !localTab && (searchingOnlinePresets() || !onlineFormatFilter.isEmpty()
++                || !PresetHomeFilter.ALL_DOWNLOADS.equals(onlineDownloadFilter));
++    }
++
+     private void loadOnlinePresetSearch(boolean refresh) {
+         if (!ready || online == null || loadingOnlineSearch || isFinishing() || isDestroyed()) return;
+         if (!refresh && (onlineSearchSnapshot != null || onlineSearchAttempted)) return;
+@@ -925,7 +936,7 @@ public final class MainActivity extends Activity {
+             onUi(() -> {
+                 if (token != onlineSearchEpoch || isFinishing() || isDestroyed()) return;
+                 loadingOnlineSearch = false; onlineSearchSnapshot = result;
+-                if (homePresetSearchVisible && searchingOnlinePresets()) render();
++                if (homePresetSearchVisible && fullCatalogHome()) render();
+             });
+         });
+     }
+@@ -944,7 +955,7 @@ public final class MainActivity extends Activity {
+         boolean compact=compactPresetHeight();
+         visiblePresets.clear();
+         List<Object> source = new ArrayList<>();
+-        boolean onlineSearching = searchingOnlinePresets();
++        boolean onlineSearching = fullCatalogHome();
+         if (localTab) {for(PresetRecord r:library.list())if(personal==null||personal.visible(r))source.add(r);}
+         else if (onlineSearching) {
+             loadOnlinePresetSearch(false);
+@@ -955,12 +966,11 @@ public final class MainActivity extends Activity {
+         if (!localTab) categories.addAll(catalogCategories);
+         if (onlineSearching && onlineSearchSnapshot != null) categories.addAll(onlineSearchSnapshot.categories);
+         String selected = localTab ? localCategoryFilter : onlineCategoryFilter;
+-        if (!localTab && !PresetCategories.ALL.equals(selected)) categories.add(selected);
+-        if (localTab && !PresetCategories.ALL.equals(selected) && !categories.contains(selected)) {
+-            selected = PresetCategories.ALL;
+-            if (localTab) localCategoryFilter = selected; else onlineCategoryFilter = selected;
+-        }
++        if (!PresetCategories.ALL.equals(selected)) categories.add(selected);
+         for (Object value : source) if ((PresetCategories.ALL.equals(selected) || selected.equals(presetCategory(value))) && homePresetMatches(value)) visiblePresets.add(value);
++        homePresetMatchCount = visiblePresets.size();
++        if (onlineSearching && visiblePresets.size() > homeIndexLimit)
++            visiblePresets.subList(homeIndexLimit, visiblePresets.size()).clear();
+         LinearLayout top = vertical(); top.setPadding(dp(20), 0, dp(20), dp(compact?4:10));
+ 
+         LinearLayout sourceRow = horizontal();
+@@ -991,11 +1001,12 @@ public final class MainActivity extends Activity {
+         LinearLayout resultHeading=horizontal(); resultHeading.setPadding(dp(20),dp(compact?0:2),dp(20),dp(compact?4:10));
+         TextView resultTitle=text(localTab?"我的色彩":"发现色彩",13,true);resultTitle.setSingleLine(true);resultTitle.setEllipsize(TextUtils.TruncateAt.END);resultHeading.addView(resultTitle,new LinearLayout.LayoutParams(0,-2,1));
+         String count = onlineSearching ? onlineSearchSnapshot != null && onlineSearchSnapshot.available
+-                ? (onlineSearchSnapshot.fromCache ? "缓存 · " : "") + visiblePresets.size() + " 份匹配" : loadingOnlineSearch ? "搜索中" : "搜索未完成"
++                ? (onlineSearchSnapshot.fromCache ? "缓存 · " : "") + homePresetMatchCount + " 份匹配" : loadingOnlineSearch ? (searchingOnlinePresets() ? "搜索中" : "加载中") : "筛选未完成"
+                 : !homePresetQuery.trim().isEmpty() ? visiblePresets.size() + " 份匹配" : localTab ? visiblePresets.size() + " 份" : catalogFromCache ? "缓存 · " + visiblePresets.size() + " 份"
+                 : catalogTotal >= 0 ? catalogTotal + " 份" : loadingCatalog ? "加载中"
+                 : catalogLoaded ? visiblePresets.size() + (catalogHasMore ? "+" : "") + " 份" : "未加载";
+-        TextView total=text(count,12,false);total.setTag("online-preset-result-count");total.setSingleLine(true);total.setTextColor(colors.secondary);resultHeading.addView(total);body.addView(resultHeading);
++        TextView total=text(count,12,false);total.setTag("online-preset-result-count");total.setSingleLine(true);total.setTextColor(colors.secondary);resultHeading.addView(total);
++        resultHeading.addView(presetFilterEntry()); body.addView(resultHeading);
+         if (visiblePresets.isEmpty()) { renderPresetEmpty(); return; }
+         int availableWidth = getResources().getConfiguration().screenWidthDp;
+         int width = Math.min(availableWidth >= 600 ? availableWidth - 80 : availableWidth, 720);
+@@ -1011,7 +1022,8 @@ public final class MainActivity extends Activity {
+         list.setClipToPadding(false);
+         int bottomReserve = compact && availableWidth >= 600 ? 76 : 108 + Math.round(Math.max(0f, getResources().getConfiguration().fontScale - 1.2f) * 24f);
+         list.setPadding(dp(18), 0, dp(18), dp(bottomReserve)); list.setSelector(android.R.color.transparent);
+-        presetGridKey = "masonry154:" + (localTab ? "local:" : "online:") + selected + (localTab ? "" : ":format:" + onlineFormatFilter) + ":query:" + homePresetQuery.trim().toLowerCase(Locale.ROOT);
++        presetGridKey = "masonry154:" + (localTab ? "local:" : "online:") + selected + ":format:" + (localTab ? localFormatFilter : onlineFormatFilter)
++                + (localTab ? "" : ":download:" + onlineDownloadFilter) + ":query:" + homePresetQuery.trim().toLowerCase(Locale.ROOT);
+         adapter = new PresetAdapter(); list.setAdapter(adapter);
+         list.setOnScrollListener(new android.widget.AbsListView.OnScrollListener() {
+             @Override public void onScrollStateChanged(android.widget.AbsListView view, int state) {
+@@ -1020,7 +1032,10 @@ public final class MainActivity extends Activity {
+             }
+             @Override public void onScroll(android.widget.AbsListView view, int first, int visible, int total) {
+                 postVisiblePresetPreviews();
+-                if (!localTab && !searchingOnlinePresets() && total > 0 && visible > 0 && first + visible >= total - (compactPresetHeight() ? 4 : 1) && catalogHasMore && !loadingCatalog) loadCatalogPage(true);
++                if (!localTab && total > 0 && visible > 0 && first + visible >= total - (compactPresetHeight() ? 4 : 1)) {
++                    if (fullCatalogHome()) loadMoreHomeIndex();
++                    else if (catalogHasMore && !loadingCatalog) loadCatalogPage(true);
++                }
+             }
+         });
+         cc.huevia.ui.PullRefreshLayout refresh = new cc.huevia.ui.PullRefreshLayout(this,
+@@ -1049,10 +1064,98 @@ public final class MainActivity extends Activity {
+     private void selectPresetCategory(String category) {
+         if (waitForCurrentTask()) return;
+         if (localTab) localCategoryFilter = category; else onlineCategoryFilter = category;
+-        if (!localTab && !searchingOnlinePresets()) reloadOnlineCatalog();
++        homeIndexLimit = 20; persistPresetHomeFilters();
++        if (!localTab && !fullCatalogHome()) reloadOnlineCatalog();
+         else render();
+     }
+ 
++    private PresetHomeFilter currentPresetHomeFilter() {
++        return new PresetHomeFilter(localTab ? localCategoryFilter : onlineCategoryFilter,
++                localTab ? localFormatFilter : onlineFormatFilter, onlineDownloadFilter);
++    }
++
++    private View presetFilterEntry() {
++        FrameLayout hit = new FrameLayout(this); hit.setTag("preset-filter-entry"); hit.setMinimumWidth(dp(48));
++        hit.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(48))); hit.setFocusable(true);
++        hit.setBackground(ripple(colors.surface));
++        boolean active = currentPresetHomeFilter().active(localTab);
++        hit.setContentDescription(active ? "筛选预设，已应用条件" : "筛选预设"); hit.setSelected(active);
++        ImageView icon = new ImageView(this); icon.setImageDrawable(new AppIcon(AppIcon.Kind.ADJUST, colors.text, getResources().getDisplayMetrics().density));
++        hit.addView(icon, new FrameLayout.LayoutParams(dp(20), dp(20), Gravity.CENTER));
++        if (active) {
++            View dot = new View(this); dot.setBackground(shape(colors.success, 3));
++            FrameLayout.LayoutParams place = new FrameLayout.LayoutParams(dp(5), dp(5), Gravity.TOP | Gravity.END);
++            place.topMargin = dp(9); place.rightMargin = dp(9); hit.addView(dot, place);
++        }
++        hit.setOnClickListener(v -> showPresetFilters()); return hit;
++    }
++
++    private void showPresetFilters() {
++        if (waitForCurrentTask() || presetFilterSheet != null && presetFilterSheet.isShowing()) return;
++        if (homePresetSearchInput != null) {
++            android.view.inputmethod.InputMethodManager keyboard = (android.view.inputmethod.InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
++            if (keyboard != null) keyboard.hideSoftInputFromWindow(homePresetSearchInput.getWindowToken(), 0);
++        }
++        Set<String> values = new LinkedHashSet<>();
++        if (localTab) { for (PresetRecord row : library.list()) if (personal == null || personal.visible(row)) values.add(row.category); }
++        else {
++            values.addAll(catalogCategories); for (OnlinePreset row : catalog) values.add(row.category);
++            if (onlineSearchSnapshot != null && onlineSearchSnapshot.available) values.addAll(onlineSearchSnapshot.categories);
++        }
++        final boolean local = localTab;
++        presetFilterSheet = new cc.huevia.ui.PresetFilterSheet(this, colors, local, currentPresetHomeFilter(), values,
++                applied -> applyPresetHomeFilter(local, applied));
++        presetFilterSheet.setOnDismissListener(dialog -> {
++            View navigation = getWindow().getDecorView().findViewWithTag("root-floating-navigation");
++            if (navigation != null) navigation.setVisibility(View.VISIBLE);
++        });
++        presetFilterSheet.show();
++        View navigation = getWindow().getDecorView().findViewWithTag("root-floating-navigation");
++        if (navigation != null) navigation.setVisibility(View.INVISIBLE);
++    }
++
++    private void applyPresetHomeFilter(boolean local, PresetHomeFilter filter) {
++        if (local) { localCategoryFilter = filter.category; localFormatFilter = filter.type; }
++        else { onlineCategoryFilter = filter.category; onlineFormatFilter = filter.type; onlineDownloadFilter = filter.download; }
++        homeIndexLimit = 20; persistPresetHomeFilters();
++        if (!local && !fullCatalogHome()) reloadOnlineCatalog(); else render();
++    }
++
++    private void loadMoreHomeIndex() {
++        if (!fullCatalogHome() || homeIndexPaging || visiblePresets.size() >= homePresetMatchCount) return;
++        homeIndexPaging = true;
++        homePresetSearchHandler.post(() -> {
++            homeIndexPaging = false;
++            if (destroyed || !homePresetSearchVisible || !fullCatalogHome()) return;
++            homeIndexLimit += 20; render();
++        });
++    }
++
++    private void restorePresetHomeFilters(Bundle state) {
++        android.content.SharedPreferences preferences = getSharedPreferences("preset-home-filter-v1", MODE_PRIVATE);
++        int version = preferences.getInt("version", 0);
++        localFormatFilter = PresetHomeFilter.restoredType(version, preferences.getString("localType", ""));
++        onlineFormatFilter = PresetHomeFilter.restoredType(version, preferences.getString("onlineType", ""));
++        onlineDownloadFilter = version == PresetHomeFilter.STATE_VERSION
++                ? PresetHomeFilter.normalizeDownload(preferences.getString("download", "all")) : "all";
++        if (state == null && version == PresetHomeFilter.STATE_VERSION) {
++            localCategoryFilter = preferences.getString("localCategory", PresetCategories.ALL);
++            onlineCategoryFilter = preferences.getString("onlineCategory", PresetCategories.ALL);
++        }
++        if (state != null && state.getInt("presetHomeFilterVersion", 0) == PresetHomeFilter.STATE_VERSION) {
++            localFormatFilter = PresetHomeFilter.restoredType(PresetHomeFilter.STATE_VERSION, state.getString("presetHomeLocalType", ""));
++            onlineFormatFilter = PresetHomeFilter.restoredType(PresetHomeFilter.STATE_VERSION, state.getString("presetHomeOnlineType", ""));
++            onlineDownloadFilter = PresetHomeFilter.normalizeDownload(state.getString("presetHomeDownload", "all"));
++        }
++    }
++
++    private void persistPresetHomeFilters() {
++        getSharedPreferences("preset-home-filter-v1", MODE_PRIVATE).edit().putInt("version", PresetHomeFilter.STATE_VERSION)
++                .putString("localType", localFormatFilter).putString("onlineType", onlineFormatFilter)
++                .putString("download", onlineDownloadFilter).putString("localCategory", localCategoryFilter)
++                .putString("onlineCategory", onlineCategoryFilter).apply();
++    }
++
+     private static String restoredOnlinePresetFormat(String value) {
+         return ""; // Retired format filters must not hide presets after upgrading.
+     }
+@@ -1066,8 +1169,7 @@ public final class MainActivity extends Activity {
+ 
+     private void clearOnlinePresetFilters() {
+         if (waitForCurrentTask()) return;
+-        onlineCategoryFilter = PresetCategories.ALL; onlineFormatFilter = "";
+-        if (catalogFromCache || searchingOnlinePresets()) render(); else reloadOnlineCatalog();
++        applyPresetHomeFilter(localTab, PresetHomeFilter.empty());
+     }
+ 
+     private static String presetCategory(Object value) {
+@@ -1077,14 +1179,17 @@ public final class MainActivity extends Activity {
+     private void renderPresetEmpty() {
+         LinearLayout holder = vertical(); holder.setGravity(Gravity.CENTER);
+         holder.setPadding(dp(24), dp(24), dp(24), dp(24));
+-        if (searchingOnlinePresets() && loadingOnlineSearch) {
++        if (fullCatalogHome() && loadingOnlineSearch) {
+             holder.addView(new cc.huevia.ui.CatalogLoadingView(this, colors), new LinearLayout.LayoutParams(-1, -2));
+         }
+-        else if (searchingOnlinePresets() && (onlineSearchSnapshot == null || !onlineSearchSnapshot.available))
+-            presetEmptyMessage(holder, "暂时无法搜索", "检查网络后重试。", "重试", this::retryOnlinePresetSearch);
++        else if (fullCatalogHome() && (onlineSearchSnapshot == null || !onlineSearchSnapshot.available))
++            presetEmptyMessage(holder, searchingOnlinePresets() ? "暂时无法搜索" : "暂时无法筛选", "完整目录尚未取得，检查网络后重试。", "重试", this::retryOnlinePresetSearch);
+         else if (!homePresetQuery.trim().isEmpty()) presetEmptyMessage(holder,
+                 searchingOnlinePresets() && onlineSearchSnapshot.fromCache ? "缓存中无匹配预设" : "没有匹配的预设",
+                 "试试其他名称或分类。", null, null);
++        else if (currentPresetHomeFilter().active(localTab) && (localTab || fullCatalogHome() || catalogLoaded))
++            presetEmptyMessage(holder, !localTab && (fullCatalogHome() ? onlineSearchSnapshot.fromCache : catalogFromCache)
++                    ? "缓存中无匹配预设" : "没有符合条件的预设", "试试其他筛选条件。", "清除筛选", this::clearOnlinePresetFilters);
+         else if (localTab) presetEmptyMessage(holder, "把喜欢的色彩带在身边", "添加 NCP、NP3，或从在线预设库下载喜欢的色彩。", "添加本地预设", () -> pickNcp(false));
+         else if (loadingCatalog) {
+             holder.addView(new cc.huevia.ui.CatalogLoadingView(this, colors), new LinearLayout.LayoutParams(-1, -2));
+@@ -1698,6 +1803,10 @@ public final class MainActivity extends Activity {
+     private final List<Object> visiblePresets = new ArrayList<>();
+     private String localCategoryFilter = PresetCategories.ALL, onlineCategoryFilter = PresetCategories.ALL;
+     private String onlineFormatFilter = "";
++    private String localFormatFilter = "", onlineDownloadFilter = PresetHomeFilter.ALL_DOWNLOADS;
++    private int homeIndexLimit = 20, homePresetMatchCount;
++    private boolean homeIndexPaging;
++    private cc.huevia.ui.PresetFilterSheet presetFilterSheet;
+     private String presetGridKey = "";
+     private String homePresetQuery = "";
+     private OnlinePresetSearch onlineSearch;
+@@ -2260,12 +2369,13 @@ public final class MainActivity extends Activity {
+ 
+     private void requestCatalog(boolean cached) {
+         if (waitForCurrentTask() || !requirePresetLibrary()) return;
+-        if (!cached && searchingOnlinePresets()) { retryOnlinePresetSearch(); return; }
++        if (!cached && fullCatalogHome()) { retryOnlinePresetSearch(); return; }
+         if (loadingCatalog) { feedback("正在加载在线预设", "目录正在读取，请等待完成后再刷新。"); return; }
+         loadCatalog(cached);
+     }
+ 
+     private void loadCatalog(boolean cached) {
++        if (fullCatalogHome()) { loadOnlinePresetSearch(false); return; }
+         if (!ready || online == null || busy || loadingCatalog) return;
+         if (!cached) { catalogPage = 0; catalogHasMore = false; loadCatalogPage(false); return; }
+         final int token = ++catalogEpoch;
+@@ -2420,7 +2530,7 @@ public final class MainActivity extends Activity {
+                 detailPresetStorage[1].setText(local == null ? "可直接预览效果，下载后保留在我的预设" : "原始预设已保留");
+             }
+             fillPresetDetailFooter(detailPresetFooter, local, detailOnline); fillPresetDeleteEntry(local);
+-        } else if (localTab && detailId.isEmpty() && detailOnline == null) render();
++        } else if ((localTab || !PresetHomeFilter.ALL_DOWNLOADS.equals(onlineDownloadFilter)) && detailId.isEmpty() && detailOnline == null) render();
+     }
+ 
+     private String presetDeletionBlock(String id) {
+@@ -3787,6 +3897,9 @@ public final class MainActivity extends Activity {
+         out.putString("localPresetCategory", localCategoryFilter);
+         out.putString("onlinePresetCategory", onlineCategoryFilter);
+         out.putString("onlinePresetFormat", onlineFormatFilter);
++        out.putInt("presetHomeFilterVersion", PresetHomeFilter.STATE_VERSION);
++        out.putString("presetHomeLocalType", localFormatFilter); out.putString("presetHomeOnlineType", onlineFormatFilter);
++        out.putString("presetHomeDownload", onlineDownloadFilter);
+         out.putString("homePresetQuery", homePresetQuery); out.putBoolean("homePresetSearchExpanded", homePresetSearchExpanded);
+         out.putBoolean("local", localTab); out.putBoolean("album", albumTab);
+         out.putBoolean("localAlbumTab", localAlbumTab); if (localAlbum != null) localAlbum.saveState(out);
+@@ -3804,7 +3917,10 @@ public final class MainActivity extends Activity {
+         out.putString("wirelessAddress", wirelessAddress); out.putString("wirelessPort", wirelessPortText);
+         super.onSaveInstanceState(out);
+     }
+-    @Override public void onConfigurationChanged(Configuration config) { super.onConfigurationChanged(config); render(); }
++    @Override public void onConfigurationChanged(Configuration config) {
++        super.onConfigurationChanged(config); render();
++        if (presetFilterSheet != null && presetFilterSheet.isShowing()) presetFilterSheet.layoutForWindow();
++    }
+ 
+     @Override protected void onPause() {
+         ConnectionTrace.mark("UI_BACKGROUND");
+@@ -4140,6 +4256,7 @@ public final class MainActivity extends Activity {
+     private static String readText(AtomicFile file, int limit) throws IOException { synchronized (CameraConnectionRuntime.PERSISTENCE_LOCK) { try (InputStream input = file.openRead()) { return new String(readBounded(input, limit), StandardCharsets.UTF_8); } } }
+ 
+     @Override protected void onDestroy() {
++        if (presetFilterSheet != null) presetFilterSheet.dismiss();
+         homePresetSearchHandler.removeCallbacks(homePresetSearchRefresh);
+         if (Build.VERSION.SDK_INT >= 33 && selectionBackCallback != null) { SelectionBackApi33.unregister(this, selectionBackCallback); selectionBackCallback = null; }
+         presetDownloads.removeObserver(presetDownloadObserver);

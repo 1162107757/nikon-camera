@@ -1,0 +1,56 @@
+{
+  "preservedSelectionMethods": [
+    {
+      "method": "cancelSelection",
+      "unchanged": true,
+      "sha256": "6ba81ac4bcc06482b8f8a04ae9042285b81fa2d9348ee1e0839551755fb81ed9"
+    },
+    {
+      "method": "selectAllOrStart",
+      "unchanged": true,
+      "sha256": "6df2699c753f4171b00b2cf1a48b0401968a548767359e1f0cbd75091217258b"
+    },
+    {
+      "method": "toggle",
+      "unchanged": true,
+      "sha256": "08d00fcd95104e03fde34bf456c543245d88c8ebf1a30355fa2531a4e9e8082a"
+    },
+    {
+      "method": "toggleDate",
+      "unchanged": true,
+      "sha256": "620d9c9b1d645e0619eddc45d3767b9db750d6ff545f49084c7419eadd6cb218"
+    },
+    {
+      "method": "prepareSelected",
+      "unchanged": true,
+      "sha256": "32ed8403e9f08b00e969f36bd54737deab958ef0a8fd3f2fc3867dc90bb4fae2"
+    },
+    {
+      "method": "exportSelected",
+      "unchanged": true,
+      "sha256": "02afa0b8c28d3f16f52d9a7cf886ccdb6045cb60148fb9ec3d2cd082b62ad90a"
+    },
+    {
+      "method": "deleteSelected",
+      "unchanged": true,
+      "sha256": "261c0f5572edad00660d22fd33d8f080299bdf9b7d385d6eb64b6c0912088e80"
+    },
+    {
+      "method": "prepareUris",
+      "unchanged": true,
+      "sha256": "93a811f5987711108fe11e1dd2634c183f64dada7218fca2fae36b93c58c4f1c"
+    },
+    {
+      "method": "clicked",
+      "unchanged": true,
+      "sha256": "cbbe6f9d26d3527b6dcd2015f04613205e26cebbf6008c5d630718ae70021035"
+    }
+  ],
+  "preset182FilesUnchanged": [
+    "app/src/main/res/values/preset_filter_ids.xml",
+    "app/src/main/java/cc/huevia/library/PresetHomeFilter.java",
+    "app/src/main/java/cc/huevia/ui/PresetFilterSheet.java"
+  ],
+  "designWorldSha256": "3257e70b6c05f01f7881134300c6f67e67aeff8bc83c361d5b894c12791a4a23",
+  "designWorldUnchangedFrom183Start": true
+}

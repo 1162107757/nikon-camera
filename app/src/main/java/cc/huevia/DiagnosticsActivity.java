@@ -264,9 +264,7 @@ public class DiagnosticsActivity extends Activity {
 
     private void showUsbPrerequisite(String title, String message) {
         statusText.setText(message);
-        new AppDialog.Builder(this).setTitle(title).setMessage(message)
-                .setNegativeButton("取消", null)
-                .setPositiveButton("检测相机", (dialog, which) -> detectCamera(UsbAction.CAPABILITIES)).show();
+        cc.huevia.connection.CameraConnectionRequest.open(this, "USB 高级诊断", cc.huevia.connection.CameraConnectionRequest.USB);
     }
 
     private void showPictureControlPrerequisite(String title, Exception error) {
@@ -281,7 +279,7 @@ public class DiagnosticsActivity extends Activity {
         if ((action == UsbAction.FILE_TRANSFER || action == UsbAction.EXISTING_DIRECTORY_TRANSFER)
                 && !requirePreset()) return;
         List<UsbDevice> devices = UsbProbe.findNikonDevices(usbManager);
-        if (devices.isEmpty()) {
+        if (devices.isEmpty() || devices.stream().noneMatch(usbManager::hasPermission)) {
             showUsbPrerequisite("先连接 USB 相机", "未发现尼康相机。请开机并使用支持数据传输的 USB 线连接手机，确认已启用 OTG（如有此设置）。连接后检测相机，并在系统弹窗中允许访问 USB。");
             return;
         }
@@ -298,6 +296,10 @@ public class DiagnosticsActivity extends Activity {
     }
 
     private void requestProbe(UsbDevice device, UsbAction action) {
+        if (!usbManager.hasPermission(device)) {
+            showUsbPrerequisite("连接 USB 相机", "请在连接页允许 USB 访问权限，再返回高级诊断选择操作。");
+            return;
+        }
         setBusy(true);
         pendingAction = action;
         statusText.setText("正在连接相机…");
@@ -850,6 +852,10 @@ public class DiagnosticsActivity extends Activity {
 
     @Override protected void onActivityResult(int request, int result, Intent data) {
         super.onActivityResult(request, result, data);
+        if (request == cc.huevia.connection.CameraConnectionRequest.REQUEST) {
+            statusText.setText(result == RESULT_OK ? "相机已连接，请重新选择检测或诊断操作。写入和试传仍需确认。" : "已返回高级诊断，可稍后连接相机。");
+            return;
+        }
         if (result != RESULT_OK || data == null || data.getData() == null) return;
         Uri uri = data.getData();
         if (request == OPEN_NCP) {
@@ -895,7 +901,7 @@ public class DiagnosticsActivity extends Activity {
             worker.execute(() -> {
                 try (OutputStream output = getContentResolver().openOutputStream(uri, "wt")) {
                     if (output == null) throw new IllegalStateException("无法写入所选位置。");
-                    output.write(snapshot.getBytes(StandardCharsets.UTF_8));
+                    output.write(AppCrashDiagnostics.appendToReport(this, snapshot).getBytes(StandardCharsets.UTF_8));
                     onUi(() -> statusText.setText("诊断报告已保存。"));
                 } catch (Exception error) {
                     onUi(() -> statusText.setText("保存失败：" + error.getMessage()));

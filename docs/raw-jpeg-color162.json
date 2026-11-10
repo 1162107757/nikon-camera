@@ -1,0 +1,16 @@
+{
+  "feature": "RAW development camera JPEG color restoration",
+  "versionCode": 162,
+  "default": "CAMERA_JPEG",
+  "modes": [
+    "CAMERA_JPEG",
+    "NEUTRAL"
+  ],
+  "reference": "Native LibRaw embedded JPEG from the same verified RAW only, bounded16MiB",
+  "calibration": "Zero EV, camera WB, AHD baseline independent of user settings; 320px analysis, bounded center crop registration and eight orientation/mirror transforms; original .90 alignment / heldout .92 relative and .10 absolute RGB RMSE gates retained",
+  "transform": "Regularized cubic RGB delta fit converted to17-cubed LUT, applied in-place to full RAW spatial pixels",
+  "cache": "v2 identity and metadata; owner/source/native/model/mode isolation, memory-only8-fit LRU; source SHA rechecked before caching reference and output",
+  "fallback": "Explicit neutral status if JPEG absent or fit unreliable; cancellation does not silently fall back",
+  "tests": "docs/validation/raw-color162/summary.json",
+  "apkSha256": "20862fbd1f770075999504ff5390b2541eb927553606debc1cd6cb581a602368"
+}

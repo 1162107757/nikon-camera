@@ -1,0 +1,65 @@
+{
+  "basis": "Native palette roles; 0xEE glass composited over worst-case pure black/white photograph; compact chip geometry reviewed separately.",
+  "pairs": [
+    {
+      "name": "light body",
+      "ink": "#242320",
+      "paper": "#F8F7F4",
+      "contrast": 14.67
+    },
+    {
+      "name": "light secondary",
+      "ink": "#635D53",
+      "paper": "#F8F7F4",
+      "contrast": 6.09
+    },
+    {
+      "name": "inactive source/category",
+      "ink": "#635D53",
+      "paper": "#EEECE6",
+      "contrast": 5.52
+    },
+    {
+      "name": "selected nav/category",
+      "ink": "#FFFFFF",
+      "paper": "#242420",
+      "contrast": 15.58
+    },
+    {
+      "name": "light glass worst black photo",
+      "ink": "#635D53",
+      "paper": "#EEEEEE",
+      "contrast": 5.62
+    },
+    {
+      "name": "dark body",
+      "ink": "#F6F1EB",
+      "paper": "#201F1D",
+      "contrast": 14.67
+    },
+    {
+      "name": "dark secondary",
+      "ink": "#CAC2B8",
+      "paper": "#201F1D",
+      "contrast": 9.35
+    },
+    {
+      "name": "dark selected source",
+      "ink": "#F6F1EB",
+      "paper": "#4B4640",
+      "contrast": 8.31
+    },
+    {
+      "name": "dark selected nav",
+      "ink": "#29251F",
+      "paper": "#F1ECE4",
+      "contrast": 12.95
+    },
+    {
+      "name": "dark glass worst white photo",
+      "ink": "#CAC2B8",
+      "paper": "#3A3834",
+      "contrast": 6.64
+    }
+  ]
+}

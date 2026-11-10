@@ -1,0 +1,14 @@
+{
+  "versionCode": 172,
+  "candidateSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef",
+  "probeSha256": "fa6fa21a52ffbb3e43311dafe6c711a993c3e8cdfa9bfcefb72d5d077a94b0cb",
+  "serial": "emulator-5588",
+  "pass": false,
+  "scope": null,
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "a1f19d759e9b91de80faa12f7a936a8b3a6517c2f17969cd68eb89a828daeff3"
+    }
+  ]
+}

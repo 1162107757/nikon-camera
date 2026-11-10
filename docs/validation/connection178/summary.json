@@ -1,0 +1,41 @@
+{
+  "versionCode": 178,
+  "versionName": "0.30.24-beta",
+  "apkSha256": "755bd4e854eb65316813e5c4f0c270020bcd90899b621262232c78f79b8ae2e7",
+  "fullSha256": "40270a3fb98977ffd4c282761b9a24c1ae2cfcc4a34587d094a7688a66a7eb2c",
+  "checksIncludingBootstrapAndRepetition": 648,
+  "originalPngs": 28,
+  "runs": [
+    {
+      "mode": "landscape",
+      "checks": 159,
+      "screenshots": 7,
+      "report": "native/755bd4e8/20261109-200942-landscape-3a6a11bb/20261109-200942-landscape-3a6a11bb/report.json",
+      "reportSha256": "964924979869eae6e26bb07fc6a2b2844c8998edde1a48d6b83d0b3e8a156c99"
+    },
+    {
+      "mode": "tablet",
+      "checks": 163,
+      "screenshots": 7,
+      "report": "native/755bd4e8/20261109-200918-tablet-a41ee41e/20261109-200918-tablet-a41ee41e/report.json",
+      "reportSha256": "3cafae7bf7609652fb1e182d5eb0957f12ffc0aa450e19d0adb66db7fd7ff086"
+    },
+    {
+      "mode": "font1.3",
+      "checks": 163,
+      "screenshots": 7,
+      "report": "native/755bd4e8/20261109-200859-font1.3-6337f59f/20261109-200859-font1.3-6337f59f/report.json",
+      "reportSha256": "f444f6a10ba0b0f8454bd99ef4d9aac7ed58bbd636164eb5db4bb2d1f8f1063d"
+    },
+    {
+      "mode": "phone",
+      "checks": 163,
+      "screenshots": 7,
+      "report": "native/755bd4e8/20261109-200838-phone-21743077/20261109-200838-phone-21743077/report.json",
+      "reportSha256": "02e1dbf5e45a91253268c3b2742d5ced6e7e51489ecd978310e16ac6c9e1e581"
+    }
+  ],
+  "published": false,
+  "scope": "Native guide and Wi-Fi intercepted system-selection return, retry and cancellation; tentative quick crop ratios, dispatched two-finger View events, native inner-frame movement to photo boundaries, apply, actual draft readback and cancel.",
+  "limitations": "No real network or camera handshake, physical phone, edge-corner certification, full TalkBack, FPS, whole-app or end-to-end export validation."
+}

@@ -14,7 +14,7 @@ public final class NcpMonochromePreviewProfileTest {
         byte[] mono=fixture(0x80,0x80,0xff);byte[] before=mono.clone();PresetPreviewProfile selected=PresetPreviewProfiles.fromPreset(mono);
         check(selected instanceof NcpMonochromePreviewProfile,"monochrome content selects dedicated reader");check(selected.modelVersion().equals(NcpMonochromePreviewProfile.MODEL_VERSION),"dedicated effect identity distinct from existing colour and NP3 identities");
         check(PresetPreviewProfiles.fromPreset(NcpCompatibilityFixtures.ncp()) instanceof NcpPreviewProfile,"colour branch retained");check(NcpPreviewProfile.MODEL_VERSION.equals("encoded-rgb-tone-hsv-v1"),"old colour identity retained");
-        check(Np3PreviewProfile.MODEL_VERSION.equals("np3-0310-encoded-hsl-zones-spatial-v3")&&Np3MonochromePreviewProfile.STANDARD_MODEL_VERSION.equals("np3-0310-monochrome-spatial-v1")&&Np3MonochromePreviewProfile.MODEL_VERSION.equals("np3-0310-deep-tone-monochrome-spatial-v1"),"all existing NP3 effect identities retained");
+        check(Np3PreviewProfile.MODEL_VERSION.equals("np3-0310-encoded-hsl-zones-spatial-v4")&&Np3MonochromePreviewProfile.STANDARD_MODEL_VERSION.equals("np3-0310-monochrome-spatial-v1")&&Np3MonochromePreviewProfile.MODEL_VERSION.equals("np3-0310-deep-tone-monochrome-spatial-v1"),"Flexible Color identity advances; monochrome identities retained");
         check(PresetPreviewProfiles.MODEL_VERSION.contains(NcpMonochromePreviewProfile.MODEL_VERSION),"aggregate preview key invalidates old unsupported caches");
         check(Arrays.equals(before,mono),"parsing never rewrites original preset");
         expectIo(()->NcpPictureControlConverter.convert(mono,0,0),"phone monochrome support does not loosen camera converter");

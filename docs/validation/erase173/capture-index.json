@@ -1,0 +1,272 @@
+{
+  "candidateSha256": "909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92",
+  "runs": [
+    {
+      "mode": "landscape",
+      "api": 36,
+      "report": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/report.json",
+      "provenance": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/provenance.json",
+      "cleanup": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/cleanup.json",
+      "checks": 162,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-ready.png",
+          "sha256": "7ba22746bdcd9c59f5cce3f63bf7726230bba9fbd2842c52aca49251186ec794",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-painting.png",
+          "sha256": "0fbbdc62a90cd2648c1e9d456e04f4717ed4539adcbf745360766c192f730575",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-first-result.png",
+          "sha256": "4df68e04871d05b309b05eac731fcd86288dadd23e8899e07a46cd522996c744",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-result-hidden.png",
+          "sha256": "4c2a6cf7f00350e687bf251b09e79879a221905068a18a1bcb69c8f6057b3624",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-undone.png",
+          "sha256": "f34d756a57a9dd7d5f8006e1526876b52ad93a789a7a2d23f7095a6ee2ecce6d",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-early-allocation-recovered.png",
+          "sha256": "89a5de448473aa290d88516bcb7a3b21ed0da5bb24b7b47d1103a2527593f856",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-second-result.png",
+          "sha256": "4a9a2b8261ce47d9c62566912ce0459187f9152016f815d2a662bf01834864c6",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-applied-main.png",
+          "sha256": "7b29e0e5db5bf5ae75b6795a59eb359b9d2ed0dd6e919b3e84b34cc871f5dde8",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093811-landscape-4a3a133a/20261109-093811-landscape-4a3a133a/erase173-reopened.png",
+          "sha256": "b6fd0664a7f447b630a7d360ce889b59cf740c636ae2f640fd1faebf44afffa9",
+          "width": 2424,
+          "height": 1080
+        }
+      ],
+      "failureRecoveryCapture": ".impeccable/review/erase173/landscape-dark-early-allocation-recovered.png",
+      "selfInspectionSheet": ".impeccable/review/erase173/landscape-dark-states.png"
+    },
+    {
+      "mode": "tablet",
+      "api": 36,
+      "report": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/report.json",
+      "provenance": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/provenance.json",
+      "cleanup": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/cleanup.json",
+      "checks": 162,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-ready.png",
+          "sha256": "ed1656cd2e1d70eba27887653694932a6abca24f13d79ae6a23494f8bc0aff90",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-painting.png",
+          "sha256": "5094cf188a7d1d82b12451f1e6832b2ed17134d467a7e8e344c4882e71d73031",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-first-result.png",
+          "sha256": "c2bfda8ef7017d89e8993f041a84a4af235c9b5e58ff38404687cf8aa7744f7a",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-result-hidden.png",
+          "sha256": "80bfbaa81d25882366080f0162b017175af9632852b851d976322a3ec0116416",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-undone.png",
+          "sha256": "676cb017453f87b4ac8cee2bdc994591331b858ee3f99e4884261c5f846726b3",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-early-allocation-recovered.png",
+          "sha256": "60678496fa42a5c7fb199fac6386451239d5b3469ec90846f0a7d47e73f34e9d",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-second-result.png",
+          "sha256": "fe1a8ac7821f6b57a59f7e94029eb315f699f020e88be4a9f807decf446c2e8b",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-applied-main.png",
+          "sha256": "6d5a2fb131f2156175106fc2c1ce83b7437c054506874c1f566dc1f77c439d45",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093744-tablet-d0d8dcd1/20261109-093744-tablet-d0d8dcd1/erase173-reopened.png",
+          "sha256": "257476e5ca1b76607771ad4eb622acabd25366087851bd0422992d5f99765d9c",
+          "width": 1600,
+          "height": 2560
+        }
+      ],
+      "failureRecoveryCapture": ".impeccable/review/erase173/tablet-early-allocation-recovered.png",
+      "selfInspectionSheet": ".impeccable/review/erase173/tablet-states.png"
+    },
+    {
+      "mode": "font1.3",
+      "api": 36,
+      "report": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/report.json",
+      "provenance": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/provenance.json",
+      "cleanup": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/cleanup.json",
+      "checks": 162,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-ready.png",
+          "sha256": "4cb5a38d429da105f900ba5ed8df4088882e8f458dc7bcaf99ad8f221ae021df",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-painting.png",
+          "sha256": "60018d3f37feae6ce279119d4b141372bb307f24051d901a5b4ff1eadb3e4cab",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-first-result.png",
+          "sha256": "2319d3b7d0a985a77bf0d1b4b7a29dd551feb13f4ac2811ad1e824ba51b2bc86",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-result-hidden.png",
+          "sha256": "6331602e030bae44ec544964f3821271e8f3604a91c446015c3c3f370a043917",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-undone.png",
+          "sha256": "45a69e4e4c7397a44ca4067e864b4c0cc51159e229ac0ef6c613b30905836a63",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-early-allocation-recovered.png",
+          "sha256": "bcf057be2b2e07be8c9d34cc4a3b53b4ced75b362ed16b463d71f09fbaaac373",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-second-result.png",
+          "sha256": "490b6a206233452693102323c607f9fb33ae9fdc6f9375764ff0e76dfe7a41de",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-applied-main.png",
+          "sha256": "f395c4d33ed0e5618f0f58e4963817467a12d90119e636fb86f89f4edb8e50a3",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093725-font1.3-9025c49c/20261109-093725-font1.3-9025c49c/erase173-reopened.png",
+          "sha256": "49f8a472f498e2b70970f79c4d465e7c0fecdbff95dffe706b6f9644d301a602",
+          "width": 840,
+          "height": 1890
+        }
+      ],
+      "failureRecoveryCapture": ".impeccable/review/erase173/narrow-font13-android16-early-allocation-recovered.png",
+      "selfInspectionSheet": ".impeccable/review/erase173/narrow-font13-android16-states.png"
+    },
+    {
+      "mode": "phone",
+      "api": 36,
+      "report": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/report.json",
+      "provenance": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/provenance.json",
+      "cleanup": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/cleanup.json",
+      "checks": 162,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-ready.png",
+          "sha256": "b631c625fbd1f57e46d48765daaca207f620697e31b96b7beae88581f0905aba",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-painting.png",
+          "sha256": "dd6dd80374197c39efa542a050fd3bd415ca0d2b0380c9651a4770271fe2ab9b",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-first-result.png",
+          "sha256": "505800eed7b842372484c684423ffc51303f8ae6128d78470b3fffaa3bb47ede",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-result-hidden.png",
+          "sha256": "51993fe674a032b52339c13c7bc94ecb5b81fd5d3dee8e82fc349a5a19d18bb6",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-undone.png",
+          "sha256": "ccaf5b1fd921fadf4fb7c207433232b658cd23cc74db303595f719e39e3d9242",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-early-allocation-recovered.png",
+          "sha256": "afc641b760ab65e4474496a4e3c49f3af8cec5859660a6666c8b603b5e29c0e3",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-second-result.png",
+          "sha256": "40b880039ca231ed5b558babfd072f64c795b627e68d420b4e759b2ee51132f0",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-applied-main.png",
+          "sha256": "2d8422a16082a719889565f6ab5f92a200ed1f974f77aed44f295ffb4803f77a",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/909a28b2/20261109-093704-phone-e3bf6aab/20261109-093704-phone-e3bf6aab/erase173-reopened.png",
+          "sha256": "072ecad87e2e2df34604515155d90ff867e8bda1969a9cf115dea5063f8fd42c",
+          "width": 1080,
+          "height": 2424
+        }
+      ],
+      "failureRecoveryCapture": ".impeccable/review/erase173/phone-early-allocation-recovered.png",
+      "selfInspectionSheet": ".impeccable/review/erase173/phone-states.png"
+    }
+  ],
+  "totalRepeatedNativeAssertions": 648,
+  "originalPngs": 36,
+  "scope": "One post-F1 confirmation round: actual early guide allocation OOM separately injected, atomic state and immediate controls recovery; old complete paint/release/native pixels/draft matrix repeated. Static layout evidence, no physical-device/fps/generative/full-export acceptance."
+}

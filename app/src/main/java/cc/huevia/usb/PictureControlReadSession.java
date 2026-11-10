@@ -10,7 +10,6 @@ import cc.huevia.ptp.PtpValidation;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
-import java.util.Locale;
 import java.util.Objects;
 
 /** One bounded photo-menu snapshot; its operations interface cannot upload data. */
@@ -116,9 +115,10 @@ public final class PictureControlReadSession {
         result.firmware = device.deviceVersion();
         result.operations = device.operationsSupported();
         result.deviceInfoRead = true;
-        result.phase = "CameraModelCheck";
-        if (!isZ6II(device.model())) {
-            throw new IOException("本次专用只读验证仅支持尼康 Z6II；未发送优化校准专用命令。");
+        result.phase = "CameraIdentityCheck";
+        if (!device.isNikonCamera()) {
+            throw new IOException("当前设备未识别为尼康相机：" + device.manufacturer() + " / " + device.model()
+                    + "；未发送优化校准专用命令。");
         }
         result.phase = "PictureControlCapabilityCheck";
         for (int required : new int[] {0x1002, 0x1003, 0x90cc, 0x90cf}) {
@@ -275,13 +275,6 @@ public final class PictureControlReadSession {
             properties[i] = (bytes[4 + i * 2] & 255) | ((bytes[5 + i * 2] & 255) << 8);
         }
         return properties;
-    }
-
-    private static boolean isZ6II(String model) {
-        if (model == null) return false;
-        String normalized = model.trim().toUpperCase(Locale.ROOT)
-                .replaceFirst("^NIKON\\s+", "").replaceAll("[\\s_-]+", "");
-        return normalized.equals("Z6II") || normalized.equals("Z62");
     }
 
     static String operationName(int operation) {

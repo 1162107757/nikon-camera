@@ -1,0 +1,18 @@
+[
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "5980fa71629efde6878797e807cad5e835b256763b8a008764de46f9e0923070"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+    "sha256": "96ef267a70d66e77561abc1efd1e2e66602ba5eb3e0e28952ab76289abfe5ace"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+    "sha256": "9f7c23d88c3f2e6764a33139497c3247b40dd0c07d7bdd577be3d6b7f9b792d2"
+  },
+  {
+    "path": "app/build.gradle",
+    "sha256": "84365765d8a44b09f1dee29eedf718c97c496248bb756a81f49fb2beda2b9f1c"
+  }
+]

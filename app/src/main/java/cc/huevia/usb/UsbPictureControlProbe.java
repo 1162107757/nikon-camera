@@ -6,12 +6,14 @@ import android.os.Looper;
 
 import cc.huevia.ptp.PtpConstants;
 import cc.huevia.ptp.PtpResponseException;
+import cc.huevia.ptp.PtpDeviceInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Nikon Z6II photo-menu PictureControl snapshot. This class has no data-upload API. */
+/** Standard Nikon device identification or an explicit photo-menu PictureControl snapshot; no upload API. */
 public final class UsbPictureControlProbe implements AutoCloseable {
     private final Object lifecycleLock = new Object();
     private final AtomicBoolean running = new AtomicBoolean();
@@ -34,27 +36,41 @@ public final class UsbPictureControlProbe implements AutoCloseable {
 
     /** USB permission must already be granted; run on a worker thread without selecting an NCP. */
     public Result probe(UsbDevice device, UsbManager manager) throws Exception {
+        return probe(device, manager, false);
+    }
+
+    /** A standard GetDeviceInfo only: no PTP session, vendor query, slot read or preset assertion. */
+    public Result probeDeviceInfo(UsbDevice device, UsbManager manager) throws Exception {
+        return probe(device, manager, true);
+    }
+
+    private Result probe(UsbDevice device, UsbManager manager, boolean deviceInfoOnly) throws Exception {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            throw new IllegalStateException("优化校准只读验证必须在后台线程运行。");
+            throw new IllegalStateException("相机只读检测必须在后台线程运行。");
         }
         if (!running.compareAndSet(false, true)) {
             throw new IllegalStateException("此优化校准只读验证实例正在运行。");
         }
         activeDeviceId = device == null ? -1 : device.getDeviceId();
         Result result = new Result();
+        result.deviceInfoOnly = deviceInfoOnly;
         PtpUsbTransport transport = null;
         PictureControlReadSession session = null;
         ProbeException failure = null;
         try {
             result.phase = "UsbConnection";
             if (closed || Thread.currentThread().isInterrupted()) throw new IOException("只读验证已取消。");
-            transport = new PtpUsbTransport(device, manager, result.commandsSent, true);
+            transport = new PtpUsbTransport(device, manager, result.commandsSent,
+                    deviceInfoOnly ? PtpUsbTransport.Mode.DEVICE_INFO_ONLY : PtpUsbTransport.Mode.PC_READ_ONLY);
             synchronized (lifecycleLock) {
                 if (closed) throw new IOException("只读验证已取消或相机已断开。");
                 active = transport;
             }
-            session = new PictureControlReadSession(transport, result);
-            session.run();
+            if (deviceInfoOnly) readDeviceInfo(transport, result);
+            else {
+                session = new PictureControlReadSession(transport, result);
+                session.run();
+            }
         } catch (Exception error) {
             failure = toException(error, result);
         } finally {
@@ -129,12 +145,43 @@ public final class UsbPictureControlProbe implements AutoCloseable {
                 }
             }
         }
-        result.completed = failure == null && result.capabilityParsed && result.items.size() == 10;
+        if (failure == null && (closed || Thread.currentThread().isInterrupted()))
+            failure = toException(new InterruptedIOException("相机只读检测已取消。"), result);
+        result.completed = failure == null && (deviceInfoOnly ? result.deviceInfoRead
+                : result.capabilityParsed && result.items.size() == 10);
         if (failure != null) {
             result.error = failure.getMessage();
             throw failure;
         }
         return result;
+    }
+
+    private void readDeviceInfo(PtpUsbTransport transport, Result result) throws IOException {
+        result.phase = "PtpOperation";
+        result.lastOperation = result.lastPtpOperation = "GetDeviceInfo";
+        result.lastTransactionId = result.lastPtpTransactionId = 0;
+        byte[] data = transport.getData(PtpConstants.GET_DEVICE_INFO, 0);
+        result.phase = "DeviceInfoParse";
+        PtpDeviceInfo info = PtpDeviceInfo.parseRedacted(data);
+        result.manufacturer = info.manufacturer(); result.model = info.model();
+        result.firmware = info.deviceVersion(); result.operations = info.operationsSupported();
+        result.deviceInfoRead = true; result.phase = "CameraIdentityCheck";
+        if (!info.isNikonCamera()) throw new IOException("当前设备未识别为尼康相机；未发送预设专用命令。");
+        if (result.model.trim().isEmpty()) throw new IOException("相机没有返回有效型号，USB 连接尚未确认。");
+        if (closed || Thread.currentThread().isInterrupted()) throw new InterruptedIOException("相机只读检测已取消。");
+        result.phase = "DeviceInfoComplete";
+    }
+
+    public static String cameraIdentity(String manufacturer, String model) {
+        String maker = oneLine(manufacturer), camera = oneLine(model);
+        if (maker.isEmpty()) return camera.isEmpty() ? "相机" : camera;
+        if (camera.isEmpty()) return maker;
+        if (camera.toLowerCase(Locale.ROOT).startsWith(maker.toLowerCase(Locale.ROOT))) return camera;
+        return maker + " · " + camera;
+    }
+
+    private static String oneLine(String value) {
+        return value == null ? "" : value.replaceAll("[\\p{Cntrl}\\s]+", " ").trim();
     }
 
     public boolean isProbingDevice(UsbDevice device) {
@@ -154,10 +201,16 @@ public final class UsbPictureControlProbe implements AutoCloseable {
         Integer responseCode = null;
         if (error instanceof PtpResponseException) {
             responseCode = Integer.valueOf(((PtpResponseException) error).responseCode());
+            if (result.deviceInfoOnly) {
+                result.failedOperation = result.lastOperation;
+                result.failedTransactionId = ((PtpResponseException) error).transactionId();
+                result.failedParameters = result.lastParameters.clone();
+            }
         }
         if (result.failurePhase.isEmpty()) result.failurePhase = result.phase;
         StringBuilder message = new StringBuilder(readableError(error))
                 .append("\n失败阶段：").append(result.failurePhase);
+        if (result.deviceInfoRead) message.append("\n相机：").append(cameraIdentity(result.manufacturer, result.model));
         if (!result.lastOperation.isEmpty()) {
             message.append("\nPTP 上下文：").append(result.lastOperation)
                     .append(", transaction=").append(result.lastTransactionId)
@@ -242,6 +295,7 @@ public final class UsbPictureControlProbe implements AutoCloseable {
         public int[] operations = new int[0];
         public int[] vendorProperties = new int[0];
         public boolean deviceInfoRead;
+        public boolean deviceInfoOnly;
         public boolean sessionOpened;
         public boolean sessionClosed;
         public boolean sessionRetained;
@@ -283,8 +337,9 @@ public final class UsbPictureControlProbe implements AutoCloseable {
                     .put("rawBase64", Base64.getEncoder().encodeToString(standardCapabilityRawBytes));
             return new JSONObject().put("reportVersion", 1).put("timestampUtc", timestamp)
                     .put("transport", transport).put("wirelessHost", wirelessHost).put("wirelessPort", wirelessPort)
-                    .put("probeMode", "nikon_picture_control_read_only").put("readOnly", true)
-                    .put("shootingMenu", "photo").put("completed", completed)
+                    .put("probeMode", deviceInfoOnly ? "nikon_device_info_only" : "nikon_picture_control_read_only").put("readOnly", true)
+                    .put("deviceInfoOnly", deviceInfoOnly)
+                    .put("shootingMenu", deviceInfoOnly ? JSONObject.NULL : "photo").put("completed", completed)
                     .put("serialNumberCollected", false).put("presetWriteAttempted", false)
                     .put("pictureControlWriteAttempted", false).put("ncpWriteAttempted", false)
                     .put("directImportVerified", false).put("menuImportVerified", false)

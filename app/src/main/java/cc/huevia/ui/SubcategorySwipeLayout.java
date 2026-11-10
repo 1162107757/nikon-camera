@@ -70,13 +70,19 @@ public final class SubcategorySwipeLayout extends LinearLayout {
         bitmapPaint.setAlpha(Math.round(255*alpha));canvas.drawBitmap(frame,null,new android.graphics.RectF(x,top,x+getWidth(),getHeight()),bitmapPaint);bitmapPaint.setAlpha(255);
     }
     private Bitmap snapshot(boolean atRest){
-        int top=motionTop(),width=getWidth(),height=getHeight()-top;if(width<=0||height<=0)return null;
-        float scale=Math.min(1f,(float)Math.sqrt(2000000d/((double)width*height)));
         Bitmap frame=null;
         try{
+            int top=motionTop(),width=getWidth(),height=getHeight()-top;if(width<=0||height<=0)return null;
+            float scale=Math.min(1f,(float)Math.sqrt(2000000d/((double)width*height)));
             frame=Bitmap.createBitmap(Math.max(1,(int)(width*scale)),Math.max(1,(int)(height*scale)),Bitmap.Config.ARGB_8888);
             Canvas canvas=new Canvas(frame);canvas.scale(scale,scale);canvas.translate(0,-top);snapshotting=atRest;draw(canvas);return frame;
-        }catch(OutOfMemoryError failure){if(frame!=null)frame.recycle();return null;}
+        }catch(RuntimeException|OutOfMemoryError failure){
+            // A transition screenshot is optional. Hardware bitmaps and vendor-backed views
+            // may reject a software Canvas; that must never block the actual page change.
+            if(frame!=null&&!frame.isRecycled())frame.recycle();
+            android.util.Log.w("HueviaSourceTabs","Transition screenshot unavailable; switching without snapshot",failure);
+            return null;
+        }
         finally{snapshotting=false;}
     }
     /** Both click and swipe handlers keep their existing state mutation and data-loading path. */

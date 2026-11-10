@@ -77,7 +77,7 @@ public final class ExportPreviewProbe extends Instrumentation {
     private static Object call(Object value,String name,Class<?>[] types,Object...args)throws Exception{return value.getClass().getMethod(name,types).invoke(value,args);}
     private static Object callPrivate(Object value,String name,Class<?>[] types,Object...args)throws Exception{Method m=value.getClass().getDeclaredMethod(name,types);m.setAccessible(true);return m.invoke(value,args);}
     private static int integer(Object value,String name)throws Exception{return (Integer)get(value,name);}
-    private static Throwable unwrap(Throwable e){return e instanceof InvocationTargetException&&e.getCause()!=null?e.getCause():e;}
+    private static Throwable unwrap(Throwable e){while(e.getCause()!=null&&(e instanceof InvocationTargetException||e.getClass()==RuntimeException.class))e=e.getCause();return e;}
     private static BitmapFactory.Options options(){BitmapFactory.Options o=new BitmapFactory.Options();o.inScaled=false;o.inPreferredConfig=Bitmap.Config.ARGB_8888;o.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);return o;}
     private static String sha(File file)throws Exception{MessageDigest digest=MessageDigest.getInstance("SHA-256");try(InputStream in=Files.newInputStream(file.toPath())){byte[] buffer=new byte[65536];int n;while((n=in.read(buffer))!=-1)digest.update(buffer,0,n);}StringBuilder hex=new StringBuilder();for(byte b:digest.digest())hex.append(String.format(Locale.ROOT,"%02x",b&255));return hex.toString();}
 }

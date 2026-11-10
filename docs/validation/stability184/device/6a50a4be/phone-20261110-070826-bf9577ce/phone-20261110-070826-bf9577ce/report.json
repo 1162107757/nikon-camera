@@ -1,0 +1,267 @@
+{
+  "versionCode": 183,
+  "sdk": 31,
+  "scope": "Actual installed MainActivity\/root navigation\/source\/filter and PhotoPresetBatch, real synthetic JPEG codecs, simple\/full and local+crop+border full\/share. Baseline183 must reproduce its own model-limit error;184 must commit\/reuse exact outputs. No physical Honor\/camera or memory-pressure certification.",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "exact-baseline183-or-fixed184",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-0",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-0",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-0",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-0",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-1",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-2",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-3",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-4",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-5",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-6",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-7",
+      "pass": true
+    },
+    {
+      "name": "filter-dialog-opens-on-runtime",
+      "pass": true
+    },
+    {
+      "name": "filter-closes-without-crash",
+      "pass": true
+    },
+    {
+      "name": "simple-full-new-fixture",
+      "pass": true
+    },
+    {
+      "name": "simple-full-batch-completes",
+      "pass": true
+    },
+    {
+      "name": "simple-full-request-accepted",
+      "pass": true
+    },
+    {
+      "name": "simple-full-terminal-state",
+      "pass": true
+    },
+    {
+      "name": "simple-full-export-succeeds",
+      "pass": true
+    },
+    {
+      "name": "simple-full-real-output-dimensions",
+      "pass": true
+    },
+    {
+      "name": "simple-full-original-unchanged",
+      "pass": true
+    },
+    {
+      "name": "simple-full-completed-output-found-with-same-identity",
+      "pass": true
+    },
+    {
+      "name": "simple-full-durable-source-link",
+      "pass": true
+    },
+    {
+      "name": "simple-full-exact-model-record",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-new-fixture",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-legitimate-model-over-old-limit",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-batch-completes",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-request-accepted",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-terminal-state",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-baseline-reproduces-real-error",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-new-fixture",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-batch-completes",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-request-accepted",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-terminal-state",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-export-succeeds",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-real-output-dimensions",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-original-unchanged",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-completed-output-found-with-same-identity",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-durable-source-link",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-exact-model-record",
+      "pass": true
+    },
+    {
+      "name": "no-export-left-active",
+      "pass": true
+    },
+    {
+      "name": "actual-D8-backported-string-path-on-runtime",
+      "pass": true
+    },
+    {
+      "name": "phone-metadata-constructs-on-runtime",
+      "pass": true
+    }
+  ],
+  "exports": [
+    {
+      "case": "simple-full",
+      "modelLength": 235,
+      "model": "original-srgb-v1:photo-manual-linear-wb-tones-v1:0:1:0:0:0:0:0:0:0:0:0:0:0:photo-composition-affine-v1:0:0:100000:100000:900000:900000:photo-border-v1:2052689fcd42e04eb247f6190a567e53b5a5107dec771289addfb30c60cbaf87:full-jpeg95-srgb-v1",
+      "failed": 0,
+      "completed": 1,
+      "error": "",
+      "errors": [],
+      "width": 625,
+      "height": 458,
+      "outputSha256": "3a461ca65605602a7cdf4f0171b9c102e85ab15efd55d3e547e04c22290230b0"
+    },
+    {
+      "case": "local-crop-frame-full",
+      "modelLength": 322,
+      "model": "original-srgb-v1:photo-manual-linear-wb-tones-v1:0:1:0:0:0:0:0:0:0:0:0:0:0:photo-local-linear-v1:7bd1e264968425436e8c42bbd1e346c84d57a3b055643e8ab26e0388f73b1623:photo-composition-affine-v1:0:0:100000:100000:900000:900000:photo-border-v1:2052689fcd42e04eb247f6190a567e53b5a5107dec771289addfb30c60cbaf87:full-jpeg95-srgb-v1",
+      "failed": 1,
+      "completed": 0,
+      "error": "效果模型无效。",
+      "errors": [
+        "qa184-phone-20261110-070826-bf9577ce-local-crop-frame-full.jpg：效果模型无效。"
+      ]
+    },
+    {
+      "case": "local-crop-frame-share",
+      "modelLength": 79,
+      "model": "export-jpeg-v1:5b0703096b3a1824c92a71a6ae89273251ae2b7eeef31301221562fca3cd7a96",
+      "failed": 0,
+      "completed": 1,
+      "error": "",
+      "errors": [],
+      "width": 625,
+      "height": 458,
+      "outputSha256": "4df9b7e1790c989aa8ac523160ed76ccefd358faba1887a96f39f1bb3137680f"
+    }
+  ],
+  "cleanupRemaining": [],
+  "candidateSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf"
+}

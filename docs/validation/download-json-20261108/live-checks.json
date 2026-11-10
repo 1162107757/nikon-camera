@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-08T02:49:48.748Z",
+  "checks": [
+    {
+      "path": "home/index.html",
+      "status": 200,
+      "sha256": "13140639c686dc2bc15145a160aefcff85f66e0e4a9a6081561dcada24f0bf5f"
+    },
+    {
+      "path": "download/index.html",
+      "status": 200,
+      "sha256": "a994f9ea15b3001a9aeb4e4d81e2e786650b21c1be76bde33a00f16e2d06ca40"
+    },
+    {
+      "accept": "text/html",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "attachment": null,
+      "readablePage": true
+    },
+    {
+      "accept": "application/json",
+      "status": 404,
+      "type": "application/json; charset=utf-8",
+      "attachment": null,
+      "readablePage": false
+    }
+  ]
+}

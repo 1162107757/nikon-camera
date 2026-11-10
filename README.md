@@ -1,5 +1,35 @@
 # Huevia · Android
 
+## 当前本地候选：0.30.13-beta（167）
+
+在线参考样片增加 100 MiB／256 张的持久浏览缓存，跨页面合并同一图片的并发请求；预设配方也在浏览与下载间共用缓存和请求锁。“我的预设”已保存的样片不参与临时缓存清理。主列表一直使用内置摄影样片在本地生成效果图。安装包位于 `dist/upload167/huevia-0.30.13-beta-update.apk`，本次尚未上传发布。见[167 缓存验证](docs/validation/online-image-cache167/README.md)。
+
+## 166 · 预设搜索空状态
+
+去掉预设搜索无结果下方的“清除搜索”和“查看缓存目录”按钮，无数据提示在结果区域居中。安装包位于 `dist/upload166/huevia-0.30.12-beta-update.apk`，本次尚未上传发布。见[166 验证记录](docs/validation/preset-empty166/README.md)。
+
+## 165 · 手机相册、搜索与色调修正
+
+修复手机相册缩略图因缓存完成回调反复重建而闪动；预设搜索改为顶部展开输入框，保留实时筛选时的键盘与光标；参照尼康工坊导出修正 Flexible Color 三段调色亮度过强的问题。安装包位于 `dist/upload165/huevia-0.30.11-beta-update.apk`，本次尚未上传发布。见[165 验证记录](docs/validation/album-search165/README.md)与[原始 NP3 色调对照](docs/validation/np3-vitality165/README.md)。
+
+## 官网与后台入口（2026-11-07）
+
+[Huevia官网](https://huevia.cc/)现提供产品介绍和Android下载；[管理后台](https://admin.huevia.cc/)使用独立子域，旧后台链接自动转入。该次部署验收版本为156／0.30.2-beta，官网下载和App更新接口均已返回新版本；实际官网下载完整APK的大小、SHA和签名校验通过。网站部署与回退见[官网迁移记录](docs/website-homepage.md)，版本上架验收见[156发布记录](docs/validation/publish156/README.md)。
+
+官网首屏、下载区和完整下载页已加入 [iOS 正在准备中](docs/validation/ios-download-20261108/README.md)入口；暂不提供下载链接。旧流量额度导致错误 JSON 被保存为文件的问题也已修复，真实浏览器已重新取得并校验 156 APK，详见[官网下载修复](docs/validation/download-json-20261108/README.md)。
+
+## 0.30.2-beta · 相机连接后返回原操作（156，已上架测试版）
+
+需要相机的照片、RAW、遥控拍摄、详情及 USB 诊断操作未连接时直接进入连接页，连接后可点“返回继续…”回到原界面，取消也原路返回；导入和边拍边传保留各自的一次性续接与确认。本地 RAW 缓存仍可离线导出。安装包、验证范围与复现方法见 [156 连接导航记录](docs/camera-connection156.md)。
+
+为满足既有 32 MiB 更新通道，另生成 29.84 MiB 的[更新包](dist/upload156/huevia-0.30.2-beta-update.apk)，仅去掉 32 位 x86 库，保留 ARM64／ARMv7／x86_64，其他 87 项应用负载逐字节相同。兼容包已上传 COS 并上架为普通更新；见[上传记录](docs/validation/upload156/README.md)与[上架验收](docs/validation/publish156/README.md)。原始四 ABI 包保留。
+
+## 0.30.1-beta · 预设浏览摄影样片（155，本地交付）
+
+预设浏览列表、详情和设置实源查看接入十张有来源的 Pexels 摄影样片，按原始预设 SHA／分类固定搭配，已有自选模板优先，效果与原图使用同一照片；处理图片时的预设预览保持原路径。继承冻结的 154 纸白／炭黑四首页布局与 `home-*` 隔离，154 安装包及[验证记录](docs/validation/four-home154/README.md)保留。十份素材已独立上传、逐字节回读，390 份既有预设状态未改；随包摄影源用于离线手机模拟，不作为“实拍参考”。
+
+[本地 APK](dist/huevia-0.30.1-beta-debug.apk) 为 34,581,880 字节，SHA-256 `b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb`。七配置 167 次断言执行／35 张原生图，另有真实在线预设 4 项检查／2 张图，十张源图的模型输出另存缩略图；V2／V3、ZIP CRC、完整文件模拟器安装均通过。初次[复核 FIX](.impeccable/review/preset-showcase155/review.md)仅 F1 设置仍显示旧模板，修正后的[限定 ship](.impeccable/review/preset-showcase155/verdict.md)只关闭设置默认说明、实源查看、恢复文案及直接回归，含横屏关闭、自选模板和浏览页，不代表整个 App、154 或编辑页全量通过。来源、上传与行为见[155 记录](docs/preset-showcase155.md)；未公开发布 APK，无实体手机／相机输出结论。
+
 ## 0.29.2-beta · 柔和卡片选中态（153，本地交付）
 
 人像肤色及同类滤镜／快速预览／边框卡片使用 1dp 柔和灰金选中框；肤色／大卡片采用轻透底与中性白字，保留勾选和实际颜色。主操作、工具黄色及布局不变。[本地 APK](dist/huevia-0.29.2-beta-debug.apk) 为 33,606,103 字节，SHA-256 `10acc7eebc77bc6f12ad36323f10f92f1d9f518e55621c87de8e5b2940a3c21e`；七模式共 70 次有界检查、42 张原生图，完整[独立复核](.impeccable/review/selection-soft153/review.md)为 FIX，仅小字对比度；白字修正后同包重跑 70 次／42 图，[评分 verdict](.impeccable/review/selection-soft153/verdict.md)为限定 ship，仅关闭卡片文字对比度修正及直接回归，不代表整页通过。见[实施及验证](docs/selection-soft153.md)；152 的 723 次未重跑，本轮无实体机或公开发布结论。

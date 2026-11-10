@@ -1,0 +1,18 @@
+{
+  "stamp": "20261108-download-13140639",
+  "before": {
+    "index.html": {
+      "sha256": "2a9586e4c023b0e163f1dd801d1f0234a51fed5a59bc01bd1207227031f9631a",
+      "bytes": 9700
+    },
+    "home.css": {
+      "sha256": "b0135d541a6ff7580a59abe9a6cabdc1221b2d881503838441c6d9867aae0f27",
+      "bytes": 14196
+    }
+  },
+  "after": {
+    "index.html": "13140639c686dc2bc15145a160aefcff85f66e0e4a9a6081561dcada24f0bf5f",
+    "home.css": "b0135d541a6ff7580a59abe9a6cabdc1221b2d881503838441c6d9867aae0f27"
+  },
+  "commandBytes": 17248
+}

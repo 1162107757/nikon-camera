@@ -1,0 +1,20 @@
+{
+  "candidateSha256": "f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b",
+  "versionCode": 163,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "0e1cff077fba5cec154e36e3279e2dac080af2fe53cc14ee4ad8a4ee9a442bb1",
+  "pass": false,
+  "scope": "Actual installed17 basic adjustment controls, independent masks, clear/repaint/delete, owner guard, drafts/photo switching, full/detail export EXIF1/6 and direct palette/cleanup/curves/HSL nested brush transactions. Zero-mask pixels checked exact. Portrait workflows excluded because they are outside163 scope; no physical-device acceptance.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "420c51e78b85a6bb5fac1025fe58c40812ce9bf86e7ba6047b49d568b42ef6e9"
+    },
+    {
+      "file": "report.json",
+      "sha256": "07d85a56adefb62b204bf9b36cce5e2ad146e39875f0c2316fdf220803f6b212"
+    }
+  ]
+}

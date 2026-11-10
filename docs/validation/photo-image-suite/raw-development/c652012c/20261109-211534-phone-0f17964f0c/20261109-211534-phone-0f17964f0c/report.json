@@ -1,0 +1,47 @@
+{
+  "pass": false,
+  "stage": "album-delete180",
+  "apkSha256": "c652012c2009deb0a3e7ab2675ccff77aead7bf51fe6a1383836cbeaffc5c602",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "fixture-group-shape",
+      "passed": true,
+      "found": false,
+      "members": -1,
+      "versions": -1,
+      "groups": 2
+    },
+    {
+      "name": "whole-group-contains-original-alias-and-effect",
+      "passed": false
+    }
+  ],
+  "measurements": [],
+  "fixtureCleanup": true,
+  "failure": "java.lang.AssertionError: whole-group-contains-original-alias-and-effect",
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+}

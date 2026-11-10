@@ -27,7 +27,7 @@ import java.util.Locale;
 
 /** Focused HSV colour selection. It never edits a photograph until Use is pressed. */
 final class SkinTonePicker {
-    interface Listener { void use(int colorRGB); void sample(int colorRGB); void saved(); void cancel(); }
+    interface Listener { void use(int colorRGB); void sample(int colorRGB); void saved(); void cancel(); default void interaction(boolean active){} }
     private static final int TEXT=0xfff4f5f7,MUTED=PhotoPrismaStyle.MUTED,ACCENT=PhotoPrismaStyle.YELLOW;
     private final Activity activity;
     private final SkinToneSwatches swatches;
@@ -38,7 +38,8 @@ final class SkinTonePicker {
     private AlertDialog dialog,nameDialog;
     private TextView preview,message;
     private SaturationValueView palette;
-    private boolean syncing;
+    private boolean syncing,interacting;
+    private void interaction(boolean active){if(interacting==active)return;interacting=active;listener.interaction(active);}
 
     SkinTonePicker(Activity activity,int colorRGB,SkinToneSwatches swatches,Listener listener) {
         this.activity=activity;this.swatches=swatches;this.listener=listener;
@@ -63,8 +64,8 @@ final class SkinTonePicker {
             row.addView(values[i],new LinearLayout.LayoutParams(dp(44),dp(48)));content.addView(row);
             slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
                 public void onProgressChanged(SeekBar seek,int progress,boolean user){if(user&&!syncing){hsv[axis]=axis==0?progress:progress/100f;refresh();}}
-                public void onStartTrackingTouch(SeekBar seek){}
-                public void onStopTrackingTouch(SeekBar seek){}
+                public void onStartTrackingTouch(SeekBar seek){interaction(true);}
+                public void onStopTrackingTouch(SeekBar seek){interaction(false);}
             });
         }
         LinearLayout actions=row();
@@ -75,12 +76,14 @@ final class SkinTonePicker {
         dialog=new AppDialog.Builder(activity,cc.huevia.R.style.AppThemeDark).setTitle("自定义肤色").setView(scroll)
                 .setNegativeButton("取消",(d,w)->listener.cancel()).setPositiveButton("预览效果",(d,w)->listener.use(color())).create();
         dialog.setOnCancelListener(d->listener.cancel());
+        dialog.setOnDismissListener(d->interaction(false));
         dialog.setOnShowListener(d->{dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTag("skin-tone-use");dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ACCENT);refresh();});
         dialog.show();
+        dialog.getWindow().getDecorView().getViewTreeObserver().addOnWindowFocusChangeListener(focused->{if(!focused)interaction(false);});
         if(dialog.getWindow()!=null){dialog.getWindow().setGravity(Gravity.BOTTOM);dialog.getWindow().setLayout(Math.min(dp(520),activity.getResources().getDisplayMetrics().widthPixels-dp(24)),Math.min(dp(560),Math.round(activity.getResources().getDisplayMetrics().heightPixels*.68f)));}
     }
 
-    void dismiss(){if(nameDialog!=null)nameDialog.dismiss();if(dialog!=null)dialog.dismiss();}
+    void dismiss(){interaction(false);if(nameDialog!=null)nameDialog.dismiss();if(dialog!=null)dialog.dismiss();}
 
     private int color(){return Color.HSVToColor(hsv)&0xffffff;}
     private void refresh(){
@@ -118,6 +121,7 @@ final class SkinTonePicker {
             float x=pad+hsv[1]*width,y=pad+(1-hsv[2])*height;paint.setStyle(Paint.Style.STROKE);paint.setStrokeWidth(dp(4));paint.setColor(0x99000000);canvas.drawCircle(x,y,dp(8),paint);paint.setStrokeWidth(dp(2));paint.setColor(Color.WHITE);canvas.drawCircle(x,y,dp(8),paint);canvas.restore();
         }
         @Override public boolean onTouchEvent(MotionEvent event){
+            int action=event.getActionMasked();if(action==MotionEvent.ACTION_DOWN)interaction(true);if(action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_CANCEL){interaction(false);getParent().requestDisallowInterceptTouchEvent(false);}
             if(event.getActionMasked()==MotionEvent.ACTION_DOWN||event.getActionMasked()==MotionEvent.ACTION_MOVE||event.getActionMasked()==MotionEvent.ACTION_UP){getParent().requestDisallowInterceptTouchEvent(true);float pad=dp(4);hsv[1]=Math.max(0,Math.min(1,(event.getX()-pad)/Math.max(1,getWidth()-2*pad)));hsv[2]=1-Math.max(0,Math.min(1,(event.getY()-pad)/Math.max(1,getHeight()-2*pad)));refresh();if(event.getActionMasked()==MotionEvent.ACTION_UP)performClick();return true;}return true;
         }
         @Override public boolean performClick(){return super.performClick();}

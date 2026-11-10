@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "pack": "photography-v1",
+  "verifiedAt": "2026-11-07T12:25:24.243Z",
+  "publicCatalogModified": false,
+  "purpose": "Independent source photography for labelled phone-side gallery simulations; not camera reference samples.",
+  "presetCount": 390,
+  "presetStateBefore": "cd005b9670d3a660ac418c65c39776b823740db2a638470e99c087e6bcd6560c",
+  "items": [
+    {
+      "id": "portrait-smile",
+      "assetId": "preview-b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+      "sha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+      "byteLength": 93210,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Andrea Piacquadio",
+      "pageUrl": "https://www.pexels.com/photo/woman-in-collared-shirt-774909/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "portrait-man",
+      "assetId": "preview-7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+      "sha256": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+      "byteLength": 48125,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Simon Robben",
+      "pageUrl": "https://www.pexels.com/photo/man-in-brown-polo-shirt-614810/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "alpine-lake",
+      "assetId": "preview-a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+      "sha256": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+      "byteLength": 103191,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "James Wheeler",
+      "pageUrl": "https://www.pexels.com/photo/lake-and-mountain-417074/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "sunlit-forest",
+      "assetId": "preview-1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473",
+      "sha256": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473",
+      "byteLength": 110831,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Kamil Szerlag",
+      "pageUrl": "https://www.pexels.com/photo/bright-sunshine-illuminating-path-between-woods-at-sunrise-4413480/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "city-skyline",
+      "assetId": "preview-a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+      "sha256": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+      "byteLength": 159137,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Lukas Kloeppel",
+      "pageUrl": "https://www.pexels.com/photo/empire-state-building-new-york-466685/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "neon-street",
+      "assetId": "preview-b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+      "sha256": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+      "byteLength": 95366,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Piotr Wojnowski",
+      "pageUrl": "https://www.pexels.com/photo/quiet-urban-street-at-night-with-neon-signs-40512875/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "coastal-water",
+      "assetId": "preview-4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+      "sha256": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+      "byteLength": 107309,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Pok Rie",
+      "pageUrl": "https://www.pexels.com/photo/transparent-sea-water-on-bright-sandy-beach-in-daylight-4103594/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "pink-tulips",
+      "assetId": "preview-73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+      "sha256": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+      "byteLength": 41800,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Nika Benedictova",
+      "pageUrl": "https://www.pexels.com/photo/close-up-of-tulip-flowers-15802403/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "breakfast",
+      "assetId": "preview-b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+      "sha256": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+      "byteLength": 76119,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Ash Craig",
+      "pageUrl": "https://www.pexels.com/photo/pancake-with-sliced-strawberry-376464/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    },
+    {
+      "id": "rainy-tokyo",
+      "assetId": "preview-bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+      "sha256": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+      "byteLength": 129907,
+      "authenticatedByteForByteRead": true,
+      "boundToPreset": false,
+      "author": "Dương Nhân",
+      "pageUrl": "https://www.pexels.com/photo/people-on-a-street-in-japan-at-night-20188510/",
+      "licenseUrl": "https://www.pexels.com/license/"
+    }
+  ],
+  "presetStateAfter": "cd005b9670d3a660ac418c65c39776b823740db2a638470e99c087e6bcd6560c"
+}

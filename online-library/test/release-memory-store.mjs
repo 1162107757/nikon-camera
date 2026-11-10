@@ -12,7 +12,7 @@ export class ReleaseMemoryStore extends MemoryStore {
   }
   async rpc(name,p){
     const error=error=>({error});
-    if(name==='nikon_release_budget_atomic')return this.releaseBudgetDenied?error('BUDGET'):{allowed:true};
+    if(name==='nikon_release_budget_atomic'||name==='nikon_release_download_budget')return this.releaseBudgetDenied?error('BUDGET'):{allowed:true};
     if(!this.admins.has(p.p_actor)||this.admins.get(p.p_actor).disabled)return error('FORBIDDEN');
     if(name==='nikon_app_upload_budget'){
       if((p.p_count_request&&this.uploadBudgetRequests>=256)||this.uploadBudgetBytes+p.p_bytes>67108864)return error('BUDGET');

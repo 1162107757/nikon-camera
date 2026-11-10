@@ -75,7 +75,7 @@ public final class AdjustmentRegionRenderer {
     private static double lift(double value,double amount){return amount>=0?value+amount*(1-value):value*(1+amount);}
 
     /** A disposable branch: candidate processing cannot feed partially blended pixels into itself. */
-    private static final class Scratch implements SpatialPreviewFilter.Pixels,AutoCloseable {
+    static final class Scratch implements SpatialPreviewFilter.Pixels,AutoCloseable {
         final File file,directory;
         final RandomAccessFile storage;
         final int width,height,exif;

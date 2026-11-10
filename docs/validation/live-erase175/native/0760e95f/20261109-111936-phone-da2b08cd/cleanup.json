@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.IllegalStateException: Immutable bitmap passed to Canvas constructor; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\live-erase175\\native\\0760e95f\\20261109-111936-phone-da2b08cd\\20261109-111936-phone-da2b08cd\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

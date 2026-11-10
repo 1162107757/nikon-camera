@@ -1,0 +1,8 @@
+{
+  "pass": false,
+  "apkSha256": "5330875ea261e9138d8ac8b89340bc21e48752d7369b3d3678026f99c3d7cfb8",
+  "checks": [],
+  "fixtureCleanup": true,
+  "failure": "java.lang.AssertionError: Missing group \/data\/user\/0\/cc.huevia\/files\/pictures\/camera-album\/QA183-20261109-231322-phone-42da63eb41-A.jpg\n\tat cc.huevia.rawdevelopmentqa.AlbumTimeSortChecks.group(AlbumTimeSortChecks.java:32)\n\tat cc.huevia.rawdevelopmentqa.AlbumTimeSortChecks.run(AlbumTimeSortChecks.java:11)\n\tat cc.huevia.rawdevelopmentqa.RawDevelopmentProbe.onStart(RawDevelopmentProbe.java:11)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2627)\n",
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF\/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims."
+}

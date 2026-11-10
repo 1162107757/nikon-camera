@@ -31,6 +31,8 @@ import java.util.function.BooleanSupplier;
 final class PhotoPresetSources {
     private static final int MAGIC = 0x50425331, OUTPUT_MAGIC = 0x50424531, META_MAGIC = 0x50424d31;
     private static final int MAX_RECORD = 32768, MAX_CANDIDATES = 2048, MAX_DIRECTORY_ENTRIES = 20000, MAX_PRESETS = 2048, MAX_SOURCE_DEPTH = 64;
+    static final int MAX_MODEL_CHARS = 1024;
+    private static final int MAX_MODEL_RECORD_BYTES = 6 + MAX_MODEL_CHARS * 3;
     private static final long MAX_PHOTO = 512L * 1024 * 1024, MAX_SCAN_BYTES = 2L * 1024 * 1024 * 1024;
     private static final ReentrantLock LOCK = new ReentrantLock();
     private final File files, records;
@@ -75,7 +77,7 @@ final class PhotoPresetSources {
             String key = effectKey(target);
             if (key == null || target.equals(input)) throw new IOException("效果图原图关联无效。");
             String sourceSha = hash(input, cancel), outputSha = verifyOutput(key, target, cancel);
-            if (model == null || model.isEmpty() || model.length() > 512 || model.indexOf('\n') >= 0 || model.indexOf('\r') >= 0) throw new IOException("效果图模型身份无效。");
+            checkModel(model);
             if (!key.equals(contentKey(sourceSha, presetSha, model))) throw new IOException("效果图与原图身份不符。");
             Link actual = read(key);
             if (actual != null) {
@@ -98,7 +100,7 @@ final class PhotoPresetSources {
     void rememberModel(String key, String model) throws IOException {
         lock(() -> false);
         try {
-            if (model == null || model.isBlank() || model.length() > 256 || model.matches("(?s).*[\\p{Cntrl}].*")) throw new IOException("效果模型无效。");
+            checkModel(model);
             AtomicFile file = record(key, ".model"); FileOutputStream output = null;
             try {
                 output = file.startWrite(); DataOutputStream out = new DataOutputStream(output);
@@ -116,15 +118,21 @@ final class PhotoPresetSources {
         models.add(PhotoPresetRenderer.LEGACY_NP3_MODEL_VERSION);
         AtomicFile file = record(key, ".model");
         if (recordExists(file)) {
-            if (file.getBaseFile().length() > 1024) throw new IOException("效果模型记录无效。");
-            try (DataInputStream in = new DataInputStream(file.openRead())) {
+            try (FileInputStream stream = file.openRead(); DataInputStream in = new DataInputStream(stream)) {
+                if (stream.getChannel().size() > MAX_MODEL_RECORD_BYTES) throw new IOException("效果模型记录无效。");
                 if (in.readInt() != 0x50454d31) throw new IOException("效果模型记录损坏。");
                 String model = in.readUTF();
-                if (model.isBlank() || model.length() > 256 || model.matches("(?s).*[\\p{Cntrl}].*") || in.read() != -1) throw new IOException("效果模型记录无效。");
+                checkModel(model);
+                if (in.read() != -1) throw new IOException("效果模型记录无效。");
                 if (!models.contains(model)) models.add(model);
             }
         }
         return models;
+    }
+    /** The same bounded identity contract applies before rendering, to journals and to source links. */
+    static void checkModel(String model) throws IOException {
+        if (model == null || model.isBlank() || model.length() > MAX_MODEL_CHARS
+                || model.matches("(?s).*[\\p{Cntrl}].*")) throw new IOException("效果模型无效。");
     }
     /** Verified read-only relation. Unlike find(), this never scans/migrates neighbouring files. */
     Relation relation(DownloadedPhoto effect, BooleanSupplier cancel) throws IOException {
@@ -359,7 +367,8 @@ final class PhotoPresetSources {
                         data.readUTF(), data.readUTF(), data.readUTF(), data.readUTF(), data.readUTF());
                 if (!key.equals(link.key) || link.sourceBytes < 4 || link.sourceBytes > MAX_PHOTO || link.outputBytes < 4 || link.outputBytes > MAX_PHOTO
                         || !link.sourceSha.matches("[0-9a-f]{64}") || !link.outputSha.matches("[0-9a-f]{64}") || !link.presetSha.matches("[0-9a-f]{64}")
-                        || link.filename.length() > 2048 || link.projectId.length() > 128 || link.projectName.length() > 256 || link.model.length() > 512 || data.read() != -1) throw new IOException("效果图原图关联无效。");
+                        || link.filename.length() > 2048 || link.projectId.length() > 128 || link.projectName.length() > 256 || data.read() != -1) throw new IOException("效果图原图关联无效。");
+                checkModel(link.model);
                 return link;
             }
         }

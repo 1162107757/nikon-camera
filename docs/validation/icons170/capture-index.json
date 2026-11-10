@@ -1,0 +1,482 @@
+{
+  "candidateSha256": "bb61358338530a4b4daeb2bff0938469c27b3e6acbe1043b822cd032006a4f43",
+  "scope": "Capture-only visual inspection and unchanged model/history/tool-open observations; counts include inherited fixture/bootstrap checks. Not a new algorithm regression or frame-rate/hardware claim.",
+  "runs": [
+    {
+      "mode": "landscape",
+      "report": "docs/validation/universal-brush/bb613583/20261109-084747-landscape-c8c94913/20261109-084747-landscape-c8c94913/report.json",
+      "provenance": "docs/validation/universal-brush/bb613583/20261109-084747-landscape-c8c94913/provenance.json",
+      "cleanup": "docs/validation/universal-brush/bb613583/20261109-084747-landscape-c8c94913/cleanup.json",
+      "checks": 51,
+      "geometry": [
+        {
+          "entry": "editor-parameter-EXPOSURE",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-CONTRAST",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-curves",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-hsl",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-palette",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-cleanup",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-local",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-patch",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-BRIGHTNESS",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084747-landscape-c8c94913/20261109-084747-landscape-c8c94913/icons170-after-refresh.png",
+          "sha256": "f47c0c3c523d1488edf664ea1cf0bda422c810f9fbc5b135defa39c106f4a6c6",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084747-landscape-c8c94913/20261109-084747-landscape-c8c94913/icons170-common.png",
+          "sha256": "7e61a2231af4b1907f0f7073a2f050f7e19996f46663360211f594fb918052c9",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084747-landscape-c8c94913/20261109-084747-landscape-c8c94913/icons170-specials.png",
+          "sha256": "90629ca3aa1560f12a2915e1e91d4bb1949598ed0858095ee5a04fb62ac377f3",
+          "width": 2424,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "mode": "tablet",
+      "report": "docs/validation/universal-brush/bb613583/20261109-084715-tablet-09561646/20261109-084715-tablet-09561646/report.json",
+      "provenance": "docs/validation/universal-brush/bb613583/20261109-084715-tablet-09561646/provenance.json",
+      "cleanup": "docs/validation/universal-brush/bb613583/20261109-084715-tablet-09561646/cleanup.json",
+      "checks": 51,
+      "geometry": [
+        {
+          "entry": "editor-parameter-EXPOSURE",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-CONTRAST",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-curves",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-hsl",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-palette",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-cleanup",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-local",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-patch",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-BRIGHTNESS",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084715-tablet-09561646/20261109-084715-tablet-09561646/icons170-after-refresh.png",
+          "sha256": "16b66a2d3d8affb80d2fb337c572a77db010dd2323d50fa33f137eb863119280",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084715-tablet-09561646/20261109-084715-tablet-09561646/icons170-common.png",
+          "sha256": "cd9b92883e76635612c64fac64fcf10f9df86ba42cf87da16626f13d994adb16",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084715-tablet-09561646/20261109-084715-tablet-09561646/icons170-specials.png",
+          "sha256": "3b1bea5cc4a15dac1b7a785105093f4e72ce2f2ae97c26e48c8c700a85394b38",
+          "width": 1600,
+          "height": 2560
+        }
+      ]
+    },
+    {
+      "mode": "phone",
+      "report": "docs/validation/universal-brush/bb613583/20261109-084619-phone-f90ea71b/20261109-084619-phone-f90ea71b/report.json",
+      "provenance": "docs/validation/universal-brush/bb613583/20261109-084619-phone-f90ea71b/provenance.json",
+      "cleanup": "docs/validation/universal-brush/bb613583/20261109-084619-phone-f90ea71b/cleanup.json",
+      "checks": 51,
+      "geometry": [
+        {
+          "entry": "editor-parameter-EXPOSURE",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-CONTRAST",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-curves",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-hsl",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-palette",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-cleanup",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-local",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-patch",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-BRIGHTNESS",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 132,
+          "drawable": "AppIcon"
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084619-phone-f90ea71b/20261109-084619-phone-f90ea71b/icons170-after-refresh.png",
+          "sha256": "156a00c844eaa056552a1a54328d89be853df58a201cdcc2b90c1fa3130e9490",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084619-phone-f90ea71b/20261109-084619-phone-f90ea71b/icons170-common.png",
+          "sha256": "7bb83933b83176acdb5ff93a9e709be87cd9160466ea13a259632c1a6bb81978",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084619-phone-f90ea71b/20261109-084619-phone-f90ea71b/icons170-specials.png",
+          "sha256": "f7e1c7c7e17174018351c5328a4866382d3a28a9d5d197ea7c0974e623eeacb0",
+          "width": 1080,
+          "height": 2424
+        }
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "report": "docs/validation/universal-brush/bb613583/20261109-084618-font1.3-beee9a7f/20261109-084618-font1.3-beee9a7f/report.json",
+      "provenance": "docs/validation/universal-brush/bb613583/20261109-084618-font1.3-beee9a7f/provenance.json",
+      "cleanup": "docs/validation/universal-brush/bb613583/20261109-084618-font1.3-beee9a7f/cleanup.json",
+      "checks": 51,
+      "geometry": [
+        {
+          "entry": "editor-parameter-EXPOSURE",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-CONTRAST",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-curves",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-hsl",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-palette",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-cleanup",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-local",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-patch",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        },
+        {
+          "entry": "editor-parameter-BRIGHTNESS",
+          "iconWidthPx": 68,
+          "iconHeightPx": 68,
+          "iconWidthDp": 25.904762268066406,
+          "paddingTopPx": 16,
+          "captionTopPx": 95,
+          "captionBaselinePx": 143,
+          "drawable": "AppIcon"
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084618-font1.3-beee9a7f/20261109-084618-font1.3-beee9a7f/icons170-after-refresh.png",
+          "sha256": "6448cda10d70f55c1b77d7cd39db9b0b4cbdf5a6467fa67a95c4d78e0b14cb01",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084618-font1.3-beee9a7f/20261109-084618-font1.3-beee9a7f/icons170-common.png",
+          "sha256": "626db9af84c2656a6b94b4a0038e9fb2419565ea1d82fc2ecf6ba3865781d2c9",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/bb613583/20261109-084618-font1.3-beee9a7f/20261109-084618-font1.3-beee9a7f/icons170-specials.png",
+          "sha256": "e111a8c4d35f17f6889e734287b3d9f1c284d05a59da5c59684feb973941f720",
+          "width": 840,
+          "height": 1890
+        }
+      ]
+    }
+  ]
+}

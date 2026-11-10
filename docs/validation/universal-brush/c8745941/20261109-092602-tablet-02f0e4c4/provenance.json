@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "versionCode": 173,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "tablet",
+  "probeSha256": "5b162c54c03f448fd7ae83fa0ec5b1906764cd501a13d7a60671d24a5727276a",
+  "pass": true,
+  "scope": "Actual installed brush-down/no-commit and release/automatic repair, real rendered pixels and exterior/alpha, one inner undo per stroke, multi-touch/cancel/focus/size-slider display, explicit overlay visibility, render-failure injection atomicity, parent apply/cancel and saved v7 draft, legacy manual access and unchanged source. Four native layout captures; no physical-device, generative AI, large-object quality or new full-export matrix claim.",
+  "files": [
+    {
+      "file": "erase173-applied-main.png",
+      "sha256": "a0c285b4f88c52a403b92375c010bd3d32e940e2e676fe5663a6014a2a737fe0"
+    },
+    {
+      "file": "erase173-first-result.png",
+      "sha256": "b7a228ea2a0261d605070250a492a4c2eb0c0dae87fa1f9f1f78192b706ba4b3"
+    },
+    {
+      "file": "erase173-painting.png",
+      "sha256": "9d1499092bd348be985ec03ea1207f45d4ea2eb6f78f978c40105df2044da8e7"
+    },
+    {
+      "file": "erase173-ready.png",
+      "sha256": "f3dd926c16a8b0f40cdaaeb83bddfec796c46fd5da639b5dee7be21dd667f290"
+    },
+    {
+      "file": "erase173-reopened.png",
+      "sha256": "3c72b0cc08f6c9fa976ec879613e04c1c5a1f44f358f2e23aa51ee65fa44facd"
+    },
+    {
+      "file": "erase173-result-hidden.png",
+      "sha256": "49333860df576a557e571d09b09bc518c8e7118397077adfd57c0f9ed8eaa535"
+    },
+    {
+      "file": "erase173-second-result.png",
+      "sha256": "89c2c8ab111f7ea1fcb06a904b945321ee03368014909c46fc6ef91eb2f74982"
+    },
+    {
+      "file": "erase173-undone.png",
+      "sha256": "fed43f067eaf710bf74ed26da5d8a4747304d5eea820d4ca35ec8698c08a7e24"
+    },
+    {
+      "file": "report.json",
+      "sha256": "ffa51c983db86cd5e94b1e9a9a8c492110f31488beab8a75f8c6addfee2a61a9"
+    }
+  ]
+}

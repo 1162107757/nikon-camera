@@ -1,0 +1,91 @@
+{
+  "versionCode": 174,
+  "sdk": 37,
+  "pageError": null,
+  "communityError": null,
+  "scope": "Actual installed app encoding on actual Android boot runtime. Baseline172 belowAPI33 must raise NoSuchMethodError in page and community encoding. Fixed174 checks UTF8 wire query, parsed page, community names and actual MainActivity source switches. HTTPS transport is mocked; no writes or preview certification. An Android API31 emulator is not a physical HarmonyOS device.",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "baseline-or-final-version",
+      "pass": true
+    },
+    {
+      "name": "owned-scratch-directory",
+      "pass": true
+    },
+    {
+      "name": "page-request-supported-by-platform",
+      "pass": true
+    },
+    {
+      "name": "validated-page-result",
+      "pass": true
+    },
+    {
+      "name": "UTF8-category-query",
+      "pass": true
+    },
+    {
+      "name": "community-encoder-supported-by-platform",
+      "pass": true
+    },
+    {
+      "name": "Chinese-space-plus-ampersand-slash-emoji-encoding",
+      "pass": true
+    },
+    {
+      "name": "null-community-name-remains-empty",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-0",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-1",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-2",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-3",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-4",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-5",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-6",
+      "pass": true
+    },
+    {
+      "name": "actual-top-source-switch-7",
+      "pass": true
+    },
+    {
+      "name": "actual-online-page-remains-alive",
+      "pass": true
+    }
+  ],
+  "candidateSha256": "527191606cc678c0e1076f42f96036160f8886aa586243e22ede06b402ce904c"
+}

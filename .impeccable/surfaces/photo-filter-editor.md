@@ -1,11 +1,30 @@
 ---
-version: 24
+version: 35
 slug: photo-filter-editor
-current_version_code: 153
-current_version_name: 0.29.2-beta
+current_version_code: 186
+current_version_name: 0.30.32-beta
 primary_target: app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java
 related_targets:
+  - app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java
+  - app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java
+  - app/src/main/java/cc/huevia/ui/PhotoPatchDialog.java
+  - app/src/main/java/cc/huevia/ncp/PhotoPatch.java
+  - app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java
+  - app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java
+  - app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java
+  - app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java
+  - app/src/main/java/cc/huevia/ui/PhotoSelectionOverlay.java
+  - app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java
+  - app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java
+  - app/src/main/java/cc/huevia/ui/SkinTonePicker.java
+  - app/src/main/java/cc/huevia/ncp/SelectionShape.java
+  - app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java
+  - app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java
+  - app/src/main/java/cc/huevia/ui/PhotoPaletteDialog.java
+  - app/src/main/java/cc/huevia/ui/PhotoCleanupDialog.java
+  - app/src/main/java/cc/huevia/ui/PhotoColorDialog.java
   - app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java
+  - app/src/main/java/cc/huevia/ui/PhotoPresetSourceTabs.java
   - app/src/main/java/cc/huevia/ui/PhotoBodyDialog.java
   - app/src/main/java/cc/huevia/ui/AppIcon.java
   - app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java
@@ -41,7 +60,140 @@ related_targets:
   - app/src/main/java/cc/huevia/ui/PhotoEditorTypography.java
 ---
 
+## Current 178 crop interaction
+
+Operate refinement: ratio selection opens the existing crop workspace with that ratio locked, including 2.35:1. Move the selection or resize with corners / two-pointer span; normalized bounds stay inside the photo. Apply commits one parent transaction and saves the draft; cancel leaves it unchanged. Precision composition shares the workspace and includes 2:3 to cover the existing quick ratio. Prisma materials and global tokens remain. Local-only validation and exact package: [178 evidence](../../docs/validation/connection178/README.md).
+
+
 # Direction contract
+
+## RAW 来源标记与同一编辑器（179 / 0.30.25-beta）
+
+MODE: Operate。沿用 178 Prisma 编辑材料；本次不重做图片处理界面。手机 RAW 首次显影为完整像素 Q100 JPEG 底图后自动进入同一编辑器，相机 RAW 菜单增加“编辑照片”。原始传感器文件按内容校验保留，工作底图继承可读取的拍摄信息并归一化方向／sRGB，不复制 GPS。
+
+FORM: 编辑页在原有 10sp 副标题行显示“NEF · 编辑照片”等；缩略图左下角为 10sp 字号、6dp 水平／3dp 垂直内边距、6dp 圆角、#B3232521 表面的紧凑格式标记。标签不承载点击，不扩大触控块，不增加头部高度。主照片和 178 裁切事务保持。
+
+EVIDENCE: [179 记录](../../docs/validation/raw-editor179/README.md)。最终 4c0a17d5…包在 API37 四配置各 43 条／共 24 图，172 条通过；另有完整 RAW 160 条及真实 Nikon NEF 新桥接 15 条通过。NEF 为 6064×4040，保留原始哈希和五类拍摄信息。8-bit sRGB 工作链路不声称是 16-bit 无损 RAW 编辑。实体相机删除尚待用户实测。
+
+
+## 电影裁切比例（177 / 0.30.23-beta，当前局部边界）
+
+THESIS: 构图快捷入口与精细构图都提供 2.35:1，沿用既有 Prisma 照片材料、字体、比例图标和选中反馈，不新增视觉世界或全局 tokens。
+
+FORM: 快捷横轨末尾追加 `2.35:1`，六项使用 56dp 最小宽度、横向滚动与 fillViewport；精细构图既有可滚动比例列末尾追加“电影 · 2.35:1”，数值为 2.35。快捷选中状态从归一化裁切范围及完整 frameWidth／frameHeight 识别，避开输出整数取整造成的竖图失选；保留 0.01 容差。实际裁切、导出算法及既有事务不变。
+
+EVIDENCE: [177 记录](../../docs/validation/crop177/README.md)、[精确包](../../docs/validation/crop177/package-candidate.json)、[逐图索引](../../docs/validation/crop177/capture-index.json)。最终签名包 f972d48b…在 API36 phone、font1.3／窄屏、tablet、landscape／深色四配置各 73 条含启动与重复断言／4 张原生图，共 292／16；覆盖横竖输入选中、既有可访问缩放、原生框内移动、捕获时精细构图窗口可见、应用后父几何和实际草稿读回，原始文件字节不变。
+
+LIMITS: [最终评分](../review/crop177/review.md)为 ship，仅关闭竖图选中与证据范围两项修正及直接回归，不构成独立全表面批准。未认证边角手势、完整 TalkBack、实体手机、FPS、全应用或完整导出。旧 4dd38a90 候选及 first-review 保留审计、排除当前验收；176 及更早包／证据保持各自归属。本次仅本地交付，未上传发布或改动云端。
+
+## 修补大小居中反馈（176 / 0.30.22-beta）
+
+拖动大小滑条时，窗口正中心显示空心圆和当前数值；圆半径与照片当前缩放后的实际笔刷半径一致。深色底描边与浅色细描边沿用原生修补笔刷样式，不铺遮罩。松手、取消／失焦和关闭时立即隐藏。显示使用窗口根ViewOverlay，不参与照片画布、像素、模型、历史或保存。175实时无高亮涂抹规则继续有效。
+
+EVIDENCE: [176记录](../../docs/validation/brush-size176/README.md)、[逐图身份](../../docs/validation/brush-size176/capture-index.json)。最终签名包9d307254…在phone、font1.3、tablet、landscape四配置各52条含启动与重复断言／4图，共208／16；中心边界等于真实屏幕尺寸，大小变化、松手／失焦隐藏与不改照片历史通过。同包phone另运行175既有157条／7图。作者一次批量查看四种状态联系图，无后续视觉改动。
+
+LIMITS: 原生API36模拟器限定视觉与交互验证，无实体S24+／鸿蒙、FPS或全应用验收；175处理算法未改，仍使用其独立证据。仅本地交付，未上传发布。原始捕获由既有175捕获器生成，保留在live-erase175/native/9d307254独立包哈希命名空间，未覆盖冻结175记录。
+
+## 实时无高亮修补（175 / 0.30.21-beta，当前默认修补边界）
+
+THESIS: 手指滑动时直接显示实际修补像素，不用高亮遮住效果；主体完整修补，柔和过渡并匹配干净周边的颜色。
+
+OWN-WORLD: 延续 Prisma 照片采样材料、原生 sans／sp、AppIcon 和黄色主操作；沿用现有标题、历史、更多、画笔大小及安全区／48dp命中。默认修补移除选区眼睛；其他局部、人像和手动选区显隐规则不受此范围覆盖。
+
+STORY: 修补 → DOWN／MOVE后台快速实际渲染 → UP精确完成本笔 → 可继续涂抹。每笔成功只记一次内部撤销，完成一次父事务。取消／失焦／双指丢弃未完成轨迹与临时图；早期导引分配失败、最后精确渲染失败和迟到回调不改暂存模型／历史。
+
+FORM: 默认PhotoCanvas只画最新实际预览／已提交帧／初始图，不绘制任何笔画或已完成高亮。单工作线程加单个最新待处理请求，MOVE不堆积事务，UP终态受generation与sequence保护；不做虚假的涂色即时效果。
+
+PROCESSING: 选中核心完整替换，羽化向外延伸；来源仍由<=384px不可变导引匹配并冻结归一化位移。新修补使用外部干净环的稳健线性光颜色／光照平面和预乘alpha双线性来源。每项contextBlend显式持久化，含新项写v8，旧项保留v7及旧像素行为，可读v1–v8，缓存身份隔离。
+
+EVIDENCE: [175记录](../../docs/validation/live-erase175/README.md)、[逐图索引](../../docs/validation/live-erase175/capture-index.json)、[摘要](../../docs/validation/live-erase175/summary.json)。最终签名包0760e95f…在phone、font1.3、tablet、landscape四配置各157含重复断言／7图，共628／28；实际手指未松开时有真修补，整画布零高亮、100MOVE合并、错误恢复、父事务、v8重开和原文件不变通过。独立新融合host973393与旧回归分别保留；合成已知背景改善不推导任意照片效果。
+
+LIMITS: 作者限定范围复核，无独立全表面ship评审；没有实体手机／鸿蒙、生成式AI、大物体重建、全应用主题或新完整导出流程保证。仅本地交付，未上传发布。173以下为历史；其按住不变／松手才处理及默认高亮／眼睛规则由175用户要求覆盖，其他仍有效规则保留。
+
+
+## 涂抹松手消除（173 / 0.30.19-beta，历史默认，175已覆盖）
+
+THESIS: 打开修补即可手指涂抹，松手自动进行本地小范围纹理修补，默认不再要求选区子页和拖动来源。
+
+OWN-WORLD: 保留 Prisma 照片采样模糊氛围、原生 sans／sp、既有 AppIcon 线图标、白色文字／滑块及黄色主操作／active。像素蛋糕只提供用户指定的松手触发交互参考，不替换视觉世界；没有新世界、comp、全局 token 或生产 raster。
+
+STORY: 调节 rail → 修补 → 涂抹 → 松手自动匹配／渲染 → 继续涂抹；每个成功笔画一次内部撤销。完成提交一次父编辑事务并沿用草稿／版本保存，取消保持父模型、主历史和源文件。更多 → 手动取样修补保留169的选区、来源拖动、羽化、融合及旧修补编辑；其变更仍在外层完成／取消边界内。
+
+FIRST VIEWPORT: 取消／修补／完成在照片上方；默认 dock 只有撤销、重做、眼睛、更多、一个画笔大小滑块与简短状态。竖屏照片下方可滚动 dock，紧凑横屏照片配侧控；保留 system bars／cutout 安全区、font1.3 和至少48dp命中范围。双指只导航，不触发消除。
+
+FORM: 实际权威为 `PhotoEraseDialog`、`PhotoPatchSampler`、主编辑默认入口及描述。170 的26dp无圆底调节线图标与39dp人像圆形入口分别保留。真实软覆盖持续显示；大小滑块期间暂隐后恢复用户显隐选择，眼睛只管显示。按住时照片不变，释放才处理，成功的最新帧才进入暂存模型／历史；pointer cancel、失焦或第二指丢弃未完成轨迹。早期导引分配和后续渲染失败均保持模型／历史原子性，立即恢复有效控件并允许重试；既有16项上限提供恢复提示。
+
+PROCESSING: 不可变定向导引图最长边≤384px，用未选中的周边上下文匹配整个标记区及安全边外的真实、不透明来源。归一化位移冻结入已有PhotoPatch v7；共享preview／export renderer及既有羽化、边缘颜色融合、顺序与alpha／零覆盖外像素语义不变。能力为确定性本地小范围纹理修补，不是生成式／语义AI或大物体重建。
+
+CURRENT EVIDENCE (173): [冻结记录](../../docs/validation/erase173/README.md)、[源身份](../../docs/validation/erase173/source-candidate.json)与[逐图索引](../../docs/validation/erase173/capture-index.json)绑定最终 full APK `909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92`。四种API36配置各162次原生检查／9张原始PNG，共648次含重复断言／36张原图，涵盖真实触摸／自动结果、外部像素／alpha、历史、显隐、手动入口和草稿重开。独立早期guide OOM与后续renderer IOException注入验证原子失败、立即恢复控件及随后真实笔画。host46702含重复逐像素断言；既有local43230／repair153740分别保留范围。
+
+REVIEW: [初审](../review/erase173/review-initial.md)保留限定范围完整视觉判断；[最终verdict](../review/erase173/review.md)关闭F1并给出ship，仅限该评分修复及直接回归，不是整个表面／全应用通过。phone、narrow/font1.3 Android16、tablet、landscape/dark 的最终ready／state／early-allocation-recovered别名与索引原图对应。
+
+LOCAL PACKAGE: [包身份](../../docs/validation/erase173/package-candidate.json)和[精确包安装smoke](../../docs/validation/erase173/upload-smoke.json)绑定签名本地交付APK `719c811f…`（31,370,429bytes），签名／16KiB／88 retained payload／离线检查通过；精确API36冷启动1451ms只证明启动。设置与夹具还原、自有5586关闭见[设备还原](../../docs/validation/erase173/device-restoration.json)。173未上传／发布，初始c874及168–172冻结记录保留。
+
+SCOPE: 仅默认涂抹松手修补及直接相关回归。NASA QA照片与不适合的大涂抹是像素／事务夹具，不能写成成功去物示范；不新增实体Samsung／鸿蒙、帧率、新full-export矩阵、全应用或公网OTA结论。没有新生产raster，native Java不运行HTML／CSS detector，也不制作native的伪web片段。下方169是保留手动工作流及历史，170是继续有效的图标规则。
+
+## 调节横轨图标一致性（170 / 0.30.16-beta，当前局部边界）
+
+THESIS: 调色盘、去灰、局部和修补在横向调节轨中与相邻参数保持同一大小和线图标风格，浏览与工具返回不产生图标尺度或字幕基线跳变。
+
+OWN-WORLD: 沿用 Prisma 照片采样氛围、安静白色图标／字幕与黄色 active。使用既有 AppIcon Canvas 线图标及原生 sans／sp；没有新世界、comp、生产 raster 或全局 token。
+
+STORY: 浏览普通参数 → 打开／关闭调色盘、去灰、局部、修补 → 继续普通参数；入口及刷新后的图标几何一致，既有模型、历史及源照片不变。
+
+FIRST VIEWPORT: 调色盘、去灰、局部、修补与普通参数、曲线及 HSL 共用 26dp 正方形无圆底 AppIcon、6dp 顶部内边距和字幕基线。人像分类保留原有 39dp 圆形入口与 3dp 顶部内边距；本次不把它们改成调节参数。入口宽度、至少 48dp 命中范围、焦点及 ripple 语义保持既有实现。
+
+FORM: 调节横轨中的调色盘、去灰、局部和修补与普通参数共用 26dp 无圆底 AppIcon、6dp 顶部内边距及字幕基线；人像分类保留 39dp 圆形入口。局部入口不另加圆底。实际权威为 `PhotoWorkspaceUi.adjustmentEntry`、共享 `entryCaption`、`PhotoFilterEditor` 四个工厂与刷新路径及 `AppIcon`；标签、回调、辅助描述与 active 色逻辑保留。原生 Views 和实际安装帧是证据，不制作 HTML／CSS 替身。
+
+FROZEN EVIDENCE (170): [冻结记录](../../docs/validation/icons170/README.md)、[源身份](../../docs/validation/icons170/source-candidate.json)及[逐图索引](../../docs/validation/icons170/capture-index.json)覆盖 phone／API37、narrow／font1.3／API36 Android16、tablet／API36、landscape／dark／API37，共 12 张实际原生 PNG。每种九个入口图标盒、顶部内边距和字幕基线一致；每组 51 项含夹具／启动检查，不是 204 项新算法测试。四个实际工具打开／关闭与刷新后模型、历史及源照片不变。[独立 finish review](../review/icons170/review.md)为 ship、无 material fixes，仅限图标一致性及直接回归。
+
+LOCAL PACKAGE: [签名候选身份](../../docs/validation/icons170/package-candidate.json)、[离线 APK 检查](../../docs/validation/icons170/apk-inspection.json)与[精确包安装／冷启动](../../docs/validation/icons170/upload-smoke.json)保留各自范围；冷启动只证明启动。设置恢复及 owned API36 关闭见[设备还原](../../docs/validation/icons170/device-restoration.json)。170 未上传／未发布，全部 168／169 证据与包冻结保留。
+
+SCOPE: 仅图标一致性与直接回归；无渲染、选区或修补算法改动，不包含在线搜索。没有新增实体 Samsung、帧率、full-export、整应用或公网 OTA 结论。QA 照片及原生截图是证据，不是生产素材；native Java 无 HTML／CSS detector。下方功能基线与历史验证按原版本保留。
+
+## 选区拖动取样修补（169 / 0.30.15-beta，功能基线）
+
+THESIS: 用户确定的修补目标保持固定，拖动仅移动干净取样来源；真实照片结果、软覆盖和“修补区／取样”双标签始终说明当前关系。使用实际像素，不生成或识别内容。
+
+OWN-WORLD: 延续 Prisma 照片采样氛围、原生 sans／sp、白色滑块、黄色 active／应用及至少 48dp 圆形控件；主入口新增同一 `AppIcon` 家族的胶布 vector。复用 `PhotoBrushDialog`、`PhotoWorkspaceUi`、`PhotoPrismaStyle`，没有新世界、comp、概念抽签或生产 raster。
+
+STORY: 调节工具 rail → 修补 → 选区 → 拖动干净来源 → 羽化／融合 → 应用一次主事务。范围菜单“修补当前选区”可显式从当前区域建立修补；多项可新增、切换、重新选区及删除。内部撤销／重做留在暂存工作区，取消保持主模型及历史。无来源位移的待修补项或尚未完成的精确预览阻止应用，预览失败提供重试。
+
+FIRST VIEWPORT: 取消／标题／应用在照片上方；照片下为历史／显隐／更多，选区／取样／新增及两条滑块。竖屏下方 dock、紧凑横屏可滚动侧控使用真实 system bars／cutout 安全区并支持 font1.3。空态引导先圈选；整图覆盖提示缩小以留下来源空间。双指缩放／移动视口，源／目标都约束照片范围。
+
+FORM: `PhotoPatchDialog` 是原生 code-led 扩展。画笔、单一圆形／椭圆、矩形沿用实际选区页；显示真实储存覆盖。暖白目标框与黄色虚线来源框、连线和可读衬底双标签区分两处范围，包围框不冒充主体轮廓。显示覆盖持续存在，羽化／融合滑块期间暂隐，释放、取消或焦点中断恢复用户偏好；眼睛只隐藏显示，保留效果。重选为空的清空与更多菜单删除独立可撤销。
+
+数据及管线：`PhotoPatch` 保留真实选区、位移和融合；`PhotoLocalEdits` v7 进入草稿／版本并读取 v1–v6，无修补继续旧格式选择。源 bytes 不变，显示层不导出；共享 preview／export 在 legacy masks／clones 后、人像／区域／塑形／构图前处理。逐项不可变 disk snapshot 防止同项重叠自采，后项可采前项结果；有界行缓存，保留 alpha 和零 mask 外像素。该边缘颜色融合不承诺自动祛瑕、生成式修复或自动 recognition。
+
+FROZEN EVIDENCE (169): [冻结记录](../../docs/validation/patch169/README.md)、[源身份](../../docs/validation/patch169/source-candidate.json)和[逐图索引](../../docs/validation/patch169/capture-index.json)对应最终 full APK `201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273`（34,647,510 bytes）。phone/API37 1080×2424、tablet/API36 1600×2560、narrow/font1.3/API36 Android16 840×1890、landscape/dark/API36 2424×1080，每组 278 checks／13 PNG，共 1,112 次含重复原生断言／52 原图；同包 selection168 回归 412／26 独立记录。host repair 153,740、local 43,230、region 1,520,101、library 548／catalog 53／cache 36 各自保留计数含义。[完整独立 reviewer](../review/patch169/review.md)为 ship、无 material fixes，只覆盖 169 Prisma 修补及直接回归。
+
+[上传变体身份](../../docs/validation/patch169/package-candidate.json)为 `ef06853b8025936ce7c972e682855ee7ac1fc55ebda2776864be6bdf94fdaa10`（31,358,141 bytes）；仅删四个 obsolete x86，88 个保留 payload 逐个相同，ARM32／ARM64／x86_64 保留。v2／v3 既有签名、16KiB、backend offline inspection 及 API36 精确安装／冷启 1772ms 见[smoke](../../docs/validation/patch169/upload-smoke.json)。[所有设置还原／5586 关闭](../../docs/validation/patch169/device-restoration.json)。169 本地未上传／未发布，未 commit／push；没有实体 Samsung、真实相机、通用分割、新 full-export 矩阵或公网 OTA 结论。
+
+初始 38f 顶部安全区遗漏已修正，当前四配置证据为同一最终 APK 重拍；不 canonize 初始重叠或不合适的复制 QA 样例。照片只是取样夹具，不是成功祛瑕宣传、真实相机样例或生产 raster；native Java 无 HTML／CSS detector。下方 168／163／151／152／153 规则及冻结证据按原范围保留。
+
+
+## 局部选区与持续显示（168 / 0.30.14-beta，沿用规则／历史证据）
+
+按[168 方向契约](../review/selection168/contract.md)及已批准选区结构实施，保留 Prisma 照片采样氛围、系统 sans／sp、既有圆形工具与 48dp 原生目标、白色滑块和黄色主操作／active。范围为局部调节；滤镜保持既有行为。下方 151／152／153／163 历史与证据原样保留，冲突的旧选区闪烁反馈由本节持续显示政策取代；不重新定义全局 tokens。
+
+- 取消／区域名称／完成 → 照片 → 撤销重做与显示 → 画笔／圆形／矩形 → 替换／添加／减去与反选 → 羽化；画笔另有大小。单一圆形工具按拖拽边界生成圆或椭圆，不另开椭圆模式。几何可移动／缩放，反选作用于最终区域。竖屏底部滚动 dock，紧凑高度／宽屏照片配滚动侧控，原生安全区与 font1.3 保留。
+- 真实画笔／几何／脸／肤覆盖持续显示；区域父调节、曲线、HSL、调色盘、去灰、检测脸、全局皮肤、手动脸、塑形范围与 legacy 局部蒙版遵循同一政策：调节手势临时收起，释放、取消、子输入关闭和焦点中断恢复用户选择的显示状态。精确调色盘／HSV 子输入仅改变表单，照片设置仍由原有应用／预览动作提交。
+- 眼睛使用既有 eye 图形，选区工作区有“隐藏选区／显示选区”动作标签；显示态黄色，隐藏态白色。已存在可用脸／肤覆盖时回到人像组选择仍可隐藏／恢复。眼睛不清空选择或移除效果；真正清空选区、删除区域分别可撤销。说明文字位于画布内有界深色半透明衬底上，保持 12sp、最多两行，不靠整图压暗换对比。
+- `SelectionShape`／`AdjustmentRegion` 以原图坐标保存几何；`PhotoLocalEdits` v6 读取 v1–v5，无几何时保留旧写格式。显示蒙版与 source／render／export 像素分层，草稿、区域参数及取消／撤销沿用实际事务。
+
+[最终证据](../../docs/validation/selection168/README.md)冻结 full APK SHA-256 `57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3`，34,635,222 字节。phone／API37、tablet／API36、narrow/font1.3／API36 Android16、landscape/dark／API37 各 412 次检查／26 张原始 PNG，共 1,648 次重复断言／104 张原图；[capture index](../../docs/validation/selection168/capture-index.json)与原始报告保留身份。核心 host 1,520,101／43,230、library 548、catalog 53、cache 36 独立计数，显示修正未修改被测核心。原 `6cf549b0…` 候选及[初审 FIX](../review/selection168/review.md)不改写；[最终 verdict](../review/selection168/verdict.md)将 F1–F4 resolved，只对四项修正与直接回归给出 ship。
+
+上传变体 31,341,757 字节，仅移除四个 obsolete x86 库；88 个保留 payload 与 full 包一致。签名、16KiB、backend 离线检查及 API36 安装冷启动通过，见[包身份](../../docs/validation/selection168/package-candidate.json)和[smoke](../../docs/validation/selection168/upload-smoke.json)。本轮未上传／未发布，无实体 Samsung、真实相机、通用分割精度、新 full-export 或公网 OTA 验收。无新增／替换生产 raster；截图是 QA 证据，native Java 不运行 HTML／CSS detector。
+
+## 调节页直接涂抹与暂存事务（163 / 0.30.9-beta，历史）
+
+范围来自用户“其他的调节都需要涂抹区域后调节”及“只需调节页内的功能”的澄清，见[163 方向](../review/local-brush163/contract.md)。沿用 Prisma 照片氛围、原生 sans／sp、既有画笔与圆形 AppIcon 工具、白色滑块和黄色主操作；没有新视觉世界、原型或生产栅格。下方 151／152／153 规则及证据按原版本保留，153 卡片选择材料继续沿用。
+
+- 基本调节滑杆右侧直接显示 48×48dp 画笔，17 项标量继续使用已有区域处理。调色盘／去灰／曲线／HSL 标题行均提供相同大小的涂抹入口，顺序为取消、画笔、工具／范围、应用。滤镜不扩展；人像保留自己的工作流。
+- 基本调节和专用工具在局部状态下显示当前区域名，单行标题对长名末尾省略，完整作用范围留在辅助描述中。手机、320dp、1.3 字号、横屏和平板保持原有照片优先拓扑；横屏控制区与窄屏 HSL 色轨可滚动。
+- 新局部参数在已提交的全图设置之上从中性开始，不吸收未应用父面板的自动去灰为全图修改；重涂已有区域保留全部参数。画笔和后续子编辑暂存，取消回父面板且不写模型／主历史／草稿；最内层应用写入一条主撤销记录并关闭祖先面板。账号／代次／请求／快照守卫与原有定向蒙版、EXIF 映射、几何／边框／塑形定位、渲染、草稿和导出链路保留。
+
+精确本地包 `dist/huevia-0.30.9-beta-debug.apk` 为 34,622,934 字节，SHA-256 `f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b`。见[功能清单](../../docs/local-brush163.json)及[验证摘要](../../docs/validation/local-brush163/summary.json)：五配置主检查 2,406 次，补充重涂／应用与横屏证据检查 970 次，共 3,376 次含重复原生检查；主机矩阵与 159 次保留 RAW 检查分别记录。21 张[必需图](../review/local-brush163/capture-index.json)全部逐张复核；早期[截图门禁](../review/local-brush163/review-capture-gate.md)按历史保留，横屏曲线已由同一精确 APK 重截并以原始分辨率核对“曲线 · 区域 1”。[最终完整复核](../review/local-brush163/review.md)为 ship、无材料修正项，只覆盖此次调节页入口／事务及直接回归；没有实体手机／相机、人像或全应用验收，未公开发布。原有 RAW162 功能独立保留，不作为此次新 RAW 验收。
 
 ## 柔和卡片选择（153 / 0.29.2-beta，当前）
 
@@ -321,3 +473,8 @@ PHOTO UTILITIES / SLIDER ENDS (136 / 0.27.4-beta): The user found overflow label
 Render the existing public Android Menu callbacks in one anchored warm-dark card with 16dp corners, 20dp icons, 14sp medium titles, 11sp secondary explanations, visible check state for histogram and muted coral for full reset/deletion. Rows are at least 48dp and grow naturally with text; the vertical scroller is capped by the actual root window's safe screen bounds as well as platform availability. Keep native outside/Back dismissal, accessible button/check semantics and focus states. Dismiss on anchor removal, rerender and owner close; suppress callbacks if source/editor/account identity changes.
 
 SeekBar endpoint support is shared in PhotoWorkspaceUi.fitSliderThumb. Reserve at least half the actual thumb width or thumb offset, plus a 2dp margin, while retaining existing larger padding. Apply to quick optimise, quick portrait, main adjustments and filter intensity. Preserve thumb offset, range, values and listeners; do not fix clipping by hiding pixels or changing the numerical range. Header photo index retains its existing current-position / total meaning (user asked for explanation, not removal).
+
+RAW SAVE PERFORMANCE (180 / 0.30.26-beta): Preserve the 179 full-resolution RAW-to-editor bridge and 8-bit sRGB source semantics. Replace only lossless workspace PNG encoding effort and avoid redundant cache work; keep cancellation, source hashes, identity receipts and full JPEG quality. At 95% show 保存中 and report real write progress through 99%, committing before 100%. The final exact-APK API37 NEF comparison is 13.9s to 3.5s, with identical full raster and final JPEG; it is one emulator comparison, not phone certification. Application-album deletion belongs to the four-home floating selection dock. See docs/validation/album-raw180/README.md; 179 hardware deletion remains separately scoped.
+
+
+EDITOR SOURCE CONTROLS (186 / 0.30.32-beta): Keep My/Online fixed at the front of the existing 48dp category row, with independent horizontal category scrolling and a fixed grid target. One parent draws track, selection, pressed fill and keyboard focus with shared 3dp inset and derived end radii; child native background, foreground and default focus highlight are disabled. User-reported F1 rectangular press was reproduced on initial d728b77a (455 changed pixels outside capsule) and fixed in final ca6262e5 (zero outside in five configurations). Final exact APK has 225 repeated source assertions/35 captures plus9 continuation checks. Source switching reuses existing reset/filter behavior and does not change the applied photo, strength or history. No new editor material, row or ordinary/1.3 font panel height. See docs/validation/editor-sources186/README.md; no physical or live-download certification.

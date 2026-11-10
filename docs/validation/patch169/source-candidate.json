@@ -1,0 +1,70 @@
+{
+  "versionCode": 169,
+  "versionName": "0.30.15-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.30.15-beta-debug.apk",
+  "sha256": "201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273",
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "949dacb386f89429a1dcc4c8750ab5a401e3f3bb049cc24a12a6f6e66702e973"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+      "sha256": "d46b7b2c83cc996e8821c3b8fa6662ad33cfe28bf1366661e42c8bef549a2b6a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+      "sha256": "75473b256952e6cc745a8bc968f936425d9bf22112a5c80b25cb86b18607bcfb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "66ca067aa09347ed6b00e8f555df6aab5c5fb2f95725d0d69ccba47f45eb1034"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java",
+      "sha256": "6ddcdf27294a9f80c39182818770f060f4da0cf7df7f455aee9b6afc5a1f7933"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
+      "sha256": "26cb78cf31401103b57f7c992b84e0b1a422233dd4cf8c1163d9ec7c2dfa15f0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPatchDialog.java",
+      "sha256": "9a4229d7177dce98235d77cf0c5a1a3772cc2a4517c9681a865e363420ba95ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "47ea5ed78d2bf2b8b737dc5dfd4dfe188a3c75cba8d8ae20981214680381ee1a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "389e301ca10305bd1fb1c65a3b962208ed6bd84664a4c03745c1c970b2552059"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+      "sha256": "138fcf90610b33d5b90470423912f3bc67ac6e8d5cece019007532f737ae526f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "f6add93e20e98443f5f7a17aa5818f9b5b5ce7774591b8bf4344e70d12b6e516"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+      "sha256": "7085774b32f193ec1368b18d1845f704f67a5bd614eea72308a8b79c26fee416"
+    }
+  ],
+  "hostChecks": {
+    "adjustmentRegion": 1520101,
+    "localEdits": 43230,
+    "repairOracle": 153740,
+    "presetLibrary": 548,
+    "editorPresetCatalog": 53,
+    "imageCache": 36
+  },
+  "nativeChecks": 1112,
+  "nativeScreenshots": 52,
+  "regressionChecks": 412,
+  "status": "four final native configurations and selection regression passed; independent review disposition ship for repair169 and direct regressions",
+  "probeSourceSha256": "44dbb69314b33f49160cc444714bca9973aff9699900114f0d8b0e231213234f",
+  "reviewFile": "D:\\dev\\ai-project\\nikon-camera\\.impeccable\\review\\patch169\\review.md"
+}

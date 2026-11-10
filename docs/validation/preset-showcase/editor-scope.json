@@ -1,0 +1,21 @@
+{
+  "unchanged": true,
+  "files": {
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java": {
+      "sha256": "5db61ec3b17235d96342416cf88fa315125e9b63985ae5e03067c9d2b878a128",
+      "unchanged": true
+    },
+    "app/src/main/java/cc/huevia/ui/PresetSelectionPage.java": {
+      "sha256": "7d2000f9b35e84e4d0912593b7a14c2c72893958701d4290e6faa62b8e183315",
+      "unchanged": true
+    },
+    "app/src/main/java/cc/huevia/ui/PresetPreviewRenderer.java": {
+      "sha256": "aa74fd286fe247fe176143920c59ee856337f89e61c893f30448a2c185f76a48",
+      "unchanged": true
+    },
+    "app/src/main/java/cc/huevia/ui/HoldToCompare.java": {
+      "sha256": "28e35fb7da1977ed6fbb5f57151eb9479e69d7e3452b212215fa263ac05ee088",
+      "unchanged": true
+    }
+  }
+}

@@ -9,6 +9,7 @@ import { createPersonalRoutes } from './personal.mjs';
 import { createChallengeService } from './challenge.mjs';
 import { createReleaseRoutes } from './releases.mjs';
 import { createProfileRoutes } from './profile.mjs';
+import { renderReleaseDownloadError } from './release-download-error.mjs';
 
 const ADMIN_DIR = fileURLToPath(new URL('../admin/', import.meta.url));
 const MAX_UPLOAD = 4 * 1024 * 1024;
@@ -96,7 +97,7 @@ function browserOrigins(publicOrigin, additionalOrigins) {
   return origins;
 }
 
-export function createHandler({ store, storage, environmentId, publicBaseUrl, allowedBrowserOrigins = [], basePath = '/preset-library', secureCookies = true, adminDir = ADMIN_DIR, qqVerifier = null, challengeService = null, challengeSecret, trustedProxyHops = 0, trustedProxyAddresses }) {
+export function createHandler({ store, storage, releaseStorage = storage, environmentId, publicBaseUrl, allowedBrowserOrigins = [], basePath = '/preset-library', secureCookies = true, adminDir = ADMIN_DIR, qqVerifier = null, challengeService = null, challengeSecret, trustedProxyHops = 0, trustedProxyAddresses }) {
   const prefix = basePath.replace(/\/$/, '');
   const publicBase = new URL(publicBaseUrl);
   // Explicit browser entrypoints do not change canonical asset URLs or trust request Host headers.
@@ -111,7 +112,7 @@ export function createHandler({ store, storage, environmentId, publicBaseUrl, al
   const challenge = challengeService || createChallengeService({ store, secret: challengeSecret, trustedProxyHops, trustedProxyAddresses });
   const communityRoutes = createCommunityRoutes({ store, storage, publicBaseUrl, basePath, abuseService: challenge });
   const personalRoutes = createPersonalRoutes({store,storage,publicBaseUrl,abuseService:challenge});
-  const releaseRoutes = createReleaseRoutes({ store, storage, publicBaseUrl, basePath, trustedProxyHops, trustedProxyAddresses });
+  const releaseRoutes = createReleaseRoutes({ store, storage: releaseStorage, publicBaseUrl, basePath, trustedProxyHops, trustedProxyAddresses });
   const profileRoutes = createProfileRoutes({ store, storage, publicBaseUrl, basePath, abuseService: challenge });
   const qqStatus = () => qqVerifier?.status() || { configured: false, provider: 'qq', message: 'QQ 登录尚未配置，请先申请 QQ 互联移动应用并配置 AppID。' };
   const sessionView = session => ({ authenticated: Boolean(session), user: session ? { username: session.username } : null,
@@ -425,7 +426,8 @@ export function createHandler({ store, storage, environmentId, publicBaseUrl, al
     } catch (error) {
       if (res.headersSent) { res.destroy(); return; }
       const status = Number.isInteger(error.status) && error.status >= 400 && error.status <= 599 ? error.status : 500;
-      if (status === 429) res.setHeader('Retry-After', '900');
+      if (status === 429) res.setHeader('Retry-After', String(error.retryAfterSeconds || 900));
+      if (renderReleaseDownloadError(req, res, { status, message: status === 500 ? '操作未完成，请稍后重试。' : error.message, prefix })) return;
       json(res, { error: { code: typeof error.code === 'string' ? error.code : 'INTERNAL_ERROR',
         message: status === 500 ? '操作未完成，请稍后重试。' : error.message } }, status);
     }

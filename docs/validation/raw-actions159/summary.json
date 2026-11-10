@@ -1,0 +1,52 @@
+{
+  "versionCode": 159,
+  "versionName": "0.30.5-beta",
+  "published": false,
+  "apk": {
+    "path": "dist/huevia-0.30.5-beta-debug.apk",
+    "sha256": "4f9fe59059ed7515738e370a0662d6d8e975039a95dab3e71248e6d7c4035936",
+    "bytes": 34581880
+  },
+  "rawChecks": 128,
+  "rawReport": "docs/validation/photo-image-suite/raw-development/4f9fe590/20261108-130244-7be19e5dbb/20261108-130244-7be19e5dbb/report.json",
+  "visualReview": {
+    "nativePlatform": "Android 17 / API 37",
+    "serial": "emulator-5588",
+    "rounds": 1,
+    "profiles": 5,
+    "clippedActionLabelsObserved": false,
+    "source": "Real system picker import of licensed Nikon NEF"
+  },
+  "inputs": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "43741b8a33627fb39951f7f6e996bde2cba8a0a4094c02ea0314375bf9e90db3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/RawDevelopActivity.java",
+      "sha256": "768ec83a79e0b32cb71978fc216af9d92798f1caced1f2038c9a7076f96e079c"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "landscape.png",
+      "sha256": "c2db1c9241a4e60d4345d6418c32bed022033e1834afb0c5c78a12ada4d12602"
+    },
+    {
+      "path": "phone-disabled.png",
+      "sha256": "cb9c18020903fb022f29c194b015740c529c8a7642cc22e36bc9920869fd8d93"
+    },
+    {
+      "path": "phone-font1.3-dark.png",
+      "sha256": "f6b46c6095e2668c617ace8bd94c4752f566402e1d669614e35d156ef8c72c7d"
+    },
+    {
+      "path": "phone-ready.png",
+      "sha256": "77e1467fe5bbc5d60f52fe5d1b4951121641d2f6c329b105abce7655a24a4ad8"
+    },
+    {
+      "path": "tablet.png",
+      "sha256": "0279099efb3e6cc387d59d88d2652ee1e499bb7e6b4b3ebf83f12cc0cb481c4e"
+    }
+  ]
+}

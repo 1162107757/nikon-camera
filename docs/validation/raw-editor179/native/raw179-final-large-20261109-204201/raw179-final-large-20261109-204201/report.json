@@ -1,0 +1,183 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "apkSha256": "4c0a17d5a3900f7b52b3dcffe4c6f071a97ebb08d8baeb9a3f3d25c90f56f72d",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "actual-MediaStore-RAW-fixture-created",
+      "passed": true
+    },
+    {
+      "name": "RAW-description-accepted",
+      "passed": true
+    },
+    {
+      "name": "RAW-visible-in-real-phone-query",
+      "passed": true
+    },
+    {
+      "name": "original-RAW-bytes-unchanged",
+      "passed": true
+    },
+    {
+      "name": "private-sensor-original-retained-exactly",
+      "passed": true
+    },
+    {
+      "name": "working-source-is-full-size-JPEG",
+      "passed": true
+    },
+    {
+      "name": "source-format-survives-working-JPEG",
+      "passed": true
+    },
+    {
+      "name": "reopen-reuses-verified-workspace",
+      "passed": true
+    },
+    {
+      "name": "pre-cancelled-import-stops-without-rewriting",
+      "passed": true
+    },
+    {
+      "name": "main-ready",
+      "passed": true
+    },
+    {
+      "name": "RAW-bound-to-ordinary-ready-editor",
+      "passed": true
+    },
+    {
+      "name": "RAW-editor-does-not-lock-tools",
+      "passed": true
+    },
+    {
+      "name": "editor-small-DNG-format-visible",
+      "passed": true
+    },
+    {
+      "name": "editor-format-single-line-and-fits",
+      "passed": true
+    },
+    {
+      "name": "RAW-basic-adjustment-accepted",
+      "passed": true
+    },
+    {
+      "name": "RAW-adjustment-state-applied",
+      "passed": true
+    },
+    {
+      "name": "RAW-adjustment-full-size-export",
+      "passed": true
+    },
+    {
+      "name": "RAW-export-preserves-sensor-and-working-source",
+      "passed": true
+    },
+    {
+      "name": "RAW-opens-showPalette",
+      "passed": true
+    },
+    {
+      "name": "RAW-opens-showCleanup",
+      "passed": true
+    },
+    {
+      "name": "RAW-opens-showComposition",
+      "passed": true
+    },
+    {
+      "name": "RAW-opens-showDetails",
+      "passed": true
+    },
+    {
+      "name": "RAW-opens-showExport",
+      "passed": true
+    },
+    {
+      "name": "RAW-curves-available",
+      "passed": true
+    },
+    {
+      "name": "RAW-HSL-available",
+      "passed": true
+    },
+    {
+      "name": "actual-album-format-marker-visible",
+      "passed": true
+    },
+    {
+      "name": "small-format-label-bounded",
+      "passed": true
+    },
+    {
+      "name": "album-shows-source-DNG-label",
+      "passed": true
+    },
+    {
+      "name": "native-slot-manager-visible",
+      "passed": true
+    },
+    {
+      "name": "native-slot-label-matches-target-and-name",
+      "passed": true
+    },
+    {
+      "name": "native-delete-confirmation-visible",
+      "passed": true
+    },
+    {
+      "name": "native-delete-confirmation-names-exact-slot",
+      "passed": true
+    },
+    {
+      "name": "native-delete-explicit-action-and-cancel",
+      "passed": true
+    },
+    {
+      "name": "native-delete-cancel-closes-without-task",
+      "passed": true
+    },
+    {
+      "name": "RAW-camera-entry-auto-reaches-full-editor",
+      "passed": true
+    },
+    {
+      "name": "RAW-auto-handoff-keeps-source-name-and-format",
+      "passed": true
+    },
+    {
+      "name": "source-preserved-after-all-editor-actions",
+      "passed": true
+    }
+  ],
+  "measurements": [],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+}

@@ -1,0 +1,64 @@
+{
+  "candidateSha256": "f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b",
+  "versionCode": 163,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "6fbd7888b996915cd9100bbd3e45b92dbc49fe05e4b2282bbc16bf2e3587cb7b",
+  "pass": true,
+  "scope": "Actual installed17 basic adjustment controls, independent masks, clear/repaint/delete, owner guard, drafts/photo switching, full/detail export EXIF1/6 and direct palette/cleanup/curves/HSL nested brush transactions. Zero-mask pixels checked exact. Portrait workflows excluded because they are outside163 scope; no physical-device acceptance.",
+  "files": [
+    {
+      "file": "01-live-brush-mask.png",
+      "sha256": "1e66408d067de27fa135af493e8b07718237b0b91e117c3af79d2f0e7d1714b6"
+    },
+    {
+      "file": "02-masked-curve-preview.png",
+      "sha256": "015fc99d091f01ed31cad847bcf327e2bcb0fe120fb3a51629dce60939fdbf98"
+    },
+    {
+      "file": "03-clean-local-parameter-editing.png",
+      "sha256": "904b58f3dc5e2d88935a61894b13642a7a77f3dcb3d951226114965adee08a32"
+    },
+    {
+      "file": "04-independent-region-scope-picker.png",
+      "sha256": "956d43fa9d87bf68570ed2d192456f733009f65ebf29737dc14e8d4bdb503bf2"
+    },
+    {
+      "file": "07-real-portrait-detail.png",
+      "sha256": "78688761655fec6a521492b1fb7e59cdcb3c18cf7658f1cb60556f25960e8ca7"
+    },
+    {
+      "file": "direct-cleanup-regional-preview.png",
+      "sha256": "08882160031ca8b9f15ccb7fc881a08bd10e9cb2c9b5be8206f00eb9c20dfa84"
+    },
+    {
+      "file": "direct-curves-regional-preview.png",
+      "sha256": "271909621c63566b1e2e5777cc90735418fa31ad07f8b8de93d082dae18aa675"
+    },
+    {
+      "file": "direct-hsl-regional-preview.png",
+      "sha256": "281fd96b115761b29ac8e672d514b45eebf2f1f4e59cdfcdc9e6563a425cc4b5"
+    },
+    {
+      "file": "direct-palette-regional-preview.png",
+      "sha256": "8d80feae1d149407d96e5c0aec7baad3dcf46ba299d983056f7f4601a53f8b88"
+    },
+    {
+      "file": "flash-01-first-warm-white.png",
+      "sha256": "6e9e163bbf19b53846876e0b0be1408273faf3921a988af398f7487050b040fe"
+    },
+    {
+      "file": "flash-02-clean-gap.png",
+      "sha256": "598ffbfbac45a0f574af04584c07aa22dba3ec4c6af0b06aa0cbc4470cd23107"
+    },
+    {
+      "file": "flash-03-second-warm-white.png",
+      "sha256": "6e9e163bbf19b53846876e0b0be1408273faf3921a988af398f7487050b040fe"
+    },
+    {
+      "file": "report.json",
+      "sha256": "1928bbdcc2534ad490c11f1b44035732ddd26774060d5e82e4fe60fbcbbe589e"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "displayRestored": true,
+  "nightRestored": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "testPackageRemoved": true,
+  "mainAppStopped": true,
+  "mainFailure": "Stability184 failed: java.lang.SecurityException: Injecting to another application requires INJECT_EVENTS permission\n\tat android.os.Parcel.createExceptionOrNull(Parcel.java:2426)\n\tat android.os.Parcel.createException(Parcel.java:2410)\n\tat android.os.Parcel.readException(Parcel.java:2393)\n\tat android.os.Parcel.readException(Parcel.java:2335)\n\tat android.hardware.input.IInputManager$Stub$Proxy.injectInputEvent(IInputManager.java:1339)\n\tat android.hardware.input.InputManager.injectInputEvent(InputManager.java:1091)\n\tat android.app.Instrumentation.sendKeySync(Instrumentation.java:1091)\n\tat android.app.Instrumentation.sendKeyDownUpSync(Instrumentation.java:1101)\n\tat cc.huevia.stability184qa.Stability184Probe.documentFailurePaths(Stability184Probe.java:111)\n\tat cc.huevia.stability184qa.Stability184Probe.onStart(Stability184Probe.java:54)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\nCaused by: android.os.RemoteException: Remote stack trace:\n\tat com.android.server.input.InputManagerService.injectInputEventInternal(InputManagerService.java:877)\n\tat com.android.server.input.InputManagerService.injectInputEvent(InputManagerService.java:829)\n\tat android.hardware.input.IInputManager$Stub.onTransact(IInputManager.java:573)\n\tat android.os.Binder.execTransactInternal(Binder.java:1179)\n\tat android.os.Binder.execTransact(Binder.java:1143)\n\n; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\stability184\\device\\2ab445a7\\phone-20261110-072321-5289d28d",
+  "errors": []
+}

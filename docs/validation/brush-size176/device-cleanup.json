@@ -1,0 +1,11 @@
+{
+  "avd": "Huevia_Raw157_API36",
+  "serial": "emulator-5586",
+  "displaySize": "Physical size: 1080x2424",
+  "fontScale": "1.3",
+  "airplaneMode": "1",
+  "nightMode": "Night mode: no",
+  "appStopped": true,
+  "probeRemoved": true,
+  "ownedEmulatorClose": "OK: killing emulator, bye bye\n\nOK"
+}

@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-08T02:00:12.613Z",
+  "releaseId": "3e32c8b4-613d-4adf-91c9-26d3badae0ff",
+  "status": "published",
+  "channel": "beta",
+  "mandatory": false,
+  "publishedAt": "2026-11-08T09:57:02.94293+08:00",
+  "revision": 2,
+  "apk": {
+    "packageName": "cc.huevia",
+    "versionName": "0.30.2-beta",
+    "versionCode": 156,
+    "minSdk": 26,
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureSchemes": [
+      2,
+      3
+    ],
+    "byteLength": 31292511,
+    "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95"
+  },
+  "website": {
+    "url": "https://huevia.cc/?channel=beta#download",
+    "actualBrowserDownload": true,
+    "byteLength": 31292511,
+    "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95"
+  },
+  "apiChecks": [
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library",
+      "status": 200,
+      "reason": "available",
+      "versionCode": 156,
+      "versionName": "0.30.2-beta",
+      "bytes": 31292511,
+      "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95",
+      "mandatory": false,
+      "publishedAt": "2026-11-08T09:57:02.94293+08:00",
+      "revision": 2,
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/3e32c8b4-613d-4adf-91c9-26d3badae0ff/file"
+    },
+    {
+      "origin": "https://huevia.cc/preset-library",
+      "status": 200,
+      "reason": "available",
+      "versionCode": 156,
+      "versionName": "0.30.2-beta",
+      "bytes": 31292511,
+      "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95",
+      "mandatory": false,
+      "publishedAt": "2026-11-08T09:57:02.94293+08:00",
+      "revision": 2,
+      "downloadUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/releases/3e32c8b4-613d-4adf-91c9-26d3badae0ff/file"
+    }
+  ]
+}

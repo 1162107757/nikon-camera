@@ -1,0 +1,58 @@
+[
+  {
+    "path": "app/build.gradle",
+    "sha256": "586b3823afb999d1b876fe72c2b902b39049098b469d4d5e5ea7f091e8760565"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "03f9df493d2a28626f04d8ec6b71b031f02e555b51a0c7465b60d3b5b6179602"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/RawDevelopActivity.java",
+    "sha256": "ebec8700b5341d60d8637b477777480bee69a5f83ede592799af093b2b7cf11e"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java",
+    "sha256": "394e1c0b1196df90facdf9193e04cb837355c8424b2c8d5735e3899b1f6e2499"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/RawEditorSource.java",
+    "sha256": "e3c07b7938c7dd0758904313fab3af216f31005130d684a7d7bd53a14a0da0fb"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PhotoSourceFormat.java",
+    "sha256": "20457e7e8b15ccfe1dca433d3a7ddb9cf0fbf74498aeac6e09edf501c5bae3ca"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+    "sha256": "caae76b0406ad0012b081bc9744a88de8d34d8a1259c5a548937424513949ae6"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+    "sha256": "0449477a5098fb0cdc69bfc1cf5e6dd5bd4c66e677ae9ea98c5f263b2b4ae8b2"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+    "sha256": "37ec5110b94d3fd3978b4263de380628b1c410c5aa06c7f1a768285f87eab2cb"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/RawPhotoPanel.java",
+    "sha256": "e5b8c45cb970e603277b6c6a3fe31fb68c1d238e1ec6753df87ad5a1e7f3f028"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/usb/PictureControlDeleteSession.java",
+    "sha256": "eb38a005cbf866f4a1cb359fffe991d991db96e101cccc20ac7e2b165d5f608a"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/usb/UsbPictureControlDelete.java",
+    "sha256": "5171f801ebf8890f5f3e6bb5ec1f00bb228d91305a2a25e99f43a4a672d4c010"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/usb/PtpUsbTransport.java",
+    "sha256": "b78808c2c09d95d7cb4ba963064aa4b39d5643695fd93d3a79d25032aadc4e7d"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/usb/WirelessPictureControl.java",
+    "sha256": "8d6e62899c15e71e7d0eafc246fb9183800297b14cf581f65e200d0f2a04259d"
+  }
+]

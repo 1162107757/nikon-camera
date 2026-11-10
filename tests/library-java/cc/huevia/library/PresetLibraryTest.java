@@ -32,7 +32,7 @@ public final class PresetLibraryTest {
         removedPresetsStayRemoved(); removalPreservesUnrelatedImages(); removalCommitAndCleanupFailures();
         removalAcrossLibraryInstances();
         np3ContainersAndPersistence(); np3CatalogAndDownload();
-        readOnlyOnlinePreviews(); rejectedOnlinePreviews(); boundedRecipeCache();
+        readOnlyOnlinePreviews(); concurrentOnlineRecipes(); rejectedOnlinePreviews(); boundedRecipeCache();
         redirectAndNetworkBoundaries(); cancelledAndFailedDownloads(); previewRejectsHtml();
         if (args.length > 1) verifyDownloadedArchive(new File(args[1]));
         System.out.println("Preset library: " + checks + " checks passed (no network or camera I/O).");
@@ -675,6 +675,16 @@ public final class PresetLibraryTest {
         fail(() -> library.readNcp(record.id), "NP3 blocked from legacy conversion/rendering readers");
         fail(() -> library.importFile("Disguised.ncp", original), "NP3 renamed NCP rejected");
         fail(() -> library.importFile("Disguised.np3", ncp("OLD", 4)), "NCP renamed NP3 rejected");
+        PresetLibrary unnamed = new PresetLibrary(fresh());
+        PresetRecord inferred = unnamed.importFile("provider-document-42", original).record;
+        eq("NP3", inferred.fileFormat, "NP3 without provider extension identified by contents");
+        eq("provider-document-42.np3", inferred.originalFileName, "inferred NP3 receives its actual extension");
+        yes(Arrays.equals(original, unnamed.readPreset(inferred.id)), "extension inference preserves exact NP3 bytes");
+        eq(inferred.toMap(), unnamed.importFile("another-document", original).record.toMap(), "inferred duplicate keeps metadata");
+        PresetRecord inferredNcp = unnamed.importFile("provider-legacy", ncp("NO EXTENSION", 2)).record;
+        eq("NCP", inferredNcp.fileFormat, "legacy NCP extension inferred independently");
+        fail(() -> unnamed.importFile("pretend.jpg", original), "unrelated extension is not silently corrected");
+        fail(() -> unnamed.importFile("no-extension", new byte[100]), "missing extension never bypasses file validation");
         library.setCategory(record.id, "我的收藏"); library.attachPreview(record.id, "content://photos/np3/1");
         PresetRecord customized = library.findBySha256(record.id);
         PresetLibrary reopened = new PresetLibrary(dir); PresetRecord restored = reopened.findBySha256(record.id);
@@ -893,6 +903,41 @@ public final class PresetLibraryTest {
             eq(before, library.findBySha256(saved.record.id).toMap(), "preview leaves user's local metadata intact");
             eq(2, server.calls.size(), "local preview never requests internet");
         }
+    }
+
+    private static void concurrentOnlineRecipes() throws Exception {
+        byte[] original = ncp("SHARED PREVIEW", 1);
+        OnlinePreset preset = parse(manifest(original)).get(0);
+        File dir = fresh(); PresetLibrary library = new PresetLibrary(dir); Mock server = new Mock();
+        java.util.concurrent.CountDownLatch reading = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+        Response response = server.add(200, original);
+        response.stream = new ByteArrayInputStream(original) {
+            @Override public synchronized int read(byte[] bytes, int offset, int length) {
+                reading.countDown();
+                try {
+                    if (!release.await(5, java.util.concurrent.TimeUnit.SECONDS)) throw new AssertionError("transfer latch timeout");
+                } catch (InterruptedException e) { throw new AssertionError(e); }
+                return super.read(bytes, offset, length);
+            }
+        };
+        OnlinePresetRepository cards = new OnlinePresetRepository(dir, library, server.client());
+        OnlinePresetRepository detail = new OnlinePresetRepository(dir, library, server.client());
+        java.util.concurrent.FutureTask<byte[]> preview = new java.util.concurrent.FutureTask<>(() -> cards.readForPreview(preset));
+        new Thread(preview, "recipe-preview").start();
+        yes(reading.await(5, java.util.concurrent.TimeUnit.SECONDS), "first recipe transfer starts");
+        java.util.concurrent.FutureTask<PresetLibrary.AddResult> download = new java.util.concurrent.FutureTask<>(() -> detail.download(preset, null));
+        Thread waiting = new Thread(download, "recipe-download"); waiting.start();
+        try {
+            long deadline = System.nanoTime() + java.util.concurrent.TimeUnit.SECONDS.toNanos(5);
+            while (waiting.isAlive() && waiting.getState() != Thread.State.BLOCKED && System.nanoTime() < deadline) Thread.sleep(2);
+            yes(waiting.getState() == Thread.State.BLOCKED, "explicit download joins in-flight preview across repository instances");
+            eq(1, server.calls.size(), "concurrent preview and download use one network request");
+        } finally { release.countDown(); }
+        yes(Arrays.equals(original, preview.get(5, java.util.concurrent.TimeUnit.SECONDS)), "preview completes original recipe");
+        PresetLibrary.AddResult saved = download.get(5, java.util.concurrent.TimeUnit.SECONDS);
+        yes(saved.added && Arrays.equals(original, library.readPreset(saved.record.id)), "waiting explicit download commits checked recipe");
+        eq(1, server.calls.size(), "waiting download reuses cached response after transfer finishes");
     }
 
     private static void rejectedOnlinePreviews() throws Exception {

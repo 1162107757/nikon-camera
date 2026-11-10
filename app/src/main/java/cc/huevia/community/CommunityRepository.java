@@ -46,7 +46,10 @@ public final class CommunityRepository {
         CommunityHttpTransport upload = new CommunityHttpTransport(mime); upload.setInstallationId(installationId);
         return decode(accounts.requestWithSession(upload, "POST", path, bytes, true));
     }
-    public static String encode(String value) { return URLEncoder.encode(value == null ? "" : value, StandardCharsets.UTF_8); }
+    public static String encode(String value) {
+        try { return URLEncoder.encode(value == null ? "" : value, StandardCharsets.UTF_8.name()); }
+        catch (java.io.UnsupportedEncodingException impossible) { throw new IllegalStateException("UTF-8 unavailable", impossible); }
+    }
     public static Map<String,Object> body(Object... values) {
         Map<String,Object> result = new LinkedHashMap<>();
         for (int i = 0; i < values.length; i += 2) result.put((String) values[i], values[i+1]); return result;

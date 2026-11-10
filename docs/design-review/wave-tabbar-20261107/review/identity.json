@@ -1,0 +1,10 @@
+{
+  "scope": "Unapproved local design prototype only; production untouched",
+  "files": {
+    "index.html": "dc315a7dcbef86162605668e0f5d5417d87b7ac7faa06ef5ea84e419f4f7e7a0",
+    "app.html": "dccd71ed17c82e6ce5537b129806040dd01e8b71f2bded15f685f234205961cf",
+    "wave.css": "ef3abfd6430a91ee44f4688cbc77ebdd102fc2f42806954a0187cc602324aef4",
+    "wave.js": "081f84f9725b6284c694d717104cbde93953573d8d22fce107e7a6f0799d648b",
+    "DIRECTION.json": "ef1c6cec8322d5d6c695569753d5fe242a3679bfd3e0fafdd79d35d4304b4454"
+  }
+}

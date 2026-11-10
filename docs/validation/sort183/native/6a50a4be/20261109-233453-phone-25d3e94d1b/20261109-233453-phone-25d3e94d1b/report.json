@@ -1,0 +1,2605 @@
+{
+  "pass": true,
+  "apkSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "checks": [
+    {
+      "name": "native-EXIF-capture-differs-from-arrival",
+      "passed": true
+    },
+    {
+      "name": "missing-capture-falls-back-to-arrival",
+      "passed": true
+    },
+    {
+      "name": "aliases-share-original-group-earliest-arrival",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-false-false",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-false-true",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-true-false",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-true-true",
+      "passed": true
+    },
+    {
+      "name": "complete-index-sorts-capture-before-first-page",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-11",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-12",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-13",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-14",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-15",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-16",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-17",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-18",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-19",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-20",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-21",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-22",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-23",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-24",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-25",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-26",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-27",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-28",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-29",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-30",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-31",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-32",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-33",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-34",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-35",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-36",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-37",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-38",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-39",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-40",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-41",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-42",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-43",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-44",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-45",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-46",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-47",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-48",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-49",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-50",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-51",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-52",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-53",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-54",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-55",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-56",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-57",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-58",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-59",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-60",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-61",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-62",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-63",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-64",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-65",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-66",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-67",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-68",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-69",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-70",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-71",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-72",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-73",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-74",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-75",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-76",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-77",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-78",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-79",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-80",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-81",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-82",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-83",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-84",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-85",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-86",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-87",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-88",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-89",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-90",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-91",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-92",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-93",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-94",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-95",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-96",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-97",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-98",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-99",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-100",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-101",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-102",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-103",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-104",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-105",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-106",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-107",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-108",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-109",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-110",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-111",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-112",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-113",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-114",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-115",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-116",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-117",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-118",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-119",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-120",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-121",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-122",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-123",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-124",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-125",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-126",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-127",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-128",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-129",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-130",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-131",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-132",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-133",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-134",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-falsefalse",
+      "passed": true
+    },
+    {
+      "name": "capture-opposite-extremes-false",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-11",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-12",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-13",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-14",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-15",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-16",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-17",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-18",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-19",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-20",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-21",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-22",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-23",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-24",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-25",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-26",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-27",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-28",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-29",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-30",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-31",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-32",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-33",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-34",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-35",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-36",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-37",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-38",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-39",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-40",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-41",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-42",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-43",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-44",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-45",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-46",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-47",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-48",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-49",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-50",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-51",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-52",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-53",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-54",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-55",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-56",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-57",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-58",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-59",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-60",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-61",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-62",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-63",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-64",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-65",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-66",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-67",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-68",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-69",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-70",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-71",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-72",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-73",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-74",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-75",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-76",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-77",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-78",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-79",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-80",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-81",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-82",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-83",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-84",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-85",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-86",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-87",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-88",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-89",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-90",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-91",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-92",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-93",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-94",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-95",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-96",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-97",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-98",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-99",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-100",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-101",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-102",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-103",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-104",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-105",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-106",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-107",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-108",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-109",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-110",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-111",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-112",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-113",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-114",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-115",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-116",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-117",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-118",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-119",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-120",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-121",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-122",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-123",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-124",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-125",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-126",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-127",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-128",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-129",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-130",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-131",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-132",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-133",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-134",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-falsetrue",
+      "passed": true
+    },
+    {
+      "name": "capture-opposite-extremes-true",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-11",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-12",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-13",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-14",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-15",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-16",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-17",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-18",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-19",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-20",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-21",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-22",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-23",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-24",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-25",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-26",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-27",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-28",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-29",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-30",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-31",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-32",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-33",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-34",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-35",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-36",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-37",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-38",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-39",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-40",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-41",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-42",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-43",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-44",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-45",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-46",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-47",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-48",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-49",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-50",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-51",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-52",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-53",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-54",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-55",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-56",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-57",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-58",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-59",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-60",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-61",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-62",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-63",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-64",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-65",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-66",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-67",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-68",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-69",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-70",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-71",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-72",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-73",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-74",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-75",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-76",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-77",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-78",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-79",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-80",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-81",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-82",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-83",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-84",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-85",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-86",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-87",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-88",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-89",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-90",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-91",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-92",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-93",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-94",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-95",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-96",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-97",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-98",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-99",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-100",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-101",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-102",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-103",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-104",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-105",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-106",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-107",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-108",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-109",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-110",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-111",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-112",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-113",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-114",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-115",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-116",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-117",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-118",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-119",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-120",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-121",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-122",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-123",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-124",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-125",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-126",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-127",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-128",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-129",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-130",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-131",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-132",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-133",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-134",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-truefalse",
+      "passed": true
+    },
+    {
+      "name": "added-newest-independent-of-capture",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-11",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-12",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-13",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-14",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-15",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-16",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-17",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-18",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-19",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-20",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-21",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-22",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-23",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-24",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-25",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-26",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-27",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-28",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-29",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-30",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-31",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-32",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-33",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-34",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-35",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-36",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-37",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-38",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-39",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-40",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-41",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-42",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-43",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-44",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-45",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-46",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-47",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-48",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-49",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-50",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-51",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-52",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-53",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-54",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-55",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-56",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-57",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-58",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-59",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-60",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-61",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-62",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-63",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-64",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-65",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-66",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-67",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-68",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-69",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-70",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-71",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-72",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-73",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-74",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-75",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-76",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-77",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-78",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-79",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-80",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-81",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-82",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-83",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-84",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-85",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-86",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-87",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-88",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-89",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-90",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-91",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-92",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-93",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-94",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-95",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-96",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-97",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-98",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-99",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-100",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-101",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-102",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-103",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-104",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-105",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-106",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-107",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-108",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-109",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-110",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-111",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-112",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-113",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-114",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-115",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-116",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-117",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-118",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-119",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-120",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-121",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-122",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-123",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-124",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-125",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-126",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-127",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-128",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-129",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-130",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-131",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-132",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-133",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-134",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-truetrue",
+      "passed": true
+    },
+    {
+      "name": "reverse-sort-prefix-includes-old-visible-anchor",
+      "passed": true
+    },
+    {
+      "name": "RAW-describe-preserves-format-and-added-date",
+      "passed": true
+    },
+    {
+      "name": "RAW-participates-in-complete-date-index",
+      "passed": true
+    },
+    {
+      "name": "main-ready",
+      "passed": true
+    },
+    {
+      "name": "private-album-ready",
+      "passed": true
+    },
+    {
+      "name": "icon-only-48dp-entry",
+      "passed": true
+    },
+    {
+      "name": "entry-before-selection-in-count-row",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "default-capture-newest-selected",
+      "passed": true
+    },
+    {
+      "name": "apply-reachable-565",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-taken-566",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-added-567",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-newest-568",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-oldest-569",
+      "passed": true
+    },
+    {
+      "name": "close-48dp-570",
+      "passed": true
+    },
+    {
+      "name": "close-discards-draft",
+      "passed": true
+    },
+    {
+      "name": "navigation-restored-after-close",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "back-discards-draft",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "sort-anchor-restored",
+      "passed": true
+    },
+    {
+      "name": "opposite-order-keeps-visible-photo-anchor",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "apply-persists-app-choice",
+      "passed": true
+    },
+    {
+      "name": "date-groups-show-full-historical-year",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "reset-draft-default-only",
+      "passed": true
+    },
+    {
+      "name": "reset-close-preserves-applied",
+      "passed": true
+    },
+    {
+      "name": "selection-A-hides-sort-entry",
+      "passed": true
+    },
+    {
+      "name": "selection-capture-has-no-active-sort-dialog",
+      "passed": true
+    },
+    {
+      "name": "cancel-selection-restores-entry",
+      "passed": true
+    },
+    {
+      "name": "phone-ready",
+      "passed": true
+    },
+    {
+      "name": "phone-keeps-independent-default",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "phone-reordered",
+      "passed": true
+    },
+    {
+      "name": "separate-source-preferences",
+      "passed": true
+    },
+    {
+      "name": "observer-invalidates-and-reloads-index",
+      "passed": true
+    },
+    {
+      "name": "observer-updates-new-media-without-restart",
+      "passed": true
+    },
+    {
+      "name": "metadata-change-does-not-rearrange-multiselect",
+      "passed": true
+    },
+    {
+      "name": "deferred-refresh-after-selection",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "apply-reachable-603",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-taken-604",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-added-605",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-newest-606",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-oldest-607",
+      "passed": true
+    },
+    {
+      "name": "close-48dp-608",
+      "passed": true
+    },
+    {
+      "name": "sort183-rendered-version-keeps-original-capture-date",
+      "passed": true
+    },
+    {
+      "name": "sort183-original-alias-time-precedes-rendered-file",
+      "passed": true
+    },
+    {
+      "name": "fixture-group-shape",
+      "passed": true,
+      "found": true,
+      "members": 3,
+      "versions": 2,
+      "groups": 19
+    },
+    {
+      "name": "whole-group-contains-original-alias-and-effect",
+      "passed": true
+    },
+    {
+      "name": "new-version-after-snapshot-stops-delete",
+      "passed": true
+    },
+    {
+      "name": "active-photo-processing-blocks-delete",
+      "passed": true
+    },
+    {
+      "name": "public-photo-fixture-created",
+      "passed": true
+    },
+    {
+      "name": "album-main-ready",
+      "passed": true
+    },
+    {
+      "name": "native-app-album-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-long-press-target-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-thumbnail-long-press-enters-selection",
+      "passed": true
+    },
+    {
+      "name": "A-selected-count-is-live-three",
+      "passed": true
+    },
+    {
+      "name": "A-count-and-cancel-in-top-header",
+      "passed": true
+    },
+    {
+      "name": "A-only-three-bottom-actions",
+      "passed": true
+    },
+    {
+      "name": "A-action-label-height-unclipped-0",
+      "passed": true
+    },
+    {
+      "name": "A-equal-width-and-matching-icon-0",
+      "passed": true
+    },
+    {
+      "name": "A-action-label-height-unclipped-1",
+      "passed": true
+    },
+    {
+      "name": "A-equal-width-and-matching-icon-1",
+      "passed": true
+    },
+    {
+      "name": "A-action-label-height-unclipped-2",
+      "passed": true
+    },
+    {
+      "name": "A-equal-width-and-matching-icon-2",
+      "passed": true
+    },
+    {
+      "name": "A-gallery-retains-visible-photo-space",
+      "passed": true
+    },
+    {
+      "name": "A-header-select-all-uses-current-scope",
+      "passed": true
+    },
+    {
+      "name": "A-header-cancel-restores-browse",
+      "passed": true
+    },
+    {
+      "name": "delete-visible-only-in-app-selection",
+      "passed": true
+    },
+    {
+      "name": "delete-retains-48dp-target",
+      "passed": true
+    },
+    {
+      "name": "maximum-count-label-fits",
+      "passed": true
+    },
+    {
+      "name": "delete-selection-toolbar-fits",
+      "passed": true
+    },
+    {
+      "name": "explicit-confirmation-shown",
+      "passed": true
+    },
+    {
+      "name": "cancel-preserves-all-versions",
+      "passed": true
+    },
+    {
+      "name": "phone-source-selected",
+      "passed": true
+    },
+    {
+      "name": "phone-album-does-not-offer-app-deletion",
+      "passed": true
+    },
+    {
+      "name": "A-phone-only-batch-edit",
+      "passed": true
+    },
+    {
+      "name": "app-source-restored",
+      "passed": true
+    },
+    {
+      "name": "cancel-disabled-during-confirmed-delete",
+      "passed": true
+    },
+    {
+      "name": "back-preserves-confirmed-delete-and-result-callback",
+      "passed": true
+    },
+    {
+      "name": "confirm-deletes-all-three-private-members",
+      "passed": true
+    },
+    {
+      "name": "other-app-photo-untouched",
+      "passed": true
+    },
+    {
+      "name": "public-MediaStore-original-retained-exactly",
+      "passed": true
+    },
+    {
+      "name": "deletion-notifies-shared-photo-library",
+      "passed": true
+    }
+  ],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF\/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims."
+}

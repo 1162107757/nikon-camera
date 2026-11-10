@@ -1,0 +1,17 @@
+{
+  "versionCode": 174,
+  "versionName": "0.30.20-beta",
+  "sourceSha256": "22deacb8e5f386f72186a34234421c07ffb38ba1b59cc769a881f151059f9077",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication174\\candidates\\22deacb8e5f386f72186a34234421c07ffb38ba1b59cc769a881f151059f9077\\update.apk",
+  "uploadSha256": "527191606cc678c0e1076f42f96036160f8886aa586243e22ede06b402ce904c",
+  "uploadBytes": 31370429,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "Scoped functional verification complete: API31/API37 native20 each andAPI31 search37; physical HarmonyOS pending."
+}

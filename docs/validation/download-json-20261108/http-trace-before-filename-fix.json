@@ -1,0 +1,13 @@
+{
+  "gatewayStatus": 307,
+  "gatewayType": null,
+  "gatewayDisposition": null,
+  "gatewayMilliseconds": 3068,
+  "targetHost": "download.huevia.cc",
+  "fileStatus": 206,
+  "fileType": "application/vnd.android.package-archive",
+  "fileDisposition": "attachment; filename=\"Huevia-156-beta.apk\"",
+  "range": "bytes 0-7/31292511",
+  "prefix": "504b030414000000",
+  "totalMilliseconds": 3304
+}

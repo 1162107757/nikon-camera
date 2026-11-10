@@ -66,9 +66,11 @@ import cc.huevia.album.CameraProtocol;
 import cc.huevia.connection.PhotoLiveContinuation;
 import cc.huevia.connection.ConnectionProtection;
 import cc.huevia.library.OnlinePresetRepository;
+import cc.huevia.library.OnlinePresetSearch;
 import cc.huevia.library.PresetLibrary;
 import cc.huevia.library.PresetRecord;
 import cc.huevia.library.PresetCategories;
+import cc.huevia.library.PresetHomeFilter;
 import cc.huevia.library.PresetFile;
 import cc.huevia.library.PresetDownloadTasks;
 import cc.huevia.album.PhotoProjectPresets;
@@ -96,6 +98,7 @@ import cc.huevia.ui.GlassBar;
 import cc.huevia.ui.AppAppearance;
 import cc.huevia.ui.PageTransitions;
 import cc.huevia.ui.PresetPreviewRenderer;
+import cc.huevia.ui.PresetShowcaseRenderer;
 import cc.huevia.ui.HoldToCompare;
 import cc.huevia.ui.ToneCurveView;
 import cc.huevia.ui.TopNotice;
@@ -132,6 +135,8 @@ import java.util.function.Consumer;
 
 /** Consumer shell. Camera writes remain in the independently guarded transport backends. */
 public final class MainActivity extends Activity {
+    private String connectionOperation = "", connectionTransport = "", requestedCameraOperation = "";
+    private boolean connectionWorkspace() { return !connectionOperation.isEmpty(); }
     private static final int PICK_NCP = 100, PICK_SAMPLE = 101, EXPORT_REPORT = 102, PICK_TEMPLATE = 103,
             PROTECT_PHOTO_LIVE = 106, SAVE_PHOTOS_PERMISSION = 107,
             CAMERA_WIFI_SYSTEM_SETTINGS = 109;
@@ -203,6 +208,7 @@ public final class MainActivity extends Activity {
     private final Set<String> catalogCategories = new LinkedHashSet<>();
     private CameraWifiNetwork wifi;
     private PresetPreviewRenderer presetPreviews;
+    private PresetShowcaseRenderer presetShowcases;
     private HoldToCompare activeComparison;
     private View transitioningContent;
     private String lastRoute = "";
@@ -211,7 +217,7 @@ public final class MainActivity extends Activity {
     private TextView title, busyLabel;
     private boolean localTab = true, albumTab, settingsTab, ready, busy, receiverRegistered, importAfterPick;
     private boolean permissionForSettings, settingsReturnToPreset;
-    private String usbModel = "";
+    private String usbModel = "", usbManufacturer = "";
     private String pendingImportId = "";
     private boolean pendingResumeScheduled, pendingConnectionAccepted, activityVisible;
     private final PhotoLiveContinuation photoLiveContinuation = new PhotoLiveContinuation();
@@ -324,6 +330,10 @@ public final class MainActivity extends Activity {
         int target() { return selectedSlot().itemCode; }
         byte[] sourceBytes() { return source.clone(); }
     }
+    private boolean slotManagementRequested;
+    private long slotManagerRevision;
+    private AlertDialog slotManagerDialog,slotDeleteDialog;
+    private cc.huevia.usb.UsbPictureControlDelete activeSlotDelete;
 
     private static final class ImportOutcome {
         final String heading, detail, presetName, camera, sourceSha256;
@@ -352,11 +362,12 @@ public final class MainActivity extends Activity {
                     scanSlots(device, permissionRecovery, connectOnly);
                 } else { permissionForSettings = false; finishBusy("未获得相机访问权限，请在设置中重新连接并允许访问。"); }
             } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(intent.getAction())) {
-                if (device != null && device.getDeviceId() == verifiedUsbId) { verifiedUsbId = -1; usbModel = ""; }
+                if (device != null && device.getDeviceId() == verifiedUsbId) { verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; }
                 UsbPictureControlProbe probe = activeProbe;
                 if (probe != null && probe.isProbingDevice(device)) probe.close();
                 UsbPictureControlImport importer = activeImport;
                 if (importer != null && importer.isProbingDevice(device)) importer.close();
+                if(activeSlotDelete!=null&&activeSlotDelete.isProbingDevice(device))activeSlotDelete.close();
                 if (permissionDevice != null && device != null && permissionDevice.getDeviceId() == device.getDeviceId()) {
                     permissionDevice = null; permissionForSettings = false; finishBusy("相机已断开。请连接数据线后重新开始。");
                 } else if (!busy) render();
@@ -367,6 +378,12 @@ public final class MainActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         AppAppearance.apply(this);
         super.onCreate(state);
+        connectionOperation = getIntent().getStringExtra(cc.huevia.connection.CameraConnectionRequest.OPERATION);
+        if (connectionOperation == null) connectionOperation = "";
+        connectionTransport = getIntent().getStringExtra(cc.huevia.connection.CameraConnectionRequest.TRANSPORT);
+        if (connectionTransport == null) connectionTransport = cc.huevia.connection.CameraConnectionRequest.WIFI;
+        if (connectionWorkspace()) { settingsTab = true; albumTab = localAlbumTab = false; }
+        if (state != null) requestedCameraOperation = state.getString("requestedCameraOperation", "");
         topNotice = new TopNotice(this);
         connections = CameraConnectionRuntime.get(this);
         connectionNoticeRevision = connections.noticeRevision();
@@ -378,6 +395,7 @@ public final class MainActivity extends Activity {
         File traceDirectory = getExternalFilesDir(null);
         if (traceDirectory != null) ConnectionTrace.configure(new File(traceDirectory, "connection-trace.log"));
         presetPreviews = new PresetPreviewRenderer(this);
+        presetShowcases = new PresetShowcaseRenderer(this, presetPreviews);
         account = new AccountPanel(this, new AccountPanel.Host() {
             @Override public void onChanged() { if (!destroyed) syncDownloadRecoveryOwner(); if (!destroyed && ready) { render(); if(personal!=null)personal.accountChanged();if(pendingPersonalPick&&!account.isOpen()&&personal!=null&&!personal.owner().isEmpty()){pendingPersonalPick=false;openPresetFilePicker(false);} if (community != null && !account.isOpen()) { community.refreshUnread(); community.onAccountChanged(); } } }
             @Override public boolean isVisible() { return activityVisible && !destroyed && !isFinishing(); }
@@ -412,6 +430,8 @@ public final class MainActivity extends Activity {
             localCategoryFilter = state.getString("localPresetCategory", PresetCategories.ALL);
             onlineCategoryFilter = state.getString("onlinePresetCategory", PresetCategories.ALL);
             onlineFormatFilter = restoredOnlinePresetFormat(state.getString("onlinePresetFormat", ""));
+            homePresetQuery = state.getString("homePresetQuery", "");
+            homePresetSearchExpanded = state.getBoolean("homePresetSearchExpanded");
             settingsReturnToPreset = state.getBoolean("settingsReturnToPreset");
             pendingImportId = state.getString("pendingImportId", "");
             pendingConnectionAccepted = state.getBoolean("pendingConnectionAccepted");
@@ -427,6 +447,7 @@ public final class MainActivity extends Activity {
             wirelessSettingsProbe = state.getBoolean("wirelessSettingsProbe");
             wirelessAddress = state.getString("wirelessAddress", ""); wirelessPortText = state.getString("wirelessPort", "15740");
         }
+        restorePresetHomeFilters(state);
         album = new AlbumPanel(this, new AlbumPanel.Host() {
             @Override public int bottomNavigationInset() { return albumBottomNavigationInset(); }
             @Override public AutoCloseable beginPhotoWork() { return connections.beginPhotoOperation(); }
@@ -458,6 +479,7 @@ public final class MainActivity extends Activity {
             }
             @Override public void onConnectionCancelled() {
                 cancelPendingCameraWifi();
+                if (connectionWorkspace()) { finish(); return; }
                 boolean returnToLive = photoLiveContinuation.isPending();
                 clearPendingPhotoLive();
                 pendingImportId = ""; pendingConnectionAccepted = false;
@@ -478,6 +500,7 @@ public final class MainActivity extends Activity {
             }
         }, connections.album, connections.photoPresets, connections.projectPresets);
         localPhotoEditor = new AlbumPanel(this, new AlbumPanel.Host() {
+            @Override public void onConnectionRequired(String operation) { showConnectionRequired(operation); }
             @Override public boolean isLocalWorkspaceVisible() { return localAlbumTab && activityVisible && !destroyed && !account.isOpen() && !community.isOpen() && !updates.isOpen(); }
             @Override public AutoCloseable beginPhotoWork() { return connections.beginPhotoOperation(); }
             @Override public void beforeSavePhotos(Runnable save) { preparePhotoSave(save); }
@@ -498,6 +521,8 @@ public final class MainActivity extends Activity {
             @Override public void changed() { if (!destroyed && ready && localAlbumTab) render(); }
             @Override public void open(DownloadedPhoto photo) { openLocalPhoto(photo); }
             @Override public void batch(List<DownloadedPhoto> photos) { localPhotoEditor.chooseLocalWorkspaceAction(photos); }
+            @Override public void photosDeleted(cc.huevia.album.PhotoDeleteResult result) { connections.album.onAppCopiesDeleted(result); }
+            @Override public void sortVisibility(boolean showing){if(destroyed)return;View navigation=getWindow().getDecorView().findViewWithTag("root-floating-navigation");if(navigation!=null)navigation.setVisibility(showing?View.INVISIBLE:View.VISIBLE);}
             @Override public void export(List<DownloadedPhoto> photos) { localPhotoEditor.exportLocalWorkspace(photos); }
             @Override public void feedback(String heading, String detail) { MainActivity.this.feedback(heading, detail); }
             @Override public void addFilters() { switchRoot(0); }
@@ -537,8 +562,12 @@ public final class MainActivity extends Activity {
                 }
                 onUi(() -> {
                     if (state == null && online.getEndpoint().isEmpty() && !library.list().isEmpty()) localTab = true;
+                    if (connectionWorkspace()) {
+                        settingsTab = true; albumTab = localAlbumTab = false;
+                        album.openConnectionSettings();
+                    }
                     ready = true; render(); refreshPresetDownloadViews();
-                    updates.automaticCheck(); community.refreshUnread();if(personal!=null)personal.resumed();
+                    if (!connectionWorkspace()) { updates.automaticCheck(); community.refreshUnread();if(personal!=null)personal.resumed(); }
                     syncConnectionState();
                     if (deferredResult != null) { Intent savedResult = deferredResult; int request = deferredRequest; deferredResult = null; onActivityResult(request, RESULT_OK, savedResult); }
                     else if (!localTab && !albumTab && !localAlbumTab && !settingsTab) loadCatalog(false);
@@ -571,7 +600,12 @@ public final class MainActivity extends Activity {
         AppAppearance.apply(this);
         // Some Android builds require DecorView creation before Window.getInsetsController().
         View decor = getWindow().getDecorView();
-        colors = new UiPalette(this); imageEpoch++;
+        boolean homeRoot = !account.isOpen() && !community.isOpen() && !updates.isOpen() && !wirelessGuide
+                && confirmation == null && importOutcome == null && detailId.isEmpty() && detailOnline == null
+                && (!albumTab || album.isHomeOverview()) && (!settingsTab || !album.isConnectionGuide())
+                && (!localAlbumTab || !localPhotoEditor.isImmersive());
+        colors = homeRoot || connectionWorkspace() || settingsTab && album.isConnectionGuide()
+                ? UiPalette.home(this) : new UiPalette(this); imageEpoch++;
         if (ready && albumTab && !wirelessGuide && !recoveryBlocked && !busy && confirmation == null && importOutcome == null
                 && album.wantsCameraPhotos()) connections.prepareAlbumFromCurrent(false);
         album.setSharedCameraState(hasPreparedWireless() || album.hasCameraConnection(), connections.isPreparingAlbum(),
@@ -604,12 +638,11 @@ public final class MainActivity extends Activity {
             android.view.WindowInsetsController controller = getWindow().getInsetsController();
             if (controller != null) controller.show(WindowInsets.Type.systemBars());
         }
-        boolean orangeHome = !albumTab && !localAlbumTab && !settingsTab && !account.isOpen() && !community.isOpen()
-                && !updates.isOpen() && !wirelessGuide && confirmation == null && importOutcome == null && detailId.isEmpty() && detailOnline == null;
-        getWindow().setStatusBarColor(orangeHome ? (colors.dark ? 0xff423636 : 0xffBEB5BC) : colors.surface); getWindow().setNavigationBarColor(colors.surface);
+        boolean presetHome = homeRoot && !albumTab && !localAlbumTab && !settingsTab;
+        getWindow().setStatusBarColor(colors.surface); getWindow().setNavigationBarColor(colors.surface);
         int system = colors.dark ? 0 : View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         decor.setSystemUiVisibility(system);
-        shell = vertical(); shell.setBackground(orangeHome ? HueTheme.orangeLight(this, colors, compactPresetHeight() ? 168 : 218) : shape(colors.surface, 0)); shell.setFitsSystemWindows(false);
+        shell = vertical(); shell.setBackgroundColor(colors.surface); shell.setFitsSystemWindows(false);
         shell.setOnApplyWindowInsetsListener((view, insets) -> {
             if (Build.VERSION.SDK_INT >= 30) {
                 android.graphics.Insets safe = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout() | WindowInsets.Type.ime());
@@ -628,7 +661,7 @@ public final class MainActivity extends Activity {
         boolean accountPage = account.isOpen();
         boolean communityPage = !accountPage && community.isOpen();
         boolean updatePage = !accountPage && !communityPage && updates.isOpen();
-        boolean settingsGuide = settingsTab && !accountPage && !communityPage && !updatePage && album.isConnectionGuide();
+        boolean settingsGuide = connectionWorkspace() || settingsTab && !accountPage && !communityPage && !updatePage && album.isConnectionGuide();
         boolean presetPage = !albumTab && !localAlbumTab && !settingsTab;
         boolean detailPage = presetPage && !wirelessGuide && confirmation == null && importOutcome == null
                 && (!detailId.isEmpty() || detailOnline != null);
@@ -649,26 +682,41 @@ public final class MainActivity extends Activity {
                 && getResources().getConfiguration().screenHeightDp < 480
                 && getResources().getConfiguration().screenWidthDp > getResources().getConfiguration().screenHeightDp;
         boolean compactRoot=!back&&compactPresetHeight();
-        LinearLayout bar = horizontal(); bar.setPadding(dp(back ? 8 : 20), dp(compactLocalAlbum||compactRoot ? 0 : 8), dp(16), dp(compactLocalAlbum||compactRoot ? 0 : 4)); bar.setMinimumHeight(dp(compactLocalAlbum||compactRoot ? 48 : back ? 56 : 64));
+        boolean resumeSearchFocus = homePresetSearchInput != null && homePresetSearchInput.hasFocus();
+        boolean resumeSearchKeyboard = resumeSearchFocus && homeSearchKeyboardVisible();
+        int searchCursor = resumeSearchFocus ? homePresetSearchInput.getSelectionEnd() : -1;
+        homePresetSearchInput = null; homePresetSearchVisible = presetHome;
+        LinearLayout bar = horizontal(); bar.setPadding(dp(presetHome && homePresetSearchExpanded ? 12 : back ? 8 : 20), dp(compactLocalAlbum||compactRoot ? 0 : 8), dp(16), dp(compactLocalAlbum||compactRoot ? 0 : 4)); bar.setMinimumHeight(dp(compactLocalAlbum||compactRoot ? 48 : back ? 56 : 64));
         if (compactLocalAlbum) bar.setMinimumHeight(dp(48));
         if (back) bar.addView(iconButton(AppIcon.Kind.BACK, "返回", this::goBack));
         title = text(accountPage ? account.title() : communityPage ? community.title() : updatePage ? "应用更新" : wirelessGuide ? (wirelessRecovery ? "无线核对预设" : wirelessSettingsProbe ? "预设支持检测" : "读取相机预设")
-                : settingsGuide ? "Wi-Fi 无线连接" : settingsTab ? "设置" : localAlbumTab ? localAlbum.title() : albumTab ? "同步"
+                : connectionWorkspace() ? "连接相机" : settingsGuide ? "Wi-Fi 无线连接" : settingsTab ? "设置" : localAlbumTab ? localAlbum.title() : albumTab ? "同步"
                 : importOutcome != null ? "导入结果" : confirmation != null ? "确认导入"
                 : (!detailId.isEmpty() || detailOnline != null ? "预设详情" : "预设"), back || compactLocalAlbum || compactRoot ? 18 : 26, true);
         title.setLetterSpacing(-.02f); title.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         title.setMaxLines(1);title.setEllipsize(TextUtils.TruncateAt.END);
-        bar.addView(title, new LinearLayout.LayoutParams(0, -2, 1));
+        if(localSelection){bar.setPadding(0,dp(compactLocalAlbum?0:8),0,dp(compactLocalAlbum?0:4));bar.addView(localAlbum.createSelectionHeader(),new LinearLayout.LayoutParams(-1,dp(compactLocalAlbum?48:52)));}
+        else if (presetHome && homePresetSearchExpanded)
+            bar.addView(homePresetSearchField(resumeSearchFocus, resumeSearchKeyboard, searchCursor), new LinearLayout.LayoutParams(0, dp(48), 1));
+        else bar.addView(title, new LinearLayout.LayoutParams(0, -2, 1));
         View accountAction = accountPage ? account.createHeaderAction(colors) : null;
         if (accountAction != null) bar.addView(accountAction);
         if (localAlbumTab && !accountPage && !communityPage && !updatePage && !localPhotoEditor.isImmersive()) {
             bar.setTag("local-album-titlebar"); if (!localSelection) bar.addView(localAlbum.createHeaderAction());
         }
         if (!back && albumTab) bar.addView(connectionIndicator(true));
-        if(orangeHome&&compactRoot)bar.addView(connectionIndicator(false));
-        if (orangeHome) {
-            View refresh = iconButton(AppIcon.Kind.REFRESH, "刷新预设", () -> { if (localTab) render(); else requestCatalog(false); });
-            refresh.setBackground(ripple(Color.TRANSPARENT)); bar.addView(refresh);
+        if (presetHome) {
+            if (homePresetSearchExpanded) {
+                TextView cancelSearch = text("取消", 14, false); cancelSearch.setTag("preset-home-search-cancel");
+                cancelSearch.setTextColor(colors.secondary); cancelSearch.setGravity(Gravity.CENTER);
+                cancelSearch.setFocusable(true); cancelSearch.setContentDescription("关闭搜索");
+                cancelSearch.setOnClickListener(v -> closeHomePresetSearch());
+                bar.addView(cancelSearch, new LinearLayout.LayoutParams(dp(48), dp(48)));
+            } else {
+                bar.addView(homeIcon(AppIcon.Kind.SEARCH, "搜索预设", this::searchHomePresets, false));
+                bar.addView(homeIcon(AppIcon.Kind.PLUS, localTab ? "导入本地预设" : "发布预设",
+                        () -> { if (localTab) pickNcp(false); else community.openSubmissionComposer(); }, true));
+            }
         }
         pane.addView(bar);
         if (busy) {
@@ -677,7 +725,8 @@ public final class MainActivity extends Activity {
             busyLabel = text(progress, 14, false); busyLabel.setPadding(dp(12), 0, 0, 0); loading.addView(busyLabel, new LinearLayout.LayoutParams(0, -2, 1)); pane.addView(loading);
         } else busyLabel = null;
         body = presetPage&&!back ? new SubcategorySwipeLayout(this,()->localTab?1:0,2,index->selectPresetSource(index==1),()->ready&&!busy&&initializationError.isEmpty()) : vertical(); pane.addView(body, new LinearLayout.LayoutParams(-1, 0, 1));
-        if (!ready) empty(body, "正在准备预设库", "正在读取保存在手机中的预设。", null, null);
+        if (connectionWorkspace()) renderRequestedConnection();
+        else if (!ready) empty(body, "正在准备预设库", "正在读取保存在手机中的预设。", null, null);
         else if (!initializationError.isEmpty()) empty(body, "预设库暂不可用", initializationError, "查看帮助", this::showHelp);
         else if (accountPage) body.addView(account.createView(colors), new LinearLayout.LayoutParams(-1, -1));
         else if (communityPage) body.addView(community.createView(colors), new LinearLayout.LayoutParams(-1, -1));
@@ -695,13 +744,13 @@ public final class MainActivity extends Activity {
         else if (confirmation != null) renderConfirmation();
         else if (!detailId.isEmpty() || detailOnline != null) renderDetail();
         else renderHome();
-        if (!localSelection && (!back || albumTab && !album.isImmersive() && !accountPage && !communityPage && !updatePage && !wirelessGuide)) {
+        if (!connectionWorkspace() && !localSelection && (!back || albumTab && !album.isImmersive() && !accountPage && !communityPage && !updatePage && !wirelessGuide)) {
             boolean rail = getResources().getConfiguration().screenWidthDp >= 600;
-            FrameLayout material = rail ? new FrameLayout(this) : new GlassBar(this);
+            FrameLayout material = rail ? new FrameLayout(this) : new GlassBar(this, colors);
             if (material instanceof GlassBar glass) glass.setBackdrop(pane);
             else material.setBackgroundColor(colors.glass);
             LinearLayout navigation = rail ? vertical() : horizontal(); navigation.setGravity(Gravity.CENTER);
-            navigation.setPadding(dp(rail ? 8 : 5), dp(rail ? 6 : 5), dp(rail ? 8 : 5), dp(rail ? 6 : 5));
+            navigation.setPadding(dp(rail ? 8 : 4), dp(rail ? 6 : 4), dp(rail ? 8 : 4), dp(rail ? 6 : 4));
             nav(navigation, "预设", AppIcon.Kind.PRESETS, presetPage, () -> switchRoot(0));
             nav(navigation, "同步", AppIcon.Kind.CAMERA, albumTab, () -> switchRoot(1));
             nav(navigation, "相册", AppIcon.Kind.ALBUM, localAlbumTab, () -> switchRoot(3));
@@ -716,6 +765,7 @@ public final class MainActivity extends Activity {
             }
             bounded.addView(material, destination);
             material.setTag("root-floating-navigation");
+            if (presetFilterSheet != null && presetFilterSheet.isShowing() || localAlbumTab && localAlbum.isSortSheetShowing()) material.setVisibility(View.INVISIBLE);
             if (rail) {
                 int safeWidth=dp(getResources().getConfiguration().screenWidthDp);
                 paneParams.width=Math.min(dp(720),safeWidth-dp(80));
@@ -727,19 +777,10 @@ public final class MainActivity extends Activity {
                 material.addView(hairline,new FrameLayout.LayoutParams(dp(1), -1, Gravity.END));
             }
         }
-        if (presetPage && !back && ready && !busy) {
-            View add = iconButton(AppIcon.Kind.PLUS, localTab ? "导入本地预设" : "发布预设",
-                    () -> { if (localTab) pickNcp(false); else community.openSubmissionComposer(); });
-            ((ImageView)add).setImageDrawable(new AppIcon(AppIcon.Kind.PLUS, colors.onAction, getResources().getDisplayMetrics().density));
-            add.setBackground(HueTheme.action(this, colors, 28)); add.setElevation(dp(4));
-            FrameLayout.LayoutParams position = new FrameLayout.LayoutParams(dp(54), dp(54), Gravity.BOTTOM | Gravity.END);
-            int addBottom = compactPresetHeight() && getResources().getConfiguration().screenWidthDp >= 600 ? 16 : 104 + Math.round(Math.max(0f, getResources().getConfiguration().fontScale - 1.2f) * 24f);
-            position.setMargins(dp(24), 0, dp(24), dp(addBottom)); bounded.addView(add, position);
-        }
         refreshMessageBadges();
         setContentView(shell); shell.requestApplyInsets(); restoreSystemBarAppearance();
         transitionTo(body);
-        if(personal!=null)personal.offerConsent();
+        if(personal!=null && !connectionWorkspace())personal.offerConsent();
     }
 
     private void openLocalPhoto(DownloadedPhoto photo) {
@@ -792,39 +833,155 @@ public final class MainActivity extends Activity {
 
     private void selectPresetSource(boolean local){
         if(localTab==local)return;
-        SubcategorySwipeLayout.changeSource(body,localTab?1:0,local?1:0,()->{localTab=local;render();if(!local&&!catalogLoaded)loadCatalog(false);},()->body);
+        SubcategorySwipeLayout.changeSource(body,localTab?1:0,local?1:0,()->{localTab=local;render();if(!local&&!catalogLoaded&&!searchingOnlinePresets())loadCatalog(false);},()->body);
+    }
+
+    private boolean homePresetMatches(Object value) {
+        String name = value instanceof PresetRecord ? ((PresetRecord)value).displayName : ((OnlinePreset)value).name;
+        String type = value instanceof PresetRecord ? ((PresetRecord)value).fileFormat : ((OnlinePreset)value).fileFormat;
+        boolean saved = value instanceof PresetRecord || library.findBySha256(((OnlinePreset)value).sha256) != null;
+        return currentPresetHomeFilter().matches(presetCategory(value), type, saved, localTab)
+                && OnlinePresetSearch.matchesName(name, homePresetQuery);
+    }
+    private void searchHomePresets() {
+        if (waitForCurrentTask()) return;
+        homePresetSearchExpanded = true; homePresetSearchRequestFocus = true; render();
+    }
+    private View homePresetSearchField(boolean resumeFocus, boolean resumeKeyboard, int cursor) {
+        LinearLayout field = horizontal(); field.setTag("preset-home-search-field");
+        field.setBackground(shape(colors.container, 18)); field.setPadding(dp(10), 0, 0, 0);
+        ImageView search = new ImageView(this); search.setImageDrawable(new AppIcon(AppIcon.Kind.SEARCH, colors.secondary, getResources().getDisplayMetrics().density));
+        search.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+        field.addView(search, new LinearLayout.LayoutParams(dp(20), dp(20)));
+        EditText input = new EditText(this); homePresetSearchInput = input; input.setTag("preset-home-search-input");
+        input.setSingleLine(true); input.setTextSize(15); input.setTextColor(colors.text); input.setHintTextColor(colors.secondary);
+        input.setBackgroundColor(Color.TRANSPARENT); input.setPadding(dp(10), 0, dp(4), 0);
+        input.setHint(localTab ? "搜索我的预设" : "搜索在线预设"); input.setContentDescription(localTab ? "搜索我的预设" : "搜索在线预设");
+        input.setFilters(new android.text.InputFilter[]{new android.text.InputFilter.LengthFilter(160)});
+        input.setImeOptions(android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH);
+        input.setText(homePresetQuery); input.setSelection(cursor < 0 ? input.length() : Math.min(cursor, input.length()));
+        field.addView(input, new LinearLayout.LayoutParams(0, -1, 1));
+        ImageView clear = new ImageView(this); clear.setTag("preset-home-search-clear");
+        clear.setImageDrawable(new AppIcon(AppIcon.Kind.CLOSE, colors.secondary, getResources().getDisplayMetrics().density));
+        clear.setPadding(dp(14), dp(14), dp(14), dp(14)); clear.setFocusable(true); clear.setContentDescription("清除搜索");
+        clear.setVisibility(homePresetQuery.isEmpty() ? View.GONE : View.VISIBLE);
+        clear.setOnClickListener(v -> { input.setText(""); input.requestFocus(); });
+        field.addView(clear, new LinearLayout.LayoutParams(dp(48), dp(48)));
+        input.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                homePresetQuery = s.toString(); homeIndexLimit = 20; clear.setVisibility(s.length() == 0 ? View.GONE : View.VISIBLE);
+                homePresetSearchHandler.removeCallbacks(homePresetSearchRefresh);
+                homePresetSearchHandler.postDelayed(homePresetSearchRefresh, 160);
+            }
+            public void afterTextChanged(android.text.Editable s) { }
+        });
+        input.setOnEditorActionListener((view, action, event) -> {
+            if (action != android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) return false;
+            homePresetSearchHandler.removeCallbacks(homePresetSearchRefresh); refreshHomePresetSearchResults();
+            android.view.inputmethod.InputMethodManager keyboard = (android.view.inputmethod.InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            if (keyboard != null) keyboard.hideSoftInputFromWindow(input.getWindowToken(), 0); return true;
+        });
+        boolean focus = homePresetSearchRequestFocus || resumeFocus, keyboard = homePresetSearchRequestFocus || resumeKeyboard;
+        homePresetSearchRequestFocus = false;
+        if (focus) input.post(() -> {
+            if (homePresetSearchInput != input || !homePresetSearchVisible || !homePresetSearchExpanded) return;
+            input.requestFocus();
+            android.view.inputmethod.InputMethodManager manager = (android.view.inputmethod.InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            if (keyboard && manager != null) manager.showSoftInput(input, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT);
+        });
+        return field;
+    }
+    private boolean homeSearchKeyboardVisible() {
+        if (Build.VERSION.SDK_INT >= 30) {
+            android.view.WindowInsets insets = getWindow().getDecorView().getRootWindowInsets();
+            return insets != null && insets.isVisible(android.view.WindowInsets.Type.ime());
+        }
+        android.graphics.Rect visible = new android.graphics.Rect(); getWindow().getDecorView().getWindowVisibleDisplayFrame(visible);
+        return getWindow().getDecorView().getHeight() - visible.bottom > dp(150);
+    }
+    private void refreshHomePresetSearchResults() {
+        if (isFinishing() || isDestroyed() || !ready || busy || !initializationError.isEmpty()
+                || !homePresetSearchVisible || !homePresetSearchExpanded || body == null) return;
+        rememberPresetPosition(); list = null; adapter = null; presetGridScrolling = false;
+        body.removeAllViews(); renderHome();
+    }
+    private void closeHomePresetSearch() {
+        homePresetSearchHandler.removeCallbacks(homePresetSearchRefresh);
+        if (homePresetSearchInput != null) {
+            android.view.inputmethod.InputMethodManager keyboard = (android.view.inputmethod.InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            if (keyboard != null) keyboard.hideSoftInputFromWindow(homePresetSearchInput.getWindowToken(), 0);
+        }
+        homePresetSearchExpanded = false; homePresetSearchRequestFocus = false; homePresetQuery = "";
+        homeIndexLimit = 20;
+        render();
+        if (!localTab && !catalogLoaded && !loadingCatalog) loadCatalog(false);
+    }
+
+    private boolean searchingOnlinePresets() { return !localTab && !homePresetQuery.trim().isEmpty(); }
+
+    private boolean fullCatalogHome() {
+        return !localTab && (searchingOnlinePresets() || !onlineFormatFilter.isEmpty()
+                || !PresetHomeFilter.ALL_DOWNLOADS.equals(onlineDownloadFilter));
+    }
+
+    private void loadOnlinePresetSearch(boolean refresh) {
+        if (!ready || online == null || loadingOnlineSearch || isFinishing() || isDestroyed()) return;
+        if (!refresh && (onlineSearchSnapshot != null || onlineSearchAttempted)) return;
+        if (onlineSearch == null) onlineSearch = new OnlinePresetSearch(online);
+        final OnlinePresetSearch engine = onlineSearch;
+        final int token = ++onlineSearchEpoch;
+        onlineSearchAttempted = true; loadingOnlineSearch = true;
+        images.execute(() -> {
+            OnlinePresetSearch.Snapshot result = engine.load(refresh);
+            onUi(() -> {
+                if (token != onlineSearchEpoch || isFinishing() || isDestroyed()) return;
+                loadingOnlineSearch = false; onlineSearchSnapshot = result;
+                if (homePresetSearchVisible && fullCatalogHome()) render();
+            });
+        });
+    }
+
+    private void retryOnlinePresetSearch() { loadOnlinePresetSearch(true); render(); }
+    private View homeIcon(AppIcon.Kind kind, String label, Runnable action, boolean filled) {
+        FrameLayout hit = new FrameLayout(this); hit.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(48)));
+        ImageView icon = new ImageView(this); icon.setPadding(dp(9), dp(9), dp(9), dp(9));
+        icon.setImageDrawable(new AppIcon(kind, filled ? colors.onPrimaryContainer : colors.text, getResources().getDisplayMetrics().density));
+        icon.setBackground(shape(filled ? colors.primaryContainer : colors.card, 18));
+        hit.addView(icon, new FrameLayout.LayoutParams(dp(36), dp(36), Gravity.CENTER)); hit.setContentDescription(label);
+        hit.setFocusable(true); hit.setOnClickListener(v -> { if (!waitForCurrentTask()) action.run(); }); return hit;
     }
 
     private void renderHome() {
         boolean compact=compactPresetHeight();
         visiblePresets.clear();
         List<Object> source = new ArrayList<>();
-        if (localTab) {for(PresetRecord r:library.list())if(personal==null||personal.visible(r))source.add(r);} else source.addAll(catalog);
+        boolean onlineSearching = fullCatalogHome();
+        if (localTab) {for(PresetRecord r:library.list())if(personal==null||personal.visible(r))source.add(r);}
+        else if (onlineSearching) {
+            loadOnlinePresetSearch(false);
+            if (onlineSearchSnapshot != null && onlineSearchSnapshot.available) source.addAll(onlineSearchSnapshot.presets);
+        } else source.addAll(catalog);
         Set<String> categories = new LinkedHashSet<>();
         for (Object value : source) categories.add(presetCategory(value));
         if (!localTab) categories.addAll(catalogCategories);
+        if (onlineSearching && onlineSearchSnapshot != null) categories.addAll(onlineSearchSnapshot.categories);
         String selected = localTab ? localCategoryFilter : onlineCategoryFilter;
-        if (!localTab && !PresetCategories.ALL.equals(selected)) categories.add(selected);
-        if (localTab && !PresetCategories.ALL.equals(selected) && !categories.contains(selected)) {
-            selected = PresetCategories.ALL;
-            if (localTab) localCategoryFilter = selected; else onlineCategoryFilter = selected;
-        }
-        for (Object value : source) if (PresetCategories.ALL.equals(selected) || selected.equals(presetCategory(value))) visiblePresets.add(value);
+        if (!PresetCategories.ALL.equals(selected)) categories.add(selected);
+        for (Object value : source) if ((PresetCategories.ALL.equals(selected) || selected.equals(presetCategory(value))) && homePresetMatches(value)) visiblePresets.add(value);
+        homePresetMatchCount = visiblePresets.size();
+        if (onlineSearching && visiblePresets.size() > homeIndexLimit)
+            visiblePresets.subList(homeIndexLimit, visiblePresets.size()).clear();
         LinearLayout top = vertical(); top.setPadding(dp(20), 0, dp(20), dp(compact?4:10));
-        TextView intro = text("把喜欢的色彩，带进相机", 13, false); intro.setTextColor(colors.dark ? 0xffF2D6C4 : 0xff5B3025); intro.setPadding(0, 0, 0, dp(12)); if(!compact)top.addView(intro);
+
         LinearLayout sourceRow = horizontal();
-        LinearLayout tabs = horizontal(); tabs.setPadding(dp(3),0,dp(3),0); tabs.setBackground(shape(colors.dark ? 0x6051382D : 0x70FFFFFF,25));
+        LinearLayout tabs = horizontal(); tabs.setPadding(dp(4),0,dp(4),0); tabs.setBackground(shape(colors.container,24));
         sourceTab(tabs, "在线预设", !localTab, () -> selectPresetSource(false));
         sourceTab(tabs, "我的预设", localTab, () -> selectPresetSource(true));
         sourceRow.addView(tabs, new LinearLayout.LayoutParams(compact?dp(216):-1, dp(48)));
         View sourceSpace = new View(this); if(!compact)sourceRow.addView(sourceSpace, new LinearLayout.LayoutParams(0, 1, 1));
         top.addView(sourceRow);
         if(body instanceof SubcategorySwipeLayout)((SubcategorySwipeLayout)body).setMotionAnchor(sourceRow);
-        LinearLayout cameraState = horizontal(); cameraState.setPadding(dp(12),dp(2),dp(4),dp(2));
-        cameraState.setBackground(shape(colors.card,18));
-        cameraState.addView(connectionIndicator(false),new LinearLayout.LayoutParams(0,dp(44),1));
-        View cameraAction=iconButton(AppIcon.Kind.CHEVRON,"相机连接",this::openCameraSettings);cameraAction.setBackground(ripple(Color.TRANSPARENT));cameraState.addView(cameraAction);
-        LinearLayout.LayoutParams stateParams=new LinearLayout.LayoutParams(-1,-2);stateParams.topMargin=dp(12);if(!compact)top.addView(cameraState,stateParams);
         if(localTab&&personal!=null){if(compact)sourceRow.addView(personal.status(colors),new LinearLayout.LayoutParams(0,-2,1));else top.addView(personal.status(colors),new LinearLayout.LayoutParams(-1,-2));}
         if (recoveryBlocked) {
             TextView warning = text("上次导入的结果需要核对，请先读取相机，避免重复导入。", 14, false);
@@ -843,21 +1000,31 @@ public final class MainActivity extends Activity {
         if (hasUncategorized) addPresetCategoryChip(chips, "", selected);
         body.addView(filters, new LinearLayout.LayoutParams(-1, -2));
         LinearLayout resultHeading=horizontal(); resultHeading.setPadding(dp(20),dp(compact?0:2),dp(20),dp(compact?4:10));
-        TextView resultTitle=text(localTab?"我的色彩":"发现预设",15,true);resultTitle.setSingleLine(true);resultTitle.setEllipsize(TextUtils.TruncateAt.END);resultHeading.addView(resultTitle,new LinearLayout.LayoutParams(0,-2,1));
-        String count = localTab ? visiblePresets.size() + " 份" : catalogFromCache ? "缓存 · " + visiblePresets.size() + " 份"
+        TextView resultTitle=text(localTab?"我的色彩":"发现色彩",13,true);resultTitle.setSingleLine(true);resultTitle.setEllipsize(TextUtils.TruncateAt.END);resultHeading.addView(resultTitle,new LinearLayout.LayoutParams(0,-2,1));
+        String count = onlineSearching ? onlineSearchSnapshot != null && onlineSearchSnapshot.available
+                ? (onlineSearchSnapshot.fromCache ? "缓存 · " : "") + homePresetMatchCount + " 份匹配" : loadingOnlineSearch ? (searchingOnlinePresets() ? "搜索中" : "加载中") : "筛选未完成"
+                : !homePresetQuery.trim().isEmpty() ? visiblePresets.size() + " 份匹配" : localTab ? visiblePresets.size() + " 份" : catalogFromCache ? "缓存 · " + visiblePresets.size() + " 份"
                 : catalogTotal >= 0 ? catalogTotal + " 份" : loadingCatalog ? "加载中"
                 : catalogLoaded ? visiblePresets.size() + (catalogHasMore ? "+" : "") + " 份" : "未加载";
-        TextView total=text(count,12,false);total.setTag("online-preset-result-count");total.setSingleLine(true);total.setTextColor(colors.secondary);resultHeading.addView(total);body.addView(resultHeading);
+        TextView total=text(count,12,false);total.setTag("online-preset-result-count");total.setSingleLine(true);total.setTextColor(colors.secondary);resultHeading.addView(total);
+        resultHeading.addView(presetFilterEntry()); body.addView(resultHeading);
         if (visiblePresets.isEmpty()) { renderPresetEmpty(); return; }
         int availableWidth = getResources().getConfiguration().screenWidthDp;
         int width = Math.min(availableWidth >= 600 ? availableWidth - 80 : availableWidth, 720);
         int columns = compact ? Math.max(3,width/170) : width >= 600 ? 3 : getResources().getConfiguration().fontScale >= 1.8f ? 1 : 2;
         presetCardWidth = (width - 36 - 12 * (columns - 1)) / columns;
-        list = new GridView(this); list.setNumColumns(columns); list.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
-        list.setHorizontalSpacing(dp(12)); list.setVerticalSpacing(dp(14)); list.setClipToPadding(false);
+        presetColumns = columns;
+        if (compact) {
+            GridView grid = new GridView(this); grid.setNumColumns(columns); grid.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+            grid.setHorizontalSpacing(dp(12)); grid.setVerticalSpacing(dp(14)); list = grid;
+        } else {
+            android.widget.ListView masonry = new android.widget.ListView(this); masonry.setDivider(null); masonry.setItemsCanFocus(true); list = masonry;
+        }
+        list.setClipToPadding(false);
         int bottomReserve = compact && availableWidth >= 600 ? 76 : 108 + Math.round(Math.max(0f, getResources().getConfiguration().fontScale - 1.2f) * 24f);
         list.setPadding(dp(18), 0, dp(18), dp(bottomReserve)); list.setSelector(android.R.color.transparent);
-        presetGridKey = (localTab ? "local:" : "online:") + selected + (localTab ? "" : ":format:" + onlineFormatFilter);
+        presetGridKey = "masonry154:" + (localTab ? "local:" : "online:") + selected + ":format:" + (localTab ? localFormatFilter : onlineFormatFilter)
+                + (localTab ? "" : ":download:" + onlineDownloadFilter) + ":query:" + homePresetQuery.trim().toLowerCase(Locale.ROOT);
         adapter = new PresetAdapter(); list.setAdapter(adapter);
         list.setOnScrollListener(new android.widget.AbsListView.OnScrollListener() {
             @Override public void onScrollStateChanged(android.widget.AbsListView view, int state) {
@@ -866,10 +1033,17 @@ public final class MainActivity extends Activity {
             }
             @Override public void onScroll(android.widget.AbsListView view, int first, int visible, int total) {
                 postVisiblePresetPreviews();
-                if (!localTab && total > 0 && visible > 0 && first + visible >= total - 4 && catalogHasMore && !loadingCatalog) loadCatalogPage(true);
+                if (!localTab && total > 0 && visible > 0 && first + visible >= total - (compactPresetHeight() ? 4 : 1)) {
+                    if (fullCatalogHome()) loadMoreHomeIndex();
+                    else if (catalogHasMore && !loadingCatalog) loadCatalogPage(true);
+                }
             }
         });
-        body.addView(list, new LinearLayout.LayoutParams(-1, 0, 1));
+        cc.huevia.ui.PullRefreshLayout refresh = new cc.huevia.ui.PullRefreshLayout(this,
+                () -> !busy && !loadingCatalog && !loadingOnlineSearch && !recoveryBlocked && (localTab || !presetGridScrolling),
+                () -> { if (localTab) render(); else requestCatalog(false); });
+        refresh.setColors(colors.primary, colors.card); refresh.setContent(list); refresh.setRefreshing(onlineSearching ? loadingOnlineSearch : !localTab && loadingCatalog);
+        body.addView(refresh, new LinearLayout.LayoutParams(-1, 0, 1));
         Parcelable position = presetPositions.get(presetGridKey);
         if (position != null) list.onRestoreInstanceState(position);
         postVisiblePresetPreviews();
@@ -878,21 +1052,109 @@ public final class MainActivity extends Activity {
     private void addPresetCategoryChip(LinearLayout parent, String category, String selected) {
         String label = PresetCategories.ALL.equals(category) ? category : PresetCategories.label(category);
         boolean active = category.equals(selected);
-        TextView chip = text(label, 13, active); chip.setGravity(Gravity.CENTER); chip.setMinHeight(dp(48));
+        TextView chip = text(label, 12, active); chip.setGravity(Gravity.CENTER); chip.setMinHeight(dp(48));
         chip.setMaxWidth(dp(230)); chip.setSingleLine(true); chip.setEllipsize(TextUtils.TruncateAt.END);
-        chip.setPadding(dp(14), dp(9), dp(14), dp(9));
+        chip.setPadding(dp(12), 0, dp(12), 0);
         chip.setTextColor(active ? colors.onPrimaryContainer : colors.text);
-        chip.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer), shape(active ? colors.primaryContainer : colors.container, 24), null));
-        chip.setSelected(active); chip.setFocusable(true); chip.setContentDescription("预设分类：" + label);
+        chip.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer), new android.graphics.drawable.InsetDrawable(shape(active ? colors.primaryContainer : colors.container, 18), 0, dp(6), 0, dp(6)), null));
+        chip.setPadding(dp(12), 0, dp(12), 0); chip.setMinHeight(dp(48)); chip.setMinWidth(dp(48)); chip.setIncludeFontPadding(false); chip.setSelected(active); chip.setFocusable(true); chip.setContentDescription("预设分类：" + label);
         chip.setOnClickListener(v -> selectPresetCategory(category));
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, -2); params.rightMargin = dp(4); parent.addView(chip, params);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(-2, dp(48)); params.rightMargin = dp(4); parent.addView(chip, params);
     }
 
     private void selectPresetCategory(String category) {
         if (waitForCurrentTask()) return;
         if (localTab) localCategoryFilter = category; else onlineCategoryFilter = category;
-        if (!localTab) reloadOnlineCatalog();
+        homeIndexLimit = 20; persistPresetHomeFilters();
+        if (!localTab && !fullCatalogHome()) reloadOnlineCatalog();
         else render();
+    }
+
+    private PresetHomeFilter currentPresetHomeFilter() {
+        return new PresetHomeFilter(localTab ? localCategoryFilter : onlineCategoryFilter,
+                localTab ? localFormatFilter : onlineFormatFilter, onlineDownloadFilter);
+    }
+
+    private View presetFilterEntry() {
+        FrameLayout hit = new FrameLayout(this); hit.setTag("preset-filter-entry"); hit.setMinimumWidth(dp(48));
+        hit.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(48))); hit.setFocusable(true);
+        hit.setBackground(ripple(colors.surface));
+        boolean active = currentPresetHomeFilter().active(localTab);
+        hit.setContentDescription(active ? "筛选预设，已应用条件" : "筛选预设"); hit.setSelected(active);
+        ImageView icon = new ImageView(this); icon.setImageDrawable(new AppIcon(AppIcon.Kind.ADJUST, colors.text, getResources().getDisplayMetrics().density));
+        hit.addView(icon, new FrameLayout.LayoutParams(dp(20), dp(20), Gravity.CENTER));
+        if (active) {
+            View dot = new View(this); dot.setBackground(shape(colors.success, 3));
+            FrameLayout.LayoutParams place = new FrameLayout.LayoutParams(dp(5), dp(5), Gravity.TOP | Gravity.END);
+            place.topMargin = dp(9); place.rightMargin = dp(9); hit.addView(dot, place);
+        }
+        hit.setOnClickListener(v -> showPresetFilters()); return hit;
+    }
+
+    private void showPresetFilters() {
+        if (waitForCurrentTask() || presetFilterSheet != null && presetFilterSheet.isShowing()) return;
+        if (homePresetSearchInput != null) {
+            android.view.inputmethod.InputMethodManager keyboard = (android.view.inputmethod.InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            if (keyboard != null) keyboard.hideSoftInputFromWindow(homePresetSearchInput.getWindowToken(), 0);
+        }
+        Set<String> values = new LinkedHashSet<>();
+        if (localTab) { for (PresetRecord row : library.list()) if (personal == null || personal.visible(row)) values.add(row.category); }
+        else {
+            values.addAll(catalogCategories); for (OnlinePreset row : catalog) values.add(row.category);
+            if (onlineSearchSnapshot != null && onlineSearchSnapshot.available) values.addAll(onlineSearchSnapshot.categories);
+        }
+        final boolean local = localTab;
+        presetFilterSheet = new cc.huevia.ui.PresetFilterSheet(this, colors, local, currentPresetHomeFilter(), values,
+                applied -> applyPresetHomeFilter(local, applied));
+        presetFilterSheet.setOnDismissListener(dialog -> {
+            View navigation = getWindow().getDecorView().findViewWithTag("root-floating-navigation");
+            if (navigation != null) navigation.setVisibility(View.VISIBLE);
+        });
+        presetFilterSheet.show();
+        View navigation = getWindow().getDecorView().findViewWithTag("root-floating-navigation");
+        if (navigation != null) navigation.setVisibility(View.INVISIBLE);
+    }
+
+    private void applyPresetHomeFilter(boolean local, PresetHomeFilter filter) {
+        if (local) { localCategoryFilter = filter.category; localFormatFilter = filter.type; }
+        else { onlineCategoryFilter = filter.category; onlineFormatFilter = filter.type; onlineDownloadFilter = filter.download; }
+        homeIndexLimit = 20; persistPresetHomeFilters();
+        if (!local && !fullCatalogHome()) reloadOnlineCatalog(); else render();
+    }
+
+    private void loadMoreHomeIndex() {
+        if (!fullCatalogHome() || homeIndexPaging || visiblePresets.size() >= homePresetMatchCount) return;
+        homeIndexPaging = true;
+        homePresetSearchHandler.post(() -> {
+            homeIndexPaging = false;
+            if (destroyed || !homePresetSearchVisible || !fullCatalogHome()) return;
+            homeIndexLimit += 20; render();
+        });
+    }
+
+    private void restorePresetHomeFilters(Bundle state) {
+        android.content.SharedPreferences preferences = getSharedPreferences("preset-home-filter-v1", MODE_PRIVATE);
+        int version = preferences.getInt("version", 0);
+        localFormatFilter = PresetHomeFilter.restoredType(version, preferences.getString("localType", ""));
+        onlineFormatFilter = PresetHomeFilter.restoredType(version, preferences.getString("onlineType", ""));
+        onlineDownloadFilter = version == PresetHomeFilter.STATE_VERSION
+                ? PresetHomeFilter.normalizeDownload(preferences.getString("download", "all")) : "all";
+        if (state == null && version == PresetHomeFilter.STATE_VERSION) {
+            localCategoryFilter = preferences.getString("localCategory", PresetCategories.ALL);
+            onlineCategoryFilter = preferences.getString("onlineCategory", PresetCategories.ALL);
+        }
+        if (state != null && state.getInt("presetHomeFilterVersion", 0) == PresetHomeFilter.STATE_VERSION) {
+            localFormatFilter = PresetHomeFilter.restoredType(PresetHomeFilter.STATE_VERSION, state.getString("presetHomeLocalType", ""));
+            onlineFormatFilter = PresetHomeFilter.restoredType(PresetHomeFilter.STATE_VERSION, state.getString("presetHomeOnlineType", ""));
+            onlineDownloadFilter = PresetHomeFilter.normalizeDownload(state.getString("presetHomeDownload", "all"));
+        }
+    }
+
+    private void persistPresetHomeFilters() {
+        getSharedPreferences("preset-home-filter-v1", MODE_PRIVATE).edit().putInt("version", PresetHomeFilter.STATE_VERSION)
+                .putString("localType", localFormatFilter).putString("onlineType", onlineFormatFilter)
+                .putString("download", onlineDownloadFilter).putString("localCategory", localCategoryFilter)
+                .putString("onlineCategory", onlineCategoryFilter).apply();
     }
 
     private static String restoredOnlinePresetFormat(String value) {
@@ -908,8 +1170,7 @@ public final class MainActivity extends Activity {
 
     private void clearOnlinePresetFilters() {
         if (waitForCurrentTask()) return;
-        onlineCategoryFilter = PresetCategories.ALL; onlineFormatFilter = "";
-        if (catalogFromCache) render(); else reloadOnlineCatalog();
+        applyPresetHomeFilter(localTab, PresetHomeFilter.empty());
     }
 
     private static String presetCategory(Object value) {
@@ -917,19 +1178,55 @@ public final class MainActivity extends Activity {
     }
 
     private void renderPresetEmpty() {
-        LinearLayout holder = vertical(); holder.setPadding(dp(18), dp(12), dp(18), dp(20));
-        if (localTab) empty(holder, "把喜欢的色彩带在身边", "添加 NCP、NP3，或从在线预设库下载喜欢的色彩。", "添加本地预设", () -> pickNcp(false));
+        LinearLayout holder = vertical(); holder.setGravity(Gravity.CENTER);
+        holder.setPadding(dp(24), dp(24), dp(24), dp(24));
+        if (fullCatalogHome() && loadingOnlineSearch) {
+            holder.addView(new cc.huevia.ui.CatalogLoadingView(this, colors), new LinearLayout.LayoutParams(-1, -2));
+        }
+        else if (fullCatalogHome() && (onlineSearchSnapshot == null || !onlineSearchSnapshot.available))
+            presetEmptyMessage(holder, searchingOnlinePresets() ? "暂时无法搜索" : "暂时无法筛选", "完整目录尚未取得，检查网络后重试。", "重试", this::retryOnlinePresetSearch);
+        else if (!homePresetQuery.trim().isEmpty()) presetEmptyMessage(holder,
+                searchingOnlinePresets() && onlineSearchSnapshot.fromCache ? "缓存中无匹配预设" : "没有匹配的预设",
+                "试试其他名称或分类。", null, null);
+        else if (currentPresetHomeFilter().active(localTab) && (localTab || fullCatalogHome() || catalogLoaded))
+            presetEmptyMessage(holder, !localTab && (fullCatalogHome() ? onlineSearchSnapshot.fromCache : catalogFromCache)
+                    ? "缓存中无匹配预设" : "没有符合条件的预设", "试试其他筛选条件。", "清除筛选", this::clearOnlinePresetFilters);
+        else if (localTab) presetEmptyMessage(holder, "把喜欢的色彩带在身边", "添加 NCP、NP3，或从在线预设库下载喜欢的色彩。", "添加本地预设", () -> pickNcp(false));
         else if (loadingCatalog) {
             holder.addView(new cc.huevia.ui.CatalogLoadingView(this, colors), new LinearLayout.LayoutParams(-1, -2));
         }
         else if (catalogLoaded && (!onlineFormatFilter.isEmpty() || !PresetCategories.ALL.equals(onlineCategoryFilter))) {
-            empty(holder, catalogFromCache ? "缓存中无匹配预设" : "没有符合条件的预设", "", "清除筛选", this::clearOnlinePresetFilters);
+            presetEmptyMessage(holder, catalogFromCache ? "缓存中无匹配预设" : "没有符合条件的预设", "", "清除筛选", this::clearOnlinePresetFilters);
             holder.addView(button("重新加载", AppIcon.Kind.REFRESH, false, () -> requestCatalog(false)));
         }
-        else if (online.getEndpoint().isEmpty()) empty(holder, "在线预设暂不可用", "请稍后重新加载，已下载的本地预设仍可使用。", "重新加载", () -> requestCatalog(false));
-        else empty(holder, "暂时没有在线预设", catalogMessage, "重新加载", () -> requestCatalog(false));
-        if (!localTab && !loadingCatalog && !online.getEndpoint().isEmpty()) holder.addView(button("查看缓存目录", AppIcon.Kind.PRESETS, false, () -> requestCatalog(true)));
-        ScrollView scroll = new ScrollView(this); scroll.addView(holder); body.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
+        else if (online.getEndpoint().isEmpty()) presetEmptyMessage(holder, "在线预设暂不可用", "请稍后重新加载，已下载的本地预设仍可使用。", "重新加载", () -> requestCatalog(false));
+        else presetEmptyMessage(holder, "暂时没有在线预设", catalogMessage, "重新加载", () -> requestCatalog(false));
+        ScrollView scroll = new ScrollView(this); scroll.setFillViewport(true); scroll.setTag("preset-empty-scroll");
+        android.content.res.Configuration configuration = getResources().getConfiguration();
+        scroll.setPadding(0, 0, 0, floatingNavigationInsetPx(configuration.screenWidthDp, configuration.fontScale,
+                getResources().getDisplayMetrics().density));
+        scroll.addView(holder); body.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
+    }
+
+    private void presetEmptyMessage(LinearLayout parent, String title, String description, String action, Runnable click) {
+        LinearLayout content = vertical(); content.setGravity(Gravity.CENTER_HORIZONTAL); content.setTag("preset-empty-message");
+        ImageView icon = new ImageView(this);
+        icon.setImageDrawable(new AppIcon(AppIcon.Kind.PRESETS, colors.secondary, getResources().getDisplayMetrics().density));
+        icon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+        content.addView(icon, new LinearLayout.LayoutParams(dp(32), dp(32)));
+        TextView heading = text(title, 18, true); heading.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams titleParams = new LinearLayout.LayoutParams(-1, -2); titleParams.topMargin = dp(16);
+        content.addView(heading, titleParams);
+        if (description != null && !description.isEmpty()) {
+            TextView note = text(description, 14, false); note.setTextColor(colors.secondary); note.setGravity(Gravity.CENTER);
+            LinearLayout.LayoutParams noteParams = new LinearLayout.LayoutParams(-1, -2); noteParams.topMargin = dp(8);
+            content.addView(note, noteParams);
+        }
+        if (action != null && click != null) {
+            LinearLayout.LayoutParams actionParams = new LinearLayout.LayoutParams(-1, -2); actionParams.topMargin = dp(20);
+            content.addView(button(action, AppIcon.Kind.FILE, false, click), actionParams);
+        }
+        parent.addView(content, new LinearLayout.LayoutParams(-1, -2));
     }
 
     private View connectionIndicator(boolean forAlbum) {
@@ -950,7 +1247,7 @@ public final class MainActivity extends Activity {
         if (verifiedUsbId < 0 || usb == null) return null;
         for (UsbDevice device : UsbProbe.findNikonDevices(usb))
             if (device.getDeviceId() == verifiedUsbId && usb.hasPermission(device)) return device;
-        verifiedUsbId = -1; usbModel = ""; return null;
+        verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; return null;
     }
 
     private boolean currentConnectionReady(boolean forAlbum) {
@@ -1084,27 +1381,21 @@ public final class MainActivity extends Activity {
         }
         final int ticket = ++wifiUiEpoch;
         if (tryUseConnectedCameraWifi(ticket, connect, failure)) return;
-        LinearLayout fields = vertical(); fields.setPadding(dp(22), dp(6), dp(22), dp(8));
-        TextView explanation = text("在系统 Wi-Fi 中选择相机热点，返回后自动继续。", 14, false);
-        explanation.setTextColor(colors.secondary); fields.addView(explanation);
-        TextView status = text("", 13, false); status.setTextColor(colors.secondary);
-        status.setPadding(0, dp(12), 0, 0); status.setVisibility(View.GONE); fields.addView(status);
-        Button retry = button("我已连接，继续", AppIcon.Kind.WIFI, false, () -> {
+        cc.huevia.ui.CameraWifiDialog prompt = new cc.huevia.ui.CameraWifiDialog(this, false);
+        TextView status = prompt.status;
+        prompt.retry.setOnClickListener(v -> {
+            if (waitForCurrentTask()) return;
             if (ticket != wifiUiEpoch || destroyed) return;
             clearSystemWifiWait();
             if (!tryUseConnectedCameraWifi(ticket, connect, failure)) {
                 status.setText("尚未连接 Wi-Fi，请重新选择。"); status.setVisibility(View.VISIBLE);
             }
         });
-        retry.setMinHeight(dp(48)); fields.addView(retry);
-        ScrollView scroll = new ScrollView(this); scroll.addView(fields);
-        AlertDialog dialog = new AppDialog.Builder(this).setTitle("连接相机 Wi-Fi").setView(scroll)
-                .setNegativeButton("取消", (d, which) -> cancelCameraWifiUi(ticket, failure))
-                .setPositiveButton("选择相机 Wi-Fi", null).create();
+        AlertDialog dialog = prompt.dialog;
         cameraWifiDialog = dialog;
         dialog.setOnCancelListener(d -> cancelCameraWifiUi(ticket, failure));
         dialog.setOnShowListener(d -> {
-            Button choose = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button choose = prompt.choose;
             choose.setOnClickListener(v -> {
                 if (ticket != wifiUiEpoch || destroyed) return;
                 clearSystemWifiWait();
@@ -1141,9 +1432,7 @@ public final class MainActivity extends Activity {
             wifiSessionToken = token; clearSystemWifiWait();
             AlertDialog previous = cameraWifiDialog; cameraWifiDialog = null;
             if (previous != null) previous.dismiss();
-            AlertDialog waiting = new AppDialog.Builder(this).setTitle("正在连接相机")
-                    .setMessage("正在确认当前 Wi-Fi，请保持相机热点开启。")
-                    .setNegativeButton("取消连接", (d, which) -> cancelCameraWifiUi(ticket, failure)).create();
+            AlertDialog waiting = new cc.huevia.ui.CameraWifiDialog(this, true).dialog;
             waiting.setOnCancelListener(d -> cancelCameraWifiUi(ticket, failure));
             cameraWifiDialog = waiting; waiting.show(); return true;
         } catch (RuntimeException unavailable) {
@@ -1259,10 +1548,10 @@ public final class MainActivity extends Activity {
                     catch (RuntimeException failure) { requestConnectionNotification(); }
                 });
         if (!unrestricted) dialog.setPositiveButton("允许后台运行", (d, w) -> {
-            try { startActivity(new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                    Uri.parse("package:" + getPackageName()))); }
-            catch (RuntimeException failure) { startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.parse("package:" + getPackageName()))); }
+            SystemActivityLauncher.settings(this,
+                    new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getPackageName())),
+                    new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName())),
+                    error -> notice("无法打开后台设置", error));
         });
         dialog.show();
     }
@@ -1279,41 +1568,32 @@ public final class MainActivity extends Activity {
         ScrollView scroll = new ScrollView(this); scroll.setFillViewport(true); scroll.setClipToPadding(false);
         LinearLayout content = vertical(); content.setPadding(dp(20), 0, dp(20), dp(96)); scroll.addView(content);
         body.addView(scroll, new LinearLayout.LayoutParams(-1, -1));
-        TextView intro = text("相机连接与应用偏好", 12, false); intro.setTextColor(colors.secondary); intro.setPadding(0, 0, 0, dp(18)); content.addView(intro);
         boolean connected = currentConnectionReady(false);
         boolean wireless = album.hasCameraConnection() || hasPreparedWireless();
-        LinearLayout camera = vertical(); camera.setPadding(dp(18), dp(18), dp(18), dp(8)); HueTheme.card(camera,colors,22);
-        LinearLayout identity = horizontal();
-        ImageView glyph = new ImageView(this); glyph.setImageDrawable(new AppIcon(AppIcon.Kind.CAMERA, colors.secondary, getResources().getDisplayMetrics().density));
-        glyph.setPadding(dp(10), dp(10), dp(10), dp(10)); glyph.setBackground(shape(colors.surface, 15)); identity.addView(glyph, new LinearLayout.LayoutParams(dp(46), dp(46)));
-        LinearLayout copy = vertical(); copy.setPadding(dp(12), 0, 0, 0);
-        TextView eyebrow = text(connected ? "当前相机" : "相机", 11, false); eyebrow.setTextColor(colors.secondary); copy.addView(eyebrow);
-        String model = connected ? (wireless ? album.hasCameraConnection() ? album.connectionModel() : preparedWirelessModel : usbModel) : "尚未连接相机";
-        TextView modelLabel = text(model == null || model.isEmpty() ? "相机" : model, 19, true); modelLabel.setPadding(0, dp(4), 0, 0); copy.addView(modelLabel);
-        identity.addView(copy, new LinearLayout.LayoutParams(0, -2, 1)); camera.addView(identity);
-        if (connected) identity.addView(iconButton(AppIcon.Kind.INFO, "相机详情", this::showCameraDetails));
-        LinearLayout status = horizontal(); status.setPadding(0, dp(10), 0, dp(8)); status.addView(connectionIndicator(false), new LinearLayout.LayoutParams(0, -2, 1));
-        if (connected) { TextView mode = text(wireless ? "Wi-Fi" : "USB", 11, false); mode.setTextColor(colors.secondary); mode.setPadding(dp(9), dp(5), dp(9), dp(5)); mode.setBackground(shape(colors.surface, 16)); status.addView(mode); }
-        camera.addView(status); divider(camera);
-        LinearLayout footer = horizontal();
-        TextView note = text(connected ? (wireless ? "相机连接已保持" : "USB 用于预设导入") : album.isConnecting() ? "正在连接相机…" : connections.isPreparingAlbum() ? "正在读取相机照片…" : "选择下方连接方式", 11, false); note.setTextColor(colors.secondary); note.setPadding(0, dp(12), dp(6), dp(12)); footer.addView(note, new LinearLayout.LayoutParams(0, -2, 1));
-        if (connected || connections.wifiSession.isActive()) {
-            TextView disconnect = text("断开连接", 12, false); disconnect.setTextColor(colors.primary); disconnect.setGravity(Gravity.CENTER); disconnect.setMinHeight(dp(48)); disconnect.setPadding(dp(8), 0, 0, 0); disconnect.setFocusable(true); disconnect.setBackground(ripple(colors.card));
-            disconnect.setOnClickListener(v -> { if (!canChangeConnection()) return; clearPendingPhotoLive(); verifiedUsbId = -1; usbModel = ""; connections.disconnect(); preparedWireless = null; message = "相机已断开，已下载照片仍可查看。"; render(); feedback("相机已断开", "已下载的照片仍可离线查看。"); }); footer.addView(disconnect);
-        }
-        camera.addView(footer); content.addView(camera);
+        LinearLayout profile = horizontal(); profile.setPadding(0, dp(10), 0, dp(10)); profile.setMinimumHeight(dp(80));
+        ImageView avatar = new ImageView(this); avatar.setImageDrawable(new AppIcon(AppIcon.Kind.PERSON, colors.secondary, getResources().getDisplayMetrics().density));
+        avatar.setPadding(dp(13), dp(13), dp(13), dp(13)); avatar.setBackground(shape(colors.container, 28)); profile.addView(avatar, new LinearLayout.LayoutParams(dp(54), dp(54)));
+        LinearLayout profileCopy = vertical(); profileCopy.setPadding(dp(12), 0, dp(8), 0);
+        profileCopy.addView(text(account.summaryTitle(), 15, true));
+        TextView profileNote = text(account.summarySubtitle(), 11, false); profileNote.setTextColor(colors.secondary); profileNote.setSingleLine(true); profileNote.setEllipsize(TextUtils.TruncateAt.END); profileNote.setPadding(0, dp(4), 0, 0); profileCopy.addView(profileNote);
+        profile.addView(profileCopy, new LinearLayout.LayoutParams(0, -2, 1));
+        ImageView next = new ImageView(this); next.setImageDrawable(new AppIcon(AppIcon.Kind.CHEVRON, colors.secondary, getResources().getDisplayMetrics().density)); profile.addView(next, new LinearLayout.LayoutParams(dp(15), dp(15)));
+        profile.setFocusable(true); profile.setContentDescription(account.summaryTitle() + "，" + account.summarySubtitle()); profile.setOnClickListener(v -> account.open()); content.addView(profile);
         if (settingsReturnToPreset) content.addView(button("返回预设", AppIcon.Kind.BACK, false, this::returnToPreset));
         if (photoLiveContinuation.isPending()) content.addView(button("返回边拍边传", AppIcon.Kind.BACK, false, this::goBack));
         if (!message.isEmpty()) { TextView notice = label(content, message, 13, colors.secondary); notice.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE); }
-        settingsHeading(content, "相机连接");
+        settingsHeading(content, "相机与传输");
         LinearLayout connections = settingsGroup(content);
         settingsRow(connections, AppIcon.Kind.WIFI, "Wi-Fi 无线连接", "尼康相机 / 富士", connected && wireless ? "使用中" : "", this::openCameraSettings);
         settingsRow(connections, AppIcon.Kind.USB, "USB 数据线连接", "导入预设", connected && !wireless ? "使用中" : "", this::connectUsbSettings);
-        settingsHeading(content, "账号");
+        if (connected) settingsRow(connections, AppIcon.Kind.INFO, "相机详情", "", wireless ? album.hasCameraConnection() ? album.connectionModel() : preparedWirelessModel : usbModel, this::showCameraDetails);
+        if (connected || this.connections.wifiSession.isActive()) settingsRow(connections, AppIcon.Kind.CLOSE, "断开连接", "", "", () -> { if (!canChangeConnection()) return; clearPendingPhotoLive(); verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; this.connections.disconnect(); preparedWireless = null; message = "相机已断开，已下载照片仍可查看。"; render(); feedback("相机已断开", "已下载的照片仍可离线查看。"); });
+        settingsRow(connections, AppIcon.Kind.WIFI, "后台连接保护", "", ConnectionProtection.settingsLabel(this), this::showBackgroundProtection);
+        settingsHeading(content, "账号与社区");
         LinearLayout identityGroup = settingsGroup(content);
-        settingsRow(identityGroup, AppIcon.Kind.PERSON, account.summaryTitle(), account.summarySubtitle(), account.summaryValue(), account::open);
-        settingsRow(identityGroup, AppIcon.Kind.PRESETS, "我的投稿", "管理上传的预设与审核结果", "", community::openSubmissions);
-        LinearLayout inbox = settingsRow(identityGroup, AppIcon.Kind.INFO, "消息", "回复与投稿审核通知", "", community::openMessages);
+
+        settingsRow(identityGroup, AppIcon.Kind.PRESETS, "我的投稿", "", "", community::openSubmissions);
+        LinearLayout inbox = settingsRow(identityGroup, AppIcon.Kind.INFO, "消息", "", "", community::openMessages);
         settingsMessageEntry = inbox;
         settingsMessageBadge = text("", 11, true); settingsMessageBadge.setGravity(Gravity.CENTER);
         settingsMessageBadge.setTextColor(colors.dark ? colors.surface : Color.WHITE);
@@ -1324,14 +1604,15 @@ public final class MainActivity extends Activity {
         settingsHeading(content, "应用");
         LinearLayout application = settingsGroup(content);
         settingsRow(application, AppIcon.Kind.ADJUST, "外观", "", AppAppearance.label(this), this::chooseAppearance);
-        settingsRow(application, AppIcon.Kind.WIFI, "后台连接保护", "切到后台或锁屏时继续接收", ConnectionProtection.settingsLabel(this), this::showBackgroundProtection);
-        settingsRow(application, AppIcon.Kind.ALBUM, "预览模板", "用于预设主图的近似模拟", presetPreviews.templateLabel(), this::choosePreviewTemplate);
+
+        settingsRow(application, AppIcon.Kind.ALBUM, "预览模板", "", (presetPreviews.hasCustomTemplate() ? presetPreviews.templateLabel() : "摄影样片 · 10 张"), this::choosePreviewTemplate);
         settingsRow(application, AppIcon.Kind.HELP, "使用帮助", "", "", this::showHelp);
-        settingsRow(application, AppIcon.Kind.DOWNLOAD, "检查更新", "查看新版本与更新说明", appVersion(), updates::open);
+        settingsRow(application, AppIcon.Kind.DOWNLOAD, "检查更新", "", appVersion(), updates::open);
         settingsRow(application, AppIcon.Kind.INFO, "关于", "", "", () -> notice(getString(R.string.app_name), "版本 " + appVersion() + "\n\n管理本地预设、模拟色调、连接相机、浏览和下载照片。支持尼康相机，富士 X-T20 的 JPEG 下载为实验适配，尚待真机验证。可在设置中注册或登录账号，也可继续以游客使用。无线支持范围取决于实际机型与接口。模板模拟为手机近似预览，不代表相机实拍。"));
     }
 
     private void renderCameraConnectionGuide() {
+        if (connectionWorkspace()) { renderRequestedConnection(); return; }
         boolean importing = settingsReturnToPreset && !pendingImportId.isEmpty();
         if (importing) {
             TextView context = text("连接成功后，继续选择预设导入槽位。", 13, false);
@@ -1352,6 +1633,49 @@ public final class MainActivity extends Activity {
         body.addView(actions);
     }
 
+    private boolean requestedConnectionReady() {
+        if (album.isConnecting() || connections.isPreparingAlbum()) return false;
+        if (cc.huevia.connection.CameraConnectionRequest.USB.equals(connectionTransport)) return verifiedUsb() != null;
+        if (cc.huevia.connection.CameraConnectionRequest.ANY.equals(connectionTransport)) return currentConnectionReady(false);
+        return currentConnectionReady(true);
+    }
+
+    private String connectedCameraIdentity() {
+        if(album.hasCameraConnection())return UsbPictureControlProbe.cameraIdentity(album.connectionManufacturer(),album.connectionModel());
+        WirelessPictureControl owner=preparedWireless;
+        if(owner!=null&&owner.isPrepared())return UsbPictureControlProbe.cameraIdentity(owner.preparedManufacturer(),preparedWirelessModel);
+        return UsbPictureControlProbe.cameraIdentity(usbManufacturer,usbModel);
+    }
+
+    private void renderRequestedConnection() {
+        boolean connected = requestedConnectionReady();
+        LinearLayout context = vertical(); context.setPadding(dp(24), dp(4), dp(24), dp(12));
+        TextView hint = text(connected ? connectedCameraIdentity()+" · 已连接" : "连接后返回：" + connectionOperation, 13, false);
+        hint.setTextColor(colors.secondary); context.addView(hint);
+        if (connected) {
+            Button back = button("返回继续" + connectionOperation, AppIcon.Kind.BACK, true, () -> {
+                if (!requestedConnectionReady() || waitForCurrentTask()) return;
+                Intent result = new Intent(); UsbDevice device = verifiedUsb();
+                if (device != null) result.putExtra(cc.huevia.connection.CameraConnectionRequest.USB_ID, device.getDeviceId())
+                        .putExtra(cc.huevia.connection.CameraConnectionRequest.USB_MODEL, usbModel)
+                        .putExtra(cc.huevia.connection.CameraConnectionRequest.USB_MANUFACTURER, usbManufacturer);
+                setResult(RESULT_OK, result); finish();
+            });
+            back.setTag("connection-return-action"); context.addView(back);
+        }
+        body.addView(context);
+        if (!cc.huevia.connection.CameraConnectionRequest.USB.equals(connectionTransport))
+            body.addView(album.createConnectionView(), new LinearLayout.LayoutParams(-1, 0, 1));
+        if (!cc.huevia.connection.CameraConnectionRequest.WIFI.equals(connectionTransport)) {
+            LinearLayout usbPanel = vertical(); usbPanel.setPadding(dp(24), dp(12), dp(24), dp(24));
+            if (cc.huevia.connection.CameraConnectionRequest.USB.equals(connectionTransport)) {
+                usbPanel.addView(text("打开相机，用支持数据传输的 USB 线连接手机，并允许 USB 访问权限。", 14, false));
+            }
+            usbPanel.addView(button("连接 USB 相机", AppIcon.Kind.USB, false, this::connectUsbSettings));
+            body.addView(usbPanel);
+        }
+    }
+
     private void chooseAppearance() {
         if (waitForCurrentTask()) return;
         String[] modes = {AppAppearance.SYSTEM, AppAppearance.LIGHT, AppAppearance.DARK};
@@ -1363,16 +1687,17 @@ public final class MainActivity extends Activity {
 
     private void choosePreviewTemplate() {
         if (waitForCurrentTask()) return;
-        new AppDialog.Builder(this).setTitle("预览模板").setItems(new String[]{"查看当前模板", "从手机选择模板图", "使用内置模板"}, (dialog, which) -> {
-            if (which == 0) showTemplateOriginal();
-            else if (which == 1) startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_TEMPLATE);
-            else updatePreviewTemplate(null);
-        }).setNegativeButton("取消", null).show();
+        new cc.huevia.ui.ActionChoiceDialog(this, colors, "预览模板")
+                .add(AppIcon.Kind.ALBUM, presetPreviews.hasCustomTemplate() ? "查看当前模板" : "查看内置摄影样片", "", this::showTemplateOriginal)
+                .add(AppIcon.Kind.FILE, "从手机选择模板图", "", () -> SystemActivityLauncher.document(this,
+                        new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_TEMPLATE,
+                        error -> notice("无法选择模板图", error)))
+                .add(AppIcon.Kind.REFRESH, "恢复内置摄影样片", "", () -> updatePreviewTemplate(null)).show();
     }
 
     private void updatePreviewTemplate(Uri uri) {
         if (waitForCurrentTask()) return;
-        startBusy(uri == null ? "正在恢复内置模板…" : "正在处理模板图…");
+        startBusy(uri == null ? "正在恢复摄影样片…" : "正在处理模板图…");
         images.execute(() -> {
             try {
                 if (uri == null) presetPreviews.resetTemplate(); else presetPreviews.setTemplate(uri);
@@ -1383,15 +1708,34 @@ public final class MainActivity extends Activity {
 
     private void showTemplateOriginal() {
         if (waitForCurrentTask()) return;
-        startBusy("正在读取模板原图…");
+        PresetShowcaseRenderer.Source[] sources = presetShowcases.sources();
+        if (sources.length == 1) { showShowcaseOriginal(sources[0]); return; }
+        String[] labels = new String[sources.length];
+        for (int i = 0; i < sources.length; i++) labels[i] = sources[i].label;
+        cc.huevia.ui.ActionChoiceDialog choices = new cc.huevia.ui.ActionChoiceDialog(this, colors, "内置摄影样片 · " + sources.length + " 张");
+        for (int i = 0; i < sources.length; i++) {
+            final PresetShowcaseRenderer.Source source = sources[i];
+            choices.add(AppIcon.Kind.ALBUM, labels[i], "", () -> showShowcaseOriginal(source));
+        }
+        choices.show();
+    }
+
+    private void showShowcaseOriginal(PresetShowcaseRenderer.Source source) {
+        if (waitForCurrentTask()) return;
+        startBusy("正在读取样片原图…");
         images.execute(() -> {
             try {
-                Bitmap bitmap = presetPreviews.originalTemplate();
+                Bitmap bitmap = presetShowcases.original(source);
                 onUi(() -> {
+                    if (!presetShowcases.isCurrent(source)) { bitmap.recycle(); finishBusy("预览已更新，请重新选择样片。"); return; }
                     busy = false; progress = ""; render();
                     ImageView original = new ImageView(this); original.setImageBitmap(bitmap); original.setAdjustViewBounds(true); original.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    original.setContentDescription("当前预览模板原图，未应用预设");
-                    new AppDialog.Builder(this).setTitle("模板原图 · 未应用预设").setView(original).setPositiveButton("关闭", null).show();
+                    original.setMaxHeight(Math.max(dp(64), getResources().getDisplayMetrics().heightPixels
+                            - dp(Math.round(220 * Math.max(1f, getResources().getConfiguration().fontScale)))));
+                    original.setContentDescription((source.custom ? "自选模板" : "内置摄影样片") + "原图：" + source.label + "，未应用预设");
+                    AlertDialog.Builder dialog = new AppDialog.Builder(this).setTitle(source.label + " · 原图").setView(original);
+                    if (!source.custom) dialog.setMessage("摄影：" + source.credit);
+                    dialog.setPositiveButton("关闭", null).show();
                 });
             } catch (Exception e) { onUi(() -> { finishBusy("模板原图暂时无法读取。"); notice("无法查看模板", readable(e)); }); }
         });
@@ -1402,13 +1746,13 @@ public final class MainActivity extends Activity {
     }
 
     private LinearLayout settingsGroup(LinearLayout parent) {
-        LinearLayout group = vertical(); HueTheme.card(group,colors,22); parent.addView(group, new LinearLayout.LayoutParams(-1, -2)); return group;
+        LinearLayout group = vertical(); group.setBackground(shape(colors.card, 16)); group.setClipToOutline(true); parent.addView(group, new LinearLayout.LayoutParams(-1, -2)); return group;
     }
 
     private LinearLayout settingsRow(LinearLayout parent, AppIcon.Kind kind, String title, String subtitle, String value, Runnable action) {
-        if (parent.getChildCount() > 0) { View line = new View(this); line.setBackgroundColor(colors.outline); LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(-1, dp(1)); p.leftMargin = dp(58); parent.addView(line, p); }
-        LinearLayout row = horizontal(); row.setPadding(dp(14), dp(11), dp(14), dp(11)); row.setMinimumHeight(dp(66)); row.setBackground(ripple(colors.card)); row.setFocusable(true); row.setOnClickListener(v -> { if (!waitForCurrentTask()) action.run(); });
-        ImageView icon = new ImageView(this); icon.setImageDrawable(new AppIcon(kind, colors.text, getResources().getDisplayMetrics().density)); icon.setPadding(dp(7), dp(7), dp(7), dp(7)); icon.setBackground(shape(colors.container, 10)); row.addView(icon, new LinearLayout.LayoutParams(dp(32), dp(32)));
+        if (parent.getChildCount() > 0) { View line = new View(this); line.setBackgroundColor(colors.outline); LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(-1, dp(1)); p.leftMargin = dp(49); parent.addView(line, p); }
+        LinearLayout row = horizontal(); row.setPadding(dp(12), dp(8), dp(12), dp(8)); row.setMinimumHeight(dp(56)); row.setBackground(ripple(colors.card)); row.setFocusable(true); row.setOnClickListener(v -> { if (!waitForCurrentTask()) action.run(); });
+        ImageView icon = new ImageView(this); icon.setImageDrawable(new AppIcon(kind, colors.text, getResources().getDisplayMetrics().density)); icon.setPadding(dp(4), dp(4), dp(4), dp(4)); row.addView(icon, new LinearLayout.LayoutParams(dp(26), dp(26)));
         LinearLayout copy = vertical(); copy.setPadding(dp(11), 0, dp(8), 0); copy.addView(text(title, 14, false));
         if (!subtitle.isEmpty()) { TextView sub = text(subtitle, 11, false); sub.setTextColor(colors.secondary); sub.setPadding(0, dp(3), 0, 0); copy.addView(sub); } row.addView(copy, new LinearLayout.LayoutParams(0, -2, 1));
         if (!value.isEmpty()) { TextView trailing = text(value, 11, false); trailing.setTextColor(colors.secondary); row.addView(trailing); }
@@ -1445,7 +1789,7 @@ public final class MainActivity extends Activity {
         if (!canChangeConnection()) return;
         pendingConnectionAccepted = !pendingImportId.isEmpty();
         connections.disconnect(); preparedWireless = null;
-        verifiedUsbId = -1; usbModel = ""; startBusy("正在读取 USB 相机…");
+        verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; startBusy("正在读取 USB 相机…");
         feedback("正在连接相机", "正在检查 USB 连接，请稍候。");
         if (usb.hasPermission(device)) scanSlots(device, false, true);
         else {
@@ -1456,12 +1800,26 @@ public final class MainActivity extends Activity {
         }
     }
 
-    private GridView list;
+    private android.widget.AbsListView list;
+    private int presetColumns = 2;
     private PresetAdapter adapter;
     private final List<Object> visiblePresets = new ArrayList<>();
     private String localCategoryFilter = PresetCategories.ALL, onlineCategoryFilter = PresetCategories.ALL;
     private String onlineFormatFilter = "";
+    private String localFormatFilter = "", onlineDownloadFilter = PresetHomeFilter.ALL_DOWNLOADS;
+    private int homeIndexLimit = 20, homePresetMatchCount;
+    private boolean homeIndexPaging;
+    private cc.huevia.ui.PresetFilterSheet presetFilterSheet;
     private String presetGridKey = "";
+    private String homePresetQuery = "";
+    private OnlinePresetSearch onlineSearch;
+    private OnlinePresetSearch.Snapshot onlineSearchSnapshot;
+    private boolean loadingOnlineSearch, onlineSearchAttempted;
+    private int onlineSearchEpoch;
+    private boolean homePresetSearchExpanded, homePresetSearchRequestFocus, homePresetSearchVisible;
+    private EditText homePresetSearchInput;
+    private final Handler homePresetSearchHandler = new Handler(Looper.getMainLooper());
+    private final Runnable homePresetSearchRefresh = this::refreshHomePresetSearchResults;
     private int presetCardWidth = 170;
     private final Map<String, Parcelable> presetPositions = new HashMap<>();
     private ScrollView detailScroll;
@@ -1546,30 +1904,46 @@ public final class MainActivity extends Activity {
     }
 
     private final class PresetAdapter extends BaseAdapter {
-        @Override public int getCount() { return visiblePresets.size(); }
+        @Override public int getCount() { return compactPresetHeight() ? visiblePresets.size() : (visiblePresets.size() + presetColumns * 3 - 1) / (presetColumns * 3); }
         @Override public Object getItem(int position) { return visiblePresets.get(position); }
         @Override public long getItemId(int position) { return position; }
         @Override public View getView(int position, View convertView, ViewGroup parent) {
+            if (compactPresetHeight()) return card(position, 1f);
+            LinearLayout row = horizontal(); row.setGravity(Gravity.TOP); row.setBaselineAligned(false);
+            for (int column = 0; column < presetColumns; column++) {
+                LinearLayout stack = vertical(); LinearLayout.LayoutParams stackSize = new LinearLayout.LayoutParams(0, -2, 1);
+                if (column > 0) stackSize.leftMargin = dp(6); if (column < presetColumns - 1) stackSize.rightMargin = dp(6);
+                for (int rank = 0; rank < 3; rank++) {
+                    int index = position * presetColumns * 3 + rank * presetColumns + column; if (index >= visiblePresets.size()) break;
+                    float[] pattern = column % 2 == 0 ? new float[]{1.12f, .94f, 1f} : new float[]{.94f, 1.12f, 1f};
+                    LinearLayout.LayoutParams cardSize = new LinearLayout.LayoutParams(-1, -2); cardSize.bottomMargin = dp(10); stack.addView(card(index, pattern[rank]), cardSize);
+                }
+                row.addView(stack, stackSize);
+            }
+            return row;
+        }
+        private View card(int position, float ratio) {
             Object value = visiblePresets.get(position);
             OnlinePreset item = value instanceof OnlinePreset ? (OnlinePreset) value : null;
             PresetRecord record = value instanceof PresetRecord ? (PresetRecord) value : item == null ? null : library.findBySha256(item.sha256);
-            LinearLayout row = vertical(); row.setLayoutParams(new GridView.LayoutParams(-1, -2));
+            LinearLayout row = vertical();
             String name = record == null ? item.name : record.displayName;
             boolean compact=compactPresetHeight();
-            FrameLayout photo = preview(record, item, compact?80:Math.round(presetCardWidth * 1.10f));
-            photo.setBackground(shape(colors.container, 19)); row.addView(photo);
-            LinearLayout caption = vertical(); caption.setPadding(dp(12), dp(compact?6:10), dp(12), dp(2));
-            TextView nameView = text(name, compact?13:15, true); nameView.setMinLines(1); nameView.setMaxLines(compact?1:2);
+            FrameLayout photo = preview(record, item, compact?80:Math.round(presetCardWidth * ratio));
+            photo.setBackground(shape(colors.container, 17)); photo.setClipToOutline(true); row.addView(photo);
+            LinearLayout caption = vertical(); caption.setPadding(dp(1), dp(7), dp(1), 0);
+            TextView nameView = text(name, 13, true); nameView.setMinLines(1); nameView.setMaxLines(1);
             nameView.setEllipsize(TextUtils.TruncateAt.END); caption.addView(nameView);
             boolean downloaded = record != null;
             LinearLayout meta = horizontal();
             TextView category = text(PresetCategories.label(presetCategory(value)), 11, false); category.setTextColor(colors.secondary);
             category.setMaxLines(1); category.setEllipsize(TextUtils.TruncateAt.END);
-            meta.addView(category, new LinearLayout.LayoutParams(0, dp(44), 1)); category.setGravity(Gravity.CENTER_VERTICAL);
+            if (item == null) category.setPadding(0, dp(3), 0, dp(2));
+            meta.addView(category, new LinearLayout.LayoutParams(0, item == null ? -2 : dp(48), 1)); category.setGravity(Gravity.CENTER_VERTICAL);
             if (item != null) meta.addView(presetDownloadControl(item, true), new LinearLayout.LayoutParams(dp(70), dp(48)));
             caption.addView(meta); row.addView(caption);
             row.setContentDescription(name + "，" + PresetCategories.label(presetCategory(value)) + "，" + (downloaded ? "已在本地" : "可下载") + "，查看预设");
-            HueTheme.card(row, colors, 20); row.setForeground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer), null, shape(Color.WHITE,20)));
+            row.setBackgroundColor(Color.TRANSPARENT); row.setForeground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer), null, shape(Color.WHITE,20)));
             row.setClipToOutline(true); row.setFocusable(true); row.setClickable(true);
             row.setOnClickListener(v -> openPreset(value, false));
             if (record != null) row.setOnLongClickListener(v -> { confirmDeletePreset(record); return true; });
@@ -1614,10 +1988,11 @@ public final class MainActivity extends Activity {
             LinearLayout.LayoutParams curveLayout = new LinearLayout.LayoutParams(-1, -2);
             curveLayout.topMargin = dp(10); curveLayout.bottomMargin = dp(16);
             content.addView(presetCurve(local), curveLayout);
+            if (np3) content.addView(textLink("查看 NP3 参数", () -> showNp3Parameters(local)));
         }
         detailPresetStorage = informationRow(content, AppIcon.Kind.CHECK, local != null ? "已保存在手机" : "在线预设 · 尚未下载", local != null ? "原始预设已保留" : "可直接预览效果，下载后保留在我的预设");
         divider(content);
-        informationRow(content, AppIcon.Kind.CAMERA, "相机兼容导入", "导入前检查兼容性；部分适配会列出差异，由你确认。当前受控通道支持 Z6II。");
+        informationRow(content, AppIcon.Kind.CAMERA, "相机兼容导入", "按相机能力与预设格式检查兼容性，适配差异会在导入前列出，由你确认。");
         String previewKey = local != null && !local.previewUri.isEmpty() ? local.previewUri : remote == null ? "" : remote.previewUrl;
         if (remote != null && !remote.compatibleModels.isEmpty()) label(content, "发布者标注机型：" + String.join("、", remote.compatibleModels) + (np3 ? "。手机调色不受此机型列表限制。" : "。导入前仍会检查文件兼容性。"), 12, colors.secondary);
         if (!previewKey.isEmpty()) content.addView(textLink("查看配套实拍参考", () -> showReferenceSample(previewKey, remote)));
@@ -1626,7 +2001,9 @@ public final class MainActivity extends Activity {
             content.addView(textLink(local.previewUri.isEmpty() ? "添加实拍参考（可选）" : "更换实拍参考", () -> pickSample(id)));
             label(content, local.originalFileName + " · " + local.byteLength + " 字节", 12, colors.secondary);
         }
-        String previewNote = "手机预览为近似效果；相机导入会单独检查可保留的参数，实际效果请试拍确认。";
+        PresetShowcaseRenderer.Source showcaseSource = presetShowcases.source(detailPresetSha, local == null ? remote.category : local.category);
+        if (!showcaseSource.custom) label(content, "展示样片 · " + showcaseSource.label + "\n摄影：" + showcaseSource.credit, 12, colors.secondary);
+        String previewNote = "展示样片用于手机近似模拟；相机导入会单独检查可保留的参数，实际效果请试拍确认。";
         TextView sampleNote = label(content, previewNote, 12, colors.secondary); sampleNote.setBackground(shape(colors.container, 14)); sampleNote.setPadding(dp(12), dp(10), dp(12), dp(10));
         detailPresetDeleteMount = vertical(); content.addView(detailPresetDeleteMount); fillPresetDeleteEntry(local);
         if (!message.isEmpty()) label(content, message, 13, colors.secondary);
@@ -1696,6 +2073,23 @@ public final class MainActivity extends Activity {
         });
     }
 
+    private void showNp3Parameters(PresetRecord record) {
+        if (waitForCurrentTask() || !requirePresetLibrary()) return;
+        startBusy("正在解析 NP3…");
+        worker.execute(() -> {
+            try {
+                cc.huevia.ncp.Np3PresetDetails details = cc.huevia.ncp.Np3PresetDetails.read(library.readPreset(record.id));
+                onUi(() -> {
+                    if (destroyed) return;
+                    finishBusy("");
+                    cc.huevia.ui.Np3PresetDetailsDialog.show(this, colors, details);
+                });
+            } catch (IOException failure) {
+                onUi(() -> { finishBusy("NP3 未解析。"); notice("无法读取预设参数", readable(failure)); });
+            }
+        });
+    }
+
     private ToneCurveView presetCurve(PresetRecord record) {
         ToneCurveView chart = new ToneCurveView(this, record.fileFormat);
         String id = record.id;
@@ -1747,15 +2141,16 @@ public final class MainActivity extends Activity {
         badge.setPadding(dp(8), dp(4), dp(8), dp(4)); badge.setBackground(shape(Color.argb(170, 0, 0, 0), 12));
         FrameLayout.LayoutParams badgePosition = new FrameLayout.LayoutParams(-2, -2, Gravity.TOP | Gravity.END);
         badgePosition.topMargin = dp(8); badgePosition.rightMargin = dp(8); frame.addView(badge, badgePosition);
-        String simulationVersion = presetPreviews.versionKey();
         String sha = record == null ? remote.sha256 : record.sha256;
+        PresetShowcaseRenderer.Source showcaseSource = presetShowcases.source(sha, record == null ? remote.category : record.category);
+        String simulationVersion = showcaseSource.version;
         int edge = compare ? 960 : Math.min(720, Math.max(320, dp(Math.max(1, presetCardWidth))));
-        String key = "sim:" + sha + ':' + simulationVersion + ':' + edge;
+        String key = "sim:" + sha + ':' + showcaseSource.cacheKey + ':' + edge;
         image.setTag(key);
         HoldToCompare comparison = compare ? new HoldToCompare(frame, image, badge) : null;
         if (comparison != null) {
             activeComparison = comparison;
-            prepareComparisonOriginal(comparison, simulationVersion, imageEpoch, image, badge, key);
+            prepareComparisonOriginal(comparison, showcaseSource, imageEpoch, image, badge, key);
         }
         Bitmap cached = imageCache.get(key);
         if (cached != null) {
@@ -1765,7 +2160,7 @@ public final class MainActivity extends Activity {
             placeholder.setVisibility(View.GONE); return frame;
         }
         PreviewTarget target = new PreviewTarget(image, placeholder, badge, imageEpoch, comparison,
-                record, remote, key, simulationVersion, edge, compare);
+                record, remote, key, simulationVersion, edge, compare, showcaseSource);
         if (previewFailures.containsKey(key)) {
             showPreviewFailure(target, previewFailures.get(key), unsupportedPreviews.contains(key));
             return frame;
@@ -1786,13 +2181,14 @@ public final class MainActivity extends Activity {
         final ImageView image; final TextView placeholder, badge; final int epoch, edge;
         final HoldToCompare comparison;
         final PresetRecord record; final OnlinePreset remote; final String key, version;
+        final PresetShowcaseRenderer.Source showcaseSource;
         final boolean detail;
         boolean attachedOnce;
         PreviewTarget(ImageView image, TextView placeholder, TextView badge, int epoch, HoldToCompare comparison,
-                      PresetRecord record, OnlinePreset remote, String key, String version, int edge, boolean detail) {
+                      PresetRecord record, OnlinePreset remote, String key, String version, int edge, boolean detail, PresetShowcaseRenderer.Source showcaseSource) {
             this.image = image; this.placeholder = placeholder; this.badge = badge; this.epoch = epoch;
             this.comparison = comparison; this.record = record; this.remote = remote; this.key = key;
-            this.version = version; this.edge = edge; this.detail = detail;
+            this.version = version; this.edge = edge; this.detail = detail; this.showcaseSource = showcaseSource;
         }
     }
 
@@ -1855,17 +2251,17 @@ public final class MainActivity extends Activity {
                     : online.readForPreview(source.remote, (received, total) -> {
                         if (job.cancelled || Thread.currentThread().isInterrupted()) throw new IOException("预览已取消。");
                     });
-            if (job.cancelled || !source.version.equals(presetPreviews.versionKey())) throw new IOException("预览已更新。");
+            if (job.cancelled || !presetShowcases.isCurrent(source.showcaseSource)) throw new IOException("预览已更新。");
             try { PresetPreviewProfiles.fromPreset(bytes); }
             catch (IOException invalid) { unsupported = true; throw invalid; }
-            bitmap = presetPreviews.render(bytes, source.edge);
+            bitmap = presetShowcases.render(bytes, source.showcaseSource, source.edge);
         } catch (Exception | OutOfMemoryError error) {
             reason = error instanceof OutOfMemoryError ? "内存暂时不足，请稍后重试。" : readable(error);
         }
         final Bitmap result = bitmap; final String failure = reason; final boolean unavailable = unsupported;
         runOnUiThread(() -> {
             activePresetImages--; previewJobs.remove(source.key);
-            if (destroyed || job.cancelled || !source.version.equals(presetPreviews.versionKey())) {
+            if (destroyed || job.cancelled || !presetShowcases.isCurrent(source.showcaseSource)) {
                 if (result != null) result.recycle();
                 if (!destroyed) postVisiblePresetPreviews();
                 return;
@@ -1904,9 +2300,9 @@ public final class MainActivity extends Activity {
                 }).show());
     }
 
-    private void prepareComparisonOriginal(HoldToCompare comparison, String version, int epoch,
+    private void prepareComparisonOriginal(HoldToCompare comparison, PresetShowcaseRenderer.Source showcaseSource, int epoch,
                                            ImageView image, TextView badge, String effectKey) {
-        String key = "original:" + version;
+        String key = "original:" + showcaseSource.cacheKey;
         Bitmap cached = imageCache.get(key);
         if (cached != null) {
             comparison.setOriginal(cached);
@@ -1921,14 +2317,14 @@ public final class MainActivity extends Activity {
         images.execute(() -> {
             Bitmap bitmap = null;
             try {
-                if (!version.equals(presetPreviews.versionKey())) throw new IOException("模板已更换。");
-                bitmap = presetPreviews.originalTemplate();
+                if (!presetShowcases.isCurrent(showcaseSource)) throw new IOException("模板已更换。");
+                bitmap = presetShowcases.original(showcaseSource);
             } catch (Exception | OutOfMemoryError unavailable) { }
             final Bitmap result = bitmap;
             runOnUiThread(() -> {
                 pendingImages.remove(key);
                 List<OriginalPreviewTarget> waiting = originalTargets.remove(key);
-                if (destroyed || !version.equals(presetPreviews.versionKey())) {
+                if (destroyed || !presetShowcases.isCurrent(showcaseSource)) {
                     if (result != null) result.recycle();
                     return;
                 }
@@ -1961,8 +2357,9 @@ public final class MainActivity extends Activity {
         startBusy("正在读取实拍参考…");
         images.execute(() -> {
             try {
-                Uri uri = source.startsWith("https:") && remote != null ? Uri.fromFile(online.downloadPreview(remote)) : Uri.parse(source);
-                Bitmap bitmap = decodePreview(readBounded(uri, 8 * 1024 * 1024));
+                byte[] bytes = source.startsWith("https:") && remote != null
+                        ? online.readPreview(remote) : readBounded(Uri.parse(source), 8 * 1024 * 1024);
+                Bitmap bitmap = decodePreview(bytes);
                 onUi(() -> {
                     busy = false; progress = ""; render();
                     ImageView view = new ImageView(this); view.setImageBitmap(bitmap); view.setAdjustViewBounds(true); view.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -1975,11 +2372,13 @@ public final class MainActivity extends Activity {
 
     private void requestCatalog(boolean cached) {
         if (waitForCurrentTask() || !requirePresetLibrary()) return;
+        if (!cached && fullCatalogHome()) { retryOnlinePresetSearch(); return; }
         if (loadingCatalog) { feedback("正在加载在线预设", "目录正在读取，请等待完成后再刷新。"); return; }
         loadCatalog(cached);
     }
 
     private void loadCatalog(boolean cached) {
+        if (fullCatalogHome()) { loadOnlinePresetSearch(false); return; }
         if (!ready || online == null || busy || loadingCatalog) return;
         if (!cached) { catalogPage = 0; catalogHasMore = false; loadCatalogPage(false); return; }
         final int token = ++catalogEpoch;
@@ -2056,6 +2455,17 @@ public final class MainActivity extends Activity {
     }
 
     private View presetDownloadControl(OnlinePreset item, boolean compact) {
+        if (compact) {
+            FrameLayout control = new FrameLayout(this); control.setMinimumHeight(dp(48)); control.setFocusable(true);
+            control.setBackground(ripple(colors.surface)); control.setOnClickListener(view -> downloadPreset(item));
+            TextView label = text("下载", 11, false); label.setTextColor(colors.secondary); label.setGravity(Gravity.CENTER); label.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            control.addView(label, new FrameLayout.LayoutParams(-1, -1));
+            ProgressBar bar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal); bar.setMax(100);
+            bar.setProgressTintList(ColorStateList.valueOf(colors.primary)); bar.setIndeterminateTintList(ColorStateList.valueOf(colors.primary)); bar.setProgressBackgroundTintList(ColorStateList.valueOf(colors.outline));
+            control.addView(bar, new FrameLayout.LayoutParams(-1, dp(3), Gravity.BOTTOM));
+            PresetDownloadTarget target = new PresetDownloadTarget(item, label, null, bar, control, true, imageEpoch);
+            presetDownloadTargets.computeIfAbsent(item.sha256, ignored -> new ArrayList<>()).add(target); updatePresetDownloadTarget(target); return control;
+        }
         LinearLayout control = vertical();
         TextView label = compact ? text("下载", 12, true) : button("下载到手机", AppIcon.Kind.DOWNLOAD, true, () -> downloadPreset(item));
         label.setGravity(Gravity.CENTER);
@@ -2123,7 +2533,7 @@ public final class MainActivity extends Activity {
                 detailPresetStorage[1].setText(local == null ? "可直接预览效果，下载后保留在我的预设" : "原始预设已保留");
             }
             fillPresetDetailFooter(detailPresetFooter, local, detailOnline); fillPresetDeleteEntry(local);
-        } else if (localTab && detailId.isEmpty() && detailOnline == null) render();
+        } else if ((localTab || !PresetHomeFilter.ALL_DOWNLOADS.equals(onlineDownloadFilter)) && detailId.isEmpty() && detailOnline == null) render();
     }
 
     private String presetDeletionBlock(String id) {
@@ -2176,25 +2586,46 @@ public final class MainActivity extends Activity {
     private void pickNcp(boolean thenImport) {
         if (waitForCurrentTask() || !requirePresetLibrary()) return;
         boolean logged=personal!=null&&!personal.owner().isEmpty();
-        AlertDialog.Builder prompt=new AppDialog.Builder(this).setTitle("添加到我的预设").setMessage(logged?"所选预设文件、名称和分类将自动保存到个人云端，仅你可见；本机保留离线副本。\n模板和自选样片保留在本机。":"当前未登录，所选预设仅保存在本机。登录后可选择同步到个人云端，换手机也能恢复。")
-            .setNegativeButton("取消",null).setPositiveButton(logged?"选择预设文件":"先保存到本机",(d,w)->openPresetFilePicker(thenImport));
-        if(!logged)prompt.setNeutralButton("登录后同步",(d,w)->{pendingPersonalPick=true;account.open();});prompt.show();
+        cc.huevia.ui.ActionChoiceDialog prompt = new cc.huevia.ui.ActionChoiceDialog(this, colors, "添加预设")
+                .add(AppIcon.Kind.FILE, "从文件导入", "NCP · NP3", () -> openPresetFilePicker(thenImport))
+                .note(logged ? "导入后自动同步至个人云端" : "仅保存到本机");
+        if (!logged) prompt.secondary("登录同步", () -> { pendingPersonalPick = true; account.open(); });
+        prompt.show();
     }
     private void openPresetFilePicker(boolean thenImport){
         if(waitForCurrentTask()||!requirePresetLibrary())return;importAfterPick=thenImport;
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*");
-        startActivityForResult(intent, PICK_NCP);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("*/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (!SystemActivityLauncher.document(this, intent, PICK_NCP, error -> notice("无法选择预设", error))) importAfterPick = false;
     }
 
     private void pickSample(String id) {
         if (waitForCurrentTask() || !requirePresetLibrary()) return;
         if (id == null || id.isEmpty() || library.findBySha256(id) == null) { showPresetRequired(); return; }
         previewForId = id;
-        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_SAMPLE);
+        if (!SystemActivityLauncher.document(this, new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"),
+                PICK_SAMPLE, error -> notice("无法选择样片", error))) previewForId = "";
     }
 
     @Override protected void onActivityResult(int request, int result, Intent data) {
         super.onActivityResult(request, result, data);
+        if (request == cc.huevia.connection.CameraConnectionRequest.REQUEST) {
+            if (!ready || album == null) { if (result == RESULT_OK) { deferredRequest = request; deferredResult = data == null ? new Intent() : data; } else requestedCameraOperation = ""; return; }
+            String operation = requestedCameraOperation; requestedCameraOperation = "";
+            if (result == RESULT_OK && data != null) {
+                int id = data.getIntExtra(cc.huevia.connection.CameraConnectionRequest.USB_ID, -1);
+                for (UsbDevice device : UsbProbe.findNikonDevices(usb)) if (device.getDeviceId() == id && usb.hasPermission(device)) {
+                    verifiedUsbId = id; usbModel = data.getStringExtra(cc.huevia.connection.CameraConnectionRequest.USB_MODEL);
+                    usbManufacturer = data.getStringExtra(cc.huevia.connection.CameraConnectionRequest.USB_MANUFACTURER);
+                    if(usbModel==null)usbModel="";if(usbManufacturer==null)usbManufacturer="";break;
+                }
+            }
+            if (result == RESULT_OK) { album.onCameraConnectionReturned(); localPhotoEditor.onCameraConnectionReturned(); }
+            render();
+            if (result == RESULT_OK && "进入遥控拍摄".equals(operation)) album.openRemoteCapture();
+            else if (result == RESULT_OK && "查看相机详情".equals(operation) && currentConnectionReady(false)) showCameraDetails();
+            return;
+        }
         if(request==7319){if(result==RESULT_OK&&data!=null){if(!ready||localAlbum==null){deferredRequest=request;deferredResult=data;return;}switchRoot(3);localAlbum.acceptRawDevelopment(data);}return;}
         if (localAlbum != null && localAlbum.onActivityResult(request, result, data)) return;
         if (request == CAMERA_WIFI_SYSTEM_SETTINGS) {
@@ -2241,7 +2672,7 @@ public final class MainActivity extends Activity {
             catch (Exception failure) { notice("报告无法生成", readable(failure)); return; }
             startBusy("正在导出报告…"); worker.execute(() -> {
                 try (OutputStream output = getContentResolver().openOutputStream(uri, "wt")) {
-                    if (output == null) throw new IOException("无法写入所选位置。"); output.write(snapshot.getBytes(StandardCharsets.UTF_8));
+                    if (output == null) throw new IOException("无法写入所选位置。"); output.write(AppCrashDiagnostics.appendToReport(this, snapshot).getBytes(StandardCharsets.UTF_8));
                     ConnectionTrace.mark("REPORT_EXPORT_WRITE_COMPLETE"); onUi(() -> finishBusy("报告已导出。"));
                 } catch (Exception e) { ConnectionTrace.mark("REPORT_EXPORT_WRITE_FAILED"); onUi(() -> { finishBusy("报告导出失败。"); notice("导出失败", readable(e)); }); }
             });
@@ -2311,7 +2742,6 @@ public final class MainActivity extends Activity {
         message = "连接相机后，将继续导入「" + selected.displayName + "」。";
         busy = false; progress = "";
         album.openConnectionSettings(); render();
-        feedback("未连接相机", "请先连接，连接成功后继续选择导入槽位。");
     }
 
     /** Consume once, only in the foreground and after the connection task releases its lease. */
@@ -2430,8 +2860,9 @@ public final class MainActivity extends Activity {
         String address = wireless ? (album.hasCameraConnection() ? album.connectionHost() : preparedWirelessHost)
                 + ":" + (album.hasCameraConnection() ? album.connectionPort() : preparedWirelessPort) : "USB 数据线";
         AlertDialog.Builder details = new AppDialog.Builder(this).setTitle("相机详情")
-                .setMessage(model + "\n" + (wireless ? "Wi-Fi · " : "") + address)
+                .setMessage(connectedCameraIdentity() + "\n" + (wireless ? "Wi-Fi · " : "") + address + "\n预设兼容性在导入前检查")
                 .setPositiveButton("关闭", null);
+        details.setNegativeButton("机内预设", (d,w) -> manageCameraSlots());
         if (wireless) details.setNeutralButton("检测预设支持", (d, w) -> {
             if (!canChangeConnection()) return;
             pendingImportId = ""; settingsReturnToPreset = false;
@@ -2440,12 +2871,96 @@ public final class MainActivity extends Activity {
         });
         details.show();
     }
+    private void manageCameraSlots(){
+        if(!canChangeConnection()||!currentConnectionReady(false))return;
+        if(recoveryBlocked){showRecoveryRequired("管理机内预设");return;}
+        pendingImportId="";settingsReturnToPreset=false;slotManagementRequested=true;
+        if(album.hasCameraConnection()||hasPreparedWireless()){openWirelessGuide(false,true);slotManagementRequested=true;scanWirelessSlots();}
+        else{UsbDevice device=verifiedUsb();if(device==null){slotManagementRequested=false;showConnectionRequired("管理机内预设");return;}startBusy("正在读取机内预设…");scanSlots(device,false,false);}
+    }
+    private void showCameraSlots(CameraConnection connection,cc.huevia.usb.UsbPictureControlProbe.Result snapshot,
+            List<cc.huevia.usb.UsbPictureControlProbe.ItemRecord> slots){
+        if(destroyed)return;slotManagementRequested=false;long revision=++slotManagerRevision;
+        if(slotManagerDialog!=null)slotManagerDialog.dismiss();
+        boolean supported=false;for(int operation:snapshot.operations)if(operation==0x90ce)supported=true;
+        final boolean canDelete=supported;
+        cc.huevia.ui.ActionChoiceDialog choices=new cc.huevia.ui.ActionChoiceDialog(this,colors,"机内预设")
+                .note(snapshot.model+(canDelete?" · 选择槽位管理":" · 相机未开放删除接口"));
+        for(cc.huevia.usb.UsbPictureControlProbe.ItemRecord item:slots){
+            String name=item.empty?"空槽位":item.registrationName.trim().isEmpty()?"未命名预设":item.registrationName;
+            choices.add(AppIcon.Kind.RECIPE,slotLabel(item.itemCode)+" · "+name,"",()->{
+                if(revision!=slotManagerRevision||busy)return;
+                if(item.empty){feedback("此槽位为空",slotLabel(item.itemCode)+" 无需删除。");return;}
+                if(!canDelete){feedback("暂不支持远程删除","请在相机的管理优化校准菜单删除。");return;}
+                try{confirmSlotDeletion(connection,new cc.huevia.usb.PictureControlDeleteSession.Confirmation(item,snapshot.model),revision);}
+                catch(IOException failure){feedback("请重新读取槽位",readable(failure));}
+            });
+        }
+        slotManagerDialog=choices.create();slotManagerDialog.show();
+    }
+    private void confirmSlotDeletion(CameraConnection connection,cc.huevia.usb.PictureControlDeleteSession.Confirmation confirmation,long revision){
+        if(slotDeleteDialog!=null)slotDeleteDialog.dismiss();
+        slotDeleteDialog=new AppDialog.Builder(this).setTitle("删除 "+slotLabel(confirmation.target)+"？")
+                .setMessage("将从相机移除「"+confirmation.name+"」。应用内预设保留。\n\n请先在相机切换其他预设。删除前会复查，完成后读回核对。")
+                .setNegativeButton("取消",null).setPositiveButton("删除槽位预设",(d,w)->{
+                    if(revision==slotManagerRevision)deleteCameraSlot(connection,confirmation);
+                }).create();slotDeleteDialog.show();
+    }
+    private void deleteCameraSlot(CameraConnection connection,cc.huevia.usb.PictureControlDeleteSession.Confirmation confirmation){
+        if(!canChangeConnection())return;
+        if(recoveryBlocked){showRecoveryRequired("删除槽位");return;}
+        WirelessPictureControl owner=connection.wirelessOwner;
+        if(connection.wireless()&&(owner==null||owner!=preparedWireless||!owner.isPrepared())){feedback("请重新读取槽位","相机连接已变化，本次未删除。");return;}
+        if(!connection.wireless()&&(verifiedUsb()==null||verifiedUsb().getDeviceId()!=connection.device.getDeviceId())){feedback("请重新连接相机","USB 连接已变化，本次未删除。");return;}
+        final cc.huevia.usb.UsbPictureControlDelete usbDelete=connection.wireless()?null:new cc.huevia.usb.UsbPictureControlDelete();
+        final CameraConnectionRuntime.OperationLease lease;
+        try{lease=connections.beginOperation();if(connection.wireless()&&!lease.bind(owner)){lease.close();return;}}
+        catch(RuntimeException failure){feedback("无法开始删除",readable(failure));return;}
+        slotManagerRevision++;slotManagementRequested=false;stopWirelessHeartbeat();activeSlotDelete=usbDelete;
+        startBusy("正在删除并核对槽位，请保持连接…");
+        try{connections.cameraWorker.execute(()->{
+            cc.huevia.usb.PictureControlDeleteSession.Result result=new cc.huevia.usb.PictureControlDeleteSession.Result();result.target=confirmation.target;
+            String warning="";boolean retained=false;
+            try{
+                // Durable local backup and intent must succeed before the backend can issue deletion.
+                File folder=new File(getFilesDir(),"slot-deletions/"+java.util.UUID.randomUUID());if(!folder.mkdirs())throw new IOException("删除记录无法保存，本次未删除。");
+                writeAtomic(new AtomicFile(new File(folder,"before.dat")),confirmation.backupBytes());
+                JSONObject journal=new JSONObject().put("type","custom_picture_control_delete").put("target",confirmation.target).put("name",confirmation.name)
+                        .put("model",confirmation.model).put("beforeSha256",confirmation.sha256).put("createdAt",System.currentTimeMillis());
+                AtomicFile receipt=new AtomicFile(new File(folder,"result.json"));writeAtomic(new AtomicFile(new File(folder,"intent.json")),journal.toString(2).getBytes(StandardCharsets.UTF_8));
+                try{
+                    if(connection.wireless())owner.deletePreparedCustomPreset(confirmation,result);
+                    else usbDelete.delete(connection.device,usb,confirmation,result);
+                }finally{writeAtomic(receipt,result.toJsonString().getBytes(StandardCharsets.UTF_8));}
+                if(connection.wireless()&&result.sessionRetained&&owner.isPrepared()){
+                    retained=connections.hold(lease,owner,connection.host,connection.port,confirmation.model);
+                }
+            }catch(Exception failure){if(result.error.isEmpty())result.error=readable(failure);}
+            finally{
+                if(usbDelete!=null)usbDelete.close();if(activeSlotDelete==usbDelete)activeSlotDelete=null;
+                if(connection.wireless()&&!retained){connections.forget(owner);if(preparedWireless==owner)preparedWireless=null;owner.close();}
+                lease.close();
+            }
+            try{warning=saveReport(result.toJsonString());}catch(Exception ignored){}
+            final boolean held=retained;final String storageWarning=warning;
+            onUi(()->{
+                if(slotManagerDialog!=null)slotManagerDialog.dismiss();slotManagerDialog=null;
+                if(held){preparedWireless=owner;startWirelessHeartbeat(owner);}
+                wirelessGuide=false;MainActivity.this.confirmation=null;
+                String text=result.verified?slotLabel(result.target)+" 已为空槽。"+(connection.wireless()?(held?"相机连接已保持。":"删除已核对，请重新连接相机。"):"")
+                        :result.attempted?"删除结果未确认，请先重新读取槽位核对，勿重复删除。\n"+result.error:"未删除。"+result.error;
+                if(!result.cleanupError.isEmpty())text+="\n会话清理未确认，请重新连接后核对。";
+                finishBusy(text+storageWarning);notice(result.verified?"预设已删除":result.attempted?"结果待核对":"未删除预设",text);
+            });
+        });}catch(java.util.concurrent.RejectedExecutionException stopped){lease.close();if(usbDelete!=null)usbDelete.close();activeSlotDelete=null;finishBusy("任务已取消，未开始删除。");}
+    }
 
     private void openWirelessGuide(boolean recovery) {
         openWirelessGuide(recovery, false);
     }
 
     private void openWirelessGuide(boolean recovery, boolean settingsProbe) {
+        slotManagementRequested=false;
         clearPendingPhotoLive();
         if (!canChangeConnection()) return;
         if (!recovery && album.hasCameraConnection()) {
@@ -2534,6 +3049,7 @@ public final class MainActivity extends Activity {
     }
 
     private void cancelWirelessScan() {
+        slotManagementRequested=false;
         wirelessScanEpoch++;
         stopWirelessHeartbeat();
         if (waitingAlbumHandoff) { waitingAlbumHandoff = false; album.disconnect(); }
@@ -2677,6 +3193,7 @@ public final class MainActivity extends Activity {
                     onUi(() -> {
                         if (request != wirelessScanEpoch) { releasePreparedWireless(owner); return; }
                         startWirelessHeartbeat(owner);
+                        if(slotManagementRequested){wirelessGuide=false;busy=false;message=warning;render();showCameraSlots(new CameraConnection(host,port,owner),result,slots);return;}
                         finishBusy("检测完成：" + result.model + "，C1–C9 中有 " + emptyCount + " 个空槽。\n"
                                 + (registrationSupported ? "支持无线导入。打开预设详情，点击“导入相机”即可。" : "相机未声明无线预设登记接口，可在相机连接中改用 USB。")
                                 + (warning.isEmpty() ? "" : "\n" + warning));
@@ -2756,28 +3273,31 @@ public final class MainActivity extends Activity {
         UsbPictureControlProbe probe = new UsbPictureControlProbe(); activeProbe = probe;
         worker.execute(() -> {
             try {
-                UsbPictureControlProbe.Result result = probe.probe(device, usb);
-                List<UsbPictureControlProbe.ItemRecord> slots = validateSnapshot(result);
+                UsbPictureControlProbe.Result result = connectionOnly ? probe.probeDeviceInfo(device, usb) : probe.probe(device, usb);
                 if (connectionOnly) {
+                    validateUsbConnectionInfo(result);
                     onUi(() -> {
                         boolean attached = false;
                         for (UsbDevice current : UsbProbe.findNikonDevices(usb)) if (current.getDeviceId() == device.getDeviceId() && usb.hasPermission(current)) attached = true;
-                        if (attached) { verifiedUsbId = device.getDeviceId(); usbModel = result.model; }
-                        finishBusy(attached ? "USB 相机已连接。" : "相机已断开，请重新连接。");
-                        feedback(attached ? "相机已连接" : "相机已断开", attached ? "USB 连接就绪，可以继续导入预设。" : "请检查数据线连接后重试。");
+                        if (attached) { verifiedUsbId = device.getDeviceId(); usbModel = result.model; usbManufacturer = result.manufacturer; }
+                        else { verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; }
+                        finishBusy(attached ? "USB 已连接：" + UsbPictureControlProbe.cameraIdentity(result.manufacturer,result.model) : "相机已断开，请重新连接。");
+                        feedback(attached ? "相机已连接" : "相机已断开", attached ? UsbPictureControlProbe.cameraIdentity(result.manufacturer,result.model)+" · USB" : "请检查数据线连接后重试。");
                     });
                     return;
                 }
+                List<UsbPictureControlProbe.ItemRecord> slots = validateSnapshot(result);
                 if (recovery) { completeRecovery(result, slots, -1); return; }
                 String saveWarning = saveReport(result.toJsonString());
-                onUi(() -> { busy = false; message = saveWarning; render(); chooseImportOptions(new CameraConnection(device), result.model, slots); });
+                onUi(() -> { busy = false; message = saveWarning; render(); if(slotManagementRequested)showCameraSlots(new CameraConnection(device),result,slots);else chooseImportOptions(new CameraConnection(device), result.model, slots); });
             } catch (Exception e) {
                 if (e instanceof UsbPictureControlProbe.ProbeException) {
                     UsbPictureControlProbe.Result partial = ((UsbPictureControlProbe.ProbeException) e).partialResult;
                     if (partial != null) saveReport(partial.toJsonString());
                 }
                 onUi(() -> {
-                    if (connectionOnly) { verifiedUsbId = -1; usbModel = ""; finishBusy("USB 连接未完成：" + readable(e)); }
+                    slotManagementRequested=false;
+                    if (connectionOnly) { verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; finishBusy("USB 连接未完成：" + readable(e)); }
                     else if (recovery) {
                         busy = false; confirmation = null;
                         importOutcome = new ImportOutcome("结果仍待核对", readable(e) + "\n\n请关闭其他相机应用，连接上次的相机后重新只读核对。", pendingJournal == null ? "" : pendingJournal.optString("presetName"), pendingJournal == null ? "" : pendingJournal.optString("model"), pendingJournal == null ? -1 : pendingJournal.optInt("targetItem", -1), false, true); render();
@@ -2785,6 +3305,10 @@ public final class MainActivity extends Activity {
                 });
             } finally { probe.close(); if (activeProbe == probe) activeProbe = null; }
         });
+    }
+
+    private static void validateUsbConnectionInfo(UsbPictureControlProbe.Result result)throws IOException{
+        if(result==null||!result.completed||!result.deviceInfoOnly||!result.deviceInfoRead||result.protocolPhaseUnconfirmed||result.sessionOpened||result.sessionRetained||result.capabilityRead||!result.items.isEmpty()||result.model.trim().isEmpty())throw new IOException("USB 设备信息未确认，请重新连接相机。");
     }
 
     private List<UsbPictureControlProbe.ItemRecord> validateSnapshot(UsbPictureControlProbe.Result result) throws Exception {
@@ -2795,7 +3319,7 @@ public final class MainActivity extends Activity {
                                                                   WirelessPictureControl owner) throws Exception {
         boolean sessionReady = owner == null ? result.sessionClosed && !result.sessionRetained
                 : result.sessionRetained && !result.sessionClosed && owner.isPrepared();
-        if (!result.completed || !sessionReady || result.protocolPhaseUnconfirmed) throw new IOException("相机读取或连接状态未确认，请重新连接后读取。");
+        if (result.deviceInfoOnly || !result.completed || !result.capabilityParsed || !sessionReady || result.protocolPhaseUnconfirmed) throw new IOException("相机读取或连接状态未确认，请重新连接后读取。");
         List<UsbPictureControlProbe.ItemRecord> slots = new ArrayList<>(); boolean[] seen = new boolean[9];
         for (UsbPictureControlProbe.ItemRecord item : result.items) {
             if (item.itemCode < 201 || item.itemCode > 209) continue;
@@ -3236,10 +3760,10 @@ public final class MainActivity extends Activity {
 
     private void exportReport() {
         if (waitForCurrentTask()) return;
-        if (report.isEmpty() && ConnectionTrace.snapshot().isEmpty()) { notice("暂无可导出的报告", "连接相机或完成一次检测后，再导出报告。"); return; }
         ConnectionTrace.mark("REPORT_PICKER_OPEN");
-        startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
-                .setType("application/json").putExtra(Intent.EXTRA_TITLE, report.isEmpty() ? "huevia-connection-report.json" : "nikon-usb-report.json"), EXPORT_REPORT);
+        SystemActivityLauncher.document(this, new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("application/json").putExtra(Intent.EXTRA_TITLE, report.isEmpty() ? "huevia-diagnostic-report.json" : "nikon-usb-report.json"),
+                EXPORT_REPORT, error -> notice("无法保存诊断报告", error));
     }
 
     private String exportReportSnapshot() throws org.json.JSONException {
@@ -3261,7 +3785,7 @@ public final class MainActivity extends Activity {
 
     private void showHelp() {
         List<String> labels = new ArrayList<>();
-        labels.add("预设导入说明"); labels.add("导出最近报告"); labels.add("高级诊断");
+        labels.add("预设导入说明"); labels.add("导出诊断报告"); labels.add("高级诊断");
         if (recoveryBlocked) labels.add("核对上次导入 · 只读");
         labels.add("关于 " + getString(R.string.app_name));
         new AppDialog.Builder(this).setTitle("帮助与设置").setItems(labels.toArray(new String[0]), (d, w) -> {
@@ -3269,7 +3793,7 @@ public final class MainActivity extends Activity {
                 case 0: notice("导入相机", "打开本地预设，点击“导入相机”。应用使用当前 Wi-Fi 或 USB 连接；尚未连接时会前往设置，连接完成后自动继续到槽位确认。\n\n无线连接不需要先读取相册。导入时自动检查相机能力与槽位，无需提前手动检测；相机详情中仍可按需检测预设支持。若无线接口不支持导入，可在设置中改用 USB。\n\n选择空槽可直接导入；选择已有预设的槽位时，会显示原名称并要求确认覆盖。确认后重新核对目标内容，只登记一次并读回核对；槽位已变化则停止。结果不明时先只读核对，勿重复导入。\n\n导入成功并读回核对后保持连接，需要断开时请到设置操作。"); break;
                 case 1: exportReport(); break;
                 case 2: if (waitForCurrentTask()) break; else if (recoveryBlocked) showRecoveryRequired("打开高级诊断"); else if (canChangeConnection()) { clearPendingPhotoLive(); album.disconnect(); startActivity(new Intent(this, DiagnosticsActivity.class)); } break;
-                default: if (recoveryBlocked && w == 3) recoverImport(); else notice(getString(R.string.app_name), "预设浏览、本地管理与尼康相机导入。\n当前 USB 兼容通道以 Z6II 实测为基础，并不支持所有 NCP、NP2 或 NP3。\n\n打开预设库中的“在线预设”，即可浏览和下载管理后台已发布的预设，无需配置地址。无线相册支持范围以实际连接与读取结果为准。");
+                default: if (recoveryBlocked && w == 3) recoverImport(); else notice(getString(R.string.app_name), "预设浏览、本地管理与尼康相机导入。\n连接后按相机能力与预设格式检查兼容性，不支持的项目会说明原因。\n\n打开预设库中的“在线预设”，即可浏览和下载管理后台已发布的预设，无需配置地址。无线相册支持范围以实际连接与读取结果为准。");
             }
         }).setNegativeButton("关闭", null).show();
     }
@@ -3290,6 +3814,13 @@ public final class MainActivity extends Activity {
     }
 
     private void goBack() {
+        if (homePresetSearchVisible && homePresetSearchExpanded) { closeHomePresetSearch(); return; }
+        if (connectionWorkspace()) {
+            if (waitForCurrentTask()) return;
+            cancelPendingCameraWifi();
+            if (album.isConnecting()) album.disconnect();
+            finish(); return;
+        }
         if (account != null && account.isOpen()) { account.goBack(); return; }
         if (community != null && community.isOpen()) { community.goBack(); return; }
         if (updates != null && updates.isOpen()) { updates.goBack(); return; }
@@ -3359,9 +3890,14 @@ public final class MainActivity extends Activity {
         restore.run();decor.post(restore);
     }
     @Override protected void onSaveInstanceState(Bundle out) {
+        out.putString("requestedCameraOperation", requestedCameraOperation);
         out.putString("localPresetCategory", localCategoryFilter);
         out.putString("onlinePresetCategory", onlineCategoryFilter);
         out.putString("onlinePresetFormat", onlineFormatFilter);
+        out.putInt("presetHomeFilterVersion", PresetHomeFilter.STATE_VERSION);
+        out.putString("presetHomeLocalType", localFormatFilter); out.putString("presetHomeOnlineType", onlineFormatFilter);
+        out.putString("presetHomeDownload", onlineDownloadFilter);
+        out.putString("homePresetQuery", homePresetQuery); out.putBoolean("homePresetSearchExpanded", homePresetSearchExpanded);
         out.putBoolean("local", localTab); out.putBoolean("album", albumTab);
         out.putBoolean("localAlbumTab", localAlbumTab); if (localAlbum != null) localAlbum.saveState(out);
         out.putBoolean("settings", settingsTab); out.putBoolean("settingsReturnToPreset", settingsReturnToPreset);
@@ -3378,7 +3914,10 @@ public final class MainActivity extends Activity {
         out.putString("wirelessAddress", wirelessAddress); out.putString("wirelessPort", wirelessPortText);
         super.onSaveInstanceState(out);
     }
-    @Override public void onConfigurationChanged(Configuration config) { super.onConfigurationChanged(config); render(); }
+    @Override public void onConfigurationChanged(Configuration config) {
+        super.onConfigurationChanged(config); render();
+        if (presetFilterSheet != null && presetFilterSheet.isShowing()) presetFilterSheet.layoutForWindow();
+    }
 
     @Override protected void onPause() {
         ConnectionTrace.mark("UI_BACKGROUND");
@@ -3404,9 +3943,9 @@ public final class MainActivity extends Activity {
         presetDownloads.addObserver(presetDownloadObserver); refreshPresetDownloadViews();
         postVisiblePresetPreviews();
         if (account != null) account.onHostResumed();
-        if(personal!=null&&ready)personal.resumed();
+        if(personal!=null&&ready&&!connectionWorkspace())personal.resumed();
         if (community != null) community.onHostResumed();
-        if (updates != null) { updates.onResume(); updates.automaticCheck(); }
+        if (updates != null) { updates.onResume(); if (!connectionWorkspace()) updates.automaticCheck(); }
         if (album != null) album.refreshGalleryStatus();
         if (localAlbum != null && localAlbumTab) localAlbum.resume();
         if (localPhotoEditor != null) localPhotoEditor.refreshGalleryStatus();
@@ -3443,7 +3982,7 @@ public final class MainActivity extends Activity {
                         if (destroyed || !activityVisible || !updates.isOpen()) return;
                         if (updateTaskActive()) { feedback("相机任务已开始", "请等待当前任务完成后再安装更新。"); return; }
                         clearPendingPhotoLive(); pendingImportId = ""; pendingConnectionAccepted = false;
-                        verifiedUsbId = -1; usbModel = ""; connections.disconnect(); preparedWireless = null;
+                        verifiedUsbId = -1; usbModel = ""; usbManufacturer = ""; connections.disconnect(); preparedWireless = null;
                         awaitUpdateDisconnect(proceed, android.os.SystemClock.elapsedRealtime() + 5000);
                     }).show();
         } else proceed.run();
@@ -3483,19 +4022,15 @@ public final class MainActivity extends Activity {
 
     /** An explicit connect action opens the Wi-Fi page immediately and remembers what to resume. */
     private void openPhotoLiveConnection(String projectId) {
-        if (destroyed || isFinishing() || waitForCurrentTask() || !canChangeConnection()) return;
-        if (album.isConnecting() || connections.isPreparingAlbum()) {
-            feedback("正在连接相机", "请等待当前连接或相册准备完成后再试。需要取消时，可返回连接页面操作。"); return;
-        }
+        if (destroyed || isFinishing() || waitForCurrentTask()) return;
         switchRoot(2);
         clearPendingPhotoLive();
         pendingImportId = ""; settingsReturnToPreset = false; pendingConnectionAccepted = false;
         pendingLiveProjectId = projectId == null ? "" : projectId;
         photoLiveContinuation.request();
-        if (album.hasCameraConnection() || hasPreparedWireless()) photoLiveContinuation.connectionAttempted();
-        openCameraSettings();
-        feedback("请连接相机 Wi-Fi", pendingLiveProjectId.isEmpty()
-                ? "连接成功后，将自动返回边拍边传新建项目。" : "连接成功后，将返回原项目继续接收。");
+        if (album.hasCameraConnection() || hasPreparedWireless() || album.isConnecting() || connections.isPreparingAlbum()) photoLiveContinuation.connectionAttempted();
+        settingsTab = true; albumTab = localAlbumTab = false; wirelessGuide = false; message = "";
+        album.openConnectionSettings(); render();
         resumePendingPhotoLive();
     }
 
@@ -3504,20 +4039,12 @@ public final class MainActivity extends Activity {
     private void showConnectionRequired(String operation, boolean continuePhotoLive) { showConnectionRequired(operation, continuePhotoLive, ""); }
     private void showConnectionRequired(String operation, boolean continuePhotoLive, String projectId) {
         if (destroyed || isFinishing() || waitForCurrentTask()) return;
-        if (album.isConnecting() || connections.isPreparingAlbum()) {
-            feedback("正在连接相机", "请等待当前连接或相册准备完成后再试。需要取消时，可返回连接页面操作。"); return;
-        }
-        if (!canChangeConnection()) return;
+        if (continuePhotoLive) { openPhotoLiveConnection(projectId); return; }
+        if (!requestedCameraOperation.isEmpty()) return;
         String action = operation == null || operation.trim().isEmpty() ? "此操作" : operation.trim();
-        String transport = "查看相机详情".equals(action) ? "相机（Wi-Fi 或 USB）" : "相机 Wi-Fi";
-        feedback("未连接相机", continuePhotoLive ? projectId.isEmpty() ? "请先连接，连接成功后继续新建拍摄项目。" : "请连接原相机，连接后继续接收这个项目。"
-                : "请先连接" + transport + "，再" + action + "。", "去连接", () -> {
-                    if (continuePhotoLive) { openPhotoLiveConnection(projectId); return; }
-                    if (!canChangeConnection()) return;
-                    clearPendingPhotoLive();
-                    switchRoot(2);
-                    openCameraSettings();
-                });
+        requestedCameraOperation = action;
+        cc.huevia.connection.CameraConnectionRequest.open(this, action, "查看相机详情".equals(action)
+                ? cc.huevia.connection.CameraConnectionRequest.ANY : cc.huevia.connection.CameraConnectionRequest.WIFI);
     }
 
     private void showPresetRequired() {
@@ -3574,7 +4101,7 @@ public final class MainActivity extends Activity {
     private LinearLayout vertical() { LinearLayout view = new LinearLayout(this); view.setOrientation(LinearLayout.VERTICAL); return view; }
     private LinearLayout horizontal() { LinearLayout view = new LinearLayout(this); view.setOrientation(LinearLayout.HORIZONTAL); view.setGravity(Gravity.CENTER_VERTICAL); return view; }
     static int floatingNavigationHeightDp(float fontScale) {
-        return 68 + Math.round(Math.max(0f, fontScale - 1.2f) * 24f);
+        return 65 + Math.round(Math.max(0f, fontScale - 1.2f) * 24f);
     }
     static int floatingNavigationInsetPx(int screenWidthDp, float fontScale, float density) {
         return screenWidthDp >= 600 ? 0
@@ -3627,18 +4154,18 @@ public final class MainActivity extends Activity {
     }
     private void nav(LinearLayout parent, String value, AppIcon.Kind kind, boolean active, Runnable click) {
         boolean bottomTab = parent.getOrientation() == LinearLayout.HORIZONTAL;
-        LinearLayout cell = vertical(); cell.setGravity(Gravity.CENTER); cell.setPadding(dp(8), dp(bottomTab ? 4 : 7), dp(8), dp(bottomTab ? 4 : 7)); cell.setMinimumHeight(dp(58));
+        LinearLayout cell = vertical(); cell.setGravity(Gravity.CENTER); cell.setPadding(dp(8), dp(bottomTab ? 4 : 7), dp(8), dp(bottomTab ? 4 : 7)); cell.setMinimumHeight(dp(56));
         GradientDrawable selection = shape(active && bottomTab ? colors.primaryContainer : Color.TRANSPARENT, bottomTab ? 29 : 20);
         if (bottomTab) cell.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> selection.setCornerRadius((bottom - top) / 2f));
         cell.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.primaryContainer), selection, null)); cell.setAlpha(busy ? .5f : 1); cell.setFocusable(true); cell.setContentDescription(value); cell.setSelected(active);
-        ImageView icon = new ImageView(this); icon.setImageDrawable(new AppIcon(kind, active ? colors.text : colors.secondary, getResources().getDisplayMetrics().density));
+        ImageView icon = new ImageView(this); icon.setImageDrawable(new AppIcon(kind, active && colors.home ? colors.onPrimaryContainer : active ? colors.text : colors.secondary, getResources().getDisplayMetrics().density));
         FrameLayout iconSlot = new FrameLayout(this); if(active && !bottomTab) iconSlot.setBackground(shape(colors.primaryContainer,16)); iconSlot.addView(icon, new FrameLayout.LayoutParams(dp(23), dp(23), Gravity.CENTER));
         if (kind == AppIcon.Kind.SETTINGS) {
             settingsNavigationItem = cell; settingsUnreadDot = new View(this); settingsUnreadDot.setBackground(shape(colors.error, 4));
             settingsUnreadDot.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
             iconSlot.addView(settingsUnreadDot, new FrameLayout.LayoutParams(dp(8), dp(8), Gravity.TOP | Gravity.END));
         }
-        cell.addView(iconSlot, new LinearLayout.LayoutParams(dp(54), dp(bottomTab ? 26 : 30))); TextView label = text(value, 11, active); label.setGravity(Gravity.CENTER); label.setTextColor(active ? colors.text : colors.secondary); label.setPadding(0, dp(bottomTab ? 2 : 3), 0, 0); cell.addView(label, new LinearLayout.LayoutParams(-1, -2));
+        cell.addView(iconSlot, new LinearLayout.LayoutParams(dp(54), dp(bottomTab ? 26 : 30))); TextView label = text(value, 11, active); label.setGravity(Gravity.CENTER); label.setTextColor(active && bottomTab && colors.home ? colors.onPrimaryContainer : active ? colors.text : colors.secondary); label.setPadding(0, dp(bottomTab ? 2 : 3), 0, 0); cell.addView(label, new LinearLayout.LayoutParams(-1, -2));
         LinearLayout.LayoutParams params = bottomTab ? new LinearLayout.LayoutParams(0,-1,1) : new LinearLayout.LayoutParams(-1,dp(72)); params.leftMargin = dp(bottomTab ? 0 : 1); params.rightMargin = dp(bottomTab ? 0 : 1); parent.addView(cell, params);
         cell.setOnClickListener(v -> { if (!waitForCurrentTask()) click.run(); });
     }
@@ -3654,8 +4181,8 @@ public final class MainActivity extends Activity {
     }
     private void sourceTab(LinearLayout parent, String value, boolean active, Runnable click) {
         FrameLayout cell = new FrameLayout(this); TextView tab = text(value, 13, active); tab.setGravity(Gravity.CENTER); tab.setTextColor(active ? colors.text : colors.secondary);
-        if (active) { tab.setBackground(shape(colors.card, 19)); tab.setElevation(dp(1)); }
-        FrameLayout.LayoutParams capsule = new FrameLayout.LayoutParams(-1, dp(40), Gravity.CENTER); capsule.leftMargin = capsule.rightMargin = dp(2); cell.addView(tab, capsule);
+        if (active) { tab.setBackground(shape(colors.home && colors.dark ? 0xff4B4640 : colors.card, 20)); tab.setElevation(0); }
+        FrameLayout.LayoutParams capsule = new FrameLayout.LayoutParams(-1, dp(40), Gravity.CENTER); capsule.leftMargin = capsule.rightMargin = 0; cell.addView(tab, capsule);
         cell.setFocusable(true); cell.setSelected(active); cell.setContentDescription(value); cell.setOnClickListener(v -> { if (!waitForCurrentTask()) click.run(); });
         parent.addView(cell, new LinearLayout.LayoutParams(0, dp(48), 1));
     }
@@ -3674,7 +4201,12 @@ public final class MainActivity extends Activity {
     }
     private static String[] quarters(int min, int max) { String[] result = new String[max - min + 1]; for (int i = 0; i < result.length; i++) result[i] = String.format(Locale.ROOT, "%.2f", (min + i) / 4.0); return result; }
     private static String slotLabel(int target) { return "C" + (target - 200); }
-    private static String readable(Throwable error) { return error.getMessage() == null || error.getMessage().trim().isEmpty() ? error.getClass().getSimpleName() : error.getMessage(); }
+    private static String readable(Throwable error) {
+        String message=error.getMessage()==null||error.getMessage().trim().isEmpty()?error.getClass().getSimpleName():error.getMessage();
+        if(error instanceof UsbPictureControlProbe.ProbeException){UsbPictureControlProbe.Result info=((UsbPictureControlProbe.ProbeException)error).partialResult;
+            if(info!=null&&info.deviceInfoRead){String identity=UsbPictureControlProbe.cameraIdentity(info.manufacturer,info.model);if(!message.contains(identity))message="相机："+identity+"\n"+message;}}
+        return message;
+    }
     private String documentName(Uri uri) {
         try (Cursor cursor = getContentResolver().query(uri, new String[]{OpenableColumns.DISPLAY_NAME}, null, null, null)) { if (cursor != null && cursor.moveToFirst() && !cursor.isNull(0)) return cursor.getString(0); }
         return "unknown";
@@ -3721,6 +4253,8 @@ public final class MainActivity extends Activity {
     private static String readText(AtomicFile file, int limit) throws IOException { synchronized (CameraConnectionRuntime.PERSISTENCE_LOCK) { try (InputStream input = file.openRead()) { return new String(readBounded(input, limit), StandardCharsets.UTF_8); } } }
 
     @Override protected void onDestroy() {
+        if (presetFilterSheet != null) presetFilterSheet.dismiss();
+        homePresetSearchHandler.removeCallbacks(homePresetSearchRefresh);
         if (Build.VERSION.SDK_INT >= 33 && selectionBackCallback != null) { SelectionBackApi33.unregister(this, selectionBackCallback); selectionBackCallback = null; }
         presetDownloads.removeObserver(presetDownloadObserver);
         cancelPendingCameraWifi();
@@ -3737,6 +4271,7 @@ public final class MainActivity extends Activity {
         pendingProtectedLiveProjectId = "";
         pendingPhotoSave = null;
         destroyed = true; if (activeProbe != null) activeProbe.close(); if (activeImport != null) activeImport.close();
+        if(activeSlotDelete!=null)activeSlotDelete.close();if(slotManagerDialog!=null)slotManagerDialog.dismiss();if(slotDeleteDialog!=null)slotDeleteDialog.dismiss();
         // The connected-device service owns wireless sessions and the serial worker.
         // Recreating or removing this screen only detaches its UI.
         if (localAlbum != null) localAlbum.close();

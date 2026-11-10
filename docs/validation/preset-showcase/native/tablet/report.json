@@ -1,0 +1,63 @@
+{
+  "pass": true,
+  "mode": "tablet",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "ten-bundled-licensed-photos",
+      "pass": true
+    },
+    {
+      "name": "all-ten-scenes-reachable-from-real-recipe-hashes",
+      "pass": true
+    },
+    {
+      "name": "settings-gallery-source-set-matches-ten-photos",
+      "pass": true
+    },
+    {
+      "name": "settings-restore-names-photography-set",
+      "pass": true
+    },
+    {
+      "name": "settings-lists-current-gallery-sources",
+      "pass": true
+    },
+    {
+      "name": "settings-photo-credit-matches-selected-source",
+      "pass": true
+    },
+    {
+      "name": "ten-source-fixtures-in-real-gallery",
+      "pass": true
+    },
+    {
+      "name": "gallery-renders-photographic-previews",
+      "pass": true
+    },
+    {
+      "name": "detail-original-is-matching-frozen-scene",
+      "pass": true
+    },
+    {
+      "name": "comparison-dimensions-match",
+      "pass": true
+    },
+    {
+      "name": "comparison-shows-original",
+      "pass": true
+    },
+    {
+      "name": "comparison-restores-effect",
+      "pass": true
+    },
+    {
+      "name": "returning-keeps-same-scene-and-key",
+      "pass": true
+    }
+  ],
+  "scope": "Installed production gallery only; generated valid NCP recipes and an owned custom-template PNG. No physical phone or camera-output claim."
+}

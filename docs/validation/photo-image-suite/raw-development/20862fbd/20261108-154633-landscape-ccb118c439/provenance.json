@@ -1,0 +1,33 @@
+{
+  "versionCode": "162",
+  "candidateSha256": "20862fbd1f770075999504ff5390b2541eb927553606debc1cd6cb581a602368",
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "uiMode": "landscape",
+  "probeSha256": "b13aecb35b2de9d13e7a5310f976c80f9e5f914c276c7aaf6f455c10fa5029b9",
+  "sampleNefSha256": "",
+  "pass": true,
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only.",
+  "files": [
+    {
+      "file": "raw-ui-auto-wb.png",
+      "sha256": "105f9cd98758d05cf6fe051a1b03668ee2b56656ced087d798462ff7de30d364"
+    },
+    {
+      "file": "raw-ui-color-choice.png",
+      "sha256": "656167f7f6a47c88cfb24126aabc3932cea3d83a4b6eebe5a7eab7b7e2570f46"
+    },
+    {
+      "file": "raw-ui-editor-return.png",
+      "sha256": "77edebd4f29536734ade6424b393a8daa5f8b9bde79113a71f912540144528c9"
+    },
+    {
+      "file": "raw-ui-initial.png",
+      "sha256": "f7d1601db43664f9ad7d4c41bab8de6ef2a535853cb651e68f8aca87185fb63e"
+    },
+    {
+      "file": "report.json",
+      "sha256": "a9012f405d263db13850aae7084a3f85a10fb73f5f0a49fc0ae98bdb73770fee"
+    }
+  ]
+}

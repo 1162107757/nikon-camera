@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "sha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+  "sourceManifestStable": true,
+  "sourceFiles": 10,
+  "zipCrcValid": true,
+  "retainedPayloadsEqual": 89,
+  "removedOnly": [
+    "lib/x86/libc++_shared.so",
+    "lib/x86/libhuevia_raw.so",
+    "lib/x86/libraw.so",
+    "lib/x86/libtensorflowlite_jni.so"
+  ]
+}

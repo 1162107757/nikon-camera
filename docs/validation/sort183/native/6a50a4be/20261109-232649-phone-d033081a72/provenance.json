@@ -1,0 +1,81 @@
+{
+  "versionCode": "183",
+  "candidateSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "uiMode": "phone",
+  "probeSha256": "ffd344d88ccdae52c8e186fa0a41767582b24c81a3b6e142d7b270deb2e4a091",
+  "sampleNefSha256": "",
+  "pass": true,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims.",
+  "files": [
+    {
+      "file": "01-album-default.png",
+      "sha256": "9b5e19d0c87a7651bbabbf7a6e0ef8801ed3f7525a3c5730df9c9f846fcd8212"
+    },
+    {
+      "file": "02-sheet-default.png",
+      "sha256": "b1e0ff20c7b15c5cd8de613302494f86b7b5d9b073a1631cf71e9736f0699554"
+    },
+    {
+      "file": "03-sheet-draft.png",
+      "sha256": "79d991e59425cfb37e5c139569fe8004dbe7a1b159cf3be22f6fa4540371bd29"
+    },
+    {
+      "file": "04-album-added-oldest.png",
+      "sha256": "5cc9ae8a3dc919f9029d7f6400b7467d3076e66dcecff82c3d3d5c7b38db39a5"
+    },
+    {
+      "file": "05-selection-A-preserved.png",
+      "sha256": "326521744d5a382e6ff2a28ed8d2abf0850bf9fc6ba73c1cee33fb2cf40ba9c0"
+    },
+    {
+      "file": "06-phone-added-newest.png",
+      "sha256": "78c31df56612efad7908d91917aad706e5deefc8864c6c492f8f7f9fd30af302"
+    },
+    {
+      "file": "07-phone-sheet.png",
+      "sha256": "9e7cf0dc162ca554e5a33a6243561f523e4ad5996b6f2af4702fc981cf679a14"
+    },
+    {
+      "file": "A-phone-selection.png",
+      "sha256": "331304a19eddd59d3b8de9eceafa3b257ff1e7a0e247d5f5eadc3d40b440b330"
+    },
+    {
+      "file": "A-three-selected.png",
+      "sha256": "d421f7c88d28ad1e99f4ef6db2310a99b8dc9292ae757d5b13078f3676fae23f"
+    },
+    {
+      "file": "app-delete-complete.png",
+      "sha256": "236e18ceabdb9ae6939deac301f197e43ceeeedd06b7d0d5eee94bf90aed6d80"
+    },
+    {
+      "file": "app-delete-confirmation.png",
+      "sha256": "d7c5f6d7952b8bd9ed5d3b2ca14afd6727fe86623c57328d05680ddb9df0f1b4"
+    },
+    {
+      "file": "app-delete-selection.png",
+      "sha256": "c098982f3a20625e146462ccddff479c69a4f81afc517ef5236472b3c3d689d0"
+    },
+    {
+      "file": "app-delete-working.png",
+      "sha256": "cdaa4b57adaf09db1df902ab81775f12b41c4ebe234bfde996554aacc75d3b0e"
+    },
+    {
+      "file": "owned-fixtures.json",
+      "sha256": "0dfd91070a2e264653ae6ca060ffee514f62e695b24b0bc94ed993b36c12dd54"
+    },
+    {
+      "file": "process-restore.json",
+      "sha256": "7d6a9e9293a8da89a1b52d79bff9f04a52fb87709727f53717a78170e71c8bec"
+    },
+    {
+      "file": "report.json",
+      "sha256": "9055c5d31193acd0cc01e8c88ede7b09c22acff268160306ba757e8dfa716378"
+    },
+    {
+      "file": "sort-preferences-backup.json",
+      "sha256": "69599f645b386834b5771284bc384483e263ddb557a9d2b061a73000598f24f6"
+    }
+  ]
+}

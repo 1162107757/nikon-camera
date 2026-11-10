@@ -1,0 +1,118 @@
+{
+  "versionCode": 171,
+  "sdk": 37,
+  "01-search-loadingText": "蔚蓝天空 取消 在线预设 我的预设 全部 发现色彩 搜索中 预设 同步 相册 设置 ",
+  "02-blue-sky-foundText": "蔚蓝天空 取消 在线预设 我的预设 全部 风景 胶片 发现色彩 1 份匹配 效果暂不可用\n点按查看详情 效果未生成 蔚蓝天空 风景 下载 预设 同步 相册 设置 ",
+  "03-category-no-matchText": "天空 取消 在线预设 我的预设 全部 风景 胶片 发现色彩 0 份匹配 没有匹配的预设 试试其他名称或分类。 预设 同步 相册 设置 ",
+  "04-cached-searchText": "天空 取消 在线预设 我的预设 全部 风景 胶片 发现色彩 缓存 · 1 份匹配 效果暂不可用\n点按查看详情 效果未生成 蔚蓝天空 风景 下载 预设 同步 相册 设置 ",
+  "05-search-unavailableText": "天空 取消 在线预设 我的预设 全部 风景 发现色彩 搜索未完成 暂时无法搜索 检查网络后重试。 重试 预设 同步 相册 设置 ",
+  "failure": "java.lang.AssertionError: clear-search-restores-browse-items\n\tat cc.huevia.onlinesearch171qa.OnlineSearch171Probe.check(OnlineSearch171Probe.java:118)\n\tat cc.huevia.onlinesearch171qa.OnlineSearch171Probe.onStart(OnlineSearch171Probe.java:74)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "pass": false,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-version171",
+      "pass": true
+    },
+    {
+      "name": "pending-search-is-not-zero-results",
+      "pass": true
+    },
+    {
+      "name": "pending-search-does-not-claim-empty",
+      "pass": true
+    },
+    {
+      "name": "no-ANR-01-search-loading",
+      "pass": true
+    },
+    {
+      "name": "actual-name-after-page-one",
+      "pass": true
+    },
+    {
+      "name": "complete-index-count",
+      "pass": true
+    },
+    {
+      "name": "search-does-not-replace-browse-page",
+      "pass": true
+    },
+    {
+      "name": "no-ANR-02-blue-sky-found",
+      "pass": true
+    },
+    {
+      "name": "partial-name-蔚",
+      "pass": true
+    },
+    {
+      "name": "partial-name-蔚蓝",
+      "pass": true
+    },
+    {
+      "name": "partial-name-蔚蓝天",
+      "pass": true
+    },
+    {
+      "name": "partial-name-天空",
+      "pass": true
+    },
+    {
+      "name": "typing-does-not-repeat-HTTP",
+      "pass": true
+    },
+    {
+      "name": "valid-empty-state",
+      "pass": true
+    },
+    {
+      "name": "no-ANR-03-category-no-match",
+      "pass": true
+    },
+    {
+      "name": "category-change-reuses-full-index",
+      "pass": true
+    },
+    {
+      "name": "cached-search-labeled",
+      "pass": true
+    },
+    {
+      "name": "no-ANR-04-cached-search",
+      "pass": true
+    },
+    {
+      "name": "network-error-distinct-from-no-match",
+      "pass": true
+    },
+    {
+      "name": "unavailable-search-not-counted-as-zero",
+      "pass": true
+    },
+    {
+      "name": "no-ANR-05-search-unavailable",
+      "pass": true
+    },
+    {
+      "name": "clearing-query-retains-selected-landscape-category",
+      "pass": true
+    },
+    {
+      "name": "clear-search-restores-browse-items",
+      "pass": false
+    }
+  ],
+  "candidateSha256": "db347fa676962aa397cb8bc5cc53407877eeac8133e3603f56bb0ea418cbb574"
+}

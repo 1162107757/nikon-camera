@@ -1,0 +1,398 @@
+[
+  {
+    "id": "ResourceType",
+    "severity": "Error",
+    "message": "Expected resource of type raw",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\ui\\PresetPreviewRenderer.java",
+        "line": "201",
+        "column": "81"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.text.style.DynamicDrawableSpan#ALIGN_CENTER`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\ui\\AlbumSortSheet.java",
+        "line": "72",
+        "column": "232"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "94",
+        "column": "54"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "95",
+        "column": "53"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_DATA_SYNC`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "97",
+        "column": "74"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_DATA_SYNC`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "99",
+        "column": "22"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_DATA_SYNC`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "101",
+        "column": "29"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "144",
+        "column": "62"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 33 (current min is 26): `android.window.OnBackInvokedDispatcher#PRIORITY_DEFAULT`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "3871",
+        "column": "81"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.provider.MediaStore#VOLUME_EXTERNAL_PRIMARY`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\PhotoLiveGallery.java",
+        "line": "224",
+        "column": "64"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.provider.MediaStore#VOLUME_EXTERNAL_PRIMARY`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\PhotoLiveGallery.java",
+        "line": "361",
+        "column": "64"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.provider.MediaStore#VOLUME_EXTERNAL_PRIMARY`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\PhotoLiveGallery.java",
+        "line": "523",
+        "column": "120"
+      }
+    ]
+  },
+  {
+    "id": "InlinedApi",
+    "severity": "Warning",
+    "message": "Field requires API level 29 (current min is 26): `android.provider.MediaStore#VOLUME_EXTERNAL_PRIMARY`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\RawPhotoPublisher.java",
+        "line": "70",
+        "column": "64"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 29 (current min is 26): `android.app.Service#startForeground`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\connection\\CameraConnectionService.java",
+        "line": "144",
+        "column": "13"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 31 (current min is 26): `android.graphics.RenderEffect#createBlurEffect`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\ui\\GlassBar.java",
+        "line": "208",
+        "column": "47"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 31 (current min is 26): `android.view.View#setRenderEffect`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\ui\\GlassBar.java",
+        "line": "208",
+        "column": "18"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 33 (current min is 26): `android.app.Activity#getOnBackInvokedDispatcher`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "3871",
+        "column": "22"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 33 (current min is 26): `android.window.OnBackInvokedDispatcher#registerOnBackInvokedCallback`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "3871",
+        "column": "51"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 33 (current min is 26): `android.app.Activity#getOnBackInvokedDispatcher`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "3875",
+        "column": "22"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 33 (current min is 26): `android.window.OnBackInvokedDispatcher#unregisterOnBackInvokedCallback`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "3875",
+        "column": "51"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Class requires API level 33 (current min is 26): `android.window.OnBackInvokedCallback`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "3875",
+        "column": "84"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 29 (current min is 26): `android.provider.MediaStore#setIncludePending`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\PhotoLiveGallery.java",
+        "line": "239",
+        "column": "111"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 29 (current min is 26): `android.provider.MediaStore#setIncludePending`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\PhotoLiveGallery.java",
+        "line": "469",
+        "column": "56"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 29 (current min is 26): `android.provider.MediaStore#setIncludePending`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\PhotoLiveGallery.java",
+        "line": "761",
+        "column": "56"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 29 (current min is 26): `android.provider.MediaStore#setIncludePending`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\RawPhotoPublisher.java",
+        "line": "219",
+        "column": "56"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "Call requires API level 29 (current min is 26): `android.provider.MediaStore#setIncludePending`",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\album\\RawPhotoPublisher.java",
+        "line": "232",
+        "column": "56"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "`android:windowLightNavigationBar` requires API level 27 (current min is 26)",
+    "locations": [
+      {
+        "file": "app\\src\\main\\res\\values\\styles.xml",
+        "line": "9",
+        "column": "15"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "`android:forceDarkAllowed` requires API level 29 (current min is 26)",
+    "locations": [
+      {
+        "file": "app\\src\\main\\res\\values\\styles.xml",
+        "line": "14",
+        "column": "15"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "`android:windowLightNavigationBar` requires API level 27 (current min is 26)",
+    "locations": [
+      {
+        "file": "app\\src\\main\\res\\values\\styles.xml",
+        "line": "54",
+        "column": "15"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "`android:forceDarkAllowed` requires API level 29 (current min is 26)",
+    "locations": [
+      {
+        "file": "app\\src\\main\\res\\values\\styles.xml",
+        "line": "59",
+        "column": "15"
+      }
+    ]
+  },
+  {
+    "id": "NewApi",
+    "severity": "Error",
+    "message": "`android:windowLightNavigationBar` requires API level 27 (current min is 26)",
+    "locations": [
+      {
+        "file": "app\\src\\main\\res\\values\\styles.xml",
+        "line": "98",
+        "column": "15"
+      }
+    ]
+  },
+  {
+    "id": "UnspecifiedRegisterReceiverFlag",
+    "severity": "Error",
+    "message": "`usbReceiver` \\\nis missing `RECEIVER_EXPORTED` or `RECEIVER_NOT_EXPORTED` flag for unprotected \\\nbroadcasts registered for cc.huevia.USB_PERMISSION",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\DiagnosticsActivity.java",
+        "line": "138",
+        "column": "13"
+      }
+    ]
+  },
+  {
+    "id": "UnspecifiedRegisterReceiverFlag",
+    "severity": "Error",
+    "message": "`receiver` \\\nis missing `RECEIVER_EXPORTED` or `RECEIVER_NOT_EXPORTED` flag for unprotected \\\nbroadcasts registered for cc.huevia.CONSUMER_USB_PERMISSION",
+    "locations": [
+      {
+        "file": "app\\src\\main\\java\\cc\\huevia\\MainActivity.java",
+        "line": "538",
+        "column": "14"
+      }
+    ]
+  }
+]

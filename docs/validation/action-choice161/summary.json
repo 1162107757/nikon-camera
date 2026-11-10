@@ -1,0 +1,144 @@
+{
+  "at": "2026-11-08T07:06:39.206Z",
+  "pass": true,
+  "versionCode": 161,
+  "versionName": "0.30.7-beta",
+  "apk": {
+    "path": "dist/huevia-0.30.7-beta-debug.apk",
+    "byteLength": 34594168,
+    "sha256": "0c029bb5d69ce1f97411ac39d7de3e344622b987b022b8aa07367d12b1d3c73c",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureV2": true,
+    "signatureV3": true,
+    "alignment16KiB": true
+  },
+  "surfaces": [
+    "添加预设：NCP/NP3文件入口、访客本机保存和登录同步、登录后的私有云提示",
+    "预览模板操作",
+    "内置摄影样片选择",
+    "头像来源选择（保留恢复确认）",
+    "个人云端操作（保留同步授权与冲突处理）",
+    "相册照片版本选择",
+    "导出成品预览的照片选择",
+    "RAW文件操作",
+    "单张下载/导出格式选择",
+    "批量下载格式选择"
+  ],
+  "ui": {
+    "fontSp": "11–16",
+    "rowHeightDp": "52 min, 66 min when secondary description is present",
+    "closeHitDp": 44,
+    "outerRadiusDp": 24,
+    "rowRadiusDp": 14,
+    "outerInsetDp": 20,
+    "close": "Top right; no footer cancel button for action menus",
+    "palettes": "Existing light/dark palette; same icon family",
+    "clickFix": "Child TextView tooltip removed after a real touch exposed it consuming row taps; labels, icon and chevron now share the parent action"
+  },
+  "native": {
+    "path": "0c029bb5/20261108-150429-caeb73a2",
+    "totalChecks": 638,
+    "modes": [
+      {
+        "mode": "phone",
+        "checks": 170,
+        "pass": true
+      },
+      {
+        "mode": "dark",
+        "checks": 154,
+        "pass": true
+      },
+      {
+        "mode": "narrow",
+        "checks": 158,
+        "pass": true
+      },
+      {
+        "mode": "font",
+        "checks": 156,
+        "pass": true
+      }
+    ],
+    "scope": "Installed APK on an owned offline Android emulator; real preset/template/avatar/RAW entries, system-file-chooser intent monitor, shared selection callbacks and text layout. Temporary in-memory account identity restored; no real login or upload."
+  },
+  "host": {
+    "personalSync": {
+      "checks": 19,
+      "pass": true
+    },
+    "account": {
+      "checks": 150,
+      "pass": true
+    },
+    "avatar": {
+      "pass": true,
+      "countNotReported": true
+    },
+    "qqAuthorizationGate": {
+      "checks": 23,
+      "pass": true
+    },
+    "communityAuthContract": {
+      "checks": 18,
+      "pass": true
+    }
+  },
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "f0c3cc2ab25439afcc659e163bf866aec4348650964260ed546dcf9d7d0aa01c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/ActionChoiceDialog.java",
+      "sha256": "456eed3c037a952c55a46df089f9e56627e1209bfcc4ade72f6d7c4f2199f9e4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "2245c6d6107c73ff6af568cea6c92d63556e6d03c11f11c6de5ed5c00357e243"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AccountPanel.java",
+      "sha256": "3faa09a14b49921b8882843cbee83e1f87b1eecd137565b20cef5f12fb39bfec"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PersonalPresetPanel.java",
+      "sha256": "1c78fb3c0a6c5a44cb0f008b047520d233f1a544b1f8c880f55098016778ff82"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/RawPhotoPanel.java",
+      "sha256": "5d8e1f564d2cb5d27018de1ca4ef6dd78e02f10611a40306b4d93347f19b6413"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+      "sha256": "a41a395be06b3a6301aae5c2cd956332308f3aac20c517eac1074ddb753a0ba4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoExportDialog.java",
+      "sha256": "9b8cb31fed47c1af0d1322f0904a1fe147eea641d9aaeae88cf80f200069dd95"
+    },
+    {
+      "path": "tests/action-choice-device-probe/src/cc/huevia/actionchoiceqa/ActionChoiceProbe.java",
+      "sha256": "c4d3778d38d726d5d3bfe37d4afd94f32f52eb14bcbf3def7955ad8f9937240b"
+    },
+    {
+      "path": "tests/action-choice-device-probe/run.ps1",
+      "sha256": "f205810dc408f2c4390ff0c8091724ca49f56fe76f1f95511a5c5084eb374052"
+    },
+    {
+      "path": "tests/action-choice-device-probe/build.ps1",
+      "sha256": "702b0b508066132b5df917b8cc51b2b4c4131f7df8cc7956c3b184861fec7cae"
+    }
+  ],
+  "published": false,
+  "preserved": [
+    "Frozen Android160 APK and prior RAW fixes",
+    "iOS build4 IPA and its workflow",
+    "Backend, release metadata and download quotas",
+    "Destructive confirmations, account/session owner checks and cloud consent"
+  ],
+  "limitations": [
+    "No physical phone or camera transfer validation in this UI change",
+    "Native screenshots for some list selections validate the shared component; no real photo export or avatar update was submitted"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "candidateSha256": "be676c81ebe471104889d4b190c4efa3e1cd4a55154f044bf5ae571d2b399cb4",
+  "versionCode": 178,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "9a71992bb9b26ba240da5be25efcf176c00a6fc9ab55f4fdf9bb27fc30ddcf98",
+  "pass": false,
+  "scope": "Capture-only connection178 flow on the exact installed APK: native camera guide and Wi-Fi automatic/intercepted system selection, return, retry and cancellation; quick-ratio entry, two-finger events dispatched to the real crop View, native inner-frame movement, photo bounds, apply and actual draft readback, plus free-crop cancellation. Other inherited flows were not run. No real network selection, camera handshake, physical-device, edge-corner, full TalkBack, performance or publication certification.",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "d34da316a521936dd44a6eb8b954d73c22d6b837fa38e356d4618754e27716cc"
+    }
+  ]
+}

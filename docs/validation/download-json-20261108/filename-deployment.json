@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-08T02:57:53.231Z",
+  "status": "Active",
+  "role": "HueviaUpdatePackageRole",
+  "provider": "cos",
+  "configurationPreserved": true,
+  "zipSha256": "c8802c9546809a97a11bbe0bae050af9ca395e6d5cf55fbc5e3cbbf840b69290",
+  "changedFiles": [
+    {
+      "path": "server/cos-release-storage.mjs",
+      "before": "ca124dab240e41a167558c4e7fbd79117a0b8a195ebd3d84f04f645af11e0322",
+      "after": "5424b005423adb33b28d948e29e4102df112135f284ad66fa66351b4f973e2e2"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "scope": "Reflection-only native harness, emulator fixtures and two-process preference restore; current harness includes settled-capture timing used for final phone/tablet recapture",
+  "files": [
+    {
+      "path": ".tooling/sort183/capture/AndroidManifest.xml",
+      "sha256": "c22464c39d6562d5ed418f3c6efc0509ba4fa2af7ee0d8bc4d3d99d1a91c7ca4",
+      "bytes": 404
+    },
+    {
+      "path": ".tooling/sort183/capture/build.ps1",
+      "sha256": "31b856cfe01291ca4a611a402c74adf35892b476bd63455d3a477fc89ec498f4",
+      "bytes": 3858
+    },
+    {
+      "path": ".tooling/sort183/capture/run.ps1",
+      "sha256": "9afef0f1d6c403b629651bccb37f7e1549357c186206c8a1fadd6f981d5888ec",
+      "bytes": 8849
+    },
+    {
+      "path": ".tooling/sort183/capture/src/cc/huevia/rawdevelopmentqa/AlbumDeleteChecks.java",
+      "sha256": "da6568980a66b43bd2e977fe5bb9e4ff703f6e5938b6907e6aa40d6d5f9c99fb",
+      "bytes": 20095
+    },
+    {
+      "path": ".tooling/sort183/capture/src/cc/huevia/rawdevelopmentqa/AlbumTimeSortChecks.java",
+      "sha256": "efbc5867723b17c089a0baf8ada209e16be5200e4b901f94040ca73cf6800bf3",
+      "bytes": 17355
+    },
+    {
+      "path": ".tooling/sort183/capture/src/cc/huevia/rawdevelopmentqa/RawDevelopmentProbe.java",
+      "sha256": "895d6e3e7f2424fe2be2e47efec461704e58832f1124e0d5b49a9719b5c80a2f",
+      "bytes": 7415
+    },
+    {
+      "path": ".tooling/sort183/capture/src/cc/huevia/rawdevelopmentqa/SyntheticDng.java",
+      "sha256": "255b5c4ee334cf6630bbfc8749e9bdc3af663a6300d277342a54e690803599ab",
+      "bytes": 4165
+    }
+  ]
+}

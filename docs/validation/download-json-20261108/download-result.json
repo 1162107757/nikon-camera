@@ -1,0 +1,20 @@
+{
+  "actualBrowserDownload": true,
+  "downloadedFile": "Huevia-156-beta (1).apk",
+  "byteLength": 31292511,
+  "at": "2026-11-08T03:00:40.769Z",
+  "apk": {
+    "packageName": "cc.huevia",
+    "versionName": "0.30.2-beta",
+    "versionCode": 156,
+    "minSdk": 26,
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureSchemes": [
+      2,
+      3
+    ],
+    "byteLength": 31292511,
+    "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95"
+  },
+  "exactHashMatch": true
+}

@@ -1,0 +1,127 @@
+{
+  "versionCode": 184,
+  "sdk": 31,
+  "failure": "java.lang.SecurityException: Injecting to another application requires INJECT_EVENTS permission\n\tat android.os.Parcel.createExceptionOrNull(Parcel.java:2426)\n\tat android.os.Parcel.createException(Parcel.java:2410)\n\tat android.os.Parcel.readException(Parcel.java:2393)\n\tat android.os.Parcel.readException(Parcel.java:2335)\n\tat android.hardware.input.IInputManager$Stub$Proxy.injectInputEvent(IInputManager.java:1339)\n\tat android.hardware.input.InputManager.injectInputEvent(InputManager.java:1091)\n\tat android.app.Instrumentation.sendKeySync(Instrumentation.java:1091)\n\tat android.app.Instrumentation.sendKeyDownUpSync(Instrumentation.java:1101)\n\tat cc.huevia.stability184qa.Stability184Probe.documentFailurePaths(Stability184Probe.java:111)\n\tat cc.huevia.stability184qa.Stability184Probe.onStart(Stability184Probe.java:54)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\nCaused by: android.os.RemoteException: Remote stack trace:\n\tat com.android.server.input.InputManagerService.injectInputEventInternal(InputManagerService.java:877)\n\tat com.android.server.input.InputManagerService.injectInputEvent(InputManagerService.java:829)\n\tat android.hardware.input.IInputManager$Stub.onTransact(IInputManager.java:573)\n\tat android.os.Binder.execTransactInternal(Binder.java:1179)\n\tat android.os.Binder.execTransact(Binder.java:1143)\n\n",
+  "pass": false,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "exact-baseline183-or-fixed184",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-0",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-0",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-0",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-0",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-1",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-2",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-3",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-4",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-5",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-6",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-7",
+      "pass": true
+    },
+    {
+      "name": "filter-dialog-opens-on-runtime",
+      "pass": true
+    },
+    {
+      "name": "filter-closes-without-crash",
+      "pass": true
+    },
+    {
+      "name": "report-picker-failure-contained-false",
+      "pass": true
+    },
+    {
+      "name": "picker-failure-keeps-main-alive-false",
+      "pass": true
+    },
+    {
+      "name": "report-picker-failure-contained-true",
+      "pass": true
+    }
+  ],
+  "exports": [],
+  "cleanupRemaining": [],
+  "candidateSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776"
+}

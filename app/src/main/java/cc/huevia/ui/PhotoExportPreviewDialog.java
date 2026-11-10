@@ -94,7 +94,19 @@ public final class PhotoExportPreviewDialog extends Dialog implements AutoClosea
     private void controls(boolean ready){for(Button b:new Button[]{jpeg,before,fit,one,two}){b.setEnabled(ready);b.setAlpha(ready?1:.45f);}refreshSelection();}
     private void refreshSelection(){if(canvas==null)return;select(jpeg,canvas.mode==PhotoExportPreview.JPEG);select(before,canvas.mode==PhotoExportPreview.BEFORE_ENCODING);select(fit,canvas.viewport.fitting);select(one,!canvas.viewport.fitting&&Math.abs(canvas.viewport.scale-1)<.005);select(two,!canvas.viewport.fitting&&Math.abs(canvas.viewport.scale-2)<.005);}
     private void invalid(){if(released)return;AppNotice.show(activity,"照片或编辑状态已变化，请重新打开成品预览。",false);dismiss();}
-    private void configureWindow(){Window w=getWindow();if(w==null)return;w.setBackgroundDrawable(new ColorDrawable(BG));w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);w.setStatusBarColor(BG);w.setNavigationBarColor(BG);if(Build.VERSION.SDK_INT>=29){w.setStatusBarContrastEnforced(false);w.setNavigationBarContrastEnforced(false);}if(Build.VERSION.SDK_INT>=30){w.setDecorFitsSystemWindows(false);WindowInsetsController controls=w.getInsetsController();if(controls!=null)controls.setSystemBarsAppearance(0,WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);}else w.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);}
+    private void configureWindow(){
+        Window w=getWindow();if(w==null)return;
+        // Dialog.onCreate runs before setContentView creates the window's DecorView.
+        View decor=w.getDecorView();
+        w.setBackgroundDrawable(new ColorDrawable(BG));w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        w.setStatusBarColor(BG);w.setNavigationBarColor(BG);
+        if(Build.VERSION.SDK_INT>=29){w.setStatusBarContrastEnforced(false);w.setNavigationBarContrastEnforced(false);}
+        if(Build.VERSION.SDK_INT>=30){
+            w.setDecorFitsSystemWindows(false);
+            WindowInsetsController controls=w.getInsetsController();
+            if(controls!=null)controls.setSystemBarsAppearance(0,WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS|WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS);
+        }else decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE|View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+    }
     @Override public void show(){super.show();Window window=getWindow();if(window!=null)window.setLayout(-1,-1);}
     @Override public void close(){dismiss();release();}
     private void release(){if(released)return;released=true;if(registered){activity.getApplication().unregisterActivityLifecycleCallbacks(lifecycle);registered=false;}if(canvas!=null)canvas.close();if(source!=null){source.close();source=null;}for(PhotoGlassDrawable glass:glasses)glass.close();glasses.clear();}

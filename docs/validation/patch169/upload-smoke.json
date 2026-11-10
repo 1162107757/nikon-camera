@@ -1,0 +1,14 @@
+{
+  "apkSha256": "ef06853b8025936ce7c972e682855ee7ac1fc55ebda2776864be6bdf94fdaa10",
+  "sourceSha256": "201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273",
+  "device": "emulator-5586",
+  "androidApi": 36,
+  "cpuAbi": "x86_64",
+  "installedSha256Verified": true,
+  "versionCode": 169,
+  "versionName": "0.30.15-beta",
+  "coldLaunchStatus": "ok",
+  "coldLaunchTotalMs": 1772,
+  "appStoppedAfterSmoke": true,
+  "scope": "Signed upload install, exact byte identity and native cold launch only; selection matrix used the payload-identical source APK."
+}

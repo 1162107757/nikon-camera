@@ -31,6 +31,12 @@ public final class PhotoImageView extends View {
     private final GestureDetector gestures;
     private final ScaleGestureDetector scales;
     private Bitmap photo;
+    private Bitmap selectionMask;
+    private boolean selectionMaskVisible=true;
+    private final RectF selectionDestination=new RectF();
+    /** Display-only borrowed mask; it follows the exact photo matrix and never changes its bitmap. */
+    public void setSelectionMask(Bitmap value){selectionMask=value;invalidate();}
+    public void setSelectionMaskVisible(boolean value){selectionMaskVisible=value;invalidate();}
     private Bitmap splitOriginal;
     private boolean splitComparison,cropGridVisible;
     private float splitFraction=.5f;
@@ -258,6 +264,10 @@ public final class PhotoImageView extends View {
             imageMatrix.setScale(fitScale * zoom, fitScale * zoom);
             imageMatrix.postTranslate(offsetX + pager.offset(), offsetY);
             canvas.drawBitmap(photo, imageMatrix, paint);
+            if(selectionMaskVisible&&!splitComparison&&selectionMask!=null&&!selectionMask.isRecycled()){
+                int selection=canvas.save();canvas.concat(imageMatrix);selectionDestination.set(0,0,photo.getWidth(),photo.getHeight());
+                canvas.drawBitmap(selectionMask,null,selectionDestination,paint);canvas.restoreToCount(selection);
+            }
             canvas.restoreToCount(currentPage);
         } else {
             int currentPage = canvas.save();

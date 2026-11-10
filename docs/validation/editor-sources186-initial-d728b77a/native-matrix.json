@@ -1,0 +1,62 @@
+[
+  {
+    "api": 37,
+    "mode": "phone",
+    "scope": "editor-sources186-initial",
+    "stage": "source",
+    "pass": true,
+    "checks": 41,
+    "captures": 5,
+    "report": "docs/validation/editor-sources186/native/api37/20261110-102642-phone-30f6df/report.json"
+  },
+  {
+    "api": 37,
+    "mode": "narrow",
+    "scope": "editor-sources186-initial",
+    "stage": "source",
+    "pass": true,
+    "checks": 41,
+    "captures": 5,
+    "report": "docs/validation/editor-sources186/native/api37/20261110-102733-narrow-336834/report.json"
+  },
+  {
+    "api": 37,
+    "mode": "tablet",
+    "scope": "editor-sources186-initial",
+    "stage": "source",
+    "pass": true,
+    "checks": 41,
+    "captures": 5,
+    "report": "docs/validation/editor-sources186/native/api37/20261110-102751-tablet-6e7ce8/report.json"
+  },
+  {
+    "api": 37,
+    "mode": "landscape",
+    "scope": "editor-sources186-initial",
+    "stage": "source",
+    "pass": true,
+    "checks": 41,
+    "captures": 5,
+    "report": "docs/validation/editor-sources186/native/api37/20261110-102818-landscape-4fde40/report.json"
+  },
+  {
+    "api": 31,
+    "mode": "phone",
+    "scope": "editor-sources186-api31",
+    "stage": "source",
+    "pass": true,
+    "checks": 41,
+    "captures": 5,
+    "report": "docs/validation/editor-sources186/native/api31/20261110-103519-phone-400725/report.json"
+  },
+  {
+    "api": 37,
+    "mode": "phone",
+    "scope": "editor-continuity186-baseline",
+    "stage": "continuity",
+    "pass": true,
+    "checks": 9,
+    "captures": 0,
+    "report": "docs/validation/editor-sources186/native/api37/20261110-103059-phone-58f6c7/report.json"
+  }
+]

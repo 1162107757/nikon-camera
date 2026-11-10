@@ -1,0 +1,34 @@
+[
+  {
+    "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+    "sha256": "a8b3bfe2042cb187258235b869c49ff09d71f803835c9b6ba5cafb89c8e6572d"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/community/CommunityRepository.java",
+    "sha256": "f9750767aa165b8a6bca2755ad3f9941c26d77c3d1ae324274d1eb9d9f9cbd2a"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "9623a1b39fdaa47f4539f62dac0d3d7e0acd35207bf63754324c90b53e9741fd"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/SubcategorySwipeLayout.java",
+    "sha256": "5a2b4a092a9a421af1125aae90512e38d5f66ac3ba293fd2d99051c5a17ea370"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java",
+    "sha256": "1a88ee1f77c7192b94add0f2ad79e75936ad083bfbc31749e3edc31b69407bfe"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+    "sha256": "d10ca7245343da863010e3c28508b587f485187836c451acc35e382fb9b8dc48"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+    "sha256": "e418e160b5bba4a3026afdb6e0f83ef77d50c021f0fcabf67af40a52d0e55fe3"
+  },
+  {
+    "path": "app/build.gradle",
+    "sha256": "77de9ed7b0b9c0c565846ff9f112a6cfa470e147c3e0c5b35ecfab8152515ff5"
+  }
+]

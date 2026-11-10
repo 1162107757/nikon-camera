@@ -1,0 +1,252 @@
+{
+  "pass": false,
+  "stage": "crop178-landscape-photo",
+  "candidateSha256": "a83f0c4ba6fca5da4a9d3ef6461472f44cfc08a179c00738e4303ad44743c52b",
+  "versionCode": 178,
+  "versionName": "0.30.24-beta",
+  "mode": "landscape",
+  "flow": "connection178",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-page",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-page",
+      "pass": true
+    },
+    {
+      "name": "camera-type-native-row",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "system-selector-auto-opens-once",
+      "pass": true
+    },
+    {
+      "name": "selection-dialog-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-wifi-checking",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-wifi-checking",
+      "pass": true
+    },
+    {
+      "name": "one-primary-and-quiet-retry",
+      "pass": true
+    },
+    {
+      "name": "native-targets-at-least48dp",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "retry-shows-real-missing-wifi",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-wifi-retry",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-wifi-retry",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "choose-reopens-system-selection",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "close-cancels-once",
+      "pass": true
+    },
+    {
+      "name": "poll-and-dialog-cleared",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "system-back-cancels-once",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "connection178-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-0",
+      "pass": true
+    },
+    {
+      "name": "connection178-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": false
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-choice-bounds",
+      "label": "原比例",
+      "width": 147,
+      "height": 200,
+      "screenX": 1673,
+      "screenY": 462,
+      "visibleInWindow": "[1673,461][1820,662]"
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "1:1",
+      "width": 147,
+      "height": 200,
+      "screenX": 1820,
+      "screenY": 586,
+      "visibleInWindow": "[1820,586][1967,786]"
+    }
+  ],
+  "screenshots": 4,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": "java.lang.AssertionError: each-ratio-opens",
+  "scope": "Capture-only connection178 flow on the exact installed APK: native camera guide and Wi-Fi automatic\/intercepted system selection, return, retry and cancellation; quick-ratio entry, two-finger events dispatched to the real crop View, native inner-frame movement, photo bounds, apply and actual draft readback, plus free-crop cancellation. Other inherited flows were not run. No real network selection, camera handshake, physical-device, edge-corner, full TalkBack, performance or publication certification."
+}

@@ -1,0 +1,13 @@
+{
+  "builtAt": "2026-11-09T01:16:01.9398165Z",
+  "inputs": [
+    {
+      "path": "tests/source-tab172-device-probe/src/SourceTab172Probe.java",
+      "sha256": "46f745ee4539e351c04d93278860b58394db232428f6661ba280ae72c1b9718c"
+    }
+  ],
+  "probeSha256": "fa6fa21a52ffbb3e43311dafe6c711a993c3e8cdfa9bfcefb72d5d077a94b0cb",
+  "manifestSha256": "550e869388682a6fb6955ddce373b1181e754f5d7a565477b7dad84a0267be43",
+  "buildSha256": "d1dd64938c13b669f3eddca1199e06a38238178ab1d0caf51074dace94dcdb54",
+  "runSha256": "5c3de54dad24e36d63d4f035a94d2bbd832bba59a2895f9cbef307d533c9af06"
+}

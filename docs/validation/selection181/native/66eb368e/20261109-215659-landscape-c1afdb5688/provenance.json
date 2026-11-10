@@ -1,0 +1,41 @@
+{
+  "versionCode": "181",
+  "candidateSha256": "66eb368ef073a5b29502d3ce57935366c883f0d155cf38f59fa14099be91102c",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "uiMode": "landscape",
+  "probeSha256": "db6bd01a540935f7897217d2576b1c11acbb33f3e26150055d6801d50249e823",
+  "sampleNefSha256": "",
+  "pass": true,
+  "scope": "Actual installed 181 native album selection A and app-only deletion regression, using owned photography fixtures, real MediaStore copy preservation, count/select-all/cancel and equal bottom actions. Phone selection visibility uses an empty/owned fixture state. Repeated assertions include bootstrap. RAW decoding, real camera, end-to-end export, physical device and full TalkBack were not run.",
+  "files": [
+    {
+      "file": "A-phone-selection.png",
+      "sha256": "2bee9db46285b03081c443090974918b612e51457fad717a1b79d5a68ae48edf"
+    },
+    {
+      "file": "A-three-selected.png",
+      "sha256": "3a007d7200521c3bdca85bae1af2e663029865f8ba8baa3dabab89ba1966796f"
+    },
+    {
+      "file": "app-delete-complete.png",
+      "sha256": "4152e401000afcc34538a3ac7df8f749df5228a593b4f403b190c498a54abb73"
+    },
+    {
+      "file": "app-delete-confirmation.png",
+      "sha256": "9e7ba05d447ac79471a31e0029824452a29c27341ec4e68fd4f2ada1138b47f5"
+    },
+    {
+      "file": "app-delete-selection.png",
+      "sha256": "85b9ae09b6dfef79fecd297458ca8add3864c3956741c8830226014e3729d93b"
+    },
+    {
+      "file": "app-delete-working.png",
+      "sha256": "056e9955aeabdafa63c8232c69c8a0ebfaa994be9cf84d0a83d6c18920628b1a"
+    },
+    {
+      "file": "report.json",
+      "sha256": "431b3ce108ca104ed65a8a47fdda4e767b6d1563004e6fc30b8b15f057228459"
+    }
+  ]
+}

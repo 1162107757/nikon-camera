@@ -1,0 +1,54 @@
+{
+  "artifact": {
+    "scope": "Unapproved local design prototype only; production untouched",
+    "files": {
+      "index.html": "dc315a7dcbef86162605668e0f5d5417d87b7ac7faa06ef5ea84e419f4f7e7a0",
+      "app.html": "dccd71ed17c82e6ce5537b129806040dd01e8b71f2bded15f685f234205961cf",
+      "wave.css": "ef3abfd6430a91ee44f4688cbc77ebdd102fc2f42806954a0187cc602324aef4",
+      "wave.js": "081f84f9725b6284c694d717104cbde93953573d8d22fce107e7a6f0799d648b",
+      "DIRECTION.json": "ef1c6cec8322d5d6c695569753d5fe242a3679bfd3e0fafdd79d35d4304b4454"
+    }
+  },
+  "screenshots": {
+    "desktop.jpg": {
+      "w": 1264,
+      "h": 1038,
+      "sha256": "46f07508401a3daa04d0ecd4259854444696e4f23b884594757e4365ce7821ea"
+    },
+    "mobile-同步.jpg": {
+      "w": 390,
+      "h": 843,
+      "sha256": "d5befe4ba506cb3c3301edcafaf2ff8db0a77a7f26a622ec50c6e74b39ce7c63"
+    },
+    "mobile-相册.jpg": {
+      "w": 390,
+      "h": 843,
+      "sha256": "fe6a61f8e7ad36fb6874d460dc1b1813d8faf7bbde4c26b7bbc7e525a98fc685"
+    },
+    "mobile-设置.jpg": {
+      "w": 390,
+      "h": 843,
+      "sha256": "f23e03055b0070b266d5d94f4bce4fcb633fcdf16823d1c0f688c94e7f0a83ed"
+    },
+    "mobile-预设.jpg": {
+      "w": 390,
+      "h": 843,
+      "sha256": "47fb067a90d8674909bbd612315e7fd7f86881654bc805519bad951814bbaba0"
+    },
+    "narrow.jpg": {
+      "w": 320,
+      "h": 720,
+      "sha256": "32bdb0deba4d0eaf568b43b550a023900c07273f64985842a1cb645faea02796"
+    },
+    "tabbar-states.jpg": {
+      "w": 406,
+      "h": 417,
+      "sha256": "ee5b81bebe271c2cdd7d5858155650a9dd3c1201895851c629c7e812728e29dd"
+    },
+    "transition.jpg": {
+      "w": 390,
+      "h": 843,
+      "sha256": "a2c2af8657241c15479917b49c02a4376260710bbe2747011cd503c0b2dc0995"
+    }
+  }
+}

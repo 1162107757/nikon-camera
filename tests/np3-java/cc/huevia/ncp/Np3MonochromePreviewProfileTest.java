@@ -15,7 +15,7 @@ import java.util.zip.ZipFile;
 /** Strict Deep Tone subset and pipeline regressions; no claim of Nikon pixel fidelity. */
 public final class Np3MonochromePreviewProfileTest {
     private static int checks;
-    private static final String FC_VERSION = "np3-0310-encoded-hsl-zones-spatial-v3";
+    private static final String FC_VERSION = "np3-0310-encoded-hsl-zones-spatial-v4";
     // Frozen before introducing monochrome, from the previously verified v3 classes.
     private static final String[] FC_OUTPUT_SHA = {
         "ca3809b29422a90ad4148deaf1164beaf5fab622f918fe010c8b20f85713f310",

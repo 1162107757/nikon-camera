@@ -1,0 +1,30 @@
+{
+  "versionCode": 164,
+  "candidateSha256": "ea4b3f539d4455cd685c6279c9bd162372448c08735d73258c26ae115c0ef585",
+  "probeSha256": "b8bb136c0a8fd4460f183a23bc990f7f3180f044158d785b711c45650d9bf39a",
+  "serial": "emulator-5588",
+  "pass": true,
+  "scope": "Installed164 Activity navigation, no-device USB guard, identification-vs-preset validators, Android JSON report, actual model/manufacturer display and error copy. Synthetic byte-framed PTP/IP client handshake; connected fixture session injected into shared controller only for UI return verification. No physical USB or camera success claim; host test owns real USB transport framing/lifecycle with scripted peer.",
+  "files": [
+    {
+      "file": "01-usb-disconnected-guide.png",
+      "sha256": "844e04d16ea68208986b212f5533569d92ddc8d4022990bd47acbf414ebd5e47"
+    },
+    {
+      "file": "02-z7ii-connected-return.png",
+      "sha256": "1efffed315f9f2451ccb3be603e6ed61a15fcbc5d90e6a52562a402e8e17158c"
+    },
+    {
+      "file": "03-z7ii-details.png",
+      "sha256": "ac89153a08a34b198e75f69ccf47d70aec0d7678acc2535a0890ebcfe8f49f93"
+    },
+    {
+      "file": "04-actual-camera-capability-error.png",
+      "sha256": "1c60b7188400a32703d19d1740281a34d8e99591da6c9cb049188c99c8c86fb7"
+    },
+    {
+      "file": "report.json",
+      "sha256": "cfe35b1a9ebee76a65ec008cb48fcde8c752d496c0a61f7482a6dec7ed08ca78"
+    }
+  ]
+}

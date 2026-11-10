@@ -1,0 +1,1100 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "38f051a8a27b4fb8c111d05a9bfbdcd1c4fbd37cd22f09ab5ce315cbbcb75711",
+  "versionCode": 169,
+  "versionName": "0.30.15-beta",
+  "mode": "font1.3",
+  "flow": "patch169",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-repair-workspace",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-empty",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-empty",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-selection",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-selection",
+      "pass": true
+    },
+    {
+      "name": "real-selection-child",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "repair-selection-accepted",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "destination-fixed-before-source",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-target-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-target-ready",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "actual-source-translation",
+      "pass": true
+    },
+    {
+      "name": "inner-edit-keeps-main-history",
+      "pass": true
+    },
+    {
+      "name": "repair-real-final-bitmap",
+      "pass": true
+    },
+    {
+      "name": "rendered-repair-leaves-zero-mask-pixels-exact",
+      "pass": true
+    },
+    {
+      "name": "rendered-repair-changes-covered-photo",
+      "pass": true
+    },
+    {
+      "name": "rendered-repair-preserves-destination-alpha",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-source-sampled",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-source-sampled",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "eye-is-display-only",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-overlay-hidden",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-overlay-hidden",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "eye-restores-exact-canvas",
+      "pass": true
+    },
+    {
+      "name": "blend-drag-hides-mask",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-slider-drag-hidden",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-slider-drag-hidden",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "release-restores-mask",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-slider-release",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-slider-release",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "release-respects-explicit-hidden",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-overlay",
+      "pass": true
+    },
+    {
+      "name": "real-native-focus-interruption",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "focus-cancels-partial-slider",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "pointer-cancel-restores-source-and-history",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "source-clamps-to-photo",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "undo-restores-source",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-redo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-redo",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-new",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-new",
+      "pass": true
+    },
+    {
+      "name": "real-selection-child",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "repair-selection-accepted",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "multiple-repairs",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-two-repairs",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-two-repairs",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-more",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-more",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-删除当前修补",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "delete-current-only",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "delete-is-undoable",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-delete-undo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-delete-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-selection",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-selection",
+      "pass": true
+    },
+    {
+      "name": "edit-repair-selection",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-more",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-more",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-清空当前选区",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "clear-selection-closes",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "clear-selection-removes-repair",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-undo",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "clear-is-undoable",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "outer-cancel-keeps-main-model-history",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-repair-workspace",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-selection",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-selection",
+      "pass": true
+    },
+    {
+      "name": "real-selection-child",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "repair-selection-accepted",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-new",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-new",
+      "pass": true
+    },
+    {
+      "name": "real-selection-child",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "repair-selection-accepted",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-apply",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "outer-apply-single-history",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "real-v7-draft-holds-repairs",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-applied-main",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-applied-main",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-undo-removes-transaction",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-redo-restores-transaction",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "draft-reloaded-from-store",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-repair-workspace",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "reopen-saved-patches",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-reopened",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-reopened",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-local",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-local",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-修补当前选区",
+      "pass": true
+    },
+    {
+      "name": "actual-repair-workspace",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "repair-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "current-region-becomes-new-repair",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-patch169-existing-region-seed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-patch169-existing-region-seed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "seed-cancel-retains-existing-work",
+      "pass": true
+    },
+    {
+      "name": "repair-original-photo-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "actual-repair-pixels",
+      "changed": 10066,
+      "exteriorErrors": 0,
+      "alphaErrors": 0
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "删除当前修补",
+      "windowId": 47,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "清空当前选区",
+      "windowId": 49,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "新增选区",
+      "windowId": 54,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "修补当前选区",
+      "windowId": 56,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    }
+  ],
+  "screenshots": 13,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Exact installed repair destination\/source drag, real circle\/ellipse and rectangle selection, feather\/blend, persistent display and slider\/focus cancellation, undo\/redo and clearing, outer apply\/cancel\/history, actual v7 saved draft reopening and original bytes. Native masked pixels and unchanged exterior checked; independent full EXIF\/alpha\/ordered-overlap and 24MP host oracle separate. No physical-device, full-export matrix, AI or public-release acceptance claim."
+}

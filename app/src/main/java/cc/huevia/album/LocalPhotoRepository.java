@@ -53,6 +53,8 @@ public final class LocalPhotoRepository {
     private final List<File> photoDirectories = new ArrayList<>();
     private final PhotoDateReader dates = new PhotoDateReader();
     private PhotoLibraryCatalog catalog;
+    private volatile long phoneIndexEpoch;
+    private volatile PhoneIndex phoneIndex;
 
     public LocalPhotoRepository(Context context) {
         this.context = context.getApplicationContext(); resolver = this.context.getContentResolver();
@@ -73,15 +75,17 @@ public final class LocalPhotoRepository {
     public static final class PhonePhoto {
         public final Uri uri;
         public final String key, filename, mime;
-        public final long bytes, date, modified;
-        PhonePhoto(Uri uri, String filename, String mime, long bytes, long date, long modified) {
+        public final long bytes, date, modified, takenDate;
+        PhonePhoto(Uri uri, String filename, String mime, long bytes, long date, long modified) {this(uri,filename,mime,bytes,date,modified,0);}
+        PhonePhoto(Uri uri,String filename,String mime,long bytes,long date,long modified,long takenDate){
             this.uri = uri; this.filename = filename == null || filename.isBlank() ? "照片" : filename;
             this.mime = mime == null ? "" : mime.toLowerCase(Locale.ROOT);
-            this.bytes = bytes; this.date = Math.max(0, date); this.modified = Math.max(0, modified);
+            this.takenDate=Math.max(0,takenDate);this.bytes = bytes; this.date = Math.max(0, date); this.modified = Math.max(0, modified);
             key = uri.toString();
         }
         public String thumbnailKey() { return key + "|" + bytes + "|" + modified; }
         public boolean png() { return "image/png".equals(mime); }
+        public boolean raw() { return PhotoSourceFormat.raw(filename, mime); }
     }
     public static final class Page {
         public final List<PhonePhoto> photos;
@@ -99,8 +103,15 @@ public final class LocalPhotoRepository {
                 MediaStore.Images.Media.MIME_TYPE, MediaStore.Images.Media.SIZE,
                 MediaStore.Images.Media.DATE_ADDED, MediaStore.Images.Media.DATE_MODIFIED};
         Bundle args = new Bundle();
-        args.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, MediaStore.Images.Media.MIME_TYPE + " IN (?,?)");
-        args.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, new String[]{"image/jpeg", "image/png"});
+        List<String> types = new ArrayList<>(); types.add("image/jpeg"); types.add("image/png");
+        Collections.addAll(types, PhotoSourceFormat.RAW_MIMES);
+        String selection = MediaStore.Images.Media.MIME_TYPE + " IN (" + String.join(",", Collections.nCopies(types.size(), "?")) + ")";
+        // Some MediaStore providers register NEF/DNG as TIFF or octet-stream.
+        for (String extension : new String[]{"nef", "nrw", "dng", "cr2", "cr3", "arw", "raf", "rw2", "orf", "pef", "srw", "raw"}) {
+            selection += " OR LOWER(" + MediaStore.Images.Media.DISPLAY_NAME + ") LIKE ?"; types.add("%." + extension);
+        }
+        args.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "(" + selection + ")");
+        args.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, types.toArray(new String[0]));
         args.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, MediaStore.Images.Media.DATE_ADDED + " DESC, " + MediaStore.Images.Media._ID + " DESC");
         // Manual cursor movement also works with providers that ignore QUERY_ARG_OFFSET/LIMIT.
         List<PhonePhoto> result = new ArrayList<>();
@@ -116,9 +127,55 @@ public final class LocalPhotoRepository {
         } catch (SecurityException denied) { throw new IOException("手机照片访问权限已变化，请重新授权或选择照片。", denied); }
         catch (RuntimeException failure) { throw new IOException("无法读取手机照片，请刷新或使用系统选择器。", failure); }
     }
+    public synchronized void invalidatePhoneIndex(){phoneIndexEpoch++;phoneIndex=null;}
+    private static final class PhoneIndex {
+        final List<PhonePhoto> all;PhotoSort sortedBy;List<PhonePhoto> sorted;
+        PhoneIndex(List<PhonePhoto> all){this.all=Collections.unmodifiableList(all);}
+        synchronized List<PhonePhoto> ordered(PhotoSort order){
+            if(!order.equals(sortedBy)){List<PhonePhoto> next=new ArrayList<>(all);next.sort((a,b)->order.compare(a.takenDate,a.date,a.key,b.takenDate,b.date,b.key));sorted=Collections.unmodifiableList(next);sortedBy=order;}return sorted;
+        }
+    }
+    /** Full metadata snapshot precedes pagination, including capture-date fallback across every page. */
+    public Page phonePage(int offset,int pageSize,PhotoSort order,BooleanSupplier cancel)throws IOException{return phonePage(offset,pageSize,order,cancel,"");}
+    public Page phonePage(int offset,int pageSize,PhotoSort order,BooleanSupplier cancel,String anchor)throws IOException{
+        if(access()==Access.NONE)throw new IOException("尚未授权读取手机照片。");
+        long epoch=phoneIndexEpoch;PhoneIndex index=phoneIndex;check(cancel);
+        if(index==null){
+            String[] projection={MediaStore.Images.Media._ID,MediaStore.Images.Media.DISPLAY_NAME,MediaStore.Images.Media.MIME_TYPE,MediaStore.Images.Media.SIZE,MediaStore.Images.Media.DATE_ADDED,MediaStore.Images.Media.DATE_MODIFIED,MediaStore.Images.Media.DATE_TAKEN};
+        Bundle args = new Bundle();
+        List<String> types = new ArrayList<>(); types.add("image/jpeg"); types.add("image/png");
+        Collections.addAll(types, PhotoSourceFormat.RAW_MIMES);
+        String selection = MediaStore.Images.Media.MIME_TYPE + " IN (" + String.join(",", Collections.nCopies(types.size(), "?")) + ")";
+        // Some MediaStore providers register NEF/DNG as TIFF or octet-stream.
+        for (String extension : new String[]{"nef", "nrw", "dng", "cr2", "cr3", "arw", "raf", "rw2", "orf", "pef", "srw", "raw"}) {
+            selection += " OR LOWER(" + MediaStore.Images.Media.DISPLAY_NAME + ") LIKE ?"; types.add("%." + extension);
+        }
+        args.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "(" + selection + ")");
+        args.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, types.toArray(new String[0]));
+        args.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, MediaStore.Images.Media.DATE_ADDED + " DESC, " + MediaStore.Images.Media._ID + " DESC");
+
+            List<PhonePhoto> all=new ArrayList<>();
+            try(Cursor cursor=resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,projection,args,null)){
+                if(cursor==null)throw new IOException("系统未返回手机照片，请刷新重试。");
+                while(cursor.moveToNext()){
+                    check(cancel);if(epoch!=phoneIndexEpoch)throw new java.io.InterruptedIOException("手机照片索引已更新。");
+                    Uri uri=ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,cursor.getLong(0));
+                    long added=cursor.getLong(4);added=added>0&&added<=253402300799L?added*1000L:0;
+                    all.add(new PhonePhoto(uri,cursor.getString(1),cursor.getString(2),cursor.getLong(3),added,cursor.getLong(5),cursor.isNull(6)?0:cursor.getLong(6)));
+                }
+            }catch(SecurityException denied){throw new IOException("手机照片访问权限已变化，请重新授权。",denied);}
+            catch(RuntimeException failure){throw new IOException("无法读取手机照片日期，请刷新重试。",failure);}
+            check(cancel);index=new PhoneIndex(all);synchronized(this){if(epoch!=phoneIndexEpoch)throw new java.io.InterruptedIOException("手机照片索引已更新。");phoneIndex=index;}
+        }
+        List<PhonePhoto> sorted=index.ordered(order);check(cancel);if(epoch!=phoneIndexEpoch)throw new java.io.InterruptedIOException("手机照片索引已更新。");
+        int start=Math.min(sorted.size(),Math.max(0,offset)),end=Math.min(sorted.size(),start+Math.min(120,Math.max(1,pageSize)));
+        if(start==0&&!anchor.isEmpty()){for(int i=0;i<sorted.size();i++)if(anchor.equals(sorted.get(i).key)){end=Math.max(end,Math.min(sorted.size(),i+Math.min(120,Math.max(1,pageSize))));break;}}
+        return new Page(new ArrayList<>(sorted.subList(start,end)),end,end<sorted.size());
+    }
+
     public PhonePhoto describe(Uri uri) throws IOException {
         if (uri == null || !"content".equals(uri.getScheme())) throw new IOException("请选择系统提供的照片。");
-        String name = "照片", mime; long size = -1, modified = 0, date = 0;
+        String name = "照片", mime; long size = -1, modified = 0, date = 0, taken = 0;
         try {
             mime = resolver.getType(uri);
             try (Cursor cursor = resolver.query(uri, null, null, null, null)) {
@@ -127,12 +184,14 @@ public final class LocalPhotoRepository {
                     index = cursor.getColumnIndex(OpenableColumns.SIZE); if (index >= 0 && !cursor.isNull(index)) size = cursor.getLong(index);
                     index = cursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED); if (index >= 0) modified = cursor.getLong(index);
                     index = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED); if (index >= 0) date = cursor.getLong(index) * 1000L;
+                    index=cursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);if(index>=0&&!cursor.isNull(index))taken=cursor.getLong(index);
                 }
             }
         } catch (SecurityException denied) { throw new IOException("这张照片的访问权限已失效，请重新选择。", denied); }
         catch (RuntimeException failure) { throw new IOException("无法读取照片信息，请重新选择。", failure); }
-        if (!"image/jpeg".equalsIgnoreCase(mime) && !"image/png".equalsIgnoreCase(mime)) throw new IOException("目前仅支持 JPEG 和 PNG 照片。");
-        return new PhonePhoto(uri, name, mime, size, date, modified);
+        if (!"image/jpeg".equalsIgnoreCase(mime) && !"image/png".equalsIgnoreCase(mime) && !PhotoSourceFormat.raw(name, mime))
+            throw new IOException("请选择 JPEG、PNG 或相机 RAW 照片。");
+        return new PhonePhoto(uri, name, mime, size, date, modified,taken);
     }
     public List<PhotoLibraryCatalog.PhotoGroup> appPhotos(BooleanSupplier cancel) throws IOException {
         List<DownloadedPhoto> completed = new ArrayList<>();
@@ -147,28 +206,62 @@ public final class LocalPhotoRepository {
             }
         }
         if (catalog == null) catalog = new PhotoLibraryCatalog(context.getFilesDir(), context.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
-        return catalog.list(dates.read(completed, cancel), cancel);
+        List<PhotoLibraryCatalog.PhotoGroup> groups=catalog.list(dates.read(completed,cancel),cancel),result=new ArrayList<>();
+        for(PhotoLibraryCatalog.PhotoGroup group:groups){
+            check(cancel);long taken=0,added=0;List<DownloadedPhoto> originals=group.originals.isEmpty()?List.of(group.display):group.originals;
+            for(DownloadedPhoto photo:originals){long value=PhotoArrivalDates.read(photo.file());if(value<=0)value=Math.max(0,photo.downloadedAt());if(value>0&&(added==0||value<added))added=value;if(taken==0)taken=dates.captureDate(photo,cancel);}
+            result.add(group.withDates(taken>0?taken:added,added));
+        }
+        return Collections.unmodifiableList(result);
     }
     public void selectVersion(PhotoLibraryCatalog.PhotoGroup group, DownloadedPhoto photo) throws IOException {
         if (catalog == null) throw new IOException("照片列表已变化，请刷新后重试。");
         catalog.selectDisplay(group, photo);
     }
+    /** Explicit whole-group app-only deletion. Public MediaStore and camera files are never touched. */
+    public PhotoDeleteResult deleteAppPhotos(List<PhotoLibraryCatalog.PhotoGroup> selected) throws IOException {
+        if(selected==null||selected.isEmpty()||selected.size()>MAX_BATCH)throw new IOException("请选择 1–100 张应用相册照片。");
+        try(PhotoLocalTasks.Lease ignored=PhotoLocalTasks.delete()){
+            List<PhotoLibraryCatalog.PhotoGroup> fresh=appPhotos(()->false);
+            java.util.Map<String,PhotoLibraryCatalog.PhotoGroup> available=new java.util.LinkedHashMap<>();
+            for(PhotoLibraryCatalog.PhotoGroup group:fresh)available.put(group.id,group);
+            java.util.Map<String,DownloadedPhoto> members=new java.util.LinkedHashMap<>();
+            for(PhotoLibraryCatalog.PhotoGroup expected:selected){
+                PhotoLibraryCatalog.PhotoGroup actual=expected==null?null:available.get(expected.id);
+                if(actual==null||!groupPaths(expected).equals(groupPaths(actual)))throw new IOException("所选照片的版本已变化，请刷新后重新选择。未开始删除。");
+                for(DownloadedPhoto photo:actual.photos())members.put(photo.file().getCanonicalPath(),photo);
+            }
+            if(members.size()>1000)throw new IOException("所选照片版本较多，请减少选择后删除。");
+            return new PhotoAlbumDeletion(context,false).delete(new ArrayList<>(members.values()));
+        }
+    }
+    private static java.util.Set<String> groupPaths(PhotoLibraryCatalog.PhotoGroup group)throws IOException{
+        java.util.Set<String> result=new java.util.TreeSet<>();for(DownloadedPhoto photo:group.photos())result.add(photo.file().getCanonicalPath());return result;
+    }
     /** Exact JPEG bytes are copied; PNG source bytes are retained beside a white-flattened JPEG working copy. */
     public DownloadedPhoto importPhoto(PhonePhoto selected, BooleanSupplier cancel) throws IOException {
+        return importPhoto(selected, "", cancel);
+    }
+    public DownloadedPhoto importPhoto(PhonePhoto selected, String owner, BooleanSupplier cancel) throws IOException {
         try (PhotoLocalTasks.Lease ignored = PhotoLocalTasks.use()) {
-            return importLocked(selected, cancel);
+            return importLocked(selected, owner, cancel);
         } catch (OutOfMemoryError memory) { throw new IOException("这张照片超出当前可用内存，请换一张较小的照片后重试。", memory); }
         catch (SecurityException denied) { throw new IOException("照片访问权限已失效，请重新选择照片。", denied); }
     }
     /** Receives only a completed private RAW-development handoff, never an arbitrary result path. */
     public DownloadedPhoto importDevelopedJpeg(File input,String jpegSha,String rawSha,String workingIdentity,BooleanSupplier cancel)throws IOException{
+        return importDevelopedJpeg(input,jpegSha,rawSha,workingIdentity,"",cancel);
+    }
+    public DownloadedPhoto importDevelopedJpeg(File input,String jpegSha,String rawSha,String workingIdentity,String sourceName,BooleanSupplier cancel)throws IOException{
         if(input==null||jpegSha==null||!jpegSha.matches("[a-f0-9]{64}")||rawSha==null||!rawSha.matches("[a-f0-9]{64}")||workingIdentity==null||workingIdentity.isBlank()||workingIdentity.length()>4096)throw new IOException("RAW 显影副本身份无效。");
         File handoff=new File(context.getFilesDir(),"raw-developed-handoff").getCanonicalFile(),file=input.getCanonicalFile();
         if(!file.getParentFile().equals(handoff)||!file.isFile()||!file.getName().toLowerCase(Locale.ROOT).endsWith(".jpg"))throw new IOException("RAW 显影副本路径无效。");
         try(PhotoLocalTasks.Lease ignored=PhotoLocalTasks.use()){
             check(cancel);if(!jpegSha.equals(hashFile(file,cancel)))throw new IOException("RAW 显影副本已变化。");
             verifyImage(file,"image/jpeg",cancel);mkdir(pictures);mkdir(sources);
-            String key="raw-developed-"+rawSha+"-"+jpegSha,name="RAW_"+rawSha.substring(0,8)+".jpg";
+            String extension=PhotoSourceFormat.rawExtension(sourceName);
+            String key=(extension.isEmpty()?"raw-developed-":"raw-"+extension+"-")+rawSha+"-"+jpegSha,
+                    name=sourceName==null||sourceName.isBlank()?"RAW_"+rawSha.substring(0,8)+".jpg":RawEditorSource.jpegName(sourceName);
             File target=new File(pictures,key+"__"+name);
             if(target.exists()){if(!jpegSha.equals(hashFile(target,cancel)))throw new IOException("已有显影副本校验失败。");}
             check(cancel);if(!jpegSha.equals(hashFile(file,cancel)))throw new IOException("显影副本导入校验失败。");
@@ -187,9 +280,10 @@ public final class LocalPhotoRepository {
             if(file.getParentFile().equals(parent)&&file.getName().matches("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\\.jpg")&&file.isFile()&&expectedSha.equals(hashFile(file,()->false)))file.delete();
         }catch(IOException ignored){/* Never remove unverified or foreign bytes. */}
     }
-    private DownloadedPhoto importLocked(PhonePhoto selected, BooleanSupplier cancel) throws IOException {
+    private DownloadedPhoto importLocked(PhonePhoto selected, String owner, BooleanSupplier cancel) throws IOException {
         check(cancel); PhonePhoto before = describe(selected.uri);
         if (!sameMetadata(selected, before)) throw new IOException("手机上的照片已变化，请刷新后重新选择。");
+        if (before.raw()) return importRaw(before, owner, cancel);
         if (before.bytes > MAX_IMPORT_BYTES) throw new IOException("单张照片不能超过 96 MB。");
         mkdir(pictures); mkdir(sources);
         if (pictures.getUsableSpace() < Math.max(16L * 1024 * 1024, Math.max(0, before.bytes) * 3)) throw new IOException("手机存储空间不足，请释放空间后重试。");
@@ -232,8 +326,26 @@ public final class LocalPhotoRepository {
                 if (!normalized.renameTo(target)) throw new IOException("无法保存 应用相册工作副本。"); normalized = null;
             } else atomicCopy(temporary, target, cancel);
             long date = before.date > 0 ? before.date : System.currentTimeMillis(); target.setLastModified(date);
+            PhotoArrivalDates.record(target);
             return new DownloadedPhoto(target, filename, "", "", date);
         } finally { temporary.delete(); if (normalized != null) normalized.delete(); }
+    }
+    private DownloadedPhoto importRaw(PhonePhoto before, String owner, BooleanSupplier cancel) throws IOException {
+        if (before.bytes > PhotoFormat.MAX_RAW_BYTES) throw new IOException("单张 RAW 不能超过 512 MB。");
+        mkdir(sources); File temporary = File.createTempFile("raw-import-", ".part", sources);
+        try {
+            String sha;
+            try (InputStream input = open(before.uri); FileOutputStream output = new FileOutputStream(temporary)) {
+                sha = transfer(input, output, cancel, PhotoFormat.MAX_RAW_BYTES); output.getFD().sync();
+            }
+            if (before.bytes >= 0 && before.bytes != temporary.length()) throw new IOException("RAW 尚未完整读取，请重试。");
+            if (!sameMetadata(before, describe(before.uri))) throw new IOException("读取期间 RAW 已变化，请重新选择。");
+            try (InputStream input = open(before.uri)) {
+                if (!sha.equals(transfer(input, null, cancel, PhotoFormat.MAX_RAW_BYTES))) throw new IOException("读取期间 RAW 内容已变化，请重试。");
+            }
+            check(cancel);
+            return RawEditorSource.prepare(context, temporary, before.filename, owner, before.date, cancel);
+        } finally { temporary.delete(); }
     }
     private void writeSourceRecord(String key, PhonePhoto photo, String sha, String retained, String workingSha, long workingBytes) throws IOException {
         AtomicFile file = new AtomicFile(new File(sources, key + ".source")); FileOutputStream stream = null;
@@ -278,6 +390,22 @@ public final class LocalPhotoRepository {
         } finally { if (source != null) source.recycle(); if (working != null) working.recycle(); }
     }
     public Bitmap thumbnail(PhonePhoto photo, int edge) throws IOException {
+        if (photo.raw() && Build.VERSION.SDK_INT >= 29) {
+            try { return resolver.loadThumbnail(photo.uri, new android.util.Size(edge, edge), null); }
+            catch (IOException | RuntimeException unavailable) { /* Embedded EXIF thumbnail is the bounded fallback. */ }
+        }
+        if (photo.raw()) {
+            try (InputStream input = open(photo.uri)) {
+                ExifInterface exif = new ExifInterface(input); byte[] bytes = exif.getThumbnail();
+                if (bytes != null) {
+                    BitmapFactory.Options bounds = new BitmapFactory.Options(); bounds.inJustDecodeBounds = true;
+                    BitmapFactory.decodeByteArray(bytes, 0, bytes.length, bounds);
+                    Bitmap preview = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, thumbOptions(bounds, edge));
+                    if (preview != null) return orient(preview, photo.uri);
+                }
+            } catch (IOException | RuntimeException unavailable) { /* No full development merely to draw the list. */ }
+            throw new IOException("RAW 暂无缩略图，点按仍可编辑。");
+        }
         try (InputStream input = open(photo.uri)) {
             BitmapFactory.Options bounds = new BitmapFactory.Options(); bounds.inJustDecodeBounds = true; BitmapFactory.decodeStream(input, null, bounds);
             if (bounds.outWidth <= 0 || bounds.outHeight <= 0) throw new IOException("无法读取缩略图。");
@@ -363,8 +491,11 @@ public final class LocalPhotoRepository {
         } catch (java.io.EOFException truncated) { throw new IOException("PNG 数据被截断。", truncated); }
     }
     private static String transfer(InputStream input, FileOutputStream output, BooleanSupplier cancel) throws IOException {
+        return transfer(input, output, cancel, MAX_IMPORT_BYTES);
+    }
+    private static String transfer(InputStream input, FileOutputStream output, BooleanSupplier cancel, long maximum) throws IOException {
         MessageDigest digest = digest(); byte[] buffer = new byte[65536]; long size = 0; int count;
-        while ((count = input.read(buffer)) != -1) { check(cancel); size += count; if (size > MAX_IMPORT_BYTES) throw new IOException("单张照片不能超过 96 MB。"); digest.update(buffer, 0, count); if (output != null) output.write(buffer, 0, count); }
+        while ((count = input.read(buffer)) != -1) { check(cancel); size += count; if (size > maximum) throw new IOException("照片超过本次可处理大小。"); digest.update(buffer, 0, count); if (output != null) output.write(buffer, 0, count); }
         if (size < 4) throw new IOException("照片内容为空或不完整。"); return hex(digest.digest());
     }
     private static String hashFile(File file, BooleanSupplier cancel) throws IOException { try (InputStream in = new FileInputStream(file)) { return transfer(in, null, cancel); } }

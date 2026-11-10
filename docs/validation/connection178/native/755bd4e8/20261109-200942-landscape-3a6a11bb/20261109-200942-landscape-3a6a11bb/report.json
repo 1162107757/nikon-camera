@@ -1,0 +1,778 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "755bd4e854eb65316813e5c4f0c270020bcd90899b621262232c78f79b8ae2e7",
+  "versionCode": 178,
+  "versionName": "0.30.24-beta",
+  "mode": "landscape",
+  "flow": "connection178",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-page",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-page",
+      "pass": true
+    },
+    {
+      "name": "camera-type-native-row",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "system-selector-auto-opens-once",
+      "pass": true
+    },
+    {
+      "name": "selection-dialog-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-wifi-checking",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-wifi-checking",
+      "pass": true
+    },
+    {
+      "name": "one-primary-and-quiet-retry",
+      "pass": true
+    },
+    {
+      "name": "native-targets-at-least48dp",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "retry-shows-real-missing-wifi",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-connection178-wifi-retry",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-connection178-wifi-retry",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "choose-reopens-system-selection",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "close-cancels-once",
+      "pass": true
+    },
+    {
+      "name": "poll-and-dialog-cleared",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "system-back-cancels-once",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-0",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-1",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-1",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-2",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-2",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-3",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-3",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-4",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-4",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-opens",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-is-locked-5",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "each-ratio-cancel-preserves-draft-5",
+      "pass": true
+    },
+    {
+      "name": "quick-ratio-opens-editable-crop-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "quick-ratio-lock-selected-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "no-parent-change-before-apply-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "actual-two-finger-shrink-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "within-photo-landscape-photo-shrink",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "dialog-not-dismissed-by-frame-drag-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "free-position-changes-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "within-photo-landscape-photo-edge-drag",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "within-photo-landscape-photo-grow",
+      "pass": true
+    },
+    {
+      "name": "actual-two-finger-grow-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "within-photo-landscape-photo-opposite-edges",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop178-adjusted-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop178-adjusted-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "connection178-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop-applied-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parent-uses-applied-geometry-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "one-parent-transaction-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "quick-selected-after-apply-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "actual-draft-readback-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "precision-opens-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "connection178-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "within-photo-landscape-photo-free",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop178-free-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop178-free-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "cancel-preserves-parent-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "quick-ratio-opens-editable-crop-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "quick-ratio-lock-selected-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "no-parent-change-before-apply-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "actual-two-finger-shrink-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "within-photo-portrait-photo-shrink",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "dialog-not-dismissed-by-frame-drag-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "free-position-changes-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "within-photo-portrait-photo-edge-drag",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "within-photo-portrait-photo-grow",
+      "pass": true
+    },
+    {
+      "name": "actual-two-finger-grow-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "within-photo-portrait-photo-opposite-edges",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop178-adjusted-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop178-adjusted-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "connection178-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop-applied-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "parent-uses-applied-geometry-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "one-parent-transaction-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "quick-selected-after-apply-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "actual-draft-readback-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "precision-opens-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "connection178-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "within-photo-portrait-photo-free",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop178-free-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop178-free-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "cancel-preserves-parent-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "landscape-photo-shrink",
+      "left": 224999,
+      "top": 324296,
+      "right": 775001,
+      "bottom": 675704
+    },
+    {
+      "case": "landscape-photo-edge-drag",
+      "left": 449998,
+      "top": 648592,
+      "right": 1000000,
+      "bottom": 1000000
+    },
+    {
+      "case": "landscape-photo-grow",
+      "left": 0,
+      "top": 361079,
+      "right": 1000000,
+      "bottom": 1000000
+    },
+    {
+      "case": "landscape-photo-opposite-edges",
+      "left": 0,
+      "top": 0,
+      "right": 1000000,
+      "bottom": 638921
+    },
+    {
+      "case": "pinched-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 512,
+      "outputHeight": 218,
+      "ratio": 2.3486238532110093,
+      "widthErrorPixels": 0.3000000000000682
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "应用",
+      "width": 168,
+      "height": 126,
+      "screenX": 1468,
+      "screenY": 145,
+      "visibleInWindow": "[1468,145][1636,271]"
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "自由",
+      "width": 130,
+      "height": 126,
+      "screenX": 1808,
+      "screenY": 137,
+      "visibleInWindow": "[1808,137][1938,263]"
+    },
+    {
+      "case": "landscape-photo-free",
+      "left": 100000,
+      "top": 63892,
+      "right": 900000,
+      "bottom": 575029
+    },
+    {
+      "case": "portrait-photo-shrink",
+      "left": 225001,
+      "top": 422064,
+      "right": 774999,
+      "bottom": 577936
+    },
+    {
+      "case": "portrait-photo-edge-drag",
+      "left": 450002,
+      "top": 844128,
+      "right": 1000000,
+      "bottom": 1000000
+    },
+    {
+      "case": "portrait-photo-grow",
+      "left": 0,
+      "top": 716594,
+      "right": 1000000,
+      "bottom": 1000000
+    },
+    {
+      "case": "portrait-photo-opposite-edges",
+      "left": 0,
+      "top": 0,
+      "right": 1000000,
+      "bottom": 283406
+    },
+    {
+      "case": "pinched-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 341,
+      "outputHeight": 145,
+      "ratio": 2.3517241379310345,
+      "widthErrorPixels": 0.25
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "应用",
+      "width": 168,
+      "height": 126,
+      "screenX": 1468,
+      "screenY": 145,
+      "visibleInWindow": "[1468,145][1636,271]"
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "自由",
+      "width": 130,
+      "height": 126,
+      "screenX": 1808,
+      "screenY": 137,
+      "visibleInWindow": "[1808,137][1938,263]"
+    },
+    {
+      "case": "portrait-photo-free",
+      "left": 100000,
+      "top": 28341,
+      "right": 900000,
+      "bottom": 255065
+    }
+  ],
+  "screenshots": 7,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Capture-only connection178 flow on the exact installed APK: native camera guide and Wi-Fi automatic\/intercepted system selection, return, retry and cancellation; quick-ratio entry, two-finger events dispatched to the real crop View, native inner-frame movement, photo bounds, apply and actual draft readback, plus free-crop cancellation. Other inherited flows were not run. No real network selection, camera handshake, physical-device, edge-corner, full TalkBack, performance or publication certification."
+}

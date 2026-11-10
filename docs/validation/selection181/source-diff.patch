@@ -1,0 +1,250 @@
+--- a/app/build.gradle
++++ b/app/build.gradle
+@@ -7,8 +7,8 @@
+         applicationId 'cc.huevia'
+         minSdk 26
+         targetSdk 35
+-        versionCode 180
+-        versionName '0.30.26-beta'
++        versionCode 181
++        versionName '0.30.27-beta'
+     }
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_17
+--- a/app/src/main/java/cc/huevia/MainActivity.java
++++ b/app/src/main/java/cc/huevia/MainActivity.java
+@@ -692,7 +692,8 @@
+                 : (!detailId.isEmpty() || detailOnline != null ? "预设详情" : "预设"), back || compactLocalAlbum || compactRoot ? 18 : 26, true);
+         title.setLetterSpacing(-.02f); title.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+         title.setMaxLines(1);title.setEllipsize(TextUtils.TruncateAt.END);
+-        if (presetHome && homePresetSearchExpanded)
++        if(localSelection){bar.setPadding(0,dp(compactLocalAlbum?0:8),0,dp(compactLocalAlbum?0:4));bar.addView(localAlbum.createSelectionHeader(),new LinearLayout.LayoutParams(-1,dp(compactLocalAlbum?48:52)));}
++        else if (presetHome && homePresetSearchExpanded)
+             bar.addView(homePresetSearchField(resumeSearchFocus, resumeSearchKeyboard, searchCursor), new LinearLayout.LayoutParams(0, dp(48), 1));
+         else bar.addView(title, new LinearLayout.LayoutParams(0, -2, 1));
+         View accountAction = accountPage ? account.createHeaderAction(colors) : null;
+--- a/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
++++ b/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
+@@ -8,6 +8,7 @@
+ import android.content.Intent;
+ import android.content.res.ColorStateList;
+ import android.graphics.Bitmap;
++import android.graphics.Color;
+ import android.graphics.Typeface;
+ import android.graphics.drawable.GradientDrawable;
+ import android.graphics.drawable.RippleDrawable;
+@@ -104,9 +105,10 @@
+     private final Runnable thumbnailChanged = this::thumbnailsChanged;
+     private UiPalette palette;
+     private LinearLayout root, selectionBar, summaryRow;
+-    private GlassBar selectionDock;
+-    private Boolean narrowDock;
+-    private Button phoneTab, appTab, permissionButton, batchButton, exportButton, selectButton, pickerButton, cancelButton, deleteButton;
++    private FrameLayout selectionDock;
++    private View cancelButton;
++    private Button selectAllButton;
++    private Button phoneTab, appTab, permissionButton, batchButton, exportButton, selectButton, pickerButton, deleteButton;
+     private AlertDialog deleteDialog;
+     private boolean deleting;
+     private ImageView moreButton;
+@@ -118,7 +120,7 @@
+     private View emptyContainer;
+     private TextView emptyTitle, emptyText;
+     private PhotoAdapter adapter;
+-    private boolean phone, selecting, closed, active, loadingPhone, loadingApp, importing, phoneMore, phoneLoaded, appLoaded, compactLayout, dockUsingList;
++    private boolean phone, selecting, closed, active, loadingPhone, loadingApp, importing, phoneMore, phoneLoaded, appLoaded, compactLayout;
+     private int phoneOffset, phoneRequest, appRequest, importRequest, imageEpoch, gridColumns = 3;
+     private String phoneError = "", appError = "", workStatus = "";
+     private String pendingDateSelection;
+@@ -129,6 +131,34 @@
+     }
+     public String title() { return "相册"; }
+     public boolean hasSelectionDock() { return selecting || importing; }
++    public View createSelectionHeader(){
++        UiPalette colors=UiPalette.home(activity);LinearLayout header=new LinearLayout(activity);header.setGravity(Gravity.CENTER_VERTICAL);
++        header.setPadding(dp(8),0,dp(12),0);header.setTag("local-album-selection-header");
++        ImageView close=new ImageView(activity);close.setImageDrawable(new AppIcon(AppIcon.Kind.CLOSE,colors.text,density()));
++        close.setPadding(dp(12),dp(12),dp(12),dp(12));close.setContentDescription("取消选择");close.setTag("local-album-cancel-selection");close.setFocusable(true);
++        close.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.container),null,shape(Color.WHITE,dp(24))));close.setOnClickListener(v->cancelSelection());
++        cancelButton=close;header.addView(close,new LinearLayout.LayoutParams(dp(48),dp(48)));
++        selectionCount=text("",18,colors.text);selectionCount.setTypeface(Typeface.create("sans-serif-medium",Typeface.NORMAL));
++        selectionCount.setIncludeFontPadding(false);selectionCount.setSingleLine(true);selectionCount.setEllipsize(TextUtils.TruncateAt.END);
++        selectionCount.setTag("local-album-selection-count");selectionCount.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
++        LinearLayout.LayoutParams label=new LinearLayout.LayoutParams(0,-2,1);label.leftMargin=dp(8);header.addView(selectionCount,label);
++        selectAllButton=new Button(activity);selectAllButton.setText("全选");selectAllButton.setAllCaps(false);selectAllButton.setTextSize(14);selectAllButton.setTextColor(colors.secondary);
++        selectAllButton.setIncludeFontPadding(false);selectAllButton.setMinWidth(0);selectAllButton.setMinimumWidth(0);selectAllButton.setPadding(dp(8),0,dp(8),0);
++        selectAllButton.setMinHeight(dp(48));selectAllButton.setMinimumHeight(dp(48));selectAllButton.setStateListAnimator(null);selectAllButton.setElevation(0);
++        selectAllButton.setBackground(new RippleDrawable(ColorStateList.valueOf(colors.container),null,shape(Color.WHITE,dp(12))));
++        selectAllButton.setTag("local-album-select-all");selectAllButton.setContentDescription("全选当前已载入的照片");selectAllButton.setOnClickListener(v->selectAllOrStart());
++        LinearLayout.LayoutParams all=new LinearLayout.LayoutParams(dp(64),dp(48));all.leftMargin=dp(8);header.addView(selectAllButton,all);updateSelectionHeader();return header;
++    }
++    private void selectAllOrStart(){
++        if(importing)return;
++        if(selecting){if(current().size()>LocalPhotoRepository.MAX_BATCH){host.feedback("最多选择 100 张","请按日期或逐张选择照片。");return;}for(Item item:current())selected.add(item.key);}
++        else{selecting=true;selected.clear();}updateSelection();
++    }
++    private void updateSelectionHeader(){
++        if(selectionCount!=null){selectionCount.setText(importing?(deleting?"删除中":"准备中"):("已选 "+selected.size()+" 张"+(compactHeight()?" · "+(phone?"手机相册":"应用相册"):"")));selectionCount.setContentDescription(importing?workStatus:"已选择 "+selected.size()+" 张照片");}
++        if(cancelButton!=null){cancelButton.setEnabled(!deleting);cancelButton.setAlpha(deleting?.45f:1f);}
++        if(selectAllButton!=null){selectAllButton.setEnabled(!importing&&!current().isEmpty());selectAllButton.setAlpha(selectAllButton.isEnabled()?1f:.45f);}
++    }
+     public View createHeaderAction() {
+         UiPalette colors = UiPalette.home(activity);
+         moreButton = new ImageView(activity);
+@@ -181,7 +211,7 @@
+         progress = new ProgressBar(activity);
+         summaryRow = new LinearLayout(activity); summaryRow.setGravity(Gravity.CENTER_VERTICAL); summaryRow.setPadding(dp(compactLayout ? 12 : 24), 0, dp(compactLayout ? 12 : 20), dp(4)); summaryRow.setTag("local-album-summary");
+         summaryRow.addView(scope, new LinearLayout.LayoutParams(0, -2, 1)); summaryRow.addView(progress, new LinearLayout.LayoutParams(dp(20), dp(20))); summaryRow.addView(status, new LinearLayout.LayoutParams(-2, -2));
+-        selectButton = smallAction("选择", () -> { if (selecting) { if (current().size() > LocalPhotoRepository.MAX_BATCH) { host.feedback("最多选择 100 张", "请按日期或逐张选择照片。"); return; } for (Item item : current()) selected.add(item.key); } else { selecting = true; selected.clear(); } updateSelection(); }); selectButton.setTag("local-album-select"); selectButton.setContentDescription("选择照片进行批量操作");
++        selectButton = smallAction("选择", this::selectAllOrStart); selectButton.setTag("local-album-select"); selectButton.setContentDescription("选择照片进行批量操作");
+         LinearLayout.LayoutParams selectParams = new LinearLayout.LayoutParams(-2, dp(48)); selectParams.leftMargin = dp(8); summaryRow.addView(selectButton, selectParams);
+         root.addView(summaryRow, new LinearLayout.LayoutParams(-1, dp(52)));
+         body = new FrameLayout(activity); root.addView(body, new LinearLayout.LayoutParams(-1, 0, 1));
+@@ -209,20 +239,17 @@
+         empty.addView(pickerButton, new LinearLayout.LayoutParams(-2, dp(48)));
+         ScrollView guidance = new ScrollView(activity); guidance.setFillViewport(true); guidance.addView(empty, new ScrollView.LayoutParams(-1, -2)); emptyContainer = guidance;
+         FrameLayout.LayoutParams guidanceParams = new FrameLayout.LayoutParams(-1, -1); guidanceParams.bottomMargin = dp(navReserve()); body.addView(guidance, guidanceParams);
+-        selectionDock = new GlassBar(activity, palette); selectionDock.setTag("local-album-selection-dock"); selectionDock.setBackdrop(list); dockUsingList = true; narrowDock = null;
+-        selectionBar = new LinearLayout(activity); selectionBar.setOrientation(LinearLayout.HORIZONTAL); selectionBar.setGravity(Gravity.CENTER_VERTICAL); selectionBar.setPadding(dp(6), dp(4), dp(6), dp(4)); selectionBar.setTag("local-album-selection-actions");
+-        cancelButton = dockAction("取消", false, this::cancelSelection); cancelButton.setTag("local-album-cancel-selection"); cancelButton.setContentDescription("取消选择");
+-        selectionBar.addView(cancelButton, new LinearLayout.LayoutParams(-2, dp(48)));
+-        selectionCount = text("", 12, palette.secondary); selectionCount.setGravity(Gravity.CENTER); selectionCount.setSingleLine(true); selectionCount.setEllipsize(TextUtils.TruncateAt.END); selectionCount.setIncludeFontPadding(false); selectionCount.setTag("local-album-selection-count"); selectionCount.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+-        selectionBar.addView(selectionCount, new LinearLayout.LayoutParams(0, -2, 1));
+-        deleteButton=dockAction("",false,this::deleteSelected);deleteButton.setTag("local-album-delete");deleteButton.setContentDescription("删除所选应用相册照片及全部版本");
+-        dockIcon(deleteButton,AppIcon.Kind.DELETE,18);selectionBar.addView(deleteButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
+-        exportButton = dockAction("导出", false, this::exportSelected); exportButton.setTag("local-album-batch-export"); exportButton.setContentDescription("按每张照片当前修图设置保存到手机相册");
+-        LinearLayout.LayoutParams exportParams = new LinearLayout.LayoutParams(-2, dp(48)); exportParams.leftMargin = dp(4); selectionBar.addView(exportButton, exportParams);
+-        batchButton = dockAction("批量编辑", true, () -> prepareSelected(false)); batchButton.setTag("local-album-batch-edit"); batchButton.setContentDescription("批量编辑所选照片");
+-        LinearLayout.LayoutParams editParams = new LinearLayout.LayoutParams(-2, dp(48)); editParams.leftMargin = dp(4); selectionBar.addView(batchButton, editParams);
+-        selectionDock.addView(selectionBar, new FrameLayout.LayoutParams(-1, -1));
+-        FrameLayout.LayoutParams dockParams = new FrameLayout.LayoutParams(-1, dp(56), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL); dockParams.leftMargin = dockParams.rightMargin = dp(16); dockParams.bottomMargin = dp(14); body.addView(selectionDock, dockParams);
++        selectionDock = new FrameLayout(activity); selectionDock.setTag("local-album-selection-dock");
++        HueTheme.card(selectionDock,palette,24);selectionDock.setElevation(dp(6));
++        selectionBar = new LinearLayout(activity);selectionBar.setGravity(Gravity.CENTER_VERTICAL);
++        selectionBar.setPadding(dp(12),dp(6),dp(12),dp(6));selectionBar.setTag("local-album-selection-actions");
++        batchButton=dockAction("编辑",AppIcon.Kind.EDIT,()->prepareSelected(false));batchButton.setTag("local-album-batch-edit");batchButton.setContentDescription("批量编辑所选照片");
++        exportButton=dockAction("导出",AppIcon.Kind.DOWNLOAD,this::exportSelected);exportButton.setTag("local-album-batch-export");exportButton.setContentDescription("按每张照片当前修图设置保存到手机相册");
++        deleteButton=dockAction("删除",AppIcon.Kind.DELETE,this::deleteSelected);deleteButton.setTag("local-album-delete");deleteButton.setContentDescription("删除所选应用相册照片及全部版本");
++        for(Button action:new Button[]{batchButton,exportButton,deleteButton})selectionBar.addView(action,new LinearLayout.LayoutParams(0,-1,1));
++        selectionDock.addView(selectionBar,new FrameLayout.LayoutParams(-1,-1));
++        FrameLayout.LayoutParams dockParams=new FrameLayout.LayoutParams(-1,dp(selectionDockHeight()),Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);
++        dockParams.leftMargin=dockParams.rightMargin=dp(16);dockParams.bottomMargin=dp(14);body.addView(selectionDock,dockParams);
+         body.addOnLayoutChangeListener((view, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+             layoutSelectionDock();
+             if (compactLayout && resolvedColumns() != gridColumns) { savePosition(); rebuildRows(); restorePosition(); }
+@@ -230,7 +257,7 @@
+         rebuildRows(); restorePosition(); updateState(); refreshApp(); return root;
+     }
+     private int navReserve() {
+-        if (hasSelectionDock()) return 80;
++        if (hasSelectionDock()) return selectionDockHeight()+28;
+         boolean floating = activity.getResources().getConfiguration().screenWidthDp < 600;
+         if (!floating) return 0;
+         return 104 + Math.round(Math.max(0f, activity.getResources().getConfiguration().fontScale - 1.2f) * 24f);
+@@ -589,11 +616,13 @@
+         scope.setContentDescription(phone ? (access == LocalPhotoRepository.Access.PARTIAL ? "仅浏览已授权照片，" : "手机照片，") + scope.getText() : "应用相册照片，" + scope.getText());
+         permissionButton.setText(!phone ? "浏览手机照片" : access == LocalPhotoRepository.Access.PARTIAL ? "选择更多照片" : "允许访问照片");
+         permissionButton.setVisibility(phone ? (access != LocalPhotoRepository.Access.FULL ? View.VISIBLE : View.GONE) : (current().isEmpty() && !loading && appError.isEmpty() ? View.VISIBLE : View.GONE));
+-        selectButton.setVisibility(!current().isEmpty() && !importing ? View.VISIBLE : View.GONE); selectButton.setEnabled(!importing); selectButton.setText(selecting ? "全选" : "选择"); selectButton.setContentDescription(selecting ? "全选当前已载入的照片" : "选择照片进行批量操作");
++        selectButton.setVisibility(!current().isEmpty() && !importing && !hasSelectionDock() ? View.VISIBLE : View.GONE); selectButton.setEnabled(!importing); selectButton.setText(selecting ? "全选" : "选择"); selectButton.setContentDescription(selecting ? "全选当前已载入的照片" : "选择照片进行批量操作");
+         boolean dockVisible = hasSelectionDock();
+         phoneTab.setEnabled(!dockVisible); appTab.setEnabled(!dockVisible); phoneTab.setAlpha(dockVisible ? .68f : 1f); appTab.setAlpha(dockVisible ? .68f : 1f); permissionButton.setEnabled(!dockVisible);
+         pickerButton.setVisibility(phone && access == LocalPhotoRepository.Access.NONE && !dockVisible ? View.VISIBLE : View.GONE); pickerButton.setEnabled(!dockVisible); if (moreButton != null) moreButton.setEnabled(!dockVisible);
+-        summaryRow.setVisibility(View.VISIBLE);
++        boolean compactSelection=compactLayout&&dockVisible;
++        root.findViewWithTag("local-album-sources").setVisibility(compactSelection?View.GONE:View.VISIBLE);
++        summaryRow.setVisibility(compactSelection?View.GONE:View.VISIBLE);
+         progress.setVisibility(loading || importing ? View.VISIBLE : View.GONE);
+         String error = phone ? phoneError : appError;
+          status.setText(importing ? workStatus : loading ? "读取中…" : !error.isEmpty() ? "读取失败" : "");
+@@ -602,31 +631,24 @@
+         boolean showEmpty = current().isEmpty(); emptyContainer.setVisibility(showEmpty ? View.VISIBLE : View.GONE); list.setVisibility(showEmpty ? View.GONE : View.VISIBLE);
+         emptyTitle.setText(!albumQuery.isEmpty() && current().isEmpty() ? "没有匹配的照片" : loading ? "正在整理照片" : phone && access == LocalPhotoRepository.Access.NONE ? "浏览手机照片" : !error.isEmpty() ? "照片暂时无法读取" : phone ? "没有可显示的照片" : "这里还没有照片");
+         emptyText.setText(!albumQuery.isEmpty() && current().isEmpty() ? "换个名称搜索，或清除搜索条件。" : loading ? "" : phone && access == LocalPhotoRepository.Access.NONE ? "允许访问后，即可在这里浏览照片。" : !error.isEmpty() ? error + "\n可在更多操作中刷新。" : phone ? "显示已授权的 JPEG、PNG 和 RAW 照片。" : "编辑或同步保存的照片会出现在这里。");
+-        selectionDock.setVisibility(dockVisible ? View.VISIBLE : View.GONE); selectionBar.setVisibility(dockVisible ? View.VISIBLE : View.GONE); selectionCount.setText(importing ? deleting?"删除中":"准备中" : selected.isEmpty() ? "未选择" : selected.size() + " 张"); selectionCount.setContentDescription(importing ? workStatus : "已选择 "+selected.size()+" 张照片");
+-        batchButton.setText(phone ? "批量编辑" : "编辑"); batchButton.setMinWidth(dp(phone ? 96 : 60)); batchButton.setMinimumWidth(dp(phone ? 96 : 60));
+-        batchButton.setEnabled(!selected.isEmpty() && !importing);
++        selectionDock.setVisibility(dockVisible?View.VISIBLE:View.GONE);selectionBar.setVisibility(dockVisible?View.VISIBLE:View.GONE);updateSelectionHeader();
++        batchButton.setText(phone?"批量编辑":"编辑");
++        batchButton.setEnabled(!selected.isEmpty() && !importing);batchButton.setAlpha(batchButton.isEnabled()?1f:.45f);
+         exportButton.setVisibility(phone ? View.GONE : View.VISIBLE);
+         deleteButton.setVisibility(phone?View.GONE:View.VISIBLE);deleteButton.setEnabled(!selected.isEmpty()&&!importing&&(photoPresets==null||!photoPresets.isActive()));deleteButton.setAlpha(deleteButton.isEnabled()?1f:.45f);
+-        cancelButton.setEnabled(!deleting);cancelButton.setAlpha(deleting?.45f:1f);
++        if(cancelButton!=null){cancelButton.setEnabled(!deleting);cancelButton.setAlpha(deleting?.45f:1f);}
+         exportButton.setEnabled(!selected.isEmpty() && !importing && photoPresets != null && !photoPresets.isActive());
+         exportButton.setAlpha(exportButton.isEnabled() ? 1f : .45f);
+         list.setPadding(list.getPaddingLeft(), 0, list.getPaddingRight(), dp(navReserve() + 8));
+         FrameLayout.LayoutParams guidanceParams = (FrameLayout.LayoutParams) emptyContainer.getLayoutParams(); if (guidanceParams.bottomMargin != dp(navReserve())) { guidanceParams.bottomMargin = dp(navReserve()); emptyContainer.setLayoutParams(guidanceParams); }
+-        if (dockUsingList == showEmpty) { dockUsingList = !showEmpty; selectionDock.setBackdrop(dockUsingList ? list : null); }
+         layoutSelectionDock();
+     }
+-    private void layoutSelectionDock() {
+-        if (selectionDock == null || body.getWidth() <= 0) return;
+-        int available = Math.max(dp(48), body.getWidth() - dp(32));
+-        int width = Math.min(dp(420), available);
+-        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) selectionDock.getLayoutParams(); if (params.width != width) { params.width = width; selectionDock.setLayoutParams(params); }
+-        boolean narrow = body.getWidth() < dp(350)||activity.getResources().getConfiguration().fontScale>1.15f&&body.getWidth()<dp(430);
+-        if (narrowDock != null && narrowDock == narrow) return;
+-        narrowDock = narrow;
+-        cancelButton.setMinWidth(dp(narrow ? 48 : 66)); cancelButton.setMinimumWidth(dp(narrow ? 48 : 66)); cancelButton.setPadding(dp(narrow ? 6 : 8), 0, dp(narrow ? 6 : 8), 0);
+-        selectionCount.setTextSize(narrow ? 11 : 12);
+-        cancelButton.setText(narrow?"":"取消");dockIcon(cancelButton,AppIcon.Kind.CLOSE,15);
+-        exportButton.setText(narrow?"":"导出");dockIcon(exportButton,AppIcon.Kind.DOWNLOAD,16);
++    private int selectionDockHeight(){return (compactHeight()?64:76)+Math.round(Math.max(0f,activity.getResources().getConfiguration().fontScale-1.3f)*20);}
++    private void layoutSelectionDock(){
++        if(selectionDock==null||body.getWidth()<=0)return;
++        int width=Math.min(dp(420),Math.max(dp(48),body.getWidth()-dp(32)));
++        FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)selectionDock.getLayoutParams();
++        if(params.width!=width||params.height!=dp(selectionDockHeight())){params.width=width;params.height=dp(selectionDockHeight());selectionDock.setLayoutParams(params);}
+     }
+     private final class PhotoAdapter extends BaseAdapter {
+         public int getCount() { return rows.size(); }
+@@ -808,6 +830,16 @@
+         result.setBackgroundTintList(null); result.setBackground(new android.graphics.drawable.InsetDrawable(new RippleDrawable(ColorStateList.valueOf(palette.primaryContainer), shape(palette.container, dp(16)), null), 0, dp(8), 0, dp(8)));
+         result.setPadding(dp(12), 0, dp(12), 0); return result;
+     }
++    private Button dockAction(String label,AppIcon.Kind kind,Runnable action){
++        Button button=button(label,action);button.setTextSize(12);button.setSingleLine(true);button.setIncludeFontPadding(false);
++        button.setLetterSpacing(0);button.setTypeface(Typeface.create("sans-serif",Typeface.NORMAL));button.setGravity(Gravity.CENTER);
++        button.setMinWidth(0);button.setMinimumWidth(0);button.setMinHeight(dp(48));button.setMinimumHeight(dp(48));
++        button.setStateListAnimator(null);button.setElevation(0);button.setTranslationZ(0);button.setBackgroundTintList(null);
++        button.setTextColor(palette.text);button.setPadding(dp(4),dp(compactHeight()?0:6),dp(4),dp(compactHeight()?0:6));
++        AppIcon icon=new AppIcon(kind,palette.text,density());icon.setBounds(0,0,dp(24),dp(24));
++        button.setCompoundDrawables(null,icon,null,null);button.setCompoundDrawablePadding(dp(6));
++        button.setBackground(new RippleDrawable(ColorStateList.valueOf(palette.container),null,shape(Color.WHITE,dp(16))));return button;
++    }
+     private Button dockAction(String label, boolean primary, Runnable action) {
+         Button result = button(label, action); result.setTextSize(13); result.setSingleLine(true); result.setIncludeFontPadding(false); result.setLetterSpacing(0);
+         result.setTypeface(Typeface.create(primary ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
+@@ -819,11 +851,6 @@
+         result.setBackground(new android.graphics.drawable.InsetDrawable(new RippleDrawable(ColorStateList.valueOf(palette.dark ? 0x33FFFFFF : 0x15000000), fill, shape(palette.card, dp(22))), 0, dp(2), 0, dp(2)));
+         result.setPadding(dp(primary ? 14 : 8), 0, dp(primary ? 14 : 8), 0);
+         return result;
+-    }
+-    private void dockIcon(Button button, AppIcon.Kind kind, int size) {
+-        AppIcon drawable = kind == null ? null : new AppIcon(kind, palette.secondary, density());
+-        if (drawable != null) drawable.setBounds(0, 0, dp(size), dp(size));
+-        button.setCompoundDrawables(drawable, null, null, null); button.setCompoundDrawablePadding(dp(4));
+     }
+     private void icon(Button button, AppIcon.Kind kind) { AppIcon icon = new AppIcon(kind, palette.primary, density()); icon.setBounds(0, 0, dp(18), dp(18)); button.setCompoundDrawables(icon, null, null, null); button.setCompoundDrawablePadding(dp(6)); }
+     private TextView text(String value, int size, int color) { TextView text = new TextView(activity); text.setText(value); text.setTextSize(size); text.setTextColor(color); return text; }
+--- a/app/src/main/java/cc/huevia/ui/AppIcon.java
++++ b/app/src/main/java/cc/huevia/ui/AppIcon.java
+@@ -11,7 +11,7 @@
+ /** One family of compact vector pictograms, no font/emoji-dependent navigation. */
+ public final class AppIcon extends Drawable {
+     public enum Kind { PRESETS, ALBUM, CAMERA, FILE, DOWNLOAD, BACK, HELP, CHECK, WIFI, ADJUST, REFRESH,
+-        SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
++        SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, EDIT, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
+         UNDO, REDO, COMPARE, MORE, BRIGHTNESS, EXPOSURE, CONTRAST, HIGHLIGHTS, SHADOWS, WHITES, BLACKS, TEMPERATURE, TINT, SATURATION, VIBRANCE, CLARITY, SHARPENING,
+         CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK, BRUSH, PATCH, PALETTE, CLEANUP, BODY, MORE_HORIZONTAL, FILTER, FRAME, FLIP_HORIZONTAL, SPLIT_COMPARE }
+     private final Kind kind;
+@@ -101,6 +101,8 @@
+                 line(canvas,3,7,7,7,9,4,15,4,17,7,21,7,21,21,3,21,3,7);
+                 canvas.drawCircle(12,13,4,ink); break;
+             case FILE: line(canvas,5,2,14,2,20,8,20,22,5,22,5,2); line(canvas,14,2,14,8,20,8); break;
++            case EDIT:
++                Path pencil=new Path();pencil.moveTo(4,16);pencil.lineTo(15.7f,4.3f);pencil.quadTo(17.5f,2.5f,19.3f,4.3f);pencil.lineTo(19.7f,4.7f);pencil.quadTo(21.5f,6.5f,19.7f,8.3f);pencil.lineTo(8,20);pencil.lineTo(3,21);pencil.close();canvas.drawPath(pencil,ink);line(canvas,14,6,18,10);break;
+             case DOWNLOAD: line(canvas,12,3,12,16); line(canvas,7,11,12,16,17,11); line(canvas,4,16,4,21,20,21,20,16); break;
+             case DELETE:
+                 line(canvas,4,6,20,6); line(canvas,9,6,9,3,15,3,15,6);

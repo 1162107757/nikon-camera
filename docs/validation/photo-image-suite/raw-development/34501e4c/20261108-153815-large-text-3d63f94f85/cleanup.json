@@ -1,0 +1,12 @@
+{
+  "serial": "emulator-5588",
+  "testPackageRemoved": true,
+  "fontRestored": true,
+  "sizeRestored": true,
+  "airplaneRestored": true,
+  "remoteFixtureRemoved": true,
+  "privateUniqueFixtureRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainFailure": "RAW development probe failed: java.lang.RuntimeException: java.lang.AssertionError: raw-color-control-single-line-fit-highlights; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\photo-image-suite\\raw-development\\34501e4c\\20261108-153815-large-text-3d63f94f85\\20261108-153815-large-text-3d63f94f85\\report.json",
+  "errors": []
+}

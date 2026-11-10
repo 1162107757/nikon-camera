@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-09T10:11:04.844Z",
+  "function": "nikon-preset-library",
+  "status": "Active",
+  "unchanged": {
+    "Runtime": true,
+    "Type": true,
+    "Role": true,
+    "MemorySize": true,
+    "Timeout": true,
+    "InitTimeout": true,
+    "Handler": true,
+    "ClsLogsetId": true,
+    "ClsTopicId": true,
+    "Environment": true,
+    "ModTime": true
+  }
+}

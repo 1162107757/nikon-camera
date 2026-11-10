@@ -1,0 +1,55 @@
+{
+  "versionCode": 163,
+  "versionName": "0.30.9-beta",
+  "apk": "dist/huevia-0.30.9-beta-debug.apk",
+  "sha256": "f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b",
+  "scope": "Only adjustment page, filters excluded per user clarification",
+  "baseParameters": [
+    "亮度",
+    "曝光",
+    "对比度",
+    "高光",
+    "阴影",
+    "白色",
+    "黑色",
+    "色温",
+    "色调",
+    "饱和度",
+    "自然饱和度",
+    "清晰度",
+    "锐化",
+    "明度降噪",
+    "彩色降噪",
+    "颗粒",
+    "暗角"
+  ],
+  "modalTools": [
+    "曲线",
+    "HSL",
+    "调色盘",
+    "去灰"
+  ],
+  "behavior": [
+    "Direct48dp brush entry in the scalar row and modal headers",
+    "New local scopes neutral over committed whole-photo edits",
+    "One main undo transaction for mask plus modal adjustment",
+    "Cancel returns to unapplied parent; masks and effects are not written until Apply",
+    "Existing-region repaint preserves all adjustments",
+    "Unchanged region model/rendering/export pipeline"
+  ],
+  "retains": "162 same-frame camera JPEG approximate RAW color restoration;8-bit sRGB workspace, full RAW pixels",
+  "host": {
+    "localEditChecks": 43230,
+    "regionChecks": 1446177,
+    "parameterExifCases": 152
+  },
+  "native": {
+    "mainChecks": 2406,
+    "supplementalChecks": 970,
+    "totalRepeatedChecks": 3376,
+    "evidence": "docs/validation/local-brush163/summary.json",
+    "review": ".impeccable/review/local-brush163/review.md"
+  },
+  "physicalDeviceTested": false,
+  "published": false
+}

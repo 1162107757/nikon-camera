@@ -1,0 +1,29 @@
+{
+  "versionCode": "183",
+  "candidateSha256": "5330875ea261e9138d8ac8b89340bc21e48752d7369b3d3678026f99c3d7cfb8",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "uiMode": "phone",
+  "probeSha256": "6ef7c7d235eb97b4357ac20e3a9dcbef756ccb37ba0e7ddf8b2b98a4525809ed",
+  "sampleNefSha256": "",
+  "pass": false,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "35e4ac383f9bd8f7d74db156b15c699087187e2eddf49f59018d73b2bbfe5e28"
+    },
+    {
+      "file": "owned-fixtures.json",
+      "sha256": "0fbb4b8b43807d37f1a009f6c7a1aa4ed061d52d9127f3ef38f43ff7f4d1a531"
+    },
+    {
+      "file": "report.json",
+      "sha256": "0a6bec762389f36e7c9453cd6349f2590e9d67e3a3184f7c59a636a53d1aee54"
+    },
+    {
+      "file": "sort-preferences-backup.json",
+      "sha256": "9160f25f23fb609fed4a1d2b70664fb61bbd581b837f2107e76ee0c9a871a881"
+    }
+  ]
+}

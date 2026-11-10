@@ -52,6 +52,7 @@ public final class LocalEditsPreviewProfile implements PresetPreviewProfile {
             for(int y=0;y<height;y++){check(cancel);pixels.read(row,y,1);for(int x=0;x<width;x++){if((x&255)==0)check(cancel);double nx=(x+.5)/width,ny=(y+.5)/height,ox=orientedX(nx,ny,exif),oy=orientedY(nx,ny,exif);int value=row[x];if((value>>>24)==0)continue;for(CompiledMask mask:masks)value=mask.apply(value,ox,oy);row[x]=value;}pixels.write(row,y,1);if(progress!=null)progress.accept((edits.portrait.isNeutral()?.65:.26)*(y+1)/(double)height);}
         }else if(progress!=null)progress.accept(edits.portrait.isNeutral()?.65:.26);
         List<PhotoLocalEdits.Clone> patches=edits.clones();for(int i=0;i<patches.size();i++){check(cancel);PhotoLocalEdits.Clone clone=patches.get(i);if(clone.hasEffect())clone(pixels,clone,exif,cancel);if(progress!=null)progress.accept(edits.portrait.isNeutral()?.65+.35*(i+1)/(double)patches.size():.26+.14*(i+1)/(double)patches.size());}
+        PhotoPatchRenderer.apply(pixels,edits.patches(),exif,cancel,null);
         if(!edits.portrait.isNeutral())PortraitPreviewFilter.apply(pixels,edits.portrait,exif,cancel,progress==null?null:v->progress.accept(.4+.6*v));
         if(progress!=null)progress.accept(1);
     }

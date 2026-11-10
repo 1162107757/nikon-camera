@@ -1,0 +1,14 @@
+[
+  {
+    "serial": "emulator-5588",
+    "api": "37",
+    "hardware": "ranchu",
+    "abi": "x86_64"
+  },
+  {
+    "serial": "emulator-5584",
+    "api": "31",
+    "hardware": "ranchu",
+    "abi": "x86_64"
+  }
+]

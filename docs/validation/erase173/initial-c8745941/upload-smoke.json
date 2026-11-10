@@ -1,0 +1,14 @@
+{
+  "apkSha256": "031912d18d80094a55e2485083bacfe9ede604e20538fce2f095d435ccc1f9fa",
+  "sourceSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "device": "emulator-5586",
+  "androidApi": 36,
+  "cpuAbi": "x86_64",
+  "installedSha256Verified": true,
+  "versionCode": 173,
+  "versionName": "0.30.19-beta",
+  "coldLaunchStatus": "ok",
+  "coldLaunchTotalMs": 1359,
+  "appStoppedAfterSmoke": true,
+  "scope": "Exact signed local APK install and startup only; native full interaction matrix used payload-identical full source APK"
+}

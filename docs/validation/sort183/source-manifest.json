@@ -1,0 +1,80 @@
+{
+  "scope": "13 production files plus 2 host-test files; unrelated dirty workspace retained",
+  "files": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "1879da69566cd183e4fe625133d0ec28010ff859b9fa675208684e29344d5586",
+      "bytes": 806
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "988b17c6a6276dce9702062c2d7f10bd89f10bbf204cf35546405cc630f320fd",
+      "bytes": 319203
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "ebdd17ac7aa19ae3b579a02533aadf5af625e5443a00ebd1d84b4b2337212202",
+      "bytes": 15183
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+      "sha256": "4eeee06fc742518476e184c71d40308385f6dcc70d876ba85db24a3f07df617a",
+      "bytes": 79443
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumSortSheet.java",
+      "sha256": "96052756c8c3a9c928b5ce2b93e57e74fdd111bae29871212242cc4fb14979c0",
+      "bytes": 15871
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java",
+      "sha256": "f1d10bda9fff0a0dc1a87f096ccd4b80b370db9ca2b501490a0f34c36728c417",
+      "bytes": 42167
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDateReader.java",
+      "sha256": "b225d483e0c9dba448dc9501b9d9a3fc6ae4191f17c5152dc12df9e6e1f2274b",
+      "bytes": 6786
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLibraryCatalog.java",
+      "sha256": "a79c742f16e8b57556a9e6a21383e5e84b6960310fea14b36c575170da166fed",
+      "bytes": 16929
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoArrivalDates.java",
+      "sha256": "3f240ff2f2d6fdff1080b6c3a615019b808e45032be478583f80c46e5f02d58d",
+      "bytes": 2729
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSort.java",
+      "sha256": "8ff7601222f82330a3db91737893be5f1e51072c0be81a62bc714294c33f0f4a",
+      "bytes": 1807
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoOriginalStore.java",
+      "sha256": "534a412629db19617f050452fbf2b6abe0592d39e8e089b2dfc7ee3ffd57a9ea",
+      "bytes": 13349
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawEditorSource.java",
+      "sha256": "1c83d50d27561812f147e72bfcdc0990a4c7bdf6a193a2535207a52eccc10c47",
+      "bytes": 9505
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAlbumDeletion.java",
+      "sha256": "7839b0b5d133730e54d4722d5d146be63be14bc0926cfc5741a4b88950432dca",
+      "bytes": 9407
+    },
+    {
+      "path": "tests/run-gallery.ps1",
+      "sha256": "e141dfcc535360744abaab3baaec06f1171f2787dedf73009642829c2900e6aa",
+      "bytes": 3238
+    },
+    {
+      "path": "tests/gallery-java/cc/huevia/album/PhotoSortHostTest.java",
+      "sha256": "72252eb8e650ed2331b16bfd5bc3097f5cf19caffe7d82ec68f9f422b0fe7e47",
+      "bytes": 3662
+    }
+  ]
+}

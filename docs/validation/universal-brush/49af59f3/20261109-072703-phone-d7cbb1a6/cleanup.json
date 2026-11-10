@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.AssertionError: Missing real editor control editor-patch; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\49af59f3\\20261109-072703-phone-d7cbb1a6\\20261109-072703-phone-d7cbb1a6\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

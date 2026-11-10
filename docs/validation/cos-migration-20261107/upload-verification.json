@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-07T17:34:16.856Z",
+  "provider": "cos",
+  "executionRole": "HueviaUpdatePackageRole",
+  "configurationPreserved": true,
+  "firstProbe": "19 COS chunks accepted; existing-file SDK code compatibility fixed",
+  "finalProbe": "19 COS chunks accepted, read and verified; exact existing file reused; duplicate release correctly rejected",
+  "publishedReleaseCount": 14,
+  "releaseMetadataUnchanged": true,
+  "probeTasksExpired": true,
+  "tasks": [
+    {
+      "id": "d2f95f13-a019-4f33-af11-0ee791f6eb9d",
+      "originalExpiresAt": "2026-11-08T02:26:14.631575+08:00",
+      "chunks": 19,
+      "bytes": 9531300,
+      "allChunkHashesVerified": true
+    },
+    {
+      "id": "8be8528c-1ee3-430b-adf9-dcd78fef956c",
+      "originalExpiresAt": "2026-11-08T02:31:51.507614+08:00",
+      "chunks": 19,
+      "bytes": 9531300,
+      "allChunkHashesVerified": true
+    }
+  ],
+  "releaseCount": 23
+}

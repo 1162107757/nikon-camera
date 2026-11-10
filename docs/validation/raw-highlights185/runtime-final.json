@@ -1,0 +1,18 @@
+[
+  {
+    "serial": "emulator-5584",
+    "pageSize": "4096",
+    "avd": "HueviaApi31Raw185",
+    "installedApkSha256": "c1142e440a9bb38afde54ce922a10e273ef5154cd1899ea5a3827ef4773a302a",
+    "sdk": "31",
+    "stopped": true
+  },
+  {
+    "serial": "emulator-5588",
+    "pageSize": "4096",
+    "avd": "HueviaApi36Raw185",
+    "installedApkSha256": "c1142e440a9bb38afde54ce922a10e273ef5154cd1899ea5a3827ef4773a302a",
+    "sdk": "36",
+    "stopped": true
+  }
+]

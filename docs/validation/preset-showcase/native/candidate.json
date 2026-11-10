@@ -1,0 +1,15 @@
+{
+  "apkSha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb",
+  "versionCode": 155,
+  "modes": [
+    "phone",
+    "font",
+    "narrow",
+    "landscape",
+    "tablet",
+    "tablet-landscape",
+    "dark",
+    "live"
+  ],
+  "scope": "Preset gallery photography only"
+}

@@ -1,0 +1,22 @@
+{
+  "versionCode": 179,
+  "versionName": "0.30.25-beta",
+  "candidateSha256": "4c0a17d5a3900f7b52b3dcffe4c6f071a97ebb08d8baeb9a3f3d25c90f56f72d",
+  "sourceStable": true,
+  "nativeConfigurations": 4,
+  "nativeChecks": 172,
+  "nativeImages": 24,
+  "rawRegressionChecks": 175,
+  "hardwareDeletionVerified": false,
+  "published": false,
+  "gitCommitted": false,
+  "wechatSent": false,
+  "deviceSettingsRestored": {
+    "size": "1080x2424",
+    "density": 420,
+    "fontScale": 1,
+    "night": "no",
+    "airplane": 0
+  },
+  "ownedEmulatorClosed": true
+}

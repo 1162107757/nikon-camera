@@ -1,0 +1,38 @@
+{
+  "versionCode": 171,
+  "candidateSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef",
+  "probeSha256": "2da06c4409c882e88a78275c7b90ea305166a87b8fcbe8b8cbb89729a43c714e",
+  "serial": "emulator-5588",
+  "pass": true,
+  "scope": "Actual MainActivity with synthetic complete390 metadata, target at index389, first20 browse fixture. Covers loading, match, category, cache, unavailable/retry, clear/cancel, repeated source transitions. Emulator does not certify HarmonyOS hardware.",
+  "files": [
+    {
+      "file": "01-search-loading.png",
+      "sha256": "313506d270f98e68f7bee0033638fa86bc51a8885512722c0e67879173d6e759"
+    },
+    {
+      "file": "02-blue-sky-found.png",
+      "sha256": "189e9cf0132c3df2566154333402b2f2ee224b478dab239e8660ba767b661f8c"
+    },
+    {
+      "file": "03-category-no-match.png",
+      "sha256": "72375f3ed903a8a36bca2d6d736e2c03c54e3ed3d6a53dd98eea60eff6846c55"
+    },
+    {
+      "file": "04-cached-search.png",
+      "sha256": "cd35dc25d4401a148eda3ff03918c807c7ccebc90525ab482b6d95b4372d5f9f"
+    },
+    {
+      "file": "05-search-unavailable.png",
+      "sha256": "13a128e7b1b9768b5c1af3bf843ba0fe21052cd18a55e6300ab7f66c6b8e9846"
+    },
+    {
+      "file": "06-source-switch-return.png",
+      "sha256": "ab2f3d7efd26fc6eab1e44b1737af4008df52f600c100391aa96dbfbe5f921c0"
+    },
+    {
+      "file": "report.json",
+      "sha256": "8fdc3cf13ffc7e36d92373739ad4c88eb4a1d9965753a120f586980b2aeef0f9"
+    }
+  ]
+}

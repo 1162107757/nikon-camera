@@ -1,0 +1,34 @@
+{
+  "versionCode": 167,
+  "versionName": "0.30.13-beta",
+  "published": false,
+  "full": {
+    "path": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.30.13-beta-debug.apk",
+    "bytes": 34627030,
+    "sha256": "73de50a8ed120dbd56b0b25f42d1bb2e22e50214789d133814ce9655785b310c"
+  },
+  "upload": {
+    "path": "D:\\dev\\ai-project\\nikon-camera\\dist\\upload167\\huevia-0.30.13-beta-update.apk",
+    "bytes": 31333565,
+    "sha256": "a9171cf7e070a090f04baab2ab123fd62d3b7d65bdf316cd358e9d43cada8907"
+  },
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "tests": {
+    "library": 548,
+    "editorCatalog": 53,
+    "sampleCache": 36
+  },
+  "sources": {
+    "app/build.gradle": "574f8fefc9f092dd7b8d380dd29c2956efe50a4c35ff2c7d41a7d622b31c20df",
+    "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java": "3633ad11f1bbefb006d0e3d275b2caf09277b99f36e46417ee28f7a204666bf3",
+    "app/src/main/java/cc/huevia/library/PreviewImageCache.java": "e5a627a73d1b9a21e5ef33474e1da9d939bcfad19974ba9e65f8b71cfda4bdff",
+    "app/src/main/java/cc/huevia/MainActivity.java": "d20d53271209f1ed637be1df4861d0d19c6693da4295a58e28e120851bd189c8",
+    "tests/library-java/cc/huevia/library/PreviewImageCacheTest.java": "5aefb4cd9c7356d24ec3ad09a8a9e75f493867e810e43c9d4bced1ce35c172f2",
+    "tests/library-java/cc/huevia/library/PresetLibraryTest.java": "5956e217c04ba9d3b038e12d6bba181fcea8352aae8c8d9166ca7ec09d7b52b0"
+  }
+}

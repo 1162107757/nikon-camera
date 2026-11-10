@@ -1,0 +1,12 @@
+{
+  "LogsetId": "ae4d30f6-aad2-44c7-aa52-fca7d7ebe513",
+  "TopicId": "b542b8c6-ab56-40fa-a14d-c81cd050fb18",
+  "TopicName": "huevia-api-runtime",
+  "LogsetName": "huevia-runtime-diagnostics",
+  "region": "ap-shanghai",
+  "retentionDays": 7,
+  "source": "verified root-account browser creation",
+  "initialPartitions": 1,
+  "maxPartitions": 2,
+  "anonymousUpload": false
+}

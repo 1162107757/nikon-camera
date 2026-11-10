@@ -1,0 +1,72 @@
+{
+  "versionCode": 155,
+  "versionName": "0.30.1-beta",
+  "apkSha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb",
+  "apkBytes": 34581880,
+  "zipAllEntriesCrcValid": true,
+  "packedPhotographsVerified": 10,
+  "v2SignatureValid": true,
+  "v3SignatureValid": true,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "fullFileInstall": {
+    "serial": "emulator-5588",
+    "noIncremental": true,
+    "noStreaming": true,
+    "result": "Success"
+  },
+  "frozen154Sha256": "9636cfe8dde97c1af3863754b16557ddf1620b75e2e6d3b9230a6705cc34b8b9",
+  "assertionExecutions": 171,
+  "galleryAssertionExecutions": 167,
+  "reports": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 83
+    },
+    {
+      "mode": "font",
+      "pass": true,
+      "checks": 14
+    },
+    {
+      "mode": "narrow",
+      "pass": true,
+      "checks": 14
+    },
+    {
+      "mode": "landscape",
+      "pass": true,
+      "checks": 14
+    },
+    {
+      "mode": "tablet",
+      "pass": true,
+      "checks": 14
+    },
+    {
+      "mode": "tablet-landscape",
+      "pass": true,
+      "checks": 14
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 14
+    },
+    {
+      "mode": "live",
+      "pass": true,
+      "checks": 4
+    }
+  ],
+  "nativeScreenshots": 37,
+  "additionalEffectThumbnails": 10,
+  "visualReview": {
+    "initialDisposition": "fix",
+    "finding": "F1 settings still used legacy template original",
+    "verdictDisposition": "ship",
+    "verdictScope": "F1 and its direct regressions only; not a whole-app or editor audit.",
+    "openedRecaptures": 13,
+    "report": ".impeccable/review/preset-showcase155/verdict.md"
+  }
+}

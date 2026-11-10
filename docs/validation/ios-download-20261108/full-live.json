@@ -1,0 +1,14 @@
+[
+  {
+    "path": "download/index.html",
+    "status": 200,
+    "sha256": "d11db6f0bb9e8ba710248f22ee28ecaadcd861f23cfd4ca43edcc072bc25b59b",
+    "cache": "no-cache"
+  },
+  {
+    "path": "download/download.css",
+    "status": 200,
+    "sha256": "19aeb69bdfc91aeaa701aff628cbb3f4bb9105ac1f3d5942b1666ac60eb99e66",
+    "cache": "no-cache"
+  }
+]

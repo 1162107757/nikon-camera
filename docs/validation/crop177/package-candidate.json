@@ -1,0 +1,25 @@
+{
+  "packageName": "cc.huevia",
+  "versionName": "0.30.23-beta",
+  "versionCode": 177,
+  "minSdk": 26,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "signatureSchemes": [
+    2,
+    3
+  ],
+  "byteLength": 31374525,
+  "sha256": "f972d48b012545e4f3a4f8de53bbefe48151e6b9d133f38ac587553adec037e8",
+  "fullSha256": "2a9064e9b1f080369711dcf3d013ab91cf05fc86c93bbdcb31cf7c0e9905dbca",
+  "delivery": "dist/upload177/huevia-0.30.23-beta-update.apk",
+  "candidate": "online-library/.local/publication177/candidates/2a9064e9b1f080369711dcf3d013ab91cf05fc86c93bbdcb31cf7c0e9905dbca/update.apk",
+  "removedOnlyAbi": "x86",
+  "retainedPayloads": 88,
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": {
+    "disposition": "ship",
+    "scope": "Both scored material fixes resolved; not whole-surface approval",
+    "record": ".impeccable/review/crop177/review.md"
+  }
+}

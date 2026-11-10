@@ -1,0 +1,240 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+  "versionCode": 176,
+  "versionName": "0.30.22-beta",
+  "mode": "tablet",
+  "flow": "size176",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "held-small-guide-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-size176-small",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-size176-small",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-size176-large",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-size176-large",
+      "pass": true
+    },
+    {
+      "name": "size-feedback-leaves-photo-pixels-exact",
+      "pass": true
+    },
+    {
+      "name": "size-feedback-not-an-edit",
+      "pass": true
+    },
+    {
+      "name": "release-hides-guide",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-size176-released",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-size176-released",
+      "pass": true
+    },
+    {
+      "name": "focus-loss-hides-guide",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-size176-focus-cancelled",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-size176-focus-cancelled",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-size-guide-released",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "size-guide-parent-model-history-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "window-overlay-size-guide",
+      "boundsWidth": 1600,
+      "boundsHeight": 2560,
+      "hostWidth": 1600,
+      "hostHeight": 2560,
+      "smallProgress": 12,
+      "smallRadius": 0.013
+    },
+    {
+      "case": "large-guide",
+      "progress": 87,
+      "radius": 0.088
+    }
+  ],
+  "screenshots": 4,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Capture-only native brush size indicator: held slider small\/large\/released\/focus-cancel, same actual photo pixels and unchanged model\/history, new stroke still uses real renderer. No new unit test, physical-device or performance claim."
+}

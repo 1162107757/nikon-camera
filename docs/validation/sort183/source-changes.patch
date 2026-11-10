@@ -1,0 +1,704 @@
+--- before182/app/build.gradle
++++ after183/app/build.gradle
+@@ -7,8 +7,8 @@
+         applicationId 'cc.huevia'
+         minSdk 26
+         targetSdk 35
+-        versionCode 182
+-        versionName '0.30.28-beta'
++        versionCode 183
++        versionName '0.30.29-beta'
+     }
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_17
+--- before182/app/src/main/java/cc/huevia/MainActivity.java
++++ after183/app/src/main/java/cc/huevia/MainActivity.java
+@@ -522,6 +522,7 @@
+             @Override public void open(DownloadedPhoto photo) { openLocalPhoto(photo); }
+             @Override public void batch(List<DownloadedPhoto> photos) { localPhotoEditor.chooseLocalWorkspaceAction(photos); }
+             @Override public void photosDeleted(cc.huevia.album.PhotoDeleteResult result) { connections.album.onAppCopiesDeleted(result); }
++            @Override public void sortVisibility(boolean showing){if(destroyed)return;View navigation=getWindow().getDecorView().findViewWithTag("root-floating-navigation");if(navigation!=null)navigation.setVisibility(showing?View.INVISIBLE:View.VISIBLE);}
+             @Override public void export(List<DownloadedPhoto> photos) { localPhotoEditor.exportLocalWorkspace(photos); }
+             @Override public void feedback(String heading, String detail) { MainActivity.this.feedback(heading, detail); }
+             @Override public void addFilters() { switchRoot(0); }
+@@ -764,7 +765,7 @@
+             }
+             bounded.addView(material, destination);
+             material.setTag("root-floating-navigation");
+-            if (presetFilterSheet != null && presetFilterSheet.isShowing()) material.setVisibility(View.INVISIBLE);
++            if (presetFilterSheet != null && presetFilterSheet.isShowing() || localAlbumTab && localAlbum.isSortSheetShowing()) material.setVisibility(View.INVISIBLE);
+             if (rail) {
+                 int safeWidth=dp(getResources().getConfiguration().screenWidthDp);
+                 paneParams.width=Math.min(dp(720),safeWidth-dp(80));
+--- before182/app/src/main/java/cc/huevia/ui/AppIcon.java
++++ after183/app/src/main/java/cc/huevia/ui/AppIcon.java
+@@ -13,7 +13,7 @@
+     public enum Kind { PRESETS, ALBUM, CAMERA, FILE, DOWNLOAD, BACK, HELP, CHECK, WIFI, ADJUST, REFRESH,
+         SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, EDIT, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
+         UNDO, REDO, COMPARE, MORE, BRIGHTNESS, EXPOSURE, CONTRAST, HIGHLIGHTS, SHADOWS, WHITES, BLACKS, TEMPERATURE, TINT, SATURATION, VIBRANCE, CLARITY, SHARPENING,
+-        CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK, BRUSH, PATCH, PALETTE, CLEANUP, BODY, MORE_HORIZONTAL, FILTER, FRAME, FLIP_HORIZONTAL, SPLIT_COMPARE }
++        CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK, BRUSH, PATCH, PALETTE, CLEANUP, BODY, MORE_HORIZONTAL, FILTER, FRAME, FLIP_HORIZONTAL, SPLIT_COMPARE, SORT }
+     private final Kind kind;
+     private final Paint ink = new Paint(Paint.ANTI_ALIAS_FLAG);
+     private final int size;
+@@ -101,6 +101,7 @@
+                 line(canvas,3,7,7,7,9,4,15,4,17,7,21,7,21,21,3,21,3,7);
+                 canvas.drawCircle(12,13,4,ink); break;
+             case FILE: line(canvas,5,2,14,2,20,8,20,22,5,22,5,2); line(canvas,14,2,14,8,20,8); break;
++            case SORT: line(canvas,8,21,8,3);line(canvas,4,7,8,3,12,7);line(canvas,16,3,16,21);line(canvas,12,17,16,21,20,17);break;
+             case EDIT:
+                 Path pencil=new Path();pencil.moveTo(4,16);pencil.lineTo(15.7f,4.3f);pencil.quadTo(17.5f,2.5f,19.3f,4.3f);pencil.lineTo(19.7f,4.7f);pencil.quadTo(21.5f,6.5f,19.7f,8.3f);pencil.lineTo(8,20);pencil.lineTo(3,21);pencil.close();canvas.drawPath(pencil,ink);line(canvas,14,6,18,10);break;
+             case DOWNLOAD: line(canvas,12,3,12,16); line(canvas,7,11,12,16,17,11); line(canvas,4,16,4,21,20,21,20,16); break;
+--- before182/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
++++ after183/app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
+@@ -37,6 +37,7 @@
+ import android.widget.TextView;
+ import cc.huevia.album.DownloadedPhoto;
+ import cc.huevia.album.LocalPhotoRepository;
++import cc.huevia.album.PhotoSort;
+ import cc.huevia.album.PhotoLibraryCatalog;
+ import cc.huevia.album.PhotoPresetBatch;
+ import java.io.IOException;
+@@ -77,6 +78,7 @@
+         void feedback(String title, String message);
+         default void photosDeleted(cc.huevia.album.PhotoDeleteResult result) { }
+         default void addFilters() { }
++        default void sortVisibility(boolean showing) { }
+     }
+     public static final int REQUEST_PHONE_ACCESS = 7410, REQUEST_PICK_PHOTOS = 7411;
+     private static final int PAGE_SIZE = 120;
+@@ -103,6 +105,10 @@
+     private final List<Row> rows = new ArrayList<>();
+     private final Runnable presetChanged = () -> main.post(this::refreshApp);
+     private final Runnable thumbnailChanged = this::thumbnailsChanged;
++    private final PhotoSort[] sortOptions={PhotoSort.DEFAULT,PhotoSort.DEFAULT};
++    private ImageView sortButton;private AlbumSortSheet sortSheet;private boolean restoringSortAnchor,phoneDirty,phoneObserving;
++    private final Runnable phoneRefresh=this::refreshPhoneMetadata;
++    private final android.database.ContentObserver phoneObserver=new android.database.ContentObserver(main){@Override public void onChange(boolean self){phoneDirty=true;main.removeCallbacks(phoneRefresh);main.postDelayed(phoneRefresh,300);}};
+     private UiPalette palette;
+     private LinearLayout root, selectionBar, summaryRow;
+     private FrameLayout selectionDock;
+@@ -128,6 +134,8 @@
+     public LocalAlbumPanel(Activity activity, PhotoPresetBatch photoPresets, Host host) {
+         this.activity = activity; this.photoPresets = photoPresets; this.host = host; repository = new LocalPhotoRepository(activity);
+         if (photoPresets != null) photoPresets.addObserver(presetChanged);
++        android.content.SharedPreferences preferences=activity.getSharedPreferences("album-time-sort",0);
++        sortOptions[0]=PhotoSort.parse(preferences.getString("app",""));sortOptions[1]=PhotoSort.parse(preferences.getString("phone",""));
+     }
+     public String title() { return "相册"; }
+     public boolean hasSelectionDock() { return selecting || importing; }
+@@ -149,6 +157,23 @@
+         selectAllButton.setTag("local-album-select-all");selectAllButton.setContentDescription("全选当前已载入的照片");selectAllButton.setOnClickListener(v->selectAllOrStart());
+         LinearLayout.LayoutParams all=new LinearLayout.LayoutParams(dp(64),dp(48));all.leftMargin=dp(8);header.addView(selectAllButton,all);updateSelectionHeader();return header;
+     }
++    private void refreshPhoneMetadata(){if(closed||!active)return;if(phone&&!hasSelectionDock()){phoneDirty=false;saveSortAnchor();invalidatePhone();restoringSortAnchor=true;loadPhone(true);}else phoneDirty=true;}
++    public boolean isSortSheetShowing(){return sortSheet!=null&&sortSheet.isShowing();}
++    private void showSort(){
++        if(closed||hasSelectionDock()||pendingDateSelection!=null||isSortSheetShowing())return;final boolean source=phone;
++        AlbumSortSheet sheet=new AlbumSortSheet(activity,UiPalette.home(activity),source,sortOptions[source?1:0],next->{if(!closed&&phone==source&&!hasSelectionDock())applySort(next);});
++        sortSheet=sheet;sheet.setOnDismissListener(d->{if(sortSheet==sheet)sortSheet=null;host.sortVisibility(false);});sheet.show();host.sortVisibility(true);
++    }
++    private void saveSortAnchor(){
++        savePosition();if(list==null||list.getChildCount()==0||rows.isEmpty())return;int tab=phone?1:0,first=list.getFirstVisiblePosition();
++        for(int i=first;i<rows.size()&&i<first+list.getChildCount();i++){Row row=rows.get(i);if(row.header==null&&!row.items.isEmpty()){positionKeys[tab]="photo:"+row.items.get(0).key;positionRows[tab]=i;positionTops[tab]=list.getChildAt(i-first).getTop()-list.getPaddingTop();break;}}
++    }
++    private void applySort(PhotoSort next){
++        int tab=phone?1:0;if(next.equals(sortOptions[tab]))return;pendingDateSelection=null;saveSortAnchor();sortOptions[tab]=next;
++        activity.getSharedPreferences("album-time-sort",0).edit().putString(phone?"phone":"app",next.token()).apply();
++        if(phone){phoneRequest++;loadingPhone=false;phoneLoaded=false;restoringSortAnchor=true;loadPhone(true);}
++        else{rebuildRows();restorePosition();updateState();}
++    }
+     private void selectAllOrStart(){
+         if(importing)return;
+         if(selecting){if(current().size()>LocalPhotoRepository.MAX_BATCH){host.feedback("最多选择 100 张","请按日期或逐张选择照片。");return;}for(Item item:current())selected.add(item.key);}
+@@ -186,6 +211,7 @@
+         for (int i = 0; i < 2; i++) { positionKeys[i] = state.getString("localAlbumAnchor" + i, ""); positionRows[i] = state.getInt("localAlbumRow" + i); positionTops[i] = state.getInt("localAlbumTop" + i); }
+     }
+     public View createView() {
++        if(sortSheet!=null&&sortSheet.isShowing())sortSheet.layoutForWindow();
+         boolean compact = compactHeight();
+         if (root != null) {
+             if (palette.dark == UiPalette.home(activity).dark && compactLayout == compact) { savePosition(); restorePosition(); return root; }
+@@ -212,6 +238,10 @@
+         summaryRow = new LinearLayout(activity); summaryRow.setGravity(Gravity.CENTER_VERTICAL); summaryRow.setPadding(dp(compactLayout ? 12 : 24), 0, dp(compactLayout ? 12 : 20), dp(4)); summaryRow.setTag("local-album-summary");
+         summaryRow.addView(scope, new LinearLayout.LayoutParams(0, -2, 1)); summaryRow.addView(progress, new LinearLayout.LayoutParams(dp(20), dp(20))); summaryRow.addView(status, new LinearLayout.LayoutParams(-2, -2));
+         selectButton = smallAction("选择", this::selectAllOrStart); selectButton.setTag("local-album-select"); selectButton.setContentDescription("选择照片进行批量操作");
++        sortButton=new ImageView(activity);sortButton.setImageDrawable(new AppIcon(AppIcon.Kind.SORT,palette.text,density()));sortButton.setPadding(dp(14),dp(14),dp(14),dp(14));
++        sortButton.setTag("local-album-sort");sortButton.setFocusable(true);sortButton.setTooltipText("排序");sortButton.setBackground(new RippleDrawable(ColorStateList.valueOf(palette.container),null,shape(Color.WHITE,dp(24))));sortButton.setOnClickListener(v->showSort());
++        sortButton.setAccessibilityDelegate(new View.AccessibilityDelegate(){@Override public void onInitializeAccessibilityNodeInfo(View view,android.view.accessibility.AccessibilityNodeInfo info){super.onInitializeAccessibilityNodeInfo(view,info);info.setClassName("android.widget.Button");}});
++        summaryRow.addView(sortButton,new LinearLayout.LayoutParams(dp(48),dp(48)));
+         LinearLayout.LayoutParams selectParams = new LinearLayout.LayoutParams(-2, dp(48)); selectParams.leftMargin = dp(8); summaryRow.addView(selectButton, selectParams);
+         root.addView(summaryRow, new LinearLayout.LayoutParams(-1, dp(52)));
+         body = new FrameLayout(activity); root.addView(body, new LinearLayout.LayoutParams(-1, 0, 1));
+@@ -268,11 +298,12 @@
+     }
+     public void resume() {
+         if (closed) return; active = true;
++        if(!phoneObserving)try{activity.getContentResolver().registerContentObserver(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,true,phoneObserver);phoneObserving=true;}catch(RuntimeException ignored){}
+         // Permission/selection can change in Settings or after backgrounding; never trust an old snapshot.
+         invalidatePhone(); refreshApp(); if (phone && repository.access() != LocalPhotoRepository.Access.NONE) loadPhone(true);
+         updateState();
+     }
+-    public void pause() { active = false; savePosition(); }
++    public void pause(){active=false;savePosition();if(sortSheet!=null)sortSheet.dismiss();if(phoneObserving){activity.getContentResolver().unregisterContentObserver(phoneObserver);phoneObserving=false;}main.removeCallbacks(phoneRefresh);}
+     public boolean canGoBack() { return selecting || importing; }
+     public boolean goBack() {
+         if (hasSelectionDock()) { cancelSelection(); return true; }
+@@ -304,6 +335,7 @@
+         });
+     }
+     private void invalidatePhone() {
++        repository.invalidatePhoneIndex();
+         pendingDateSelection = null;
+         phoneRequest++; loadingPhone = false; phonePhotos.clear(); phoneOffset = 0; phoneMore = false; phoneLoaded = false; phoneError = "";
+         imageEpoch++; pendingThumbs.clear(); images.getQueue().clear(); thumbnails.evictAll(); failedThumbs.clear();
+@@ -311,13 +343,13 @@
+     }
+     private void loadPhone(boolean replace) {
+         if (closed || loadingPhone || repository.access() == LocalPhotoRepository.Access.NONE) return;
+-        loadingPhone = true; phoneError = ""; int request = ++phoneRequest; int offset = replace ? 0 : phoneOffset; updateState();
++        loadingPhone = true; phoneError = ""; int request = ++phoneRequest; int offset = replace ? 0 : phoneOffset;final PhotoSort order=sortOptions[1];final String anchor=replace&&restoringSortAnchor&&positionKeys[1].startsWith("photo:")?positionKeys[1].substring(6):"";updateState();
+         worker.execute(() -> {
+             LocalPhotoRepository.Page page = null; String error = "";
+-            try { page = repository.phonePage(offset, PAGE_SIZE); } catch (IOException | RuntimeException failure) { error = message(failure); }
++            try { page = repository.phonePage(offset,PAGE_SIZE,order,()->closed||request!=phoneRequest,anchor); } catch (IOException | RuntimeException failure) { error = message(failure); }
+             LocalPhotoRepository.Page result = page; String failure = error;
+             main.post(() -> {
+-                if (closed || request != phoneRequest) return; loadingPhone = false; phoneLoaded = true; phoneError = failure;
++                if (closed || request != phoneRequest) return; loadingPhone = false; phoneLoaded = true; phoneError = failure;restoringSortAnchor=false;
+                 if (result != null) {
+                     if (replace) phonePhotos.clear(); Set<String> known = new HashSet<>(); for (Item item : phonePhotos) known.add(item.key);
+                     for (LocalPhotoRepository.PhonePhoto photo : result.photos) if (known.add(photo.key)) phonePhotos.add(Item.phone(photo));
+@@ -580,9 +612,13 @@
+     private static boolean matchesPositionKey(Row row, String key) { if (row.header != null) return key.equals("date:" + row.header); for (Item item : row.items) if (key.equals("photo:" + item.key)) return true; return false; }
+     private void rebuildRows() {
+         gridColumns = resolvedColumns();
++        PhotoSort order=sortOptions[phone?1:0];List<Item> source=phone?phonePhotos:appPhotos;
++        for(Item item:source)item.date=order.date(item.taken,item.added);
++        source.sort((a,b)->order.compare(a.taken,a.added,a.key,b.taken,b.added,b.key));
++        java.util.Map<Long,String> dateLabels=new java.util.HashMap<>();
+         rows.clear(); String lastDate = ""; Row row = null, header = null;
+         for (Item item : current()) {
+-            String date = cc.huevia.album.PhotoDateGroups.label(item.date);
++            long day=item.date<=0?Long.MIN_VALUE:Math.floorDiv(item.date+java.util.TimeZone.getDefault().getOffset(item.date),86_400_000L);String date=dateLabels.computeIfAbsent(day,key->cc.huevia.album.PhotoDateGroups.label(item.date));
+             if (!date.equals(lastDate)) { header = Row.header(date); rows.add(header); lastDate = date; row = null; }
+             header.items.add(item);
+             if (row == null || row.items.size() == columns() * (compactLayout ? 1 : 3)) { row = new Row(); rows.add(row); } row.items.add(item);
+@@ -618,6 +654,8 @@
+         permissionButton.setVisibility(phone ? (access != LocalPhotoRepository.Access.FULL ? View.VISIBLE : View.GONE) : (current().isEmpty() && !loading && appError.isEmpty() ? View.VISIBLE : View.GONE));
+         selectButton.setVisibility(!current().isEmpty() && !importing && !hasSelectionDock() ? View.VISIBLE : View.GONE); selectButton.setEnabled(!importing); selectButton.setText(selecting ? "全选" : "选择"); selectButton.setContentDescription(selecting ? "全选当前已载入的照片" : "选择照片进行批量操作");
+         boolean dockVisible = hasSelectionDock();
++        sortButton.setVisibility(dockVisible?View.GONE:View.VISIBLE);sortButton.setEnabled(!importing&&pendingDateSelection==null);sortButton.setAlpha(sortButton.isEnabled()?1f:.45f);sortButton.setContentDescription("排序，"+sortOptions[phone?1:0].label());
++        if(phoneDirty&&phone&&!dockVisible&&active){main.removeCallbacks(phoneRefresh);main.post(phoneRefresh);}
+         phoneTab.setEnabled(!dockVisible); appTab.setEnabled(!dockVisible); phoneTab.setAlpha(dockVisible ? .68f : 1f); appTab.setAlpha(dockVisible ? .68f : 1f); permissionButton.setEnabled(!dockVisible);
+         pickerButton.setVisibility(phone && access == LocalPhotoRepository.Access.NONE && !dockVisible ? View.VISIBLE : View.GONE); pickerButton.setEnabled(!dockVisible); if (moreButton != null) moreButton.setEnabled(!dockVisible);
+         boolean compactSelection=compactLayout&&dockVisible;
+@@ -810,9 +848,9 @@
+     }
+     private void thumbnailsChanged() { if (!closed) fillVisibleThumbnails(list); }
+     private static final class Item {
+-        String key; long date; DownloadedPhoto photo; LocalPhotoRepository.PhonePhoto phone; PhotoLibraryCatalog.PhotoGroup group;
+-        static Item local(PhotoLibraryCatalog.PhotoGroup group) { Item item = new Item(); item.group = group; item.photo = group.display; item.key = group.id; item.date = group.photoDate; return item; }
+-        static Item phone(LocalPhotoRepository.PhonePhoto photo) { Item item = new Item(); item.phone = photo; item.key = photo.key; item.date = photo.date; return item; }
++        String key; long date,taken,added; DownloadedPhoto photo; LocalPhotoRepository.PhonePhoto phone; PhotoLibraryCatalog.PhotoGroup group;
++        static Item local(PhotoLibraryCatalog.PhotoGroup group) { Item item = new Item(); item.group = group; item.photo = group.display; item.key = group.id; item.date=group.photoDate;item.taken=group.photoDate;item.added=group.addedDate; return item; }
++        static Item phone(LocalPhotoRepository.PhonePhoto photo) { Item item = new Item(); item.phone = photo; item.key = photo.key; item.date=photo.date;item.taken=photo.takenDate;item.added=photo.date; return item; }
+         String name() { return phone == null ? photo.filename() : phone.filename; }
+         String thumbKey() { return phone == null ? photo.file().getPath() + "|" + photo.byteSize() + "|" + photo.downloadedAt() : phone.thumbnailKey(); }
+     }
+@@ -861,6 +899,7 @@
+     @Override public void close() {
+         if (closed) return; closed = true; phoneRequest++; appRequest++; importRequest++; imageEpoch++;
+         if(deleteDialog!=null)deleteDialog.dismiss();
++        if(sortSheet!=null)sortSheet.dismiss();if(phoneObserving){activity.getContentResolver().unregisterContentObserver(phoneObserver);phoneObserving=false;}main.removeCallbacks(phoneRefresh);
+         if (photoPresets != null) photoPresets.removeObserver(presetChanged);
+         worker.shutdownNow(); images.shutdownNow(); thumbnails.evictAll(); pendingThumbs.clear(); failedThumbs.clear();
+         main.removeCallbacks(thumbnailChanged);
+--- /dev/null
++++ after183/app/src/main/java/cc/huevia/ui/AlbumSortSheet.java
+@@ -0,0 +1,194 @@
++package cc.huevia.ui;
++
++import android.app.Activity;
++import android.app.Dialog;
++import android.content.res.ColorStateList;
++import android.graphics.Color;
++import android.graphics.Insets;
++import android.graphics.Typeface;
++import android.graphics.drawable.GradientDrawable;
++import android.graphics.drawable.RippleDrawable;
++import android.os.Build;
++import android.text.SpannableString;
++import android.text.Spanned;
++import android.text.style.ImageSpan;
++import android.view.Gravity;
++import android.view.View;
++import android.view.ViewGroup;
++import android.view.Window;
++import android.view.WindowInsets;
++import android.view.WindowManager;
++import android.widget.ImageView;
++import android.widget.LinearLayout;
++import android.widget.ScrollView;
++import android.widget.TextView;
++import cc.huevia.R;
++import cc.huevia.album.PhotoSort;
++
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.LinkedHashSet;
++import java.util.List;
++import java.util.Set;
++import java.util.function.Consumer;
++
++/** THESIS: Order the album by meaningful dates. OWN-WORLD: inherited paper/charcoal B sheet.
++ * STORY: inspect order, change a draft, apply once. FIRST VIEWPORT: two pairs of choices, fixed actions.
++ * FORM: approved album-time-sort-v2-arrows.png; no new visual tokens.
++ * FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance. */
++public final class AlbumSortSheet extends Dialog {
++    private final Activity activity;private final UiPalette palette;private final boolean phone;
++    private final Consumer<PhotoSort> apply;private PhotoSort draft;
++    private LinearLayout content,frame;private LimitedScroll scroll;private TextView note;
++    private final List<TextView> choices=new ArrayList<>();
++    private final GradientDrawable material=new GradientDrawable();private java.util.function.Consumer<Boolean> blurListener;private WindowManager manager;
++    public AlbumSortSheet(Activity activity,UiPalette palette,boolean phone,PhotoSort applied,Consumer<PhotoSort> apply){
++        super(activity,palette.dark?R.style.PresetFilterDialogDark:R.style.PresetFilterDialogLight);
++        this.activity=activity;this.palette=palette;this.phone=phone;this.draft=applied;this.apply=apply;requestWindowFeature(Window.FEATURE_NO_TITLE);setCanceledOnTouchOutside(true);build();
++    }
++    private void build(){
++        frame=new LinearLayout(getContext());frame.setOrientation(LinearLayout.VERTICAL);frame.setPadding(dp(18),dp(10),dp(18),dp(12));frame.setTag("album-sort-sheet");
++        if(Build.VERSION.SDK_INT>=28)frame.setAccessibilityPaneTitle("时间排序");
++        View handle=new View(activity);handle.setBackground(shape(palette.outline,2));LinearLayout.LayoutParams grip=new LinearLayout.LayoutParams(dp(30),dp(3));grip.gravity=Gravity.CENTER_HORIZONTAL;grip.bottomMargin=dp(4);frame.addView(handle,grip);handle.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
++        LinearLayout header=new LinearLayout(activity);header.setGravity(Gravity.CENTER_VERTICAL);header.addView(text("时间排序",16,true),new LinearLayout.LayoutParams(0,-2,1));
++        ImageView close=new ImageView(activity);close.setImageDrawable(new AppIcon(AppIcon.Kind.CLOSE,palette.text,density()));close.setPadding(dp(14),dp(14),dp(14),dp(14));close.setContentDescription("关闭排序，放弃未应用修改");close.setTag("album-sort-close");close.setFocusable(true);close.setBackground(ripple(Color.TRANSPARENT,24));close.setOnClickListener(v->dismiss());header.addView(close,new LinearLayout.LayoutParams(dp(48),dp(48)));frame.addView(header);
++        content=new LinearLayout(activity);content.setOrientation(LinearLayout.VERTICAL);scroll=new LimitedScroll();scroll.setTag("album-sort-options");scroll.setClipToPadding(false);scroll.addView(content);frame.addView(scroll,new LinearLayout.LayoutParams(-1,-2));
++        group("排序依据",new String[]{"拍摄时间","添加时间"},new String[]{"taken","added"},0);
++        group("排列顺序",new String[]{"新到旧","旧到新"},new String[]{"newest","oldest"},2);
++        note=text("旧照片没有入库记录时，添加时间使用现存文件时间。",12,false);note.setTextColor(palette.secondary);note.setPadding(0,dp(4),0,dp(6));content.addView(note);
++        LinearLayout footer=new LinearLayout(activity);footer.setGravity(Gravity.CENTER_VERTICAL);TextView reset=text("重置",14,false);reset.setTag("album-sort-reset");reset.setGravity(Gravity.CENTER);reset.setMinHeight(dp(48));reset.setPadding(dp(6),0,dp(6),0);reset.setTextColor(palette.secondary);reset.setFocusable(true);reset.setBackground(ripple(Color.TRANSPARENT,12));reset.setOnClickListener(v->{draft=PhotoSort.DEFAULT;refreshChoices();});footer.addView(reset,new LinearLayout.LayoutParams(dp(64),-2));
++        footer.addView(new View(activity),new LinearLayout.LayoutParams(0,1,1));TextView done=text("应用",14,true);done.setTag("album-sort-apply");done.setGravity(Gravity.CENTER);done.setPadding(dp(20),dp(10),dp(20),dp(10));done.setMinHeight(dp(48));done.setTextColor(palette.onAction);done.setFocusable(true);done.setBackground(ripple(palette.action,24));done.setOnClickListener(v->{PhotoSort selected=draft;dismiss();apply.accept(selected);});footer.addView(done,new LinearLayout.LayoutParams(dp(108),-2));frame.addView(footer);setContentView(frame);refreshChoices();
++    }
++    private void group(String title,String[] names,String[] tags,int start){
++        TextView label=text(title,12,false);label.setTextColor(palette.secondary);label.setPadding(0,dp(start==0?0:10),0,dp(4));content.addView(label);
++        ChipFlow row=new ChipFlow(2);for(int i=0;i<2;i++){final int item=start+i;TextView chip=text(names[i],14,false);chip.setTag("album-sort-"+tags[i]);chip.setMinHeight(dp(48));chip.setGravity(Gravity.CENTER);chip.setPadding(dp(10),dp(6),dp(10),dp(6));chip.setFocusable(true);chip.setOnClickListener(v->{draft=item<2?draft.withBasis(item==1):draft.withDirection(item==3);refreshChoices();});chip.setAccessibilityDelegate(new View.AccessibilityDelegate(){@Override public void onInitializeAccessibilityNodeInfo(View view,android.view.accessibility.AccessibilityNodeInfo info){super.onInitializeAccessibilityNodeInfo(view,info);info.setClassName("android.widget.Button");}});choices.add(chip);row.addView(chip);}content.addView(row,new LinearLayout.LayoutParams(-1,-2));
++    }
++    private void refreshChoices(){
++        for(String tag:new String[]{"album-sort-close","album-sort-reset","album-sort-apply"}){View action=frame.findViewWithTag(tag);action.setAccessibilityDelegate(new View.AccessibilityDelegate(){@Override public void onInitializeAccessibilityNodeInfo(View view,android.view.accessibility.AccessibilityNodeInfo info){super.onInitializeAccessibilityNodeInfo(view,info);info.setClassName("android.widget.Button");}});}
++        String[] labels={"拍摄时间","添加时间","新到旧","旧到新"};
++        for(int i=0;i<choices.size();i++){
++            TextView chip=choices.get(i);boolean selected=i<2?(draft.added?i==1:i==0):(draft.oldest?i==3:i==2);chip.setSelected(selected);chip.setTextColor(selected?palette.onAction:palette.text);
++            chip.setBackground(new android.graphics.drawable.InsetDrawable(ripple(selected?palette.action:alpha(palette.card,.65f),24),0,dp(6),0,dp(6)));chip.setPadding(dp(10),dp(6),dp(10),dp(6));
++            if(selected){AppIcon check=new AppIcon(AppIcon.Kind.CHECK,palette.onAction,density());check.setBounds(0,0,dp(16),dp(16));SpannableString label=new SpannableString(labels[i]+"  \uFFFC");label.setSpan(new ImageSpan(check,ImageSpan.ALIGN_CENTER),label.length()-1,label.length(),Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);chip.setText(label);}else chip.setText(labels[i]);
++            chip.setContentDescription(labels[i]+(selected?"，已选中":"")+(i==0?"；缺少拍摄时间时使用添加时间":""));
++        }
++        note.setVisibility(!phone&&draft.added?View.VISIBLE:View.GONE);if(isShowing())frame.post(this::layoutForWindow);
++    }
++    @Override public void show() {
++        super.show(); Window window = getWindow(); if (window == null) return;
++        window.setBackgroundDrawable(material); material.setCornerRadius(dp(28));
++        // Android forces light status icons for dimming floating windows that do not
++        // intersect the status bar. Keep the page's own bar appearance and glass depth.
++        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND); window.setDimAmount(0f);
++        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
++        window.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
++        window.setNavigationBarColor(palette.surface);
++        if (Build.VERSION.SDK_INT >= 29) window.setNavigationBarContrastEnforced(false);
++        if (Build.VERSION.SDK_INT >= 30) window.setDecorFitsSystemWindows(true);
++        window.getDecorView().setSystemUiVisibility(palette.dark ? 0 : View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
++        updateSystemBars();
++        layoutForWindow();
++        updateMaterial(false);
++        if (Build.VERSION.SDK_INT >= 31) {
++            manager = activity.getSystemService(WindowManager.class);
++            blurListener = enabled -> updateMaterial(enabled);
++            manager.addCrossWindowBlurEnabledListener(activity.getMainExecutor(), blurListener);
++            updateMaterial(manager.isCrossWindowBlurEnabled());
++        }
++    }
++
++    /** Called when the host handles configuration changes without recreating its Activity. */
++    public void layoutForWindow() {
++        Window window = getWindow(); if (window == null) return;
++        android.util.DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
++        int width = metrics.widthPixels, height = metrics.heightPixels, top = dp(24), bottom = dp(24);
++        if (Build.VERSION.SDK_INT >= 30) {
++            android.view.WindowMetrics bounds = activity.getWindowManager().getCurrentWindowMetrics();
++            Insets safe = bounds.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
++            width = bounds.getBounds().width() - safe.left - safe.right;
++            height = bounds.getBounds().height(); top = safe.top; bottom = safe.bottom;
++        }
++        int available = height - top - bottom - dp(24);
++        // Header/footer wrap with sp text, leaving every remaining pixel to scrollable options.
++        frame.measure(View.MeasureSpec.makeMeasureSpec(Math.min(dp(520), width - dp(20)), View.MeasureSpec.EXACTLY),
++                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
++        int fixed = frame.getMeasuredHeight() - scroll.getMeasuredHeight();
++        scroll.limit = Math.max(dp(48), available - fixed); scroll.requestLayout();
++        window.setLayout(Math.min(dp(520), width - dp(20)), ViewGroup.LayoutParams.WRAP_CONTENT);
++        WindowManager.LayoutParams params = window.getAttributes(); params.y = dp(10); window.setAttributes(params);
++    }
++
++    private void updateMaterial(boolean blurred) {
++        material.setColor(alpha(palette.surface, blurred ? .83f : .995f));
++        material.setStroke(dp(1), alpha(palette.dark ? Color.WHITE : palette.card, palette.dark ? .16f : .90f));
++        if (Build.VERSION.SDK_INT >= 31 && getWindow() != null) getWindow().setBackgroundBlurRadius(blurred ? dp(28) : 0);
++        frame.setTag(cc.huevia.R.id.preset_filter_material, blurred ? "blur" : "translucent-fallback");
++    }
++    @Override public void onWindowFocusChanged(boolean hasFocus) {
++        super.onWindowFocusChanged(hasFocus);
++        if (hasFocus) updateSystemBars();
++    }
++    private void updateSystemBars() {
++        if (Build.VERSION.SDK_INT >= 30 && getWindow() != null) {
++            android.view.WindowInsetsController controller = getWindow().getInsetsController();
++            if (controller != null) {
++                int mask = android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
++                        | android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
++                controller.setSystemBarsAppearance(palette.dark ? 0 : mask, mask);
++            }
++        }
++    }
++    @Override public void dismiss() {
++        if (Build.VERSION.SDK_INT >= 31 && manager != null && blurListener != null) {
++            manager.removeCrossWindowBlurEnabledListener(blurListener); blurListener = null;
++        }
++        super.dismiss();
++    }
++    private final class LimitedScroll extends ScrollView {
++        int limit = Integer.MAX_VALUE;
++        LimitedScroll() { super(activity); }
++        @Override protected void onMeasure(int width, int height) {
++            super.onMeasure(width, MeasureSpec.makeMeasureSpec(limit == Integer.MAX_VALUE ? 100000 : limit, MeasureSpec.AT_MOST));
++        }
++    }
++    private final class ChipFlow extends ViewGroup {
++        final int maxColumns; int columns, cell, gap = dp(8);
++        ChipFlow(int maxColumns) { super(activity); this.maxColumns = maxColumns; }
++        @Override protected void onMeasure(int widthSpec, int heightSpec) {
++            int width = MeasureSpec.getSize(widthSpec);
++            float font = getResources().getConfiguration().fontScale;
++            columns = Math.max(1, Math.min(maxColumns, (width + gap) / (dp(124 * Math.max(1f, font)) + gap)));
++            cell = (width - gap * (columns - 1)) / columns;
++            int height = 0;
++            for (int first = 0; first < getChildCount(); first += columns) {
++                int row = dp(48);
++                for (int i = first; i < Math.min(first + columns, getChildCount()); i++) {
++                    View child = getChildAt(i); child.measure(MeasureSpec.makeMeasureSpec(cell, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
++                    row = Math.max(row, child.getMeasuredHeight());
++                }
++                height += row + (first == 0 ? 0 : gap);
++            }
++            setMeasuredDimension(width, height);
++        }
++        @Override protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
++            int y = 0;
++            for (int first = 0; first < getChildCount(); first += columns) {
++                int row = dp(48);
++                for (int i = first; i < Math.min(first + columns, getChildCount()); i++) row = Math.max(row, getChildAt(i).getMeasuredHeight());
++                for (int i = first; i < Math.min(first + columns, getChildCount()); i++) {
++                    int x = (i - first) * (cell + gap); getChildAt(i).layout(x, y, x + cell, y + row);
++                }
++                y += row + gap;
++            }
++        }
++    }
++    private TextView text(String value, float size, boolean bold) {
++        TextView text = new TextView(getContext()); text.setText(value); text.setTextSize(size); text.setTextColor(palette.text);
++        text.setTypeface(Typeface.create("sans-serif", bold ? Typeface.BOLD : Typeface.NORMAL)); return text;
++    }
++    private GradientDrawable shape(int color, int radius) { GradientDrawable shape = new GradientDrawable(); shape.setColor(color); shape.setCornerRadius(dp(radius)); return shape; }
++    private RippleDrawable ripple(int color, int radius) { return new RippleDrawable(ColorStateList.valueOf(alpha(palette.text, .10f)), shape(color, radius), shape(Color.WHITE, radius)); }
++    private static int alpha(int color, float value) { return (color & 0xffffff) | (Math.round(value * 255) << 24); }
++    private float density() { return activity.getResources().getDisplayMetrics().density; }
++    private int dp(float value) { return Math.round(value * density()); }
++}
+--- before182/app/src/main/java/cc/huevia/album/LocalPhotoRepository.java
++++ after183/app/src/main/java/cc/huevia/album/LocalPhotoRepository.java
+@@ -53,6 +53,8 @@
+     private final List<File> photoDirectories = new ArrayList<>();
+     private final PhotoDateReader dates = new PhotoDateReader();
+     private PhotoLibraryCatalog catalog;
++    private volatile long phoneIndexEpoch;
++    private volatile PhoneIndex phoneIndex;
+ 
+     public LocalPhotoRepository(Context context) {
+         this.context = context.getApplicationContext(); resolver = this.context.getContentResolver();
+@@ -73,11 +75,12 @@
+     public static final class PhonePhoto {
+         public final Uri uri;
+         public final String key, filename, mime;
+-        public final long bytes, date, modified;
+-        PhonePhoto(Uri uri, String filename, String mime, long bytes, long date, long modified) {
++        public final long bytes, date, modified, takenDate;
++        PhonePhoto(Uri uri, String filename, String mime, long bytes, long date, long modified) {this(uri,filename,mime,bytes,date,modified,0);}
++        PhonePhoto(Uri uri,String filename,String mime,long bytes,long date,long modified,long takenDate){
+             this.uri = uri; this.filename = filename == null || filename.isBlank() ? "照片" : filename;
+             this.mime = mime == null ? "" : mime.toLowerCase(Locale.ROOT);
+-            this.bytes = bytes; this.date = Math.max(0, date); this.modified = Math.max(0, modified);
++            this.takenDate=Math.max(0,takenDate);this.bytes = bytes; this.date = Math.max(0, date); this.modified = Math.max(0, modified);
+             key = uri.toString();
+         }
+         public String thumbnailKey() { return key + "|" + bytes + "|" + modified; }
+@@ -124,9 +127,55 @@
+         } catch (SecurityException denied) { throw new IOException("手机照片访问权限已变化，请重新授权或选择照片。", denied); }
+         catch (RuntimeException failure) { throw new IOException("无法读取手机照片，请刷新或使用系统选择器。", failure); }
+     }
++    public synchronized void invalidatePhoneIndex(){phoneIndexEpoch++;phoneIndex=null;}
++    private static final class PhoneIndex {
++        final List<PhonePhoto> all;PhotoSort sortedBy;List<PhonePhoto> sorted;
++        PhoneIndex(List<PhonePhoto> all){this.all=Collections.unmodifiableList(all);}
++        synchronized List<PhonePhoto> ordered(PhotoSort order){
++            if(!order.equals(sortedBy)){List<PhonePhoto> next=new ArrayList<>(all);next.sort((a,b)->order.compare(a.takenDate,a.date,a.key,b.takenDate,b.date,b.key));sorted=Collections.unmodifiableList(next);sortedBy=order;}return sorted;
++        }
++    }
++    /** Full metadata snapshot precedes pagination, including capture-date fallback across every page. */
++    public Page phonePage(int offset,int pageSize,PhotoSort order,BooleanSupplier cancel)throws IOException{return phonePage(offset,pageSize,order,cancel,"");}
++    public Page phonePage(int offset,int pageSize,PhotoSort order,BooleanSupplier cancel,String anchor)throws IOException{
++        if(access()==Access.NONE)throw new IOException("尚未授权读取手机照片。");
++        long epoch=phoneIndexEpoch;PhoneIndex index=phoneIndex;check(cancel);
++        if(index==null){
++            String[] projection={MediaStore.Images.Media._ID,MediaStore.Images.Media.DISPLAY_NAME,MediaStore.Images.Media.MIME_TYPE,MediaStore.Images.Media.SIZE,MediaStore.Images.Media.DATE_ADDED,MediaStore.Images.Media.DATE_MODIFIED,MediaStore.Images.Media.DATE_TAKEN};
++        Bundle args = new Bundle();
++        List<String> types = new ArrayList<>(); types.add("image/jpeg"); types.add("image/png");
++        Collections.addAll(types, PhotoSourceFormat.RAW_MIMES);
++        String selection = MediaStore.Images.Media.MIME_TYPE + " IN (" + String.join(",", Collections.nCopies(types.size(), "?")) + ")";
++        // Some MediaStore providers register NEF/DNG as TIFF or octet-stream.
++        for (String extension : new String[]{"nef", "nrw", "dng", "cr2", "cr3", "arw", "raf", "rw2", "orf", "pef", "srw", "raw"}) {
++            selection += " OR LOWER(" + MediaStore.Images.Media.DISPLAY_NAME + ") LIKE ?"; types.add("%." + extension);
++        }
++        args.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, "(" + selection + ")");
++        args.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, types.toArray(new String[0]));
++        args.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, MediaStore.Images.Media.DATE_ADDED + " DESC, " + MediaStore.Images.Media._ID + " DESC");
++
++            List<PhonePhoto> all=new ArrayList<>();
++            try(Cursor cursor=resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,projection,args,null)){
++                if(cursor==null)throw new IOException("系统未返回手机照片，请刷新重试。");
++                while(cursor.moveToNext()){
++                    check(cancel);if(epoch!=phoneIndexEpoch)throw new java.io.InterruptedIOException("手机照片索引已更新。");
++                    Uri uri=ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,cursor.getLong(0));
++                    long added=cursor.getLong(4);added=added>0&&added<=253402300799L?added*1000L:0;
++                    all.add(new PhonePhoto(uri,cursor.getString(1),cursor.getString(2),cursor.getLong(3),added,cursor.getLong(5),cursor.isNull(6)?0:cursor.getLong(6)));
++                }
++            }catch(SecurityException denied){throw new IOException("手机照片访问权限已变化，请重新授权。",denied);}
++            catch(RuntimeException failure){throw new IOException("无法读取手机照片日期，请刷新重试。",failure);}
++            check(cancel);index=new PhoneIndex(all);synchronized(this){if(epoch!=phoneIndexEpoch)throw new java.io.InterruptedIOException("手机照片索引已更新。");phoneIndex=index;}
++        }
++        List<PhonePhoto> sorted=index.ordered(order);check(cancel);if(epoch!=phoneIndexEpoch)throw new java.io.InterruptedIOException("手机照片索引已更新。");
++        int start=Math.min(sorted.size(),Math.max(0,offset)),end=Math.min(sorted.size(),start+Math.min(120,Math.max(1,pageSize)));
++        if(start==0&&!anchor.isEmpty()){for(int i=0;i<sorted.size();i++)if(anchor.equals(sorted.get(i).key)){end=Math.max(end,Math.min(sorted.size(),i+Math.min(120,Math.max(1,pageSize))));break;}}
++        return new Page(new ArrayList<>(sorted.subList(start,end)),end,end<sorted.size());
++    }
++
+     public PhonePhoto describe(Uri uri) throws IOException {
+         if (uri == null || !"content".equals(uri.getScheme())) throw new IOException("请选择系统提供的照片。");
+-        String name = "照片", mime; long size = -1, modified = 0, date = 0;
++        String name = "照片", mime; long size = -1, modified = 0, date = 0, taken = 0;
+         try {
+             mime = resolver.getType(uri);
+             try (Cursor cursor = resolver.query(uri, null, null, null, null)) {
+@@ -135,13 +184,14 @@
+                     index = cursor.getColumnIndex(OpenableColumns.SIZE); if (index >= 0 && !cursor.isNull(index)) size = cursor.getLong(index);
+                     index = cursor.getColumnIndex(MediaStore.Images.Media.DATE_MODIFIED); if (index >= 0) modified = cursor.getLong(index);
+                     index = cursor.getColumnIndex(MediaStore.Images.Media.DATE_ADDED); if (index >= 0) date = cursor.getLong(index) * 1000L;
++                    index=cursor.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);if(index>=0&&!cursor.isNull(index))taken=cursor.getLong(index);
+                 }
+             }
+         } catch (SecurityException denied) { throw new IOException("这张照片的访问权限已失效，请重新选择。", denied); }
+         catch (RuntimeException failure) { throw new IOException("无法读取照片信息，请重新选择。", failure); }
+         if (!"image/jpeg".equalsIgnoreCase(mime) && !"image/png".equalsIgnoreCase(mime) && !PhotoSourceFormat.raw(name, mime))
+             throw new IOException("请选择 JPEG、PNG 或相机 RAW 照片。");
+-        return new PhonePhoto(uri, name, mime, size, date, modified);
++        return new PhonePhoto(uri, name, mime, size, date, modified,taken);
+     }
+     public List<PhotoLibraryCatalog.PhotoGroup> appPhotos(BooleanSupplier cancel) throws IOException {
+         List<DownloadedPhoto> completed = new ArrayList<>();
+@@ -156,7 +206,13 @@
+             }
+         }
+         if (catalog == null) catalog = new PhotoLibraryCatalog(context.getFilesDir(), context.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+-        return catalog.list(dates.read(completed, cancel), cancel);
++        List<PhotoLibraryCatalog.PhotoGroup> groups=catalog.list(dates.read(completed,cancel),cancel),result=new ArrayList<>();
++        for(PhotoLibraryCatalog.PhotoGroup group:groups){
++            check(cancel);long taken=0,added=0;List<DownloadedPhoto> originals=group.originals.isEmpty()?List.of(group.display):group.originals;
++            for(DownloadedPhoto photo:originals){long value=PhotoArrivalDates.read(photo.file());if(value<=0)value=Math.max(0,photo.downloadedAt());if(value>0&&(added==0||value<added))added=value;if(taken==0)taken=dates.captureDate(photo,cancel);}
++            result.add(group.withDates(taken>0?taken:added,added));
++        }
++        return Collections.unmodifiableList(result);
+     }
+     public void selectVersion(PhotoLibraryCatalog.PhotoGroup group, DownloadedPhoto photo) throws IOException {
+         if (catalog == null) throw new IOException("照片列表已变化，请刷新后重试。");
+@@ -270,6 +326,7 @@
+                 if (!normalized.renameTo(target)) throw new IOException("无法保存 应用相册工作副本。"); normalized = null;
+             } else atomicCopy(temporary, target, cancel);
+             long date = before.date > 0 ? before.date : System.currentTimeMillis(); target.setLastModified(date);
++            PhotoArrivalDates.record(target);
+             return new DownloadedPhoto(target, filename, "", "", date);
+         } finally { temporary.delete(); if (normalized != null) normalized.delete(); }
+     }
+--- before182/app/src/main/java/cc/huevia/album/PhotoDateReader.java
++++ after183/app/src/main/java/cc/huevia/album/PhotoDateReader.java
+@@ -49,11 +49,15 @@
+         check(cancel); return Collections.unmodifiableList(result);
+     }
+ 
+-    private long date(DownloadedPhoto photo, BooleanSupplier cancel, ZoneId zone) throws InterruptedIOException {
++    public long captureDate(DownloadedPhoto photo,BooleanSupplier cancel)throws InterruptedIOException {return captureDate(photo,cancel,ZoneId.systemDefault());}
++    private long date(DownloadedPhoto photo,BooleanSupplier cancel,ZoneId zone)throws InterruptedIOException {
++        long value=captureDate(photo,cancel,zone);return value>0?value:photo.file()==null?0:Math.max(0,photo.file().lastModified());
++    }
++    private long captureDate(DownloadedPhoto photo, BooleanSupplier cancel, ZoneId zone) throws InterruptedIOException {
+         File file = photo.file(); if (file == null) return 0;
+         long fallback = Math.max(0, file.lastModified());
+         final File canonical;
+-        try { canonical = file.getCanonicalFile(); } catch (IOException failure) { return fallback; }
++        try { canonical = file.getCanonicalFile(); } catch (IOException failure) { return 0; }
+         Key key = new Key(canonical.getPath(), canonical.length(), fallback); Fields fields;
+         synchronized (cache) { fields = cache.get(key); }
+         if (fields == null) {
+@@ -63,13 +67,13 @@
+             catch (IOException | RuntimeException unreadable) { fields = Fields.EMPTY; }
+             check(cancel);
+             long after = Math.max(0, canonical.lastModified());
+-            if (canonical.length() != key.bytes || after != key.modified) return after;
++            if (canonical.length() != key.bytes || after != key.modified) return 0;
+             synchronized (cache) { cache.put(key, fields); }
+         }
+         for (int i = 0; i < fields.dates.length; i++) {
+             long value = parse(fields.dates[i], fields.offsets[i], zone); if (value > 0) return value;
+         }
+-        return fallback;
++        return 0;
+     }
+ 
+     static long parse(String date, String offset, ZoneId zone) {
+--- before182/app/src/main/java/cc/huevia/album/PhotoLibraryCatalog.java
++++ after183/app/src/main/java/cc/huevia/album/PhotoLibraryCatalog.java
+@@ -153,6 +153,7 @@
+         /** Every private original alias is retained for an explicit whole-group deletion. */
+         public final List<DownloadedPhoto> originals;
+         public final long photoDate;
++        public final long addedDate;
+         private final List<DownloadedPhoto> photos;
+         private final Map<String, Version> byPath;
+         private PhotoGroup(String id, DownloadedPhoto original, DownloadedPhoto display, List<Version> versions,
+@@ -163,7 +164,14 @@
+             this.photos = Collections.unmodifiableList(new ArrayList<>(photos));
+             this.byPath = Collections.unmodifiableMap(new HashMap<>(byPath));
+             this.photoDate = original == null ? display.photoDate() : original.photoDate();
+-        }
++            long added=0;for(DownloadedPhoto photo:originals){long value=photo.downloadedAt();if(value>0&&(added==0||value<added))added=value;}
++            this.addedDate=added>0?added:display.downloadedAt();
++        }
++        private PhotoGroup(PhotoGroup group,long taken,long added) {
++            id=group.id;original=group.original;display=group.display;versions=group.versions;originals=group.originals;photos=group.photos;byPath=group.byPath;
++            photoDate=taken;addedDate=added;
++        }
++        public PhotoGroup withDates(long taken,long added) { return new PhotoGroup(this,taken,added); }
+         public List<DownloadedPhoto> photos() { return photos; }
+         public boolean orphan() { return original == null; }
+         /** Read-only path equality; callers pass completed canonical DownloadedPhoto files. */
+--- /dev/null
++++ after183/app/src/main/java/cc/huevia/album/PhotoArrivalDates.java
+@@ -0,0 +1,42 @@
++package cc.huevia.album;
++
++import android.util.AtomicFile;
++import java.io.*;
++import java.nio.charset.StandardCharsets;
++import java.nio.file.Files;
++import java.security.MessageDigest;
++
++/** Presentation metadata only. Arrival journaling must never fail an original-photo commit. */
++public final class PhotoArrivalDates {
++    private PhotoArrivalDates() { }
++    public static synchronized long read(File photo) {
++        try(DataInputStream in=new DataInputStream(record(photo,false).openRead())) {
++            if(in.readInt()!=0x48415231||!in.readUTF().equals(photo.getName()))return 0;
++            long date=in.readLong();return date>0&&date<=253402300799999L?date:0;
++        }catch(IOException|RuntimeException invalid){return 0;}
++    }
++    public static synchronized void record(File photo) { write(photo,System.currentTimeMillis()); }
++    public static synchronized void recordIfMissing(File photo) { if(read(photo)==0)record(photo); }
++    static synchronized void write(File photo,long receivedAt) {
++        AtomicFile target=null;FileOutputStream stream=null;
++        try {
++            target=record(photo,true);stream=target.startWrite();DataOutputStream out=new DataOutputStream(stream);
++            out.writeInt(0x48415231);out.writeUTF(photo.getName());out.writeLong(receivedAt);out.flush();target.finishWrite(stream);stream=null;
++        }catch(IOException|RuntimeException ignored){if(stream!=null&&target!=null)try{target.failWrite(stream);}catch(RuntimeException alsoIgnored){}}
++    }
++    public static synchronized void forget(File photo) {
++        try{record(photo,false).delete();}catch(IOException|RuntimeException ignored){}
++    }
++    private static AtomicFile record(File photo,boolean create)throws IOException {
++        File original=photo.getCanonicalFile(),parent=original.getParentFile();
++        if(parent==null||Files.isSymbolicLink(photo.toPath()))throw new IOException("照片日期路径无效");
++        File directory=new File(parent,".huevia-arrivals").getCanonicalFile();
++        if(!parent.equals(directory.getParentFile()))throw new IOException("照片日期目录无效");
++        if(create&&!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法保存照片添加时间");
++        try{
++            byte[] bytes=MessageDigest.getInstance("SHA-256").digest(original.getName().getBytes(StandardCharsets.UTF_8));
++            StringBuilder key=new StringBuilder();for(byte value:bytes)key.append(String.format(java.util.Locale.ROOT,"%02x",value&255));
++            return new AtomicFile(new File(directory,key+".arrival"));
++        }catch(java.security.NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
++    }
++}
+--- /dev/null
++++ after183/app/src/main/java/cc/huevia/album/PhotoSort.java
+@@ -0,0 +1,28 @@
++package cc.huevia.album;
++
++import java.util.Objects;
++
++/** Source-independent date semantics; unknown dates remain last in both directions. */
++public final class PhotoSort {
++    public static final PhotoSort DEFAULT = new PhotoSort(false, false);
++    public final boolean added, oldest;
++    public PhotoSort(boolean added, boolean oldest) { this.added = added; this.oldest = oldest; }
++    public long date(long taken, long addedAt) { long value=added?addedAt:taken>0&&taken<=253402300799999L?taken:addedAt;return value>0&&value<=253402300799999L?value:0; }
++    public int compare(long takenA,long addedA,String idA,long takenB,long addedB,String idB) {
++        long a=date(takenA,addedA),b=date(takenB,addedB);
++        int order=a<=0||b<=0?(a<=0?(b<=0?0:1):-1):(oldest?Long.compare(a,b):Long.compare(b,a));
++        return order!=0?order:idA.compareTo(idB);
++    }
++    public PhotoSort withBasis(boolean value) { return new PhotoSort(value,oldest); }
++    public PhotoSort withDirection(boolean value) { return new PhotoSort(added,value); }
++    public String token() { return (added?"added":"taken")+"-"+(oldest?"oldest":"newest"); }
++    public String label() { return (added?"添加时间":"拍摄时间")+"，"+(oldest?"旧到新":"新到旧"); }
++    public static PhotoSort parse(String token) {
++        if("added-oldest".equals(token))return new PhotoSort(true,true);
++        if("added-newest".equals(token))return new PhotoSort(true,false);
++        if("taken-oldest".equals(token))return new PhotoSort(false,true);
++        return DEFAULT;
++    }
++    @Override public boolean equals(Object other) { return other instanceof PhotoSort&&added==((PhotoSort)other).added&&oldest==((PhotoSort)other).oldest; }
++    @Override public int hashCode() { return Objects.hash(added,oldest); }
++}
+--- before182/app/src/main/java/cc/huevia/album/PhotoOriginalStore.java
++++ after183/app/src/main/java/cc/huevia/album/PhotoOriginalStore.java
+@@ -93,6 +93,7 @@
+                 } else {
+                     // A deterministic destination recovers a process stop after rename but before the journal commit.
+                     Files.move(input.toPath(), target.toPath());
++                    PhotoArrivalDates.record(target);
+                 }
+             }
+             if (target.length() != bytes || !sha.equals(contentId(target))) throw new IOException("原图在保存过程中发生变化，未确认完成记录。");
+--- before182/app/src/main/java/cc/huevia/album/RawEditorSource.java
++++ after183/app/src/main/java/cc/huevia/album/RawEditorSource.java
+@@ -80,6 +80,7 @@
+             } finally { if (stream != null) record.failWrite(stream); }
+             Files.move(temporary.toPath(), target.toPath(), StandardCopyOption.ATOMIC_MOVE);
+             if (date > 0) target.setLastModified(date);
++            PhotoArrivalDates.recordIfMissing(target);
+             return new DownloadedPhoto(target, filename, "", "", date > 0 ? date : target.lastModified());
+         } catch (OutOfMemoryError memory) { throw new IOException("完整 RAW 处理内存不足，请关闭其他应用后重试。", memory); }
+         finally { if (bitmap != null) bitmap.recycle(); temporary.delete(); }
+--- before182/app/src/main/java/cc/huevia/album/PhotoAlbumDeletion.java
++++ after183/app/src/main/java/cc/huevia/album/PhotoAlbumDeletion.java
+@@ -111,6 +111,7 @@
+         File checked = owned(photo);
+         if (!source.equals(checked) || bytes != checked.length() || modified != checked.lastModified() || !sha.equals(hash(checked))) throw new IOException("照片在删除过程中发生变化，应用内文件未删除。");
+         Files.delete(checked.toPath());
++        PhotoArrivalDates.forget(checked);
+     }
+     private File owned(DownloadedPhoto photo) throws IOException {
+         if (photo == null || photo.file() == null) throw new IOException("照片信息无效。");

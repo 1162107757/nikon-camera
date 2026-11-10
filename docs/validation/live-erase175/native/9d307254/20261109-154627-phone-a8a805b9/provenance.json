@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+  "versionCode": 176,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "562cdf608a2f64f91587d815aca73c672c7931c9ac5ae2a184da3490fa1c61e0",
+  "pass": true,
+  "scope": "Capture-only native brush size indicator: held slider small/large/released/focus-cancel, same actual photo pixels and unchanged model/history, new stroke still uses real renderer. No new unit test, physical-device or performance claim.",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "f94226734c8dd5b635aaeb22407284658ecc9c076ed522df67cd1146e28c7b71"
+    },
+    {
+      "file": "size176-focus-cancelled.png",
+      "sha256": "90afd6f6b8c578b0121c1617ecfac263c6aa2ae55bec12372721a1e92747c2ee"
+    },
+    {
+      "file": "size176-large.png",
+      "sha256": "28785b205f26ad6095617f309ae09032faa3a41a4e9ed1cb2ddc94223c3e2926"
+    },
+    {
+      "file": "size176-released.png",
+      "sha256": "c215bfbd3b25b575cd786a21f862b60d79ab703abdde1b7687db69e0c62d55b8"
+    },
+    {
+      "file": "size176-small.png",
+      "sha256": "b7f0b1de4dc88cf44830fc2702af5c21733bf1e1bc348b505927a1dd2695afb1"
+    }
+  ]
+}

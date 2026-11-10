@@ -1,0 +1,36 @@
+{
+  "pass": true,
+  "runId": "20261108-142313-9364c3be",
+  "candidateSha256": "576aec24cbb6c01e66388f80c1f2e639530d98b5d25e4d004704ed8dbe4b950a",
+  "versionCode": 160,
+  "serial": "emulator-5588",
+  "probeSha256": "1a523a71614b3cc3c5fd8e82503924aa14e2471947e901d91fec852edb260d03",
+  "modes": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 727,
+      "apkSha256": "576aec24cbb6c01e66388f80c1f2e639530d98b5d25e4d004704ed8dbe4b950a"
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 696,
+      "apkSha256": "576aec24cbb6c01e66388f80c1f2e639530d98b5d25e4d004704ed8dbe4b950a"
+    },
+    {
+      "mode": "narrow",
+      "pass": true,
+      "checks": 696,
+      "apkSha256": "576aec24cbb6c01e66388f80c1f2e639530d98b5d25e4d004704ed8dbe4b950a"
+    },
+    {
+      "mode": "font",
+      "pass": true,
+      "checks": 696,
+      "apkSha256": "576aec24cbb6c01e66388f80c1f2e639530d98b5d25e4d004704ed8dbe4b950a"
+    }
+  ],
+  "totalChecks": null,
+  "scope": "Installed APK, generated NP3, real parameter-entry touch and dialog; offline owned emulator only."
+}

@@ -1,0 +1,150 @@
+[
+  {
+    "run": "phone-20261109-222303-1d3b520b",
+    "pass": true,
+    "checks": 77,
+    "material": "blur",
+    "report": "docs/validation/preset-filter182/device/9f0e76d2/phone-20261109-222303-1d3b520b/phone-20261109-222303-1d3b520b/report.json",
+    "screenshots": [
+      {
+        "file": "01-sheet-online.png",
+        "sha256": "846ce2f4eee8e1f27c216998c1a4e2b19d54de019d223054894198e8c4e88ede"
+      },
+      {
+        "file": "02-draft-combination.png",
+        "sha256": "5fd1e52c36054c3c7cc1a41edf6b7d5694f679c47b651aa7bc8ddea48ab8c7fb"
+      },
+      {
+        "file": "03-combined-deep-result.png",
+        "sha256": "e3b49ce22efe78cb952d65302319b63331d1ea0abd93446ac83d7f5a4c0db52d"
+      },
+      {
+        "file": "04-filter-pagination.png",
+        "sha256": "fc8d5c2dac68df6c6680f2efeae6aa9f3be2f1e21690ee84ba545487695314b7"
+      },
+      {
+        "file": "05-sheet-local.png",
+        "sha256": "b7c76640bdf853a68ffb02b6b8d50f5974b92e3298436a84ce6cc76338527aac"
+      },
+      {
+        "file": "06-cache-result.png",
+        "sha256": "b7878847dff7d2a8586dd68502b443a1d8539ab845e13948da9caf95d615b070"
+      },
+      {
+        "file": "07-empty-after-local-delete.png",
+        "sha256": "30647bb86844bf8481c2bd35b208cea0188a91d3340c4292efae15d65c3e2830"
+      }
+    ]
+  },
+  {
+    "run": "font-dark-20261109-222323-b8d2e716",
+    "pass": true,
+    "checks": 77,
+    "material": "translucent-fallback",
+    "report": "docs/validation/preset-filter182/device/9f0e76d2/font-dark-20261109-222323-b8d2e716/font-dark-20261109-222323-b8d2e716/report.json",
+    "screenshots": [
+      {
+        "file": "01-sheet-online.png",
+        "sha256": "d28e76aeb7f9a89893b7b79eeb46ebad768173795c386ec89121d6a668f03877"
+      },
+      {
+        "file": "02-draft-combination.png",
+        "sha256": "c0e1c1049a59876166731d6b788960d566bdd6543dafba170559575dbf6fe0d0"
+      },
+      {
+        "file": "03-combined-deep-result.png",
+        "sha256": "ed7386a175c88589b78f1cbbf3636cd2a812aba0e00ef0184a122a2b0885676b"
+      },
+      {
+        "file": "04-filter-pagination.png",
+        "sha256": "c924b0057cc30f3707000cd5d60f16ace2667eda17ab4130a24bd8a6d76d3632"
+      },
+      {
+        "file": "05-sheet-local.png",
+        "sha256": "2093b1367efa8e3e3836a95ec5bfb6e1195fee2c082749e411de0803ede61713"
+      },
+      {
+        "file": "06-cache-result.png",
+        "sha256": "45e28de0c217d51d95451bfbe48d2ac5ec373913b9fe0a84df4c0ff6127ae7b1"
+      },
+      {
+        "file": "07-empty-after-local-delete.png",
+        "sha256": "bcd152f03b09d831298cac89ab267c73e58d8ecafd69b995d36d10436699b5b1"
+      }
+    ]
+  },
+  {
+    "run": "landscape-dark-20261109-222343-8a212747",
+    "pass": true,
+    "checks": 77,
+    "material": "blur",
+    "report": "docs/validation/preset-filter182/device/9f0e76d2/landscape-dark-20261109-222343-8a212747/landscape-dark-20261109-222343-8a212747/report.json",
+    "screenshots": [
+      {
+        "file": "01-sheet-online.png",
+        "sha256": "13dd9c9517a1e0c2478e76e81931e4ed88e90f96dabb5533af645e765e59cd3e"
+      },
+      {
+        "file": "02-draft-combination.png",
+        "sha256": "6995043a03213bdb3b12c5ded96474cb7270d7663d3de3be592b50b7112bb4ee"
+      },
+      {
+        "file": "03-combined-deep-result.png",
+        "sha256": "e24f1035d21a8bff02c3dbf6fa8558a5b6c643172d6019cb9232366788444a6b"
+      },
+      {
+        "file": "04-filter-pagination.png",
+        "sha256": "7f152a544b027b13348d63e0f477442544079f4099e6a5866991e9e99f27d018"
+      },
+      {
+        "file": "05-sheet-local.png",
+        "sha256": "c567e3d5caaa03cd1770d97d089043e8d2af74e06ec4ec25033b11a7f72276a1"
+      },
+      {
+        "file": "06-cache-result.png",
+        "sha256": "158de1f0b33fabcf490f79d0e3487d260cd88f120e84d368d8f3c6adcfc31ff9"
+      },
+      {
+        "file": "07-empty-after-local-delete.png",
+        "sha256": "b7f1a8c992cbf863355ea05a782f28a3bcce116549fccce326b15ec72e4bc238"
+      }
+    ]
+  },
+  {
+    "run": "tablet-20261109-222402-20d66515",
+    "pass": true,
+    "checks": 77,
+    "material": "blur",
+    "report": "docs/validation/preset-filter182/device/9f0e76d2/tablet-20261109-222402-20d66515/tablet-20261109-222402-20d66515/report.json",
+    "screenshots": [
+      {
+        "file": "01-sheet-online.png",
+        "sha256": "846a4fe73014aa621543eda3c245b06eb14c82e727e1a0e5d8890b6716933776"
+      },
+      {
+        "file": "02-draft-combination.png",
+        "sha256": "1604dc7e5b31e386d03b5d02c55047d16435402d5efecc0e0e1e1d02ecc13a0e"
+      },
+      {
+        "file": "03-combined-deep-result.png",
+        "sha256": "11d6b37fb1984db0f2f8f64111d0d703c63c4fcc9c032eb9de7b08c20b03e373"
+      },
+      {
+        "file": "04-filter-pagination.png",
+        "sha256": "d07e07cd43431433656c3346cc990676ad0dc51b58854660cb39229157de7f97"
+      },
+      {
+        "file": "05-sheet-local.png",
+        "sha256": "4db1d7ae9dcb540e0275bda8a0f3521e799007109da977f64869bdb910e13b2e"
+      },
+      {
+        "file": "06-cache-result.png",
+        "sha256": "5ab77890147cf12a0889ce7e7ee1cc094a4c8d505f57382206add8d94284d3a2"
+      },
+      {
+        "file": "07-empty-after-local-delete.png",
+        "sha256": "80bd265816ad4bfe939b008774e6f0d83a8d044cfd461fc89336a87eda967eea"
+      }
+    ]
+  }
+]

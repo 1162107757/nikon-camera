@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.3",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "1",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": null,
+  "errors": [],
+  "displaySizeRestored": true
+}

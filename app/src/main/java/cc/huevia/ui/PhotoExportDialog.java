@@ -235,7 +235,9 @@ public final class PhotoExportDialog extends Dialog {
         if(!isShowing()||submitted||previewRequests.isEmpty())return;final PhotoExportSpec spec;try{spec=selected();}catch(IllegalArgumentException invalid){refresh();return;}
         if(previewRequests.size()==1){openPreview(0,spec);return;}
         String[] names=new String[items.size()];for(int i=0;i<names.length;i++)names[i]=items.get(i).filename;
-        previewPicker=new AppDialog.Builder(getContext()).setTitle("预览照片").setItems(names,(d,index)->openPreview(index,spec)).setNegativeButton("取消",null).create();AlertDialog shown=previewPicker;shown.setOnDismissListener(ignored->{if(previewPicker==shown)previewPicker=null;});shown.show();
+        ActionChoiceDialog choices=new ActionChoiceDialog(getContext(),UiPalette.forTheme(getContext()),"预览照片");
+        for(int i=0;i<names.length;i++){final int index=i;choices.add(AppIcon.Kind.ALBUM,names[i],"",()->openPreview(index,spec));}
+        previewPicker=choices.create();AlertDialog shown=previewPicker;shown.setOnDismissListener(ignored->{if(previewPicker==shown)previewPicker=null;});shown.show();
     }
     private void openPreview(int index,PhotoExportSpec spec){if(!isShowing()||submitted||index<0||index>=previewRequests.size())return;closePreview();previewDialog=PhotoExportPreviewDialog.show(activity,previewRequests.get(index),spec,items.get(index).filename);}
     private void closePreview(){if(previewDialog!=null){PhotoExportPreviewDialog old=previewDialog;previewDialog=null;old.close();}}

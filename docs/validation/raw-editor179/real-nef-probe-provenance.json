@@ -1,0 +1,37 @@
+{
+  "builtAt": "2026-11-09T12:45:51.4970571Z",
+  "inputs": [
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawActivityChecks.java",
+      "sha256": "e071731865562524873435277285e9ff38ef8fc0e517975f23072dcc04e69314"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawColorChecks.java",
+      "sha256": "77aa185082bc2c30ab41071f66adc4e3ddc8a0f549cde333074101234ef5e2d4"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawDevelopmentProbe.java",
+      "sha256": "38d15f33a9341fa753ebc28cb89d10986bdcfb2ab292e32e8c8619b12ab758cf"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawDocumentPickerChecks.java",
+      "sha256": "a6db8acc5b7e22ff2a699ea5b9d2ab063aae18c95ea156b56ad88894f4ee85e8"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawEditorChecks.java",
+      "sha256": "4b0d33ae51b9e869262bd4cbfe5a93515457ec4443f4ec75fca3199b013edb66"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RealRawEditorChecks.java",
+      "sha256": "bebe521cda7129885a8d380a9783d557536f730863fe6f7de687c55a46d91c3a"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/SyntheticDng.java",
+      "sha256": "255b5c4ee334cf6630bbfc8749e9bdc3af663a6300d277342a54e690803599ab"
+    }
+  ],
+  "probeSha256": "39ad7993e7eecd43da1dba0f37f6b252785e778eb9a688ca7b81f99455b32a11",
+  "manifestSha256": "d2df60419d51818162fae7ce66ea5b6c6fbbcf44c74d4019fa764fc1c49c3624",
+  "buildSha256": "401de00e447eaf098c4edd5d244d23d470be1ad08ad0e161fe5a4759d4cacc40",
+  "runSha256": "8bdcc8c521b8d54b3d008a3a8b60709bcc3412b22c414b6231909c92db3b3560"
+}

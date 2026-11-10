@@ -1,0 +1,9 @@
+{
+  "file": "album-time-sort-v2-arrows.png",
+  "sha256": "e1554f2117c005ebaf14de1b34e758f9e3f788b8d5ee9f3631dcd845312bb9f5",
+  "bytes": 1958089,
+  "tool": "built-in image_gen.imagegen",
+  "status": "design-only; latest user-directed entry style",
+  "supersedes": "album-time-sort.png for trigger appearance",
+  "applicationSourcesChanged": false
+}

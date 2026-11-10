@@ -1,0 +1,69 @@
+{
+  "unchanged183Sources": [
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "ebdd17ac7aa19ae3b579a02533aadf5af625e5443a00ebd1d84b4b2337212202",
+      "bytes": 15183
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumSortSheet.java",
+      "sha256": "96052756c8c3a9c928b5ce2b93e57e74fdd111bae29871212242cc4fb14979c0",
+      "bytes": 15871
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java",
+      "sha256": "f1d10bda9fff0a0dc1a87f096ccd4b80b370db9ca2b501490a0f34c36728c417",
+      "bytes": 42167
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoDateReader.java",
+      "sha256": "b225d483e0c9dba448dc9501b9d9a3fc6ae4191f17c5152dc12df9e6e1f2274b",
+      "bytes": 6786
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoLibraryCatalog.java",
+      "sha256": "a79c742f16e8b57556a9e6a21383e5e84b6960310fea14b36c575170da166fed",
+      "bytes": 16929
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoArrivalDates.java",
+      "sha256": "3f240ff2f2d6fdff1080b6c3a615019b808e45032be478583f80c46e5f02d58d",
+      "bytes": 2729
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoSort.java",
+      "sha256": "8ff7601222f82330a3db91737893be5f1e51072c0be81a62bc714294c33f0f4a",
+      "bytes": 1807
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoOriginalStore.java",
+      "sha256": "534a412629db19617f050452fbf2b6abe0592d39e8e089b2dfc7ee3ffd57a9ea",
+      "bytes": 13349
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawEditorSource.java",
+      "sha256": "1c83d50d27561812f147e72bfcdc0990a4c7bdf6a193a2535207a52eccc10c47",
+      "bytes": 9505
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoAlbumDeletion.java",
+      "sha256": "7839b0b5d133730e54d4722d5d146be63be14bc0926cfc5741a4b88950432dca",
+      "bytes": 9407
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java",
+      "sha256": "3eaba34622576f24d464d474bf1495e80380bab879c41e82fac08ecd74015967"
+    }
+  ],
+  "localAlbumOnlyPickerAndSettingsChanges": true,
+  "apkEntryDifferencesFrom183": [
+    "AndroidManifest.xml",
+    "classes.dex",
+    "META-INF/ANDROIDD.SF",
+    "META-INF/ANDROIDD.RSA",
+    "META-INF/MANIFEST.MF"
+  ],
+  "allOtherApkPayloadsByteIdentical": true,
+  "baselineApkSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "candidateApkSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776"
+}

@@ -1,0 +1,61 @@
+{
+  "versionCode": "183",
+  "candidateSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "uiMode": "landscape",
+  "probeSha256": "ffd344d88ccdae52c8e186fa0a41767582b24c81a3b6e142d7b270deb2e4a091",
+  "sampleNefSha256": "",
+  "pass": true,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims.",
+  "files": [
+    {
+      "file": "01-album-default.png",
+      "sha256": "ae0bbd9bfd3e9dad58504eab392941c6f60047d4ef346ddac652dd20f0db39ad"
+    },
+    {
+      "file": "02-sheet-default.png",
+      "sha256": "ab4b9475c59c81079656bf678c5a5145ef38ba479b709d206a5adde6809749b9"
+    },
+    {
+      "file": "03-sheet-draft.png",
+      "sha256": "7af8e9b880308adae1d69c738dd713626fbd84f1c1cafc571f029135b4a4ddd7"
+    },
+    {
+      "file": "04-album-added-oldest.png",
+      "sha256": "713235e579d94d3b2e172415f20a85d2e1b964572b66376b1e11ebad2479f1f7"
+    },
+    {
+      "file": "05-selection-A-preserved.png",
+      "sha256": "c680c04b031242375fed08e9ed5b62bc35d89f87997c172f2b9e0decca29e1f3"
+    },
+    {
+      "file": "06-phone-added-newest.png",
+      "sha256": "62582d262aae9d3c60f7f3f2c1b8845a45d3da22c69a20f34ab052dd111afe20"
+    },
+    {
+      "file": "07-phone-sheet.png",
+      "sha256": "69638ecdad3a14b6ac6b61d0b7c79c786bdb2fe347ee9d98aeada1796131a244"
+    },
+    {
+      "file": "08-landscape-scrolled.png",
+      "sha256": "163f33e72cbbb7939be2a09d0ade0ce5b4fb8bacce0c90522f33a96e37ae4c1c"
+    },
+    {
+      "file": "owned-fixtures.json",
+      "sha256": "98e3ed87244bc5995846a3252f203386f169a9825c2f4c9fe201d3af5e123583"
+    },
+    {
+      "file": "process-restore.json",
+      "sha256": "dd2007bd1d8ad69aeaa3a75594a8b6c86ce9ebc1d392190a3815cc9ff5e5a2ad"
+    },
+    {
+      "file": "report.json",
+      "sha256": "a1f74d7713bb7211158adb0bebc254c2596c58320552cc800b1a69c63530bbfc"
+    },
+    {
+      "file": "sort-preferences-backup.json",
+      "sha256": "acb24853f55f06145214052d0be31588fbd2ba00344aab1d94b719de295ff229"
+    }
+  ]
+}

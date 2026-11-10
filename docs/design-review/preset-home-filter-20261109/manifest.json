@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-09",
+  "status": "design proposals for user review",
+  "applicationChanged": false,
+  "tool": "built-in image_gen.imagegen",
+  "images": [
+    {
+      "variant": "A",
+      "title": "右上浮窗",
+      "file": "A-anchored-popover.png",
+      "bytes": 1925244,
+      "sha256": "438f57e907b12a82454394b749e5b2533a2be0f244759cf963cd34edfb3a37ca"
+    },
+    {
+      "variant": "B",
+      "title": "毛玻璃底部浮层",
+      "file": "B-glass-bottom-sheet.png",
+      "bytes": 1923751,
+      "sha256": "af93a40171e7b58880a8f9ba2d3c90e4571d22236112ede5668c78cac197b478"
+    },
+    {
+      "variant": "C",
+      "title": "右侧抽屉",
+      "file": "C-side-drawer.png",
+      "bytes": 1478523,
+      "sha256": "f5449c4462472b8db1e89543039ab28c6a7492cf634f6d012596c36976906aba"
+    }
+  ],
+  "limitations": "Concept imagery and demonstration counts; final implementation keeps current home content, source labels, columns and behavior. C compact revision rejected for background drift."
+}

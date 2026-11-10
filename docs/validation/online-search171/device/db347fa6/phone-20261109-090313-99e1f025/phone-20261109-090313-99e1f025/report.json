@@ -1,0 +1,29 @@
+{
+  "versionCode": 171,
+  "sdk": 37,
+  "failure": "java.lang.AssertionError: pending-search-is-not-zero-results\n\tat cc.huevia.onlinesearch171qa.OnlineSearch171Probe.check(OnlineSearch171Probe.java:117)\n\tat cc.huevia.onlinesearch171qa.OnlineSearch171Probe.onStart(OnlineSearch171Probe.java:48)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "pass": false,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-version171",
+      "pass": true
+    },
+    {
+      "name": "pending-search-is-not-zero-results",
+      "pass": false
+    }
+  ],
+  "candidateSha256": "db347fa676962aa397cb8bc5cc53407877eeac8133e3603f56bb0ea418cbb574"
+}

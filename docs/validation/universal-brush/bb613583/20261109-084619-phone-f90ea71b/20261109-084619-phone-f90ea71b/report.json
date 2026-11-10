@@ -1,0 +1,331 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "bb61358338530a4b4daeb2bff0938469c27b3e6acbe1043b822cd032006a4f43",
+  "versionCode": 170,
+  "versionName": "0.30.16-beta",
+  "mode": "phone",
+  "flow": "icons170",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-EXPOSURE",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-icons170-common",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-icons170-common",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-icons170-specials",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-icons170-specials",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "native-tool-open-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "native-tool-open-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-local",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-local",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-全图",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "native-tool-open-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-icons170-after-refresh",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-icons170-after-refresh",
+      "pass": true
+    },
+    {
+      "name": "capture-session-model-history-preserved",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "entry": "editor-palette",
+      "opened": "PhotoPaletteDialog"
+    },
+    {
+      "entry": "editor-cleanup",
+      "opened": "PhotoCleanupDialog"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "全图",
+      "windowId": 2810,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "entry": "editor-patch",
+      "opened": "PhotoPatchDialog"
+    },
+    {
+      "entry": "editor-parameter-EXPOSURE",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-parameter-CONTRAST",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-curves",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-hsl",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-palette",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-cleanup",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-local",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-patch",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    },
+    {
+      "entry": "editor-parameter-BRIGHTNESS",
+      "iconWidthPx": 68,
+      "iconHeightPx": 68,
+      "iconWidthDp": 25.904762268066406,
+      "paddingTopPx": 16,
+      "captionTopPx": 95,
+      "captionBaselinePx": 132,
+      "drawable": "AppIcon"
+    }
+  ],
+  "screenshots": 3,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Capture-only adjustment-rail inspection: native common\/special\/after-refresh frames and widget geometry; palette\/cleanup\/local\/repair opened then dismissed on an owned fixture, unchanged model\/history\/source. No new unit\/regression test or frame-rate\/hardware claim."
+}

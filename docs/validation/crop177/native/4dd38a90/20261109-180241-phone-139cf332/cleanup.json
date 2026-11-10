@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.3",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "1",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.AssertionError: crop177-precision-opens-landscape-photo; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\crop177\\native\\4dd38a90\\20261109-180241-phone-139cf332\\20261109-180241-phone-139cf332\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

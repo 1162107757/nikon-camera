@@ -1,0 +1,34 @@
+[
+  {
+    "path": "app/build.gradle",
+    "sha256": "9ca1d44eb3a375514ee689eadacde47b96650ce9ddb12246ca091a5071143489"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java",
+    "sha256": "7ec73c7eff913eaded7f58b1c9ad1f2c7e43c6f93c8b16c6655b9ac857071ab7"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+    "sha256": "d0fce69a3e99f32b5751088d6e028e599480e4f3b473275737e47da83c3282f6"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+    "sha256": "82b9d416a2c8ac3d99932935468345fe19b8c12bf9e2644382e1db7cf323ec00"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+    "sha256": "39eb589f553976e50ad897fded89dcda350a1265eece17b2d92e06c178234c4e"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+    "sha256": "8cfe27140bfc14191a0fd97f2e4117ad1087e095153da524f9a2016baa4791e7"
+  },
+  {
+    "path": "tests/local-edits-java/cc/huevia/ncp/PhotoPatchContext175Test.java",
+    "sha256": "577614e1a3b1dec0b8346a4b15519c325dffe7fcbe1f34713d338b3186bc34f6"
+  },
+  {
+    "path": "tests/run-photo-local-edits.ps1",
+    "sha256": "5355ac1bc6c987576fe4cdc1339f373f955d4fdf30757dd07a3ddc03838d4c85"
+  }
+]

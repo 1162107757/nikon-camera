@@ -1,0 +1,11 @@
+{
+  "serial": "emulator-5588",
+  "testPackageRemoved": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "remoteFixtureRemoved": true,
+  "privateUniqueFixtureRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainFailure": "RAW probe ADB failed: pull /sdcard/Android/data/cc.huevia/files/raw-development-109/20261108-113226-04a25005e5 D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\photo-image-suite\\raw-development\\9223d32f\\20261108-113226-04a25005e5 adb: error: failed to stat remote object '/sdcard/Android/data/cc.huevia/files/raw-development-109/20261108-113226-04a25005e5': No such file or directory\r\n",
+  "errors": []
+}

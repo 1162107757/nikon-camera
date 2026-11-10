@@ -1,0 +1,10 @@
+{
+  "displayRestored": true,
+  "nightRestored": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "testPackageRemoved": true,
+  "mainAppStopped": true,
+  "mainFailure": "OnlineSearch171 failed: java.lang.AssertionError: clear-search-restores-browse-items\n\tat cc.huevia.onlinesearch171qa.OnlineSearch171Probe.check(OnlineSearch171Probe.java:118)\n\tat cc.huevia.onlinesearch171qa.OnlineSearch171Probe.onStart(OnlineSearch171Probe.java:74)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\online-search171\\device\\db347fa6\\phone-20261109-090419-0a517d44",
+  "errors": []
+}

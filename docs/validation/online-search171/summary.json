@@ -1,0 +1,129 @@
+{
+  "versionCode": 171,
+  "versionName": "0.30.17-beta",
+  "date": "2026-11-09",
+  "status": "local verified, unpublished",
+  "rootCause": "Home search filtered only the first loaded feed page. Searching a name absent from those20 items removed the scroll surface, preventing later pages from loading.",
+  "productionReadOnlyObservation": {
+    "catalogUrl": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/catalog.json",
+    "presets": 390,
+    "name": "蔚蓝天空",
+    "id": "b798456f-e181-4944-95c0-f91a6cd0763c",
+    "category": "风景",
+    "fileFormat": "NCP",
+    "notPresentInFirstFeed50": true
+  },
+  "behavior": [
+    "Search uses the existing validated complete metadata catalog; first query loads once, further input and category changes reuse it.",
+    "Browse pagination remains separate; clearing search returns the original browse context.",
+    "Loading and unavailable full indexes never claim zero matches; cached indexes are labeled.",
+    "No bulk preview or preset downloads are initiated by the search index. Existing visible-card preview behavior remains unchanged.",
+    "Matching normalizes case, whitespace edges and full-width text."
+  ],
+  "sourceSha256": "db347fa676962aa397cb8bc5cc53407877eeac8133e3603f56bb0ea418cbb574",
+  "uploadSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef",
+  "uploadPath": "dist/upload171/huevia-0.30.17-beta-update.apk",
+  "sourceInputs": [
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "9623a1b39fdaa47f4539f62dac0d3d7e0acd35207bf63754324c90b53e9741fd"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetSearch.java",
+      "sha256": "ba5f8b9f77e06f4da9cf3e7012de576a8e86940387c4566c541575bf6d7c1f47"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+      "sha256": "3633ad11f1bbefb006d0e3d275b2caf09277b99f36e46417ee28f7a204666bf3"
+    },
+    {
+      "path": "app/build.gradle",
+      "sha256": "c81398830dcbb08f4ae5136ec1a630ab1d4f0ae5bdc1f6e1019a940ab190a216"
+    }
+  ],
+  "checks": {
+    "searchHost": 30,
+    "libraryHost": 548,
+    "editorCatalogHost": 53,
+    "imageCacheHost": 36,
+    "exactPublicVariant": [
+      {
+        "run": "font-dark-20261109-090923-c55473ee",
+        "checks": 37,
+        "pass": true,
+        "cleanup": {
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "landscape-dark-20261109-091019-c2c655d9",
+        "checks": 37,
+        "pass": true,
+        "cleanup": {
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "phone-20261109-090833-1fb5b01c",
+        "checks": 37,
+        "pass": true,
+        "cleanup": {
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "tablet-20261109-091110-d8f68339",
+        "checks": 37,
+        "pass": true,
+        "cleanup": {
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      }
+    ]
+  },
+  "visualReview": {
+    "captures": "capture-index.json",
+    "board": "capture-board.png",
+    "count": 24,
+    "reviewer": "owner; bounded source-scope review",
+    "result": "No required search-scope layout or state fix found. Real-name and large-font error frames additionally opened at full resolution. No independent-review or whole-app claim."
+  },
+  "harnessCorrections": [
+    "Initial active accessibility window was IME; assertions changed to the actual MainActivity visible view tree.",
+    "Original category-restoration test triggered ordinary asynchronous page reload; test reordered category change inside active search before clearing. Product APK unchanged throughout. Failed runs retained."
+  ],
+  "limits": [
+    "Synthetic390 metadata/native fixtures, with target at index389; no preview or camera compatibility certification.",
+    "Existing complete-catalog contract remains bounded to1024 items and2MiB. Failure is explicit, never substituted with a partial page.",
+    "Physical HarmonyOS4.3.0.208 crash investigation is separate172, not certified by this emulator search pass.",
+    "No upload, public release, commit or push."
+  ]
+}

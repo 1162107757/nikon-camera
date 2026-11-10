@@ -1,0 +1,116 @@
+{
+  "date": "2026-11-09",
+  "versionCode": 174,
+  "versionName": "0.30.20-beta",
+  "status": "final local verified; unpublished",
+  "userReport": {
+    "system": "HarmonyOS4.3.0.208",
+    "deviceModel": null,
+    "actualSdk": null,
+    "originalUserStackObtained": false,
+    "trigger": "Tap top online preset source tab"
+  },
+  "confirmedIssue": {
+    "method": "java.net.URLEncoder.encode(String, Charset)",
+    "availableFromAndroidApi": 33,
+    "reference": "https://developer.android.com/reference/java/net/URLEncoder",
+    "packagedBaselineReference": "baseline-dex.json",
+    "actualAndroid31": {
+      "baselineVersion": 172,
+      "baselineSha256": "6712f7513eb35b5e9d9e7c3ce797fcd7fc0395b2400fffbc436a2d017dbe5d83",
+      "directMethodChecks": 8,
+      "actualUserPathReproduced": true,
+      "trace": "baseline-online-tab-crash.txt",
+      "fatal": "NoSuchMethodError in OnlinePresetRepository.fetchPage:84 after actual top online tab click",
+      "sdk": 31
+    },
+    "fix": "Use encoding-name String overload in both OnlinePresetRepository and CommunityRepository; preserve exact UTF8 query/name semantics, no broad LinkageError swallowing."
+  },
+  "package": {
+    "source": "dist/huevia-0.30.20-beta-debug.apk",
+    "sourceSha256": "22deacb8e5f386f72186a34234421c07ffb38ba1b59cc769a881f151059f9077",
+    "upload": "dist/upload174/huevia-0.30.20-beta-update.apk",
+    "uploadSha256": "527191606cc678c0e1076f42f96036160f8886aa586243e22ede06b402ce904c",
+    "bytes": 31370429,
+    "originalCertificate": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "v2": true,
+    "v3": true,
+    "alignment16KiB": true,
+    "retainedPayloads": 88,
+    "removedOnlyAbi": "obsolete x86"
+  },
+  "verification": {
+    "dex": "final-dex.json",
+    "apkInspection": "apk-inspection.json",
+    "nativeExactVariant": [
+      {
+        "sdk": 31,
+        "versionCode": 174,
+        "checks": 20,
+        "pass": true,
+        "run": "phone-20261109-100837-14a9ef03",
+        "cleanup": {
+          "animatorRestored": true,
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "sdk": 37,
+        "versionCode": 174,
+        "checks": 20,
+        "pass": true,
+        "run": "phone-20261109-102100-19c3ea2a",
+        "cleanup": {
+          "animatorRestored": true,
+          "displayRestored": true,
+          "nightRestored": true,
+          "fontRestored": true,
+          "airplaneRestored": true,
+          "testPackageRemoved": true,
+          "mainAppStopped": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      }
+    ],
+    "searchRegression": {
+      "sdk": 31,
+      "versionCode": 174,
+      "pass": true,
+      "checks": 37,
+      "evidence": "../online-search174/device/52719160/phone-20261109-101031-7b930551"
+    },
+    "host": {
+      "communityRepository": 33,
+      "communityPaging": 46,
+      "commentReplies": 94,
+      "replyRecipient": 9,
+      "library": 548,
+      "editorCatalog": 53,
+      "imageCache": 36
+    },
+    "retainedFeatures": [
+      "171 complete-metadata search",
+      "172 optional source-transition capture recovery",
+      "173 final local automatic brush repair; its algorithm/UI evidence stays separately scoped173"
+    ]
+  },
+  "environment": {
+    "privateApi31": "Official Android31 x86_64 archive verified against repository size657246510 and SHA1; private workspace AVD emulator5584 closed after tests.",
+    "primaryEmulator": "API37 package/input services were unavailable after system_server death, leading to Broken pipe install attempts. Only project emulator Pixel_9/5588 restarted without wiping data; exact same APK then installed and passed20. Primary display/font/night/airplane restored and app stopped by runner.",
+    "rawRestartProof": "modern-emulator-restart.json",
+    "ownedEmulatorClosure": "owned-emulator-cleanup.json"
+  },
+  "limits": [
+    "API31 andAPI37 are emulators; physical HarmonyOS4.3.0.208 SDK, original stack and final physical verification remain unavailable. Reproducing the reported path onAndroid12 establishes a real compatible-runtime defect, not a claim that all Huawei issues have one root cause.",
+    "Earlier171/172 source/UI tests and173 erase tests retain their own APK/count scopes; not rerun here as whole-app certification.",
+    "No external upload, public release, commit, push or WeChat send."
+  ]
+}

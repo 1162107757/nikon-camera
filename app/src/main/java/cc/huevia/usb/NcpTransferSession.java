@@ -74,8 +74,9 @@ final class NcpTransferSession {
         result.manufacturer = device.manufacturer();
         result.model = device.model();
         result.firmware = device.deviceVersion();
-        if (!isZ6II(device.model())) {
-            throw new IOException("实验性上传仅允许尼康 Z6II，当前相机为 " + device.model() + "；未写入文件。");
+        if (!device.isNikonCamera()) {
+            throw new IOException("当前设备未识别为尼康相机：" + device.manufacturer() + " / " + device.model()
+                    + "；未写入文件。");
         }
         for (int operation : REQUIRED_OPERATIONS) {
             if (!device.supportsOperation(operation)) {
@@ -433,13 +434,6 @@ final class NcpTransferSession {
             if (!occupied) return candidate;
         }
         return null;
-    }
-
-    static boolean isZ6II(String model) {
-        if (model == null) return false;
-        String normalized = model.trim().toUpperCase(Locale.ROOT)
-                .replaceFirst("^NIKON\\s+", "").replaceAll("[\\s_-]+", "");
-        return normalized.equals("Z6II") || normalized.equals("Z62");
     }
 
     private static boolean looksLikeSd(PtpStorageInfo info) {

@@ -1,0 +1,16 @@
+{
+  "versionCode": 181,
+  "versionName": "0.30.27-beta",
+  "files": {
+    "app/build.gradle": "84365765d8a44b09f1dee29eedf718c97c496248bb756a81f49fb2beda2b9f1c",
+    "app/src/main/java/cc/huevia/MainActivity.java": "5980fa71629efde6878797e807cad5e835b256763b8a008764de46f9e0923070",
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "acf87392a0aa5a57930039383a02c5f572966b1b9e0e765f4590a5ba2fadf72b",
+    "app/src/main/java/cc/huevia/ui/AppIcon.java": "9f7c23d88c3f2e6764a33139497c3247b40dd0c07d7bdd577be3d6b7f9b792d2"
+  },
+  "baselineFiles": {
+    "app/build.gradle": "91fad1d24497e659c45d90cf30cc9d5ab325c04ab3adeed29de294a31bf2c2fe",
+    "app/src/main/java/cc/huevia/MainActivity.java": "3f252834166d70cfef419f3dad3244606ede084f3e8ea78736339b28b9ae863d",
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "12c40eadcc304b01eef52724214a4ecbd10f2f2a3c35e4dbaee924cc5b9f38bd",
+    "app/src/main/java/cc/huevia/ui/AppIcon.java": "389e301ca10305bd1fb1c65a3b962208ed6bd84664a4c03745c1c970b2552059"
+  }
+}

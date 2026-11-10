@@ -1,0 +1,26 @@
+[
+  {
+    "path": "app/build.gradle",
+    "sha256": "1879da69566cd183e4fe625133d0ec28010ff859b9fa675208684e29344d5586"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PhotoPresetSources.java",
+    "sha256": "baca7b9f1648421cc02a17cdc60ac4ea75a5d403dcb1fd9d7d59121a5f50a8e5"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PhotoPresetRenderer.java",
+    "sha256": "3eaba34622576f24d464d474bf1495e80380bab879c41e82fac08ecd74015967"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java",
+    "sha256": "1b81190fc863e22ab220c14e637923aadc1a1cd87f5bac97a0977711a0b2d2a7"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+    "sha256": "4eeee06fc742518476e184c71d40308385f6dcc70d876ba85db24a3f07df617a"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "988b17c6a6276dce9702062c2d7f10bd89f10bbf204cf35546405cc630f320fd"
+  }
+]

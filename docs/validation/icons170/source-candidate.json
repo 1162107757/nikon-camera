@@ -1,0 +1,30 @@
+{
+  "versionCode": 170,
+  "versionName": "0.30.16-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.30.16-beta-debug.apk",
+  "sha256": "bb61358338530a4b4daeb2bff0938469c27b3e6acbe1043b822cd032006a4f43",
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "bf85ee10cdfeae3a9c6b169e5e35d782919c7b49d7c8e89827284362118f56d4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "5ee3262da65374c9aad8b5a64c16a4631ee6ecb7b23507df4e39bf6f627f5980"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "f5955e1f2d9a9402dbab6d4e882a29b61590082cb0595af8677708b9c795bc8f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "389e301ca10305bd1fb1c65a3b962208ed6bd84664a4c03745c1c970b2552059"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPrismaStyle.java",
+      "sha256": "7085774b32f193ec1368b18d1845f704f67a5bd614eea72308a8b79c26fee416"
+    }
+  ],
+  "scope": "Adjustment rail icon consistency only; no rendering, selection or repair algorithm changes",
+  "published": false
+}

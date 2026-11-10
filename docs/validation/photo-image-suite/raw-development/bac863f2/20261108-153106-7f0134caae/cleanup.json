@@ -1,0 +1,11 @@
+{
+  "serial": "emulator-5588",
+  "testPackageRemoved": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "remoteFixtureRemoved": true,
+  "privateUniqueFixtureRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainFailure": "RAW development probe failed: java.lang.AssertionError: real-nef-heldout-color-error-improved; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\photo-image-suite\\raw-development\\bac863f2\\20261108-153106-7f0134caae\\20261108-153106-7f0134caae\\report.json",
+  "errors": []
+}

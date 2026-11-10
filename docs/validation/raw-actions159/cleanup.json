@@ -1,0 +1,21 @@
+{
+  "settingsRestored": true,
+  "before": {
+    "font": "1.0",
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "night": "no",
+    "airplane": "0"
+  },
+  "after": {
+    "font": "1.0",
+    "size": "Physical size: 1080x2424",
+    "density": "Physical density: 420",
+    "night": "no",
+    "airplane": "0"
+  },
+  "qaDownloadFixtureRemoved": true,
+  "qaScreenshotsRemovedFromDevice": true,
+  "appStopped": true,
+  "normalRawWorkingCacheRetained": true
+}

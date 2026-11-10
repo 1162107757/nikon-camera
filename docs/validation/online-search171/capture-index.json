@@ -1,0 +1,122 @@
+[
+  {
+    "mode": "phone",
+    "path": "docs/validation/online-search171/device/71de10a2/phone-20261109-090833-1fb5b01c/phone-20261109-090833-1fb5b01c/01-search-loading.png",
+    "sha256": "7b6fff14c63fa5b61750e4bcabb37fb67267142458582f48d7055eeed8cc5a19"
+  },
+  {
+    "mode": "phone",
+    "path": "docs/validation/online-search171/device/71de10a2/phone-20261109-090833-1fb5b01c/phone-20261109-090833-1fb5b01c/02-blue-sky-found.png",
+    "sha256": "c755a4bb8ee35d43183bf9c1378de7f52059344834c2ef5570db3c9c41ba85e4"
+  },
+  {
+    "mode": "phone",
+    "path": "docs/validation/online-search171/device/71de10a2/phone-20261109-090833-1fb5b01c/phone-20261109-090833-1fb5b01c/03-category-no-match.png",
+    "sha256": "75aed60548d6daa6efaf26251cedaa3a99f71fc327913e68153c90474286b870"
+  },
+  {
+    "mode": "phone",
+    "path": "docs/validation/online-search171/device/71de10a2/phone-20261109-090833-1fb5b01c/phone-20261109-090833-1fb5b01c/04-cached-search.png",
+    "sha256": "52890e7221f51c3c5d4cc7eeb5d8c034a9f255eebd86476cfa84fd2ae3355fc7"
+  },
+  {
+    "mode": "phone",
+    "path": "docs/validation/online-search171/device/71de10a2/phone-20261109-090833-1fb5b01c/phone-20261109-090833-1fb5b01c/05-search-unavailable.png",
+    "sha256": "010c5c09c538466203d783ce20cc5983489796288a5e4fa5a22b658ba1ee41da"
+  },
+  {
+    "mode": "phone",
+    "path": "docs/validation/online-search171/device/71de10a2/phone-20261109-090833-1fb5b01c/phone-20261109-090833-1fb5b01c/06-source-switch-return.png",
+    "sha256": "183f6b7d55eb9af3ffa6bf45c4fe50c4556d60e932fb248d35608821de400b57"
+  },
+  {
+    "mode": "font-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/font-dark-20261109-090923-c55473ee/font-dark-20261109-090923-c55473ee/01-search-loading.png",
+    "sha256": "ab6a8e225676bb3fd51c38ecf890f86f2582283eaf9a3ab57c0ade99982fd237"
+  },
+  {
+    "mode": "font-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/font-dark-20261109-090923-c55473ee/font-dark-20261109-090923-c55473ee/02-blue-sky-found.png",
+    "sha256": "21956a1835f9728a4786e83182a686a2f694b444c6936a456a661a7209fea14f"
+  },
+  {
+    "mode": "font-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/font-dark-20261109-090923-c55473ee/font-dark-20261109-090923-c55473ee/03-category-no-match.png",
+    "sha256": "4a7889292e594bf90353f170f8da72ef89d49b1b406ea800f9790a5bb3ae8170"
+  },
+  {
+    "mode": "font-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/font-dark-20261109-090923-c55473ee/font-dark-20261109-090923-c55473ee/04-cached-search.png",
+    "sha256": "2e25d1a5c58159f19cf676e95c4241e8d23b444142f9d79ffeaab6229b97fb39"
+  },
+  {
+    "mode": "font-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/font-dark-20261109-090923-c55473ee/font-dark-20261109-090923-c55473ee/05-search-unavailable.png",
+    "sha256": "c19eb5c206d057e050d5e5dcc3bb1e8f07b98bda3fc2555829a21d8fe3504d99"
+  },
+  {
+    "mode": "font-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/font-dark-20261109-090923-c55473ee/font-dark-20261109-090923-c55473ee/06-source-switch-return.png",
+    "sha256": "0ca37107a768bf8ef7b77dda5124b9c9b850f25da4a6d6e04bb5ce8b0da9d412"
+  },
+  {
+    "mode": "landscape-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/landscape-dark-20261109-091019-c2c655d9/landscape-dark-20261109-091019-c2c655d9/01-search-loading.png",
+    "sha256": "0341f43c78351654bed7ccf24be94c30a0e4eb62f8347d1011a61a2c99512a81"
+  },
+  {
+    "mode": "landscape-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/landscape-dark-20261109-091019-c2c655d9/landscape-dark-20261109-091019-c2c655d9/02-blue-sky-found.png",
+    "sha256": "e2a7ba64e3adb566e0940b0ac169e05653ee4f00a4cf3fa995426ffe97f0700e"
+  },
+  {
+    "mode": "landscape-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/landscape-dark-20261109-091019-c2c655d9/landscape-dark-20261109-091019-c2c655d9/03-category-no-match.png",
+    "sha256": "9038edd4eeef1aa0895b853587b61e4f6fb082d801ce94f60209e2474894b2ef"
+  },
+  {
+    "mode": "landscape-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/landscape-dark-20261109-091019-c2c655d9/landscape-dark-20261109-091019-c2c655d9/04-cached-search.png",
+    "sha256": "7f75f3a721e7ce652fe7148fc18c24aff400410d3f517be0a99c5ea6ffde455f"
+  },
+  {
+    "mode": "landscape-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/landscape-dark-20261109-091019-c2c655d9/landscape-dark-20261109-091019-c2c655d9/05-search-unavailable.png",
+    "sha256": "4433e0fea38b89865a3b08d53df0da9a650d76bce5a65ca47997035032e30e8d"
+  },
+  {
+    "mode": "landscape-dark",
+    "path": "docs/validation/online-search171/device/71de10a2/landscape-dark-20261109-091019-c2c655d9/landscape-dark-20261109-091019-c2c655d9/06-source-switch-return.png",
+    "sha256": "91ee4d8d169f802045ae6d6a82bf2e1d01345a6a776ccd27390bbc50f780bec2"
+  },
+  {
+    "mode": "tablet",
+    "path": "docs/validation/online-search171/device/71de10a2/tablet-20261109-091110-d8f68339/tablet-20261109-091110-d8f68339/01-search-loading.png",
+    "sha256": "313506d270f98e68f7bee0033638fa86bc51a8885512722c0e67879173d6e759"
+  },
+  {
+    "mode": "tablet",
+    "path": "docs/validation/online-search171/device/71de10a2/tablet-20261109-091110-d8f68339/tablet-20261109-091110-d8f68339/02-blue-sky-found.png",
+    "sha256": "189e9cf0132c3df2566154333402b2f2ee224b478dab239e8660ba767b661f8c"
+  },
+  {
+    "mode": "tablet",
+    "path": "docs/validation/online-search171/device/71de10a2/tablet-20261109-091110-d8f68339/tablet-20261109-091110-d8f68339/03-category-no-match.png",
+    "sha256": "72375f3ed903a8a36bca2d6d736e2c03c54e3ed3d6a53dd98eea60eff6846c55"
+  },
+  {
+    "mode": "tablet",
+    "path": "docs/validation/online-search171/device/71de10a2/tablet-20261109-091110-d8f68339/tablet-20261109-091110-d8f68339/04-cached-search.png",
+    "sha256": "cd35dc25d4401a148eda3ff03918c807c7ccebc90525ab482b6d95b4372d5f9f"
+  },
+  {
+    "mode": "tablet",
+    "path": "docs/validation/online-search171/device/71de10a2/tablet-20261109-091110-d8f68339/tablet-20261109-091110-d8f68339/05-search-unavailable.png",
+    "sha256": "13a128e7b1b9768b5c1af3bf843ba0fe21052cd18a55e6300ab7f66c6b8e9846"
+  },
+  {
+    "mode": "tablet",
+    "path": "docs/validation/online-search171/device/71de10a2/tablet-20261109-091110-d8f68339/tablet-20261109-091110-d8f68339/06-source-switch-return.png",
+    "sha256": "ab2f3d7efd26fc6eab1e44b1737af4008df52f600c100391aa96dbfbe5f921c0"
+  }
+]

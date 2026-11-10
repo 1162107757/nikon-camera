@@ -1,0 +1,22 @@
+{
+  "environment": "nikon-d8girdjsr252fd90e",
+  "region": "ap-shanghai",
+  "functionName": "huevia-data-backup",
+  "type": "Event",
+  "handler": "index.main_handler",
+  "runtime": "Nodejs20.19",
+  "memoryMB": 512,
+  "timeoutSeconds": 900,
+  "role": "HueviaDataBackupRole",
+  "policy": "HueviaDataBackupStorage",
+  "policyFile": "online-library/infra/cos-backup-policy.json",
+  "additionalExistingPolicy": {"name": "HueviaFunctionLogWrite", "id": 293251244},
+  "bucket": "huevia-updates-1252602548",
+  "privatePrefix": "huevia-backups/daily/",
+  "encryption": "SSE-COS AES256",
+  "trigger": {"name": "huevia-daily-backup", "type": "timer", "cron": "0 0 3 * * * *", "intendedTimeZone": "Asia/Shanghai", "enabledOnlyAfterSuccessfulManualBackup": true},
+  "retentionDays": 30,
+  "credentialSource": "Reuse existing CLOUDBASE_SERVICE_KEY only in the private worker environment; never print, package or publish its value. COS uses fresh invocation-context role credentials.",
+  "existingApplicationChanges": "Add service_role-only stable read-only snapshot RPC; preserve all existing business data and existing web function code/config/role/logging.",
+  "publicHttpEndpoint": false
+}

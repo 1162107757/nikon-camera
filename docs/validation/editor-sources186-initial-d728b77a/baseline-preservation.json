@@ -1,0 +1,17 @@
+{
+  "baselineVersionCode": 185,
+  "baselineFiles": 348,
+  "changedExistingSourcePaths": [
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+    "app/build.gradle"
+  ],
+  "addedSourcePaths": [
+    "app/src/main/java/cc/huevia/ui/PhotoPresetSourceTabs.java"
+  ],
+  "rawHighlightSourceUnchanged": true,
+  "apkPayloadDifferences": [
+    "AndroidManifest.xml",
+    "classes.dex"
+  ],
+  "allNativeLibrariesAndAssetsEqualTo185": true
+}

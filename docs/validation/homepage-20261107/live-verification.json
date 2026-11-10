@@ -1,0 +1,99 @@
+{
+  "checkedAt": "2026-11-07T13:55:30.165Z",
+  "checks": [
+    {
+      "name": "Root domain serves the product homepage",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Homepage is browser HTML rather than an attachment",
+      "pass": true
+    },
+    {
+      "name": "Homepage asset: home.css",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Homepage asset: home.js",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Homepage asset: assets/app-presets.webp",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Homepage asset: assets/outfit.ttf",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Homepage asset: assets/site-qr.svg",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Homepage asset: credits.html",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "Old admin entry redirects to the new host",
+      "pass": true
+    },
+    {
+      "name": "New administrator root has its own entry",
+      "pass": true
+    },
+    {
+      "name": "New administrator login page renders over valid HTTPS",
+      "pass": true
+    },
+    {
+      "name": "Admin data remains authenticated",
+      "pass": true
+    },
+    {
+      "name": "New browser origin accepted while authentication remains required",
+      "pass": true
+    },
+    {
+      "name": "Untrusted browser origins remain rejected",
+      "pass": true
+    },
+    {
+      "name": "Existing application API path remains live",
+      "pass": true
+    },
+    {
+      "name": "Existing public preset catalog is preserved",
+      "pass": true,
+      "presets": 390
+    },
+    {
+      "name": "Published beta identity remains unchanged",
+      "pass": true,
+      "version": "0.23.4-beta",
+      "versionCode": 115
+    },
+    {
+      "name": "Homepage download route returns the complete published APK",
+      "pass": true,
+      "bytes": 9531300,
+      "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2",
+      "attachment": true
+    }
+  ],
+  "publishedApkChanged": false,
+  "presetRecordsChanged": false,
+  "currentBeta": {
+    "versionName": "0.23.4-beta",
+    "versionCode": 115,
+    "byteLength": 9531300,
+    "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2"
+  },
+  "credentialsNote": "Existing initial-admin.json was not current (one401); no administrator password was changed or guessed. New-host authenticated login was not certified; anonymous guards and origin boundaries were verified."
+}

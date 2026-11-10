@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.stability184qa">
+ <application android:label="Stability184 QA" android:allowBackup="false" />
+ <instrumentation android:name=".Stability184Probe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+</manifest>

@@ -1,0 +1,24 @@
+{
+  "versionCode": 165,
+  "versionName": "0.30.11-beta",
+  "published": false,
+  "fullApk": {
+    "file": "dist/huevia-0.30.11-beta-debug.apk",
+    "bytes": 34627030,
+    "sha256": "d1b342b5791dfbb391a4b2b6fd00642b9063b574cbbfb43e5eb8910bda9b2a71"
+  },
+  "uploadApk": {
+    "file": "dist/upload165/huevia-0.30.11-beta-update.apk",
+    "bytes": 31333565,
+    "sha256": "992644b188cabfce01732653938840c6bc1b867b6b53b6dc5a81be69b87d542b"
+  },
+  "sourceInputs": {
+    "app/build.gradle": "5a471fa49f608938834ada10ee896422149db62aad7fe5092fd0de5de99698c9",
+    "app/src/main/java/cc/huevia/MainActivity.java": "51341c3057f3f1f144dbe1f630f39254180010ef05c3182bc342face50bec659",
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "4a99b4e2bc022719b8615e4ef53e53b1484461e3240f4f85892df69db87e8e41",
+    "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java": "c2dbb17b5cf83f23b8d539dc6e3cefca58da39d184aa453cb9d5c2397471c788",
+    "tests/album-search165-device-probe/src/AlbumSearch165Probe.java": "5fe483d2f28d2e48d904e87e681bfa2f16078e1338071251863381edf52c7dcb",
+    "tests/album-search165-device-probe/run.ps1": "cb659325a43e28ad13e8c5272e4f892815234538bd80b164ae60477225cf5524"
+  },
+  "physicalSamsungTested": false
+}

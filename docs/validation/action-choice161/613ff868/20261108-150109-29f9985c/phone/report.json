@@ -1,0 +1,32 @@
+{
+  "pass": false,
+  "failure": "java.lang.reflect.InvocationTargetException",
+  "checks": [
+    "owned-emulator",
+    "frozen-apk-sha",
+    "version-161",
+    "guest-choice-keeps-login-entry",
+    "normal-compact-type",
+    "no-truncated-label",
+    "label-fits-column",
+    "action-target-at-least-52dp",
+    "normal-compact-type",
+    "no-truncated-label",
+    "label-fits-column",
+    "normal-compact-type",
+    "no-truncated-label",
+    "label-fits-column",
+    "normal-compact-type",
+    "no-truncated-label",
+    "label-fits-column",
+    "normal-compact-type",
+    "no-truncated-label",
+    "label-fits-column",
+    "dialog-fits-screen",
+    "actual-choice-window",
+    "close-keeps-44dp-hit-area",
+    "close-does-not-select-file"
+  ],
+  "mode": "phone",
+  "scope": "Installed product APK on an offline owned emulator. Actual preset import\/template\/avatar entry points, intent monitor for system chooser, shared action callbacks and text layout. Synthetic in-memory logged identity is restored; no login or upload performed."
+}

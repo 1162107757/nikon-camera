@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.AssertionError: actual-editor-undo-visible-and-enabled; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\f64a5c58\\20261108-155234-phone-422093c0\\20261108-155234-phone-422093c0\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

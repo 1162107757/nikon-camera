@@ -1,0 +1,244 @@
+{
+  "candidateSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "runs": [
+    {
+      "mode": "landscape",
+      "api": 36,
+      "report": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/report.json",
+      "provenance": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/provenance.json",
+      "cleanup": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/cleanup.json",
+      "checks": 154,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-ready.png",
+          "sha256": "a0149f74686a32ddc5e03219ee0605682b6c1fe1396dd578958f7e92beb7e41f",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-painting.png",
+          "sha256": "a47726c6c294a4958dd2589afb41a75b43951d29f1e693912993d42f3df86f19",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-first-result.png",
+          "sha256": "3296e413f4ec95cf2911e86b62125b8e2ad0f8be4b9902095a02fb8b6c0eff9c",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-result-hidden.png",
+          "sha256": "98bf0e7c3f5939821b8b0e97e33092fd9f0f75a84c94113f277696b78c3bf660",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-undone.png",
+          "sha256": "e4a08c2ae85d42cff0a9a545d81a2012a27ff099da098c723169cb5288ab4348",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-second-result.png",
+          "sha256": "679e4032fa72fc7ac7d155329ee9b5a7da6e8c30055d93bdea7dbe8d94bfbf00",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-applied-main.png",
+          "sha256": "7b29e0e5db5bf5ae75b6795a59eb359b9d2ed0dd6e919b3e84b34cc871f5dde8",
+          "width": 2424,
+          "height": 1080
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092627-landscape-a2f1533c/20261109-092627-landscape-a2f1533c/erase173-reopened.png",
+          "sha256": "0acb2f8f5ff146527f95ad8aad2f68a272a2c3b79666b159f09000137ca3014b",
+          "width": 2424,
+          "height": 1080
+        }
+      ],
+      "selfInspectionSheet": ".impeccable/review/erase173/landscape-dark-states.png"
+    },
+    {
+      "mode": "tablet",
+      "api": 36,
+      "report": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/report.json",
+      "provenance": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/provenance.json",
+      "cleanup": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/cleanup.json",
+      "checks": 154,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-ready.png",
+          "sha256": "f3dd926c16a8b0f40cdaaeb83bddfec796c46fd5da639b5dee7be21dd667f290",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-painting.png",
+          "sha256": "9d1499092bd348be985ec03ea1207f45d4ea2eb6f78f978c40105df2044da8e7",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-first-result.png",
+          "sha256": "b7a228ea2a0261d605070250a492a4c2eb0c0dae87fa1f9f1f78192b706ba4b3",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-result-hidden.png",
+          "sha256": "49333860df576a557e571d09b09bc518c8e7118397077adfd57c0f9ed8eaa535",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-undone.png",
+          "sha256": "fed43f067eaf710bf74ed26da5d8a4747304d5eea820d4ca35ec8698c08a7e24",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-second-result.png",
+          "sha256": "89c2c8ab111f7ea1fcb06a904b945321ee03368014909c46fc6ef91eb2f74982",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-applied-main.png",
+          "sha256": "a0c285b4f88c52a403b92375c010bd3d32e940e2e676fe5663a6014a2a737fe0",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092602-tablet-02f0e4c4/20261109-092602-tablet-02f0e4c4/erase173-reopened.png",
+          "sha256": "3c72b0cc08f6c9fa976ec879613e04c1c5a1f44f358f2e23aa51ee65fa44facd",
+          "width": 1600,
+          "height": 2560
+        }
+      ],
+      "selfInspectionSheet": ".impeccable/review/erase173/tablet-states.png"
+    },
+    {
+      "mode": "font1.3",
+      "api": 36,
+      "report": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/report.json",
+      "provenance": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/provenance.json",
+      "cleanup": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/cleanup.json",
+      "checks": 154,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-ready.png",
+          "sha256": "d94480596bf267314f299d29107049848b9351e12c912e55ac49d374d426332c",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-painting.png",
+          "sha256": "944ddc7a46ae6567cfeef0d5df28169e41155da3ad3eb69b1f8e6e151c2da827",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-first-result.png",
+          "sha256": "a2c4d32d6957a9e99a455786d26651bb2b7854067ffbebbb1fbc638e98da2059",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-result-hidden.png",
+          "sha256": "5fc87d166b623abb3cb3f166874720967560d1e9f83613cd64d128e71daae3e3",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-undone.png",
+          "sha256": "01b0fe059a3c441738a9dbe829ba09abba6eb3befb9cbf8272b1f009f10b4c40",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-second-result.png",
+          "sha256": "dc2e08375a31e5d28c68c7a287c0f1be933ea04d7534311e854d40c8e60619ab",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-applied-main.png",
+          "sha256": "0f4d3a96a3aa33089b85f8887ce2dfe2a003bbfa29cf75683a4b1f98217681ad",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092543-font1.3-624c6643/20261109-092543-font1.3-624c6643/erase173-reopened.png",
+          "sha256": "d4c5fa031f38170e8e2c37635d770148d83e4f029a5a34164fddba17cc333e1e",
+          "width": 840,
+          "height": 1890
+        }
+      ],
+      "selfInspectionSheet": ".impeccable/review/erase173/narrow-font13-android16-states.png"
+    },
+    {
+      "mode": "phone",
+      "api": 36,
+      "report": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/report.json",
+      "provenance": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/provenance.json",
+      "cleanup": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/cleanup.json",
+      "checks": 154,
+      "captures": [
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-ready.png",
+          "sha256": "768cb5d95bf9c50726b647abcacce561b9fec1e3929aa74aafec5af8d2b5da6b",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-painting.png",
+          "sha256": "c1c6cd86c28460b02a1f00f93a23c217300ff41803672e14e12030da4c9ff4d4",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-first-result.png",
+          "sha256": "b23f50b4a165a92d8f882d7217ae888dcf1962c6836e4a4a59358e2295665bec",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-result-hidden.png",
+          "sha256": "e9b4de2280637d5cf995ecea425fc98a2b135a2a3c41137bdee9430b42366975",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-undone.png",
+          "sha256": "dd0c17e3a8c18021de74fb2928f8c217f408aa1aff34f47dd3e7776d7b9e2d28",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-second-result.png",
+          "sha256": "51f6725fdf582583a7e9bfbf1e00fe99f2bd91436906d691d58ce2726d051bc7",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-applied-main.png",
+          "sha256": "0eebe6def37e1483bf81639c6b9b34f1940ab9685ac7e2af8bfaf3bed3d980d4",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/universal-brush/c8745941/20261109-092410-phone-dade8ab0/20261109-092410-phone-dade8ab0/erase173-reopened.png",
+          "sha256": "e40613bff6a1f78b1ce072367e27d00d2061fef2de4f4e361b217ab14763a25d",
+          "width": 1080,
+          "height": 2424
+        }
+      ],
+      "selfInspectionSheet": ".impeccable/review/erase173/phone-states.png"
+    }
+  ],
+  "totalRepeatedNativeAssertions": 616,
+  "originalPngs": 32,
+  "scope": "Actual installed default erase interaction, rendering, transaction/draft and direct regression checks; one intentional renderer-failure injection per mode. No fake production classes. Static visual capture does not establish fps or hardware behavior."
+}

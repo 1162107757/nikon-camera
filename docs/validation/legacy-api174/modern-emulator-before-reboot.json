@@ -1,0 +1,10 @@
+{
+  "serial": "emulator-5588",
+  "sdk": "37",
+  "size": "cmd: Failure calling service window: Broken pipe (32)",
+  "density": "cmd: Failure calling service window: Broken pipe (32)",
+  "font": "cmd: Failure calling service settings: Broken pipe (32)",
+  "night": "cmd: Failure calling service uimode: Broken pipe (32)",
+  "airplane": "cmd: Failure calling service settings: Broken pipe (32)",
+  "reason": "Package service Broken pipe after system death; reboot without clearing data"
+}

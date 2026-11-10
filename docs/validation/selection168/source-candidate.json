@@ -1,0 +1,92 @@
+{
+  "versionCode": 168,
+  "versionName": "0.30.14-beta",
+  "apk": "D:/dev/ai-project/nikon-camera/dist/huevia-0.30.14-beta-debug.apk",
+  "sha256": "57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3",
+  "status": "four post-fix native configurations passed; reviewer disposition ship, F1-F4 all resolved only",
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "a49dbaf55190b0996217b7519fdc5b6711a50f4e8bc84dc0809a27b7ec935f8a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/SelectionShape.java",
+      "sha256": "5d1b9cedb58e415c2c2b3ca7e249b3f4dfee6ccb031e9bbfb6ae6660c4bd3608"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
+      "sha256": "be30c06ea219d74fb9ea87166b864033ce2b2d554ad175663fe1f9dddeb1d2c2"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "7505b0a71ca010948a5e264dc18683dde3c3b828b21fe24f693d36d5503a2ac3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBrushDialog.java",
+      "sha256": "138fcf90610b33d5b90470423912f3bc67ac6e8d5cece019007532f737ae526f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoImageView.java",
+      "sha256": "347a164f918da8078df4ebf6f733b76f69b4538b85cc2a7d38b5360d1b23a00c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoSelectionOverlay.java",
+      "sha256": "6bb019441912f1bbcb07cbaad854e0a573cfa9f460f75d3d8238a552a3dd8941"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "dff480e9b84049a60687fbbe0b845b092940db29069b685a4b3e836364fb5a12"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPortraitDialog.java",
+      "sha256": "9580c30830549c996b1a38007cbd32a60030fdc25a010393ddda1f3dcfe28c13"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoColorDialog.java",
+      "sha256": "9ebe3b71fc02859c68b6e681b4d2e7acb564732cb5d091bd6e77a3e07c859092"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPaletteDialog.java",
+      "sha256": "efeda838bd5b5582b1b1d763521b94d253b2298281f8c96cde0a3412311c3e97"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoCleanupDialog.java",
+      "sha256": "8a74d23f40b95738bccdc172f7518f1b6abb1dce0750fbba2a6d7dd8f50ad970"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoLocalEditDialog.java",
+      "sha256": "cdb466d0c99025edc4877afd0a215d0775c32587f128f15a3e215d417a890dee"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoBodyDialog.java",
+      "sha256": "e8d39d5afe87936aadca0fc5ab28ea4b175acfc3e61b8afaeb1d22d8c08aaf4f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "9a6ddd6e74fda2b7ffa2683b285bba8f129073532966910b9155dc6c3225ae59"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "f6add93e20e98443f5f7a17aa5818f9b5b5ce7774591b8bf4344e70d12b6e516"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/SkinTonePicker.java",
+      "sha256": "8c83a782274d62d6fd36a38fa28cf56b0694d63725aba7e3758851d03ead1f31"
+    }
+  ],
+  "hostChecks": {
+    "adjustmentRegion": 1520101,
+    "localEdits": 43230,
+    "presetLibrary": 548,
+    "editorPresetCatalog": 53,
+    "imageCache": 36
+  },
+  "nativeChecks": 1648,
+  "nativeScreenshots": 104,
+  "nativeProbe": {
+    "source": "tests/universal-brush-device-probe/src/cc/huevia/brushqa/BrushProbe.java",
+    "sha256": "a78d941125e5942d85be473d93dd3586f9299537799b836690d9593612e39ebd",
+    "addedCases": "Nested palette precision and HSV: three axes, shown/hidden, deferred input, release, native focus interruption and dismiss while held. Face/skin to chooser: shown/hidden/restore without edit changes."
+  },
+  "reviewFile": "D:\\dev\\ai-project\\nikon-camera\\.impeccable\\review\\selection168\\verdict.md"
+}

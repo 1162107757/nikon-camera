@@ -1,0 +1,92 @@
+[
+  {
+    "path": "app/build.gradle",
+    "sha256": "8b2bca9305099df2b6a60325703f37f274fe1c2c9d891e36aea012bfd490c9c4",
+    "bytes": 806
+  },
+  {
+    "path": "app/src/main/AndroidManifest.xml",
+    "sha256": "388d24d4f0f13c5f3b21900f70b2f181f8b7ad10106c02b1a35eed3c5aaff1de",
+    "bytes": 4911
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/AppCrashDiagnostics.java",
+    "sha256": "d1819e9e4223885f0766a8b3b87fff7a2b62d432e2165509802defb4f7f27a5e",
+    "bytes": 9572
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/HueviaApplication.java",
+    "sha256": "40290a11f87003b83105b58899596903c59129ad737765a9887afeeab715d5e8",
+    "bytes": 293
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/SystemActivityLauncher.java",
+    "sha256": "efbcc47e7060ed02bf3403a363dd20170c9638a6403eaed0e7d4f3e5c6f1f47a",
+    "bytes": 1926
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "47376aface9423545ed6c9648c18bac1dd551b7ad83a997acef13ae1b2042d7c",
+    "bytes": 319017
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/DiagnosticsActivity.java",
+    "sha256": "693593bd65f3db63ff71b3d2844853e5b83a9e873a56737e8d3989c2817841f6",
+    "bytes": 61548
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PhotoPresetSources.java",
+    "sha256": "3d438645729412ed7d3ef6eebd1d21c57e81cefa3a5b3a868c4f0004eddcf3e5",
+    "bytes": 29266
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/PhotoPresetBatch.java",
+    "sha256": "2f4df3380e918d577e3d75d6e258022cf09ec7e1283ee171ad9f220078c2bea4",
+    "bytes": 57813
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfile.java",
+    "sha256": "516a1a969196b1056949ef962cd6a91ea5b9e423aacf36751aa04d8579239983",
+    "bytes": 2286
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+    "sha256": "1a83fa6362ad05dce220df551e1535a3bb2b489f0196c10b5e8bae8df78037d4",
+    "bytes": 79367
+  },
+  {
+    "path": "tests/batch-java/cc/huevia/album/PhotoPresetSourcesTest.java",
+    "sha256": "abc5cfd4cff1d624c938a62df0220b3bfa140d3f656383cc1736cf9f6b0cf650",
+    "bytes": 33816
+  },
+  {
+    "path": "tests/stability-java/cc/huevia/AppCrashDiagnosticsTest.java",
+    "sha256": "42563ccba6ae4cb52689e2c39473bbf5203c3f871994c564273a192cadd5064d",
+    "bytes": 3627
+  },
+  {
+    "path": "tests/run-stability184.ps1",
+    "sha256": "a1f81904844517bfe4848b457b38e1e9927b64cc5535a3d432e06d248108742e",
+    "bytes": 890
+  },
+  {
+    "path": "tests/stability184-device-probe/src/Stability184Probe.java",
+    "sha256": "81489a2a0f18688025bc47e608710941520815e073cb8d6b411ffe72b9ad1981",
+    "bytes": 21006
+  },
+  {
+    "path": "tests/stability184-device-probe/AndroidManifest.xml",
+    "sha256": "0e479ec7eaa3d54ee531bf8ac2f9011c1e853504cff67b9cd4b9ecc55b4a3c99",
+    "bytes": 313
+  },
+  {
+    "path": "tests/stability184-device-probe/build.ps1",
+    "sha256": "a47cd430d33d301f5386faac7bb4092107ddf2fdc61af6ff9667af59ec127736",
+    "bytes": 3869
+  },
+  {
+    "path": "tests/stability184-device-probe/run.ps1",
+    "sha256": "5bfd57cdb1fe89d5c1371e4b729729645e51b305542a084e377e4937de8c617f",
+    "bytes": 5870
+  }
+]

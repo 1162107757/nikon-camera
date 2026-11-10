@@ -1,0 +1,30 @@
+[
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "9623a1b39fdaa47f4539f62dac0d3d7e0acd35207bf63754324c90b53e9741fd"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/library/OnlinePresetSearch.java",
+    "sha256": "ba5f8b9f77e06f4da9cf3e7012de576a8e86940387c4566c541575bf6d7c1f47"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+    "sha256": "3633ad11f1bbefb006d0e3d275b2caf09277b99f36e46417ee28f7a204666bf3"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/SubcategorySwipeLayout.java",
+    "sha256": "5a2b4a092a9a421af1125aae90512e38d5f66ac3ba293fd2d99051c5a17ea370"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+    "sha256": "5ee3262da65374c9aad8b5a64c16a4631ee6ecb7b23507df4e39bf6f627f5980"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+    "sha256": "f5955e1f2d9a9402dbab6d4e882a29b61590082cb0595af8677708b9c795bc8f"
+  },
+  {
+    "path": "app/build.gradle",
+    "sha256": "861f4199870bd7961de591c0741a4d3e3ce207d7b5b9279db036f0f0c7c7fdd4"
+  }
+]

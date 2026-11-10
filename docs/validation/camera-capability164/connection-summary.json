@@ -1,0 +1,123 @@
+{
+  "date": "2026-11-08",
+  "versionCode": 164,
+  "versionName": "0.30.10-beta",
+  "status": "final public variant verified; publication owned by coordinated chat",
+  "implemented": [
+    "Ordinary USB connection uses strict standard GetDeviceInfo 0x1001 transaction0 only, with no protocol session, vendor operation, slot read or write.",
+    "Separate preset operation capability checks from basic camera identification; no fixed camera-model whitelist.",
+    "Actual manufacturer/model propagated through connection requests, live album connection info, connection success hint, details and capability error.",
+    "Remove stale MainActivity Z6II-only copy."
+  ],
+  "artifacts": [
+    {
+      "path": "dist/huevia-0.30.10-beta-debug.apk",
+      "bytes": 34622934,
+      "sha256": "080accef6588863e096227adc631aed9e3e79f773cd0728f276bceac256fc2b8"
+    },
+    {
+      "path": "dist/upload164/huevia-0.30.10-beta-update.apk",
+      "bytes": 31321078,
+      "sha256": "ea4b3f539d4455cd685c6279c9bd162372448c08735d73258c26ae115c0ef585"
+    }
+  ],
+  "sourceFingerprints": [
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "4bd6ed74d44902ac71d1a5dd5cfe5027740c4d68938d33845f810fc4f28121f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/UsbPictureControlProbe.java",
+      "sha256": "cd9c7390657c6504b19f1b21b01f8db6db75e01dbb01ab3e50ddce6be886c331"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PtpUsbTransport.java",
+      "sha256": "7eb2b72b3ad2b40596a0e74a57b359362dda1b7a29625352843da4e1029c8835"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/WirelessPictureControl.java",
+      "sha256": "69e9ec7a5b221efd518ffcde7081a7345222a084dc647d877f8be832df443062"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/ConnectionInfo.java",
+      "sha256": "414a722706a7bbd4df9cb498d10a0c89061c9243b6abb1bf65ab709d64c3cc41"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+      "sha256": "e4036b09e32239c48c2c826af3dd10e54c4e45d20865cffcdd5a5ab4ea54fe12"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "cb4f6cb6ab6460a53343a9df454ce5bfd9f76a67b410e6b6233aff808e8525a4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraConnectionRequest.java",
+      "sha256": "fc42e19c9ac3c33c76cd2230504f16be31507933400edf185fc6d768cd4923db"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlReadSession.java",
+      "sha256": "b164c48d4bcb1899f47da336bb113e2dfa2c862293a655bb35b41e25f18c4950"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlImportSession.java",
+      "sha256": "dbe0058245faeea6964571e71d5931135029bd93c8031bfb2cb41a75165d8a54"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/NcpTransferSession.java",
+      "sha256": "ceae7ad6d6c2b22feea20ee212abd41afcfee1d96c61cac9965ba7f7902b07f8"
+    },
+    {
+      "path": "app/build.gradle",
+      "sha256": "6ff42025318771b753139d40d49eb60d721df9b494e2b9477c9c18f120366848"
+    }
+  ],
+  "sourceSignature": {
+    "v2": true,
+    "v3": true,
+    "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "alignment16KiB": true
+  },
+  "checks": {
+    "identificationHost": {
+      "pass": true,
+      "count": 234,
+      "runner": "tests/run-connection-device-info164.ps1",
+      "log": "connection-host.txt"
+    },
+    "installedPublicVariant": {
+      "pass": true,
+      "count": 38,
+      "serial": "emulator-5588",
+      "candidateSha256": "ea4b3f539d4455cd685c6279c9bd162372448c08735d73258c26ae115c0ef585",
+      "evidenceDirectory": "docs/validation/camera-capability164/device/ea4b3f53/20261108-165153-e5351388",
+      "scope": "Installed164 Activity navigation, no-device USB guard, identification-vs-preset validators, Android JSON report, actual model/manufacturer display and error copy. Synthetic byte-framed PTP/IP client handshake; connected fixture session injected into shared controller only for UI return verification. No physical USB or camera success claim; host test owns real USB transport framing/lifecycle with scripted peer.",
+      "visuallyOpened": [
+        "02-z7ii-connected-return.png",
+        "03-z7ii-details.png",
+        "04-actual-camera-capability-error.png"
+      ],
+      "cleanup": {
+        "fontRestored": true,
+        "airplaneRestored": true,
+        "testPackageRemoved": true,
+        "mainAppStopped": true,
+        "mainFailure": null,
+        "errors": []
+      }
+    },
+    "dependentRegressions": {
+      "pictureControlRead": 823,
+      "pictureControlImport": 1646,
+      "wireless": 10162,
+      "pass": true,
+      "note": "Independently rerun against modified transport; console output passed. Coordinator also captured protocol-tests.txt and protocol-summary.json."
+    },
+    "coordinatedProtocolAndCoreEvidence": "protocol-summary.json",
+    "publicVariantPayloadEvidence": "../release164/payload-provenance.json"
+  },
+  "limits": [
+    "No physical USB camera or Z7II attached. Scripted USB peer and emulator UI/synthetic PTP-IP tests do not establish real camera import support.",
+    "Final native test installed and verified the exact publication variant, not the full four-ABI source APK. Retained payload comparison is recorded separately by release owner.",
+    "No publication result is asserted by this file; release owner performs upload and public endpoint verification."
+  ]
+}

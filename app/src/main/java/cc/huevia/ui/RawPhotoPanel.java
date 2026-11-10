@@ -85,7 +85,7 @@ public final class RawPhotoPanel implements AutoCloseable {
         String filename;
         RawPhotoDownload saved;
         Batch batch;
-        boolean busy = true, complete, selectionRequired, validatedSnapshot;
+        boolean busy = true, complete, selectionRequired, validatedSnapshot, editWhenReady;
         long received, total;
         double progress;
         String stage = "准备 RAW 原文件", error = "";
@@ -129,6 +129,7 @@ public final class RawPhotoPanel implements AutoCloseable {
         open = true; this.local = local; pageEpoch++; loaded = false; loading = false; pageError = "";
         cameraFiles.clear(); savedFiles.clear(); nextOffset = 0; hasMore = !local;
         clearPage(); host.onChanged(); loadPage(true);
+        if (!local && !controller.hasLiveSession()) host.onConnectionRequired("查看 RAW 文件");
     }
 
     public boolean goBack() {
@@ -145,19 +146,19 @@ public final class RawPhotoPanel implements AutoCloseable {
         if (isBusy()) { feedback("RAW 正在保存", "当前文件保存完成后，再导出其他照片。可以收起进度继续查看。"); showProgress(); return; }
         if (!controller.canOfferRawExport()) { dismissFormat(); jpg.run(); return; }
         ensurePalette(); dismissFormat();
-        LinearLayout choices = vertical(); choices.setPadding(dp(18), dp(4), dp(18), dp(12));
         boolean cameraDownload = original == null && remote != null;
-        choices.addView(formatChoice(cameraDownload ? "JPG（相机原图）" : "JPG（当前版本）", cameraDownload ? "下载相机原图到手机，不套用滤镜" : "保存当前照片版本，保留已套用的预设效果", () -> {
+        ActionChoiceDialog choices = new ActionChoiceDialog(activity, palette, cameraDownload ? "下载格式" : "导出格式");
+        choices.add(AppIcon.Kind.ALBUM, cameraDownload ? "JPG（相机原图）" : "JPG（当前版本）", cameraDownload ? "相机原图，不套用滤镜" : "保留当前编辑效果", () -> {
             dismissFormat(); if (!closed) jpg.run();
-        }));
-        choices.addView(formatChoice("RAW 原文件（NEF）", "相机拍摄的原始文件，不包含手机预设效果", () -> {
+        });
+        choices.add(AppIcon.Kind.FILE, "RAW 原文件（NEF）", "保留相机原始数据，不含手机预设效果", () -> {
             dismissFormat();
             if (remote == null && original == null) {
                 feedback("请明确选择 RAW 原文件", "这张照片没有可核对的相机来源，请在 RAW 文件列表选择 NEF 原文件。"); open(false); return;
             }
             chooseDestination(target -> beginDownload(remote, original, target));
-        }));
-        AlertDialog dialog = dialog().setTitle(cameraDownload ? "下载格式" : "导出格式").setView(choices).setNegativeButton("取消", null).create();
+        });
+        AlertDialog dialog = choices.create();
         formatDialog = dialog; dialog.setOnDismissListener(ignored -> { if (formatDialog == dialog) formatDialog = null; });
         show(dialog);
     }
@@ -169,9 +170,9 @@ public final class RawPhotoPanel implements AutoCloseable {
         if (!controller.canOfferRawExport()) { dismissFormat(); jpg.run(); return; }
         List<PhotoItem> selection = Collections.unmodifiableList(new ArrayList<>(sources));
         ensurePalette(); dismissFormat();
-        LinearLayout choices = vertical(); choices.setPadding(dp(18), dp(4), dp(18), dp(12));
-        choices.addView(formatChoice("JPG（相机原图）", "保存所选 " + selection.size() + " 张照片的 JPG", () -> { dismissFormat(); if (!closed) jpg.run(); }));
-        choices.addView(formatChoice("RAW 原文件（NEF）", "逐张核对并保存相机 NEF，不包含手机预设效果", () -> {
+        ActionChoiceDialog choices = new ActionChoiceDialog(activity, palette, "下载 " + selection.size() + " 张照片");
+        choices.add(AppIcon.Kind.ALBUM, "JPG（相机原图）", "保存所选 " + selection.size() + " 张照片", () -> { dismissFormat(); if (!closed) jpg.run(); });
+        choices.add(AppIcon.Kind.FILE, "RAW 原文件（NEF）", "逐张核对并保留相机原始数据", () -> {
             dismissFormat();
             if (selection.size() > 100 || selection.contains(null)) { feedback("请分批导出 RAW", "每批可选择 1–100 张照片；只有相机实际拍摄的 NEF 原文件可以导出。"); return; }
             chooseDestination(target -> {
@@ -180,8 +181,8 @@ public final class RawPhotoPanel implements AutoCloseable {
                 List<Operation> inputs = new ArrayList<>(); for (PhotoItem source : selection) inputs.add(new Operation(source, null, null, target));
                 beginBatch(inputs);
             });
-        }));
-        AlertDialog dialog = dialog().setTitle("下载 " + selection.size() + " 张照片").setView(choices).setNegativeButton("取消", null).create();
+        });
+        AlertDialog dialog = choices.create();
         formatDialog = dialog; dialog.setOnDismissListener(ignored -> { if (formatDialog == dialog) formatDialog = null; }); show(dialog);
     }
 
@@ -239,15 +240,22 @@ public final class RawPhotoPanel implements AutoCloseable {
 
     private void selectTab(boolean nextLocal) {
         if (closed || !open || local == nextLocal) return;
-        if (!nextLocal && !controller.canOfferRawExport()) {
+        if (!nextLocal && controller.hasLiveSession() && !controller.canOfferRawExport()) {
             feedback("当前相机仅支持 JPG", "富士 RAF/RAW 导出暂不支持，可在“已保存 NEF”查看本机文件。"); return;
         }
         local = nextLocal; pageEpoch++; loading = false; loaded = false; pageError = ""; nextOffset = 0; hasMore = !local;
         cameraFiles.clear(); savedFiles.clear(); if (list != null) list.setSelection(0); updatePage(); loadPage(true);
+        if (!local && !controller.hasLiveSession()) host.onConnectionRequired("查看 RAW 文件");
     }
     private void refresh() {
         pageEpoch++; loading = false; loaded = false; pageError = ""; nextOffset = 0; hasMore = !local;
         cameraFiles.clear(); savedFiles.clear(); updatePage(); loadPage(true);
+        if (!local && !controller.hasLiveSession()) host.onConnectionRequired("刷新 RAW 文件");
+    }
+
+    /** Refreshes the list after a connection; original downloads still require another explicit action. */
+    public void onCameraConnectionReturned() {
+        if (open && !local && controller.hasLiveSession()) refresh();
     }
     private void maybeLoadMore() {
         if (!closed && open && !local && loaded && hasMore && !loading && pageError.isEmpty() && !isBusy() && !controller.isRawBusy()) loadPage(false);
@@ -329,12 +337,26 @@ public final class RawPhotoPanel implements AutoCloseable {
         String metadata = bytes(saved != null ? saved.byteSize() : remote.byteSize());
         if (saved != null) metadata += " · 保存于 " + date(saved.savedAt());
         else if (!captureDate(remote.captureDate()).isEmpty()) metadata += " · " + captureDate(remote.captureDate());
-        AlertDialog next = dialog().setTitle(clean(filename)).setMessage(metadata + "\n\n保留相机原始 NEF 数据，不包含手机预设效果。")
-                .setPositiveButton(saved != null ? "保存原文件" : "下载原文件", (dialog, which) -> {
+        ActionChoiceDialog choices = new ActionChoiceDialog(activity, palette, clean(filename))
+                .note(metadata + "\n保留原始 NEF，不含手机预设效果")
+                .add(AppIcon.Kind.ADJUST, "编辑照片", "", () -> {
+                    if (closed) return;
+                    if (saved != null) editRaw(saved);
+                    else host.beforeSavePhotos(PhotoSaveTarget.APP_ONLY, () -> beginDownload(remote, null, PhotoSaveTarget.APP_ONLY, true));
+                })
+                .add(AppIcon.Kind.DOWNLOAD, saved != null ? "保存原文件" : "下载原文件", "", () -> {
                     if (closed) return;
                     chooseDestination(target -> { if (saved != null) beginPublish(saved, target); else beginDownload(remote, null, target); });
-                }).setNeutralButton(saved==null?null:"显影",saved==null?null:(dialog,which)->activity.startActivityForResult(cc.huevia.RawDevelopActivity.intent(activity,saved.file(),PhotoFilterEditor.accountOwner(activity)).putExtra(cc.huevia.RawDevelopActivity.EXTRA_SOURCE_SHA,saved.sha256()),7319)).setNegativeButton("取消", null).create();
+                });
+        if (saved != null) choices.add(AppIcon.Kind.ADJUST, "RAW 显影", "", () -> { if (!closed) activity.startActivityForResult(cc.huevia.RawDevelopActivity.intent(activity,saved.file(),PhotoFilterEditor.accountOwner(activity)).putExtra(cc.huevia.RawDevelopActivity.EXTRA_SOURCE_SHA,saved.sha256()),7319); });
+        AlertDialog next = choices.create();
         fileDialog = next; next.setOnDismissListener(ignored -> { if (fileDialog == next) fileDialog = null; }); show(next);
+    }
+    private void editRaw(RawPhotoDownload saved) {
+        if (closed || saved == null || isBusy() || host.isOtherPhotoWorkBusy()) return;
+        activity.startActivityForResult(cc.huevia.RawDevelopActivity.intent(activity, saved.file(), PhotoFilterEditor.accountOwner(activity))
+                .putExtra(cc.huevia.RawDevelopActivity.EXTRA_SOURCE_SHA, saved.sha256())
+                .putExtra(cc.huevia.RawDevelopActivity.EXTRA_EDIT_DIRECTLY, true), 7319);
     }
 
     private void chooseDestination(java.util.function.Consumer<PhotoSaveTarget> selected) {
@@ -343,12 +365,15 @@ public final class RawPhotoPanel implements AutoCloseable {
                 (target, ignored) -> host.beforeSavePhotos(target, () -> { if (!closed) selected.accept(target); }));
     }
     private void beginDownload(PhotoItem remote, DownloadedPhoto original, PhotoSaveTarget target) {
+        beginDownload(remote, original, target, false);
+    }
+    private void beginDownload(PhotoItem remote, DownloadedPhoto original, PhotoSaveTarget target, boolean editWhenReady) {
         if (closed || !rawReadAllowed(true)) return;
         // Local lookup may find a previously saved NEF without a network. The core still refuses an
         // uncached remote read without a current matching camera and uniquely verified source evidence.
         if (remote != null && !controller.hasLiveSession()) { host.onConnectionRequired("下载 RAW 原文件"); return; }
         if (!retainPhotoWork()) return;
-        batch = null; Operation next = new Operation(remote, original, null, target); runDownload(next);
+        batch = null; Operation next = new Operation(remote, original, null, target); next.editWhenReady = editWhenReady; runDownload(next);
     }
     private void runDownload(Operation next) {
         try { start(next); }
@@ -375,6 +400,11 @@ public final class RawPhotoPanel implements AutoCloseable {
                 next.saved = saved; next.validatedSnapshot = true; next.filename = saved.filename(); next.received = next.total = saved.byteSize(); next.progress = Math.max(next.progress, .95); publish(next);
             }
             public void onError(String error) { failed(next, error); }
+            public void onConnectionRequired() {
+                if (!current(next)) return;
+                next.busy = false; next.error = "连接原相机后，重新选择下载 RAW 原文件。"; next.stage = "等待连接相机";
+                releasePhotoWork(); dismissProgress(); host.onChanged(); host.onConnectionRequired("下载 RAW 原文件");
+            }
             public void onSelectionRequired(String error) {
                 if (!current(next)) return;
                 next.selectionRequired = true; failed(next, error);
@@ -440,6 +470,7 @@ public final class RawPhotoPanel implements AutoCloseable {
         if (next.batch != null) { batchFinishedInput(next, true); return; }
         releasePhotoWork(); updateProgress();
         if (closed) return;
+        if (next.editWhenReady) { next.editWhenReady = false; dismissProgress(); host.onChanged(); editRaw(next.saved); return; }
         if (adapter != null) adapter.notifyDataSetChanged();
         if (open && local && !loading) loadPage(true);
         host.onChanged(); feedback("RAW 已保存在应用相册", "完整 NEF 原文件已保留，手机相册未新增文件。可稍后再保存到手机相册。");
@@ -657,13 +688,6 @@ public final class RawPhotoPanel implements AutoCloseable {
         }
     }
 
-    private View formatChoice(String title, String body, Runnable click) {
-        LinearLayout row = vertical(); row.setPadding(dp(12), dp(14), dp(12), dp(14)); row.setMinimumHeight(dp(76));
-        row.setBackground(new RippleDrawable(ColorStateList.valueOf(palette.primaryContainer), shape(palette.card, 14), null));
-        TextView heading = text(title, 16, palette.text, true); row.addView(heading);
-        TextView description = text(body, 13, palette.secondary, false); LinearLayout.LayoutParams bodyParams = new LinearLayout.LayoutParams(-1, -2); bodyParams.topMargin = dp(5); row.addView(description, bodyParams);
-        row.setFocusable(true); row.setClickable(true); row.setContentDescription(title + "，" + body); row.setOnClickListener(view -> click.run()); return row;
-    }
     private void styleTab(Button button, boolean selected) {
         if (button == null) return;
         button.setTextColor(selected ? palette.text : palette.secondary); button.setTypeface(Typeface.create("sans-serif", selected ? Typeface.BOLD : Typeface.NORMAL));

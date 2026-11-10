@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-11-07T14:04:16.270Z",
+  "homepage": "https://huevia.cc/",
+  "admin": "https://admin.huevia.cc/",
+  "configSha256": "4fff434b6f048d3486c1adfb188693fa0dfe67dfffe9a531fecbfff891222414",
+  "sitePackageSha256": "cc005874d1d6af361baed110733fe87a9407d1cb7f86d001eb0193e403761a8c",
+  "liveChecks": 18,
+  "liveChecksPassed": true,
+  "photos": 6,
+  "publicBeta": {
+    "versionName": "0.23.4-beta",
+    "versionCode": 115,
+    "byteLength": 9531300,
+    "sha256": "ae2f90cf0580f265a893036b2977c9b36547b2b3000c4a6296e69c43249721c2"
+  },
+  "ui": {
+    "localMobileWidth": 390,
+    "localMobileOverflow": false,
+    "liveDesktopWidth": 2048,
+    "liveDesktopOverflow": false,
+    "channelToggleAndFaq": true,
+    "headlessCaptures": [
+      1440,
+      500
+    ],
+    "viewportRestored": true
+  },
+  "rollbackConfig": "/etc/caddy/huevia.caddy.before-homepage-20261107"
+}

@@ -5,6 +5,7 @@ $output=Join-Path $PSScriptRoot '.build/classes'
 New-Item -ItemType Directory -Force -Path $output | Out-Null
 $javaRoot=Join-Path $root 'app/src/main/java/cc/huevia'
 $sources=@(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'ncp') -Filter '*.java' | ForEach-Object FullName)
+foreach($source in @('PresetFile','LibraryJson')){$sources+=Join-Path $javaRoot ('library/'+$source+'.java')}
 foreach($source in @('PhotoEditStore','PhotoRecipeStore','PhotoAdjustmentCopy')){$sources+=Join-Path $javaRoot ('album/'+$source+'.java')}
 $sources+=@(Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'cc') -Recurse -Filter '*.java' | ForEach-Object FullName)
 & (Join-Path $JdkHome 'bin/javac.exe') '-J-Xmx256m' --release 17 -encoding UTF-8 -d $output @sources

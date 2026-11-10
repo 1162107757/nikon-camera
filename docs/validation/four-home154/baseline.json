@@ -1,0 +1,11 @@
+{
+  "note": "Frozen pre154 current-worktree source hashes; not git HEAD. Baseline bodies remain in .tooling/four-home154/baseline.",
+  "files": {
+    "app/src/main/java/cc/huevia/MainActivity.java": "2f62722e451bb8665f71dbe048f62fb4e07a2354f76d43f157c2fd681fd1efb8",
+    "app/src/main/java/cc/huevia/ui/UiPalette.java": "b5b7a20fcc3abcdbca836dc2fb018af976c13427609be5172dd3a56a199a0dbd",
+    "app/src/main/java/cc/huevia/ui/GlassBar.java": "c7d64c0720d7be05dbbf247cd3f552c0ca4a4efb40c37aa98f54aaceee682b3e",
+    "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java": "c1a01f3d84b944519171af4b93741740c12d3905a9657e76fcd455d3686cbbc9",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "a09526c6a4c347074df5a8d947b517f42c4eae9aa4d6443864e79d5a59cd52b1",
+    "app/build.gradle": "84054329997285b2a51114b0d48415257f0faccd8c591b22cdaaf1f1baa273d1"
+  }
+}

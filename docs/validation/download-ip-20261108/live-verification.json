@@ -1,0 +1,23 @@
+{
+  "at": "2026-11-08T08:14:49.476Z",
+  "publicOrigin": "https://huevia.cc",
+  "versionCode": 156,
+  "versionName": "0.30.2-beta",
+  "bytes": 31292511,
+  "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95",
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "firstStatus": 307,
+  "cosStatus": 200,
+  "retryStatus": 307,
+  "conditionalStatus": 304,
+  "disposition": "attachment; filename=Huevia-156-beta.apk",
+  "downloadOrigin": "https://download.huevia.cc",
+  "globalCountersUnchanged": true,
+  "sourceDeltas": [
+    {
+      "requests": 3,
+      "bytes": 31292511
+    }
+  ],
+  "signedUrlOrCredentialsRecorded": false
+}

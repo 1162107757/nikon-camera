@@ -1,0 +1,13 @@
+{
+  "environmentId": "nikon-d8girdjsr252fd90e",
+  "functionName": "nikon-preset-library",
+  "status": "Active",
+  "allowedBrowserOrigins": [
+    "https://huevia.cc",
+    "https://admin.huevia.cc"
+  ],
+  "unchangedOtherVariableCount": 9,
+  "unchangedOtherVariablesSha256": "09342864f23ded778363efbc81c4b2e45b0c511efa9cce4c2e7999ff4a23da59",
+  "codeRedeployed": false,
+  "verifiedAt": "2026-11-07T13:41:21.802Z"
+}

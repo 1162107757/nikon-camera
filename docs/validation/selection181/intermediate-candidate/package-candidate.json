@@ -1,0 +1,20 @@
+{
+  "packageName": "cc.huevia",
+  "versionName": "0.30.27-beta",
+  "versionCode": 181,
+  "minSdk": 26,
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "signatureSchemes": [
+    2,
+    3
+  ],
+  "byteLength": 31395094,
+  "sha256": "9ae3b95e1bc56a745d6eeeed24cc0966a78cf3ec8158eea1f8b157250fbe8893",
+  "fullSha256": "ddbfd3d4592f4f807179814b5a6dd27442ef205c43cb2939b4a94a0e7bcb0725",
+  "delivery": "dist/upload181/huevia-0.30.27-beta-update.apk",
+  "candidate": "online-library/.local/publication181/candidates/ddbfd3d4592f4f807179814b5a6dd27442ef205c43cb2939b4a94a0e7bcb0725/update.apk",
+  "removedOnlyAbi": "x86",
+  "retainedPayloads": 89,
+  "alignment": "16KiB verified",
+  "published": false
+}

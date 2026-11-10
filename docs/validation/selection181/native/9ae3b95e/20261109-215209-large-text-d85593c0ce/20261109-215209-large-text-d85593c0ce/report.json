@@ -1,0 +1,175 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "apkSha256": "9ae3b95e1bc56a745d6eeeed24cc0966a78cf3ec8158eea1f8b157250fbe8893",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "fixture-group-shape",
+      "passed": true,
+      "found": true,
+      "members": 3,
+      "versions": 2,
+      "groups": 8
+    },
+    {
+      "name": "whole-group-contains-original-alias-and-effect",
+      "passed": true
+    },
+    {
+      "name": "new-version-after-snapshot-stops-delete",
+      "passed": true
+    },
+    {
+      "name": "active-photo-processing-blocks-delete",
+      "passed": true
+    },
+    {
+      "name": "public-photo-fixture-created",
+      "passed": true
+    },
+    {
+      "name": "album-main-ready",
+      "passed": true
+    },
+    {
+      "name": "native-app-album-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-long-press-target-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-thumbnail-long-press-enters-selection",
+      "passed": true
+    },
+    {
+      "name": "A-selected-count-is-live-three",
+      "passed": true
+    },
+    {
+      "name": "A-count-and-cancel-in-top-header",
+      "passed": true
+    },
+    {
+      "name": "A-only-three-bottom-actions",
+      "passed": true
+    },
+    {
+      "name": "A-equal-width-and-matching-icon-0",
+      "passed": true
+    },
+    {
+      "name": "A-equal-width-and-matching-icon-1",
+      "passed": true
+    },
+    {
+      "name": "A-equal-width-and-matching-icon-2",
+      "passed": true
+    },
+    {
+      "name": "A-gallery-retains-visible-photo-space",
+      "passed": true
+    },
+    {
+      "name": "A-header-select-all-uses-current-scope",
+      "passed": true
+    },
+    {
+      "name": "A-header-cancel-restores-browse",
+      "passed": true
+    },
+    {
+      "name": "delete-visible-only-in-app-selection",
+      "passed": true
+    },
+    {
+      "name": "delete-retains-48dp-target",
+      "passed": true
+    },
+    {
+      "name": "maximum-count-label-fits",
+      "passed": true
+    },
+    {
+      "name": "delete-selection-toolbar-fits",
+      "passed": true
+    },
+    {
+      "name": "explicit-confirmation-shown",
+      "passed": true
+    },
+    {
+      "name": "cancel-preserves-all-versions",
+      "passed": true
+    },
+    {
+      "name": "phone-source-selected",
+      "passed": true
+    },
+    {
+      "name": "phone-album-does-not-offer-app-deletion",
+      "passed": true
+    },
+    {
+      "name": "A-phone-only-batch-edit",
+      "passed": true
+    },
+    {
+      "name": "app-source-restored",
+      "passed": true
+    },
+    {
+      "name": "cancel-disabled-during-confirmed-delete",
+      "passed": true
+    },
+    {
+      "name": "back-preserves-confirmed-delete-and-result-callback",
+      "passed": true
+    },
+    {
+      "name": "confirm-deletes-all-three-private-members",
+      "passed": true
+    },
+    {
+      "name": "other-app-photo-untouched",
+      "passed": true
+    },
+    {
+      "name": "public-MediaStore-original-retained-exactly",
+      "passed": true
+    },
+    {
+      "name": "deletion-notifies-shared-photo-library",
+      "passed": true
+    }
+  ],
+  "measurements": [],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Actual installed 181 native album selection A and app-only deletion regression, using owned photography fixtures, real MediaStore copy preservation, count\/select-all\/cancel and equal bottom actions. Phone selection visibility uses an empty\/owned fixture state. Repeated assertions include bootstrap. RAW decoding, real camera, end-to-end export, physical device and full TalkBack were not run."
+}

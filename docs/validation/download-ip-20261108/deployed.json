@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-08T08:13:45.148Z",
+  "status": "Active",
+  "configurationPreserved": true,
+  "rolePreserved": "HueviaUpdatePackageRole",
+  "zipSha256": "383cca2bed1855483fb6bc8cf63d81fd7d97f698e49e91850b68920a897f0c12",
+  "changedFiles": [
+    {
+      "path": "server/releases.mjs",
+      "before": "8600238c62ad54408406939455b6d753a1387405e37f7484baac35dec890e1f2",
+      "after": "4eab58b1d3e879efc7d84ce1291f0ab70ea070bbd2b8fe5ce293b4a2f1d731b3"
+    },
+    {
+      "path": "server/app.mjs",
+      "before": "ae2d4369e0d03593a393bd77350e2d63e35a44d8be2de612a01032c0a83fe53a",
+      "after": "a527609876abb448853db8bfa693e34088b5dbc7ad147dc6ee6ba3bfceadeb7f"
+    }
+  ]
+}

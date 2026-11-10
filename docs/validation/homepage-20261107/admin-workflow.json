@@ -1,0 +1,11 @@
+{
+  "origin": "https://admin.huevia.cc",
+  "checkedAt": "2026-11-07T13:51:44.677Z",
+  "checks": [
+    {
+      "name": "New administrator origin accepts existing credentials",
+      "pass": false,
+      "status": 401
+    }
+  ]
+}

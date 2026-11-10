@@ -1,0 +1,463 @@
+{
+  "apkSha256": "c1142e440a9bb38afde54ce922a10e273ef5154cd1899ea5a3827ef4773a302a",
+  "sdk": 31,
+  "versionCode": 185,
+  "syntheticWhiteReference": {
+    "accepted": false,
+    "reason": "UNSAFE_HIGHLIGHTS",
+    "maxPinkDelta": 0,
+    "nativeLutApplied": false
+  },
+  "sampleOrigin": "pinned CC0 NEF in local QA APK, copied into own private cache",
+  "nefExactProductionCalibration": {
+    "accepted": true,
+    "reason": "MATCHED",
+    "correlation": 0.9900595269885555,
+    "before": 0.29805144310325227,
+    "after": 0.03443026896772467,
+    "neutralAxis": [
+      {
+        "input": 128,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "input": 180,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "input": 200,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "input": 220,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "input": 230,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "input": 240,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "input": 248,
+        "rgb": [
+          252,
+          253,
+          253
+        ]
+      },
+      {
+        "input": 252,
+        "rgb": [
+          253,
+          253,
+          253
+        ]
+      },
+      {
+        "input": 255,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      }
+    ]
+  },
+  "z6iiExactProductionCalibration": {
+    "accepted": false,
+    "reason": "UNSAFE_HIGHLIGHTS",
+    "correlation": 0.943541066113928,
+    "before": 0.28823068805859214,
+    "after": 0.042659335063801054,
+    "neutralAxis": [
+      {
+        "input": 128,
+        "rgb": [
+          128,
+          128,
+          128
+        ]
+      },
+      {
+        "input": 180,
+        "rgb": [
+          180,
+          180,
+          180
+        ]
+      },
+      {
+        "input": 200,
+        "rgb": [
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "input": 220,
+        "rgb": [
+          220,
+          220,
+          220
+        ]
+      },
+      {
+        "input": 230,
+        "rgb": [
+          230,
+          230,
+          230
+        ]
+      },
+      {
+        "input": 240,
+        "rgb": [
+          240,
+          240,
+          240
+        ]
+      },
+      {
+        "input": 248,
+        "rgb": [
+          248,
+          248,
+          248
+        ]
+      },
+      {
+        "input": 252,
+        "rgb": [
+          252,
+          252,
+          252
+        ]
+      },
+      {
+        "input": 255,
+        "rgb": [
+          255,
+          255,
+          255
+        ]
+      }
+    ]
+  },
+  "fixtureCleanup": true,
+  "pass": true,
+  "cases": [
+    {
+      "case": "ramp-neutral-H0",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "d8e08573fac9656f91856096dd39b61eff4aa4348617ff0e9834081f6a5f815e",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "a81384085c87a93f81775f0e7cafa9abe66d68ef9aecff6110a56d2d71712e0a",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 16817,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 256,
+      "fullHeight": 128,
+      "clippedWhite": {
+        "meanR": 255,
+        "meanG": 255,
+        "meanB": 255,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-neutral-H1",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "82646daa9fb7cffd9d5a310bdba8becb691dcb1ae117f696e7419beec8f9a58e",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "4249c70d17bd9624033324b949bf8d7f5b770cb6e92715d6787c4c41b244280c",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 0,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 256,
+      "fullHeight": 128,
+      "clippedWhite": {
+        "meanR": 255,
+        "meanG": 188,
+        "meanB": 225,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-neutral-H2",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "5c6f0ff527d7ca6a3496a1fb544cd8771cffb35a162b37135ba35e11627f211e",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "4f4e4dcc0a95eccaa30d92d45238dcf65cea8fb2fc883b8852bd51cbf975fdd0",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 8821,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 256,
+      "fullHeight": 128,
+      "clippedWhite": {
+        "meanR": 225,
+        "meanG": 225,
+        "meanB": 225,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-neutral-H3",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "7a3603c0d36b8fb6458143e15574b25ad50ad6c798b30c9333847c8d3522ee0b",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "93db5cf32d87188c7712f5825a6f3cc2b67c6fa6dd9d1818b750bfa23ee8ce70",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 10735,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 2
+      },
+      "fullWidth": 256,
+      "fullHeight": 128,
+      "clippedWhite": {
+        "meanR": 255,
+        "meanG": 255,
+        "meanB": 255,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-camera-default",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "5c6f0ff527d7ca6a3496a1fb544cd8771cffb35a162b37135ba35e11627f211e",
+      "cameraColorApplied": false,
+      "colorStatus": "无相机 JPEG 参考 · 已用中性色彩",
+      "identity": "890f217f2f2de45b2e5fb25744e7451cb14783e7483e0f458ed04ef2494ef1f5",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 8821,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 256,
+      "fullHeight": 128,
+      "clippedWhite": {
+        "meanR": 225,
+        "meanG": 225,
+        "meanB": 225,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "nef-neutral-default",
+      "sourceSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+      "outputSha256": "ac6f76a413bf1b0f6f90109aae4f2f5473d6edeef83758e1bf4c2c4c55fe3608",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "5b80b7158522b4fe83269f3cd5371f2f1bd9fe786223153487d18957eed18fdb",
+      "width": 320,
+      "height": 213,
+      "stats": {
+        "brightPixels": 0,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 6064,
+      "fullHeight": 4040
+    },
+    {
+      "case": "nef-camera-default",
+      "sourceSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+      "outputSha256": "6d6dd8f127ed619f4c715209d896711d6b20a826b4c3e1ede9abc54ed7963dff",
+      "cameraColorApplied": true,
+      "colorStatus": "相机 JPEG 色彩 · 近似还原",
+      "identity": "02c226e0dba9a206f7783eb19808fde98d6912ece9758949f98fb758b7975f4f",
+      "width": 320,
+      "height": 213,
+      "stats": {
+        "brightPixels": 64,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 5
+      },
+      "fullWidth": 6064,
+      "fullHeight": 4040
+    },
+    {
+      "case": "z6ii-neutral-default",
+      "sourceSha256": "142656e30e8735fa29684a3b46145eba0a7b219a947ce6bf45d68a387ceb72e5",
+      "outputSha256": "4521a8cde861395c24874b682e4fda4f7ffbab52e5e16320ebf23041a469c63f",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "a7189de29060da82142ce613c357988a1388417c86755ed4f53e8716e3c563b8",
+      "width": 320,
+      "height": 213,
+      "stats": {
+        "brightPixels": 0,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 6064,
+      "fullHeight": 4040
+    },
+    {
+      "case": "z6ii-camera-default",
+      "sourceSha256": "142656e30e8735fa29684a3b46145eba0a7b219a947ce6bf45d68a387ceb72e5",
+      "outputSha256": "4521a8cde861395c24874b682e4fda4f7ffbab52e5e16320ebf23041a469c63f",
+      "cameraColorApplied": false,
+      "colorStatus": "JPEG 色彩匹配不可靠 · 已用中性色彩",
+      "identity": "4c5e585c191b5a17831078abe1c47bdfc7299dad67dc26df393d752eeb2ab660",
+      "width": 320,
+      "height": 213,
+      "stats": {
+        "brightPixels": 0,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "fullWidth": 6064,
+      "fullHeight": 4040
+    }
+  ],
+  "checks": [
+    {
+      "name": "fixed185-native-color-path-keeps-white-neutral",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H0-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H0-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H1-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H1-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H2-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H2-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H2-default-native-white-neutral",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H3-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "ramp-neutral-H3-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "ramp-camera-default-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "ramp-camera-default-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "ramp-camera-default-default-native-white-neutral",
+      "passed": true
+    },
+    {
+      "name": "nef-neutral-default-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "nef-neutral-default-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "nef-camera-default-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "nef-camera-default-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "nef-display-white-and-alpha-preserved",
+      "passed": true
+    },
+    {
+      "name": "nef-neutral-highlight-gradient-safe",
+      "passed": true
+    },
+    {
+      "name": "z6ii-neutral-default-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "z6ii-neutral-default-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "z6ii-camera-default-source-byte-preserved",
+      "passed": true
+    },
+    {
+      "name": "z6ii-camera-default-full-size-output",
+      "passed": true
+    },
+    {
+      "name": "z6ii-display-white-and-alpha-preserved",
+      "passed": true
+    },
+    {
+      "name": "z6ii-neutral-highlight-gradient-safe",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "versionCode": 172,
+  "candidateSha256": "6712f7513eb35b5e9d9e7c3ce797fcd7fc0395b2400fffbc436a2d017dbe5d83",
+  "probeSha256": "c5a9adf520c1a5b96d4f294eb03e84ae18160973959ba1c09a95076cb06c8532",
+  "serial": "emulator-5584",
+  "pass": true,
+  "scope": "Actual installed app encoding on actual Android boot runtime. Baseline172 belowAPI33 must raise NoSuchMethodError in page and community encoding. Fixed174 checks UTF8 wire query, parsed page, community names and actual MainActivity source switches. HTTPS transport is mocked; no writes or preview certification. An Android API31 emulator is not a physical HarmonyOS device.",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "a8607b9ad2d6771dac3a4b80d866f90a73f1ef4988079a813bc6f341a8a561a6"
+    }
+  ]
+}

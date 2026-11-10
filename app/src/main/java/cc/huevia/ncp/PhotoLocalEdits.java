@@ -8,12 +8,13 @@ import java.util.*;
 /** Immutable edits bound to one photograph, in its EXIF-oriented, pre-composition frame. */
 public final class PhotoLocalEdits {
     public static final String MODEL="photo-local-linear-v1";
-    public static final int MAX_MASKS=16,MAX_CLONES=64,MAX_BRUSH_POINTS=512,MAX_REGIONS=16;
+    public static final int MAX_MASKS=16,MAX_CLONES=64,MAX_BRUSH_POINTS=512,MAX_REGIONS=16,MAX_PATCHES=16;
     public static final int MAX_REGION_STROKES=256,MAX_REGION_POINTS=32768;
     public static final int MAX_REGION_RECIPE_BYTES=1_000_000;
     public static final PhotoLocalEdits NONE=new PhotoLocalEdits(Collections.emptyList(),Collections.emptyList());
     private final List<Mask> masks;
     private final List<Clone> clones;
+    private final List<PhotoPatch> patches;
     private final List<AdjustmentRegion> regions;
     public final PhotoPortrait portrait;
     public enum Kind { BRUSH,RADIAL,LINEAR }
@@ -24,45 +25,54 @@ public final class PhotoLocalEdits {
         this(masks,clones,portrait,Collections.emptyList());
     }
     public PhotoLocalEdits(List<Mask> masks,List<Clone> clones,PhotoPortrait portrait,List<AdjustmentRegion> regions){
-        if(masks==null||clones==null||portrait==null||regions==null||masks.size()>MAX_MASKS||clones.size()>MAX_CLONES||regions.size()>MAX_REGIONS)throw new IllegalArgumentException("局部编辑数量超出范围。");
+        this(masks,clones,portrait,regions,Collections.emptyList());
+    }
+    public PhotoLocalEdits(List<Mask> masks,List<Clone> clones,PhotoPortrait portrait,List<AdjustmentRegion> regions,List<PhotoPatch> patches){
+        if(masks==null||clones==null||portrait==null||regions==null||masks.size()>MAX_MASKS||clones.size()>MAX_CLONES||regions.size()>MAX_REGIONS||patches==null||patches.size()>MAX_PATCHES)throw new IllegalArgumentException("局部编辑数量超出范围。");
         ArrayList<Mask> m=new ArrayList<>(masks);ArrayList<Clone> c=new ArrayList<>(clones);
         if(m.contains(null)||c.contains(null))throw new IllegalArgumentException("局部编辑无效。");
         ArrayList<AdjustmentRegion> r=new ArrayList<>(regions);Set<String> ids=new HashSet<>();int strokes=0,points=0;
-        for(AdjustmentRegion region:r){if(region==null||!ids.add(region.id))throw new IllegalArgumentException("局部调节区域无效。");strokes+=region.strokes.size();for(PhotoPortrait.Stroke stroke:region.strokes)points+=stroke.points().length/2;}
+        for(AdjustmentRegion region:r){if(region==null||!ids.add(region.id))throw new IllegalArgumentException("局部调节区域无效。");strokes+=region.strokes.size()+region.shapes.size();for(PhotoPortrait.Stroke stroke:region.strokes)points+=stroke.points().length/2;}
+        ArrayList<PhotoPatch> patchCopy=new ArrayList<>(patches);for(PhotoPatch patch:patchCopy){if(patch==null)throw new IllegalArgumentException("修补数据无效。");strokes+=patch.selection.strokes.size()+patch.selection.shapes.size();for(PhotoPortrait.Stroke stroke:patch.selection.strokes)points+=stroke.points().length/2;}
         if(strokes>MAX_REGION_STROKES||points>MAX_REGION_POINTS)throw new IllegalArgumentException("局部调节轨迹总量超限。");
-        this.masks=Collections.unmodifiableList(m);this.clones=Collections.unmodifiableList(c);this.portrait=portrait;this.regions=Collections.unmodifiableList(r);
-        if(!r.isEmpty())try{write(new DataOutputStream(new OutputStream(){int bytes;public void write(int value)throws IOException{reserve(1);}public void write(byte[] value,int offset,int length)throws IOException{reserve(length);}private void reserve(int count)throws IOException{if(count<0||bytes>MAX_REGION_RECIPE_BYTES-count)throw new IOException("局部调节数据已达容量上限，请删除不再使用的区域。");bytes+=count;}}));}catch(IOException tooLarge){throw new IllegalArgumentException(tooLarge.getMessage(),tooLarge);}
+        this.masks=Collections.unmodifiableList(m);this.clones=Collections.unmodifiableList(c);this.portrait=portrait;this.regions=Collections.unmodifiableList(r);this.patches=Collections.unmodifiableList(patchCopy);
+        if(!r.isEmpty()||!patchCopy.isEmpty())try{write(new DataOutputStream(new OutputStream(){int bytes;public void write(int value)throws IOException{reserve(1);}public void write(byte[] value,int offset,int length)throws IOException{reserve(length);}private void reserve(int count)throws IOException{if(count<0||bytes>MAX_REGION_RECIPE_BYTES-count)throw new IOException("局部调节数据已达容量上限，请删除不再使用的区域。");bytes+=count;}}));}catch(IOException tooLarge){throw new IllegalArgumentException(tooLarge.getMessage(),tooLarge);}
     }
     public List<Mask> masks(){return masks;}
     public List<Clone> clones(){return clones;}
+    public List<PhotoPatch> patches(){return patches;}
     public List<AdjustmentRegion> regions(){return regions;}
-    public boolean isEmpty(){return masks.isEmpty()&&clones.isEmpty()&&portrait.isEmpty()&&regions.isEmpty();}
-    public boolean hasLocalEffects(){for(Mask m:masks)if(m.hasEffect())return true;for(Clone c:clones)if(c.hasEffect())return true;for(AdjustmentRegion r:regions)if(r.hasEffect())return true;return false;}
+    public boolean isEmpty(){return masks.isEmpty()&&clones.isEmpty()&&portrait.isEmpty()&&regions.isEmpty()&&patches.isEmpty();}
+    public boolean hasLocalEffects(){for(Mask m:masks)if(m.hasEffect())return true;for(Clone c:clones)if(c.hasEffect())return true;for(AdjustmentRegion r:regions)if(r.hasEffect())return true;for(PhotoPatch p:patches)if(p.hasEffect())return true;return false;}
     public boolean isNeutral(){return !hasLocalEffects()&&portrait.isNeutral();}
     /** Keep a frozen zero-intensity regional analysis in draft/version comparisons. */
     public boolean hasStoredSkinSmoothingState(){if(portrait.skinSmoothing>0||portrait.hasRetouchState())return true;for(AdjustmentRegion region:regions)if(region.portrait.skinSmoothing>0||region.portrait.hasRetouchState())return true;return false;}
     public boolean hasStoredBodyState(){if(portrait.bodyShape.hasStoredState())return true;for(AdjustmentRegion region:regions)if(region.portrait.bodyShape.hasStoredState())return true;return false;}
     public boolean hasStoredCleanupState(){for(AdjustmentRegion region:regions)if(region.adjustments.cleanup.hasStoredState())return true;return false;}
-    public PhotoLocalEdits withPortrait(PhotoPortrait value){return new PhotoLocalEdits(masks,clones,value,regions);}
-    public PhotoLocalEdits add(Mask value){ArrayList<Mask> m=new ArrayList<>(masks);m.add(value);return new PhotoLocalEdits(m,clones,portrait,regions);}
-    public PhotoLocalEdits withMask(int index,Mask value){ArrayList<Mask> m=new ArrayList<>(masks);m.set(index,value);return new PhotoLocalEdits(m,clones,portrait,regions);}
-    public PhotoLocalEdits removeMask(int index){ArrayList<Mask> m=new ArrayList<>(masks);m.remove(index);return new PhotoLocalEdits(m,clones,portrait,regions);}
-    public PhotoLocalEdits add(Clone value){ArrayList<Clone> c=new ArrayList<>(clones);c.add(value);return new PhotoLocalEdits(masks,c,portrait,regions);}
-    public PhotoLocalEdits withClone(int index,Clone value){ArrayList<Clone> c=new ArrayList<>(clones);c.set(index,value);return new PhotoLocalEdits(masks,c,portrait,regions);}
-    public PhotoLocalEdits removeClone(int index){ArrayList<Clone> c=new ArrayList<>(clones);c.remove(index);return new PhotoLocalEdits(masks,c,portrait,regions);}
-    public PhotoLocalEdits withRegions(List<AdjustmentRegion> values){return new PhotoLocalEdits(masks,clones,portrait,values);}
+    public PhotoLocalEdits withPortrait(PhotoPortrait value){return new PhotoLocalEdits(masks,clones,value,regions,patches);}
+    public PhotoLocalEdits add(Mask value){ArrayList<Mask> m=new ArrayList<>(masks);m.add(value);return new PhotoLocalEdits(m,clones,portrait,regions,patches);}
+    public PhotoLocalEdits withMask(int index,Mask value){ArrayList<Mask> m=new ArrayList<>(masks);m.set(index,value);return new PhotoLocalEdits(m,clones,portrait,regions,patches);}
+    public PhotoLocalEdits removeMask(int index){ArrayList<Mask> m=new ArrayList<>(masks);m.remove(index);return new PhotoLocalEdits(m,clones,portrait,regions,patches);}
+    public PhotoLocalEdits add(Clone value){ArrayList<Clone> c=new ArrayList<>(clones);c.add(value);return new PhotoLocalEdits(masks,c,portrait,regions,patches);}
+    public PhotoLocalEdits withClone(int index,Clone value){ArrayList<Clone> c=new ArrayList<>(clones);c.set(index,value);return new PhotoLocalEdits(masks,c,portrait,regions,patches);}
+    public PhotoLocalEdits removeClone(int index){ArrayList<Clone> c=new ArrayList<>(clones);c.remove(index);return new PhotoLocalEdits(masks,c,portrait,regions,patches);}
+    public PhotoLocalEdits withRegions(List<AdjustmentRegion> values){return new PhotoLocalEdits(masks,clones,portrait,values,patches);}
     public PhotoLocalEdits addRegion(AdjustmentRegion value){ArrayList<AdjustmentRegion> r=new ArrayList<>(regions);r.add(Objects.requireNonNull(value));return withRegions(r);}
     public PhotoLocalEdits withRegion(int index,AdjustmentRegion value){ArrayList<AdjustmentRegion> r=new ArrayList<>(regions);r.set(index,Objects.requireNonNull(value));return withRegions(r);}
     public PhotoLocalEdits removeRegion(int index){ArrayList<AdjustmentRegion> r=new ArrayList<>(regions);r.remove(index);return withRegions(r);}
+    public PhotoLocalEdits withPatches(List<PhotoPatch> value){return new PhotoLocalEdits(masks,clones,portrait,regions,value);}
+    public PhotoLocalEdits addPatch(PhotoPatch value){ArrayList<PhotoPatch> p=new ArrayList<>(patches);p.add(Objects.requireNonNull(value));return withPatches(p);}
+    public PhotoLocalEdits withPatch(int index,PhotoPatch value){ArrayList<PhotoPatch> p=new ArrayList<>(patches);p.set(index,Objects.requireNonNull(value));return withPatches(p);}
+    public PhotoLocalEdits removePatch(int index){ArrayList<PhotoPatch> p=new ArrayList<>(patches);p.remove(index);return withPatches(p);}
     public String identity(){try{ByteArrayOutputStream bytes=new ByteArrayOutputStream();write(new DataOutputStream(bytes));byte[] hash=MessageDigest.getInstance("SHA-256").digest(bytes.toByteArray());StringBuilder s=new StringBuilder(MODEL+":");for(byte b:hash)s.append(Character.forDigit((b>>>4)&15,16)).append(Character.forDigit(b&15,16));return s.toString();}catch(IOException impossible){throw new AssertionError(impossible);}catch(NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}}
-    public void write(DataOutput out)throws IOException{int version=regions.isEmpty()?(portrait.isEmpty()?1:2):3;for(AdjustmentRegion region:regions)if(region.adjustments.cleanup.hasStoredState()){version=5;break;}else if(region.adjustments.palette.hasStoredState())version=4;out.writeInt(version);out.writeInt(masks.size());for(Mask m:masks)m.write(out);out.writeInt(clones.size());for(Clone c:clones)c.write(out);if(version>=2)portrait.write(out);if(version>=3){out.writeInt(regions.size());for(AdjustmentRegion region:regions)region.write(out,version>=4,version>=5);}}
+    public void write(DataOutput out)throws IOException{int version=regions.isEmpty()?(portrait.isEmpty()?1:2):3;for(AdjustmentRegion region:regions){if(!region.shapes.isEmpty()||region.inverted)version=6;else if(region.adjustments.cleanup.hasStoredState())version=Math.max(version,5);else if(region.adjustments.palette.hasStoredState())version=Math.max(version,4);}if(!patches.isEmpty())version=7;for(PhotoPatch patch:patches)if(patch.contextBlend)version=8;out.writeInt(version);out.writeInt(masks.size());for(Mask m:masks)m.write(out);out.writeInt(clones.size());for(Clone c:clones)c.write(out);if(version>=2)portrait.write(out);if(version>=3){out.writeInt(regions.size());for(AdjustmentRegion region:regions)region.write(out,version>=4,version>=5,version>=6);}if(version>=7){out.writeInt(patches.size());for(PhotoPatch patch:patches)patch.write(out,version>=8);}}
     public static PhotoLocalEdits read(DataInput in)throws IOException{
-        int version=in.readInt();if(version<1||version>5)throw new IOException("局部编辑版本不支持。");
-        try{int n=count(in.readInt(),MAX_MASKS);ArrayList<Mask> masks=new ArrayList<>(n);for(int i=0;i<n;i++)masks.add(Mask.read(in));n=count(in.readInt(),MAX_CLONES);ArrayList<Clone> clones=new ArrayList<>(n);for(int i=0;i<n;i++)clones.add(Clone.read(in));PhotoPortrait portrait=version>=2?PhotoPortrait.read(in):PhotoPortrait.NONE;ArrayList<AdjustmentRegion> regions=new ArrayList<>();if(version>=3){n=count(in.readInt(),MAX_REGIONS);for(int i=0;i<n;i++)regions.add(AdjustmentRegion.read(in,version>=4,version>=5));}return masks.isEmpty()&&clones.isEmpty()&&portrait.isEmpty()&&regions.isEmpty()?NONE:new PhotoLocalEdits(masks,clones,portrait,regions);}catch(IllegalArgumentException bad){throw new IOException("局部编辑数据无效。",bad);}
+        int version=in.readInt();if(version<1||version>8)throw new IOException("局部编辑版本不支持。");
+        try{int n=count(in.readInt(),MAX_MASKS);ArrayList<Mask> masks=new ArrayList<>(n);for(int i=0;i<n;i++)masks.add(Mask.read(in));n=count(in.readInt(),MAX_CLONES);ArrayList<Clone> clones=new ArrayList<>(n);for(int i=0;i<n;i++)clones.add(Clone.read(in));PhotoPortrait portrait=version>=2?PhotoPortrait.read(in):PhotoPortrait.NONE;ArrayList<AdjustmentRegion> regions=new ArrayList<>();if(version>=3){n=count(in.readInt(),MAX_REGIONS);for(int i=0;i<n;i++)regions.add(AdjustmentRegion.read(in,version>=4,version>=5,version>=6));}ArrayList<PhotoPatch> patches=new ArrayList<>();if(version>=7){n=count(in.readInt(),MAX_PATCHES);for(int i=0;i<n;i++)patches.add(PhotoPatch.read(in,version>=8));}return masks.isEmpty()&&clones.isEmpty()&&portrait.isEmpty()&&regions.isEmpty()&&patches.isEmpty()?NONE:new PhotoLocalEdits(masks,clones,portrait,regions,patches);}catch(IllegalArgumentException bad){throw new IOException("局部编辑数据无效。",bad);}
     }
     private static int count(int value,int max)throws IOException{if(value<0||value>max)throw new IOException("局部编辑数量无效。");return value;}
-    @Override public boolean equals(Object other){return other instanceof PhotoLocalEdits&&masks.equals(((PhotoLocalEdits)other).masks)&&clones.equals(((PhotoLocalEdits)other).clones)&&portrait.equals(((PhotoLocalEdits)other).portrait)&&regions.equals(((PhotoLocalEdits)other).regions);}
-    @Override public int hashCode(){return Objects.hash(masks,clones,portrait,regions);}
+    @Override public boolean equals(Object other){return other instanceof PhotoLocalEdits&&masks.equals(((PhotoLocalEdits)other).masks)&&clones.equals(((PhotoLocalEdits)other).clones)&&portrait.equals(((PhotoLocalEdits)other).portrait)&&regions.equals(((PhotoLocalEdits)other).regions)&&patches.equals(((PhotoLocalEdits)other).patches);}
+    @Override public int hashCode(){return Objects.hash(masks,clones,portrait,regions,patches);}
     private static double value(double n,double min,double max){if(!Double.isFinite(n)||n<min||n>max)throw new IllegalArgumentException("局部编辑参数超出范围。");return n==0?0:n;}
     private static int integer(int n,int min,int max){if(n<min||n>max)throw new IllegalArgumentException("局部调节数值超出范围。");return n;}
     static double smooth(double x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}

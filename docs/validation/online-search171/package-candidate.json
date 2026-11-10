@@ -1,0 +1,17 @@
+{
+  "versionCode": 171,
+  "versionName": "0.30.17-beta",
+  "sourceSha256": "db347fa676962aa397cb8bc5cc53407877eeac8133e3603f56bb0ea418cbb574",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication171\\candidates\\db347fa676962aa397cb8bc5cc53407877eeac8133e3603f56bb0ea418cbb574\\update.apk",
+  "uploadSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef",
+  "uploadBytes": 31358141,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "pending"
+}

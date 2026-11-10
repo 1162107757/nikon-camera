@@ -1,13 +1,19 @@
 ---
-version: 4
+version: 5
 slug: camera-wifi-connection
-primary_target: app/src/main/java/com/nikonpreset/usbprobe/MainActivity.java
+primary_target: app/src/main/java/cc/huevia/MainActivity.java
 related_targets:
-  - app/src/main/java/com/nikonpreset/usbprobe/connection/CameraWifiSession.java
-  - app/src/main/java/com/nikonpreset/usbprobe/album/CameraWifiNetwork.java
+  - app/src/main/java/cc/huevia/connection/CameraWifiSession.java
+  - app/src/main/java/cc/huevia/album/CameraWifiNetwork.java
 ---
 
 # Connection flow contract
+
+## Current 178
+
+MODE: Operate. The user requested the incumbent paper-white / charcoal style. `UiPalette.home`, the existing icons and HueTheme actions apply to the guide and new `CameraWifiDialog.java`. One full-width primary choice, quiet retry and 48dp close replace the mixed button layout. System-selection auto-launch, return polling, retry, cancellation and operation continuation stay owned by MainActivity. Local 178 / 0.30.24-beta; four API36 configurations including crop, with intercepted Wi-Fi intents and no actual camera handshake. See [178 evidence](../../docs/validation/connection178/README.md).
+
+## Frozen 72 contract and evidence
 
 MODE: Operate. A narrow refinement of Huevia's existing native Android cloud-white / graphite and system-blue interface.
 

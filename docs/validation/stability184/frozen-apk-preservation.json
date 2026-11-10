@@ -1,0 +1,22 @@
+[
+  {
+    "path": "dist/upload182/huevia-0.30.28-beta-update.apk",
+    "sha256": "bb8f5c66282c9731e58b84bf7a68e3f8fa9236532003fd27de1a6a9c09518645",
+    "unchanged": true
+  },
+  {
+    "path": "dist/upload180/huevia-0.30.26-beta-update.apk",
+    "sha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+    "unchanged": true
+  },
+  {
+    "path": "dist/upload183/huevia-0.30.29-beta-update.apk",
+    "sha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+    "unchanged": true
+  },
+  {
+    "path": "dist/upload181/huevia-0.30.27-beta-update.apk",
+    "sha256": "66eb368ef073a5b29502d3ce57935366c883f0d155cf38f59fa14099be91102c",
+    "unchanged": true
+  }
+]

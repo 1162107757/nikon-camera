@@ -1,0 +1,32 @@
+{
+  "apkSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "sourceFiles": 15,
+  "nativeRecords": 977,
+  "originalPngs": 35,
+  "finishReview": "ship; complete four-configuration visual review after recapture",
+  "designWorldUnchanged": true,
+  "emulatorClosed": true,
+  "published": false,
+  "documentation": [
+    {
+      "path": "PRODUCT.md",
+      "sha256": "618d4611b9543040f47ff8035e70931f80e80587d6dd8cdeb2c365748d6118a8"
+    },
+    {
+      "path": ".impeccable/surfaces/local-album.md",
+      "sha256": "88828d1827cce7157b8dfce4ffa0754a1326f1b43aa1ba29c4bc9100b75c3df2"
+    },
+    {
+      "path": ".impeccable/design.json",
+      "sha256": "aeb08df41bc3051c4c51e6a3d1dd94aacad7810a6eba885f95bc3467496dce72"
+    },
+    {
+      "path": "docs/validation/sort183/README.md",
+      "sha256": "e01a84ba3106bc2ce2318045f0ef27409f44b2c3f7865a33e3d9fff5c642c8d3"
+    },
+    {
+      "path": ".impeccable/review/sort183/documenter.md",
+      "sha256": "a7b188526a6c3567bb62c04cf775642f5591c5533dafd9a27d8221679d8837c1"
+    }
+  ]
+}

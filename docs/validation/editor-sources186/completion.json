@@ -1,0 +1,56 @@
+{
+  "versionCode": 186,
+  "versionName": "0.30.32-beta",
+  "apkSha256": "ca6262e510e9c751cd5b40eb93e2a90e5b3b7a3ae6229cc794878960ea6b2b15",
+  "implemented": [
+    "fixed My/Online source tabs in main editor",
+    "independently scrollable category rail",
+    "fixed all-presets grid action",
+    "concentric selection/frame with symmetric inset and end radii"
+  ],
+  "productionFiles": 3,
+  "sourceChecks": 225,
+  "continuityChecks": 9,
+  "captures": 35,
+  "nativePlatforms": [
+    {
+      "serial": "emulator-5588",
+      "api": "37",
+      "hardware": "ranchu",
+      "abi": "x86_64"
+    },
+    {
+      "serial": "emulator-5584",
+      "api": "31",
+      "hardware": "ranchu",
+      "abi": "x86_64"
+    }
+  ],
+  "physicalDeviceValidated": false,
+  "realOnlineDownloadValidated": false,
+  "published": false,
+  "gitCommitOrPush": false,
+  "wechatSent": false,
+  "devicesClosed": true,
+  "sourceStable": true,
+  "restoredSettings": {
+    "emulator-5588": {
+      "size": "1080x2424",
+      "density": 420,
+      "font": 1.0,
+      "night": "no",
+      "airplane": 0
+    },
+    "emulator-5584": {
+      "size": "1080x2340",
+      "density": 420,
+      "font": 1.0,
+      "night": "no",
+      "airplane": 0
+    }
+  },
+  "pressedRectangleFixed": true,
+  "initialPressedOutsidePixels": 455,
+  "finalPressedOutsidePixelsAllCases": 0,
+  "finalSourceRoot": ".tooling/editor-sources186/final-source-ca6262e5"
+}

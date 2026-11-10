@@ -1,0 +1,48 @@
+{
+  "candidateSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "versionCode": 173,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "5b162c54c03f448fd7ae83fa0ec5b1906764cd501a13d7a60671d24a5727276a",
+  "pass": true,
+  "scope": "Actual installed brush-down/no-commit and release/automatic repair, real rendered pixels and exterior/alpha, one inner undo per stroke, multi-touch/cancel/focus/size-slider display, explicit overlay visibility, render-failure injection atomicity, parent apply/cancel and saved v7 draft, legacy manual access and unchanged source. Four native layout captures; no physical-device, generative AI, large-object quality or new full-export matrix claim.",
+  "files": [
+    {
+      "file": "erase173-applied-main.png",
+      "sha256": "0eebe6def37e1483bf81639c6b9b34f1940ab9685ac7e2af8bfaf3bed3d980d4"
+    },
+    {
+      "file": "erase173-first-result.png",
+      "sha256": "b23f50b4a165a92d8f882d7217ae888dcf1962c6836e4a4a59358e2295665bec"
+    },
+    {
+      "file": "erase173-painting.png",
+      "sha256": "c1c6cd86c28460b02a1f00f93a23c217300ff41803672e14e12030da4c9ff4d4"
+    },
+    {
+      "file": "erase173-ready.png",
+      "sha256": "768cb5d95bf9c50726b647abcacce561b9fec1e3929aa74aafec5af8d2b5da6b"
+    },
+    {
+      "file": "erase173-reopened.png",
+      "sha256": "e40613bff6a1f78b1ce072367e27d00d2061fef2de4f4e361b217ab14763a25d"
+    },
+    {
+      "file": "erase173-result-hidden.png",
+      "sha256": "e9b4de2280637d5cf995ecea425fc98a2b135a2a3c41137bdee9430b42366975"
+    },
+    {
+      "file": "erase173-second-result.png",
+      "sha256": "51f6725fdf582583a7e9bfbf1e00fe99f2bd91436906d691d58ce2726d051bc7"
+    },
+    {
+      "file": "erase173-undone.png",
+      "sha256": "dd0c17e3a8c18021de74fb2928f8c217f408aa1aff34f47dd3e7776d7b9e2d28"
+    },
+    {
+      "file": "report.json",
+      "sha256": "c2695c5ccbc8c6ed46234b5adbcf177665dbd52f2e2face8b441380cc75e7ab7"
+    }
+  ]
+}

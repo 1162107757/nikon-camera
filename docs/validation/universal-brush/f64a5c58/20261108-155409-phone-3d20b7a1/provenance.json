@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b",
+  "versionCode": 163,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "8da40acb1f54b881ec9ff39a2306d56ad04684ecb625222515a9b073052ee599",
+  "pass": true,
+  "scope": "Actual installed direct palette/cleanup/curves/HSL brush buttons, add/cancel/repaint/apply transactions, zero-mask pixel invariants, one main undo, redo and persisted draft payloads. Generated texture only; no universal 17-parameter, portrait, EXIF or full-export workflow run in this modal-only mode.",
+  "files": [
+    {
+      "file": "direct-cleanup-regional-preview.png",
+      "sha256": "0f73a84278e8ea81091886704c75c83e60cc40304dfbc91bbde0a357f453ae01"
+    },
+    {
+      "file": "direct-curves-regional-preview.png",
+      "sha256": "2eba9fbd86f11ac5d09f9005ee77380b9cf3a71c41115a0118a0b11d7306ed28"
+    },
+    {
+      "file": "direct-hsl-regional-preview.png",
+      "sha256": "6ef94cab3052efdef372c9b597bab6e3e4dd5932df789ed2011bd46dada3209a"
+    },
+    {
+      "file": "direct-palette-regional-preview.png",
+      "sha256": "cad5f7cd269d8df84405db8a94c094b46acdd7d65a5f8c7187b8c1f3e46c8519"
+    },
+    {
+      "file": "report.json",
+      "sha256": "954f320833bf802c14f7e037c2fc53deddc4a6dcd8f5f4f856f7b8e119019f3c"
+    }
+  ]
+}

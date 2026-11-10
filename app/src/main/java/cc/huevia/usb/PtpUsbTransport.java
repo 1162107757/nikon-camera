@@ -21,8 +21,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Bounded USB transport with separate fixed transfer and read-only probe allow-lists. */
 final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operations,
-        PictureControlReadSession.Operations, PictureControlImportSession.Operations {
-    enum Mode { STANDARD_TRANSFER, PC_READ_ONLY, WRITE_EMPTY_PC, WRITE_CONFIRMED_PC }
+        PictureControlReadSession.Operations, PictureControlImportSession.Operations, PictureControlDeleteSession.Operations {
+    enum Mode { STANDARD_TRANSFER, DEVICE_INFO_ONLY, PC_READ_ONLY, WRITE_EMPTY_PC, WRITE_CONFIRMED_PC, DELETE_CONFIRMED_PC }
     private static final int BUFFER_BYTES = 16384;
     private static final int BULK_TIMEOUT_MS = 5000;
     private static final int TRANSACTION_TIMEOUT_MS = 30000;
@@ -40,6 +40,13 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
     private int limit;
     private long deadline;
     private boolean pictureControlWriteAttempted;
+    private int deletionTarget=-1;
+    private boolean deletionAttempted;
+    @Override public void authorizeDeletion(int target)throws IOException{
+        if(mode!=Mode.DELETE_CONFIRMED_PC||target<201||target>209||deletionTarget!=-1||deletionAttempted)
+            throw new IOException("此连接未获一次性槽位删除授权。");
+        deletionTarget=target;
+    }
 
     PtpUsbTransport(UsbDevice device, UsbManager manager, List<String> commandsSent)
             throws IOException {
@@ -109,7 +116,11 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
     }
 
     @Override public byte[] getData(int operation, long transactionId, long... parameters) throws IOException {
-        if (mode == Mode.PC_READ_ONLY) validatePictureControlQuery(operation, parameters);
+        if (mode == Mode.DEVICE_INFO_ONLY && (operation != PtpConstants.GET_DEVICE_INFO
+                || transactionId != 0 || parameters == null || parameters.length != 0))
+            throw new IOException("USB 连接检测仅允许标准 GetDeviceInfo，不检测预设能力。");
+        boolean deletionActiveRead=mode==Mode.DELETE_CONFIRMED_PC&&deletionTarget>=201&&operation==0x1015&&parameters!=null&&parameters.length==1&&(parameters[0]==0xd200||parameters[0]==0xd237);
+        if (mode == Mode.PC_READ_ONLY || mode == Mode.DELETE_CONFIRMED_PC&&!deletionActiveRead) validatePictureControlQuery(operation, parameters);
         if (isPictureControlWriteMode()) {
             if (!(pictureControlWriteAttempted && CameraParameterWriteGuard.propertyRead(operation, parameters)))
                 validatePictureControlImportQuery(operation, parameters, mode == Mode.WRITE_CONFIRMED_PC);
@@ -137,6 +148,13 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
     }
 
     @Override public PtpContainer command(int operation, long transactionId, long... parameters) throws IOException {
+        if (mode == Mode.DEVICE_INFO_ONLY) throw new IOException("USB 连接检测不打开或关闭 PTP 会话。");
+        if(operation==0x90ce){
+            if(mode!=Mode.DELETE_CONFIRMED_PC||parameters==null||parameters.length!=1||parameters[0]!=deletionTarget||deletionTarget<201||deletionAttempted)
+                throw new IOException("仅允许删除已明确确认的一个 C1–C9 槽位。");
+            deletionAttempted=true;
+            return guarded(()->commandInternal(operation,transactionId,parameters));
+        }
         if (mode != Mode.STANDARD_TRANSFER) {
             if (parameters == null || (operation != 0x1002 && operation != 0x1003)
                     || (operation == 0x1002 && (parameters.length != 1 || parameters[0] != 1))
@@ -148,7 +166,7 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
     }
 
     private PtpContainer commandInternal(int operation, long transactionId, long... parameters) throws IOException {
-        if (operation != 0x1002 && operation != 0x1003) {
+        if (operation != 0x1002 && operation != 0x1003 && !(operation==0x90ce&&mode==Mode.DELETE_CONFIRMED_PC&&deletionAttempted)) {
             throw new IOException("此传输层仅允许 OpenSession / CloseSession 无数据命令。");
         }
         begin(operation, transactionId, parameters);
@@ -159,6 +177,8 @@ final class PtpUsbTransport implements AutoCloseable, NcpTransferSession.Operati
 
     @Override public PtpContainer sendData(int operation, long transactionId, byte[] bytes, long... parameters)
             throws IOException {
+        if(mode==Mode.DELETE_CONFIRMED_PC)throw new IOException("槽位删除连接禁止上传预设、文件或拍摄参数。");
+        if (mode == Mode.DEVICE_INFO_ONLY) throw new IOException("USB 连接检测禁止所有数据上传。");
         if (mode == Mode.PC_READ_ONLY) {
             throw new IOException("优化校准只读模式禁止所有数据上传、属性修改和删除操作。");
         }

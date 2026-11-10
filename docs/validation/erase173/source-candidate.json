@@ -1,0 +1,58 @@
+{
+  "versionCode": 173,
+  "versionName": "0.30.19-beta",
+  "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.30.19-beta-debug.apk",
+  "sha256": "909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92",
+  "bytes": 34663894,
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "d550e46773740b02dad73e2643429c22242c0569d7c977648ca8e67c7d9daaa9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java",
+      "sha256": "1a88ee1f77c7192b94add0f2ad79e75936ad083bfbc31749e3edc31b69407bfe"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoPatchDialog.java",
+      "sha256": "9a4229d7177dce98235d77cf0c5a1a3772cc2a4517c9681a865e363420ba95ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "sha256": "e418e160b5bba4a3026afdb6e0f83ef77d50c021f0fcabf67af40a52d0e55fe3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoWorkspaceUi.java",
+      "sha256": "5ee3262da65374c9aad8b5a64c16a4631ee6ecb7b23507df4e39bf6f627f5980"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AppIcon.java",
+      "sha256": "389e301ca10305bd1fb1c65a3b962208ed6bd84664a4c03745c1c970b2552059"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java",
+      "sha256": "d10ca7245343da863010e3c28508b587f485187836c451acc35e382fb9b8dc48"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatch.java",
+      "sha256": "e6cfc78799abe3e1c30e8bfb606c9c178f10fb2d75d65969bde93b8465052399"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java",
+      "sha256": "75473b256952e6cc745a8bc968f936425d9bf22112a5c80b25cb86b18607bcfb"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java",
+      "sha256": "66ca067aa09347ed6b00e8f555df6aab5c5fb2f95725d0d69ccba47f45eb1034"
+    }
+  ],
+  "hostChecks": {
+    "existingLocalEdits": 43230,
+    "existingRepairRenderer": 153740,
+    "automaticSampling": 46702
+  },
+  "scope": "Direct paint/release automatic texture sampling and native transaction behavior; existing v7 recipe and renderer unchanged. Counts include repeated pixel assertions. No generative AI, physical Samsung/Hongmeng, fps, large-object or new full-export acceptance.",
+  "published": false,
+  "initialCandidate": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "reviewFix": "F1: restore controls immediately after early guide allocation failure; actual early allocator OOM injected separately from later renderer IOException in native confirmation."
+}

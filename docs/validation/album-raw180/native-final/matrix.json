@@ -1,0 +1,66 @@
+[
+  {
+    "mode": "phone",
+    "configuration": {
+      "night": "no",
+      "name": "phone",
+      "size": "1080x2424",
+      "density": "420",
+      "font": "1.0"
+    },
+    "pass": true,
+    "checks": 28,
+    "failure": null,
+    "directory": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\album-raw180\\native-final\\raw180-final-phone-20261109-212525",
+    "sha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+    "api": "37"
+  },
+  {
+    "mode": "large",
+    "configuration": {
+      "night": "no",
+      "name": "large",
+      "size": "840x1890",
+      "density": "420",
+      "font": "1.3"
+    },
+    "pass": true,
+    "checks": 28,
+    "failure": null,
+    "directory": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\album-raw180\\native-final\\raw180-final-large-20261109-212533",
+    "sha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+    "api": "37"
+  },
+  {
+    "mode": "tablet",
+    "configuration": {
+      "night": "no",
+      "name": "tablet",
+      "size": "1600x2560",
+      "density": "240",
+      "font": "1.0"
+    },
+    "pass": true,
+    "checks": 28,
+    "failure": null,
+    "directory": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\album-raw180\\native-final\\raw180-final-tablet-20261109-212540",
+    "sha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+    "api": "37"
+  },
+  {
+    "mode": "landscape",
+    "configuration": {
+      "night": "yes",
+      "name": "landscape",
+      "size": "2424x1080",
+      "density": "420",
+      "font": "1.0"
+    },
+    "pass": true,
+    "checks": 28,
+    "failure": null,
+    "directory": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\album-raw180\\native-final\\raw180-final-landscape-20261109-212549",
+    "sha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+    "api": "37"
+  }
+]

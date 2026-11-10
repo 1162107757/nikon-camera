@@ -1,0 +1,54 @@
+{
+  "versionCode": 157,
+  "versionName": "0.30.3-beta",
+  "published": false,
+  "phoneRootCauseConfirmed": false,
+  "fixedFailure": "Uncaught framework exceptions while launching RAW import and PNG save document pickers",
+  "apk": {
+    "path": "dist/huevia-0.30.3-beta-debug.apk",
+    "bytes": 34581880,
+    "sha256": "5d6658fbf916fde9566870ec7f6d83932f05ebff917357c47125d586e1773e1b",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31"
+  },
+  "hostChecks": 281,
+  "deviceRuns": [
+    {
+      "path": "docs/validation/photo-image-suite/raw-development/5d6658fb/20261108-113531-5b6ae2b28a",
+      "checks": 128,
+      "realNef": true,
+      "pass": true
+    },
+    {
+      "path": "docs/validation/photo-image-suite/raw-development/5d6658fb/20261108-113825-534833d150",
+      "checks": 122,
+      "realNef": false,
+      "pass": true,
+      "purpose": "Verify optional empty NEF argument runner fix"
+    }
+  ],
+  "manualNormalPicker": "Real album menu opened DocumentsUI; cancel returned to RAW workspace; empty export disabled; back returned to album",
+  "serial": "emulator-5588",
+  "physicalDeviceAvailable": false,
+  "inputs": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "0771e1d27423ad5a284388d26b6b1fb5a8348cb52c4bcfba9a45745300e69dd1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/RawDevelopActivity.java",
+      "sha256": "814b5ddbcd5650e764f488680d16bbfa18fc60ee5bf8cb7f3892d379797fe8bd"
+    },
+    {
+      "path": "tests/raw-development-device-probe/run.ps1",
+      "sha256": "a6d0d893b92b8a65563e159cfac9e4f164432f6b3994254dc47c88b831ff6880"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawActivityChecks.java",
+      "sha256": "23b0a401582f69dd58633dc68e47a8126f28b6c25ff72efe29819d71d2fda27e"
+    },
+    {
+      "path": "tests/raw-development-device-probe/src/cc/huevia/rawdevelopmentqa/RawDocumentPickerChecks.java",
+      "sha256": "a6db8acc5b7e22ff2a699ea5b9d2ab063aae18c95ea156b56ad88894f4ee85e8"
+    }
+  ]
+}

@@ -1,0 +1,384 @@
+{
+  "pass": true,
+  "mode": "phone",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "normal-motion-enabled",
+      "pass": true
+    },
+    {
+      "name": "short-drag-follows-without-selecting",
+      "pass": true
+    },
+    {
+      "name": "short-release-animates-return",
+      "pass": true
+    },
+    {
+      "name": "short-return-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "short-drag-returns-to-original-source",
+      "pass": true
+    },
+    {
+      "name": "long-drag-follows-before-source-change",
+      "pass": true
+    },
+    {
+      "name": "preset-header-fixed-during-drag",
+      "pass": true
+    },
+    {
+      "name": "preset-left-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "preset-left-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "preset-left-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "left-release-selects-my-once",
+      "pass": true
+    },
+    {
+      "name": "preset-header-fixed-during-transition",
+      "pass": true
+    },
+    {
+      "name": "preset-left-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "preset-click-right-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "preset-click-right-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "preset-click-right-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "preset-click-restores-online",
+      "pass": true
+    },
+    {
+      "name": "rapid-first-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "rapid-first-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "rapid-first-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "interrupted-transition-releases-old-snapshot",
+      "pass": true
+    },
+    {
+      "name": "rapid-reverse-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "rapid-reverse-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "rapid-reverse-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "same-source-click-does-not-restart-motion",
+      "pass": true
+    },
+    {
+      "name": "rapid-reverse-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "cancel-does-not-switch-source",
+      "pass": true
+    },
+    {
+      "name": "cancel-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "navigate-away-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "navigate-away-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "navigate-away-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "navigation-away-releases-snapshot",
+      "pass": true
+    },
+    {
+      "name": "sync-live-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "sync-live-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "sync-live-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "sync-click-selects-live",
+      "pass": true
+    },
+    {
+      "name": "sync-selector-stays-fixed",
+      "pass": true
+    },
+    {
+      "name": "sync-downloaded-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "sync-downloaded-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "sync-downloaded-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "sync-data-rebuild-retains-transition",
+      "pass": true
+    },
+    {
+      "name": "sync-downloaded-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "sync-last-source-does-not-wrap",
+      "pass": true
+    },
+    {
+      "name": "sync-edge-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "sync-nonadjacent-right-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "sync-nonadjacent-right-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "sync-nonadjacent-right-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "nonadjacent-click-selects-camera-directly",
+      "pass": true
+    },
+    {
+      "name": "album-phone-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "album-phone-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "album-phone-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "album-click-selects-phone",
+      "pass": true
+    },
+    {
+      "name": "cached-album-root-supported",
+      "pass": true
+    },
+    {
+      "name": "album-source-strip-fixed",
+      "pass": true
+    },
+    {
+      "name": "album-app-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "album-app-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "album-app-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "album-swipe-selects-application",
+      "pass": true
+    },
+    {
+      "name": "album-app-settles-without-snapshot-or-offset",
+      "pass": true
+    },
+    {
+      "name": "album-enter-selection-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "album-enter-selection-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "album-enter-selection-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "entering-selection-stops-inflight-page-motion",
+      "pass": true
+    },
+    {
+      "name": "selection-mode-has-no-page-motion",
+      "pass": true
+    },
+    {
+      "name": "moving-body-tap-has-intermediate-motion",
+      "pass": true
+    },
+    {
+      "name": "moving-body-tap-correct-direction",
+      "pass": true
+    },
+    {
+      "name": "moving-body-tap-snapshot-budget",
+      "pass": true
+    },
+    {
+      "name": "moving-body-does-not-deliver-stale-button-tap",
+      "pass": true
+    },
+    {
+      "name": "settled-body-action-receives-tap",
+      "pass": true
+    }
+  ],
+  "frames": [
+    {
+      "name": "preset-left",
+      "progress": 0.28003036975860596,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 436,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "preset-click-right",
+      "progress": 0.29580894112586975,
+      "direction": -1,
+      "width": 1080,
+      "anchorBottom": 436,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "rapid-first",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 436,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "rapid-reverse",
+      "progress": 0.5187729597091675,
+      "direction": -1,
+      "width": 1080,
+      "anchorBottom": 436,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "navigate-away",
+      "progress": 0.28003036975860596,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 436,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "sync-live",
+      "progress": 0.5187729597091675,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 441,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "sync-downloaded",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 441,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "sync-nonadjacent-right",
+      "progress": 0.29580894112586975,
+      "direction": -1,
+      "width": 1080,
+      "anchorBottom": 441,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "album-phone",
+      "progress": 0.5305588841438293,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 447,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "album-app",
+      "progress": 0.29580894112586975,
+      "direction": -1,
+      "width": 1080,
+      "anchorBottom": 447,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "album-enter-selection",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 1080,
+      "anchorBottom": 447,
+      "nativeFrameHeld": true
+    },
+    {
+      "name": "moving-body-tap",
+      "progress": 0.29580894112586975,
+      "direction": 1,
+      "width": 996,
+      "anchorBottom": 1025,
+      "nativeFrameHeld": true
+    }
+  ]
+}

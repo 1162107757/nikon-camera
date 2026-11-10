@@ -20,7 +20,7 @@ if ($JdkHome) {
 
 $javaRoot = Join-Path $projectRoot 'app\src\main\java\cc\huevia'
 $sources = @()
-foreach ($name in @('NcpFile', 'NcpPreviewProfile', 'NcpMonochromePreviewProfile', 'PresetPreviewProfile', 'Np3PreviewProfile', 'Np3MonochromePreviewProfile', 'PresetPreviewProfiles', 'SpatialPreviewFilter', 'StrengthPreviewProfile')) {
+foreach ($name in @('NcpFile', 'NcpPreviewProfile', 'NcpMonochromePreviewProfile', 'PresetPreviewProfile', 'Np3PreviewProfile', 'Np3MonochromePreviewProfile', 'Np3PresetDetails', 'PresetPreviewProfiles', 'SpatialPreviewFilter', 'StrengthPreviewProfile')) {
     $sources += Join-Path $javaRoot ('ncp\' + $name + '.java')
 }
 $sources += Join-Path $javaRoot 'library\LibraryJson.java'
@@ -35,6 +35,8 @@ if ($LASTEXITCODE -ne 0) { throw 'NP3 synthetic renderer tests failed.' }
 if ($LASTEXITCODE -ne 0) { throw 'NP3 monochrome renderer tests failed.' }
 & $runtimePath '-Dfile.encoding=UTF-8' -cp $classesDirectory cc.huevia.ncp.Np3StandardMonochromePreviewProfileTest
 if ($LASTEXITCODE -ne 0) { throw 'NP3 standard monochrome renderer tests failed.' }
+& $runtimePath '-Dfile.encoding=UTF-8' -cp $classesDirectory cc.huevia.ncp.Np3PresetDetailsTest
+if ($LASTEXITCODE -ne 0) { throw 'NP3 parameter inspection tests failed.' }
 
 if ($CorpusZip) {
     if (-not (Test-Path -LiteralPath $CorpusZip -PathType Leaf)) { throw 'The requested NP3 corpus ZIP does not exist.' }

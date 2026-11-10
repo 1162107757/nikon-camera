@@ -1,0 +1,19 @@
+{
+  "resetAt": "2026-11-08 12:27:36.755539+08",
+  "databaseTimezone": "PRC",
+  "scope": "All existing APK download count and byte budgets; user explicitly approved a full reset",
+  "removedBuckets": 4,
+  "removedGlobalRequests": 27,
+  "removedGlobalBytes": 649046898,
+  "removedIpRequests": 11,
+  "removedIpBytes": 344217621,
+  "remainingFileBuckets": 0,
+  "metadataUntouchedByStatement": true,
+  "limiterUnchanged": true,
+  "functionSha256": "f9bf1288a40fd44a38d1ee8d58b62929158100849ce1aa075a64e130106339c6",
+  "advisoryLock": "Same transaction lock as download limiter; accepted downloads serialize with reset",
+  "redeployed": false,
+  "verificationConsumedDownloadQuota": false,
+  "metadataBucketsBefore": 2,
+  "metadataBucketsAfter": 2
+}

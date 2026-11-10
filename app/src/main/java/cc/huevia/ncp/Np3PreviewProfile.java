@@ -33,7 +33,10 @@ import java.nio.charset.StandardCharsets;
  * Three Color Grading zones then use normalized Gaussian weights over encoded RGB
  * luma; balance shifts luma by balance/250 and blending changes sigma from .12 to .47.
  * A zone adds a zero-luma RGB tint of strength chroma/500 and a neutral brightness lift
- * of brightness/200. Negative grading chroma reverses the tint. The three RGB offsets
+ * of brightness/1600. Controlled NX Studio 1.11 exports of an isolated three-zone
+ * brightness edit showed that the former /200 lift washed out the midtones. The
+ * bounded /1600 approximation reduces that lift without changing stored parameters
+ * or Color Blender brightness. Negative grading chroma reverses the tint. The RGB offsets
  * are precomputed at 1025 luma positions and linearly interpolated per pixel to avoid
  * exponential functions in full-size image loops. Controlled NX Studio observations
  * support this contrast/brightness approximation, but these formulas remain explicit
@@ -47,7 +50,7 @@ import java.nio.charset.StandardCharsets;
  * A successful parse is not a claim of colour equivalence with NX Studio.</p>
  */
 public final class Np3PreviewProfile implements PresetPreviewProfile {
-    public static final String MODEL_VERSION = "np3-0310-encoded-hsl-zones-spatial-v3";
+    public static final String MODEL_VERSION = "np3-0310-encoded-hsl-zones-spatial-v4";
     private static final int MAX_BYTES = 1024 * 1024;
     private static final double[] ANCHORS = {0, 30, 60, 120, 180, 240, 270, 300, 360};
     private final String registrationName;
@@ -92,9 +95,9 @@ public final class Np3PreviewProfile implements PresetPreviewProfile {
             int rgb = hsl(hue, 1, .5);
             double r = ((rgb >>> 16) & 255) / 255.0, g = ((rgb >>> 8) & 255) / 255.0, b = (rgb & 255) / 255.0;
             double luma = .2126 * r + .7152 * g + .0722 * b;
-            grade[i][0] = (r - luma) * chroma / 500.0 + brightness / 200.0;
-            grade[i][1] = (g - luma) * chroma / 500.0 + brightness / 200.0;
-            grade[i][2] = (b - luma) * chroma / 500.0 + brightness / 200.0;
+            grade[i][0] = (r - luma) * chroma / 500.0 + brightness / 1600.0;
+            grade[i][1] = (g - luma) * chroma / 500.0 + brightness / 1600.0;
+            grade[i][2] = (b - luma) * chroma / 500.0 + brightness / 1600.0;
             active |= chroma != 0 || brightness != 0;
         }
         require(fields[32][17] == 1 && fields[32][19] == 1, "调色器混合或平衡字段类型无效。");

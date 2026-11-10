@@ -1,0 +1,80 @@
+{
+  "versionCode": 160,
+  "versionName": "0.30.6-beta",
+  "platform": "Android",
+  "format": "NP3",
+  "containerVersion": "0310",
+  "scope": "Local preset addition, read-only parameter inspection, and existing approximate phone preview support",
+  "adding": {
+    "entry": "预设 → 我的预设 → 添加本地预设",
+    "fileNames": "Case-insensitive .np3 and .ncp; extensionless provider names are inferred from a validated binary container",
+    "rejects": [
+      "Declared extension/content mismatch",
+      "Unsupported explicit filename extensions",
+      "Malformed, truncated, oversized, unsupported-version containers"
+    ],
+    "source": "Original bytes retained with SHA-256 identity; duplicate content preserves prior metadata"
+  },
+  "inspection": {
+    "entry": "预设详情 → 查看 NP3 参数",
+    "api": "cc.huevia.ncp.Np3PresetDetails.read(byte[])",
+    "snapshot": "Immutable groups, rows and values; source is bounded and defensively copied",
+    "knownBases": {
+      "0x0020": "Flexible Color",
+      "0x064D": "单色",
+      "0x0655": "深色调单色"
+    },
+    "numericGate": "Publish interpreted values only after the existing strict PresetPreviewProfiles parser accepts the whole recipe",
+    "fields": [
+      "名称、版本、基底、备注",
+      "锐化、中范围锐化、清晰度",
+      "对比度、高光、阴影、白色色阶、黑色色阶、饱和度",
+      "自定义曲线状态与已验证的 257 个采样点",
+      "红、橙、黄、绿、青、蓝、紫、洋红的色相/饱和/亮度",
+      "高光、中间调、阴影的色相/浓度/亮度",
+      "色彩分级混合与平衡",
+      "受支持单色的滤镜和调色状态"
+    ],
+    "unsupported": "Keep only validated container metadata and the exact unsupported reason; do not invent numerical results or camera compatibility",
+    "curveRule": "When a custom curve is active, do not present inactive basic-tone sentinels as -127 adjustments"
+  },
+  "interface": {
+    "groups": [
+      "细节",
+      "色调",
+      "混色",
+      "分级"
+    ],
+    "fontSp": "11–16 (22 for the close glyph only)",
+    "close": "Small top-right close icon; 32dp visible circle within a 44dp target; no separate footer action",
+    "palette": "Reuse current light/dark UiPalette and AppDialog finish"
+  },
+  "validation": {
+    "host": {
+      "np3Flexible": 24829,
+      "np3DeepMonochrome": 112146,
+      "np3StandardMonochrome": 161928,
+      "np3Inspection": 72,
+      "presetLibrary": 540,
+      "editorPresetCatalog": 53
+    },
+    "realCorpus": "Local 142-recipe and full original ZIP archives absent; those corpus runs skipped and no recipes downloaded",
+    "native": "Final installed-APK-bound native evidence is recorded separately in docs/validation/np3-inspection160"
+  },
+  "unchanged": [
+    "Existing phone-renderer math and strict subset acceptance",
+    "Existing NCP camera-conversion/writes",
+    "Website, backend and download budgets",
+    "iOS project and its build workflow"
+  ],
+  "remaining": [
+    "Unverified NP3 versions or active parameter combinations are explicitly unsupported",
+    "NP3 parsing on iOS is not part of this Android change",
+    "No new NP3 camera-write capability or Nikon color-equivalence claim"
+  ],
+  "references": [
+    "https://nikonimglib.com/nxstdo/onlinehelp/en/copy_custom_picture_controls_50.html",
+    "https://nikonimglib.com/nxstdo/onlinehelp/en/the_picture_controls_flexible_color_23.html",
+    "docs/np3-rendering.md"
+  ]
+}

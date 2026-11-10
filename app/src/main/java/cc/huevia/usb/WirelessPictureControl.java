@@ -206,6 +206,47 @@ public final class WirelessPictureControl implements AutoCloseable {
                     && active != null && active.isOpen() && !active.isProtocolUnconfirmed();
         }
     }
+    /** Uses the same confirmed, owned wireless session; failure never reconnects or retries. */
+    public void deletePreparedCustomPreset(PictureControlDeleteSession.Confirmation confirmation,
+            PictureControlDeleteSession.Result result)throws Exception{
+        begin(true);PtpIpClient client=null;PictureControlReadSession reader=null;PictureControlDeleteSession deletion=null;boolean retained=false;
+        try{
+            UsbPictureControlProbe.Result before;
+            synchronized(lifecycle){checkCancelled();if(!isPrepared())throw new IOException("相机连接已变化，请重新读取槽位。");client=active;reader=preparedSession;before=preparedResult;}
+            deletion=new PictureControlDeleteSession(new Operations(client,result.commands),confirmation,result,reader.transferOwnedSession());
+            deletion.run();checkCancelled();
+            UsbPictureControlProbe.Result snapshot=new UsbPictureControlProbe.Result();snapshot.transport="wifi";
+            snapshot.wirelessHost=before.wirelessHost;snapshot.wirelessPort=before.wirelessPort;snapshot.manufacturer=before.manufacturer;
+            snapshot.model=result.model;snapshot.firmware=before.firmware;snapshot.operations=result.operations.clone();snapshot.deviceInfoRead=true;
+            snapshot.vendorProperties=before.vendorProperties.clone();snapshot.vendorPropertiesRead=before.vendorPropertiesRead;
+            snapshot.standardCapabilityRawBytes=result.capability.clone();snapshot.standardCapabilitySha256=UsbPictureControlProbe.sha256(result.capability);
+            snapshot.capabilityRead=true;snapshot.capabilityParsed=true;
+            for(UsbPictureControlProbe.ItemRecord item:before.items)if(item.itemCode==1)snapshot.items.add(copyParsedItem(item));
+            for(UsbPictureControlProbe.ItemRecord item:result.after)snapshot.items.add(copyParsedItem(item));
+            snapshot.completed=true;snapshot.sessionOpened=true;snapshot.sessionRetained=true;snapshot.phase="ReadComplete";
+            long next=deletion.transferVerifiedSession();client=client.transferAfterVerifiedPictureControlDeletion(next);
+            if(client.claimTransferredSession()!=next)throw new IOException("删除后的事务序列未确认。");
+            PictureControlReadSession continuation=PictureControlReadSession.fromVerifiedImportSnapshot(new Operations(client,snapshot.commandsSent),snapshot,next);
+            synchronized(lifecycle){checkCancelled();active=client;preparedSession=continuation;preparedResult=snapshot;result.sessionRetained=true;retained=true;}
+        }catch(Exception failure){if(result.error.isEmpty())result.error=readableError(failure);throw failure;}
+        finally{
+            if(!retained){
+                try{if(client!=null&&!closed&&client.isOpen()&&!client.isProtocolUnconfirmed()){
+                    if(deletion!=null&&deletion.mayCloseSession())deletion.closeSession();
+                    else if(deletion==null&&reader!=null&&reader.ownsSession())reader.closeSession();
+                }}catch(Exception cleanup){result.cleanupError=readableError(cleanup);}
+                finally{if(client!=null)try{client.close();}catch(RuntimeException ignored){}clearPrepared();}
+            }
+            finish(retained);
+        }
+    }
+
+    /** Identity already read from the retained device; no additional wire request. */
+    public String preparedManufacturer() {
+        synchronized (lifecycle) {
+            return preparedResult == null ? "" : preparedResult.manufacturer;
+        }
+    }
 
     /** Retained state can still need cleanup/reporting after its physical connection has failed. */
     public boolean hasPreparedSession() {
@@ -824,7 +865,7 @@ public final class WirelessPictureControl implements AutoCloseable {
     }
 
     private static final class Operations implements PictureControlReadSession.Operations,
-            PictureControlImportSession.Operations {
+            PictureControlImportSession.Operations, PictureControlDeleteSession.Operations {
         private final PtpIpClient client;
         private final List<String> commands;
         Operations(PtpIpClient client, List<String> commands) { this.client = client; this.commands = commands; }
@@ -844,6 +885,7 @@ public final class WirelessPictureControl implements AutoCloseable {
         @Override public void authorizeCameraParameters(java.util.Map<Integer, byte[]> values) throws IOException {
             client.authorizeCameraParameters(values);
         }
+        @Override public void authorizeDeletion(int target)throws IOException{client.authorizePictureControlDeletion(target);}
         private void record(int operation, long transaction, long[] parameters) {
             commands.add(PtpConstants.hex16(operation) + " transaction=" + transaction
                     + " parameters=" + Arrays.toString(parameters));

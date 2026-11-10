@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-08T01:52:15.717Z",
+  "releaseId": "3e32c8b4-613d-4adf-91c9-26d3badae0ff",
+  "status": "draft",
+  "channel": "beta",
+  "mandatory": false,
+  "versionCode": 156,
+  "versionName": "0.30.2-beta",
+  "byteLength": 31292511,
+  "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95",
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "storage": {
+    "provider": "cos",
+    "bucket": "huevia-updates-1252602548",
+    "key": "huevia-updates/app-releases/9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95.bin",
+    "consoleConfirmed": true,
+    "unsignedStatus": 403
+  },
+  "publicBeta": 115,
+  "publicDraftStatus": 404
+}

@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5586",
+  "fontScaleRestoredTo": "1.3",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "1",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "null",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.AssertionError: precision-dismiss-restores-pref-false; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004747-font1.3-6d64d1de\\20261109-004747-font1.3-6d64d1de\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

@@ -1,0 +1,13 @@
+{
+  "builtAt": "2026-11-09T23:20:49.9549848Z",
+  "inputs": [
+    {
+      "path": "tests/stability184-device-probe/src/Stability184Probe.java",
+      "sha256": "85125b68db6ff339bdabf59daa4ffe06aa6dc2f2bd268811642de7061b3f7686"
+    }
+  ],
+  "probeSha256": "b84d060ba584f82f91fd27a1cee04244c244833d8b4286314d787a8770dc8212",
+  "manifestSha256": "0e479ec7eaa3d54ee531bf8ac2f9011c1e853504cff67b9cd4b9ecc55b4a3c99",
+  "buildSha256": "a47cd430d33d301f5386faac7bb4092107ddf2fdc61af6ff9667af59ec127736",
+  "runSha256": "5bfd57cdb1fe89d5c1371e4b729729645e51b305542a084e377e4937de8c617f"
+}

@@ -57,6 +57,12 @@ public final class PresetLibrary {
         String name = safeFileName(originalFileName);
         String lower = name.toLowerCase(Locale.ROOT);
         String format = lower.endsWith(".ncp") ? PresetFile.NCP : lower.endsWith(".np3") ? PresetFile.NP3 : "";
+        // Some document providers omit extensions. Detect bounded binary contents, while
+        // retaining strict mismatch rejection whenever a real extension was supplied.
+        if (format.isEmpty() && name.indexOf('.') < 0) {
+            format = PresetFile.validate(bytes).fileFormat;
+            name = safeFileName(name + PresetFile.extension(format));
+        }
         if (format.isEmpty()) throw new IOException("请选择 NCP 或 NP3 文件。");
         return add(bytes, name, "", "phone", "", "", "", format);
     }

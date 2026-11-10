@@ -1,0 +1,57 @@
+{
+  "photos": [
+    {
+      "name": "lake",
+      "url": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=85",
+      "bytes": 252580,
+      "usage": "Illustrative photography in local review prototype; not user library data.",
+      "file": "assets/lake.jpg",
+      "sha256": "de72792cbed168a6362f7d33593ed91fd57cee5c3bb3f96ec8fce7230242cd7e"
+    },
+    {
+      "name": "mountain",
+      "url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=85",
+      "bytes": 270274,
+      "usage": "Illustrative photography in local review prototype; not user library data.",
+      "file": "assets/mountain.jpg",
+      "sha256": "4cebfd3eccffc821d4d8073bb6f2439bb13c84b83fd7ac8ab235908d2375a77e"
+    },
+    {
+      "name": "coast",
+      "url": "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=85",
+      "bytes": 235255,
+      "usage": "Illustrative photography in local review prototype; not user library data.",
+      "file": "assets/coast.jpg",
+      "sha256": "71e7761af364e06b3efbcca216a873accea6583cf81abb9b304296161ff4c695"
+    },
+    {
+      "name": "forest",
+      "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=85",
+      "bytes": 335948,
+      "usage": "Illustrative photography in local review prototype; not user library data.",
+      "file": "assets/forest.jpg",
+      "sha256": "bc3e4cbf9ae759f72bbfcaa40c5ce85784111c49773cd28949a342d6dc00754b"
+    },
+    {
+      "name": "coffee",
+      "url": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
+      "bytes": 379730,
+      "usage": "Illustrative photography in local review prototype; not user library data.",
+      "file": "assets/coffee.jpg",
+      "sha256": "8990d542a492efd815a6365cfb247fdc1d36741b7abd04b21d7a2adb188aec1e"
+    },
+    {
+      "name": "portrait",
+      "origin": "Pre-existing docs/design-review/prisma-editor-20261107/assets/portrait.jpg",
+      "usage": "Reused illustrative photo asset; see source prototype provenance.",
+      "file": "assets/portrait.jpg",
+      "bytes": 289476,
+      "sha256": "232a8f8b8c83b5fcfafd3c93d31a60cf911290664f8b087e0be18ed0ba6bf811"
+    }
+  ],
+  "references": {
+    "dribbble": "https://dribbble.com/shots/15187764-wave-tabbar",
+    "localFrames": "reference/user-state-1.png through user-state-4.png; supplied by the user; internal study only"
+  },
+  "illustrative": true
+}

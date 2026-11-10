@@ -93,5 +93,7 @@ Copy-Item -LiteralPath (Join-Path $toolRoot 'NOTICE') -Destination (Join-Path $a
 Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $assetRoot 'build-raw-native.ps1') -Force
 Copy-Item -LiteralPath (Join-Path $projectRoot 'app/src/main/cpp/huevia_raw.cpp') -Destination (Join-Path $assetRoot 'huevia_raw.cpp') -Force
 Copy-Item -LiteralPath (Join-Path $projectRoot 'app/src/main/java/cc/huevia/album/RawDeveloper.java') -Destination (Join-Path $assetRoot 'RawDeveloper.java') -Force
+Copy-Item -LiteralPath (Join-Path $projectRoot 'app/src/main/java/cc/huevia/album/RawPngWriter.java') -Destination (Join-Path $assetRoot 'RawPngWriter.java') -Force
 Copy-Item -LiteralPath (Join-Path $projectRoot 'app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java') -Destination (Join-Path $assetRoot 'RawDevelopmentSettings.java') -Force
+Copy-Item -LiteralPath (Join-Path $projectRoot 'app/src/main/java/cc/huevia/ncp/RawJpegColorMatch.java') -Destination (Join-Path $assetRoot 'RawJpegColorMatch.java') -Force
 Write-Output ('Native build complete: '+$outputs.Count+' libraries, source '+$fingerprint.Substring(0,16))

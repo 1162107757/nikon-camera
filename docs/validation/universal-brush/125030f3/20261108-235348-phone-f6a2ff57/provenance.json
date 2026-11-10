@@ -1,0 +1,64 @@
+{
+  "candidateSha256": "125030f31150e0f123d939b3b7af6d2262f265c8febfb8b9778a875c8d929a97",
+  "versionCode": 168,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "0361fd39ed8a91346387474e49b2043f958776145d26d80b4c6ac3f1e96e7384",
+  "pass": false,
+  "scope": "Exact installed direct modal palette/cleanup/curves/HSL brush transaction checks plus selected universal workflow. Exact installed universal brush and scoped adjustment UI: real live paint/erase, size/feather, two-finger navigation, clear/reopen/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing/deletion, owner rejection, real drafts/photo switching and representative full/detail export EXIF1/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "c9c5a73f4b88a036789df60812fbf2224f29978fe1dc94632cf2cd49e9581038"
+    },
+    {
+      "file": "report.json",
+      "sha256": "ee2cca643c61c4a8e25d05971512744d4667792512a2cc041915f3da03ae357f"
+    },
+    {
+      "file": "selection168-circle-drag-hidden.png",
+      "sha256": "f88746f309ba7f912ad6957383f380eaf253a251ef65cedf20ffa870c4870aa8"
+    },
+    {
+      "file": "selection168-circle-persistent.png",
+      "sha256": "72c3ffaa5b51ee521892fc5bc21b6cdf0e8b2bb12a7f7b50fe38e889e306f1e8"
+    },
+    {
+      "file": "selection168-circle-release-restored.png",
+      "sha256": "14e5d0f29d17ecbe28c55da6601f0b6f4a9bec63391349f14e72e9a3ba5c667c"
+    },
+    {
+      "file": "selection168-cleanup-persistent.png",
+      "sha256": "1a56f444c06bb8873197ccd63acd6e36d19dedf70dce7e77da28aaaac2b3b66a"
+    },
+    {
+      "file": "selection168-curves-persistent.png",
+      "sha256": "3be4f656620edaeba9340335d429388034b802448d3cb1314d9279847e1fe88a"
+    },
+    {
+      "file": "selection168-hsl-persistent.png",
+      "sha256": "33867d0b2773040e4b9178c01be48d806f5285c3decba793bb62aa5862cb79f0"
+    },
+    {
+      "file": "selection168-inverse.png",
+      "sha256": "cc50c8bf7bc10e5f8282a98e039edf4957d1a738f97b22639a35dc0aba647a8f"
+    },
+    {
+      "file": "selection168-main-drag-hidden.png",
+      "sha256": "8db585830a198ea4605e8dd595b7cddd4bf335ff769b77fef00f9ba6ce4c48ff"
+    },
+    {
+      "file": "selection168-main-regional.png",
+      "sha256": "629358a49f7ea96fbbcce2d71f9def37c4ff0af40fad9c85f688b5018cf08f1f"
+    },
+    {
+      "file": "selection168-palette-persistent.png",
+      "sha256": "fb4554f48c2c5ec2dbe04722f0168cf01feff57eb01104366c6b7fd766030afc"
+    },
+    {
+      "file": "selection168-rectangle-added.png",
+      "sha256": "46b39122a576b9977ffcf4700cf4978bf243920038bf638d96c73c12bd7b4398"
+    }
+  ]
+}

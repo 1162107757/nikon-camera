@@ -1,0 +1,14 @@
+[
+  {
+    "command": "shell cat /proc/uptime",
+    "output": "136675.83 458849.18"
+  },
+  {
+    "command": "shell pidof system_server",
+    "error": "Error: Command failed: D:/dev/Android/Sdk/platform-tools/adb.exe -s emulator-5588 shell pidof system_server"
+  },
+  {
+    "command": "shell cmd package path cc.huevia",
+    "error": "Error: Command failed: D:/dev/Android/Sdk/platform-tools/adb.exe -s emulator-5588 shell cmd package path cc.huevia"
+  }
+]

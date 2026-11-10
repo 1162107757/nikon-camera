@@ -153,6 +153,7 @@ public final class PhotoLibraryCatalog {
         /** Every private original alias is retained for an explicit whole-group deletion. */
         public final List<DownloadedPhoto> originals;
         public final long photoDate;
+        public final long addedDate;
         private final List<DownloadedPhoto> photos;
         private final Map<String, Version> byPath;
         private PhotoGroup(String id, DownloadedPhoto original, DownloadedPhoto display, List<Version> versions,
@@ -163,7 +164,14 @@ public final class PhotoLibraryCatalog {
             this.photos = Collections.unmodifiableList(new ArrayList<>(photos));
             this.byPath = Collections.unmodifiableMap(new HashMap<>(byPath));
             this.photoDate = original == null ? display.photoDate() : original.photoDate();
+            long added=0;for(DownloadedPhoto photo:originals){long value=photo.downloadedAt();if(value>0&&(added==0||value<added))added=value;}
+            this.addedDate=added>0?added:display.downloadedAt();
         }
+        private PhotoGroup(PhotoGroup group,long taken,long added) {
+            id=group.id;original=group.original;display=group.display;versions=group.versions;originals=group.originals;photos=group.photos;byPath=group.byPath;
+            photoDate=taken;addedDate=added;
+        }
+        public PhotoGroup withDates(long taken,long added) { return new PhotoGroup(this,taken,added); }
         public List<DownloadedPhoto> photos() { return photos; }
         public boolean orphan() { return original == null; }
         /** Read-only path equality; callers pass completed canonical DownloadedPhoto files. */

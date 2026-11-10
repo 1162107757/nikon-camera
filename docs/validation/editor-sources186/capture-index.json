@@ -1,0 +1,251 @@
+{
+  "apkSha256": "ca6262e510e9c751cd5b40eb93e2a90e5b3b7a3ae6229cc794878960ea6b2b15",
+  "count": 35,
+  "captures": [
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/01-mine-fixed.png",
+      "sha256": "dfdab3d4246e90edb4a52be30d5a8310953f9947ba83b3382fe83541fa0588d1",
+      "bytes": 2525680,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/02-online-fixed.png",
+      "sha256": "17e2b6307450afb209c38528416c5e7ede9054f86071a0b81a0f9bc80a5f33ee",
+      "bytes": 2332848,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/03-category-scroll.png",
+      "sha256": "acc42d6c4e92f617dead142e071bda50767a7fee2a5e4ab35c62f9720c536c67",
+      "bytes": 2332791,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/04-mine-pressed.png",
+      "sha256": "608db8a126126bbf76eeb63d683eecc1f588e62f645130cc2f570006741ee19b",
+      "bytes": 2527238,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/05-online-focus.png",
+      "sha256": "35301076616157419a5969581da3f8376517e6190dbcf7b2b23c55a7ea874e63",
+      "bytes": 2529437,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/pressed-mine.png",
+      "sha256": "608db8a126126bbf76eeb63d683eecc1f588e62f645130cc2f570006741ee19b",
+      "bytes": 2527238,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api31/20261110-105407-phone-4dd911/pressed-online.png",
+      "sha256": "5e8f06302a77dbb57e938db7e1b99697614cf087564aa21b6f5295598e072448",
+      "bytes": 2527899,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/01-mine-fixed.png",
+      "sha256": "082158129e29f593673a5a0762e0acdcbee81e52e56bd5fd4851781bd94ea94d",
+      "bytes": 2392366,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/02-online-fixed.png",
+      "sha256": "652c87b64b1091cae9897ea922539a28d96a20302620c0eec0e4121d6e30948e",
+      "bytes": 2199643,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/03-category-scroll.png",
+      "sha256": "1069bd6c0f535df716eeddd2e10dd7ba72b9e92b16a43593d0043b0ea764e57d",
+      "bytes": 2195828,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/04-mine-pressed.png",
+      "sha256": "52eb6db166ab59346e70df166b9fdc2920c199f3a4b7f89b1957ac6051bebb8f",
+      "bytes": 2392072,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/05-online-focus.png",
+      "sha256": "05544b06f0b1ea14ada7fbd1a3295dea3efa2b6381a47e759a9ec85c1dd3b076",
+      "bytes": 2393948,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/pressed-mine.png",
+      "sha256": "52eb6db166ab59346e70df166b9fdc2920c199f3a4b7f89b1957ac6051bebb8f",
+      "bytes": 2392072,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105201-phone-f7c727/pressed-online.png",
+      "sha256": "1850a34f3851915fd55631347937805765d5f72500297b0a0097d80b06f65db6",
+      "bytes": 2392600,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/01-mine-fixed.png",
+      "sha256": "424d297782b6eb89c69edb31f87687942395f6f7ccc8825d11df83a0932ae3e2",
+      "bytes": 1283954,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/02-online-fixed.png",
+      "sha256": "6e713678e9c094f663d7528c32c2258bfe075871c73766a6810843a46bf8186f",
+      "bytes": 1191545,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/03-category-scroll.png",
+      "sha256": "d2d1956dd2adb766d6e51ccadc56a5dfed1b7b92ea4b795812a585d0f7e0d53a",
+      "bytes": 1189903,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/04-mine-pressed.png",
+      "sha256": "98dbeae41d82751cd2aac93a365b8fbfacf7f36ba71fc397d357b60d3f4c170b",
+      "bytes": 1285365,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/05-online-focus.png",
+      "sha256": "e1a94dd07d185243ac4f9516c7ef45ee010a269069865989ca5d8c040dee7914",
+      "bytes": 1287679,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/pressed-mine.png",
+      "sha256": "98dbeae41d82751cd2aac93a365b8fbfacf7f36ba71fc397d357b60d3f4c170b",
+      "bytes": 1285365,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105233-narrow-07e6ce/pressed-online.png",
+      "sha256": "a7f0fd5c9006bbf0538c2475b3ca2ff02b7bb074a9db8d2c664af7c16a630d55",
+      "bytes": 1286177,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/01-mine-fixed.png",
+      "sha256": "7071580e219d1fc86819d3067e633e04aa28db9827d2a4c2734fe1d94e55b076",
+      "bytes": 3397575,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/02-online-fixed.png",
+      "sha256": "845799b90958ce186baec0eade359a0fa187127bfada986791ae8e909bb6b260",
+      "bytes": 3337753,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/03-category-scroll.png",
+      "sha256": "554caca880922c97f9a1dc02f65a3919f98481cffaaf848ff5791f221dd51868",
+      "bytes": 3340760,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/04-mine-pressed.png",
+      "sha256": "9bb7476a141e2d97be11400fd0f6aa9811f42e28200646386634a29ce9d59629",
+      "bytes": 3397640,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/05-online-focus.png",
+      "sha256": "8ffea3eae4b69c8b0640824c6fc57a7645f9618f673f2a3527755d7dd8174583",
+      "bytes": 3398833,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/pressed-mine.png",
+      "sha256": "9bb7476a141e2d97be11400fd0f6aa9811f42e28200646386634a29ce9d59629",
+      "bytes": 3397640,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105259-tablet-be8c7f/pressed-online.png",
+      "sha256": "10fe99c18f1caebdf58d2c7d381f6327afe39d82b6b51d46fcf2aca78b4cc495",
+      "bytes": 3398220,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/01-mine-fixed.png",
+      "sha256": "e20bf2aa1392ccf5ef76c2440b48c7d1ec70dbb351a7aa54cede1f2aaeba417c",
+      "bytes": 2119115,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/02-online-fixed.png",
+      "sha256": "2614a95d1b2a51366b310d5dd934905673f3332ddae2ae47d710c0a3c29ce236",
+      "bytes": 1994700,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/03-category-scroll.png",
+      "sha256": "fcb9dc9368e8a5ddc118ed2353a84a8d5551d579170bd0089f86271e655ba6e9",
+      "bytes": 1994467,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/04-mine-pressed.png",
+      "sha256": "39ed83ae8bb20c37add40ed1e4fd1febd704121db92dc09a6dbac46834f02a70",
+      "bytes": 2118550,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/05-online-focus.png",
+      "sha256": "4a7435d50a06456e7ad98d28958f077f8c699c6a879915e5fdcb4450feb99669",
+      "bytes": 2121686,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/pressed-mine.png",
+      "sha256": "39ed83ae8bb20c37add40ed1e4fd1febd704121db92dc09a6dbac46834f02a70",
+      "bytes": 2118550,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native-final/api37/20261110-105340-landscape-2bbd53/pressed-online.png",
+      "sha256": "4d553b88ecb9598bc9a365570d2dacf4fa85041b570e4db1f7478031adc3a00e",
+      "bytes": 2119207,
+      "width": 2532,
+      "height": 1170
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: Huevia
-description: 橙光、暖白与炭黑的原生 Android 摄影工作流
+description: 纸白四首页与独立照片编辑材料的原生 Android 摄影工作流
 colors:
   surface: "#FAFAF8"
   container: "#EFEDE9"
@@ -53,6 +53,19 @@ colors:
   prisma-selection-frame: "#BBB9A1"
   prisma-selection-label: "#FFFFFF"
   prisma-selection-fill: "rgba(18, 28, 23, 0.0941176471)"
+  home-paper: "#F8F7F4"
+  home-container: "#EEECE6"
+  home-text: "#242320"
+  home-secondary: "#635D53"
+  home-charcoal: "#242420"
+  home-on-charcoal: "#FFFFFF"
+  home-glass: "rgba(255, 255, 255, 0.9333333333)"
+  home-dark-container: "#34312D"
+  home-dark-secondary: "#CAC2B8"
+  home-dark-action: "#F1ECE4"
+  home-dark-on-action: "#29251F"
+  home-dark-source-selected: "#4B4640"
+  home-dark-glass: "rgba(44, 42, 38, 0.9333333333)"
 typography:
   page-title:
     fontFamily: "sans-serif-medium"
@@ -100,6 +113,14 @@ typography:
     fontFamily: "sans-serif"
     fontSize: "11sp"
     fontWeight: 400
+  home-preset-name:
+    fontFamily: "sans-serif"
+    fontSize: "13sp"
+    fontWeight: 700
+  home-category-label:
+    fontFamily: "sans-serif"
+    fontSize: "12sp"
+    fontWeight: 400
 rounded:
   field: "14dp"
   photo: "14dp"
@@ -113,6 +134,11 @@ rounded:
   fab: "28dp"
   prisma-thumbnail: "7dp"
   prisma-circle: "50%"
+  home-photo: "17dp"
+  home-settings: "16dp"
+  home-source: "20dp"
+  home-source-track: "24dp"
+  home-category: "18dp"
 spacing:
   gap: "8dp"
   grid-horizontal: "12dp"
@@ -121,6 +147,8 @@ spacing:
   touch-target: "48dp"
   prisma-filter-gap: "14dp"
   prisma-rail-inset: "18dp"
+  home-navigation-inset: "4dp"
+  home-photo-gap: "10dp"
 components:
   primary-button:
     backgroundColor: "{colors.action}"
@@ -161,6 +189,39 @@ components:
     backgroundColor: "{colors.navigation-glass}"
     textColor: "{colors.text}"
     height: "68dp"
+  home-primary-action:
+    backgroundColor: "{colors.home-charcoal}"
+    textColor: "{colors.home-on-charcoal}"
+    height: "48dp"
+  home-navigation:
+    backgroundColor: "{colors.home-glass}"
+    textColor: "{colors.home-text}"
+    height: "65dp"
+    padding: "4dp"
+  home-category-selected:
+    backgroundColor: "{colors.home-charcoal}"
+    textColor: "{colors.home-on-charcoal}"
+    rounded: "{rounded.home-category}"
+    height: "36dp"
+    padding: "0dp 12dp"
+  home-source-selected:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.home-text}"
+    rounded: "{rounded.home-source}"
+    height: "40dp"
+  home-settings-group:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.home-text}"
+    rounded: "{rounded.home-settings}"
+  home-photo-card:
+    backgroundColor: "{colors.home-container}"
+    rounded: "{rounded.home-photo}"
+  home-header-action:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.home-text}"
+    rounded: "{rounded.home-category}"
+    height: "36dp"
+    width: "36dp"
   photo-control:
     backgroundColor: "{colors.photo-control-scrim}"
     textColor: "{colors.on-action}"
@@ -203,6 +264,12 @@ components:
 ---
 
 # Design System: Huevia
+
+> 154／0.30.0-beta 更新范围仅为原生「预设／同步／相册／设置」四个首页及其来源条。`home-*` 是此范围的独立 token；普通 `UiPalette` 与下列 Prisma 151／152／153 编辑规则继续保留。下列版本记录中的“当前”按该版本阅读，不代表全应用或本次重新验收。
+
+> 修补当前按175「实时无高亮修补」执行：手指滑动即后台更新实际像素，松手精确完成；主体完整替换、外缘柔化并匹配干净周边颜色。默认不显示任何选区高亮或眼睛按钮。173松手触发／默认高亮规则保留为历史；169手动来源及其他局部／人像显示规则保持各自范围。170横轨图标规则不变。验证见 docs/validation/live-erase175/README.md。
+
+> 176补充：仅拖动修补「大小」滑条期间，在窗口正中心显示实际投影大小的空心圆与数值；松手／失焦／关闭立即隐藏。此圆是窗口显示反馈，不是照片选区或修补高亮，不写入照片、修补模型或历史；175实时修补规则继续生效。见 docs/validation/brush-size176/README.md。
 
 ## 柔和卡片选择当前规则（153 / 0.29.2-beta）
 
@@ -263,19 +330,23 @@ components:
 
 **Creative North Star: "橙光进入照片"**
 
-Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白层次、橙杏光晕、炭黑胶囊与系统无衬线字。光晕为发现预设建立气氛，照片仍是内容；编辑时让位于完整比例画布、黑色工具区与杏色控制。
+Huevia 的原生 Android Java / Views 保留既有橙光摄影工作流，并以用户批准的纸白相册方向更新四个首页：暖纸页面、真实照片、白色来源内衬与炭黑整项选择。首页减少装饰与说明的占位，保持照片和实际操作清楚；照片编辑继续采用独立的 Prisma 照片氛围与黄色工具，不随首页改色。
 
-本文件记录 0.17.4-beta（88）的实际实现；本次按用户参考图将手机悬浮底栏四边统一为 5dp 内缩，让首尾选中项与外栏弧线同心、等距，保留 87 的 68dp 基础高度、86 的整项选中态、85 的悬浮位置与内容留位，以及 84 的暖色设计与四个根入口，全面取代原生界面此前的云白／蓝色声明。当前代码权威为 [UiPalette](app/src/main/java/cc/huevia/ui/UiPalette.java) 与 [HueTheme](app/src/main/java/cc/huevia/ui/HueTheme.java)，布局取自 [MainActivity](app/src/main/java/cc/huevia/MainActivity.java)、[LocalAlbumPanel](app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java)、[AlbumPanel](app/src/main/java/cc/huevia/ui/AlbumPanel.java)、[PhotoFilterEditor](app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java) 及其原生面板。批准的 [详细交互稿](docs/design-review/insurance-inspired-20261023/detailed/index.html) 与 [84 需求](docs/design-review/orange-ui-84/REQUIREMENTS.md) 解释意图，发生差异时以本版实际颜色、布局与截图为准。
+154 的界面权威是 `UiPalette.home`、`MainActivity`、`LocalAlbumPanel`、`AlbumPanel` 的首页分支和 `GlassBar`。批准的[四首页图板](docs/design-review/hyperactive-gallery-20261107/review/four-home-board.jpg)给出方向；实际 native Views 决定 token、尺寸、交互和响应行为。专用[首页 brief](.impeccable/surfaces/native-four-homes.md)记录表面策略和边界，现有 151／152／153 编辑续接、共享工具及柔和选择规则保持原范围。
 
-浅色与深色是完整配对的语义系统，设置中的跟随系统／浅色／深色保持持久化。保留现有 Huevia 标识、代码绘制图标族和有来源的照片模板；本轮新增生产栅格为零。下方 Web 管理后台和旧社区／版本 Web 记录保留独立作用域，不能反向覆盖当前原生规则。
+浅色／深色、系统 sp 缩放、安全区、紧凑高度和宽屏侧栏保留。154 使用现有真实模板模拟，未打包新的演示摄影图片。155／0.30.1-beta 在该冻结布局上增量接入十张有来源的摄影样片，仅用于预设浏览列表、预设详情和设置中的实源查看；处理照片时的预设预览继续原有路径。原型图板、QA 夹具和摄影源素材不构成相机效果证明。下方 Web、社区、更新与旧原生记录保留各自的版本及表面范围。
 
 **Key Characteristics:**
 
-- 暖白页面、白色分组与暖石墨深色。
-- 橙杏光区只承担预设发现页的光感，照片与真实状态保持清楚。
-- 炭黑渐变主动作、杏色选择态与可读的深陶土选中文字。
-- 四个根入口、紧凑高度重排、宽屏侧栏和原生 48dp 操作目标。
-- 系统 sans-serif 与 sp 字号；编辑工具保留黑底、杏色强调和完整比例照片。
+- 暖纸首页、白色来源内衬、炭黑整项选择；深色采用配对暖石墨与浅米色操作。
+- 首页以真实预设模板模拟、照片和紧凑计数为主；加载、权限、版本和连接仍显示真实状态。
+- 视觉胶囊可以收紧，主要原生命中范围仍保留 48dp。
+- 四个根入口、可回收的小批瀑布流、紧凑高度重排与宽屏侧栏。
+- 系统 sans-serif／sp；照片处理、编辑、细节、导出和 RAW 保持独立既有设计。
+
+154 的[冻结验证](docs/validation/four-home154/README.md)记录同一候选 `9636cfe8…` 的七模式 333 次有界首页断言，另列来源动效 70＋9 与 Prisma 选择／续接 10＋101 次回归。初审的 F1／F2 经[评分 verdict](docs/validation/four-home154/verdict.md)关闭；ship 仅限两项修正与直接回归，初审 FIX、旧版验证和非实体机／非发布边界不改写。
+
+155 的[摄影展示记录](docs/preset-showcase155.md)绑定 `b7d39e49…` 本地包：七模式 167 次断言执行与 35 张原生截图，另有真实在线目录的 4 项检查及 2 张截图。初次[复核](.impeccable/review/preset-showcase155/review.md)为 FIX，唯一 F1 为设置仍展示旧模板；修正后[评分 verdict](.impeccable/review/preset-showcase155/verdict.md)为限定 ship，只关闭设置默认说明、实源查看、恢复文案及直接回归，含横屏关闭、自选模板和浏览页，不代表整个 App、154 或编辑页全量通过。素材上传与客户端随包展示分开记录，无实体手机／相机实拍／公开 APK 发布结论。
 
 **84 历史验证（不覆盖 85–88 的悬浮导航、选中态与几何变更）：** 最终视觉证据为 [.impeccable/review/orange-ui-84/](.impeccable/review/orange-ui-84/) 的 phone、large-font、landscape、dark、tablet 原生截图，含 presets、settings、live、editor-adjustments、import-slots 和 crop；[实体手机证据](docs/validation/orange-ui-84/physical/) 来自 OnePlus Ace 5 的现有用户数据。最终包 SHA-256 为 `b4a5b10fa5dffcd0850508eb0a7dc4a88cffa47ca5a2b2ed3894dfd2efcbdd03`（3,532,397 字节）。[矩阵](docs/validation/orange-ui-84/matrix.json) 为 PASS、sourcesStable 为 true：手机／1.3 字号／深色／平板各 364，横屏 365，共 1,821 次重复断言执行，非独立场景数量。最终 [修正复核](docs/validation/orange-ui-84/FIX-VERDICT.md) 将 M1–M6 评分为 resolved、remaining clear、disposition ship，范围限六项修正与直接回归；完整首轮见 [FINISH-REVIEW](docs/validation/orange-ui-84/FINISH-REVIEW.md)。实体证据限保数据覆盖安装与只读界面对照，没有相机写入、导出或账号修改；不构成生产网络、真实相机、FPS 或 TalkBack 认证。
 
@@ -285,15 +356,20 @@ Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白
 
 ## Colors
 
-配色从暖白与石墨中展开，用深陶土指示普通界面操作、杏色表达选择和照片工具强调。上方 frontmatter 为精确原语；Android ARGB 的透明颜色在其中转换为 CSS rgba，避免把 alpha 当成红色。 `.impeccable/design.json` 的色阶为面板按 OKLCH 生成的展示扩展，不是新增的 Android 调色板；HTML 标本将 dp／sp 以 CSS px 近似显示，原生源代码仍为组件行为权威。
+配色按范围取值：四首页从纸白与炭黑展开，其他普通界面保留暖白／陶土／杏色，照片工作区保留各自材料。上方 frontmatter 为精确原语；Android ARGB 的透明颜色在其中转换为 CSS rgba，避免把 alpha 当成红色。 `.impeccable/design.json` 的色阶为面板按 OKLCH 生成的展示扩展，不是新增的 Android 调色板；HTML 标本将 dp／sp 以 CSS px 近似显示，原生源代码仍为组件行为权威。
 
 ### Primary
+
+- **首页炭黑操作**（home-charcoal / home-on-charcoal）：四首页的分类、完整根导航选中项、主添加和选中标记；深色对应 home-dark-action / home-dark-on-action。不把这组角色写入普通 UiPalette 或照片工具。
 
 - **深陶土**（primary）：普通界面的链接、输入／状态强调与槽位选中描边；不再使用系统蓝作为全局操作色。
 - **杏色选择底与深陶土选中文字**（primary-container / on-primary-container）：分类胶囊、槽位等小字选中态。深色分别采用暖棕底与浅杏字。
 - **照片杏光**（photo-accent / photo-track）：黑色照片工具的滑杆、选中参数、导出和直播进度；轨道保持暖棕。
 
 ### Neutral
+
+- **首页暖纸、浅砂容器与暖墨**（home-paper / home-container / home-text / home-secondary）：四首页页面、来源轨道、正文与辅助信息。深色页面／卡片／正文复用既有 dark-surface / dark-card / dark-text；容器和辅助字采用 home-dark-container / home-dark-secondary。
+- **首页白色内衬与轻透导航**（card / home-glass）：白色来源选中项与浮动导航。深色来源内衬用 home-dark-source-selected，导航用 home-dark-glass；无模糊条件时仍退回实色卡片。
 
 - **暖白页面、白色内容、暖灰容器**（surface / card / container）：建立页面、分组和字段层次；深色对应暖石墨页面、抬高的深棕灰容器与卡片。
 - **炭黑渐变动作**（action → action-end / on-action）：HueTheme 主操作与悬浮加号。深色反转为暖米色渐变与深色文字。社区、更新、RAW 和回执的部分原生面板使用同一 action 角色的实色变体。
@@ -303,11 +379,15 @@ Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白
 
 成功与错误沿用各自语义角色并配文字。连接状态只来自实际已验证会话；“未连接”“正在读取”“待核对”不能由装饰圆点替代。
 
-**The Native Authority Rule.** 新增原生页面从 UiPalette 和 HueTheme 取值；历史蓝色记录及浏览器原型不再定义本版原生全局样式。
+**The Native Authority Rule.** 原生页面从所属范围的 UiPalette / HueTheme 或 PhotoPrismaStyle 取值；四首页显式使用 UiPalette.home，二级界面和照片工作区保留原有上下文。历史蓝色记录及浏览器原型不定义当前原生样式。
+
+**The Home Boundary Rule.** 纸白与炭黑整项选择只属于四首页。进入预设详情、连接引导、照片处理／编辑／细节、导出或 RAW 后，恢复既有语义色与工作区材料；不把首页 tokens 全局化。
 
 **The Selected Text Rule.** 杏色选择底必须配 onPrimaryContainer，不能直接把 primary 当作小字颜色。 最终独立计算中，浅色选中配对为 6.1986:1、深色为 6.0206:1；这两个结果限相应实色配对。
 
 ## Typography
+
+**154 首页层级：** 根标题沿用 page-title，紧凑／返回标题沿用 back-page-title；预设名称用 home-preset-name，分类用 home-category-label，来源和导航沿用 source-label / navigation-label。预设被动分类为自然文字高度；在线下载操作仍有 48dp 行，不能为统一卡片高度给无操作的本地说明强加该高度。设置正文为 14sp，组标题与计数为 12sp。
 
 **Display / Body Font:** Android 系统 `sans-serif`；标题和部分标签使用 `sans-serif-medium`，不打包 SF 字体。文字使用 sp，布局与命中区域使用 dp；frontmatter 中的单位是原生单位。
 
@@ -325,6 +405,12 @@ Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白
 
 ## Layout
 
+**154 四首页当前布局：** 手机导航基础高为 65dp，字号增长为 `65 + round(max(0, fontScale − 1.2) × 24)` dp；外边距、安全区、360dp 宽上限、600dp 侧栏断点与 720dp 内容上限保持原有结构。手机四边内缩 4dp，选中底连同图标和名称占完整单元，内外圆角按实际高度的一半计算；侧栏仍只为图标槽绘制选中底。下载浮层使用宿主导航实际遮挡量再加至少 15dp，字节另起一行，不与系统安全区重复相加。
+
+预设常规布局为两列、有效宽达 600dp 时三列；大字号与紧凑模式沿用现有退让逻辑。常规 ListView 的每个可回收单元只装每列三张卡，不一次生成整个图库；图高按列内节奏变化，照片圆角用 home-photo，卡片说明自然排版。紧凑高度继续使用既有网格。相册保留日期分组，常规两列／宽屏四列，每个可回收行有界承载 6／12 张；选择时冻结列结构，底部浮动 dock、来源锁、返回语义和最多 100 张保持。
+
+**以下 84–100 布局原文为历史结构记录；与上述首页当前规则冲突的 68dp／5dp 导航、固定卡片比例和方形相册图不再约束四首页。照片编辑及二级工作区仍按各自后续规则读取。**
+
 100 下载进度／多选动作区域通过宿主取得导航实际像素遮挡量。窄屏分别取整导航高度与14dp底距后相加，避免合并取整少1px；进度另留12dp、多选另留8dp。侧栏与沉浸返回0；内容与系统栏inset不重复计算。
 
 
@@ -341,6 +427,8 @@ Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白
 
 ## Elevation & Depth
 
+**154 首页材料：** 纸白页面、白色／深色来源内衬和照片本身建立层次；首页来源选中项无额外 elevation，预设图片直接承载照片而不附加整张厚白卡。首页不调用旧预设光晕头部。浮动导航继续采用下述条件式采样、8dp elevation 与实色后备，下载卡为局部 5dp 浮层；这些是首页 UI 材料，不进入照片像素。以下光区、普通卡片等描述保留其原有／历史范围。
+
 层次主要来自暖白／卡片／容器的色调差、留白与细分隔。HueTheme 卡片在浅色为 2dp elevation，环境／聚光阴影分别为 Android ARGB `#12302B23` / `#18302B23`；深色为 0dp。来源选中胶囊仅 1dp，悬浮加号 4dp；普通主按钮清除默认 elevation 与 StateListAnimator。
 
 预设首页光区由 HueTheme 的缓存线性／径向 shader 叠加并渐隐至页面色，不使用栅格背景、模糊捕获或持续动画。手机悬浮底栏恢复 GlassBar：8dp elevation，浅色环境／聚光阴影为 Android ARGB `#26302B23` / `#30302B23`，深色为 `#40000000` / `#60000000`；0.5dp 细边为暖棕灰 `#18302B23`，深色 `#35FFFFFF`。API 31+ 且非低内存、硬件加速、动画开启、非省电状态时，对独立内容层以 1/6 尺寸采样并施加 18dp 模糊，上限每 100ms 一次；只由来源绘制帧驱动，无常驻定时器。条件不满足、采样失败或无背景时退回不透明 card，卸载释放采样。宽屏侧栏保留轻透实色与右侧分隔。黑色照片工具保持平面；收藏、更多与图标对比使用 photo-control-scrim，最差白底合成后的白色图标对比为 6.2610:1。
@@ -351,11 +439,33 @@ Huevia 的原生 Android Java / Views 采用用户批准的橙光世界：暖白
 
 ## Shapes
 
+**154 首页形状：** 首页照片用 home-photo，设置组用 home-settings；来源的 home-source 内衬置于 home-source-track 轨道。分类的 home-category 胶囊可见高 36dp，置于 48dp 目标中央；来源可见高 40dp，同样保留 48dp 目标。手机整项导航以实际单元短边定圆角并保持 4dp 同心内缩；以下旧首页圆角仅作历史，不能覆盖 home-*。
+
 圆角由角色确定：字段与本地照片 14dp，宽屏侧栏选中图标底 16dp，预设来源选中胶囊 19dp，预设卡片 20dp，设置与相机分组 22dp，照片控制及部分紧凑操作 24dp，来源轨道 25dp，主按钮 26dp，悬浮加号 28dp。手机悬浮根导航的外轮廓与 Rim 使用实际栏高的一半作圆角，整项选中底使用实际单元高度的一半；它们随字号引起的高度变化计算，不再使用固定 34dp／28dp 半径。宽屏保持全高侧栏。
 
 AppIcon 沿用代码绘制的 24dp 画布、1.8 单位圆头／圆角线条；结构图标不换成 emoji。头像与状态点保持圆形。照片控件的衬底跟随命中区域，收藏与更多之间保留 8dp 间隔。诊断界面沿用独立 DiagnosticTheme，不作为消费界面的模板。
 
 ## Components
+
+### Native four-home controls · 154
+
+首页图标动作为 48dp 命中／36dp 可见材料，来源为 48dp 命中／40dp 内衬，分类为 48dp 命中／36dp 胶囊；分类绘制明确上下各内缩 6dp，设置背景后恢复 padding，保留 selected、焦点和原生点击行为。版本入口为 48dp 命中／23dp 可见标签，显示真实版本数量并进入既有选择器。
+
+预设来源、分类、名称搜索与下拉刷新连接现有数据和回调；搜索作用于当前已载入项，不宣称完整服务器搜索。主图继续真实模板模拟；格式限制、下载缓存、失败与重试保留。相册搜索同样限当前已载入照片；多选浮动 dock 和日期组选择继续使用现有事务。
+
+同步保留相机照片／边拍边传／已下载三来源，连接与遥控拍摄采用轻量入口；实际连接、队列、权限、分页与原图下载仍由原有流程决定。下载卡的任务文字、进度与单独字节行和停止操作保持分离。设置以 16dp 白色／深色组、至少 56dp 行和轻量图标保留原有账号、连接、后台保护、外观、模板、帮助、更新与关于动作。
+
+**The Painted Target Rule.** 首页缩小的是可见材料，来源／分类／版本与图标动作仍保留 48dp 原生目标。被动说明按文字内容排版，只有实际操作保留操作行。
+
+### Preset showcase photography · 155
+
+预设浏览的默认主图使用十张 Pexels 摄影源图，再由既有 `PresetPreviewProfiles` 生成手机近似效果，继续标注“模板模拟”。照片按预设原始 SHA 与分类固定搭配；用户自选模板优先。列表、详情、按住或点击查看原图共用冻结的 `Source`，素材包、模型、模板和照片身份进入缓存键，模板变化时丢弃旧请求；不能在对比时换成另一张照片。此规则仅属于 `MainActivity` 的预设展示，不扩展到 `PhotoFilterEditor` 或 `PresetSelectionPage`。
+
+设置默认状态显示“摄影样片 · 10 张”，查看入口列出实际十张源图；有自选模板时只显示当前一张。源图查看保留完整比例、原图标识和摄影署名，并按可用高度约束图片，使横屏关闭操作可见。来源、作者、许可和文件 SHA 存于随包 manifest 与 JPEG 注释，详情保留摄影署名。真实配套样片的 `previewUrl`／`previewUri` 保持独立，素材照片不冒充预设实拍。
+
+**The Same Showcase Source Rule.** 摄影展示与原图比较使用同一份冻结的照片身份；选择或恢复模板后重新生成，不能把旧效果与新原图配对。
+
+**以下组件规则继续适用于原有普通界面；与上方首页材料／尺寸冲突时，四首页使用 home-*，照片工作区使用其专用规则。**
 
 ### Buttons
 
@@ -383,9 +493,19 @@ AppIcon 沿用代码绘制的 24dp 画布、1.8 单位圆头／圆角线条；�
 
 ### Photography tools
 
-预览主图分别标注模板模拟、发布者样片与真正照片；来源见 [模板素材记录](docs/assets/preset-template-provenance.md)。详情的只读色调曲线继续读取真实采样，使用当前 primary 与有标签参考线。编辑工具为黑底、浅文字、杏色滑杆与选中参数；13 项调节、精确值、撤销／重做、构图与配方保持真实状态。
+预览主图分别标注模板模拟、发布者样片与真正照片；155 预设浏览的摄影来源见[摄影清单](app/src/main/assets/preset-showcase/manifest.json)，既有统一模板的[素材记录](docs/assets/preset-template-provenance.md)保留原作用。详情的只读色调曲线继续读取真实采样，使用当前 primary 与有标签参考线。编辑工具为黑底、浅文字、杏色滑杆与选中参数；13 项调节、精确值、撤销／重做、构图与配方保持真实状态。
 
 HoldToCompare 的文字或图标目标为 48dp，照片上图标态使用共享深色衬底；文字态保留自己的深色半透明胶囊与白色细边。按住显示真正原图，松开、移出、取消、失焦或隐藏恢复效果；键盘／辅助点击为两次点击切换。更改对比状态保持照片变换，不在按下时执行图片 IO。当前功能与代码语义不等于 TalkBack 实测。
+
+### Adjustment-page brush scope · 163
+
+163／`0.30.9-beta` 在既有 Prisma 照片氛围内补齐调节页的直接涂抹入口。基本调节滑杆右侧与调色盘／去灰／曲线／HSL 标题行使用既有画笔和圆形材料，操作目标为 48×48dp；白色滑块、黄色主操作、系统 sans／sp 层级及照片真实颜色继续沿用。17 项基本调节原已支持区域处理，163 增加入口和嵌套事务，不建立新的区域算法或视觉 tokens。滤镜不在本次扩展范围，人像沿用自己的工作流。
+
+**The Visible Adjustment Scope Rule.** 区域生效时，基本调节标题与四个专用工具标题显示当前区域名；标题保持单行，长名末尾省略，辅助描述保留完整工具与范围。专用工具的标题行按取消、画笔、工具／范围、应用排列，受限横屏保留照片与可滚动的右侧控制区，不挤压操作目标。
+
+**The Final Apply Rule.** 从专用工具新建区域时，局部参数在已提交的全图设置之上从中性开始；未应用父面板的自动去灰不得成为隐式全图修改。重涂已有区域保留全部参数。画笔和后续调节暂存为同一事务：取消返回父面板且不写入模型、主历史或草稿；最内层应用才提交一条主撤销记录并关闭祖先面板。保留账号、照片身份与异步请求守卫，以及原有定向蒙版、几何／边框／塑形定位、草稿和导出链路。
+
+本段规则来自已构建的四个编辑器源文件与[最终完整复核](.impeccable/review/local-brush163/review.md)，结论为限定 ship、无材料修正项。精确本地 APK 为 34,622,934 字节、SHA-256 `f64a5c5815d766e13444752abace0a434aabaacddabbd86a763daa5b6a79558b`；[证据摘要](docs/validation/local-brush163/summary.json)记录 3,376 次含重复原生检查，[21 张必需截图](.impeccable/review/local-brush163/capture-index.json)逐张复核。159 次保留 RAW 检查独立计数；151／152／153 原有验证记录不改归属。范围限模拟器上的此次调节扩展，不构成实体机、相机、人像或全应用验收，也未公开发布。
 
 ### Photo borders · 89
 
@@ -439,17 +559,22 @@ HoldToCompare 的文字或图标目标为 48dp，照片上图标态使用共享�
 
 ### Do:
 
+- **Do** 将 home-* 限定到四首页；保留普通 UiPalette、Prisma 151／152／153 及下游照片工作区规则。
+- **Do** 区分 48dp 原生命中与 36dp 分类／40dp 来源的可见材料，并让被动说明按内容排版。
 - **Do** 从 UiPalette / HueTheme 和本版原生截图提取规则，维护浅深色完整对应。
 - **Do** 在分类、槽位选择等杏色小字区域使用 onPrimaryContainer，并同时保留选中语义。
 - **Do** 为连接、权限、下载、保存、加载和失败提供真实文字状态；圆点与颜色只作辅助。
 - **Do** 保留 sp 字号缩放、系统返回、WindowInsets 安全区、48dp 主要操作与完整比例照片。
 - **Do** 保留现有标识与模板溯源；模板模拟、发布者样片和用户照片分别标识。
+- **Do** 将 155 摄影源图限定到预设浏览及设置实源查看；原图比较与效果共用照片身份，处理图片预览保持原有路径。
 
 - **Do** 将边框品牌／机型／参数约束在各自槽位，原图内容、字节和自动／手动来源保持清楚。
 - **Do** 以固定小占位符号表达真实加载或不可用状态，就绪后显示真实 CENTER_CROP 照片。
 
 ### Don't:
 
+- **Don't** 把四首页图板、QA 夹具或另一工作流的新摄影样片当作 154 已打包的真实内容。
+- **Don't** 用首页炭黑／纸白替换照片编辑、详情、导出或 RAW 的既有材料。
 - **Don't** 把旧原生蓝色或原型示例数据当作当前实现；恢复悬浮导航时仍使用现有暖色 tokens 与真实四个入口。
 - **Don't** 用橙色铺满所有表面；编辑画布与工具保持黑色材料，局部操作使用杏色。
 - **Don't** 用无底白图标直接覆盖任意照片；收藏、更多和图标对比使用共享照片控件衬底。
@@ -662,3 +787,229 @@ Android 在线预设页提供“发布预设”和消息入口，设置增加“
 **The Moving Body Owns Touch Rule.** 画布移动时正文点击由容器拦截，固定来源条保持可点；横向轨、输入框／滑杆、纵向与多指输入以及选择／导入、编辑／详情／RAW 门禁继承 149。支持快速反向、缓存／重建根视图交接；离开页面、来源上下文禁用或视口改变时清理。仅暂存一张最多 2MP 的出场 UI 位图，中断重截合成画面时短暂与旧图重叠，随后回收；不逐帧截图、不用于照片处理。风格分类、设置与根导航没有新增滑动，导出和人像规则保留原版本归属。
 
 [最终独立复核](.impeccable/review/source-motion150/review.md)为限定范围 **SHIP**，25 张必要原生截图有效且哈希匹配，无实质修改项。[验证](docs/validation/source-motion150/validation.json)为 phone 70、六种其他配置各 16、关闭动画 9，共 175 次动效重复断言；另有未改编辑器探针的 phone 38 次直接回归，合计 213 次。其他配置只覆盖三组来源截图及实际正文点击夹具，未重复完整 70 项。中间截图暂停实际动画并等待渲染，不能认证 FPS／触感；证据仅来自 Pixel 9 API 37.2 模拟器，不扩大为全应用、硬件、完整人像处理或实际公共 JPEG 导出验收。149 及更早冻结记录保持其版本边界。
+
+## 165 · 预设页展开搜索（2026-11-08）
+
+沿用四个原生首页的暖纸／石墨材料与系统 sp。点击顶部搜索图标后，在同一标题位置展开 48 dp 输入框，含搜索图标、清除和取消；160 ms 合并筛选更新，仅重建结果正文，输入框实例、焦点、光标与 IME 保持稳定。来源和分类维持现有作用域，在线提示“搜索已载入预设”。返回／取消收起并清空查询，空结果提供清除搜索。查询及展开状态写入 Activity 保存状态；重建时保留光标，只有明确启动或原键盘仍可见时请求 IME。
+
+[165 验证记录](docs/validation/album-search165/README.md)限定本次搜索交互、可见缩略图缓存刷新和命名设备配置的结论；154 及此前首页、Prisma 编辑器的冻结审阅仍保留原候选范围。
+
+## 166 · 居中的预设空态（2026-11-08）
+
+按用户截图去掉搜索空结果下方的“清除搜索”和预设空态“查看缓存目录”入口。图标、标题和说明在结果区域内水平／垂直居中，手机底部悬浮导航预留采用既有高度规则；短屏和大字通过 ScrollView 保留溢出阅读。顶部输入框清除和取消保留，原有材料、图标与 18／14 sp 层级延续。其他预设缺省／错误状态同样居中并保留其添加／重试动作。[原生验证与包身份](docs/validation/preset-empty166/README.md)。165 的旧截图与说明按历史保留。
+
+## 168 · 局部选区工作区（2026-11-09）
+
+### Overview
+
+168／`0.30.14-beta` 将用户批准的局部选区结构落实在既有 Prisma 照片工作区内，不更换视觉世界。权威为 `PhotoBrushDialog`、`PhotoSelectionOverlay`、`PhotoImageView` 与主编辑／人像／调色盘／曲线及 HSL／去灰／局部／塑形面板的实际原生实现；[方向契约](.impeccable/review/selection168/contract.md)记录本轮范围。151／152／153 的照片氛围、共享工具及柔和卡片选择保持既有边界；163 的直接入口与暂存事务继续保留。下述规则只更新局部选区及其反馈，不扩展滤镜。
+
+### Colors
+
+复用 frontmatter 的 `prisma-*`：照片采样氛围、半透明深色圆形材料、白色文字和滑块、黄色主操作／active。选区显示使用真实覆盖生成的暖白轻透软蒙版，几何边线与控制点表达可编辑范围，照片与肤色色值保持真实颜色。选区提示用有界深色半透明衬底承载浅色文字，不能依赖照片局部恰好较暗来获得对比；这不改变 153 卡片选择角色，也不新增全局配色 tokens。
+
+### Typography
+
+继续使用 Android 系统 sans／sp 和原生字号缩放。选区工具、数值及简短操作沿用工作区的小字层级；画布说明为现有 12sp，最多两行并按舞台宽度约束。眼睛旁的“隐藏选区／显示选区”是当前动作标签，其命中区随字号增长；不以标题字体或装饰文字增加新层级。
+
+### Layout
+
+取消／区域名称／完成位于照片上方；照片之后依次为撤销重做与选区可见性、画笔／圆形／矩形、替换／添加／减去与反选、羽化，画笔模式另显示大小。竖屏用底部可滚动 dock，宽于高且具备足够宽度的紧凑高度改为照片与可滚动侧控；保留系统安全区、字号 1.3 和 48dp 原生命中。工具区限制在可用主体内，不能用固定底栏遮住照片或让末端控件不可达。
+
+### Elevation & Depth
+
+深度来自照片采样、软覆盖和各圆形控件自身材料，沿用 152 的透明二级历史行。新增说明衬底只保护画布内提示的可读性：有内边距、有限宽度、轻圆角，并与工具和系统栏留开；不通过压暗整张照片或新增全宽深色带取得对比。
+
+### Shapes
+
+单一“圆形”工具依据拖拽边界得到圆或椭圆，矩形为另一工具；不另设椭圆模式。已有几何选区可移动和调整边界。几何与画笔都支持替换、添加、减去，反选作用于最终组合区域；羽化保持软边。圆形工具材料继续复用既有圆盘与 48dp 目标，几何选区的形状不成为全局容器样式。
+
+### Components
+
+**The Persistent Selection Feedback Rule.** 选区使用实际储存的画笔、几何、人脸或皮肤覆盖持续显示；调节手势期间临时收起，释放、取消、关闭子输入或焦点中断后恢复用户选择的显示状态。手动画笔、自动脸／肤、手动人脸、塑形范围与 legacy 局部蒙版遵循此显示政策，不恢复完成时闪两下即消失的旧反馈。
+
+**The Display Only Eye Rule.** 眼睛只切换选区显示，不清除覆盖或移除调整效果；沿用既有 eye 图形，选区工作区同时显示“隐藏选区／显示选区”。已存在可用脸／肤选区时返回人像组选择页仍可操作眼睛。真实清空选区与删除区域是独立且可撤销的操作，不能借隐藏动作执行。
+
+**The Deferred Input Boundary Rule.** 精确调色盘与 HSV 子输入拖动时同样临时隐藏覆盖，但照片设置仍由其既有“应用／预览”动作更新；临时显示抑制不把这些输入改为实时编辑。
+
+选区覆盖与照片像素分层；显示蒙版不替换 source、render 或 export。`SelectionShape`／`AdjustmentRegion` 以原图坐标保留几何，`PhotoLocalEdits` 的 v6 持久化读回 v1–v5，未使用新几何时继续旧写入格式。取消、区域参数保留和主撤销仍沿用原事务，不将可见性切换写成调节结果。
+
+[冻结证据](docs/validation/selection168/README.md)对应 full APK SHA-256 `57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3`。phone／API37、tablet／API36、narrow/font1.3／API36 Android16、landscape/dark／API37 各 412 次检查及 26 张原始 PNG，共 1,648 次重复原生断言、104 张原图；[capture index](docs/validation/selection168/capture-index.json)保留逐图身份。核心 host 检查为 1,520,101／43,230，library 548、catalog 53、cache 36 独立记录，F1–F4 显示修正未改变核心代码。[初审 FIX](.impeccable/review/selection168/review.md)保持历史，[最终 verdict](.impeccable/review/selection168/verdict.md)只将 F1–F4 及直接回归评为 ship，不是全表面或全应用认证。
+
+### Do's and Don'ts
+
+- **Do** 保留用户隐藏偏好，并区分持久覆盖、临时手势抑制与真实模型状态。
+- **Do** 使用已存覆盖、人脸／皮肤蒙版及真实几何表达选区，提示在明暗照片上均有可读衬底。
+- **Don't** 把隐藏选区等同清空／删除，或把精确／HSV 子输入写成实时改变照片。
+- **Don't** 将原型图、QA 截图、初审缺陷或旧闪烁反馈推广为生产材料；本轮无新增／替换生产 raster，原生 Java 不运行 HTML／CSS detector。
+- **Don't** 将本地未发布候选和有界模拟器证据写成实体 Samsung、真实相机、通用分割精度、新 full-export 或公网 OTA 认证。
+
+## 169 · 选区拖动取样修补（2026-11-09）
+
+### Overview
+
+169／`0.30.15-beta` 按用户确认的“选区拖动取样修补”扩展既有 Prisma Operate 世界。实际权威是 `PhotoPatchDialog`、主编辑的修补入口与当前选区路由、`PhotoBrushDialog`、`PhotoWorkspaceUi`、`PhotoPrismaStyle` 和 `AppIcon.PATCH`；[方向契约](.impeccable/review/patch169/contract.md)限定为原生 code-led 扩展，无新世界、comp 或生产 raster。168 的持续选区反馈、151／152 的共同材料、153 卡片选择与 163 暂存事务按原范围保留。
+
+### Colors
+
+继续使用 frontmatter 的 `prisma-*`：照片采样氛围、半透明深色圆工具、白色文字／滑块、黄色主操作与 active。修补区使用真实软覆盖及暖白范围框；位移后的来源使用黄色虚线框和连接线。“修补区／取样”标签各有有界深色半透明衬底，颜色帮助区分角色，不能以颜色代替标签。本轮不新增全局配色 tokens。
+
+### Typography
+
+继续原生 Android sans／sp 与系统缩放。页标题（16sp）、控制／百分数／画布提示（12sp）和源／目标标签（11sp）沿用照片工作区紧凑层级；提示最多两行，标题单行省略，完整动作由辅助描述承载。胶布是 `AppIcon` Canvas vector，不能用字体字形代替。
+
+### Layout
+
+主编辑“调节”横向工具 rail 直接提供“修补”；当前区域的范围菜单另有“修补当前选区”。修补页依次为取消／标题／应用、照片、撤销重做与显隐／更多、选区／取样／新增、羽化与融合。竖屏为照片下方可滚动 dock；紧凑横屏为照片配可滚动侧控。共享至少 48dp 原生命中区；按真实 system bars／display cutout 安全区与字号分配空间，保留照片主体和末端控件可达性。空态先引导选区；覆盖整图而无来源空间时明确要求缩小选区。数值与照片不是固定底栏的遮挡背景。
+
+### Elevation & Depth
+
+深度沿用照片氛围和单个半透明圆工具；提示及双标签只用局部衬底保护文字。真实目标软蒙版、来源覆盖、范围线与连线构成交互反馈，显示层与照片结果分离，不新增装饰整图暗层或全宽历史带。
+
+### Shapes
+
+选区继续复用手动画笔、单一圆形／椭圆及矩形工具与真实组合覆盖；几何框只表示可编辑或取样的包围范围。修补目标固定，来源位移被照片边界约束；双指用于缩放／移动视口。选区几何、来源偏移与修补数据不是全局容器或视觉 tokens。
+
+### Components
+
+**The Fixed Repair Target Rule.** 修补目标使用用户确认的真实覆盖并保持固定；拖动只移动受照片边界约束的取样来源。目标与来源分别以“修补区”和“取样”标识，范围框表达编辑／取样边界，不冒充主体轮廓。
+
+**The Repair Transaction Rule.** 选区、取样、羽化、融合、新增、切换、删除与内部撤销重做留在修补暂存工作区；取消不改主模型或主历史，应用在最新精确预览完成且无待取样项后只提交一次主编辑事务。
+
+修补继承 **The Persistent Selection Feedback Rule** 与 **The Display Only Eye Rule**：真实覆盖持续显示，羽化／融合手势期间暂隐，释放及取消／焦点中断恢复用户显隐偏好；眼睛只切换显示，保留结果。重新选区可清空当前修补，更多菜单可删除当前项，均为独立可撤销操作；多修补可新增、切换和重选。失败状态提供重试并阻止应用未完成预览。
+
+`PhotoPatch` 是不可变的选区、来源位移、融合与启用状态；`PhotoLocalEdits` v7 持久化修补并读取 v1–v6，无修补时继续原有格式选择。显示覆盖不进入导出，原文件 bytes 不变。`PhotoPatchRenderer` 在共享 preview／export 链中位于 legacy masks／clones 之后、人像／区域／塑形／构图之前；每项使用独立不可变磁盘快照处理重叠，后项可采到前项结果，行缓存有界，保留目标 alpha 和零覆盖外像素。羽化和边缘颜色融合使用用户指定的真实照片纹理，不产生或识别内容。
+
+[169 冻结证据](docs/validation/patch169/README.md)与[当前完整复核](.impeccable/review/patch169/review.md)限定到修补及直接回归，disposition 为 ship、无 material fixes；四配置最终原图均对应同一最终 full APK。初始候选顶部安全区遗漏已修正，不将其尺寸或重叠写成规则；不继承初始不合适的复制示例。此处不改写 168 冻结身份，也不构成全应用／实体设备／公开发布认证。
+
+### Do's and Don'ts
+
+- **Do** 保持修补目标固定，明确标出来源和目标；取样、显示偏好与模型结果各自保留真实含义。
+- **Do** 延续持续覆盖、手势暂隐、独立清空／删除及取消隔离／一次应用事务。
+- **Don't** 把手动取样修补写成生成式移除、自动识别或通用祛瑕保证。
+- **Don't** 将初始安全区缺陷、QA 复制示例、原型图或截图 canonize 为生产材料／全局 tokens；原生 Java 无 HTML／CSS detector。
+
+
+## 170 · 调节横轨图标一致性（2026-11-09）
+
+### Overview
+
+170／`0.30.16-beta` 仅细化既有 Prisma 调节横轨中的调色盘、去灰、局部和修补入口，使其与相邻参数同属一个紧凑线图标家族。实际权威为 `PhotoWorkspaceUi.adjustmentEntry`、共享 `entryCaption`、`PhotoFilterEditor` 的入口及刷新路径和 `AppIcon`；151／152／153／163／168／169 的工作区规则与冻结证据保留原范围。
+
+### Colors
+
+沿用既有照片采样氛围、安静白色图标／字幕与黄色 active；不新增或改写全局配色 tokens。
+
+### Typography
+
+沿用原生 Android sans／sp 与系统字号缩放。调节入口与普通参数共用 `entryCaption`，保持相同字幕基线；完整动作和状态继续由入口的辅助描述承载。
+
+### Layout
+
+调色盘、去灰、局部、修补与普通参数、曲线及 HSL 共用 26dp 正方形无圆底 AppIcon、6dp 顶部内边距和字幕基线。人像分类保留原有 39dp 圆形入口与 3dp 顶部内边距；本次不把它们改成调节参数。入口宽度、至少 48dp 命中范围、焦点及 ripple 语义保持既有实现。
+
+### Elevation & Depth
+
+调节轨的局部入口不再另加圆底；照片氛围、主工具与人像分类的圆形材料仍按既有角色使用。
+
+### Shapes
+
+继续使用既有 AppIcon Canvas 线图标、圆端点与圆连接；26dp 调节图标和 39dp 人像圆形入口是不同角色，不形成新的全局尺寸或容器 tokens。
+
+### Components
+
+**The Adjustment Rail Peer Rule.** 调节横轨中的调色盘、去灰、局部和修补与普通参数共用 26dp 无圆底 AppIcon、6dp 顶部内边距及字幕基线；人像分类保留 39dp 圆形入口。
+
+[170 冻结记录](docs/validation/icons170/README.md)及[独立 finish review](.impeccable/review/icons170/review.md)为 ship、无 material fixes，范围仅为图标一致性与直接回归。四种原生配置共 12 张 PNG，每种九个入口的图标盒、顶部内边距与字幕基线一致；每组 51 项含夹具／启动检查，不是 204 项新算法测试。打开／关闭工具及刷新后的模型、历史与源照片保持不变。
+
+170 仅为本地签名候选，未上传或发布；精确 full／交付 APK 身份、签名、大小及安装冷启动见冻结记录。不涉及渲染、选区或修补算法，不新增实体 Samsung、帧率、full-export 或公网 OTA 结论；不包含在线搜索改动。
+
+### Do's and Don'ts
+
+- **Do** 让四个专用调节入口与相邻参数保持同一图标盒、字幕基线及 AppIcon 风格，并保留原有标签、状态、回调与可访问语义。
+- **Don't** 把调节轨的无圆底规则推广到人像分类或其他照片圆形控件，也不把静态布局检查写成帧率、算法或整应用验收。
+
+
+
+## 171 · 在线全库搜索（2026-11-09）
+
+在线搜索改为查询既有完整目录元数据，取代165仅搜索已载入页的范围；普通浏览继续分页。首次搜索读取目录，后续输入与分类匹配复用索引，顶部提示为“搜索在线预设”。保留既有48dp搜索、清除／取消、160ms合并更新、来源控件与四首页材料，不扩展照片工作区。
+
+加载中显示“搜索中”；目录不可用显示可重试错误，不显示0匹配；离线完整缓存明确标记“缓存”。搜索空结果沿用166居中、无页脚清除动作；重试仅用于真实加载错误。原生四配置各37次检查、24张图及精确交付包身份见[171记录](docs/validation/online-search171/summary.json)。此为本地搜索修复，不代表鸿蒙实机闪退已解决。
+
+
+## 172 · 来源切页快照降级（2026-11-09）
+
+保留150固定来源控件、正文过渡及240ms／170ms节奏。出场截图是可选的显示辅助：硬件位图或平台View拒绝软件Canvas、以及内存不足时，释放临时图并继续真正来源变更；正常截图仍有原过渡。不将整个页面操作的异常吞掉，也不按手机品牌禁用所有动画。[172对照与限制](docs/validation/source-tab172/README.md)区分受控硬件位图复现和未取得的鸿蒙实机栈。
+
+
+## 173 · 涂抹松手消除（2026-11-09）
+
+### Overview
+
+173／`0.30.19-beta` 按用户“手指涂抹选中，松开触发消除”简化既有修补入口。当前默认为 `PhotoEraseDialog`：打开修补即可涂抹，松手后自动匹配局部干净纹理并显示结果；169 的选区、拖动来源、羽化及融合仍在“更多 → 手动取样修补”中保留。实际权威为已构建的对话框、`PhotoPatchSampler` 和主编辑入口，[方向契约](.impeccable/review/erase173/contract.md)限定为既有 Prisma 世界的操作细化。168 的显示政策、170 的 26dp 调节线图标及 39dp 人像圆形入口继续沿用，不新增视觉世界或全局 tokens。
+
+### Colors
+
+复用 frontmatter 的 `prisma-*` 角色：照片采样模糊氛围、半透明深色圆工具、安静白色文字与白色滑块、黄色主操作及 active。暖白软覆盖表达真实已存修补范围；它是显示层，眼睛只改变可见性。覆盖的透明度不成为照片色彩或新的全局 token。
+
+### Typography
+
+继续 Android 系统 sans／sp 与系统字号缩放。标题、画笔大小／数值及简短状态沿用照片工作区的紧凑层级；提示直接说明“涂抹要消除的地方，松手自动处理”。完整动作由辅助描述承载，不增加操作教学卡或装饰标题。
+
+### Layout
+
+取消／修补／完成位于照片上方；默认 dock 只有撤销、重做、眼睛、更多、一条画笔大小滑块和状态。竖屏照片下方为可滚动紧凑 dock，紧凑横屏改为照片配侧控；保留真实 system bars／cutout 安全区、字号 1.3 与至少 48dp 原生命中范围。默认流程不再先开选区子页或要求取样、添加、羽化、融合。
+
+### Elevation & Depth
+
+沿用照片本身、图像采样模糊场与单个圆形控件的材料；软覆盖独立于渲染结果。没有新增装饰暗层、卡片、生产 raster 或 HTML／CSS 替身。
+
+### Shapes
+
+延续既有 AppIcon Canvas 线图标与圆形工具材料。手指轨迹形成真实软边修补范围，双指只缩放／移动视口；指针取消、焦点中断或第二指加入会丢弃未完成的一笔。几何、取样位移及导引图尺寸属于编辑数据与实现边界，不形成全局容器 tokens。
+
+### Components
+
+**The Paint Release Repair Rule.** 打开修补即可涂抹，按住期间照片结果不变；松手才启动自动纹理匹配和渲染，成功的最新结果才写入暂存模型与内部历史，每笔只增加一次内部撤销。处理期间暂时禁用相冲突的编辑操作。
+
+**The Recoverable Repair Session Rule.** 完成只提交一次主编辑事务并沿用草稿／版本保存；取消不改父模型、主历史或源文件。早期导引图分配失败和后续渲染失败都保留原模型／历史，立即恢复有效控件并允许重试；既有 16 项修补上限提供可恢复提示，仍可撤销或在更多中删除。
+
+显示继承 **The Persistent Selection Feedback Rule** 与 **The Display Only Eye Rule**：保存的真实覆盖持续存在；大小滑块拖动暂隐，释放及中断后恢复用户明确选择的显隐状态，眼睛不删除效果。手动取样面板与旧修补继续可用，其暂存变更仍服从外层完成／取消边界。
+
+自动匹配使用最长边不超过 384px 的不可变定向导引图，根据未选中的周边上下文确定整块标记区域及安全边之外的真实、不透明来源。归一化来源位移冻结到已有 `PhotoPatch`／v7 配方，重开不重新随机取样；既有 preview／export 羽化、边缘颜色融合与渲染顺序不变，保留目标 alpha 和零覆盖外像素。这是本地小范围纹理修补，不能推导为生成式／语义 AI 或大物体重建。
+
+[173 冻结记录](docs/validation/erase173/README.md)绑定最终 full APK `909a28b2…`、签名本地交付包、四种 API36 原生配置及独立的早期分配／后续渲染失败注入；精确身份、计数、逐图索引、安装 smoke 和设备还原以该记录为准。[初审](.impeccable/review/erase173/review-initial.md)保留完整限定范围的视觉判断；[最终 verdict](.impeccable/review/erase173/review.md)只关闭 F1 及直接回归并给出 ship，不是整表面或整应用通过。未上传／发布；171／172 与更早冻结证据保持原归属。
+
+### Do's and Don'ts
+
+- **Do** 将涂抹／松手处理作为默认，手动取样留在更多，保留一笔一撤销及完成／取消事务边界。
+- **Do** 区分真实修补数据、显示覆盖、暂时手势抑制与用户显隐偏好，失败后立即恢复有效控件。
+- **Don't** 将确定性局部纹理取样写成生成式消除、语义识别或大物体重建保证。
+- **Don't** 将 NASA QA 照片及不适合的大涂抹写成成功去物示范，或把静态模拟器证据扩大为实体 Samsung／鸿蒙、帧率、新 full-export 或全应用验收。
+
+
+## 174 · 在线请求兼容补记（2026-11-09）
+
+仅调整在线请求及社区名称的UTF-8编码接口兼容性，搜索、来源控件、材料、字体与动画规范保持不变。不把缺少运行时方法导致的崩溃当作无数据状态；API31真实旧包点击崩溃与174同包API31／API37检查见[174记录](docs/validation/legacy-api174/README.md)，不外推为鸿蒙全机型验收。
+
+
+## 179 · 格式微标记与机内预设管理
+
+在原有照片缩略图左下角加 10sp、内容尺寸、6dp 圆角的格式标记；白字置于 #B3232521 表面，6dp 水平、3dp 垂直内边距，距图边 8dp。格式为展示信息，不增加点击块。编辑头部在现有 10sp 副标题行显示来源格式，保持原有照片、动作、布局高度和 178 交互。
+
+机内预设使用既有 ActionChoiceDialog 的可滚动原生选择行与 AppDialog 的显式删除／取消确认，不引入新材料、全局颜色或导航结构。确认页注明 C 编号和名称；空槽和不支持删除的相机不会发删除命令。[179 原生、协议与包验证](docs/validation/raw-editor179/README.md)；实体相机删除留待用户复测。
+
+## 180 · 应用相册删除与 RAW 保存进度
+
+应用相册沿用原有浮动选择栏，增加 48dp 触摸目标的垃圾桶线图标；手机相册不出现该入口。数量简写为“x 张”。窄屏及大字时，取消／导出收为同族图标，保留完整无障碍名称和编辑主操作，不增加第二排大按钮。删除确认复用 AppDialog，说明删除应用内照片及全部版本、手机相册和相机原图保留，沿用错误色文字／描边。实际删除中禁用冲突操作，返回不撤销已确认的后台任务，完成仍同步共享相册状态。
+
+RAW 在 95% 后切换为“保存中 x%”，实际写入驱动 95–99% 进度，校验提交完成才到 100%。不修改显影算法、尺寸和照片处理材料；加速来自无损 PNG 的编码投入与消除重复工作。短标签不再增加占位说明。[180 同包证据与限定复核](docs/validation/album-raw180/README.md)覆盖四配置删除、PNG 像素一致性和 RAW 回归；实体手机速度仍待复测。
+
+## 186 · 编辑器固定来源与分类横轨
+
+在原有 48dp 分类行内，左侧常显“我的／在线”，中部分类单独横向滚动，右侧 48dp 网格入口固定。默认及1.3倍字不增加行或工具区高度；继承编辑器暗色玻璃／黄色层级，不将首页材料套入照片处理。
+
+来源外框由单一原生控件绘制，默认宽104dp，绘制轨高至少32dp，触摸高48dp。按钮排版与选中框使用同一3dp内距；选中框半径由外框半径减该内距得到，上下居中，两端等距。描边在外轨内侧绘制；按压填色及键盘焦点由同层绘制，复用内框尺寸，不使用子按钮默认按压底。12sp文字随系统缩放，大字优先增加来源宽度、减少可见分类，分类仍可拖动。选中使用既有近白色及墨色文字，分类保持细黄色下划线。
+
+切换来源沿用现有数据及重置分类／搜索行为，只改变浏览，不清空当前效果、强度或历史；全部滤镜与主行共用来源状态。限定同包225次含重复原生检查、35图及9项编辑回归见[186记录](docs/validation/editor-sources186/README.md)。实际线上下载、实体手机与完整读屏验证不从模拟器结果推导。

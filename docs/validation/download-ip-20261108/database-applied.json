@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-08T08:13:02.220Z",
+  "appliedAtomically": true,
+  "globalReleaseQuotasRemoved": true,
+  "metadataRequestsPerIpMinute": 120,
+  "downloadRequestsPerIpHour": 60,
+  "sourceBytesPerHour": 268435456,
+  "retryWindowSeconds": 600,
+  "usageReset": false,
+  "definitions": [
+    {
+      "name": "nikon_release_budget_atomic",
+      "sha256": "af6b07bb8c03246b160b8439a2316064cec20e5147586de40f95713d4d3940d5"
+    },
+    {
+      "name": "nikon_release_download_budget",
+      "sha256": "5e1bf5e8bc7ca6652301ae22e6068365d266f5e786f554ea78fc0ef7b2c4e24a"
+    }
+  ]
+}

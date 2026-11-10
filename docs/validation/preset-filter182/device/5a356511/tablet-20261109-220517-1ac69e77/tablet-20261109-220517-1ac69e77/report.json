@@ -1,0 +1,160 @@
+{
+  "versionCode": 182,
+  "material": "blur",
+  "01-sheet-onlineText": "预设 在线预设 我的预设 全部 人像 风景 胶片 黑白 日常 夜景 未分类 发现色彩 390 份 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 0 人像 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 3 黑白 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 6 未分类 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 1 风景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 4 日常 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 7 人像 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 2 胶片 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 5 夜景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 8 风景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 9 胶片 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 12 夜景 下载 正在生成效果… 生成中 NP3 名称·色彩 15 风景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 10 黑白 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 13 未分类 下载 正在生成效果… 生成中 NP3 名称·色彩 16 胶片 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 11 日常 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 14 人像 下载 正在生成效果… 生成中 NP3 名称·色彩 17 黑白 下载 预设 同步 相册 设置 ",
+  "02-draft-combinationText": "预设 在线预设 我的预设 全部 人像 风景 胶片 黑白 日常 夜景 未分类 发现色彩 390 份 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 0 人像 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 3 黑白 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 6 未分类 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 1 风景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 4 日常 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 7 人像 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 2 胶片 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 5 夜景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 8 风景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 9 胶片 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 12 夜景 下载 正在生成效果… 生成中 NP3 名称·色彩 15 风景 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 10 黑白 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 13 未分类 下载 正在生成效果… 生成中 NP3 名称·色彩 16 胶片 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 11 日常 下载 效果暂不可用\n点按查看详情 效果未生成 NP3 名称·色彩 14 人像 下载 正在生成效果… 生成中 NP3 名称·色彩 17 黑白 下载 预设 同步 相册 设置 ",
+  "03-combined-deep-resultText": "预设 在线预设 我的预设 全部 人像 风景 胶片 黑白 日常 夜景 未分类 发现色彩 1 份匹配 暂不支持手机模拟\n点按卡片查看详情 效果未生成 NCP misleading 风景 已下载 预设 同步 相册 设置 ",
+  "failure": "java.lang.AssertionError: full-filter-result-first-page20\n\tat cc.huevia.presetfilter182qa.PresetFilter182Probe.check(PresetFilter182Probe.java:179)\n\tat cc.huevia.presetfilter182qa.PresetFilter182Probe.onStart(PresetFilter182Probe.java:85)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n",
+  "pass": false,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-version182",
+      "pass": true
+    },
+    {
+      "name": "unfiltered-server-total-retained",
+      "pass": true
+    },
+    {
+      "name": "first-page-browse-fixture20",
+      "pass": true
+    },
+    {
+      "name": "custom-sheet-opens",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter-close",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:全部",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:人像",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:风景",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:胶片",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:黑白",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:日常",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:夜景",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:风格:",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:下载状态:all",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:下载状态:missing",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:下载状态:saved",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:预设类型:",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:预设类型:NCP",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter:预设类型:NP3",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter-reset",
+      "pass": true
+    },
+    {
+      "name": "48dp-preset-filter-apply",
+      "pass": true
+    },
+    {
+      "name": "fixed-apply-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "fixed-close-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "header-footer-do-not-overlap",
+      "pass": true
+    },
+    {
+      "name": "glass-or-explicit-fallback",
+      "pass": true
+    },
+    {
+      "name": "draft-type-not-committed",
+      "pass": true
+    },
+    {
+      "name": "close-discards-draft",
+      "pass": true
+    },
+    {
+      "name": "pending-filter-not-zero",
+      "pass": true
+    },
+    {
+      "name": "real-type-despite-misleading-NCP-name-and-url",
+      "pass": true
+    },
+    {
+      "name": "combined-full-library-count",
+      "pass": true
+    },
+    {
+      "name": "sheet-reopens-committed-style",
+      "pass": true
+    },
+    {
+      "name": "reset-only-changes-draft",
+      "pass": true
+    },
+    {
+      "name": "system-back-discards-reset",
+      "pass": true
+    },
+    {
+      "name": "full-filter-result-first-page20",
+      "pass": false
+    }
+  ],
+  "candidateSha256": "5a3565111f42efb6eba1b013de6c5d5d71243ce5dd9c0b73b6a657c806f49813"
+}

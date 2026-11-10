@@ -49,11 +49,15 @@ public final class PhotoDateReader {
         check(cancel); return Collections.unmodifiableList(result);
     }
 
-    private long date(DownloadedPhoto photo, BooleanSupplier cancel, ZoneId zone) throws InterruptedIOException {
+    public long captureDate(DownloadedPhoto photo,BooleanSupplier cancel)throws InterruptedIOException {return captureDate(photo,cancel,ZoneId.systemDefault());}
+    private long date(DownloadedPhoto photo,BooleanSupplier cancel,ZoneId zone)throws InterruptedIOException {
+        long value=captureDate(photo,cancel,zone);return value>0?value:photo.file()==null?0:Math.max(0,photo.file().lastModified());
+    }
+    private long captureDate(DownloadedPhoto photo, BooleanSupplier cancel, ZoneId zone) throws InterruptedIOException {
         File file = photo.file(); if (file == null) return 0;
         long fallback = Math.max(0, file.lastModified());
         final File canonical;
-        try { canonical = file.getCanonicalFile(); } catch (IOException failure) { return fallback; }
+        try { canonical = file.getCanonicalFile(); } catch (IOException failure) { return 0; }
         Key key = new Key(canonical.getPath(), canonical.length(), fallback); Fields fields;
         synchronized (cache) { fields = cache.get(key); }
         if (fields == null) {
@@ -63,13 +67,13 @@ public final class PhotoDateReader {
             catch (IOException | RuntimeException unreadable) { fields = Fields.EMPTY; }
             check(cancel);
             long after = Math.max(0, canonical.lastModified());
-            if (canonical.length() != key.bytes || after != key.modified) return after;
+            if (canonical.length() != key.bytes || after != key.modified) return 0;
             synchronized (cache) { cache.put(key, fields); }
         }
         for (int i = 0; i < fields.dates.length; i++) {
             long value = parse(fields.dates[i], fields.offsets[i], zone); if (value > 0) return value;
         }
-        return fallback;
+        return 0;
     }
 
     static long parse(String date, String offset, ZoneId zone) {

@@ -1,6 +1,10 @@
 # 在线预设库管理后台
 
+**数据备份（2026-11-09）：** 独立云函数每天北京时间03:00将数据库与业务文件备份到私有COS，保留30天；首次35张表／773文件已全部回读校验。仅后台可执行快照RPC，原Web函数配置及更新包读写权限保留。方案、恢复说明和实际完成记录见[数据备份](../docs/data-backup.md)。
+
 这套后台用于上传 NCP 与样片、编辑预设草稿和分类、查看版本、上架和下架，以及管理普通 App 用户。Android App 继续读取现有 HTTPS 目录格式，无需接入 CloudBase SDK，也无需把云端凭据放入 App。
+
+**更新包存储（2026-11-08）：** 后台 APK 上传和下载已接入腾讯云 COS 私有桶，下载域名为 `https://download.huevia.cc`。23 个历史更新包已逐包迁移回读校验；当前公开测试版仍为115，现有更新地址与上架/撤回规则保留。预设、样片、头像及数据库保持原服务。配置、最小权限、验收、回滚与证书续期见 [COS 更新包存储](../docs/cos-update-storage.md)。
 
 **分类功能（后台 1.3.0）：** 预设编辑器支持选择建议分类或输入自定义分类，列表支持按分类筛选，历史记录保留各版本分类。建议值为人像、风景、胶片、黑白、日常、夜景；并非固定枚举，也不另设分类表或管理菜单。分类为可选的单个 `category` 字符串；旧数据与未填写的分类均显示“未分类”。修改分类后先保存草稿、再发布更新，App 才会看到新分类。迁移见 [004-preset-categories.sql](database/004-preset-categories.sql)；真实 PostgreSQL 验收入口见 [category-database-acceptance.sql](test/category-database-acceptance.sql)，包含 20 项断言且强制回滚全部合成数据。数据库验收和公网部署需单独执行，不能据本地 Node 测试宣称已上线。
 
@@ -28,11 +32,13 @@
 | HTTP 路径前缀 | `/preset-library` |
 | PostgreSQL 对象存储 bucket | `nikon-presets`，须保持私有 |
 
-已公开的后台入口（主域名根路径也会进入后台）：
+官网与后台入口（2026-11-07）：
 
-```text
-https://huevia.cc/preset-library/admin/
-```
+- 产品介绍与下载：`https://huevia.cc/`。
+- 管理后台：`https://admin.huevia.cc/`，沿用现有账号密码，新域名需重新登录。
+- 原 `https://huevia.cc/preset-library/admin/` 自动转到新后台。
+
+官网读取现有发布渠道，当前公开测试版为115／0.23.4-beta；本轮未发布155或更改更新策略。原App接口、公开目录与下载路径保持。完整部署、回退、来源及18项公网验证见[官网与后台迁移记录](../docs/website-homepage.md)。
 
 App 使用的公开目录地址：
 

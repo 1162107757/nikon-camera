@@ -15,13 +15,19 @@ const ERRORS = {
   INVALID: [400, '版本信息不完整，请检查后重试。'], NOT_FOUND: [404, '版本或上传任务不存在。'],
   UPLOAD_EXPIRED: [409, '上传任务已过期或已完成，请重新选择安装包。'],
   INCOMPLETE: [409, '安装包尚未传完，请重新上传。'], BUDGET: [429, '请求次数或今日流量达到上限，请稍后重试。'],
+  IP_BUDGET: [429, '当前网络（IP）的下载请求已达本小时上限，请稍后重试。'],
   DOWNGRADE: [409, '不能发布比本渠道已发布版本更旧的版本。'], CONFIRMATION: [400, '请先复核并确认本次发布。']
 };
 export class ReleaseStore {
   constructor(store) { this.store = store; }
   async rpc(name, body) {
     const result = await this.store.rpc(name, body);
-    if (result?.error) { const [status, message] = ERRORS[result.error] || [503, '版本服务暂时不可用，请稍后重试。']; throw new ServiceError(status, `RELEASE_${result.error}`, message); }
+    if (result?.error) {
+      const [status, message] = ERRORS[result.error] || [503, '版本服务暂时不可用，请稍后重试。'];
+      const error = new ServiceError(status, `RELEASE_${result.error}`, message);
+      if (result.error === 'IP_BUDGET' && Number.isInteger(result.retryAfterSeconds) && result.retryAfterSeconds >= 1 && result.retryAfterSeconds <= 3600) error.retryAfterSeconds = result.retryAfterSeconds;
+      throw error;
+    }
     return result;
   }
   async rows() { return this.store.rest('nikon_app_releases?select=*&order=version_code.desc&limit=200'); }
@@ -66,10 +72,11 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
   const releases = new ReleaseStore(store), prefix = basePath.replace(/\/$/, ''), base = new URL(publicBaseUrl).origin + prefix;
   const source = createAbuseContext({ store, secret: store.serviceKey || 'app-releases-local-source-budget-v1', trustedProxyHops, trustedProxyAddresses });
   const staticFiles = { 'index.html': 'text/html; charset=utf-8', 'download.js': 'text/javascript; charset=utf-8', 'download.css': 'text/css; charset=utf-8', 'tokens.css': 'text/css; charset=utf-8', 'icon.png': 'image/png', 'qr.js': 'text/javascript; charset=utf-8', 'preview-community.png':'image/png', 'preview-submission.png':'image/png', 'preview-messages.png':'image/png' };
-  async function budget(req, kind, bytes = 0) {
+  async function budget(req, kind, bytes = 0, sha256) {
     // Proxy identity is used only with explicitly configured trusted hops; IPv6 rotates within a /64 bucket.
     const key = source.context(req).sourceHash;
-    await releases.rpc('nikon_release_budget_atomic', { p_key: key, p_kind: kind, p_bytes: bytes });
+    if (kind === 'download') await releases.rpc('nikon_release_download_budget', { p_key: key, p_sha256: sha256, p_bytes: bytes });
+    else await releases.rpc('nikon_release_budget_atomic', { p_key: key, p_kind: kind, p_bytes: bytes });
   }
   async function publicRoute(req, res, { path, url, json }) {
     if (path === '/download') { res.writeHead(302, { Location: `${prefix}/download/` }); res.end(); return true; }
@@ -99,19 +106,19 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     res.setHeader('Cache-Control', 'no-store, max-age=0');
     const row = await releases.row(file[1]);
     if (row?.status !== 'published') throw new ServiceError(404, 'RELEASE_NOT_FOUND', '版本不存在或已下架。');
-    await budget(req, 'download', row.byte_length);
-    // Status and budget checks precede conditional response, so withdrawn files never return 304.
-    const etag = `"sha256-${row.sha256}"`;
-    if (req.headers['if-none-match'] === etag) { res.writeHead(304, { ETag: etag }); res.end(); return true; }
     if (!/^[a-f0-9]{64}$/.test(row.sha256) || ![`app-releases/${row.sha256}.apk`,`app-releases/${row.sha256}.bin`].includes(row.storage_path)
       || !Number.isInteger(row.byte_length) || row.byte_length < 1 || row.byte_length > MAX_APK_BYTES) throw new ServiceError(503, 'RELEASE_FILE_INVALID', '安装包位置校验失败。');
+    const etag = `"sha256-${row.sha256}"`, unchanged = req.headers['if-none-match'] === etag;
+    // Count every request, but a 304 transfers no package and must not consume its byte allowance.
+    await budget(req, 'download', unchanged ? 0 : row.byte_length, row.sha256);
+    if (unchanged) { res.writeHead(304, { ETag: etag }); res.end(); return true; }
     // A reviewed APK may ship with the function when the object store is unavailable.
     // It follows the same publication, budget, integrity and withdrawal checks.
     let data;
-    const large = row.byte_length > APK_INLINE_BYTES;
+    const large = row.byte_length > APK_INLINE_BYTES || storage.preferSignedDownloads === true;
     if (large) {
-      // A bundled copy cannot prove that the object behind a signed URL has the
-      // same bytes. Large packages require a real private storage object.
+      // A bundled copy cannot prove the signed object's bytes. COS always serves
+      // the real private object, including small historical APKs.
       data = await storage.get(row.storage_path, MAX_APK_BYTES);
     } else {
       try { data = await readBundledApk(row.storage_path.slice('app-releases/'.length)); }
@@ -150,7 +157,7 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     const uploadBudget = (bytes = 0, countRequest = false) => releases.rpc('nikon_app_upload_budget', { p_actor: actor, p_bytes: bytes, p_count_request: countRequest });
     if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) await uploadBudget(0, true);
     if (path === '/api/releases' && req.method === 'GET') {
-      json(res, { items: (await releases.rows()).map(row => adminView(row, base)), downloadPageUrl: `${base}/download/`,
+      json(res, { items: (await releases.rows()).map(row => adminView(row, base)), downloadPageUrl: `${base}/download/`, storageProvider: storage.provider || 'cloudbase',
         limits: { maxApkBytes: MAX_APK_BYTES, chunkBytes: APK_CHUNK_BYTES }, packageName: APK_PACKAGE, signerSha256: APK_SIGNER_SHA256 }); return true;
     }
     if (path === '/api/releases/uploads' && req.method === 'POST') {

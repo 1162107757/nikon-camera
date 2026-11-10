@@ -1,0 +1,19 @@
+{
+  "status": "design-only; fixed My/Online plus scrollable categories",
+  "nativeApplicationChanged": false,
+  "tool": "built-in image_gen.imagegen",
+  "images": [
+    {
+      "state": "mine",
+      "file": "editor-mine-fixed-source.png",
+      "bytes": 2175483,
+      "sha256": "fd889ec3d3f0cd4f0e2beda39caa16a829a2cd919f872eb155855ea3d3c1fbf6"
+    },
+    {
+      "state": "online",
+      "file": "editor-online-fixed-source.png",
+      "bytes": 2173087,
+      "sha256": "1b2a9761aff6d483f8c75cf21d93eb8590d9cda47cce30a196bdb1cf9aef05f3"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-08",
+  "scope": "remove model-only rejection; require Nikon identity, advertised operations and existing strict data/slot/write/readback validation",
+  "modelsCoveredByScriptedResponses": [
+    "NIKON Z 7II",
+    "Z 7_2",
+    "Z7II",
+    "Z 6",
+    "D850"
+  ],
+  "checks": {
+    "usbProbe": 685,
+    "pictureControlRead": 823,
+    "pictureControlImport": 1646,
+    "wireless": 10162
+  },
+  "physicalZ7IITested": false,
+  "files": [
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlReadSession.java",
+      "sha256": "b164c48d4bcb1899f47da336bb113e2dfa2c862293a655bb35b41e25f18c4950"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/PictureControlImportSession.java",
+      "sha256": "dbe0058245faeea6964571e71d5931135029bd93c8031bfb2cb41a75165d8a54"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/usb/NcpTransferSession.java",
+      "sha256": "ceae7ad6d6c2b22feea20ee212abd41afcfee1d96c61cac9965ba7f7902b07f8"
+    },
+    {
+      "path": "tests/probe-java/cc/huevia/usb/UsbPictureControlProbeHostTest.java",
+      "sha256": "0f005994d1f03e70e6f2f174da3a268009d0b2e9dc1ca58aae67fc80aeeb5fed"
+    },
+    {
+      "path": "tests/probe-java/cc/huevia/usb/UsbPictureControlImportHostTest.java",
+      "sha256": "c283fd52c686ffa889285584560b452925036278913ca125ab74db849e5d22b6"
+    },
+    {
+      "path": "tests/probe-java/cc/huevia/usb/UsbWirelessPictureControlHostTest.java",
+      "sha256": "a051af4319e4c56721a94f49a0796fca41bdc47829114e09c3803f46dd3e89ac"
+    },
+    {
+      "path": "tests/java/cc/huevia/usb/NcpTransferSessionTest.java",
+      "sha256": "70bc4a9ad8b1e8d6569498cbcca2545ec15223f2366057555bef71ad3efb2e65"
+    }
+  ],
+  "coreSuite": {
+    "exitCode": 0,
+    "prefixedPassGroups": 30,
+    "prefixedAssertions": 40182,
+    "transferProgressAssertions": 23,
+    "fujifilmSuitePassed": true,
+    "log": "core-tests.txt"
+  }
+}

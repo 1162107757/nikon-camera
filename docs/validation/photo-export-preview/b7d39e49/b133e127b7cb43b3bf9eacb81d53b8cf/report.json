@@ -1,0 +1,46 @@
+{
+  "pass": false,
+  "stage": "custom-jpeg",
+  "apkSha256": "b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb",
+  "checks": [
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "passed": true
+    },
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "fixture-JPEG",
+      "passed": true
+    },
+    {
+      "name": "main-ready",
+      "passed": true
+    },
+    {
+      "name": "actual-frame-committed-failure",
+      "passed": true
+    }
+  ],
+  "measurements": [],
+  "screenshots": [
+    "failure.png"
+  ],
+  "fixtureCleanup": true,
+  "failure": "java.lang.RuntimeException: java.lang.reflect.InvocationTargetException",
+  "scope": "Actual installed export-preview source and dialog; generated JPEG, JPEG\/reference pixel oracle, EXIF6, crop\/frame, normal-font emulator, account invalidation and pending close. No physical handset, camera or gallery publishing."
+}

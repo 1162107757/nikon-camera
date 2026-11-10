@@ -1,0 +1,51 @@
+{
+  "versionCode": 166,
+  "sdk": 37,
+  "dark": true,
+  "presets-collapsedActivePackage": null,
+  "presets-collapsedWindowText": "",
+  "presets-search-keyboardActivePackage": "cc.huevia",
+  "presets-search-keyboardWindowText": "预设 同步 相册 设置 123 取消 在线预设 我的预设 全部 发现色彩 0 份匹配 没有匹配的预设 试试其他名称或关键词。 ",
+  "presets-search-submittedActivePackage": "cc.huevia",
+  "presets-search-submittedWindowText": "预设 同步 相册 设置 123 取消 在线预设 我的预设 全部 发现色彩 0 份匹配 没有匹配的预设 试试其他名称或关键词。 ",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "actual-app-dark-palette",
+      "pass": true
+    },
+    {
+      "name": "no-system-ANR-over-presets-collapsed",
+      "pass": true
+    },
+    {
+      "name": "inline-search-focus",
+      "pass": true
+    },
+    {
+      "name": "no-system-ANR-over-presets-search-keyboard",
+      "pass": true
+    },
+    {
+      "name": "no-system-ANR-over-presets-search-submitted",
+      "pass": true
+    },
+    {
+      "name": "back-closes-search",
+      "pass": true
+    }
+  ],
+  "failure": null
+}

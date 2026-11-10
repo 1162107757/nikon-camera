@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "f972d48b012545e4f3a4f8de53bbefe48151e6b9d133f38ac587553adec037e8",
+  "versionCode": 177,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "728d9f69df2a43cc5616445e189082da7ec936934e20943d533b9b727ef81314",
+  "pass": true,
+  "scope": "Capture-only crop177 flow on the exact installed APK: owned landscape/portrait JPEG fixtures, native pointer selection in inline and precision crop, persistent quick selected state, existing accessibility resize and native inner-frame movement, active-dialog guards, apply and actual draft readback. Edge-corner drag and full TalkBack behavior are not certified. Other inherited flows were not run. No physical-device, performance, camera or publication certification.",
+  "files": [
+    {
+      "file": "crop177-inline-landscape-photo.png",
+      "sha256": "12d695cd402450832e0572df9b22ecd58535c936d87f946fb8c104d576aac89f"
+    },
+    {
+      "file": "crop177-inline-portrait-photo.png",
+      "sha256": "805c6a25fbb3f762fa442f0caf0fbeaa5bcb5fc6f0a94770dee4bd1d87716a1d"
+    },
+    {
+      "file": "crop177-precision-landscape-photo.png",
+      "sha256": "dcb6ea59aec25a10e3e104398069c894959e13b0253ffd2cfbcfda3efddb8aea"
+    },
+    {
+      "file": "crop177-precision-portrait-photo.png",
+      "sha256": "fc4246b537a5da7c39404b063905da9b604f6de868e2d8ad9c67c0ea762d0971"
+    },
+    {
+      "file": "report.json",
+      "sha256": "8da026cc3762db82cf9e9a7230e45e1c1a78ec62a2d83960a5bdb4179d15c881"
+    }
+  ]
+}

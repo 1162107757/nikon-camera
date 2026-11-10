@@ -1,0 +1,19 @@
+{
+  "versionCode": 178,
+  "versionName": "0.30.24-beta",
+  "files": {
+    "app/build.gradle": "24fe42a9644bda51de05263efd60ec44eaa40e0193958bac24b985f58370cc15",
+    "app/src/main/java/cc/huevia/MainActivity.java": "293a631da3447c790aadcf58baa199af16ef92ca737af9f68c9cf6d347fa3de6",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "3e3f1b5e7e490c368c3b07864d946d1c8c63f86c3cd0c362a5642b623f51b953",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java": "513fe9812994225193b07e4ce812b68f455a5f47f707c137e82a3f0d81367e3d",
+    "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java": "e48f65870ef853e8b970d255b0913d09ee5b6fac77d206c2a6b4cd5ac9379548",
+    "app/src/main/java/cc/huevia/ui/CameraWifiDialog.java": "f92c3d22815a055c469dc4c83fe7da2f4e5a858566707adcc6bcdf241ceefb09"
+  },
+  "baselineFiles": {
+    "app/build.gradle": "2fdd5d756766b71326bee164d8e419e9b6d68645a3b6cc8f94d224e8f604f394",
+    "app/src/main/java/cc/huevia/MainActivity.java": "9623a1b39fdaa47f4539f62dac0d3d7e0acd35207bf63754324c90b53e9741fd",
+    "app/src/main/java/cc/huevia/ui/AlbumPanel.java": "9a6ddd6e74fda2b7ffa2683b285bba8f129073532966910b9155dc6c3225ae59",
+    "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java": "bab72ec5be3fd0129a3eafb558624af8a44c03f53956d8b2740ffc05c5d3c693",
+    "app/src/main/java/cc/huevia/ui/PhotoCropDialog.java": "9ff7731344ee0017258e057ed3ea6ea672ece6ea4de64cb6cfdcfe08140990b6"
+  }
+}

@@ -1,0 +1,329 @@
+{
+  "apkSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "checks": 977,
+  "pngs": 35,
+  "runs": [
+    {
+      "mode": "phone",
+      "runId": "20261109-233453-phone-25d3e94d1b",
+      "checks": 648,
+      "pass_": true,
+      "processRestore": {
+        "pass": true,
+        "pid": 9004,
+        "previousPid": 8865,
+        "app": "added-oldest",
+        "phone": "added-newest"
+      },
+      "images": [
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/01-album-default.png",
+          "sha256": "6344e6eb22f68d3748aa13890e11f737dbd6e3c7df4abba72172f66fe602bf41",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/02-sheet-default.png",
+          "sha256": "1ec051acd31985fbf5d3498888a60d221d6b29f584e8eaa3b01340f02d9931f7",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/03-sheet-draft.png",
+          "sha256": "57419a25aa628d675aaa3139a063b0fa34218a1567218c5b7ae8260df28392fe",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/04-album-added-oldest.png",
+          "sha256": "d70f6fa6674743953f198ddabe34dd448ffb2be02e2ca7edfa5084b137869d4d",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/05-selection-A-preserved.png",
+          "sha256": "334360197a647d5b4d46b73ee06864377129568aa8c34e8d89335e8cc5c35a7d",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/06-phone-added-newest.png",
+          "sha256": "5be6ac12da86650c824cf30ae9027c68cce2642ac0bcc7b5c83ee70ea337d8e7",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/07-phone-sheet.png",
+          "sha256": "92c8d84008ad949341bcf08389fe9c599e813cf4a7f8afb899956b975499f21e",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/A-phone-selection.png",
+          "sha256": "81043b29ea9d27549b8abd09bae8e842f8af69e82d84d31a93d16cc3f2871519",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/A-three-selected.png",
+          "sha256": "74ce6af0935246d9493f9e9ccbb5fc25b569d204e36c27c36eaec8ad5ce7979c",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/app-delete-complete.png",
+          "sha256": "f933d5b9ec0c7ce32f2a22d252cfaed5cebafb93832ae28ac72bd9e1068a04bd",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/app-delete-confirmation.png",
+          "sha256": "3d479269dcad56c17d5a081d84b0536d0f730aac2525425f4503072616532803",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/app-delete-selection.png",
+          "sha256": "b9ee7697d67f156338b3a475a6411f360d4b8c22de3b51b15fa57dc868258bbf",
+          "width": 1080,
+          "height": 2424
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233453-phone-25d3e94d1b/20261109-233453-phone-25d3e94d1b/app-delete-working.png",
+          "sha256": "18299f4baf98b9623d6eb054578a72d9d0447952d100d3e38eaf013ac17ab7b2",
+          "width": 1080,
+          "height": 2424
+        }
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "testPackageRemoved": true,
+        "permissionRestored": true,
+        "fontRestored": true,
+        "sizeRestored": true,
+        "airplaneRestored": true,
+        "remoteFixtureRemoved": true,
+        "privateUniqueFixtureRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "mode": "large-text",
+      "runId": "20261109-232809-large-text-d3dfb126c7",
+      "checks": 109,
+      "pass_": true,
+      "processRestore": {
+        "pass": true,
+        "pid": 7601,
+        "previousPid": 7484,
+        "app": "added-oldest",
+        "phone": "added-newest"
+      },
+      "images": [
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/01-album-default.png",
+          "sha256": "239345791dc141eaee8bc02b215c2249c20bdbb5c64c077453032f1fba17aa46",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/02-sheet-default.png",
+          "sha256": "b3a486440b6782b4fc9f305e57e6a694c2e30a4d33ab8d6c8961133519e4eb7b",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/03-sheet-draft.png",
+          "sha256": "e70225f455ebdd2e21836d0bf9c34e511adbf7140609fe8fb713e0eefb7f04e9",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/04-album-added-oldest.png",
+          "sha256": "9f1e67b3c7bc78a6c59f1f28e8af76c44197e0d2de5f9d94abf675820f3f2cd9",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/05-selection-A-preserved.png",
+          "sha256": "5cd5b9c6fe0ee7cdcb40eceb3d1b5f03034e6f301b96a709b577d83ef412551e",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/06-phone-added-newest.png",
+          "sha256": "8e4141a20e6a4dafd955ae40b5ce9b4afd821fb574ec6ed440e673d820a6dffb",
+          "width": 840,
+          "height": 1890
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232809-large-text-d3dfb126c7/20261109-232809-large-text-d3dfb126c7/07-phone-sheet.png",
+          "sha256": "da6122fb5f909184bb59b339713d5900fe7c558eab1af8584b85da24f93a89ed",
+          "width": 840,
+          "height": 1890
+        }
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "testPackageRemoved": true,
+        "permissionRestored": true,
+        "fontRestored": true,
+        "sizeRestored": true,
+        "airplaneRestored": true,
+        "remoteFixtureRemoved": true,
+        "privateUniqueFixtureRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "mode": "tablet",
+      "runId": "20261109-233527-tablet-857a221c07",
+      "checks": 110,
+      "pass_": true,
+      "processRestore": {
+        "pass": true,
+        "pid": 9445,
+        "previousPid": 9259,
+        "app": "added-oldest",
+        "phone": "added-newest"
+      },
+      "images": [
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/01-album-default.png",
+          "sha256": "55912b7f1a2d37ceda822774ef6e90165861bb0ec4e74588b6bc0579ab6008ad",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/02-sheet-default.png",
+          "sha256": "d5e57ce156282e660d94f12a8b8cfde27e3674c91fc5c021a15d73be327bc8a0",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/03-sheet-draft.png",
+          "sha256": "49345a82564dc17d644edf263bd21077837e484b3bffe61ab76bc2b5c23f7abd",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/04-album-added-oldest.png",
+          "sha256": "6ac74aee7ce495f82e094047afaa5193b9a4f1ffcca39e279808d8302bbb1787",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/05-selection-A-preserved.png",
+          "sha256": "42b96c27ce204632394572fd24f54fce6f4fa88e0c59813207a10a9c17428963",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/06-phone-added-newest.png",
+          "sha256": "a3681565c4728e610043a96e5cea5505a7dc1502091f32d97da2f0c4c6eb9532",
+          "width": 1600,
+          "height": 2560
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-233527-tablet-857a221c07/20261109-233527-tablet-857a221c07/07-phone-sheet.png",
+          "sha256": "fc070bfaea4271f26fac34a9da12cf52610e8d829bdd0c5cd1fc224f3606fe4b",
+          "width": 1600,
+          "height": 2560
+        }
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "testPackageRemoved": true,
+        "permissionRestored": true,
+        "fontRestored": true,
+        "sizeRestored": true,
+        "airplaneRestored": true,
+        "remoteFixtureRemoved": true,
+        "privateUniqueFixtureRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainFailure": null,
+        "errors": []
+      }
+    },
+    {
+      "mode": "landscape",
+      "runId": "20261109-232840-landscape-4568a7bf41",
+      "checks": 110,
+      "pass_": true,
+      "processRestore": {
+        "pass": true,
+        "pid": 8457,
+        "previousPid": 8286,
+        "app": "added-oldest",
+        "phone": "added-newest"
+      },
+      "images": [
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/01-album-default.png",
+          "sha256": "ae0bbd9bfd3e9dad58504eab392941c6f60047d4ef346ddac652dd20f0db39ad",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/02-sheet-default.png",
+          "sha256": "ab4b9475c59c81079656bf678c5a5145ef38ba479b709d206a5adde6809749b9",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/03-sheet-draft.png",
+          "sha256": "7af8e9b880308adae1d69c738dd713626fbd84f1c1cafc571f029135b4a4ddd7",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/04-album-added-oldest.png",
+          "sha256": "713235e579d94d3b2e172415f20a85d2e1b964572b66376b1e11ebad2479f1f7",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/05-selection-A-preserved.png",
+          "sha256": "c680c04b031242375fed08e9ed5b62bc35d89f87997c172f2b9e0decca29e1f3",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/06-phone-added-newest.png",
+          "sha256": "62582d262aae9d3c60f7f3f2c1b8845a45d3da22c69a20f34ab052dd111afe20",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/07-phone-sheet.png",
+          "sha256": "69638ecdad3a14b6ac6b61d0b7c79c786bdb2fe347ee9d98aeada1796131a244",
+          "width": 1890,
+          "height": 840
+        },
+        {
+          "path": "docs/validation/sort183/native/6a50a4be/20261109-232840-landscape-4568a7bf41/20261109-232840-landscape-4568a7bf41/08-landscape-scrolled.png",
+          "sha256": "163f33e72cbbb7939be2a09d0ade0ce5b4fb8bacce0c90522f33a96e37ae4c1c",
+          "width": 1890,
+          "height": 840
+        }
+      ],
+      "cleanup": {
+        "serial": "emulator-5586",
+        "testPackageRemoved": true,
+        "permissionRestored": true,
+        "fontRestored": true,
+        "sizeRestored": true,
+        "airplaneRestored": true,
+        "remoteFixtureRemoved": true,
+        "privateUniqueFixtureRemoved": true,
+        "remoteEvidenceRetained": true,
+        "mainFailure": null,
+        "errors": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "versionCode": 169,
+  "versionName": "0.30.15-beta",
+  "sourceSha256": "201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication169\\candidates\\201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273\\update.apk",
+  "uploadSha256": "ef06853b8025936ce7c972e682855ee7ac1fc55ebda2776864be6bdf94fdaa10",
+  "uploadBytes": 31358141,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "ship; scoped to selected-source repair169 and direct regressions",
+  "finalApk": "D:\\dev\\ai-project\\nikon-camera\\dist\\upload169\\huevia-0.30.15-beta-update.apk",
+  "reviewFile": "D:\\dev\\ai-project\\nikon-camera\\.impeccable\\review\\patch169\\review.md"
+}

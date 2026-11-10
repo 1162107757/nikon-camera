@@ -115,9 +115,11 @@ public final class PhotoPortraitDialog extends Dialog {
     private View lightAxes;
     private int selected=-1,tool,mode=3,activeParameter,lastFaceMode,activeSkinParameter;
     private double radius=.022;
-    private boolean adding,showOverlay,compare,updating,dragging,analysisBusy;
+    private boolean adding,showOverlay=true,compare,updating,dragging,analysisBusy;
+    private boolean overlayHiddenByUser,selectionEntryDragging;
+    private PhotoPortrait.BodySkinMask overlayGlobalMask;
     private boolean selectionFlashPending;
-    /** Two brief mask pulses, then a clean photograph. Timing starts after the mask is ready. */
+    /** Legacy queue cancellation state, retained for in-flight mask callbacks; no timer animates selection. */
     private int selectionFlashStep=-1;
     private final Runnable selectionFlashTick=this::advanceSelectionFlash;
     private LinearLayout selectionTools,workspaceBody;
@@ -209,7 +211,7 @@ public final class PhotoPortraitDialog extends Dialog {
         selection.setEllipsize(android.text.TextUtils.TruncateAt.END);faces.addView(selection,new LinearLayout.LayoutParams(0,dp(48),1));
         auto=button("自动选脸",this::askDetect);auto.setTag("portrait-auto");auto.setTextColor(ACCENT);
         faces.addView(auto,new LinearLayout.LayoutParams(dp(96),dp(48)));
-        Button add=PhotoWorkspaceUi.icon(getContext(),"add","手动添加人脸","portrait-add-face",()->{cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=2;adding=true;tool=0;showOverlay=false;refresh();revealActiveChoice();});
+        Button add=PhotoWorkspaceUi.icon(getContext(),"add","手动添加人脸","portrait-add-face",()->{cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=2;adding=true;tool=0;showOverlay=!overlayHiddenByUser;refresh();revealActiveChoice();});
         faces.addView(add,new LinearLayout.LayoutParams(dp(48),dp(48)));
         Button more=PhotoWorkspaceUi.icon(getContext(),"more","更多人像操作","portrait-more",()->showMore());
         faces.addView(more,new LinearLayout.LayoutParams(dp(48),dp(48)));
@@ -220,7 +222,7 @@ public final class PhotoPortraitDialog extends Dialog {
         redoButton=stageAction(quick,"redo","重做","portrait-redo",this::redo);
         quick.addView(new View(getContext()),new LinearLayout.LayoutParams(0,1,1));
         brushButton=stageAction(quick,"brush","涂抹范围","portrait-brush",this::editBrush);
-        overlayButton=stageAction(quick,"mask","显示或隐藏选区","portrait-overlay",()->{clearSelectionFlash();showOverlay=!showOverlay;refresh();});
+        overlayButton=stageAction(quick,"eye","显示或隐藏选区","portrait-overlay",()->{clearSelectionFlash();overlayHiddenByUser=!overlayHiddenByUser;showOverlay=!overlayHiddenByUser;refresh();});
         stageAction(quick,"fit","适应照片","portrait-fit",photo::resetViewport);
         Button compareButton=stageAction(quick,"compare","按住查看处理前；辅助功能点击切换","portrait-compare",()->setCompare(!compare));
         compareButton.setOnTouchListener((v,e)->{switch(e.getActionMasked()){case MotionEvent.ACTION_DOWN:setCompare(true);return true;case MotionEvent.ACTION_UP:case MotionEvent.ACTION_CANCEL:case MotionEvent.ACTION_POINTER_DOWN:setCompare(false);return true;case MotionEvent.ACTION_MOVE:if(e.getX()<0||e.getX()>v.getWidth()||e.getY()<0||e.getY()>v.getHeight())setCompare(false);return true;}return true;});
@@ -233,7 +235,7 @@ public final class PhotoPortraitDialog extends Dialog {
         LinearLayout controls=column();controls.setBackgroundColor(PANEL);controls.setPadding(dp(12),dp(4),dp(12),dp(8));
         selectionTools=row();selectionTools.setTag("portrait-selection-modes");
         String[] names={"选脸","补选","擦除"};
-        for(int i=0;i<3;i++){final int next=i;tools[i]=button(names[i],()->{clearSelectionFlash();mode=2;tool=next;adding=false;showOverlay=next!=0;refresh();if(next==0)flashSelectedFace();revealActiveChoice();});tools[i].setTag("portrait-tool-"+i);selectionTools.addView(tools[i],new LinearLayout.LayoutParams(0,dp(48),1));}
+        for(int i=0;i<3;i++){final int next=i;tools[i]=button(names[i],()->{clearSelectionFlash();mode=2;tool=next;adding=false;showOverlay=!overlayHiddenByUser;refresh();if(next==0)flashSelectedFace();revealActiveChoice();});tools[i].setTag("portrait-tool-"+i);selectionTools.addView(tools[i],new LinearLayout.LayoutParams(0,dp(48),1));}
         controls.addView(selectionTools);
         hint=text("",12,MUTED);hint.setTag("portrait-hint");hint.setPadding(dp(4),0,dp(4),0);hint.setGravity(Gravity.CENTER);hint.setMaxLines(2);
         controls.addView(hint,new LinearLayout.LayoutParams(-1,dp(48)));
@@ -241,7 +243,7 @@ public final class PhotoPortraitDialog extends Dialog {
         LinearLayout regions=row();sizeRow=regions;TextView sizeLabel=text("大小",12,TEXT);regions.addView(sizeLabel,new LinearLayout.LayoutParams(dp(44),dp(48)));
         SeekBar size=new SeekBar(getContext());size.setTag("portrait-size");size.setMax(118);size.setProgress(20);tint(size);size.setContentDescription("画笔和祛痘范围");regions.addView(size,new LinearLayout.LayoutParams(0,dp(48),1));
         sizeValue=text("2.2%",12,ACCENT);sizeValue.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);regions.addView(sizeValue,new LinearLayout.LayoutParams(dp(44),dp(48)));
-        size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int p,boolean user){if(user)stopSelectionFlash();radius=(p+2)/1000.0;sizeValue.setText(String.format(Locale.ROOT,"%.1f%%",radius*100));size.setContentDescription(String.format(Locale.ROOT,"画笔和祛痘范围 %.1f%%",radius*100));}public void onStartTrackingTouch(SeekBar b){stopSelectionFlash();}public void onStopTrackingTouch(SeekBar b){}});controls.addView(regions);
+        size.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int p,boolean user){if(user)stopSelectionFlash();radius=(p+2)/1000.0;sizeValue.setText(String.format(Locale.ROOT,"%.1f%%",radius*100));size.setContentDescription(String.format(Locale.ROOT,"画笔和祛痘范围 %.1f%%",radius*100));}public void onStartTrackingTouch(SeekBar b){dragging=true;photo.invalidate();}public void onStopTrackingTouch(SeekBar b){dragging=false;photo.invalidate();}});controls.addView(regions);
         toneControls=column();toneControls.setTag("portrait-tone-controls");LinearLayout scope=row();
         toneFace=button("仅脸部",()->chooseToneScope(false));toneFace.setTag("portrait-tone-scope-face");scope.addView(toneFace,new LinearLayout.LayoutParams(0,dp(48),1));
         toneBody=button("全身皮肤",()->chooseToneScope(true));toneBody.setTag("portrait-tone-scope-body");scope.addView(toneBody,new LinearLayout.LayoutParams(0,dp(48),1));
@@ -253,10 +255,10 @@ public final class PhotoPortraitDialog extends Dialog {
         Button cancelTone=button("取消",this::cancelTonePreview);cancelTone.setTag("portrait-tone-preview-cancel");tonePreviewActions.addView(cancelTone,new LinearLayout.LayoutParams(0,dp(48),1));
         Button useTone=button("使用此色",this::confirmTonePreview);useTone.setTag("portrait-tone-preview-use");useTone.setTextColor(ACCENT);tonePreviewActions.addView(useTone,new LinearLayout.LayoutParams(0,dp(48),1));toneControls.addView(tonePreviewActions);controls.addView(toneControls);
         for(int i=0;i<sliders.length;i++){final int axis=i;LinearLayout line=row();labels[i]=text("",12,TEXT);line.addView(labels[i],new LinearLayout.LayoutParams(dp(80),dp(48)));sliders[i]=new SeekBar(getContext());sliders[i].setTag("portrait-axis-"+i);tint(sliders[i]);line.addView(sliders[i],new LinearLayout.LayoutParams(0,dp(48),1));values[i]=text("",12,ACCENT);values[i].setGravity(Gravity.END|Gravity.CENTER_VERTICAL);line.addView(values[i],new LinearLayout.LayoutParams(dp(44),dp(48)));rows[i]=line;controls.addView(line);
-            sliders[i].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int p,boolean user){if(user&&!updating)adjust(axis,p);}public void onStartTrackingTouch(SeekBar b){showOverlay=false;stopSelectionFlash();select(overlayButton,false);gestureStart=snapshot();dragging=true;}public void onStopTrackingTouch(SeekBar b){dragging=false;if(!tonePreviewing)remember(gestureStart);gestureStart=null;changed(false);}});
+            sliders[i].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar b,int p,boolean user){if(user&&!updating)adjust(axis,p);}public void onStartTrackingTouch(SeekBar b){showOverlay=!overlayHiddenByUser;stopSelectionFlash();select(overlayButton,showOverlay);gestureStart=snapshot();dragging=true;}public void onStopTrackingTouch(SeekBar b){dragging=false;if(!tonePreviewing)remember(gestureStart);gestureStart=null;changed(false);}});
         }
 
-        lightPad=new PortraitLightPad(getContext(),new PortraitLightPad.Listener(){public void start(){gestureStart=snapshot();dragging=true;showOverlay=false;clearSelectionFlash();}public void change(int x,int y){setLightPosition(x,y);}public void end(boolean cancel){dragging=false;if(cancel&&gestureStart!=null)restore(gestureStart);else remember(gestureStart);gestureStart=null;changed(false);}});controls.addView(lightPad,new LinearLayout.LayoutParams(-1,dp(112)));
+        lightPad=new PortraitLightPad(getContext(),new PortraitLightPad.Listener(){public void start(){gestureStart=snapshot();dragging=true;showOverlay=!overlayHiddenByUser;clearSelectionFlash();}public void change(int x,int y){setLightPosition(x,y);}public void end(boolean cancel){dragging=false;if(cancel&&gestureStart!=null)restore(gestureStart);else remember(gestureStart);gestureStart=null;changed(false);}});controls.addView(lightPad,new LinearLayout.LayoutParams(-1,dp(112)));
         LinearLayout axes=row();lightAxes=axes;for(cc.huevia.ncp.PortraitRetouch.Parameter axis:new cc.huevia.ncp.PortraitRetouch.Parameter[]{cc.huevia.ncp.PortraitRetouch.Parameter.LIGHT_X,cc.huevia.ncp.PortraitRetouch.Parameter.LIGHT_Y}){Button exact=button(axis.label,()->chooseRetouch(axis,false));exact.setTag("portrait-retouch-"+axis.name().toLowerCase(java.util.Locale.US));lightAxisTools.put(axis,exact);axes.addView(exact,new LinearLayout.LayoutParams(0,dp(48),1));}controls.addView(axes);
         skinRail=new HorizontalScrollView(getContext());skinRail.setTag("portrait-skin-tools");skinRail.setHorizontalScrollBarEnabled(false);skinRail.setOverScrollMode(View.OVER_SCROLL_NEVER);LinearLayout skinTools=row();
         Button naturalTool=PhotoWorkspaceUi.tool(getContext(),"自然精修","portrait-retouch-natural","face",this::naturalRetouch);retouchTools.put(cc.huevia.ncp.PortraitRetouch.Parameter.NATURAL,naturalTool);skinTools.addView(naturalTool,new LinearLayout.LayoutParams(toolWidth(),toolHeight()));
@@ -328,14 +330,14 @@ public final class PhotoPortraitDialog extends Dialog {
     }
 
     private void chooseEffect(int parameter){activeRetouch=null;
-        cancelTonePreview();photoSampling=false;clearSelectionFlash();activeParameter=parameter;mode=0;adding=false;showOverlay=false;tool=0;refresh();revealActiveChoice();
+        cancelTonePreview();photoSampling=false;clearSelectionFlash();activeParameter=parameter;mode=0;adding=false;showOverlay=!overlayHiddenByUser;tool=0;refresh();revealActiveChoice();
     }
     private void chooseMode(int next){activeRetouch=null;
-        cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=next;adding=false;showOverlay=false;tool=next==1?3:0;refresh();if(next==2)flashSelectedFace();revealActiveChoice();
+        cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=next;adding=false;showOverlay=!overlayHiddenByUser;tool=next==1?3:0;refresh();if(next==2)flashSelectedFace();revealActiveChoice();
     }
     private void chooseFaceGroup(){
         if(!choosingGroup&&mode<3)return;
-        cancelTonePreview();choosingGroup=false;photoSampling=false;clearSelectionFlash();activeRetouch=null;mode=lastFaceMode;adding=false;showOverlay=false;tool=mode==1?3:0;
+        cancelTonePreview();choosingGroup=false;photoSampling=false;clearSelectionFlash();activeRetouch=null;mode=lastFaceMode;adding=false;showOverlay=!overlayHiddenByUser;tool=mode==1?3:0;
         if(!portrait.bodyShape.isNeutral()){rendered=null;changed(false);}else{refresh();refreshApplyAvailability();showPreviewStatus();}dock.scrollTo(0,0);revealActiveChoice();
     }
     private void chooseBody(){
@@ -351,7 +353,7 @@ public final class PhotoPortraitDialog extends Dialog {
         if(mode<3)lastFaceMode=mode;
         cancelTonePreview();boolean finishDrag=dragging||gestureStart!=null;
         if(finishDrag){dragging=false;remember(gestureStart);gestureStart=null;}
-        photoSampling=false;clearSelectionFlash();adding=false;showOverlay=false;tool=0;photo.cancelEditingGesture();choosingGroup=true;
+        photoSampling=false;clearSelectionFlash();adding=false;showOverlay=!overlayHiddenByUser;tool=0;photo.cancelEditingGesture();choosingGroup=true;
         if(finishDrag||!portrait.bodyShape.isNeutral()){rendered=null;changed(false);}else{refresh();refreshApplyAvailability();showPreviewStatus();}
     }
     private void revealActiveChoice(){
@@ -376,7 +378,7 @@ public final class PhotoPortraitDialog extends Dialog {
         menu.show();
     }
     @Override public void show(){super.show();if(getWindow()!=null)getWindow().setLayout(-1,-1);}
-    @Override public void onWindowFocusChanged(boolean focus){super.onWindowFocusChanged(focus);if(!focus){compare=false;photo.invalidate();}}
+    @Override public void onWindowFocusChanged(boolean focus){super.onWindowFocusChanged(focus);if(!focus){compare=false;if(dragging){dragging=false;if(gestureStart!=null){Snapshot before=gestureStart;gestureStart=null;restore(before);}}photo.invalidate();}}
     @Override public void dismiss(){
         if(!disposed){disposed=true;photoSampling=false;toneTask++;globalSkinTask++;if(bodyDialog!=null){bodyDialog.dismiss();bodyDialog=null;}if(brushDialog!=null){brushDialog.dismiss();brushDialog=null;}if(tonePicker!=null){tonePicker.dismiss();tonePicker=null;}clearSelectionFlash();revision++;completedPreview=null;refreshApplyAvailability();if(decision!=null){decision.dismiss();decision=null;}queue.close();maskQueue.close();worker.shutdownNow();auxiliary.execute(()->analysis.recycle());auxiliary.shutdown();photo.invalidate();if(rendered!=null){rendered.recycle();rendered=null;}if(overlay!=null){overlay.recycle();overlay=null;}}
         super.dismiss();
@@ -395,11 +397,11 @@ public final class PhotoPortraitDialog extends Dialog {
     private void redo(){if(tonePreviewStart!=null){cancelTonePreview();return;}if(redo.isEmpty())return;undo.addLast(snapshot());restore(redo.removeLast());revision++;normalize();changed(false);}
     private void normalize(){portrait=withPreparedSkin(portrait);if(selected>=portrait.faces().size())selected=portrait.faces().size()-1;if(selected<0&&!portrait.faces().isEmpty())selected=0;}
     private void chooseFace(){stopSelectionFlash();PopupMenu menu=new PopupMenu(getContext(),selection);for(int i=0;i<portrait.faces().size();i++){PhotoPortrait.Face f=portrait.faces().get(i);menu.getMenu().add(0,i,i,"人脸 "+(i+1)+(f.enabled?"":" · 停用")).setCheckable(true).setChecked(i==selected);}if(portrait.faces().isEmpty())menu.getMenu().add("先自动选脸或手动添加").setEnabled(false);else menu.getMenu().setGroupCheckable(0,true,true);menu.setOnMenuItemClickListener(item->{selectFace(item.getItemId());return true;});menu.show();}
-    private void selectFace(int index){if(index<0||index>=portrait.faces().size())return;cancelTonePreview();photoSampling=false;toneTask++;selected=index;adding=false;tool=mode==1?3:0;showOverlay=false;refresh();flashSelectedFace();}
+    private void selectFace(int index){if(index<0||index>=portrait.faces().size())return;cancelTonePreview();photoSampling=false;toneTask++;selected=index;adding=false;tool=mode==1?3:0;showOverlay=!overlayHiddenByUser;refresh();flashSelectedFace();}
     private void deleteFace(){if(face()==null)return;replace(portrait.removeFace(selected),true);}
     private void deleteHeal(){if(!portrait.heals().isEmpty())replace(portrait.removeHeal(portrait.heals().size()-1),true);}
     private void toggleFace(){PhotoPortrait.Face value=face();if(value!=null)replace(portrait.withFace(selected,value.withEnabled(!value.enabled)),true);}
-    private void adjust(int axis,int progress){if(analysisBusy||!hasSliderSelection())return;PhotoPortrait.Face value=face();if(mode==3?!canEditTone():mode==4?!regionMode:mode==5?globalSkinBusy||portrait.globalSkinMask==null:value==null)return;showOverlay=false;Snapshot old=snapshot();if(activeRetouch!=null){int amount=progress+activeRetouch.min;cc.huevia.ncp.PortraitRetouch next=retouchSettings().with(activeRetouch,amount);portrait=mode>=3?portrait.withRetouch(next):portrait.withFace(selected,value.withRetouch(next));}else if(mode==5){portrait=portrait.withSkinSmoothing(progress);}else if(mode==3){PhotoPortrait.Tone tone=editedTone();portrait=withEditedTone(new PhotoPortrait.Tone(tone.presetId,tone.colorRGB,progress/100.0,tone.body));}else{int p=mode==4?activeSkinParameter:parameter(axis);int[] v=settings(mode==4?region.skinSettings:value.settings);v[p]=progress-(p==0||p==1||p==2||p==5?100:0);PhotoPortrait.Settings next=new PhotoPortrait.Settings(v[0],v[1],v[2],v[3],v[4],v[5],v[6]);if(mode==4)region=region.withSkinSettings(next);else portrait=portrait.withFace(selected,value.withSettings(next));}revision++;if(!dragging&&!tonePreviewing)remember(old);changed(dragging);}
+    private void adjust(int axis,int progress){if(analysisBusy||!hasSliderSelection())return;PhotoPortrait.Face value=face();if(mode==3?!canEditTone():mode==4?!regionMode:mode==5?globalSkinBusy||portrait.globalSkinMask==null:value==null)return;showOverlay=!overlayHiddenByUser;Snapshot old=snapshot();if(activeRetouch!=null){int amount=progress+activeRetouch.min;cc.huevia.ncp.PortraitRetouch next=retouchSettings().with(activeRetouch,amount);portrait=mode>=3?portrait.withRetouch(next):portrait.withFace(selected,value.withRetouch(next));}else if(mode==5){portrait=portrait.withSkinSmoothing(progress);}else if(mode==3){PhotoPortrait.Tone tone=editedTone();portrait=withEditedTone(new PhotoPortrait.Tone(tone.presetId,tone.colorRGB,progress/100.0,tone.body));}else{int p=mode==4?activeSkinParameter:parameter(axis);int[] v=settings(mode==4?region.skinSettings:value.settings);v[p]=progress-(p==0||p==1||p==2||p==5?100:0);PhotoPortrait.Settings next=new PhotoPortrait.Settings(v[0],v[1],v[2],v[3],v[4],v[5],v[6]);if(mode==4)region=region.withSkinSettings(next);else portrait=portrait.withFace(selected,value.withSettings(next));}revision++;if(!dragging&&!tonePreviewing)remember(old);changed(dragging);}
     private static int[] settings(PhotoPortrait.Settings v){return new int[]{v.brightness,v.warmth,v.redness,v.smoothing,v.texture,v.light,v.shadows};}
     private int parameter(int axis){return activeParameter;}
     private void refresh(){
@@ -410,7 +412,9 @@ public final class PhotoPortraitDialog extends Dialog {
         primaryRail.setVisibility(choosingGroup||mode>=3?View.GONE:View.VISIBLE);
         skinRail.setVisibility(!choosingGroup&&mode>=3?View.VISIBLE:View.GONE);select(skinToneTool,mode==3);skinSmoothingTool.setVisibility(regionMode?View.GONE:View.VISIBLE);select(skinSmoothingTool,mode==5&&activeRetouch==null);for(int i=0;i<skinEffects.length;i++){skinEffects[i].setVisibility(regionMode?View.VISIBLE:View.GONE);select(skinEffects[i],mode==4&&activeSkinParameter==i);}
         faceBar.setVisibility(choosingGroup||mode>=4||mode==3&&!tonePerFace?View.GONE:View.VISIBLE);
-        overlayButton.setVisibility(choosingGroup||mode>=4||mode==3&&!tonePerFace?View.GONE:View.VISIBLE);
+        boolean selectionAvailable=face()!=null||preparedGlobalSkinMask!=null||regionMode&&region.hasSelection();
+        overlayButton.setVisibility(choosingGroup&&!selectionAvailable?View.GONE:View.VISIBLE);overlayButton.setEnabled(selectionAvailable);
+        overlayButton.setContentDescription(showOverlay?"隐藏选区，保留调整":"显示选区");overlayButton.setTooltipText(overlayButton.getContentDescription());
         brushButton.setVisibility(!choosingGroup&&(regionMode||paintRequest!=null)?View.VISIBLE:View.GONE);brushButton.setEnabled(!analysisBusy&&!globalSkinBusy&&!photoSampling&&!tonePreviewing);brushButton.setContentDescription(regionMode?"编辑"+region.name+"涂抹范围":"涂抹局部调节范围");
         for(int i=0;i<3;i++){select(tools[i],selectionMode&&tool==i);tools[i].setEnabled(i==0||value!=null);}
         for(int i=0;i<effects.length;i++)select(effects[i],adjustment&&activeRetouch==null&&activeParameter==i);
@@ -453,9 +457,9 @@ public final class PhotoPortraitDialog extends Dialog {
         updating=false;requestMask();photo.invalidate();
         if(workspaceBody!=null&&workspaceStage!=null&&dockPanel!=null)layoutWorkspace(workspaceBody,workspaceStage,dockPanel);
     }
-    private void chooseTone(){activeRetouch=null;if(!choosingGroup&&mode==3)return;if(mode<3)lastFaceMode=mode;cancelTonePreview();choosingGroup=false;photoSampling=false;clearSelectionFlash();mode=3;tool=0;adding=false;showOverlay=false;if(!portrait.bodyShape.isNeutral()){rendered=null;changed(false);}else{refresh();refreshApplyAvailability();showPreviewStatus();}dock.scrollTo(0,0);revealActiveChoice();if(!tonePerFace)ensureGlobalSkin(false);}
+    private void chooseTone(){activeRetouch=null;if(!choosingGroup&&mode==3)return;if(mode<3)lastFaceMode=mode;cancelTonePreview();choosingGroup=false;photoSampling=false;clearSelectionFlash();mode=3;tool=0;adding=false;showOverlay=!overlayHiddenByUser;if(!portrait.bodyShape.isNeutral()){rendered=null;changed(false);}else{refresh();refreshApplyAvailability();showPreviewStatus();}dock.scrollTo(0,0);revealActiveChoice();if(!tonePerFace)ensureGlobalSkin(false);}
     private cc.huevia.ncp.PortraitRetouch retouchSettings(){return mode>=3?portrait.retouch:face()==null?cc.huevia.ncp.PortraitRetouch.NONE:face().retouch;}
-    private void chooseRetouch(cc.huevia.ncp.PortraitRetouch.Parameter parameter,boolean skin){cancelTonePreview();photoSampling=false;clearSelectionFlash();activeRetouch=parameter;mode=skin?5:0;choosingGroup=false;adding=false;showOverlay=false;tool=0;refresh();revealActiveChoice();if(skin){ensureGlobalSkin(false);if(parameter==cc.huevia.ncp.PortraitRetouch.Parameter.EVENNESS&&portrait.faces().isEmpty())prepareRetouchFaces();}else if(face()==null||face().landmarks==null)prepareRetouchFaces();}
+    private void chooseRetouch(cc.huevia.ncp.PortraitRetouch.Parameter parameter,boolean skin){cancelTonePreview();photoSampling=false;clearSelectionFlash();activeRetouch=parameter;mode=skin?5:0;choosingGroup=false;adding=false;showOverlay=!overlayHiddenByUser;tool=0;refresh();revealActiveChoice();if(skin){ensureGlobalSkin(false);if(parameter==cc.huevia.ncp.PortraitRetouch.Parameter.EVENNESS&&portrait.faces().isEmpty())prepareRetouchFaces();}else if(face()==null||face().landmarks==null)prepareRetouchFaces();}
     private void prepareRetouchFaces(){
         if(disposed||analysisBusy)return;analysisBusy=true;final long token=revision;final List<PhotoPortrait.Face> existing=portrait.faces();refresh();refreshApplyAvailability();status.setText("正在定位面部细节…");
         auxiliary.execute(()->{List<PhotoPortrait.Face> found=null;try{found=existing.isEmpty()?cc.huevia.album.PhotoPersonAnalysis.analyze(activity.getApplicationContext(),analysis,()->disposed||token!=revision).faces:PhotoFaceSkinMask.refine(activity.getApplicationContext(),analysis,PhotoFaceLandmarks.refine(activity.getApplicationContext(),analysis,existing,()->disposed||token!=revision),()->disposed||token!=revision);}catch(Exception|LinkageError|OutOfMemoryError ignored){}final List<PhotoPortrait.Face> result=found;main.post(()->{if(disposed)return;analysisBusy=false;if(token!=revision){changed(false);return;}if(result==null||result.isEmpty()){status.setText("未定位到清晰五官，可自动选脸或手动调整脸部范围。");refresh();refreshApplyAvailability();return;}if(selected<0)selected=0;replace(portrait.withFaces(result),false);});});
@@ -472,10 +476,10 @@ public final class PhotoPortraitDialog extends Dialog {
     }
     private void reviewBlemishes(List<PhotoPortrait.Heal> found,long token){if(disposed||token!=revision||found==null||found.isEmpty())return;String[] names=new String[found.size()];boolean[] chosen=new boolean[names.length];java.util.Arrays.fill(chosen,true);for(int i=0;i<names.length;i++)names[i]="第 "+(i+1)+" 处 · "+Math.round(found.get(i).tx*100)+"%, "+Math.round(found.get(i).ty*100)+"%";decision=new AppDialog.Builder(getContext()).setTitle("修复疑似小瑕疵").setMultiChoiceItems(names,chosen,(d,i,checked)->chosen[i]=checked).setNegativeButton("取消",(d,w)->refreshApplyAvailability()).setPositiveButton("修复所选",(d,w)->{if(disposed||token!=revision)return;PhotoPortrait next=portrait;for(int i=0;i<chosen.length;i++)if(chosen[i])next=next.addHeal(found.get(i));replace(next,true);}).setOnCancelListener(d->refreshApplyAvailability()).create();decision.show();refreshApplyAvailability();}
     private void showHealingHistory(){String[] names=new String[portrait.heals().size()];for(int i=0;i<names.length;i++)names[i]="撤销第 "+(i+1)+" 处 · "+Math.round(portrait.heals().get(i).tx*100)+"%, "+Math.round(portrait.heals().get(i).ty*100)+"%";decision=new AppDialog.Builder(getContext()).setTitle("选择要撤销的祛痘记录").setItems(names,(d,i)->{if(!disposed&&i<portrait.heals().size())replace(portrait.removeHeal(i),true);}).setNegativeButton("关闭",null).create();decision.show();}
-    private void chooseSkinSmoothing(){activeRetouch=null;if(regionMode){chooseSkinEffect(3);return;}cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=5;choosingGroup=false;adding=false;showOverlay=false;tool=0;refresh();refreshApplyAvailability();showPreviewStatus();revealActiveChoice();ensureGlobalSkin(false);}
-    private void chooseSkinEffect(int parameter){activeRetouch=null;if(!regionMode)return;cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=4;activeSkinParameter=parameter;adding=false;showOverlay=false;tool=0;refresh();refreshApplyAvailability();showPreviewStatus();revealActiveChoice();ensureGlobalSkin(false);}
+    private void chooseSkinSmoothing(){activeRetouch=null;if(regionMode){chooseSkinEffect(3);return;}cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=5;choosingGroup=false;adding=false;showOverlay=!overlayHiddenByUser;tool=0;refresh();refreshApplyAvailability();showPreviewStatus();revealActiveChoice();ensureGlobalSkin(false);}
+    private void chooseSkinEffect(int parameter){activeRetouch=null;if(!regionMode)return;cancelTonePreview();photoSampling=false;clearSelectionFlash();mode=4;activeSkinParameter=parameter;adding=false;showOverlay=!overlayHiddenByUser;tool=0;refresh();refreshApplyAvailability();showPreviewStatus();revealActiveChoice();ensureGlobalSkin(false);}
     private void editBrush(){
-        if(disposed||analysisBusy||globalSkinBusy)return;cancelTonePreview();photoSampling=false;clearSelectionFlash();photo.cancelEditingGesture();showOverlay=false;
+        if(disposed||analysisBusy||globalSkinBusy)return;cancelTonePreview();photoSampling=false;clearSelectionFlash();photo.cancelEditingGesture();showOverlay=!overlayHiddenByUser;
         if(dragging||gestureStart!=null){dragging=false;remember(gestureStart);gestureStart=null;changed(false);}
         if(!regionMode){if(paintRequest!=null)paintRequest.run();return;}
         Bitmap brushPhoto=(rendered==null?initial:rendered).copy(Bitmap.Config.ARGB_8888,false);if(brushPhoto==null){status.setText("选区照片准备失败，请重试。");return;}
@@ -503,7 +507,7 @@ public final class PhotoPortraitDialog extends Dialog {
         auxiliary.execute(()->{PhotoPortrait.BodySkinMask mask=null;try{mask=PhotoExposedSkin.detect(getContext().getApplicationContext(),analysis,knownFaces,()->disposed||task!=globalSkinTask);}catch(Exception|LinkageError|OutOfMemoryError failure){}
             final PhotoPortrait.BodySkinMask result=mask;main.post(()->{if(disposed||task!=globalSkinTask)return;globalSkinBusy=false;
                 if(result==null){globalSkinFailed=true;refresh();refreshApplyAvailability();showPreviewStatus();return;}
-                preparedGlobalSkinMask=result;globalSkinEmpty=emptySkinMask(result);globalSkinFailed=false;
+                overlayHiddenByUser=false;showOverlay=true;preparedGlobalSkinMask=result;globalSkinEmpty=emptySkinMask(result);globalSkinFailed=false;
                 // Preparing an automatic mask is a cache update, not a user edit. Keep queued face detection valid.
                 portrait=portrait.withGlobalSkinMask(result);changed(false);showPreviewStatus();
             });});
@@ -549,12 +553,13 @@ public final class PhotoPortraitDialog extends Dialog {
     }
     private void openTonePicker(int rgb){
         if(!canEditTone())return;
-        stopSelectionFlash();showOverlay=false;photoSampling=false;final int target=selected;final boolean perFace=tonePerFace;
+        stopSelectionFlash();showOverlay=!overlayHiddenByUser;photoSampling=false;final int target=selected;final boolean perFace=tonePerFace;
         if(tonePreviewStart==null)tonePreviewStart=snapshot();
         if(tonePicker!=null)tonePicker.dismiss();
         tonePicker=new SkinTonePicker(activity,rgb,toneSwatches,new SkinTonePicker.Listener(){
+            public void interaction(boolean active){if(!disposed){selectionEntryDragging=active;photo.invalidate();}}
             public void use(int color){if(disposed||perFace!=tonePerFace||(perFace&&target!=selected)||!canEditTone())return;tonePreviewing=true;portrait=withEditedTone(SkinTone.custom(color,toneAmount(),editedTone().body));revision++;changed(false);}
-            public void sample(int color){if(disposed||perFace!=tonePerFace||(perFace&&target!=selected))return;sampleSeed=color;photoSampling=true;stopSelectionFlash();showOverlay=false;refresh();refreshApplyAvailability();status.setText("点按照片取色");}
+            public void sample(int color){if(disposed||perFace!=tonePerFace||(perFace&&target!=selected))return;sampleSeed=color;photoSampling=true;stopSelectionFlash();showOverlay=!overlayHiddenByUser;refresh();refreshApplyAvailability();status.setText("点按照片取色");}
             public void saved(){if(!disposed){toneCardsKey=null;refreshToneCards();}}
             public void cancel(){if(!disposed)cancelTonePreview();}
         });tonePicker.show();photo.invalidate();
@@ -598,7 +603,7 @@ public final class PhotoPortraitDialog extends Dialog {
         auxiliary.execute(()->{List<PhotoPortrait.Face> found=null;String error=null;try{found=PhotoFaceSkinMask.refine(getContext().getApplicationContext(),analysis,PhotoFaceLandmarks.refine(getContext().getApplicationContext(),analysis,PhotoPortraitDetection.detect(analysis,()->disposed||token!=revision),()->disposed||token!=revision),()->disposed||token!=revision);}catch(Exception|LinkageError|OutOfMemoryError failure){error="自动选脸未完成，请重试或手动添加。";}final List<PhotoPortrait.Face> result=found;final String message=error;main.post(()->{
             if(disposed)return;analysisBusy=false;auto.setEnabled(true);if(token!=revision){changed(false);return;}
             if(message!=null||result==null||result.isEmpty()){notice=message==null?"未识别到清晰正脸，请手动添加。":message;status.setText(notice);refreshApplyAvailability();return;}
-            selected=0;tool=mode==1?3:0;adding=false;showOverlay=false;replace(portrait.withFaces(result),true);flashSelectedFace();
+            selected=0;tool=mode==1?3:0;adding=false;showOverlay=!overlayHiddenByUser;replace(portrait.withFaces(result),true);flashSelectedFace();
         });});
     }
     private void heal(double x,double y){
@@ -609,7 +614,19 @@ public final class PhotoPortraitDialog extends Dialog {
         });});
     }
     private void requestMask(){
-        PhotoPortrait.Face value=(showOverlay||selectionFlashPending||selectionFlashStep>=0)?face():null;
+        boolean global=mode==4||mode==5||mode==3&&!tonePerFace;
+        PhotoPortrait.BodySkinMask body=global?preparedGlobalSkinMask:null;
+        if(showOverlay&&body!=null){
+            if(overlayGlobalMask==body&&overlay!=null&&!overlay.isRecycled())return;
+            overlayFace=null;maskQueue.reset();overlayGlobalMask=body;
+            if(overlay!=null){overlay.recycle();overlay=null;}
+            byte[] coverage=body.copyCoverage();int[] pixels=new int[coverage.length];
+            AdjustmentRegion.Brush brush=regionMode?region.compileBrush(analysis.getWidth(),analysis.getHeight()):null;int side=PhotoPortrait.BodySkinMask.SIZE;
+            for(int i=0;i<pixels.length;i++){double selected=brush==null?1:brush.weight((i%side+.5)/side,(i/side+.5)/side);pixels[i]=((int)Math.round((coverage[i]&255)*38.0/255*selected)<<24)|0x00fff1e4;}
+            overlay=Bitmap.createBitmap(pixels,PhotoPortrait.BodySkinMask.SIZE,PhotoPortrait.BodySkinMask.SIZE,Bitmap.Config.ARGB_8888);return;
+        }
+        overlayGlobalMask=null;
+        PhotoPortrait.Face value=showOverlay&&!global?face():null;
         if(value==null){overlayFace=null;maskQueue.reset();if(overlay!=null){overlay.recycle();overlay=null;}return;}
         value=value.withSettings(PhotoPortrait.Settings.NONE);
         if(value.equals(overlayFace))return;overlayFace=value;if(overlay!=null){overlay.recycle();overlay=null;}maskQueue.offer(value,false);
@@ -617,22 +634,14 @@ public final class PhotoPortraitDialog extends Dialog {
     private void clearSelectionFlash(){main.removeCallbacks(selectionFlashTick);selectionFlashPending=false;selectionFlashStep=-1;}
     private void stopSelectionFlash(){clearSelectionFlash();requestMask();photo.invalidate();}
     private void flashSelectedFace(){
-        clearSelectionFlash();if(disposed||choosingGroup||mode>=4||mode==3&&!tonePerFace||compare||face()==null)return;selectionFlashPending=true;requestMask();
-        if(overlay!=null&&!overlay.isRecycled())startSelectionFlash();photo.invalidate();
+        clearSelectionFlash();if(disposed)return;overlayHiddenByUser=false;showOverlay=true;requestMask();photo.invalidate();
     }
-    private void startSelectionFlash(){
-        selectionFlashPending=false;selectionFlashStep=0;main.removeCallbacks(selectionFlashTick);photo.invalidate();main.postDelayed(selectionFlashTick,220);
-    }
-    private void advanceSelectionFlash(){
-        if(disposed||compare||selectionFlashStep<0){stopSelectionFlash();return;}
-        selectionFlashStep++;
-        if(selectionFlashStep>=3){stopSelectionFlash();return;}
-        photo.invalidate();main.postDelayed(selectionFlashTick,selectionFlashStep==1?140:220);
-    }
+    private void startSelectionFlash(){clearSelectionFlash();requestMask();photo.invalidate();}
+    private void advanceSelectionFlash(){clearSelectionFlash();}
     private void setCompare(boolean value){compare=value;if(value)stopSelectionFlash();photo.invalidate();}
     private Bitmap maskBitmap(PhotoPortrait.Face value)throws Exception{
         int width=240,height=Math.max(1,(int)Math.round(analysis.getHeight()*240.0/analysis.getWidth()));if(height>320){width=Math.max(1,(int)Math.round(width*320.0/height));height=320;}
-        Bitmap image=Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);boolean completed=false;try{PortraitPreviewFilter.Mask mask=PortraitPreviewFilter.mask(value,analysis.getWidth(),analysis.getHeight());int[] row=new int[width];for(int y=0;y<height;y++){if(disposed||Thread.currentThread().isInterrupted())throw new java.io.IOException("选区已关闭。");double ny=(y+.5)/height;for(int x=0;x<width;x++){double nx=(x+.5)/width;int source=analysis.getPixel(Math.min(analysis.getWidth()-1,(int)(nx*analysis.getWidth())),Math.min(analysis.getHeight()-1,(int)(ny*analysis.getHeight())));int alpha=(int)Math.round(mask.weight(source,nx,ny)*38);row[x]=(alpha<<24)|0x00fff1e4;}image.setPixels(row,0,width,0,y,width,1);}completed=true;return image;}finally{if(!completed)image.recycle();}}
+        Bitmap image=Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888);boolean completed=false;try{PortraitPreviewFilter.Mask mask=PortraitPreviewFilter.mask(value,analysis.getWidth(),analysis.getHeight());AdjustmentRegion.Brush brush=regionMode?region.compileBrush(analysis.getWidth(),analysis.getHeight()):null;int[] row=new int[width];for(int y=0;y<height;y++){if(disposed||Thread.currentThread().isInterrupted())throw new java.io.IOException("选区已关闭。");double ny=(y+.5)/height;for(int x=0;x<width;x++){double nx=(x+.5)/width;int source=analysis.getPixel(Math.min(analysis.getWidth()-1,(int)(nx*analysis.getWidth())),Math.min(analysis.getHeight()-1,(int)(ny*analysis.getHeight())));int alpha=(int)Math.round(mask.weight(source,nx,ny)*38*(brush==null?1:brush.weight(nx,ny)));row[x]=(alpha<<24)|0x00fff1e4;}image.setPixels(row,0,width,0,y,width,1);}completed=true;return image;}finally{if(!completed)image.recycle();}}
 
     private final class PhotoCanvas extends View {
         final RectF frame=new RectF();private final Paint ink=new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);private final ArrayList<Double> path=new ArrayList<>();
@@ -652,9 +661,9 @@ public final class PhotoPortraitDialog extends Dialog {
         }
         void resetViewport(){stopSelectionFlash();zoom=1;panX=panY=0;bounds();invalidate();}
         private void bounds(){float fit=Math.min(getWidth()/(float)initial.getWidth(),getHeight()/(float)initial.getHeight()),w=initial.getWidth()*fit*zoom,h=initial.getHeight()*fit*zoom;float mx=Math.max(0,(w-getWidth())/2),my=Math.max(0,(h-getHeight())/2);panX=Math.max(-mx,Math.min(mx,panX));panY=Math.max(-my,Math.min(my,panY));frame.set((getWidth()-w)/2+panX,(getHeight()-h)/2+panY,(getWidth()+w)/2+panX,(getHeight()+h)/2+panY);}
-        @Override protected void onDraw(Canvas canvas){super.onDraw(canvas);if(disposed)return;bounds();Bitmap image=compare||rendered==null?initial:rendered;ink.setAlpha(255);ink.setStyle(Paint.Style.FILL);canvas.drawBitmap(image,null,frame,ink);if(compare||frame.isEmpty())return;canvas.save();canvas.clipRect(frame);if((showOverlay||selectionFlashStep==0||selectionFlashStep==2)&&overlay!=null&&!overlay.isRecycled())canvas.drawBitmap(overlay,null,frame,ink);
-            // Selection feedback uses the actual skin mask briefly; keep facial detail unobstructed afterward.
-            if(!choosingGroup&&tool==3){ink.setColor(ACCENT);ink.setStyle(Paint.Style.STROKE);ink.setStrokeWidth(dp(1));for(PhotoPortrait.Heal h:portrait.heals())canvas.drawCircle((float)(frame.left+h.tx*frame.width()),(float)(frame.top+h.ty*frame.height()),(float)(h.radius*Math.min(frame.width(),frame.height())),ink);}
+        @Override protected void onDraw(Canvas canvas){super.onDraw(canvas);if(disposed)return;bounds();Bitmap image=compare||rendered==null?initial:rendered;ink.setAlpha(255);ink.setStyle(Paint.Style.FILL);canvas.drawBitmap(image,null,frame,ink);if(compare||frame.isEmpty())return;canvas.save();canvas.clipRect(frame);if(showOverlay&&!dragging&&!selectionEntryDragging&&!photoSampling&&overlay!=null&&!overlay.isRecycled())canvas.drawBitmap(overlay,null,frame,ink);
+            // Selection stays visible until hidden by the user; adjustment gestures temporarily suppress it.
+            if(showOverlay&&!dragging&&!selectionEntryDragging&&!photoSampling&&!choosingGroup&&tool==3){ink.setColor(ACCENT);ink.setStyle(Paint.Style.STROKE);ink.setStrokeWidth(dp(1));for(PhotoPortrait.Heal h:portrait.heals())canvas.drawCircle((float)(frame.left+h.tx*frame.width()),(float)(frame.top+h.ty*frame.height()),(float)(h.radius*Math.min(frame.width(),frame.height())),ink);}
             if(tracking&&!navigating&&!path.isEmpty()){ink.setColor(tool==2?0xaaff9b8f:0x66fff1e4);ink.setStyle(Paint.Style.STROKE);ink.setStrokeCap(Paint.Cap.ROUND);ink.setStrokeJoin(Paint.Join.ROUND);ink.setStrokeWidth((float)(2*radius*Math.min(frame.width(),frame.height())));Path stroke=new Path();for(int i=0;i<path.size();i+=2){float x=(float)(frame.left+path.get(i)*frame.width()),y=(float)(frame.top+path.get(i+1)*frame.height());if(i==0)stroke.moveTo(x,y);else stroke.lineTo(x,y);}canvas.drawPath(stroke,ink);}
             ink.setStyle(Paint.Style.FILL);canvas.restore();
         }

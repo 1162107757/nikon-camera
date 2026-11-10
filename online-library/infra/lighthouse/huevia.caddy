@@ -6,9 +6,9 @@
 	# Use the existing CloudBase custom-domain binding for browser navigation.
 	reverse_proxy https://huevia.cc.tcbaccess.tencentcloudbase.com {
 		header_up Host huevia.cc
-		header_up X-Forwarded-Host huevia.cc
+		header_up X-Forwarded-Host {host}
 		header_up X-Forwarded-Proto https
-		header_down Location "^https://nikon-d8girdjsr252fd90e-1252602548\\.ap-shanghai\\.app\\.tcloudbase\\.com(.*)$" "https://huevia.cc${1}"
+		header_down Location "^https://nikon-d8girdjsr252fd90e-1252602548\\.ap-shanghai\\.app\\.tcloudbase\\.com(.*)$" "https://{http.request.host}${1}"
 		transport http {
 			tls_server_name huevia.cc
 			dial_timeout 10s
@@ -18,6 +18,25 @@
 }
 
 huevia.cc {
-	# Caddy obtains and renews the public certificate automatically.
+	encode zstd gzip
+	@old_admin path /preset-library/admin /preset-library/admin/*
+	redir @old_admin https://admin.huevia.cc{uri} 302
+	@library path /preset-library /preset-library/*
+	handle @library {
+		import huevia_cloudbase
+	}
+	handle {
+		root * /var/www/huevia-home/current
+		header X-Huevia-Site "product-home-20261107"
+		header X-Content-Type-Options nosniff
+		header Referrer-Policy strict-origin-when-cross-origin
+		file_server
+	}
+}
+
+admin.huevia.cc {
+	# Host-only administrator cookies and the existing API prefix stay intact.
+	@root path /
+	redir @root /preset-library/admin/ 302
 	import huevia_cloudbase
 }

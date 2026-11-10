@@ -93,6 +93,7 @@ public final class PhotoOriginalStore {
                 } else {
                     // A deterministic destination recovers a process stop after rename but before the journal commit.
                     Files.move(input.toPath(), target.toPath());
+                    PhotoArrivalDates.record(target);
                 }
             }
             if (target.length() != bytes || !sha.equals(contentId(target))) throw new IOException("原图在保存过程中发生变化，未确认完成记录。");

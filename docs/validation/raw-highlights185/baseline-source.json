@@ -1,0 +1,18 @@
+[
+  {
+    "Path": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\cpp\\huevia_raw.cpp",
+    "Hash": "190AD56D1426565FE6D375064570EFA4328B110756E3C983EE46AEF5F63E410D"
+  },
+  {
+    "Path": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\java\\cc\\huevia\\ncp\\RawJpegColorMatch.java",
+    "Hash": "BC9690EC94D5683325E2C891DF9984D94A6ADB0F84E2E2CFC8755C1352608BA7"
+  },
+  {
+    "Path": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\java\\cc\\huevia\\ncp\\RawDevelopmentSettings.java",
+    "Hash": "4DDDDAD38C1523C936E905FFB5CEAF3C5462691F814EBD28D61D11024A9542E9"
+  },
+  {
+    "Path": "D:\\dev\\ai-project\\nikon-camera\\app\\src\\main\\java\\cc\\huevia\\album\\RawDeveloper.java",
+    "Hash": "AFE69745BE1468EDC2F76DCC69D9A8FB3E3C6AB06F32A86E97858A23BB5D0CB4"
+  }
+]

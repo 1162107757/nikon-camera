@@ -1,0 +1,182 @@
+{
+  "versionCode": 162,
+  "versionName": "0.30.8-beta",
+  "apk": "dist/huevia-0.30.8-beta-debug.apk",
+  "sha256": "20862fbd1f770075999504ff5390b2541eb927553606debc1cd6cb581a602368",
+  "bytes": 34618838,
+  "host": {
+    "settingsChecks": 299,
+    "colorMatchChecks": 15575,
+    "log": ".tooling/raw-color162-host.log"
+  },
+  "native": {
+    "checks": 591,
+    "runs": [
+      {
+        "run": "20261108-154407-phone-44fb46228b",
+        "pass": true,
+        "checks": 159,
+        "measurements": [
+          {
+            "case": "synthetic-dng-default",
+            "elapsedMs": 133.3447,
+            "width": 96,
+            "height": 64,
+            "workingBytes": 9327,
+            "meanLuma": 72.40369669596355,
+            "outputBits": 8
+          },
+          {
+            "case": "real-nef",
+            "make": "Nikon",
+            "model": "Z 6",
+            "decoder": "nikon_load_raw()",
+            "width": 6064,
+            "height": 4040,
+            "sourceSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+            "workingSha256": "99e59dcc87939275f88a8550dbb8797b5752f0e46ddbefca763a3ac9023ffce3",
+            "workingBytes": 29481131,
+            "elapsedMs": 22740.723,
+            "outputBits": 8
+          },
+          {
+            "case": "real-nef-camera-JPEG-color",
+            "applied": true,
+            "status": "相机 JPEG 色彩 · 近似还原",
+            "beforeRgbRmse": 0.29805144310325227,
+            "afterRgbRmse": 0.035123020420655654,
+            "fitReason": "MATCHED",
+            "correlation": 0.9891077686955722,
+            "orientation": 0,
+            "referenceScale": 1.06,
+            "samples": 2280,
+            "referenceWidth": 6048,
+            "referenceHeight": 4024,
+            "referenceBytes": 1297891,
+            "neutralExtraElapsedMs": 20082.6833
+          },
+          {
+            "case": "independent-full-raster-unaligned-reference",
+            "beforeRgbRmse": 0.30481216917800324,
+            "afterRgbRmse": 0.12648417284305627
+          }
+        ],
+        "cleanup": {
+          "serial": "emulator-5588",
+          "testPackageRemoved": true,
+          "fontRestored": true,
+          "sizeRestored": true,
+          "airplaneRestored": true,
+          "remoteFixtureRemoved": true,
+          "privateUniqueFixtureRemoved": true,
+          "remoteEvidenceRetained": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "20261108-154541-narrow-b30070627d",
+        "pass": true,
+        "checks": 144,
+        "measurements": [
+          {
+            "case": "synthetic-dng-default",
+            "elapsedMs": 57.8649,
+            "width": 96,
+            "height": 64,
+            "workingBytes": 9327,
+            "meanLuma": 72.40369669596355,
+            "outputBits": 8
+          },
+          {
+            "case": "real-nef",
+            "skipped": "host did not provide licensed NEF"
+          }
+        ],
+        "cleanup": {
+          "serial": "emulator-5588",
+          "testPackageRemoved": true,
+          "fontRestored": true,
+          "sizeRestored": true,
+          "airplaneRestored": true,
+          "remoteFixtureRemoved": true,
+          "privateUniqueFixtureRemoved": true,
+          "remoteEvidenceRetained": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "20261108-154607-large-text-2751092370",
+        "pass": true,
+        "checks": 144,
+        "measurements": [
+          {
+            "case": "synthetic-dng-default",
+            "elapsedMs": 64.3808,
+            "width": 96,
+            "height": 64,
+            "workingBytes": 9327,
+            "meanLuma": 72.40369669596355,
+            "outputBits": 8
+          },
+          {
+            "case": "real-nef",
+            "skipped": "host did not provide licensed NEF"
+          }
+        ],
+        "cleanup": {
+          "serial": "emulator-5588",
+          "testPackageRemoved": true,
+          "fontRestored": true,
+          "sizeRestored": true,
+          "airplaneRestored": true,
+          "remoteFixtureRemoved": true,
+          "privateUniqueFixtureRemoved": true,
+          "remoteEvidenceRetained": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      },
+      {
+        "run": "20261108-154633-landscape-ccb118c439",
+        "pass": true,
+        "checks": 144,
+        "measurements": [
+          {
+            "case": "synthetic-dng-default",
+            "elapsedMs": 139.8868,
+            "width": 96,
+            "height": 64,
+            "workingBytes": 9327,
+            "meanLuma": 72.40369669596355,
+            "outputBits": 8
+          },
+          {
+            "case": "real-nef",
+            "skipped": "host did not provide licensed NEF"
+          }
+        ],
+        "cleanup": {
+          "serial": "emulator-5588",
+          "testPackageRemoved": true,
+          "fontRestored": true,
+          "sizeRestored": true,
+          "airplaneRestored": true,
+          "remoteFixtureRemoved": true,
+          "privateUniqueFixtureRemoved": true,
+          "remoteEvidenceRetained": true,
+          "mainFailure": null,
+          "errors": []
+        }
+      }
+    ]
+  },
+  "limits": [
+    "Same-frame embedded camera JPEG approximation, not Nikon proprietary processing or exact JPEG equivalence.",
+    "Full active RAW pixels retained; PNG workspace remains 8-bit sRGB.",
+    "One pinned Nikon Z6 NEF; no physical phone/camera color-accuracy acceptance.",
+    "Only RAW development work tested on162;163 local-brush edits made later are not in this APK."
+  ],
+  "unpublished": true
+}

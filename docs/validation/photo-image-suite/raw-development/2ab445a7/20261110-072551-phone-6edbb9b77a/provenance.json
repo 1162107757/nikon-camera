@@ -1,0 +1,45 @@
+{
+  "versionCode": "184",
+  "candidateSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "serial": "emulator-5584",
+  "hardware": "ranchu",
+  "uiMode": "phone",
+  "probeSha256": "22daa0a74825bc90d7de87d781209d64f71e3092580642ba0b5f734c9942bcdf",
+  "sampleNefSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+  "pass": true,
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only.",
+  "files": [
+    {
+      "file": "raw-ui-auto-wb.png",
+      "sha256": "90d7d075096554cdfb9572bea322a70c6247dc13e93608aa6139f29092752da2"
+    },
+    {
+      "file": "raw-ui-color-choice.png",
+      "sha256": "99f8ec2af7cfaadb5aeed71de2e0b3709289e997b8d8a38dca55ce9117a931c5"
+    },
+    {
+      "file": "raw-ui-editor-return.png",
+      "sha256": "37b1bcb4ecd2b7e3a7f0d6557d8f0e6c25eb9c28e0665d500298d9ff5172b887"
+    },
+    {
+      "file": "raw-ui-initial.png",
+      "sha256": "bc353ca3e546d714df51a5f9b02c3569ec065070e0247e93de8ddf7b15cc3007"
+    },
+    {
+      "file": "real-nef-camera-color.png",
+      "sha256": "9f57ab7c2bee6ff294e2a32e8ae2d30c1aea9d1da31e39a7e4fe06fa0feb86da"
+    },
+    {
+      "file": "real-nef-camera-jpeg-reference.png",
+      "sha256": "d889877382f9486734549146470cf034550e881f461ff13a8a198e8de92c7bb3"
+    },
+    {
+      "file": "real-nef-neutral.png",
+      "sha256": "4e483000ddd97e54bb3324772cf7ac4b7195767f8251de311d4a0910ddbccf3c"
+    },
+    {
+      "file": "report.json",
+      "sha256": "1a3d91738d970c7969104710c0f4d0a5eb45c59c86d9f8459cbfd08b9bc803ce"
+    }
+  ]
+}

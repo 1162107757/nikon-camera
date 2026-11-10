@@ -1,0 +1,11 @@
+{
+  "animatorRestored": true,
+  "displayRestored": true,
+  "nightRestored": true,
+  "fontRestored": true,
+  "airplaneRestored": true,
+  "testPackageRemoved": true,
+  "mainAppStopped": true,
+  "mainFailure": "SourceTab172 failed: java.lang.AssertionError: actual-online-tab-button-found\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.check(SourceTab172Probe.java:78)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.actualPresetTab(SourceTab172Probe.java:65)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.onStart(SourceTab172Probe.java:37)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2701)\n; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\source-tab172\\device\\71de10a2\\phone-20261109-091602-0d6eeae2",
+  "errors": []
+}

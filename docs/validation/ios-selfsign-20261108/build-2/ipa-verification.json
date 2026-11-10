@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "bundleIdentifier": "cc.huevia.ios",
+  "version": "0.1.0",
+  "build": "2",
+  "minimumOS": "16.0",
+  "platform": "iPhoneOS",
+  "architecture": "arm64",
+  "machOSignatureCommandPresent": false,
+  "provisioningProfilePresent": false,
+  "requiresUserSigning": true,
+  "bytes": 2609899,
+  "sha256": "51eeb94cad2fe6419bd9ca923f9c093f8361c0b6b6b999d2e05b7a69427230ce"
+}

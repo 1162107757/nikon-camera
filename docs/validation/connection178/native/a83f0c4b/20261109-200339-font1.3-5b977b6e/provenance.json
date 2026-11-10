@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "a83f0c4ba6fca5da4a9d3ef6461472f44cfc08a179c00738e4303ad44743c52b",
+  "versionCode": 178,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "c9f6d9405e11a33f22c219ff26ee5026ce4b17a3717ef94ecb21eefeab8e4be0",
+  "pass": true,
+  "scope": "Capture-only connection178 flow on the exact installed APK: native camera guide and Wi-Fi automatic/intercepted system selection, return, retry and cancellation; quick-ratio entry, two-finger events dispatched to the real crop View, native inner-frame movement, photo bounds, apply and actual draft readback, plus free-crop cancellation. Other inherited flows were not run. No real network selection, camera handshake, physical-device, edge-corner, full TalkBack, performance or publication certification.",
+  "files": [
+    {
+      "file": "connection178-page.png",
+      "sha256": "8fd06c74b338cb64d58ffb45c77598ec6ff841b6d0f9044058eca15d1c62cf4b"
+    },
+    {
+      "file": "connection178-wifi-checking.png",
+      "sha256": "c94a644006c1aa9f7fa696a8ef81393f58f82c2bbffcf46834c0cfcaaf5d587f"
+    },
+    {
+      "file": "connection178-wifi-retry.png",
+      "sha256": "81e7617085c65650fbdfb7caf71c8c0bc755903a7e4cfa5d2319798af396c1dc"
+    },
+    {
+      "file": "crop178-adjusted-landscape-photo.png",
+      "sha256": "1d947dbc4feb2220814ca0a9a020c4064236ed5aa268d13f97e170d6f40121da"
+    },
+    {
+      "file": "crop178-adjusted-portrait-photo.png",
+      "sha256": "e6779e5f58bc2fdc3deeb4ac021b01261024b9350ef5f6edcd26b6f8ec682fc7"
+    },
+    {
+      "file": "crop178-free-landscape-photo.png",
+      "sha256": "255d9efc4b39c9c98345ccb45aae4236dcd1afa29cf7424b63f9e85f9528590a"
+    },
+    {
+      "file": "crop178-free-portrait-photo.png",
+      "sha256": "3c3f46064253a2092bd9cd0d17c821885152d31d716a0b00b4e05d280ab6df86"
+    },
+    {
+      "file": "report.json",
+      "sha256": "d42e4799d50de80be777d6d7676a87e62c3c2eb52c705e7c282b0e4b90c4911a"
+    }
+  ]
+}

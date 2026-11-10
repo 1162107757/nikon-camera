@@ -1,0 +1,28 @@
+{
+  "apk": "dist\\upload172\\huevia-0.30.18-beta-update.apk",
+  "expectation": "baseline",
+  "pass": true,
+  "charsetOverloadRemaining": true,
+  "legacyEncodingNameOverload": true,
+  "methodReferences": [
+    {
+      "dex": "classes.dex",
+      "class": "java.net.URLEncoder",
+      "method": "encode",
+      "descriptor": "(Ljava/lang/String;)Ljava/lang/String;"
+    },
+    {
+      "dex": "classes.dex",
+      "class": "java.net.URLEncoder",
+      "method": "encode",
+      "descriptor": "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"
+    },
+    {
+      "dex": "classes.dex",
+      "class": "java.net.URLEncoder",
+      "method": "encode",
+      "descriptor": "(Ljava/lang/String;Ljava/nio/charset/Charset;)Ljava/lang/String;"
+    }
+  ],
+  "apiReference": "https://developer.android.com/reference/java/net/URLEncoder"
+}

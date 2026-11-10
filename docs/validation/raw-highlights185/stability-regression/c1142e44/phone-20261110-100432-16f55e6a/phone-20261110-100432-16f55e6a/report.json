@@ -1,0 +1,365 @@
+{
+  "versionCode": 185,
+  "sdk": 36,
+  "stabilitySnapshot": {
+    "sdk": 36,
+    "manufacturer": "Google",
+    "model": "sdk_gphone64_x86_64",
+    "currentAppVersion": "0.30.31-beta",
+    "lastJavaCrash": null,
+    "processExitHistoryAvailable": true,
+    "processExitHistory": []
+  },
+  "scope": "Actual installed MainActivity\/root navigation\/source\/filter and PhotoPresetBatch, real synthetic JPEG codecs, simple\/full and local+crop+border full\/share. Baseline183 must reproduce its own model-limit error;184 must commit\/reuse exact outputs. No physical Honor\/camera or memory-pressure certification.",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "exact-baseline183-or-fixed184-or-regression185",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-0-0",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-1-0",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-1",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-3",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-2",
+      "pass": true
+    },
+    {
+      "name": "root-navigation-2-0",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-0",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-1",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-2",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-3",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-4",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-5",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-6",
+      "pass": true
+    },
+    {
+      "name": "preset-source-switch-7",
+      "pass": true
+    },
+    {
+      "name": "filter-dialog-opens-on-runtime",
+      "pass": true
+    },
+    {
+      "name": "filter-closes-without-crash",
+      "pass": true
+    },
+    {
+      "name": "report-picker-failure-contained-false",
+      "pass": true
+    },
+    {
+      "name": "picker-failure-keeps-main-alive-false",
+      "pass": true
+    },
+    {
+      "name": "report-picker-failure-contained-true",
+      "pass": true
+    },
+    {
+      "name": "picker-failure-keeps-main-alive-true",
+      "pass": true
+    },
+    {
+      "name": "document-picker-supported-fallback",
+      "pass": true
+    },
+    {
+      "name": "fallback-does-not-mutate-original-intent",
+      "pass": true
+    },
+    {
+      "name": "both-settings-entrypoints-blocked-with-one-recoverable-error",
+      "pass": true
+    },
+    {
+      "name": "interface-default-preview-independent-pixel-copy",
+      "pass": true
+    },
+    {
+      "name": "interface-default-preview-source-untouched",
+      "pass": true
+    },
+    {
+      "name": "interface-default-preview-transform-AdjustedPreviewProfile",
+      "pass": true
+    },
+    {
+      "name": "interface-default-preview-transform-StrengthPreviewProfile",
+      "pass": true
+    },
+    {
+      "name": "baseline183-android12-preview-must-reproduce-clone-error",
+      "pass": true
+    },
+    {
+      "name": "simple-full-new-fixture",
+      "pass": true
+    },
+    {
+      "name": "simple-full-batch-completes",
+      "pass": true
+    },
+    {
+      "name": "simple-full-request-accepted",
+      "pass": true
+    },
+    {
+      "name": "simple-full-terminal-state",
+      "pass": true
+    },
+    {
+      "name": "simple-full-export-succeeds",
+      "pass": true
+    },
+    {
+      "name": "simple-full-real-output-dimensions",
+      "pass": true
+    },
+    {
+      "name": "simple-full-original-unchanged",
+      "pass": true
+    },
+    {
+      "name": "simple-full-completed-output-found-with-same-identity",
+      "pass": true
+    },
+    {
+      "name": "simple-full-durable-source-link",
+      "pass": true
+    },
+    {
+      "name": "simple-full-exact-model-record",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-new-fixture",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-legitimate-model-over-old-limit",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-batch-completes",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-request-accepted",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-terminal-state",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-export-succeeds",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-real-output-dimensions",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-original-unchanged",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-completed-output-found-with-same-identity",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-durable-source-link",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-full-exact-model-record",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-new-fixture",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-batch-completes",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-request-accepted",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-terminal-state",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-export-succeeds",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-real-output-dimensions",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-original-unchanged",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-completed-output-found-with-same-identity",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-durable-source-link",
+      "pass": true
+    },
+    {
+      "name": "local-crop-frame-share-exact-model-record",
+      "pass": true
+    },
+    {
+      "name": "no-export-left-active",
+      "pass": true
+    },
+    {
+      "name": "actual-D8-backported-string-path-on-runtime",
+      "pass": true
+    },
+    {
+      "name": "phone-metadata-constructs-on-runtime",
+      "pass": true
+    },
+    {
+      "name": "app-installs-chained-crash-recorder",
+      "pass": true
+    },
+    {
+      "name": "actual-platform-exit-history-collection",
+      "pass": true
+    },
+    {
+      "name": "diagnostics-export-preserves-original-report",
+      "pass": true
+    },
+    {
+      "name": "new-isolated-crash-fixture",
+      "pass": true
+    },
+    {
+      "name": "native-recorder-is-bounded-and-keeps-original-handler",
+      "pass": true
+    }
+  ],
+  "exports": [
+    {
+      "case": "simple-full",
+      "modelLength": 235,
+      "model": "original-srgb-v1:photo-manual-linear-wb-tones-v1:0:1:0:0:0:0:0:0:0:0:0:0:0:photo-composition-affine-v1:0:0:100000:100000:900000:900000:photo-border-v1:2052689fcd42e04eb247f6190a567e53b5a5107dec771289addfb30c60cbaf87:full-jpeg95-srgb-v1",
+      "failed": 0,
+      "completed": 1,
+      "error": "",
+      "errors": [],
+      "width": 625,
+      "height": 458,
+      "outputSha256": "5912a64755d49d10883edbbf117f2a4b261601f576c7999d48c753caccc9c8fe"
+    },
+    {
+      "case": "local-crop-frame-full",
+      "modelLength": 322,
+      "model": "original-srgb-v1:photo-manual-linear-wb-tones-v1:0:1:0:0:0:0:0:0:0:0:0:0:0:photo-local-linear-v1:7bd1e264968425436e8c42bbd1e346c84d57a3b055643e8ab26e0388f73b1623:photo-composition-affine-v1:0:0:100000:100000:900000:900000:photo-border-v1:2052689fcd42e04eb247f6190a567e53b5a5107dec771289addfb30c60cbaf87:full-jpeg95-srgb-v1",
+      "failed": 0,
+      "completed": 1,
+      "error": "",
+      "errors": [],
+      "width": 625,
+      "height": 458,
+      "outputSha256": "76dd09a093265c4cc934e4fecf48015fc7b2563ef9e20b909ce69fbbc23e4380"
+    },
+    {
+      "case": "local-crop-frame-share",
+      "modelLength": 79,
+      "model": "export-jpeg-v1:5b0703096b3a1824c92a71a6ae89273251ae2b7eeef31301221562fca3cd7a96",
+      "failed": 0,
+      "completed": 1,
+      "error": "",
+      "errors": [],
+      "width": 625,
+      "height": 458,
+      "outputSha256": "643091c1e96c3b7029a5b628b4523e57f1cef7a3cd8e39d4843321366acc7557"
+    }
+  ],
+  "cleanupRemaining": [],
+  "candidateSha256": "c1142e440a9bb38afde54ce922a10e273ef5154cd1899ea5a3827ef4773a302a"
+}

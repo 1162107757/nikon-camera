@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-09T09:34:51.351Z",
+  "pass": true,
+  "response": {
+    "RequestId": "17beadba-0c6f-4a06-928d-37d516f9c69c",
+    "ExecutionTimeMs": 2783,
+    "Columns": [
+      "result"
+    ],
+    "Rows": [
+      "[\"PASS: all application tables restored into temporary typed tables with exact JSON values\"]"
+    ],
+    "AffectedRows": 0
+  }
+}

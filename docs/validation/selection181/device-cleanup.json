@@ -1,0 +1,13 @@
+{
+  "serial": "emulator-5586",
+  "ownedProcessId": "32068",
+  "sdk": "36",
+  "fontScale": "1.3",
+  "display": "Physical size: 1080x2424",
+  "night": "Night mode: no",
+  "airplane": "1",
+  "probeInstalled": false,
+  "mainAppStopped": true,
+  "emulatorCloseRequested": true,
+  "serialAbsentAfterClose": true
+}

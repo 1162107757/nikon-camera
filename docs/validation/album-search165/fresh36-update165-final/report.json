@@ -1,0 +1,95 @@
+{
+  "versionCode": 165,
+  "sdk": 36,
+  "dark": false,
+  "stationaryTileReplacements": 0,
+  "readyToPlaceholderRegressions": 0,
+  "observations": 504,
+  "readyKeys": 6,
+  "phone-album-cache-pressureActivePackage": null,
+  "phone-album-cache-pressureWindowText": "",
+  "search-no-resultsActivePackage": "cc.huevia",
+  "search-no-resultsWindowText": "  no-match-165   取消 在线预设 我的预设 仅保存在本机 · 登录后可同步云端 › 全部 我的色彩 0 份匹配 没有匹配的预设 试试其他名称或关键词。 清除搜索 预设 同步 相册 设置 ",
+  "search-inlineActivePackage": "cc.huevia",
+  "search-inlineWindowText": "film 取消 在线预设 我的预设 仅保存在本机 · 登录后可同步云端 › 全部 我的色彩 0 份匹配 没有匹配的预设 试试其他名称或关键词。 清除搜索 预设 同步 相册 设置 ",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "no-system-ANR-over-phone-album-cache-pressure",
+      "pass": true
+    },
+    {
+      "name": "cache-completions-keep-visible-tile-instances",
+      "pass": true
+    },
+    {
+      "name": "cache-eviction-does-not-clear-visible-photos",
+      "pass": true
+    },
+    {
+      "name": "visible-thumbnails-eventually-complete",
+      "pass": true
+    },
+    {
+      "name": "scroll-away-and-return-has-thumbnails",
+      "pass": true
+    },
+    {
+      "name": "search-expands-in-header",
+      "pass": true
+    },
+    {
+      "name": "live-search-keeps-input-instance",
+      "pass": true
+    },
+    {
+      "name": "live-search-keeps-focus",
+      "pass": true
+    },
+    {
+      "name": "raw-query-preserves-cursor-and-whitespace",
+      "pass": true
+    },
+    {
+      "name": "inline-search-field-visible",
+      "pass": true
+    },
+    {
+      "name": "no-system-ANR-over-search-no-results",
+      "pass": true
+    },
+    {
+      "name": "clear-query",
+      "pass": true
+    },
+    {
+      "name": "typing-retains-cursor",
+      "pass": true
+    },
+    {
+      "name": "no-system-ANR-over-search-inline",
+      "pass": true
+    },
+    {
+      "name": "back-collapses-and-clears-search",
+      "pass": true
+    },
+    {
+      "name": "cancel-collapses-search",
+      "pass": true
+    }
+  ],
+  "failure": null
+}

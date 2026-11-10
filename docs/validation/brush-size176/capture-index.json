@@ -1,0 +1,202 @@
+{
+  "apkSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+  "runs": [
+    {
+      "mode": "landscape",
+      "report": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/20261109-154721-landscape-1e1ef485/report.json",
+      "provenance": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/provenance.json",
+      "cleanup": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/cleanup.json",
+      "checks": 52,
+      "measurements": [
+        {
+          "case": "window-overlay-size-guide",
+          "boundsWidth": 2424,
+          "boundsHeight": 1080,
+          "hostWidth": 2424,
+          "hostHeight": 1080,
+          "smallProgress": 12,
+          "smallRadius": 0.013
+        },
+        {
+          "case": "large-guide",
+          "progress": 87,
+          "radius": 0.088
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/20261109-154721-landscape-1e1ef485/size176-small.png",
+          "width": 2424,
+          "height": 1080,
+          "sha256": "e4bcc4db5fdcef6689eaa9e5e866eef56c862b228cf11993093b43daa8625817"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/20261109-154721-landscape-1e1ef485/size176-large.png",
+          "width": 2424,
+          "height": 1080,
+          "sha256": "fc172d6d12ee8c041aea5d0507a28fe7d9ab9dda62c9c9c30eecb0c1dfa8911b"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/20261109-154721-landscape-1e1ef485/size176-released.png",
+          "width": 2424,
+          "height": 1080,
+          "sha256": "44787908f579e7ed57a4258b3ad10895fbbd7c056be41e079b133957317482b4"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154721-landscape-1e1ef485/20261109-154721-landscape-1e1ef485/size176-focus-cancelled.png",
+          "width": 2424,
+          "height": 1080,
+          "sha256": "69015314211e2f928a96c00be2290ee69cc7e5e8ee0d42f83bea0dbd2d599c10"
+        }
+      ]
+    },
+    {
+      "mode": "tablet",
+      "report": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/20261109-154700-tablet-649aa422/report.json",
+      "provenance": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/provenance.json",
+      "cleanup": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/cleanup.json",
+      "checks": 52,
+      "measurements": [
+        {
+          "case": "window-overlay-size-guide",
+          "boundsWidth": 1600,
+          "boundsHeight": 2560,
+          "hostWidth": 1600,
+          "hostHeight": 2560,
+          "smallProgress": 12,
+          "smallRadius": 0.013
+        },
+        {
+          "case": "large-guide",
+          "progress": 87,
+          "radius": 0.088
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/20261109-154700-tablet-649aa422/size176-small.png",
+          "width": 1600,
+          "height": 2560,
+          "sha256": "14b256676f1ce31c5f79b4df2369d4b081854e6d94e362b1fdc24bd3a81597f3"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/20261109-154700-tablet-649aa422/size176-large.png",
+          "width": 1600,
+          "height": 2560,
+          "sha256": "d619cf57a16d2f1fda93980499bbd2a08382a4880e2f14424e16cbbe3bf84d8a"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/20261109-154700-tablet-649aa422/size176-released.png",
+          "width": 1600,
+          "height": 2560,
+          "sha256": "415a4593adad898f3d1d2c85f9f4fe1a785469d8f75d68e42e13ea9665353dde"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154700-tablet-649aa422/20261109-154700-tablet-649aa422/size176-focus-cancelled.png",
+          "width": 1600,
+          "height": 2560,
+          "sha256": "4e50ffdf05a846d60c88ab7aeeff47b7039aaeb64f78e22ce78884a062ed27b1"
+        }
+      ]
+    },
+    {
+      "mode": "font1.3",
+      "report": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/20261109-154644-font1.3-db3ec145/report.json",
+      "provenance": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/provenance.json",
+      "cleanup": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/cleanup.json",
+      "checks": 52,
+      "measurements": [
+        {
+          "case": "window-overlay-size-guide",
+          "boundsWidth": 840,
+          "boundsHeight": 1890,
+          "hostWidth": 840,
+          "hostHeight": 1890,
+          "smallProgress": 12,
+          "smallRadius": 0.013
+        },
+        {
+          "case": "large-guide",
+          "progress": 87,
+          "radius": 0.088
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/20261109-154644-font1.3-db3ec145/size176-small.png",
+          "width": 840,
+          "height": 1890,
+          "sha256": "dbfa941977fff8454a84e22ee3bf7a77e5c2039d40d8102a8c5b45d614a1cfee"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/20261109-154644-font1.3-db3ec145/size176-large.png",
+          "width": 840,
+          "height": 1890,
+          "sha256": "0509b2f93822bf4fdbb70592df66af5dbde656f533724215d9748241eef13230"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/20261109-154644-font1.3-db3ec145/size176-released.png",
+          "width": 840,
+          "height": 1890,
+          "sha256": "1a2aa6450c8be419682a4138c0a4d08d497f70cf5a3cdb28b558d41b247c98b6"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154644-font1.3-db3ec145/20261109-154644-font1.3-db3ec145/size176-focus-cancelled.png",
+          "width": 840,
+          "height": 1890,
+          "sha256": "b9b6b91afcc2b8a42f39668148c48774f5331e85b6155964df952b839454b1a5"
+        }
+      ]
+    },
+    {
+      "mode": "phone",
+      "report": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/20261109-154627-phone-a8a805b9/report.json",
+      "provenance": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/provenance.json",
+      "cleanup": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/cleanup.json",
+      "checks": 52,
+      "measurements": [
+        {
+          "case": "window-overlay-size-guide",
+          "boundsWidth": 1080,
+          "boundsHeight": 2424,
+          "hostWidth": 1080,
+          "hostHeight": 2424,
+          "smallProgress": 12,
+          "smallRadius": 0.013
+        },
+        {
+          "case": "large-guide",
+          "progress": 87,
+          "radius": 0.088
+        }
+      ],
+      "captures": [
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/20261109-154627-phone-a8a805b9/size176-small.png",
+          "width": 1080,
+          "height": 2424,
+          "sha256": "b7f0b1de4dc88cf44830fc2702af5c21733bf1e1bc348b505927a1dd2695afb1"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/20261109-154627-phone-a8a805b9/size176-large.png",
+          "width": 1080,
+          "height": 2424,
+          "sha256": "28785b205f26ad6095617f309ae09032faa3a41a4e9ed1cb2ddc94223c3e2926"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/20261109-154627-phone-a8a805b9/size176-released.png",
+          "width": 1080,
+          "height": 2424,
+          "sha256": "c215bfbd3b25b575cd786a21f862b60d79ab703abdde1b7687db69e0c62d55b8"
+        },
+        {
+          "path": "docs/validation/live-erase175/native/9d307254/20261109-154627-phone-a8a805b9/20261109-154627-phone-a8a805b9/size176-focus-cancelled.png",
+          "width": 1080,
+          "height": 2424,
+          "sha256": "90afd6f6b8c578b0121c1617ecfac263c6aa2ae55bec12372721a1e92747c2ee"
+        }
+      ]
+    }
+  ],
+  "scope": "Capture-only size indication and unchanged photo/model observations;52 includes inherited bootstrap/fixture assertions per mode. No new unit tests or frame-rate/hardware claim."
+}

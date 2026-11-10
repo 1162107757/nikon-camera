@@ -1,0 +1,673 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+  "versionCode": 176,
+  "versionName": "0.30.22-beta",
+  "mode": "phone",
+  "flow": "erase175",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "no-selection-eye-in-default-repair",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-01-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-01-ready",
+      "pass": true
+    },
+    {
+      "name": "actual-pixels-arrive-before-finger-up",
+      "pass": true
+    },
+    {
+      "name": "finger-still-down-model-history-unchanged",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-down",
+      "pass": true
+    },
+    {
+      "name": "live-repairs-actual-blemish",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-02-finger-held-live",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-02-finger-held-live",
+      "pass": true
+    },
+    {
+      "name": "latest-move-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-move",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-03-moving-live",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-03-moving-live",
+      "pass": true
+    },
+    {
+      "name": "done-disabled-until-stroke-finished",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "release-one-patch-one-undo",
+      "pass": true
+    },
+    {
+      "name": "new-mode-stored",
+      "pass": true
+    },
+    {
+      "name": "live-frame-discarded-after-precision",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-completed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-04-completed-clean",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-04-completed-clean",
+      "pass": true
+    },
+    {
+      "name": "no-parent-history-until-done",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-undo",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "undo-whole-stroke",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-redo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-redo",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "redo-frozen-result",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-redo",
+      "pass": true
+    },
+    {
+      "name": "cancel-case-live-visible",
+      "pass": true
+    },
+    {
+      "name": "cancel-worker-idle",
+      "pass": true
+    },
+    {
+      "name": "cancel-discards-live-no-model-history",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-cancelled",
+      "pass": true
+    },
+    {
+      "name": "focus-worker-idle",
+      "pass": true
+    },
+    {
+      "name": "focus-loss-discards-unreleased-stroke",
+      "pass": true
+    },
+    {
+      "name": "pinch-span-crosses-platform-threshold",
+      "pass": true
+    },
+    {
+      "name": "pinch-preserves-mask-count",
+      "pass": true
+    },
+    {
+      "name": "native-pinch-zooms",
+      "pass": true
+    },
+    {
+      "name": "pinch-does-not-repair",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "guide-oom-atomic",
+      "pass": true
+    },
+    {
+      "name": "guide-oom-controls-recovered",
+      "pass": true
+    },
+    {
+      "name": "slow-preview-entered",
+      "pass": true
+    },
+    {
+      "name": "moves-coalesce-to-one-latest-request",
+      "pass": true
+    },
+    {
+      "name": "coalesced-latest-real-preview",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "100-moves-one-patch-one-undo",
+      "pass": true
+    },
+    {
+      "name": "bounded-render-queue",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-05-coalesced-result",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-05-coalesced-result",
+      "pass": true
+    },
+    {
+      "name": "late-worker-entered",
+      "pass": true
+    },
+    {
+      "name": "late-result-discarded",
+      "pass": true
+    },
+    {
+      "name": "late-result-no-resurrection",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-late-cancel",
+      "pass": true
+    },
+    {
+      "name": "interactive-before-final-failure",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "precision-failure-rolls-back-live-and-history",
+      "pass": true
+    },
+    {
+      "name": "failure-restores-done",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "next-stroke-after-error-works",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-more",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-more",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-手动取样修补",
+      "pass": true
+    },
+    {
+      "name": "manual-still-reachable",
+      "pass": true
+    },
+    {
+      "name": "manual-keeps-new-data",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-patch-cancel",
+      "pass": true
+    },
+    {
+      "name": "manual-cancelled",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "outer-cancel-no-parent-edit",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-apply",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "done-one-parent-transaction",
+      "pass": true
+    },
+    {
+      "name": "real-draft-retains-new-mode",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-06-parent-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-06-parent-committed",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-patch",
+      "pass": true
+    },
+    {
+      "name": "actual-direct-erase-dialog",
+      "pass": true
+    },
+    {
+      "name": "auto-erase-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-present",
+      "pass": true
+    },
+    {
+      "name": "erase-window-insets-applied",
+      "pass": true
+    },
+    {
+      "name": "erase-complete-and-brush-control-visible",
+      "pass": true
+    },
+    {
+      "name": "reopen-frozen-v8-draft",
+      "pass": true
+    },
+    {
+      "name": "exact-actual-photo-only-no-highlight-reopened",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-07-reopened",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-07-reopened",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-erase-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "original-file-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "held-down-actual-render",
+      "firstFrameMs": 216,
+      "scope": "Owned emulator actual renderer, not physical-phone latency"
+    },
+    {
+      "case": "native-pinch",
+      "minimumSpanPx": 446,
+      "spanSlopPx": 42,
+      "startSpanPx": 530,
+      "endSpanPx": 848,
+      "zoomBefore": 1,
+      "zoomAfter": 1.4545451402664185,
+      "moves": 12
+    },
+    {
+      "case": "100-move-coalescing",
+      "renderCalls": 3,
+      "maximumConcurrent": 1
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "手动取样修补",
+      "windowId": 60,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    }
+  ],
+  "screenshots": 7,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Exact installed175 renderer during held DOWN\/MOVE before release, no-overlay full-canvas pixel oracle; latest-only100-move queue, one undo per stroke, cancel\/focus\/pinch, guide OOM and precision failure rollback, parent transaction, real v8 draft and original bytes. Owned emulator synthetic texture; host independently covers blend quality, EXIF and alpha. No physical device or all-photo quality claim."
+}

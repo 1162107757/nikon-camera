@@ -1,0 +1,52 @@
+{
+  "candidateSha256": "909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92",
+  "versionCode": 173,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "7818f82ecbd28100edf85aa2e2ec55744961667746920d15ea001eef54f98fd0",
+  "pass": true,
+  "scope": "Actual installed brush-down/no-commit and release/automatic repair, real rendered pixels and exterior/alpha, one inner undo per stroke, multi-touch/cancel/focus/size-slider display, explicit overlay visibility, early guide-allocation OOM and later render-failure injection atomicity, parent apply/cancel and saved v7 draft, legacy manual access and unchanged source. Four native layout captures; no physical-device, generative AI, large-object quality or new full-export matrix claim.",
+  "files": [
+    {
+      "file": "erase173-applied-main.png",
+      "sha256": "f395c4d33ed0e5618f0f58e4963817467a12d90119e636fb86f89f4edb8e50a3"
+    },
+    {
+      "file": "erase173-early-allocation-recovered.png",
+      "sha256": "bcf057be2b2e07be8c9d34cc4a3b53b4ced75b362ed16b463d71f09fbaaac373"
+    },
+    {
+      "file": "erase173-first-result.png",
+      "sha256": "2319d3b7d0a985a77bf0d1b4b7a29dd551feb13f4ac2811ad1e824ba51b2bc86"
+    },
+    {
+      "file": "erase173-painting.png",
+      "sha256": "60018d3f37feae6ce279119d4b141372bb307f24051d901a5b4ff1eadb3e4cab"
+    },
+    {
+      "file": "erase173-ready.png",
+      "sha256": "4cb5a38d429da105f900ba5ed8df4088882e8f458dc7bcaf99ad8f221ae021df"
+    },
+    {
+      "file": "erase173-reopened.png",
+      "sha256": "49f8a472f498e2b70970f79c4d465e7c0fecdbff95dffe706b6f9644d301a602"
+    },
+    {
+      "file": "erase173-result-hidden.png",
+      "sha256": "6331602e030bae44ec544964f3821271e8f3604a91c446015c3c3f370a043917"
+    },
+    {
+      "file": "erase173-second-result.png",
+      "sha256": "490b6a206233452693102323c607f9fb33ae9fdc6f9375764ff0e76dfe7a41de"
+    },
+    {
+      "file": "erase173-undone.png",
+      "sha256": "45a69e4e4c7397a44ca4067e864b4c0cc51159e229ac0ef6c613b30905836a63"
+    },
+    {
+      "file": "report.json",
+      "sha256": "be129bf62d28129826dd58e13db61906950f32992477d04b6f408c901997a737"
+    }
+  ]
+}

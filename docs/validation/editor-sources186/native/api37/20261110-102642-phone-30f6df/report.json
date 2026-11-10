@@ -1,0 +1,192 @@
+{
+  "pass": true,
+  "stage": "complete-source186",
+  "candidateSha256": "d728b77adba6062e0cb34e5325df219f3c9089a5abf68b27e58864cad4c0f2a2",
+  "mode": "phone",
+  "scope": "editor-sources186-initial",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-candidate",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "main-fixed-sources-and-grid-visible",
+      "pass": true
+    },
+    {
+      "name": "mine-first-online-second",
+      "pass": true
+    },
+    {
+      "name": "source-targets-48dp",
+      "pass": true
+    },
+    {
+      "name": "classification-has-visible-scroll-region",
+      "pass": true
+    },
+    {
+      "name": "source-categories-grid-share-one-row",
+      "pass": true
+    },
+    {
+      "name": "independent-regions-do-not-overlap",
+      "pass": true
+    },
+    {
+      "name": "heading-keeps-existing-48dp-height",
+      "pass": true
+    },
+    {
+      "name": "fixed-source-labels-fit",
+      "pass": true
+    },
+    {
+      "name": "symmetric-top-bottom-inset-false",
+      "pass": true
+    },
+    {
+      "name": "symmetric-outer-end-inset-false",
+      "pass": true
+    },
+    {
+      "name": "radii-derived-from-same-inset-false",
+      "pass": true
+    },
+    {
+      "name": "painted-corners-top-bottom-symmetric-false",
+      "pass": true
+    },
+    {
+      "name": "online-main-tap-changes-source",
+      "pass": true
+    },
+    {
+      "name": "online-list-uses-online-entries",
+      "pass": true
+    },
+    {
+      "name": "symmetric-top-bottom-inset-true",
+      "pass": true
+    },
+    {
+      "name": "symmetric-outer-end-inset-true",
+      "pass": true
+    },
+    {
+      "name": "radii-derived-from-same-inset-true",
+      "pass": true
+    },
+    {
+      "name": "painted-corners-top-bottom-symmetric-true",
+      "pass": true
+    },
+    {
+      "name": "browse-source-keeps-applied-photo",
+      "pass": true
+    },
+    {
+      "name": "category-touch-scrolls",
+      "pass": true
+    },
+    {
+      "name": "category-drag-keeps-source-and-grid-fixed",
+      "pass": true
+    },
+    {
+      "name": "category-drag-does-not-shrink-photo",
+      "pass": true
+    },
+    {
+      "name": "mine-main-tap-restores-local-list",
+      "pass": true
+    },
+    {
+      "name": "switch-keeps-existing-category-reset",
+      "pass": true
+    },
+    {
+      "name": "symmetric-top-bottom-inset-false",
+      "pass": true
+    },
+    {
+      "name": "symmetric-outer-end-inset-false",
+      "pass": true
+    },
+    {
+      "name": "radii-derived-from-same-inset-false",
+      "pass": true
+    },
+    {
+      "name": "painted-corners-top-bottom-symmetric-false",
+      "pass": true
+    },
+    {
+      "name": "source-keyboard-focus-visible",
+      "pass": true
+    },
+    {
+      "name": "direct-grid-opens-existing-picker",
+      "pass": true
+    },
+    {
+      "name": "picker-exposes-shared-online-choice",
+      "pass": true
+    },
+    {
+      "name": "picker-source-synchronizes-main-tabs",
+      "pass": true
+    },
+    {
+      "name": "source-row-hidden-outside-filter-mode",
+      "pass": true
+    },
+    {
+      "name": "source-state-survives-tool-roundtrip",
+      "pass": true
+    },
+    {
+      "name": "all-browsing-keeps-model-and-history",
+      "pass": true
+    },
+    {
+      "name": "source-original-unchanged",
+      "pass": true
+    },
+    {
+      "name": "owned-fixture-and-draft-cleaned",
+      "pass": true
+    }
+  ],
+  "screenshots": 5,
+  "privateFixtureRemoved": true,
+  "privateDraftRemoved": true,
+  "layout": {
+    "sourceGeometry-false": {
+      "outer": "RectF(0.0, 24.0, 312.0, 120.0)",
+      "selected": "RectF(9.0, 33.0, 156.0, 111.0)",
+      "outerRadius": 48,
+      "innerRadius": 39,
+      "inset": 9
+    },
+    "sourceGeometry-true": {
+      "outer": "RectF(0.0, 24.0, 312.0, 120.0)",
+      "selected": "RectF(156.0, 33.0, 303.0, 111.0)",
+      "outerRadius": 48,
+      "innerRadius": 39,
+      "inset": 9
+    }
+  }
+}

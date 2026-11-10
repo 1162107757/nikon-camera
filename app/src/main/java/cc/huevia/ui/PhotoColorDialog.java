@@ -23,7 +23,7 @@ public final class PhotoColorDialog extends Dialog {
     private final ThreadPoolExecutor worker=new ThreadPoolExecutor(1,1,0,TimeUnit.SECONDS,new ArrayBlockingQueue<>(1),r->{Thread t=new Thread(r,"photo-colour-preview");t.setDaemon(true);return t;},new ThreadPoolExecutor.DiscardOldestPolicy());
     private final LatestPreviewQueue<PhotoAdjustments,Bitmap> previewQueue;
     private PhotoAdjustments settings;
-    private ImageView photo;
+    private PhotoImageView photo;
     private Bitmap rendered;private final Bitmap initial;
     private TextView status,pointValue;
     private Button apply,remove;
@@ -36,22 +36,27 @@ public final class PhotoColorDialog extends Dialog {
     private AlertDialog exactDialog;
     public PhotoColorDialog(Activity activity,Bitmap initial,PhotoAdjustments settings,boolean curveMode,Renderer renderer,Consumer<PhotoAdjustments> commit){
         super(activity,cc.huevia.R.style.AppThemeDark);this.activity=activity;this.settings=settings;this.curveMode=curveMode;this.renderer=renderer;this.commit=commit;this.bands=new Button[curveMode?4:8];
-        this.initial=initial;photo=new ImageView(getContext());photo.setScaleType(ImageView.ScaleType.FIT_CENTER);photo.setImageBitmap(initial);photo.setContentDescription("当前调色预览");
+        this.initial=initial;photo=new PhotoImageView(getContext());photo.setPhoto(initial);photo.setContentDescription("当前调色预览");
         previewQueue=new LatestPreviewQueue<>(worker,task->main.post(task),renderer::render,new LatestPreviewQueue.Listener<PhotoAdjustments,Bitmap>(){
-            public void frame(PhotoAdjustments value,Bitmap image,boolean interactive,boolean latest){if(disposed){image.recycle();return;}Bitmap old=rendered;rendered=image;photo.setImageBitmap(image);if(old!=null&&old!=image)old.recycle();if(latest&&!interactive){status.setText("");status.setOnClickListener(null);apply.setEnabled(true);apply.setAlpha(1f);}}
+            public void frame(PhotoAdjustments value,Bitmap image,boolean interactive,boolean latest){if(disposed){image.recycle();return;}Bitmap old=rendered;rendered=image;photo.setPhotoPreservingTransform(image);if(old!=null&&old!=image)old.recycle();if(latest&&!interactive){status.setText("");status.setOnClickListener(null);apply.setEnabled(true);apply.setAlpha(1f);}}
             public void discard(Bitmap image){image.recycle();}
             public void error(Throwable error){if(disposed)return;status.setText("预览失败，请重试");apply.setEnabled(false);apply.setAlpha(.45f);status.setOnClickListener(v->changed());}
         });
     }
+    private final PhotoSelectionOverlay selectionOverlay=new PhotoSelectionOverlay();
+    public void setSelectionMask(Bitmap owned){selectionOverlay.setMask(owned);}
+    private Runnable paintRequest;
+    private String paintScope="全图";
+    public void setPaintRequest(String scope,Runnable request){paintScope=scope==null?"全图":scope;paintRequest=request;}
     public PhotoAdjustments settings(){return settings;}
     @Override protected void onCreate(Bundle saved){
         super.onCreate(saved);requestWindowFeature(Window.FEATURE_NO_TITLE);
         LinearLayout root=column();root.setBackgroundColor(0xff0e0d0c);root.setTag("photo-colour-workspace");
-        LinearLayout top=row();top.addView(button("取消",this::dismiss),new LinearLayout.LayoutParams(dp(68),dp(48)));TextView title=text(curveMode?"曲线":"HSL",16,TEXT);title.setGravity(Gravity.CENTER);top.addView(title,new LinearLayout.LayoutParams(0,dp(48),1));
+        LinearLayout top=row();top.addView(button("取消",this::dismiss),new LinearLayout.LayoutParams(dp(68),dp(48)));if(paintRequest!=null){Button brush=PhotoWorkspaceUi.icon(getContext(),"brush","涂抹范围，当前"+paintScope,"colour-brush",()->{if(!disposed&&!dragging)paintRequest.run();});top.addView(brush,new LinearLayout.LayoutParams(dp(48),dp(48)));}TextView title=text((curveMode?"曲线":"HSL")+(paintScope.equals("全图")?"":" · "+paintScope),16,TEXT);title.setSingleLine(true);title.setEllipsize(android.text.TextUtils.TruncateAt.END);title.setContentDescription((curveMode?"曲线":"HSL")+"，作用范围："+paintScope);title.setGravity(Gravity.CENTER);top.addView(title,new LinearLayout.LayoutParams(0,dp(48),1));
         apply=button("应用",()->{commit.accept(settings);dismiss();});apply.setTag("colour-apply");apply.setTextColor(ACCENT);top.addView(apply,new LinearLayout.LayoutParams(dp(68),dp(48)));root.addView(top);
         boolean landscape=activity.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE;
         LinearLayout body=new LinearLayout(getContext());body.setOrientation(landscape?LinearLayout.HORIZONTAL:LinearLayout.VERTICAL);root.addView(body,new LinearLayout.LayoutParams(-1,0,1));
-        FrameLayout stage=new FrameLayout(getContext());stage.addView(photo,new FrameLayout.LayoutParams(-1,-1));status=text("",11,MUTED);status.setPadding(dp(12),dp(4),dp(12),dp(4));status.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);status.setMinHeight(dp(48));stage.addView(status,new FrameLayout.LayoutParams(-1,-2,Gravity.BOTTOM));
+        FrameLayout stage=new FrameLayout(getContext());stage.addView(photo,new FrameLayout.LayoutParams(-1,-1));selectionOverlay.attach(stage,photo,"colour-selection-visibility");status=text("",11,MUTED);status.setPadding(dp(12),dp(4),dp(12),dp(4));status.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);status.setMinHeight(dp(48));stage.addView(status,new FrameLayout.LayoutParams(-1,-2,Gravity.BOTTOM));
         body.addView(stage,landscape?new LinearLayout.LayoutParams(0,-1,1):new LinearLayout.LayoutParams(-1,0,1));
         LinearLayout controls=column();controls.setBackgroundColor(BG);controls.setPadding(dp(12),0,dp(12),dp(6));
         HorizontalScrollView scroll=new HorizontalScrollView(getContext());scroll.setHorizontalScrollBarEnabled(false);LinearLayout choices=row();scroll.addView(choices);LinearLayout.LayoutParams colorRow=new LinearLayout.LayoutParams(-1,dp(curveMode?48:56));colorRow.topMargin=dp(curveMode?0:8);controls.addView(scroll,colorRow);
@@ -64,7 +69,7 @@ public final class PhotoColorDialog extends Dialog {
         }else{
             String[] axes={"色相","饱和度","明亮度"};
             for(int axis=0;axis<3;axis++){final int a=axis;LinearLayout line=row();line.addView(text(axes[a],12,TEXT),new LinearLayout.LayoutParams(dp(56),dp(48)));SeekBar slider=new SeekBar(getContext());slider.setTag("hsl-axis-"+a);slider.setMax(200);slider.setKeyProgressIncrement(1);slider.setProgressTintList(ColorStateList.valueOf(ACCENT));slider.setThumbTintList(ColorStateList.valueOf(ACCENT));line.addView(slider,new LinearLayout.LayoutParams(0,dp(48),1));sliders[a]=slider;values[a]=text("",12,ACCENT);values[a].setGravity(Gravity.END|Gravity.CENTER_VERTICAL);values[a].setFocusable(true);values[a].setOnClickListener(v->exactHsl(a));line.addView(values[a],new LinearLayout.LayoutParams(dp(48),dp(48)));controls.addView(line);
-                slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar s,int p,boolean user){if(user&&!updating){settings=settings.withHsl(settings.hsl.with(channel,a,p-100));changed();}}public void onStartTrackingTouch(SeekBar s){dragging=true;}public void onStopTrackingTouch(SeekBar s){dragging=false;changed();}});
+                slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar s,int p,boolean user){if(user&&!updating){settings=settings.withHsl(settings.hsl.with(channel,a,p-100));changed();}}public void onStartTrackingTouch(SeekBar s){dragging=true;selectionOverlay.setInteracting(true);}public void onStopTrackingTouch(SeekBar s){dragging=false;selectionOverlay.setInteracting(false);changed();}});
             }
         }
         LinearLayout resets=row();resets.addView(button(curveMode?"重置通道":"重置此颜色",()->{settings=curveMode?settings.withCurves(settings.curves.reset(channel)):settings.withHsl(settings.hsl.reset(channel));point=0;changed();}),new LinearLayout.LayoutParams(0,dp(48),1));resets.addView(button(curveMode?"重置曲线":"重置 HSL",()->{settings=curveMode?settings.withCurves(PhotoCurves.NONE):settings.withHsl(PhotoHsl.NONE);point=0;changed();}),new LinearLayout.LayoutParams(0,dp(48),1));controls.addView(resets);
@@ -74,8 +79,9 @@ public final class PhotoColorDialog extends Dialog {
         PhotoPrismaStyle.workspace(root,initial);setContentView(root);if(getWindow()!=null){getWindow().setBackgroundDrawableResource(android.R.color.transparent);getWindow().setLayout(-1,-1);}root.requestApplyInsets();refresh();changed();
     }
     @Override public void show(){super.show();if(getWindow()!=null)getWindow().setLayout(-1,-1);}
+    @Override public void onWindowFocusChanged(boolean focused){super.onWindowFocusChanged(focused);if(!focused){dragging=false;selectionOverlay.setInteracting(false);}}
     @Override public void dismiss(){dispose();super.dismiss();}
-    private void dispose(){if(disposed)return;disposed=true;revision++;previewQueue.close();if(exactDialog!=null)exactDialog.dismiss();worker.shutdownNow();photo.setImageDrawable(null);if(rendered!=null){rendered.recycle();rendered=null;}}
+    private void dispose(){if(disposed)return;disposed=true;selectionOverlay.close();revision++;previewQueue.close();if(exactDialog!=null)exactDialog.dismiss();worker.shutdownNow();photo.setPhoto(null);if(rendered!=null){rendered.recycle();rendered=null;}}
     private void changed(){if(disposed)return;refresh();revision++;status.setText("预览中");apply.setEnabled(false);apply.setAlpha(.45f);previewQueue.offer(settings,dragging);}
     private void refresh(){
         updating=true;
@@ -95,7 +101,7 @@ public final class PhotoColorDialog extends Dialog {
         private final Paint ink=new Paint(Paint.ANTI_ALIAS_FLAG);private final RectF frame=new RectF();
         CurveCanvas(){super(PhotoColorDialog.this.getContext());setFocusable(true);}
         @Override protected void onDraw(Canvas canvas){super.onDraw(canvas);frame.set(dp(12),dp(10),getWidth()-dp(12),getHeight()-dp(10));ink.setStrokeWidth(dp(1));ink.setColor(0x24ffffff);for(int i=0;i<=4;i++){float t=i/4f;canvas.drawLine(frame.left+frame.width()*t,frame.top,frame.left+frame.width()*t,frame.bottom,ink);canvas.drawLine(frame.left,frame.top+frame.height()*t,frame.right,frame.top+frame.height()*t,ink);}ink.setColor(0x45ffffff);canvas.drawLine(frame.left,frame.bottom,frame.right,frame.top,ink);Path path=new Path();for(int x=0;x<256;x++){float a=frame.left+frame.width()*x/255f,b=frame.bottom-frame.height()*(float)settings.curves.map(channel,x/255.0);if(x==0)path.moveTo(a,b);else path.lineTo(a,b);}ink.setColor(new int[]{ACCENT,0xffee8e86,0xff8bca95,0xff97b7ef}[channel]);ink.setStyle(Paint.Style.STROKE);ink.setStrokeWidth(dp(2));canvas.drawPath(path,ink);ink.setStyle(Paint.Style.FILL);int[] p=settings.curves.points(channel);for(int i=0;i<p.length;i+=2){ink.setColor(i/2==point?Color.WHITE:ACCENT);canvas.drawCircle(frame.left+frame.width()*p[i]/255f,frame.bottom-frame.height()*p[i+1]/255f,dp(i/2==point?5:4),ink);}}
-        @Override public boolean onTouchEvent(MotionEvent e){if(frame.width()<=0)return false;int action=e.getActionMasked(),x=Math.max(0,Math.min(255,Math.round((e.getX()-frame.left)/frame.width()*255))),y=Math.max(0,Math.min(255,Math.round((frame.bottom-e.getY())/frame.height()*255)));if(action==MotionEvent.ACTION_DOWN){dragging=true;int[] p=settings.curves.points(channel);double best=dp(26);int nearest=-1;for(int i=0;i<p.length;i+=2){double distance=Math.hypot(e.getX()-(frame.left+frame.width()*p[i]/255f),e.getY()-(frame.bottom-frame.height()*p[i+1]/255f));if(distance<best){best=distance;nearest=i/2;}}if(nearest<0&&p.length>=PhotoCurves.MAX_POINTS*2){dragging=false;return false;}if(nearest<0)insert(x,y);else{point=nearest;refresh();}getParent().requestDisallowInterceptTouchEvent(true);return true;}if(action==MotionEvent.ACTION_MOVE){movePoint(x,y);return true;}if(action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_CANCEL){dragging=false;changed();getParent().requestDisallowInterceptTouchEvent(false);performClick();return true;}return true;}
+        @Override public boolean onTouchEvent(MotionEvent e){if(frame.width()<=0)return false;int action=e.getActionMasked(),x=Math.max(0,Math.min(255,Math.round((e.getX()-frame.left)/frame.width()*255))),y=Math.max(0,Math.min(255,Math.round((frame.bottom-e.getY())/frame.height()*255)));if(action==MotionEvent.ACTION_DOWN){dragging=true;selectionOverlay.setInteracting(true);int[] p=settings.curves.points(channel);double best=dp(26);int nearest=-1;for(int i=0;i<p.length;i+=2){double distance=Math.hypot(e.getX()-(frame.left+frame.width()*p[i]/255f),e.getY()-(frame.bottom-frame.height()*p[i+1]/255f));if(distance<best){best=distance;nearest=i/2;}}if(nearest<0&&p.length>=PhotoCurves.MAX_POINTS*2){dragging=false;selectionOverlay.setInteracting(false);return false;}if(nearest<0)insert(x,y);else{point=nearest;refresh();}getParent().requestDisallowInterceptTouchEvent(true);return true;}if(action==MotionEvent.ACTION_MOVE){movePoint(x,y);return true;}if(action==MotionEvent.ACTION_UP||action==MotionEvent.ACTION_CANCEL){dragging=false;selectionOverlay.setInteracting(false);changed();getParent().requestDisallowInterceptTouchEvent(false);performClick();return true;}return true;}
         @Override public boolean performClick(){super.performClick();return true;}
     }
     private int dp(int n){return Math.round(n*activity.getResources().getDisplayMetrics().density);}

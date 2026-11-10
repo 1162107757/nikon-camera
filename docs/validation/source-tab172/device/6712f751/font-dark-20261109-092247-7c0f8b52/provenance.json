@@ -1,0 +1,18 @@
+{
+  "versionCode": 172,
+  "candidateSha256": "6712f7513eb35b5e9d9e7c3ce797fcd7fc0395b2400fffbc436a2d017dbe5d83",
+  "probeSha256": "7355d5459b33c32393256a4a5a1cd24373b954f0d4e0f55b44a78a587688d0fb",
+  "serial": "emulator-5588",
+  "pass": true,
+  "scope": "Installed shared source-tab component and actual MainActivity online source button. Real Bitmap.Config.HARDWARE cannot be drawn by a software Canvas; runtime-only and OOM fixtures are explicitly injected. Baseline reproduces missing protection; fixed candidate changes pages without an optional snapshot. Normal software capture retains animation. No physical HarmonyOS device or user crash trace obtained.",
+  "files": [
+    {
+      "file": "fixed-online-tab.png",
+      "sha256": "586338d3c4ab55a45b421fe78ce88bfa11fe8c58231650a4112898e59755c6cd"
+    },
+    {
+      "file": "report.json",
+      "sha256": "96f0cf0ba52f49a3e022a1485c31ec4537cef2b4ce5cef644a41e0163944512d"
+    }
+  ]
+}

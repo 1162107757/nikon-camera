@@ -1,0 +1,18 @@
+{
+  "stamp": "20261108-ios-2a9586e4",
+  "before": {
+    "index.html": {
+      "sha256": "f8b2b532bb0f6e7613c4aba286e62d2fdaf0042d33e5dc1848d92071be150df4",
+      "bytes": 9306
+    },
+    "home.css": {
+      "sha256": "f4fb6b4e34b3d46b57956f923cfd368b319945564e7ca90a39be11088f92056b",
+      "bytes": 13848
+    }
+  },
+  "after": {
+    "index.html": "2a9586e4c023b0e163f1dd801d1f0234a51fed5a59bc01bd1207227031f9631a",
+    "home.css": "b0135d541a6ff7580a59abe9a6cabdc1221b2d881503838441c6d9867aae0f27"
+  },
+  "commandBytes": 17304
+}

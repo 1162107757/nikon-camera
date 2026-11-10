@@ -1,0 +1,51 @@
+{
+  "versionCode": 180,
+  "versionName": "0.30.26-beta",
+  "apkSha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+  "delivery": "dist/upload180/huevia-0.30.26-beta-update.apk",
+  "implemented": [
+    "application-album private-version deletion",
+    "RAW lossless workspace write acceleration",
+    "95-99 actual saving progress",
+    "verified JPEG workspace fast reuse"
+  ],
+  "finalNativeDelete": {
+    "configurations": 4,
+    "checks": 112,
+    "captures": 16
+  },
+  "finalPerformanceAndPng": {
+    "checks": 87,
+    "report": "docs/validation/photo-image-suite/raw-development/897f1a14/20261109-212605-phone-c9dadc7856/20261109-212605-phone-c9dadc7856/report.json"
+  },
+  "finalRawRegression": {
+    "checks": 160,
+    "report": "docs/validation/photo-image-suite/raw-development/897f1a14/20261109-212623-phone-a47346e9a1/20261109-212623-phone-a47346e9a1/report.json"
+  },
+  "host": {
+    "gallery": 459,
+    "albumControllers": 1436,
+    "encoding": "UTF-8; initial GBK child-process fixture failure retained"
+  },
+  "sourceStable": true,
+  "review": ".impeccable/review/album-raw180/review.md",
+  "pending": [
+    "physical phone performance and reported 95% symptom confirmation",
+    "179 camera-slot delete actual firmware verification"
+  ],
+  "published": false,
+  "gitCommitOrPush": false,
+  "wechatSent": false,
+  "device": {
+    "serial": "emulator-5588",
+    "restored": {
+      "size": "1080x2424",
+      "density": 420,
+      "font": 1.0,
+      "night": "no",
+      "airplane": 0
+    },
+    "closed": true
+  },
+  "gitDiffCheck": "pass; only existing LF-to-CRLF warnings"
+}

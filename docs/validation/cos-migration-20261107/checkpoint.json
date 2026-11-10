@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-11-07T17:40:41.362Z",
+  "provider": "cos",
+  "bucket": "huevia-updates-1252602548",
+  "region": "ap-shanghai",
+  "private": true,
+  "historyUploadedViaConsole": 23,
+  "sourceBytes": 116371212,
+  "sourceIntegrityVerified": true,
+  "targetFullDownloadVerified": true,
+  "productionSwitched": true,
+  "roleCreated": true,
+  "roleApprovalPending": false,
+  "certificateId": "cBmyGXt7",
+  "certificateBound": true,
+  "httpsPublicVerification": "passed",
+  "tests": {
+    "full": {
+      "tests": 188,
+      "passed": 181,
+      "skipped": 7,
+      "failed": 0
+    },
+    "cosFocused": {
+      "tests": 6,
+      "passed": 6,
+      "failed": 0
+    }
+  },
+  "codeDeployed": true,
+  "identityVerificationPending": false,
+  "compatibleLiveChecks": 7,
+  "completed": true,
+  "role": "HueviaUpdatePackageRole",
+  "roleId": "4611686018450225576",
+  "actualUploadVerified": true,
+  "duplicateReleaseProtected": true,
+  "websiteDownloadVerified": true,
+  "allReleaseMetadataPreserved": true,
+  "publicBetaVersionCode": 115
+}

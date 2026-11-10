@@ -1,0 +1,16 @@
+{
+  "candidateSha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+  "versionCode": 175,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "a0df542ef0b448ae007bf1725fc897fac45f7f18429df2815cc0471d53c950f3",
+  "pass": false,
+  "scope": "Exact installed175 renderer during held DOWN/MOVE before release, no-overlay full-canvas pixel oracle; latest-only100-move queue, one undo per stroke, cancel/focus/pinch, guide OOM and precision failure rollback, parent transaction, real v8 draft and original bytes. Owned emulator synthetic texture; host independently covers blend quality, EXIF and alpha. No physical device or all-photo quality claim.",
+  "files": [
+    {
+      "file": "report.json",
+      "sha256": "fad4a95b5c1d9a387c5d4cb96f44ecaae29b14a11f3d5a30db3f0b4f65f78ea4"
+    }
+  ]
+}

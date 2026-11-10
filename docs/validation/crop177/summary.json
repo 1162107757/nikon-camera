@@ -1,0 +1,25 @@
+{
+  "versionCode": 177,
+  "versionName": "0.30.23-beta",
+  "apkSha256": "f972d48b012545e4f3a4f8de53bbefe48151e6b9d133f38ac587553adec037e8",
+  "fullSha256": "2a9064e9b1f080369711dcf3d013ab91cf05fc86c93bbdcb31cf7c0e9905dbca",
+  "nativeModes": [
+    "phone",
+    "font1.3",
+    "tablet",
+    "landscape"
+  ],
+  "nativeOriginalPngs": 16,
+  "recordedChecksIncludingBootstrapAndRepetition": 292,
+  "quickSelectionVerifiedForLandscapeAndPortrait": true,
+  "precisionActiveWindowVerified": true,
+  "precisionResizeScope": "existing accessibility scale action",
+  "precisionDragScope": "native inner-frame movement; no edge-corner gesture certification",
+  "parentGeometryAndActualDraftReadbackVerified": true,
+  "integerOutputRoundingMaxWidthResidualPixels": 2.1000000000000227,
+  "geometrySourceUnchanged": true,
+  "detector": "not run; native Android Views",
+  "physicalPhoneVerified": false,
+  "fullExportFlowVerified": false,
+  "published": false
+}

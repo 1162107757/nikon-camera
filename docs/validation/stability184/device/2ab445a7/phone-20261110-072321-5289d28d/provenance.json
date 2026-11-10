@@ -1,0 +1,18 @@
+{
+  "versionCode": 184,
+  "candidateSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "probeSha256": "b84d060ba584f82f91fd27a1cee04244c244833d8b4286314d787a8770dc8212",
+  "serial": "emulator-5584",
+  "pass": false,
+  "scope": null,
+  "files": [
+    {
+      "file": "01-filter-open.png",
+      "sha256": "4a4184567cc87c9f1a98f17b6e157a9fa72767821112eb2c5fcd0f47254e4817"
+    },
+    {
+      "file": "report.json",
+      "sha256": "5c0ecb03f144027c193983473544bee05ec2f247c3ccaf3589b6dd5585a03ef6"
+    }
+  ]
+}

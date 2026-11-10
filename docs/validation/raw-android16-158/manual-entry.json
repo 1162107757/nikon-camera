@@ -1,0 +1,69 @@
+{
+  "pass": true,
+  "at": "2026-11-08T12:48:26.9810645+08:00",
+  "serial": "emulator-5586",
+  "release": "16",
+  "sdk": 36,
+  "fingerprint": "google/sdk_gphone64_x86_64/emu64xa:16/BP41.250916.009.A1/14246511:user/release-keys",
+  "apkSha256": "31a5be2a9818fa1b859753d702078ec0a13d8971a274b08d5446c538f8767971",
+  "processId": "5574",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "android16-api36",
+      "pass": true
+    },
+    {
+      "name": "installed-frozen158",
+      "pass": true
+    },
+    {
+      "name": "real-menu-opens-system-picker-1",
+      "pass": true
+    },
+    {
+      "name": "raw-launch-keeps-app-process-1",
+      "pass": true
+    },
+    {
+      "name": "cancel-returns-to-raw-1",
+      "pass": true
+    },
+    {
+      "name": "empty-export-disabled-1",
+      "pass": true
+    },
+    {
+      "name": "back-returns-to-album-1",
+      "pass": true
+    },
+    {
+      "name": "real-menu-opens-system-picker-2",
+      "pass": true
+    },
+    {
+      "name": "raw-launch-keeps-app-process-2",
+      "pass": true
+    },
+    {
+      "name": "cancel-returns-to-raw-2",
+      "pass": true
+    },
+    {
+      "name": "empty-export-disabled-2",
+      "pass": true
+    },
+    {
+      "name": "back-returns-to-album-2",
+      "pass": true
+    },
+    {
+      "name": "no-fatal-exception-in-current-process",
+      "pass": true
+    }
+  ],
+  "scope": "Actual MainActivity album menu, real system DocumentsUI, cancel, RAW workspace and back navigation twice; no injected picker or reflection"
+}

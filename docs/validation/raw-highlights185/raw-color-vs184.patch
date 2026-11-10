@@ -1,0 +1,92 @@
+--- 184/RawJpegColorMatch.java
++++ 185/RawJpegColorMatch.java
+@@ -8,9 +8,9 @@
+ 
+ /** Conservative, same-frame JPEG color approximation. Never supplies spatial image detail. */
+ public final class RawJpegColorMatch {
+-    public static final String MODEL = "same-raw-jpeg-crop-ridge-cubic-lut17-v1";
++    public static final String MODEL = "same-raw-jpeg-crop-ridge-cubic-lut17-white-v2";
+     public static final int GRID = 17;
+-    private static final int FEATURES = 13;
++    private static final int FEATURES = 12;
+     private RawJpegColorMatch() {}
+ 
+     public static final class Fit {
+@@ -60,18 +60,24 @@
+             if(score>best){best=score;scale=zoom;}
+         }
+         if (best < .90) return new Fit(false, "UNRELIABLE_ALIGNMENT", 0, orientation, scale, Math.max(-1, best), 0, 0, new float[0]);
+-        List<double[]> training = new ArrayList<>(), validation = new ArrayList<>();
++        List<double[]> training = new ArrayList<>(), validation = new ArrayList<>(), whiteValidation = new ArrayList<>();
+         for (int y = 3, iy = 0; y < height - 3; y += step, iy++) {
+             check(cancel);
+             for (int x = 3, ix = 0; x < width - 3; x += step, ix++) {
+                 double[] s = sample(source, width, height, (x + .5) / width, (y + .5) / height);
+                 double[] t = reference(reference, refWidth, refHeight, width, height, x, y, orientation, scale);
+                 if(t==null)continue;
++                // A neutral clipped JPEG highlight still tells us its expected color.
++                // Discarding it lets a good midtone fit turn white into magenta.
++                boolean white = Math.min(t[0], Math.min(t[1], t[2])) >= .985
++                        && Math.max(t[0], Math.max(t[1], t[2])) - Math.min(t[0], Math.min(t[1], t[2])) <= .015;
+                 boolean usable = true;
+-                for (int c = 0; c < 3; c++) usable &= s[c] > .02 && s[c] < .97 && t[c] > .008 && t[c] < .992;
++                for (int c = 0; c < 3; c++) usable &= s[c] > .02 && (white || s[c] < .97)
++                        && (white || (t[c] > .008 && t[c] < .992));
+                 if (!usable) continue;
+                 double[] pair = {s[0], s[1], s[2], t[0], t[1], t[2]};
+-                ((ix + iy * 3) % 5 == 0 ? validation : training).add(pair);
++                if ((ix + iy * 3) % 5 == 0) { validation.add(pair); if (white) whiteValidation.add(pair); }
++                else training.add(pair);
+             }
+         }
+         int count = training.size() + validation.size();
+@@ -89,14 +95,14 @@
+             }
+         }
+         // Fit a bounded departure from identity. Ridge regularization stabilizes sparse scene colors.
+-        for (int i = 0; i < FEATURES; i++) normal[i][i] += i == 0 ? .0008 : .0002;
++        for (int i = 0; i < FEATURES; i++) normal[i][i] += .0002;
+         double[][] coefficients = solve(normal);
+         float[] table = new float[GRID * GRID * GRID * 3];
+         for (int r = 0; r < GRID; r++) {
+             check(cancel);
+             for (int g = 0; g < GRID; g++) for (int b = 0; b < GRID; b++) {
+-                double[] f = features(r / 16.0, g / 16.0, b / 16.0);
+                 double[] rgb = {r / 16.0, g / 16.0, b / 16.0}; int index = ((r * GRID + g) * GRID + b) * 3;
++                double[] f = features(rgb[0],rgb[1],rgb[2]);
+                 for (int c = 0; c < 3; c++) {
+                     double value = rgb[c]; for (int i = 0; i < FEATURES; i++) value += f[i] * coefficients[i][c];
+                     if (!Double.isFinite(value)) return unavailable("UNRELIABLE_FIT");
+@@ -105,6 +111,9 @@
+             }
+         }
+         double after = error(validation, table); check(cancel);
++        // Most held-out pixels can be midtones: check highlight safety separately.
++        if (!safeHighlights(table) || (!whiteValidation.isEmpty() && error(whiteValidation, table) > .04))
++            return new Fit(false, "UNSAFE_HIGHLIGHTS", count, orientation, scale, best, before, after, new float[0]);
+         // Held-out spatial samples, never the training residual, decide whether any correction is applied.
+         boolean accepted = after <= before * .92 && after <= .10;
+         return new Fit(accepted, accepted ? "MATCHED" : "UNRELIABLE_FIT", count, orientation, scale, best, before, after,
+@@ -116,7 +125,21 @@
+                 || (long) width * height != image.length) throw new IllegalArgumentException("Invalid color analysis image");
+     }
+     private static double[] features(double r, double g, double b) {
+-        return new double[] {1, r, g, b, r*r, g*g, b*b, r*g, r*b, g*b, r*r*r, g*g*g, b*b*b};
++        // Zero correction at display white, enforced during fitting rather than
++        // repainting bright pixels after the transform.
++        return new double[] {r-1, g-1, b-1, r*r-1, g*g-1, b*b-1, r*g-1, r*b-1, g*b-1, r*r*r-1, g*g*g-1, b*b*b-1};
++    }
++    private static boolean safeHighlights(float[] table) {
++        double brightest = 0;
++        for (int n = 128; n <= 255; n++) {
++            double v = n / 255.0;
++            double r=lookup(table,v,v,v,0),g=lookup(table,v,v,v,1),b=lookup(table,v,v,v,2);
++            double light = .2126*r + .7152*g + .0722*b;
++            if (light + .01 < brightest) return false;
++            if (n >= 220 && Math.min(r,b) - g > .025) return false;
++            brightest = Math.max(brightest,light);
++        }
++        return true;
+     }
+     private static double[][] solve(double[][] a) throws IOException {
+         for (int i = 0; i < FEATURES; i++) {

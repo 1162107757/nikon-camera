@@ -1,10 +1,14 @@
 ---
-version: 5
+version: 7
 slug: local-album
-current_version_code: 146
-current_version_name: 0.28.9-beta
+current_version_code: 183
+current_version_name: 0.30.29-beta
 primary_target: app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
 related_targets:
+  - app/src/main/java/cc/huevia/ui/AlbumSortSheet.java
+  - app/src/main/java/cc/huevia/album/PhotoSort.java
+  - app/src/main/java/cc/huevia/album/PhotoArrivalDates.java
+  - app/src/main/java/cc/huevia/album/PhotoDateReader.java
   - app/src/main/java/cc/huevia/MainActivity.java
   - app/src/main/java/cc/huevia/ui/AlbumPanel.java
   - app/src/main/java/cc/huevia/ui/PhotoSaveChoice.java
@@ -29,6 +33,24 @@ related_targets:
 ---
 
 # Direction contract
+
+## Time sorting 183 (2026-11-09, current narrow extension)
+
+MODE: Operate. User-approved [v2 arrows comp](../../docs/design-review/album-time-sort-20261109/album-time-sort-v2-arrows.png) and [requirements](../../docs/design-review/album-time-sort-20261109/requirements.md) govern this local extension. The count row puts a drawn ↑↓ icon immediately before Select, with a 48dp target and 8dp gap; no persistent sort label, badge or extra row. Its accessible name includes the current basis and direction. Sorting is unavailable during selection/import; the 181 A header/dock and 180 deletion guards remain authoritative.
+
+THESIS: Order the album by meaningful dates. OWN-WORLD: inherited paper/charcoal B sheet, native sans/sp and AppIcon geometry. STORY: inspect order, change a draft, apply once. FIRST VIEWPORT: capture/arrival and newest/oldest choice pairs with fixed Close, Reset and Apply; large text stacks choices, short landscape scrolls only the options. FORM: approved album-time-sort-v2-arrows.png; no new global tokens or shipping raster assets.
+
+The built sheet uses a 16sp bold title, 12sp group labels/note and 14sp choices/actions; choices and actions retain at least 48dp targets. Selected label and inline check are centered together. The inset 28dp-corner surface is at most 520dp wide, with live Android window blur where enabled and a nearly opaque fallback. These are local component facts, not additions to the global token scales. Reset changes the draft to capture/newest; Close, outside tap and Back discard it. Only Apply persists the active source's preference; app and phone choices restore across separate processes.
+
+Capture time uses trustworthy private EXIF or phone MediaStore capture metadata, then falls back to arrival. App arrival is journaled at receive/import; old photos without a journal use existing file modification time. The sheet shows “旧照片没有入库记录时，添加时间使用现存文件时间。” only for the app source's arrival draft. Date groups use the same effective basis/direction, historical years remain explicit, unknown dates stay last and ties use stable photo IDs. An original, aliases and effects remain one group ordered by original dates; cache regeneration does not become a new arrival.
+
+Local183 evidence: [final index](../../docs/validation/sort183/capture-index.json) selects four API36 runs, 977 assertion records including repeated bootstrap/per-row/selection checks and 35 unedited PNGs. Phone/tablet selection recapture repaired stale exit-animation evidence at the same APK SHA; a fresh [full finish review](../../docs/validation/sort183/finish-review.md) is SHIP with no material fixes. [183 validation](../../docs/validation/sort183/README.md) records host 486/122/59 checks, metadata/paging and two-process source-preference proof. Physical Samsung/OEM, full TalkBack, full RAW decode/performance, camera interaction and end-to-end export were not retested. No publication, commit or push. The 181/180/179 records and incumbent DESIGN.md remain unchanged.
+
+## Multi-select A 181 (current narrow refinement)
+
+MODE: Operate. The user approved A-balanced-toolbar.png. Selection replaces the page title with a48dp cancel target, live18sp count and48dp select-all target. The bottom white/dark24dp-radius dock contains equal-width edit/export/delete with24dp AppIcon glyphs and12sp labels; no singled-out filled button, count or cancel in the dock. Normal height76dp, compact landscape64dp, minimum48dp targets, font growth retained. Compact selection hides the locked source strip and duplicate summary, names the source in the header, and restores both on exit. Phone source retains only its existing batch-edit capability. This supersedes earlier selection-dock geometry, preserving source motion, group/version semantics, import/export and180 deletion/async guards.
+
+Local181 evidence:173 bootstrap/repetition-inclusive records and24 native originals in fourAPI36 configurations. Actual View semantic long press, counts, select-all/cancel, text geometry and deletion/MediaStore protection are scoped in [181 validation](../../docs/validation/selection181/README.md). No physical-device, end-to-end edit/export or whole-app certification.
 
 ## Source motion 150 (2026-11-07, current narrow extension)
 
@@ -162,7 +184,7 @@ ROOT SEMANTICS: Visual navigation is 预设|同步|相册|设置. The old album 
 
 ACCESS / PICKER: Entering 手机相册 alone does not request permission; the 应用相册 empty-state “浏览手机照片” only switches there. API 34+ explicit access requests READ_MEDIA_IMAGES plus READ_MEDIA_VISUAL_USER_SELECTED; API 33 requests images, older versions external read. Partial access is stated in the existing count scope, 已授权 · 共 x 张, while the source label remains 手机相册. Access can be reselected through the relevant More action or empty-state recovery; phone permissions can be managed in application settings. Resume rechecks access and invalidates old phone rows/thumbnails. Denial/revocation never blocks durable app photos. Only the permission-NONE 手机相册 empty-state “选择指定照片” alternative calls the existing ACTION_OPEN_DOCUMENT/CATEGORY_OPENABLE flow with image/* plus explicit JPEG/PNG MIME types and multiple selection; authorized browsing and 应用相册 have no persistent picker action. Cancellation imports nothing and preserves existing data. Missing system activity reports a recoverable message.
 
-BROWSING: Phone pages contain at most 120 JPEG/PNG records, ordered by added time descending with ID tie-break; only currently accessible records can appear. App photos use existing original/effect grouping and photo dates. Date headers expose the 48dp tri-state group target, including when browsing. A phone page-tail group completes metadata before selection. Sources retain independent scroll state. Thumbnails are sampled on demand with a bounded worker/cache; browsing never performs a full-library import. Selection is capped atomically at 100; unavailable source, empty state, read error and partial preparation have explicit text and recovery.
+BROWSING (183 current time metadata): On the album worker, phone browsing collects the complete accessible JPEG/PNG/RAW metadata snapshot and sorts it by the source preference before paging; ordinary pages request up to 120 records, while a reordered initial prefix may extend through the visible anchor. Capture is the default basis and newest is the default direction; capture fallback, unknown-last ordering and stable ID ties apply across the complete snapshot. App originals/effects/aliases remain grouped with original capture/arrival dates. Date headers use the selected effective basis/direction and keep the 48dp tri-state group target. A phone page-tail group completes metadata before selection. Sources retain independent sort preferences and scroll anchors; permission changes, resume, additions and deletions invalidate metadata, with observer refresh deferred during selection/import. Thumbnails remain sampled on demand with the bounded worker/cache; the full metadata snapshot is not a full-photo import or UI-thread image decode. Selection remains capped atomically at 100; unavailable source, empty state, read error and partial preparation retain explicit text and recovery. Earlier 146 layout/export wording below retains its historical scope where superseded by later local sections.
 
 IMPORT: Accept content URIs for real JPEG/PNG, checking metadata before/after, complete structure/image validity and repeated content hash. A JPEG working original preserves exact bytes. A PNG requires “以白底编辑 PNG” confirmation, keeps its original private bytes, and uses a white-flattened JPEG 95/sRGB working copy. Import identity combines URI hash and original-content hash; it does not merge arbitrary equal pixels across different URIs. Working originals live in private pictures/camera-album; PNG originals and versioned provenance live in local-photo-sources. These are formal private data, not preview cache and not automatic uploads. Limits are 96 MiB per photo, 50 million pixels, 1 GiB aggregate phone input plus memory checks. Failures never silently downsize. Cancel/partial failure may leave completed private copies but does not start editing a partial selection.
 

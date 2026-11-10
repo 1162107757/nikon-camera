@@ -393,7 +393,7 @@ public final class Np3NativeProbe extends Instrumentation {
         byte[] contrast = neutral.clone(); contrast[payloadOffset(contrast, 25)] = (byte)228;
         Object brightnessProfile = invokeStatic("ncp.PresetPreviewProfiles", "fromPreset", new Class<?>[]{byte[].class}, bright);
         Object contrastProfile = invokeStatic("ncp.PresetPreviewProfiles", "fromPreset", new Class<?>[]{byte[].class}, contrast);
-        check("np3-0310-encoded-hsl-zones-spatial-v3".equals(invoke(brightnessProfile, "modelVersion")), "native-v3-colour-profile-model");
+        check("np3-0310-encoded-hsl-zones-spatial-v4".equals(invoke(brightnessProfile, "modelVersion")), "native-v4-colour-profile-model");
         Method point = type("ncp.PresetPreviewProfile").getMethod("applyArgb", int.class);
         int nearGray = (Integer)point.invoke(brightnessProfile, 0xff818080);
         check(nearGray == 0xff818080, "native-v3-blender-brightness-suppresses-near-gray-fringe");

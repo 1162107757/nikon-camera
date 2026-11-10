@@ -1,7 +1,8 @@
-param(
+﻿param(
     [Parameter(Mandatory=$true)][string]$CandidateApk,
     [Parameter(Mandatory=$true)][ValidatePattern('^[a-fA-F0-9]{64}$')][string]$ExpectedApkSha256,
-    [ValidateSet('phone','font1.3','landscape')][string]$Mode='phone',
+    [ValidateSet('phone','narrow','font1.3','landscape','tablet')][string]$Mode='phone',
+    [ValidateSet('all','adjustments','modal-only','selection168','patch169','erase173')][string]$Flow='selection168',
     [ValidateSet('emulator-5586','emulator-5588')][string]$Serial='emulator-5586',
     [string]$AdbPath='D:/dev/Android/Sdk/platform-tools/adb.exe',
     [string]$FixtureImage=(Join-Path $PSScriptRoot '../../.tooling/portrait-qa/astronaut.png')
@@ -27,6 +28,7 @@ $package=Adb @('shell','dumpsys','package','cc.huevia')
 $versionMatch=[regex]::Match($package,'versionCode=(\d+)')
 if(-not $versionMatch.Success){throw 'Cannot read installed version'}
 $fontBefore=Adb @('shell','settings','get','system','font_scale')
+$sizeBefore=[regex]::Match((Adb @('shell','wm','size')),'Override size: (\d+x\d+)').Groups[1].Value
 $airplaneBefore=Adb @('shell','settings','get','global','airplane_mode_on')
 $immersiveBefore=Adb @('shell','settings','get','secure','immersive_mode_confirmations')
 $runId=(Get-Date -Format 'yyyyMMdd-HHmmss')+'-'+$Mode+'-'+[Guid]::NewGuid().ToString('N').Substring(0,8)
@@ -56,10 +58,11 @@ try{
     Adb @('shell','settings','put','secure','immersive_mode_confirmations','confirmed')|Out-Null
     Adb @('shell','cmd','connectivity','airplane-mode','enable')|Out-Null
     Adb @('shell','settings','put','system','font_scale',$(if($Mode -eq 'font1.3'){'1.3'}else{'1.0'}))|Out-Null
+    Adb @('shell','wm','size',$(if($Mode -in @('narrow','font1.3')){'840x1890'}elseif($Mode -eq 'tablet'){'1600x2560'}else{'reset'}))|Out-Null
     Adb @('shell','am','force-stop','cc.huevia')|Out-Null
     Adb @('install','-r','-t',$probe)|Out-Null
     $installed=$true
-    $result=Adb @('shell','am','instrument','-w','-e','runId',$runId,'-e','candidateSha256',$candidateSha,'-e','mode',$Mode,'-e','fixture',$remoteFixture,'-e','fixtureSha256',$fixtureSha,'cc.huevia.brushqa/.BrushProbe')
+    $result=Adb @('shell','am','instrument','-w','-e','runId',$runId,'-e','candidateSha256',$candidateSha,'-e','mode',$Mode,'-e','flow',$Flow,'-e','fixture',$remoteFixture,'-e','fixtureSha256',$fixtureSha,'cc.huevia.brushqa/.BrushProbe')
     [IO.File]::WriteAllText((Join-Path $destination 'instrumentation.txt'),$result,[Text.UTF8Encoding]::new($false))
     Adb @('pull',$remote,$destination)|Out-Null
     $reportDirectory=Join-Path $destination $runId
@@ -85,6 +88,10 @@ try{
     CleanupStep 'restore font scale' {
         if([string]::IsNullOrWhiteSpace($fontBefore) -or $fontBefore -eq 'null'){Adb @('shell','settings','delete','system','font_scale')|Out-Null}else{Adb @('shell','settings','put','system','font_scale',$fontBefore)|Out-Null}
         $cleanup.fontScaleRestored=$true
+    }
+    CleanupStep 'restore display size' {
+        Adb @('shell','wm','size',$(if($sizeBefore){$sizeBefore}else{'reset'}))|Out-Null
+        $cleanup.displaySizeRestored=$true
     }
     CleanupStep 'restore airplane command' {
         Adb @('shell','cmd','connectivity','airplane-mode',$(if($airplaneBefore -eq '1'){'enable'}else{'disable'}))|Out-Null

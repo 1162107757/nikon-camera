@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-11-09T10:03:13.021Z",
+  "privateGrants": {
+    "anon": false,
+    "authenticated": false,
+    "service": true
+  },
+  "rpcRead": true,
+  "bytes": 4061027,
+  "tables": 35,
+  "files": 773
+}

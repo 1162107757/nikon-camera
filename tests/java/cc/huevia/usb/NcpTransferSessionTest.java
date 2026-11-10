@@ -94,15 +94,15 @@ public final class NcpTransferSessionTest {
     }
 
     private static void unsupportedCamerasAndOperationsDoNotWrite() throws Exception {
-        for (String model : new String[] {"Z 7II", "Z 6", "D850", "unknown"}) {
+        for (String manufacturer : new String[] {"Canon", "Sony", ""}) {
             Camera camera = new Camera();
-            camera.model = model;
+            camera.manufacturer = manufacturer;
             UsbNcpTransfer.Result result = result();
             NcpTransferSession session = new NcpTransferSession(camera, result);
             rejects(() -> session.run(NCP));
             equal(0, camera.totalWrites());
             equal(0L, camera.countCommands(0x1002));
-            check(!session.ownsSession(), "Unrecognized model never owns a session");
+            check(!session.ownsSession(), "A non-Nikon identity never owns a session");
         }
         for (int missing : REQUIRED) {
             Camera camera = new Camera();
@@ -112,8 +112,14 @@ public final class NcpTransferSessionTest {
             equal(0, camera.totalWrites());
             equal(0L, camera.countCommands(0x1002));
         }
-        check(NcpTransferSession.isZ6II("NIKON Z 6II"), "Official spaced model is accepted");
-        check(NcpTransferSession.isZ6II("Z6II"), "Compact Z6II model is accepted");
+        for (String model : new String[] {"Z 7_2", "NIKON Z 7II", "Z7II", "Z 6", "D850"}) {
+            Camera camera = Camera.existingDirectories(); camera.model = model;
+            UsbNcpTransfer.Result result = result();
+            NcpTransferSession session = new NcpTransferSession(camera, result);
+            session.run(NCP);
+            check(result.verifiedTransfer, "Standard transfer uses actual operations and storage checks, not a model whitelist: " + model);
+            session.closeSession();
+        }
     }
 
     private static void fileAndStoragePreconditionsDoNotWrite() throws Exception {
@@ -802,9 +808,9 @@ public final class NcpTransferSessionTest {
             check(!result.storageAssessment.get(0).experimentCandidate, "Other guards exclude experimental candidacy");
             session.closeSession();
         }
-        for (String model : new String[] {"Z 6", "Z 7II", "unknown"}) {
+        for (String manufacturer : new String[] {"Canon", "Sony", ""}) {
             Camera camera = readOnlyCamera();
-            camera.model = model;
+            camera.manufacturer = manufacturer;
             NcpTransferSession session = new NcpTransferSession(camera, result(), true);
             rejects(() -> session.run(NCP));
             equal(0, camera.totalWrites());
@@ -969,6 +975,7 @@ public final class NcpTransferSessionTest {
         int sendFailureResponse = 0x2013;
         String storageDescription = "SDXC Card";
         String model = "NIKON Z 6II";
+        String manufacturer = "Nikon";
         int missingOperation = -1;
         int accessCapability;
         int fileSystemType = 2;
@@ -1027,7 +1034,7 @@ public final class NcpTransferSessionTest {
             record("read", operation, transactionId, parameters);
             if (operation == readFailureOperation) throw new PtpResponseException(0x2013, transactionId);
             switch (operation) {
-                case 0x1001: return deviceInfo(model, missingOperation);
+                case 0x1001: return deviceInfo(model, manufacturer, missingOperation);
                 case 0x1004: {
                     Writer writer = new Writer().u32(storageIds.length);
                     for (long storage : storageIds) writer.u32(storage);
@@ -1151,13 +1158,13 @@ public final class NcpTransferSessionTest {
         }
     }
 
-    private static byte[] deviceInfo(String model, int missing) {
+    private static byte[] deviceInfo(String model, String manufacturer, int missing) {
         List<Integer> supported = new ArrayList<>();
         supported.add(0x1001);
         for (int operation : REQUIRED) if (operation != missing) supported.add(operation);
         Writer writer = new Writer().u16(100).u32(10).u16(100).string("").u16(0).u32(supported.size());
         for (int operation : supported) writer.u16(operation);
-        return writer.u32(0).u32(0).u32(0).u32(0).string("Nikon").string(model).string("1.62")
+        return writer.u32(0).u32(0).u32(0).u32(0).string(manufacturer).string(model).string("1.62")
                 .string("private serial").bytes();
     }
 

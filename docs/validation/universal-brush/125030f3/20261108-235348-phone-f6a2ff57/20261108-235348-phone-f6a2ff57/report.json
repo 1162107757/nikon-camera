@@ -1,0 +1,703 @@
+{
+  "pass": false,
+  "stage": "selection168-auto-face",
+  "candidateSha256": "125030f31150e0f123d939b3b7af6d2262f265c8febfb8b9778a875c8d929a97",
+  "versionCode": 168,
+  "versionName": "0.30.14-beta",
+  "mode": "phone",
+  "flow": "selection168",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-3",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-parameter-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "actual-parameter-binding-BRIGHTNESS",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-cancel",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "cancelled-geometry-keeps-model-history",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-新增选区",
+      "pass": true
+    },
+    {
+      "name": "actual-brush-dialog-open",
+      "pass": true
+    },
+    {
+      "name": "brush-photo-frame-ready",
+      "pass": true
+    },
+    {
+      "name": "single-pointer-brush-cannot-trigger-anchored-scale",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-circle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "one-circle-tool-creates-ellipse",
+      "pass": true
+    },
+    {
+      "name": "ellipse-is-not-many-brush-strokes",
+      "pass": true
+    },
+    {
+      "name": "selected-circle-persists-after-old-flash-window",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-hold-mask",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-hold-mask",
+      "pass": true
+    },
+    {
+      "name": "hide-button-removes-display-only-overlay",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-hold-mask",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-hold-mask",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-circle-persistent",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-circle-persistent",
+      "pass": true
+    },
+    {
+      "name": "feather-drag-hides-selection",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-circle-drag-hidden",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-circle-drag-hidden",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "feather-release-restores-selection",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-circle-release-restored",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-circle-release-restored",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-add",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-add",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-rectangle",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "rectangle-add-preserves-circle",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-rectangle-added",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-rectangle-added",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-erase",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-erase",
+      "pass": true
+    },
+    {
+      "name": "real-photo-frame",
+      "pass": true
+    },
+    {
+      "name": "latest-brush-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "geometric-subtract-stored",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-selection-invert",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-selection-invert",
+      "pass": true
+    },
+    {
+      "name": "inverse-applies-to-current-region",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-undo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-undo",
+      "pass": true
+    },
+    {
+      "name": "inverse-undo-preserves-selection",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-redo",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-redo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-inverse",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-inverse",
+      "pass": true
+    },
+    {
+      "name": "native-control-visible-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "native-control-enabled-brush-apply",
+      "pass": true
+    },
+    {
+      "name": "finish-commits-immediately-without-flashes",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-regional-selection-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-main-regional",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-main-regional",
+      "pass": true
+    },
+    {
+      "name": "geometry-reaches-editor-model",
+      "pass": true
+    },
+    {
+      "name": "main-slider-hides-selection",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-main-drag-hidden",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-main-drag-hidden",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "main-release-restores-selection",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "shape-and-inverse-saved-in-real-photo-draft",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-curves",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-curves-has-real-mask",
+      "pass": true
+    },
+    {
+      "name": "curves-gesture-suppresses-overlay",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "curves-release-restores-overlay",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-curves-persistent",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-curves-persistent",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-hsl",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-hsl-has-real-mask",
+      "pass": true
+    },
+    {
+      "name": "selection-slider-visible",
+      "pass": true
+    },
+    {
+      "name": "hsl-gesture-suppresses-overlay",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "hsl-release-restores-overlay",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-hsl-persistent",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-hsl-persistent",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-palette",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-palette-has-real-mask",
+      "pass": true
+    },
+    {
+      "name": "selection-slider-visible",
+      "pass": true
+    },
+    {
+      "name": "palette-gesture-suppresses-overlay",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "palette-release-restores-overlay",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-palette-persistent",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-palette-persistent",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-open-cleanup",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "regional-cleanup-has-real-mask",
+      "pass": true
+    },
+    {
+      "name": "selection-slider-visible",
+      "pass": true
+    },
+    {
+      "name": "cleanup-gesture-suppresses-overlay",
+      "pass": true
+    },
+    {
+      "name": "direct-tool-latest-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "cleanup-release-restores-overlay",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-selection168-cleanup-persistent",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-selection168-cleanup-persistent",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-brush-scope",
+      "pass": true
+    },
+    {
+      "name": "native-menu-choice-全图",
+      "pass": true
+    },
+    {
+      "name": "actual-scope-selected",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-failure",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-failure",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-menu-locator",
+      "item": "新增选区",
+      "windowId": 2466,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "新增选区",
+      "windowId": 2468,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    },
+    {
+      "case": "native-menu-locator",
+      "item": "全图",
+      "windowId": 2474,
+      "nodeClass": "android.widget.TextView",
+      "action": "accessibility-click"
+    }
+  ],
+  "screenshots": 12,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": "java.lang.AssertionError: Missing real editor control editor-portrait",
+  "scope": "Exact installed direct modal palette\/cleanup\/curves\/HSL brush transaction checks plus selected universal workflow. Exact installed universal brush and scoped adjustment UI: real live paint\/erase, size\/feather, two-finger navigation, clear\/reopen\/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves\/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing\/deletion, owner rejection, real drafts\/photo switching and representative full\/detail export EXIF1\/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures\/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim."
+}

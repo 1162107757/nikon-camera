@@ -1,0 +1,183 @@
+{
+  "pass": true,
+  "mode": "tablet",
+  "scope": "Owned emulator only; real JPEG\/MediaStore\/private-library reads, hand-authored valid NCP recipes, synthetic camera metadata\/progress for UI placement only. No camera transport, live catalog or physical phone claim.",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "预设-uses-home-palette",
+      "pass": true
+    },
+    {
+      "name": "预设-navigation-visible",
+      "pass": true
+    },
+    {
+      "name": "real-category-controls-present",
+      "pass": true
+    },
+    {
+      "name": "category-hit-48",
+      "pass": true
+    },
+    {
+      "name": "category-capsule-encloses-text",
+      "pass": true
+    },
+    {
+      "name": "category-hit-48",
+      "pass": true
+    },
+    {
+      "name": "category-capsule-encloses-text",
+      "pass": true
+    },
+    {
+      "name": "category-hit-48",
+      "pass": true
+    },
+    {
+      "name": "category-capsule-encloses-text",
+      "pass": true
+    },
+    {
+      "name": "category-hit-48",
+      "pass": true
+    },
+    {
+      "name": "category-capsule-encloses-text",
+      "pass": true
+    },
+    {
+      "name": "category-hit-48",
+      "pass": true
+    },
+    {
+      "name": "category-capsule-encloses-text",
+      "pass": true
+    },
+    {
+      "name": "search-editable-native-field",
+      "pass": true
+    },
+    {
+      "name": "search-field-set-text",
+      "pass": true
+    },
+    {
+      "name": "preset-search-real-dialog-filter",
+      "pass": true
+    },
+    {
+      "name": "相册-uses-home-palette",
+      "pass": true
+    },
+    {
+      "name": "相册-navigation-visible",
+      "pass": true
+    },
+    {
+      "name": "compact-version-badge-visible",
+      "pass": true
+    },
+    {
+      "name": "version-badge-touch-48",
+      "pass": true
+    },
+    {
+      "name": "real-version-chooser-opens",
+      "pass": true
+    },
+    {
+      "name": "source-touch-48",
+      "pass": true
+    },
+    {
+      "name": "source-single-line",
+      "pass": true
+    },
+    {
+      "name": "source-touch-48",
+      "pass": true
+    },
+    {
+      "name": "source-single-line",
+      "pass": true
+    },
+    {
+      "name": "bounded-masonry-row",
+      "pass": true
+    },
+    {
+      "name": "search-editable-native-field",
+      "pass": true
+    },
+    {
+      "name": "search-field-set-text",
+      "pass": true
+    },
+    {
+      "name": "album-search-filters-loaded-file-names",
+      "pass": true
+    },
+    {
+      "name": "album-search-clear-restores-groups",
+      "pass": true
+    },
+    {
+      "name": "real-long-select-mode",
+      "pass": true
+    },
+    {
+      "name": "selection-locks-source",
+      "pass": true
+    },
+    {
+      "name": "floating-selection-visible",
+      "pass": true
+    },
+    {
+      "name": "selection-count-real",
+      "pass": true
+    },
+    {
+      "name": "select-all-real-loaded-items",
+      "pass": true
+    },
+    {
+      "name": "同步-uses-home-palette",
+      "pass": true
+    },
+    {
+      "name": "同步-navigation-visible",
+      "pass": true
+    },
+    {
+      "name": "transfer-visible",
+      "pass": true
+    },
+    {
+      "name": "transfer-byte-size-shown-single-line",
+      "pass": true
+    },
+    {
+      "name": "设置-uses-home-palette",
+      "pass": true
+    },
+    {
+      "name": "设置-navigation-visible",
+      "pass": true
+    },
+    {
+      "name": "photo-processing-palette-isolated",
+      "pass": true
+    },
+    {
+      "name": "photo-controls-unchanged-accent",
+      "pass": true
+    }
+  ]
+}

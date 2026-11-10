@@ -7,8 +7,8 @@ android {
         applicationId 'cc.huevia'
         minSdk 26
         targetSdk 35
-        versionCode 153
-        versionName '0.29.2-beta'
+        versionCode 186
+        versionName '0.30.32-beta'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

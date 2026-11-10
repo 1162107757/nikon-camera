@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-08T08:29:58.270Z",
+  "actualWriteBytesPerDay": 268435456,
+  "declaredUploadBytesPerDay": 134217728,
+  "requestAndTaskAndPackageCapsPreserved": true,
+  "usageReset": false,
+  "functions": [
+    {
+      "name": "nikon_app_upload_begin",
+      "sha256": "a36649251dc6002dc43cf4150232cd5be2857d1ba3c639acaa81a02a27df6751"
+    },
+    {
+      "name": "nikon_app_upload_budget",
+      "sha256": "43abe1d6bf9d4f2d2eb534cbbe9f63a9934a9d086254ced2bb09f1628edba066"
+    }
+  ]
+}

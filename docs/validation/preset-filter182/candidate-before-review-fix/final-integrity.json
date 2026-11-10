@@ -1,0 +1,32 @@
+{
+  "versionCode": 182,
+  "sha256": "2d1ea2aeb04593a61f8146fb6106f3840262ac4dc61f1d613f4c73af4626a2ae",
+  "bytes": 31403286,
+  "sourceFiles": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "64c2544e22d6d156bb864601c5051aee1006d83c871ac35659f0b6a89c0c8360"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "79253017636cebc11e75a86f3e73485be1f218d06ce343636fc8fdce975b8f31"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetHomeFilter.java",
+      "sha256": "5b427313f8c6e5981a13eb40132d4cb30e228de5ac79cc5e17e4a3ed33ccc0f0"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PresetFilterSheet.java",
+      "sha256": "7451806e71fa5dc495a352e09012f30a2db2cf25dfd906620dec636d845e3d05"
+    },
+    {
+      "path": "app/src/main/res/values/preset_filter_ids.xml",
+      "sha256": "65674efffa8e33b4af7b21f3d4584505ac294681283b8e47e2c9ba6c18769055"
+    }
+  ],
+  "frozen180and181Unchanged": true,
+  "retainedPayloadsVerified": 89,
+  "capturesVerifiedNonBlank": 28,
+  "nativeChecksIncludingRepeats": 308,
+  "published": false
+}

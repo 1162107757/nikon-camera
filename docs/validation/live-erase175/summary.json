@@ -1,0 +1,208 @@
+{
+  "versionCode": 175,
+  "versionName": "0.30.21-beta",
+  "sourceSha256": "a9eb73310d8ae98ef06530469c2576dab65c2a4f7187cf740b47f0f15ccba437",
+  "deliverySha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+  "deliveryBytes": 31374525,
+  "host": {
+    "local": 43230,
+    "legacyRepair": 153740,
+    "automaticSampler": 46702,
+    "newContext": 973393,
+    "countMeaning": "Repeated assertions/pixels, not independent scenarios",
+    "knownFixture": {
+      "coreMeanAbsoluteError": {
+        "legacy": 21.425213675213676,
+        "context": 0.44871794871794873
+      },
+      "sharedRimMeanAbsoluteError": {
+        "legacy": 3.9971264367816093,
+        "context": 0.3936781609195402
+      },
+      "scope": "192×128 synthetic known clean texture with donor color/lighting cast; no general photo success rate"
+    },
+    "largeImage": "24MP small-context-patch streamed under64MiB Java heap; bounded row writes"
+  },
+  "native": {
+    "exactCandidate": true,
+    "device": "owned emulator-5588, Android API37",
+    "configurations": [
+      {
+        "runId": "20261109-112009-phone-1e650f13",
+        "pass": true,
+        "mode": "phone",
+        "checks": 157,
+        "screenshots": 7,
+        "report": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/report.json",
+        "measurements": [
+          {
+            "case": "held-down-actual-render",
+            "firstFrameMs": 184,
+            "scope": "Owned emulator actual renderer, not physical-phone latency"
+          },
+          {
+            "case": "native-pinch",
+            "minimumSpanPx": 446,
+            "spanSlopPx": 42,
+            "startSpanPx": 530,
+            "endSpanPx": 848,
+            "zoomBefore": 1,
+            "zoomAfter": 1.4545451402664185,
+            "moves": 12
+          },
+          {
+            "case": "100-move-coalescing",
+            "renderCalls": 3,
+            "maximumConcurrent": 1
+          },
+          {
+            "case": "native-menu-locator",
+            "item": "手动取样修补",
+            "windowId": 33,
+            "nodeClass": "android.widget.TextView",
+            "action": "accessibility-click"
+          }
+        ]
+      },
+      {
+        "runId": "20261109-112106-font1.3-f0dfac34",
+        "pass": true,
+        "mode": "font1.3",
+        "checks": 157,
+        "screenshots": 7,
+        "report": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/report.json",
+        "measurements": [
+          {
+            "case": "held-down-actual-render",
+            "firstFrameMs": 459,
+            "scope": "Owned emulator actual renderer, not physical-phone latency"
+          },
+          {
+            "case": "native-pinch",
+            "minimumSpanPx": 446,
+            "spanSlopPx": 42,
+            "startSpanPx": 530,
+            "endSpanPx": 777,
+            "zoomBefore": 1,
+            "zoomAfter": 1.3130542039871216,
+            "moves": 12
+          },
+          {
+            "case": "100-move-coalescing",
+            "renderCalls": 3,
+            "maximumConcurrent": 1
+          },
+          {
+            "case": "native-menu-locator",
+            "item": "手动取样修补",
+            "windowId": 49,
+            "nodeClass": "android.widget.TextView",
+            "action": "accessibility-click"
+          }
+        ]
+      },
+      {
+        "runId": "20261109-112153-landscape-89036a4a",
+        "pass": true,
+        "mode": "landscape",
+        "checks": 157,
+        "screenshots": 7,
+        "report": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/report.json",
+        "measurements": [
+          {
+            "case": "held-down-actual-render",
+            "firstFrameMs": 163,
+            "scope": "Owned emulator actual renderer, not physical-phone latency"
+          },
+          {
+            "case": "native-pinch",
+            "minimumSpanPx": 446,
+            "spanSlopPx": 42,
+            "startSpanPx": 530,
+            "endSpanPx": 848,
+            "zoomBefore": 1,
+            "zoomAfter": 1.4545451402664185,
+            "moves": 12
+          },
+          {
+            "case": "100-move-coalescing",
+            "renderCalls": 3,
+            "maximumConcurrent": 1
+          },
+          {
+            "case": "native-menu-locator",
+            "item": "手动取样修补",
+            "windowId": 65,
+            "nodeClass": "android.widget.TextView",
+            "action": "accessibility-click"
+          }
+        ]
+      },
+      {
+        "runId": "20261109-112247-tablet-33394764",
+        "pass": true,
+        "mode": "tablet",
+        "checks": 157,
+        "screenshots": 7,
+        "report": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/report.json",
+        "measurements": [
+          {
+            "case": "held-down-actual-render",
+            "firstFrameMs": 153,
+            "scope": "Owned emulator actual renderer, not physical-phone latency"
+          },
+          {
+            "case": "native-pinch",
+            "minimumSpanPx": 529,
+            "spanSlopPx": 42,
+            "startSpanPx": 720,
+            "endSpanPx": 1152,
+            "zoomBefore": 1,
+            "zoomAfter": 1.4545451402664185,
+            "moves": 12
+          },
+          {
+            "case": "100-move-coalescing",
+            "renderCalls": 3,
+            "maximumConcurrent": 1
+          },
+          {
+            "case": "native-menu-locator",
+            "item": "手动取样修补",
+            "windowId": 81,
+            "nodeClass": "android.widget.TextView",
+            "action": "accessibility-click"
+          }
+        ]
+      }
+    ],
+    "totalRepeatedChecks": 628,
+    "originalScreenshots": 28,
+    "initialHarnessFailure": [
+      {
+        "runId": "20261109-111936-phone-da2b08cd",
+        "pass": false,
+        "mode": "phone",
+        "checks": 11,
+        "screenshots": 0,
+        "report": "docs/validation/live-erase175/native/0760e95f/20261109-111936-phone-da2b08cd/20261109-111936-phone-da2b08cd/report.json",
+        "measurements": []
+      }
+    ],
+    "darkScope": "Landscape run requested system night=yes; Prisma material remains photo-derived. Not a separate app dark-theme certification."
+  },
+  "changes": [
+    "Actual backend repair frames while DOWN/MOVE; latest-only coalesced queue",
+    "Default repair photo canvas has no live/completed highlight and no eye button",
+    "Opaque painted core with softer exterior; robust exterior-context linear-light affine color fit and bilinear donor sampling",
+    "New repairs opt into per-patch contextBlend with LocalEdits v8; old v1–v7 behavior retained",
+    "One undo per completed stroke, one Done parent transaction, cancel/focus/pinch/stale result and failure rollback"
+  ],
+  "limits": [
+    "No physical HarmonyOS/phone acceptance",
+    "Local real-texture repair; not generative AI or large-object reconstruction",
+    "No new full-export workflow matrix; common renderer and shared streaming path tested",
+    "No upload, public release, git commit/push or WeChat action"
+  ],
+  "published": false
+}

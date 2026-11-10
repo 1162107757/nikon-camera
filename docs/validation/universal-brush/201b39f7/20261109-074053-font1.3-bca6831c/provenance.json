@@ -1,0 +1,68 @@
+{
+  "candidateSha256": "201b39f735b7067fa306ae2621876a78907f70a4e69020a29cde29ed554fc273",
+  "versionCode": 169,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "452a16a3a06152fb02e92815fe712a1a3766132388b126974973b1a35d146da8",
+  "pass": true,
+  "scope": "Exact installed repair destination/source drag, real circle/ellipse and rectangle selection, feather/blend, persistent display and slider/focus cancellation, undo/redo and clearing, outer apply/cancel/history, actual v7 saved draft reopening and original bytes. Native masked pixels and unchanged exterior checked; independent full EXIF/alpha/ordered-overlap and 24MP host oracle separate. No physical-device, full-export matrix, AI or public-release acceptance claim.",
+  "files": [
+    {
+      "file": "patch169-applied-main.png",
+      "sha256": "64ddd82c74c900200292bf034f68690a31e8f2f17fe022d2d5ecbee6156f6f8e"
+    },
+    {
+      "file": "patch169-delete-undo.png",
+      "sha256": "6a918197243ff73d7f1578dabcea0f01741fa8c6098fecd1e17aef61d0bc0260"
+    },
+    {
+      "file": "patch169-empty.png",
+      "sha256": "95428e6240ed71ab58320bb9435495d4a454d63f306d639660db03dae7223da1"
+    },
+    {
+      "file": "patch169-existing-region-seed.png",
+      "sha256": "cc5e9ac8b9b0eef54c8db8b497f2dc92b40bf5c5d71f1d94c60e6ab7f221deb3"
+    },
+    {
+      "file": "patch169-overlay-hidden.png",
+      "sha256": "0e2cf3f74c52b5d65bea2a4274c3745e433201b80b75908ca44b04e09d67b567"
+    },
+    {
+      "file": "patch169-reopened.png",
+      "sha256": "5ebca7097a8b8d5712fd43d68f5d6bfe61695e19253d754b45af4cfd82fbb80c"
+    },
+    {
+      "file": "patch169-selection-circle.png",
+      "sha256": "9623c7b1a413a309bc5d014b2ae572ccd03fca772ff0b382998a1ada4f63daae"
+    },
+    {
+      "file": "patch169-selection-rectangle.png",
+      "sha256": "40778fad8f89d94db594f90cadd101d51e952ccf8708184b7a42b53deba17fe2"
+    },
+    {
+      "file": "patch169-slider-drag-hidden.png",
+      "sha256": "6bc1f22c53fed551d57895566120403285257499777f46f830dd9e8700d25d53"
+    },
+    {
+      "file": "patch169-slider-release.png",
+      "sha256": "21dbb569252b9af6937851241a7dc7f3a84ae8710f9007dd72164843d87082c1"
+    },
+    {
+      "file": "patch169-source-sampled.png",
+      "sha256": "7c0ef587e3a6a2518578aedf11c98a7333eb45c1b7b6e70259c531ce0200e56e"
+    },
+    {
+      "file": "patch169-target-ready.png",
+      "sha256": "db52a50a316e3152237929b9bc092d0720f3baee818cab033240fcd0ed7aca6e"
+    },
+    {
+      "file": "patch169-two-repairs.png",
+      "sha256": "c9a57de933f7953da19475d818f4793bb0e12a08af3a5b2e14f65991bb92951d"
+    },
+    {
+      "file": "report.json",
+      "sha256": "f0d0bb351761b94a3d11549c5de2504734db091f1fd3c79bb27650e65b3b19a0"
+    }
+  ]
+}

@@ -55,6 +55,8 @@ public final class AlbumController implements AutoCloseable {
         default void onDiscoveryProgress(int checked, int total) { }
         /** No original was downloaded; explicit selection can resolve an unprovable JPEG-to-NEF match. */
         default void onSelectionRequired(String message) { onError(message); }
+        /** Local cache lookup completed; a camera is required for the remaining read. */
+        default void onConnectionRequired() { onError("连接原相机后，继续下载 RAW 原文件。"); }
     }
     public interface PreviewCallback extends Callback<PhotoPreview> { void onProgress(long received, long total); }
     public interface PhotoLivePublisher { String publish(DownloadedPhoto photo) throws Exception; }
@@ -183,18 +185,7 @@ public final class AlbumController implements AutoCloseable {
                     for (DownloadedPhoto photo : selected) failed.add(new PhotoDeleteResult.Failure(photo, failure.getMessage() == null ? "照片删除未完成，请重试。" : failure.getMessage()));
                     result = new PhotoDeleteResult(Collections.emptyList(), failed);
                 }
-                Set<String> removed = new HashSet<>();
-                for (DownloadedPhoto photo : result.deletedPhotos) try { removed.add(photo.file().getCanonicalPath()); } catch (IOException ignored) { }
-                synchronized (lifecycle) {
-                    if (liveRun != null) {
-                        int count = 0; java.util.Iterator<LiveCandidate> entries = liveRun.recent.values().iterator();
-                        while (entries.hasNext()) {
-                            LiveCandidate item = entries.next();
-                            if (item.saved != null && removed.contains(item.saved.file().getAbsolutePath())) { entries.remove(); count++; }
-                        }
-                        if (count > 0) { liveRun.completed = Math.max(0, liveRun.completed - count); publishLiveLocked(liveRun); }
-                    }
-                }
+                applyDeletedPhotos(result);
             } finally {
                 synchronized (lifecycle) { deletingDownloadedPhotos = false; }
                 lease.close(); notifyStateChanged();
@@ -208,6 +199,27 @@ public final class AlbumController implements AutoCloseable {
         }); } catch (java.util.concurrent.RejectedExecutionException stopped) {
             synchronized (lifecycle) { deletingDownloadedPhotos = false; } lease.close(); notifyStateChanged();
             main.post(() -> callback.onError("本地照片删除队列已关闭。"));
+        }
+    }
+
+    /** Reconciles app-only local deletion with live history and all photo-library surfaces; no camera I/O. */
+    public void onAppCopiesDeleted(PhotoDeleteResult result) {
+        if(result==null||result.deleted==0)return;
+        applyDeletedPhotos(result);notifyStateChanged();
+        main.post(()->{List<Runnable> observers;synchronized(lifecycle){observers=new ArrayList<>(photoLibraryObservers);}for(Runnable observer:observers)try{observer.run();}catch(RuntimeException ignored){}});
+    }
+    private void applyDeletedPhotos(PhotoDeleteResult result) {
+        Set<String> removed = new HashSet<>();
+        for (DownloadedPhoto photo : result.deletedPhotos) try { removed.add(photo.file().getCanonicalPath()); } catch (IOException ignored) { }
+        synchronized (lifecycle) {
+            if (liveRun != null) {
+                int count = 0; java.util.Iterator<LiveCandidate> entries = liveRun.recent.values().iterator();
+                while (entries.hasNext()) {
+                    LiveCandidate item = entries.next();
+                    if (item.saved != null && removed.contains(item.saved.file().getAbsolutePath())) { entries.remove(); count++; }
+                }
+                if (count > 0) { liveRun.completed = Math.max(0, liveRun.completed - count); publishLiveLocked(liveRun); }
+            }
         }
     }
 
@@ -1282,7 +1294,7 @@ public final class AlbumController implements AutoCloseable {
                 byte[] info = client.connect(address, port, wifi.clientGuid(), "Preset Album");
                 if (browse) return readConnectionSnapshot(client, address, port, info, connectionGeneration, false);
                 PtpDeviceInfo parsed = readCameraIdentity(client, info, connectionGeneration);
-                ConnectionInfo connected = new ConnectionInfo(parsed.model(), address, port, 0, protocol);
+                ConnectionInfo connected = new ConnectionInfo(parsed.model(), address, port, 0, protocol, parsed.manufacturer());
                 synchronized (lifecycle) {
                     requireCurrentSession(client, connectionGeneration);
                     handles = new long[0]; session = "";
@@ -1569,7 +1581,7 @@ public final class AlbumController implements AutoCloseable {
         PtpDeviceInfo parsed = readCameraIdentity(client, info, request);
         synchronized (lifecycle) {
             requireCurrentSession(client, request);
-            if (preserveSession) sessionConnectionInfo = new ConnectionInfo(parsed.model(), host, port, 0, cameraProtocol(client));
+            if (preserveSession) sessionConnectionInfo = new ConnectionInfo(parsed.model(), host, port, 0, cameraProtocol(client), parsed.manufacturer());
         }
         for (int op : new int[] {0x1004, 0x1007, 0x1008, 0x1009}) if (!parsed.supportsOperation(op)) {
             throw new BrowseUnavailableException("相机未提供当前相册需要的照片读取能力。");
@@ -1597,7 +1609,7 @@ public final class AlbumController implements AutoCloseable {
         }
         long[] observedHandles = new long[collected.size()]; int i = 0;
         for (long handle : collected) observedHandles[i++] = handle;
-        ConnectionInfo connected = new ConnectionInfo(parsed.model(), host, port, observedHandles.length, cameraProtocol(client));
+        ConnectionInfo connected = new ConnectionInfo(parsed.model(), host, port, observedHandles.length, cameraProtocol(client), parsed.manufacturer());
         synchronized (lifecycle) {
             requireCurrentSession(client, request);
             handles = observedHandles; session = UUID.randomUUID().toString();
@@ -1916,6 +1928,7 @@ public final class AlbumController implements AutoCloseable {
                 RawPhotoDownload saved = rawStore().find(reference.sourceIdentity);
                 if (saved != null) { deliver(request, () -> callback.onProgress(saved.byteSize(), saved.byteSize())); return saved; }
                 throw new RawContinuation(false, () -> {
+                    if (!hasLiveSession()) throw new RawConnectionRequired();
                     requireRawIdle(); PhotoCameraClient client = requireClient();
                     if (!trustedCamera(client) || !reference.camera.equals(cameraKey(client, deviceInfo)))
                         throw new RawPhotoPairing.SelectionRequiredException("请连接拍摄这张照片的原相机，或在 RAW 文件列表明确选择 NEF 原文件。");
@@ -2082,6 +2095,8 @@ public final class AlbumController implements AutoCloseable {
         RawContinuation(boolean local, Work<?> work, Runnable rejected) { this.local = local; this.work = work; this.rejected = rejected; }
     }
     public boolean isRawBusy() { return rawReadReserved.get(); }
+    private static final class RawConnectionRequired extends Exception { }
+
     private <T> void submitRaw(int request, Callback<T> callback, Work<T> work) {
         if (callback == null) throw new IllegalArgumentException("callback");
         synchronized (lifecycle) {
@@ -2110,7 +2125,8 @@ public final class AlbumController implements AutoCloseable {
                 boolean selectionRequired = failure instanceof RawPhotoPairing.SelectionRequiredException;
                 rawReadReserved.set(false); main.post(() -> {
                     if (closed) return;
-                    if (selectionRequired && generation.get() == request && callback instanceof RawDownloadCallback) ((RawDownloadCallback) callback).onSelectionRequired(message);
+                    if (failure instanceof RawConnectionRequired && generation.get() == request && callback instanceof RawDownloadCallback) ((RawDownloadCallback) callback).onConnectionRequired();
+                    else if (selectionRequired && generation.get() == request && callback instanceof RawDownloadCallback) ((RawDownloadCallback) callback).onSelectionRequired(message);
                     else callback.onError(message);
                 });
             }

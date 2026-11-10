@@ -1,0 +1,19 @@
+{
+  "versionCode": 173,
+  "versionName": "0.30.19-beta",
+  "sourceSha256": "c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication173\\candidates\\c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7\\update.apk",
+  "uploadSha256": "031912d18d80094a55e2485083bacfe9ede604e20538fce2f095d435ccc1f9fa",
+  "uploadBytes": 31370429,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "fix-F1",
+  "deliveryApk": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication173\\candidates\\c8745941655c7995e5d704be482eb4aa2e350afd22d1aab867c02b55ddd009c7\\update.apk",
+  "superseded": true
+}

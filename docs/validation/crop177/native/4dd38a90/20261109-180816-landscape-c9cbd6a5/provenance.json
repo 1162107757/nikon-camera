@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "4dd38a90ae45e06c8dfcef0a8a2e3c519841933f98d2e0dc26b22ee73ad52f54",
+  "versionCode": 177,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "9418c5692c7ddd2551ec6586f045b4d56f5254a448f3046af8f39fa0e53ff222",
+  "pass": true,
+  "scope": "Exact installed direct modal palette/cleanup/curves/HSL brush transaction checks plus selected universal workflow. Exact installed universal brush and scoped adjustment UI: real live paint/erase, size/feather, two-finger navigation, clear/reopen/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing/deletion, owner rejection, real drafts/photo switching and representative full/detail export EXIF1/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "crop177-inline-landscape-photo.png",
+      "sha256": "9fb1812de622eca448383c036f637ef7d90307fc8f8008cacaf74d12e87a7a20"
+    },
+    {
+      "file": "crop177-inline-portrait-photo.png",
+      "sha256": "eb9c7755937dd9ae0876315a76be8a74eb6e78d4f62c10bed9bfb59ef9e308b7"
+    },
+    {
+      "file": "crop177-precision-landscape-photo.png",
+      "sha256": "84ab614e1214edeb0ca77fa18f76261478d57f91f9037d52178697153cf71e57"
+    },
+    {
+      "file": "crop177-precision-portrait-photo.png",
+      "sha256": "e85c00048cdfd5661690b8a3fb25eac9367c532847979625065a9fa05eac06d8"
+    },
+    {
+      "file": "report.json",
+      "sha256": "3d3dd8d3be7b8ca20e67e5c99fbb9a994278afbf8976f2ae3dfffc6dff061cce"
+    }
+  ]
+}

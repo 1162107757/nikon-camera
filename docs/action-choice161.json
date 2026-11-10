@@ -1,0 +1,21 @@
+{
+  "versionCode": 161,
+  "title": "Compact file and action choice dialogs",
+  "approvedReference": "docs/design-review/action-choice161-20261108/approved-reference.png",
+  "implementation": "app/src/main/java/cc/huevia/ui/ActionChoiceDialog.java",
+  "surfaces": [
+    "添加预设：NCP/NP3文件入口、访客本机保存和登录同步、登录后的私有云提示",
+    "预览模板操作",
+    "内置摄影样片选择",
+    "头像来源选择（保留恢复确认）",
+    "个人云端操作（保留同步授权与冲突处理）",
+    "相册照片版本选择",
+    "导出成品预览的照片选择",
+    "RAW文件操作",
+    "单张下载/导出格式选择",
+    "批量下载格式选择"
+  ],
+  "evidence": "docs/validation/action-choice161/summary.json",
+  "businessBehavior": "Choice actions retain their callbacks. Confirmations and cloud-consent decisions remain explicit. Guest local storage and optional account login remain available.",
+  "scope": "Android UI implementation only; no service deployment or iOS changes"
+}

@@ -1,0 +1,13 @@
+{
+  "apkSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+  "status": "ok",
+  "launchState": "COLD",
+  "activity": "cc.huevia/.MainActivity",
+  "elapsedMs": 2052,
+  "alive": true,
+  "versions": [
+    "versionCode=176 minSdk=26 targetSdk=35",
+    "versionName=0.30.22-beta"
+  ],
+  "androidRuntimeFatal": false
+}

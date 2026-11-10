@@ -138,11 +138,17 @@ public final class UsbPictureControlProbeHostTest {
             equal(1, camera.commands.size());
             lifecycle(camera);
         }
-        Camera wrongModel = new Camera();
-        wrongModel.model = "NIKON Z 6";
-        failed(wrongModel);
-        equal(1, wrongModel.commands.size());
-        lifecycle(wrongModel);
+        for (String model : List.of("NIKON Z 7II", "Z 7_2", "Z7II", "NIKON Z 6")) {
+            Camera camera = new Camera(); camera.model = model;
+            UsbPictureControlProbe.Result result = probe(camera);
+            check(result.completed && result.capabilityParsed && result.items.size() == 10,
+                    "Capable Nikon models are checked through actual capability/data responses: " + model);
+            equal(model, result.model); readOnly(camera); lifecycle(camera);
+        }
+        for (String manufacturer : List.of("Canon", "Sony", "")) {
+            Camera camera = new Camera(); camera.manufacturer = manufacturer;
+            failed(camera); equal(1, camera.commands.size()); lifecycle(camera);
+        }
     }
 
     private static void matchedFailureRetainsPartialItemsAndOriginalContext() throws Exception {
@@ -288,6 +294,7 @@ public final class UsbPictureControlProbeHostTest {
         boolean closed;
         int missingOperation = -1;
         String model = "NIKON Z 6II";
+        String manufacturer = "Nikon";
         int failedItem = -1;
         int malformedItem = -1;
         int errorCode;
@@ -326,7 +333,7 @@ public final class UsbPictureControlProbeHostTest {
             byte[] data;
             int response = 0x2001;
             switch (command.operation) {
-                case 0x1001: data = deviceInfo(model, missingOperation); break;
+                case 0x1001: data = deviceInfo(model, missingOperation, manufacturer); break;
                 case 0x1002: equal(new long[] {1}, command.parameters); data = null; break;
                 case 0x1003: equal(new long[0], command.parameters); data = null; if (cleanupError != 0) response = cleanupError; break;
                 case 0x90ca: equal(new long[0], command.parameters); data = vendorProperties(); break;
@@ -357,12 +364,15 @@ public final class UsbPictureControlProbeHostTest {
     }
 
     private static byte[] deviceInfo(String model, int missing) {
+        return deviceInfo(model, missing, "Nikon");
+    }
+    private static byte[] deviceInfo(String model, int missing, String manufacturer) {
         int[] supported = {0x1001, 0x1002, 0x1003, 0x90ca, 0x90cf, 0x90cc};
         int count = supported.length;
         for (int operation : supported) if (operation == missing) count--;
         Writer writer = new Writer().u16(100).u32(10).u16(100).string("").u16(0).u32(count);
         for (int operation : supported) if (operation != missing) writer.u16(operation);
-        return writer.u32(0).u32(0).u32(0).u32(0).string("Nikon").string(model).string("1.62")
+        return writer.u32(0).u32(0).u32(0).u32(0).string(manufacturer).string(model).string("1.62")
                 .string("serial-must-not-be-collected").bytes();
     }
     private static byte[] vendorProperties() { return new Writer().u32(2).u16(0xd000).u16(0xd001).bytes(); }

@@ -1,0 +1,7 @@
+{
+  "ordinaryDeviceInfoEntryPresent": true,
+  "standardOnlyModePresent": true,
+  "nikonIdentityCheckPresent": true,
+  "obsoleteModelGatePhaseAbsent": true,
+  "obsoleteModelWhitelistMethodAbsent": true
+}

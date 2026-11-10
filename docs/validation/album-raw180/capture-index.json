@@ -1,0 +1,91 @@
+{
+  "apkSha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+  "count": 16,
+  "captures": [
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-landscape-20261109-212549/raw180-final-landscape-20261109-212549/app-delete-complete.png",
+      "bytes": 222924,
+      "sha256": "50fe4b6cc28fefcc7353f3ebeef71a73ca16838163f9e2978c91c4c9ebfa91cd"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-landscape-20261109-212549/raw180-final-landscape-20261109-212549/app-delete-confirmation.png",
+      "bytes": 263525,
+      "sha256": "b969231f3592d0a95516427d56e8bb1724701b959745c3bafecb2e2ab5816d67"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-landscape-20261109-212549/raw180-final-landscape-20261109-212549/app-delete-selection.png",
+      "bytes": 316273,
+      "sha256": "bce5fe340429d241a5ffd7bcfcfc6f4934ef7dd0bbabf310dd9c2adbc689936c"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-landscape-20261109-212549/raw180-final-landscape-20261109-212549/app-delete-working.png",
+      "bytes": 320988,
+      "sha256": "6ee8e8ee2bbfbfe9f4a7fff41cdda343e2d250212b1bc0c3c0fbb8a6de205c62"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-large-20261109-212533/raw180-final-large-20261109-212533/app-delete-complete.png",
+      "bytes": 329653,
+      "sha256": "e42b5dba5750cb3e10ae45ee8d0b61523d02a138910a14074b8dd7b33252eb05"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-large-20261109-212533/raw180-final-large-20261109-212533/app-delete-confirmation.png",
+      "bytes": 120495,
+      "sha256": "ba25418eed32bc41f38bf5d1f8ca6c3a8567fb208e98011eda9d40d264708d55"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-large-20261109-212533/raw180-final-large-20261109-212533/app-delete-selection.png",
+      "bytes": 521764,
+      "sha256": "90c1a7039560480101bd13a753c3795b5eb71cb35b6b3c1633c3f0036a3e6dfe"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-large-20261109-212533/raw180-final-large-20261109-212533/app-delete-working.png",
+      "bytes": 527301,
+      "sha256": "18b015e177f67a34cef23f0ec3a127c633f5ffbc88eb1df5c6adec9431e43f91"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-phone-20261109-212525/raw180-final-phone-20261109-212525/app-delete-complete.png",
+      "bytes": 464927,
+      "sha256": "b0584507fab6ea7e2b8f56eec908811b3d91ce6392b449b0f86619654735fa7d"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-phone-20261109-212525/raw180-final-phone-20261109-212525/app-delete-confirmation.png",
+      "bytes": 470085,
+      "sha256": "a343ae2b563d40ab242b75cbe9feb29a5c479f69f4458454289805826de81b68"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-phone-20261109-212525/raw180-final-phone-20261109-212525/app-delete-selection.png",
+      "bytes": 776164,
+      "sha256": "20f3a951e4d6bacfaf413ea89e72ec78ed1ddeac15b48101af2707a4a11afa73"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-phone-20261109-212525/raw180-final-phone-20261109-212525/app-delete-working.png",
+      "bytes": 778026,
+      "sha256": "875246227d82293ed759ccb1ac2558b84d3f93fc362b36bb0701b7c0da7c066f"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-tablet-20261109-212540/raw180-final-tablet-20261109-212540/app-delete-complete.png",
+      "bytes": 199626,
+      "sha256": "b60b8ca05520a63a1004b4d943f9bcdde710982db0f7805bd7bad73002c56d5e"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-tablet-20261109-212540/raw180-final-tablet-20261109-212540/app-delete-confirmation.png",
+      "bytes": 318272,
+      "sha256": "800b6cc8b9131fc994f49ab1f0252cb8e72f1b81f8ed67fa3045a3a6d0788df2"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-tablet-20261109-212540/raw180-final-tablet-20261109-212540/app-delete-selection.png",
+      "bytes": 317374,
+      "sha256": "e2a45e3791fa637ffca04abcd1e20a7e344b10ff255fc7e429cb872b64c5b1aa"
+    },
+    {
+      "path": "docs/validation/album-raw180/native-final/raw180-final-tablet-20261109-212540/raw180-final-tablet-20261109-212540/app-delete-working.png",
+      "bytes": 325388,
+      "sha256": "450575c768f3e3397881b1e0e3e4fb7b8df07b52001f1913a11153f54b2edd89"
+    }
+  ],
+  "manualVisualSample": [
+    "initial phone selection and confirmation",
+    "final large selection and landscape confirmation"
+  ],
+  "allManuallyReviewed": false
+}

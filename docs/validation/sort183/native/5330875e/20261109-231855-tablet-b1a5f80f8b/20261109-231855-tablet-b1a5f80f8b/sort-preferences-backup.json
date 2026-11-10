@@ -1,0 +1,12 @@
+{
+  "appPresent": false,
+  "app": "",
+  "phonePresent": false,
+  "phone": "",
+  "appearancePresent": true,
+  "appearance": "dark",
+  "expectedApp": "added-oldest",
+  "expectedPhone": "added-newest",
+  "previousPid": 5333,
+  "restored": true
+}

@@ -1,0 +1,19 @@
+{
+  "serial": "emulator-5588",
+  "fontScaleRestoredTo": "1.0",
+  "fontScaleRestored": true,
+  "airplaneModeRestoredTo": "0",
+  "airplaneCommandRestored": true,
+  "airplaneSettingRestored": true,
+  "airplaneModeRestored": true,
+  "immersiveConfirmationRestoredTo": "confirmed",
+  "immersiveConfirmationRestored": true,
+  "mainAppStopped": true,
+  "testPackageRemoved": true,
+  "remoteEvidenceRetained": true,
+  "mainAppUninstalled": false,
+  "mainDataCleared": false,
+  "primaryFailure": "Universal brush probe failed: java.lang.NoSuchMethodException: cc.huevia.ui.PhotoFilterEditor.undo []; D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\38f051a8\\20261109-072942-phone-52b67fd4\\20261109-072942-phone-52b67fd4\\report.json",
+  "errors": [],
+  "displaySizeRestored": true
+}

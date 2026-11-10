@@ -1,0 +1,362 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "4dd38a90ae45e06c8dfcef0a8a2e3c519841933f98d2e0dc26b22ee73ad52f54",
+  "versionCode": 177,
+  "versionName": "0.30.23-beta",
+  "mode": "landscape",
+  "flow": "crop177",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-inline-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-inline-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-opens-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-precision-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-precision-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-applied-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "crop177-actual-draft-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-inline-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-inline-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-opens-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-precision-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-precision-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-applied-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "crop177-actual-draft-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-choice-bounds",
+      "label": "2.35:1",
+      "width": 147,
+      "height": 200,
+      "screenX": 2240,
+      "screenY": 460,
+      "visibleInWindow": "[2240,461][2387,662]"
+    },
+    {
+      "case": "inline-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 512,
+      "outputHeight": 217,
+      "ratio": 2.359447004608295,
+      "widthErrorPixels": 2.0499999999999545
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "电影 · 2.35:1",
+      "width": 244,
+      "height": 126,
+      "screenX": 2138,
+      "screenY": 137,
+      "visibleInWindow": "[2138,137][2382,263]"
+    },
+    {
+      "case": "precision-resized-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 444,
+      "outputHeight": 188,
+      "ratio": 2.3617021276595747,
+      "widthErrorPixels": 2.1999999999999886
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "应用",
+      "width": 168,
+      "height": 126,
+      "screenX": 1468,
+      "screenY": 145,
+      "visibleInWindow": "[1468,145][1636,271]"
+    },
+    {
+      "case": "saved-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 444,
+      "outputHeight": 188,
+      "ratio": 2.3617021276595747,
+      "widthErrorPixels": 2.1999999999999886
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "2.35:1",
+      "width": 147,
+      "height": 200,
+      "screenX": 2240,
+      "screenY": 461,
+      "visibleInWindow": "[2240,460][2387,661]"
+    },
+    {
+      "case": "inline-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 341,
+      "outputHeight": 146,
+      "ratio": 2.335616438356164,
+      "widthErrorPixels": 2.1000000000000227
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "电影 · 2.35:1",
+      "width": 244,
+      "height": 126,
+      "screenX": 2138,
+      "screenY": 137,
+      "visibleInWindow": "[2138,137][2382,263]"
+    },
+    {
+      "case": "precision-resized-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 296,
+      "outputHeight": 126,
+      "ratio": 2.3492063492063493,
+      "widthErrorPixels": 0.10000000000002274
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "应用",
+      "width": 168,
+      "height": 126,
+      "screenX": 1468,
+      "screenY": 145,
+      "visibleInWindow": "[1468,145][1636,271]"
+    },
+    {
+      "case": "saved-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 296,
+      "outputHeight": 126,
+      "ratio": 2.3492063492063493,
+      "widthErrorPixels": 0.10000000000002274
+    }
+  ],
+  "screenshots": 4,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Exact installed direct modal palette\/cleanup\/curves\/HSL brush transaction checks plus selected universal workflow. Exact installed universal brush and scoped adjustment UI: real live paint\/erase, size\/feather, two-finger navigation, clear\/reopen\/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves\/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing\/deletion, owner rejection, real drafts\/photo switching and representative full\/detail export EXIF1\/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures\/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim."
+}

@@ -1,0 +1,46 @@
+{
+  "sha256": "1831ff635c5fa4b79137c8d9e32a2e60952b8c97a1bdc790365a5f7233a112ba",
+  "bytes": 280705,
+  "files": [
+    {
+      "path": "index.js",
+      "bytes": 103,
+      "sha256": "eb25d7ed454d26175ae7fbcfd749e00cd8d66b3f6c00cd3e8ec4032b21692588"
+    },
+    {
+      "path": "backup/core.mjs",
+      "bytes": 7194,
+      "sha256": "b1cbb13ceef91e71b5ed3d33651b5a9be786d6f6ae10ead67e08884cec04781c"
+    },
+    {
+      "path": "backup/runtime.mjs",
+      "bytes": 7859,
+      "sha256": "3c44ad83aa5676bb05190d15630760a73aece0e7aae2a53cf5c34b5345218f90"
+    },
+    {
+      "path": "backup/recovery/RECOVERY.md",
+      "bytes": 2761,
+      "sha256": "344a2d8b219c765aec129212ef2ef2854a2dc23f11ff2221a2c0c12a3ed28d5e"
+    },
+    {
+      "path": "backup/recovery/schema-migrations.sql",
+      "bytes": 157734,
+      "sha256": "d5b725fc59362e57c0c2c7548b33e29ae2aa498a6216c4c5bbcf2ca1b08311e7"
+    },
+    {
+      "path": "server/vendor/cos-sdk.cjs",
+      "bytes": 820812,
+      "sha256": "dd3cddfc8899f9d81ee700f260bde7467ca0db34f6d0d135d49cff274831c958"
+    },
+    {
+      "path": "server/vendor/COS-NOTICES.txt",
+      "bytes": 134306,
+      "sha256": "a91679885e1133b6863198d40ba1fffe5deea534a57985f7fe62a57883b4d90d"
+    },
+    {
+      "path": "server/vendor/cos-sdk.manifest.json",
+      "bytes": 6508,
+      "sha256": "bfbfb95e0ceb540534ce9f17501793271fde7b54939709cd5ef7ffc24bf9cad7"
+    }
+  ]
+}

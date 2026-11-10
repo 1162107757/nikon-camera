@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-07T17:30:25.922Z",
+  "finalArchiveSha256": "64d1c3ee04d6023b08d658ab4791708cad8b81ea0c42ac82087e5486a4730bb4",
+  "initialOverlayChangedFiles": 7,
+  "finalCorrection": {
+    "changedFiles": [
+      "server/cos-release-storage.mjs"
+    ],
+    "before": "f317774a275e27dc00281cfcaabcc662374478c83e710112fbab51b3e59de9fc",
+    "after": "ca124dab240e41a167558c4e7fbd79117a0b8a195ebd3d84f04f645af11e0322",
+    "archiveSha256": "64d1c3ee04d6023b08d658ab4791708cad8b81ea0c42ac82087e5486a4730bb4",
+    "allOtherFilesPreserved": true
+  },
+  "originalEnvironmentPreserved": true,
+  "storageProvider": "cos"
+}

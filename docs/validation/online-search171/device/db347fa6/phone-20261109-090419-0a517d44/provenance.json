@@ -1,0 +1,34 @@
+{
+  "versionCode": 171,
+  "candidateSha256": "db347fa676962aa397cb8bc5cc53407877eeac8133e3603f56bb0ea418cbb574",
+  "probeSha256": "703827090ef5819a6469b73d21e9625c2aa64899b4ffda9953fb1ce4e1995f0e",
+  "serial": "emulator-5588",
+  "pass": false,
+  "scope": null,
+  "files": [
+    {
+      "file": "01-search-loading.png",
+      "sha256": "679b986715514c8018ec11983d603ec0cbd9f5aa3bff1db9ef403e9f81d41e35"
+    },
+    {
+      "file": "02-blue-sky-found.png",
+      "sha256": "5e5e854a4ff0d0926ba42782d5fec41b4e6fcd17aed8eb2914c44f9e6a3c307c"
+    },
+    {
+      "file": "03-category-no-match.png",
+      "sha256": "1f8008596324acd47c213f3140f5da04160ba012884a4cc5b7e7c50899fe52d0"
+    },
+    {
+      "file": "04-cached-search.png",
+      "sha256": "c6290c02390f8ad5e983c629c3b8fb8ba1a20c95dd0ce3bc39e3789c688ea602"
+    },
+    {
+      "file": "05-search-unavailable.png",
+      "sha256": "00cc2083b47212276fb0f4933efd6ed84d591c49f4f432f1c0503dd129fc308b"
+    },
+    {
+      "file": "report.json",
+      "sha256": "bcd10481c9c805f86fe6e7219e2ebfd6b8bb54c4395cdf19cacf16dbdd2e4c4f"
+    }
+  ]
+}

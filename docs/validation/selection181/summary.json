@@ -1,0 +1,37 @@
+{
+  "versionCode": 181,
+  "versionName": "0.30.27-beta",
+  "apkSha256": "66eb368ef073a5b29502d3ce57935366c883f0d155cf38f59fa14099be91102c",
+  "fullSha256": "2213ec8ed742a18bc71ed72104266e1fe466bddb8feb156bffc4523c32140f52",
+  "published": false,
+  "recordsIncludingRepetition": 173,
+  "originalPngs": 24,
+  "runs": [
+    {
+      "mode": "phone",
+      "report": "native/66eb368e/20261109-215617-phone-d7630259ba/20261109-215617-phone-d7630259ba/report.json",
+      "reportSha256": "983e309452c84ad5d1dffe9ad43aef72ed66c5a1b73376c3fe04f95bc0d20ec6",
+      "checks": 43
+    },
+    {
+      "mode": "large-text",
+      "report": "native/66eb368e/20261109-215629-large-text-3e37bfc18c/20261109-215629-large-text-3e37bfc18c/report.json",
+      "reportSha256": "983e309452c84ad5d1dffe9ad43aef72ed66c5a1b73376c3fe04f95bc0d20ec6",
+      "checks": 43
+    },
+    {
+      "mode": "tablet",
+      "report": "native/66eb368e/20261109-215642-tablet-d6a2b0204a/20261109-215642-tablet-d6a2b0204a/report.json",
+      "reportSha256": "983e309452c84ad5d1dffe9ad43aef72ed66c5a1b73376c3fe04f95bc0d20ec6",
+      "checks": 43
+    },
+    {
+      "mode": "landscape",
+      "report": "native/66eb368e/20261109-215659-landscape-c1afdb5688/20261109-215659-landscape-c1afdb5688/report.json",
+      "reportSha256": "431b3ce108ca104ed65a8a47fdda4e767b6d1563004e6fc30b8b15f057228459",
+      "checks": 44
+    }
+  ],
+  "scope": "Native album A selection header and equal action dock, semantic long-press, select-all/cancel, text geometry, app deletion guard/regression and actual MediaStore preservation.",
+  "limits": "Emulator only; no physical phone, full TalkBack, FPS, camera, RAW speed or end-to-end edit/export certification."
+}

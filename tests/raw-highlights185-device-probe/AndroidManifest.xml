@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.rawhighlights185qa">
+ <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35"/>
+ <application android:label="Huevia RAW highlights185 QA"/>
+ <instrumentation android:name=".RawHighlights185Probe" android:targetPackage="cc.huevia" android:functionalTest="true" android:handleProfiling="false"/>
+</manifest>

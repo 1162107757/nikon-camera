@@ -1,0 +1,605 @@
+{
+  "pass": false,
+  "stage": "real-nef",
+  "apkSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "full-active-dng-dimensions",
+      "passed": true
+    },
+    {
+      "name": "dng-sensor-white-level-bits",
+      "passed": true
+    },
+    {
+      "name": "actual-sensor-decoder-identified",
+      "passed": true
+    },
+    {
+      "name": "jpeg-reference-absent-on-generated-dng",
+      "passed": true
+    },
+    {
+      "name": "native-LUT-index-interpolation-RGB-alpha-dimensions",
+      "passed": true
+    },
+    {
+      "name": "native-LUT-analysis-source-array-unchanged",
+      "passed": true
+    },
+    {
+      "name": "native-LUT-pre-cancelled",
+      "passed": true
+    },
+    {
+      "name": "native-LUT-NaN-rejected",
+      "passed": true
+    },
+    {
+      "name": "native-LUT-invalid-length-rejected",
+      "passed": true
+    },
+    {
+      "name": "native-LUT-lock-reusable-after-error",
+      "passed": true
+    },
+    {
+      "name": "no-JPEG-explicit-neutral-fallback",
+      "passed": true
+    },
+    {
+      "name": "first-raw-development-not-cached",
+      "passed": true
+    },
+    {
+      "name": "raw-original-bytes-preserved",
+      "passed": true
+    },
+    {
+      "name": "full-size-srgb-png-without-embedded-jpeg",
+      "passed": true
+    },
+    {
+      "name": "raw-progress-completes-monotonically",
+      "passed": true
+    },
+    {
+      "name": "workspace-png-checksum",
+      "passed": true
+    },
+    {
+      "name": "demosaic-output-is-visible-image",
+      "passed": true
+    },
+    {
+      "name": "exact-source-settings-cache-reuse",
+      "passed": true
+    },
+    {
+      "name": "account-workspaces-isolated",
+      "passed": true
+    },
+    {
+      "name": "native-plus-one-ev-brightens",
+      "passed": true
+    },
+    {
+      "name": "native-minus-one-ev-darkens",
+      "passed": true
+    },
+    {
+      "name": "raw-exposure-cache-identity",
+      "passed": true
+    },
+    {
+      "name": "custom-camera-matrix-kelvin-changes-colour",
+      "passed": true
+    },
+    {
+      "name": "automatic-white-balance-processes-sensor-image",
+      "passed": true
+    },
+    {
+      "name": "linear-and-ahd-demosaic-produce-different-pixels",
+      "passed": true
+    },
+    {
+      "name": "raw-highlight-mode-participates-in-identity",
+      "passed": true
+    },
+    {
+      "name": "raw-orientation-6-full-dimensions",
+      "passed": true
+    },
+    {
+      "name": "raw-orientation-8-full-dimensions",
+      "passed": true
+    },
+    {
+      "name": "raw-pre-cancelled-no-result",
+      "passed": true
+    },
+    {
+      "name": "raw-in-flight-callback-cancels",
+      "passed": true
+    },
+    {
+      "name": "unsupported-or-damaged-raw-reports-error",
+      "passed": true
+    },
+    {
+      "name": "corrupt-workspace-rebuilt-from-verified-raw",
+      "passed": true
+    },
+    {
+      "name": "source-change-during-development-prevents-result",
+      "passed": true
+    },
+    {
+      "name": "all-raw-controls-preserve-source",
+      "passed": true
+    },
+    {
+      "name": "raw-return-main-ready",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-starts-real-raw-activity",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-tries-both-import-handlers",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-survives-missing-file-picker",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-releases-picker-state",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-has-readable-recovery-message",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-keeps-export-disabled",
+      "passed": true
+    },
+    {
+      "name": "empty-entry-test-activity-destroyed",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-started-by-real-main-for-result",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-initial-ready",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owner-preserved",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-full-result-dimensions",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-original-sha",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-real-preview-visible",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-single-line-fit-colorMode",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-touch-target-colorMode",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-single-line-fit-whiteBalance",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-touch-target-whiteBalance",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-single-line-fit-highlights",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-touch-target-highlights",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-single-line-fit-quality",
+      "passed": true
+    },
+    {
+      "name": "raw-color-control-touch-target-quality",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-neutral-color-ready",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-neutral-color-setting",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-camera-color-restored",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-camera-color-cache-reused",
+      "passed": true
+    },
+    {
+      "name": "missing-open-document-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "missing-open-document-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "missing-open-document-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "missing-open-document-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "both-import-handlers-missing-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "both-import-handlers-missing-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "both-import-handlers-missing-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "both-import-handlers-missing-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "both-import-handlers-missing-readable-recovery-message",
+      "passed": true
+    },
+    {
+      "name": "import-security-denied-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "import-security-denied-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "import-security-denied-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "import-security-denied-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "import-security-denied-readable-recovery-message",
+      "passed": true
+    },
+    {
+      "name": "fallback-security-denied-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "fallback-security-denied-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "fallback-security-denied-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "fallback-security-denied-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "fallback-security-denied-readable-recovery-message",
+      "passed": true
+    },
+    {
+      "name": "save-handler-missing-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "save-handler-missing-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "save-handler-missing-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "save-handler-missing-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "save-handler-missing-readable-recovery-message",
+      "passed": true
+    },
+    {
+      "name": "save-security-denied-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "save-security-denied-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "save-security-denied-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "save-security-denied-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "save-security-denied-readable-recovery-message",
+      "passed": true
+    },
+    {
+      "name": "retry-import-after-failure-does-not-escape-main-thread",
+      "passed": true
+    },
+    {
+      "name": "retry-import-after-failure-expected-system-actions",
+      "passed": true
+    },
+    {
+      "name": "retry-import-after-failure-picker-state-cleared",
+      "passed": true
+    },
+    {
+      "name": "retry-import-after-failure-pending-save-cleared",
+      "passed": true
+    },
+    {
+      "name": "document-failures-preserve-developed-photo",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-exposure-accessibility-action",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-exposure-render-ready",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-exposure-setting-applied",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-exposure-changes-visible-pixels",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-auto-wb-ready",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-white-balance-applied",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-PNG-stream-save-completes",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-PNG-bytes-exact",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-PNG-full-dimensions",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-raw-preserved-after-save",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-edit-copy-finishes",
+      "passed": true
+    },
+    {
+      "name": "raw-system-result-reaches-real-editor",
+      "passed": true
+    },
+    {
+      "name": "raw-return-editor-bound-JPEG-sha",
+      "passed": true
+    },
+    {
+      "name": "raw-return-editor-editable",
+      "passed": true
+    },
+    {
+      "name": "raw-return-local-album-root-selected",
+      "passed": true
+    },
+    {
+      "name": "raw-return-imported-JPEG-full-dimensions",
+      "passed": true
+    },
+    {
+      "name": "raw-return-private-repository-path",
+      "passed": true
+    },
+    {
+      "name": "raw-return-identity-receipt-exists",
+      "passed": true
+    },
+    {
+      "name": "raw-return-receipt-raw-JPEG-working-identity",
+      "passed": true
+    },
+    {
+      "name": "raw-return-consumed-handoff-removed",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-raw-preserved-after-real-return",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-activity-destroyed",
+      "passed": true
+    },
+    {
+      "name": "raw-return-main-destroyed-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-return-photo-worker-terminated-before-cleanup",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-PNG-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-cache-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-return-owned-repository-file-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-return-owned-repository-file-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-owned-retained-source-cleaned",
+      "passed": true
+    },
+    {
+      "name": "raw-ui-final-original-sha",
+      "passed": true
+    },
+    {
+      "name": "owned-real-nef-fixture-path",
+      "passed": false
+    }
+  ],
+  "measurements": [
+    {
+      "case": "synthetic-dng-default",
+      "elapsedMs": 38.4229,
+      "width": 96,
+      "height": 64,
+      "workingBytes": 10339,
+      "meanLuma": 72.40369669596355,
+      "outputBits": 8
+    }
+  ],
+  "fixtureCleanup": false,
+  "failure": "java.lang.AssertionError: owned-real-nef-fixture-path",
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+}

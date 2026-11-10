@@ -1,0 +1,57 @@
+{
+  "versionCode": "183",
+  "candidateSha256": "5330875ea261e9138d8ac8b89340bc21e48752d7369b3d3678026f99c3d7cfb8",
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "uiMode": "tablet",
+  "probeSha256": "3afe503066503621c8e43dce613ef53ea371e0524abeeb18495cb89b5697701d",
+  "sampleNefSha256": "",
+  "pass": true,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims.",
+  "files": [
+    {
+      "file": "01-album-default.png",
+      "sha256": "e5319a98b0f519403087e027f5be9d808a77938ccc30f7fb873d8b7f1c08f313"
+    },
+    {
+      "file": "02-sheet-default.png",
+      "sha256": "1155220e233eaa24d03f9b0b883a0be86f34777bd1fbed805d4afec318663856"
+    },
+    {
+      "file": "03-sheet-draft.png",
+      "sha256": "cebf19489a57e1008d93581ce3b14369e3e66bef0923f2c11ddab1984bf8551f"
+    },
+    {
+      "file": "04-album-added-oldest.png",
+      "sha256": "511ce16ad4e2b53f7ee9c3adcb354019326f0910aa4dbbb22486a701c8b92caf"
+    },
+    {
+      "file": "05-selection-A-preserved.png",
+      "sha256": "ae1935769943ca71bc2e85ecdee0021ed05224bc2d7db0d9b563dcea5f8adf43"
+    },
+    {
+      "file": "06-phone-added-newest.png",
+      "sha256": "aaded7da36c0e3802702b34b31c7d594639b133f4ac4d999e6887cc37589d0f3"
+    },
+    {
+      "file": "07-phone-sheet.png",
+      "sha256": "9e038762ed31fce83635440875f6547e9f0c2d997b8b8e38c0d222439a1f8229"
+    },
+    {
+      "file": "owned-fixtures.json",
+      "sha256": "08c6364ae43dc8c565716e2e560283ab1aa2fae57ff518e2be0dc4b348617a06"
+    },
+    {
+      "file": "process-restore.json",
+      "sha256": "8169b191c433330213c428b3bbc15261020bffa96216f70b22545826ccaac000"
+    },
+    {
+      "file": "report.json",
+      "sha256": "f5b4431d57d4e43dd4090c96e524c5f7b7fb367436ee1b8f8a22ee7fbef591c8"
+    },
+    {
+      "file": "sort-preferences-backup.json",
+      "sha256": "ccf0bc4c58362cd8137b3cc08fc5ddcaf9630b72fa3a0765385d1e8d30f059d3"
+    }
+  ]
+}

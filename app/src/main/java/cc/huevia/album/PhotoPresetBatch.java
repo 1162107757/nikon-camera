@@ -554,6 +554,7 @@ public final class PhotoPresetBatch {
         PhotoPresetRenderer.Dimensions dimensions = PhotoPresetRenderer.dimensions(source, profile);
         PhotoExportSpec.Resolved resolved = spec.resolve(dimensions.width, dimensions.height);
         String model = PhotoPresetRenderer.modelVersion(profile, resolved);
+        PhotoPresetSources.checkModel(model);
         String key = key(sourceSha, presetSha, model); File directory = source.getParentFile();
         String display = stem(original.filename()) + "_" + stem(presetName) + ".JPG";
         // The private path is content-addressed only: display-name changes or selecting
@@ -690,7 +691,7 @@ public final class PhotoPresetBatch {
     public static boolean isSavedEffect(DownloadedPhoto photo){return photo!=null&&PhotoPresetSources.isEffect(photo.file());}
     static String key(String sourceSha, String presetSha, String model) throws IOException {
         if (!sourceSha.matches("[0-9a-f]{64}") || !presetSha.matches("[0-9a-f]{64}")) throw new IOException("效果图身份无效。");
-        if (model == null || model.isEmpty() || model.length() > 512 || model.indexOf('\n') >= 0 || model.indexOf('\r') >= 0) throw new IOException("效果图模型身份无效。");
+        PhotoPresetSources.checkModel(model);
         return hex(digest().digest((sourceSha + "\n" + presetSha + "\n" + model).getBytes(StandardCharsets.UTF_8)));
     }
     private static void writeRecord(AtomicFile file, long bytes, String sha) throws IOException {

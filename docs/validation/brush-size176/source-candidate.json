@@ -1,0 +1,18 @@
+{
+  "versionCode": 176,
+  "versionName": "0.30.22-beta",
+  "scope": [
+    "PhotoEraseDialog window-centred size display",
+    "build version"
+  ],
+  "files": {
+    "app/build.gradle": "a6911f4d9dbd8bf06dee5142eed6d28d087ea8be75bc78f018d49653f818823c",
+    "app/src/main/java/cc/huevia/ui/PhotoEraseDialog.java": "35afcf8e3af0806ed9551bc6fb5374a879fd63556510eb28c30264e41511dd1c",
+    "app/src/main/java/cc/huevia/ncp/PhotoPatch.java": "d0fce69a3e99f32b5751088d6e028e599480e4f3b473275737e47da83c3282f6",
+    "app/src/main/java/cc/huevia/ncp/PhotoPatchRenderer.java": "82b9d416a2c8ac3d99932935468345fe19b8c12bf9e2644382e1db7cf323ec00",
+    "app/src/main/java/cc/huevia/ncp/PhotoPatchSampler.java": "39eb589f553976e50ad897fded89dcda350a1265eece17b2d92e06c178234c4e",
+    "app/src/main/java/cc/huevia/ncp/PhotoLocalEdits.java": "8cfe27140bfc14191a0fd97f2e4117ad1087e095153da524f9a2016baa4791e7",
+    "app/src/main/java/cc/huevia/ncp/LocalEditsPreviewProfile.java": "6ddcdf27294a9f80c39182818770f060f4da0cf7df7f455aee9b6afc5a1f7933"
+  },
+  "baselineDialogSha256": "7ec73c7eff913eaded7f58b1c9ad1f2c7e43c6f93c8b16c6655b9ac857071ab7"
+}

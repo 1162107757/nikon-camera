@@ -28,6 +28,7 @@ public final class UsbPictureControlImportHostTest {
     public static void main(String[] args) throws Exception {
         onlyExplicitWriterModeCanSendTheExactRegistration();
         strictWriterDataValidationRejectsUnknownFieldsAndEncodings();
+        capableModelsUseTheSameGuardedRegistration();
         copyUsesFreshSourceAndTwiceObservedEmptyTarget();
         occupiedRacedAndChangedSourcesNeverWrite();
         rejectionRetainsPossibleWriteAndPrimaryContext();
@@ -41,6 +42,21 @@ public final class UsbPictureControlImportHostTest {
         occupiedOverwriteRequiresMatchingConfirmationAndCapability();
         selectedCameraParametersRunOnlyAfterVerifiedPreset();
         System.out.println("PASS: " + checks + " production empty-slot Picture Control copy checks");
+    }
+
+    private static void capableModelsUseTheSameGuardedRegistration() throws Exception {
+        for (String model : List.of("Z 7_2", "NIKON Z 7II", "Z7II", "Z 6", "D850")) {
+            Camera camera = new Camera(); camera.model = model;
+            UsbPictureControlImport.Result result = copy(camera, SNAPSHOT, SOURCE, TARGET);
+            check(result.completed && result.sourceVerified && result.recheckTargetEmpty && result.readbackVerified,
+                    "Capable models retain source, target and exact readback checks: " + model);
+            equal(model, result.model); equal(1L, camera.count(0x90cd)); lifecycle(camera);
+        }
+        for (String manufacturer : List.of("Canon", "Sony", "")) {
+            Camera camera = new Camera(); camera.manufacturer = manufacturer;
+            rejects(() -> copy(camera, SNAPSHOT, SOURCE, TARGET));
+            equal(1, camera.commands.size()); equal(0, camera.dataPayloads.size()); lifecycle(camera);
+        }
     }
 
     private static void onlyExplicitWriterModeCanSendTheExactRegistration() throws Exception {
@@ -515,6 +531,7 @@ public final class UsbPictureControlImportHostTest {
         boolean closed;
         boolean targetBecomesOccupied;
         boolean advertiseCapability, malformedCapability;
+        String model = "Z 6_2", manufacturer = "Nikon";
         boolean allowParameters, losePropertyResponse;
         int exposureBias = -333;
         boolean normalizeReadback;
@@ -601,7 +618,7 @@ public final class UsbPictureControlImportHostTest {
             long responseTransaction = command.transaction;
             boolean finalReadback = false;
             switch (command.operation) {
-                case 0x1001: data = deviceInfo(advertiseCapability, allowParameters); break;
+                case 0x1001: data = deviceInfo(advertiseCapability, allowParameters, model, manufacturer); break;
                 case 0x1014:
                     check(allowParameters && slotReads.getOrDefault(TARGET, 0) >= 3, "Property reads follow exact preset readback");
                     equal(new long[] {0x5010}, command.parameters);
@@ -636,12 +653,15 @@ public final class UsbPictureControlImportHostTest {
         return deviceInfo(capability, false);
     }
     private static byte[] deviceInfo(boolean capability, boolean parameters) {
+        return deviceInfo(capability, parameters, "Z 6_2", "Nikon");
+    }
+    private static byte[] deviceInfo(boolean capability, boolean parameters, String model, String manufacturer) {
         int[] supported = capability ? new int[] {0x1001, 0x1002, 0x1003, 0x90cc, 0x90cd, 0x90cf}
                 : new int[] {0x1001, 0x1002, 0x1003, 0x90cc, 0x90cd};
         if (parameters) { int length = supported.length; supported = Arrays.copyOf(supported, length + 3); supported[length] = 0x1014; supported[length+1] = 0x1015; supported[length+2] = 0x1016; }
         Writer writer = new Writer().u16(100).u32(10).u16(100).string("").u16(0).u32(supported.length);
         for (int opcode : supported) writer.u16(opcode);
-        return writer.u32(0).u32(0).u32(0).u32(0).string("Nikon").string("Z 6_2").string("V1.62").string("private").bytes();
+        return writer.u32(0).u32(0).u32(0).u32(0).string(manufacturer).string(model).string("V1.62").string("private").bytes();
     }
     private static final class Writer {
         final ByteArrayOutputStream bytes = new ByteArrayOutputStream();

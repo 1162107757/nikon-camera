@@ -1,0 +1,54 @@
+{
+  "desktop": {
+    "navHeight": 64,
+    "pillHeight": 56,
+    "insets": 4,
+    "radius": 28,
+    "imagesLoaded": true
+  },
+  "mobile": [
+    {
+      "root": "presets",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "root": "sync",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "root": "album",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "root": "settings",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "allMobileOverflow": false,
+  "narrow": {
+    "width": 320,
+    "height": 720,
+    "navWidth": 290,
+    "navHeight": 64,
+    "minHitWidth": 70.5,
+    "hitHeight": 56,
+    "overflow": false
+  },
+  "rapid": {
+    "lastSelection": "album",
+    "settledAnimations": 0
+  },
+  "keyboard": {
+    "arrowRight": "settings",
+    "focus": "settings"
+  },
+  "corrections": [
+    "Middle wave specimen made half-filled instead of mostly-filled",
+    "Reselecting same root preserves source selection"
+  ],
+  "scope": "Browser prototype only, no native or physical-device claim"
+}

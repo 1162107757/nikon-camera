@@ -1,0 +1,33 @@
+{
+  "versionCode": 165,
+  "sdk": 37,
+  "dark": true,
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "actual-app-dark-palette",
+      "pass": true
+    },
+    {
+      "name": "inline-search-focus",
+      "pass": true
+    },
+    {
+      "name": "back-closes-search",
+      "pass": true
+    }
+  ],
+  "failure": null
+}

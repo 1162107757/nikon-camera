@@ -1248,8 +1248,8 @@
       "abi": "arm64-v8a",
       "abiBits": 64,
       "path": "app/src/main/jniLibs/arm64-v8a/libhuevia_raw.so",
-      "bytes": 49960,
-      "sha256": "b4cee0a1a03278d4d92ed8bc104f76b018eb1d08269934c7339628cc80ec8e48",
+      "bytes": 55680,
+      "sha256": "552e7a8d7c3bd414a34ae10227d685e26abee6fb40cf58df1eea7fa82578be9a",
       "minimumLoadAlignmentBytes": 16384.0,
       "page16KiBCompatible": true,
       "requires16KiBAlignment": true
@@ -1278,8 +1278,8 @@
       "abi": "armeabi-v7a",
       "abiBits": 32,
       "path": "app/src/main/jniLibs/armeabi-v7a/libhuevia_raw.so",
-      "bytes": 19904,
-      "sha256": "216408adbf425d742e0b1e3729ab6868bf00baf22307fd7df3595daa2d466bce",
+      "bytes": 25756,
+      "sha256": "e4526df0c29c4defb089c4e62cf99560c8ef1cca14d2fd9196d325903919bc2b",
       "minimumLoadAlignmentBytes": 16384.0,
       "page16KiBCompatible": true,
       "requires16KiBAlignment": false
@@ -1308,8 +1308,8 @@
       "abi": "x86_64",
       "abiBits": 64,
       "path": "app/src/main/jniLibs/x86_64/libhuevia_raw.so",
-      "bytes": 50184,
-      "sha256": "dbfebddac8879a8b66814dd327a948e3df989daccec495d990a61de44aea42b5",
+      "bytes": 56128,
+      "sha256": "f77d7a5fc5453b3aa46b725b5a8e5caf43f20a28bebc314f9e270c54ad9fa689",
       "minimumLoadAlignmentBytes": 16384.0,
       "page16KiBCompatible": true,
       "requires16KiBAlignment": true
@@ -1338,8 +1338,8 @@
       "abi": "x86",
       "abiBits": 32,
       "path": "app/src/main/jniLibs/x86/libhuevia_raw.so",
-      "bytes": 46564,
-      "sha256": "999da070e6d3c8833d0c9e71870b8089d6d81e44758b09ec912f7fe2526df003",
+      "bytes": 52644,
+      "sha256": "e0e2be3b493f44b74c7e71a1a52e119b94a5a7f06a7c2b591273d00cb53be11c",
       "minimumLoadAlignmentBytes": 16384.0,
       "page16KiBCompatible": true,
       "requires16KiBAlignment": false
@@ -1355,5 +1355,5 @@
       "requires16KiBAlignment": false
     }
   ],
-  "bridgeSha256": "c3a8348d8b4b18a843339c622dc42a26681b3174f7406645d24df86d289380ae"
+  "bridgeSha256": "190ad56d1426565fe6d375064570efa4328b110756e3c983ee46aef5f63e410d"
 }

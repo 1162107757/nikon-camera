@@ -1,0 +1,255 @@
+{
+  "pass": true,
+  "candidateSha256": "b2e88b46e8932aba3abba15f663a1282a3179bc48bb77adb3e272e489d8d5fef",
+  "checks": [
+    {
+      "name": "owned-emulator-only",
+      "pass": true
+    },
+    {
+      "name": "candidate-version-156",
+      "pass": true
+    },
+    {
+      "name": "exact-candidate-apk",
+      "pass": true
+    },
+    {
+      "name": "actual-app-theme",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "actual-orientation",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "remote-entry-direct-route",
+      "pass": true
+    },
+    {
+      "name": "connection-title",
+      "pass": true
+    },
+    {
+      "name": "guide-has-no-root-navigation",
+      "pass": true
+    },
+    {
+      "name": "no-success-return-before-connection",
+      "pass": true
+    },
+    {
+      "name": "source-kept-on-back-stack",
+      "pass": true
+    },
+    {
+      "name": "cancel-retains-sync-source",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "raw-source-open",
+      "pass": true
+    },
+    {
+      "name": "raw-direct-route",
+      "pass": true
+    },
+    {
+      "name": "connection-title",
+      "pass": true
+    },
+    {
+      "name": "guide-has-no-root-navigation",
+      "pass": true
+    },
+    {
+      "name": "no-success-return-before-connection",
+      "pass": true
+    },
+    {
+      "name": "source-kept-on-back-stack",
+      "pass": true
+    },
+    {
+      "name": "guide-recreated",
+      "pass": true
+    },
+    {
+      "name": "recreated-operation-preserved",
+      "pass": true
+    },
+    {
+      "name": "return-target-at-least-48dp",
+      "pass": true
+    },
+    {
+      "name": "return-button-fully-visible",
+      "pass": true
+    },
+    {
+      "name": "success-retains-original-raw-page",
+      "pass": true
+    },
+    {
+      "name": "connection-return-never-fires-shutter",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "camera-tab-direct-route",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "operation-remembered-浏览相机照片",
+      "pass": true
+    },
+    {
+      "name": "details-offers-usb-and-wifi",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "operation-remembered-下载相机原图",
+      "pass": true
+    },
+    {
+      "name": "details-offers-usb-and-wifi",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "operation-remembered-继续未完成下载",
+      "pass": true
+    },
+    {
+      "name": "details-offers-usb-and-wifi",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "operation-remembered-下载照片并套用预设",
+      "pass": true
+    },
+    {
+      "name": "details-offers-usb-and-wifi",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "operation-remembered-重试接收照片",
+      "pass": true
+    },
+    {
+      "name": "details-offers-usb-and-wifi",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "operation-remembered-查看相机详情",
+      "pass": true
+    },
+    {
+      "name": "details-offers-usb-and-wifi",
+      "pass": true
+    },
+    {
+      "name": "photo-live-direct-guide",
+      "pass": true
+    },
+    {
+      "name": "photo-live-return-intent-kept",
+      "pass": true
+    },
+    {
+      "name": "photo-live-cancel-returns-once",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "success-opens-requested-remote-workspace",
+      "pass": true
+    },
+    {
+      "name": "remote-entry-does-not-replay-capture",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "remote-reconnect-direct-route",
+      "pass": true
+    },
+    {
+      "name": "remote-cancel-retains-workspace",
+      "pass": true
+    },
+    {
+      "name": "diagnostics-opened",
+      "pass": true
+    },
+    {
+      "name": "diagnostics-direct-route",
+      "pass": true
+    },
+    {
+      "name": "diagnostics-usb-only",
+      "pass": true
+    },
+    {
+      "name": "diagnostics-cancel-keeps-existing-screen",
+      "pass": true
+    },
+    {
+      "name": "guide-opened-without-second-tap",
+      "pass": true
+    },
+    {
+      "name": "local-editor-raw-callback-direct-route",
+      "pass": true
+    },
+    {
+      "name": "local-editor-return-keeps-local-album-root",
+      "pass": true
+    }
+  ],
+  "scope": "Production navigation; in-process PTP fixture, no physical camera or USB hardware claim"
+}

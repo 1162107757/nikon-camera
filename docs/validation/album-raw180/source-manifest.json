@@ -1,0 +1,42 @@
+[
+  {
+    "path": "app/build.gradle",
+    "sha256": "91fad1d24497e659c45d90cf30cc9d5ab325c04ab3adeed29de294a31bf2c2fe"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "3f252834166d70cfef419f3dad3244606ede084f3e8ea78736339b28b9ae863d"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/RawDevelopActivity.java",
+    "sha256": "31e75f198ab1cbabcc5ce24aee4fec955e3e1afef93a97301d16532bfe2b6906"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/LocalPhotoRepository.java",
+    "sha256": "8a0fabdc9190f000fa395d8fbbbe9d0e8feb4de5c6667d96f7588a282038848c"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+    "sha256": "5671340771b85495a2ce80567c686e645c8b9f4dec0f5ec424b310441291372d"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/RawDeveloper.java",
+    "sha256": "afe69745be1468edc2f76dcc69d9a8fb3e3c6ab06f32a86e97858a23bb5d0cb4"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/RawEditorSource.java",
+    "sha256": "b642776da0ef6183821ad111cac334c7f36cd9eef55b2f3a212ddfa76b7381ef"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/album/RawPngWriter.java",
+    "sha256": "e0b9fb73fee443afe82d69922d5ad3363bbd4cb9a2b91142a8d7c382fdd8e49a"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java",
+    "sha256": "12c40eadcc304b01eef52724214a4ecbd10f2f2a3c35e4dbaee924cc5b9f38bd"
+  },
+  {
+    "path": "scripts/build-raw-native.ps1",
+    "sha256": "6390b58e8fc4868ad67144f209019b87b7ab7cb261c9bbf4882e13bf8e40bb46"
+  }
+]

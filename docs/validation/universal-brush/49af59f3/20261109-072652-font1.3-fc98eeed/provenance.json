@@ -1,0 +1,20 @@
+{
+  "candidateSha256": "49af59f3dce46e904a3df3674f2a74951943737f5cfab2fbe1b438f28818f9c9",
+  "versionCode": 169,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "a66cc56a0fe285becff058e00d37644e714c5609ee345db52f1f24fc3d223f7f",
+  "pass": false,
+  "scope": "Exact installed repair destination/source drag, real circle/ellipse and rectangle selection, feather/blend, persistent display and slider/focus cancellation, undo/redo and clearing, outer apply/cancel/history, actual v7 saved draft reopening and original bytes. Native masked pixels and unchanged exterior checked; independent full EXIF/alpha/ordered-overlap and 24MP host oracle separate. No physical-device, full-export matrix, AI or public-release acceptance claim.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "a619c0f656b191af7e4ea607ef47cdbd128c57d99dcc403453b7e108ad242eb9"
+    },
+    {
+      "file": "report.json",
+      "sha256": "675c29b07e0d0a0aaf11015dd6ea11fc5e8f2b386693ea11e5ae881101f41915"
+    }
+  ]
+}

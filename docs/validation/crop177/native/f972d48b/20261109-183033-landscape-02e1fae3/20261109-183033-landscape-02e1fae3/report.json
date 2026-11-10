@@ -1,0 +1,418 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "candidateSha256": "f972d48b012545e4f3a4f8de53bbefe48151e6b9d133f38ac587553adec037e8",
+  "versionCode": 177,
+  "versionName": "0.30.23-beta",
+  "mode": "landscape",
+  "flow": "crop177",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-apk",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "new-fixture-directory",
+      "pass": true
+    },
+    {
+      "name": "exact-owned-public-domain-skin-fixture",
+      "pass": true
+    },
+    {
+      "name": "public-domain-fixture-decodes",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "requested-orientation",
+      "pass": true
+    },
+    {
+      "name": "actual-font-scale",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-0",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-0",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "crop177-quick-selected-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-inline-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-inline-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-opens-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop177-movie-selected-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-supported-accessibility-resize-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-dialog-visible-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-frame-moved-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-precision-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-precision-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-capture-target-still-visible-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-applied-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "crop177-parent-uses-applied-geometry-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-actual-draft-landscape-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-brush-jpeg-created-1",
+      "pass": true
+    },
+    {
+      "name": "editor-ready-photo-1",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-primary-4",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "crop177-quick-selected-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-inline-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-inline-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-control-visible-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "editor-control-enabled-editor-composition-summary",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-opens-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop177-movie-selected-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-supported-accessibility-resize-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-dialog-visible-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-frame-moved-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-target-frame-committed",
+      "pass": true
+    },
+    {
+      "name": "screenshot-crop177-precision-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "screenshot-written-crop177-precision-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-capture-target-still-visible-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-native-choice-visible",
+      "pass": true
+    },
+    {
+      "name": "crop177-precision-applied-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "editor-latest-final-preview-ready",
+      "pass": true
+    },
+    {
+      "name": "crop177-parent-uses-applied-geometry-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "crop177-actual-draft-portrait-photo",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-0",
+      "pass": true
+    },
+    {
+      "name": "owned-original-bytes-preserved-1",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "editor-saves-drained",
+      "pass": true
+    },
+    {
+      "name": "personal-tone-original-key-restored",
+      "pass": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "native-choice-bounds",
+      "label": "2.35:1",
+      "width": 147,
+      "height": 200,
+      "screenX": 2240,
+      "screenY": 461,
+      "visibleInWindow": "[2240,461][2387,662]"
+    },
+    {
+      "case": "inline-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 512,
+      "outputHeight": 217,
+      "ratio": 2.359447004608295,
+      "widthErrorPixels": 2.0499999999999545
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "电影 · 2.35:1",
+      "width": 244,
+      "height": 126,
+      "screenX": 2138,
+      "screenY": 137,
+      "visibleInWindow": "[2138,137][2382,263]"
+    },
+    {
+      "case": "precision-resized-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 460,
+      "outputHeight": 196,
+      "ratio": 2.3469387755102042,
+      "widthErrorPixels": 0.6000000000000227
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "应用",
+      "width": 168,
+      "height": 126,
+      "screenX": 1468,
+      "screenY": 145,
+      "visibleInWindow": "[1468,145][1636,271]"
+    },
+    {
+      "case": "saved-landscape-photo",
+      "sourceWidth": 512,
+      "sourceHeight": 341,
+      "outputWidth": 460,
+      "outputHeight": 196,
+      "ratio": 2.3469387755102042,
+      "widthErrorPixels": 0.6000000000000227
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "2.35:1",
+      "width": 147,
+      "height": 200,
+      "screenX": 2240,
+      "screenY": 461,
+      "visibleInWindow": "[2240,461][2387,662]"
+    },
+    {
+      "case": "inline-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 341,
+      "outputHeight": 146,
+      "ratio": 2.335616438356164,
+      "widthErrorPixels": 2.1000000000000227
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "电影 · 2.35:1",
+      "width": 244,
+      "height": 126,
+      "screenX": 2138,
+      "screenY": 137,
+      "visibleInWindow": "[2138,137][2382,263]"
+    },
+    {
+      "case": "precision-resized-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 307,
+      "outputHeight": 130,
+      "ratio": 2.3615384615384616,
+      "widthErrorPixels": 1.5
+    },
+    {
+      "case": "native-choice-bounds",
+      "label": "应用",
+      "width": 168,
+      "height": 126,
+      "screenX": 1468,
+      "screenY": 145,
+      "visibleInWindow": "[1468,145][1636,271]"
+    },
+    {
+      "case": "saved-portrait-photo",
+      "sourceWidth": 341,
+      "sourceHeight": 512,
+      "outputWidth": 307,
+      "outputHeight": 130,
+      "ratio": 2.3615384615384616,
+      "widthErrorPixels": 1.5
+    }
+  ],
+  "screenshots": 4,
+  "fixturesRemoved": true,
+  "personalTonePreferencesRestored": true,
+  "failure": null,
+  "scope": "Capture-only crop177 flow on the exact installed APK: owned landscape\/portrait JPEG fixtures, native pointer selection in inline and precision crop, persistent quick selected state, existing accessibility resize and native inner-frame movement, active-dialog guards, apply and actual draft readback. Edge-corner drag and full TalkBack behavior are not certified. Other inherited flows were not run. No physical-device, performance, camera or publication certification."
+}

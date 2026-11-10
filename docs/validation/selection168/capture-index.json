@@ -1,0 +1,879 @@
+{
+  "candidateSha256": "57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3",
+  "configurations": [
+    {
+      "mode": "phone",
+      "runId": "20261109-004939-phone-dbbcb92d",
+      "report": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\report.json",
+      "provenance": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\provenance.json",
+      "cleanup": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\cleanup.json",
+      "checkCount": 412,
+      "screenshots": 26,
+      "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim."
+    },
+    {
+      "mode": "tablet",
+      "runId": "20261109-005052-tablet-d1406ca5",
+      "report": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\report.json",
+      "provenance": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\provenance.json",
+      "cleanup": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\cleanup.json",
+      "checkCount": 412,
+      "screenshots": 26,
+      "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim."
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "runId": "20261109-004937-font1.3-2a43cd8b",
+      "report": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\report.json",
+      "provenance": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\provenance.json",
+      "cleanup": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\cleanup.json",
+      "checkCount": 412,
+      "screenshots": 26,
+      "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim."
+    },
+    {
+      "mode": "landscape-dark",
+      "runId": "20261109-005241-landscape-14e3dff2",
+      "report": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\report.json",
+      "provenance": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\provenance.json",
+      "cleanup": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\cleanup.json",
+      "checkCount": 412,
+      "screenshots": 26,
+      "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim."
+    }
+  ],
+  "captures": [
+    {
+      "mode": "phone",
+      "name": "fix168-face-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-face-chooser-hidden.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "33cda9080bbfa60be7aaed328a243819c44362adfbbb6aa7baad167211843181"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-face-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-face-chooser-shown.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "be4b9516b1ce6f635a605ef29a182a05a3a18ab7eb210567927c7ce745a0dad3"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-palette-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-palette-shown-drag.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "f0bd31ff3d3da310a24e7571d206821082a41e28f10262ea33c9d6a6629766a1"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-palette-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-palette-shown-release.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "3495552cab23e6f7ddbc5b49951cc83bd4a0ceb8c0da2dae49e91dc5100a6199"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-skin-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-skin-chooser-hidden.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "33cda9080bbfa60be7aaed328a243819c44362adfbbb6aa7baad167211843181"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-skin-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-skin-chooser-shown.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "c201c5c68d05005f156613c9de5342f0598b343ea2aef9ad3d596133215a89ce"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-skin-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-skin-shown-drag.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "6ee799db0a039d51caa6e923e5c21362aa425ecf2cc10abe1de25a0b45225a1b"
+    },
+    {
+      "mode": "phone",
+      "name": "fix168-skin-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\fix168-skin-shown-release.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "3e66ea4908c380b98b19d20297d1639054fb623b7942034534e32037331ef01f"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-auto-face-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-auto-face-drag-hidden.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "3965911c42b0adaea46feb2140fe018ee6ccc1dd700cdf34045b539814a0acf6"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-auto-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-auto-face-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "9620c5020642265c43058368ca456951c85d438ced9b3bff044cab44050a61d1"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-auto-skin-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-auto-skin-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "db03e45b39dc75bd0c08da68579783cddbbcdf77dd184ed2b133b05a1ca12eea"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-body-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-body-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "2c8557fd7e964e055cb4ac83197ff954ec9092d6196feb6f67946485732c7087"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-circle-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-circle-drag-hidden.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "730180810a7074c9182d4c4bb1e1f2b8481a9aa956508cfa397cfe4ec9b51f4a"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-circle-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-circle-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "91b09f527fb5f0d98acd8186c2952b5904e9ed52a4fbe2b2a58a7dd2036d84b0"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-circle-release-restored",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-circle-release-restored.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "e61c139da9ef417ea32ef91eb3193f9bf4b8cd2a395d11766441bd69a3ba7bb9"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-cleanup-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-cleanup-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "b3fa8711f85e09e55882874908f8c1bb370c17511bf8b57d19e1c16634b55073"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-curves-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-curves-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "9bcbd512b07184fd4d2ac721752888b9f75e766d60fec4001c639639edfd44c5"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-hsl-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-hsl-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "e1bf9396848b1d5b1667629dd013257ffc84a23369128ebcd774b5d87adfbe6b"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-inverse",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-inverse.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "9942d8fc2e926b33b7a491d912872dbc860793771d4c18f26bf0bf6edcec96e3"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-legacy-radial-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-legacy-radial-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "8ffb029bdb657ce6e168c46ac5a15e7235591ff257e4473f93ed6ec106451de1"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-main-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-main-drag-hidden.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "4db09488429a627cca5050f8bf1260c97a799169f40c02b08cbf4601aa7637d0"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-main-regional",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-main-regional.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "183e8687ad8f31893d93d0595338983e776edf230ab909c040c3f67940bb3541"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-manual-brush-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-manual-brush-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "25750a70bb9d1841fc2c31ee3c8c70808b990375279fff9e5a312072de908c3e"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-manual-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-manual-face-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "75e7c232ea336543b2ac1eb63739388f7f51c8009a4d1c72f5a1f63cf13f5770"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-palette-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-palette-persistent.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "195db74706d865c473f77736aab196b7c9bf43e04f96a370f8960b48e5cbfe21"
+    },
+    {
+      "mode": "phone",
+      "name": "selection168-rectangle-added",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004939-phone-dbbcb92d\\20261109-004939-phone-dbbcb92d\\selection168-rectangle-added.png",
+      "width": 1080,
+      "height": 2424,
+      "sha256": "d04ce22f586e48161612ac7a623e36bdf12cc3bf70c899acacf97a17fe4ce1f6"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-face-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-face-chooser-hidden.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "c14c055de643b03cd58e778b995fb72e2c924ed464443a4a98edb4ed6cc575af"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-face-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-face-chooser-shown.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "b5b5e0559579b576140b0c6f790c483f5f34984a0465b2e0b51ecda79b410a07"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-palette-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-palette-shown-drag.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "e7ef26ff631e601db012342d71946d3bdedb5487af626d76656c4d1564344827"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-palette-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-palette-shown-release.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "ceb0b6e544bdb4f6e30681025e4173aae228289914b6e31a5a983e4bb5b5d0b1"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-skin-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-skin-chooser-hidden.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "c14c055de643b03cd58e778b995fb72e2c924ed464443a4a98edb4ed6cc575af"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-skin-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-skin-chooser-shown.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "f808e7efd9beb28ccb5dd5a16c3a3fb3265131ddc6e77e9d42834bfbcfa49c81"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-skin-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-skin-shown-drag.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "714f140e06fa71a5f830d7fe2dddef4e2088342f786eb56251c7534a16091b13"
+    },
+    {
+      "mode": "tablet",
+      "name": "fix168-skin-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\fix168-skin-shown-release.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "f3f8c4855cc645278355848dd6e02d0bf087491df771ab256e0e432b6e44a3d3"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-auto-face-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-auto-face-drag-hidden.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "a0501303739ea3d6cb9daece6008640f46d0c99a88a3a6797a638e02905ab31c"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-auto-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-auto-face-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "f242975c7e4d2c55e561e073eaa859565fe32475feaa9d4c3831e31465688f57"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-auto-skin-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-auto-skin-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "2e80aeab9e742d0fb86f7988fba2549180d4057cf374487bd4426d554d7d20df"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-body-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-body-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "897093768319d871baa1dffcc308281fc1b2742736a1514d256c2315381b8f77"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-circle-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-circle-drag-hidden.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "0fe48159c078551ce97eb0b1f355e0ed4c687880cf55721d20283693055c3777"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-circle-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-circle-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "5441d218b6a366889d23f5409defed4c3d2da069badee7da29fff4164453b68d"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-circle-release-restored",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-circle-release-restored.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "bf9f0b763a3bbbaf6cba70183f33887803dea3eb6623acc9f1eef1c2ad49b961"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-cleanup-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-cleanup-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "9d0e09b97df364cb686c37fb4b33c997d5031ff876eeb3766647ad16d62e4c7d"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-curves-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-curves-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "b6e4f939e8f98df4385fd49e2efb7b36efca732486333d36de4d08664c7d38b1"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-hsl-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-hsl-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "0f4ba8c962ac830b5d1d6ee7ffcf1b1ae5ca6dc78d89643126f0ebce83d26464"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-inverse",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-inverse.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "8fcb782e121d44c6b324658b513658aa52d7a6277a29579bed346c45eef97ed2"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-legacy-radial-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-legacy-radial-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "b7a6614f96fb7845933e8283dfd711e075341ce60c2891aa54467b6df9055b19"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-main-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-main-drag-hidden.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "288b261365e280927cd54865286b5a520970a8e8987ffdfbf9614462d8ac8aab"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-main-regional",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-main-regional.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "9e4ca8ef2e3702b4e59c51132b40edbe129f73c8e1c001a6964cee61a460ca5f"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-manual-brush-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-manual-brush-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "2f569ed3e70d07de2e095318d9abcd1162f27dde7574beef73e56ef81988db4d"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-manual-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-manual-face-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "3f4db8d734a5e5411a1d555759d8572e63de763e1d7558e511abe85effeb5aa5"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-palette-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-palette-persistent.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "bf981073438092222c33f0a5dc3bebd47b229fc3515d51b90b1fb6ca13a84ca3"
+    },
+    {
+      "mode": "tablet",
+      "name": "selection168-rectangle-added",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005052-tablet-d1406ca5\\20261109-005052-tablet-d1406ca5\\selection168-rectangle-added.png",
+      "width": 1600,
+      "height": 2560,
+      "sha256": "a81257693d6614990384e43bfcd4cc2e84c34e7962cae9d54da166182776012a"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-face-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-face-chooser-hidden.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "6d161c7247fc73829fecf34fbcc07d980d61b92dbe0e5b055981a97a3e041068"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-face-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-face-chooser-shown.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "215424fa8ca29d48c125af30a430c251b83e23f300184a3d0e60825c774a567e"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-palette-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-palette-shown-drag.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "beea349777e7852dd649998ffe44774a3127e32cd475a548deced9436c9a2e36"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-palette-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-palette-shown-release.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "ea5185001d63063d4f82e33bfb8b3ea95b21a74dc9d139fe7fe030ff5e6aefc4"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-skin-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-skin-chooser-hidden.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "6d161c7247fc73829fecf34fbcc07d980d61b92dbe0e5b055981a97a3e041068"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-skin-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-skin-chooser-shown.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "3ef23ea3a29473984bb8b2de637d6afd3c391ca9ce18b367e9b297b86c734a37"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-skin-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-skin-shown-drag.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "13073ccbd1bcad408a4dec47ac9b858b8bee07f6675fdc86074f583a05d02747"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "fix168-skin-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\fix168-skin-shown-release.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "0d8fe99ca9e9382ef62677996b65ff3a4c10441756d5e6f91fa4666afd34d3ec"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-auto-face-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-auto-face-drag-hidden.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "93b2a08d86ecc3b621a556685d7e9ed82f4e55fe6540a8007b04dc1d2cd7dd1b"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-auto-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-auto-face-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "3391a60106754d17732e91bc46b4686c4cb6812ac17d8e05cdada76639faf5a0"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-auto-skin-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-auto-skin-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "4e70556dbcd92288b5e9c73cce4e2013193bd22ab013278ddfd3eb0db0d27b67"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-body-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-body-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "68688dbc0319e5c06f75b18fdaeb286d13fcff0de66b716b65d55e38bd65bd70"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-circle-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-circle-drag-hidden.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "528338e040ea10278b2eb668b3a0781c9719c8a33d63a3f726769f46b4ad9f62"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-circle-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-circle-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "03fdd81fdc8af5dbc9a4a2d88cf998a2814526b7a22e5cb867df3c882b58d799"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-circle-release-restored",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-circle-release-restored.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "1f455e89f0fe896cae589aefd5ec34a4f4878e0e134fa31c530bc57f65555671"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-cleanup-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-cleanup-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "9a8ef8047a0bf2ac9e178d7941f69f1ea4c40462de2beeb5c17d5ac90ef29305"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-curves-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-curves-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "93103afd53913343efebc8364d1fa4f819667f9d6746128bfd4557e00f52c823"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-hsl-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-hsl-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "37db0b535257795eea66036d21d369a78db5db26591950a6f1e4dea863cfaafc"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-inverse",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-inverse.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "81cf6d0efa12e5a36e150d3cd40b430251cda19d2eb325e8e71dee0b5daa7476"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-legacy-radial-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-legacy-radial-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "db1353b59fa6400ba192079703d947e0ade0c50f6dbd84c91104a1d70580dc36"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-main-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-main-drag-hidden.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "d5e94cd6db9dcd0ec12887d9260a37f1515008ec23f02128a367640ff22499ac"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-main-regional",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-main-regional.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "af8a897258aad4ec41f837e0905d0730f771c91ef04f55f0d8665132e0645d32"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-manual-brush-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-manual-brush-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "a39dd049fc6ee64ea7911ae15a341a6df5b1240bbdcd2d68150f088c5b5bf1b2"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-manual-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-manual-face-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "60b2f21ec7ab6882fbdacdb66d64538361566b34af754382cea95d4e5d880dc5"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-palette-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-palette-persistent.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "ccb5d160ffbcc439a95defd3234cbb3ac01cd77798d22c0a72747f1f4d568b6a"
+    },
+    {
+      "mode": "narrow-font13-android16",
+      "name": "selection168-rectangle-added",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-004937-font1.3-2a43cd8b\\20261109-004937-font1.3-2a43cd8b\\selection168-rectangle-added.png",
+      "width": 840,
+      "height": 1890,
+      "sha256": "0daac971bc28ad6898a9769fee7a42fed343bbe17a0f7282b794b015bb008ac9"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-face-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-face-chooser-hidden.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "2dc30d6ef41945a556657a04bbf2fb7025bdeae158273f149c89ad7e991c0c20"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-face-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-face-chooser-shown.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "b0cfe930aa87d1123093a176e0425844243635f4384140bd33b202c5979ffcf2"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-palette-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-palette-shown-drag.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "b39e56ab05609b5eb400bd569d004656c75105bbb5cb8475d8ee8dc59a7a59a9"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-palette-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-palette-shown-release.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "901699ffe78aa57f7256070116af20ffc0073b2a7be8e20ecf73481e3989d8fd"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-skin-chooser-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-skin-chooser-hidden.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "2dc30d6ef41945a556657a04bbf2fb7025bdeae158273f149c89ad7e991c0c20"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-skin-chooser-shown",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-skin-chooser-shown.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "4aba18d6a3ebf1e35ec478df13d0a568a42bc7bebcad26743c39b33ff7c68d7a"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-skin-shown-drag",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-skin-shown-drag.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "57f5b40318f93944516d15fe24643e7a9052badb6b73618d6d21c54629f35d58"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "fix168-skin-shown-release",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\fix168-skin-shown-release.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "91c0f26e57b22962a1e189a8da3d61fddec17676eaf0739f28158122460d02a0"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-auto-face-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-auto-face-drag-hidden.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "6c16ca1cdd4e808506309a541bb1e55e5469859b264e47be8c03b78f65b20892"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-auto-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-auto-face-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "86342e7ffbc8d590bc9286ab32e19767e094133e7f717c23c05ced359aaab948"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-auto-skin-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-auto-skin-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "a33c240700aa805fcc39e1565370dfca204c0a26b4d32da74cc7f32effa32dac"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-body-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-body-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "43257befed99b5787e9accb1785f0420cd092e5fa9f943d295b7a6ec3a4a1ae9"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-circle-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-circle-drag-hidden.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "37a9a23d4ca288dbd48bf6d7be1ce243aafdf937898cee37288faecd561eaf86"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-circle-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-circle-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "48024a573f1b7628f000bff8cd4cae07ce8745be42d335d56c8e81b706849efe"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-circle-release-restored",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-circle-release-restored.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "cea59dc4d29f567d21114616b00bea760d2a0a07b6bab234ef1b44e7a8b5bff0"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-cleanup-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-cleanup-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "cd266cfb81ff0432edeebf386ece119e6cefee46feeedf60eb5545fa11c4c02c"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-curves-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-curves-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "fa1bd7961348103fc591b5a657f31798b486d0d31de12b11d9068abd53624576"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-hsl-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-hsl-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "f209679e6bbfe621cb03f32ac1abf32fdea73309a1ee728a57359c4770ffd326"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-inverse",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-inverse.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "654f4fb5090ee6d9f02ab7f87f32413d2fb8afd2be430f978b9a9e6175b9d2d3"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-legacy-radial-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-legacy-radial-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "128b7fbd7327d9fceead6413c67c6dd606170b0f444b5f6c1dc9cb5b96159cdf"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-main-drag-hidden",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-main-drag-hidden.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "78a031d43c4e470518b19f5d8f75ea438b94b9d1f30522ff4e2110f843429dc1"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-main-regional",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-main-regional.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "8184214310d2b3b30b63d0319ce99e0fbcfa79c64bdda856f1efaa4c914e9ed9"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-manual-brush-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-manual-brush-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "ac93c579c8092c4ebc25726765c1321d6681961bb4861d0163835c1fe908ee0d"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-manual-face-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-manual-face-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "6827ac9f90cc69b304e32e433b4c3819df86a97e3961d7993f94ca0fb46a9f98"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-palette-persistent",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-palette-persistent.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "39620885cacb6f337d28f66c032cb947ba1a31e1378a65e07c06b4d4526a3ba4"
+    },
+    {
+      "mode": "landscape-dark",
+      "name": "selection168-rectangle-added",
+      "path": "D:\\dev\\ai-project\\nikon-camera\\docs\\validation\\universal-brush\\57c37922\\20261109-005241-landscape-14e3dff2\\20261109-005241-landscape-14e3dff2\\selection168-rectangle-added.png",
+      "width": 2424,
+      "height": 1080,
+      "sha256": "95d579b72e34efef5dae1ae3a3d7e7dd3206389326cc1f826a29249fd62486a9"
+    }
+  ]
+}

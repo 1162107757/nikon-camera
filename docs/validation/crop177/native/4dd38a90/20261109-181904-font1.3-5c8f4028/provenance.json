@@ -1,0 +1,32 @@
+{
+  "candidateSha256": "4dd38a90ae45e06c8dfcef0a8a2e3c519841933f98d2e0dc26b22ee73ad52f54",
+  "versionCode": 177,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "88e2698ad7b3cb3a97fdfdd9b93200295c0c45d7a48fa0ac912768af74e668c9",
+  "pass": true,
+  "scope": "Exact installed direct modal palette/cleanup/curves/HSL brush transaction checks plus selected universal workflow. Exact installed universal brush and scoped adjustment UI: real live paint/erase, size/feather, two-finger navigation, clear/reopen/cancel and two actual subtle warm-white completion pulses with exact clean gap. All 17 native parameter controls plus masked curves/HSL previews use full-pixel zero-mask packed-ARGB checks. Multiple parameters and regions retain global settings and independent history; existing-mask clearing/deletion, owner rejection, real drafts/photo switching and representative full/detail export EXIF1/6 are exercised. Regional skin uses the same actual brush: ordinary controls affect non-skin while five skin controls and tone leave zero semantic-mask pixels exact; nested brush and outer transactions are checked. Owned synthetic textures/public-domain NASA images only. Host owns all-eight-EXIF and alpha0 matrices; no physical-phone or broad segmentation accuracy claim.",
+  "files": [
+    {
+      "file": "crop177-inline-landscape-photo.png",
+      "sha256": "8703b1462a540e109368ce6035463b54d787b786062629c5e1f347d5ee0d91be"
+    },
+    {
+      "file": "crop177-inline-portrait-photo.png",
+      "sha256": "633efa35928c6e8655edee19a18414e0db22c67c97a81cdbecfc87c17a562897"
+    },
+    {
+      "file": "crop177-precision-landscape-photo.png",
+      "sha256": "c7793913439f0a7ad6d2eecd8cf635daed1bf725b9d97e31844db8b95ba440e7"
+    },
+    {
+      "file": "crop177-precision-portrait-photo.png",
+      "sha256": "39e21b0be219a2fca27d1041901dd4bde76bcfa7abf052b43dcf7c10aed5c550"
+    },
+    {
+      "file": "report.json",
+      "sha256": "699022e6e65b924d08821c4cd482e8263ab8dd80e7915cc964e6c70136405c5a"
+    }
+  ]
+}

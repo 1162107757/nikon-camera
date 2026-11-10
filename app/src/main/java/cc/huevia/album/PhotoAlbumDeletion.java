@@ -111,6 +111,7 @@ final class PhotoAlbumDeletion {
         File checked = owned(photo);
         if (!source.equals(checked) || bytes != checked.length() || modified != checked.lastModified() || !sha.equals(hash(checked))) throw new IOException("照片在删除过程中发生变化，应用内文件未删除。");
         Files.delete(checked.toPath());
+        PhotoArrivalDates.forget(checked);
     }
     private File owned(DownloadedPhoto photo) throws IOException {
         if (photo == null || photo.file() == null) throw new IOException("照片信息无效。");

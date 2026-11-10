@@ -13,7 +13,7 @@ public final class AdjustmentRegionTest {
     private static Path temporary;
     public static void main(String[] args)throws Exception{
         temporary=Files.createTempDirectory("huevia-regions-host-");
-        try{modelAndWire();brushGeometry();parameterMatrix();skinAndFace();independentRegionsAndOrdering();tilesAndLifetime();draft();}
+        try{modelAndWire();brushGeometry();geometricSelections();parameterMatrix();skinAndFace();independentRegionsAndOrdering();tilesAndLifetime();draft();}
         finally{try(var files=Files.walk(temporary)){for(Path p:files.sorted(Comparator.reverseOrder()).toList())Files.delete(p);}}
         System.out.println("PASS AdjustmentRegionTest "+checks+" checks; parameterExifCases="+matrixCases+"; heapLimitMiB=96");
     }
@@ -57,6 +57,42 @@ public final class AdjustmentRegionTest {
         check(region.withStrokes(List.of(add,erase,add)).compileBrush(120,80).weight(.35,.5)==1,"ordered repaint restores erased core");
         check(region.withStrokes(List.of(add)).compileBrush(120,80).weight(.35+.12*80/120+.001,.5)==0,"radius is measured along oriented short side with finite outer support");
         check(brush.workingBytes<16*1024*1024,"stroke index memory bounded independently of image pixel count");
+    }
+    private static void geometricSelections()throws Exception{
+        SelectionShape ellipse=new SelectionShape(SelectionShape.Kind.ELLIPSE,.2,.1,.8,.9,.25,false,0);
+        SelectionShape rectangle=new SelectionShape(SelectionShape.Kind.RECTANGLE,.2,.1,.8,.9,0,false,0);
+        check(ellipse.weight(.5,.5)==1&&ellipse.weight(.2,.1)==0&&rectangle.weight(.201,.101)==1,"ellipse and rectangle keep distinct geometry");
+        check(ellipse.weight(.77,.5)>0&&ellipse.weight(.77,.5)<1,"shape feather retains fractional coverage");
+        for(double invalid:new double[]{Double.NaN,Double.POSITIVE_INFINITY,-.1,1.1})expectInvalid(()->new SelectionShape(SelectionShape.Kind.ELLIPSE,invalid,.1,.8,.9,.2,false,0),"invalid bounds rejected");
+        expectInvalid(()->new SelectionShape(SelectionShape.Kind.RECTANGLE,.8,.1,.2,.9,.2,false,0),"reversed bounds rejected");
+        SelectionShape negativeZero=new SelectionShape(SelectionShape.Kind.RECTANGLE,-0.0,-0.0,.8,.9,-0.0,false,0),positiveZero=new SelectionShape(SelectionShape.Kind.RECTANGLE,0,0,.8,.9,0,false,0);
+        check(negativeZero.equals(positiveZero)&&negativeZero.hashCode()==positiveZero.hashCode(),"zero normalization keeps equals/hash contract");
+        PhotoPortrait.Stroke add=new PhotoPortrait.Stroke(new double[]{.5,.5},.1,0,false),erase=new PhotoPortrait.Stroke(new double[]{.5,.5},.1,0,true);
+        AdjustmentRegion erased=AdjustmentRegion.create("组合").addShape(rectangle).addStroke(erase);
+        check(erased.compileBrush(300,200).weight(.5,.5)==0,"later brush erases earlier shape");
+        AdjustmentRegion repainted=erased.addShape(new SelectionShape(SelectionShape.Kind.ELLIPSE,.4,.4,.6,.6,0,false,1));
+        check(repainted.compileBrush(300,200).weight(.5,.5)==1,"later shape restores erased coverage");
+        AdjustmentRegion subtract=AdjustmentRegion.create("减去").addStroke(add).addShape(new SelectionShape(SelectionShape.Kind.RECTANGLE,.3,.3,.7,.7,0,true,1));
+        check(subtract.compileBrush(300,200).weight(.5,.5)==0,"later geometric subtraction removes brush coverage");
+        check(subtract.addStroke(add).compileBrush(300,200).weight(.5,.5)==1,"brush after subtraction can repaint");
+        AdjustmentRegion normal=AdjustmentRegion.create("圆形").addShape(ellipse);
+        AdjustmentRegion inverted=normal.withInverted(true);
+        check(inverted.compileBrush(300,200).weight(.01,.01)==1&&inverted.compileBrush(300,200).weight(.5,.5)==0,"inverse expands support to photo bounds");
+        for(int y=0;y<=40;y++)for(int x=0;x<=40;x++)near(normal.compileBrush(20,30).weight(x/40.0,y/40.0)+inverted.compileBrush(20,30).weight(x/40.0,y/40.0),1,1e-12,"inverse complements soft coverage");
+        check(inverted.withInverted(false).equals(normal),"double inverse restores exact vector state");
+        check(!inverted.clearSelection().hasSelection()&&inverted.clearSelection().compileBrush(30,20).weight(.5,.5)==0,"clear removes shapes, strokes and inversion");
+        check(!AdjustmentRegion.create("空").withInverted(true).hasEffect(),"empty inverse cannot invent a selected effect");
+        PhotoLocalEdits wire=PhotoLocalEdits.NONE.addRegion(repainted.withInverted(true).withAdjustments(PhotoAdjustments.NONE.with(PhotoAdjustments.Parameter.EXPOSURE,12)));
+        byte[] encoded=bytes(wire);check(ByteBuffer.wrap(encoded).getInt()==6&&read(encoded).equals(wire)&&Arrays.equals(encoded,bytes(read(encoded))),"v6 mixed geometry roundtrips canonically");
+        expectIo(()->read(Arrays.copyOf(encoded,encoded.length-1)),"truncated geometry payload rejected");
+        check(!wire.identity().equals(wire.withRegion(0,repainted).identity()),"geometric coverage and inversion affect cache identity");
+        for(int exif=1;exif<=8;exif++)for(SelectionShape shape:List.of(ellipse,rectangle))for(boolean inverse:new boolean[]{false,true}){
+            Raster source=pattern(61,37,exif),candidate=source.copy(),actual=source.copy();PhotoAdjustments settings=PhotoAdjustments.NONE.with(PhotoAdjustments.Parameter.EXPOSURE,12);
+            AdjustedPreviewProfile.of(null,settings).renderPixels(candidate,()->false,null);
+            AdjustmentRegion r=AdjustmentRegion.create("形状").addShape(shape).withInverted(inverse).withAdjustments(settings).withAmount(.7);
+            LocalEditsPreviewProfile.renderLocal(actual,PhotoLocalEdits.NONE.addRegion(r),exif,()->false,null);
+            for(int y=0;y<source.h;y++)for(int x=0;x<source.w;x++){double[] p=oriented(x,y,source.w,source.h,exif);double dx=(p[0]-.5)/.3,dy=(p[1]-.5)/.4,d=shape.kind==SelectionShape.Kind.ELLIPSE?Math.hypot(dx,dy):Math.max(Math.abs(dx),Math.abs(dy));double m=d>=1?0:shape.feather==0||d<=1-shape.feather?1:1-smooth((d-1+shape.feather)/shape.feather);if(inverse)m=1-m;int i=y*source.w+x;check(actual.data[i]==(source.data[i]>>>24==0?source.data[i]:mix(source.data[i],candidate.data[i],m*.7)),"shape render matches independent coverage oracle and EXIF mapping");}
+        }
     }
     private static void parameterMatrix()throws Exception{
         ArrayList<PhotoAdjustments> settings=new ArrayList<>();ArrayList<String> names=new ArrayList<>();

@@ -1,0 +1,28 @@
+{
+  "candidateSha256": "bb61358338530a4b4daeb2bff0938469c27b3e6acbe1043b822cd032006a4f43",
+  "versionCode": 170,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "phone",
+  "probeSha256": "c6e5d183f40de49d8f1ab7804379a93e6596517aa55e80e11f131581364e8da3",
+  "pass": true,
+  "scope": "Capture-only adjustment-rail inspection: native common/special/after-refresh frames and widget geometry; palette/cleanup/local/repair opened then dismissed on an owned fixture, unchanged model/history/source. No new unit/regression test or frame-rate/hardware claim.",
+  "files": [
+    {
+      "file": "icons170-after-refresh.png",
+      "sha256": "156a00c844eaa056552a1a54328d89be853df58a201cdcc2b90c1fa3130e9490"
+    },
+    {
+      "file": "icons170-common.png",
+      "sha256": "7bb83933b83176acdb5ff93a9e709be87cd9160466ea13a259632c1a6bb81978"
+    },
+    {
+      "file": "icons170-specials.png",
+      "sha256": "f7e1c7c7e17174018351c5328a4866382d3a28a9d5d197ea7c0974e623eeacb0"
+    },
+    {
+      "file": "report.json",
+      "sha256": "ee34177e34ef2ff7b6e9be222fcbbea9458fe1f8f87617f5fb6b85f97220ced2"
+    }
+  ]
+}

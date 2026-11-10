@@ -1,0 +1,28 @@
+{
+  "versionCode": 165,
+  "sdk": 37,
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "inline-search-focus",
+      "pass": true
+    },
+    {
+      "name": "back-closes-search",
+      "pass": true
+    }
+  ],
+  "failure": null
+}

@@ -11,7 +11,6 @@ import cc.huevia.ptp.PtpValidation;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Objects;
 
 /** One registration into a twice-checked empty slot or explicitly confirmed occupied snapshot. */
@@ -205,11 +204,10 @@ public final class PictureControlImportSession {
         result.model = info.model();
         result.firmware = info.deviceVersion();
         result.operations = info.operationsSupported();
-        result.phase = "CameraModelCheck";
-        String normalized = info.model().trim().toUpperCase(Locale.ROOT)
-                .replaceFirst("^NIKON\\s+", "").replaceAll("[\\s_-]+", "");
-        if (!normalized.equals("Z6II") && !normalized.equals("Z62")) {
-            throw new IOException("受控登记仅支持尼康 Z6II，未发送写入请求。");
+        result.phase = "CameraIdentityCheck";
+        if (!info.isNikonCamera()) {
+            throw new IOException("当前设备未识别为尼康相机：" + info.manufacturer() + " / " + info.model()
+                    + "；未发送写入请求。");
         }
         result.phase = "RequiredOperationsCheck";
         for (int required : new int[] {0x1002, 0x1003, 0x90cc, 0x90cd}) {

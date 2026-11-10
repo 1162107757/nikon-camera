@@ -1,0 +1,181 @@
+{
+  "apkSha256": "d728b77adba6062e0cb34e5325df219f3c9089a5abf68b27e58864cad4c0f2a2",
+  "count": 25,
+  "captures": [
+    {
+      "path": "docs/validation/editor-sources186/native/api31/20261110-103519-phone-400725/01-mine-fixed.png",
+      "sha256": "e9d6b57e428625a6b8785869c1f35674bfc343b69f652887bd7a75d6f9d2d089",
+      "bytes": 2526292,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api31/20261110-103519-phone-400725/02-online-fixed.png",
+      "sha256": "a29fca34178523a66ae1f04faa19ecf53267731c8c2dba0da5df019325c399a5",
+      "bytes": 2333670,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api31/20261110-103519-phone-400725/03-category-scroll.png",
+      "sha256": "8d10c83d4deb563f20110202d0d28a8805a14be23641331607add8f1bcfeb328",
+      "bytes": 2339437,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api31/20261110-103519-phone-400725/04-mine-pressed.png",
+      "sha256": "6c834c78d04f9a24110ab57a0bdf36b5663eae3c2b83dc9849f34cc587c2d37a",
+      "bytes": 2528403,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api31/20261110-103519-phone-400725/05-online-focus.png",
+      "sha256": "fecd6dd71c5ccec89e25a65fd27d38e18898144428e21b5e9087e0e7dbb411cc",
+      "bytes": 2530316,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102642-phone-30f6df/01-mine-fixed.png",
+      "sha256": "acb3894308dff706b31c0bd4e65456573e5e7b478283370edd72ac5eb41ce026",
+      "bytes": 2392448,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102642-phone-30f6df/02-online-fixed.png",
+      "sha256": "7760a32d54403f80c6f6974a4913819f8fccc8d0133a13e3efc22aec4b27e5f4",
+      "bytes": 2199907,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102642-phone-30f6df/03-category-scroll.png",
+      "sha256": "3cedda351f8a31336aa461261041b00ca0aaf0b81e8803d366bd590513d1e0f8",
+      "bytes": 2195936,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102642-phone-30f6df/04-mine-pressed.png",
+      "sha256": "4cce25a302a991666860a9989393f34beb0bfe7896779a9aaf087cbfe65d1277",
+      "bytes": 2392147,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102642-phone-30f6df/05-online-focus.png",
+      "sha256": "cc2546f1d524f30b099cb339663a038f2efd541de5af84cb78660a31b69cb116",
+      "bytes": 2393864,
+      "width": 1170,
+      "height": 2532
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102733-narrow-336834/01-mine-fixed.png",
+      "sha256": "2286584db5cfb5c8cc54528dcd9fb2402d61e13df876f539499a6c0b66daf56b",
+      "bytes": 1283637,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102733-narrow-336834/02-online-fixed.png",
+      "sha256": "c54e34e20d8c2fb9e74db9fe9107399c261f80d46e75ecc8d1300d49eb767cb6",
+      "bytes": 1191324,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102733-narrow-336834/03-category-scroll.png",
+      "sha256": "117d35605ad2671bc26ad64959c067f7dd49b8c485eeccae6449aace59d4b860",
+      "bytes": 1190506,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102733-narrow-336834/04-mine-pressed.png",
+      "sha256": "103bf149bde6859d9d3b56b5729f44efeb9047f3e53edfe3281bdf61be52ae4b",
+      "bytes": 1281825,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102733-narrow-336834/05-online-focus.png",
+      "sha256": "898bc0d178a9bd0e131fb28c6ae349fb9c5796b295aea41b18f4ae5beeebf6d9",
+      "bytes": 1284172,
+      "width": 960,
+      "height": 1920
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102751-tablet-6e7ce8/01-mine-fixed.png",
+      "sha256": "28251c1c6d85dafb158c498c9b3a85143d622866b123aca51205a561e294c1a0",
+      "bytes": 3397078,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102751-tablet-6e7ce8/02-online-fixed.png",
+      "sha256": "3c53eb311c29e28bb4e321bf29a2d190a6c8f64543724e19de4023c98dcddeef",
+      "bytes": 3337387,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102751-tablet-6e7ce8/03-category-scroll.png",
+      "sha256": "9414d151780c7b3c93ea495af2efb11c3c0c8b4102f9299b9a2d9fd2bdc09a67",
+      "bytes": 3340565,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102751-tablet-6e7ce8/04-mine-pressed.png",
+      "sha256": "646bfe4253105f8a4a47c4dbc2efccecd1180c4824dabd6b96b620d335fcab4b",
+      "bytes": 3397599,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102751-tablet-6e7ce8/05-online-focus.png",
+      "sha256": "0833a2473719bb61f0f4bf740db335de03e1ff16898d47baac4612ed61e38a1f",
+      "bytes": 3398580,
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102818-landscape-4fde40/01-mine-fixed.png",
+      "sha256": "ba180892b14173de0f19116e260264db470745c7f1200a970ea6c597b8ff6006",
+      "bytes": 2119208,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102818-landscape-4fde40/02-online-fixed.png",
+      "sha256": "a00417d2a166de7b546bc729c59d7b90e3735f3c38cdef3278ee3d9c4d1e8d8f",
+      "bytes": 1994738,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102818-landscape-4fde40/03-category-scroll.png",
+      "sha256": "ecc4cb0937241edeb798e81869ae8ba28837952469c6ed5d8afefb01ad2acb72",
+      "bytes": 1994554,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102818-landscape-4fde40/04-mine-pressed.png",
+      "sha256": "370f427ceff94787fa437b8839a4075faeedfd494d2183672293d3c7e0b7c316",
+      "bytes": 2118866,
+      "width": 2532,
+      "height": 1170
+    },
+    {
+      "path": "docs/validation/editor-sources186/native/api37/20261110-102818-landscape-4fde40/05-online-focus.png",
+      "sha256": "ac0e60f492499eb5a45fe4c864f94843e44b132e914bc2c3edbc1dc3d65250b1",
+      "bytes": 2121562,
+      "width": 2532,
+      "height": 1170
+    }
+  ]
+}

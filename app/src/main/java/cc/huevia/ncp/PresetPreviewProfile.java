@@ -25,7 +25,9 @@ public interface PresetPreviewProfile {
         long pixels = (long) width * height;
         if (argb == null || width <= 0 || height <= 0 || pixels > NcpPreviewProfile.MAX_PIXELS
                 || pixels != argb.length) throw new IllegalArgumentException("Invalid preview dimensions.");
-        int[] output = argb.clone();
+        // Android 12 can resolve array.clone() from an interface default method to
+        // inaccessible Object.clone(). Keep the same independent pixel copy.
+        int[] output = java.util.Arrays.copyOf(argb, argb.length);
         try {
             renderPixels(new SpatialPreviewFilter.Pixels() {
                 public int width() { return width; }

@@ -1,0 +1,26 @@
+{
+  "priorVersion": 174,
+  "scope": "All174 recorded production inputs outside175 owned files",
+  "preserved": [
+    {
+      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+      "unchanged": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/community/CommunityRepository.java",
+      "unchanged": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "unchanged": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/SubcategorySwipeLayout.java",
+      "unchanged": true
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java",
+      "unchanged": true
+    }
+  ]
+}

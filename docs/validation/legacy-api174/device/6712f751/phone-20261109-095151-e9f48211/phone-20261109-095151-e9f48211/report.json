@@ -1,0 +1,43 @@
+{
+  "versionCode": 172,
+  "sdk": 31,
+  "pageError": "java.lang.NoSuchMethodError: No static method encode(Ljava\/lang\/String;Ljava\/nio\/charset\/Charset;)Ljava\/lang\/String; in class Ljava\/net\/URLEncoder; or its super classes (declaration of 'java.net.URLEncoder' appears in \/apex\/com.android.art\/javalib\/core-oj.jar)\n\tat cc.huevia.library.OnlinePresetRepository.fetchPage(OnlinePresetRepository.java:84)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat cc.huevia.legacyapi174qa.LegacyApi174Probe.onStart(LegacyApi174Probe.java:30)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\n",
+  "communityError": "java.lang.NoSuchMethodError: No static method encode(Ljava\/lang\/String;Ljava\/nio\/charset\/Charset;)Ljava\/lang\/String; in class Ljava\/net\/URLEncoder; or its super classes (declaration of 'java.net.URLEncoder' appears in \/apex\/com.android.art\/javalib\/core-oj.jar)\n\tat cc.huevia.community.CommunityRepository.encode(CommunityRepository.java:49)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat cc.huevia.legacyapi174qa.LegacyApi174Probe.onStart(LegacyApi174Probe.java:35)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\n",
+  "scope": "Actual installed app encoding on actual Android boot runtime. Baseline172 belowAPI33 must raise NoSuchMethodError in page and community encoding. Fixed174 checks UTF8 wire query, parsed page, community names and actual MainActivity source switches. HTTPS transport is mocked; no writes or preview certification. An Android API31 emulator is not a physical HarmonyOS device.",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "baseline-or-final-version",
+      "pass": true
+    },
+    {
+      "name": "owned-scratch-directory",
+      "pass": true
+    },
+    {
+      "name": "baseline-real-platform-missing-encoder",
+      "pass": true
+    },
+    {
+      "name": "baseline-fails-before-network",
+      "pass": true
+    },
+    {
+      "name": "baseline-community-missing-encoder",
+      "pass": true
+    }
+  ],
+  "candidateSha256": "6712f7513eb35b5e9d9e7c3ce797fcd7fc0395b2400fffbc436a2d017dbe5d83"
+}

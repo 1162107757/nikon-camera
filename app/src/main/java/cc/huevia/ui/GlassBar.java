@@ -49,9 +49,10 @@ public final class GlassBar extends FrameLayout {
         return true;
     };
 
-    public GlassBar(Context context) {
+    public GlassBar(Context context) { this(context, new UiPalette(context)); }
+    public GlassBar(Context context, UiPalette palette) {
         super(context);
-        colors = new UiPalette(context);
+        colors = palette;
         ActivityManager activity = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         lowRam = activity != null && activity.isLowRamDevice();
         powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);

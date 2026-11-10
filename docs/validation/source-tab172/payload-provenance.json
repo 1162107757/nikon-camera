@@ -1,0 +1,386 @@
+{
+  "source": "D:\\dev\\ai-project\\nikon-camera\\dist\\huevia-0.30.18-beta-debug.apk",
+  "sourceSha256": "6bf21f11d28a66a2b9926a58f1c03176309271a3c61c6bd2cb8a8397f17a1c4c",
+  "removedOnlyAbi": "x86",
+  "retainedAbis": [
+    "armeabi-v7a",
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "removed": [
+    {
+      "path": "lib/x86/libraw.so",
+      "sha256": "53c437116a46cee2ba4380e582c33bad68b280cd078110bc0062a47f9d2da30e",
+      "bytes": 1265240
+    },
+    {
+      "path": "lib/x86/libhuevia_raw.so",
+      "sha256": "e0e2be3b493f44b74c7e71a1a52e119b94a5a7f06a7c2b591273d00cb53be11c",
+      "bytes": 52644
+    },
+    {
+      "path": "lib/x86/libc++_shared.so",
+      "sha256": "23ff3b208a61693deda577e381a7da775b104b6c5e997465802037ab8952d9f1",
+      "bytes": 1143240
+    },
+    {
+      "path": "lib/x86/libtensorflowlite_jni.so",
+      "sha256": "2936768e762e4f007d0005a419fbe1d7fc7b65c22892e43484a72e75981eacaf",
+      "bytes": 6323728
+    }
+  ],
+  "retained": [
+    {
+      "path": "AndroidManifest.xml",
+      "sha256": "77780401e08138d6fd6f1a542fd6a49f4ac555b2774dec6817e8af340c22cb59"
+    },
+    {
+      "path": "res/color/huevia_action_text.xml",
+      "sha256": "918fae870f53543b1cf19cc7ce778b8339e2325b14a8965aa2fd86b2703136e9"
+    },
+    {
+      "path": "res/color/huevia_switch_thumb.xml",
+      "sha256": "cec6d9d6d4edc9a2ddb30540c9b05261340185225d99c702f12ccb15b531f52a"
+    },
+    {
+      "path": "res/color/huevia_switch_track.xml",
+      "sha256": "38a1bbb1e6a72e44f396211678e4cd3226802bc6f8b54e35bc045bbcfd1428b3"
+    },
+    {
+      "path": "res/color/huevia_text.xml",
+      "sha256": "0d9dc2b57c723df7e1fc134e1811e6ca262125575b30b22cd5df80bfb29b3384"
+    },
+    {
+      "path": "res/drawable/huevia_button.xml",
+      "sha256": "3d2625692b76d8cab0e5b488e7fd3a315fd932b5432f604cd69287f9118e63bf"
+    },
+    {
+      "path": "res/drawable/huevia_check.xml",
+      "sha256": "f89c00c13412b19ef7df2479895c76687490ed4050ba3ce12189b647d7f907b8"
+    },
+    {
+      "path": "res/drawable/huevia_check_button.xml",
+      "sha256": "965b91f723029a0ee5b4eca3df6375e71fc5f54788b75995450ece646bd8df6a"
+    },
+    {
+      "path": "res/drawable/huevia_check_checked.xml",
+      "sha256": "daa2e40fa0d030e0389ceca174bd5987b171a143836016206d63428078bc6798"
+    },
+    {
+      "path": "res/drawable/huevia_check_disabled.xml",
+      "sha256": "a19a0a21b7e4a9ab9e664db2ff24a30e06ef114e3a6247f02d13fdf05675866a"
+    },
+    {
+      "path": "res/drawable/huevia_choice_disabled.xml",
+      "sha256": "b6ed51238574323a76825e1e9cd46bf96b83a4c34facae2b79f9049548e9b0f3"
+    },
+    {
+      "path": "res/drawable/huevia_choice_ring.xml",
+      "sha256": "d8ada03ec84fd60f8ffe6c8697fd55e07303c88688bbbea9d2cce48d02080444"
+    },
+    {
+      "path": "res/drawable/huevia_dialog.xml",
+      "sha256": "4fb5e704d75f25c5f33087d6c3bfe110a644d8e42e17c2f4d135268b5122edf5"
+    },
+    {
+      "path": "res/drawable/huevia_field.xml",
+      "sha256": "0e8df3a4023f4b7dae6e8080bf0fa4933af6429350f5ee61986b0f2e7a105e07"
+    },
+    {
+      "path": "res/drawable/huevia_popup.xml",
+      "sha256": "ef77f0eb5c5f22c84f93bb722c86682fe01ce9048dc6def2665057e017540432"
+    },
+    {
+      "path": "res/drawable/huevia_radio.xml",
+      "sha256": "7cf16412288e35b27bb1e088a6410086aab3d6b9c4ee834b4a9d0ad918291786"
+    },
+    {
+      "path": "res/drawable/huevia_radio_button.xml",
+      "sha256": "51208be92f28dc79c720ebab58929620780f0d294244ae466377d02c2c0b4f55"
+    },
+    {
+      "path": "res/drawable/huevia_radio_checked.xml",
+      "sha256": "bfe82d585769488db4c9eed27f0ba31e4bb55b6f1cbaadb20f0429b79385e843"
+    },
+    {
+      "path": "res/drawable/huevia_radio_disabled.xml",
+      "sha256": "f8f824fd594679c1377c12409147643d5b962d3b516eb5971afddd7957af7824"
+    },
+    {
+      "path": "res/drawable/huevia_spinner.xml",
+      "sha256": "8479ca9b1dae5e45ca193355e2db79fa3d35119943099c885c680a91fc1c6791"
+    },
+    {
+      "path": "res/drawable/huevia_switch_thumb.xml",
+      "sha256": "bd6e080eae1d7d57a31bf795cac7ae8d86f0a5979813601c7ca9c959d1998d7b"
+    },
+    {
+      "path": "res/drawable/huevia_switch_track.xml",
+      "sha256": "949955feccf79425fb93a5d094fa709e980c4c229d29a60a015d9430dfd08075"
+    },
+    {
+      "path": "res/drawable/huevia_thumb.xml",
+      "sha256": "7e00c6bda1c26fa6b60b23ef8bc7dc06c480e35cac4c7055fbc6c58d7a95df30"
+    },
+    {
+      "path": "res/drawable/ic_account_password_hidden.xml",
+      "sha256": "c210db264468602667c0e8b15bb1c64c6c46071c2ab338ff2d362018eb016c07"
+    },
+    {
+      "path": "res/drawable/ic_account_password_visible.xml",
+      "sha256": "6a0c4d6cf62e41703b89e8b0672e67772db9f5b647e5c8ced807d30ea3229f56"
+    },
+    {
+      "path": "res/drawable/ic_camera.xml",
+      "sha256": "4f8bff7ab07da63650379864b320c5301e623b0c7de32004b3a48b993aef5b29"
+    },
+    {
+      "path": "res/drawable/ic_huevia_foreground.xml",
+      "sha256": "e2723684c4420af55743f479c1e2d4253ae5085042545679fbab14696f4beaf9"
+    },
+    {
+      "path": "res/drawable/ic_qq_login.png",
+      "sha256": "46b86da6aa75b0c4913082401b06d33430e0d11ed725f68bcf5c1c5d00314f9a"
+    },
+    {
+      "path": "res/drawable-nodpi-v4/huevia_launcher.png",
+      "sha256": "cc4dac0f9428bb1b363bf065cd8283a669d989e595e751ffc9c8d06dae72289d"
+    },
+    {
+      "path": "res/drawable-nodpi-v4/preset_template.png",
+      "sha256": "fbb13fd57ca7d657e807b7c5cf902d24f9167c727bb49498df52c1fd2aaf7906"
+    },
+    {
+      "path": "res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "1674dbbd152c1fcc07bb71ccd93dad778c2386fdd233d23c127ab51c4a1f9d46"
+    },
+    {
+      "path": "res/xml/device_filter.xml",
+      "sha256": "e6500ccdd4e0201a2210e500fe8496e18a37078d8aa4d46eff8fcb39f795dde1"
+    },
+    {
+      "path": "resources.arsc",
+      "sha256": "a3d2fe7f7ad36169376835e116f6c54d9feab7a42e1bb0cca0586784de2b2dbb"
+    },
+    {
+      "path": "assets/photo-borders/nikon-wordmark-black.png",
+      "sha256": "93ef2b678d1bd74cf80ff93ff51edc37cb2d12f068db783b49c426087198c7c3"
+    },
+    {
+      "path": "assets/photo-borders/nikon-wordmark-white.png",
+      "sha256": "dc7068dd1a1dac737fadb04036744560aaed5e062c6c653d88b2abacd5599303"
+    },
+    {
+      "path": "assets/photo-borders/nikon-yellow-square.png",
+      "sha256": "1f5c351a9248cb8f1ae038be59f0bc8e36ffedb5b81ed3e1b0ca8fe829f8a519"
+    },
+    {
+      "path": "assets/photo-borders/parameters-OFL.txt",
+      "sha256": "1dd4eaacd1da1bfb7e1d14dd5af0279c17d4503fde55abc628bdaccc63ae9eca"
+    },
+    {
+      "path": "assets/photo-borders/parameters.ttf",
+      "sha256": "f7fe4bed14aaec1e25b1173c4eed35c3c5537e836c47db67b06189ec4adc7b19"
+    },
+    {
+      "path": "assets/photo-borders/source-manifest.json",
+      "sha256": "417cc7c8a1b5d9164ad12b007863ff0b18e818666e9619b3a8131b4e7b41a518"
+    },
+    {
+      "path": "assets/portrait/face_landmarks_detector.tflite",
+      "sha256": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5"
+    },
+    {
+      "path": "assets/portrait/face_skin_multiclass.shuffle4.zlib",
+      "sha256": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+    },
+    {
+      "path": "assets/preset-showcase/alpine-lake.jpg",
+      "sha256": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3"
+    },
+    {
+      "path": "assets/preset-showcase/breakfast.jpg",
+      "sha256": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648"
+    },
+    {
+      "path": "assets/preset-showcase/city-skyline.jpg",
+      "sha256": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486"
+    },
+    {
+      "path": "assets/preset-showcase/coastal-water.jpg",
+      "sha256": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28"
+    },
+    {
+      "path": "assets/preset-showcase/manifest.json",
+      "sha256": "c2830dda189454474cdab4ff94feda83f7419b1e1ce657c7793d74658e9d50c6"
+    },
+    {
+      "path": "assets/preset-showcase/neon-street.jpg",
+      "sha256": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2"
+    },
+    {
+      "path": "assets/preset-showcase/pink-tulips.jpg",
+      "sha256": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580"
+    },
+    {
+      "path": "assets/preset-showcase/portrait-man.jpg",
+      "sha256": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182"
+    },
+    {
+      "path": "assets/preset-showcase/portrait-smile.jpg",
+      "sha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58"
+    },
+    {
+      "path": "assets/preset-showcase/rainy-tokyo.jpg",
+      "sha256": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe"
+    },
+    {
+      "path": "assets/preset-showcase/sunlit-forest.jpg",
+      "sha256": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+    },
+    {
+      "path": "assets/third-party/libfuji-MIT.txt",
+      "sha256": "62b8331c35d76305e3badac3d886b9b1ebdbea5d7019876c0caafdc8e95cbf1e"
+    },
+    {
+      "path": "assets/third-party/libraw/BUILD-IDENTITY.json",
+      "sha256": "ec747899ae40be87a650a56ec9b546601e3a678368a9fab8b6ebcab9d0aaf352"
+    },
+    {
+      "path": "assets/third-party/libraw/COPYRIGHT",
+      "sha256": "574c88f5dd59414cfc896293a63defbc2d525a418ed413d7ab7dcc43cf79c509"
+    },
+    {
+      "path": "assets/third-party/libraw/LICENSE.CDDL",
+      "sha256": "0e3098d2d54a12434715f6679ea408d57da5e8d613c385c58ecc6fe5d30cc81f"
+    },
+    {
+      "path": "assets/third-party/libraw/LICENSE.LGPL",
+      "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449"
+    },
+    {
+      "path": "assets/third-party/libraw/LLVM-NOTICE.txt",
+      "sha256": "f96f763beb66a7ba7a667647fc64c0226ace875e590c831fdd9579ec1c1d91e1"
+    },
+    {
+      "path": "assets/third-party/libraw/LibRaw-0.22.3-source.zip",
+      "sha256": "114ca5cf9f774114cb99ce7acbb521af5f6895e76372098ea4bef5741bd089ac"
+    },
+    {
+      "path": "assets/third-party/libraw/NOTICE.txt",
+      "sha256": "2fc943117833261917f070cea1398901fd4be8f108a1d690f2bec181a4d7c55e"
+    },
+    {
+      "path": "assets/third-party/libraw/RawDeveloper.java",
+      "sha256": "9d54f3698456b1ce723a4c297c0993178e96d62b0c89bc3e5ced7010aef5781d"
+    },
+    {
+      "path": "assets/third-party/libraw/RawDevelopmentSettings.java",
+      "sha256": "4ddddad38c1523c936e905ffb5ceaf3c5462691f814ebd28d61d11024a9542e9"
+    },
+    {
+      "path": "assets/third-party/libraw/RawJpegColorMatch.java",
+      "sha256": "bc9690ec94d5683325e2c891df9984d94a6adb0f84e2e2cfc8755c1352608ba7"
+    },
+    {
+      "path": "assets/third-party/libraw/build-raw-native.ps1",
+      "sha256": "81105ba0fce36eb6fbed4c4c22e9e5b3522f5732221970e644de6567d0367750"
+    },
+    {
+      "path": "assets/third-party/libraw/huevia_raw.cpp",
+      "sha256": "190ad56d1426565fe6d375064570efa4328b110756e3c983ee46aef5f63e410d"
+    },
+    {
+      "path": "assets/third-party/litert/BUILD-IDENTITY.json",
+      "sha256": "1076604ad787b22acefdfe41966f093b848de2491ed9912122c011558f19b4ac"
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-LiteRT.txt",
+      "sha256": "71c6915d04265772a0339bed47276942c678b45cc01534210ebe6984fd1aec65"
+    },
+    {
+      "path": "assets/third-party/litert/LICENSE-MediaPipe.txt",
+      "sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8"
+    },
+    {
+      "path": "assets/third-party/litert/README.md",
+      "sha256": "247a24a8dc360ecf97f8cbff9a2a153e7ae090fadd30e5c564cab0eec621e0c1"
+    },
+    {
+      "path": "classes.dex",
+      "sha256": "f62d9dcd93a60075ffbbc519d8530318fe2c2964c9da909226397947ff3e428d"
+    },
+    {
+      "path": "lib/arm64-v8a/libraw.so",
+      "sha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9"
+    },
+    {
+      "path": "lib/arm64-v8a/libhuevia_raw.so",
+      "sha256": "552e7a8d7c3bd414a34ae10227d685e26abee6fb40cf58df1eea7fa82578be9a"
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "sha256": "cd61762848882a16c8244c964a6f396c0caa0b440588a210ce9cc4ab0e6d9f0c"
+    },
+    {
+      "path": "lib/arm64-v8a/libtensorflowlite_jni.so",
+      "sha256": "85b97f038170c1c3137ba5e2f70d1435cc2cda5a7b07570e2192a38a0b5bdda8"
+    },
+    {
+      "path": "lib/armeabi-v7a/libraw.so",
+      "sha256": "ce5d1168180b6d75349e76d50410b3f5dee791cd3d1126c331d83166cd1250e9"
+    },
+    {
+      "path": "lib/armeabi-v7a/libhuevia_raw.so",
+      "sha256": "e4526df0c29c4defb089c4e62cf99560c8ef1cca14d2fd9196d325903919bc2b"
+    },
+    {
+      "path": "lib/armeabi-v7a/libc++_shared.so",
+      "sha256": "e7e20f6e0f3f181e853cea50373ecee2ccfe95c668dce72d0999b2469c92d0e1"
+    },
+    {
+      "path": "lib/armeabi-v7a/libtensorflowlite_jni.so",
+      "sha256": "4531965835c33601f7e317299ba19100337c830e99d26f0665b2f786353e3010"
+    },
+    {
+      "path": "lib/x86_64/libraw.so",
+      "sha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3"
+    },
+    {
+      "path": "lib/x86_64/libhuevia_raw.so",
+      "sha256": "f77d7a5fc5453b3aa46b725b5a8e5caf43f20a28bebc314f9e270c54ad9fa689"
+    },
+    {
+      "path": "lib/x86_64/libc++_shared.so",
+      "sha256": "2e855857f80819737d25a663109fedf816a5e996a85423166806014a06593256"
+    },
+    {
+      "path": "lib/x86_64/libtensorflowlite_jni.so",
+      "sha256": "935c6a66556fd8e0c1d061733d1cfa5f46eb950f1ac8f02347e0d2ee09833aa8"
+    },
+    {
+      "path": "assets/com.tencent.open.config.json",
+      "sha256": "18d68d491240549e0034c88879accc51744f8b43a8bde7ee0113bbf78a3a646a"
+    },
+    {
+      "path": "assets/h5_qr_back.png",
+      "sha256": "6c17717d5a34c2e1555c481577bdc8bec602244339df953bc217e74bba2d6224"
+    },
+    {
+      "path": "assets/libwbsafeedit",
+      "sha256": "8325ae4b974dc5a4d25be95159d792b5dd9ace4620b0a54ac83ff3d2a245466c"
+    },
+    {
+      "path": "assets/libwbsafeedit_64",
+      "sha256": "5713d3c0c4bb45490a0fa54cf0fb32cb798ccd0be74dab47572f68ce97931f27"
+    },
+    {
+      "path": "assets/libwbsafeedit_x86",
+      "sha256": "91bb72d194805aa8c5e6e6efd71331a2fedce79fa5b1b7db4c35a84b47abf4be"
+    },
+    {
+      "path": "assets/libwbsafeedit_x86_64",
+      "sha256": "da0a59edb4c5e6c79d9dff83f458bee1a0336c510aa2de4cf4c317a353b38b51"
+    }
+  ]
+}

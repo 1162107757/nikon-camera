@@ -1,0 +1,146 @@
+[
+  {
+    "mode": "phone",
+    "file": "native/raw179-final-phone-20261109-204150/raw179-final-phone-20261109-204150/raw-adjustments.png",
+    "sha256": "a325ef05a96c6dada709fe2087be3685f1269fddcf51cb18066ec93991f8a0a9",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "phone",
+    "file": "native/raw179-final-phone-20261109-204150/raw179-final-phone-20261109-204150/raw-album.png",
+    "sha256": "19d06968342d0e26354c8f5a1976b2b2a82f13d86770398d6bdb421d3069c624",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "phone",
+    "file": "native/raw179-final-phone-20261109-204150/raw179-final-phone-20261109-204150/raw-camera-entry.png",
+    "sha256": "f27b4dd3c133cad11c4bee7ffbcf8631bb74345e35bb090ac09381923d911284",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "phone",
+    "file": "native/raw179-final-phone-20261109-204150/raw179-final-phone-20261109-204150/raw-editor.png",
+    "sha256": "3467c8421acbcdec7583d47af7d9137ddf14ea6326ddc443d1a51405fd02bc21",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "phone",
+    "file": "native/raw179-final-phone-20261109-204150/raw179-final-phone-20261109-204150/slot-confirmation.png",
+    "sha256": "1ed3217e74932cc03c18a56ae547f2682135ac3146e396c0608c09080c0eff03",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "phone",
+    "file": "native/raw179-final-phone-20261109-204150/raw179-final-phone-20261109-204150/slot-manager.png",
+    "sha256": "f797de7b9f12a95d4672886b462e54352812832817493aba6a347c841a901e84",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "large",
+    "file": "native/raw179-final-large-20261109-204201/raw179-final-large-20261109-204201/raw-adjustments.png",
+    "sha256": "ecc623aa0c184ca9f0327a710a74224678735a153166a18939120a1e8aa736d2",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "large",
+    "file": "native/raw179-final-large-20261109-204201/raw179-final-large-20261109-204201/raw-album.png",
+    "sha256": "2b2c39f97984c5071e633d507d1249c16d29112448ba373c75c6a807e3408e80",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "large",
+    "file": "native/raw179-final-large-20261109-204201/raw179-final-large-20261109-204201/raw-camera-entry.png",
+    "sha256": "8a64589cb771a507cb6aa746e62b62932899050a42acc87f0275530762f3104d",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "large",
+    "file": "native/raw179-final-large-20261109-204201/raw179-final-large-20261109-204201/raw-editor.png",
+    "sha256": "8d8735a5ca633e4b2e726197c4e36e9281695337184e857e88e844620048acbb",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "large",
+    "file": "native/raw179-final-large-20261109-204201/raw179-final-large-20261109-204201/slot-confirmation.png",
+    "sha256": "444406989b5425e49d41555062da3fbd2926f7356dd0392d4d0501a60ad7b8cc",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "large",
+    "file": "native/raw179-final-large-20261109-204201/raw179-final-large-20261109-204201/slot-manager.png",
+    "sha256": "d4bf5b96307ab81de582309e0aa0ea1a51e6a4b09e3ac389f2357c5d6a2a225b",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "tablet",
+    "file": "native/raw179-final-tablet-20261109-204211/raw179-final-tablet-20261109-204211/raw-adjustments.png",
+    "sha256": "cbd5353325dd0c2ab0f0629e5781030141838fffff54b8cc00b716e60ff4e766",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "tablet",
+    "file": "native/raw179-final-tablet-20261109-204211/raw179-final-tablet-20261109-204211/raw-album.png",
+    "sha256": "c9a4c3b9a4b3dc49d962a1ed4daa2a279d6ea674848d8bf801436fabc2ea1a39",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "tablet",
+    "file": "native/raw179-final-tablet-20261109-204211/raw179-final-tablet-20261109-204211/raw-camera-entry.png",
+    "sha256": "c2ef28336ca73beb639d317417d4a142df522298da1f948ea7ce68921b649714",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "tablet",
+    "file": "native/raw179-final-tablet-20261109-204211/raw179-final-tablet-20261109-204211/raw-editor.png",
+    "sha256": "aab3de56371528cafa3de6cfb8a836dec5cc894fb0e69b27f71dc67aa2a950d6",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "tablet",
+    "file": "native/raw179-final-tablet-20261109-204211/raw179-final-tablet-20261109-204211/slot-confirmation.png",
+    "sha256": "09230aacc13feeab800f5507122ed2d9c5e8046c8b77cead73b102df4f731f95",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "tablet",
+    "file": "native/raw179-final-tablet-20261109-204211/raw179-final-tablet-20261109-204211/slot-manager.png",
+    "sha256": "a524c00e699dbd32c14b372804c967aa6e8c4198a9eea0141d8e032c78852eff",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "landscape",
+    "file": "native/raw179-final-landscape-20261109-204223/raw179-final-landscape-20261109-204223/raw-adjustments.png",
+    "sha256": "64633de5d4e1ab4b57eebbc214b7a0e9919d799906a0200a759c2b779debe228",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "landscape",
+    "file": "native/raw179-final-landscape-20261109-204223/raw179-final-landscape-20261109-204223/raw-album.png",
+    "sha256": "3de22578f567d78098ed1d842c8606b5c4c3bcd940d1ce803072dcb544f4b6d3",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "landscape",
+    "file": "native/raw179-final-landscape-20261109-204223/raw179-final-landscape-20261109-204223/raw-camera-entry.png",
+    "sha256": "40562100ac52c743f83b941f85b4037ffbfba86dd4626442b303e3617c01938f",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "landscape",
+    "file": "native/raw179-final-landscape-20261109-204223/raw179-final-landscape-20261109-204223/raw-editor.png",
+    "sha256": "f8242edf986c28397ef4f1324ee2d833652bc0149dc592b5f38aed6004a84ce7",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "landscape",
+    "file": "native/raw179-final-landscape-20261109-204223/raw179-final-landscape-20261109-204223/slot-confirmation.png",
+    "sha256": "93e5f8806cbdce9dc51169e29fa32d8a5890e56989104aed2d2c9738d4cc1e35",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  },
+  {
+    "mode": "landscape",
+    "file": "native/raw179-final-landscape-20261109-204223/raw179-final-landscape-20261109-204223/slot-manager.png",
+    "sha256": "c8cadd99d9ac153719949e855a8be80bb51baec23657e58f3281229323d01310",
+    "kind": "actual Android native UI; generated Bayer DNG, no embedded JPEG"
+  }
+]

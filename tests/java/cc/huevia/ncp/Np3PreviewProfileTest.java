@@ -327,7 +327,9 @@ public final class Np3PreviewProfileTest {
                 "Blending adjusts grading zone overlap");
         byte[] brightness = identityNp3();
         for (int i = 0; i < 3; i++) field(brightness, 32, i * 4 + 3, 178);
-        equal(0xff808080, Np3PreviewProfile.fromNp3(brightness).applyArgb(0xff404040));
+        int lifted = Np3PreviewProfile.fromNp3(brightness).applyArgb(0xff404040);
+        check(red(lifted) > 64 && red(lifted) <= 76, "Grading brightness keeps the bounded NX-reference lift instead of doubling dark RGB");
+        equal(red(lifted), green(lifted)); equal(red(lifted), blue(lifted));
     }
 
     private static void commentsDoNotMoveOrChangeCurveRendering() throws Exception {

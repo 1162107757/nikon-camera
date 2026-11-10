@@ -1,0 +1,52 @@
+---
+version: 2
+slug: native-four-homes
+primary_target: app/src/main/java/cc/huevia/MainActivity.java
+related_targets:
+  - app/src/main/java/cc/huevia/ui/UiPalette.java
+  - app/src/main/java/cc/huevia/ui/GlassBar.java
+  - app/src/main/java/cc/huevia/ui/LocalAlbumPanel.java
+  - app/src/main/java/cc/huevia/ui/AlbumPanel.java
+---
+
+# Native four-home brief · 154 / 0.30.0-beta
+
+MODE: Operate. User-approved [four-home board](../../docs/design-review/hyperactive-gallery-20261107/review/four-home-board.jpg), implemented as Android Java / Views. This brief records the native build, not the prototype's CSS or simulated photo processing.
+
+THESIS: Put real presets and photographs first on four warm-paper home roots, with white source insets, charcoal whole-tab selection and compact floating controls.
+
+OWN-WORLD: Keep Huevia's existing native icon family, system sans/sp, real safe insets, connection/data state and paired warm-stone dark appearance. Use the scoped UiPalette.home factory; ordinary UiPalette and PhotoPrismaStyle remain independent. DESIGN.md owns home-* tokens. Do not apply this palette to photo processing/editor/detail/export/RAW, preset detail, account/community/update pages or connection guides.
+
+STORY: 预设 retains 在线预设／我的预设, category and format filtering, actual template simulation, download/cache/error state and existing local/online actions. Header search filters the loaded names; pull refresh reuses existing local reload/catalog callbacks. 同步 retains 相机照片／边拍边传／已下载 with light connect/remote-capture entries, real counts and download state. 相册 retains 应用相册／手机相册, access scope, date groups, version choice and the existing 100-photo selection limit. 设置 groups the existing account, connection, protection, appearance, template, help, update and about actions without adding capabilities.
+
+FIRST VIEWPORT: Keep title and source context fixed, then compact filters/counts or date groups and photographs. Standard preset rows are bounded recyclable batches of three cards per column, with alternating portrait ratios; compact height retains the established grid. Local album rows bound six photographs on phones or twelve in the four-column wide layout, retaining date boundaries, selection column stability and lazy thumbnails. Local filenames remain accessible; compact mode keeps the visible filename row. Passive preset category captions use content height, while actual online download controls retain their 48dp row.
+
+FORM: Phone navigation is min(360, screenWidthDp − 48)dp wide, 65dp base height, 14dp above the already-inset safe edge. Font growth is 65 + round(max(0, fontScale − 1.2) × 24)dp. The whole selected icon/label item has concentric 4dp inset and height-derived corners. At 600dp and wider, retain the 80dp rail and at most 720dp body; rail selection remains on the icon slot. Source controls keep a 48dp target and 40dp white painted inset (dark selected source #4B4640); category controls keep a 48dp target and 36dp painted capsule. Header actions use 48dp targets with 36dp paint. Version choice uses a 48dp target with a compact 23dp painted label.
+
+MOTION: Preserve 150's content-only source motion, 149's gesture ownership/guards and the existing cross-root transitions. The prior [source brief](sync-overview.md) remains authoritative for its 240ms/170ms settling, disabled-animation behavior, interruptibility and bounded outgoing frame. No new category/settings/root swipe is added.
+
+DOWNLOAD / SELECTION: Download overlay uses the host's real navigation obstruction plus at least 15dp, with a separate byte row and existing stop handler. Local floating selection dock, source locks, back behavior, date selection, version transactions, queue freezes and export rules keep their prior semantics; this homepage change does not redesign their downstream sheets.
+
+ASSETS / TRUTH: 154 ships the current real preset-template simulation. No new demo photography asset is packaged. New photography showcase samples belong to a separate authorized chat workstream for a later build; prototype images and owned emulator fixtures are not production samples or camera-effect proof.
+
+155 FOLLOW-UP / PHOTOGRAPHY: 0.30.1-beta preserves the frozen 154 home layout, home-* scope and editor separation while adding ten licensed Pexels photographs as preset-gallery inputs. MainActivity's list/detail/settings source viewer uses PresetShowcaseRenderer; preset SHA/category fixes the scene, an existing custom template takes priority, and effect/original share a frozen Source. The original viewer preserves aspect ratio and photo credit, with bounded height to keep Close usable in compact landscape. Processing-photo preset previews, PresetSelectionPage, PresetPreviewRenderer and HoldToCompare remain on their existing paths. Real camera-reference fields remain separate; these photos are labelled phone simulations, not preset-specific camera samples. See the [155 photography brief](native-preset-showcase.md), [source manifest](../../app/src/main/assets/preset-showcase/manifest.json) and [implementation/evidence](../../docs/preset-showcase155.md).
+
+155 EVIDENCE BOUNDARY: Local APK b7d39e4930ca02a01174dcbdb26b7aa91d57dd84f2ebe20baf17305e44e61beb; seven modes167 assertion executions/35 native captures, plus4 live-catalog checks/2 captures and10 output thumbnails. Initial review remains FIX. The [scored verdict](../review/preset-showcase155/verdict.md) closes only F1 settings default/source viewer/restore wording and direct regressions, including compact-landscape Close/custom-template/gallery behavior. It does not extend 154's review or certify the full app/editor. Ten independent private-source uploads were verified byte-for-byte without changing390existing presets; no website/server behavior deployment, public APK release, physical-phone or camera-output claim.
+
+AUTHORITY / EVIDENCE: Final candidate identity is [reviewed-candidate.json](../../.tooling/four-home154/reviewed-candidate.json), APK SHA-256 9636cfe8dde97c1af3863754b16557ddf1620b75e2e6d3b9230a6705cc34b8b9. Native source and [scope preservation](../../docs/validation/four-home154/scope-preservation.json) take precedence over this brief where they differ. The [contract](../../docs/validation/four-home154/contract.md), [initial finish review](../../docs/validation/four-home154/finish-review.md), [scored verdict](../../docs/validation/four-home154/verdict.md) and [validation README](../../docs/validation/four-home154/README.md) retain their exact candidate, counts and disposition. Seven corrected native modes pass 333 repeated home assertions; final same-APK source-motion 70 + 9 and Prisma selection 10 / continuity 101 remain separately scoped regressions. The scored follow-up closes F1/F2 with limited ship; it does not relabel the initial full-review FIX as full-surface SHIP.
+
+BOUNDARY: Only the four native roots and their source controls are redesigned. Existing Prisma 151/152/153 editing, draft continuity, shared tools, quiet card selection, original bytes, save/export and RAW rules remain in force. Native fixture assertions do not certify real-camera transport, throughput, server catalogs, physical devices, TalkBack, FPS, algorithms or whole-app acceptance.
+
+NOT CANONIZED: Collapsed category paint/hit mismatch and fixed passive-caption gaps were review defects corrected in source. Prototype demo processing and imagery are outside production truth; none is a reusable system rule.
+
+AMENDMENT 165 (2026-11-08): The preset header search action now expands in place into a 48 dp search input with clear and cancel controls. Live filtering keeps the header input attached; source/category scope, the warm paper/graphite palette and root navigation remain authoritative. No editor or source-motion redesign. See the separately scoped [165 evidence](../../docs/validation/album-search165/README.md); the frozen 154 review above is not relabeled.
+
+AMENDMENT 166 (2026-11-08): Search empty results contain the icon, title and hint without the two footer actions; header clear / cancel remain. Preset empty content is centered in the result viewport with the established floating-navigation inset and scroll overflow for short / enlarged layouts. Other preset empty/error recovery actions remain. Native phone light/dark, large font, wide and compact-landscape evidence is [separately scoped](../../docs/validation/preset-empty166/README.md); 165 and older records remain historical.
+
+AMENDMENT 171 (2026-11-09): Online name search covers the validated complete catalog, superseding the loaded-page limitation. Browse pagination is kept separately. Initial lookup, cached lookup, unavailable/retry and real zero-match states remain distinct; existing48dp inline search,160ms coalescing and166 centered empty composition are retained. Four native configurations with synthetic390 metadata are scoped in [171 evidence](../../docs/validation/online-search171/summary.json); no physical HarmonyOS crash or whole-app certification.
+
+AMENDMENT 172 (2026-11-09): The150 source transition snapshot is optional. If hardware-backed content rejects a software Canvas or allocation fails, continue the actual source selection without that snapshot; ordinary capture retains existing motion. Do not catch failures of the actual page operation. Controlled171 hardware-bitmap baseline and172 evidence are [separate](../../docs/validation/source-tab172/README.md) from the unverified physical HarmonyOS report.
+
+AMENDMENT 174 (2026-11-09): Online feed and community-name UTF8 encoding use the older platform overload instead of an unbackported API33 overload. No new visual rule. An actual top-tab tap on172/API31 produced NoSuchMethodError; exact174 passesAPI31/API37 native20 each andAPI31 search37. [174 evidence](../../docs/validation/legacy-api174/README.md) keeps physical HarmonyOS verification separate.
+
+180 APPLICATION-ALBUM DELETE: Keep the existing home world and floating selection dock. Add one 48dp trash action only to 应用相册; compact the count to x 张. Narrow/large-font docks use incumbent Cancel/Export icons with full accessible names, while retaining 编辑. Confirm all private versions/aliases with AppDialog and preserve phone/camera originals. Disable conflicting actions during actual deletion; Back does not abandon confirmed work or shared-library reconciliation. Four exact-final-APK API37 configurations pass 112 repeated checks/16 captures; this does not extend 154 whole-home or physical-device certification. See docs/validation/album-raw180/README.md.

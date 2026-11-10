@@ -1,0 +1,91 @@
+{
+  "pass": true,
+  "download": {
+    "actualBrowserDownload": true,
+    "downloadedFile": "Huevia-156-beta (1).apk",
+    "byteLength": 31292511,
+    "at": "2026-11-08T03:00:40.769Z",
+    "apk": {
+      "packageName": "cc.huevia",
+      "versionName": "0.30.2-beta",
+      "versionCode": 156,
+      "minSdk": 26,
+      "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+      "signatureSchemes": [
+        2,
+        3
+      ],
+      "byteLength": 31292511,
+      "sha256": "9223d32f9db99cec28282c3af007acff9cf1fb36a724c14b2525ad7ccef4fc95"
+    },
+    "exactHashMatch": true
+  },
+  "fullTests": {
+    "total": 191,
+    "pass": 184,
+    "skip": 7,
+    "fail": 0
+  },
+  "targetedTests": {
+    "total": 19,
+    "pass": 19,
+    "fail": 0
+  },
+  "budget": {
+    "at": "2026-11-08T02:47:08.668Z",
+    "hourlyRequests": 20,
+    "hourlySourceBytes": 268435456,
+    "globalDailyRequests": 1000,
+    "globalDailyBytes": 2147483648,
+    "usageReset": false,
+    "onlyChanged": "source hourly byte allowance: 80MiB to 256MiB",
+    "beforeSha256": "f60cc9720541d57cc318d4485438242d08c3af5a13dee3597dc7ccecb4402376",
+    "afterSha256": "f9bf1288a40fd44a38d1ee8d58b62929158100849ce1aa075a64e130106339c6"
+  },
+  "inputs": [
+    {
+      "path": "online-library/server/app.mjs",
+      "sha256": "ae2d4369e0d03593a393bd77350e2d63e35a44d8be2de612a01032c0a83fe53a"
+    },
+    {
+      "path": "online-library/server/release-download-error.mjs",
+      "sha256": "520ab488463120921880979363d3129c3ecf6262263c085e824d2d1c6a0b4785"
+    },
+    {
+      "path": "online-library/server/cos-release-storage.mjs",
+      "sha256": "5424b005423adb33b28d948e29e4102df112135f284ad66fa66351b4f973e2e2"
+    },
+    {
+      "path": "online-library/database/018-app-download-budget.sql",
+      "sha256": "a36853aa6608444bc6ee30203f911f68185b6819310eafef31dd876cb1ccf1a9"
+    },
+    {
+      "path": "online-library/home/index.html",
+      "sha256": "13140639c686dc2bc15145a160aefcff85f66e0e4a9a6081561dcada24f0bf5f"
+    },
+    {
+      "path": "online-library/home/home.css",
+      "sha256": "b0135d541a6ff7580a59abe9a6cabdc1221b2d881503838441c6d9867aae0f27"
+    },
+    {
+      "path": "online-library/download/index.html",
+      "sha256": "a994f9ea15b3001a9aeb4e4d81e2e786650b21c1be76bde33a00f16e2d06ca40"
+    },
+    {
+      "path": "online-library/download/download.css",
+      "sha256": "19aeb69bdfc91aeaa701aff628cbb3f4bb9105ac1f3d5942b1666ac60eb99e66"
+    },
+    {
+      "path": "online-library/test/release-download-error.test.mjs",
+      "sha256": "82b111375171f5a1d0905e342c408ceca2db051d108870d5b4bff3bfcd706c08"
+    },
+    {
+      "path": "online-library/test/release-download-budget.test.mjs",
+      "sha256": "7e96a053f6329a6b38270770863e37a4573068fc8b90295dd01a849da711f864"
+    },
+    {
+      "path": "online-library/test/cos-release-storage.test.mjs",
+      "sha256": "322a508eba201f801a147223b506db2fbaddf2f6f0b4952d0dc332e7b7bbe4da"
+    }
+  ]
+}

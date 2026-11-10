@@ -1,0 +1,24 @@
+{
+  "baselineApkSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "candidateApkSha256": "c1142e440a9bb38afde54ce922a10e273ef5154cd1899ea5a3827ef4773a302a",
+  "changedApkPayloads": [
+    "AndroidManifest.xml",
+    "assets/third-party/libraw/RawJpegColorMatch.java",
+    "classes.dex"
+  ],
+  "allOtherPayloadsByteIdentical": true,
+  "unchangedRawSources": [
+    {
+      "path": "app/src/main/cpp/huevia_raw.cpp",
+      "sha256": "190ad56d1426565fe6d375064570efa4328b110756e3c983ee46aef5f63e410d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/RawDevelopmentSettings.java",
+      "sha256": "4ddddad38c1523c936e905ffb5ceaf3c5462691f814ebd28d61d11024a9542e9"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/RawDeveloper.java",
+      "sha256": "afe69745be1468edc2f76dcc69d9a8fb3e3c6ab06f32a86e97858a23bb5d0cb4"
+    }
+  ]
+}

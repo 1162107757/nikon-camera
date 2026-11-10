@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-08T02:16:29.924Z",
+  "status": "Active",
+  "role": "HueviaUpdatePackageRole",
+  "provider": "cos",
+  "configurationPreserved": true,
+  "zipSha256": "42588553486755e5a2658ce1cce5d2c2594db0eb47239af2c7964f84bec5e37d",
+  "changedFiles": [
+    {
+      "path": "download/download.css",
+      "before": "9ca7d36fd91691e0e6f21e3144fccce7a8263ecf999f4f78379566bd61e9035f",
+      "after": "19aeb69bdfc91aeaa701aff628cbb3f4bb9105ac1f3d5942b1666ac60eb99e66"
+    },
+    {
+      "path": "download/index.html",
+      "before": "eeeb51481732fb6fc05625c931e7c8b7dc4fd12c0df905229997cb16673c600b",
+      "after": "d11db6f0bb9e8ba710248f22ee28ecaadcd861f23cfd4ca43edcc072bc25b59b"
+    }
+  ]
+}

@@ -50,10 +50,11 @@ public final class PersonalPresetPanel {
             if(conflicts>0)new AppDialog.Builder(activity).setTitle("处理云端信息差异").setMessage("其他设备更新了同一预设的名称、分类或删除状态。预设原文件内容相同，请选择保留哪一份信息。")
                 .setNegativeButton("使用云端信息",(d,w)->enqueue(owner,()->sync.resolveConflicts(owner,false),true))
                 .setPositiveButton("保留本机更改",(d,w)->enqueue(owner,()->sync.resolveConflicts(owner,true),true)).show();
-            else new AppDialog.Builder(activity).setTitle("我的预设 · 个人云端").setItems(new String[]{"立即同步","同步已有本机预设","存储说明"},(d,w)->{
-                if(w==0)requestSync();else if(w==1){offered.remove(owner);new AppDialog.Builder(activity).setTitle("同步本机预设？").setMessage("将尚未归属账号的本机预设保存到当前账号，仅你可见。不会上传其他账号的离线副本。")
-                    .setNegativeButton("取消",null).setPositiveButton("同步",(dialog,which)->enqueue(owner,()->sync.consent(owner,true),true)).show();}
-                else new AppDialog.Builder(activity).setTitle("云端与离线使用").setMessage("预设文件、名称和分类保存在个人账号，登录后自动同步；手机保留离线副本。未联网时更改会排队，恢复网络后可重试。\n\n模板和自选样片保留在本机。删除已同步预设会同时删除个人云端记录；已生成照片与相机中的预设保留。").setPositiveButton("知道了",null).show();}).show();
+            else new ActionChoiceDialog(activity,UiPalette.forTheme(activity),"个人云端")
+                .add(AppIcon.Kind.REFRESH,"立即同步","",()->{if(owner.equals(owner()))requestSync();})
+                .add(AppIcon.Kind.PRESETS,"同步本机预设","",()->{if(!owner.equals(owner()))return;offered.remove(owner);new AppDialog.Builder(activity).setTitle("同步本机预设？").setMessage("将尚未归属账号的本机预设保存到当前账号，仅你可见。不会上传其他账号的离线副本。")
+                    .setNegativeButton("取消",null).setPositiveButton("同步",(dialog,which)->{if(owner.equals(owner()))enqueue(owner,()->sync.consent(owner,true),true);}).show();})
+                .add(AppIcon.Kind.INFO,"存储说明","",()->new AppDialog.Builder(activity).setTitle("云端与离线使用").setMessage("预设文件、名称和分类保存在个人账号，登录后自动同步；手机保留离线副本。未联网时更改会排队，恢复网络后可重试。\n\n模板和自选样片保留在本机。删除已同步预设会同时删除个人云端记录；已生成照片与相机中的预设保留。").setPositiveButton("知道了",null).show()).show();
         });});
     }
     private int dp(int value){return Math.round(activity.getResources().getDisplayMetrics().density*value);}

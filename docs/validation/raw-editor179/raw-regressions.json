@@ -1,0 +1,70 @@
+[
+  {
+    "path": "docs/validation/photo-image-suite/raw-development/4c0a17d5/20261109-204252-phone-710ef2d8cd",
+    "pass": true,
+    "checks": 160,
+    "measurements": [
+      {
+        "case": "synthetic-dng-default",
+        "elapsedMs": 18.6006,
+        "width": 96,
+        "height": 64,
+        "workingBytes": 9327,
+        "meanLuma": 72.40369669596355,
+        "outputBits": 8
+      },
+      {
+        "case": "real-nef",
+        "make": "Nikon",
+        "model": "Z 6",
+        "decoder": "nikon_load_raw()",
+        "width": 6064,
+        "height": 4040,
+        "sourceSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+        "workingSha256": "99e59dcc87939275f88a8550dbb8797b5752f0e46ddbefca763a3ac9023ffce3",
+        "workingBytes": 29481131,
+        "elapsedMs": 13968.0875,
+        "outputBits": 8
+      },
+      {
+        "case": "real-nef-camera-JPEG-color",
+        "applied": true,
+        "status": "\u76f8\u673a JPEG \u8272\u5f69 \u00b7 \u8fd1\u4f3c\u8fd8\u539f",
+        "beforeRgbRmse": 0.29805144310325227,
+        "afterRgbRmse": 0.035123020420655654,
+        "fitReason": "MATCHED",
+        "correlation": 0.9891077686955722,
+        "orientation": 0,
+        "referenceScale": 1.06,
+        "samples": 2280,
+        "referenceWidth": 6048,
+        "referenceHeight": 4024,
+        "referenceBytes": 1297891,
+        "neutralExtraElapsedMs": 12087.5609
+      },
+      {
+        "case": "independent-full-raster-unaligned-reference",
+        "beforeRgbRmse": 0.30481216917800324,
+        "afterRgbRmse": 0.12648417284305627
+      }
+    ],
+    "fixtureCleanup": true
+  },
+  {
+    "path": "docs/validation/photo-image-suite/raw-development/4c0a17d5/20261109-204552-phone-573852ce05",
+    "pass": true,
+    "checks": 15,
+    "measurements": [
+      {
+        "case": "real-nef-editor-bridge",
+        "width": 6064,
+        "height": 4040,
+        "bytes": 11873269,
+        "sourceSha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+        "elapsedMs": 15002,
+        "shootingMetadataFields": 5
+      }
+    ],
+    "fixtureCleanup": true
+  }
+]

@@ -14,6 +14,8 @@ $javaRoot = Join-Path $projectRoot 'app\src\main\java\cc\huevia'
 $sourcePaths = @(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'ptp') -Filter '*.java' | ForEach-Object FullName)
 $sourcePaths += @(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'picturecontrol') -Filter '*.java' | ForEach-Object FullName)
 $sourcePaths += @(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'ncp') -Filter '*.java' | ForEach-Object FullName)
+$sourcePaths += Join-Path $javaRoot 'library\PresetFile.java'
+$sourcePaths += Join-Path $javaRoot 'library\LibraryJson.java'
 foreach ($name in @('PhotoCameraClient', 'PtpIpClient', 'ConnectionTrace', 'FujifilmPhotoClient')) {
     $sourcePaths += Join-Path $javaRoot ('album\' + $name + '.java')
 }

@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-11-09T08:30:02.048Z",
+  "source": "visible CLS browser results",
+  "topicId": "b542b8c6-ab56-40fa-a14d-c81cd050fb18",
+  "logsetId": "ae4d30f6-aad2-44c7-aa52-fca7d7ebe513",
+  "rows": [
+    {
+      "functionName": "nikon-preset-library",
+      "status": "200",
+      "requestId": "c6a7509f-7504-4a8b-afa4-d21063e059a7"
+    },
+    {
+      "functionName": "nikon-preset-library",
+      "status": "202",
+      "requestId": "c6a7509f-7504-4a8b-afa4-d21063e059a7"
+    },
+    {
+      "functionName": "nikon-preset-library",
+      "status": "202",
+      "requestId": "f1d913f0-d4d9-4e79-abf4-c51d33cc912c"
+    },
+    {
+      "functionName": "nikon-preset-library",
+      "status": "202",
+      "requestId": "0bce08c3-0ae1-43b7-87c4-59130685b7d5"
+    }
+  ]
+}

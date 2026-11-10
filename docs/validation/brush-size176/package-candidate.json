@@ -1,0 +1,18 @@
+{
+  "versionCode": 176,
+  "versionName": "0.30.22-beta",
+  "sourceSha256": "e7d2438ccdec191a53ff45f84d5c312c7d6cbf0209d58eda986d0467667d0330",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication176\\candidates\\e7d2438ccdec191a53ff45f84d5c312c7d6cbf0209d58eda986d0467667d0330\\update.apk",
+  "uploadSha256": "9d307254e007cc6272c1b2f7f653c0f685bd6de9eb6d637498481d07aedaca3c",
+  "uploadBytes": 31374525,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "bounded native visual review passed",
+  "delivery": "dist/upload176/huevia-0.30.22-beta-update.apk"
+}

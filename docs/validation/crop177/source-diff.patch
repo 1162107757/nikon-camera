@@ -1,0 +1,55 @@
+--- 176/app/build.gradle
++++ 177/app/build.gradle
+@@ -7,8 +7,8 @@
+         applicationId 'cc.huevia'
+         minSdk 26
+         targetSdk 35
+-        versionCode 176
+-        versionName '0.30.22-beta'
++        versionCode 177
++        versionName '0.30.23-beta'
+     }
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_17
+--- 176/app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java
++++ 177/app/src/main/java/cc/huevia/ui/PhotoFilterEditor.java
+@@ -90,7 +90,7 @@
+     private boolean recipeMode,compositionMode,compositionLoading;
+     private double inlineRatio=0;
+     private final java.util.List<Button> inlineRatios=new ArrayList<>();
+-    private static final double[] INLINE_RATIOS={0,1,2.0/3,1.5,9.0/16};
++    private static final double[] INLINE_RATIOS={0,1,2.0/3,1.5,9.0/16,2.35};
+     private LinearLayout compositionPanel;private TextView compositionSummary,adjustmentCaption;
+     private FrameLayout toolPanels;private Button compositionReset;
+     private final java.util.List<View> compositionTools=new ArrayList<>();
+@@ -345,8 +345,8 @@
+         parameters.addOnLayoutChangeListener((v,l,t,r,b,ol,ot,or,ob)->{int width=Math.max(dp(48),(parameters.getWidth()-options.getPaddingLeft()-options.getPaddingRight())/4);for(int i=0;i<options.getChildCount();i++){View child=options.getChildAt(i);if(child.getLayoutParams().width!=width){child.getLayoutParams().width=width;child.requestLayout();}}});
+         TextView parameterHint=text("长按参数图标，恢复此项",10,0xb8ffffff);parameterHint.setPadding(dp(21),0,dp(21),0);adjustmentPanel.addView(parameterHint,new LinearLayout.LayoutParams(-1,PhotoPrismaStyle.compact(activity)?dp(20):fp(22)));
+         compositionPanel=column();compositionPanel.setTag("editor-composition-panel");compositionPanel.setPadding(dp(14),0,dp(14),0);modes.addView(compositionPanel,new FrameLayout.LayoutParams(-1,-1));
+-        compositionTools.clear();inlineRatios.clear();LinearLayout ratios=row();String[] ratioNames={"原比例","1:1","2:3","3:2","9:16"};
+-        for(int i=0;i<INLINE_RATIOS.length;i++){final double ratio=INLINE_RATIOS[i];Button item=button(ratioNames[i],false,()->chooseInlineRatio(ratio));item.setTag("editor-crop-ratio-"+i);item.setContentDescription("裁切比例，"+ratioNames[i]);item.setTextSize(10.5f);item.setGravity(Gravity.CENTER);item.setPadding(0,dp(7),0,0);item.setCompoundDrawablePadding(dp(5));ratios.addView(item,new LinearLayout.LayoutParams(0,PhotoPrismaStyle.compact(activity)?dp(64):fp(76),1));inlineRatios.add(item);compositionTools.add(item);}compositionPanel.addView(ratios);
++        compositionTools.clear();inlineRatios.clear();LinearLayout ratios=row();String[] ratioNames={"原比例","1:1","2:3","3:2","9:16","2.35:1"};HorizontalScrollView ratioScroll=new HorizontalScrollView(activity);ratioScroll.setHorizontalScrollBarEnabled(false);ratioScroll.setFillViewport(true);ratioScroll.addView(ratios);
++        for(int i=0;i<INLINE_RATIOS.length;i++){final double ratio=INLINE_RATIOS[i];Button item=button(ratioNames[i],false,()->chooseInlineRatio(ratio));item.setTag("editor-crop-ratio-"+i);item.setContentDescription("裁切比例，"+(ratio==2.35?"电影 · ":"")+ratioNames[i]);item.setTextSize(10.5f);item.setGravity(Gravity.CENTER);item.setPadding(0,dp(7),0,0);item.setCompoundDrawablePadding(dp(5));ratios.addView(item,new LinearLayout.LayoutParams(dp(56),PhotoPrismaStyle.compact(activity)?dp(64):fp(76),1));inlineRatios.add(item);compositionTools.add(item);}compositionPanel.addView(ratioScroll);
+         LinearLayout transforms=row();transforms.setGravity(Gravity.CENTER);compositionPanel.addView(transforms,new LinearLayout.LayoutParams(-1,dp(48)));
+         Button rotate=inlineCompositionAction("旋转 90°",AppIcon.Kind.ROTATE,"editor-composition-rotate",this::rotateInline);
+         Button flip=inlineCompositionAction("水平翻转",AppIcon.Kind.FLIP_HORIZONTAL,"editor-composition-flip",()->changeComposition(geometry.flipHorizontal()));
+@@ -452,7 +452,7 @@
+         filterPanel.setVisibility(plain&&!adjustmentMode?View.VISIBLE:View.INVISIBLE);adjustmentPanel.setVisibility(plain&&adjustmentMode?View.VISIBLE:View.INVISIBLE);compositionPanel.setVisibility(compositionMode?View.VISIBLE:View.INVISIBLE);recipePanel.setVisibility(!compositionMode&&!borderMode&&recipeMode?View.VISIBLE:View.INVISIBLE);if(borderPanel!=null)borderPanel.setVisibility(!compositionMode&&borderMode?View.VISIBLE:View.INVISIBLE);
+         styleCategory(filterModeButton,plain&&!adjustmentMode);styleCategory(adjustmentModeButton,plain&&adjustmentMode);
+         Button recipe=dock.findViewWithTag("recipe-mode"),frame=dock.findViewWithTag("border-mode"),compose=dock.findViewWithTag("composition-mode");if(recipe!=null)styleCategory(recipe,recipeMode&&!compositionMode&&!borderMode);if(frame!=null)styleCategory(frame,borderMode&&!compositionMode);if(compose!=null)styleCategory(compose,compositionMode);
+-        if(original!=null&&!original.isRecycled()){PhotoGeometry.Plan plan=geometry.plan(original.getWidth(),original.getHeight(),1),full=geometry.fullFrame().plan(original.getWidth(),original.getHeight(),1);double actual=plan.width/(double)plan.height,frameRatio=full.width/(double)full.height;if(inlineRatio<0||Math.abs(actual-(inlineRatio==0?frameRatio:inlineRatio))>.01){inlineRatio=-1;for(double ratio:INLINE_RATIOS)if(Math.abs(actual-(ratio==0?frameRatio:ratio))<.01){inlineRatio=ratio;break;}}}
++        if(original!=null&&!original.isRecycled()){PhotoGeometry.Plan full=geometry.fullFrame().plan(original.getWidth(),original.getHeight(),1);double frameRatio=full.frameWidth/(double)full.frameHeight,actual=frameRatio*(geometry.right-geometry.left)/(geometry.bottom-geometry.top);if(inlineRatio<0||Math.abs(actual-(inlineRatio==0?frameRatio:inlineRatio))>.01){inlineRatio=-1;for(double ratio:INLINE_RATIOS)if(Math.abs(actual-(ratio==0?frameRatio:ratio))<.01){inlineRatio=ratio;break;}}}
+         compositionSummary.setTooltipText(geometry.label()+"，点击精细构图");for(int i=0;i<inlineRatios.size();i++){Button item=inlineRatios.get(i);boolean selected=inlineRatio==INLINE_RATIOS[i];item.setSelected(selected);item.setTextColor(selected?BLUE:0xc9ffffff);Drawable ratioIcon=PhotoPrismaStyle.ratio(activity,INLINE_RATIOS[i],selected);ratioIcon.setBounds(0,0,dp(30),dp(30));item.setCompoundDrawables(null,ratioIcon,null,null);item.setBackground(new RippleDrawable(ColorStateList.valueOf(0x22ffe335),null,shape(Color.WHITE,4)));}
+         boolean compositionReady=ready&&!unrecoverableSaved;for(View tool:compositionTools){tool.setEnabled(compositionReady);tool.setAlpha(compositionReady?1:.35f);}compositionReset.setEnabled(compositionReady&&!geometry.isNeutral());compositionReset.setAlpha(compositionReset.isEnabled()?1:.3f);if(borderControls!=null)borderControls.refresh();
+     }
+--- 176/app/src/main/java/cc/huevia/ui/PhotoCropDialog.java
++++ 177/app/src/main/java/cc/huevia/ui/PhotoCropDialog.java
+@@ -31,7 +31,7 @@
+         crop=new CropCanvas();FrameLayout canvasStage=new FrameLayout(activity);canvasStage.addView(crop,new FrameLayout.LayoutParams(-1,-1));top.setBackground(new android.graphics.drawable.GradientDrawable(android.graphics.drawable.GradientDrawable.Orientation.TOP_BOTTOM,new int[]{0x88000000,0x00000000}));canvasStage.addView(top,new FrameLayout.LayoutParams(-1,dp(54),Gravity.TOP));body.addView(canvasStage,landscape?new LinearLayout.LayoutParams(0,-1,1):new LinearLayout.LayoutParams(-1,0,1));
+         LinearLayout controls=column();controls.setPadding(dp(10),0,dp(10),dp(8));controls.setBackgroundColor(Color.TRANSPARENT);
+         HorizontalScrollView ratios=new HorizontalScrollView(activity);ratios.setHorizontalScrollBarEnabled(false);LinearLayout choices=row();ratios.addView(choices);
+-        String[] labels={"原图","自由","1:1","4:3","3:2","9:16"};double[] values={0,-1,1,4.0/3,1.5,9.0/16};
++        String[] labels={"原图","自由","1:1","4:3","3:2","9:16","电影 · 2.35:1"};double[] values={0,-1,1,4.0/3,1.5,9.0/16,2.35};
+         for(int i=0;i<labels.length;i++){String label=labels[i];double value=values[i];Button b=button(label,()->{ratio=value;ratioName=label;fitRatio();for(int j=0;j<choices.getChildCount();j++){Button item=(Button)choices.getChildAt(j);styleRatio(item,item.getText().toString().equals(label));}});b.setSingleLine(true);styleRatio(b,label.equals("自由"));LinearLayout.LayoutParams choiceSize=new LinearLayout.LayoutParams(-2,dp(48));choiceSize.rightMargin=dp(6);choices.addView(b,choiceSize);}controls.addView(ratios,new LinearLayout.LayoutParams(-1,dp(48)));
+         LinearLayout actions=row();Button rotate=button("旋转 90°",()->{geometry=geometry.rotate();fitRatio();});actions.addView(rotate,new LinearLayout.LayoutParams(0,dp(48),1));Button reset=button("重置",()->{geometry=PhotoGeometry.NONE;ratio=-1;ratioName="自由";transformMode=0;updateTransformSlider();for(int j=0;j<choices.getChildCount();j++){Button item=(Button)choices.getChildAt(j);styleRatio(item,item.getText().toString().equals("自由"));}changed();});actions.addView(reset,new LinearLayout.LayoutParams(0,dp(48),1));controls.addView(actions);
+         LinearLayout angle=row();transformChoice=button("拉直",this::chooseTransform);android.graphics.drawable.Drawable arrow=icon(AppIcon.Kind.CHEVRON_DOWN);arrow.setBounds(0,0,dp(12),dp(12));transformChoice.setCompoundDrawables(null,null,arrow,null);transformChoice.setCompoundDrawablePadding(dp(2));angle.addView(transformChoice,new LinearLayout.LayoutParams(dp(72),dp(48)));slider=new SeekBar(activity);slider.setMax(900);slider.setProgress(geometry.angle+450);slider.setKeyProgressIncrement(1);slider.setProgressTintList(ColorStateList.valueOf(BLUE));slider.setThumbTintList(ColorStateList.valueOf(BLUE));angle.addView(slider,new LinearLayout.LayoutParams(0,dp(48),1));angleValue=text("",12);angleValue.setSingleLine(true);angleValue.setGravity(Gravity.END|Gravity.CENTER_VERTICAL);angle.addView(angleValue,new LinearLayout.LayoutParams(dp(60),dp(48)));controls.removeView(actions);controls.addView(angle);controls.addView(actions);slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onProgressChanged(SeekBar s,int p,boolean user){if(user&&!updating){if(transformMode==0)geometry=geometry.straighten(p-450);else if(transformMode==1)geometry=geometry.perspective(p-100,geometry.verticalPerspective);else geometry=geometry.perspective(geometry.horizontalPerspective,p-100);changed();}}public void onStartTrackingTouch(SeekBar s){}public void onStopTrackingTouch(SeekBar s){}});

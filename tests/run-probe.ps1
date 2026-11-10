@@ -23,11 +23,15 @@ $commonSourcePaths = @(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'ptp') -F
 $commonSourcePaths += Join-Path $javaRoot 'usb\StorageAssessment.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\PtpDirectorySurvey.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\NcpTransferSession.java'
+$commonSourcePaths += Join-Path $javaRoot 'library\PresetFile.java'
+$commonSourcePaths += Join-Path $javaRoot 'library\LibraryJson.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\PtpUsbTransport.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\PictureControlReadSession.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\UsbPictureControlProbe.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\PictureControlImportSession.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\UsbPictureControlImport.java'
+$commonSourcePaths += Join-Path $javaRoot 'usb\PictureControlDeleteSession.java'
+$commonSourcePaths += Join-Path $javaRoot 'usb\UsbPictureControlDelete.java'
 $commonSourcePaths += @(Get-ChildItem -LiteralPath (Join-Path $javaRoot 'usb') -Filter 'CameraParameter*.java' | ForEach-Object FullName)
 $commonSourcePaths += Join-Path $javaRoot 'usb\PresetImportOptions.java'
 $commonSourcePaths += Join-Path $javaRoot 'usb\WirelessPictureControl.java'
@@ -57,6 +61,8 @@ function Invoke-ProbeTest([string]$SourcePath, [string]$OutputPath, [string]$Tes
         }
         & $runtimePath -cp $testClassPath cc.huevia.usb.UsbPictureControlImportHostTest
         if ($LASTEXITCODE -ne 0) { throw 'Production Picture Control empty-slot copy host tests failed.' }
+        & $runtimePath -cp $testClassPath cc.huevia.usb.PictureControlDeleteHostTest
+        if ($LASTEXITCODE -ne 0) { throw 'Custom slot deletion safety checks failed.' }
         & $runtimePath -cp $testClassPath cc.huevia.usb.UsbWirelessPictureControlHostTest
         if ($LASTEXITCODE -ne 0) { throw 'Production wireless Picture Control host tests failed.' }
     }

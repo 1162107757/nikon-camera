@@ -1,0 +1,1 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.showcaseqa"><application android:label="Preset Showcase QA" android:allowBackup="false"/><instrumentation android:name=".ShowcaseProbe" android:targetPackage="cc.huevia" android:functionalTest="true"/></manifest>

@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-11-09T08:26:16.717Z",
+  "Status": "Active",
+  "AvailableStatus": "Available",
+  "StatusReasons": [],
+  "ModTime": "2026-11-09 16:26:02",
+  "Runtime": "Nodejs20.19",
+  "Type": "HTTP",
+  "Role": "HueviaUpdatePackageRole",
+  "MemorySize": 256,
+  "Timeout": 60,
+  "ClsTopicId": "b542b8c6-ab56-40fa-a14d-c81cd050fb18",
+  "ClsLogsetId": "ae4d30f6-aad2-44c7-aa52-fca7d7ebe513",
+  "IgnoreSysLog": false,
+  "environmentUnchanged": true,
+  "coreConfigUnchanged": true
+}

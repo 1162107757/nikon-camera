@@ -11,9 +11,9 @@ import android.graphics.drawable.Drawable;
 /** One family of compact vector pictograms, no font/emoji-dependent navigation. */
 public final class AppIcon extends Drawable {
     public enum Kind { PRESETS, ALBUM, CAMERA, FILE, DOWNLOAD, BACK, HELP, CHECK, WIFI, ADJUST, REFRESH,
-        SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
+        SETTINGS, PLUS, USB, CHEVRON, CHEVRON_DOWN, INFO, LINK, DELETE, STAR, STAR_FILLED, EDIT, RECEIPTS, PERSON, EXPAND, GRID, CLOSE, SEARCH,
         UNDO, REDO, COMPARE, MORE, BRIGHTNESS, EXPOSURE, CONTRAST, HIGHLIGHTS, SHADOWS, WHITES, BLACKS, TEMPERATURE, TINT, SATURATION, VIBRANCE, CLARITY, SHARPENING,
-        CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK, BRUSH, PALETTE, CLEANUP, BODY, MORE_HORIZONTAL, FILTER, FRAME, FLIP_HORIZONTAL, SPLIT_COMPARE }
+        CROP, ROTATE, STRAIGHTEN, PERSPECTIVE, RECIPE, SAVE, HISTOGRAM, DETAIL, CURVE, STACK, BRUSH, PATCH, PALETTE, CLEANUP, BODY, MORE_HORIZONTAL, FILTER, FRAME, FLIP_HORIZONTAL, SPLIT_COMPARE, SORT }
     private final Kind kind;
     private final Paint ink = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final int size;
@@ -36,6 +36,8 @@ public final class AppIcon extends Drawable {
                 canvas.drawArc(new RectF(8,5,16,13),180,180,false,ink);line(canvas,12,1,12,3);line(canvas,4,5,6,6);line(canvas,18,6,20,5);line(canvas,3,14,21,14);line(canvas,5,18,19,18);line(canvas,8,22,16,22);break;
             case PALETTE:
                 canvas.drawRoundRect(new RectF(3,3,21,21),3,3,ink);line(canvas,7,12,17,12);line(canvas,12,7,12,17);canvas.drawCircle(15.5f,8.5f,2.5f,ink);break;
+            case PATCH:
+                canvas.save();canvas.rotate(-45,12,12);canvas.drawRoundRect(new RectF(6,2,18,22),4,4,ink);canvas.drawRect(8,8,16,16,ink);canvas.drawCircle(10,5,0.5f,ink);canvas.drawCircle(14,19,0.5f,ink);canvas.restore();break;
             case BRUSH:
                 line(canvas,10,15,7,12,17,3,21,7,12,17,10,15);
                 Path brush=new Path();brush.moveTo(7,14);brush.cubicTo(2,14,6,20,2,21);brush.cubicTo(8,23,12,19,9,16);canvas.drawPath(brush,ink);break;
@@ -99,6 +101,9 @@ public final class AppIcon extends Drawable {
                 line(canvas,3,7,7,7,9,4,15,4,17,7,21,7,21,21,3,21,3,7);
                 canvas.drawCircle(12,13,4,ink); break;
             case FILE: line(canvas,5,2,14,2,20,8,20,22,5,22,5,2); line(canvas,14,2,14,8,20,8); break;
+            case SORT: line(canvas,8,21,8,3);line(canvas,4,7,8,3,12,7);line(canvas,16,3,16,21);line(canvas,12,17,16,21,20,17);break;
+            case EDIT:
+                Path pencil=new Path();pencil.moveTo(4,16);pencil.lineTo(15.7f,4.3f);pencil.quadTo(17.5f,2.5f,19.3f,4.3f);pencil.lineTo(19.7f,4.7f);pencil.quadTo(21.5f,6.5f,19.7f,8.3f);pencil.lineTo(8,20);pencil.lineTo(3,21);pencil.close();canvas.drawPath(pencil,ink);line(canvas,14,6,18,10);break;
             case DOWNLOAD: line(canvas,12,3,12,16); line(canvas,7,11,12,16,17,11); line(canvas,4,16,4,21,20,21,20,16); break;
             case DELETE:
                 line(canvas,4,6,20,6); line(canvas,9,6,9,3,15,3,15,6);

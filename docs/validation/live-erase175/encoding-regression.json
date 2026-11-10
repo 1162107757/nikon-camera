@@ -1,0 +1,22 @@
+{
+  "apk": "online-library\\.local\\publication175\\candidates\\a9eb73310d8ae98ef06530469c2576dab65c2a4f7187cf740b47f0f15ccba437\\update.apk",
+  "expectation": "compatible",
+  "pass": true,
+  "charsetOverloadRemaining": false,
+  "legacyEncodingNameOverload": true,
+  "methodReferences": [
+    {
+      "dex": "classes.dex",
+      "class": "java.net.URLEncoder",
+      "method": "encode",
+      "descriptor": "(Ljava/lang/String;)Ljava/lang/String;"
+    },
+    {
+      "dex": "classes.dex",
+      "class": "java.net.URLEncoder",
+      "method": "encode",
+      "descriptor": "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"
+    }
+  ],
+  "apiReference": "https://developer.android.com/reference/java/net/URLEncoder"
+}

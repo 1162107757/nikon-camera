@@ -1,0 +1,33 @@
+{
+  "version": "2.0",
+  "statement": [
+    {
+      "effect": "allow",
+      "action": [
+        "cls:DescribeTopics"
+      ],
+      "resource": [
+        "qcs::cls:ap-shanghai::topic/*"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": [
+        "cls:DescribeLogsets"
+      ],
+      "resource": [
+        "qcs::cls:ap-shanghai::logset/ae4d30f6-aad2-44c7-aa52-fca7d7ebe513"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": [
+        "cls:pushLog",
+        "cls:UploadLog"
+      ],
+      "resource": [
+        "qcs::cls:ap-shanghai::topic/b542b8c6-ab56-40fa-a14d-c81cd050fb18"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "checkedAt": "2026-11-09T08:31:31.878Z",
+  "environmentId": "nikon-d8girdjsr252fd90e",
+  "functionName": "nikon-preset-library",
+  "alarmLocalTime": "2026-11-09T15:04:00+08:00",
+  "alarmErrorCount": 11,
+  "burst": {
+    "Error": {
+      "total": 43,
+      "nonzero": [
+        {
+          "time": "2026-11-09T07:01:00.000Z",
+          "value": 7
+        },
+        {
+          "time": "2026-11-09T07:02:00.000Z",
+          "value": 11
+        },
+        {
+          "time": "2026-11-09T07:03:00.000Z",
+          "value": 1
+        },
+        {
+          "time": "2026-11-09T07:04:00.000Z",
+          "value": 11
+        },
+        {
+          "time": "2026-11-09T07:05:00.000Z",
+          "value": 6
+        },
+        {
+          "time": "2026-11-09T07:06:00.000Z",
+          "value": 7
+        }
+      ]
+    },
+    "Http4xx": {
+      "total": 79,
+      "nonzero": [
+        {
+          "time": "2026-11-09T07:01:00.000Z",
+          "value": 13
+        },
+        {
+          "time": "2026-11-09T07:02:00.000Z",
+          "value": 21
+        },
+        {
+          "time": "2026-11-09T07:03:00.000Z",
+          "value": 2
+        },
+        {
+          "time": "2026-11-09T07:04:00.000Z",
+          "value": 21
+        },
+        {
+          "time": "2026-11-09T07:05:00.000Z",
+          "value": 9
+        },
+        {
+          "time": "2026-11-09T07:06:00.000Z",
+          "value": 13
+        }
+      ]
+    },
+    "Syserr": {
+      "total": 0,
+      "nonzero": []
+    },
+    "Http433": {
+      "total": 0,
+      "nonzero": []
+    },
+    "Http434": {
+      "total": 0,
+      "nonzero": []
+    },
+    "Throttle": {
+      "total": 0,
+      "nonzero": []
+    },
+    "Invocation": {
+      "total": 325,
+      "nonzero": [
+        {
+          "time": "2026-11-09T06:55:00.000Z",
+          "value": 1
+        },
+        {
+          "time": "2026-11-09T06:56:00.000Z",
+          "value": 4
+        },
+        {
+          "time": "2026-11-09T06:57:00.000Z",
+          "value": 3
+        },
+        {
+          "time": "2026-11-09T06:58:00.000Z",
+          "value": 4
+        },
+        {
+          "time": "2026-11-09T06:59:00.000Z",
+          "value": 3
+        },
+        {
+          "time": "2026-11-09T07:00:00.000Z",
+          "value": 1
+        },
+        {
+          "time": "2026-11-09T07:01:00.000Z",
+          "value": 30
+        },
+        {
+          "time": "2026-11-09T07:02:00.000Z",
+          "value": 35
+        },
+        {
+          "time": "2026-11-09T07:03:00.000Z",
+          "value": 5
+        },
+        {
+          "time": "2026-11-09T07:04:00.000Z",
+          "value": 38
+        },
+        {
+          "time": "2026-11-09T07:05:00.000Z",
+          "value": 20
+        },
+        {
+          "time": "2026-11-09T07:06:00.000Z",
+          "value": 19
+        },
+        {
+          "time": "2026-11-09T07:07:00.000Z",
+          "value": 35
+        },
+        {
+          "time": "2026-11-09T07:08:00.000Z",
+          "value": 42
+        },
+        {
+          "time": "2026-11-09T07:09:00.000Z",
+          "value": 49
+        },
+        {
+          "time": "2026-11-09T07:10:00.000Z",
+          "value": 36
+        }
+      ]
+    }
+  },
+  "recovery": {
+    "Error": {
+      "requestedStart": "2026-11-09T15:10:00+08:00",
+      "requestedEnd": "2026-11-09T16:27:00+08:00",
+      "availablePoints": 62,
+      "total": 0,
+      "firstSample": "2026-11-09T07:10:00.000Z",
+      "lastSample": "2026-11-09T08:26:00.000Z",
+      "note": "Only returned samples; absent minute samples are not counted as observed zero."
+    },
+    "Http4xx": {
+      "requestedStart": "2026-11-09T15:10:00+08:00",
+      "requestedEnd": "2026-11-09T16:27:00+08:00",
+      "availablePoints": 62,
+      "total": 0,
+      "firstSample": "2026-11-09T07:10:00.000Z",
+      "lastSample": "2026-11-09T08:26:00.000Z",
+      "note": "Only returned samples; absent minute samples are not counted as observed zero."
+    }
+  },
+  "logging": {
+    "checkedAt": "2026-11-09T08:26:16.717Z",
+    "Status": "Active",
+    "AvailableStatus": "Available",
+    "StatusReasons": [],
+    "ModTime": "2026-11-09 16:26:02",
+    "Runtime": "Nodejs20.19",
+    "Type": "HTTP",
+    "Role": "HueviaUpdatePackageRole",
+    "MemorySize": 256,
+    "Timeout": 60,
+    "ClsTopicId": "b542b8c6-ab56-40fa-a14d-c81cd050fb18",
+    "ClsLogsetId": "ae4d30f6-aad2-44c7-aa52-fca7d7ebe513",
+    "IgnoreSysLog": false,
+    "environmentUnchanged": true,
+    "coreConfigUnchanged": true,
+    "topicName": "huevia-api-runtime",
+    "retentionDays": 7,
+    "initialPartitions": 1,
+    "maxPartitions": 2,
+    "anonymousUpload": false,
+    "policyName": "HueviaFunctionLogWrite",
+    "policyId": 293251244,
+    "policyVersion": 4,
+    "role": "HueviaUpdatePackageRole",
+    "environmentRequestLogsEnabled": true,
+    "runtimeLogsVerified": true,
+    "normalHealthRequestId": "c6a7509f-7504-4a8b-afa4-d21063e059a7",
+    "normalHealthStatus": 200,
+    "normalHealthRuntimeStatusMatched": true
+  },
+  "source": {
+    "providerSha256": "c658d22bf91b9693c5a5b1b1a2e01d72460c33ea4c08989d355bb5cba0079ab9",
+    "unchanged": true,
+    "deployedCode": false
+  },
+  "cleanup": {
+    "checkedAt": "2026-11-09T08:30:40.993Z",
+    "removedTopicId": "82623427-ab41-4bf3-a036-691dbeecdbff",
+    "removedLogsetId": "338eef2d-cfad-48b6-aec0-8a32ec070716",
+    "wasUnboundAndUnindexed": true,
+    "topicAbsent": true,
+    "existingEnvironmentTopicPreserved": true,
+    "workingRootTopicId": "b542b8c6-ab56-40fa-a14d-c81cd050fb18"
+  },
+  "conclusion": {
+    "historicalLogsRecoverable": false,
+    "historicalCauseDetermined": false,
+    "attackDetermined": false,
+    "currentHealthVerified": true,
+    "automaticFutureAlertWatch": false
+  }
+}

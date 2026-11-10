@@ -43,6 +43,7 @@ public final class PtpIpClient implements PhotoCameraClient {
     private boolean started;
     private boolean cancelled;
     private boolean pictureControlWriteAttempted;
+    private int pictureControlDeletionTarget=-1;
     private boolean pictureControlWriteAcknowledged;
     private boolean pictureControlReadbackVerified;
     private byte[] pictureControlWrittenData;
@@ -128,6 +129,16 @@ public final class PtpIpClient implements PhotoCameraClient {
                 throw new IOException("本次登记尚未由同一连接完整确认并精确读回，不能延续或再次登记。");
             }
             return transferOwnedConnection(nextTransactionId, Mode.PICTURE_CONTROL);
+        }
+    }
+    public synchronized PtpIpClient transferAfterVerifiedPictureControlDeletion(long nextTransactionId)throws IOException{
+        requireMode(Mode.PICTURE_CONTROL);checkClosed();
+        synchronized(lifecycle){
+            requireOpen();
+            if(ownership.owner!=this||protocolUnconfirmed||pictureControlDeletionTarget<201||!pictureControlWriteAttempted
+                    ||!pictureControlWriteAcknowledged||!pictureControlReadbackVerified||nextTransactionId<1||nextTransactionId>0xffffffffL||nextTransactionId!=lastPictureControlTransaction+1)
+                throw new IOException("删除尚未由同一连接响应并读回空槽，不能延续会话。");
+            return transferOwnedConnection(nextTransactionId,Mode.PICTURE_CONTROL);
         }
     }
 
@@ -386,7 +397,8 @@ public final class PtpIpClient implements PhotoCameraClient {
             throws IOException {
         requireMode(Mode.PICTURE_CONTROL);
         requirePictureControlConnection();
-        if (!(pictureControlReadbackVerified && cc.huevia.picturecontrol.CameraParameterWriteGuard.propertyRead(operation, parameters)))
+        boolean deletionActiveRead=pictureControlDeletionTarget>=201&&operation==0x1015&&parameters!=null&&parameters.length==1&&(parameters[0]==0xd200||parameters[0]==0xd237);
+        if (!deletionActiveRead && !(pictureControlReadbackVerified && cc.huevia.picturecontrol.CameraParameterWriteGuard.propertyRead(operation, parameters)))
             validatePictureControlRead(operation, parameters);
         validateTransaction(transaction);
         if (operation == 0x1001) {
@@ -397,8 +409,8 @@ public final class PtpIpClient implements PhotoCameraClient {
         byte[] bytes = receive(operation, transaction, parameters, 1024 * 1024, null, -1, null);
         if (operation == 0x90cc && pictureControlWriteAcknowledged
                 && parameters[0] == pictureControlWrittenTarget) {
-            pictureControlReadbackVerified = transaction > pictureControlWriteTransaction
-                    && Arrays.equals(bytes, pictureControlWrittenData);
+            pictureControlReadbackVerified = transaction > pictureControlWriteTransaction && (pictureControlDeletionTarget>=201
+                    ? cc.huevia.picturecontrol.PictureControlData.parse(bytes).basePictureControl()==0 : Arrays.equals(bytes, pictureControlWrittenData));
         }
         return bytes;
     }
@@ -408,6 +420,15 @@ public final class PtpIpClient implements PhotoCameraClient {
         requireMode(Mode.PICTURE_CONTROL);
         requirePictureControlConnection();
         validateTransaction(transaction);
+        if(operation==0x90ce){
+            requirePictureControlSession(transaction);
+            if(parameters==null||parameters.length!=1||parameters[0]!=pictureControlDeletionTarget||pictureControlDeletionTarget<201||pictureControlWriteAttempted)
+                throw new IOException("仅允许删除已明确确认的一个 C1–C9 槽位。");
+            pictureControlWriteAttempted=true;pictureControlWrittenTarget=pictureControlDeletionTarget;pictureControlWriteTransaction=transaction;
+            lastPictureControlTransaction=Math.max(lastPictureControlTransaction,transaction);
+            try{request(operation,transaction,parameters);PtpContainer response=response(nextControl(deadline(CONTROL_TIMEOUT)),transaction);pictureControlWriteAcknowledged=true;return response;}
+            catch(PtpResponseException error){throw error;}catch(IOException|RuntimeException error){abortProtocolFailure(error);throw error;}
+        }
         boolean opening = operation == 0x1002;
         if (parameters == null || (!opening && operation != 0x1003)
                 || (opening && (parameters.length != 1 || parameters[0] != 1 || transaction != 0 || sessionOpen))
@@ -437,9 +458,16 @@ public final class PtpIpClient implements PhotoCameraClient {
     }
 
     /** Sends at most one validated registration per instance, including rejected/uncertain attempts. */
+    public synchronized void authorizePictureControlDeletion(int target)throws IOException{
+        requireMode(Mode.PICTURE_CONTROL);requirePictureControlConnection();
+        if(!sessionOpen||target<201||target>209||pictureControlDeletionTarget!=-1||pictureControlWriteAttempted)
+            throw new IOException("此连接不能再次授权槽位删除。");
+        pictureControlDeletionTarget=target;
+    }
     private final cc.huevia.picturecontrol.CameraParameterWriteGuard cameraParameterWrites = new cc.huevia.picturecontrol.CameraParameterWriteGuard();
 
     public synchronized void authorizeCameraParameters(java.util.Map<Integer, byte[]> values) throws IOException {
+        if(pictureControlDeletionTarget!=-1)throw new IOException("删除会话禁止修改拍摄参数。");
         requireMode(Mode.PICTURE_CONTROL); requirePictureControlConnection();
         if (!pictureControlReadbackVerified || !pictureControlWriteAcknowledged)
             throw new IOException("仅在预设精确读回后允许拍摄参数授权。");
@@ -448,6 +476,7 @@ public final class PtpIpClient implements PhotoCameraClient {
 
     public synchronized PtpContainer sendPictureControlData(int operation, long transaction, byte[] data,
                                                            long... parameters) throws IOException {
+        if(pictureControlDeletionTarget!=-1)throw new IOException("删除会话禁止上传任何数据。");
         requireMode(Mode.PICTURE_CONTROL);
         requirePictureControlConnection();
         requirePictureControlSession(transaction);

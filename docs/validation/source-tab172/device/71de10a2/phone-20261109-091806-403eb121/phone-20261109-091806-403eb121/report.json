@@ -1,0 +1,107 @@
+{
+  "versionCode": 171,
+  "sdk": 37,
+  "baseline": true,
+  "hardware-bitmapError": "java.lang.IllegalArgumentException: Software rendering doesn't support hardware bitmaps\n\tat android.graphics.BaseCanvas.throwIfHwBitmapInSwMode(BaseCanvas.java:725)\n\tat android.graphics.BaseCanvas.throwIfCannotDraw(BaseCanvas.java:81)\n\tat android.graphics.BaseCanvas.drawBitmap(BaseCanvas.java:139)\n\tat android.graphics.Canvas.drawBitmap(Canvas.java:1653)\n\tat android.graphics.drawable.BitmapDrawable.draw(BitmapDrawable.java:557)\n\tat android.widget.ImageView.onDraw(ImageView.java:1447)\n\tat android.view.View.draw(View.java:25829)\n\tat android.view.View.draw(View.java:25699)\n\tat android.view.ViewGroup.drawChild(ViewGroup.java:4852)\n\tat android.view.ViewGroup.dispatchDraw(ViewGroup.java:4609)\n\tat cc.huevia.ui.SubcategorySwipeLayout.dispatchDraw(SubcategorySwipeLayout.java:56)\n\tat android.view.View.draw(View.java:25832)\n\tat cc.huevia.ui.SubcategorySwipeLayout.snapshot(SubcategorySwipeLayout.java:78)\n\tat cc.huevia.ui.SubcategorySwipeLayout.changeSource(SubcategorySwipeLayout.java:87)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.lambda$exercise$8(SourceTab172Probe.java:53)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.$r8$lambda$Jh0ux1Lrzzntt9Ac7gctXZJUYt4(SourceTab172Probe.java:0)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$$ExternalSyntheticLambda14.run(D8$$SyntheticClass:0)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.lambda$attempt$13(SourceTab172Probe.java:77)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$$ExternalSyntheticLambda11.run(D8$$SyntheticClass:0)\n\tat android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2721)\n\tat android.os.Handler.handleCallback(Handler.java:1080)\n\tat android.os.Handler.dispatchMessageImpl(Handler.java:135)\n\tat android.os.Handler.dispatchMessage(Handler.java:126)\n\tat android.os.Looper.loopOnce(Looper.java:285)\n\tat android.os.Looper.loop(Looper.java:390)\n\tat android.app.ActivityThread.main(ActivityThread.java:9884)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)\n\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:906)\n",
+  "software-canvas-runtimeError": "java.lang.IllegalStateException: QA unsupported software capture\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$1.onDraw(SourceTab172Probe.java:50)\n\tat android.view.View.draw(View.java:25829)\n\tat android.view.View.draw(View.java:25699)\n\tat android.view.ViewGroup.drawChild(ViewGroup.java:4852)\n\tat android.view.ViewGroup.dispatchDraw(ViewGroup.java:4609)\n\tat cc.huevia.ui.SubcategorySwipeLayout.dispatchDraw(SubcategorySwipeLayout.java:56)\n\tat android.view.View.draw(View.java:25832)\n\tat cc.huevia.ui.SubcategorySwipeLayout.snapshot(SubcategorySwipeLayout.java:78)\n\tat cc.huevia.ui.SubcategorySwipeLayout.changeSource(SubcategorySwipeLayout.java:87)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.lambda$exercise$8(SourceTab172Probe.java:53)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.$r8$lambda$Jh0ux1Lrzzntt9Ac7gctXZJUYt4(SourceTab172Probe.java:0)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$$ExternalSyntheticLambda14.run(D8$$SyntheticClass:0)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.lambda$attempt$13(SourceTab172Probe.java:77)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$$ExternalSyntheticLambda11.run(D8$$SyntheticClass:0)\n\tat android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2721)\n\tat android.os.Handler.handleCallback(Handler.java:1080)\n\tat android.os.Handler.dispatchMessageImpl(Handler.java:135)\n\tat android.os.Handler.dispatchMessage(Handler.java:126)\n\tat android.os.Looper.loopOnce(Looper.java:285)\n\tat android.os.Looper.loop(Looper.java:390)\n\tat android.app.ActivityThread.main(ActivityThread.java:9884)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)\n\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:906)\n",
+  "memory-pressureError": null,
+  "ordinary-software-bitmapError": null,
+  "actualOnlineTabError": "java.lang.IllegalArgumentException: Software rendering doesn't support hardware bitmaps\n\tat android.graphics.BaseCanvas.throwIfHwBitmapInSwMode(BaseCanvas.java:725)\n\tat android.graphics.BaseCanvas.throwIfCannotDraw(BaseCanvas.java:81)\n\tat android.graphics.BaseCanvas.drawBitmap(BaseCanvas.java:139)\n\tat android.graphics.Canvas.drawBitmap(Canvas.java:1653)\n\tat android.graphics.drawable.BitmapDrawable.draw(BitmapDrawable.java:557)\n\tat android.widget.ImageView.onDraw(ImageView.java:1447)\n\tat android.view.View.draw(View.java:25829)\n\tat android.view.View.draw(View.java:25699)\n\tat android.view.ViewGroup.drawChild(ViewGroup.java:4852)\n\tat android.view.ViewGroup.dispatchDraw(ViewGroup.java:4609)\n\tat cc.huevia.ui.SubcategorySwipeLayout.dispatchDraw(SubcategorySwipeLayout.java:56)\n\tat android.view.View.draw(View.java:25832)\n\tat cc.huevia.ui.SubcategorySwipeLayout.snapshot(SubcategorySwipeLayout.java:78)\n\tat cc.huevia.ui.SubcategorySwipeLayout.changeSource(SubcategorySwipeLayout.java:87)\n\tat cc.huevia.MainActivity.selectPresetSource(MainActivity.java:824)\n\tat cc.huevia.MainActivity.lambda$renderHome$24(MainActivity.java:960)\n\tat cc.huevia.MainActivity.$r8$lambda$7pvRztxUvHQOzjvzY8IXWjIrJ2E(MainActivity.java:0)\n\tat cc.huevia.MainActivity$$ExternalSyntheticLambda57.run(D8$$SyntheticClass:0)\n\tat cc.huevia.MainActivity.lambda$sourceTab$197(MainActivity.java:3985)\n\tat cc.huevia.MainActivity.$r8$lambda$BrHh0-eC8uEwsp_R3h7ci23iqDI(MainActivity.java:0)\n\tat cc.huevia.MainActivity$$ExternalSyntheticLambda125.onClick(D8$$SyntheticClass:0)\n\tat android.view.View.performClick(View.java:8278)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.lambda$actualPresetTab$12(SourceTab172Probe.java:68)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$$ExternalSyntheticLambda8.run(D8$$SyntheticClass:0)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe.lambda$attempt$13(SourceTab172Probe.java:77)\n\tat cc.huevia.sourcetab172qa.SourceTab172Probe$$ExternalSyntheticLambda11.run(D8$$SyntheticClass:0)\n\tat android.app.Instrumentation$SyncRunnable.run(Instrumentation.java:2721)\n\tat android.os.Handler.handleCallback(Handler.java:1080)\n\tat android.os.Handler.dispatchMessageImpl(Handler.java:135)\n\tat android.os.Handler.dispatchMessage(Handler.java:126)\n\tat android.os.Looper.loopOnce(Looper.java:285)\n\tat android.os.Looper.loop(Looper.java:390)\n\tat android.app.ActivityThread.main(ActivityThread.java:9884)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)\n\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:906)\n",
+  "scope": "Installed shared source-tab component and actual MainActivity online source button. Real Bitmap.Config.HARDWARE cannot be drawn by a software Canvas; runtime-only and OOM fixtures are explicitly injected. Baseline reproduces missing protection; fixed candidate changes pages without an optional snapshot. Normal software capture retains animation. No physical HarmonyOS device or user crash trace obtained.",
+  "pass": true,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "expected-baseline-or-fixed-version",
+      "pass": true
+    },
+    {
+      "name": "actual-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "baseline-reproduces-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "baseline-change-blocked-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-hardware-bitmap",
+      "pass": true
+    },
+    {
+      "name": "baseline-reproduces-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "baseline-change-blocked-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-software-canvas-runtime",
+      "pass": true
+    },
+    {
+      "name": "no-uncaught-error-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "source-change-completes-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "failed-snapshot-skips-only-animation-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-memory-pressure",
+      "pass": true
+    },
+    {
+      "name": "no-uncaught-error-ordinary-software-bitmap",
+      "pass": true
+    },
+    {
+      "name": "source-change-completes-ordinary-software-bitmap",
+      "pass": true
+    },
+    {
+      "name": "ordinary-source-retains-animation",
+      "pass": true
+    },
+    {
+      "name": "activity-alive-ordinary-software-bitmap",
+      "pass": true
+    },
+    {
+      "name": "actual-online-tab-button-found",
+      "pass": true
+    },
+    {
+      "name": "actual-online-tab-reproduces-baseline-error",
+      "pass": true
+    },
+    {
+      "name": "baseline-tab-cannot-complete",
+      "pass": true
+    },
+    {
+      "name": "actual-main-remains-alive",
+      "pass": true
+    }
+  ],
+  "candidateSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef"
+}

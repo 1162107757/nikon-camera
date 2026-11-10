@@ -1,0 +1,26 @@
+{
+  "mode": "Operate",
+  "scope": "Local Tabbar review prototype only; no production Android edits",
+  "reference": "https://dribbble.com/shots/15187764-wave-tabbar",
+  "pin": "User supplied four white floating bar frames with pastel solid icons, grey-to-color wave fill and soft tint grounds.",
+  "thesis": "A compact white floating capsule with four functional pastel icon silhouettes and one brief wave-fill acknowledgment on selection.",
+  "preserve": [
+    "预设/同步/相册/设置 order",
+    "Small visible names",
+    "Full icon+name selected tint",
+    "Even4px insets and concentric radii",
+    "Current home photo content as illustrative context",
+    "Reduced-motion and keyboard access"
+  ],
+  "motion": "440ms icon-only liquid fill,220ms selection continuity; single pass, no idle loop; interruptible.",
+  "colors": [
+    "warm paper #F8F7F4",
+    "white capsule",
+    "sky #70D5F1",
+    "green #83D38F",
+    "coral #F58E88",
+    "lavender #8E7BEC"
+  ],
+  "authority": "Pinned component extension inside the approved home world; code-native SVG/CSS, no imagegen comp tournament",
+  "approval": "Prototype pending user review; does not authorize implementation"
+}

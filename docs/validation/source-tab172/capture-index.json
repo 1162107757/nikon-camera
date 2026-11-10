@@ -1,0 +1,22 @@
+[
+  {
+    "run": "font-dark-20261109-092247-7c0f8b52",
+    "path": "D:/dev/ai-project/nikon-camera/docs/validation/source-tab172/device/6712f751/font-dark-20261109-092247-7c0f8b52/font-dark-20261109-092247-7c0f8b52/fixed-online-tab.png",
+    "sha256": "586338d3c4ab55a45b421fe78ce88bfa11fe8c58231650a4112898e59755c6cd"
+  },
+  {
+    "run": "landscape-dark-20261109-092351-b314ef4d",
+    "path": "D:/dev/ai-project/nikon-camera/docs/validation/source-tab172/device/6712f751/landscape-dark-20261109-092351-b314ef4d/landscape-dark-20261109-092351-b314ef4d/fixed-online-tab.png",
+    "sha256": "87f8ef5e8390b3496cbf1a3b503886dcd8181db151243c90dc5329c9261e34d7"
+  },
+  {
+    "run": "phone-20261109-092211-a95e3624",
+    "path": "D:/dev/ai-project/nikon-camera/docs/validation/source-tab172/device/6712f751/phone-20261109-092211-a95e3624/phone-20261109-092211-a95e3624/fixed-online-tab.png",
+    "sha256": "06191d29162fc3c4954458d4268e4f56e6d07ca7406c148c739c9c5c5b64aefe"
+  },
+  {
+    "run": "tablet-20261109-092454-92310961",
+    "path": "D:/dev/ai-project/nikon-camera/docs/validation/source-tab172/device/6712f751/tablet-20261109-092454-92310961/tablet-20261109-092454-92310961/fixed-online-tab.png",
+    "sha256": "f10446422884975cde36e2f05e24f0f9da5a7cd559b063bfcb2c30fd304bf5b6"
+  }
+]

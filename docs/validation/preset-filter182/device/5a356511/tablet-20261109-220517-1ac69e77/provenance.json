@@ -1,0 +1,26 @@
+{
+  "versionCode": 182,
+  "candidateSha256": "5a3565111f42efb6eba1b013de6c5d5d71243ce5dd9c0b73b6a657c806f49813",
+  "probeSha256": "e148f0407fc3d1805bd0b6fb634cea4b3e513210d8064919daca791a406e9a1e",
+  "serial": "emulator-5588",
+  "pass": false,
+  "scope": null,
+  "files": [
+    {
+      "file": "01-sheet-online.png",
+      "sha256": "056276db350b2d6100fe8e827f064cc58b0b69900bd3698c21619b98d8844a6b"
+    },
+    {
+      "file": "02-draft-combination.png",
+      "sha256": "13d49ea2a265b139fb5f873c39921f73bf25ef5e8fa0d0342f1f74f625a89f4b"
+    },
+    {
+      "file": "03-combined-deep-result.png",
+      "sha256": "8b22af763cb012196728fd56517a0858b8c6d739449ac783ba5065c8982bc5b1"
+    },
+    {
+      "file": "report.json",
+      "sha256": "8c2c23833777a8630ca351502f23a326545be09b2bd4c1648c60e006c6f75272"
+    }
+  ]
+}

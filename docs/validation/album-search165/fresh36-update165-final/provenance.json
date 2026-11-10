@@ -1,0 +1,11 @@
+{
+  "candidateSha256": "992644b188cabfce01732653938840c6bc1b867b6b53b6dc5a81be69b87d542b",
+  "installedSha256": "992644b188cabfce01732653938840c6bc1b867b6b53b6dc5a81be69b87d542b",
+  "probeSha256": "5e4ec04270b1db26edca0e09ae2e84e0031fe94afe385aa96d94d0491fed981e",
+  "serial": "emulator-5592",
+  "versionCode": 165,
+  "sdk": 36,
+  "pass": true,
+  "visualOnly": false,
+  "appearance": "light"
+}

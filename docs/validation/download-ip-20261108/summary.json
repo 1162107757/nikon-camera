@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "status": "deployed-and-verified",
+  "usageReset": false,
+  "sharedReleaseQuotasRemoved": true,
+  "tests": {
+    "total": 193,
+    "passed": 186,
+    "failed": 0,
+    "existingConditionalSkips": 7,
+    "syntaxModules": 77
+  },
+  "liveVerification": "live-verification.json",
+  "databaseMigration": "019-app-release-ip-budget.sql",
+  "deployment": "deployed.json",
+  "unchangedReleaseCode": 156,
+  "androidConnectionFixIncluded": false
+}

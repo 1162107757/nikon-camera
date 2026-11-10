@@ -1,0 +1,160 @@
+{
+  "pass": true,
+  "apkSha256": "ea4b3f539d4455cd685c6279c9bd162372448c08735d73258c26ae115c0ef585",
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "installed164",
+      "pass": true
+    },
+    {
+      "name": "exact-installed-APK",
+      "pass": true
+    },
+    {
+      "name": "safe-evidence-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "main-ready",
+      "pass": true
+    },
+    {
+      "name": "no-device-not-connected",
+      "pass": true
+    },
+    {
+      "name": "ordinary-connection-validator-needs-no-preset-ops",
+      "pass": true
+    },
+    {
+      "name": "device-info-only-cannot-be-used-as-preset-snapshot",
+      "pass": true
+    },
+    {
+      "name": "incomplete-info-cannot-connect-completed",
+      "pass": true
+    },
+    {
+      "name": "incomplete-info-cannot-connect-deviceInfoRead",
+      "pass": true
+    },
+    {
+      "name": "incomplete-info-cannot-connect-deviceInfoOnly",
+      "pass": true
+    },
+    {
+      "name": "unconfirmed-protocol-cannot-connect",
+      "pass": true
+    },
+    {
+      "name": "real-Android-report-schema-distinguishes-identification",
+      "pass": true
+    },
+    {
+      "name": "capability-error-shows-actual-maker-model",
+      "pass": true
+    },
+    {
+      "name": "USB-guide-opens",
+      "pass": true
+    },
+    {
+      "name": "USB-guide-ready",
+      "pass": true
+    },
+    {
+      "name": "unattached-id-never-marks-USB-connected",
+      "pass": true
+    },
+    {
+      "name": "detached-identity-cleared",
+      "pass": true
+    },
+    {
+      "name": "no-success-return-without-device",
+      "pass": true
+    },
+    {
+      "name": "captured-01-usb-disconnected-guide",
+      "pass": true
+    },
+    {
+      "name": "USB-cancel-returns-source",
+      "pass": true
+    },
+    {
+      "name": "standard-PTPIP-reads-Z7II-identity",
+      "pass": true
+    },
+    {
+      "name": "peer-has-no-preset-capability",
+      "pass": true
+    },
+    {
+      "name": "ordinary-WiFi-session-not-gated-by-preset-capability",
+      "pass": true
+    },
+    {
+      "name": "actual-session-identity-reaches-UI",
+      "pass": true
+    },
+    {
+      "name": "shared-connection-guide-opens",
+      "pass": true
+    },
+    {
+      "name": "Z7II-connected-return-visible",
+      "pass": true
+    },
+    {
+      "name": "connected-guide-shows-real-maker-and-model",
+      "pass": true
+    },
+    {
+      "name": "captured-02-z7ii-connected-return",
+      "pass": true
+    },
+    {
+      "name": "connected-return-source-preserved",
+      "pass": true
+    },
+    {
+      "name": "details-show-real-manufacturer",
+      "pass": true
+    },
+    {
+      "name": "details-show-real-model",
+      "pass": true
+    },
+    {
+      "name": "captured-03-z7ii-details",
+      "pass": true
+    },
+    {
+      "name": "captured-04-actual-camera-capability-error",
+      "pass": true
+    },
+    {
+      "name": "ordinary-connection-never-reads-or-writes-PC-1001",
+      "pass": true
+    },
+    {
+      "name": "ordinary-connection-never-reads-or-writes-PC-1002",
+      "pass": true
+    },
+    {
+      "name": "connection-check-never-shoots",
+      "pass": true
+    }
+  ],
+  "failure": null,
+  "scope": "Installed164 Activity navigation, no-device USB guard, identification-vs-preset validators, Android JSON report, actual model\/manufacturer display and error copy. Synthetic byte-framed PTP\/IP client handshake; connected fixture session injected into shared controller only for UI return verification. No physical USB or camera success claim; host test owns real USB transport framing\/lifecycle with scripted peer."
+}

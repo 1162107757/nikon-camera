@@ -1,0 +1,111 @@
+{
+  "pass": true,
+  "stage": "complete",
+  "apkSha256": "4c0a17d5a3900f7b52b3dcffe4c6f071a97ebb08d8baeb9a3f3d25c90f56f72d",
+  "checks": [
+    {
+      "name": "safe-run-id",
+      "passed": true
+    },
+    {
+      "name": "emulator-only",
+      "passed": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "passed": true
+    },
+    {
+      "name": "new-private-fixture-directory",
+      "passed": true
+    },
+    {
+      "name": "native-engine-available",
+      "passed": true
+    },
+    {
+      "name": "pinned-libraw-version",
+      "passed": true
+    },
+    {
+      "name": "performance-progress-monotonic-cold",
+      "passed": true
+    },
+    {
+      "name": "performance-cache-state-cold",
+      "passed": true
+    },
+    {
+      "name": "performance-progress-monotonic-warm",
+      "passed": true
+    },
+    {
+      "name": "performance-cache-state-warm",
+      "passed": true
+    },
+    {
+      "name": "performance-progress-monotonic-exposure",
+      "passed": true
+    },
+    {
+      "name": "performance-cache-state-exposure",
+      "passed": true
+    },
+    {
+      "name": "performance-editor-full-size-0",
+      "passed": true
+    },
+    {
+      "name": "performance-editor-full-size-1",
+      "passed": true
+    },
+    {
+      "name": "performance-source-unchanged",
+      "passed": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "raw-speed-cold",
+      "totalMs": 13893.31,
+      "pixelsMs": 2393.3191,
+      "writeAndVerifyMs": 11499.9909,
+      "progressEvents": 280,
+      "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+      "fileBytes": 29481131
+    },
+    {
+      "case": "raw-speed-warm",
+      "totalMs": 64.3809,
+      "pixelsMs": 64.3564,
+      "writeAndVerifyMs": 0.0245,
+      "progressEvents": 1,
+      "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+      "fileBytes": 29481131
+    },
+    {
+      "case": "raw-speed-exposure",
+      "totalMs": 14116.5432,
+      "pixelsMs": 2278.6921,
+      "writeAndVerifyMs": 11837.8511,
+      "progressEvents": 279,
+      "rasterSha256": "bc75d1fbda3fb1fb2b715a9baf0ebc94afb5dde4aff22d54885884b93895da91",
+      "fileBytes": 30487189
+    },
+    {
+      "case": "raw-editor-cold",
+      "totalMs": 14782.2905,
+      "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+      "bytes": 11873269
+    },
+    {
+      "case": "raw-editor-warm",
+      "totalMs": 140.2884,
+      "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+      "bytes": 11873269
+    }
+  ],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Actual installed LibRaw native decoding and RAW Activity; generated Bayer DNG has no embedded JPEG. Full active-pixel sRGB PNG output is 8-bit, not a 16-bit Java edit chain. Real NEF optional and explicitly reported. Emulator only."
+}

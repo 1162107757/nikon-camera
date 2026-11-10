@@ -1,0 +1,196 @@
+{
+  "apkSha256": "9ae3b95e1bc56a745d6eeeed24cc0966a78cf3ec8158eea1f8b157250fbe8893",
+  "runs": [
+    {
+      "mode": "phone",
+      "report": "native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/report.json",
+      "checks": 40
+    },
+    {
+      "mode": "large-text",
+      "report": "native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/report.json",
+      "checks": 40
+    },
+    {
+      "mode": "tablet",
+      "report": "native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/report.json",
+      "checks": 40
+    },
+    {
+      "mode": "landscape",
+      "report": "native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/report.json",
+      "checks": 41
+    }
+  ],
+  "originalPngs": [
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/A-phone-selection.png",
+      "sha256": "e96cc1d6ab3621e602fdb4550650ad2b8125457691872d6c1f5ef3950f3667c4",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/A-three-selected.png",
+      "sha256": "ad2c6c2ee64f4ed7b58698b1997ac11a48ea86c400a5afe585cbd3a6417a0648",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/app-delete-complete.png",
+      "sha256": "4a937b0ed8a6e943eb7acf63fdcbb8085c24596457a2b9906c72698f17a74f38",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/app-delete-confirmation.png",
+      "sha256": "89df2663c7c669d23f64b1dfcf5e2ef3d523fc5ccf73f3a6115da160fef3b5ee",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/app-delete-selection.png",
+      "sha256": "026b28d36d154c92d1d743155738930ac22c1efec840394017119eb9c19f798f",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215155-phone-6d35c2e39c/20261109-215155-phone-6d35c2e39c/app-delete-working.png",
+      "sha256": "64a92577b227573d9d97dcd0b527603d1ae56dbf5f9c28304854bdd73a3a0de6",
+      "width": 1080,
+      "height": 2424
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/A-phone-selection.png",
+      "sha256": "f551c697a1ead63eef1ead11085070b8db986bea4348008b246f04bbac11c697",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/A-three-selected.png",
+      "sha256": "eedf594c3a8a96af64ea3e9ad6f30a8eb191157c7ba5a7b727faa8c5d6f93d37",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/app-delete-complete.png",
+      "sha256": "cd3c1df37d53ce7e7442abc0d502db55e99e0df6506f5a929927f9b3915b384b",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/app-delete-confirmation.png",
+      "sha256": "4d7c22583b4845b27e62818f5714d2e240904d47e37058d38e513016993e7d06",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/app-delete-selection.png",
+      "sha256": "b1dbc7c519e0ba68d521d1b4901a34944351beb132d2201c6ac3b0fdd2a997a2",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "large-text",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215209-large-text-d85593c0ce/20261109-215209-large-text-d85593c0ce/app-delete-working.png",
+      "sha256": "f0f4425f60843385449661bcf120e5e781a712134cf84b6b7dabb2c146ebf16b",
+      "width": 840,
+      "height": 1890
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/A-phone-selection.png",
+      "sha256": "cc3e0572918dadd5f056c85a9c9ebd7b4d89cdce92c251197a63add3cb41fc35",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/A-three-selected.png",
+      "sha256": "3a244fa0d49e0fe8b8bd3a0d0f5f13c20dfb15ec14f644ad4beb46e9b3afa21d",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/app-delete-complete.png",
+      "sha256": "c7fc9e3899a1f4e40f980990401db6a9f676863c61e9b1d9d39d7bc75e89f31f",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/app-delete-confirmation.png",
+      "sha256": "ce34435c8a5961214ef772e728984573fd9f6a18dc2aeed84700cb72330bdd0a",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/app-delete-selection.png",
+      "sha256": "a61b2b2c6100e9c4e94b83c3e00b73f80b65252d39ec44bce7b5f36eb981a334",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215222-tablet-b27127ff34/20261109-215222-tablet-b27127ff34/app-delete-working.png",
+      "sha256": "69c40db5261ba65f7e24306517629a1ff8312959ad6e83f894c96b1e5ce85443",
+      "width": 1600,
+      "height": 2560
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/A-phone-selection.png",
+      "sha256": "68f3162b95fb303b400f375aa8cada0009ee1ddd8e5596d1adb47ea0d66ecd8b",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/A-three-selected.png",
+      "sha256": "8418d059389787764db1c9d38c4439eb020c8e9b4533a9ea2af8f85ef01c3b4b",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/app-delete-complete.png",
+      "sha256": "8783138abd14e815b887ad76850c52ae30cff665b0935218aeff404e8986649e",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/app-delete-confirmation.png",
+      "sha256": "46d3313e08858af242255fa2f1963ef1ab912d7f8f9a39d08ca2c7a4b10a4439",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/app-delete-selection.png",
+      "sha256": "5bc40b6befe4f9ed3aab682e13533bfab78914059f625950ff175da98d319d13",
+      "width": 1890,
+      "height": 840
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/selection181/native/9ae3b95e/20261109-215237-landscape-a6cbc1d745/20261109-215237-landscape-a6cbc1d745/app-delete-working.png",
+      "sha256": "d9985426c8be1ffa42ab076893653caf100dc1cf19c5fa0c0a147eb125012c1e",
+      "width": 1890,
+      "height": 840
+    }
+  ],
+  "excluded": "First candidate 7a889c74 is historical, excluded from current acceptance."
+}

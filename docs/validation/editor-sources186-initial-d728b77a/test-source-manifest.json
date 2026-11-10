@@ -1,0 +1,18 @@
+[
+  {
+    "path": "tests/editor-sources186-device-probe/build.ps1",
+    "sha256": "15ef86dccf65946afc8f4f82dda57f47ede778eb38b63a08ed8b7b4233365df6"
+  },
+  {
+    "path": "tests/editor-sources186-device-probe/run.ps1",
+    "sha256": "d3979560af3a52708ddf6c09ba12bbe1f70eea23cec591f2f3644d580d1bb6c7"
+  },
+  {
+    "path": "tests/editor-sources186-device-probe/AndroidManifest.xml",
+    "sha256": "bf53d7ff1ba31e656eb8b8f4bbe82c22cfa4aee28039906790bf8529c7010f32"
+  },
+  {
+    "path": "tests/editor-sources186-device-probe/src/cc/huevia/editorsourceqa/PrismaEditorProbe.java",
+    "sha256": "fd6b38b426bd1a3b5424f18c2a9da6072046135d9414b758b311a3a9f9996c6f"
+  }
+]

@@ -8,6 +8,8 @@
 #include <exception>
 #include <new>
 #include <string>
+#include <memory>
+#include <vector>
 
 namespace {
 constexpr uint64_t kMaxPixels=60000000;
@@ -76,6 +78,51 @@ bool whiteBalance(JNIEnv* env,LibRaw& raw,int mode,int kelvin,int tint){
 }
 
 extern "C" JNIEXPORT jstring JNICALL Java_cc_huevia_album_RawDeveloper_nativeVersion(JNIEnv* env,jclass){return env->NewStringUTF(LibRaw::version());}
+extern "C" JNIEXPORT jbyteArray JNICALL Java_cc_huevia_album_RawDeveloper_nativeEmbeddedJpeg(JNIEnv* env,jclass,jstring path,jobject callbacks){
+    try{
+        Path file(env,path);if(!file.chars)return nullptr;Callback callback(env,callbacks);
+        if(callback.check()){if(!env->ExceptionCheck())fail(env,"java/io/InterruptedIOException","RAW reference cancelled");return nullptr;}
+        LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);raw.imgdata.rawparams.max_raw_memory_mb=512;
+        int result=raw.open_file(file.chars);if(result!=LIBRAW_SUCCESS){resultError(env,result,"RAW reference open failed");return nullptr;}
+        constexpr unsigned maxBytes=16*1024*1024;
+        if(raw.imgdata.thumbnail.tlength>maxBytes)return nullptr;
+        result=raw.unpack_thumb();if(result!=LIBRAW_SUCCESS)return nullptr;
+        if(callback.check()){if(!env->ExceptionCheck())fail(env,"java/io/InterruptedIOException","RAW reference cancelled");return nullptr;}
+        int error=0;std::unique_ptr<libraw_processed_image_t,void(*)(libraw_processed_image_t*)> thumb(raw.dcraw_make_mem_thumb(&error),LibRaw::dcraw_clear_mem);
+        if(!thumb||error!=LIBRAW_SUCCESS||thumb->type!=LIBRAW_IMAGE_JPEG||thumb->data_size<4||thumb->data_size>maxBytes)return nullptr;
+        jbyteArray output=env->NewByteArray(static_cast<jsize>(thumb->data_size));if(!output)return nullptr;
+        env->SetByteArrayRegion(output,0,static_cast<jsize>(thumb->data_size),reinterpret_cast<const jbyte*>(thumb->data));return output;
+    }catch(const std::bad_alloc&){io(env,"Not enough memory for RAW JPEG reference");}catch(const std::exception& error){io(env,std::string("RAW reference failed: ")+error.what());}catch(...){io(env,"RAW reference failed");}return nullptr;
+}
+extern "C" JNIEXPORT void JNICALL Java_cc_huevia_album_RawDeveloper_nativeApplyColor(JNIEnv* env,jclass,jobject bitmap,jfloatArray values,jobject callbacks){
+    bool locked=false;
+    try{
+        constexpr int grid=17,count=grid*grid*grid*3;
+        if(!bitmap||!values||env->GetArrayLength(values)!=count){io(env,"RAW color table invalid");return;}
+        std::vector<float> table(count);env->GetFloatArrayRegion(values,0,count,table.data());if(env->ExceptionCheck())return;
+        for(float value:table)if(!std::isfinite(value)||value<0||value>1){io(env,"RAW color table outside RGB bounds");return;}
+        Callback callback(env,callbacks);if(callback.check()){if(!env->ExceptionCheck())fail(env,"java/io/InterruptedIOException","RAW color cancelled");return;}
+        AndroidBitmapInfo info{};void* pixels=nullptr;
+        if(AndroidBitmap_getInfo(env,bitmap,&info)!=ANDROID_BITMAP_RESULT_SUCCESS||info.format!=ANDROID_BITMAP_FORMAT_RGBA_8888||!dimensions(env,info.width,info.height)||AndroidBitmap_lockPixels(env,bitmap,&pixels)!=ANDROID_BITMAP_RESULT_SUCCESS){io(env,"Cannot access RAW color pixels");return;}locked=true;
+        for(unsigned y=0;y<info.height;y++){
+            if((y&31)==0&&!callback.progress(.91+.035*y/static_cast<double>(info.height))){AndroidBitmap_unlockPixels(env,bitmap);locked=false;if(!env->ExceptionCheck())fail(env,"java/io/InterruptedIOException","RAW color cancelled");return;}
+            uint8_t* row=static_cast<uint8_t*>(pixels)+static_cast<size_t>(y)*info.stride;
+            for(unsigned x=0;x<info.width;x++){
+                uint8_t* pixel=row+x*4;float pos[3]={pixel[0]*(16.f/255),pixel[1]*(16.f/255),pixel[2]*(16.f/255)},fraction[3];int base[3];
+                for(int c=0;c<3;c++){base[c]=std::min(15,static_cast<int>(pos[c]));fraction[c]=pos[c]-base[c];}
+                float rgb[3]={0,0,0};
+                for(int dr=0;dr<=1;dr++)for(int dg=0;dg<=1;dg++)for(int db=0;db<=1;db++){
+                    int index=(((base[0]+dr)*grid+base[1]+dg)*grid+base[2]+db)*3;
+                    float weight=(dr?fraction[0]:1-fraction[0])*(dg?fraction[1]:1-fraction[1])*(db?fraction[2]:1-fraction[2]);
+                    for(int c=0;c<3;c++)rgb[c]+=table[index+c]*weight;
+                }
+                for(int c=0;c<3;c++)pixel[c]=static_cast<uint8_t>(std::max(0,std::min(255,static_cast<int>(rgb[c]*255+.5f))));
+            }
+        }
+        AndroidBitmap_unlockPixels(env,bitmap);locked=false;
+    }catch(const std::bad_alloc&){io(env,"Not enough memory for RAW color transform");}catch(const std::exception& error){io(env,std::string("RAW color transform failed: ")+error.what());}catch(...){io(env,"RAW color transform failed");}
+    if(locked)AndroidBitmap_unlockPixels(env,bitmap);
+}
 extern "C" JNIEXPORT jobject JNICALL Java_cc_huevia_album_RawDeveloper_nativeInspect(JNIEnv* env,jclass,jstring path){
     try{Path file(env,path);if(!file.chars)return nullptr;LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);raw.imgdata.rawparams.max_raw_memory_mb=512;raw.imgdata.params.half_size=0;raw.imgdata.params.output_bps=8;
         int result=raw.open_file(file.chars);if(result!=LIBRAW_SUCCESS){resultError(env,result,"RAW open failed");return nullptr;}return info(env,raw);

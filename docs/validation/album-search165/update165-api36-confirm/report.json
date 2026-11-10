@@ -1,0 +1,69 @@
+{
+  "versionCode": 165,
+  "sdk": 36,
+  "dark": false,
+  "stationaryTileReplacements": 0,
+  "readyToPlaceholderRegressions": 0,
+  "observations": 498,
+  "readyKeys": 6,
+  "pass": false,
+  "checks": [
+    {
+      "name": "owned-emulator",
+      "pass": true
+    },
+    {
+      "name": "safe-run-id",
+      "pass": true
+    },
+    {
+      "name": "new-evidence-directory",
+      "pass": true
+    },
+    {
+      "name": "no-system-dialog-over-phone-album-cache-pressure",
+      "pass": true
+    },
+    {
+      "name": "cache-completions-keep-visible-tile-instances",
+      "pass": true
+    },
+    {
+      "name": "cache-eviction-does-not-clear-visible-photos",
+      "pass": true
+    },
+    {
+      "name": "visible-thumbnails-eventually-complete",
+      "pass": true
+    },
+    {
+      "name": "scroll-away-and-return-has-thumbnails",
+      "pass": true
+    },
+    {
+      "name": "search-expands-in-header",
+      "pass": true
+    },
+    {
+      "name": "live-search-keeps-input-instance",
+      "pass": true
+    },
+    {
+      "name": "live-search-keeps-focus",
+      "pass": true
+    },
+    {
+      "name": "raw-query-preserves-cursor-and-whitespace",
+      "pass": true
+    },
+    {
+      "name": "inline-search-field-visible",
+      "pass": true
+    },
+    {
+      "name": "no-system-dialog-over-search-no-results",
+      "pass": false
+    }
+  ],
+  "failure": "java.lang.AssertionError: no-system-dialog-over-search-no-results"
+}

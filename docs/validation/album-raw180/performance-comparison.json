@@ -1,0 +1,125 @@
+{
+  "pass": true,
+  "device": "API37 Pixel_9 x86_64 emulator-5588; one run per cold/warm case, not a phone benchmark",
+  "sample": {
+    "sha256": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+    "bytes": 30164134,
+    "make": "Nikon",
+    "model": "Z 6",
+    "outputWidth": 6064,
+    "outputHeight": 4040
+  },
+  "baseline": {
+    "apkSha256": "4c0a17d5a3900f7b52b3dcffe4c6f071a97ebb08d8baeb9a3f3d25c90f56f72d",
+    "report": "docs/validation/photo-image-suite/raw-development/4c0a17d5/20261109-210159-phone-3ca72377c2/20261109-210159-phone-3ca72377c2/report.json",
+    "measurements": [
+      {
+        "case": "raw-speed-cold",
+        "totalMs": 13893.31,
+        "pixelsMs": 2393.3191,
+        "writeAndVerifyMs": 11499.9909,
+        "progressEvents": 280,
+        "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+        "fileBytes": 29481131
+      },
+      {
+        "case": "raw-speed-warm",
+        "totalMs": 64.3809,
+        "pixelsMs": 64.3564,
+        "writeAndVerifyMs": 0.0245,
+        "progressEvents": 1,
+        "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+        "fileBytes": 29481131
+      },
+      {
+        "case": "raw-speed-exposure",
+        "totalMs": 14116.5432,
+        "pixelsMs": 2278.6921,
+        "writeAndVerifyMs": 11837.8511,
+        "progressEvents": 279,
+        "rasterSha256": "bc75d1fbda3fb1fb2b715a9baf0ebc94afb5dde4aff22d54885884b93895da91",
+        "fileBytes": 30487189
+      },
+      {
+        "case": "raw-editor-cold",
+        "totalMs": 14782.2905,
+        "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+        "bytes": 11873269
+      },
+      {
+        "case": "raw-editor-warm",
+        "totalMs": 140.2884,
+        "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+        "bytes": 11873269
+      }
+    ]
+  },
+  "final": {
+    "apkSha256": "897f1a14d6ff2d7187cfd3e8a61e8f08898d57451753c093f005c8a2c0fbddd8",
+    "report": "docs/validation/photo-image-suite/raw-development/897f1a14/20261109-212605-phone-c9dadc7856/20261109-212605-phone-c9dadc7856/report.json",
+    "checks": 87,
+    "measurements": [
+      {
+        "case": "raw-speed-cold",
+        "totalMs": 3506.4996,
+        "pixelsMs": 2550.0789,
+        "writeAndVerifyMs": 956.4207,
+        "progressEvents": 408,
+        "savePercentValues": [
+          95,
+          96,
+          97,
+          98,
+          99
+        ],
+        "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+        "fileBytes": 31119634
+      },
+      {
+        "case": "raw-speed-warm",
+        "totalMs": 73.057,
+        "pixelsMs": 73.0246,
+        "writeAndVerifyMs": 0.0324,
+        "progressEvents": 1,
+        "savePercentValues": [],
+        "rasterSha256": "d9d3d9a38dea123bef797019f82e69c277c81d2ac3d999096ee23db999d530c8",
+        "fileBytes": 31119634
+      },
+      {
+        "case": "raw-speed-exposure",
+        "totalMs": 3325.6613,
+        "pixelsMs": 2380.3368,
+        "writeAndVerifyMs": 945.3245,
+        "progressEvents": 407,
+        "savePercentValues": [
+          95,
+          96,
+          97,
+          98,
+          99
+        ],
+        "rasterSha256": "bc75d1fbda3fb1fb2b715a9baf0ebc94afb5dde4aff22d54885884b93895da91",
+        "fileBytes": 32290928
+      },
+      {
+        "case": "raw-editor-cold",
+        "totalMs": 4659.8745,
+        "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+        "bytes": 11873269
+      },
+      {
+        "case": "raw-editor-warm",
+        "totalMs": 110.1827,
+        "fileSha256": "42079ce13351b416aab34671872aed17cf4e845194c9294af098cd91a1733c09",
+        "bytes": 11873269
+      }
+    ]
+  },
+  "equal": {
+    "fullRasterCold": true,
+    "fullRasterExposure": true,
+    "editorJpegBytes": true
+  },
+  "tradeoff": "Lossless intermediate PNG grows about 5.6%; full pixels and final JPEG are identical.",
+  "physicalDeviceVerified": false
+}

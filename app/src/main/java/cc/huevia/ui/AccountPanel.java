@@ -496,12 +496,9 @@ public final class AccountPanel implements AutoCloseable {
         if (destroyed || working || restoring || screen != Screen.PROFILE || session == null || !host.isVisible() || repository.isLogoutPending()) return;
         final AccountRepository.Session owner = repository.cachedSession(); final long attempt = epoch;
         String restoreLabel = owner != null && "qq".equals(owner.user.provider) ? "恢复 QQ 头像" : "恢复默认头像";
-        avatarDialog = new AppDialog.Builder(activity).setTitle("修改头像")
-                .setItems(new String[]{"从相册选择", restoreLabel}, (dialog, which) -> {
-                    avatarDialog = null;
-                    if (!avatarOwnerMatches(owner, attempt)) return;
-                    if (which == 0) chooseAvatar(owner, attempt); else confirmDefaultAvatar(owner, attempt);
-                }).setNegativeButton("取消", null).create();
+        avatarDialog = new ActionChoiceDialog(activity, colors, "修改头像")
+                .add(AppIcon.Kind.ALBUM, "从相册选择", "", () -> { if (avatarOwnerMatches(owner, attempt)) chooseAvatar(owner, attempt); })
+                .add(AppIcon.Kind.REFRESH, restoreLabel, "", () -> { if (avatarOwnerMatches(owner, attempt)) confirmDefaultAvatar(owner, attempt); }).create();
         AlertDialog shown = avatarDialog; shown.setOnDismissListener(dialog -> { if (avatarDialog == shown) avatarDialog = null; }); shown.show();
     }
 

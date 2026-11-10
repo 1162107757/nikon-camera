@@ -1,0 +1,119 @@
+{
+  "apkSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "sdk": 31,
+  "versionCode": 184,
+  "suppliedNef": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/cache\/raw-highlights185\/20261110-093749-fb0d20ed\/sample.NEF",
+  "externalCache": "\/storage\/emulated\/0\/Android\/data\/cc.huevia\/cache",
+  "suppliedExists": false,
+  "suppliedBytes": 0,
+  "failure": "java.lang.AssertionError: licensed NEF missing\/changed\n\tat cc.huevia.rawhighlights185qa.RawHighlights185Probe.onStart(RawHighlights185Probe.java:40)\n\tat android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2248)\n",
+  "fixtureCleanup": true,
+  "pass": false,
+  "cases": [
+    {
+      "case": "ramp-neutral-H0",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "d8e08573fac9656f91856096dd39b61eff4aa4348617ff0e9834081f6a5f815e",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "dd173b9c2d39da57f12c58e8434a9835674c0d4ca9b0b4ab87b8c510354fa1cb",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 16817,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "clippedWhite": {
+        "meanR": 255,
+        "meanG": 255,
+        "meanB": 255,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-neutral-H1",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "82646daa9fb7cffd9d5a310bdba8becb691dcb1ae117f696e7419beec8f9a58e",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "23a417de780ad57d9bce22b78ecdc06de064729e715bbaf7bc9e0c365b93a97d",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 0,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "clippedWhite": {
+        "meanR": 255,
+        "meanG": 188,
+        "meanB": 225,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-neutral-H2",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "5c6f0ff527d7ca6a3496a1fb544cd8771cffb35a162b37135ba35e11627f211e",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "75703f1b37f2f9a7380d8a10cbb8bc37cccc1456e4e70290571a544a9c9da35f",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 8821,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "clippedWhite": {
+        "meanR": 225,
+        "meanG": 225,
+        "meanB": 225,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-neutral-H3",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "7a3603c0d36b8fb6458143e15574b25ad50ad6c798b30c9333847c8d3522ee0b",
+      "cameraColorApplied": false,
+      "colorStatus": "中性色彩",
+      "identity": "2ddb60efd4c587b8a288a2e66e84bc9bf43f4e10968adf12a497a83b6c2eea5f",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 10735,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 2
+      },
+      "clippedWhite": {
+        "meanR": 255,
+        "meanG": 255,
+        "meanB": 255,
+        "pixels": 897
+      }
+    },
+    {
+      "case": "ramp-camera-default",
+      "sourceSha256": "ef19be7ea919e4fb90315326c1b128e61299177dd3795ff487bb4a9d6052d2fc",
+      "outputSha256": "5c6f0ff527d7ca6a3496a1fb544cd8771cffb35a162b37135ba35e11627f211e",
+      "cameraColorApplied": false,
+      "colorStatus": "无相机 JPEG 参考 · 已用中性色彩",
+      "identity": "a60457dc82f9e84f63622b611498114fe7c000307d2b93720dffd2640698401e",
+      "width": 256,
+      "height": 128,
+      "stats": {
+        "brightPixels": 8821,
+        "pinkBrightPixels": 0,
+        "maxPinkDelta": 0
+      },
+      "clippedWhite": {
+        "meanR": 225,
+        "meanG": 225,
+        "meanB": 225,
+        "pixels": 897
+      }
+    }
+  ]
+}

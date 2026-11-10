@@ -1,0 +1,1 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.np3inspectionqa"><application android:label="NP3 Inspection QA" android:allowBackup="false"/><instrumentation android:name=".Np3InspectionProbe" android:targetPackage="cc.huevia" android:functionalTest="true"/></manifest>

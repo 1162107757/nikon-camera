@@ -1,0 +1,36 @@
+{
+  "pass": true,
+  "runId": "20261108-143322-a461058c",
+  "candidateSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd",
+  "versionCode": 160,
+  "serial": "emulator-5588",
+  "probeSha256": "57810b5e29f26b8697cfb209538f9b347626f7dd430288eed2175950692aae4b",
+  "modes": [
+    {
+      "mode": "phone",
+      "pass": true,
+      "checks": 512,
+      "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+    },
+    {
+      "mode": "dark",
+      "pass": true,
+      "checks": 476,
+      "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+    },
+    {
+      "mode": "narrow",
+      "pass": true,
+      "checks": 476,
+      "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+    },
+    {
+      "mode": "font",
+      "pass": true,
+      "checks": 476,
+      "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+    }
+  ],
+  "totalChecks": null,
+  "scope": "Installed APK, generated NP3, real parameter-entry touch and dialog; offline owned emulator only."
+}

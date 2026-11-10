@@ -1,0 +1,50 @@
+[
+  {
+    "path": "online-library/backup/core.mjs",
+    "sha256": "b1cbb13ceef91e71b5ed3d33651b5a9be786d6f6ae10ead67e08884cec04781c"
+  },
+  {
+    "path": "online-library/backup/runtime.mjs",
+    "sha256": "3c44ad83aa5676bb05190d15630760a73aece0e7aae2a53cf5c34b5345218f90"
+  },
+  {
+    "path": "online-library/backup/index.cjs",
+    "sha256": "eb25d7ed454d26175ae7fbcfd749e00cd8d66b3f6c00cd3e8ec4032b21692588"
+  },
+  {
+    "path": "online-library/backup/RECOVERY.md",
+    "sha256": "344a2d8b219c765aec129212ef2ef2854a2dc23f11ff2221a2c0c12a3ed28d5e"
+  },
+  {
+    "path": "online-library/backup/verify-restore.sql",
+    "sha256": "691bed6ab35226cae3813aeb094f55bf79f82b48a35aa93b1588be5f673b060f"
+  },
+  {
+    "path": "online-library/backup/deployment-plan.json",
+    "sha256": "254ec2734f09d4cf6b8ff25250ef2f0997571661582425963a87ee546a08cdf7"
+  },
+  {
+    "path": "online-library/database/021-data-backup.sql",
+    "sha256": "483c16c13a11cc5adb4ed6ab2d9c9b94a6dea88056fa7ac9e2c72486e15f3f1e"
+  },
+  {
+    "path": "online-library/infra/cos-backup-policy.json",
+    "sha256": "1282e396b810c7ec25fdf7cdba7e553efc3a0a5cce217fbc5370796a5f69a659"
+  },
+  {
+    "path": "online-library/scripts/deploy-data-backup.mjs",
+    "sha256": "81a723027c8c24a9c26c8567b04a975586519f41b29ef8ded30d3642b8c30372"
+  },
+  {
+    "path": "online-library/scripts/data-backup-cloud.mjs",
+    "sha256": "3781c974c17c2e491a5602c23fc848f622dc347db37d1888944faba0e325b8c5"
+  },
+  {
+    "path": "online-library/scripts/package-data-backup.py",
+    "sha256": "b1dbdd8e239ab18b092d08eea0b22f5f713e76544a918e65a4f4770422aa7751"
+  },
+  {
+    "path": "online-library/test/data-backup.test.mjs",
+    "sha256": "edce0487bf97bf92b2cacd0642589b07775879eab9b40cb6a827a1791f34750d"
+  }
+]

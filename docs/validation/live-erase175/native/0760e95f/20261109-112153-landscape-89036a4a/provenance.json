@@ -1,0 +1,44 @@
+{
+  "candidateSha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+  "versionCode": 175,
+  "serial": "emulator-5588",
+  "hardware": "ranchu",
+  "mode": "landscape",
+  "probeSha256": "a7946dc2ff2b4e74956057a404949d4570bdac3f6ff83beab495a470fcc3fdc0",
+  "pass": true,
+  "scope": "Exact installed175 renderer during held DOWN/MOVE before release, no-overlay full-canvas pixel oracle; latest-only100-move queue, one undo per stroke, cancel/focus/pinch, guide OOM and precision failure rollback, parent transaction, real v8 draft and original bytes. Owned emulator synthetic texture; host independently covers blend quality, EXIF and alpha. No physical device or all-photo quality claim.",
+  "files": [
+    {
+      "file": "01-ready.png",
+      "sha256": "2c48fb2746485f7e392da9f9d9493449128125ce873998d656fcf20a983725da"
+    },
+    {
+      "file": "02-finger-held-live.png",
+      "sha256": "6ca3a7e9700f8aa036ffa54e548865a7fe6b7c1b81b575c408d7beea8469babe"
+    },
+    {
+      "file": "03-moving-live.png",
+      "sha256": "8ee0802fe4a6fee176bd9db03058b0f9d381aa09fd8bc5f48822a2bc2d4dccf1"
+    },
+    {
+      "file": "04-completed-clean.png",
+      "sha256": "ea79a64283b454046d1cf281fc81bebf5091cc9dfd3ac2e6099d713725840924"
+    },
+    {
+      "file": "05-coalesced-result.png",
+      "sha256": "ef6721e6927fe2977bdc575796e0469cffa114e86d169d4fc43c6488fd68a963"
+    },
+    {
+      "file": "06-parent-committed.png",
+      "sha256": "35dff0fbe578529860978265a6ddb1cc0fa53660e3910ba07b6dca79854e1505"
+    },
+    {
+      "file": "07-reopened.png",
+      "sha256": "331efb646303b07d9f149028a0d7535f36a2db17dbaba788938a8bc57ece1794"
+    },
+    {
+      "file": "report.json",
+      "sha256": "6b0a280369170bcdf577f38e5b295d62e6004152cd4df9cfed1a5b5db3f934e8"
+    }
+  ]
+}

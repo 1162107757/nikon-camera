@@ -1,0 +1,42 @@
+{
+  "versionCode": 182,
+  "candidateSha256": "bb8f5c66282c9731e58b84bf7a68e3f8fa9236532003fd27de1a6a9c09518645",
+  "probeSha256": "aeea061f400206d4c6e422c0fe52df8c8df50efc7c77ad673705fd8a34e7e4cb",
+  "serial": "emulator-5588",
+  "pass": true,
+  "scope": "Installed182 actual MainActivity/custom Dialog; isolated validated NP3 library plus synthetic390 complete catalog, first20 browsing. Covers three-group combination, full counts/local paging/search, draft close/back/reset, shared category, versioned restoration, local semantics, cache/error/retry and committed deletion. No live server or camera writes.",
+  "files": [
+    {
+      "file": "01-sheet-online.png",
+      "sha256": "325a3e6178cb1db02aaaa14836cbf48661d81726f3316e97b66a4907d070f6ab"
+    },
+    {
+      "file": "02-draft-combination.png",
+      "sha256": "a383a2d61b03bc7cb46bac22fb7b5cf7c1834636375befea43c7d52a6384eca4"
+    },
+    {
+      "file": "03-combined-deep-result.png",
+      "sha256": "47a6c2f33067a87591c8d83aa1c0172da519236b0f03c9ea29904ec58e32dcfe"
+    },
+    {
+      "file": "04-filter-pagination.png",
+      "sha256": "204d46abea3f847d79434da44de93acae7268f08cba031ee8cd07e4b178e27e3"
+    },
+    {
+      "file": "05-sheet-local.png",
+      "sha256": "276cf63f9a360d85624b5322bba300a5e4c7ca862bd7d3cb87d507e941dca894"
+    },
+    {
+      "file": "06-cache-result.png",
+      "sha256": "03e367dfdc669e6404b3bb3e726bceac8c39897d6a1749df05cb688a0e72716d"
+    },
+    {
+      "file": "07-empty-after-local-delete.png",
+      "sha256": "a7b7636dd5729442303afab4554916b762f9616d1e607e10a77b7b1fbaf1693a"
+    },
+    {
+      "file": "report.json",
+      "sha256": "9fba1a33d6a4066192d63c0198de63f6bd1259f63a36a720799a0555a37a9fab"
+    }
+  ]
+}

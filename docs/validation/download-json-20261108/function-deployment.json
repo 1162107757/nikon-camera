@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-08T02:45:20.157Z",
+  "status": "Active",
+  "role": "HueviaUpdatePackageRole",
+  "provider": "cos",
+  "configurationPreserved": true,
+  "zipSha256": "2ea3fa38b891b75ee98d4539eda67043a9997aed7bfc65afd89e194915890d4e",
+  "changedFiles": [
+    {
+      "path": "server/app.mjs",
+      "before": "a5d39a910879aa4d9e1e647a13b2f77dea49df23b77b0f33c46b5ec2bc028bf2",
+      "after": "ae2d4369e0d03593a393bd77350e2d63e35a44d8be2de612a01032c0a83fe53a"
+    },
+    {
+      "path": "download/index.html",
+      "before": "d11db6f0bb9e8ba710248f22ee28ecaadcd861f23cfd4ca43edcc072bc25b59b",
+      "after": "a994f9ea15b3001a9aeb4e4d81e2e786650b21c1be76bde33a00f16e2d06ca40"
+    },
+    {
+      "path": "server/release-download-error.mjs",
+      "before": null,
+      "after": "520ab488463120921880979363d3129c3ecf6262263c085e824d2d1c6a0b4785"
+    }
+  ]
+}

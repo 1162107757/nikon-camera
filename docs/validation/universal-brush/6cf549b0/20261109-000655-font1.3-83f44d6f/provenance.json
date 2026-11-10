@@ -1,0 +1,56 @@
+{
+  "candidateSha256": "6cf549b070170c9b62fc9f6fc3d31617b3602f60245c12d06c4eff9ea0661332",
+  "versionCode": 168,
+  "serial": "emulator-5586",
+  "hardware": "ranchu",
+  "mode": "font1.3",
+  "probeSha256": "57726901dc9d185b2ea040f5b848b0b34c540cf155c7dc0de44a4694a6bad7b4",
+  "pass": false,
+  "scope": "Exact installed geometric circle/ellipse and rectangle selection, add/subtract/invert, cancel/undo/redo, real draft payloads; persistent display, gesture suppression and manual hide in main regional adjustments, curves/HSL/palette/cleanup, actual detected face/exposed skin, body range and legacy radial mask. Original bytes preserved. Host covers geometry oracle and EXIF/alpha; this flow makes no new full-export, segmentation-accuracy or physical-phone acceptance claim.",
+  "files": [
+    {
+      "file": "failure.png",
+      "sha256": "2803dfc311b3d2cdf11d3677c7626f956fbcc2085242f306ee4e84e7e8016c31"
+    },
+    {
+      "file": "report.json",
+      "sha256": "f77ac8cb3b72dff574e300dffe8320a1e67177b122278f7391590b6658c3bb8e"
+    },
+    {
+      "file": "selection168-circle-drag-hidden.png",
+      "sha256": "2ef07250538a7db3241294a660979ba7f43aba8a863ff634d4e0567a3999396b"
+    },
+    {
+      "file": "selection168-circle-persistent.png",
+      "sha256": "c04e8d287057c2383f27b8c2ff64f3cc77e598317ac1c6de36dddc90689d5c7d"
+    },
+    {
+      "file": "selection168-circle-release-restored.png",
+      "sha256": "95df5eb76167ba280cb2054ebb9460d9b7bd3ec0b94fdd99812f788207666d65"
+    },
+    {
+      "file": "selection168-curves-persistent.png",
+      "sha256": "a8c1f352bf67fed77dd8489af13537a6fd22b6b8505653616f989dff10d6997a"
+    },
+    {
+      "file": "selection168-inverse.png",
+      "sha256": "ae7331c39d0034093ac8d77d3d93d419c5d93c125b0d5428472d3d8ea10ff65f"
+    },
+    {
+      "file": "selection168-main-drag-hidden.png",
+      "sha256": "ecf5696571d0a579cf7cc9615d9af365d9a1d6d85b919c200a23ba70dd2fe41b"
+    },
+    {
+      "file": "selection168-main-regional.png",
+      "sha256": "36422898a97bfc6e7a6d2c7e908444de7ac78c6a272e6244c0884cedc1d7778a"
+    },
+    {
+      "file": "selection168-manual-brush-persistent.png",
+      "sha256": "67f4f04a62bc84c6f829e40bbb54afedb5e38c11a7d96f3c1db3940cd8bb4897"
+    },
+    {
+      "file": "selection168-rectangle-added.png",
+      "sha256": "f15cd4509e230b4208f496ae93799ea64eef6d7e5574a759144376f088aaefad"
+    }
+  ]
+}

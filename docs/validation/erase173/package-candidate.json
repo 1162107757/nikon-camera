@@ -1,0 +1,20 @@
+{
+  "versionCode": 173,
+  "versionName": "0.30.19-beta",
+  "sourceSha256": "909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication173\\candidates\\909a28b2ce6fb80dbcf970fcaff5878942f595b8a931751ac8c00000d15f1d92\\update.apk",
+  "uploadSha256": "719c811fe39febf90db193283465dd4d847e42d3dff955e028102c632863ccb9",
+  "uploadBytes": 31370429,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "ship-scored-F1",
+  "deliveryApk": "D:\\dev\\ai-project\\nikon-camera\\dist\\upload173\\huevia-0.30.19-beta-update.apk",
+  "initialReview": ".impeccable/review/erase173/review-initial.md",
+  "finalVerdict": ".impeccable/review/erase173/review.md"
+}

@@ -1,0 +1,79 @@
+{
+  "finalApkSha256": "2ab445a72700385b5ba95fb51d8ee130f2df751c59e4723e1d2572ac7cf72776",
+  "selectedDeviceChecks": 615,
+  "runs": [
+    {
+      "case": "Android12 phone",
+      "report": "docs/validation/stability184/device/2ab445a7/phone-20261110-072452-c4244bdb/phone-20261110-072452-c4244bdb/report.json",
+      "checks": 77,
+      "pass_": true,
+      "cleanup": "docs/validation/stability184/device/2ab445a7/phone-20261110-072452-c4244bdb/cleanup.json"
+    },
+    {
+      "case": "Android12 large text/dark/no blur",
+      "report": "docs/validation/stability184/device/2ab445a7/font-dark-20261110-072720-9fd83a9b/font-dark-20261110-072720-9fd83a9b/report.json",
+      "checks": 77,
+      "pass_": true,
+      "cleanup": "docs/validation/stability184/device/2ab445a7/font-dark-20261110-072720-9fd83a9b/cleanup.json"
+    },
+    {
+      "case": "Android12 tablet",
+      "report": "docs/validation/stability184/device/2ab445a7/tablet-20261110-072739-96d2c30d/tablet-20261110-072739-96d2c30d/report.json",
+      "checks": 77,
+      "pass_": true,
+      "cleanup": "docs/validation/stability184/device/2ab445a7/tablet-20261110-072739-96d2c30d/cleanup.json"
+    },
+    {
+      "case": "Android16 phone",
+      "report": "docs/validation/stability184/device/2ab445a7/phone-20261110-072616-6db1a6ac/phone-20261110-072616-6db1a6ac/report.json",
+      "checks": 77,
+      "pass_": true,
+      "cleanup": "docs/validation/stability184/device/2ab445a7/phone-20261110-072616-6db1a6ac/cleanup.json"
+    },
+    {
+      "case": "Android16 landscape/dark",
+      "report": "docs/validation/stability184/device/2ab445a7/landscape-dark-20261110-072635-0737af93/landscape-dark-20261110-072635-0737af93/report.json",
+      "checks": 77,
+      "pass_": true,
+      "cleanup": "docs/validation/stability184/device/2ab445a7/landscape-dark-20261110-072635-0737af93/cleanup.json"
+    },
+    {
+      "case": "Android12 RAW native/UI/NEF",
+      "report": "docs/validation/photo-image-suite/raw-development/2ab445a7/20261110-072551-phone-6edbb9b77a/20261110-072551-phone-6edbb9b77a/report.json",
+      "checks": 160,
+      "pass_": true,
+      "cleanup": "docs/validation/photo-image-suite/raw-development/2ab445a7/20261110-072551-phone-6edbb9b77a/cleanup.json"
+    },
+    {
+      "case": "Android12 real NEF editor",
+      "report": "docs/validation/photo-image-suite/raw-development/2ab445a7/20261110-072709-phone-803c8d9bc4/20261110-072709-phone-803c8d9bc4/report.json",
+      "checks": 15,
+      "pass_": true,
+      "cleanup": "docs/validation/photo-image-suite/raw-development/2ab445a7/20261110-072709-phone-803c8d9bc4/cleanup.json"
+    },
+    {
+      "case": "Android12 export preview",
+      "report": "docs/validation/photo-export-preview/2ab445a7/dfc144ded19f4e7994b570df0cbde7a1/report.json",
+      "checks": 55,
+      "pass_": true,
+      "cleanup": "docs/validation/photo-export-preview/2ab445a7/dfc144ded19f4e7994b570df0cbde7a1/cleanup.json"
+    }
+  ],
+  "renderingComparisons": [
+    {
+      "case": "simple-full",
+      "modelUnchanged": true,
+      "outputSha256": "3a461ca65605602a7cdf4f0171b9c102e85ab15efd55d3e547e04c22290230b0",
+      "byteIdenticalTo183": true
+    },
+    {
+      "case": "local-crop-frame-share",
+      "modelUnchanged": true,
+      "outputSha256": "4df9b7e1790c989aa8ac523160ed76ccefd358faba1887a96f39f1bb3137680f",
+      "byteIdenticalTo183": true
+    }
+  ],
+  "previouslyFailingModelLength": 322,
+  "android12Baseline183PreviewCrashReproduced": true,
+  "honorPhysicalCrashCauseConfirmed": false
+}

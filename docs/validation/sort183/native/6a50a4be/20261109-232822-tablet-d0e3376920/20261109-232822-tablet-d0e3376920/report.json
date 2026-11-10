@@ -1,0 +1,445 @@
+{
+  "pass": true,
+  "apkSha256": "6a50a4bebc1894cf535653b60d609ad273ab496fbf0399158ad5f34b59dbafdf",
+  "checks": [
+    {
+      "name": "native-EXIF-capture-differs-from-arrival",
+      "passed": true
+    },
+    {
+      "name": "missing-capture-falls-back-to-arrival",
+      "passed": true
+    },
+    {
+      "name": "aliases-share-original-group-earliest-arrival",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-false-false",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-false-true",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-true-false",
+      "passed": true
+    },
+    {
+      "name": "native-private-four-orders-true-true",
+      "passed": true
+    },
+    {
+      "name": "complete-index-sorts-capture-before-first-page",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsefalse-11",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-falsefalse",
+      "passed": true
+    },
+    {
+      "name": "capture-opposite-extremes-false",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-falsetrue-11",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-falsetrue",
+      "passed": true
+    },
+    {
+      "name": "capture-opposite-extremes-true",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truefalse-11",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-truefalse",
+      "passed": true
+    },
+    {
+      "name": "added-newest-independent-of-capture",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-0",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-1",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-2",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-3",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-4",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-5",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-6",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-7",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-8",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-9",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-10",
+      "passed": true
+    },
+    {
+      "name": "page-unique-truetrue-11",
+      "passed": true
+    },
+    {
+      "name": "all-owned-rows-cross-page-boundary-truetrue",
+      "passed": true
+    },
+    {
+      "name": "main-ready",
+      "passed": true
+    },
+    {
+      "name": "private-album-ready",
+      "passed": true
+    },
+    {
+      "name": "icon-only-48dp-entry",
+      "passed": true
+    },
+    {
+      "name": "entry-before-selection-in-count-row",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "default-capture-newest-selected",
+      "passed": true
+    },
+    {
+      "name": "apply-reachable-70",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-taken-71",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-added-72",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-newest-73",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-oldest-74",
+      "passed": true
+    },
+    {
+      "name": "close-48dp-75",
+      "passed": true
+    },
+    {
+      "name": "close-discards-draft",
+      "passed": true
+    },
+    {
+      "name": "navigation-restored-after-close",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "back-discards-draft",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "sort-anchor-restored",
+      "passed": true
+    },
+    {
+      "name": "opposite-order-keeps-visible-photo-anchor",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "apply-persists-app-choice",
+      "passed": true
+    },
+    {
+      "name": "date-groups-show-full-historical-year",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "reset-draft-default-only",
+      "passed": true
+    },
+    {
+      "name": "reset-close-preserves-applied",
+      "passed": true
+    },
+    {
+      "name": "selection-A-hides-sort-entry",
+      "passed": true
+    },
+    {
+      "name": "cancel-selection-restores-entry",
+      "passed": true
+    },
+    {
+      "name": "phone-ready",
+      "passed": true
+    },
+    {
+      "name": "phone-keeps-independent-default",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "phone-reordered",
+      "passed": true
+    },
+    {
+      "name": "separate-source-preferences",
+      "passed": true
+    },
+    {
+      "name": "sheet-open",
+      "passed": true
+    },
+    {
+      "name": "root-navigation-hidden-under-sheet",
+      "passed": true
+    },
+    {
+      "name": "apply-reachable-103",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-taken-104",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-added-105",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-newest-106",
+      "passed": true
+    },
+    {
+      "name": "choice-height-unclipped-album-sort-oldest-107",
+      "passed": true
+    },
+    {
+      "name": "close-48dp-108",
+      "passed": true
+    }
+  ],
+  "fixtureCleanup": true,
+  "failure": null,
+  "scope": "Installed 183 app: complete MediaStore metadata ordering and pagination, private EXIF\/arrival grouping, native sort sheet and selection A regression. Process restore is separately recorded after force-stop. No RAW decoding, camera, physical Samsung or full TalkBack claims."
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "app/build.gradle",
+    "sha256": "64c2544e22d6d156bb864601c5051aee1006d83c871ac35659f0b6a89c0c8360"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/MainActivity.java",
+    "sha256": "79253017636cebc11e75a86f3e73485be1f218d06ce343636fc8fdce975b8f31"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/library/PresetHomeFilter.java",
+    "sha256": "5b427313f8c6e5981a13eb40132d4cb30e228de5ac79cc5e17e4a3ed33ccc0f0"
+  },
+  {
+    "path": "app/src/main/java/cc/huevia/ui/PresetFilterSheet.java",
+    "sha256": "d82861507af44074d7b0c0e409f381a09c75998a81010e47d660293accdd4607"
+  },
+  {
+    "path": "app/src/main/res/values/preset_filter_ids.xml",
+    "sha256": "65674efffa8e33b4af7b21f3d4584505ac294681283b8e47e2c9ba6c18769055"
+  }
+]

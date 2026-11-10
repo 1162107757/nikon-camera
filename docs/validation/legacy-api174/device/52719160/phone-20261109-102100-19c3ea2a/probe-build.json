@@ -1,0 +1,13 @@
+{
+  "builtAt": "2026-11-09T01:39:25.9483440Z",
+  "inputs": [
+    {
+      "path": "tests/legacy-api174-device-probe/src/LegacyApi174Probe.java",
+      "sha256": "0f643096577d5dcc2baa642cfe3ec4880bba8263e487ead0ff96576b62853e8c"
+    }
+  ],
+  "probeSha256": "c5a9adf520c1a5b96d4f294eb03e84ae18160973959ba1c09a95076cb06c8532",
+  "manifestSha256": "b769ee06aa285988fbabbd25756e394dea8a3b2fcbfebadc5863e32fcea496f9",
+  "buildSha256": "81a1ff3c0e7fe80156a2ad169c9dc5ceaee08edcc502474c7771d0aa94fed0b3",
+  "runSha256": "8e9de56041fa4320fd063f527a79e0be690508e46415b61879f8bf2755c797cc"
+}

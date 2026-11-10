@@ -25,6 +25,7 @@ public final class PhotoPresetSourcesTest {
         try {
             durableExactInputAndAliases(root.resolve("durable"));
             separateModelsRetainDurableOriginals(root.resolve("models"));
+            realComposedModelsAndBoundedJournals(root.resolve("composed-models"));
             interruptedNp3CommitRecoversExactOriginal(root.resolve("np3-interrupted"));
             directDerivedInputAndLegacyMigration(root.resolve("legacy"));
             corruptionAndPrivateBoundaries(root.resolve("invalid"));
@@ -38,6 +39,34 @@ public final class PhotoPresetSourcesTest {
         } finally {
             try (var paths = Files.walk(root)) { for (Path path : paths.sorted(Comparator.reverseOrder()).toList()) Files.deleteIfExists(path); }
         }
+    }
+    private static void realComposedModelsAndBoundedJournals(Path root) throws Exception {
+        Fixture f = new Fixture(root);
+        DownloadedPhoto original = f.photo("composed-original.JPG", jpeg(42, 37));
+        String sourceSha = sha(Files.readAllBytes(original.file().toPath()));
+        cc.huevia.ncp.PhotoAdjustments manual = cc.huevia.ncp.PhotoAdjustments.NONE.with(cc.huevia.ncp.PhotoAdjustments.Parameter.EXPOSURE, 1);
+        cc.huevia.ncp.PhotoLocalEdits local = new cc.huevia.ncp.PhotoLocalEdits(List.of(cc.huevia.ncp.PhotoLocalEdits.Mask.radial(.5, .5).parameters(5, 0, 0)), List.of());
+        PhotoEditStore.Draft draft = new PhotoEditStore.Draft(sourceSha, null, "", 100, manual,
+                new cc.huevia.ncp.PhotoGeometry(0, 0, 100000, 100000, 900000, 900000),
+                cc.huevia.ncp.PhotoBorder.NONE.withTemplate(1), local, false);
+        String model = PhotoPresetRenderer.modelVersion(draft.profile(), PhotoExportSpec.full().resolve(640, 480));
+        check(model.length() > 256, "Real manual/local/crop/border export exceeds the obsolete short-model journal cap");
+        check(model.equals(draft.profile().modelVersion() + ":full-jpeg95-srgb-v1"), "Fix preserves the exact full/Q95 renderer identity");
+        DownloadedPhoto effect = f.effect(original, PRESET, jpeg(64, 79), model);
+        String key = effect.file().getName().substring(7, 71);
+        f.store().rememberModel(key, model);
+        check(f.store().find(effect, () -> List.of(PRESET), () -> false).file().equals(original.file().getCanonicalFile()), "Interrupted composed export recovers its exact persisted model and original");
+        check(f.store().relation(effect, () -> false).presetSha.equals(PRESET), "Composed source relation survives a store restart");
+        String unicode = "model:" + "型".repeat(PhotoPresetSources.MAX_MODEL_CHARS - 6);
+        DownloadedPhoto unicodeEffect = f.effect(original, OTHER_PRESET, jpeg(64, 80), unicode);
+        String unicodeKey = unicodeEffect.file().getName().substring(7, 71);
+        f.store().rememberModel(unicodeKey, unicode);
+        File journal = f.records.resolve(unicodeKey + ".model").toFile();
+        check(journal.length() > 1024, "Modified-UTF8 bytes are bounded independently from UTF16 character count");
+        check(f.store().find(unicodeEffect, () -> List.of(OTHER_PRESET), () -> false).file().equals(original.file().getCanonicalFile()), "Maximum-length non-ASCII model reads what the writer accepted");
+        for (String invalid : new String[]{null, "", "\u2003", "bad\nmodel", "bad\tmodel", "x".repeat(PhotoPresetSources.MAX_MODEL_CHARS + 1)})
+            fails(() -> f.store().rememberModel(key, invalid), "Reject null/blank/control/oversize model without truncating");
+        check(f.store().relation(effect, () -> false).original.file().equals(original.file().getCanonicalFile()), "Rejected model cannot damage an already verified source relationship");
     }
     private static void separateModelsRetainDurableOriginals(Path root) throws Exception {
         Fixture f = new Fixture(root); DownloadedPhoto original = f.photo("original.JPG", jpeg(32, 17));

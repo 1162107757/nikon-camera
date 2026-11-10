@@ -1,0 +1,87 @@
+diff --git a/.tooling/sort183/final-source/app/src/main/java/cc/huevia/MainActivity.java b/app/src/main/java/cc/huevia/MainActivity.java
+index 37606f6..73af831 100644
+--- a/.tooling/sort183/final-source/app/src/main/java/cc/huevia/MainActivity.java
++++ b/app/src/main/java/cc/huevia/MainActivity.java
+@@ -1548,10 +1548,10 @@ public final class MainActivity extends Activity {
+                     catch (RuntimeException failure) { requestConnectionNotification(); }
+                 });
+         if (!unrestricted) dialog.setPositiveButton("允许后台运行", (d, w) -> {
+-            try { startActivity(new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+-                    Uri.parse("package:" + getPackageName()))); }
+-            catch (RuntimeException failure) { startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+-                    Uri.parse("package:" + getPackageName()))); }
++            SystemActivityLauncher.settings(this,
++                    new Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, Uri.parse("package:" + getPackageName())),
++                    new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName())),
++                    error -> notice("无法打开后台设置", error));
+         });
+         dialog.show();
+     }
+@@ -1689,7 +1689,9 @@ public final class MainActivity extends Activity {
+         if (waitForCurrentTask()) return;
+         new cc.huevia.ui.ActionChoiceDialog(this, colors, "预览模板")
+                 .add(AppIcon.Kind.ALBUM, presetPreviews.hasCustomTemplate() ? "查看当前模板" : "查看内置摄影样片", "", this::showTemplateOriginal)
+-                .add(AppIcon.Kind.FILE, "从手机选择模板图", "", () -> startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_TEMPLATE))
++                .add(AppIcon.Kind.FILE, "从手机选择模板图", "", () -> SystemActivityLauncher.document(this,
++                        new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_TEMPLATE,
++                        error -> notice("无法选择模板图", error)))
+                 .add(AppIcon.Kind.REFRESH, "恢复内置摄影样片", "", () -> updatePreviewTemplate(null)).show();
+     }
+ 
+@@ -2594,21 +2596,15 @@ public final class MainActivity extends Activity {
+         if(waitForCurrentTask()||!requirePresetLibrary())return;importAfterPick=thenImport;
+         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                 .setType("*/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+-        try { startActivityForResult(intent, PICK_NCP); }
+-        catch (android.content.ActivityNotFoundException unavailable) {
+-            try { startActivityForResult(new Intent(intent).setAction(Intent.ACTION_GET_CONTENT), PICK_NCP); }
+-            catch (android.content.ActivityNotFoundException missing) {
+-                importAfterPick = false;
+-                notice("无法选择预设", "手机没有可用的文件选择器，请启用系统文件应用后重试。");
+-            }
+-        }
++        if (!SystemActivityLauncher.document(this, intent, PICK_NCP, error -> notice("无法选择预设", error))) importAfterPick = false;
+     }
+ 
+     private void pickSample(String id) {
+         if (waitForCurrentTask() || !requirePresetLibrary()) return;
+         if (id == null || id.isEmpty() || library.findBySha256(id) == null) { showPresetRequired(); return; }
+         previewForId = id;
+-        startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"), PICK_SAMPLE);
++        if (!SystemActivityLauncher.document(this, new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("image/*"),
++                PICK_SAMPLE, error -> notice("无法选择样片", error))) previewForId = "";
+     }
+ 
+     @Override protected void onActivityResult(int request, int result, Intent data) {
+@@ -2676,7 +2672,7 @@ public final class MainActivity extends Activity {
+             catch (Exception failure) { notice("报告无法生成", readable(failure)); return; }
+             startBusy("正在导出报告…"); worker.execute(() -> {
+                 try (OutputStream output = getContentResolver().openOutputStream(uri, "wt")) {
+-                    if (output == null) throw new IOException("无法写入所选位置。"); output.write(snapshot.getBytes(StandardCharsets.UTF_8));
++                    if (output == null) throw new IOException("无法写入所选位置。"); output.write(AppCrashDiagnostics.appendToReport(this, snapshot).getBytes(StandardCharsets.UTF_8));
+                     ConnectionTrace.mark("REPORT_EXPORT_WRITE_COMPLETE"); onUi(() -> finishBusy("报告已导出。"));
+                 } catch (Exception e) { ConnectionTrace.mark("REPORT_EXPORT_WRITE_FAILED"); onUi(() -> { finishBusy("报告导出失败。"); notice("导出失败", readable(e)); }); }
+             });
+@@ -3764,10 +3760,10 @@ public final class MainActivity extends Activity {
+ 
+     private void exportReport() {
+         if (waitForCurrentTask()) return;
+-        if (report.isEmpty() && ConnectionTrace.snapshot().isEmpty()) { notice("暂无可导出的报告", "连接相机或完成一次检测后，再导出报告。"); return; }
+         ConnectionTrace.mark("REPORT_PICKER_OPEN");
+-        startActivityForResult(new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+-                .setType("application/json").putExtra(Intent.EXTRA_TITLE, report.isEmpty() ? "huevia-connection-report.json" : "nikon-usb-report.json"), EXPORT_REPORT);
++        SystemActivityLauncher.document(this, new Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
++                .setType("application/json").putExtra(Intent.EXTRA_TITLE, report.isEmpty() ? "huevia-diagnostic-report.json" : "nikon-usb-report.json"),
++                EXPORT_REPORT, error -> notice("无法保存诊断报告", error));
+     }
+ 
+     private String exportReportSnapshot() throws org.json.JSONException {
+@@ -3789,7 +3785,7 @@ public final class MainActivity extends Activity {
+ 
+     private void showHelp() {
+         List<String> labels = new ArrayList<>();
+-        labels.add("预设导入说明"); labels.add("导出最近报告"); labels.add("高级诊断");
++        labels.add("预设导入说明"); labels.add("导出诊断报告"); labels.add("高级诊断");
+         if (recoveryBlocked) labels.add("核对上次导入 · 只读");
+         labels.add("关于 " + getString(R.string.app_name));
+         new AppDialog.Builder(this).setTitle("帮助与设置").setItems(labels.toArray(new String[0]), (d, w) -> {

@@ -1,0 +1,145 @@
+{
+  "candidateSha256": "0760e95f2b6370d59a07a8e691d58c8ac3fbd6f01e4218e157abe67aa6f4d3f0",
+  "images": [
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/01-ready.png",
+      "sha256": "2a7b972366caf120f0d918b1aa8aa5e4cc2c3c114a3334e99f2e40b005335149"
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/02-finger-held-live.png",
+      "sha256": "1b8e9225886601bb21c1bafe9c552bcaf851fdbc6eeeaf275ba3208d40d2ec75"
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/03-moving-live.png",
+      "sha256": "84e29b3b251249d246786bfbcec3249826682b2a4572aa0567a645138411eb6d"
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/04-completed-clean.png",
+      "sha256": "fa3489ee6c1c8bae4e1b0908e23a7b5f90e731412f1bd32c85600680f2698496"
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/05-coalesced-result.png",
+      "sha256": "1c16ff66548c47967d6dae8bc9bdca49bd60612f716b0e7d775609dbddfad712"
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/06-parent-committed.png",
+      "sha256": "977faded626076716e3a0d7b404952afd5b6ba4947f2f4a83d743e1ff9252b51"
+    },
+    {
+      "mode": "phone",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112009-phone-1e650f13/20261109-112009-phone-1e650f13/07-reopened.png",
+      "sha256": "3b8132aa25e58fea595f64655ef78534fddbe2534dbecd394234cef8133638b3"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/01-ready.png",
+      "sha256": "fd5c23547cebfac689d6d81e50548eed18fc618150848e8a945ebbc38346867e"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/02-finger-held-live.png",
+      "sha256": "f7fff9a541db975b010085b807466bced163afb2f21367e34b5368e125d262a8"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/03-moving-live.png",
+      "sha256": "2ad6a98fe5c408b8601a13f6b19dbe091b394dd739155c82b8bf9a5da4a5acb7"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/04-completed-clean.png",
+      "sha256": "65a682e845b6b492c1da6f287aa8442df5632104ff0e70fa65084a3f6cdc1b0e"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/05-coalesced-result.png",
+      "sha256": "eec1dc7aa8d7bb80b5d65119b4a59178aa003cf40d812e9ec2d81da3a4282fe6"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/06-parent-committed.png",
+      "sha256": "2321aa8497d298ae0788342e4184d5ab88ecb3b855c8de7c3011ede1a0fb58b4"
+    },
+    {
+      "mode": "font1.3",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112106-font1.3-f0dfac34/20261109-112106-font1.3-f0dfac34/07-reopened.png",
+      "sha256": "864ef96897e8b3f437d1a16df84735cc8c8dfa163938f8616300cd3bca5b3804"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/01-ready.png",
+      "sha256": "2c48fb2746485f7e392da9f9d9493449128125ce873998d656fcf20a983725da"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/02-finger-held-live.png",
+      "sha256": "6ca3a7e9700f8aa036ffa54e548865a7fe6b7c1b81b575c408d7beea8469babe"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/03-moving-live.png",
+      "sha256": "8ee0802fe4a6fee176bd9db03058b0f9d381aa09fd8bc5f48822a2bc2d4dccf1"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/04-completed-clean.png",
+      "sha256": "ea79a64283b454046d1cf281fc81bebf5091cc9dfd3ac2e6099d713725840924"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/05-coalesced-result.png",
+      "sha256": "ef6721e6927fe2977bdc575796e0469cffa114e86d169d4fc43c6488fd68a963"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/06-parent-committed.png",
+      "sha256": "35dff0fbe578529860978265a6ddb1cc0fa53660e3910ba07b6dca79854e1505"
+    },
+    {
+      "mode": "landscape",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112153-landscape-89036a4a/20261109-112153-landscape-89036a4a/07-reopened.png",
+      "sha256": "331efb646303b07d9f149028a0d7535f36a2db17dbaba788938a8bc57ece1794"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/01-ready.png",
+      "sha256": "35ce9097841176423363e4c8edf0b34fdcb8be2e0412e717a54beeb378430272"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/02-finger-held-live.png",
+      "sha256": "c860b52e293bbb9890f7f3144c3a6e39c9e45c5ea110d60b0f090e2c58973f70"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/03-moving-live.png",
+      "sha256": "c5af8c73e5fa8737b86d4dc4c7332b5381800ae85a66dff05289099ae95effd9"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/04-completed-clean.png",
+      "sha256": "9f5731032c9b9db6ed25f74b58afcf7a45fe03367a404603561c095ce09128ad"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/05-coalesced-result.png",
+      "sha256": "2e7016727fe04b8f7b9f37d039ab7c86c3e9d8862038f3062ed2811e9cf5fbd5"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/06-parent-committed.png",
+      "sha256": "9bb76c1ce7fac0dd5c33bf742e9fe30661c508383a20963001afe2f84c246c17"
+    },
+    {
+      "mode": "tablet",
+      "path": "docs/validation/live-erase175/native/0760e95f/20261109-112247-tablet-33394764/20261109-112247-tablet-33394764/07-reopened.png",
+      "sha256": "d3842d02a3a4369df48b133f9756f002e2b8cf5415e82c17d0b75262785100cf"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "finalApkSha256": "c1142e440a9bb38afde54ce922a10e273ef5154cd1899ea5a3827ef4773a302a",
+  "baselineReport": "docs/validation/raw-highlights185/device/2ab445a7/20261110-095556-92b4a802/20261110-095556-92b4a802/report.json",
+  "selectedDeviceChecks": 511,
+  "runs": [
+    {
+      "case": "Android12 RAW highlight safety",
+      "report": "docs/validation/raw-highlights185/device/c1142e44/20261110-100600-3841bb76/20261110-100600-3841bb76/report.json",
+      "checks": 25,
+      "cleanup": "docs/validation/raw-highlights185/device/c1142e44/20261110-100600-3841bb76/cleanup.json"
+    },
+    {
+      "case": "Android16 RAW highlight safety",
+      "report": "docs/validation/raw-highlights185/device/c1142e44/20261110-100600-178577c4/20261110-100600-178577c4/report.json",
+      "checks": 25,
+      "cleanup": "docs/validation/raw-highlights185/device/c1142e44/20261110-100600-178577c4/cleanup.json"
+    },
+    {
+      "case": "Android12 RAW core/UI/NEF",
+      "report": "docs/validation/photo-image-suite/raw-development/c1142e44/20261110-100021-phone-cab68bc80e/20261110-100021-phone-cab68bc80e/report.json",
+      "checks": 160,
+      "cleanup": "docs/validation/photo-image-suite/raw-development/c1142e44/20261110-100021-phone-cab68bc80e/cleanup.json"
+    },
+    {
+      "case": "Android12 real NEF editor",
+      "report": "docs/validation/photo-image-suite/raw-development/c1142e44/20261110-100321-phone-6ccc9f13f9/20261110-100321-phone-6ccc9f13f9/report.json",
+      "checks": 15,
+      "cleanup": "docs/validation/photo-image-suite/raw-development/c1142e44/20261110-100321-phone-6ccc9f13f9/cleanup.json"
+    },
+    {
+      "case": "Android12 export preview",
+      "report": "docs/validation/photo-export-preview/c1142e44/53defa0c25524bca97aec042f7c4ff42/report.json",
+      "checks": 55,
+      "cleanup": "docs/validation/photo-export-preview/c1142e44/53defa0c25524bca97aec042f7c4ff42/cleanup.json"
+    },
+    {
+      "case": "Android12 app/export regression",
+      "report": "docs/validation/raw-highlights185/stability-regression/c1142e44/phone-20261110-100238-be963dae/phone-20261110-100238-be963dae/report.json",
+      "checks": 77,
+      "cleanup": "docs/validation/raw-highlights185/stability-regression/c1142e44/phone-20261110-100238-be963dae/cleanup.json"
+    },
+    {
+      "case": "Android12 large font/dark app regression",
+      "report": "docs/validation/raw-highlights185/stability-regression/c1142e44/font-dark-20261110-100254-6819a683/font-dark-20261110-100254-6819a683/report.json",
+      "checks": 77,
+      "cleanup": "docs/validation/raw-highlights185/stability-regression/c1142e44/font-dark-20261110-100254-6819a683/cleanup.json"
+    },
+    {
+      "case": "Android16 app/export regression",
+      "report": "docs/validation/raw-highlights185/stability-regression/c1142e44/phone-20261110-100432-16f55e6a/phone-20261110-100432-16f55e6a/report.json",
+      "checks": 77,
+      "cleanup": "docs/validation/raw-highlights185/stability-regression/c1142e44/phone-20261110-100432-16f55e6a/cleanup.json"
+    }
+  ],
+  "whiteFixtureNativePinkDelta": {
+    "baseline184": 57,
+    "final185": 0
+  },
+  "unchangedNativeRenders": [
+    {
+      "case": "ramp-neutral-H0",
+      "outputSha256": "d8e08573fac9656f91856096dd39b61eff4aa4348617ff0e9834081f6a5f815e",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    },
+    {
+      "case": "ramp-neutral-H1",
+      "outputSha256": "82646daa9fb7cffd9d5a310bdba8becb691dcb1ae117f696e7419beec8f9a58e",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    },
+    {
+      "case": "ramp-neutral-H2",
+      "outputSha256": "5c6f0ff527d7ca6a3496a1fb544cd8771cffb35a162b37135ba35e11627f211e",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    },
+    {
+      "case": "ramp-neutral-H3",
+      "outputSha256": "7a3603c0d36b8fb6458143e15574b25ad50ad6c798b30c9333847c8d3522ee0b",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    },
+    {
+      "case": "ramp-camera-default",
+      "outputSha256": "5c6f0ff527d7ca6a3496a1fb544cd8771cffb35a162b37135ba35e11627f211e",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    },
+    {
+      "case": "nef-neutral-default",
+      "outputSha256": "ac6f76a413bf1b0f6f90109aae4f2f5473d6edeef83758e1bf4c2c4c55fe3608",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    },
+    {
+      "case": "z6ii-neutral-default",
+      "outputSha256": "4521a8cde861395c24874b682e4fda4f7ffbab52e5e16320ebf23041a469c63f",
+      "byteIdenticalTo184": true,
+      "cacheIdentityChanged": true
+    }
+  ],
+  "z6iiUnsafeFitFallsBackToExactNeutralPng": true,
+  "userOriginalNefWasAvailable": false
+}

@@ -1,0 +1,1 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.fourhomeqa"><application android:label="Four Home QA" android:allowBackup="false"/><instrumentation android:name=".FourHomeProbe" android:targetPackage="cc.huevia" android:functionalTest="true"/></manifest>

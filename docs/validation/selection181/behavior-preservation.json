@@ -1,0 +1,6 @@
+{
+  "deleteSelected": true,
+  "exportSelected": true,
+  "prepareSelected": true,
+  "cancelSelection": true
+}

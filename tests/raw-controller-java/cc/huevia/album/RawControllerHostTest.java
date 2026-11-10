@@ -24,6 +24,7 @@ public final class RawControllerHostTest {
         automaticMatchingFailsClosed(base.resolve("pairing"));
         localWithoutProvenanceRequiresSelection(base.resolve("legacy"));
         localJpegReusesRawOffline(base.resolve("local"));
+        localJpegNeedsConnection(base.resolve("local-needs-connection"));
         unreadableInventoryPreventsPairing(base.resolve("incomplete"));
         unavailableStorageIsNotMissingRaw(base.resolve("unavailable"));
         rawReservationProtectsLiveAndCancellation(base.resolve("reservation"));
@@ -118,6 +119,16 @@ public final class RawControllerHostTest {
         }
         try(AlbumController controller=new AlbumController(new android.content.Context(root.toFile()))){RawResult result=new RawResult();controller.downloadRawForLocal(jpeg,result);check(result.value().file().equals(cached.file()),"Offline local NEF export survives controller/app restart");}
     }
+    private static void localJpegNeedsConnection(Path root)throws Exception {
+        Object peer=peer(RawJpegReferenceTest.jpeg(),true);((Map<Long,Integer>)field(peer,"formats")).put(42L,0x3801);((Map<Long,String>)field(peer,"filenames")).put(42L,"CONNECT.JPG");
+        try(AlbumController controller=connect(root,peer)){
+            PhotoPage page=call(cb->controller.loadPage(0,20,cb));Result<DownloadedPhoto> got=new Result<>();controller.download(page.items().get(0),new AlbumController.DownloadCallback(){public void onProgress(long r,long t){}public void onSuccess(DownloadedPhoto p){got.onSuccess(p);}public void onError(String e){got.onError(e);}});DownloadedPhoto jpeg=got.value();
+            call(controller::listRawDownloads);controller.disconnect();int reads=count(peer,0x1009);
+            RawResult result=new RawResult();controller.downloadRawForLocal(jpeg,result);result.error();
+            check(result.connectionRequired&&!result.selectionRequired,"Uncached local RAW requests connection through a typed callback");
+            check(count(peer,0x1009)==reads&&!controller.isRawBusy(),"Connection request releases RAW reservation without another camera read");
+        }
+    }
     private static void unreadableInventoryPreventsPairing(Path root)throws Exception {
         Object peer=peer(RawFormatPairingTest.fixture(true),true);((Map<Long,String>)field(peer,"filenames")).put(43L,"RAWONLY.JPG");((Map<Long,byte[]>)field(peer,"originals")).put(43L,RawJpegReferenceTest.jpeg());set(peer,"photoHandles",new long[]{42,43,44});
         try(AlbumController controller=connect(root,peer)){
@@ -162,6 +173,6 @@ public final class RawControllerHostTest {
     private static int count(Object peer,int operation)throws Exception{Method m=PEER.getDeclaredMethod("count",int.class);m.setAccessible(true);return (Integer)m.invoke(peer,operation);}
     private static <T>T call(Consumer<AlbumController.Callback<T>> action)throws Exception{Result<T> r=new Result<>();action.accept(r);return r.value();}
     private static class Result<T>implements AlbumController.Callback<T>{final CountDownLatch done=new CountDownLatch(1);T result;String error;public void onSuccess(T value){result=value;done.countDown();}public void onError(String message){error=message;done.countDown();}void await()throws Exception{if(!done.await(15,TimeUnit.SECONDS))throw new AssertionError("No RAW callback");}T value()throws Exception{await();if(error!=null)throw new AssertionError(error);return result;}String error()throws Exception{await();if(error==null)throw new AssertionError("Expected rejection");return error;}}
-    private static final class RawResult extends Result<RawPhotoDownload>implements AlbumController.RawDownloadCallback{long last,total;boolean selectionRequired;final java.util.List<String>stages=new java.util.ArrayList<>();public void onProgress(long done,long total){last=done;this.total=total;}public void onStage(String stage){stages.add(stage);}public void onSelectionRequired(String message){selectionRequired=true;onError(message);}}
+    private static final class RawResult extends Result<RawPhotoDownload>implements AlbumController.RawDownloadCallback{long last,total;boolean selectionRequired,connectionRequired;final java.util.List<String>stages=new java.util.ArrayList<>();public void onProgress(long done,long total){last=done;this.total=total;}public void onStage(String stage){stages.add(stage);}public void onSelectionRequired(String message){selectionRequired=true;onError(message);}public void onConnectionRequired(){connectionRequired=true;onError("connection required");}}
     private static void check(boolean value,String message){if(!value)throw new AssertionError(message);checks++;}
 }

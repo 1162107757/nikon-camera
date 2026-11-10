@@ -1,0 +1,19 @@
+{
+  "versionCode": 171,
+  "candidateSha256": "71de10a266e4f159b2119e44c392597eab1e6b91c5942b1c905f28484dcf42ef",
+  "probeSha256": "615fe418efad9ec67291532325b22dabef9df4cac0c7f5d6034d36e3a64c91e9",
+  "serial": "emulator-5588",
+  "pass": true,
+  "scope": "Installed shared source-tab component and actual MainActivity online source button. Real Bitmap.Config.HARDWARE cannot be drawn by a software Canvas; runtime-only and OOM fixtures are explicitly injected. Baseline reproduces missing protection; fixed candidate changes pages without an optional snapshot. Normal software capture retains animation. No physical HarmonyOS device or user crash trace obtained.",
+  "files": [
+    {
+      "file": "baseline-tab-error.png",
+      "sha256": "3276925c726a54c6d1d62d33ebb8035ad8dee098a959b92beda53b0aa24c59a6"
+    },
+    {
+      "file": "report.json",
+      "sha256": "59e8b13b826d876b7b02b2dd1dbc5adcf093e6fad68927c694ee3d35d04b0288"
+    }
+  ],
+  "writerLabelCorrection": "The copied172 runner had a constant version label for the171 baseline; corrected from actual immutable report and exact171 candidate SHA. Original writer metadata retained."
+}

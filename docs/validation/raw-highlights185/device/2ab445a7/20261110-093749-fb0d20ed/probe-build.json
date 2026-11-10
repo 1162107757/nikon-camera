@@ -1,0 +1,17 @@
+{
+  "builtAt": "2026-11-10T01:37:48.4201282Z",
+  "inputs": [
+    {
+      "path": "tests/raw-highlights185-device-probe/src/cc/huevia/rawhighlights185qa/RawHighlights185Probe.java",
+      "sha256": "75585518c18c64b72ada322a408742a705e72a85e4f3080df1474f27abfc00a4"
+    },
+    {
+      "path": "tests/raw-highlights185-device-probe/src/cc/huevia/rawhighlights185qa/SyntheticDng.java",
+      "sha256": "b0667c6d68b85c3a9c127cada943cf68ed455fe048e462031e6bd0dcaf9dd4f6"
+    }
+  ],
+  "probeSha256": "b49d93217476a817675e1c1867cd86713d60a96981a426b5d6abac6c303fdbcd",
+  "manifestSha256": "17f51107ceecd888842031e8e67dc59a9c5b8f64b9c84b66139d31d9542c291e",
+  "buildSha256": "8a63a4c7435e125c20b66e4dc65145fe7c67f8938df637f3670f9a735a182a43",
+  "runSha256": "b59034366d5ec4fa4373d2772639949557f777bd4ff5c82cb7c16bdba9704edc"
+}

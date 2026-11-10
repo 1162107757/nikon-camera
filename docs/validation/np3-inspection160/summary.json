@@ -1,0 +1,142 @@
+{
+  "at": "2026-11-08T06:34:47.827Z",
+  "pass": true,
+  "apk": {
+    "path": "dist/huevia-0.30.6-beta-debug.apk",
+    "versionCode": 160,
+    "versionName": "0.30.6-beta",
+    "byteLength": 34590072,
+    "sha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd",
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureV2": true,
+    "signatureV3": true,
+    "alignment16KiB": true
+  },
+  "hostChecks": {
+    "flexible": 24829,
+    "deepMonochrome": 112146,
+    "standardMonochrome": 161928,
+    "inspection": 72,
+    "library": 540,
+    "editorCatalog": 53
+  },
+  "native": {
+    "path": "6c569f39/20261108-143322-a461058c",
+    "checks": 1940,
+    "modes": [
+      {
+        "mode": "phone",
+        "pass": true,
+        "checks": 512,
+        "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+      },
+      {
+        "mode": "dark",
+        "pass": true,
+        "checks": 476,
+        "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+      },
+      {
+        "mode": "narrow",
+        "pass": true,
+        "checks": 476,
+        "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+      },
+      {
+        "mode": "font",
+        "pass": true,
+        "checks": 476,
+        "apkSha256": "6c569f3954a3ca8818309ac21e3ee83f08f0801facac5f3a776693e90a75a5dd"
+      }
+    ],
+    "serial": "emulator-5588",
+    "aggregation": "Recomputed from four immutable per-mode report.checks arrays; the runner originally wrote a null aggregate but correct per-mode counts. Runner aggregation fixed separately; frozen raw receipts retained."
+  },
+  "logSha256": {
+    "np3-unit-tests.log": "e30da62318f0c2e3fea777196d3487f07b4ea76227313d56d00152a520c9d832",
+    "library-unit-tests.log": "5c2ca2a73e0d14589abe936d87c1f33b218d165004c715faa13a4ca91c9f5817",
+    "build.log": "37600129e83117e548340dea2621d4c586d333218ef1ef19c02f126aad933405"
+  },
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "5ce8de6b4d7490b1e37d83edcf464f4f752d0d188220ba2f68db14c3b8521171"
+    },
+    {
+      "path": "app/src/main/AndroidManifest.xml",
+      "sha256": "b686dc377fc754031f7cfa70f014671d954fbc8e8bb801abc169e04f70c52491"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "20d9790ddb8fdd922e6af4c0ce8deccf1b65196c5dcc2891e92170696de51a19"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetLibrary.java",
+      "sha256": "0efae8f66251ff9b279b77a59b6ab57ad7a00616c6d449c4323064dd7c634920"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/library/PresetFile.java",
+      "sha256": "be8a5759c89c0ac990f7290102a1968c9a5463720cf4087ac115adc3a80f1d96"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PresetDetails.java",
+      "sha256": "96b9e0d6ff03e0e970b3a0c65b6a2c56a2e78c068517aecaa11c394ecf0ed8d4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/PresetPreviewProfiles.java",
+      "sha256": "65e74d4c3e367b4d586ad678c8f74751d312d3540256a32ce65bbfe59f401894"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3PreviewProfile.java",
+      "sha256": "c7bb716430cc634817a700447287a7d7dad404ccf7b6f7d3202c2058a3b9dc4d"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ncp/Np3MonochromePreviewProfile.java",
+      "sha256": "47087569a97eeb09ec8cd0c6e8387f226260b567845b530ccb50981c95bf65f4"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/Np3PresetDetailsDialog.java",
+      "sha256": "f39a42590031762274b71d895e6e65386016674ff9c2cd2c070fc72f1364d8bb"
+    },
+    {
+      "path": "tests/run-np3.ps1",
+      "sha256": "9bd8d7f843f4898d481283e265ddf8c5412c75b816e60c17daaaaa7d2f2d74f6"
+    },
+    {
+      "path": "tests/np3-java/cc/huevia/ncp/Np3PresetDetailsTest.java",
+      "sha256": "28befe5db6602c2a0392a72770d03e2ebbc798b00df0accddb3647e9d6e6421c"
+    },
+    {
+      "path": "tests/library-java/cc/huevia/library/PresetLibraryTest.java",
+      "sha256": "fc0f2a1ee61adeff160564db4ea3ef9bf21bad2646659aaea088edd181a9bbd0"
+    },
+    {
+      "path": "tests/np3-inspection-device-probe/build.ps1",
+      "sha256": "0989081a15665300e3bb304d56dcbf0f6dad4ce5dc0baeabbb14f883fd53e1fe"
+    },
+    {
+      "path": "tests/np3-inspection-device-probe/run.ps1",
+      "sha256": "cc39a76fcab7f17a43414a56e8a09921656ffd24cda9493e19142ae04db2772d",
+      "note": "Post-run reporting-only aggregate correction; APK unchanged."
+    },
+    {
+      "path": "tests/np3-inspection-device-probe/src/cc/huevia/np3inspectionqa/Np3InspectionProbe.java",
+      "sha256": "ab47bf851bee9169e70419c140b75673ea13a21ec9a88b2f0cfc42ccaec19521"
+    }
+  ],
+  "scope": "Android NP3 import/inspection enhancement with compact parameter tabs and header close. Actual installed-APK tests on an offline emulator. Source hashes are a workspace inventory, not an embedded build attestation.",
+  "limitations": [
+    "Real 142-recipe/full NP3 ZIP archives absent; corpus runs skipped. No recipe downloaded.",
+    "No physical-phone speed, Nikon color-equivalence or new NP3 camera-write claim.",
+    "No website/backend deployment and no iOS changes."
+  ],
+  "published": false,
+  "deviceStateRestored": {
+    "fontScale": "1.0",
+    "airplaneMode": "0",
+    "size": "1080x2424 physical, no override",
+    "appearanceMode": "Restored by instrumentation",
+    "productForceStopped": true,
+    "probeUninstalled": true
+  }
+}

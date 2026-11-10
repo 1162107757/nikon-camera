@@ -1,0 +1,36 @@
+{
+  "versionCode": 186,
+  "versionName": "0.30.32-beta",
+  "apkSha256": "d728b77adba6062e0cb34e5325df219f3c9089a5abf68b27e58864cad4c0f2a2",
+  "implemented": [
+    "fixed My/Online source tabs in main editor",
+    "independently scrollable category rail",
+    "fixed all-presets grid action",
+    "concentric selection/frame with symmetric inset and end radii"
+  ],
+  "productionFiles": 3,
+  "sourceChecks": 205,
+  "continuityChecks": 9,
+  "captures": 25,
+  "nativePlatforms": [
+    {
+      "serial": "emulator-5588",
+      "api": "37",
+      "hardware": "ranchu",
+      "abi": "x86_64"
+    },
+    {
+      "serial": "emulator-5584",
+      "api": "31",
+      "hardware": "ranchu",
+      "abi": "x86_64"
+    }
+  ],
+  "physicalDeviceValidated": false,
+  "realOnlineDownloadValidated": false,
+  "published": false,
+  "gitCommitOrPush": false,
+  "wechatSent": false,
+  "devicesClosed": false,
+  "sourceStable": true
+}

@@ -1,0 +1,19 @@
+{
+  "versionCode": 168,
+  "versionName": "0.30.14-beta",
+  "sourceSha256": "57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3",
+  "uploadCandidate": "D:\\dev\\ai-project\\nikon-camera\\online-library\\.local\\publication168\\candidates\\57c37922a6150c0e7aa86b8bfb39ad1d041589dbcde34d889f6afd9b7d58aef3\\update.apk",
+  "uploadSha256": "d278209b8cd921dddb11e84429cdfe375ff7604c12b34e31e34951010067dd03",
+  "uploadBytes": 31341757,
+  "retainedPayloads": 88,
+  "removedOnlyAbi": "x86",
+  "signatureSchemes": [
+    "v2",
+    "v3"
+  ],
+  "alignment": "16KiB verified",
+  "published": false,
+  "review": "ship; F1-F4 all resolved, scoped to the four findings and direct regressions",
+  "finalApk": "D:\\dev\\ai-project\\nikon-camera\\dist\\upload168\\huevia-0.30.14-beta-update.apk",
+  "reviewFile": "D:\\dev\\ai-project\\nikon-camera\\.impeccable\\review\\selection168\\verdict.md"
+}
