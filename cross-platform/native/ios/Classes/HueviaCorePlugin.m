@@ -10,6 +10,7 @@
 #import "java/io/IOException.h"
 #import "java/lang/Throwable.h"
 #import "IOSPrimitiveArray.h"
+#import "HueviaCoreBootstrap.h"
 
 @interface HueviaSockets : NSObject <CcHueviaSharedSharedCamera_Connectors,CcHueviaAlbumPtpIpClient_SocketConnector>
 @end
@@ -34,6 +35,7 @@
 
 @implementation HueviaCorePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+  HueviaLinkCoreModules();
   HueviaCorePlugin *host=[[self alloc] init];
   host.queue=dispatch_queue_create("cc.huevia.shared.worker",DISPATCH_QUEUE_SERIAL);
   host.tasks=[NSMutableDictionary dictionary];

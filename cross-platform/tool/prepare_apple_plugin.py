@@ -11,3 +11,4 @@ for original,target in [(source,pod/'Generated'),(toolchain/'include',pod/'Runti
     if not original.is_dir():raise SystemExit('Missing verified native build output: '+str(original))
     shutil.copytree(original,target,dirs_exist_ok=True)
 print('Staged verified generated core and pinned JRE runtime for the Apple host')
+shutil.copy2(ROOT/'cross-platform/core/apple/HueviaCoreBootstrap.h',pod/'Generated/HueviaCoreBootstrap.h')

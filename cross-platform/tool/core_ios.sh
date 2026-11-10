@@ -73,7 +73,7 @@ from pathlib import Path
 work=Path(sys.argv[1])
 (work/'objc.args').write_text('\n'.join('"'+str(p)+'"' for p in (work/'generated').rglob('*.m'))+'\n')
 PY
-"$J2OBJCC" -O2 -fobjc-arc -ffp-contract=off -I"$WORK/generated" \
+"$J2OBJCC" -O2 -fobjc-arc -ffp-contract=off -I"$WORK/generated" -I"$ROOT/cross-platform/core/apple" \
   @"$WORK/objc.args" "$ROOT/cross-platform/core/test/main.m" -ljre_emul \
   -o "$WORK/core-parity" > "$WORK/objc-build.log" 2>&1
 "$WORK/core-parity" > "$WORK/objc.log" 2>&1
