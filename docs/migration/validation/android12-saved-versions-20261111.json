@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "sourceCommit": "33a591ab69d77dbe621c7f5ae095c55407f9d53a",
+  "appSourceCommit": "6ac14050fa49307a92521126478ebd26f2ee69f1",
+  "device": "isolated Android 12 API31 x86_64 emulator",
+  "normalApp": true,
+  "sourceSha256": "797a1876e3759e2cfce13fec0ef425f4b0e7db7e9ac93244e6774f7775cb4ff7",
+  "originalsUnchanged": true,
+  "versions": [
+    {
+      "id": "0f5c2be753e9a37a2bd4e5c6bdad3aa00e6fba2669614ce4686de6cc5733707a",
+      "effectKey": "d230bec1d7ed72e720c7346c0885340580393cf4f20e10a8281112877970ec5e",
+      "model": "encoded-rgb-tone-hsv-v1:full-jpeg95-srgb-v1",
+      "exportSpec": "jpeg-srgb-v1:1200x800:q95:capture-no-gps-v1",
+      "sha256": "8a70a0faf8d238f883d2ae9ba358e8f7e8a2946bbbc2e53f93bf65c34423178b",
+      "width": 1200,
+      "height": 800,
+      "bytes": 70409
+    }
+  ],
+  "observedUi": [
+    "export full JPEG and open system share sheet",
+    "open saved version and bounded preview",
+    "restore frozen recipe from saved version after library preset removal",
+    "repeat export and open system share sheet again"
+  ],
+  "externalMessageSent": false,
+  "limits": [
+    "Synthetic QA image and preset only",
+    "No Honor Magic physical device",
+    "No iOS compilation in this round"
+  ],
+  "collectedAt": "2026-11-11T00:50:49.5020382+08:00"
+}
