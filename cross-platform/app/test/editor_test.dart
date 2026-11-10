@@ -67,6 +67,14 @@ void main() {
           ),
         );
         final core = DraftCore(directory.path);
+        final state = AppState(core)
+          ..presets = [
+            const Preset({
+              'id': 'available',
+              'displayName': '新滤镜',
+              'fileFormat': 'NCP',
+            }),
+          ];
         tester.view.physicalSize = size;
         tester.view.devicePixelRatio = 1;
         addTearDown(() {
@@ -88,7 +96,7 @@ void main() {
               child: child!,
             ),
             home: EditorPage(
-              state: AppState(core),
+              state: state,
               photo: Photo('${directory.path}/source.png', '测试照片', const {}),
             ),
           ),
@@ -123,6 +131,20 @@ void main() {
         await tapLabel('HSL');
         expect(find.text('洋红'), findsOneWidget);
         expect(tester.takeException(), isNull);
+        await tapLabel('滤镜');
+        await tester.tap(find.byType(DropdownButtonFormField<String>));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('无滤镜').last);
+        await tester.pumpAndSettle();
+        await tester.tap(find.byType(DropdownButtonFormField<String>));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('新滤镜').last);
+        await tester.pumpAndSettle();
+        final newRecipe = core.calls
+            .lastWhere((call) => call.$1 == 'media.preview')
+            .$2['recipe'];
+        expect(newRecipe['presetId'], 'available');
+        expect(newRecipe['strength'], 100);
         await tester.pumpWidget(const SizedBox());
         await tester.pump();
         expect(core.calls.last.$1, 'draft.save');

@@ -507,8 +507,20 @@ class _EditorPageState extends State<EditorPage> {
               ],
               onChanged: exporting
                   ? null
-                  : (value) =>
-                        change(() => recipe.data['presetId'] = value ?? ''),
+                  : (value) => change(() {
+                      final selected = value ?? '';
+                      if ((recipe.data['presetId'] as String).isEmpty &&
+                          selected.isNotEmpty) {
+                        recipe.data['strength'] = 100;
+                      }
+                      recipe.data['presetId'] = selected;
+                      if (selected.isEmpty) recipe.data['presetName'] = '无滤镜';
+                      for (final preset in widget.state.presets) {
+                        if (preset.id == selected) {
+                          recipe.data['presetName'] = preset.name;
+                        }
+                      }
+                    }),
             ),
             const SizedBox(height: 16),
             slider(

@@ -26,11 +26,16 @@ void main() {
       ).create();
       final outputs = <String>[];
       Future<Json> render(String operation, Json payload) async {
-        final result = await core.call(
-          operation,
-          payload,
-          'integration-${DateTime.now().microsecondsSinceEpoch}',
-        );
+        late final Json result;
+        try {
+          result = await core.call(
+            operation,
+            payload,
+            'integration-${DateTime.now().microsecondsSinceEpoch}',
+          );
+        } on AppFailure catch (failure) {
+          fail('$operation failed: ${failure.message}; ${failure.details}');
+        }
         if (result['path'] is String) outputs.add(result['path'] as String);
         return result;
       }

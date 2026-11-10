@@ -24,13 +24,13 @@
 @end
 
 @interface HueviaCorePlugin ()
-@property(nonatomic) dispatch_queue_t queue;
-@property(nonatomic) NSMutableDictionary<NSString *,HueviaTask *> *tasks;
+@property(nonatomic,strong) dispatch_queue_t queue;
+@property(nonatomic,strong) NSMutableDictionary<NSString *,HueviaTask *> *tasks;
 @property(nonatomic,copy) FlutterEventSink events;
-@property(nonatomic) CcHueviaSharedSharedRuntime *runtime;
-@property(nonatomic) CcHueviaSharedSharedCamera *camera;
-@property(nonatomic) HueviaMedia *media;
-@property(nonatomic) NSString *root;
+@property(nonatomic,strong) CcHueviaSharedSharedRuntime *runtime;
+@property(nonatomic,strong) CcHueviaSharedSharedCamera *camera;
+@property(nonatomic,strong) HueviaMedia *media;
+@property(nonatomic,copy) NSString *root;
 @end
 
 @implementation HueviaCorePlugin
@@ -72,11 +72,12 @@
           stage=@"image validation";
           [CcHueviaSharedMediaValidation installWithCcHueviaSharedMediaValidation_Decoder:[[HueviaImageValidator alloc] init]];
           stage=@"account and preset runtime";
-          self.runtime=[[CcHueviaSharedSharedRuntime alloc] initWithNSString:self.root withCcHueviaAccountAccountRepository_Store:[[HueviaKeychain alloc] init] withCcHueviaAccountAccountRepository_Transport:[[CcHueviaAccountAccountHttpTransport alloc] init]];
+          CcHueviaSharedSharedRuntime *runtime=[[CcHueviaSharedSharedRuntime alloc] initWithNSString:self.root withCcHueviaAccountAccountRepository_Store:[[HueviaKeychain alloc] init] withCcHueviaAccountAccountRepository_Transport:[[CcHueviaAccountAccountHttpTransport alloc] init]];
           stage=@"camera runtime";
-          self.camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init]];
+          CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init]];
           stage=@"media runtime";
-          self.media=[[HueviaMedia alloc] initWithRuntime:self.runtime root:self.root];
+          HueviaMedia *media=[[HueviaMedia alloc] initWithRuntime:runtime root:self.root];
+          self.runtime=runtime;self.camera=camera;self.media=media;
         }
         stage=@"bridge schema";
         NSData *schema=[[CcHueviaSharedCoreEngine schema] dataUsingEncoding:NSUTF8StringEncoding];
@@ -86,6 +87,7 @@
         if(!self.runtime)@throw [[JavaIoIOException alloc] initWithNSString:@"应用尚未初始化。"];
         NSString *operation=args[@"operation"],*payload=args[@"payload"];
         if(![operation isKindOfClass:NSString.class]||![payload isKindOfClass:NSString.class]||payload.length>4*1024*1024)@throw [[JavaIoIOException alloc] initWithNSString:@"操作数据无效。"];
+        stage=operation;
         if([operation hasPrefix:@"media."]){NSDictionary *data=[self.media request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation hasPrefix:@"camera."])value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
         else value=[self.runtime requestWithNSString:operation withNSString:payload withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
@@ -95,6 +97,13 @@
       NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"操作未完成，请重试。";
       NSMutableDictionary *details=[@{@"stage":stage,@"nativeType":NSStringFromClass([failure class])} mutableCopy];
       if([call.method isEqualToString:@"initialize"])details[@"reason"]=[failure description]?:@"unknown";
+#if DEBUG
+      // Native debug integration failures must retain their actual exception,
+      // while release requests keep the friendly message and omit operation data.
+      NSString *reason=[failure description]?:@"unknown";
+      details[@"reason"]=[reason substringToIndex:MIN(reason.length,2048)];
+      if([failure isKindOfClass:NSException.class])details[@"nativeStack"]=[[(NSException *)failure callStackSymbols] subarrayWithRange:NSMakeRange(0,MIN(10,[(NSException *)failure callStackSymbols].count))];
+#endif
       dispatch_async(dispatch_get_main_queue(),^{[self.tasks removeObjectForKey:job];reply([FlutterError errorWithCode:task.cancelled?@"CANCELLED":@"OPERATION_FAILED" message:message details:details]);});
     }
   }});
