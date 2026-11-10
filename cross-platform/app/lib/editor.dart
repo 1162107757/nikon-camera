@@ -116,7 +116,10 @@ class _EditorPageState extends State<EditorPage> {
         'path': widget.photo.path,
         'recipe': recipe.clone().data,
       }, job);
-      if (!mounted || current != revision || activeJob != job) return;
+      if (!mounted || current != revision || activeJob != job) {
+        await discardPreview(result['path']);
+        return;
+      }
       final old = preview;
       setState(() {
         preview = result['path'] as String;
@@ -138,6 +141,19 @@ class _EditorPageState extends State<EditorPage> {
           activeJob = null;
         });
       }
+    }
+  }
+
+  Future<void> discardPreview(Object? path) async {
+    if (path is! String ||
+        !p.isWithin(p.join(widget.state.core.root, 'previews'), path)) {
+      return;
+    }
+    try {
+      final file = File(path);
+      if (await file.exists()) await file.delete();
+    } on FileSystemException {
+      // A preview is disposable; cleanup failure never affects the original.
     }
   }
 
@@ -172,16 +188,19 @@ class _EditorPageState extends State<EditorPage> {
     );
     if (size == null || !mounted) return;
     debounce?.cancel();
-    if (activeJob != null) await widget.state.core.cancel(activeJob!);
-    if (!mounted) return;
+    final previousJob = activeJob;
     final job = 'export-${DateTime.now().microsecondsSinceEpoch}';
     final frozen = recipe.clone();
+    revision++;
     setState(() {
       exporting = true;
+      rendering = false;
       progress = 0;
       activeJob = job;
     });
     try {
+      if (previousJob != null) await widget.state.core.cancel(previousJob);
+      if (!mounted) return;
       final result = await widget.state.core.call('media.export', {
         'path': widget.photo.path,
         'recipe': frozen.data,
@@ -201,6 +220,7 @@ class _EditorPageState extends State<EditorPage> {
       if (mounted) {
         setState(() {
           exporting = false;
+          rendering = false;
           activeJob = null;
         });
       }

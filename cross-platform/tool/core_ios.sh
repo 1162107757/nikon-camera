@@ -17,7 +17,7 @@ python3 "$ROOT/cross-platform/tool/core_check.py" > "$WORK/jvm.log" 2>&1
 python3 "$ROOT/cross-platform/tool/inventory.py" --verify
 
 TOOLCHAIN="$ROOT/.tooling/cross-platform187/j2objc-3.1"
-if [[ ! -x "$TOOLCHAIN/dist/j2objc" ]]; then
+if [[ ! -x "$TOOLCHAIN/dist/j2objc" || ! -f "$TOOLCHAIN/dist/frameworks/JRE.xcframework/Info.plist" ]]; then
   mkdir -p "$(dirname "$TOOLCHAIN")"
   curl --fail --location --retry 3 --connect-timeout 20 \
     https://codeload.github.com/google/j2objc/zip/refs/tags/3.1 \

@@ -59,10 +59,11 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
   int w=photo.pixelWidth,h=photo.pixelHeight;IOSIntArray *size=[b dimensionsWithInt:w withInt:h];
   HueviaRaster *output=[[HueviaRaster alloc] initWithWidth:size->buffer_[0] height:size->buffer_[1] root:root];
   CGContextRef context=[output newContext];CGContextTranslateCTM(context,0,output.pixelHeight);CGContextScaleCTM(context,1,-1);UIGraphicsPushContext(context);
-  CGImageRef image=[photo newImage];
+  CGImageRef image=NULL;
   @try {
+    image=[photo newImage];
     CGFloat m=b->margin_/100.0;
-    if(b->template_==3){
+    if(b->template__==3){
       CGContextSetRGBFillColor(context,1,1,1,1);CGContextFillRect(context,CGRectMake(0,0,output.pixelWidth,output.pixelHeight));draw(context,image,CGRectMake(0,0,w,h));
       CGFloat fh=output.pixelHeight-h,first=h+fh*.43,second=h+fh*.76;
       text([info companyWithCcHueviaNcpPhotoBorder:b],w*.04,first,w*.024,w*.51,UIColor.blackColor,YES);
@@ -74,11 +75,11 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
       if([b showsWithInt:5])text([info fieldWithCcHueviaNcpPhotoBorder:b withInt:4],w*.68,second,w*.020,w*.28,[UIColor colorWithWhite:.467 alpha:1],NO);
     }else{
       background(context,photo,b,output.pixelWidth,output.pixelHeight,root);
-      CGFloat x=b->template_==1?(output.pixelWidth-w)/2.0:output.pixelWidth-w-w*.08*m,y=w*(b->template_==1?.06:.07)*m,radius=w*.025*b->corner_/100;
+      CGFloat x=b->template__==1?(output.pixelWidth-w)/2.0:output.pixelWidth-w-w*.08*m,y=w*(b->template__==1?.06:.07)*m,radius=w*.025*b->corner_/100;
       CGRect rect=CGRectMake(x,y,w,h);CGPathRef clip=CGPathCreateWithRoundedRect(rect,radius,radius,NULL);
       if(b->shadow_>0){CGContextSaveGState(context);CGContextSetShadowWithColor(context,CGSizeMake(0,w*.014),w*.025*b->shadow_/100,[UIColor colorWithWhite:0 alpha:.69].CGColor);CGContextSetRGBFillColor(context,0,0,0,.6);CGContextAddPath(context,clip);CGContextFillPath(context);CGContextRestoreGState(context);}
       CGContextSaveGState(context);CGContextAddPath(context,clip);CGContextClip(context);draw(context,image,rect);CGContextRestoreGState(context);CGPathRelease(clip);
-      if(b->template_==1){
+      if(b->template__==1){
         CGFloat logoHeight=w*.027*m,baseline=y+h+w*.048*m;NSString *model=[b showsWithInt:0]?[info modelWithCcHueviaNcpPhotoBorder:b]:@"",*maker=[info brandWithCcHueviaNcpPhotoBorder:b];
         UIFont *font=[UIFont systemFontOfSize:w*.021*m];CGFloat modelWidth=std::min(w*.58,[model sizeWithAttributes:@{NSFontAttributeName:font}].width);
         CGFloat logoWidth=!maker.length?0:[maker isEqualToString:@"NIKON"]?(b->logo_==1?logoHeight:logoHeight*(1600.0/443)):std::min(w*.25,[maker sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:logoHeight]}].width);
@@ -95,7 +96,7 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
         }
       }
     }
-  }@finally{CGImageRelease(image);UIGraphicsPopContext();CGContextRelease(context);}
+  }@finally{if(image)CGImageRelease(image);UIGraphicsPopContext();CGContextRelease(context);}
   return output;
 }
 @end

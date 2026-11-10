@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'domain.dart';
 import 'widgets.dart';
+import 'registration.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key, required this.state});
@@ -49,6 +50,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     final user = widget.state.session['user'];
+    final warning = widget.state.session['storageWarning'] as String? ?? '';
     return Scaffold(
       appBar: AppBar(title: const Text('我的')),
       body: SafeArea(
@@ -62,6 +64,33 @@ class _AccountPageState extends State<AccountPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 16),
+                  if (warning.isNotEmpty) ...[
+                    Text(
+                      warning,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                    if (widget.state.session['logoutPending'] == true)
+                      OutlinedButton(
+                        onPressed: busy
+                            ? null
+                            : () async {
+                                try {
+                                  await widget.state.core.call(
+                                    'account.logout',
+                                  );
+                                  if (mounted) {
+                                    setState(() => widget.state.session = {});
+                                  }
+                                } catch (failure) {
+                                  if (context.mounted) report(context, failure);
+                                }
+                              },
+                        child: const Text('重试清除登录资料'),
+                      ),
+                    const SizedBox(height: 16),
+                  ],
                   if (user != null) ...[
                     Text(
                       (user['nickname'] as String).isEmpty
@@ -132,6 +161,27 @@ class _AccountPageState extends State<AccountPage> {
                     FilledButton(
                       onPressed: busy ? null : login,
                       child: Text(busy ? '正在登录' : '登录'),
+                    ),
+                    const SizedBox(height: 8),
+                    TextButton(
+                      onPressed: busy
+                          ? null
+                          : () async {
+                              final session = await Navigator.push<Json>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      RegistrationPage(state: widget.state),
+                                ),
+                              );
+                              if (mounted && session != null) {
+                                setState(() {
+                                  widget.state.session = session;
+                                  password.clear();
+                                });
+                              }
+                            },
+                      child: const Text('注册账号'),
                     ),
                   ],
                   const SizedBox(height: 40),

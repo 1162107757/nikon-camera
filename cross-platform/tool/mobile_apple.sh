@@ -25,6 +25,7 @@ import json,sys
 value=json.load(open(sys.argv[1]));assert value['frameworkRevision']==sys.argv[2]
 assert value['frameworkVersion']=='3.47.9'
 PY
+if [[ "${1:-all}" != build ]]; then
 bash "$ROOT/cross-platform/tool/core_ios.sh"
 python3 "$ROOT/cross-platform/tool/prepare_apple_plugin.py"
 python3 "$ROOT/cross-platform/tool/raw_apple.py" > "$WORK/raw-build.log" 2>&1
@@ -37,6 +38,9 @@ PY
 flutter config --no-enable-swift-package-manager
 cd "$ROOT/cross-platform/app"
 flutter pub get > "$WORK/pub-get.log" 2>&1
+fi
+if [[ "${1:-all}" == prepare ]]; then exit 0; fi
+cd "$ROOT/cross-platform/app"
 flutter analyze --no-pub > "$WORK/analyze.log" 2>&1
 flutter test --no-pub --reporter expanded > "$WORK/flutter-tests.log" 2>&1
 flutter build ios --release --no-codesign --no-pub > "$WORK/device-build.log" 2>&1

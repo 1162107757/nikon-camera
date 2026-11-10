@@ -13,8 +13,10 @@ public final class CoreParity {
         PhotoLocalEditsTest.main(new String[0]);
         RawJpegColorMatchTest.main(new String[0]);
         RawHighlightColorTest.main(new String[0]);
+        int boundaryChecks=CoreBoundary.run();
         Map<String,Object> result=new LinkedHashMap<>();result.put("schema",1);result.put("engine",CoreEngine.VERSION);
         result.put("rawColorModel",RawJpegColorMatch.MODEL);result.put("tests","original-ncp-local-edits-raw-color-highlight");
+        result.put("boundaryChecks",boundaryChecks);
         Map<String,Object> fingerprints=new LinkedHashMap<>();int width=96,height=64;int[] original=scene(width,height);
         int[] neutral=new int[PhotoAdjustments.Parameter.values().length];
         fingerprints.put("identity",hash(CoreEngine.colourPreview(original,width,height,null,100,neutral)));

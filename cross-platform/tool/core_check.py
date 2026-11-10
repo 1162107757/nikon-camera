@@ -12,7 +12,11 @@ javac=str(Path(java_home)/'bin'/('javac.exe' if os.name=='nt' else 'javac'))
 java=str(Path(java_home)/'bin'/('java.exe' if os.name=='nt' else 'java'))
 args=['--release','11','-encoding','UTF-8','-d',str(OUT/'classes')]+[str(ROOT/p) for p in sources]
 argfile=OUT/'javac.args';argfile.write_text('\n'.join('"'+a.replace('\\','/')+'"' for a in args),encoding='utf-8')
-subprocess.run([javac,'-J-Xmx512m','@'+str(argfile)],cwd=ROOT,check=True)
+compile_result=subprocess.run([javac,'-J-Xmx512m','-J-Dfile.encoding=UTF-8','-J-Duser.language=en','-J-Duser.country=US','@'+str(argfile)],cwd=ROOT,capture_output=True)
+(OUT/'compile.log').write_bytes(compile_result.stdout+compile_result.stderr)
+if compile_result.returncode:
+    print((compile_result.stdout+compile_result.stderr).decode('utf-8',errors='replace')[-4000:])
+    raise SystemExit(compile_result.returncode)
 run=subprocess.run([java,'-Xmx256m','-Dfile.encoding=UTF-8','-cp',str(OUT/'classes'),'cc.huevia.shared.CoreParity'],cwd=ROOT,text=True,encoding='utf-8',capture_output=True)
 (OUT/'run.log').write_text(run.stdout+run.stderr,encoding='utf-8')
 if run.returncode:print(run.stderr[-3000:]);raise SystemExit(run.returncode)

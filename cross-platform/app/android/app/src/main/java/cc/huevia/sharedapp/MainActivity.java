@@ -38,7 +38,7 @@ public final class MainActivity extends FlutterActivity {
                 try{
                     Object value;
                     if(call.method.equals("initialize")){
-                        if(runtime==null){File root=new File(getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(this),new AccountHttpTransport());media=new NativeMedia(this,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(this);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);});}
+                        if(runtime==null){File root=new File(getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(this),new AccountHttpTransport(),AccountInstallation.id(this));media=new NativeMedia(this,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(this);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);});}
                         value=SharedJson.encode(SharedRuntime.map("root",runtime.root().getPath(),"schema",SharedJson.object(CoreEngine.schema()),"platform","android"));
                     }else{
                         if(runtime==null)throw new IOException("应用尚未初始化。");

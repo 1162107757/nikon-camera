@@ -6,6 +6,7 @@ import cc.huevia.library.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.nio.charset.StandardCharsets;
 
 /** Serial worker entry point shared by Android and the translated Apple implementation. */
 public final class SharedRuntime {
@@ -14,15 +15,24 @@ public final class SharedRuntime {
     private final OnlinePresetRepository online;
     private final AccountRepository accounts;
     private final CommunityRepository community;
+    private final OnlinePresetSearch search;
+    private final String installationId;
+    private String storageWarning="";
     public SharedRuntime(String directory, AccountRepository.Store store, AccountRepository.Transport transport)throws IOException {
+        this(directory,store,transport,"");
+    }
+    public SharedRuntime(String directory, AccountRepository.Store store, AccountRepository.Transport transport,String installation)throws IOException {
         root=new File(directory).getCanonicalFile();
         if(!root.isDirectory()&&!root.mkdirs())throw new IOException("无法打开应用资料目录。");
         library=new PresetLibrary(root);
         online=new OnlinePresetRepository(root,library);
         online.initializeDefaultEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
+        search=new OnlinePresetSearch(online);
+        installationId=installationId(root,installation);
         accounts=new AccountRepository(store,transport);
         community=new CommunityRepository(accounts);
-        accounts.restore();
+        community.setInstallationId(installationId);
+        try{accounts.restore();}catch(IOException failure){storageWarning=failure.getMessage();}
     }
     public File root(){return root;}
     public byte[] preset(String id)throws IOException{return id==null||id.isEmpty()?new byte[0]:library.readPreset(id);}
@@ -58,17 +68,26 @@ public final class SharedRuntime {
                 List<Object> rows=new ArrayList<>();for(OnlinePreset r:page.presets)rows.add(onlineMap(r));
                 result=map("items",rows,"total",page.total,"hasMore",page.hasMore,"page",page.page,"categories",page.categories);break;
             }
+            case "online.search":{
+                OnlinePresetSearch.Snapshot snapshot=search.load(Boolean.TRUE.equals(p.get("refresh")));
+                String category=text(p,"category",100);if(category.isEmpty())category=PresetCategories.ALL;
+                List<Object> rows=new ArrayList<>();for(OnlinePreset r:snapshot.matching(text(p,"query",256),category))rows.add(onlineMap(r));
+                result=map("items",rows,"categories",new ArrayList<>(snapshot.categories),"fromCache",snapshot.fromCache,"available",snapshot.available,"message",snapshot.message);break;
+            }
             case "online.download":{
                 PresetLibrary.AddResult added=online.download(OnlinePreset.fromMap(object(p.get("preset"))),null);
                 result=map("record",added.record.toMap(),"added",added.added);break;
             }
-            case "account.current":result=session(accounts.cachedSession());break;
-            case "account.challenge":result=accounts.challenge(text(p,"installationId",128));break;
-            case "account.login":result=session(accounts.login(text(p,"username",32),text(p,"password",256)));break;
-            case "account.register":result=session(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),text(p,"installationId",128)));break;
-            case "account.qq":result=session(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),text(p,"installationId",128)));break;
-            case "account.refresh":result=session(accounts.refresh());break;
-            case "account.logout":accounts.logout();result=map("loggedOut",true);break;
+            case "account.current":{
+                Object current=session(accounts.cachedSession());Map<String,Object> value=current==null?new LinkedHashMap<>():object(current);
+                value.put("storageWarning",storageWarning);value.put("logoutPending",accounts.isLogoutPending());result=value;break;
+            }
+            case "account.challenge":result=accounts.challenge(installationId);break;
+            case "account.login":result=authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));break;
+            case "account.register":result=authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
+            case "account.qq":result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
+            case "account.refresh":result=authenticated(accounts.refresh());break;
+            case "account.logout":accounts.logout();storageWarning="";result=map("loggedOut",true);break;
             case "community.get":result=community.get(text(p,"path",2048),Boolean.TRUE.equals(p.get("login")));break;
             case "community.write":result=community.writeForOwner(text(p,"method",6),text(p,"path",2048),object(p.get("body")),text(p,"ownerId",64));break;
             default:throw new IOException("未知的应用操作："+operation);
@@ -88,5 +107,14 @@ public final class SharedRuntime {
         if(session==null)return null;AccountRepository.User u=session.user;
         return map("user",map("id",u.id,"username",u.username,"nickname",u.nickname,"avatarUrl",u.avatarUrl,"avatarSource",u.avatarSource,"provider",u.provider,"updatedAt",u.updatedAt),"expiresAt",session.expiresAt,"verified",session.verified);
     }
+    private Object authenticated(AccountRepository.Session value){storageWarning="";return session(value);}
     private static Object onlineMap(OnlinePreset r){return map("id",r.id,"name",r.name,"description",r.description,"fileUrl",r.fileUrl,"sha256",r.sha256,"byteLength",r.byteLength,"previewUrl",r.previewUrl,"compatibleModels",r.compatibleModels,"category",r.category,"authorName",r.authorName,"source",r.source,"fileFormat",r.fileFormat);}
+    private static String installationId(File root,String preferred)throws IOException{
+        if(preferred!=null&&preferred.matches("(?i)[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}"))return preferred;
+        File target=new File(root,"account-installation.txt");
+        if(target.isFile()&&target.length()<=128){String value=new String(Files.readAllBytes(target.toPath()),StandardCharsets.UTF_8).trim();if(value.matches("(?i)[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}"))return value;}
+        String value=UUID.randomUUID().toString();File temporary=File.createTempFile("installation-",".part",root);
+        try{Files.write(temporary.toPath(),value.getBytes(StandardCharsets.UTF_8));Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}finally{Files.deleteIfExists(temporary.toPath());}
+        return value;
+    }
 }

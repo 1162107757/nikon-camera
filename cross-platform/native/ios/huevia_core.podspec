@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.author = { 'Huevia' => 'Huevia' }
   s.source = { :path => '.' }
   s.source_files = 'Classes/**/*.{h,m,mm,cpp}', 'Generated/**/*.{h,m}'
-  s.exclude_files = 'Generated/**/*Test.{h,m}', 'Generated/**/CoreParity.{h,m}', 'Generated/**/NcpCompatibilityFixtures.{h,m}'
+  s.exclude_files = 'Generated/**/*Test.{h,m}', 'Generated/**/CoreParity.{h,m}', 'Generated/**/CoreBoundary.{h,m}', 'Generated/**/NcpCompatibilityFixtures.{h,m}'
   s.public_header_files = 'Classes/HueviaCorePlugin.h'
   s.vendored_frameworks = 'Frameworks/JRE.xcframework', 'Frameworks/LibRaw.xcframework'
   s.resource_bundles = { 'HueviaNativeAssets' => ['Assets/**/*', 'Notices/*'] }

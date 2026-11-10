@@ -36,6 +36,7 @@ public final class CoreEngine {
     }
     /** Colour only. Oriented geometry/border compositing is a separate native raster stage. */
     public static int[] colourPreview(int[] pixels,int width,int height,byte[] preset,int strength,int[] values)throws IOException{
+        if(width<1||height<1||(long)width*height>4_000_000||pixels==null||pixels.length!=(long)width*height)throw new IOException("预览像素尺寸无效或过大。");
         return colourProfile(preset,strength,values,PhotoCurves.NONE,PhotoHsl.NONE,PhotoColorPalette.NONE,PhotoCleanup.NONE,PhotoLocalEdits.NONE).render(pixels,width,height);
     }
     /** Native row-backed surfaces keep full-size image buffers outside the UI runtime. */

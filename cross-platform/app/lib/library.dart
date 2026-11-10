@@ -22,28 +22,66 @@ class _LibraryPageState extends State<LibraryPage> {
   bool busy = false, hasMore = false;
   List<Preset> online = [];
   List<String> categories = [];
-  Future<void> load({bool next = false}) async {
+  Timer? searchDelay;
+  String notice = '';
+  @override
+  void dispose() {
+    searchDelay?.cancel();
+    generation++;
+    super.dispose();
+  }
+
+  void searchChanged(String value) {
+    searchDelay?.cancel();
+    generation++;
+    setState(() {
+      query = value;
+      if (tab == 1) {
+        online = [];
+        hasMore = false;
+        busy = true;
+      }
+    });
+    if (tab == 1) {
+      searchDelay = Timer(
+        const Duration(milliseconds: 220),
+        () => unawaited(load()),
+      );
+    }
+  }
+
+  Future<void> load({bool next = false, bool refresh = false}) async {
     final request = ++generation;
     setState(() {
       busy = true;
       error = null;
     });
     try {
-      final value = await widget.state.core.call('online.page', {
-        'page': next ? page + 1 : 1,
-        'pageSize': 24,
-        'category': category,
-        'fileFormat': '',
-      });
+      final searching = query.trim().isNotEmpty;
+      final value = await widget.state.core.call(
+        searching ? 'online.search' : 'online.page',
+        searching
+            ? {'query': query, 'category': category, 'refresh': refresh}
+            : {
+                'page': next ? page + 1 : 1,
+                'pageSize': 24,
+                'category': category,
+                'fileFormat': '',
+              },
+      );
       if (!mounted || request != generation) return;
       final rows = (value['items'] as List)
           .map((row) => Preset(object(row), online: true))
           .toList();
       setState(() {
         online = next ? [...online, ...rows] : rows;
-        page = value['page'] as int;
-        hasMore = value['hasMore'] as bool;
-        categories = List<String>.from(value['categories'] as List);
+        page = value['page'] as int? ?? 1;
+        hasMore = value['hasMore'] == true;
+        categories = List<String>.from(value['categories'] as List)
+            .where((item) => item.isNotEmpty)
+            .toList();
+        notice = value['message'] as String? ?? '';
+        if (value['available'] == false) error = notice;
       });
     } catch (failure) {
       if (mounted && request == generation) setState(() => error = '$failure');
@@ -229,7 +267,8 @@ class _LibraryPageState extends State<LibraryPage> {
         .where(
           (preset) =>
               (tab == 1 || category.isEmpty || preset.category == category) &&
-              (query.isEmpty ||
+              (tab == 1 ||
+                  query.isEmpty ||
                   '${preset.name} ${preset.author} ${preset.category}'
                       .toLowerCase()
                       .contains(query.toLowerCase())),
@@ -271,10 +310,10 @@ class _LibraryPageState extends State<LibraryPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
               child: TextField(
-                onChanged: (value) => setState(() => query = value),
+                onChanged: searchChanged,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.search_rounded),
-                  hintText: '搜索预设、作者或分类',
+                  hintText: '搜索预设名称',
                   isDense: true,
                 ),
               ),
@@ -299,6 +338,14 @@ class _LibraryPageState extends State<LibraryPage> {
                 ],
               ),
             ),
+            if (notice.isNotEmpty && error == null)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 8,
+                ),
+                child: Text(notice),
+              ),
             if (error != null)
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -315,8 +362,9 @@ class _LibraryPageState extends State<LibraryPage> {
             if (busy) const LinearProgressIndicator(minHeight: 2),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: () =>
-                    tab == 0 ? widget.state.refreshLibrary() : load(),
+                onRefresh: () => tab == 0
+                    ? widget.state.refreshLibrary()
+                    : load(refresh: true),
                 child: rows.isEmpty
                     ? ListView(
                         children: [
