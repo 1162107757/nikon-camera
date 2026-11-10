@@ -141,6 +141,9 @@ class Photo {
   const Photo(this.path, this.name, this.info);
   final String path, name;
   final Json info;
+  String get id => p.basename(path);
+  String get editorLocation => '/photo/${Uri.encodeComponent(id)}';
+  String get starKey => 'f:${sha256.convert(utf8.encode(id))}';
   Json toJson() => {'path': path, 'name': name, 'info': info};
   factory Photo.fromJson(Json json) => Photo(
     json['path'] as String,
@@ -176,6 +179,7 @@ class AppState extends ChangeNotifier {
   String? failure;
   List<Preset> presets = [];
   List<Photo> photos = [];
+  Set<String> starredPhotos = {};
   Json session = {};
   Future<void> _photoCommit = Future.value();
   Future<T> _serialPhotos<T>(Future<T> Function() operation) {
@@ -218,6 +222,21 @@ class AppState extends ChangeNotifier {
     presets = (value['items'] as List)
         .map((row) => Preset(object(row)))
         .toList();
+    notifyListeners();
+  }
+
+  Future<void> refreshStars() async {
+    final value = await core.call('photo.stars');
+    starredPhotos = Set<String>.from(value['keys'] as List);
+    notifyListeners();
+  }
+
+  Future<void> starPhoto(Photo photo, bool starred) async {
+    final value = await core.call('photo.star', {
+      'path': photo.path,
+      'starred': starred,
+    });
+    starredPhotos = Set<String>.from(value['keys'] as List);
     notifyListeners();
   }
 

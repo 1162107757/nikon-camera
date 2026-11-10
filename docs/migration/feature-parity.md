@@ -57,6 +57,8 @@
 - 新增账户配方保存/列表/重命名/删除/跨照片应用，直接使用原 `PhotoRecipeStore` 格式。应用配方保留目标照片的构图、边框与局部编辑；原生侧按照片和账户保存校验后的预设快照，确保从无滤镜撤销回已移除的预设。JVM 共享边界检查增至 89 项并通过；新增 2 项大字体横竖屏配方界面测试通过。Windows 全套测试仍偶发宿主 `flutter_tester.exe` 访问异常，单独运行导航文件通过，Apple 全套复测待完成。
 - `e5d3781458a7552fcab775c96e546f8199ab6720` 在 Apple 的 16 项界面测试及 iPhoneOS 编译通过（Actions `42828335962`）。文件系统异常已进一步确认：J2ObjC 3.1 的 `UnixFileSystem.provider` 使用 `@Weak`，默认文件系统独立存活，而默认 provider 会在初始化任务的 autorelease pool 排空后释放。主程序现保留该 provider，并将 Apple 核心测试改为初始化后先排空 pool、再运行核心检查，复现应用任务边界。[固定版本源码](https://github.com/google/j2objc/blob/3.1/jre_emul/Classes/sun/nio/fs/UnixFileSystem.java)
 - 自动去灰/降噪复用原 `PhotoCleanupEstimator`，Android 使用原 `PhotoCleanupAnalyzer`；iOS 从原生完整表面抽取最多 9 个 96×96 真正原像素样本及不超过 512 边长的小样。分析结果随原草稿冻结，强度调整不重新分析。新增 10 项核心检查（含 EXIF 方向、取样范围、取消、独立参数及原图不变），JVM 共享边界总数为 99 项；横竖屏编辑及配方 4 项针对测试通过。上述新增功能尚待 Apple 和 Android 原生应用集成复跑。
+- Android 12 已通过包含自动去灰分析/导出的完整 Flutter/native 集成场景。随后增加原 `PhotoStarStore` 星标持久化、全部/星标/RAW 筛选、名称搜索；编辑链接改为稳定照片文件身份，避免列表插入后索引偏移。JVM 共享边界总数为 108 项，本地 Flutter 分析与全套 17 项测试通过。
+- 文件系统生命周期修复提交 `a47951def76e44749ca1b260135031ad29106d2e` 的 Apple 应用（Actions `42830354406`）通过分析、16 项界面测试和设备编译；模拟器测试进程随后失去连接，未获得完整场景成功证据。已增加逐操作记录和 Apple 原生崩溃报告/系统日志收集，继续定位，不能据此发布完整迁移 IPA。
 
 ## 保留和交付规则
 

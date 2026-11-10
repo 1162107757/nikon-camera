@@ -181,7 +181,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         'lastDevelopment': result['settings'],
       });
       if (mounted) {
-        context.push('/edit/${widget.state.photos.indexOf(working)}');
+        context.push(working.editorLocation);
       }
     } catch (failure) {
       if (mounted) setState(() => error = '$failure');

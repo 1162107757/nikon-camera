@@ -53,22 +53,17 @@ class _HueviaAppState extends State<HueviaApp> {
         ],
       ),
       GoRoute(
-        path: '/edit/:index',
+        path: '/photo/:id',
         builder: (_, route) {
-          final index = int.tryParse(route.pathParameters['index'] ?? '');
-          return index == null ||
-                  index < 0 ||
-                  index >= widget.state.photos.length
+          final candidates = widget.state.photos.where(
+            (photo) => photo.id == route.pathParameters['id'],
+          );
+          final photo = candidates.length == 1 ? candidates.first : null;
+          return photo == null
               ? const Scaffold(body: Center(child: Text('照片已不可用，请返回相册重新选择。')))
-              : widget.state.photos[index].info['raw'] == true
-              ? RawDevelopPage(
-                  state: widget.state,
-                  photo: widget.state.photos[index],
-                )
-              : EditorPage(
-                  state: widget.state,
-                  photo: widget.state.photos[index],
-                );
+              : photo.info['raw'] == true
+              ? RawDevelopPage(state: widget.state, photo: photo)
+              : EditorPage(state: widget.state, photo: photo);
         },
       ),
     ],

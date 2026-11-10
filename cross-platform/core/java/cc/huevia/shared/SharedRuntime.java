@@ -5,6 +5,7 @@ import cc.huevia.community.*;
 import cc.huevia.library.*;
 import cc.huevia.album.PhotoEditStore;
 import cc.huevia.album.PhotoRecipeStore;
+import cc.huevia.album.PhotoStarStore;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -52,6 +53,14 @@ public final class SharedRuntime {
         if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));
         switch(operation){
             case "core.schema":return CoreEngine.schema();
+            case "photo.stars":result=map("keys",new ArrayList<>(new PhotoStarStore(root).snapshot()));break;
+            case "photo.star":{
+                File source=privateFile(text(p,"path",4096));
+                if(!source.toPath().startsWith(new File(root,"originals").getCanonicalFile().toPath()))throw new IOException("只能标记原图库中的照片。");
+                if(!(p.get("starred") instanceof Boolean))throw new IOException("星标状态无效。");
+                PhotoStarStore stars=new PhotoStarStore(root);stars.setStarred(PhotoStarStore.localKey(source),(Boolean)p.get("starred"));
+                result=map("keys",new ArrayList<>(stars.snapshot()));break;
+            }
             case "draft.load":{
                 String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
                 PhotoEditStore.Draft draft=edits.load(source,owner);

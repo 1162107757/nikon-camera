@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:huevia/domain.dart';
@@ -14,6 +15,7 @@ void main() {
     'Native codecs and LibRaw retain originals, dimensions and white highlights',
     (tester) async {
       final core = HueviaCore();
+      debugPrint('Native pipeline: initializing');
       try {
         await core.initialize();
       } on AppFailure catch (failure) {
@@ -26,6 +28,9 @@ void main() {
       ).create();
       final outputs = <String>[];
       Future<Json> render(String operation, Json payload) async {
+        debugPrint(
+          'Native pipeline: $operation begin (border ${payload['recipe']?['border']?['template'] ?? 0})',
+        );
         late final Json result;
         try {
           result = await core.call(
@@ -37,6 +42,7 @@ void main() {
           fail('$operation failed: ${failure.message}; ${failure.details}');
         }
         if (result['path'] is String) outputs.add(result['path'] as String);
+        debugPrint('Native pipeline: $operation completed');
         return result;
       }
 
