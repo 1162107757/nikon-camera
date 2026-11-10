@@ -50,6 +50,11 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             yes(((Number)info.get("width")).intValue()==256&&((Number)info.get("height")).intValue()==192,"inspect dimensions");
             Map<String,Object> neutral=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             File output=new File((String)neutral.get("path"));yes(output.isFile()&&!output.equals(source),"private separate export");
+            Map<String,Object> repeated=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
+            yes(output.getPath().equals(repeated.get("path"))&&Boolean.TRUE.equals(repeated.get("reused")),"same encoded effect reuses a verified saved version");
+            yes(neutral.get("sha256").equals(PhotoEditStore.hashFile(output)),"saved version records actual JPEG digest");
+            Map<String,Object> opened=SharedJson.object(runtime.request("version.open",SharedJson.encode(SharedRuntime.map("owner","","id",neutral.get("id")))));
+            yes(opened.get("sha256").equals(neutral.get("sha256")),"saved version survives independent lookup");
             yes(((Number)neutral.get("width")).intValue()==256&&((Number)neutral.get("height")).intValue()==192,"full export dimensions");
             yes(!((String)neutral.get("model")).isEmpty(),"valid render model");
             cc.huevia.ncp.PresetPreviewProfile neutralProfile=runtime.originalView(source.getPath(),"").profile();

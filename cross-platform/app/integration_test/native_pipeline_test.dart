@@ -27,6 +27,7 @@ void main() {
         '${core.root}/originals/integration-${DateTime.now().microsecondsSinceEpoch}',
       ).create(recursive: true);
       final outputs = <String>[];
+      final versions = <String>{};
       Future<Json> render(String operation, Json payload) async {
         debugPrint(
           'Native pipeline: $operation begin (border ${payload['recipe']?['border']?['template'] ?? 0})',
@@ -42,6 +43,7 @@ void main() {
           fail('$operation failed: ${failure.message}; ${failure.details}');
         }
         if (result['path'] is String) outputs.add(result['path'] as String);
+        if (result['id'] is String) versions.add(result['id'] as String);
         debugPrint('Native pipeline: $operation completed');
         return result;
       }
@@ -84,6 +86,21 @@ void main() {
           exported['exportSpec'],
           'jpeg-srgb-v1:256x192:q95:capture-no-gps-v1',
         );
+        final repeated = await render('media.export', {
+          'path': source.path,
+          'owner': '',
+          'size': 'full',
+          'recipe': {'schema': 1},
+        });
+        expect(repeated['id'], exported['id']);
+        expect(repeated['path'], exported['path']);
+        expect(repeated['sha256'], exported['sha256']);
+        expect(repeated['reused'], true);
+        final opened = await core.call('version.open', {
+          'owner': '',
+          'id': exported['id'],
+        });
+        expect(opened['sha256'], exported['sha256']);
         final shared = await render('media.export', {
           'path': source.path,
           'owner': '',
@@ -269,6 +286,9 @@ void main() {
         expect(custom['settings']['colorMode'], 'NEUTRAL');
         expect((await sha256.bind(raw.openRead()).first).toString(), rawHash);
       } finally {
+        for (final id in versions) {
+          await core.call('version.delete', {'owner': '', 'id': id});
+        }
         for (final path in outputs) {
           if (path.startsWith('${core.root}/') ||
               path.startsWith('${core.root}\\')) {

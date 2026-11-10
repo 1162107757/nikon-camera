@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'domain.dart';
 import 'widgets.dart';
+import 'versions.dart';
 
 class PhotosPage extends StatefulWidget {
   const PhotosPage({super.key, required this.state});
@@ -87,6 +88,19 @@ class _PhotosPageState extends State<PhotosPage> {
                 )
               : null,
           actions: [
+            IconButton(
+              onPressed: () => Navigator.push<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => VersionsPage(
+                    core: state.core,
+                    owner: state.session['user']?['id'] as String? ?? '',
+                  ),
+                ),
+              ),
+              tooltip: '成品版本',
+              icon: const Icon(Icons.collections_outlined),
+            ),
             IconButton(
               onPressed: importing ? null : () => import(context),
               tooltip: '导入照片或 RAW',

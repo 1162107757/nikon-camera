@@ -60,8 +60,14 @@ final class NativeMedia {
             runtime.guardOwner(owner);
             if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
-            if(!preview)runtime.markEditExported(owner,frozen);
-            return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity()));
+            Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity());
+            if(!preview){
+                try{
+                    String saved=runtime.commitVersion(original,owner,frozen,target.getPath(),SharedJson.encode(result),cancel);
+                    runtime.markEditExported(owner,frozen);return saved;
+                }finally{Files.deleteIfExists(target.toPath());}
+            }
+            return SharedJson.encode(result);
         }catch(PhotoPresetRenderer.Cancelled stopped){throw new InterruptedIOException("照片处理已取消。");}
         finally{Files.deleteIfExists(temporary.toPath());if(reduced!=null)Files.deleteIfExists(reduced.toPath());}
     }

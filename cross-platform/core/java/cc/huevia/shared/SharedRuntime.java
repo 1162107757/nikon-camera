@@ -24,6 +24,7 @@ public final class SharedRuntime {
     private final String installationId;
     private final SharedEdits edits;
     private final SharedPersonal personal;
+    private final SharedVersions versions;
     private String storageWarning="";
     private PhotoAdjustmentCopy.Receipt copyReceipt;
     private String copyReceiptId="",copyReceiptOwner="";
@@ -35,6 +36,7 @@ public final class SharedRuntime {
         if(!root.isDirectory()&&!root.mkdirs())throw new IOException("无法打开应用资料目录。");
         library=new PresetLibrary(root);
         edits=new SharedEdits(root,library);
+        versions=new SharedVersions(root);
         online=new OnlinePresetRepository(root,library);
         online.initializeDefaultEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
         search=new OnlinePresetSearch(online);
@@ -55,6 +57,7 @@ public final class SharedRuntime {
         if(operation.startsWith("personal."))return SharedJson.encode(personal.request(operation,p,cancel,progress));
         if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));
         if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
+        if(operation.startsWith("version."))return SharedJson.encode(versions(operation,p,cancel));
         switch(operation){
             case "core.schema":return CoreEngine.schema();
             case "photo.stars":result=map("keys",new ArrayList<>(new PhotoStarStore(root).snapshot()));break;
@@ -163,6 +166,26 @@ public final class SharedRuntime {
         }
     }
     private static Map<String,Object> recipeInfo(PhotoRecipeStore.Recipe recipe){return map("id",recipe.id,"name",recipe.name,"createdAt",recipe.createdAt,"summary",recipe.summary());}
+    private Map<String,Object> versions(String operation,Map<String,Object> p,BooleanSupplier cancel)throws IOException{
+        String owner=text(p,"owner",64);guardOwner(owner);
+        switch(operation){
+            case "version.list":{
+                String path=text(p,"path",4096),sha=path.isEmpty()?"":sourceIdentity(path,false);
+                return map("items",versions.list(owner,sha,cancel));
+            }
+            case "version.open":return versions.open(owner,text(p,"id",64),cancel);
+            case "version.recipe":{
+                PhotoEditStore.Draft saved=versions.draft(owner,text(p,"id",64),cancel);
+                edits.retainPreset(owner,saved);return map("sourceSha",saved.sourceSha,"recipe",SharedEdits.recipe(saved));
+            }
+            case "version.delete":versions.delete(owner,text(p,"id",64),cancel);return map("deleted",true);
+            default:throw new IOException("未知的成品版本操作。");
+        }
+    }
+    public synchronized String commitVersion(String path,String owner,PhotoEditStore.Draft frozen,String rendered,String details,BooleanSupplier cancel)throws IOException{
+        guardOwner(owner);validateSource(path,frozen.sourceSha);
+        return SharedJson.encode(versions.commit(privateFile(path),owner,frozen,privateFile(rendered),SharedJson.object(details),cancel));
+    }
     private Map<String,Object> copyAdjustments(String operation,Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         String owner=text(p,"owner",64);guardOwner(owner);
         BooleanSupplier allowed=()->!cancel.getAsBoolean()&&owner.equals(SharedPersonal.currentOwner(accounts));

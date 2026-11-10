@@ -10,6 +10,7 @@ import 'domain.dart';
 import 'curve_control.dart';
 import 'recipes.dart';
 import 'copy_adjustments.dart';
+import 'versions.dart';
 import 'widgets.dart';
 
 class EditorPage extends StatefulWidget {
@@ -186,7 +187,10 @@ class _EditorPageState extends State<EditorPage> {
     }
   }
 
-  Future<void> openTool({bool copying = false}) async {
+  Future<void> openTool({
+    bool copying = false,
+    bool savedVersions = false,
+  }) async {
     if (exporting || managingTools || analyzingCleanup || !restored) return;
     debounce?.cancel();
     revision++;
@@ -203,6 +207,12 @@ class _EditorPageState extends State<EditorPage> {
                   source: widget.photo,
                   recipe: recipe.clone().data,
                   owner: owner,
+                )
+              : savedVersions
+              ? VersionsPage(
+                  core: widget.state.core,
+                  owner: owner,
+                  path: widget.photo.path,
                 )
               : RecipesPage(
                   core: widget.state.core,
@@ -1202,10 +1212,14 @@ class _EditorPageState extends State<EditorPage> {
             tooltip: '编辑选项',
             enabled:
                 restored && !exporting && !managingTools && !analyzingCleanup,
-            onSelected: (value) => openTool(copying: value == 'copy'),
+            onSelected: (value) => openTool(
+              copying: value == 'copy',
+              savedVersions: value == 'versions',
+            ),
             itemBuilder: (_) => const [
               PopupMenuItem(value: 'recipes', child: Text('我的配方')),
               PopupMenuItem(value: 'copy', child: Text('复制当前调节')),
+              PopupMenuItem(value: 'versions', child: Text('成品版本')),
             ],
           ),
         ],
