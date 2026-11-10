@@ -3,6 +3,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="$ROOT/cross-platform/.build/mobile-apple"
 mkdir -p "$WORK"
+python3 "$ROOT/cross-platform/tool/source_check.py"
 export CI=true FLUTTER_SUPPRESS_ANALYTICS=true
 export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
 export PUB_CACHE="$ROOT/.tooling/cross-platform187/pub-cache"
