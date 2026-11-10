@@ -42,11 +42,25 @@ import json,sys
 from pathlib import Path
 root,work=map(Path,sys.argv[1:])
 paths=json.loads((root/'cross-platform/.build/core-jvm/sources.json').read_text())
+# J2ObjC 3.1 lacks TimeZone.toZoneId(). Its JDK equivalent uses the same short
+# ID map. Adapt only the translation input; preserved sources stay untouched.
+adapted=[]
+for name in paths:
+    source=root/name
+    if name.endswith('/PhotoDateGroups.java'):
+        text=source.read_text(encoding='utf-8-sig')
+        a='TimeZone.getDefault().toZoneId()'
+        b='Objects.requireNonNull(timeZone, "timeZone").toZoneId()'
+        if text.count(a)!=1 or text.count(b)!=1:raise SystemExit('TimeZone adapter requires review')
+        text=text.replace(a,'ZoneId.of(TimeZone.getDefault().getID(), ZoneId.SHORT_IDS)').replace(b,'ZoneId.of(Objects.requireNonNull(timeZone, "timeZone").getID(), ZoneId.SHORT_IDS)')
+        source=work/'translation-input'/name
+        source.parent.mkdir(parents=True,exist_ok=True);source.write_text(text)
+    adapted.append(source)
 # J2ObjC's response-file reader treats quote characters as filename characters.
 # macOS CI paths contain no whitespace; use its literal one-path-per-line format.
-if any(any(c.isspace() for c in str(root/p)) for p in paths):
+if any(any(c.isspace() for c in str(p)) for p in adapted):
     raise SystemExit('J2ObjC source paths must not contain whitespace')
-(work/'sources.args').write_text('\n'.join(str(root/p) for p in paths)+'\n')
+(work/'sources.args').write_text('\n'.join(str(p) for p in adapted)+'\n')
 PY
 "$J2OBJC" -source 11 -encoding UTF-8 -use-arc -d "$WORK/generated" \
   @"$WORK/sources.args" > "$WORK/translation.log" 2>&1
