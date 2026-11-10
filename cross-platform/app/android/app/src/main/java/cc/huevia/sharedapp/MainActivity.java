@@ -28,9 +28,12 @@ public final class MainActivity extends FlutterActivity {
             public void onCancel(Object args){events=null;}
         });
         new MethodChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/core").setMethodCallHandler((call,reply)->{
-            if(call.method.equals("cancel")){String id=call.argument("jobId");AtomicBoolean flag=jobs.get(id);if(flag!=null)flag.set(true);if(camera!=null)camera.cancel(id);reply.success(null);return;}
-            String job=call.argument("jobId");final String identity=job==null?UUID.randomUUID().toString():job;
-            AtomicBoolean cancelled=new AtomicBoolean();jobs.put(identity,cancelled);
+            Object rawJob=call.argument("jobId");
+            if(rawJob!=null&&!(rawJob instanceof String)){reply.error("INVALID_ARGUMENT","任务标识格式无效。",null);return;}
+            String job=(String)rawJob;
+            if(call.method.equals("cancel")){if(job!=null){AtomicBoolean flag=jobs.get(job);if(flag!=null)flag.set(true);if(camera!=null)camera.cancel(job);}reply.success(null);return;}
+            final String identity=job==null?UUID.randomUUID().toString():job;
+            AtomicBoolean cancelled=new AtomicBoolean();if(jobs.putIfAbsent(identity,cancelled)!=null){reply.error("BUSY","该任务正在执行。",null);return;}
             try{worker.execute(()->{
                 try{
                     Object value;
@@ -55,5 +58,5 @@ public final class MainActivity extends FlutterActivity {
         });
     }
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);super.cleanUpFlutterEngine(engine);}
-    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(camera!=null)camera.disconnect();worker.shutdown();super.onDestroy();}
+    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
 }

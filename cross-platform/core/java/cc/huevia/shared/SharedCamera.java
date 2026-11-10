@@ -21,7 +21,9 @@ public final class SharedCamera {
     private final List<Long> handles=new ArrayList<>();
     private final Map<Long,PtpObjectInfo> observed=new LinkedHashMap<>();
     public SharedCamera(String root,Connectors connectors)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;}
-    public void cancel(String job){if(job.equals(activeJob)){PhotoCameraClient current=client;if(current!=null)current.close();}}
+    public void cancel(String job){if(job!=null&&job.equals(activeJob))closeTransport();}
+    /** Can run from the host lifecycle thread without changing worker-owned indexes. */
+    public void closeTransport(){PhotoCameraClient current=client;if(current!=null)current.close();}
     public synchronized String request(String operation,String json,String job,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         activeJob=job;
         try{return SharedJson.encode(execute(operation,SharedJson.object(json),cancel,progress));}

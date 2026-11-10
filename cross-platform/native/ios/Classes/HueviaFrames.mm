@@ -59,8 +59,9 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
   int w=photo.pixelWidth,h=photo.pixelHeight;IOSIntArray *size=[b dimensionsWithInt:w withInt:h];
   HueviaRaster *output=[[HueviaRaster alloc] initWithWidth:size->buffer_[0] height:size->buffer_[1] root:root];
   CGContextRef context=[output newContext];CGContextTranslateCTM(context,0,output.pixelHeight);CGContextScaleCTM(context,1,-1);UIGraphicsPushContext(context);
+  CGImageRef image=[photo newImage];
   @try {
-    CGImageRef image=[photo newImage];CGFloat m=b->margin_/100.0;
+    CGFloat m=b->margin_/100.0;
     if(b->template_==3){
       CGContextSetRGBFillColor(context,1,1,1,1);CGContextFillRect(context,CGRectMake(0,0,output.pixelWidth,output.pixelHeight));draw(context,image,CGRectMake(0,0,w,h));
       CGFloat fh=output.pixelHeight-h,first=h+fh*.43,second=h+fh*.76;
@@ -94,8 +95,7 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
         }
       }
     }
-    CGImageRelease(image);
-  }@finally{UIGraphicsPopContext();CGContextRelease(context);}
+  }@finally{CGImageRelease(image);UIGraphicsPopContext();CGContextRelease(context);}
   return output;
 }
 @end

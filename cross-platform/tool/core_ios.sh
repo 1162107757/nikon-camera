@@ -24,6 +24,9 @@ if [[ ! -x "$TOOLCHAIN/dist/j2objc" ]]; then
     --output "$WORK/j2objc-source.zip"
   echo '8116d3accee27ec83aec69cfd738bf75b632a226af7f0f736f00ae60cc2c70d5  '"$WORK/j2objc-source.zip" | shasum -a 256 -c -
   unzip -q -o "$WORK/j2objc-source.zip" -d "$(dirname "$TOOLCHAIN")"
+  # Clang 26 diagnoses an existing JDK Hashtable float constant conversion.
+  # Keep all original warning checks; only this diagnostic remains a warning.
+  printf '\nCC_WARNINGS += -Wno-error=implicit-const-int-float-conversion\n' >> "$TOOLCHAIN/make/common.mk"
   # macosx is x86_64; macosx64 is arm64. Only the required mobile/host
   # architectures are built, without watchOS/tvOS/Catalyst runtimes.
   if [[ "$(uname -m)" == arm64 ]]; then
