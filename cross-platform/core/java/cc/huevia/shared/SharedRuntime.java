@@ -4,6 +4,7 @@ import cc.huevia.account.*;
 import cc.huevia.community.*;
 import cc.huevia.library.*;
 import cc.huevia.album.PhotoEditStore;
+import cc.huevia.album.PhotoRecipeStore;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -48,6 +49,7 @@ public final class SharedRuntime {
     public synchronized String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException {
         Map<String,Object> p=SharedJson.object(json);Object result;
         if(operation.startsWith("personal."))return SharedJson.encode(personal.request(operation,p,cancel,progress));
+        if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));
         switch(operation){
             case "core.schema":return CoreEngine.schema();
             case "draft.load":{
@@ -122,9 +124,38 @@ public final class SharedRuntime {
         }
         return SharedJson.encode(result);
     }
+    private Map<String,Object> recipes(String operation,Map<String,Object> p)throws IOException{
+        String owner=text(p,"owner",64);guardOwner(owner);
+        PhotoRecipeStore store=new PhotoRecipeStore(root,owner);
+        switch(operation){
+            case "recipe.list":{
+                List<Object> items=new ArrayList<>();for(PhotoRecipeStore.Recipe recipe:store.list())items.add(recipeInfo(recipe));
+                return map("items",items);
+            }
+            case "recipe.create":{
+                PhotoEditStore.Draft draft=freezeEdit(text(p,"path",4096),owner,SharedJson.encode(object(p.get("recipe"))));
+                return recipeInfo(store.create(text(p,"name",160),draft));
+            }
+            case "recipe.rename":return recipeInfo(store.rename(text(p,"id",32),text(p,"name",160)));
+            case "recipe.delete":store.delete(text(p,"id",32));return map("deleted",true);
+            case "recipe.apply":{
+                PhotoRecipeStore.Recipe saved=store.read(text(p,"id",32));
+                PhotoEditStore.Draft current=freezeEdit(text(p,"path",4096),owner,SharedJson.encode(object(p.get("recipe"))));
+                PhotoEditStore.Draft next=new PhotoEditStore.Draft(current.sourceSha,saved.presetBytes(),saved.presetName,saved.strength,saved.adjustments,current.geometry,current.border,current.localEdits,false);
+                edits.retainPreset(owner,next);
+                if(!new PhotoEditStore(root,owner).replace(current.sourceSha,current,next))throw new IOException("照片设置已变化，请重新应用配方。");
+                return map("recipe",SharedEdits.recipe(next),"name",saved.name);
+            }
+            default:throw new IOException("未知的配方操作。");
+        }
+    }
+    private static Map<String,Object> recipeInfo(PhotoRecipeStore.Recipe recipe){return map("id",recipe.id,"name",recipe.name,"createdAt",recipe.createdAt,"summary",recipe.summary());}
     public File privateFile(String path)throws IOException {
         File original=new File(path),file=original.getCanonicalFile();
-        if(!file.toPath().startsWith(root.toPath())||Files.isSymbolicLink(original.toPath())||!file.isFile())throw new IOException("文件不在应用资料目录内。");
+        Path candidate=original.toPath(),canonical=file.toPath(),base=root.toPath();
+        if(candidate==null||canonical==null||base==null)throw new IOException("文件系统路径接口不可用。");
+        if(candidate.getFileSystem()==null||candidate.getFileSystem().provider()==null)throw new IOException("文件系统提供器不可用。");
+        if(!canonical.startsWith(base)||Files.isSymbolicLink(candidate)||!file.isFile())throw new IOException("文件不在应用资料目录内。");
         return file;
     }
     public synchronized String sourceIdentity(String path,boolean force)throws IOException{return edits.sourceIdentity(privateFile(path),force);}

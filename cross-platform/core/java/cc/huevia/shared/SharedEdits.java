@@ -27,6 +27,15 @@ public final class SharedEdits {
         identities.put(path,new Identity(file,sha));while(identities.size()>64)identities.remove(identities.keySet().iterator().next());return sha;
     }
     public PhotoEditStore.Draft load(File source,String owner)throws IOException{return new PhotoEditStore(root,owner).read(sourceIdentity(source,false));}
+    private PhotoEditStore history(String sourceSha,String owner)throws IOException{return new PhotoEditStore(new File(root,"photo-preset-history/"+sourceSha),owner);}
+    /** The Flutter undo stack holds identities; retain their original bytes on the native side. */
+    public void retainPreset(String owner,PhotoEditStore.Draft draft)throws IOException{
+        if(draft.presetSha.isEmpty())return;
+        PhotoEditStore cache=history(draft.sourceSha,owner);
+        PhotoEditStore.Draft previous=cache.read(draft.presetSha);
+        if(previous==null)cache.save(new PhotoEditStore.Draft(draft.presetSha,draft.presetBytes(),draft.name,100,false));
+        else if(!previous.presetSha.equals(draft.presetSha))throw new IOException("编辑历史预设校验失败。");
+    }
     public PhotoEditStore.Draft freeze(File source,String owner,String json)throws IOException{
         return freeze(source,owner,json,id->true);
     }
@@ -36,12 +45,19 @@ public final class SharedEdits {
         if(recipe.presetId.isEmpty()){bytes=new byte[0];name="无滤镜";}
         else if(previous!=null&&recipe.presetId.equals(previous.presetSha)){bytes=previous.presetBytes();name=previous.name;}
         else{
-            if(!visible.test(recipe.presetId))throw new IOException("此预设不属于当前账号。");
-            bytes=library.readPreset(recipe.presetId);PresetRecord record=library.findBySha256(recipe.presetId);
-            if(record==null)throw new IOException("预设已移除，请重新选择滤镜。");name=record.displayName;
+            PhotoEditStore.Draft historical=history(sha,owner).read(recipe.presetId);
+            if(historical!=null){
+                if(!historical.presetSha.equals(recipe.presetId))throw new IOException("编辑历史预设校验失败。");
+                bytes=historical.presetBytes();name=historical.name;
+            }else{
+                if(!visible.test(recipe.presetId))throw new IOException("此预设不属于当前账号。");
+                bytes=library.readPreset(recipe.presetId);PresetRecord record=library.findBySha256(recipe.presetId);
+                if(record==null)throw new IOException("预设已移除，请重新选择滤镜。");name=record.displayName;
+            }
         }
         PhotoEditStore.Draft next=new PhotoEditStore.Draft(sha,bytes,name,recipe.strength,recipe.adjustments,recipe.geometry,recipe.border,recipe.local,false);
         if(previous!=null&&previous.exported&&previous.identity().equals(next.identity()))next=new PhotoEditStore.Draft(sha,bytes,name,recipe.strength,recipe.adjustments,recipe.geometry,recipe.border,recipe.local,true);
+        if(previous!=null)retainPreset(owner,previous);retainPreset(owner,next);
         store.save(next);return next;
     }
     public void markExported(String owner,PhotoEditStore.Draft frozen)throws IOException{new PhotoEditStore(root,owner).markExported(frozen);}

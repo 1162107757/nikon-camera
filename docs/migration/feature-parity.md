@@ -9,7 +9,7 @@
 | NCP / NP3 校验、单色与彩色预设解析 | `library/PresetFile`, `ncp/*PreviewProfile` | 直接复用 | 本地导入已接线 | 核心 JVM / Apple 原测试通过；应用待验证 |
 | 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 首批页面已接线；样片编辑待迁移 | 待应用验证 |
 | 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示已接线，搜索合并在途请求 | 应用联网验收待完成 |
-| 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出已接线；其他账户流程待迁移 | 待完成 |
+| 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出/注册/图形验证已接线；QQ、头像待迁移 | 待完成 |
 | 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑复用并补充任务取消和作者校验 | 同步范围选择、两种冲突处理、删除及会话可见性已接线 | 31 项事务/权限检查通过；真实账号联网验收待完成 |
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
 | 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | 私有原图导入与索引已接线；系统图库待接入 | 待完成 |
@@ -18,10 +18,10 @@
 | 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 待应用像素验收 |
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 待迁移编辑交互及原生表面 | 核心 JVM / Apple 原测试通过；应用待完成 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
-| 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器已接线；iOS 排版待移植 | 待完成 |
-| 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 初始撤销/重做已接线；原格式迁移与隔离验收待完成 | 待完成 |
+| 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器、iOS 三种排版/原素材字体已接线 | 安卓三种边框集成通过；iOS 待应用验证 |
+| 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方保存/管理/应用已接线；批量调整复制待迁移 | JVM 配方及快照恢复验证通过；Apple 与旧安装资料迁移待验证 |
 | RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 安卓 12 合成 Bayer RAW 全链路通过；iOS 同场景待验证，未知型号 NEF 待实样复测 |
-| 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | Android 原渲染器与首批导出已接线；iOS 编解码/元数据待接入 | 待完成 |
+| 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 两端编解码/安全元数据及完整/分享/自定义导出已接线；成品管理待迁移 | 安卓集成通过；iOS 文件接口异常待修复 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 部分模型已纳入 | 待迁移 | 待完成 |
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | Wi-Fi 手动连接已接线；平台网络/生命周期待迁移 | 待完成，不扩大 Fuji 已验证能力 |
 | 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用 | 初始会话分页/接收已接线；完整库存策略与恢复待迁移 | 待完成 |
@@ -52,7 +52,9 @@
 - Android 12 已复跑 16 项原生媒体检查及 Flutter/native 集成场景，均通过；后者增加梯度图旋转裁剪的实际像素位置、三种 Nikon 边框素材及真实 DNG 显影。
 - 为 Android 12L 及以下启用 Flutter 官方允许的兼容渲染器；Android 13+ 仍使用默认引擎配置。此选项已在固定 Flutter 3.47.9 源码核对、API 31 运行验证；后续升级 Flutter 时须检查其弃用状态。[官方文档](https://docs.flutter.dev/perf/impeller)
 - 原项目 420 个已跟踪 Android/iOS 文件仍通过内容保留校验。上述 API 31 证据不能代替荣耀 Magic 的实机闪退复测。
-- iOS 设备应用已成功编译至 RAW 控制版本；模拟器已越过库架构匹配检查，正在定位原生初始化失败，完整 iOS 应用级验收和新版 IPA 交付仍未完成。
+- iOS 设备应用已成功编译至 RAW 控制版本；模拟器初始化已通过，首次图片导出在 `Files.isSymbolicLink` 的 JRE 路径触发空指针，正在修复运行库接入。完整 iOS 应用级验收和新版 IPA 交付仍未完成。
+- `2524f4355ad6ce2ea581826a72c4f268154d7bd7` 的 Apple 共享核心验证通过（Actions `42823580601`），包含 69 项共享边界与原有全部图像指纹；`77230cb3ec080485fb7d983697a0b38e82de6e2d` 的 Apple 应用分析、14 项界面测试和 iPhoneOS 编译通过（Actions `42825950954`），应用集成仍被上述文件接口异常阻塞。
+- 新增账户配方保存/列表/重命名/删除/跨照片应用，直接使用原 `PhotoRecipeStore` 格式。应用配方保留目标照片的构图、边框与局部编辑；原生侧按照片和账户保存校验后的预设快照，确保从无滤镜撤销回已移除的预设。JVM 共享边界检查增至 89 项并通过；新增 2 项大字体横竖屏配方界面测试通过。Windows 全套测试仍偶发宿主 `flutter_tester.exe` 访问异常，单独运行导航文件通过，Apple 全套复测待完成。
 
 ## 保留和交付规则
 

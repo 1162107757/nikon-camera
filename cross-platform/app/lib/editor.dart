@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 
 import 'domain.dart';
 import 'curve_control.dart';
+import 'recipes.dart';
 import 'widgets.dart';
 
 class EditorPage extends StatefulWidget {
@@ -25,6 +26,7 @@ class _EditorPageState extends State<EditorPage> {
   StreamSubscription<dynamic>? progressEvents;
   String? preview, error, activeJob;
   bool exporting = false, rendering = false, compare = false, restored = false;
+  bool managingRecipes = false;
   double progress = 0;
   int tab = 0, revision = 0, hslBand = 0;
   late final String owner =
@@ -102,7 +104,7 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   void change(void Function() mutation, {bool snapshot = true}) {
-    if (exporting || !restored) return;
+    if (exporting || managingRecipes || !restored) return;
     if (snapshot) checkpoint();
     setState(() {
       mutation();
@@ -171,6 +173,40 @@ class _EditorPageState extends State<EditorPage> {
       if (await file.exists()) await file.delete();
     } on FileSystemException {
       // A preview is disposable; cleanup failure never affects the original.
+    }
+  }
+
+  Future<void> openRecipes() async {
+    if (exporting || managingRecipes || !restored) return;
+    debounce?.cancel();
+    revision++;
+    setState(() => managingRecipes = true);
+    try {
+      if (activeJob != null) await widget.state.core.cancel(activeJob!);
+      if (!mounted) return;
+      final applied = await Navigator.push<Json>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RecipesPage(
+            core: widget.state.core,
+            owner: owner,
+            path: widget.photo.path,
+            current: recipe.clone().data,
+          ),
+        ),
+      );
+      if (!mounted) return;
+      if (applied != null) {
+        checkpoint();
+        setState(() => recipe = Recipe(data: applied));
+      }
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) {
+        setState(() => managingRecipes = false);
+        unawaited(render());
+      }
     }
   }
 
@@ -959,7 +995,7 @@ class _EditorPageState extends State<EditorPage> {
         actions: [
           IconButton(
             tooltip: '撤销',
-            onPressed: undo.isEmpty || exporting
+            onPressed: undo.isEmpty || exporting || managingRecipes
                 ? null
                 : () {
                     redo.add(recipe.clone());
@@ -970,7 +1006,7 @@ class _EditorPageState extends State<EditorPage> {
           ),
           IconButton(
             tooltip: '重做',
-            onPressed: redo.isEmpty || exporting
+            onPressed: redo.isEmpty || exporting || managingRecipes
                 ? null
                 : () {
                     undo.add(recipe.clone());
@@ -988,8 +1024,18 @@ class _EditorPageState extends State<EditorPage> {
           ),
           IconButton(
             tooltip: '导出照片',
-            onPressed: exporting || preview == null ? null : export,
+            onPressed: exporting || managingRecipes || preview == null
+                ? null
+                : export,
             icon: const Icon(Icons.ios_share_rounded),
+          ),
+          PopupMenuButton<String>(
+            tooltip: '编辑选项',
+            enabled: restored && !exporting && !managingRecipes,
+            onSelected: (_) => openRecipes(),
+            itemBuilder: (_) => const [
+              PopupMenuItem(value: 'recipes', child: Text('我的配方')),
+            ],
           ),
         ],
       ),
