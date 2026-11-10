@@ -40,7 +40,7 @@ class _EditorPageState extends State<EditorPage> {
   @override
   void initState() {
     super.initState();
-    progressEvents = HueviaCore.events.receiveBroadcastStream().listen((event) {
+    progressEvents = HueviaCore.progress.listen((event) {
       final value = object(event);
       if (mounted && value['jobId'] == activeJob) {
         setState(() => progress = (value['progress'] as num).toDouble());
@@ -272,31 +272,42 @@ class _EditorPageState extends State<EditorPage> {
       context: context,
       showDragHandle: true,
       builder: (sheet) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text('导出照片', style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 8),
-              const Text('保留原图，另存为 sRGB JPEG。'),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: () => Navigator.pop(sheet, 'full'),
-                child: const Text('完整尺寸 · JPEG 95'),
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton(
-                onPressed: () => Navigator.pop(sheet, 'share'),
-                child: const Text('适合分享 · 长边 2048'),
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('导出照片', style: Theme.of(context).textTheme.headlineSmall),
+                const SizedBox(height: 8),
+                const Text('保留原图，另存为 sRGB JPEG。'),
+                const SizedBox(height: 20),
+                FilledButton(
+                  onPressed: () => Navigator.pop(sheet, 'full'),
+                  child: const Text('完整尺寸 · JPEG 95'),
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(sheet, 'share'),
+                  child: const Text('适合分享 · 长边 2048'),
+                ),
+                const SizedBox(height: 12),
+                TextButton(
+                  onPressed: () => Navigator.pop(sheet, 'custom'),
+                  child: const Text('自定义尺寸与质量'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
     if (size == null || !mounted) return;
+    final custom = size == 'custom'
+        ? await customExportOptions()
+        : <String, dynamic>{};
+    if (custom == null || !mounted) return;
     debounce?.cancel();
     final previousJob = activeJob;
     final job = 'export-${DateTime.now().microsecondsSinceEpoch}';
@@ -316,6 +327,7 @@ class _EditorPageState extends State<EditorPage> {
         'recipe': frozen.data,
         'owner': owner,
         'size': size,
+        ...custom,
       }, job);
       if (!mounted) return;
       await SharePlus.instance.share(
@@ -335,6 +347,74 @@ class _EditorPageState extends State<EditorPage> {
         });
       }
     }
+  }
+
+  Future<Json?> customExportOptions() async {
+    final edge = TextEditingController(text: '2048'),
+        form = GlobalKey<FormState>();
+    var quality = 95;
+    final result = await showDialog<Json>(
+      context: context,
+      builder: (dialog) => StatefulBuilder(
+        builder: (context, refresh) => AlertDialog(
+          title: const Text('自定义导出'),
+          content: Form(
+            key: form,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('设置长边上限，保留较小照片的尺寸。'),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: edge,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: '长边 640–8192 px',
+                    ),
+                    validator: (value) {
+                      final parsed = int.tryParse(value ?? '');
+                      return parsed == null || parsed < 640 || parsed > 8192
+                          ? '请输入 640–8192 之间的整数。'
+                          : null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  Text('JPEG 质量 $quality'),
+                  Slider(
+                    min: 70,
+                    max: 100,
+                    divisions: 30,
+                    value: quality.toDouble(),
+                    onChanged: (value) =>
+                        refresh(() => quality = value.round()),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialog),
+              child: const Text('取消'),
+            ),
+            FilledButton(
+              onPressed: () {
+                if (form.currentState!.validate()) {
+                  Navigator.pop(dialog, {
+                    'longEdge': int.parse(edge.text),
+                    'quality': quality,
+                  });
+                }
+              },
+              child: const Text('导出'),
+            ),
+          ],
+        ),
+      ),
+    );
+    edge.dispose();
+    return result;
   }
 
   Widget slider(

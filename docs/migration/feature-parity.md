@@ -20,7 +20,7 @@
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
 | 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器已接线；iOS 排版待移植 | 待完成 |
 | 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 初始撤销/重做已接线；原格式迁移与隔离验收待完成 | 待完成 |
-| RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | Android 原引擎已接线；iOS LibRaw 适配待迁移 | 高光核心测试通过；应用待完成 |
+| RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 安卓 12 合成 Bayer RAW 全链路通过；iOS 同场景待验证，未知型号 NEF 待实样复测 |
 | 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | Android 原渲染器与首批导出已接线；iOS 编解码/元数据待接入 | 待完成 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 部分模型已纳入 | 待迁移 | 待完成 |
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | Wi-Fi 手动连接已接线；平台网络/生命周期待迁移 | 待完成，不扩大 Fuji 已验证能力 |
@@ -45,6 +45,9 @@
 - 同一提交新增的 31 项共享边界检查已在 JVM 和 Apple 通过，覆盖离线账户、完整草稿、预设删除后的编辑、账户隔离和旧导出快照保护。
 - Android x86_64 开发 APK 已构建，在隔离 Android 12 / API 31 模拟器冷启动并显示预设库；这不代表荣耀 Magic 实机稳定性已验证。
 - 后续共享界面 9 项测试通过，含离线四页导航、注册失败保留输入、完整在线搜索，以及编辑器在横竖屏/大字体下恢复已移除预设的草稿、曲线和 HSL 操作。
+- 后续 16 项 Android 12 原生媒体检查通过：真实 PNG/JPEG 编解码、原渲染器、EXIF 方向、旋转裁剪、边框、原草稿格式、取消及临时文件清理、原文件 SHA 不变、LibRaw 0.22.3 加载。
+- 同一 Flutter/native 集成场景在 Android 12 通过：用自行生成的 Bayer DNG 实际显影，验证完整尺寸、白色饱和高光无明显偏粉、自定义白平衡/色彩参数、原始字节不变。合成 DNG 不能代替用户未知型号 NEF 实样。
+- 共享界面及文件状态测试已增至 11 项并通过；新增照片并发导入串行提交、索引写入失败回滚与重试。Windows 本地测试需与模拟器分时运行，曾观察到宿主 `flutter_tester.exe` 退出，停止独立模拟器后串行测试通过。
 
 ## 保留和交付规则
 

@@ -1,6 +1,6 @@
 """Package only a verified iPhoneOS ARM64 app as an unsigned self-signing IPA."""
 from pathlib import Path,PurePosixPath
-import hashlib,json,os,plistlib,struct,zipfile
+import hashlib,json,os,plistlib,struct,subprocess,zipfile
 ROOT=Path(__file__).resolve().parents[2]
 app=ROOT/'cross-platform/app/build/ios/iphoneos/Runner.app'
 out=ROOT/'cross-platform/.build/mobile-apple';out.mkdir(parents=True,exist_ok=True)
@@ -25,5 +25,7 @@ with zipfile.ZipFile(ipa,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) a
 with zipfile.ZipFile(ipa) as z:
     if z.testzip() is not None:raise SystemExit('IPA archive integrity check failed')
 report={'developmentBuild':True,'fullParityComplete':False,'bundleIdentifier':info['CFBundleIdentifier'],'version':info['CFBundleShortVersionString'],'build':info['CFBundleVersion'],'platform':'iPhoneOS','architecture':'arm64','minimumOS':info.get('MinimumOSVersion'),'sha256':hashlib.sha256(ipa.read_bytes()).hexdigest(),'bytes':ipa.stat().st_size}
+report['sourceCommit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+report['flutterRevision']=json.loads((ROOT/'cross-platform/toolchain.json').read_text())['flutterRevision']
 (out/'ipa-verification.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report))

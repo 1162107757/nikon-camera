@@ -92,10 +92,17 @@ rewrite="""def hueviaRoute = { repos -> repos.all { repo ->
  if (repo instanceof org.gradle.api.artifacts.repositories.MavenArtifactRepository) {
   def address = repo.url.toString()
   def routes = ['https://dl.google.com/dl/android/maven2/':'google', 'https://dl.google.com/android/maven2/':'google', 'https://repo.maven.apache.org/maven2/':'central', 'https://repo1.maven.org/maven2/':'central', 'https://plugins.gradle.org/m2/':'plugin', 'https://storage.googleapis.com/download.flutter.io/':'flutter']
-  routes.each { origin, name -> if(address == origin || address + '/' == origin) { repo.url = 'http://127.0.0.1:PORT/' + name + '/'; repo.allowInsecureProtocol = true } }
+  routes.each { origin, name -> if(address == origin || address + '/' == origin) {
+   repo.url = 'http://127.0.0.1:PORT/' + name + '/'; repo.allowInsecureProtocol = true
+   repo.content {
+    if(name == 'google') { GOOGLE_FILTERS }
+    else if(name == 'flutter') { includeGroup 'io.flutter' }
+    else { excludeGroup 'io.flutter'; CENTRAL_FILTERS }
+   }
+  } }
  }
 } }
-""".replace('PORT',str(port))
+""".replace('PORT',str(port)).replace('GOOGLE_FILTERS','; '.join("includeGroupByRegex '"+group+"'" for group in google_groups)).replace('CENTRAL_FILTERS','; '.join("excludeGroupByRegex '"+group+"'" for group in google_groups))
 init=rewrite+"gradle.beforeSettings { settings -> hueviaRoute(settings.pluginManagement.repositories); hueviaRoute(settings.dependencyResolutionManagement.repositories); settings.pluginManagement.repositories {\n"+repositories+"\n}; settings.dependencyResolutionManagement.repositories {\n"+repositories+"\n} }\ngradle.settingsEvaluated { settings -> gradle.ext.hueviaProjectRepos = settings.dependencyResolutionManagement.repositoriesMode.get().name() == 'PREFER_PROJECT' }\ngradle.beforeProject { project -> hueviaRoute(project.repositories); hueviaRoute(project.buildscript.repositories); if (gradle.ext.hueviaProjectRepos) { project.repositories {\n"+repositories+"\n} }; project.buildscript.repositories {\n"+repositories+"\n} }\n"
 (ROOT/'.tooling/cross-platform187/maven-proxy.init.gradle').write_text(init)
 print('Build artifact proxy listening only on 127.0.0.1:'+str(port),flush=True)

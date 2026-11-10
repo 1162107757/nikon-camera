@@ -13,15 +13,25 @@ import cc.huevia.shared.SharedRuntime;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
+import java.util.concurrent.*;
 
 /** Real Android codecs, native RAW loading, original renderer and guarded output. */
 public final class MediaSmokeInstrumentation extends Instrumentation {
     private int checks;
+    private boolean integration;
     private void yes(boolean value,String name){checks++;if(!value)throw new AssertionError(name);}
-    @Override public void onCreate(Bundle arguments){super.onCreate(arguments);start();}
+    @Override public void onCreate(Bundle arguments){super.onCreate(arguments);integration=arguments!=null&&"true".equals(arguments.getString("integration"));start();}
     @Override public void onStart(){
         Bundle result=new Bundle();File workspace=null;
         try{
+            if(integration){
+                startActivitySync(new android.content.Intent().setClassName(getTargetContext(),"cc.huevia.sharedapp.MainActivity").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
+                Object pending=Class.forName("dev.flutter.plugins.integration_test.IntegrationTestPlugin").getField("testResults").get(null);
+                Map<?,?> results=(Map<?,?>)((Future<?>)pending).get(5,TimeUnit.MINUTES);
+                yes(!results.isEmpty(),"Flutter native suite produced results");
+                for(Object value:results.values())yes("success".equals(value),String.valueOf(value));
+                result.putString("stream","PASS cross-platform Flutter/native pipeline: "+results.size()+" scenario(s)\n");finish(Activity.RESULT_OK,result);return;
+            }
             workspace=Files.createTempDirectory(getTargetContext().getFilesDir().toPath(),"migration-smoke-").toFile();
             SharedRuntime runtime=new SharedRuntime(workspace.getPath(),new AccountRepository.Store(){
                 public byte[] read(){return null;} public void write(byte[] b){} public void clear(){}
@@ -60,7 +70,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             yes(RawDeveloper.available(),"LibRaw loaded for device ABI");yes(RawDeveloper.libraryVersion().contains("0.22.3"),"original LibRaw version");
             result.putString("stream","PASS "+checks+" Android media checks; codecs, original renderer, geometry, EXIF, draft, cancellation, unchanged source, LibRaw ABI\n");
             finish(Activity.RESULT_OK,result);
-        }catch(Throwable failure){result.putString("stream","FAIL "+failure+"\n");finish(Activity.RESULT_CANCELED,result);}
+        }catch(Throwable failure){result.putString("stream","FAIL after "+checks+" checks: "+failure+"\n");finish(Activity.RESULT_CANCELED,result);}
         finally{if(workspace!=null)try{remove(workspace,workspace.getCanonicalFile());}catch(IOException ignored){}}
     }
     private static void remove(File file,File guard)throws IOException{

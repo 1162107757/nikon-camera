@@ -63,6 +63,11 @@ public final class CoreBoundary {
             rejects(()->runtime.freezeEdit(source.getPath(),"alice",edit));
             String sourceSha=edits.sourceIdentity(source,false);Files.write(source.toPath(),new byte[]{40,30,20,10});
             yes(!sourceSha.equals(edits.sourceIdentity(source,true)));
+            yes(SharedRawSettings.parse("{}").equals(cc.huevia.ncp.RawDevelopmentSettings.DEFAULT));
+            cc.huevia.ncp.RawDevelopmentSettings rawSettings=SharedRawSettings.parse("{\"whiteBalance\":\"CUSTOM\",\"temperature\":4800,\"tint\":10,\"exposure\":5,\"colorMode\":\"NEUTRAL\"}");
+            yes(SharedRawSettings.parse(SharedRawSettings.json(rawSettings)).equals(rawSettings));
+            rejects(()->SharedRawSettings.parse("{\"quality\":2}"));rejects(()->SharedRawSettings.parse("{\"exposure\":51}"));
+            rejects(()->SharedRawSettings.parse("{\"temperature\":1999}"));rejects(()->SharedRawSettings.parse("{\"whiteBalance\":\"unknown\"}"));
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

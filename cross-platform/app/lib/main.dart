@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'domain.dart';
 import 'editor.dart';
+import 'raw_develop.dart';
 import 'library.dart';
 import 'photos.dart';
 import 'profile.dart';
@@ -59,6 +60,11 @@ class _HueviaAppState extends State<HueviaApp> {
                   index < 0 ||
                   index >= widget.state.photos.length
               ? const Scaffold(body: Center(child: Text('照片已不可用，请返回相册重新选择。')))
+              : widget.state.photos[index].info['raw'] == true
+              ? RawDevelopPage(
+                  state: widget.state,
+                  photo: widget.state.photos[index],
+                )
               : EditorPage(
                   state: widget.state,
                   photo: widget.state.photos[index],

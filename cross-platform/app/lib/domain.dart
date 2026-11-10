@@ -22,6 +22,7 @@ class AppFailure implements Exception {
 class HueviaCore {
   static const channel = MethodChannel('cc.huevia/core');
   static const events = EventChannel('cc.huevia/events');
+  static final progress = events.receiveBroadcastStream();
   String root = '';
   Json schema = {};
   Future<void> initialize() async {
@@ -175,6 +176,16 @@ class AppState extends ChangeNotifier {
   List<Preset> presets = [];
   List<Photo> photos = [];
   Json session = {};
+  Future<void> _photoCommit = Future.value();
+  Future<T> _serialPhotos<T>(Future<T> Function() operation) {
+    final next = _photoCommit.then((_) => operation());
+    _photoCommit = next.then<void>(
+      (_) {},
+      onError: (Object _, StackTrace _) {},
+    );
+    return next;
+  }
+
   Future<void> initialize() async {
     failure = null;
     notifyListeners();
@@ -215,24 +226,68 @@ class AppState extends ChangeNotifier {
     await refreshLibrary();
   }
 
-  Future<Photo> importPhoto(XFile selected) async {
+  Future<Photo> importPhoto(XFile selected) => _serialPhotos(() async {
     final path = await core.importFile(selected, preset: false);
     final existing = photos.where((photo) => photo.path == path);
     if (existing.isNotEmpty) return existing.first;
     final info = await core.call('media.info', {'path': path});
     final photo = Photo(path, selected.name, info);
-    photos.insert(0, photo);
-    await savePhotos();
+    final next = [photo, ...photos];
+    await _persistPhotos(next);
+    photos = next;
     notifyListeners();
     return photo;
-  }
+  });
 
-  Future<void> savePhotos() async {
-    final temporary = File(p.join(core.root, 'photos-index.json.part'));
-    await temporary.writeAsString(
-      jsonEncode(photos.map((photo) => photo.toJson()).toList()),
-      flush: true,
+  Future<Photo> registerPhoto(String path, String name, Json info) =>
+      _serialPhotos(() async {
+        if (!p.isWithin(p.join(core.root, 'originals'), path) ||
+            !await File(path).exists()) {
+          throw const AppFailure('照片文件不在应用原图库中。');
+        }
+        final existing = photos.where((photo) => photo.path == path);
+        if (existing.isNotEmpty) return existing.first;
+        final photo = Photo(path, name, info);
+        final next = <Photo>[photo, ...photos];
+        await _persistPhotos(next);
+        photos = next;
+        notifyListeners();
+        return photo;
+      });
+
+  Future<Photo> updatePhoto(Photo photo, Json metadata) =>
+      _serialPhotos(() async {
+        final index = photos.indexWhere((item) => item.path == photo.path);
+        if (index < 0) throw const AppFailure('照片已不在资料库中。');
+        final current = photos[index], next = List<Photo>.from(photos);
+        final updated = Photo(current.path, current.name, {
+          ...current.info,
+          ...metadata,
+        });
+        next[index] = updated;
+        await _persistPhotos(next);
+        photos = next;
+        notifyListeners();
+        return updated;
+      });
+
+  Future<void> savePhotos() =>
+      _serialPhotos(() => _persistPhotos(List<Photo>.from(photos)));
+  Future<void> _persistPhotos(List<Photo> snapshot) async {
+    final temporary = File(
+      p.join(
+        core.root,
+        'photos-index-${DateTime.now().microsecondsSinceEpoch}.part',
+      ),
     );
-    await temporary.rename(p.join(core.root, 'photos-index.json'));
+    try {
+      await temporary.writeAsString(
+        jsonEncode(snapshot.map((photo) => photo.toJson()).toList()),
+        flush: true,
+      );
+      await temporary.rename(p.join(core.root, 'photos-index.json'));
+    } finally {
+      if (await temporary.exists()) await temporary.delete();
+    }
   }
 }

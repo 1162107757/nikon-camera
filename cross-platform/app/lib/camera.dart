@@ -121,13 +121,11 @@ class _CameraPageState extends State<CameraPage> {
       final info = await widget.state.core.call('media.info', {
         'path': result['path'],
       });
-      if (!widget.state.photos.any((photo) => photo.path == result['path'])) {
-        widget.state.photos.insert(
-          0,
-          Photo(result['path'] as String, result['name'] as String, info),
-        );
-        await widget.state.savePhotos();
-      }
+      await widget.state.registerPhoto(
+        result['path'] as String,
+        result['name'] as String,
+        info,
+      );
       if (mounted) report(context, '${item['name']} 已保存到应用照片库');
     } catch (failure) {
       if (mounted) setState(() => error = '$failure');
