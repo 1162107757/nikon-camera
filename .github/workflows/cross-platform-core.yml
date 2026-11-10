@@ -1,12 +1,6 @@
 name: Cross-platform core parity
 on:
   workflow_dispatch:
-  push:
-    branches: ['codex/cross-platform-migration']
-    paths:
-      - 'cross-platform/core/**'
-      - 'cross-platform/tool/**'
-      - '.github/workflows/cross-platform-core.yml'
 permissions:
   contents: read
 concurrency:

@@ -1,21 +1,6 @@
 name: Cross-platform mobile development build
 on:
   workflow_dispatch:
-  push:
-    branches: ['codex/cross-platform-migration']
-    paths:
-      - 'cross-platform/app/**'
-      - 'cross-platform/native/**'
-      - 'cross-platform/core/**'
-      - 'cross-platform/tool/core_*.py'
-      - 'cross-platform/tool/core_*.sh'
-      - 'cross-platform/tool/apple_integration.sh'
-      - 'cross-platform/tool/package_ipa.py'
-      - 'cross-platform/tool/prepare_apple_plugin.py'
-      - 'cross-platform/toolchain.json'
-      - 'cross-platform/tool/mobile_apple.sh'
-      - 'cross-platform/tool/raw_*.py'
-      - '.github/workflows/cross-platform-mobile.yml'
 permissions:
   contents: read
 concurrency:
