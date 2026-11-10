@@ -5,6 +5,7 @@ import cc.huevia.library.*;
 import cc.huevia.ncp.*;
 import java.io.*;
 import java.util.*;
+import java.util.function.Predicate;
 
 /** Reuses the original account-scoped, checksummed, immutable-preset draft format. */
 public final class SharedEdits {
@@ -27,11 +28,15 @@ public final class SharedEdits {
     }
     public PhotoEditStore.Draft load(File source,String owner)throws IOException{return new PhotoEditStore(root,owner).read(sourceIdentity(source,false));}
     public PhotoEditStore.Draft freeze(File source,String owner,String json)throws IOException{
+        return freeze(source,owner,json,id->true);
+    }
+    public PhotoEditStore.Draft freeze(File source,String owner,String json,Predicate<String> visible)throws IOException{
         String sha=sourceIdentity(source,false);SharedRecipe recipe=new SharedRecipe(json);PhotoEditStore store=new PhotoEditStore(root,owner);
         PhotoEditStore.Draft previous=store.read(sha);byte[] bytes;String name;
         if(recipe.presetId.isEmpty()){bytes=new byte[0];name="无滤镜";}
         else if(previous!=null&&recipe.presetId.equals(previous.presetSha)){bytes=previous.presetBytes();name=previous.name;}
         else{
+            if(!visible.test(recipe.presetId))throw new IOException("此预设不属于当前账号。");
             bytes=library.readPreset(recipe.presetId);PresetRecord record=library.findBySha256(recipe.presetId);
             if(record==null)throw new IOException("预设已移除，请重新选择滤镜。");name=record.displayName;
         }

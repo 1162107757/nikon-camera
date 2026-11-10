@@ -17,7 +17,7 @@ class _CameraPageState extends State<CameraPage> {
       port = TextEditingController(text: '15740');
   String protocol = 'nikon', session = '', model = '', job = '';
   bool busy = false, connected = false, raw = false, hasMore = false;
-  int offset = 0;
+  int offset = 0, epoch = 0;
   String? error;
   List<Json> items = [];
   @override
@@ -28,6 +28,7 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   void dispose() {
+    epoch++;
     host.dispose();
     port.dispose();
     if (busy && job.isNotEmpty) unawaited(widget.state.core.cancel(job));
@@ -35,9 +36,10 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> status() async {
+    final request = ++epoch;
     try {
       final result = await widget.state.core.call('camera.status');
-      if (!mounted) return;
+      if (!mounted || request != epoch) return;
       setState(() {
         connected = result['connected'] == true;
         session = result['session'] as String;
@@ -45,11 +47,12 @@ class _CameraPageState extends State<CameraPage> {
       });
       if (connected) await page();
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (mounted && request == epoch) setState(() => error = '$failure');
     }
   }
 
   Future<void> connect() async {
+    final request = ++epoch;
     setState(() {
       busy = true;
       error = null;
@@ -61,7 +64,7 @@ class _CameraPageState extends State<CameraPage> {
         'port': int.tryParse(port.text) ?? 0,
         'protocol': protocol,
       }, job);
-      if (!mounted) return;
+      if (!mounted || request != epoch) return;
       setState(() {
         connected = result['connected'] == true;
         session = result['session'] as String;
@@ -69,9 +72,9 @@ class _CameraPageState extends State<CameraPage> {
       });
       await page();
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
-      if (mounted) {
+      if (mounted && request == epoch) {
         setState(() {
           busy = false;
           job = '';
@@ -81,9 +84,12 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> page({bool next = false}) async {
+    final request = ++epoch, expectedSession = session;
+    final identity = 'camera-page-${DateTime.now().microsecondsSinceEpoch}';
     setState(() {
       busy = true;
       error = null;
+      job = identity;
     });
     try {
       final result = await widget.state.core.call('camera.page', {
@@ -91,8 +97,8 @@ class _CameraPageState extends State<CameraPage> {
         'offset': next ? offset : 0,
         'limit': 24,
         'raw': raw,
-      });
-      if (!mounted) return;
+      }, identity);
+      if (!mounted || request != epoch || session != expectedSession) return;
       final rows = (result['items'] as List).map(object).toList();
       setState(() {
         items = next ? [...items, ...rows] : rows;
@@ -100,13 +106,19 @@ class _CameraPageState extends State<CameraPage> {
         hasMore = result['hasMore'] == true;
       });
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (mounted && request == epoch) {
+        setState(() {
+          busy = false;
+          job = '';
+        });
+      }
     }
   }
 
   Future<void> download(Json item) async {
+    final request = ++epoch;
     setState(() {
       busy = true;
       error = null;
@@ -126,11 +138,13 @@ class _CameraPageState extends State<CameraPage> {
         result['name'] as String,
         info,
       );
-      if (mounted) report(context, '${item['name']} 已保存到应用照片库');
+      if (mounted && request == epoch) {
+        report(context, '${item['name']} 已保存到应用照片库');
+      }
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
-      if (mounted) {
+      if (mounted && request == epoch) {
         setState(() {
           busy = false;
           job = '';
@@ -140,9 +154,11 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> disconnect() async {
+    final request = ++epoch;
+    setState(() => busy = true);
     try {
       await widget.state.core.call('camera.disconnect');
-      if (mounted) {
+      if (mounted && request == epoch) {
         setState(() {
           connected = false;
           session = '';
@@ -150,7 +166,14 @@ class _CameraPageState extends State<CameraPage> {
         });
       }
     } catch (failure) {
-      if (mounted) report(context, failure);
+      if (mounted && request == epoch) report(context, failure);
+    } finally {
+      if (mounted && request == epoch) {
+        setState(() {
+          busy = false;
+          job = '';
+        });
+      }
     }
   }
 

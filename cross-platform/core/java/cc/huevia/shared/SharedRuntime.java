@@ -7,6 +7,7 @@ import cc.huevia.album.PhotoEditStore;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.function.*;
 import java.nio.charset.StandardCharsets;
 
 /** Serial worker entry point shared by Android and the translated Apple implementation. */
@@ -19,6 +20,7 @@ public final class SharedRuntime {
     private final OnlinePresetSearch search;
     private final String installationId;
     private final SharedEdits edits;
+    private final SharedPersonal personal;
     private String storageWarning="";
     public SharedRuntime(String directory, AccountRepository.Store store, AccountRepository.Transport transport)throws IOException {
         this(directory,store,transport,"");
@@ -36,11 +38,16 @@ public final class SharedRuntime {
         community=new CommunityRepository(accounts);
         community.setInstallationId(installationId);
         try{accounts.restore();}catch(IOException failure){storageWarning=failure.getMessage();}
+        personal=new SharedPersonal(root,library,accounts,installationId);
     }
     public File root(){return root;}
-    public byte[] preset(String id)throws IOException{return id==null||id.isEmpty()?new byte[0]:library.readPreset(id);}
+    public byte[] preset(String id)throws IOException{if(id==null||id.isEmpty())return new byte[0];requirePreset(id);return library.readPreset(id);}
     public synchronized String request(String operation,String json)throws IOException {
+        return request(operation,json,()->false,value->{});
+    }
+    public synchronized String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException {
         Map<String,Object> p=SharedJson.object(json);Object result;
+        if(operation.startsWith("personal."))return SharedJson.encode(personal.request(operation,p,cancel,progress));
         switch(operation){
             case "core.schema":return CoreEngine.schema();
             case "draft.load":{
@@ -53,21 +60,26 @@ public final class SharedRuntime {
                 result=map("sourceSha",draft.sourceSha,"recipe",SharedEdits.recipe(draft));break;
             }
             case "library.list":{
-                library.refresh();List<Object> rows=new ArrayList<>();for(PresetRecord r:library.list())rows.add(r.toMap());
+                library.refresh();personal.restoreMetadata();List<Object> rows=new ArrayList<>();for(PresetRecord r:library.list())if(personal.visible(r.id))rows.add(r.toMap());
                 result=map("items",rows,"diagnostics",library.diagnostics());break;
             }
             case "library.import":{
+                guardOwner(text(p,"owner",64));
                 File file=privateFile(text(p,"path",4096));long length=file.length();
                 if(length<1||length>1024*1024)throw new IOException("预设文件大小无效。");
                 PresetLibrary.AddResult added=library.importFile(text(p,"name",240),Files.readAllBytes(file.toPath()));
+                personal.added(added.record);
                 result=map("record",added.record.toMap(),"added",added.added);break;
             }
             case "library.remove":{
-                PresetLibrary.RemoveResult removed=library.remove(text(p,"id",64));result=map("warnings",removed.cleanupWarnings);break;
+                guardOwner(text(p,"owner",64));String id=text(p,"id",64);requirePreset(id);
+                PresetLibrary.RemoveResult removed=library.remove(id);personal.deleted(id);result=map("warnings",removed.cleanupWarnings);break;
             }
-            case "library.category":result=library.setCategory(text(p,"id",64),text(p,"category",100)).toMap();break;
+            case "library.category":{
+                guardOwner(text(p,"owner",64));String id=text(p,"id",64);requirePreset(id);PresetRecord changed=library.setCategory(id,text(p,"category",100));personal.added(changed);result=changed.toMap();break;
+            }
             case "library.export":{
-                String id=text(p,"id",64);byte[] bytes=library.readPreset(id);PresetRecord record=library.findBySha256(id);
+                String id=text(p,"id",64);byte[] bytes=preset(id);PresetRecord record=library.findBySha256(id);
                 File dir=new File(root,"shared-exports");if(!dir.isDirectory()&&!dir.mkdirs())throw new IOException("无法创建分享文件。");
                 String name=record.originalFileName.replaceAll("[^\\p{L}\\p{N}._-]","_");
                 if(name.isEmpty())name=id+"."+record.fileFormat.toLowerCase(Locale.ROOT);
@@ -87,7 +99,9 @@ public final class SharedRuntime {
                 result=map("items",rows,"categories",new ArrayList<>(snapshot.categories),"fromCache",snapshot.fromCache,"available",snapshot.available,"message",snapshot.message);break;
             }
             case "online.download":{
+                guardOwner(text(p,"owner",64));
                 PresetLibrary.AddResult added=online.download(OnlinePreset.fromMap(object(p.get("preset"))),null);
+                personal.added(added.record);
                 result=map("record",added.record.toMap(),"added",added.added);break;
             }
             case "account.current":{
@@ -99,7 +113,9 @@ public final class SharedRuntime {
             case "account.register":result=authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
             case "account.qq":result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
             case "account.refresh":result=authenticated(accounts.refresh());break;
-            case "account.logout":accounts.logout();storageWarning="";result=map("loggedOut",true);break;
+            case "account.logout":
+                try{accounts.logout();storageWarning="";}catch(IOException failure){storageWarning=failure.getMessage();throw failure;}
+                result=map("loggedOut",true);break;
             case "community.get":result=community.get(text(p,"path",2048),Boolean.TRUE.equals(p.get("login")));break;
             case "community.write":result=community.writeForOwner(text(p,"method",6),text(p,"path",2048),object(p.get("body")),text(p,"ownerId",64));break;
             default:throw new IOException("未知的应用操作："+operation);
@@ -112,11 +128,12 @@ public final class SharedRuntime {
         return file;
     }
     public synchronized String sourceIdentity(String path,boolean force)throws IOException{return edits.sourceIdentity(privateFile(path),force);}
-    public synchronized PhotoEditStore.Draft freezeEdit(String path,String owner,String json)throws IOException{guardOwner(owner);return edits.freeze(privateFile(path),owner,json);}
+    public synchronized PhotoEditStore.Draft freezeEdit(String path,String owner,String json)throws IOException{guardOwner(owner);return edits.freeze(privateFile(path),owner,json,personal::visible);}
     public synchronized void guardOwner(String owner)throws IOException{
-        AccountRepository.Session session=accounts.cachedSession();String current=session==null||accounts.isLogoutPending()?"":session.user.id;
+        String current=SharedPersonal.currentOwner(accounts);
         if(owner==null||!owner.equals(current))throw new IOException("账号状态已改变，请重新打开照片。");
     }
+    private void requirePreset(String id)throws IOException{if(!personal.visible(id)||library.findBySha256(id)==null)throw new IOException("预设已移除或不属于当前账号。");}
     public synchronized void validateSource(String path,String expected)throws IOException{if(!expected.equals(sourceIdentity(path,true)))throw new IOException("照片原文件发生变化，未保存效果图。");}
     public synchronized void markEditExported(String owner,PhotoEditStore.Draft frozen)throws IOException{guardOwner(owner);edits.markExported(owner,frozen);}
     public static String editJson(PhotoEditStore.Draft frozen)throws IOException{return SharedJson.encode(SharedEdits.recipe(frozen));}

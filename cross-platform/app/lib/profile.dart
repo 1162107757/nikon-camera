@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'domain.dart';
 import 'widgets.dart';
 import 'registration.dart';
+import 'personal_sync.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key, required this.state});
@@ -30,13 +31,13 @@ class _AccountPageState extends State<AccountPage> {
       error = null;
     });
     try {
-      final session = await widget.state.core.call('account.login', {
+      await widget.state.core.call('account.login', {
         'username': username.text.trim(),
         'password': password.text,
       });
+      await widget.state.refreshSession();
       if (mounted) {
         setState(() {
-          widget.state.session = session;
           password.clear();
         });
       }
@@ -44,6 +45,26 @@ class _AccountPageState extends State<AccountPage> {
       if (mounted) setState(() => error = '$failure');
     } finally {
       if (mounted) setState(() => busy = false);
+    }
+  }
+
+  Future<void> logout() async {
+    if (busy) return;
+    setState(() => busy = true);
+    Object? failure;
+    try {
+      await widget.state.core.call('account.logout');
+    } catch (error) {
+      failure = error;
+    }
+    try {
+      await widget.state.refreshSession();
+    } catch (error) {
+      failure ??= error;
+    }
+    if (mounted) {
+      setState(() => busy = false);
+      if (failure != null) report(context, failure);
     }
   }
 
@@ -73,25 +94,26 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                     if (widget.state.session['logoutPending'] == true)
                       OutlinedButton(
-                        onPressed: busy
-                            ? null
-                            : () async {
-                                try {
-                                  await widget.state.core.call(
-                                    'account.logout',
-                                  );
-                                  if (mounted) {
-                                    setState(() => widget.state.session = {});
-                                  }
-                                } catch (failure) {
-                                  if (context.mounted) report(context, failure);
-                                }
-                              },
+                        onPressed: busy ? null : logout,
                         child: const Text('重试清除登录资料'),
                       ),
                     const SizedBox(height: 16),
                   ],
                   if (user != null) ...[
+                    OutlinedButton.icon(
+                      onPressed: busy
+                          ? null
+                          : () => Navigator.push<void>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    PersonalSyncPage(state: widget.state),
+                              ),
+                            ),
+                      icon: const Icon(Icons.cloud_sync_outlined),
+                      label: const Text('个人预设同步'),
+                    ),
+                    const SizedBox(height: 16),
                     Text(
                       (user['nickname'] as String).isEmpty
                           ? user['username'] as String
@@ -102,18 +124,7 @@ class _AccountPageState extends State<AccountPage> {
                     const Text('本地预设与照片仍可离线使用。'),
                     const SizedBox(height: 24),
                     OutlinedButton(
-                      onPressed: busy
-                          ? null
-                          : () async {
-                              try {
-                                await widget.state.core.call('account.logout');
-                                if (mounted) {
-                                  setState(() => widget.state.session = {});
-                                }
-                              } catch (error) {
-                                if (context.mounted) report(context, error);
-                              }
-                            },
+                      onPressed: busy ? null : logout,
                       child: const Text('退出登录'),
                     ),
                   ] else ...[
@@ -175,8 +186,9 @@ class _AccountPageState extends State<AccountPage> {
                                 ),
                               );
                               if (mounted && session != null) {
+                                await widget.state.refreshSession();
+                                if (!mounted) return;
                                 setState(() {
-                                  widget.state.session = session;
                                   password.clear();
                                 });
                               }

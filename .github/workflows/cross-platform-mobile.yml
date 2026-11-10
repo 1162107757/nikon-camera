@@ -11,6 +11,8 @@ on:
       - 'cross-platform/tool/core_*.sh'
       - 'cross-platform/tool/apple_integration.sh'
       - 'cross-platform/tool/package_ipa.py'
+      - 'cross-platform/tool/prepare_apple_plugin.py'
+      - 'cross-platform/toolchain.json'
       - 'cross-platform/tool/mobile_apple.sh'
       - 'cross-platform/tool/raw_*.py'
       - '.github/workflows/cross-platform-mobile.yml'

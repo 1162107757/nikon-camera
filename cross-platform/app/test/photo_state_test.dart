@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:path/path.dart' as p;
 import 'package:huevia/domain.dart';
 
 class PhotoCore extends HueviaCore {
@@ -11,11 +12,15 @@ class PhotoCore extends HueviaCore {
   }
   int active = 0, maximum = 0;
   @override
+  Future<void> initialize() async {}
+  @override
   Future<Json> call(
     String operation, [
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'library.list') return {'items': []};
+    if (operation == 'account.current') return {};
     if (operation != 'media.info') throw AppFailure(operation);
     active++;
     if (active > maximum) maximum = active;
@@ -26,6 +31,29 @@ class PhotoCore extends HueviaCore {
 }
 
 void main() {
+  test('Photo index survives a changed application container path', () async {
+    final directory = await Directory.systemTemp.createTemp(
+      'huevia-photo-relocation-',
+    );
+    addTearDown(() => directory.delete(recursive: true));
+    final before = await Directory('${directory.path}/old-container').create();
+    final original = await File('${directory.path}/source.jpg')
+        .writeAsBytes([11, 22, 33]);
+    final state = AppState(PhotoCore(before.path));
+    final photo = await state.importPhoto(XFile(original.path));
+    await state.updatePhoto(photo, {'rawSource': photo.path});
+    final after = await before.rename('${directory.path}/new-container');
+    final reopened = AppState(PhotoCore(after.path));
+    await reopened.initialize();
+    expect(reopened.failure, isNull);
+    expect(reopened.photos, hasLength(1));
+    expect(p.isWithin(after.path, reopened.photos.single.path), isTrue);
+    expect(
+      reopened.photos.single.info['rawSource'],
+      reopened.photos.single.path,
+    );
+    expect(await File(reopened.photos.single.path).readAsBytes(), [11, 22, 33]);
+  });
   test(
     'Concurrent imports commit a complete index and retain distinct originals',
     () async {

@@ -14,7 +14,13 @@ void main() {
     'Native codecs and LibRaw retain originals, dimensions and white highlights',
     (tester) async {
       final core = HueviaCore();
-      await core.initialize();
+      try {
+        await core.initialize();
+      } on AppFailure catch (failure) {
+        fail(
+          'Native initialization failed: ${failure.message}; ${failure.details}',
+        );
+      }
       final directory = await Directory(
         '${core.root}/integration-${DateTime.now().microsecondsSinceEpoch}',
       ).create();
@@ -31,7 +37,21 @@ void main() {
 
       try {
         final recorder = ui.PictureRecorder(), canvas = ui.Canvas(recorder);
-        canvas.drawColor(const ui.Color(0xff707070), ui.BlendMode.src);
+        final paint = ui.Paint();
+        for (var y = 0; y < 192; y++) {
+          for (var x = 0; x < 256; x++) {
+            paint.color = ui.Color(
+              0xff000000 |
+                  (20 + x ~/ 2) << 16 |
+                  (20 + y ~/ 2) << 8 |
+                  (40 + (x + y) ~/ 4),
+            );
+            canvas.drawRect(
+              ui.Rect.fromLTWH(x.toDouble(), y.toDouble(), 1, 1),
+              paint,
+            );
+          }
+        }
         final picture = recorder.endRecording(),
             image = await picture.toImage(256, 192);
         final png = await image.toByteData(format: ui.ImageByteFormat.png);
@@ -59,6 +79,42 @@ void main() {
         });
         expect(crop['width'], 96);
         expect(crop['height'], 256);
+        final cropCodec = await ui.instantiateImageCodec(
+          await File(crop['path'] as String).readAsBytes(),
+        );
+        final cropFrame = await cropCodec.getNextFrame();
+        final cropPixels = await cropFrame.image.toByteData(
+          format: ui.ImageByteFormat.rawRgba,
+        );
+        final center = (128 * 96 + 48) * 4;
+        for (var channel = 0; channel < 3; channel++) {
+          expect(
+            (cropPixels!.getUint8(center + channel) - [84, 92, 108][channel])
+                .abs(),
+            lessThanOrEqualTo(8),
+            reason: 'Rotation/crop maps the same source coordinates on both platforms',
+          );
+        }
+        cropFrame.image.dispose();
+        cropCodec.dispose();
+        for (final entry in [(1, 312, 229), (2, 371, 228), (3, 256, 221)]) {
+          final framed = await render('media.export', {
+            'path': source.path,
+            'owner': '',
+            'size': 'full',
+            'recipe': {
+              'border': {
+                'template': entry.$1,
+                'automatic': false,
+                'brand': 'NIKON',
+                'model': 'TEST CAMERA',
+                'fields': ['50mm', 'F2.8', '1/125s', 'ISO400', '2026-11-10'],
+              },
+            },
+          });
+          expect(framed['width'], entry.$2);
+          expect(framed['height'], entry.$3);
+        }
         expect((await sha256.bind(source.openRead()).first).toString(), before);
         final raw = await File('${directory.path}/synthetic.dng')
             .writeAsBytes(syntheticDng());

@@ -10,6 +10,7 @@ android {
     // Existing native libraries are consumed without rebuilding or changing them.
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -48,6 +49,7 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation(files("../../../../app/libs/litert-1.4.1.jar", "../../../../app/libs/litert-api-1.4.1.jar", "../../../../app/libs/open_sdk_3.5.19_r9483ffc7_lite.jar"))
     compileOnly(files("../../../../app/libs/compile-only/support-fragment-28.0.0.jar"))
 }

@@ -68,6 +68,8 @@ public final class CoreBoundary {
             yes(SharedRawSettings.parse(SharedRawSettings.json(rawSettings)).equals(rawSettings));
             rejects(()->SharedRawSettings.parse("{\"quality\":2}"));rejects(()->SharedRawSettings.parse("{\"exposure\":51}"));
             rejects(()->SharedRawSettings.parse("{\"temperature\":1999}"));rejects(()->SharedRawSettings.parse("{\"whiteBalance\":\"unknown\"}"));
+            rejects(()->runtime.request("personal.status","{\"owner\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\"}"));
+            checks+=PersonalSyncBoundaryTest.run(temporary);
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

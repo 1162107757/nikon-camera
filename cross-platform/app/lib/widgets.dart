@@ -4,6 +4,13 @@ import 'package:flutter/material.dart';
 
 import 'domain.dart';
 
+Rect? shareAnchor(BuildContext context) {
+  final box = context.findRenderObject();
+  return box is RenderBox && box.hasSize && !box.size.isEmpty
+      ? box.localToGlobal(Offset.zero) & box.size
+      : null;
+}
+
 void report(BuildContext context, Object error) {
   if (context.mounted) {
     ScaffoldMessenger.of(context).showSnackBar(

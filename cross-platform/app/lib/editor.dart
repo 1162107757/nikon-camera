@@ -332,6 +332,7 @@ class _EditorPageState extends State<EditorPage> {
       if (!mounted) return;
       await SharePlus.instance.share(
         ShareParams(
+          sharePositionOrigin: shareAnchor(context),
           files: [XFile(result['path'] as String)],
           text: '${widget.photo.name} · Huevia',
         ),
@@ -479,6 +480,7 @@ class _EditorPageState extends State<EditorPage> {
         return Column(
           children: [
             DropdownButtonFormField<String>(
+              key: ValueKey('preset-${recipe.data['presetId']}'),
               initialValue: recipe.data['presetId'] as String,
               isExpanded: true,
               decoration: const InputDecoration(labelText: '滤镜预设'),
@@ -773,6 +775,7 @@ class _EditorPageState extends State<EditorPage> {
         return Column(
           children: [
             DropdownButtonFormField<int>(
+              key: ValueKey('border-${border['template']}'),
               initialValue: border['template'] as int? ?? 0,
               decoration: const InputDecoration(labelText: '边框样式'),
               items: [
@@ -925,7 +928,11 @@ class _EditorPageState extends State<EditorPage> {
                   style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
                 TextButton(
-                  onPressed: rendering || exporting ? null : render,
+                  onPressed: rendering || exporting
+                      ? null
+                      : restored
+                      ? render
+                      : restore,
                   child: const Text('重试预览'),
                 ),
               ],

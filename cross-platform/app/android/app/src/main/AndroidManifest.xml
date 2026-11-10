@@ -8,6 +8,7 @@
         android:usesCleartextTraffic="false"
         android:name="cc.huevia.HueviaApplication"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="io.flutter.embedding.android.EnableImpeller" android:value="@bool/huevia_enable_impeller" />
         <activity
             android:name="cc.huevia.sharedapp.MainActivity"
             android:exported="true"

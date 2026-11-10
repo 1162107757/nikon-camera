@@ -11,11 +11,24 @@ void draw(CGContextRef context,CGImageRef image,CGRect rect){CGContextSaveGState
 void text(NSString *value,CGFloat x,CGFloat baseline,CGFloat size,CGFloat max,UIColor *color,BOOL bold,NSString *face=nil){
   if(!value.length||max<=0)return;
   UIFont *font=face?[UIFont fontWithName:face size:size]:[UIFont systemFontOfSize:size weight:bold?UIFontWeightBold:UIFontWeightRegular];
+  if(!font)@throw [[JavaIoIOException alloc] initWithNSString:@"边框参数字体不可用。"];
   CGFloat width=[value sizeWithAttributes:@{NSFontAttributeName:font}].width;
   if(width>max)font=[font fontWithSize:size*max/width];
   [value drawAtPoint:CGPointMake(x,baseline-font.ascender) withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:color}];
 }
 NSBundle *assets(){NSURL *url=[NSBundle.mainBundle URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];if(!url)url=[[NSBundle bundleForClass:HueviaFrames.class] URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];return url?[NSBundle bundleWithURL:url]:nil;}
+NSString *parameterFont(){
+  static NSString *name;static dispatch_once_t once;
+  dispatch_once(&once,^{
+    NSURL *url=[assets() URLForResource:@"parameters" withExtension:@"ttf"];if(!url)return;
+    CFErrorRef error=NULL;CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url,kCTFontManagerScopeProcess,&error);if(error)CFRelease(error);
+    CFArrayRef descriptors=CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)url);
+    if(descriptors&&CFArrayGetCount(descriptors)>0)name=CFBridgingRelease(CTFontDescriptorCopyAttribute((CTFontDescriptorRef)CFArrayGetValueAtIndex(descriptors,0),kCTFontNameAttribute));
+    if(descriptors)CFRelease(descriptors);
+  });
+  if(!name)@throw [[JavaIoIOException alloc] initWithNSString:@"边框参数字体不可用。"];
+  return name;
+}
 CGFloat brand(CGContextRef context,CcHueviaNcpPhotoBorder *b,CcHueviaSharedSharedCaptureInfo *info,CGFloat x,CGFloat y,CGFloat height,BOOL white,CGFloat max){
   NSString *name=[info brandWithCcHueviaNcpPhotoBorder:b];if(!name.length)return 0;
   if([name isEqualToString:@"NIKON"]){
@@ -92,7 +105,7 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
         for(int row=0;row<3;row++){
           int field=fields[row];NSString *value=[info fieldWithCcHueviaNcpPhotoBorder:b withInt:field];if(![b showsWithInt:field+1]||!value.length)continue;
           if(field==1&&[value.uppercaseString hasPrefix:@"F"])value=[value substringFromIndex:1];if(field==3&&[value.uppercaseString hasPrefix:@"ISO"])value=[value substringFromIndex:3];if(field==2&&[value hasSuffix:@"s"])value=[value substringToIndex:value.length-1];
-          CGFloat top=y+h*(.46+row*.175),left=w*.09*m,bw=w*.09*m,bh=w*.047*m;CGRect badge=CGRectMake(left,top,bw,bh);UIBezierPath *path=[UIBezierPath bezierPathWithRoundedRect:badge cornerRadius:w*.009*m];[UIColor.whiteColor setStroke];path.lineWidth=w*.0033*m;[path stroke];CGFloat labelWidth=[names[row] sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:w*.022*m]}].width;text(names[row],left+(bw-labelWidth)/2,top+bh*.69,w*.022*m,bw,UIColor.whiteColor,YES);text(value,left+bw+w*.045*m,top+bh*.7,w*.027*m,x-left-bw-w*.06*m,UIColor.whiteColor,YES);
+          CGFloat top=y+h*(.46+row*.175),left=w*.09*m,bw=w*.09*m,bh=w*.047*m;CGRect badge=CGRectMake(left,top,bw,bh);UIBezierPath *path=[UIBezierPath bezierPathWithRoundedRect:badge cornerRadius:w*.009*m];[UIColor.whiteColor setStroke];path.lineWidth=w*.0033*m;[path stroke];CGFloat labelWidth=[names[row] sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:parameterFont() size:w*.022*m]}].width;text(names[row],left+(bw-labelWidth)/2,top+bh*.69,w*.022*m,bw,UIColor.whiteColor,YES,parameterFont());text(value,left+bw+w*.045*m,top+bh*.7,w*.027*m,x-left-bw-w*.06*m,UIColor.whiteColor,YES,parameterFont());
         }
       }
     }

@@ -45,14 +45,20 @@ public final class MainActivity extends FlutterActivity {
                         String operation=call.argument("operation"),payload=call.argument("payload");
                         if(operation==null||payload==null||payload.length()>4*1024*1024)throw new IOException("操作数据无效。");
                         if(cancelled.get())throw new InterruptedIOException("操作已取消。");
-                        java.util.function.DoubleConsumer progress=valueProgress->main.post(()->{EventChannel.EventSink sink=events;if(sink!=null)sink.success(SharedRuntime.map("jobId",identity,"progress",valueProgress));});
+                        long[] lastProgress={0};double[] lastValue={-1};
+                        java.util.function.DoubleConsumer progress=valueProgress->{
+                            if(!Double.isFinite(valueProgress))return;double normalized=Math.max(0,Math.min(1,valueProgress));long now=System.nanoTime();
+                            if(normalized==lastValue[0]||normalized<1&&now-lastProgress[0]<60_000_000L)return;lastProgress[0]=now;lastValue[0]=normalized;
+                            main.post(()->{EventChannel.EventSink sink=events;if(sink!=null)sink.success(SharedRuntime.map("jobId",identity,"progress",normalized));});
+                        };
                         if(operation.startsWith("media."))value=media.request(operation,payload,cancelled::get,progress);
                         else if(operation.startsWith("camera."))value=camera.request(operation,payload,identity,cancelled::get,progress);
-                        else value=runtime.request(operation,payload);
+                        else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
                     main.post(()->reply.success(value));
                 }catch(Exception error){String message=error.getMessage();main.post(()->reply.error(error instanceof InterruptedIOException?"CANCELLED":"OPERATION_FAILED",message==null?"操作未完成，请重试。":message,null));}
                 catch(OutOfMemoryError exhausted){main.post(()->reply.error("MEMORY_LIMIT","内存不足，请关闭其他应用后重试。",null));}
+                catch(LinkageError missing){main.post(()->reply.error("INSTALLATION_ERROR","安装包中的原生组件不可用，请重新安装此版本。",null));}
                 finally{jobs.remove(identity);}
             });}catch(RejectedExecutionException busy){jobs.remove(identity);reply.error("BUSY","任务较多，请等待当前操作完成。",null);}
         });

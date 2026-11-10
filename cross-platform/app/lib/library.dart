@@ -159,6 +159,8 @@ class _LibraryPageState extends State<LibraryPage> {
                   try {
                     await widget.state.core.call('online.download', {
                       'preset': preset.data,
+                      'owner':
+                          widget.state.session['user']?['id'] as String? ?? '',
                     });
                     await widget.state.refreshLibrary();
                     if (mounted) report(context, '预设已保存');
@@ -178,8 +180,10 @@ class _LibraryPageState extends State<LibraryPage> {
                       'library.export',
                       {'id': preset.id},
                     );
+                    if (!mounted) return;
                     await SharePlus.instance.share(
                       ShareParams(
+                        sharePositionOrigin: shareAnchor(context),
                         files: [XFile(file['path'] as String)],
                         fileNameOverrides: [file['name'] as String],
                       ),
@@ -212,6 +216,7 @@ class _LibraryPageState extends State<LibraryPage> {
     ),
   );
   Future<void> editCategory(Preset preset) async {
+    final owner = widget.state.session['user']?['id'] as String? ?? '';
     final input = TextEditingController(text: preset.category);
     final value = await showDialog<String>(
       context: context,
@@ -240,6 +245,7 @@ class _LibraryPageState extends State<LibraryPage> {
       await widget.state.core.call('library.category', {
         'id': preset.id,
         'category': value,
+        'owner': owner,
       });
       await widget.state.refreshLibrary();
     } catch (error) {
@@ -248,11 +254,16 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> remove(Preset preset) async {
+    final owner = widget.state.session['user']?['id'] as String? ?? '';
     final value = await showDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
-        title: const Text('移除本地预设？'),
-        content: Text(preset.name),
+        title: const Text('移除预设？'),
+        content: Text(
+          owner.isEmpty
+              ? preset.name
+              : '${preset.name}\n\n从本机和当前账号的云端预设中移除，云端变更会在下次同步时提交。',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialog, false),
@@ -267,7 +278,10 @@ class _LibraryPageState extends State<LibraryPage> {
     );
     if (value != true) return;
     try {
-      await widget.state.core.call('library.remove', {'id': preset.id});
+      await widget.state.core.call('library.remove', {
+        'id': preset.id,
+        'owner': owner,
+      });
       await widget.state.refreshLibrary();
     } catch (error) {
       if (mounted) report(context, error);

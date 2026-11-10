@@ -10,7 +10,7 @@
 | 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 首批页面已接线；样片编辑待迁移 | 待应用验证 |
 | 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示已接线，搜索合并在途请求 | 应用联网验收待完成 |
 | 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出已接线；其他账户流程待迁移 | 待完成 |
-| 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑已纳入 | 待接入 | 待完成 |
+| 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑复用并补充任务取消和作者校验 | 同步范围选择、两种冲突处理、删除及会话可见性已接线 | 31 项事务/权限检查通过；真实账号联网验收待完成 |
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
 | 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | 私有原图导入与索引已接线；系统图库待接入 | 待完成 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
@@ -48,6 +48,11 @@
 - 后续 16 项 Android 12 原生媒体检查通过：真实 PNG/JPEG 编解码、原渲染器、EXIF 方向、旋转裁剪、边框、原草稿格式、取消及临时文件清理、原文件 SHA 不变、LibRaw 0.22.3 加载。
 - 同一 Flutter/native 集成场景在 Android 12 通过：用自行生成的 Bayer DNG 实际显影，验证完整尺寸、白色饱和高光无明显偏粉、自定义白平衡/色彩参数、原始字节不变。合成 DNG 不能代替用户未知型号 NEF 实样。
 - 共享界面及文件状态测试已增至 11 项并通过；新增照片并发导入串行提交、索引写入失败回滚与重试。Windows 本地测试需与模拟器分时运行，曾观察到宿主 `flutter_tester.exe` 退出，停止独立模拟器后串行测试通过。
+- 当前 JVM 共享边界检查为 69 项，含 31 项个人同步事务检查；本地界面/状态测试为 14 项，新增旧相机会话响应隔离、同步范围作者固定、应用容器路径变化后的照片与 RAW 关联恢复。
+- Android 12 已复跑 16 项原生媒体检查及 Flutter/native 集成场景，均通过；后者增加梯度图旋转裁剪的实际像素位置、三种 Nikon 边框素材及真实 DNG 显影。
+- 为 Android 12L 及以下启用 Flutter 官方允许的兼容渲染器；Android 13+ 仍使用默认引擎配置。此选项已在固定 Flutter 3.47.9 源码核对、API 31 运行验证；后续升级 Flutter 时须检查其弃用状态。[官方文档](https://docs.flutter.dev/perf/impeller)
+- 原项目 420 个已跟踪 Android/iOS 文件仍通过内容保留校验。上述 API 31 证据不能代替荣耀 Magic 的实机闪退复测。
+- iOS 设备应用已成功编译至 RAW 控制版本；模拟器已越过库架构匹配检查，正在定位原生初始化失败，完整 iOS 应用级验收和新版 IPA 交付仍未完成。
 
 ## 保留和交付规则
 

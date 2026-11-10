@@ -13,8 +13,9 @@ typedef Json = Map<String, dynamic>;
 Json object(Object? value) => Map<String, dynamic>.from(value! as Map);
 
 class AppFailure implements Exception {
-  const AppFailure(this.message);
+  const AppFailure(this.message, {this.details});
   final String message;
+  final Object? details;
   @override
   String toString() => message;
 }
@@ -37,7 +38,7 @@ class HueviaCore {
       final decoded = jsonDecode(value ?? 'null');
       return decoded == null ? {} : object(decoded);
     } on PlatformException catch (error) {
-      throw AppFailure(error.message ?? '操作未完成，请重试。');
+      throw AppFailure(error.message ?? '操作未完成，请重试。', details: error.details);
     }
   }
 
@@ -197,7 +198,7 @@ class AppState extends ChangeNotifier {
       if (await index.exists()) {
         final value = jsonDecode(await index.readAsString()) as List;
         photos = value
-            .map((row) => Photo.fromJson(object(row)))
+            .map((row) => restorePhoto(object(row)))
             .where(
               (photo) =>
                   p.isWithin(p.join(core.root, 'originals'), photo.path) &&
@@ -220,9 +221,41 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Photo restorePhoto(Json saved) {
+    final row = object(saved), info = object(row['info']);
+    String path(String value) {
+      final restored = p.normalize(
+        p.join(core.root, value.replaceAll('\\', '/')),
+      );
+      if (!p.isWithin(p.join(core.root, 'originals'), restored)) {
+        throw const AppFailure('照片索引包含不属于原图库的路径。');
+      }
+      return restored;
+    }
+
+    if (row['relative'] == true) row['path'] = path(row['path'] as String);
+    if (info['rawSourceRelative'] == true) {
+      info['rawSource'] = path(info['rawSource'] as String);
+      info.remove('rawSourceRelative');
+    }
+    row['info'] = info;
+    return Photo.fromJson(row);
+  }
+
   Future<void> importPreset(XFile selected) async {
+    final owner = session['user']?['id'] as String? ?? '';
     final file = await core.importFile(selected, preset: true);
-    await core.call('library.import', {'path': file, 'name': selected.name});
+    await core.call('library.import', {
+      'path': file,
+      'name': selected.name,
+      'owner': owner,
+    });
+    await refreshLibrary();
+  }
+
+  Future<void> refreshSession() async {
+    session = await core.call('account.current');
+    notifyListeners();
     await refreshLibrary();
   }
 
@@ -281,10 +314,27 @@ class AppState extends ChangeNotifier {
       ),
     );
     try {
-      await temporary.writeAsString(
-        jsonEncode(snapshot.map((photo) => photo.toJson()).toList()),
-        flush: true,
-      );
+      final records = snapshot.map((photo) {
+        if (!p.isWithin(p.join(core.root, 'originals'), photo.path)) {
+          throw const AppFailure('照片文件不在应用原图库中。');
+        }
+        final info = {...photo.info};
+        final rawSource = info['rawSource'];
+        if (rawSource is String &&
+            p.isWithin(p.join(core.root, 'originals'), rawSource)) {
+          info['rawSource'] = p
+              .relative(rawSource, from: core.root)
+              .replaceAll('\\', '/');
+          info['rawSourceRelative'] = true;
+        }
+        return {
+          ...photo.toJson(),
+          'path': p.relative(photo.path, from: core.root).replaceAll('\\', '/'),
+          'relative': true,
+          'info': info,
+        };
+      }).toList();
+      await temporary.writeAsString(jsonEncode(records), flush: true);
       await temporary.rename(p.join(core.root, 'photos-index.json'));
     } finally {
       if (await temporary.exists()) await temporary.delete();
