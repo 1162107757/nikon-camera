@@ -17,4 +17,4 @@ trap 'xcrun simctl shutdown "$DEVICE" >/dev/null 2>&1 || true' EXIT
 xcrun simctl boot "$DEVICE" || true
 xcrun simctl bootstatus "$DEVICE" -b > "$WORK/simulator-boot.log" 2>&1
 cd "$ROOT/cross-platform/app"
-flutter test integration_test/native_pipeline_test.dart --device-id "$DEVICE" --no-pub --reporter expanded > "$WORK/simulator-tests.log" 2>&1
+flutter test integration_test/native_pipeline_test.dart --device-id "$DEVICE" --no-pub --reporter expanded --verbose > "$WORK/simulator-tests.log" 2>&1
