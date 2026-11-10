@@ -70,6 +70,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       return;
     }
     try {
+      if (!full) await FileImage(File(path)).evict();
       await File(path).delete();
     } on FileSystemException {
       /* Disposable native output. */

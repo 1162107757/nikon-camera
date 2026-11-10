@@ -84,6 +84,7 @@ class _EditorPageState extends State<EditorPage> {
     if (restored && !exporting) unawaited(saveDraft().catchError((_) {}));
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
+    if (preview != null) unawaited(discardPreview(preview));
     super.dispose();
   }
 
@@ -148,7 +149,7 @@ class _EditorPageState extends State<EditorPage> {
       if (old != null &&
           old != result['path'] &&
           p.isWithin(p.join(widget.state.core.root, 'previews'), old)) {
-        unawaited(File(old).delete().catchError((_) => File(old)));
+        unawaited(discardPreview(old));
       }
     } catch (failure) {
       if (mounted && current == revision && activeJob == job) {
@@ -171,6 +172,7 @@ class _EditorPageState extends State<EditorPage> {
     }
     try {
       final file = File(path);
+      await FileImage(file).evict();
       if (await file.exists()) await file.delete();
     } on FileSystemException {
       // A preview is disposable; cleanup failure never affects the original.
@@ -1029,6 +1031,28 @@ class _EditorPageState extends State<EditorPage> {
                 fit: BoxFit.contain,
                 gaplessPlayback: true,
                 semanticLabel: '照片效果预览',
+                errorBuilder: (_, _, _) => Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.image_not_supported_outlined),
+                        const SizedBox(height: 12),
+                        const Text('预览无法读取，请重试。'),
+                        TextButton(
+                          onPressed: rendering || exporting || analyzingCleanup
+                              ? null
+                              : () {
+                                  setState(() => compare = false);
+                                  unawaited(restored ? render() : restore());
+                                },
+                          child: const Text('重新生成预览'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
           )
@@ -1099,7 +1123,7 @@ class _EditorPageState extends State<EditorPage> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('编辑照片'),
+        title: const Text('编辑'),
         actions: [
           IconButton(
             tooltip: '撤销',

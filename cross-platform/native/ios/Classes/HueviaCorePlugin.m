@@ -1,6 +1,7 @@
 #import "HueviaCorePlugin.h"
 #import "HueviaKeychain.h"
 #import "HueviaMedia.h"
+#import "HueviaImportPicker.h"
 #import "cc/huevia/account/AccountHttpTransport.h"
 #import "cc/huevia/shared/CoreEngine.h"
 #import "cc/huevia/shared/SharedCamera.h"
@@ -31,6 +32,8 @@
 @property(nonatomic,strong) CcHueviaSharedSharedCamera *camera;
 @property(nonatomic,strong) HueviaMedia *media;
 @property(nonatomic,copy) NSString *root;
+@property(nonatomic,strong) HueviaImportPicker *importPicker;
+@property(nonatomic,weak) UIViewController *presenter;
 @end
 
 @implementation HueviaCorePlugin
@@ -38,6 +41,8 @@
   HueviaCorePlugin *host=[[self alloc] init];
   host.queue=dispatch_queue_create("cc.huevia.shared.worker",DISPATCH_QUEUE_SERIAL);
   host.tasks=[NSMutableDictionary dictionary];
+  host.importPicker=[[HueviaImportPicker alloc] initWithQueue:host.queue];
+  host.presenter=registrar.viewController;
   FlutterMethodChannel *channel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/core" binaryMessenger:registrar.messenger];
   [registrar addMethodCallDelegate:host channel:channel];
   FlutterEventChannel *events=[FlutterEventChannel eventChannelWithName:@"cc.huevia/events" binaryMessenger:registrar.messenger];
@@ -47,6 +52,10 @@
 - (FlutterError *)onCancelWithArguments:(id)arguments {self.events=nil;return nil;}
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
+  if([call.method isEqualToString:@"pickFile"]){
+    if(!self.runtime||![args[@"preset"] isKindOfClass:NSNumber.class]){reply([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"应用尚未准备好或导入类型无效。" details:nil]);return;}
+    [self.importPicker pickPreset:[args[@"preset"] boolValue] root:self.root presenter:self.presenter reply:reply];return;
+  }
   if([call.method isEqualToString:@"cancel"]){NSString *job=args[@"jobId"];if([job isKindOfClass:NSString.class]){self.tasks[job].cancelled=YES;[self.camera cancelWithNSString:job];}reply(nil);return;}
   if(![call.method isEqualToString:@"initialize"]&&![call.method isEqualToString:@"request"]){reply(FlutterMethodNotImplemented);return;}
   NSString *job=[args[@"jobId"] isKindOfClass:NSString.class]?args[@"jobId"]:NSUUID.UUID.UUIDString;

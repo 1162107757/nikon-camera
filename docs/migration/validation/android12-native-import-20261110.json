@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-10",
+  "environment": "isolated Android 12 API31 x86_64 emulator",
+  "applicationId": "cc.huevia.next",
+  "version": "0.31.0-dev+187",
+  "sourceBaseCommit": "7ca9454c80308763c886bc636c1ee1898cd19f1b",
+  "workingTreeChanges": true,
+  "input": "Self-generated 1200x800 colour/checker PNG and original NCP compatibility fixture; no user photos",
+  "checks": [
+    "System SAF document picker imports the actual NCP provider filename",
+    "Native streaming PNG import opens the shared editor",
+    "HOST NCP at 100 percent exports a full-size JPEG and opens the system share sheet",
+    "Star and original photo index persist after application restart",
+    "Removing the preset library entry does not change the frozen draft export",
+    "Clearing the filter and undoing to the removed preset reproduces the same export"
+  ],
+  "jpegWidth": 1200,
+  "jpegHeight": 800,
+  "jpegBytes": 70409,
+  "jpegSha256": "8a70a0faf8d238f883d2ae9ba358e8f7e8a2946bbbc2e53f93bf65c34423178b",
+  "allThreeExportsIdentical": true,
+  "originalSha256": "797a1876e3759e2cfce13fec0ef425f4b0e7db7e9ac93244e6774f7775cb4ff7",
+  "privateAndExternalOriginalsUnchanged": true,
+  "limitations": [
+    "This is not an Honor Magic physical-device stability result",
+    "This is not the user's unknown-camera NEF highlight validation",
+    "The iOS native document picker has not been compiled or run because hosted macOS Actions is blocked by account billing and no Mac is available"
+  ]
+}

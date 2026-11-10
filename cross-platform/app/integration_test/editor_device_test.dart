@@ -1,0 +1,25 @@
+import 'package:integration_test/integration_test.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../test/editor_test.dart' as editor;
+import '../test/photos_test.dart' as photos;
+import '../test/recipes_test.dart' as recipes;
+import '../test/shared_app_test.dart' as shared_app;
+
+// Reuse the actual widget regressions on Android when the Windows test engine
+// cannot finish. Native image/RAW behavior has its separate integration suite.
+class DeviceWidgetsBinding extends IntegrationTestWidgetsFlutterBinding {
+  // These are viewport/layout tests. Keep their simulated text input instead
+  // of opening the device IME over the intentionally narrow test viewport.
+  @override
+  bool get registerTestTextInput => true;
+}
+
+void main() {
+  final binding = DeviceWidgetsBinding();
+  binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.onlyPumps;
+  editor.main();
+  photos.main();
+  recipes.main();
+  shared_app.main();
+}

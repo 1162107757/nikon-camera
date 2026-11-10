@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -20,13 +19,34 @@ class _LibraryPageState extends State<LibraryPage> {
   String category = '', query = '';
   String? error;
   bool busy = false, hasMore = false, requestInFlight = false;
+  bool importing = false;
   ({bool next, bool refresh})? pendingLoad;
   List<Preset> online = [];
   List<String> categories = [];
   Timer? searchDelay;
   String notice = '';
   @override
+  void initState() {
+    super.initState();
+    widget.state.addListener(refreshState);
+  }
+
+  void refreshState() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant LibraryPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.state != widget.state) {
+      oldWidget.state.removeListener(refreshState);
+      widget.state.addListener(refreshState);
+    }
+  }
+
+  @override
   void dispose() {
+    widget.state.removeListener(refreshState);
     searchDelay?.cancel();
     generation++;
     super.dispose();
@@ -105,21 +125,15 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> import() async {
+    if (importing) return;
+    setState(() => importing = true);
     try {
-      final selected = await openFile(
-        acceptedTypeGroups: [
-          const XTypeGroup(
-            label: '尼康预设',
-            extensions: ['ncp', 'np3'],
-            uniformTypeIdentifiers: ['public.data'],
-          ),
-        ],
-      );
-      if (selected == null) return;
-      await widget.state.importPreset(selected);
+      if (!await widget.state.pickPreset()) return;
       if (mounted) report(context, '预设已加入本地库');
     } catch (error) {
       if (mounted) report(context, error);
+    } finally {
+      if (mounted) setState(() => importing = false);
     }
   }
 
@@ -308,10 +322,16 @@ class _LibraryPageState extends State<LibraryPage> {
     }.toList();
     return Scaffold(
       appBar: AppBar(
+        bottom: importing
+            ? const PreferredSize(
+                preferredSize: Size.fromHeight(3),
+                child: LinearProgressIndicator(),
+              )
+            : null,
         title: const Text('预设库'),
         actions: [
           IconButton(
-            onPressed: import,
+            onPressed: importing ? null : import,
             tooltip: '导入预设',
             icon: const Icon(Icons.add_rounded),
           ),
@@ -319,193 +339,190 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
       body: SafeArea(
         top: false,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CapsuleSwitch(
-                labels: const ['我的预设', '在线预设'],
-                selected: tab,
-                onSelected: (value) {
-                  searchDelay?.cancel();
-                  generation++;
-                  pendingLoad = null;
-                  setState(() {
-                    tab = value;
-                    category = '';
-                    busy = false;
-                  });
-                  if (value == 1) unawaited(load());
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-              child: TextField(
-                onChanged: searchChanged,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search_rounded),
-                  hintText: '搜索预设名称',
-                  isDense: true,
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              child: Row(
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerScrolled) => [
+            SliverToBoxAdapter(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (final item in ['', ...allCategories])
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: ChoiceChip(
-                        label: Text(item.isEmpty ? '全部' : item),
-                        selected: category == item,
-                        onSelected: (_) {
-                          setState(() => category = item);
-                          if (tab == 1) unawaited(load());
-                        },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: CapsuleSwitch(
+                      labels: const ['我的预设', '在线预设'],
+                      selected: tab,
+                      onSelected: (value) {
+                        searchDelay?.cancel();
+                        generation++;
+                        pendingLoad = null;
+                        setState(() {
+                          tab = value;
+                          category = '';
+                          busy = false;
+                        });
+                        if (value == 1) unawaited(load());
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+                    child: TextField(
+                      onChanged: searchChanged,
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.search_rounded),
+                        hintText: '搜索预设名称',
+                        isDense: true,
                       ),
                     ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 4,
+                    ),
+                    child: Row(
+                      children: [
+                        for (final item in ['', ...allCategories])
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: ChoiceChip(
+                              label: Text(item.isEmpty ? '全部' : item),
+                              selected: category == item,
+                              onSelected: (_) {
+                                setState(() => category = item);
+                                if (tab == 1) unawaited(load());
+                              },
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (notice.isNotEmpty && error == null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 8,
+                      ),
+                      child: Text(notice),
+                    ),
+                  if (error != null)
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          Text(error!),
+                          TextButton(
+                            onPressed: busy ? null : load,
+                            child: const Text('重新加载'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (busy) const LinearProgressIndicator(minHeight: 2),
                 ],
               ),
             ),
-            if (notice.isNotEmpty && error == null)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
-                ),
-                child: Text(notice),
-              ),
-            if (error != null)
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Text(error!),
-                    TextButton(
-                      onPressed: busy ? null : load,
-                      child: const Text('重新加载'),
-                    ),
-                  ],
-                ),
-              ),
-            if (busy) const LinearProgressIndicator(minHeight: 2),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () => tab == 0
-                    ? widget.state.refreshLibrary()
-                    : load(refresh: true),
-                child: rows.isEmpty
-                    ? ListView(
-                        children: [
-                          const SizedBox(height: 72),
-                          Icon(
-                            tab == 0
-                                ? Icons.tune_rounded
-                                : Icons.cloud_outlined,
-                            size: 40,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant,
-                          ),
-                          const SizedBox(height: 16),
-                          Center(
-                            child: Text(
-                              busy
-                                  ? '正在读取预设'
-                                  : tab == 0
-                                  ? '把喜欢的色彩收进来'
-                                  : '暂时没有符合条件的预设',
-                            ),
-                          ),
-                          if (tab == 0)
-                            Center(
-                              child: TextButton(
-                                onPressed: import,
-                                child: const Text('导入 NCP / NP3'),
-                              ),
-                            ),
-                        ],
-                      )
-                    : LayoutBuilder(
-                        builder: (context, constraints) => GridView.builder(
-                          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: (constraints.maxWidth / 180)
-                                    .floor()
-                                    .clamp(2, 5),
-                                mainAxisSpacing: 12,
-                                crossAxisSpacing: 12,
-                                mainAxisExtent:
-                                    228 +
-                                    (MediaQuery.textScalerOf(context)
-                                                .scale(14) -
-                                            14) *
-                                        3,
-                              ),
-                          itemCount:
-                              rows.length + (hasMore && tab == 1 ? 1 : 0),
-                          itemBuilder: (context, index) {
-                            if (index == rows.length) {
-                              return Center(
-                                child: OutlinedButton(
-                                  onPressed: busy
-                                      ? null
-                                      : () => load(next: true),
-                                  child: const Text('加载更多'),
-                                ),
-                              );
-                            }
-                            final preset = rows[index];
-                            return Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: InkWell(
-                                onTap: () => detail(preset),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: SizedBox.expand(
-                                        child: PresetImage(preset: preset),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(12),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            preset.name,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 6),
-                                          Text(
-                                            '${preset.format} · ${preset.category.isEmpty ? '未分类' : preset.category}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+          ],
+          body: RefreshIndicator(
+            onRefresh: () =>
+                tab == 0 ? widget.state.refreshLibrary() : load(refresh: true),
+            child: rows.isEmpty
+                ? ListView(
+                    children: [
+                      const SizedBox(height: 72),
+                      Icon(
+                        tab == 0 ? Icons.tune_rounded : Icons.cloud_outlined,
+                        size: 40,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                      const SizedBox(height: 16),
+                      Center(
+                        child: Text(
+                          busy
+                              ? '正在读取预设'
+                              : tab == 0
+                              ? '把喜欢的色彩收进来'
+                              : '暂时没有符合条件的预设',
                         ),
                       ),
-              ),
-            ),
-          ],
+                      if (tab == 0)
+                        Center(
+                          child: TextButton(
+                            onPressed: importing ? null : import,
+                            child: const Text('导入 NCP / NP3'),
+                          ),
+                        ),
+                    ],
+                  )
+                : LayoutBuilder(
+                    builder: (context, constraints) => GridView.builder(
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: (constraints.maxWidth / 180)
+                            .floor()
+                            .clamp(2, 5),
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        mainAxisExtent:
+                            228 +
+                            (MediaQuery.textScalerOf(context).scale(14) - 14) *
+                                3,
+                      ),
+                      itemCount: rows.length + (hasMore && tab == 1 ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index == rows.length) {
+                          return Center(
+                            child: OutlinedButton(
+                              onPressed: busy ? null : () => load(next: true),
+                              child: const Text('加载更多'),
+                            ),
+                          );
+                        }
+                        final preset = rows[index];
+                        return Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            onTap: () => detail(preset),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: SizedBox.expand(
+                                    child: PresetImage(preset: preset),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        preset.name,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(
+                                        '${preset.format} · ${preset.category.isEmpty ? '未分类' : preset.category}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+          ),
         ),
       ),
     );

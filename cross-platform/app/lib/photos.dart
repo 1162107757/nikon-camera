@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:async';
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,6 +19,7 @@ class _PhotosPageState extends State<PhotosPage> {
   String query = '', filter = 'all';
   final Set<String> pendingStars = {};
   String? starError;
+  bool importing = false;
   @override
   void initState() {
     super.initState();
@@ -51,39 +51,16 @@ class _PhotosPageState extends State<PhotosPage> {
   }
 
   Future<void> import(BuildContext context) async {
+    if (importing) return;
+    setState(() => importing = true);
     try {
-      final selected = await openFile(
-        acceptedTypeGroups: [
-          const XTypeGroup(
-            label: '照片与 RAW',
-            extensions: [
-              'jpg',
-              'jpeg',
-              'png',
-              'heic',
-              'heif',
-              'webp',
-              'nef',
-              'nrw',
-              'dng',
-              'arw',
-              'cr2',
-              'cr3',
-              'raf',
-              'rw2',
-              'orf',
-              'pef',
-              'srw',
-            ],
-            uniformTypeIdentifiers: ['public.image', 'public.camera-raw-image'],
-          ),
-        ],
-      );
-      if (selected == null) return;
-      final photo = await state.importPhoto(selected);
+      final photo = await state.pickPhoto();
+      if (photo == null) return;
       if (context.mounted) context.push(photo.editorLocation);
     } catch (error) {
       if (context.mounted) report(context, error);
+    } finally {
+      if (mounted) setState(() => importing = false);
     }
   }
 
@@ -103,9 +80,15 @@ class _PhotosPageState extends State<PhotosPage> {
       return Scaffold(
         appBar: AppBar(
           title: const Text('照片'),
+          bottom: importing
+              ? const PreferredSize(
+                  preferredSize: Size.fromHeight(3),
+                  child: LinearProgressIndicator(),
+                )
+              : null,
           actions: [
             IconButton(
-              onPressed: () => import(context),
+              onPressed: importing ? null : () => import(context),
               tooltip: '导入照片或 RAW',
               icon: const Icon(Icons.add_photo_alternate_outlined),
             ),
@@ -130,7 +113,7 @@ class _PhotosPageState extends State<PhotosPage> {
                         ),
                         const SizedBox(height: 24),
                         FilledButton(
-                          onPressed: () => import(context),
+                          onPressed: importing ? null : () => import(context),
                           child: const Text('选择照片'),
                         ),
                       ],

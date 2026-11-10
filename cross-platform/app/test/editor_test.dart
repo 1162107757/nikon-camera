@@ -66,7 +66,7 @@ void main() {
         Directory('${directory.path}/previews').createSync();
         File('${directory.path}/previews/preview.png').writeAsBytesSync(
           base64Decode(
-            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO3R9v8AAAAASUVORK5CYII=',
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
           ),
         );
         final core = DraftCore(directory.path);

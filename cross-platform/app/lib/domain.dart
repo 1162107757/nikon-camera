@@ -54,6 +54,20 @@ class HueviaCore {
   Future<void> cancel(String jobId) =>
       channel.invokeMethod<void>('cancel', {'jobId': jobId});
 
+  Future<Json?> pickFile({required bool preset}) async {
+    final result = await _invoke('pickFile', {'preset': preset});
+    if (result['cancelled'] == true) return null;
+    final path = result['path'], name = result['name'], sha = result['sha256'];
+    if (path is! String ||
+        name is! String ||
+        sha is! String ||
+        !RegExp(r'^[0-9a-f]{64}$').hasMatch(sha) ||
+        !p.isWithin(p.join(root, preset ? 'incoming' : 'originals'), path)) {
+      throw const AppFailure('文件导入结果无效。');
+    }
+    return result;
+  }
+
   /// Originals stream to private storage; RAW pixels never enter the UI heap.
   Future<String> importFile(XFile selected, {required bool preset}) async {
     if (root.isEmpty) throw const AppFailure('应用尚未准备好。');
@@ -270,6 +284,27 @@ class AppState extends ChangeNotifier {
       'owner': owner,
     });
     await refreshLibrary();
+  }
+
+  Future<bool> pickPreset() async {
+    final owner = session['user']?['id'] as String? ?? '';
+    final selected = await core.pickFile(preset: true);
+    if (selected == null) return false;
+    await core.call('library.import', {
+      'path': selected['path'],
+      'name': selected['name'],
+      'owner': owner,
+    });
+    await refreshLibrary();
+    return true;
+  }
+
+  Future<Photo?> pickPhoto() async {
+    final selected = await core.pickFile(preset: false);
+    if (selected == null) return null;
+    final path = selected['path'] as String;
+    final info = await core.call('media.info', {'path': path});
+    return registerPhoto(path, selected['name'] as String, info);
   }
 
   Future<void> refreshSession() async {

@@ -28,6 +28,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
                 startActivitySync(new android.content.Intent().setClassName(getTargetContext(),"cc.huevia.sharedapp.MainActivity").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
                 Object pending=Class.forName("dev.flutter.plugins.integration_test.IntegrationTestPlugin").getField("testResults").get(null);
                 Map<?,?> results=(Map<?,?>)((Future<?>)pending).get(5,TimeUnit.MINUTES);
+                result.putString("testResults",SharedJson.encode(results));
                 yes(!results.isEmpty(),"Flutter native suite produced results");
                 for(Object value:results.values())yes("success".equals(value),String.valueOf(value));
                 result.putString("stream","PASS cross-platform Flutter/native pipeline: "+results.size()+" scenario(s)\n");finish(Activity.RESULT_OK,result);return;

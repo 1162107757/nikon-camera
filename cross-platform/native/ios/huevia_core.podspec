@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Classes/HueviaCorePlugin.h'
   s.vendored_frameworks = 'Frameworks/JRE.xcframework', 'Frameworks/LibRaw.xcframework'
   s.resource_bundles = { 'HueviaNativeAssets' => ['Assets/**/*', 'Notices/*'] }
-  s.frameworks = 'Foundation', 'UIKit', 'ImageIO', 'CoreGraphics', 'CoreText', 'Security', 'Photos'
+  s.frameworks = 'Foundation', 'UIKit', 'ImageIO', 'CoreGraphics', 'CoreText', 'Security', 'Photos', 'UniformTypeIdentifiers'
   s.libraries = 'z', 'iconv', 'c++'
   s.dependency 'Flutter'
   s.platform = :ios, '16.0'

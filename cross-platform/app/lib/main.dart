@@ -14,6 +14,7 @@ import 'theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 32 << 20;
   final state = AppState(HueviaCore());
   runApp(HueviaApp(state: state));
   unawaited(state.initialize());

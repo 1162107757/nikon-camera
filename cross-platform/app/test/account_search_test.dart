@@ -21,7 +21,7 @@ class TestCore extends HueviaCore {
         return {
           'id':
               '00000000-0000-0000-0000-${challenges.toString().padLeft(12, '0')}',
-          'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO3R9v8AAAAASUVORK5CYII=',
+          'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
         };
       case 'account.register':
         throw const AppFailure('验证码已过期，请刷新后重试。');

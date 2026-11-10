@@ -20,14 +20,21 @@ public final class MainActivity extends FlutterActivity {
     private SharedRuntime runtime;
     private NativeMedia media;
     private SharedCamera camera;
+    private NativeImportPicker importPicker;
     private volatile EventChannel.EventSink events;
     @Override public void configureFlutterEngine(FlutterEngine engine){
         super.configureFlutterEngine(engine);
+        importPicker=new NativeImportPicker(this,worker);
         new EventChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/events").setStreamHandler(new EventChannel.StreamHandler(){
             public void onListen(Object args,EventChannel.EventSink sink){events=sink;}
             public void onCancel(Object args){events=null;}
         });
         new MethodChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/core").setMethodCallHandler((call,reply)->{
+            if(call.method.equals("pickFile")){
+                Object kind=call.argument("preset");
+                if(!(kind instanceof Boolean)||runtime==null){reply.error("INVALID_ARGUMENT","应用尚未准备好或导入类型无效。",null);return;}
+                importPicker.pick((Boolean)kind,runtime.root().getPath(),reply);return;
+            }
             Object rawJob=call.argument("jobId");
             if(rawJob!=null&&!(rawJob instanceof String)){reply.error("INVALID_ARGUMENT","任务标识格式无效。",null);return;}
             String job=(String)rawJob;
@@ -64,5 +71,6 @@ public final class MainActivity extends FlutterActivity {
         });
     }
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);super.cleanUpFlutterEngine(engine);}
-    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
+    @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);if(request==NativeImportPicker.REQUEST&&importPicker!=null)importPicker.result(result,data);}
+    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(importPicker!=null)importPicker.cancel();if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
 }
