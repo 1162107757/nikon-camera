@@ -7,9 +7,12 @@ import android.media.ExifInterface;
 import android.os.Bundle;
 import cc.huevia.account.AccountRepository;
 import cc.huevia.album.PhotoEditStore;
+import cc.huevia.album.PhotoExportSpec;
+import cc.huevia.album.PhotoPresetRenderer;
 import cc.huevia.album.RawDeveloper;
 import cc.huevia.library.SharedJson;
 import cc.huevia.shared.SharedRuntime;
+import cc.huevia.shared.SharedExportModel;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
@@ -49,6 +52,14 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             File output=new File((String)neutral.get("path"));yes(output.isFile()&&!output.equals(source),"private separate export");
             yes(((Number)neutral.get("width")).intValue()==256&&((Number)neutral.get("height")).intValue()==192,"full export dimensions");
             yes(!((String)neutral.get("model")).isEmpty(),"valid render model");
+            cc.huevia.ncp.PresetPreviewProfile neutralProfile=runtime.originalView(source.getPath(),"").profile();
+            PhotoExportSpec.Resolved fullSpec=PhotoExportSpec.full().resolve(256,192);
+            yes(neutral.get("model").equals(PhotoPresetRenderer.modelVersion(neutralProfile,fullSpec)),"original Android full-export identity");
+            yes(SharedExportModel.of(neutralProfile,fullSpec).equals(PhotoPresetRenderer.modelVersion(neutralProfile,fullSpec)),"portable full identity matches original renderer");
+            for(PhotoExportSpec selected:new PhotoExportSpec[]{PhotoExportSpec.share(),PhotoExportSpec.custom(640,83)}){
+                PhotoExportSpec.Resolved resolved=selected.resolve(256,192);
+                yes(SharedExportModel.of(neutralProfile,resolved).equals(PhotoPresetRenderer.modelVersion(neutralProfile,resolved)),"portable resized/quality identity matches original renderer");
+            }
             Bitmap decoded=BitmapFactory.decodeFile(output.getPath());yes(decoded!=null,"JPEG decode");
             yes(Math.abs(Color.red(decoded.getPixel(100,100))-70)<8,"neutral colour");decoded.recycle();
             int[] values=new int[17];values[1]=10;List<Integer> settings=new ArrayList<>();for(int v:values)settings.add(v);
@@ -57,6 +68,14 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             yes(((Number)changed.get("width")).intValue()==96&&((Number)changed.get("height")).intValue()==256,"rotated half crop");
             Map<String,Object> draft=SharedJson.object(runtime.request("draft.load",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner",""))));
             yes(draft.get("recipe") instanceof Map,"original draft readable");
+            Map<String,Object> originalView=SharedJson.object(media.request("media.originalPreview",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner","")),()->false,p->{}));
+            yes(((Number)originalView.get("width")).intValue()==256&&((Number)originalView.get("height")).intValue()==192,"original comparison ignores edited geometry");
+            yes(draft.equals(SharedJson.object(runtime.request("draft.load",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner",""))))),"original comparison preserves complete draft");
+            File large=new File(workspace,"large.jpg");Bitmap largeImage=Bitmap.createBitmap(3000,2000,Bitmap.Config.ARGB_8888);
+            try(FileOutputStream out=new FileOutputStream(large)){largeImage.eraseColor(Color.rgb(120,130,140));if(!largeImage.compress(Bitmap.CompressFormat.JPEG,95,out))throw new IOException("large fixture encode");}finally{largeImage.recycle();}
+            Map<String,Object> bounded=SharedJson.object(media.request("media.originalPreview",SharedJson.encode(SharedRuntime.map("path",large.getPath(),"owner","")),()->false,p->{}));
+            yes(Math.max(((Number)bounded.get("width")).intValue(),((Number)bounded.get("height")).intValue())<=1280,"large original comparison is bounded");
+            yes(SharedJson.object(runtime.request("draft.load",SharedJson.encode(SharedRuntime.map("path",large.getPath(),"owner","")))).get("recipe")==null,"original comparison never creates an edit");
             request.put("recipe",SharedRuntime.map("border",SharedRuntime.map("template",3)));
             Map<String,Object> framed=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             yes(((Number)framed.get("height")).intValue()==192+Math.round(256*.112f),"original border dimensions");

@@ -41,7 +41,7 @@ class DraftCore extends HueviaCore {
         },
       };
     }
-    if (operation == 'media.preview') {
+    if (operation == 'media.preview' || operation == 'media.originalPreview') {
       return {'path': '$root/previews/preview.png'};
     }
     if (operation == 'media.cleanupAnalyze') {
@@ -148,6 +148,20 @@ void main() {
             .$2['recipe'];
         expect(newRecipe['presetId'], 'available');
         expect(newRecipe['strength'], 100);
+        await tester.tap(find.byTooltip('对比原图'));
+        await tester.pumpAndSettle();
+        final originalRequest = core.calls
+            .lastWhere((call) => call.$1 == 'media.originalPreview')
+            .$2;
+        expect(originalRequest.containsKey('recipe'), isFalse);
+        await tester.tap(find.byTooltip('显示效果'));
+        await tester.pumpAndSettle();
+        expect(
+          core.calls
+              .lastWhere((call) => call.$1 == 'media.preview')
+              .$2['recipe']['presetId'],
+          'available',
+        );
         await tapLabel('去灰');
         await tapLabel('分析并应用');
         await tester.ensureVisible(find.byTooltip('减小总强度'));

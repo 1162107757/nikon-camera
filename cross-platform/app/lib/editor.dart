@@ -109,6 +109,7 @@ class _EditorPageState extends State<EditorPage> {
     if (exporting || managingRecipes || analyzingCleanup || !restored) return;
     if (snapshot) checkpoint();
     setState(() {
+      compare = false;
       mutation();
       error = null;
     });
@@ -121,10 +122,11 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> render() async {
     final current = revision;
+    final originalView = compare;
     final frozen = recipe.clone();
     final previousJob = activeJob;
     if (previousJob != null) await widget.state.core.cancel(previousJob);
-    if (!mounted) return;
+    if (!mounted || current != revision) return;
     final job = 'preview-${DateTime.now().microsecondsSinceEpoch}';
     setState(() {
       rendering = true;
@@ -132,11 +134,15 @@ class _EditorPageState extends State<EditorPage> {
       progress = 0;
     });
     try {
-      final result = await widget.state.core.call('media.preview', {
-        'path': widget.photo.path,
-        'recipe': frozen.data,
-        'owner': owner,
-      }, job);
+      final result = await widget.state.core.call(
+        originalView ? 'media.originalPreview' : 'media.preview',
+        {
+          'path': widget.photo.path,
+          if (!originalView) 'recipe': frozen.data,
+          'owner': owner,
+        },
+        job,
+      );
       if (!mounted || current != revision || activeJob != job) {
         await discardPreview(result['path']);
         return;
@@ -201,7 +207,10 @@ class _EditorPageState extends State<EditorPage> {
       if (!mounted) return;
       if (applied != null) {
         checkpoint();
-        setState(() => recipe = Recipe(data: applied));
+        setState(() {
+          compare = false;
+          recipe = Recipe(data: applied);
+        });
       }
     } catch (failure) {
       if (mounted) report(context, failure);
@@ -235,6 +244,7 @@ class _EditorPageState extends State<EditorPage> {
       if (!mounted || activeJob != job) return;
       checkpoint();
       setState(() {
+        compare = false;
         recipe.data['cleanupData'] = result['cleanupData'];
         recipe.data['cleanup'] = {'amount': 100, 'haze': 100, 'noise': 100};
       });
@@ -1014,9 +1024,7 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    final image = compare && widget.photo.info['raw'] != true
-        ? widget.photo.path
-        : preview;
+    final image = preview;
     final visual = Stack(
       fit: StackFit.expand,
       children: [
@@ -1030,7 +1038,7 @@ class _EditorPageState extends State<EditorPage> {
                 File(image),
                 fit: BoxFit.contain,
                 gaplessPlayback: true,
-                semanticLabel: '照片效果预览',
+                semanticLabel: compare ? '原图预览' : '照片效果预览',
                 errorBuilder: (_, _, _) => Padding(
                   padding: const EdgeInsets.all(20),
                   child: SingleChildScrollView(
@@ -1151,9 +1159,20 @@ class _EditorPageState extends State<EditorPage> {
           ),
           IconButton(
             tooltip: compare ? '显示效果' : '对比原图',
-            onPressed: widget.photo.info['raw'] == true
+            isSelected: compare,
+            onPressed:
+                widget.photo.info['raw'] == true ||
+                    !restored ||
+                    exporting ||
+                    managingRecipes ||
+                    analyzingCleanup
                 ? null
-                : () => setState(() => compare = !compare),
+                : () {
+                    setState(() => compare = !compare);
+                    revision++;
+                    debounce?.cancel();
+                    unawaited(render());
+                  },
             icon: const Icon(Icons.compare_rounded),
           ),
           IconButton(

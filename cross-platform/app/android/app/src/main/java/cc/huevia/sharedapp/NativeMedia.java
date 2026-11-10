@@ -33,10 +33,11 @@ final class NativeMedia {
             runtime.guardOwner(owner);runtime.validateSource(source.getPath(),sha);
             return SharedCleanup.result(analysis);
         }
-        if(!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
-        boolean preview=operation.equals("media.preview");
+        boolean originalView=operation.equals("media.originalPreview");
+        if(!originalView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
+        boolean preview=originalView||operation.equals("media.preview");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
-        PhotoEditStore.Draft frozen=runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
         if(!preview)runtime.validateSource(original,frozen.sourceSha);
         if(raw(source))source=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
         File directory=new File(runtime.root(),preview?"previews":"exports");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片输出目录。");
@@ -44,16 +45,23 @@ final class NativeMedia {
         try{
             PhotoExportSpec spec=preview?PhotoExportSpec.share():spec(p);
             PresetPreviewProfile profile=frozen.profile();
+            BitmapFactory.Options sourceBounds=bounds(source);
+            int sourceOrientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(sourceOrientation<1||sourceOrientation>8)sourceOrientation=1;
+            PhotoGeometry.Plan plan=GeometryPreviewProfile.geometry(profile).plan(sourceBounds.outWidth,sourceBounds.outHeight,sourceOrientation);
+            int[] canvas=BorderPreviewProfile.border(profile).dimensions(plan.width,plan.height);
+            PhotoExportSpec.Resolved resolved=spec.resolve(canvas[0],canvas[1]);
             if(preview||!"image/jpeg".equals(bounds(source).outMimeType))NativeRaster.render(context,source,temporary,profile,spec,preview,cancel,progress);
             else PhotoPresetRenderer.forContext(context).render(source,temporary,profile,spec,cancel,progress::accept);
             if(cancel.getAsBoolean())throw new InterruptedIOException("照片处理已取消。");
+            BitmapFactory.Options info=bounds(temporary,100_000_000);
+            int orientation=new ExifInterface(temporary.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
+            int width=orientation>=5?info.outHeight:info.outWidth,height=orientation>=5?info.outWidth:info.outHeight;
+            if(!preview&&(width!=resolved.width||height!=resolved.height))throw new IOException("成品尺寸与导出规格不符，未保存结果。");
             runtime.guardOwner(owner);
             if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
             if(!preview)runtime.markEditExported(owner,frozen);
-            BitmapFactory.Options info=bounds(target);
-            int orientation=new ExifInterface(target.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
-            return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",orientation>=5?info.outHeight:info.outWidth,"height",orientation>=5?info.outWidth:info.outHeight,"bytes",target.length(),"preview",preview,"model",profile.modelVersion()));
+            return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity()));
         }catch(PhotoPresetRenderer.Cancelled stopped){throw new InterruptedIOException("照片处理已取消。");}
         finally{Files.deleteIfExists(temporary.toPath());if(reduced!=null)Files.deleteIfExists(reduced.toPath());}
     }
@@ -82,7 +90,8 @@ final class NativeMedia {
     }
     private static PhotoExportSpec spec(Map<String,Object> p)throws IOException{String size=SharedRuntime.text(p,"size",16);if(size.equals("share"))return PhotoExportSpec.share();if(size.equals("custom"))return PhotoExportSpec.custom(SharedRuntime.integer(p,"longEdge",2048),SharedRuntime.integer(p,"quality",95));return PhotoExportSpec.full();}
     private static boolean raw(File source){String name=source.getName().toLowerCase(Locale.ROOT);return name.matches(".*\\.(nef|nrw|arw|cr2|cr3|dng|raf|rw2|orf|pef|srw)$");}
-    private static BitmapFactory.Options bounds(File source)throws IOException{BitmapFactory.Options options=new BitmapFactory.Options();options.inJustDecodeBounds=true;BitmapFactory.decodeFile(source.getPath(),options);if(options.outWidth<1||options.outHeight<1||(long)options.outWidth*options.outHeight>60_000_000)throw new IOException("照片尺寸无效或超过 6000 万像素。");return options;}
+    private static BitmapFactory.Options bounds(File source)throws IOException{return bounds(source,60_000_000);}
+    private static BitmapFactory.Options bounds(File source,long maxPixels)throws IOException{BitmapFactory.Options options=new BitmapFactory.Options();options.inJustDecodeBounds=true;BitmapFactory.decodeFile(source.getPath(),options);if(options.outWidth<1||options.outHeight<1||(long)options.outWidth*options.outHeight>maxPixels)throw new IOException("照片尺寸无效或超过处理上限。");return options;}
     private static File small(File source,File directory,BooleanSupplier cancel)throws IOException{
         BitmapFactory.Options info=bounds(source),options=new BitmapFactory.Options();options.inSampleSize=1;while(Math.max(info.outWidth,info.outHeight)/options.inSampleSize>1280)options.inSampleSize*=2;
         options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);

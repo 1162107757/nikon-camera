@@ -168,6 +168,9 @@ public final class SharedRuntime {
         return file;
     }
     public synchronized String sourceIdentity(String path,boolean force)throws IOException{return edits.sourceIdentity(privateFile(path),force);}
+    public synchronized PhotoEditStore.Draft originalView(String path,String owner)throws IOException{
+        guardOwner(owner);return new PhotoEditStore.Draft(sourceIdentity(path,false),null,"无滤镜",0,false);
+    }
     public synchronized PhotoEditStore.Draft freezeEdit(String path,String owner,String json)throws IOException{guardOwner(owner);return edits.freeze(privateFile(path),owner,json,personal::visible);}
     public synchronized void guardOwner(String owner)throws IOException{
         String current=SharedPersonal.currentOwner(accounts);

@@ -79,7 +79,19 @@ void main() {
         });
         expect(exported['width'], 256);
         expect(exported['height'], 192);
-        expect(exported['model'], isNotEmpty);
+        expect(exported['model'], endsWith(':full-jpeg95-srgb-v1'));
+        expect(
+          exported['exportSpec'],
+          'jpeg-srgb-v1:256x192:q95:capture-no-gps-v1',
+        );
+        final shared = await render('media.export', {
+          'path': source.path,
+          'owner': '',
+          'size': 'share',
+          'recipe': {'schema': 1},
+        });
+        expect(shared['model'], startsWith('export-jpeg-v1:'));
+        expect(shared['model'], isNot(exported['model']));
         final cleanup = await render('media.cleanupAnalyze', {
           'path': source.path,
           'owner': '',
@@ -109,6 +121,20 @@ void main() {
         });
         expect(crop['width'], 96);
         expect(crop['height'], 256);
+        final savedBeforeCompare = await core.call('draft.load', {
+          'path': source.path,
+          'owner': '',
+        });
+        final originalView = await render('media.originalPreview', {
+          'path': source.path,
+          'owner': '',
+        });
+        expect(originalView['width'], 256);
+        expect(originalView['height'], 192);
+        expect(
+          await core.call('draft.load', {'path': source.path, 'owner': ''}),
+          savedBeforeCompare,
+        );
         final cropCodec = await ui.instantiateImageCodec(
           await File(crop['path'] as String).readAsBytes(),
         );

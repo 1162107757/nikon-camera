@@ -38,6 +38,13 @@ public final class RecipeBoundaryTest {
         // Removing a filter and undoing must recover its immutable bytes even after library deletion.
         runtime.freezeEdit(second.toString(),"","{}");
         yes(runtime.freezeEdit(second.toString(),"",SharedJson.encode(applied.get("recipe"))).presetSha.equals(preset));
+        PhotoEditStore.Draft pending=new PhotoEditStore(root.toFile(),"").read(draft.sourceSha);
+        PhotoEditStore.Draft originalView=runtime.originalView(second.toString(),"");
+        yes(originalView.presetBytes().length==0&&originalView.adjustments.isNeutral());
+        yes(originalView.geometry.isNeutral()&&originalView.border.isNone());
+        yes(new PhotoEditStore(root.toFile(),"").read(draft.sourceSha).identity().equals(pending.identity()));
+        yes(new PhotoEditStore(root.toFile(),"").read(draft.sourceSha).exported==pending.exported);
+        rejects(()->runtime.originalView(second.toString(),"alice"));
         rejects(()->runtime.freezeEdit(first.toString(),"alice",SharedJson.encode(settings)));
         rejects(()->call(runtime,"recipe.list",SharedRuntime.map("owner","alice")));
         rejects(()->call(runtime,"recipe.delete",SharedRuntime.map("owner","alice","id",id)));

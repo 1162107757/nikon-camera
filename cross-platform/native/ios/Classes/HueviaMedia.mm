@@ -8,6 +8,7 @@
 #import "cc/huevia/shared/SharedCaptureInfo.h"
 #import "cc/huevia/shared/SharedRawSettings.h"
 #import "cc/huevia/shared/SharedCleanup.h"
+#import "cc/huevia/shared/SharedExportModel.h"
 #import "cc/huevia/ncp/RawDevelopmentSettings.h"
 #import "cc/huevia/ncp/PhotoGeometry.h"
 #import "cc/huevia/ncp/PhotoBorder.h"
@@ -166,10 +167,10 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sha];
     return [NSJSONSerialization JSONObjectWithData:[value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
   }
-  BOOL preview=[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"])fail(@"未知的照片操作。");
-  if(![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");
+  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],preview=originalView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"])fail(@"未知的照片操作。");
+  if(!originalView&&![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");
   NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");
-  CcHueviaAlbumPhotoEditStore_Draft *frozen=[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
+  CcHueviaAlbumPhotoEditStore_Draft *frozen=originalView?[_runtime originalViewWithNSString:path withNSString:owner]:[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
   if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];
   NSString *colorStatus=@"";HueviaRaster *working=raw?[self raw:path owner:owner settings:[CcHueviaSharedSharedRawSettings parseWithNSString:@"{}"] task:task status:&colorStatus]:load(path,_root,preview?1280:0);
   if(raw&&preview){double scale=std::min(1.0,1280.0/std::max(working.pixelWidth,working.pixelHeight));working=scaled(working,std::max(1,int(std::lround(working.pixelWidth*scale))),std::max(1,int(std::lround(working.pixelHeight*scale))),_root);}
@@ -183,6 +184,6 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   NSString *directory=[_root stringByAppendingPathComponent:preview?@"previews":@"exports"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建照片导出目录。");
   NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
   @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");if(!preview)[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
-  [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];return @{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":[profile modelVersion],@"rawColorStatus":colorStatus};
+  [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];return @{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved],@"exportSpec":preview?@"":[resolved identity],@"rawColorStatus":colorStatus};
 }
 @end
