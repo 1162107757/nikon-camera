@@ -7,9 +7,11 @@ parser=argparse.ArgumentParser()
 parser.add_argument('--sdk',required=True,type=Path)
 parser.add_argument('--java',required=True,type=Path)
 parser.add_argument('--offline',action='store_true')
+parser.add_argument('--mode',choices=['debug','release'],default='debug')
 parser.add_argument('--target',type=Path)
 parser.add_argument('--abi',choices=['android-x64','android-arm64','android-arm'],default='android-x64')
 options=parser.parse_args()
+if options.mode=='release' and options.target:parser.error('Integration test targets require debug mode')
 sdk=options.sdk.resolve();java=options.java.resolve()
 if not (sdk/'platform-tools/adb.exe').is_file() or not (java/'bin/java.exe').is_file():
     raise SystemExit('A complete Windows Android SDK and JDK are required')
@@ -25,7 +27,8 @@ env=dict(os.environ,JAVA_HOME=str(java),ANDROID_HOME=str(sdk),ANDROID_SDK_ROOT=s
     HUEVIA_FLUTTER_MAVEN=str(ROOT/'.tooling/cross-platform187/flutter-maven'),
     CI='true',FLUTTER_SUPPRESS_ANALYTICS='true')
 env['PATH']=str(java/'bin')+os.pathsep+env['PATH']
-command=[str(android/'gradlew.bat'),':app:assembleDebug',':app:assembleDebugAndroidTest','--no-daemon','--max-workers=2','-Ptarget-platform='+options.abi]
+tasks=[':app:assembleDebug',':app:assembleDebugAndroidTest'] if options.mode=='debug' else [':app:assembleRelease']
+command=[str(android/'gradlew.bat'),*tasks,'--no-daemon','--max-workers=2','-Ptarget-platform='+options.abi]
 if options.target:
     target=options.target.resolve()
     if not target.is_relative_to(ROOT/'cross-platform/app') or not target.is_file():raise SystemExit('Test target must be inside the shared app')
