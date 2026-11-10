@@ -28,4 +28,5 @@ jobs:
           path: |
             cross-platform/.build/core-ios/
             cross-platform/.build/core-jvm/
+            !cross-platform/.build/core-ios/j2objc-source.zip
           retention-days: 7

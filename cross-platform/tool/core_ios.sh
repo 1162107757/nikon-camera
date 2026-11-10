@@ -3,6 +3,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="$ROOT/cross-platform/.build/core-ios"
 mkdir -p "$WORK"
+failure_logs() {
+  code=$?
+  if [[ $code != 0 ]]; then
+    for file in "$WORK"/*.log; do echo "Log: $(basename "$file")"; tail -n 25 "$file"; done
+  fi
+  exit "$code"
+}
+trap failure_logs EXIT
 export JAVA_HOME="${HUEVIA_JAVA_HOME:-$(/usr/libexec/java_home -v 21)}"
 export PATH="$JAVA_HOME/bin:$PATH"
 python3 "$ROOT/cross-platform/tool/core_check.py" > "$WORK/jvm.log" 2>&1
@@ -34,7 +42,11 @@ import json,sys
 from pathlib import Path
 root,work=map(Path,sys.argv[1:])
 paths=json.loads((root/'cross-platform/.build/core-jvm/sources.json').read_text())
-(work/'sources.args').write_text('\n'.join('"'+str(root/p)+'"' for p in paths)+'\n')
+# J2ObjC's response-file reader treats quote characters as filename characters.
+# macOS CI paths contain no whitespace; use its literal one-path-per-line format.
+if any(any(c.isspace() for c in str(root/p)) for p in paths):
+    raise SystemExit('J2ObjC source paths must not contain whitespace')
+(work/'sources.args').write_text('\n'.join(str(root/p) for p in paths)+'\n')
 PY
 "$J2OBJC" -source 11 -encoding UTF-8 -use-arc -d "$WORK/generated" \
   @"$WORK/sources.args" > "$WORK/translation.log" 2>&1

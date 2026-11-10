@@ -47,16 +47,30 @@
     "app/src/main/java/cc/huevia/album/RawPhotoDownload.java",
     "app/src/main/java/cc/huevia/album/RawPhotoPairing.java",
     "app/src/main/java/cc/huevia/album/RawPhotoStore.java",
+    "app/src/main/java/cc/huevia/community/CommentReplyPages.java",
+    "app/src/main/java/cc/huevia/community/CommentReplyTarget.java",
     "app/src/main/java/cc/huevia/community/CommunityException.java",
     "app/src/main/java/cc/huevia/community/CommunityHttpTransport.java",
+    "app/src/main/java/cc/huevia/community/CommunityRepository.java",
+    "app/src/main/java/cc/huevia/community/SubmissionDraftStore.java",
+    "app/src/main/java/cc/huevia/community/SubmissionFlow.java",
     "app/src/main/java/cc/huevia/connection/PhotoLiveContinuation.java",
+    "app/src/main/java/cc/huevia/library/EditorPresetCatalog.java",
     "app/src/main/java/cc/huevia/library/LibraryFiles.java",
     "app/src/main/java/cc/huevia/library/LibraryJson.java",
+    "app/src/main/java/cc/huevia/library/OnlinePreset.java",
+    "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
+    "app/src/main/java/cc/huevia/library/OnlinePresetSearch.java",
+    "app/src/main/java/cc/huevia/library/PersonalPresetApi.java",
+    "app/src/main/java/cc/huevia/library/PersonalPresetSync.java",
     "app/src/main/java/cc/huevia/library/PresetCategories.java",
+    "app/src/main/java/cc/huevia/library/PresetDownloadTasks.java",
     "app/src/main/java/cc/huevia/library/PresetFile.java",
     "app/src/main/java/cc/huevia/library/PresetHomeFilter.java",
+    "app/src/main/java/cc/huevia/library/PresetLibrary.java",
     "app/src/main/java/cc/huevia/library/PresetRecord.java",
     "app/src/main/java/cc/huevia/library/PreviewImageCache.java",
+    "app/src/main/java/cc/huevia/library/SecureHttpClient.java",
     "app/src/main/java/cc/huevia/ncp/AdjustedPreviewProfile.java",
     "app/src/main/java/cc/huevia/ncp/AdjustmentRegion.java",
     "app/src/main/java/cc/huevia/ncp/AdjustmentRegionRenderer.java",
@@ -134,7 +148,8 @@
     "app/src/main/java/cc/huevia/usb/CameraParameterRequest.java",
     "app/src/main/java/cc/huevia/usb/PresetImportOptions.java",
     "app/src/main/java/cc/huevia/usb/PtpDirectorySurvey.java",
-    "app/src/main/java/cc/huevia/usb/StorageAssessment.java"
+    "app/src/main/java/cc/huevia/usb/StorageAssessment.java",
+    "cross-platform/core/adapters/cc/huevia/library/PreviewImages.java"
   ],
   "excluded": [
     {
@@ -149,11 +164,6 @@
     },
     {
       "path": "app/src/main/java/cc/huevia/album/PhotoVersionExportPlan.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/OnlinePresetRepository.java",
       "reason": "Requires a class/API outside the current portable Java closure",
       "compilerLog": ".tooling/cross-platform187/portable-closure/compile-0.log"
     },
@@ -186,71 +196,6 @@
       "path": "app/src/main/java/cc/huevia/album/PhotoLiveReceiptStore.java",
       "reason": "Requires a class/API outside the current portable Java closure",
       "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/EditorPresetCatalog.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/OnlinePresetSearch.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/PresetDownloadTasks.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/SecureHttpClient.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-1.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/OnlinePreset.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-2.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/community/CommunityRepository.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-3.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/PresetLibrary.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-3.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/community/CommentReplyPages.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/community/CommentReplyTarget.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/community/SubmissionDraftStore.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/community/SubmissionFlow.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/PersonalPresetSync.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-4.log"
-    },
-    {
-      "path": "app/src/main/java/cc/huevia/library/PersonalPresetApi.java",
-      "reason": "Requires a class/API outside the current portable Java closure",
-      "compilerLog": ".tooling/cross-platform187/portable-closure/compile-5.log"
     }
   ]
 }
