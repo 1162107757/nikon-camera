@@ -17,13 +17,23 @@ python3 "$ROOT/cross-platform/tool/core_check.py" > "$WORK/jvm.log" 2>&1
 python3 "$ROOT/cross-platform/tool/inventory.py" --verify
 
 TOOLCHAIN="$ROOT/.tooling/cross-platform187/j2objc-3.1"
-if [[ ! -x "$TOOLCHAIN/dist/j2objc" || ! -f "$TOOLCHAIN/dist/frameworks/JRE.xcframework/Info.plist" ]]; then
+if [[ ! -x "$TOOLCHAIN/dist/j2objc" || ! -f "$TOOLCHAIN/dist/frameworks/JRE.xcframework/Info.plist" || ! -f "$TOOLCHAIN/.huevia-file-varargs-v1" ]]; then
   mkdir -p "$(dirname "$TOOLCHAIN")"
   curl --fail --location --retry 3 --connect-timeout 20 \
     https://codeload.github.com/google/j2objc/zip/refs/tags/3.1 \
     --output "$WORK/j2objc-source.zip"
   echo '8116d3accee27ec83aec69cfd738bf75b632a226af7f0f736f00ae60cc2c70d5  '"$WORK/j2objc-source.zip" | shasum -a 256 -c -
   unzip -q -o "$WORK/j2objc-source.zip" -d "$(dirname "$TOOLCHAIN")"
+  # Upstream 3.1 File.toPath reflects getPath(String,String[]) but omits the
+  # empty array argument. Correct its JRE adapter, leaving app sources intact.
+  python3 - "$TOOLCHAIN" <<'PY'
+from pathlib import Path
+import sys
+source=Path(sys.argv[1])/'jre_emul/android/platform/libcore/ojluni/src/main/java/java/io/File.java'
+text=source.read_text();before='getPath.invoke(defaultFileSystem, path);'
+if text.count(before)!=1:raise SystemExit('J2ObjC File.toPath adapter requires review')
+source.write_text(text.replace(before,'getPath.invoke(defaultFileSystem, path, new String[0]);'))
+PY
   # Clang 26 diagnoses an existing JDK Hashtable float constant conversion.
   # Keep all original warning checks; only this diagnostic remains a warning.
   printf '\nCC_WARNINGS += -Wno-error=implicit-const-int-float-conversion\n' >> "$TOOLCHAIN/make/common.mk"
@@ -35,6 +45,7 @@ if [[ ! -x "$TOOLCHAIN/dist/j2objc" || ! -f "$TOOLCHAIN/dist/frameworks/JRE.xcfr
     export J2OBJC_ARCHS="macosx iphone64 simulator"
   fi
   make -C "$TOOLCHAIN" -j4 translator_dist jre_emul_dist > "$WORK/toolchain-build.log" 2>&1
+  touch "$TOOLCHAIN/.huevia-file-varargs-v1"
 fi
 
 J2OBJC="$TOOLCHAIN/dist/j2objc"

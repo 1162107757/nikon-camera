@@ -3,6 +3,7 @@ package cc.huevia.shared;
 import cc.huevia.account.*;
 import cc.huevia.community.*;
 import cc.huevia.library.*;
+import cc.huevia.album.PhotoEditStore;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -17,6 +18,7 @@ public final class SharedRuntime {
     private final CommunityRepository community;
     private final OnlinePresetSearch search;
     private final String installationId;
+    private final SharedEdits edits;
     private String storageWarning="";
     public SharedRuntime(String directory, AccountRepository.Store store, AccountRepository.Transport transport)throws IOException {
         this(directory,store,transport,"");
@@ -25,6 +27,7 @@ public final class SharedRuntime {
         root=new File(directory).getCanonicalFile();
         if(!root.isDirectory()&&!root.mkdirs())throw new IOException("无法打开应用资料目录。");
         library=new PresetLibrary(root);
+        edits=new SharedEdits(root,library);
         online=new OnlinePresetRepository(root,library);
         online.initializeDefaultEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
         search=new OnlinePresetSearch(online);
@@ -40,6 +43,15 @@ public final class SharedRuntime {
         Map<String,Object> p=SharedJson.object(json);Object result;
         switch(operation){
             case "core.schema":return CoreEngine.schema();
+            case "draft.load":{
+                String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
+                PhotoEditStore.Draft draft=edits.load(source,owner);
+                result=map("sourceSha",edits.sourceIdentity(source,false),"recipe",draft==null?null:SharedEdits.recipe(draft));break;
+            }
+            case "draft.save":{
+                PhotoEditStore.Draft draft=freezeEdit(text(p,"path",4096),text(p,"owner",64),SharedJson.encode(object(p.get("recipe"))));
+                result=map("sourceSha",draft.sourceSha,"recipe",SharedEdits.recipe(draft));break;
+            }
             case "library.list":{
                 library.refresh();List<Object> rows=new ArrayList<>();for(PresetRecord r:library.list())rows.add(r.toMap());
                 result=map("items",rows,"diagnostics",library.diagnostics());break;
@@ -99,6 +111,15 @@ public final class SharedRuntime {
         if(!file.toPath().startsWith(root.toPath())||Files.isSymbolicLink(original.toPath())||!file.isFile())throw new IOException("文件不在应用资料目录内。");
         return file;
     }
+    public synchronized String sourceIdentity(String path,boolean force)throws IOException{return edits.sourceIdentity(privateFile(path),force);}
+    public synchronized PhotoEditStore.Draft freezeEdit(String path,String owner,String json)throws IOException{guardOwner(owner);return edits.freeze(privateFile(path),owner,json);}
+    public synchronized void guardOwner(String owner)throws IOException{
+        AccountRepository.Session session=accounts.cachedSession();String current=session==null||accounts.isLogoutPending()?"":session.user.id;
+        if(owner==null||!owner.equals(current))throw new IOException("账号状态已改变，请重新打开照片。");
+    }
+    public synchronized void validateSource(String path,String expected)throws IOException{if(!expected.equals(sourceIdentity(path,true)))throw new IOException("照片原文件发生变化，未保存效果图。");}
+    public synchronized void markEditExported(String owner,PhotoEditStore.Draft frozen)throws IOException{guardOwner(owner);edits.markExported(owner,frozen);}
+    public static String editJson(PhotoEditStore.Draft frozen)throws IOException{return SharedJson.encode(SharedEdits.recipe(frozen));}
     public static Map<String,Object> map(Object... values){Map<String,Object> m=new LinkedHashMap<>();for(int i=0;i<values.length;i+=2)m.put((String)values[i],values[i+1]);return m;}
     @SuppressWarnings("unchecked") public static Map<String,Object> object(Object value)throws IOException{if(!(value instanceof Map))throw new IOException("操作数据格式无效。");return (Map<String,Object>)value;}
     public static String text(Map<String,Object> m,String key,int max)throws IOException{Object v=m.get(key);if(v==null)return "";if(!(v instanceof String)||((String)v).length()>max)throw new IOException("操作文字超出范围："+key);return (String)v;}

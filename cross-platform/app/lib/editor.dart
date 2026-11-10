@@ -23,12 +23,12 @@ class _EditorPageState extends State<EditorPage> {
   Timer? debounce;
   StreamSubscription<dynamic>? progressEvents;
   String? preview, error, activeJob;
-  bool exporting = false, rendering = false, compare = false;
+  bool exporting = false, rendering = false, compare = false, restored = false;
   double progress = 0;
   int tab = 0, revision = 0;
   late final String owner =
       widget.state.session['user']?['id'] as String? ?? '';
-  late final File draft = File(
+  late final File legacyDraft = File(
     p.join(
       widget.state.core.root,
       'shared-drafts',
@@ -50,11 +50,23 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> restore() async {
     try {
-      if (await draft.exists()) {
-        recipe = Recipe(data: object(jsonDecode(await draft.readAsString())));
+      final saved = await widget.state.core.call('draft.load', {
+        'path': widget.photo.path,
+        'owner': owner,
+      });
+      if (saved['recipe'] != null) {
+        recipe = Recipe(data: object(saved['recipe']));
+      } else if (await legacyDraft.exists()) {
+        // Validate the old development draft through the original native format.
+        final migrated = await widget.state.core.call('draft.save', {
+          'path': widget.photo.path,
+          'owner': owner,
+          'recipe': object(jsonDecode(await legacyDraft.readAsString())),
+        });
+        recipe = Recipe(data: object(migrated['recipe']));
       }
       if (mounted) {
-        setState(() {});
+        setState(() => restored = true);
         await render();
       }
     } catch (failure) {
@@ -65,6 +77,7 @@ class _EditorPageState extends State<EditorPage> {
   @override
   void dispose() {
     debounce?.cancel();
+    if (restored && !exporting) unawaited(saveDraft().catchError((_) {}));
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     super.dispose();
@@ -74,10 +87,11 @@ class _EditorPageState extends State<EditorPage> {
     if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
       throw const AppFailure('账号已改变，请重新打开照片。');
     }
-    await draft.parent.create(recursive: true);
-    final temporary = File('${draft.path}.part');
-    await temporary.writeAsString(jsonEncode(recipe.data), flush: true);
-    await temporary.rename(draft.path);
+    await widget.state.core.call('draft.save', {
+      'path': widget.photo.path,
+      'owner': owner,
+      'recipe': recipe.clone().data,
+    });
   }
 
   void checkpoint() {
@@ -87,7 +101,7 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   void change(void Function() mutation, {bool snapshot = true}) {
-    if (exporting) return;
+    if (exporting || !restored) return;
     if (snapshot) checkpoint();
     setState(() {
       mutation();
@@ -102,6 +116,7 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> render() async {
     final current = revision;
+    final frozen = recipe.clone();
     final previousJob = activeJob;
     if (previousJob != null) await widget.state.core.cancel(previousJob);
     if (!mounted) return;
@@ -114,7 +129,8 @@ class _EditorPageState extends State<EditorPage> {
     try {
       final result = await widget.state.core.call('media.preview', {
         'path': widget.photo.path,
-        'recipe': recipe.clone().data,
+        'recipe': frozen.data,
+        'owner': owner,
       }, job);
       if (!mounted || current != revision || activeJob != job) {
         await discardPreview(result['path']);
@@ -129,7 +145,6 @@ class _EditorPageState extends State<EditorPage> {
           p.isWithin(p.join(widget.state.core.root, 'previews'), old)) {
         unawaited(File(old).delete().catchError((_) => File(old)));
       }
-      await saveDraft();
     } catch (failure) {
       if (mounted && current == revision && activeJob == job) {
         setState(() => error = '$failure');
@@ -204,9 +219,9 @@ class _EditorPageState extends State<EditorPage> {
       final result = await widget.state.core.call('media.export', {
         'path': widget.photo.path,
         'recipe': frozen.data,
+        'owner': owner,
         'size': size,
       }, job);
-      await saveDraft();
       if (!mounted) return;
       await SharePlus.instance.share(
         ShareParams(
@@ -294,6 +309,14 @@ class _EditorPageState extends State<EditorPage> {
               decoration: const InputDecoration(labelText: '滤镜预设'),
               items: [
                 const DropdownMenuItem(value: '', child: Text('无滤镜')),
+                if ((recipe.data['presetId'] as String).isNotEmpty &&
+                    !widget.state.presets.any(
+                      (preset) => preset.id == recipe.data['presetId'],
+                    ))
+                  DropdownMenuItem(
+                    value: recipe.data['presetId'] as String,
+                    child: Text('${recipe.data['presetName'] ?? '已保存滤镜'} · 草稿'),
+                  ),
                 ...widget.state.presets.map(
                   (preset) => DropdownMenuItem(
                     value: preset.id,

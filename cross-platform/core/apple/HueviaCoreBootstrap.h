@@ -6,7 +6,7 @@
 
 /** Retain JRE modules reached through reflection by filesystem/network factories. */
 static inline void HueviaLinkCoreModules(void) {
-    JavaNioFileFileSystems_class_();
+    [JavaNioFileFileSystems getDefault];
     JavaTimeInstant_class_();
     JavaNetSocket_class_();
     JavaNetURL_class_();

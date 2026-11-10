@@ -24,18 +24,23 @@ final class NativeMedia {
             BitmapFactory.Options bounds=bounds(source);return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1)));
         }
         if(!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
-        SharedRecipe recipe=new SharedRecipe(SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
-        if(raw(source))source=RawDeveloper.develop(context,source,"",RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
         boolean preview=operation.equals("media.preview");
+        String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
+        PhotoEditStore.Draft frozen=runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        if(!preview)runtime.validateSource(original,frozen.sourceSha);
+        if(raw(source))source=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
         File directory=new File(runtime.root(),preview?"previews":"exports");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片输出目录。");
         File temporary=File.createTempFile("render-",".part",directory),target=new File(directory,UUID.randomUUID()+".jpg");File reduced=null;
         try{
             if(preview){reduced=small(source,directory,cancel);source=reduced;}
             PhotoExportSpec spec=preview?PhotoExportSpec.share():spec(p);
-            PresetPreviewProfile profile=recipe.profile(runtime.preset(recipe.presetId));
+            PresetPreviewProfile profile=frozen.profile();
             PhotoPresetRenderer.forContext(context).render(source,temporary,profile,spec,cancel,progress::accept);
             if(cancel.getAsBoolean())throw new InterruptedIOException("照片处理已取消。");
+            runtime.guardOwner(owner);
+            if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
+            if(!preview)runtime.markEditExported(owner,frozen);
             BitmapFactory.Options info=bounds(target);
             return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",info.outWidth,"height",info.outHeight,"bytes",target.length(),"preview",preview,"model",profile.modelVersion()));
         }finally{Files.deleteIfExists(temporary.toPath());if(reduced!=null)Files.deleteIfExists(reduced.toPath());}

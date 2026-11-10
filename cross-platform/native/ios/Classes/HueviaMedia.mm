@@ -11,6 +11,7 @@
 #import "cc/huevia/ncp/PresetPreviewProfile.h"
 #import "cc/huevia/ncp/RawJpegColorMatch.h"
 #import "cc/huevia/album/PhotoExportSpec.h"
+#import "cc/huevia/album/PhotoEditStore.h"
 #import "java/io/File.h"
 #import "java/io/IOException.h"
 #import "java/io/InterruptedIOException.h"
@@ -98,8 +99,9 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   NSString *_root;
 }
 - (instancetype)initWithRuntime:(CcHueviaSharedSharedRuntime *)runtime root:(NSString *)root {self=[super init];if(self){_runtime=runtime;_root=root;}return self;}
-- (HueviaRaster *)raw:(NSString *)path task:(HueviaTask *)task status:(NSString **)status {
-  NSString *sourceHash=hashFile(path,task),*directory=[_root stringByAppendingPathComponent:@"raw-development"];
+- (HueviaRaster *)raw:(NSString *)path owner:(NSString *)owner task:(HueviaTask *)task status:(NSString **)status {
+  NSData *scope=[owner dataUsingEncoding:NSUTF8StringEncoding];unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(scope.bytes,CC_LONG(scope.length),digest);NSMutableString *scopeHash=[NSMutableString string];for(unsigned char b:digest)[scopeHash appendFormat:@"%02x",b];
+  NSString *sourceHash=hashFile(path,task),*directory=[[_root stringByAppendingPathComponent:@"raw-development"] stringByAppendingPathComponent:scopeHash];
   if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建 RAW 显影目录。");
   NSString *identity=[NSString stringWithFormat:@"%@-%s-raw-default-h2-white-v2.png",sourceHash,HueviaRawVersion()],*cached=[directory stringByAppendingPathComponent:identity];
   if([NSFileManager.defaultManager fileExistsAtPath:cached]){@try{HueviaRaster *r=load(cached,_root,0);*status=@"CACHED";return r;}@catch(id invalid){[NSFileManager.defaultManager removeItemAtPath:cached error:nil];}}
@@ -130,19 +132,21 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   }
   BOOL preview=[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"])fail(@"未知的照片操作。");
   if(![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");
-  CcHueviaSharedSharedRecipe *recipe=[[CcHueviaSharedSharedRecipe alloc] initWithNSString:json(p[@"recipe"])];
-  NSString *colorStatus=@"";HueviaRaster *working=raw?[self raw:path task:task status:&colorStatus]:load(path,_root,preview?1280:0);
+  NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");
+  CcHueviaAlbumPhotoEditStore_Draft *frozen=[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
+  if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];
+  NSString *colorStatus=@"";HueviaRaster *working=raw?[self raw:path owner:owner task:task status:&colorStatus]:load(path,_root,preview?1280:0);
   if(raw&&preview){double scale=std::min(1.0,1280.0/std::max(working.pixelWidth,working.pixelHeight));working=scaled(working,std::max(1,int(std::lround(working.pixelWidth*scale))),std::max(1,int(std::lround(working.pixelHeight*scale))),_root);}
-  id<CcHueviaNcpPresetPreviewProfile> profile=[recipe profileWithByteArray:[_runtime presetWithNSString:recipe->presetId_]];
+  id<CcHueviaNcpPresetPreviewProfile> profile=[frozen profile];
   [profile renderPixelsWithCcHueviaNcpSpatialPreviewFilter_Pixels:working withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
-  check(task);working=compose(working,recipe->geometry_,_root,task);
-  working=[HueviaFrames apply:working border:recipe->border_ capture:[[CcHueviaSharedSharedCaptureInfo alloc] initWithNSString:json(captureData(metadata))] root:_root task:task];
+  check(task);working=compose(working,frozen->geometry_,_root,task);
+  working=[HueviaFrames apply:working border:frozen->border_ capture:[[CcHueviaSharedSharedCaptureInfo alloc] initWithNSString:json(captureData(metadata))] root:_root task:task];
   CcHueviaAlbumPhotoExportSpec *spec=preview||[p[@"size"] isEqual:@"share"]?[CcHueviaAlbumPhotoExportSpec share]:[CcHueviaAlbumPhotoExportSpec full];
   if(!preview&&[p[@"size"] isEqual:@"custom"]){if(![p[@"longEdge"] isKindOfClass:NSNumber.class]||![p[@"quality"] isKindOfClass:NSNumber.class])fail(@"自定义导出设置无效。");spec=[CcHueviaAlbumPhotoExportSpec customWithInt:[p[@"longEdge"] intValue] withInt:[p[@"quality"] intValue]];}
   CcHueviaAlbumPhotoExportSpec_Resolved *resolved=[spec resolveWithInt:working.pixelWidth withInt:working.pixelHeight];working=scaled(working,resolved->width_,resolved->height_,_root);check(task);
   NSString *directory=[_root stringByAppendingPathComponent:preview?@"previews":@"exports"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建照片导出目录。");
   NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
-  @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
+  @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");if(!preview)[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
   [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];return @{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":[profile modelVersion],@"rawColorStatus":colorStatus};
 }
 @end

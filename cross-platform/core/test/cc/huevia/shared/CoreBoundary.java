@@ -2,6 +2,9 @@ package cc.huevia.shared;
 
 import cc.huevia.account.AccountRepository;
 import cc.huevia.library.SharedJson;
+import cc.huevia.library.PresetLibrary;
+import cc.huevia.album.PhotoEditStore;
+import cc.huevia.ncp.NcpCompatibilityFixtures;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -41,7 +44,26 @@ public final class CoreBoundary {
             SharedCaptureInfo capture=new SharedCaptureInfo("{\"Make\":\"NIKON CORPORATION\",\"Model\":\"NIKON Z 6_2\",\"FocalLength\":\"500/10\",\"FNumber\":\"28/10\",\"ExposureTime\":\"1/125\",\"ISOSpeedRatings\":\"400\",\"DateTimeOriginal\":\"2026:11:10 08:09:10\"}");
             yes(capture.brand.equals("NIKON"));yes(capture.parameters(cc.huevia.ncp.PhotoBorder.NONE).equals("50mm  F2.8  1/125s  ISO400"));
             yes(capture.field(cc.huevia.ncp.PhotoBorder.NONE,4).equals("2026-11-10 08:09:10"));
-            System.out.println("PASS "+checks+" shared boundary checks; locked credentials, offline opening, stable installation, private paths, complete recipe validation and capture labels");
+            File source=root.resolve("source.jpg").toFile();Files.write(source.toPath(),new byte[]{10,20,30,40});
+            PresetLibrary presets=new PresetLibrary(root.toFile());byte[] original=NcpCompatibilityFixtures.ncp();
+            String presetId=presets.importFile("frozen.ncp",original).record.sha256;
+            SharedEdits edits=new SharedEdits(root.toFile(),presets);
+            String edit=SharedJson.encode(SharedRuntime.map("presetId",presetId,"strength",75));
+            PhotoEditStore.Draft frozen=edits.freeze(source,"alice",edit);
+            yes(Arrays.equals(original,frozen.presetBytes()));yes(frozen.strength==75);
+            presets.remove(presetId);
+            PhotoEditStore.Draft reopened=edits.freeze(source,"alice",edit);
+            yes(Arrays.equals(original,reopened.presetBytes()));yes(frozen.identity().equals(reopened.identity()));
+            yes(frozen.profile().modelVersion().equals(reopened.profile().modelVersion()));
+            yes(edits.load(source,"bob")==null);
+            edits.markExported("alice",frozen);yes(edits.load(source,"alice").exported);
+            PhotoEditStore.Draft changed=edits.freeze(source,"alice",SharedJson.encode(SharedRuntime.map("presetId",presetId,"strength",50)));
+            edits.markExported("alice",frozen);yes(!edits.load(source,"alice").exported);yes(edits.load(source,"alice").identity().equals(changed.identity()));
+            String roundTrip=SharedJson.encode(SharedEdits.recipe(changed));yes(changed.identity().equals(edits.freeze(source,"alice",roundTrip).identity()));
+            rejects(()->runtime.freezeEdit(source.getPath(),"alice",edit));
+            String sourceSha=edits.sourceIdentity(source,false);Files.write(source.toPath(),new byte[]{40,30,20,10});
+            yes(!sourceSha.equals(edits.sourceIdentity(source,true)));
+            System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{
             Path guard=temporary.toFile().getCanonicalFile().toPath();
