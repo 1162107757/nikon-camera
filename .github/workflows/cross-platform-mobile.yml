@@ -1,0 +1,41 @@
+name: Cross-platform mobile development build
+on:
+  workflow_dispatch:
+  push:
+    branches: ['codex/cross-platform-migration']
+    paths:
+      - 'cross-platform/app/**'
+      - 'cross-platform/native/**'
+      - 'cross-platform/tool/mobile_apple.sh'
+      - 'cross-platform/tool/raw_*.py'
+      - '.github/workflows/cross-platform-mobile.yml'
+permissions:
+  contents: read
+concurrency:
+  group: shared-mobile-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  apple-app:
+    runs-on: macos-26
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Build shared core and unsigned device app
+        run: bash cross-platform/tool/mobile_apple.sh
+      - name: Show actionable build errors
+        if: failure()
+        run: |
+          for f in cross-platform/.build/mobile-apple/*.log; do
+            echo "Log: $f"
+            tail -n 35 "$f"
+          done
+      - name: Preserve development IPA and exact build evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: huevia-cross-platform-ios-development
+          path: |
+            cross-platform/.build/mobile-apple/
+            cross-platform/.build/core-ios/parity.json
+            cross-platform/.build/core-ios/translation.log
+          retention-days: 7

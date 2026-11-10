@@ -1,0 +1,8 @@
+.dart_tool/
+.flutter-plugins*
+build/
+ios/Generated/
+ios/RuntimeHeaders/
+ios/Frameworks/
+ios/Notices/
+ios/Assets/
