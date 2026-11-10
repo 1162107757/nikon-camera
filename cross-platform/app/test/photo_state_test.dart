@@ -40,13 +40,17 @@ void main() {
     final original = await File('${directory.path}/source.jpg')
         .writeAsBytes([11, 22, 33]);
     final state = AppState(PhotoCore(before.path));
-    final photo = await state.importPhoto(XFile(original.path));
+    final photo = await state.importPhoto(
+      XFile(original.path),
+      displayName: 'RAW 原片.jpg',
+    );
     await state.updatePhoto(photo, {'rawSource': photo.path});
     final after = await before.rename('${directory.path}/new-container');
     final reopened = AppState(PhotoCore(after.path));
     await reopened.initialize();
     expect(reopened.failure, isNull);
     expect(reopened.photos, hasLength(1));
+    expect(reopened.photos.single.name, 'RAW 原片.jpg');
     expect(p.isWithin(after.path, reopened.photos.single.path), isTrue);
     expect(
       reopened.photos.single.info['rawSource'],
@@ -103,6 +107,23 @@ void main() {
       expect(state.photos, isEmpty);
       await blocker.delete();
       final photo = await state.importPhoto(XFile(source.path));
+      expect(state.photos.single.path, photo.path);
+      final index = File('${root.path}/photos-index.json');
+      final backup = await index.rename('${root.path}/index-backup.json');
+      final renameBlocker = await Directory(index.path).create();
+      await expectLater(
+        state.importPhoto(XFile(source.path), displayName: '显影完成.jpg'),
+        throwsA(isA<FileSystemException>()),
+      );
+      expect(state.photos.single.name, photo.name);
+      await renameBlocker.delete();
+      await backup.rename(index.path);
+      final renamed = await state.importPhoto(
+        XFile(source.path),
+        displayName: '显影完成.jpg',
+      );
+      expect(renamed.name, '显影完成.jpg');
+      expect(state.photos, hasLength(1));
       expect(state.photos.single.path, photo.path);
       expect(await source.readAsBytes(), [10, 20, 30]);
       expect(

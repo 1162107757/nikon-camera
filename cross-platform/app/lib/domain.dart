@@ -313,18 +313,36 @@ class AppState extends ChangeNotifier {
     await refreshLibrary();
   }
 
-  Future<Photo> importPhoto(XFile selected) => _serialPhotos(() async {
-    final path = await core.importFile(selected, preset: false);
-    final existing = photos.where((photo) => photo.path == path);
-    if (existing.isNotEmpty) return existing.first;
-    final info = await core.call('media.info', {'path': path});
-    final photo = Photo(path, selected.name, info);
-    final next = [photo, ...photos];
-    await _persistPhotos(next);
-    photos = next;
-    notifyListeners();
-    return photo;
-  });
+  Future<Photo> importPhoto(XFile selected, {String? displayName}) =>
+      _serialPhotos(() async {
+        final name = displayName ?? p.basename(selected.name);
+        if (name.trim().isEmpty ||
+            name.length > 240 ||
+            RegExp(r'[\x00-\x1f\x7f/\\]').hasMatch(name)) {
+          throw const AppFailure('照片名称无效。');
+        }
+        final path = await core.importFile(selected, preset: false);
+        final existing = photos.where((photo) => photo.path == path);
+        if (existing.isNotEmpty) {
+          final current = existing.first;
+          if (displayName == null || current.name == name) return current;
+          final renamed = Photo(path, name, current.info);
+          final next = photos
+              .map((photo) => photo.path == path ? renamed : photo)
+              .toList();
+          await _persistPhotos(next);
+          photos = next;
+          notifyListeners();
+          return renamed;
+        }
+        final info = await core.call('media.info', {'path': path});
+        final photo = Photo(path, name, info);
+        final next = [photo, ...photos];
+        await _persistPhotos(next);
+        photos = next;
+        notifyListeners();
+        return photo;
+      });
 
   Future<Photo> registerPhoto(String path, String name, Json info) =>
       _serialPhotos(() async {

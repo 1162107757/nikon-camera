@@ -167,10 +167,8 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       temporary = result['path'] as String;
       if (!mounted) return;
       final photo = await widget.state.importPhoto(
-        XFile(
-          temporary,
-          name: '${p.basenameWithoutExtension(widget.photo.name)}.jpg',
-        ),
+        XFile(temporary),
+        displayName: '${p.basenameWithoutExtension(widget.photo.name)}.jpg',
       );
       final working = await widget.state.updatePhoto(photo, {
         'rawSource': widget.photo.path,
