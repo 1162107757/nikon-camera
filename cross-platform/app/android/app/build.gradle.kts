@@ -22,6 +22,17 @@ android {
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 26
         targetSdk = 35
+        // A single-platform Flutter build must not advertise the other ABIs
+        // from the preserved original JNI directory without their engine/AOT.
+        if (providers.gradleProperty("split-per-abi").orNull != "true") {
+            val requested = providers.gradleProperty("target-platform")
+                .getOrElse("android-arm,android-arm64,android-x64")
+            val names = mapOf("android-arm" to "armeabi-v7a", "android-arm64" to "arm64-v8a", "android-x64" to "x86_64")
+            ndk {
+                abiFilters.clear()
+                abiFilters.addAll(requested.split(",").map { names[it] ?: error("Unsupported Flutter platform: $it") })
+            }
+        }
         testInstrumentationRunner = "cc.huevia.sharedapp.MediaSmokeInstrumentation"
         // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION
         // is added automatically by Flutter. (https://developer.android.com/studio/build/configure-apk-splits#configure-APK-versions)

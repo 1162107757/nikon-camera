@@ -1,6 +1,7 @@
 """Build only the coinstalled migration app without changing global SDK settings."""
 from pathlib import Path
 import argparse,os,re,subprocess,sys
+from verify_android_apk import verify
 
 ROOT=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
@@ -38,6 +39,15 @@ if init.is_file():command+=['--init-script',str(init)]
 if options.offline:command+=['--offline']
 log=ROOT/'.tooling/cross-platform187/android-proxy-build.log'
 with log.open('w',encoding='utf-8') as output:
+    generator=[str(flutter/'bin/cache/dart-sdk/bin/dart.exe'),
+        '--packages='+str(flutter/'packages/flutter_tools/.dart_tool/package_config.json'),
+        str(ROOT/'cross-platform/tool/android_plugins.dart'),str(android.parent),options.mode,str(flutter)]
+    preparation=subprocess.run(generator,cwd=android.parent,env=env,stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT)
+    if preparation.returncode:raise SystemExit('Android plugin generation failed; see '+str(log))
     result=subprocess.run(command,cwd=android,env=env,stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT)
 print('Android build exit '+str(result.returncode)+'; log: '+str(log))
+if result.returncode==0:
+    artifact=ROOT/'cross-platform/app/build/app/outputs/apk'/options.mode/('app-'+options.mode+'.apk')
+    evidence=verify(artifact,options.abi,options.mode)
+    print('Verified '+evidence['abi']+' '+options.mode+' APK: '+str(evidence['bytes'])+' bytes; SHA-256 '+evidence['sha256'])
 raise SystemExit(result.returncode)
