@@ -19,7 +19,7 @@
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 待迁移编辑交互及原生表面 | 核心 JVM / Apple 原测试通过；应用待完成 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
 | 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器、iOS 三种排版/原素材字体已接线 | 安卓三种边框集成通过；iOS 待应用验证 |
-| 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方保存/管理/应用已接线；批量调整复制待迁移 | JVM 配方及快照恢复验证通过；Apple 与旧安装资料迁移待验证 |
+| 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方及批量调节复制/撤销已接线；完整项目预设待迁移 | JVM 配方、复制事务与快照恢复验证通过；Apple 与旧安装资料迁移待验证 |
 | RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 安卓 12 合成 Bayer RAW 全链路通过；iOS 同场景待验证，未知型号 NEF 待实样复测 |
 | 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 两端编解码/安全元数据及完整/分享/自定义导出已接线；成品管理待迁移 | 安卓集成通过；iOS 文件接口异常待修复 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 部分模型已纳入 | 待迁移 | 待完成 |
@@ -66,6 +66,8 @@
 - Android 设备回归已扩展为 8 项并全部通过，补齐离线三种屏幕/主题/字体组合。实际发现横屏 2 倍字体与系统安全区域叠加时，库页固定筛选头部造成底部溢出；改用可随内容滚动的头部后通过。库页直接监听账户/预设状态；编辑及 RAW 预览在替换和退出时逐个驱逐旧解码缓存，迁移应用图片缓存预算设为 32 MiB。此内存改进不能直接作为荣耀 Magic 闪退已解决的结论。
 - 导出返回值已采用原 `PhotoPresetRenderer.modelVersion(profile, spec)` 的规则：完整 Q95 保留旧模型身份，其他实际尺寸/质量生成成品规格哈希；Android 原生检查直接与原渲染器对照完整/分享/自定义三种规格。额外核对编码成品尺寸后再提交，输出上限与边框的 100 MP 规则一致，原图输入仍限制 60 MP。
 - 原图对比改走独立的只读原生预览，不再由 Flutter 直接解码完整原文件；最大边长 1280，保持目标照片当前草稿及导出状态。139 项 JVM 共享边界检查通过；Android 24 项媒体检查及扩展的 Flutter/native RAW/边框/去灰/规格/对比场景通过。iOS 相关适配受上述构建条件限制，尚未编译或运行验证。
+- 批量调节复制复用原 `PhotoAdjustmentCopy`：按基础/去灰、四通道曲线、HSL/调色盘选择，最多 100 张私有照片，保留目标滤镜、强度、构图、边框及局部编辑。取消或写入失败按原事务规则回滚；撤销比较完整草稿，保留之后的独立修改。21 项新增核心检查通过，JVM 共享边界为 160 项；Android 实际图片流程已验证复制、构图/边框保留及撤销恢复，原工程 420 个文件保留校验通过。最新共享代码尚未经 Apple 翻译或运行验证。
+- Android 设备界面回归增至 10 个场景并全部通过，含新增复制范围、固定账户、撤销保留后续修改的横竖屏 2 倍字体检查；另有同一设备运行的 2 项文件/配方状态测试通过。Flutter 分析无问题。此结果仍不代表荣耀 Magic 实机稳定性或 iOS 通过。
 
 ## 保留和交付规则
 

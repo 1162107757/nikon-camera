@@ -9,6 +9,7 @@ import 'package:path/path.dart' as p;
 import 'domain.dart';
 import 'curve_control.dart';
 import 'recipes.dart';
+import 'copy_adjustments.dart';
 import 'widgets.dart';
 
 class EditorPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _EditorPageState extends State<EditorPage> {
   StreamSubscription<dynamic>? progressEvents;
   String? preview, error, activeJob;
   bool exporting = false, rendering = false, compare = false, restored = false;
-  bool managingRecipes = false;
+  bool managingTools = false;
   bool analyzingCleanup = false;
   double progress = 0;
   int tab = 0, revision = 0, hslBand = 0;
@@ -106,7 +107,7 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   void change(void Function() mutation, {bool snapshot = true}) {
-    if (exporting || managingRecipes || analyzingCleanup || !restored) return;
+    if (exporting || managingTools || analyzingCleanup || !restored) return;
     if (snapshot) checkpoint();
     setState(() {
       compare = false;
@@ -185,27 +186,38 @@ class _EditorPageState extends State<EditorPage> {
     }
   }
 
-  Future<void> openRecipes() async {
-    if (exporting || managingRecipes || analyzingCleanup || !restored) return;
+  Future<void> openTool({bool copying = false}) async {
+    if (exporting || managingTools || analyzingCleanup || !restored) return;
     debounce?.cancel();
     revision++;
-    setState(() => managingRecipes = true);
+    setState(() => managingTools = true);
     try {
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
       if (!mounted) return;
       final applied = await Navigator.push<Json>(
         context,
         MaterialPageRoute(
-          builder: (_) => RecipesPage(
-            core: widget.state.core,
-            owner: owner,
-            path: widget.photo.path,
-            current: recipe.clone().data,
-          ),
+          builder: (_) => copying
+              ? CopyAdjustmentsPage(
+                  state: widget.state,
+                  source: widget.photo,
+                  recipe: recipe.clone().data,
+                  owner: owner,
+                )
+              : RecipesPage(
+                  core: widget.state.core,
+                  owner: owner,
+                  path: widget.photo.path,
+                  current: recipe.clone().data,
+                ),
         ),
       );
       if (!mounted) return;
       if (applied != null) {
+        if (copying) {
+          showCopyReceipt(context, widget.state.core, owner, applied);
+          return;
+        }
         checkpoint();
         setState(() {
           compare = false;
@@ -216,14 +228,14 @@ class _EditorPageState extends State<EditorPage> {
       if (mounted) report(context, failure);
     } finally {
       if (mounted) {
-        setState(() => managingRecipes = false);
+        setState(() => managingTools = false);
         unawaited(render());
       }
     }
   }
 
   Future<void> analyzeCleanup() async {
-    if (exporting || managingRecipes || analyzingCleanup || !restored) return;
+    if (exporting || managingTools || analyzingCleanup || !restored) return;
     debounce?.cancel();
     revision++;
     final job = 'cleanup-${DateTime.now().microsecondsSinceEpoch}';
@@ -533,7 +545,7 @@ class _EditorPageState extends State<EditorPage> {
           IconButton(
             tooltip: '减小$label',
             onPressed:
-                exporting || managingRecipes || analyzingCleanup || value <= min
+                exporting || managingTools || analyzingCleanup || value <= min
                 ? null
                 : () {
                     checkpoint();
@@ -546,10 +558,10 @@ class _EditorPageState extends State<EditorPage> {
               value: value.clamp(min, max),
               min: min,
               max: max,
-              onChangeStart: exporting || managingRecipes || analyzingCleanup
+              onChangeStart: exporting || managingTools || analyzingCleanup
                   ? null
                   : (_) => (start ?? checkpoint)(),
-              onChanged: exporting || managingRecipes || analyzingCleanup
+              onChanged: exporting || managingTools || analyzingCleanup
                   ? null
                   : changed,
             ),
@@ -557,7 +569,7 @@ class _EditorPageState extends State<EditorPage> {
           IconButton(
             tooltip: '增大$label',
             onPressed:
-                exporting || managingRecipes || analyzingCleanup || value >= max
+                exporting || managingTools || analyzingCleanup || value >= max
                 ? null
                 : () {
                     checkpoint();
@@ -1116,7 +1128,7 @@ class _EditorPageState extends State<EditorPage> {
                       rendering ||
                           exporting ||
                           analyzingCleanup ||
-                          managingRecipes
+                          managingTools
                       ? null
                       : restored
                       ? render
@@ -1136,7 +1148,7 @@ class _EditorPageState extends State<EditorPage> {
           IconButton(
             tooltip: '撤销',
             onPressed:
-                undo.isEmpty || exporting || managingRecipes || analyzingCleanup
+                undo.isEmpty || exporting || managingTools || analyzingCleanup
                 ? null
                 : () {
                     redo.add(recipe.clone());
@@ -1148,7 +1160,7 @@ class _EditorPageState extends State<EditorPage> {
           IconButton(
             tooltip: '重做',
             onPressed:
-                redo.isEmpty || exporting || managingRecipes || analyzingCleanup
+                redo.isEmpty || exporting || managingTools || analyzingCleanup
                 ? null
                 : () {
                     undo.add(recipe.clone());
@@ -1164,7 +1176,7 @@ class _EditorPageState extends State<EditorPage> {
                 widget.photo.info['raw'] == true ||
                     !restored ||
                     exporting ||
-                    managingRecipes ||
+                    managingTools ||
                     analyzingCleanup
                 ? null
                 : () {
@@ -1179,7 +1191,7 @@ class _EditorPageState extends State<EditorPage> {
             tooltip: '导出照片',
             onPressed:
                 exporting ||
-                    managingRecipes ||
+                    managingTools ||
                     analyzingCleanup ||
                     preview == null
                 ? null
@@ -1189,10 +1201,11 @@ class _EditorPageState extends State<EditorPage> {
           PopupMenuButton<String>(
             tooltip: '编辑选项',
             enabled:
-                restored && !exporting && !managingRecipes && !analyzingCleanup,
-            onSelected: (_) => openRecipes(),
+                restored && !exporting && !managingTools && !analyzingCleanup,
+            onSelected: (value) => openTool(copying: value == 'copy'),
             itemBuilder: (_) => const [
               PopupMenuItem(value: 'recipes', child: Text('我的配方')),
+              PopupMenuItem(value: 'copy', child: Text('复制当前调节')),
             ],
           ),
         ],

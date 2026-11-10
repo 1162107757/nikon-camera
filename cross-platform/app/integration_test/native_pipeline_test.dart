@@ -24,8 +24,8 @@ void main() {
         );
       }
       final directory = await Directory(
-        '${core.root}/integration-${DateTime.now().microsecondsSinceEpoch}',
-      ).create();
+        '${core.root}/originals/integration-${DateTime.now().microsecondsSinceEpoch}',
+      ).create(recursive: true);
       final outputs = <String>[];
       Future<Json> render(String operation, Json payload) async {
         debugPrint(
@@ -171,6 +171,50 @@ void main() {
           expect(framed['width'], entry.$2);
           expect(framed['height'], entry.$3);
         }
+        final target = await File('${directory.path}/copy-target.jpg')
+            .writeAsBytes(await File(exported['path'] as String).readAsBytes());
+        await core.call('draft.save', {
+          'path': target.path,
+          'owner': '',
+          'recipe': {
+            'geometry': {'turns': 3},
+            'border': {'template': 3},
+          },
+        });
+        final beforeCopy = await core.call('draft.load', {
+          'path': target.path,
+          'owner': '',
+        });
+        final copied = await core.call('photo.copy', {
+          'path': source.path,
+          'owner': '',
+          'recipe': {
+            'values': [0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          },
+          'paths': [target.path],
+          'basic': true,
+          'curves': false,
+          'colour': false,
+        });
+        expect(copied['changed'], 1);
+        final targetDraft = object(
+          (await core.call('draft.load', {
+            'path': target.path,
+            'owner': '',
+          }))['recipe'],
+        );
+        expect((targetDraft['values'] as List)[1], 10);
+        expect(targetDraft['geometry']['turns'], 3);
+        expect(targetDraft['border']['template'], 3);
+        final undone = await core.call('photo.copyUndo', {
+          'owner': '',
+          'receipt': copied['receipt'],
+        });
+        expect(undone['restored'], 1);
+        expect(
+          await core.call('draft.load', {'path': target.path, 'owner': ''}),
+          beforeCopy,
+        );
         expect((await sha256.bind(source.openRead()).first).toString(), before);
         final raw = await File('${directory.path}/synthetic.dng')
             .writeAsBytes(syntheticDng());

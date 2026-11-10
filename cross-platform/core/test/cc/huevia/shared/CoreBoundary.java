@@ -75,6 +75,7 @@ public final class CoreBoundary {
             checks+=PhotoBoundaryTest.run(temporary);
             checks+=ImportBoundaryTest.run(temporary);
             checks+=ExportBoundaryTest.run();
+            checks+=CopyBoundaryTest.run(temporary);
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

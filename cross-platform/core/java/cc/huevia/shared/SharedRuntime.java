@@ -6,6 +6,7 @@ import cc.huevia.library.*;
 import cc.huevia.album.PhotoEditStore;
 import cc.huevia.album.PhotoRecipeStore;
 import cc.huevia.album.PhotoStarStore;
+import cc.huevia.album.PhotoAdjustmentCopy;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -24,6 +25,8 @@ public final class SharedRuntime {
     private final SharedEdits edits;
     private final SharedPersonal personal;
     private String storageWarning="";
+    private PhotoAdjustmentCopy.Receipt copyReceipt;
+    private String copyReceiptId="",copyReceiptOwner="";
     public SharedRuntime(String directory, AccountRepository.Store store, AccountRepository.Transport transport)throws IOException {
         this(directory,store,transport,"");
     }
@@ -51,6 +54,7 @@ public final class SharedRuntime {
         Map<String,Object> p=SharedJson.object(json);Object result;
         if(operation.startsWith("personal."))return SharedJson.encode(personal.request(operation,p,cancel,progress));
         if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));
+        if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
         switch(operation){
             case "core.schema":return CoreEngine.schema();
             case "photo.stars":result=map("keys",new ArrayList<>(new PhotoStarStore(root).snapshot()));break;
@@ -159,6 +163,42 @@ public final class SharedRuntime {
         }
     }
     private static Map<String,Object> recipeInfo(PhotoRecipeStore.Recipe recipe){return map("id",recipe.id,"name",recipe.name,"createdAt",recipe.createdAt,"summary",recipe.summary());}
+    private Map<String,Object> copyAdjustments(String operation,Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        String owner=text(p,"owner",64);guardOwner(owner);
+        BooleanSupplier allowed=()->!cancel.getAsBoolean()&&owner.equals(SharedPersonal.currentOwner(accounts));
+        PhotoEditStore store=new PhotoEditStore(root,owner);
+        if(operation.equals("photo.copyUndo")){
+            if(copyReceipt==null||!owner.equals(copyReceiptOwner)||!copyReceiptId.equals(text(p,"receipt",36)))throw new IOException("此撤销记录已失效，请核对目标照片当前设置。");
+            int changed=copyReceipt.changed(),restored=copyReceipt.undo(store,allowed);
+            copyReceipt=null;copyReceiptId="";copyReceiptOwner="";
+            return map("restored",restored,"changed",changed,"keptNewer",changed-restored);
+        }
+        if(!(p.get("basic") instanceof Boolean)||!(p.get("curves") instanceof Boolean)||!(p.get("colour") instanceof Boolean))throw new IOException("请选择要复制的调节范围。");
+        if(!(p.get("paths") instanceof List)||((List<?>)p.get("paths")).isEmpty()||((List<?>)p.get("paths")).size()>100)throw new IOException("请选择 1–100 张目标照片。");
+        boolean basic=(Boolean)p.get("basic"),curves=(Boolean)p.get("curves"),colour=(Boolean)p.get("colour");
+        if(!basic&&!curves&&!colour)throw new IOException("请至少选择一类调节。");
+        File source=originalPhoto(text(p,"path",4096));
+        PhotoEditStore.Draft frozen=freezeEdit(source.getPath(),owner,SharedJson.encode(object(p.get("recipe"))));
+        List<PhotoAdjustmentCopy.Target> targets=new ArrayList<>();
+        for(Object value:(List<?>)p.get("paths")){
+            if(!allowed.getAsBoolean())throw new IOException("账号或任务已变化，复制已取消。");
+            if(!(value instanceof String)||((String)value).length()>4096)throw new IOException("目标照片路径无效。");
+            File target=originalPhoto((String)value);String sha=edits.sourceIdentity(target,false);
+            if(sha.equals(frozen.sourceSha))throw new IOException("源照片与目标包含同一原图，请取消重复选择。");
+            PhotoEditStore.Draft expected=store.read(sha);targets.add(new PhotoAdjustmentCopy.Target(sha,expected,expected));
+            progress.accept(.2*targets.size()/((List<?>)p.get("paths")).size());
+        }
+        PhotoAdjustmentCopy.Receipt receipt=PhotoAdjustmentCopy.apply(store,targets,frozen.adjustments,basic,curves,colour,allowed);
+        // Only the latest receipt is retained; the original class compares each
+        // complete draft before undo, preserving later independent edits.
+        copyReceipt=receipt;copyReceiptId=UUID.randomUUID().toString();copyReceiptOwner=owner;progress.accept(1);
+        return map("changed",receipt.changed(),"skipped",receipt.skipped,"receipt",copyReceiptId);
+    }
+    private File originalPhoto(String path)throws IOException{
+        File file=privateFile(path);
+        if(!file.toPath().startsWith(new File(root,"originals").getCanonicalFile().toPath()))throw new IOException("只能选择应用原图库中的照片。");
+        return file;
+    }
     public File privateFile(String path)throws IOException {
         File original=new File(path),file=original.getCanonicalFile();
         Path candidate=original.toPath(),canonical=file.toPath(),base=root.toPath();
