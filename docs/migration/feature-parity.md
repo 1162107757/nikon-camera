@@ -8,14 +8,14 @@
 | --- | --- | --- | --- | --- |
 | NCP / NP3 校验、单色与彩色预设解析 | `library/PresetFile`, `ncp/*PreviewProfile` | 直接复用 | 本地导入已接线 | 核心 JVM / Apple 原测试通过；应用待验证 |
 | 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 首批页面已接线；样片编辑待迁移 | 待应用验证 |
-| 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载已接线；完整搜索与离线状态待接入 | 待完成 |
+| 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示已接线，搜索合并在途请求 | 应用联网验收待完成 |
 | 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出已接线；其他账户流程待迁移 | 待完成 |
 | 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑已纳入 | 待接入 | 待完成 |
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
 | 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | 私有原图导入与索引已接线；系统图库待接入 | 待完成 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
-| 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 调色盘已接线；其余交互待迁移 | 待完成 |
-| 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直已接线；完整构图待迁移 | 待完成 |
+| 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道控制点曲线、八色 HSL、调色盘已接线；自动去灰分析待迁移 | 待完成 |
+| 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 待应用像素验收 |
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 待迁移编辑交互及原生表面 | 核心 JVM / Apple 原测试通过；应用待完成 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
 | 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器已接线；iOS 排版待移植 | 待完成 |
@@ -38,6 +38,13 @@
 - Apple Objective-C 翻译运行同一套原测试，6 组图像 SHA-256 与 JVM 完全一致。
 - 首次 Apple 成功记录：提交 `9a285bfe2e1726bdc34042bba596054b479d6546`，Actions run `42787370999`。
 - 此证据仅证明共享核心。完整 Android APK、iOS 应用和 IPA 仍需构建与应用级验证。
+
+### 首次应用构建与后续检查（开发记录）
+
+- `060c5147d270717872202bf3b64ce004a7360c87` 的 iPhoneOS ARM64 应用构建成功，Actions `42807885872`；生成未签名 IPA `24,848,665` 字节，SHA-256 `2cacbf061580b07e25cd1897dd89082d6da3f1e69d7064975dbc37e6e0abd654`。最低 iOS 16，开发标识 `cc.huevia.next`，完整功能对齐仍未完成。
+- 同一提交新增的 31 项共享边界检查已在 JVM 和 Apple 通过，覆盖离线账户、完整草稿、预设删除后的编辑、账户隔离和旧导出快照保护。
+- Android x86_64 开发 APK 已构建，在隔离 Android 12 / API 31 模拟器冷启动并显示预设库；这不代表荣耀 Magic 实机稳定性已验证。
+- 后续共享界面 9 项测试通过，含离线四页导航、注册失败保留输入、完整在线搜索，以及编辑器在横竖屏/大字体下恢复已移除预设的草稿、曲线和 HSL 操作。
 
 ## 保留和交付规则
 

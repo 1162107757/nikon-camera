@@ -19,7 +19,8 @@ class _LibraryPageState extends State<LibraryPage> {
   int tab = 0, page = 1, generation = 0;
   String category = '', query = '';
   String? error;
-  bool busy = false, hasMore = false;
+  bool busy = false, hasMore = false, requestInFlight = false;
+  ({bool next, bool refresh})? pendingLoad;
   List<Preset> online = [];
   List<String> categories = [];
   Timer? searchDelay;
@@ -51,6 +52,13 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> load({bool next = false, bool refresh = false}) async {
+    if (!mounted || tab != 1) return;
+    if (requestInFlight) {
+      generation++;
+      pendingLoad = (next: next, refresh: refresh);
+      return;
+    }
+    requestInFlight = true;
     final request = ++generation;
     setState(() {
       busy = true;
@@ -86,7 +94,13 @@ class _LibraryPageState extends State<LibraryPage> {
     } catch (failure) {
       if (mounted && request == generation) setState(() => error = '$failure');
     } finally {
+      requestInFlight = false;
       if (mounted && request == generation) setState(() => busy = false);
+      final pending = pendingLoad;
+      pendingLoad = null;
+      if (mounted && tab == 1 && pending != null) {
+        unawaited(load(next: pending.next, refresh: pending.refresh));
+      }
     }
   }
 
@@ -96,7 +110,7 @@ class _LibraryPageState extends State<LibraryPage> {
         acceptedTypeGroups: [
           const XTypeGroup(
             label: '尼康预设',
-            extensions: ['ncp', 'np2', 'np3'],
+            extensions: ['ncp', 'np3'],
             uniformTypeIdentifiers: ['public.data'],
           ),
         ],
@@ -299,11 +313,15 @@ class _LibraryPageState extends State<LibraryPage> {
                 labels: const ['我的预设', '在线预设'],
                 selected: tab,
                 onSelected: (value) {
+                  searchDelay?.cancel();
+                  generation++;
+                  pendingLoad = null;
                   setState(() {
                     tab = value;
                     category = '';
+                    busy = false;
                   });
-                  if (value == 1 && online.isEmpty) unawaited(load());
+                  if (value == 1) unawaited(load());
                 },
               ),
             ),
@@ -392,7 +410,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             Center(
                               child: TextButton(
                                 onPressed: import,
-                                child: const Text('导入 NCP / NP2 / NP3'),
+                                child: const Text('导入 NCP / NP3'),
                               ),
                             ),
                         ],

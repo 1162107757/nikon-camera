@@ -29,6 +29,7 @@ jobs:
         with:
           path: |
             .tooling/cross-platform187/j2objc-3.1/dist
+            .tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
             cross-platform/.build/raw-apple
           key: huevia-apple-native-v1-${{ runner.arch }}-${{ steps.apple.outputs.xcode }}-${{ hashFiles('cross-platform/tool/core_ios.sh', 'cross-platform/tool/raw_apple.py', 'cross-platform/tool/raw_sources.py', 'cross-platform/toolchain.json') }}
       - name: Verify core parity and prepare native runtimes
@@ -39,6 +40,7 @@ jobs:
         with:
           path: |
             .tooling/cross-platform187/j2objc-3.1/dist
+            .tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
             cross-platform/.build/raw-apple
           key: ${{ steps.native-cache.outputs.cache-primary-key }}
       - name: Build and test the unsigned device app

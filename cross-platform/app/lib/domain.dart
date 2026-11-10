@@ -60,7 +60,7 @@ class HueviaCore {
     if (length < 1 || length > limit) throw const AppFailure('文件大小超出允许范围。');
     final extension = p.extension(selected.name).toLowerCase();
     final allowed = preset
-        ? {'.ncp', '.np2', '.np3'}
+        ? {'.ncp', '.np3'}
         : {
             '.jpg',
             '.jpeg',

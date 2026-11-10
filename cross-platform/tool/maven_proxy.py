@@ -5,11 +5,34 @@ contents, credentials, application networking, or remote certificate validation.
 """
 from pathlib import Path,PurePosixPath
 from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
-import json,os,re,subprocess,threading,time
+import argparse,hashlib,json,os,re,shutil,subprocess,threading,time
 ROOT=Path(__file__).resolve().parents[2]
 CACHE=ROOT/'.tooling/cross-platform187/maven-http-cache'
 ORIGINS={'google':'https://dl.google.com/dl/android/maven2/','central':'https://repo.maven.apache.org/maven2/','plugin':'https://plugins.gradle.org/m2/','flutter':'https://storage.googleapis.com/download.flutter.io/'}
 locks={};guard=threading.Lock();negative={}
+def existing_artifact(relative,target):
+    parts=PurePosixPath(relative).parts
+    if len(parts)<4:return False
+    group='.'.join(parts[:-3]);artifact,version,name=parts[-3:]
+    checksum=next((suffix for suffix in ['.sha1','.sha256','.sha512'] if name.endswith(suffix)),None)
+    original_name=name[:-len(checksum)] if checksum else name
+    cached=target.with_name(original_name)
+    if checksum and cached.is_file():
+        with cached.open('rb') as file: digest=hashlib.file_digest(file,checksum[1:]).hexdigest()
+        target.write_text(digest,encoding='ascii');return True
+    base=Path(os.environ.get('GRADLE_USER_HOME',str(Path.home()/'.gradle')))/'caches/modules-2/files-2.1'/group/artifact/version
+    if not base.is_dir():return False
+    for source in base.glob('*/'+original_name):
+        if not source.is_file() or not re.fullmatch('[a-f0-9]{40}',source.parent.name):continue
+        with source.open('rb') as file:
+            if hashlib.file_digest(file,'sha1').hexdigest()!=source.parent.name:continue
+        temporary=target.with_name(target.name+'.cached-'+str(threading.get_ident()))
+        if checksum:
+            with source.open('rb') as file: digest=hashlib.file_digest(file,checksum[1:]).hexdigest()
+            temporary.write_text(digest,encoding='ascii')
+        else:shutil.copyfile(source,temporary)
+        temporary.replace(target);return True
+    return False
 curl_proxy=[]
 if os.name=='nt':
     import winreg
@@ -32,7 +55,9 @@ class Handler(BaseHTTPRequestHandler):
             if negative.get(key,0)>time.monotonic():self.send_error(404);return
             if not target.is_file():
                 target.parent.mkdir(parents=True,exist_ok=True);temporary=target.with_name(target.name+'.download-'+str(os.getpid())+'-'+str(threading.get_ident()))
-                run=subprocess.run(['curl.exe' if os.name=='nt' else 'curl',*curl_proxy,'--location','--silent','--show-error','--retry','2','--connect-timeout','15','--max-time','240','--max-filesize','536870912','--output',str(temporary),'--write-out','%{http_code}',ORIGINS[parts[0]]+parts[1]],capture_output=True,text=True)
+                existing_artifact(parts[1],target)
+            if not target.is_file():
+                run=subprocess.run(['curl.exe' if os.name=='nt' else 'curl',*curl_proxy,'--location','--silent','--show-error','--retry','2','--retry-all-errors','--connect-timeout','10','--max-time','60','--max-filesize','536870912','--output',str(temporary),'--write-out','%{http_code}',ORIGINS[parts[0]]+parts[1]],capture_output=True,text=True)
                 if run.returncode or run.stdout!='200':
                     temporary.unlink(missing_ok=True)
                     status=404 if run.stdout in ['404','410'] else 502
@@ -48,7 +73,10 @@ class Handler(BaseHTTPRequestHandler):
                 with target.open('rb') as file:
                     while block:=file.read(65536):self.wfile.write(block)
             except (BrokenPipeError,ConnectionResetError):pass
-server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=0);options=parser.parse_args()
+if options.port!=0 and not 1024<=options.port<=65535:raise SystemExit('Invalid loopback port')
+ThreadingHTTPServer.allow_reuse_address=True
+server=ThreadingHTTPServer(('127.0.0.1',options.port),Handler)
 port=server.server_address[1]
 config=ROOT/'.tooling/cross-platform187/maven-proxy.json'
 config.write_text(json.dumps({'port':port,'pid':os.getpid(),'origins':ORIGINS},indent=2)+'\n')
@@ -60,7 +88,15 @@ def repository(name,url):
     else:filters="excludeGroup 'io.flutter'; "+'; '.join("excludeGroupByRegex '"+group+"'" for group in google_groups)
     return "maven { url = '"+url+"'; allowInsecureProtocol = true; content { "+filters+" } }"
 repositories='\n'.join(repository(name,url) for name,url in zip(['google','central','plugin','flutter'],urls))
-init="gradle.beforeSettings { settings -> settings.pluginManagement.repositories {\n"+repositories+"\n}; settings.dependencyResolutionManagement.repositories {\n"+repositories+"\n} }\ngradle.settingsEvaluated { settings -> gradle.ext.hueviaProjectRepos = settings.dependencyResolutionManagement.repositoriesMode.get().name() == 'PREFER_PROJECT' }\ngradle.beforeProject { project -> if (gradle.ext.hueviaProjectRepos) { project.repositories {\n"+repositories+"\n} }; project.buildscript.repositories {\n"+repositories+"\n} }\n"
+rewrite="""def hueviaRoute = { repos -> repos.all { repo ->
+ if (repo instanceof org.gradle.api.artifacts.repositories.MavenArtifactRepository) {
+  def address = repo.url.toString()
+  def routes = ['https://dl.google.com/dl/android/maven2/':'google', 'https://dl.google.com/android/maven2/':'google', 'https://repo.maven.apache.org/maven2/':'central', 'https://repo1.maven.org/maven2/':'central', 'https://plugins.gradle.org/m2/':'plugin', 'https://storage.googleapis.com/download.flutter.io/':'flutter']
+  routes.each { origin, name -> if(address == origin || address + '/' == origin) { repo.url = 'http://127.0.0.1:PORT/' + name + '/'; repo.allowInsecureProtocol = true } }
+ }
+} }
+""".replace('PORT',str(port))
+init=rewrite+"gradle.beforeSettings { settings -> hueviaRoute(settings.pluginManagement.repositories); hueviaRoute(settings.dependencyResolutionManagement.repositories); settings.pluginManagement.repositories {\n"+repositories+"\n}; settings.dependencyResolutionManagement.repositories {\n"+repositories+"\n} }\ngradle.settingsEvaluated { settings -> gradle.ext.hueviaProjectRepos = settings.dependencyResolutionManagement.repositoriesMode.get().name() == 'PREFER_PROJECT' }\ngradle.beforeProject { project -> hueviaRoute(project.repositories); hueviaRoute(project.buildscript.repositories); if (gradle.ext.hueviaProjectRepos) { project.repositories {\n"+repositories+"\n} }; project.buildscript.repositories {\n"+repositories+"\n} }\n"
 (ROOT/'.tooling/cross-platform187/maven-proxy.init.gradle').write_text(init)
 print('Build artifact proxy listening only on 127.0.0.1:'+str(port),flush=True)
 try:server.serve_forever()

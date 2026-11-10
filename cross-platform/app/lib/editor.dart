@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'curve_control.dart';
 import 'widgets.dart';
 
 class EditorPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _EditorPageState extends State<EditorPage> {
   String? preview, error, activeJob;
   bool exporting = false, rendering = false, compare = false, restored = false;
   double progress = 0;
-  int tab = 0, revision = 0;
+  int tab = 0, revision = 0, hslBand = 0;
   late final String owner =
       widget.state.session['user']?['id'] as String? ?? '';
   late final File legacyDraft = File(
@@ -142,6 +143,7 @@ class _EditorPageState extends State<EditorPage> {
         error = null;
       });
       if (old != null &&
+          old != result['path'] &&
           p.isWithin(p.join(widget.state.core.root, 'previews'), old)) {
         unawaited(File(old).delete().catchError((_) => File(old)));
       }
@@ -169,6 +171,99 @@ class _EditorPageState extends State<EditorPage> {
       if (await file.exists()) await file.delete();
     } on FileSystemException {
       // A preview is disposable; cleanup failure never affects the original.
+    }
+  }
+
+  Future<void> editBorderText() async {
+    final border = object(recipe.clone().data['border'] ?? {});
+    final fields = List<String>.from(
+      border['fields'] as List? ?? List.filled(5, ''),
+    );
+    final inputs = [
+      TextEditingController(text: border['brand'] as String? ?? ''),
+      TextEditingController(text: border['model'] as String? ?? ''),
+      ...fields.map((text) => TextEditingController(text: text)),
+    ];
+    var automatic = border['automatic'] != false,
+        visible = border['visible'] as int? ?? 63;
+    final accepted = await showDialog<bool>(
+      context: context,
+      builder: (dialog) => StatefulBuilder(
+        builder: (context, refresh) => AlertDialog(
+          title: const Text('拍摄信息'),
+          content: SizedBox(
+            width: 420,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('自动读取原图信息'),
+                    value: automatic,
+                    onChanged: (value) => refresh(() => automatic = value),
+                  ),
+                  for (var i = 0; i < inputs.length; i++)
+                    TextField(
+                      controller: inputs[i],
+                      enabled: !automatic,
+                      maxLength: 96,
+                      decoration: InputDecoration(
+                        labelText: [
+                          '品牌',
+                          '型号',
+                          '焦距',
+                          '光圈',
+                          '快门',
+                          'ISO',
+                          '拍摄时间',
+                        ][i],
+                      ),
+                    ),
+                  for (var i = 0; i < 6; i++)
+                    CheckboxListTile(
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        '显示${['型号', '焦距', '光圈', '快门', 'ISO', '拍摄时间'][i]}',
+                      ),
+                      value: (visible & (1 << i)) != 0,
+                      onChanged: (value) => refresh(() {
+                        visible = value == true
+                            ? visible | (1 << i)
+                            : visible & ~(1 << i);
+                      }),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialog, false),
+              child: const Text('取消'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialog, true),
+              child: const Text('应用'),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (accepted == true && mounted) {
+      change(() {
+        border.addAll({
+          'automatic': automatic,
+          'visible': visible,
+          'brand': inputs[0].text,
+          'model': inputs[1].text,
+          'fields': inputs.skip(2).map((input) => input.text).toList(),
+        });
+        recipe.data['border'] = border;
+      });
+    }
+    for (final input in inputs) {
+      input.dispose();
     }
   }
 
@@ -438,6 +533,12 @@ class _EditorPageState extends State<EditorPage> {
                       : () => change(() {
                           geometry['turns'] =
                               ((geometry['turns'] as int? ?? 0) + 1) % 4;
+                          geometry.addAll({
+                            'left': 0,
+                            'top': 0,
+                            'right': 1000000,
+                            'bottom': 1000000,
+                          });
                           recipe.data['geometry'] = geometry;
                         }),
                 ),
@@ -448,6 +549,10 @@ class _EditorPageState extends State<EditorPage> {
                       ? null
                       : () => change(() {
                           geometry['mirrored'] = geometry['mirrored'] != true;
+                          final left = geometry['left'] as int? ?? 0;
+                          geometry['left'] =
+                              1000000 - (geometry['right'] as int? ?? 1000000);
+                          geometry['right'] = 1000000 - left;
                           recipe.data['geometry'] = geometry;
                         }),
                 ),
@@ -465,6 +570,121 @@ class _EditorPageState extends State<EditorPage> {
               }, snapshot: false),
               display:
                   '${((geometry['angle'] as int? ?? 0) / 10).toStringAsFixed(1)}°',
+            ),
+            for (final entry in [
+              ('horizontalPerspective', '水平透视'),
+              ('verticalPerspective', '垂直透视'),
+            ])
+              slider(
+                entry.$2,
+                (geometry[entry.$1] as int? ?? 0).toDouble(),
+                -100,
+                100,
+                (value) => change(() {
+                  geometry[entry.$1] = value.round();
+                  recipe.data['geometry'] = geometry;
+                }, snapshot: false),
+              ),
+            const SizedBox(height: 12),
+            const Text('裁剪范围'),
+            for (final entry in [
+              ('left', '左侧', 0),
+              ('top', '顶部', 0),
+              ('right', '右侧', 1000000),
+              ('bottom', '底部', 1000000),
+            ])
+              slider(
+                entry.$2,
+                (geometry[entry.$1] as int? ?? entry.$3) / 10000,
+                0,
+                100,
+                (value) => change(() {
+                  var next = (value * 10000).round();
+                  final opposite = {
+                    'left': 'right',
+                    'right': 'left',
+                    'top': 'bottom',
+                    'bottom': 'top',
+                  }[entry.$1]!;
+                  if (entry.$3 == 0) {
+                    next = next.clamp(
+                      0,
+                      (geometry[opposite] as int? ?? 1000000) - 1000,
+                    );
+                  } else {
+                    next = next.clamp(
+                      (geometry[opposite] as int? ?? 0) + 1000,
+                      1000000,
+                    );
+                  }
+                  geometry[entry.$1] = next;
+                  recipe.data['geometry'] = geometry;
+                }, snapshot: false),
+                display:
+                    '${((geometry[entry.$1] as int? ?? entry.$3) / 10000).toStringAsFixed(1)}%',
+              ),
+            TextButton(
+              onPressed: exporting
+                  ? null
+                  : () => change(() => recipe.data.remove('geometry')),
+              child: const Text('重置构图'),
+            ),
+          ],
+        );
+      case 5:
+        return CurveControl(
+          curves:
+              (recipe.data['curves'] as List? ??
+                      List.generate(4, (_) => [0, 0, 255, 255]))
+                  .map((row) => List<int>.from(row as List))
+                  .toList(),
+          enabled: !exporting && restored,
+          onStart: checkpoint,
+          onChanged: (value) =>
+              change(() => recipe.data['curves'] = value, snapshot: false),
+        );
+      case 6:
+        final values = List<int>.from(
+          recipe.data['hsl'] as List? ?? List.filled(24, 0),
+        );
+        return Column(
+          children: [
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (var band = 0; band < 8; band++)
+                  ChoiceChip(
+                    label: Text(
+                      ['红', '橙', '黄', '绿', '青', '蓝', '紫', '洋红'][band],
+                    ),
+                    selected: hslBand == band,
+                    onSelected: (_) => setState(() => hslBand = band),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            for (var axis = 0; axis < 3; axis++)
+              slider(
+                ['色相', '饱和度', '明度'][axis],
+                values[hslBand * 3 + axis].toDouble(),
+                -100,
+                100,
+                (value) => change(() {
+                  values[hslBand * 3 + axis] = value.round();
+                  recipe.data['hsl'] = values;
+                }, snapshot: false),
+              ),
+            TextButton(
+              onPressed: exporting
+                  ? null
+                  : () => change(() {
+                      for (var axis = 0; axis < 3; axis++) {
+                        values[hslBand * 3 + axis] = 0;
+                      }
+                      recipe.data['hsl'] = values;
+                    }),
+              child: const Text('重置此颜色'),
             ),
           ],
         );
@@ -499,6 +719,56 @@ class _EditorPageState extends State<EditorPage> {
                 border['margin'] = value.round();
                 recipe.data['border'] = border;
               }, snapshot: false),
+            ),
+            for (final entry in [
+              ('corner', '圆角', 200.0),
+              ('shadow', '阴影', 150.0),
+              ('blur', '模糊', 200.0),
+            ])
+              slider(
+                entry.$2,
+                (border[entry.$1] as int? ?? 100).toDouble(),
+                0,
+                entry.$3,
+                (value) => change(() {
+                  border[entry.$1] = value.round();
+                  recipe.data['border'] = border;
+                }, snapshot: false),
+              ),
+            DropdownButtonFormField<int>(
+              key: ValueKey('logo-${border['logo']}'),
+              initialValue: border['logo'] as int? ?? 0,
+              decoration: const InputDecoration(labelText: '品牌标识'),
+              items: [
+                for (var i = 0; i < 4; i++)
+                  DropdownMenuItem(
+                    value: i,
+                    child: Text(
+                      ['自动', 'Nikon 黄色方形', 'Nikon 白色文字', 'Nikon 黑色文字'][i],
+                    ),
+                  ),
+              ],
+              onChanged: exporting
+                  ? null
+                  : (value) => change(() {
+                      border['logo'] = value;
+                      recipe.data['border'] = border;
+                    }),
+            ),
+            const SizedBox(height: 12),
+            OutlinedButton(
+              onPressed: exporting ? null : editBorderText,
+              child: const Text('拍摄信息与显示项目'),
+            ),
+            TextButton(
+              onPressed: exporting
+                  ? null
+                  : () => change(
+                      () => recipe.data['border'] = {
+                        'template': border['template'] ?? 0,
+                      },
+                    ),
+              child: const Text('重置边框设置'),
             ),
           ],
         );
@@ -541,18 +811,20 @@ class _EditorPageState extends State<EditorPage> {
           ),
       ],
     );
-    final panel = ListView(
-      padding: const EdgeInsets.all(20),
+    final panel = Column(
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
           child: Row(
             children: [
-              for (var i = 0; i < 5; i++)
+              for (var i = 0; i < 7; i++)
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: ChoiceChip(
-                    label: Text(['滤镜', '调节', '调色盘', '构图', '边框'][i]),
+                    label: Text(
+                      ['滤镜', '调节', '调色盘', '构图', '边框', '曲线', 'HSL'][i],
+                    ),
                     selected: tab == i,
                     onSelected: (_) => setState(() => tab = i),
                   ),
@@ -560,19 +832,26 @@ class _EditorPageState extends State<EditorPage> {
             ],
           ),
         ),
-        const SizedBox(height: 20),
-        controls(),
-        if (error != null) ...[
-          const SizedBox(height: 16),
-          Text(
-            error!,
-            style: TextStyle(color: Theme.of(context).colorScheme.error),
+        Expanded(
+          child: ListView(
+            key: ValueKey('editor-panel-$tab'),
+            padding: const EdgeInsets.all(20),
+            children: [
+              controls(),
+              if (error != null) ...[
+                const SizedBox(height: 16),
+                Text(
+                  error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
+                TextButton(
+                  onPressed: rendering || exporting ? null : render,
+                  child: const Text('重试预览'),
+                ),
+              ],
+            ],
           ),
-          TextButton(
-            onPressed: rendering || exporting ? null : render,
-            child: const Text('重试预览'),
-          ),
-        ],
+        ),
       ],
     );
     return Scaffold(
