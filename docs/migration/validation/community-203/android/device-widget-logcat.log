@@ -1,0 +1,81 @@
+--------- beginning of main
+11-11 20:44:58.331  9512  9512 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-11 20:44:58.331  9512  9512 I flutter :     The application opted out of Impeller by either using the
+11-11 20:44:58.331  9512  9512 I flutter :     `--no-enable-impeller` flag or the
+11-11 20:44:58.331  9512  9512 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-11 20:44:58.331  9512  9512 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-11 20:44:58.331  9512  9512 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-11 20:44:58.331  9512  9512 I flutter :     the issue.
+11-11 20:44:58.331  9512  9512 I flutter : 
+11-11 20:44:58.331  9512  9512 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-11 20:44:58.331  9512  9512 I flutter : 
+11-11 20:44:58.455  9512  9542 I flutter : The Dart VM service is listening on http://127.0.0.1:35393/EGnspCOnblI=/
+11-11 20:44:58.915  9512  9512 I flutter : 00:00 +0: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text
+11-11 20:45:12.210  9512  9512 I flutter : 00:13 +1: Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text
+11-11 20:45:24.247  9512  9512 I flutter : 00:25 +2: Photo stars survive reload, combine with search, and keep stable editor links
+11-11 20:45:30.255  9512  9512 I flutter : 00:31 +3: Save and apply a recipe at Size(375.0, 812.0) with large text and a pinned owner
+11-11 20:45:32.755  9512  9512 I flutter : 00:33 +4: Save and apply a recipe at Size(812.0, 375.0) with large text and a pinned owner
+11-11 20:45:35.154  9512  9512 I flutter : 00:36 +5: Frozen export recipe retains independent advanced edits
+11-11 20:45:35.157  9512  9512 I flutter : 00:36 +6: File import retains exact original bytes and rejects a corrupt collision
+11-11 20:45:35.595  9512  9512 I flutter : 00:36 +7: Offline navigation remains usable at Size(375.0, 812.0), Brightness.light, text 1.0
+11-11 20:45:37.849  9512  9512 I flutter : 00:38 +8: Offline navigation remains usable at Size(812.0, 375.0), Brightness.dark, text 2.0
+11-11 20:45:39.855  9512  9512 I flutter : 00:40 +9: Offline navigation remains usable at Size(375.0, 812.0), Brightness.dark, text 2.0
+11-11 20:45:41.924  9512  9512 I flutter : 00:43 +10: Copy scope and owner stay pinned; newer edits survive undo at Size(375.0, 812.0)
+11-11 20:45:45.496  9512  9512 I flutter : 00:46 +11: Copy scope and owner stay pinned; newer edits survive undo at Size(812.0, 375.0)
+11-11 20:45:49.734  9512  9512 I flutter : 00:50 +12: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(375.0, 812.0)
+11-11 20:45:54.186  9512  9512 I flutter : 00:55 +13: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(812.0, 375.0)
+11-11 20:45:58.648  9512  9512 I flutter : 00:59 +14: Registration failures retain credentials and refresh only the challenge answer
+11-11 20:46:00.142  9512  9512 I flutter : 01:01 +15: Online search can display a match beyond the loaded feed page
+11-11 20:46:01.528  9512  9512 I flutter : 01:02 +16: An old camera status cannot replace a newly established session
+11-11 20:46:02.069  9512  9512 I flutter : 01:03 +17: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+11-11 20:46:03.249  9512  9512 I flutter : 01:04 +18: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 1.0)
+11-11 20:46:05.739  9512  9512 I flutter : 01:06 +19: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 2.0)
+11-11 20:46:08.234  9512  9512 I flutter : 01:09 +20: Root sheets cover navigation and retain fixed actions at (Size(812.0, 375.0), 2.0)
+11-11 20:46:10.817  9512  9512 I flutter : 01:11 +21: Online download filtering loads the complete catalog and source filters remain separate
+11-11 20:46:13.356  9512  9512 I flutter : 01:14 +22: Independent source filters survive rebuilding the whole application state
+11-11 20:46:17.442  9512  9512 I flutter : 01:18 +23: Album sort and RAW filter survive rebuilding the application
+11-11 20:46:21.731  9512  9512 I flutter : 01:22 +24: A failed preference commit does not block subsequent partial updates
+11-11 20:46:21.735  9512  9512 I flutter : 01:22 +25: Batch freezes every recipe before export and retains per-photo adjustments
+11-11 20:46:21.746  9512  9512 I flutter : 01:22 +26: Batch retries failures without repeating completed outputs or changing frozen settings
+11-11 20:46:21.749  9512  9512 I flutter : 01:22 +27: Cancellation keeps completed outputs and resumes only remaining photos
+11-11 20:46:21.753  9512  9512 I flutter : 01:22 +28: Changing account prevents remaining exports and all later retries
+11-11 20:46:21.755  9512  9512 I flutter : 01:22 +29: Batch refuses duplicate sources and an unbounded selection
+11-11 20:46:21.757  9512  9512 I flutter : 01:22 +30: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 1.0)
+11-11 20:46:23.308  9512  9512 I flutter : 01:24 +31: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 2.0)
+11-11 20:46:24.806  9512  9512 I flutter : 01:25 +32: Album selection groups photos and opens a full-page batch with fixed actions at (Size(812.0, 375.0), 2.0)
+11-11 20:46:26.414  9512  9512 I flutter : 01:27 +33: Diagnostic reports exclude payloads, credentials, device addresses and unexpected native fields
+11-11 20:46:26.441  9512  9512 I flutter : 01:27 +34: Help opens readable diagnostics and about opens a separate license page
+11-11 20:46:28.306  9512  9512 I flutter : 01:29 +35: Template selection uses streamed native picking, handles cancellation and restores built-ins
+11-11 20:46:29.584  9512  9512 I flutter : 01:30 +36: Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0)
+11-11 20:46:35.602  9512  9512 I flutter : 01:36 +37: Tentative crop handles, ratio, rotate and cancel at Size(812.0, 375.0)
+11-11 20:46:41.662  9512  9512 I flutter : 01:42 +38: Split divider clamps and preserves a common zoom transform
+11-11 20:46:42.917  9512  9512 I flutter : 01:44 +39: Encoded preview cancel creates no saved version
+11-11 20:46:47.045  9512  9512 I flutter : 01:48 +40: Encoded preview commits the frozen result
+11-11 20:46:51.197  9512  9512 I flutter : 01:52 +41: Account change cancels stale frame work and disables confirmation
+11-11 20:46:53.116  9512  9512 I flutter : 01:54 +42: Original border strip, fields, settings and camera at (Size(375.0, 812.0), 1.0)
+11-11 20:47:10.245  9512  9512 I flutter : 02:11 +43: Original border strip, fields, settings and camera at (Size(812.0, 375.0), 2.0)
+11-11 20:47:30.328  9512  9512 I flutter : 02:31 +44: Account changes reject pending border thumbnails and field commits
+11-11 20:47:34.795  9512  9512 I flutter : 02:35 +45: Reply recipient uses the explicit target and unavailable marker
+11-11 20:47:34.805  9512  9512 I flutter : 02:35 +46: Concurrent comment confirmation sends once and cannot reuse another owner receipt
+11-11 20:47:34.821  9512  9512 I flutter : 02:35 +47: Failed comment retry retains its key; editing creates a new reviewed body
+11-11 20:47:34.826  9512  9512 I flutter : 02:35 +48: Account change rejects an in-flight comment result and invalid reply IDs never send
+11-11 20:47:34.829  9512  9512 I flutter : 02:35 +49: Private list switches owner without allowing an old page to replace the new request
+11-11 20:47:34.844  9512  9512 I flutter : 02:35 +50: Failed next page preserves rows and retries the same page with duplicate IDs merged
+11-11 20:47:34.847  9512  9512 I flutter : 02:35 +51: Reply previews do not skip page one and a wrong response page never advances the cursor
+11-11 20:47:34.850  9512  9512 I flutter : 02:35 +52: Read acknowledgements survive paging but cannot replace a newer unread count
+11-11 20:47:34.853  9512  9512 I flutter : 02:35 +53: Malformed read acknowledgement does not mark unrelated messages read
+11-11 20:47:34.855  9512  9512 I flutter : 02:35 +54: Read-all accepts the server acknowledgement and refreshes the real unread count
+11-11 20:47:34.858  9512  9512 I flutter : 02:35 +55: Single read acknowledgement refreshes the badge without assuming a returned count
+11-11 20:47:34.864  9512  9512 I flutter : 02:35 +56: Disposed discussion ignores a pending page and never schedules another request
+11-11 20:47:34.867  9512  9512 I flutter : 02:35 +57: Comment modal clears private text after account switch at (Size(375.0, 812.0), 1.0)
+11-11 20:47:36.727  9512  9512 I flutter : 02:37 +58: Comment modal clears private text after account switch at (Size(812.0, 375.0), 2.0)
+11-11 20:47:38.578  9512  9512 I flutter : 02:39 +59: Comment send failure preserves the reviewed text and retry key
+11-11 20:47:40.895  9512  9512 I flutter : 02:41 +60: Root message page retains read failure and never retries it in a build loop
+11-11 20:47:47.163  9512  9512 I flutter : 02:48 +61: Submission next page replaces rows and stops at the actual final page
+11-11 20:47:49.277  9512  9512 I flutter : 02:50 +62: Autosave is serial and old responses cannot replace newer typing
+11-11 20:47:50.046  9512  9512 I flutter : 02:51 +63: Uncertain save restores native receipt and locks edits until retry
+11-11 20:47:50.069  9512  9512 I flutter : 02:51 +64: Picker result from an old account is discarded and private fields clear
+11-11 20:47:50.109  9512  9512 I flutter : 02:51 +65: Submission fields preserve comma input without overflow at (Size(375.0, 812.0), 1.0)
+11-11 20:47:51.121  9512  9512 I flutter : 02:52 +66: Submission fields preserve comma input without overflow at (Size(812.0, 375.0), 2.0)
+11-11 20:47:52.078  9512  9512 I flutter : 02:53 +67: Foreground unread polling stops in background and rejects a stale count
+11-11 20:47:54.434  9512  9512 I flutter : 02:55 +68: (tearDownAll)

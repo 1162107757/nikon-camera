@@ -1,0 +1,11 @@
+{
+  "version": "0.31.0-dev+203",
+  "abi": "arm64-v8a",
+  "bytes": 50635814,
+  "sha256": "74888439756c045b9211bcbacfa8069cab1c711f61aa531ae0991f6ce74e4d08",
+  "signatureVerified": true,
+  "modelsMatchOriginal186": {
+    "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+    "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+  }
+}

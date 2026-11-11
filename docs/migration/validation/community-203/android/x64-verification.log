@@ -1,0 +1,11 @@
+{
+  "version": "0.31.0-dev+203",
+  "abi": "x86_64",
+  "bytes": 54007246,
+  "sha256": "f1da5996b9769c54fdc69b651e247f7c7247dea98265431e3bf2cdfb04334340",
+  "signatureVerified": true,
+  "modelsMatchOriginal186": {
+    "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+    "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+  }
+}

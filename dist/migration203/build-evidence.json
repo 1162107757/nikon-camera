@@ -1,0 +1,324 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T21:00:59.745210+00:00",
+  "sourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "artifacts": [
+    {
+      "apk": "dist/migration203/huevia-0.31.0-dev-203-android-arm64.apk",
+      "bytes": 50635814,
+      "sha256": "74888439756c045b9211bcbacfa8069cab1c711f61aa531ae0991f6ce74e4d08",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "sourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+203",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches190": true,
+      "liteRtSha256": "70b6d8f09cfa72158b142a54c84d978670523e420267273a9948a0f40fb535c9",
+      "referenceFontsVerified": {
+        "Roboto-Regular.ttf": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+        "Roboto-Medium.ttf": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+        "Roboto-Bold.ttf": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4"
+      },
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "apk": "dist/migration203/huevia-0.31.0-dev-203-android-x64.apk",
+      "bytes": 54007246,
+      "sha256": "f1da5996b9769c54fdc69b651e247f7c7247dea98265431e3bf2cdfb04334340",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "sourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+203",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches190": true,
+      "liteRtSha256": "946664d75ea3966fafd5b3a9f52b6d246f99e2dd1e9ae830c50afd2bc7cea096",
+      "referenceFontsVerified": {
+        "Roboto-Regular.ttf": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+        "Roboto-Medium.ttf": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+        "Roboto-Bold.ttf": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4"
+      },
+      "elfAndStoredLibraryAlignment16KiB": true
+    }
+  ],
+  "validation": {
+    "androidApi": 31,
+    "deviceWidgetScenarios": 47,
+    "dartTestExecutions": 68,
+    "communityStateCases": 12,
+    "communityUiCases": 5,
+    "submissionUiCases": 6,
+    "nativeCodecChecks": 56,
+    "nativePipelineScenarios": 1,
+    "sharedBoundaryChecks": 276,
+    "originalFingerprintsPreserved": true,
+    "r8NativeCallbacksVerified": true,
+    "originalPreservation": {
+      "sourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+      "frozenFiles": 420,
+      "approvedRepairFiles": 8,
+      "unchangedAtBaseline": 412,
+      "allWorkingTreeGitBlobsMatch": true
+    },
+    "installedReleaseSha256": "f1da5996b9769c54fdc69b651e247f7c7247dea98265431e3bf2cdfb04334340",
+    "observedReleasePid": 9769,
+    "ownProcessCrashEntries": 0,
+    "communityAuthenticatedMutationsVerified": false
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/community-203/analyze.log",
+      "bytes": 36,
+      "sha256": "75bfaea98de986e4dce9f7bee9047a5b536a2a43b4e2cbcb5cecbccdda1bc5a1"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-camera.png",
+      "bytes": 253433,
+      "sha256": "659ee3744ffd90934add858ce68c235c7b13d7abd9b2153f6663adce48e59ac8"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-camera.xml",
+      "bytes": 11746,
+      "sha256": "49eab3d4d040f2528427460920db5f5703e0faf9bd0a6fc68b9d4013f6c72a62"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-information.png",
+      "bytes": 481387,
+      "sha256": "050b4a56a5ea36ac749c25ff2ed2886d1ac3cc88a0a87144352f6020606ad0e9"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-information.xml",
+      "bytes": 8333,
+      "sha256": "e445f071eba7b4daf401c439c8a8176b17d5f6022b65fa6610b51c4bf7bfa9f8"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-inline.png",
+      "bytes": 1052255,
+      "sha256": "8d3052894c3b451298143601d705254b357a392502077a9cc9ec2e65c65a571a"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-inline.xml",
+      "bytes": 11020,
+      "sha256": "b6a066eb72998afa171bb180ff09564305d353f209e891013a975819f8a60b6c"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-settings.png",
+      "bytes": 479307,
+      "sha256": "db13338c54c084bb3cd0bce698cbe1c7e0c1cf11a974cc1c8777d60cb1f6ab69"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-settings.xml",
+      "bytes": 11741,
+      "sha256": "e6548773a18d148db133a4746ae4b47d3be7f3be60a88c058f65654d6d7b436b"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-styles.png",
+      "bytes": 461619,
+      "sha256": "bdc672f40293acab628a96287cf20e3c4a2d3aebed62311bb414370bace1f479"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-styles.xml",
+      "bytes": 8524,
+      "sha256": "2c0ca2598e27f7d970e1bd667ece65b11fa4eddfb04220beb28af9277c1c7d2e"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-white-info.png",
+      "bytes": 1051223,
+      "sha256": "2d0895dd76bfe24820378d001c998b3d5b3272cc8bb66f8c4a3a1354af28f9d7"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-border-white-info.xml",
+      "bytes": 10962,
+      "sha256": "4e8f546accd727593561e0e4a9c00072d13817f8e8fd48fc53eaa3a8646effe2"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-comment-login.png",
+      "bytes": 159025,
+      "sha256": "1d6050e98c7e4bdd3e676ebda3b7a7941fbeb5bc710b544a511bcccf0de09bad"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-comment-login.xml",
+      "bytes": 8038,
+      "sha256": "c58676390b45815d7f6b35e769c243cff385c5956060567ee569a912cbb193dd"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-discussion-scroll.png",
+      "bytes": 204711,
+      "sha256": "c2e804520ef0cf09cda09b630eca86d3551b8917848503dc993170a612e4fc70"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-discussion-scroll.xml",
+      "bytes": 8575,
+      "sha256": "0960130b411b8d246eac8acfa718568c16a405a399dde0f1ae13bada7104f9cf"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-discussion.png",
+      "bytes": 145453,
+      "sha256": "c1c928d774df129cb40bed456eaa3f4f2dcbc8861e10d1bb6ec59bff5a8c9ac7"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-discussion.xml",
+      "bytes": 8154,
+      "sha256": "a286bd8c90fa2f69ee94f84ef592f58a54887eff1f4434d8f195c88eeed36da8"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-messages-guest.png",
+      "bytes": 57531,
+      "sha256": "f9fd61bec77b60d78eb6c694b2f0cb7a1e330405b6f219d88c75b84be571eb54"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-messages-guest.xml",
+      "bytes": 5002,
+      "sha256": "0aca6bead9f4bd8f248eec435d4d9918c5bec41488e9c5e66994a4c4adc5d788"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-online.png",
+      "bytes": 164902,
+      "sha256": "8f98791a8fe6d7ef46077e9c9be880d5b2437f7ef9ce5bf7a5642c22ba42397e"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-online.xml",
+      "bytes": 13900,
+      "sha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-publish-login.png",
+      "bytes": 159316,
+      "sha256": "f2a61fcbc58f580042f08936a7c19e88e17c08fbda237bb215943459ad2f2212"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-publish-login.xml",
+      "bytes": 8038,
+      "sha256": "c58676390b45815d7f6b35e769c243cff385c5956060567ee569a912cbb193dd"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-submissions-guest.png",
+      "bytes": 62273,
+      "sha256": "630ec1acd6071e28f767cbeafba3baea0922bdf87f755d40363877f85f8a06b7"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/203-release-submissions-guest.xml",
+      "bytes": 5008,
+      "sha256": "34efe6ec24c82f07f8a7b1f1b64c4203ac80384a9b57d992ff0dd51049cac57d"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/arm64-verification.log",
+      "bytes": 447,
+      "sha256": "4f3eaace1af9e9994235a29b657879727ea53bbdb56248a04c0ea032804601ac"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/codecs.log",
+      "bytes": 126,
+      "sha256": "5f282d8682c233446d0ee896ed692e38de6e5c874aba68db4951f49afe8513bf"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/debug-evidence.json",
+      "bytes": 640,
+      "sha256": "bea4a35c979e9cc8b0863a129cf4cdd81b00e8b2a1e2814e36a9501288ceb4dd"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/device-widget-logcat.log",
+      "bytes": 10199,
+      "sha256": "44bbebe528d594f12a19a60074f97881780a6c41dcc17a0e36aa67ab397ca552"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/pipeline.log",
+      "bytes": 62,
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/release-arm64-gradle.log",
+      "bytes": 28861,
+      "sha256": "5854535e8699704496f690988d4bde71dabedfaff3fba27946de0be27554398c"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/release-device-checks.json",
+      "bytes": 1356,
+      "sha256": "989dabb2b6bdc9d9d2dc4a65a53ec917ed1a0e00e1a2c00d1bb3a443c83d85f8"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/release-x64-gradle.log",
+      "bytes": 28921,
+      "sha256": "9f3593c25715082e70a9d816a4a046925eb2f2c202e8bedf698e54e32069a430"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/widgets.log",
+      "bytes": 63,
+      "sha256": "f337083763b9e020af2b28e7acd972e3dc24de8d898ce050b928b437b3eadb66"
+    },
+    {
+      "file": "docs/migration/validation/community-203/android/x64-verification.log",
+      "bytes": 444,
+      "sha256": "61dcb8ef56c7457e880120762ad30877ae8cc01bdeaab7169350df357dfafb6b"
+    },
+    {
+      "file": "docs/migration/validation/community-203/attempts/candidate-device-logcat.log",
+      "bytes": 12125,
+      "sha256": "6109dcdd932794b2db970a8dde852382f9fc292b1382ade5c3f0528abe3d5ce6"
+    },
+    {
+      "file": "docs/migration/validation/community-203/attempts/candidate-widgets-failed.log",
+      "bytes": 189,
+      "sha256": "94d99adb47704bacb4abf4b8b5b2101f6261888a44c678bec8989c5c39c09af7"
+    },
+    {
+      "file": "docs/migration/validation/community-203/attempts/community-state-host.log",
+      "bytes": 1211,
+      "sha256": "b5fb733181b825c3655a6bc10d8adedce4db79d1c48351dc62f91298c3216eda"
+    },
+    {
+      "file": "docs/migration/validation/community-203/attempts/host-combined-load-failure.log",
+      "bytes": 3469,
+      "sha256": "c9a4297de6f956ea9ae9cb4f14b31a90b7543ddd750e0c491c2080dca9f90708"
+    },
+    {
+      "file": "docs/migration/validation/community-203/attempts/submission-test-final.log",
+      "bytes": 1161,
+      "sha256": "a0913895ba74b8cae44d0920ee9ad3c29e1b3f996d4db00f2278c58746924616"
+    },
+    {
+      "file": "docs/migration/validation/community-203/core-final.log",
+      "bytes": 884,
+      "sha256": "2c86e58ad4d305448f13467e6198b46d116f349251e3635f10e4fdf78e5d0886"
+    },
+    {
+      "file": "docs/migration/validation/community-203/jvm-golden.json",
+      "bytes": 759,
+      "sha256": "fcc92acf24597a70161d9b640bb39df5ec35758c93b2ca28379897ba6534cdd9"
+    },
+    {
+      "file": "docs/migration/validation/community-203/original-preservation.json",
+      "bytes": 191,
+      "sha256": "3e4559ef5bd1f840acfec96b2b5451813d209094a9d7341144bcf704e8c96f22"
+    }
+  ],
+  "limits": [
+    "Full migration and every visual state remain incomplete",
+    "Windows host test engine failures are retained; Android target passed",
+    "No real account comments, reports, messages or submissions were sent",
+    "Honor Magic Android12, unknown-camera NEF, physical ARM64 and iPhone remain unverified"
+  ]
+}

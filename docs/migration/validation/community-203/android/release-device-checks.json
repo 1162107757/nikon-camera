@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+  "at": "2026-11-11T21:00:21.690108+00:00",
+  "applicationId": "cc.huevia.next",
+  "installedX64ApkSha256": "f1da5996b9769c54fdc69b651e247f7c7247dea98265431e3bf2cdfb04334340",
+  "androidApi": 31,
+  "observedPid": 9769,
+  "ownProcessCrashEntries": 0,
+  "allRecordedChecksPassed": true,
+  "checks": [
+    "Online library shows 391 records and the publishing entry",
+    "Online preset public discussion loads its empty state and scrolls above the footer",
+    "Guest publishing and comment actions open account login",
+    "Messages and submissions open independent root pages without floating navigation",
+    "Border has four real native thumbnails, six information fields, style/information/appearance tabs",
+    "Border appearance controls match the retained original 186 reference layout",
+    "Manual camera model selection retains Nikon Z6 III and offers automatic/manual modes",
+    "White information frame and Nikon logo render in the actual photo preview"
+  ],
+  "authenticatedMutationsVerified": false,
+  "physicalHonorMagicVerified": false,
+  "unknownCameraNefVerified": false,
+  "limits": [
+    "No real account content was posted, reported, or submitted",
+    "Guest API reads and owned QA fixture only",
+    "Pixel equality across every border combination is not claimed"
+  ]
+}

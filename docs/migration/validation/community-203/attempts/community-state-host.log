@@ -1,0 +1,14 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/community_state_test.dart
+00:00 +0: Reply recipient uses the explicit target and unavailable marker
+00:00 +1: Concurrent comment confirmation sends once and cannot reuse another owner receipt
+00:00 +2: Failed comment retry retains its key; editing creates a new reviewed body
+00:00 +3: Account change rejects an in-flight comment result and invalid reply IDs never send
+00:00 +4: Private list switches owner without allowing an old page to replace the new request
+00:00 +5: Failed next page preserves rows and retries the same page with duplicate IDs merged
+00:00 +6: Reply previews do not skip page one and a wrong response page never advances the cursor
+00:00 +7: Read acknowledgements survive paging but cannot replace a newer unread count
+00:00 +8: Malformed read acknowledgement does not mark unrelated messages read
+00:00 +9: Read-all accepts the server acknowledgement and refreshes the real unread count
+00:00 +10: Single read acknowledgement refreshes the badge without assuming a returned count
+00:00 +11: Disposed discussion ignores a pending page and never schedules another request
+00:00 +12: All tests passed!

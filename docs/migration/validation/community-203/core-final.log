@@ -1,0 +1,9 @@
+PASS: 2168 NCP phone-template approximation checks
+PASS 43230 local-edit checks; EXIF1-8, masks, clone snapshot, serialization, cancellation, 24MP bounded stream.
+PASS JPEG color matching 15575 checks; full-raster RGB RMSE 0.025863 -> 0.001274; heldout 0.025817 -> 0.001018
+PASS RAW highlight color 243 checks; unsafe-midtones-only fit UNSAFE_HIGHLIGHTS
+PASS 31 personal sync checks; consent, owner visibility, revisions, both conflict choices and deletion persistence
+PASS 35 durable submission checks; lost save/submit replies, account ownership, staged attachment limits
+PASS 270 shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots
+PASS 6 shared atmosphere checks; colour, alpha, ownership and bounded allocation
+Shared JVM golden: D:\dev\ai-project\nikon-camera\cross-platform\.build\core-jvm\golden.json
