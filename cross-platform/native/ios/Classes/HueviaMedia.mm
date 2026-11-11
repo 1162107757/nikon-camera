@@ -143,7 +143,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
 - (NSDictionary *)request:(NSString *)operation payload:(NSString *)payload task:(HueviaTask *)task {
   NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![p isKindOfClass:NSDictionary.class])fail(@"照片请求数据无效。");
   NSString *templateDirectory=[_root stringByAppendingPathComponent:@"preview-template"],*customTemplate=[templateDirectory stringByAppendingPathComponent:@"custom.jpg"];
-  if(![[templateDirectory stringByResolvingSymlinksInPath] isEqualToString:[[_root stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"preview-template"]]||![[customTemplate stringByResolvingSymlinksInPath] isEqualToString:[[templateDirectory stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"custom.jpg"]])fail(@"模板目录不可用。");
+  if(([operation hasPrefix:@"media.template"]||[operation isEqualToString:@"media.showcase"])&&(![[templateDirectory stringByResolvingSymlinksInPath] isEqualToString:[[_root stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"preview-template"]]||![[customTemplate stringByResolvingSymlinksInPath] isEqualToString:[[templateDirectory stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"custom.jpg"]]))fail(@"模板目录不可用。");
   if([operation hasPrefix:@"media.template"]){
     if([operation isEqualToString:@"media.templateSet"]){
       NSString *source=[[_runtime privateFileWithNSString:p[@"path"]] getPath];unsigned long long size=[[NSFileManager.defaultManager attributesOfItemAtPath:source error:nil] fileSize];
@@ -183,7 +183,8 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     NSString *directory=[_root stringByAppendingPathComponent:@"preset-previews"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建预设预览目录。");
     NSString *model=[[profile modelVersion] stringByReplacingOccurrencesOfString:@"[^a-zA-Z0-9_-]" withString:@"_" options:NSRegularExpressionSearch range:NSMakeRange(0,[[profile modelVersion] length])];
     BOOL original=[p[@"original"] boolValue];int edge=p[@"edge"]?[p[@"edge"] intValue]:480;if(edge!=480&&edge!=960)fail(@"预览尺寸无效。");
-    NSString *target=[directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-photography-v1-%@-%d-%d.jpg",presetID,scene,model,edge,original]];
+    NSString *cacheKey=hashText([NSString stringWithFormat:@"showcase-v2:%@:%@:%@:%d:%d",presetID,scene,model,edge,original]);
+    NSString *target=[directory stringByAppendingPathComponent:[cacheKey stringByAppendingString:@".jpg"]];
     if(![NSFileManager.defaultManager fileExistsAtPath:target]){
       HueviaRaster *raster=load(imageURL.path,_root,edge);if(!original)[profile renderPixelsWithCcHueviaNcpSpatialPreviewFilter_Pixels:raster withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
       NSString *temporary=[directory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];

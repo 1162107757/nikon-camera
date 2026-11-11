@@ -6,6 +6,7 @@ import 'domain.dart';
 import 'widgets.dart';
 import 'legacy_dialog.dart';
 import 'theme.dart';
+import 'help.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({
@@ -451,6 +452,16 @@ class _CameraPageState extends State<CameraPage> {
                   TextButton(
                     onPressed: () => widget.state.core.cancel(job),
                     child: const Text('取消操作'),
+                  ),
+                if (error != null && !busy)
+                  TextButton(
+                    onPressed: () => hueRootPage<void>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => DiagnosticsPage(state: widget.state),
+                      ),
+                    ),
+                    child: const Text('导出诊断报告'),
                   ),
               ],
             ),

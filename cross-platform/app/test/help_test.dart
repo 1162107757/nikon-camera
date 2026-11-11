@@ -76,6 +76,8 @@ void main() {
       expect(find.text('诊断报告'), findsOneWidget);
       expect(find.text('导出 JSON'), findsOneWidget);
       expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
       await tester.pumpWidget(
         MaterialApp(
           theme: hueviaTheme(Brightness.light),

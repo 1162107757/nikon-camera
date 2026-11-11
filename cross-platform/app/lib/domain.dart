@@ -36,8 +36,11 @@ class HueviaCore {
     final response = await _invoke('initialize', {});
     root = response['root'] as String;
     schema = object(response['schema']);
-    try { await call('media.templateInfo'); }
-    catch (_) { /* Template preferences must not block opening the library. */ }
+    try {
+      await call('media.templateInfo');
+    } catch (_) {
+      /* Template preferences must not block opening the library. */
+    }
   }
 
   Future<Json> _invoke(String method, Json arguments) async {
