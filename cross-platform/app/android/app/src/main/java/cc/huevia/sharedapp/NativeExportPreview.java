@@ -18,8 +18,8 @@ final class NativeExportPreview {
     private Session session;
     private static final class Session {
         String id,owner,source,model,spec; PhotoEditStore.Draft draft;
-        File folder,jpeg,reference,jpegDisplay,referenceDisplay;
-        BitmapRegionDecoder before,after; int width,height;
+        File folder,jpeg,reference;
+        BitmapRegionDecoder before,after; int width,height,orientation;
         long length,modified;
     }
     NativeExportPreview(Context context,SharedRuntime runtime){
@@ -46,13 +46,6 @@ final class NativeExportPreview {
     private static BitmapFactory.Options options(int sample){
         BitmapFactory.Options p=new BitmapFactory.Options();p.inSampleSize=sample;p.inScaled=false;
         p.inPreferredConfig=Bitmap.Config.ARGB_8888;p.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);return p;
-    }
-    private static void normalize(File source,File target,int orientation,BooleanSupplier cancel)throws IOException{
-        Bitmap bitmap=null;try{
-            bitmap=BitmapFactory.decodeFile(source.getPath(),options(1));if(bitmap==null)throw new IOException("成品方向读取失败。");
-            Bitmap next=PhotoComposition.apply(bitmap,PhotoGeometry.NONE,orientation);if(next!=bitmap)bitmap.recycle();bitmap=next;
-            check(cancel);try(FileOutputStream out=new FileOutputStream(target)){if(!bitmap.compress(Bitmap.CompressFormat.PNG,100,out))throw new IOException("成品方向归一失败。");out.getFD().sync();}
-        }finally{if(bitmap!=null)bitmap.recycle();}
     }
     String request(String operation,Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         check(cancel);
@@ -96,21 +89,17 @@ final class NativeExportPreview {
             if("image/jpeg".equals(info.outMimeType))PhotoPresetRenderer.forContext(context).renderWithReference(source,s.jpeg,s.reference,profile,spec,cancel,progress::accept);
             else NativeRaster.render(context,source,s.jpeg,s.reference,profile,spec,false,cancel,progress);
             check(cancel);valid(s);runtime.validateSource(s.source,s.draft.sourceSha);
-            int orientation=new ExifInterface(s.jpeg.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
-            s.jpegDisplay=s.jpeg;s.referenceDisplay=s.reference;
-            if(orientation>=2&&orientation<=8){
-                s.jpegDisplay=new File(s.folder,"jpeg-oriented.png");s.referenceDisplay=new File(s.folder,"reference-oriented.png");
-                normalize(s.jpeg,s.jpegDisplay,orientation,cancel);normalize(s.reference,s.referenceDisplay,orientation,cancel);
-            }
-            s.before=BitmapRegionDecoder.newInstance(s.referenceDisplay.getPath(),false);s.after=BitmapRegionDecoder.newInstance(s.jpegDisplay.getPath(),false);
+            s.orientation=new ExifInterface(s.jpeg.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
+            if(s.orientation<1||s.orientation>8)s.orientation=1;
+            s.before=BitmapRegionDecoder.newInstance(s.reference.getPath(),false);s.after=BitmapRegionDecoder.newInstance(s.jpeg.getPath(),false);
             if(s.before==null||s.after==null)throw new IOException("成品区域读取不可用。");
-            s.width=s.before.getWidth();s.height=s.before.getHeight();
-            if(s.width!=s.after.getWidth()||s.height!=s.after.getHeight())throw new IOException("成品与编码前尺寸不符。");
+            if(s.before.getWidth()!=s.after.getWidth()||s.before.getHeight()!=s.after.getHeight())throw new IOException("成品与编码前尺寸不符。");
+            s.width=s.orientation>=5?s.before.getHeight():s.before.getWidth();s.height=s.orientation>=5?s.before.getWidth():s.before.getHeight();
             PhotoExportSpec.Resolved resolved=spec.resolve(s.width,s.height);s.spec=resolved.identity();s.model=SharedExportModel.of(profile,resolved);
             double overviewScale=Math.min(1,256.0/Math.max(s.width,s.height));
             int overviewWidth=Math.max(1,(int)Math.round(s.width*overviewScale)),overviewHeight=Math.max(1,(int)Math.round(s.height*overviewScale));
             File overview=new File(s.folder,"overview.png");
-            surface(s.after,overview,overviewWidth,overviewHeight,Math.min(overviewWidth/(double)s.width,overviewHeight/(double)s.height),s.width/2.0,s.height/2.0,cancel);
+            surface(s.after,s.orientation,overview,overviewWidth,overviewHeight,Math.min(overviewWidth/(double)s.width,overviewHeight/(double)s.height),s.width/2.0,s.height/2.0,cancel);
             session=s;ready=true;return SharedJson.encode(SharedRuntime.map("id",s.id,"width",s.width,"height",s.height,
                 "overview",overview.getPath(),"bytes",s.jpeg.length(),"sha256",PhotoEditStore.hashFile(s.jpeg),"quality",resolved.quality,"exportSpec",s.spec));
         }finally{if(!ready){if(s.before!=null)s.before.recycle();if(s.after!=null)s.after.recycle();remove(s.folder);}}
@@ -126,24 +115,27 @@ final class NativeExportPreview {
         double scale=number(p,"scale",fit,Math.min(fit,.00001),32),cx=number(p,"cx",.5,0,1)*s.width,cy=number(p,"cy",.5,0,1)*s.height;
         File before=new File(s.folder,UUID.randomUUID()+".png"),after=new File(s.folder,UUID.randomUUID()+".png");boolean ready=false;
         try{
-            surface(s.before,before,w,h,scale,cx,cy,cancel);surface(s.after,after,w,h,scale,cx,cy,cancel);
+            surface(s.before,s.orientation,before,w,h,scale,cx,cy,cancel);surface(s.after,s.orientation,after,w,h,scale,cx,cy,cancel);
             check(cancel);valid(s);ready=true;return SharedJson.encode(SharedRuntime.map("before",before.getPath(),"jpeg",after.getPath(),"width",w,"height",h));
         }finally{if(!ready){before.delete();after.delete();}}
     }
-    private static void surface(BitmapRegionDecoder decoder,File file,int w,int h,double scale,double cx,double cy,BooleanSupplier cancel)throws IOException{
+    private static void surface(BitmapRegionDecoder decoder,int orientation,File file,int w,int h,double scale,double cx,double cy,BooleanSupplier cancel)throws IOException{
         Bitmap canvasBitmap=null,tile=null;
         try{
             check(cancel);canvasBitmap=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);Canvas canvas=new Canvas(canvasBitmap);canvas.drawColor(0xff0a0908);
             int sample=1;while(sample<64&&sample*2*scale<=1)sample*=2;
+            Matrix toDisplay=new Matrix();toDisplay.setValues(PhotoGeometry.NONE.plan(decoder.getWidth(),decoder.getHeight(),orientation).matrix());
+            Matrix toSource=new Matrix();if(!toDisplay.invert(toSource))throw new IOException("成品方向变换无效。");
+            RectF visible=new RectF((float)(cx-w/(2*scale)),(float)(cy-h/(2*scale)),(float)(cx+w/(2*scale)),(float)(cy+h/(2*scale)));
+            toSource.mapRect(visible);
             // Include JPEG chroma neighbours, preserving all real pixels at 100%.
             int halo=32*sample;
-            Rect region=new Rect(Math.max(0,(int)Math.floor(cx-w/(2*scale))-halo),Math.max(0,(int)Math.floor(cy-h/(2*scale))-halo),
-                Math.min(decoder.getWidth(),(int)Math.ceil(cx+w/(2*scale))+halo),Math.min(decoder.getHeight(),(int)Math.ceil(cy+h/(2*scale))+halo));
+            Rect region=new Rect(Math.max(0,(int)Math.floor(visible.left)-halo),Math.max(0,(int)Math.floor(visible.top)-halo),
+                Math.min(decoder.getWidth(),(int)Math.ceil(visible.right)+halo),Math.min(decoder.getHeight(),(int)Math.ceil(visible.bottom)+halo));
             if(!region.isEmpty()){
                 tile=decoder.decodeRegion(region,options(sample));if(tile==null)throw new IOException("成品区域解码失败。");
-                RectF dest=new RectF((float)(w/2.0+(region.left-cx)*scale),(float)(h/2.0+(region.top-cy)*scale),
-                    (float)(w/2.0+(region.right-cx)*scale),(float)(h/2.0+(region.bottom-cy)*scale));
-                canvas.drawBitmap(tile,null,dest,new Paint(scale!=1?Paint.FILTER_BITMAP_FLAG:0));
+                canvas.translate((float)(w/2.0-cx*scale),(float)(h/2.0-cy*scale));canvas.scale((float)scale,(float)scale);canvas.concat(toDisplay);
+                canvas.drawBitmap(tile,null,new RectF(region),new Paint(scale!=1?Paint.FILTER_BITMAP_FLAG:0));
             }
             check(cancel);try(FileOutputStream out=new FileOutputStream(file)){if(!canvasBitmap.compress(Bitmap.CompressFormat.PNG,100,out))throw new IOException("视口保存失败。");}
         }finally{if(tile!=null)tile.recycle();if(canvasBitmap!=null)canvasBitmap.recycle();}

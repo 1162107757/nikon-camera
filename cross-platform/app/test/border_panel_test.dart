@@ -104,28 +104,30 @@ void main() {
               child: child!,
             ),
             home: Scaffold(
-              body: StatefulBuilder(
-                builder: (context, refresh) => Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    height: setting.$1.width > setting.$1.height ? 160 : 184,
-                    child: BorderPanel(
-                      state: state,
-                      photo: Photo(core.source.path, 'own.png', {}),
-                      owner: '',
-                      recipe: recipe,
-                      enabled: true,
-                      canUndo: true,
-                      canRedo: true,
-                      onUndo: () =>
-                          refresh(() => recipe['border'] = {'template': 0}),
-                      onRedo: () {},
-                      onDragStart: () => checkpoints++,
-                      onChanged: (border, snapshot) => refresh(() {
-                        recipe['border'] = border;
-                        mutations.add(object(jsonDecode(jsonEncode(border))));
-                        if (snapshot) checkpoints++;
-                      }),
+              body: SafeArea(
+                child: StatefulBuilder(
+                  builder: (context, refresh) => Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      height: setting.$1.width > setting.$1.height ? 160 : 184,
+                      child: BorderPanel(
+                        state: state,
+                        photo: Photo(core.source.path, 'own.png', {}),
+                        owner: '',
+                        recipe: recipe,
+                        enabled: true,
+                        canUndo: true,
+                        canRedo: true,
+                        onUndo: () =>
+                            refresh(() => recipe['border'] = {'template': 0}),
+                        onRedo: () {},
+                        onDragStart: () => checkpoints++,
+                        onChanged: (border, snapshot) => refresh(() {
+                          recipe['border'] = border;
+                          mutations.add(object(jsonDecode(jsonEncode(border))));
+                          if (snapshot) checkpoints++;
+                        }),
+                      ),
                     ),
                   ),
                 ),
@@ -153,17 +155,24 @@ void main() {
         expect(core.calls.where((c) => c.$1 == 'media.preview'), hasLength(4));
         expect(object(recipe['geometry'])['left'], 123456);
 
+        expect(
+          find.byKey(const ValueKey('border-information-list')),
+          findsOneWidget,
+        );
+
         final scroll = find
             .descendant(
               of: find.byKey(const ValueKey('border-information-list')),
-              matching: find.byType(Scrollable),
+              matching: find.byWidgetPredicate((w) => w is Scrollable),
             )
             .first;
         await tester.scrollUntilVisible(
           find.text('ISO'),
           80,
           scrollable: scroll,
+          continuous: true,
         );
+      await tester.pumpAndSettle();
         await tester.tap(find.text('ISO'));
         await tester.pumpAndSettle();
         expect(find.text('原图值：ISO200'), findsOneWidget);
@@ -177,6 +186,7 @@ void main() {
           find.text('设置'),
           100,
           scrollable: scroll,
+          continuous: true,
         );
         await tester.pumpAndSettle();
         await tester.ensureVisible(find.text('设置'));
@@ -196,6 +206,7 @@ void main() {
             find.byKey(ValueKey('border-appearance-$key')),
             80,
             scrollable: appearanceScroll,
+            continuous: true,
           );
           await tester.pumpAndSettle();
           expect(
@@ -208,15 +219,17 @@ void main() {
           margin,
           -100,
           scrollable: appearanceScroll,
+          continuous: true,
         );
         await tester.pumpAndSettle();
-        await tester.drag(margin, const Offset(24, 0));
+        await tester.drag(margin, const Offset(120, 0), touchSlopX: 64);
         await settle(tester);
         expect(object(recipe['border'])['margin'], isNot(100));
         await tester.scrollUntilVisible(
           find.text('Logo · 跟随模板'),
           100,
           scrollable: appearanceScroll,
+          continuous: true,
         );
         await tester.pumpAndSettle();
         await tester.tap(find.text('Logo · 跟随模板'));
@@ -242,6 +255,7 @@ void main() {
           showIso,
           100,
           scrollable: informationScroll,
+          continuous: true,
         );
         await tester.pumpAndSettle();
         await tester.tap(showIso);
@@ -253,9 +267,11 @@ void main() {
         await tester.tap(find.byTooltip('关闭边框设置'));
         await tester.pumpAndSettle();
 
-        await tester.drag(
-          find.byKey(const ValueKey('border-information-list')),
-          const Offset(0, 1200),
+        await tester.scrollUntilVisible(
+          find.text('机型'),
+          -100,
+          scrollable: scroll,
+          continuous: true,
         );
         await settle(tester);
         await tester.tap(find.text('机型'));

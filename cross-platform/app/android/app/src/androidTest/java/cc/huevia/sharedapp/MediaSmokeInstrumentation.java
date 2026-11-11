@@ -9,6 +9,8 @@ import cc.huevia.account.AccountRepository;
 import cc.huevia.album.PhotoEditStore;
 import cc.huevia.album.PhotoExportSpec;
 import cc.huevia.album.PhotoPresetRenderer;
+import cc.huevia.album.PhotoComposition;
+import cc.huevia.ncp.PhotoGeometry;
 import cc.huevia.album.RawDeveloper;
 import cc.huevia.library.SharedJson;
 import cc.huevia.shared.SharedRuntime;
@@ -107,6 +109,23 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             request.put("maxEdge",128);Map<String,Object> thumbnail=SharedJson.object(media.request("media.preview",SharedJson.encode(request),()->false,p->{}));
             yes(((Number)thumbnail.get("width")).intValue()==96&&((Number)thumbnail.get("height")).intValue()==128,"bounded EXIF-oriented border thumbnail");
             request.put("maxEdge",127);try{media.request("media.preview",SharedJson.encode(request),()->false,p->{});throw new AssertionError("unbounded thumbnail accepted");}catch(IOException expected){checks++;}request.remove("maxEdge");
+            for(int direction=1;direction<=8;direction++){
+                File oriented=new File(workspace,"preview-exif-"+direction+".jpg");Files.copy(orient.toPath(),oriented.toPath());
+                ExifInterface tags=new ExifInterface(oriented.getPath());tags.setAttribute("Orientation",Integer.toString(direction));tags.saveAttributes();
+                Map<String,Object> frozen=SharedRuntime.map("path",oriented.getPath(),"owner","","size","full","recipe",SharedRuntime.map("schema",1));
+                Map<String,Object> header=SharedJson.object(media.request("media.exportPreview",SharedJson.encode(frozen),()->false,p->{}));
+                Map<String,Object> frame=SharedJson.object(media.request("media.exportPreviewFrame",SharedJson.encode(SharedRuntime.map("id",header.get("id"),"width",header.get("width"),"height",header.get("height"),"scale",1,"cx",.5,"cy",.5)),()->false,p->{}));
+                File folder=new File((String)header.get("overview")).getParentFile();boolean exact=true;
+                for(String[] pair:new String[][]{{"jpeg","encoded.jpg"},{"before","reference.png"}}){
+                    Bitmap raw=BitmapFactory.decodeFile(new File(folder,pair[1]).getPath()),expected=PhotoComposition.apply(raw,PhotoGeometry.NONE,direction),actual=BitmapFactory.decodeFile((String)frame.get(pair[0]));
+                    try{
+                        if(expected.getWidth()!=actual.getWidth()||expected.getHeight()!=actual.getHeight()){exact=false;continue;}
+                        int[] a=new int[expected.getWidth()*expected.getHeight()],b=new int[a.length];expected.getPixels(a,0,expected.getWidth(),0,0,expected.getWidth(),expected.getHeight());actual.getPixels(b,0,actual.getWidth(),0,0,actual.getWidth(),actual.getHeight());exact&=Arrays.equals(a,b);
+                    }finally{if(expected!=raw)expected.recycle();raw.recycle();actual.recycle();}
+                }
+                yes(exact,"region preview exactly matches original composition for EXIF "+direction);
+                media.request("media.exportPreviewClose",SharedJson.encode(SharedRuntime.map("id",header.get("id"))),()->false,p->{});
+            }
             Map<String,Object> rotated=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             yes(((Number)rotated.get("width")).intValue()==192&&((Number)rotated.get("height")).intValue()==256,"EXIF orientation applied once");
             int count=new File(workspace,"exports").list().length;
