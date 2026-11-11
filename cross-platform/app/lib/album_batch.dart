@@ -43,6 +43,7 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
       appBar: HueHeader(
         title: '已选 ${selected.length} 张',
         compact: MediaQuery.sizeOf(context).height < 480,
+        endPadding: 12,
         navigation: HueIconButton(
           kind: HueIconKind.close,
           label: '取消选择',
@@ -50,9 +51,21 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          TextButton(
-            onPressed: () => toggle(widget.rows),
-            child: Text(selected.length == widget.rows.length ? '取消全选' : '全选'),
+          const SizedBox(width: 8),
+          SizedBox(
+            width: 64,
+            height: 48,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: p.secondary,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                textStyle: const TextStyle(fontSize: 14, height: 1.17),
+              ),
+              onPressed: () => toggle(widget.rows),
+              child: Text(
+                selected.length == widget.rows.length ? '取消全选' : '全选',
+              ),
+            ),
           ),
         ],
       ),
@@ -65,18 +78,26 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
                 labels: const ['应用相册', '手机相册'],
                 selected: widget.phone ? 1 : 0,
                 onSelected: (_) {},
+                enabled: false,
               ),
             ),
           ),
           SizedBox(
             height: 52,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24),
-                child: Text(
-                  '共 ${widget.rows.length} 张',
-                  style: TextStyle(fontSize: 12, color: p.secondary),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 24),
+                  child: Text(
+                    '共 ${widget.rows.length} 张',
+                    style: TextStyle(
+                      fontSize: 12,
+                      height: 1.35,
+                      color: p.secondary,
+                    ),
+                  ),
                 ),
               ),
             ),

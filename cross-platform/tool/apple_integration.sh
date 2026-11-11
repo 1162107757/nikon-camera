@@ -3,6 +3,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="$ROOT/cross-platform/.build/mobile-apple"
 STARTED="$(date +%s)"
+GALLERY_GRANT_PID=""
 DEVICE="$(python3 - <<'PY'
 import json,subprocess
 devices=json.loads(subprocess.check_output(['xcrun','simctl','list','devices','available','-j']))['devices']
@@ -16,6 +17,7 @@ PY
 )"
 finish() {
   code=$?
+  if [[ -n "$GALLERY_GRANT_PID" ]]; then kill "$GALLERY_GRANT_PID" >/dev/null 2>&1 || true; wait "$GALLERY_GRANT_PID" >/dev/null 2>&1 || true; fi
   if [[ "$code" != 0 ]]; then
     # Flutter loses its VM connection on native aborts. Keep the actual Apple
     # exception report and unified log before the ephemeral runner is removed.
@@ -59,7 +61,7 @@ if [[ "$SIM_ARCH" != arm64 && "$SIM_ARCH" != x86_64 ]]; then echo "Unsupported s
 xcrun simctl list devices available -j > "$WORK/simulator-devices.json"
 xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
-  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build > "$WORK/simulator-build.log" 2>&1
+  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build-for-testing > "$WORK/simulator-build.log" 2>&1
 SIM_APP="$(python3 - "$ROOT/cross-platform/app/build/ios" <<'PY'
 from pathlib import Path
 import plistlib,sys
@@ -73,7 +75,20 @@ PY
 xcrun simctl install "$DEVICE" "$SIM_APP"
 xcrun simctl privacy "$DEVICE" grant photos cc.huevia.next
 xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
-xcrun xcodebuild test -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
+# Xcode can reinstall the test host after the explicit simctl installation,
+# invalidating TCC authorization. Reapply the real simulator grant through
+# that installation boundary; the Dart suite still requires full access and
+# validates the original resource SHA. This helper affects only this CI VM.
+(
+  while true; do
+    if xcrun simctl privacy "$DEVICE" grant photos cc.huevia.next; then
+      echo "$(date -u +%FT%TZ) PhotoKit grant applied to $DEVICE"
+    fi
+    sleep 2
+  done
+) > "$WORK/gallery-permission.log" 2>&1 &
+GALLERY_GRANT_PID=$!
+xcrun xcodebuild test-without-building -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
   "BUILD_DIR=$ROOT/cross-platform/app/build/ios" -only-testing:RunnerTests \
   -resultBundlePath "$WORK/simulator-tests.xcresult" \

@@ -89,7 +89,16 @@ void main() {
 
       try {
         if (Platform.isIOS) {
-          final access = await core.call('gallery.access');
+          var access = await core.call('gallery.access');
+          for (
+            var attempt = 0;
+            attempt < 20 && access['access'] != 'full';
+            attempt++
+          ) {
+            await Future<void>.delayed(const Duration(milliseconds: 500));
+            access = await core.call('gallery.access');
+          }
+          debugPrint('PhotoKit test authorization: $access');
           expect(access['access'], 'full');
           expect(access['alternateBasis'], 'modified');
           Json? fixture;

@@ -281,10 +281,12 @@ class CapsuleSwitch extends StatelessWidget {
     required this.labels,
     required this.selected,
     required this.onSelected,
+    this.enabled = true,
   });
   final List<String> labels;
   final int selected;
   final ValueChanged<int> onSelected;
+  final bool enabled;
   @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
@@ -299,33 +301,37 @@ class CapsuleSwitch extends StatelessWidget {
         children: [
           for (var i = 0; i < labels.length; i++)
             Expanded(
-              child: Semantics(
-                selected: i == selected,
-                button: true,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => onSelected(i),
-                  child: Center(
-                    child: Container(
-                      height: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: i == selected
-                            ? p.home && p.dark
-                                  ? const Color(0xff4b4640)
-                                  : p.card
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        labels[i],
-                        style: TextStyle(
-                          fontSize: 13,
-                          height: 1.2,
-                          fontWeight: i == selected
-                              ? FontWeight.w700
-                              : FontWeight.w400,
-                          color: i == selected ? p.ink : p.secondary,
+              child: Opacity(
+                opacity: enabled ? 1 : .68,
+                child: Semantics(
+                  enabled: enabled,
+                  selected: i == selected,
+                  button: true,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: enabled ? () => onSelected(i) : null,
+                    child: Center(
+                      child: Container(
+                        height: 40,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: i == selected
+                              ? p.home && p.dark
+                                    ? const Color(0xff4b4640)
+                                    : p.card
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          labels[i],
+                          style: TextStyle(
+                            fontSize: 13,
+                            height: 1.2,
+                            fontWeight: i == selected
+                                ? FontWeight.w700
+                                : FontWeight.w400,
+                            color: i == selected ? p.ink : p.secondary,
+                          ),
                         ),
                       ),
                     ),
@@ -347,6 +353,7 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
     this.back = false,
     this.leading,
     this.navigation,
+    this.endPadding = 16,
     this.compact = false,
   });
   final String title;
@@ -354,6 +361,7 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
   final bool back, compact;
   final Widget? leading;
   final Widget? navigation;
+  final double endPadding;
   @override
   Size get preferredSize => Size.fromHeight(
     compact
@@ -375,7 +383,7 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
             padding: EdgeInsets.fromLTRB(
               back || navigation != null ? 8 : 20,
               compact ? 0 : 8,
-              16,
+              endPadding,
               compact ? 0 : 4,
             ),
             child: Row(

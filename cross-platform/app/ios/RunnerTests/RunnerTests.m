@@ -7,6 +7,7 @@
 @implementation RunnerTests
 - (void)testNativePipeline {
   self.executionTimeAllowance = 360;
+  NSLog(@"Huevia test host: %@ simulator %@", NSBundle.mainBundle.bundleIdentifier, NSProcessInfo.processInfo.environment[@"SIMULATOR_UDID"]);
   __block NSUInteger completed = 0;
   FLTIntegrationTestRunner *runner = [[FLTIntegrationTestRunner alloc] init];
   [runner testIntegrationTestWithResults:^(SEL selector, BOOL success, NSString *failure) {

@@ -454,51 +454,54 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
                 height: 52,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4),
-                        child: Text(
-                          phone && access == 'none'
-                              ? '未授权'
-                              : query.isNotEmpty
-                              ? '匹配 ${rows.length} 张 · $query'
-                              : '共 ${rows.length} 张',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 12,
-                            height: 1.35,
-                            color: p.secondary,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: Text(
+                            phone && access == 'none'
+                                ? '未授权'
+                                : query.isNotEmpty
+                                ? '匹配 ${rows.length} 张 · $query'
+                                : '共 ${rows.length} 张',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                              height: 1.35,
+                              color: p.secondary,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    HueIconButton(
-                      kind: HueIconKind.sort,
-                      label:
-                          '排序，${added ? alternateLabel : '拍摄时间'}，${oldest ? '旧到新' : '新到旧'}',
-                      disc: false,
-                      iconSize: 20,
-                      onPressed: sort,
-                    ),
-                    TextButton(
-                      onPressed: rows.isEmpty
-                          ? null
-                          : () => hueRootPage<void>(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => AlbumSelectionPage(
-                                  state: state,
-                                  rows: List<Json>.from(rows),
-                                  phone: phone,
+                      HueIconButton(
+                        kind: HueIconKind.sort,
+                        label:
+                            '排序，${added ? alternateLabel : '拍摄时间'}，${oldest ? '旧到新' : '新到旧'}',
+                        disc: false,
+                        iconSize: 20,
+                        onPressed: sort,
+                      ),
+                      TextButton(
+                        onPressed: rows.isEmpty
+                            ? null
+                            : () => hueRootPage<void>(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => AlbumSelectionPage(
+                                    state: state,
+                                    rows: List<Json>.from(rows),
+                                    phone: phone,
+                                  ),
                                 ),
                               ),
-                            ),
-                      child: const Text('选择'),
-                    ),
-                  ],
+                        child: const Text('选择'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
