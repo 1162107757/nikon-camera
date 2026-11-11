@@ -381,6 +381,7 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               children: [
                 ?navigation,
+                if (navigation != null) const SizedBox(width: 8),
                 if (back)
                   HueIconButton(
                     kind: HueIconKind.back,

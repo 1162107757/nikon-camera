@@ -157,40 +157,56 @@ void main() {
       throwsA(isA<AppFailure>()),
     );
   });
-  testWidgets(
-    'Album selection groups photos and opens a full-page batch with fixed actions',
-    (tester) async {
-      final (state, _, rows) = setup();
-      tester.view.physicalSize = const Size(375, 812);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(() {
-        tester.view.resetPhysicalSize();
-        tester.view.resetDevicePixelRatio();
-      });
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: hueviaTheme(Brightness.light),
-          home: AlbumSelectionPage(state: state, rows: rows, phone: false),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(
-        tester
-            .widget<FilledButton>(find.widgetWithText(FilledButton, '批量编辑'))
-            .onPressed,
-        isNull,
-      );
-      await tester.tap(find.byTooltip('日期未知，共 2 张，选择整组'));
-      await tester.pumpAndSettle();
-      expect(find.text('已选 2 张'), findsOneWidget);
-      await tester.tap(find.text('批量编辑'));
-      await tester.pumpAndSettle();
-      expect(find.text('开始批量导出'), findsOneWidget);
-      await tester.tap(find.text('开始批量导出'));
-      await tester.pumpAndSettle();
-      expect(find.text('已保存 2/2 张'), findsOneWidget);
-      expect(find.text('分享已完成的 2 张'), findsOneWidget);
-      expect(tester.takeException(), isNull);
-    },
-  );
+  for (final viewport in const [
+    (Size(375, 812), 1.0),
+    (Size(375, 812), 2.0),
+    (Size(812, 375), 2.0),
+  ]) {
+    testWidgets(
+      'Album selection groups photos and opens a full-page batch with fixed actions at $viewport',
+      (tester) async {
+        final (state, _, rows) = setup();
+        tester.view.physicalSize = viewport.$1;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(() {
+          tester.view.resetPhysicalSize();
+          tester.view.resetDevicePixelRatio();
+        });
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: hueviaTheme(Brightness.light),
+            builder: (context, child) => MediaQuery(
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(viewport.$2)),
+              child: child!,
+            ),
+            home: AlbumSelectionPage(state: state, rows: rows, phone: false),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(
+          tester
+              .widget<TextButton>(find.widgetWithText(TextButton, '批量编辑'))
+              .onPressed,
+          isNull,
+        );
+        await tester.tap(find.byTooltip('日期未知，共 2 张，选择整组'));
+        await tester.pumpAndSettle();
+        expect(find.text('已选 2 张'), findsOneWidget);
+        await tester.tap(find.text('批量编辑'));
+        await tester.pumpAndSettle();
+        expect(find.text('开始批量导出'), findsOneWidget);
+        await tester.tap(find.text('开始批量导出'));
+        await tester.pumpAndSettle();
+        await tester.scrollUntilVisible(
+          find.text('已保存 2/2 张'),
+          180,
+          scrollable: find.byType(Scrollable).first,
+        );
+        expect(find.text('已保存 2/2 张'), findsOneWidget);
+        expect(find.text('分享已完成的 2 张'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
 }

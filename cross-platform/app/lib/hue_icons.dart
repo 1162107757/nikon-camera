@@ -42,6 +42,7 @@ enum HueIconKind {
   palette,
   frame,
   check,
+  edit,
 }
 
 class HueIcon extends StatelessWidget {
@@ -184,6 +185,18 @@ class _Painter extends CustomPainter {
         line([4, 7, 8, 3, 12, 7]);
         line([16, 3, 16, 21]);
         line([12, 17, 16, 21, 20, 17]);
+      case HueIconKind.edit:
+        final pencil = Path()
+          ..moveTo(4, 16)
+          ..lineTo(15.7, 4.3)
+          ..quadraticBezierTo(17.5, 2.5, 19.3, 4.3)
+          ..lineTo(19.7, 4.7)
+          ..quadraticBezierTo(21.5, 6.5, 19.7, 8.3)
+          ..lineTo(8, 20)
+          ..lineTo(3, 21)
+          ..close();
+        canvas.drawPath(pencil, ink);
+        line([14, 6, 18, 10]);
       case HueIconKind.presets:
         round(3, 3, 21, 21, 2);
         circle(8, 8, 1.6);

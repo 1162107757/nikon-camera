@@ -1,5 +1,6 @@
 #import "HueviaGallery.h"
 #import <Photos/Photos.h>
+#import <PhotosUI/PhotosUI.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "cc/huevia/shared/SharedImport.h"

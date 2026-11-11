@@ -42,9 +42,11 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
     return Scaffold(
       appBar: HueHeader(
         title: '已选 ${selected.length} 张',
+        compact: MediaQuery.sizeOf(context).height < 480,
         navigation: HueIconButton(
           kind: HueIconKind.close,
           label: '取消选择',
+          disc: false,
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
@@ -93,26 +95,99 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
           ),
         ],
       ),
-      bottomNavigationBar: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(28, 8, 28, 12),
-          child: FilledButton(
-            onPressed: selected.isEmpty
-                ? null
-                : () => hueRootPage<void>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BatchExportPage(
-                        state: widget.state,
-                        phone: widget.phone,
-                        rows: widget.rows
-                            .where((row) => selected.contains(row['id']))
-                            .toList(),
+      bottomNavigationBar: _SelectionDock(
+        onPressed: selected.isEmpty
+            ? null
+            : () => hueRootPage<void>(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BatchExportPage(
+                    state: widget.state,
+                    phone: widget.phone,
+                    rows: widget.rows
+                        .where((row) => selected.contains(row['id']))
+                        .toList(),
+                  ),
+                ),
+              ),
+      ),
+    );
+  }
+}
+
+class _SelectionDock extends StatelessWidget {
+  const _SelectionDock({required this.onPressed});
+  final VoidCallback? onPressed;
+  @override
+  Widget build(BuildContext context) {
+    final p = HuePalette.of(context);
+    final extra =
+        ((MediaQuery.textScalerOf(context).scale(12) / 12 - 1.3).clamp(
+                  0,
+                  double.infinity,
+                ) *
+                20)
+            .round();
+    final compact = MediaQuery.sizeOf(context).height < 480;
+    final height = (compact ? 64.0 : 76.0) + extra;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 14),
+        child: Center(
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Material(
+              color: p.card,
+              elevation: 6,
+              shadowColor: const Color(0x18000000),
+              borderRadius: BorderRadius.circular(24),
+              child: SizedBox(
+                width: double.infinity,
+                height: height,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  child: TextButton(
+                    onPressed: onPressed,
+                    style: TextButton.styleFrom(
+                      foregroundColor: p.ink,
+                      disabledForegroundColor: p.ink.withValues(alpha: .45),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: compact ? 0 : 6,
+                      ),
+                      minimumSize: const Size(0, 48),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      textStyle: const TextStyle(
+                        fontSize: 12,
+                        height: 1.17,
+                        letterSpacing: 0,
                       ),
                     ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        HueIcon(
+                          HueIconKind.edit,
+                          size: 24,
+                          color: onPressed == null
+                              ? p.ink.withValues(alpha: .45)
+                              : p.ink,
+                        ),
+                        const SizedBox(height: 6),
+                        const Text('批量编辑'),
+                      ],
+                    ),
                   ),
-            child: const Text('批量编辑'),
+                ),
+              ),
+            ),
           ),
         ),
       ),
