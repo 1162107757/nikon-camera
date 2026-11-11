@@ -606,8 +606,7 @@ public final class MainActivity extends Activity {
                 && (!localAlbumTab || !localPhotoEditor.isImmersive());
         colors = homeRoot || connectionWorkspace() || settingsTab && album.isConnectionGuide()
                 ? UiPalette.home(this) : new UiPalette(this); imageEpoch++;
-        if (ready && albumTab && !wirelessGuide && !recoveryBlocked && !busy && confirmation == null && importOutcome == null
-                && album.wantsCameraPhotos()) connections.prepareAlbumFromCurrent(false);
+        prepareVisibleCameraAlbum();
         album.setSharedCameraState(hasPreparedWireless() || album.hasCameraConnection(), connections.isPreparingAlbum(),
                 connections.albumPreparationError(), () -> {
                     if (recoveryBlocked) { notice("请先核对上次导入", "先完成只读核对，再继续浏览相机照片。"); return; }
@@ -1260,6 +1259,13 @@ public final class MainActivity extends Activity {
         return owner != null && owner.isPrepared();
     }
 
+    private void prepareVisibleCameraAlbum() {
+        if (ready && albumTab && !wirelessGuide && !recoveryBlocked && !busy
+                && confirmation == null && importOutcome == null && album.wantsCameraPhotos()) {
+            connections.prepareAlbumFromCurrent(false);
+        }
+    }
+
     private void syncConnectionState() {
         if (destroyed || connections == null) return;
         boolean shellChanged = false;
@@ -1305,6 +1311,9 @@ public final class MainActivity extends Activity {
                 importOutcome = new ImportOutcome("相机连接已断开", "本次尚未写入，请重新连接后读取槽位。",
                         plan.preset.displayName, plan.model, plan.target(), false, false);
             }
+            // A connect/import lease can defer the first inventory read. Its release need not
+            // change ConnectionUiState, so resume visible album demand before comparing UI state.
+            prepareVisibleCameraAlbum();
             // Automatic preset work also publishes runtime events for every queued item and lease.
             // AlbumPanel's live/preset listeners update those views in place; rebuilding the shell
             // here would reset the hero image, progress indicator and scroll position on each event.

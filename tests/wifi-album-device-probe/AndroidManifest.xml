@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.wifialbumqa">
+    <application android:label="Wi-Fi album regression QA" android:allowBackup="false" android:debuggable="false" />
+    <instrumentation android:name=".WifiAlbumProbe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+</manifest>

@@ -21,7 +21,14 @@ import java.util.function.LongSupplier;
 /** Bounded PTP/IP initiator with separate album and explicitly requested Picture Control modes. */
 public final class PtpIpClient implements PhotoCameraClient {
     public interface SocketConnector { Socket connect(String host, int port, int timeoutMs) throws IOException; }
+    /** A setup timeout whose message identifies the failed channel/handshake phase. */
+    public static final class SetupTimeoutException extends SocketTimeoutException {
+        private SetupTimeoutException(String message, SocketTimeoutException cause) {
+            super(message); initCause(cause);
+        }
+    }
     private static final int CONTROL_TIMEOUT = 30000;
+    private static final int CONTROL_READ_TIMEOUT = 15000;
     private static final int DOWNLOAD_TIMEOUT = 600000;
     private static final int DOWNLOAD_IDLE_TIMEOUT = 90000;
     private static final long MAX_DOWNLOAD = 512L * 1024 * 1024;
@@ -39,6 +46,7 @@ public final class PtpIpClient implements PhotoCameraClient {
     private volatile boolean protocolUnconfirmed;
     private volatile Runnable onClosed;
     private volatile java.util.function.LongConsumer onObjectAdded;
+    private volatile java.util.function.Consumer<ConnectionStage> connectionStageListener;
     private String cameraIdentity = "";
     private boolean started;
     private boolean cancelled;
@@ -237,8 +245,10 @@ public final class PtpIpClient implements PhotoCameraClient {
             connectedHost = host.trim(); connectedPort = port;
             closed = false;
         }
+        String phase = "连接相机 Wi-Fi 通道";
         try {
             checkClosed();
+            connectionStage(ConnectionStage.CONNECTING_CAMERA);
             Socket command = connector.connect(host, port, 5000);
             install(command, false);
             command.setTcpNoDelay(true);
@@ -248,8 +258,11 @@ public final class PtpIpClient implements PhotoCameraClient {
             ByteArrayOutputStream init = new ByteArrayOutputStream();
             init.write(guid.clone()); init.write(name); put32(init, 0x00010000);
             send(output, 1, init.toByteArray());
-            Header ack = header(input, deadline(CONTROL_TIMEOUT), command);
-            byte[] ackData = body(input, ack, 1024, deadline(CONTROL_TIMEOUT), command);
+            phase = "等待相机确认连接";
+            connectionStage(ConnectionStage.WAITING_CONFIRMATION);
+            long commandDeadline = deadline(CONTROL_TIMEOUT);
+            Header ack = header(input, commandDeadline, command, null, CONTROL_TIMEOUT);
+            byte[] ackData = body(input, ack, 1024, commandDeadline, command, null, CONTROL_TIMEOUT);
             if (ack.type == 5) throw new IOException("相机拒绝无线连接。请在相机中确认连接，或检查其是否要求配对认证。");
             if (ack.type != 2 || ackData.length < 26) throw new IOException("相机没有返回受支持的无线握手。");
             long connectionNumber = u32(ackData, 0);
@@ -257,17 +270,23 @@ public final class PtpIpClient implements PhotoCameraClient {
             StringBuilder camera = new StringBuilder(32);
             for (int i = 4; i < 20; i++) camera.append(String.format(java.util.Locale.ROOT, "%02x", ackData[i] & 255));
             cameraIdentity = camera.toString();
+            phase = "连接相机事件通道";
+            connectionStage(ConnectionStage.CONNECTING_CAMERA);
             Socket events = connector.connect(host, port, 5000);
             install(events, true);
             events.setTcpNoDelay(true); events.setSoTimeout(15000);
             ByteArrayOutputStream eventInit = new ByteArrayOutputStream(); put32(eventInit, connectionNumber);
             send(events.getOutputStream(), 3, eventInit.toByteArray());
-            Header eventAck = header(events.getInputStream(), deadline(CONTROL_TIMEOUT), events);
-            byte[] eventBody = body(events.getInputStream(), eventAck, 1024, deadline(CONTROL_TIMEOUT), events);
+            phase = "等待相机事件通道确认";
+            long eventDeadline = deadline(CONTROL_TIMEOUT);
+            Header eventAck = header(events.getInputStream(), eventDeadline, events, null, CONTROL_TIMEOUT);
+            byte[] eventBody = body(events.getInputStream(), eventAck, 1024, eventDeadline, events, null, CONTROL_TIMEOUT);
             if (eventAck.type != 4 || eventBody.length != 0) throw new IOException("相机无线事件通道未建立。");
             byte[] info = null;
             if (album) {
+                phase = "读取相机信息";
                 info = receive(0x1001, 0, new long[0], 1024 * 1024, null, -1, null);
+                phase = "打开相机会话";
                 long traceStart = ConnectionTrace.operationStarted(ownership.traceId, 0x1002, 0);
                 try {
                     request(0x1002, 0, new long[] {1});
@@ -286,6 +305,12 @@ public final class PtpIpClient implements PhotoCameraClient {
             return info;
         } catch (IOException | RuntimeException error) {
             closeWithReason("无线握手：" + failureText(error), false, ConnectionTrace.category(error));
+            if (error instanceof SocketTimeoutException) {
+                String hint = phase.equals("等待相机确认连接") ? "请在相机上确认连接请求，并保持无线通信开启。"
+                        : "请保持连接相机 Wi-Fi，并关闭占用相机的其他应用后重试。";
+                throw new SetupTimeoutException(phase + "超时（" + host + ":" + port + "）。" + hint,
+                        (SocketTimeoutException) error);
+            }
             throw error;
         }
     }
@@ -298,6 +323,15 @@ public final class PtpIpClient implements PhotoCameraClient {
     public int connectedPort() { return connectedPort; }
     public void abortProtocol(IOException failure) { closeWithReason("协议中止：" + failureText(failure), true); }
     public void setOnClosed(Runnable listener) { onClosed = listener; }
+
+    @Override public void setConnectionStageListener(java.util.function.Consumer<ConnectionStage> listener) {
+        connectionStageListener = listener;
+    }
+
+    private void connectionStage(ConnectionStage stage) {
+        java.util.function.Consumer<ConnectionStage> listener = connectionStageListener;
+        if (listener != null) try { listener.accept(stage); } catch (RuntimeException ignored) { }
+    }
 
     /** Called only for the current read-only owner; callbacks must enqueue work, never perform protocol I/O. */
     public void setOnObjectAdded(java.util.function.LongConsumer listener) { onObjectAdded = listener; }
@@ -817,7 +851,11 @@ public final class PtpIpClient implements PhotoCameraClient {
         return header(in, until, socket, null);
     }
     private static Header header(InputStream in, long until, Socket socket, DownloadBudget budget) throws IOException {
-        byte[] b = new byte[8]; fully(in, b, 0, 8, until, socket, budget);
+        return header(in, until, socket, budget, CONTROL_READ_TIMEOUT);
+    }
+    private static Header header(InputStream in, long until, Socket socket, DownloadBudget budget,
+                                 int readTimeout) throws IOException {
+        byte[] b = new byte[8]; fully(in, b, 0, 8, until, socket, budget, readTimeout);
         long length = u32(b, 0); if (length < 8) throw new IOException("无线包头长度无效。");
         return new Header(u32(b, 4), length - 8);
     }
@@ -826,18 +864,26 @@ public final class PtpIpClient implements PhotoCameraClient {
     }
     private static byte[] body(InputStream in, Header h, int max, long until, Socket socket,
                                DownloadBudget budget) throws IOException {
+        return body(in, h, max, until, socket, budget, CONTROL_READ_TIMEOUT);
+    }
+    private static byte[] body(InputStream in, Header h, int max, long until, Socket socket,
+                               DownloadBudget budget, int readTimeout) throws IOException {
         if (h.payload > max) throw new IOException("无线控制数据超出上限。");
-        byte[] data = new byte[(int) h.payload]; fully(in, data, 0, data.length, until, socket, budget); return data;
+        byte[] data = new byte[(int) h.payload]; fully(in, data, 0, data.length, until, socket, budget, readTimeout); return data;
     }
     private static void fully(InputStream in, byte[] b, int offset, int length, long until, Socket socket,
                               DownloadBudget budget) throws IOException {
+        fully(in, b, offset, length, until, socket, budget, CONTROL_READ_TIMEOUT);
+    }
+    private static void fully(InputStream in, byte[] b, int offset, int length, long until, Socket socket,
+                              DownloadBudget budget, int readTimeout) throws IOException {
         int end = offset + length;
         while (offset < end) {
             if (Thread.currentThread().isInterrupted()) throw new IOException("无线操作已取消。");
             if (budget != null || until != Long.MAX_VALUE) {
                 long remaining = budget == null ? (until - System.nanoTime()) / 1000000L : budget.remainingMillis();
                 if (remaining <= 0) throw new IOException("相机无线响应超时。");
-                socket.setSoTimeout((int) Math.min(15000, Math.max(1, remaining)));
+                socket.setSoTimeout((int) Math.min(readTimeout, Math.max(1, remaining)));
             }
             final int n;
             try { n = in.read(b, offset, end - offset); }

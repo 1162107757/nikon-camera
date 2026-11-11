@@ -1,0 +1,129 @@
+{
+  "date": "2026-11-11",
+  "package": {
+    "packageName": "cc.huevia",
+    "versionName": "0.30.33-beta",
+    "versionCode": 191,
+    "minSdk": 26,
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureSchemes": [
+      2,
+      3
+    ],
+    "byteLength": 31411279,
+    "sha256": "e4a3455ca8440fd0da0b7a3ca85a70384eedc402f9f4075300d659467d22c52e",
+    "path": "dist/upload191/huevia-0.30.33-beta-update.apk",
+    "alignment": "zipalign -c -P 16 4 passed",
+    "fullApkSha256": "c077ffc8dbbf91ffb33784239b3f53641922222010851abc1bedaf09f2b10fff",
+    "retainedPayloads": 89,
+    "removedOnlyAbi": "x86",
+    "removedLibraries": 4,
+    "published": false
+  },
+  "hostTests": {
+    "ptpip-after.log": [
+      "PASS: 5435 PTP/IP client checks"
+    ],
+    "album.log": [
+      "PASS: 899 production album controller checks",
+      "PASS: 33 camera capability controller checks",
+      "PASS: 25 gateway connection controller checks",
+      "PASS: 356 photo-live project store checks",
+      "PASS: 100 photo-live project folder checks",
+      "PhotoTransferProgressTest PASS 23 checks"
+    ],
+    "wifi-retention.log": [
+      "PASS: 519 camera Wi-Fi retention checks",
+      "PASS: 27 camera Wi-Fi socket-target checks",
+      "PASS: 37 selected camera gateway/self-target checks",
+      "PASS: 604 camera Wi-Fi session checks"
+    ],
+    "wifi-runtime.log": [
+      "PASS: 29 actual runtime Wi-Fi loss checks"
+    ]
+  },
+  "baseline": {
+    "operations": "[4097, 4098]",
+    "channels": 2,
+    "status": "PASS",
+    "assertions": [
+      "owned-emulator-only",
+      "installed-candidate-hash",
+      "production-shell-ready",
+      "single-initial-session-two-channels",
+      "no-existing-camera-session",
+      "connected-with-inventory-deferred-by-lease",
+      "matches-reported-default-unavailable-message",
+      "no-inventory-transaction-during-connect-lease",
+      "baseline-reproduces-missing-inventory-after-lease-release",
+      "no-reconnect-or-repeated-open-session",
+      "no-camera-content-or-setting-writes"
+    ],
+    "apkSha256": "4d486044e9dbb330ec7f9cf109815dc84bda981c134545d8de0b7446cd4226c2",
+    "scope": "Installed native MainActivity/runtime/controller with synthetic PTP/IP peer; no physical camera or Wi-Fi radio validation"
+  },
+  "candidate": {
+    "operations": "[4097, 4098, 4097, 4100, 4103, 4104]",
+    "channels": 2,
+    "status": "PASS",
+    "assertions": [
+      "owned-emulator-only",
+      "installed-candidate-hash",
+      "production-shell-ready",
+      "single-initial-session-two-channels",
+      "no-existing-camera-session",
+      "connected-with-inventory-deferred-by-lease",
+      "matches-reported-default-unavailable-message",
+      "no-inventory-transaction-during-connect-lease",
+      "lease-release-automatically-reads-storage-and-photo-handles",
+      "no-reconnect-or-repeated-open-session",
+      "no-camera-content-or-setting-writes",
+      "one-camera-photo-in-production-inventory",
+      "unavailable-state-clears-without-tapping-retry"
+    ],
+    "apkSha256": "e4a3455ca8440fd0da0b7a3ca85a70384eedc402f9f4075300d659467d22c52e",
+    "scope": "Installed native MainActivity/runtime/controller with synthetic PTP/IP peer; no physical camera or Wi-Fi radio validation"
+  },
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "9eef020f3d175e1a1763c10838453f0d206c75fd4d15524d8cdf9dc251cbf24f"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "719ac56873be3065f36816dbae18543488df88b0c7026d01ad770d12fde278c1"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+      "sha256": "b7730a1949255675c736218c79c29a53af83a97ff03dde5731bcac090ecfdcc6"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+      "sha256": "db9f8041a08324299b4fe9bf3e3e185614b55597a6b517afc2d09a24ec60aa1e"
+    },
+    {
+      "path": "tests/java/cc/huevia/album/PtpIpClientTest.java",
+      "sha256": "97390a91863898cfda231b323f51a0027654121059dda7644ea3bdfee2382941"
+    },
+    {
+      "path": "tests/run-album.ps1",
+      "sha256": "0cb6a649a778980a547e1a8781461b87269baf1d453e106f58ed3dff63c7d942"
+    },
+    {
+      "path": "tests/wifi-album-device-probe/AndroidManifest.xml",
+      "sha256": "9e98c4342c4c4d9f0235bd188c46e239d990ece653577c5b5f1ec5ce260978d4"
+    },
+    {
+      "path": "tests/wifi-album-device-probe/build.ps1",
+      "sha256": "b4fa3cf571a5b6a19942f40cc0aebbacdf8cec9d83d0c056ad94ed8f769cc595"
+    },
+    {
+      "path": "tests/wifi-album-device-probe/src/cc/huevia/wifialbumqa/WifiAlbumProbe.java",
+      "sha256": "83014f92d02bd386f7716f417a5ba95b0585a4ad2d0c660d58d703362e7ea7bb"
+    }
+  ],
+  "limitations": [
+    "No physical camera/phone attached during this validation. Real Z30 Wi-Fi radio/approval/standby compatibility remains to be tested.",
+    "TCP connection establishment remains bounded to 5 seconds; only each initialization acknowledgment shares a 30-second header/body budget. Ordinary control read and original-download budgets are preserved."
+  ]
+}

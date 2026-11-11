@@ -33,6 +33,8 @@ public final class PtpIpClientTest {
 
     public static void main(String[] args) throws Exception {
         handshakeAndFragmentedTransfers();
+        handshakeAllowsCameraConfirmationBeyondTheControlReadTimeout();
+        setupTimeoutsIdentifyTheirPhaseAndCloseOwnedChannels();
         remoteGrantRecognizesNikonMtpWithoutInventingCapabilities();
         rejectedWritesNeverReachTheSocket();
         largeThumbnailIsBoundedReadonlyAndCannotCrossModes();
@@ -73,6 +75,40 @@ public final class PtpIpClientTest {
         malformedObjectAddedEventsCloseTheCurrentOwner();
         connectionTraceHooksNeverExposeCameraData();
         System.out.println("PASS: " + checks + " PTP/IP client checks");
+    }
+
+    private static void handshakeAllowsCameraConfirmationBeyondTheControlReadTimeout() throws Exception {
+        Peer peer = new Peer();
+        peer.requiredHandshakeReadTimeout = 20000;
+        PtpIpClient client = peer.connect();
+        try {
+            equal(2, peer.sockets.size());
+            equal(1, peer.eventRequests);
+            equal(Arrays.asList(0x1001, 0x1002), peer.operations);
+            check(client.isOpen(), "Delayed camera approval opens one session without retrying the handshake");
+        } finally { client.close(); }
+    }
+
+    private static void setupTimeoutsIdentifyTheirPhaseAndCloseOwnedChannels() throws Exception {
+        String[] phases = {"command-connect", "command-ack", "event-connect", "event-ack", "device-info", "open-session"};
+        String[] messages = {"连接相机 Wi-Fi 通道", "等待相机确认连接", "连接相机事件通道", "等待相机事件通道确认", "读取相机信息", "打开相机会话"};
+        for (int i = 0; i < phases.length; i++) {
+            Peer peer = new Peer(); peer.timeoutPhase = phases[i];
+            PtpIpClient client = new PtpIpClient(peer::openSocket);
+            List<PhotoCameraClient.ConnectionStage> stages = new ArrayList<>();
+            client.setConnectionStageListener(stages::add);
+            try {
+                client.connect("camera.test", 15740, GUID, FRIENDLY_NAME);
+                throw new AssertionError("Setup timeout must fail without retry");
+            } catch (PtpIpClient.SetupTimeoutException expected) {
+                check(expected.getMessage().contains(messages[i]), "Setup timeout retains its exact phase");
+                check(expected.getCause() instanceof SocketTimeoutException, "Setup timeout retains its network cause");
+                check(client.isClosed(), "Failed setup closes the client");
+                for (FakeSocket socket : peer.sockets) check(socket.closed, "Failed setup closes every owned channel");
+                check(stages.contains(PhotoCameraClient.ConnectionStage.CONNECTING_CAMERA), "Setup publishes connecting stage");
+                if (i > 0) check(stages.contains(PhotoCameraClient.ConnectionStage.WAITING_CONFIRMATION), "Setup publishes camera approval stage");
+            } finally { client.setConnectionStageListener(null); client.close(); }
+        }
     }
 
     private static byte[] remoteInfo(long vendor,String manufacturer) {
@@ -1294,6 +1330,8 @@ public final class PtpIpClientTest {
         private FakeSocket command;
         private Fault fault = Fault.NONE;
         private int eventRequests;
+        private int requiredHandshakeReadTimeout;
+        private String timeoutPhase = "";
         private int eventPongs;
         private boolean exactPictureControlReadback;
         private int uploadedTarget;
@@ -1329,6 +1367,8 @@ public final class PtpIpClientTest {
             equal("camera.test", host);
             equal(15740, port);
             check(timeout > 0, "Socket connects use a finite timeout");
+            if (timeoutPhase.equals(sockets.isEmpty() ? "command-connect" : "event-connect"))
+                throw new SocketTimeoutException("synthetic connect timeout");
             if (sockets.size() == 1 && fault == Fault.SECOND_CONNECT_FAIL) throw new IOException("event connect failed");
             boolean event = !sockets.isEmpty();
             check(sockets.size() < 2, "A client uses exactly the two requested channels");
@@ -1492,7 +1532,21 @@ public final class PtpIpClientTest {
         private volatile boolean closed;
         private volatile int soTimeout;
 
-        FakeSocket(Peer peer, boolean event) { this.peer = peer; this.event = event; input = new QueuedInput(event); }
+        FakeSocket(Peer peer, boolean event) {
+            this.peer = peer; this.event = event; input = new QueuedInput(event);
+            input.beforeRead = () -> {
+                if (input.remaining() > 0 && (peer.timeoutPhase.equals(event ? "event-ack" : "command-ack")
+                        && peer.operations.isEmpty()
+                        || !event && !peer.operations.isEmpty()
+                        && peer.timeoutPhase.equals(peer.operations.get(peer.operations.size() - 1) == 0x1001 ? "device-info" : "open-session"))) {
+                    throw new SocketTimeoutException("synthetic setup response timeout");
+                }
+                if (peer.operations.isEmpty() && input.remaining() > 0
+                        && peer.requiredHandshakeReadTimeout > soTimeout) {
+                    throw new SocketTimeoutException("synthetic camera approval exceeds the socket timeout");
+                }
+            };
+        }
         @Override public InputStream getInputStream() { return input; }
         @Override public OutputStream getOutputStream() {
             return new OutputStream() {

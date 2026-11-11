@@ -1303,6 +1303,7 @@ public final class AlbumController implements AutoCloseable {
                 return connected;
             } catch (Exception error) {
                 client.close();
+                if (error instanceof PtpIpClient.SetupTimeoutException) throw error;
                 if (error instanceof java.net.ConnectException) throw new IOException("相机地址 " + address + ":" + port
                         + " 的网络连接被拒绝。请保持相机“无线通信”界面开启，确认连接的是相机热点，并关闭 Camera Remote 等其他相机应用。", error);
                 if (error instanceof java.net.SocketTimeoutException) throw new IOException("连接相机 " + address + ":" + port

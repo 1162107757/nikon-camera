@@ -21,6 +21,7 @@ foreach($name in @('RemoteTransport','RemoteProperty','RemoteLiveFrame','NikonRe
 foreach ($name in @('PhotoSaveTarget', 'PhotoCameraClient', 'CameraProtocol', 'FujifilmPhotoClient', 'AlbumController', 'PhotoDownloadRecovery', 'RawPhotoDownload', 'RawPhotoStore', 'RawPhotoPairing', 'RawJpegReferenceStore', 'PtpIpClient', 'ConnectionTrace', 'PhotoItem', 'PhotoFormat', 'PhotoPreview', 'PhotoPreviewCache', 'DownloadedPhoto', 'PhotoPage', 'ConnectionInfo', 'PhotoLiveState', 'PhotoTransferProgress', 'PhotoLiveLedger', 'PhotoLiveReceipt', 'PhotoLiveReceiptStore', 'PhotoLiveProject', 'PhotoLiveProjectStore', 'PhotoLiveProjectFolders', 'PhotoLocalTasks', 'PhotoDeleteResult', 'PhotoAlbumDeletion', 'PhotoOriginalStore', 'PhotoPresetSources')) {
     $sourcePaths += Join-Path $javaRoot ('album\' + $name + '.java')
 }
+$sourcePaths += Join-Path $javaRoot 'album\PhotoArrivalDates.java'
 $sourcePaths += Join-Path $PSScriptRoot 'raw-controller-stubs\cc\huevia\album\RawPhotoPublisher.java'
 $sourcePaths += Join-Path $PSScriptRoot 'android-stubs\android\os\Looper.java'
 $sourcePaths += Join-Path $PSScriptRoot 'gallery-stubs\android\util\AtomicFile.java'
