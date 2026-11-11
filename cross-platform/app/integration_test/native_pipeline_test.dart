@@ -252,8 +252,14 @@ void main() {
           beforeCopy,
         );
         expect((await sha256.bind(source.openRead()).first).toString(), before);
-        final raw = await File('${directory.path}/synthetic.dng')
-            .writeAsBytes(syntheticDng());
+        // Vary metadata so a previous native development cache cannot mask a
+        // decoder regression; sensor pixels and white-highlight checks stay equal.
+        final raw = await File('${directory.path}/synthetic.dng').writeAsBytes(
+          syntheticDng(
+            identity:
+                'Huevia pipeline ${DateTime.now().microsecondsSinceEpoch}',
+          ),
+        );
         final rawHash = (await sha256.bind(raw.openRead()).first).toString();
         final info = await core.call('media.info', {'path': raw.path});
         expect(info['raw'], true);

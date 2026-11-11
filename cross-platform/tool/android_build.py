@@ -41,6 +41,8 @@ if init.is_file():command+=['--init-script',str(init)]
 if options.offline:command+=['--offline']
 log=ROOT/'.tooling/cross-platform187/android-proxy-build.log'
 with log.open('w',encoding='utf-8') as output:
+    native=subprocess.run([sys.executable,str(ROOT/'cross-platform/tool/raw_android.py'),'--sdk',str(sdk),'--abi',options.abi],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=output,stderr=subprocess.STDOUT)
+    if native.returncode:raise SystemExit('Android RAW bridge preparation failed; see '+str(log))
     generator=[str(flutter/'bin/cache/dart-sdk/bin/dart.exe'),
         '--packages='+str(flutter/'packages/flutter_tools/.dart_tool/package_config.json'),
         str(ROOT/'cross-platform/tool/android_plugins.dart'),str(android.parent),options.mode,str(flutter)]

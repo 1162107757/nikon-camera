@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 /// Original synthetic Bayer ramp; no camera/user photographs are distributed.
 /// Tags follow Adobe's public DNG 1.4 TIFF/CFA and color-matrix specification.
-Uint8List syntheticDng() {
+Uint8List syntheticDng({String? identity}) {
   const width = 256, height = 192;
   Uint8List words(List<int> values, int size) {
     final data = ByteData(values.length * size);
@@ -46,6 +46,7 @@ Uint8List syntheticDng() {
   long(278, [height]);
   long(279, [width * height * 2]);
   short(284, [1]);
+  if (identity != null) text(305, identity);
   short(33421, [2, 2]);
   bytes(33422, [0, 1, 1, 2]);
   bytes(50706, [1, 4, 0, 0]);

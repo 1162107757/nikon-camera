@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "cc.huevia"
     compileSdk = flutter.compileSdkVersion
-    // Existing native libraries are consumed without rebuilding or changing them.
+    // Original libraries are staged unchanged, with a separately built RAW JNI bridge.
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -47,8 +47,10 @@ android {
         java.srcDirs("../../../../app/src/main/java", "../../../core/java")
         res.srcDir("../../../../app/src/main/res")
         assets.srcDir("../../../../app/src/main/assets")
-        jniLibs.srcDir("../../../../app/src/main/jniLibs")
+        jniLibs.srcDir("../../../.build/raw-android/jniLibs")
+        assets.srcDir("../../../.build/raw-android/assets")
     }
+    sourceSets.getByName("androidTest").assets.srcDir("../../../.build/raw-android/test-assets")
 
     buildTypes {
         release {
@@ -78,3 +80,17 @@ flutter {
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
 }
+
+val verifyMigrationNativeRuntime = tasks.register("verifyMigrationNativeRuntime") {
+    doLast {
+        val names = mapOf("android-arm" to "armeabi-v7a", "android-arm64" to "arm64-v8a", "android-x64" to "x86_64")
+        val requested = providers.gradleProperty("target-platform").getOrElse("android-arm,android-arm64,android-x64")
+        requested.split(",").forEach { target ->
+            val abi = names[target] ?: error("Unsupported Flutter platform: $target")
+            check(file("../../../.build/raw-android/jniLibs/$abi/libhuevia_raw.so").isFile) {
+                "Prepare the migration RAW bridge using cross-platform/tool/android_build.py before building."
+            }
+        }
+    }
+}
+tasks.named("preBuild").configure { dependsOn(verifyMigrationNativeRuntime) }

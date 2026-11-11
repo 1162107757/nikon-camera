@@ -24,7 +24,7 @@ extern "C" const char *HueviaRawVersion(){return LibRaw::version();}
 extern "C" int HueviaRawEmbeddedJpeg(const char *path,uint8_t **bytes,int *length){
   if(!bytes||!length)return -1;*bytes=nullptr;*length=0;
   try{
-    LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);raw.imgdata.rawparams.max_raw_memory_mb=512;
+    auto storage=std::make_unique<LibRaw>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);LibRaw &raw=*storage;raw.imgdata.rawparams.max_raw_memory_mb=512;
     if(raw.open_file(path)!=LIBRAW_SUCCESS||raw.imgdata.thumbnail.tlength>16*1024*1024||raw.unpack_thumb()!=LIBRAW_SUCCESS)return -1;
     int error=0;std::unique_ptr<libraw_processed_image_t,void(*)(libraw_processed_image_t*)> image(raw.dcraw_make_mem_thumb(&error),LibRaw::dcraw_clear_mem);
     if(!image||error!=LIBRAW_SUCCESS||image->type!=LIBRAW_IMAGE_JPEG||image->data_size<4||image->data_size>16*1024*1024)return -1;
@@ -34,7 +34,8 @@ extern "C" int HueviaRawEmbeddedJpeg(const char *path,uint8_t **bytes,int *lengt
 extern "C" int HueviaRawInspect(const char *path,HueviaRawInfo *info,char *error,int capacity){
   try{
     if(!path||!info)throw std::runtime_error("Missing RAW input");
-    LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);raw.imgdata.rawparams.max_raw_memory_mb=512;raw.imgdata.params.half_size=0;raw.imgdata.params.output_bps=8;
+    // LibRaw's large inline metadata exceeds a GCD worker's stack allowance.
+    auto storage=std::make_unique<LibRaw>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);LibRaw &raw=*storage;raw.imgdata.rawparams.max_raw_memory_mb=512;raw.imgdata.params.half_size=0;raw.imgdata.params.output_bps=8;
     checked(raw.open_file(path),"RAW open failed");int width,height,colors,bits;dimensions(raw,width,height,colors,bits);
     *info={};info->width=width;info->height=height;info->rawWidth=raw.imgdata.sizes.raw_width;info->rawHeight=raw.imgdata.sizes.raw_height;
     unsigned maximum=raw.imgdata.color.maximum;while(maximum){info->bits++;maximum>>=1;}if(!info->bits)info->bits=16;
@@ -47,7 +48,7 @@ extern "C" int HueviaRawDevelop(const char *path,const HueviaRawSettings *settin
     if(!path||!settings||!argb)throw std::runtime_error("Missing RAW development input");const auto &s=*settings;
     if(s.whiteBalance<0||s.whiteBalance>2||s.kelvin<2000||s.kelvin>12000||s.tint< -100||s.tint>100||s.exposureTenths< -50||s.exposureTenths>50||s.highlights<0||s.highlights>9||(s.quality!=0&&s.quality!=3))throw std::runtime_error("Invalid RAW settings");
     if(progress&&progress(context,0))throw std::runtime_error("RAW development cancelled");
-    LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);raw.imgdata.rawparams.max_raw_memory_mb=512;Callback callback{progress,context};raw.set_progress_handler(report,&callback);
+    auto storage=std::make_unique<LibRaw>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);LibRaw &raw=*storage;raw.imgdata.rawparams.max_raw_memory_mb=512;Callback callback{progress,context};raw.set_progress_handler(report,&callback);
     auto &p=raw.imgdata.params;p.half_size=0;p.output_bps=8;p.output_color=1;p.no_auto_bright=1;p.user_qual=s.quality;p.highlight=s.highlights;p.use_camera_matrix=3;p.gamm[0]=1/2.4;p.gamm[1]=12.92;p.use_fuji_rotate=1;p.no_interpolation=0;p.no_auto_scale=0;
     double gain=std::pow(2,s.exposureTenths/10.0),linear=std::clamp(gain,.25,8.0);p.exp_correc=s.exposureTenths!=0;p.exp_shift=float(linear);p.exp_preser=0;p.bright=float(gain/linear);
     checked(raw.open_file(path),"RAW open failed");int width,height,colors,bits;dimensions(raw,width,height,colors,bits);sharedWhiteBalance(raw,s.whiteBalance,s.kelvin,s.tint);

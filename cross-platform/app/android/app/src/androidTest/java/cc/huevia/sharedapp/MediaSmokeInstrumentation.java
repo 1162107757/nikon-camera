@@ -106,6 +106,27 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             yes(new File(workspace,"exports").list().length==count,"cancel leaves no partial output");
             yes(before.equals(PhotoEditStore.hashFile(source)),"original bytes unchanged");
             yes(RawDeveloper.available(),"LibRaw loaded for device ABI");yes(RawDeveloper.libraryVersion().contains("0.22.3"),"original LibRaw version");
+            final File smallStackRoot=workspace;
+            android.content.Context boundedContext=new android.content.ContextWrapper(getTargetContext()){
+                @Override public File getFilesDir(){return smallStackRoot;}
+            };
+            File rawInput=new File(workspace,"small-stack.dng");
+            try(InputStream input=getContext().getAssets().open("raw-stack.dng")){Files.copy(input,rawInput.toPath());}
+            String rawBefore=PhotoEditStore.hashFile(rawInput);
+            FutureTask<int[]> boundedRaw=new FutureTask<>(()->{
+                RawDeveloper.Info rawInfo=RawDeveloper.inspect(rawInput);
+                RawDeveloper.Result developed=RawDeveloper.develop(boundedContext,rawInput,"small-stack-regression",cc.huevia.ncp.RawDevelopmentSettings.DEFAULT,()->false,p->{});
+                Bitmap decodedRaw=BitmapFactory.decodeFile(developed.workingFile.getPath());
+                if(decodedRaw==null)throw new IOException("Small-stack RAW output cannot decode");
+                try{int white=decodedRaw.getPixel(decodedRaw.getWidth()*9/10,decodedRaw.getHeight()/2);return new int[]{rawInfo.width,rawInfo.height,Color.red(white),Color.green(white),Color.blue(white),developed.cached?1:0};}
+                finally{decodedRaw.recycle();}
+            });
+            new Thread(null,boundedRaw,"huevia-raw-small-stack",512*1024L).start();
+            int[] rawResult=boundedRaw.get(60,TimeUnit.SECONDS);
+            yes(rawResult[0]==256&&rawResult[1]==192,"RAW inspection/development on a requested 512 KiB stack");
+            yes(rawResult[5]==0,"Small-stack check executes the decoder without a prior development cache");
+            yes(Math.min(rawResult[2],Math.min(rawResult[3],rawResult[4]))>220&&Math.max(rawResult[2],Math.max(rawResult[3],rawResult[4]))-Math.min(rawResult[2],Math.min(rawResult[3],rawResult[4]))<15,"Small-stack RAW saturated highlights stay white");
+            yes(rawBefore.equals(PhotoEditStore.hashFile(rawInput)),"Small-stack RAW source bytes unchanged");
             result.putString("stream","PASS "+checks+" Android media checks; codecs, original renderer, geometry, EXIF, draft, cancellation, unchanged source, LibRaw ABI\n");
             finish(Activity.RESULT_OK,result);
         }catch(Throwable failure){result.putString("stream","FAIL after "+checks+" checks: "+failure+"\n");finish(Activity.RESULT_CANCELED,result);}
