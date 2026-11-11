@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "collectedAt": "2026-11-11T12:56:10.782917+08:00",
+  "collectedAt": "2026-11-11T13:10:02.156937+08:00",
   "sourceCommit": "db097df4967ea07d125c86cdd292fcb81645a959",
   "runtimeFixCommit": "78478ffd09e7c074f404683a0390ee0deca14fd9",
   "developmentBuild": true,
@@ -99,8 +99,10 @@
     "originalLocalEditChecks": 43230,
     "originalRawColourChecks": 15575,
     "originalRawHighlightChecks": 243,
-    "codecOnlyFixtureAutomaticSemanticsEnabled": false,
-    "separateWidgetSuiteSemanticsEnabled": true
+    "codecOnlyFixtureAutomaticSemanticsEnabled": true,
+    "separateWidgetSuiteSemanticsEnabled": true,
+    "codecOnlyFixturePlatformSemanticsPinnedBeforeTest": true,
+    "codecOnlyFixturePlatformSemanticsRestoredAfterSuite": true
   },
   "referenceStyleReview": "docs/migration/validation/android12-style-20261111.json",
   "crashEvidence": "docs/migration/validation/raw-stack-189/ios-crash-summary.json",
@@ -142,5 +144,5 @@
     "Complete feature and per-screen visual parity remain incomplete; see visual-acceptance.md.",
     "Separate development package/signing; original Android/iOS sources and 187/188 artifacts are preserved."
   ],
-  "testFixtureSourceCommit": "5aff39c4de913bf918e46d898f07584516ad31f5"
+  "testFixtureSourceCommit": "1c424600dd284041ede82fa99a444ac37b94c63b"
 }

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "device": "Android 12 / API 31 isolated emulator-5584, adb server 5038",
+  "display": {
+    "width": 1080,
+    "height": 2340,
+    "densityDpi": 420
+  },
+  "state": "Settings > appearance; light selected in both original 186 and shared 189",
+  "productSourceCommit": "db097df4967ea07d125c86cdd292fcb81645a959",
+  "fullParityComplete": false,
+  "result": "FAIL: original appearance dialog geometry and styling not reproduced",
+  "differences": {
+    "originalChoiceBounds": [
+      42,
+      927,
+      1038,
+      1053
+    ],
+    "sharedChoiceBounds": [
+      173,
+      910,
+      908,
+      1057
+    ],
+    "originalChoiceRowHeight": 126,
+    "sharedChoiceRowHeight": 147,
+    "originalTitleBounds": [
+      105,
+      870,
+      975,
+      927
+    ],
+    "sharedTitleBounds": [
+      236,
+      821,
+      845,
+      879
+    ],
+    "originalCancelBounds": [
+      838,
+      1316,
+      1006,
+      1442
+    ],
+    "sharedCancelBounds": [
+      173,
+      1351,
+      908,
+      1477
+    ]
+  },
+  "screenshots": [
+    {
+      "file": "docs/migration/validation/style-android12-189/original-appearance.png",
+      "sha256": "0c71a5fcd3bdb1c152d9cb98a43f68f3942f2cfaeb6df9b08f6d409699be894a",
+      "bytes": 162873
+    },
+    {
+      "file": "docs/migration/validation/style-android12-189/shared-appearance.png",
+      "sha256": "a9d63af8eb7b3fb79e709b9726bba7c6dae01e4ca088dfb5a485bf417a0a0f7e",
+      "bytes": 167091
+    }
+  ]
+}
