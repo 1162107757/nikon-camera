@@ -222,7 +222,7 @@ class _BorderPanelState extends State<BorderPanel> {
   Future<void> render(Json frozen, int serial) async {
     if (!ready || serial != generation) return;
     final identity = 'border-${DateTime.now().microsecondsSinceEpoch}';
-    job = identity;
+    String? activeJob;
     final results = <String>[];
     bool accepted = false;
     setState(() {
@@ -231,6 +231,8 @@ class _BorderPanelState extends State<BorderPanel> {
     });
     try {
       for (var i = 0; i < 4; i++) {
+        activeJob = '$identity-$i';
+        job = activeJob;
         final result = await core.call('media.preview', {
           'path': widget.photo.path,
           'owner': widget.owner,
@@ -239,7 +241,8 @@ class _BorderPanelState extends State<BorderPanel> {
             ...frozen,
             'border': {...frozenBorder(frozen), 'template': i},
           },
-        }, identity);
+        }, activeJob);
+        if (job == activeJob) job = null;
         results.add(result['path'] as String);
         if (!ready || serial != generation) return;
       }
@@ -258,7 +261,7 @@ class _BorderPanelState extends State<BorderPanel> {
         });
       }
     } finally {
-      if (job == identity) job = null;
+      if (job == activeJob) job = null;
       if (!accepted) unawaited(discard(results));
     }
   }

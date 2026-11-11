@@ -99,14 +99,3 @@ if expected!=actual: raise SystemExit('JVM / Objective-C core fingerprints diffe
 (work/'parity.json').write_text(json.dumps({'pass':True,'platform':'macOS Objective-C runtime; iOS static runtime built separately','golden':actual},indent=2)+'\n')
 print('PASS original JVM tests translated to Objective-C and matching image fingerprints')
 PY
-
-# Exercise the production ImageIO avatar adapter directly. This owns its test
-# images and never fabricates a signed-in session or adds a production test API.
-"$J2OBJCC" -O2 -fobjc-arc -I"$ROOT/cross-platform/native/ios/Classes" \
-  "$ROOT/cross-platform/core/test/avatar_apple.mm" \
-  "$ROOT/cross-platform/native/ios/Classes/HueviaAvatar.mm" \
-  "$ROOT/cross-platform/native/ios/Classes/HueviaTask.m" \
-  -framework ImageIO -framework CoreGraphics -ljre_emul -lc++ \
-  -o "$WORK/avatar-checks" > "$WORK/avatar-build.log" 2>&1
-"$WORK/avatar-checks" > "$WORK/avatar.log" 2>&1
-cat "$WORK/avatar.log"

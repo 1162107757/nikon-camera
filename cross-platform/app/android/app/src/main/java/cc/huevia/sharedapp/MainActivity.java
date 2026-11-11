@@ -88,13 +88,18 @@ public final class MainActivity extends FlutterActivity {
                         else if(operation.startsWith("gallery."))value=gallery.request(operation,payload,cancelled::get);
                         else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
-                    main.post(()->reply.success(value));
-                }catch(Exception error){String message=error.getMessage();main.post(()->reply.error(error instanceof InterruptedIOException?"CANCELLED":"OPERATION_FAILED",message==null?"操作未完成，请重试。":message,null));}
-                catch(OutOfMemoryError exhausted){main.post(()->reply.error("MEMORY_LIMIT","内存不足，请关闭其他应用后重试。",null));}
-                catch(LinkageError missing){main.post(()->reply.error("INSTALLATION_ERROR","安装包中的原生组件不可用，请重新安装此版本。",null));}
-                finally{jobs.remove(identity);}
-            });}catch(RejectedExecutionException busy){jobs.remove(identity);reply.error("BUSY","任务较多，请等待当前操作完成。",null);}
+                    complete(identity,cancelled,()->reply.success(value));
+                }catch(Exception error){String message=error.getMessage();complete(identity,cancelled,()->reply.error(error instanceof InterruptedIOException?"CANCELLED":"OPERATION_FAILED",message==null?"操作未完成，请重试。":message,null));}
+                catch(OutOfMemoryError exhausted){complete(identity,cancelled,()->reply.error("MEMORY_LIMIT","内存不足，请关闭其他应用后重试。",null));}
+                catch(LinkageError missing){complete(identity,cancelled,()->reply.error("INSTALLATION_ERROR","安装包中的原生组件不可用，请重新安装此版本。",null));}
+                finally{jobs.remove(identity,cancelled);}
+            });}catch(RejectedExecutionException busy){jobs.remove(identity,cancelled);reply.error("BUSY","任务较多，请等待当前操作完成。",null);}
         });
+    }
+    private void complete(String identity,AtomicBoolean task,Runnable deliver){
+        // Flutter may issue the next request synchronously from this result.
+        // A late finalizer for this task must never remove its replacement.
+        main.post(()->{jobs.remove(identity,task);deliver.run();});
     }
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);super.cleanUpFlutterEngine(engine);}
     @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);if(importPicker!=null&&importPicker.handles(request))importPicker.result(result,data);}

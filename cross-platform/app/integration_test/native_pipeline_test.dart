@@ -500,6 +500,15 @@ void main() {
         expect(capture['brand'], '');
         expect(capture['model'], '');
         expect(capture['fields'], orderedEquals(List.filled(5, '')));
+        // A completed native task ID may immediately be reused. The Android
+        // result must release its own slot before Flutter can issue another.
+        for (var i = 0; i < 16; i++) {
+          final again = await core.call('media.borderInfo', {
+            'path': source.path,
+            'owner': '',
+          }, 'pipeline-sequential-border-info');
+          expect(again, capture);
+        }
         final smallPreview = await core.call('media.preview', {
           'path': orientedTemplate.path,
           'owner': '',

@@ -12,12 +12,14 @@ import 'editor_workspace_test.dart' show WorkspaceCore, WorkspaceState;
 class BorderCore extends WorkspaceCore {
   BorderCore(super.directory);
   Completer<Json>? delayedPreview;
+  final previewJobs = <String?>[];
   @override
   Future<Json> call(
     String operation, [
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'media.preview') previewJobs.add(jobId);
     if (operation == 'media.borderInfo') {
       calls.add((operation, object(jsonDecode(jsonEncode(payload)))));
       return {
@@ -148,6 +150,8 @@ void main() {
           orderedEquals([0, 1, 2, 3]),
         );
         expect(previews.every((c) => c.$2['maxEdge'] == 256), true);
+        expect(core.previewJobs.every((job) => job != null), true);
+        expect(core.previewJobs.toSet(), hasLength(4));
         expect(find.text('Nikon Z6 III'), findsOneWidget);
         await tester.tap(find.bySemanticsLabel('模糊居中'));
         await settle(tester);
@@ -172,7 +176,7 @@ void main() {
           scrollable: scroll,
           continuous: true,
         );
-      await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
         await tester.tap(find.text('ISO'));
         await tester.pumpAndSettle();
         expect(find.text('原图值：ISO200'), findsOneWidget);
@@ -292,11 +296,13 @@ void main() {
         expect(object(recipe['border'])['brand'], 'NIKON');
         expect(checkpoints, greaterThanOrEqualTo(3));
         expect(mutations, isNotEmpty);
-      final exception = tester.takeException();
-      if (exception is FlutterError) {
-        debugPrint(exception.diagnostics.map((d) => d.toStringDeep()).join('\n'));
-      }
-      expect(exception, isNull);
+        final exception = tester.takeException();
+        if (exception is FlutterError) {
+          debugPrint(
+            exception.diagnostics.map((d) => d.toStringDeep()).join('\n'),
+          );
+        }
+        expect(exception, isNull);
         await cleanup(tester, core.directory);
         state.dispose();
       },
