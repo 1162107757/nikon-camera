@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T12:56:10.782917+08:00",
+  "sourceCommit": "db097df4967ea07d125c86cdd292fcb81645a959",
+  "runtimeFixCommit": "78478ffd09e7c074f404683a0390ee0deca14fd9",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "originalTrackedFilesPreserved": 420,
+  "originalPackagesPreserved": [
+    "187",
+    "188"
+  ],
+  "artifacts": [
+    {
+      "apk": "dist/migration189/huevia-0.31.0-dev-189-android-arm64.apk",
+      "bytes": 49617938,
+      "sha256": "ef95d0cae8471a8e1a9074ea6ffe9dfe5747fac6694a8a0e46bdf57f69043244",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+189",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "nativeRuntime": {
+        "abi": "arm64-v8a",
+        "heapAllocatedLibRaw": true,
+        "sourceBridgeSha256": "190ad56d1426565fe6d375064570efa4328b110756e3c983ee46aef5f63e410d",
+        "adaptedBridgeSha256": "87554bdfd2a18a6d98292ea496300894a586d338462f6f80cc8d3946bfc6929f",
+        "librarySha256": "fe66ffa34d45f4068afa9e44dcb97566e98ad395800089b85b51effc6d95bfa5",
+        "originalLibRawSha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+        "compiler": "Android NDK 28.2.13676358",
+        "minimumApi": 26,
+        "minimumLoadAlignment": 16384,
+        "bridgeFrameLimitBytes": 131072,
+        "originalLibrariesUnmodified": true
+      }
+    },
+    {
+      "apk": "dist/migration189/huevia-0.31.0-dev-189-android-x64.apk",
+      "bytes": 52989370,
+      "sha256": "ceba8b5385ad7eea6b63032999903119b5c1325b1fc1b6dedaea8a81a1d94112",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+189",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "nativeRuntime": {
+        "abi": "x86_64",
+        "heapAllocatedLibRaw": true,
+        "sourceBridgeSha256": "190ad56d1426565fe6d375064570efa4328b110756e3c983ee46aef5f63e410d",
+        "adaptedBridgeSha256": "87554bdfd2a18a6d98292ea496300894a586d338462f6f80cc8d3946bfc6929f",
+        "librarySha256": "c5c9c11d40b59b0eeade2bf963c0246f439a30612668e3c6b71bc2a1a25da35e",
+        "originalLibRawSha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+        "compiler": "Android NDK 28.2.13676358",
+        "minimumApi": 26,
+        "minimumLoadAlignment": 16384,
+        "bridgeFrameLimitBytes": 131072,
+        "originalLibrariesUnmodified": true
+      }
+    }
+  ],
+  "validation": {
+    "androidApi": 31,
+    "emulator": "emulator-5584; isolated adb server 5038",
+    "os": "Android 12",
+    "widgetScenarios": 16,
+    "nativeChecks": 38,
+    "flutterNativePipelineScenarios": 1,
+    "rawThreadRequestedStackBytes": 524288,
+    "rawThreadResult": "actual inspect, fresh develop including embedded-JPEG lookup, white highlights, unchanged source passed",
+    "bridgeCompilerFrameLimitBytes": 131072,
+    "nativeLibRawLibrariesUnchanged": true,
+    "sourceAndBinaryHashesVerifiedInsideBothApks": true,
+    "rawFixtureNoncePreventsDevelopmentCacheMasking": true,
+    "releaseGui": [
+      "cold start",
+      "preset home",
+      "automatic DNG development into editor",
+      "adjustment layout",
+      "full JPEG export",
+      "system share sheet"
+    ],
+    "releaseProcessAlive": true,
+    "releaseProcessCrashBufferEmpty": true,
+    "flutterAnalysis": "No issues found",
+    "jvmBoundaryChecks": 201,
+    "originalNcpChecks": 2168,
+    "originalLocalEditChecks": 43230,
+    "originalRawColourChecks": 15575,
+    "originalRawHighlightChecks": 243,
+    "codecOnlyFixtureAutomaticSemanticsEnabled": false,
+    "separateWidgetSuiteSemanticsEnabled": true
+  },
+  "referenceStyleReview": "docs/migration/validation/android12-style-20261111.json",
+  "crashEvidence": "docs/migration/validation/raw-stack-189/ios-crash-summary.json",
+  "evidence": [
+    {
+      "file": "docs/migration/validation/raw-stack-189/android-native.log",
+      "sha256": "79d952fdc7f8e2844ea816d6ea84b49b44a6383016cf2448ffe86efda6b412f3",
+      "bytes": 126
+    },
+    {
+      "file": "docs/migration/validation/raw-stack-189/android-pipeline.log",
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee",
+      "bytes": 62
+    },
+    {
+      "file": "docs/migration/validation/raw-stack-189/android-release-raw.png",
+      "sha256": "713cb0cdd0bf0a115a666fd89f981ae33dc2a4293843c5518781d2e3a5303bfc",
+      "bytes": 479250
+    },
+    {
+      "file": "docs/migration/validation/raw-stack-189/android-release-share.png",
+      "sha256": "a6df0cb3a626c0c680619a66250daac8998dcf4edd13e1348a7b87bf93af80ad",
+      "bytes": 118539
+    },
+    {
+      "file": "docs/migration/validation/raw-stack-189/android-widget.log",
+      "sha256": "1c6ded6d14069a467bab9a3d799072a4c5a3673fc834464e2408415fbaa55691",
+      "bytes": 63
+    },
+    {
+      "file": "docs/migration/validation/raw-stack-189/ios-crash-summary.json",
+      "sha256": "73cbb4941e3b34112aead8d85d679d48931495b615780cab6218fee13d41f7b6",
+      "bytes": 986
+    }
+  ],
+  "limits": [
+    "Honor Magic physical-device verification is still pending; the same stack-allocation pattern was removed from the migration JNI bridge, not attributed to that device without its logs.",
+    "Synthetic DNG is not the unknown-model user NEF.",
+    "Complete feature and per-screen visual parity remain incomplete; see visual-acceptance.md.",
+    "Separate development package/signing; original Android/iOS sources and 187/188 artifacts are preserved."
+  ],
+  "testFixtureSourceCommit": "5aff39c4de913bf918e46d898f07584516ad31f5"
+}

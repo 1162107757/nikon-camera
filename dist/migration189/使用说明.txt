@@ -1,0 +1,14 @@
+Huevia 跨平台迁移开发版 0.31.0 / 189
+
+安卓真机优先使用 huevia-0.31.0-dev-189-android-arm64.apk。
+x86_64 安卓模拟器使用 huevia-0.31.0-dev-189-android-x64.apk。
+均为 release/R8/AOT 开发包，开发证书，独立包名 cc.huevia.next，与原版并存。
+
+本版修正 RAW 小栈线程溢出风险。iOS 原生崩溃报告明确指向栈内 LibRaw 对象构造；迁移版两端均改为堆分配。
+安卓仅重编译 JNI 桥接，原 LibRaw/C++/TFLite 动态库与原项目源码保持原样。包内附桥接源码和构建哈希。
+Android 12 模拟器通过 38 项原生检查（含请求 512 KB 栈的 RAW 显影）、16 个界面场景及完整 Flutter/native 图像场景。
+最终 x64 release 包实际完成 DNG 打开、编辑、完整 JPEG 导出和系统分享面板。
+
+尚无荣耀 Magic 实机证据；合成 DNG 也不能替代未知型号的用户 NEF。
+完整功能迁移、全部页面样式对齐仍在进行，见 docs/migration/visual-acceptance.md。
+原工程、187 与 188 包及其验证记录均保留。精确包哈希与验证范围见 build-evidence.json。

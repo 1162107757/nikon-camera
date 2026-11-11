@@ -1,0 +1,24 @@
+{
+  "sourceCommit": "06f5b5827a15c19ce5fa1c5d97ab9b1a9cada520",
+  "runUrl": "https://github.com/1162107757/nikon-camera/actions/runs/42955921950",
+  "artifactId": 13827122389,
+  "artifactZipSha256": "9505a789bb22870f7293666101054cec9e3b145d9834eabbba95a5210be47a9e",
+  "originalReportSha256": "43526b9dac37606c78da1b9a0a25d9dd8b4898e29283845211702ceec830b95d",
+  "exception": "EXC_BAD_ACCESS",
+  "signal": "SIGBUS",
+  "subtype": "KERN_PROTECTION_FAILURE",
+  "memoryRegion": "Stack Guard",
+  "reportedNeighborStackKiB": 544,
+  "guardKiB": 16,
+  "faultingThread": 7,
+  "frames": [
+    "__bzero",
+    "LibRaw::LibRaw(unsigned int)",
+    "HueviaRawInspect",
+    "-[HueviaMedia request:payload:task:]",
+    "__44-[HueviaCorePlugin handleMethodCall:result:]_block_invoke.100",
+    "_dispatch_call_block_and_release"
+  ],
+  "lastDartOperation": "media.info",
+  "cause": "Stack-local LibRaw inline metadata crosses a small GCD worker stack guard during construction."
+}
