@@ -4,4 +4,5 @@
 @interface HueviaImportPicker : NSObject <UIDocumentPickerDelegate>
 - (instancetype)initWithQueue:(dispatch_queue_t)queue;
 - (void)pickPreset:(BOOL)preset root:(NSString *)root presenter:(UIViewController *)presenter reply:(FlutterResult)reply;
+- (void)pickSubmission:(NSString *)kind owner:(NSString *)owner root:(NSString *)root presenter:(UIViewController *)presenter reply:(FlutterResult)reply;
 @end

@@ -15,6 +15,7 @@ import 'camera.dart';
 import 'theme.dart';
 import 'settings.dart';
 import 'appearance.dart';
+import 'community_activity.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,7 +113,7 @@ class _HueviaAppState extends State<HueviaApp> {
         if (widget.state.ready) {
           return AnnotatedRegion<SystemUiOverlayStyle>(
             value: Theme.of(context).appBarTheme.systemOverlayStyle!,
-            child: child!,
+            child: CommunityActivity(state: widget.state, child: child!),
           );
         }
         return Scaffold(
@@ -269,15 +270,43 @@ class HomeFrame extends StatelessWidget {
                         )
                       : null,
                   child: Center(
-                    child: HueIcon(
-                      [
-                        HueIconKind.presets,
-                        HueIconKind.camera,
-                        HueIconKind.album,
-                        HueIconKind.settings,
-                      ][index],
-                      size: 23,
-                      color: selected ? p.onPrimaryContainer : p.secondary,
+                    child: SizedBox(
+                      width: 26,
+                      height: 26,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.none,
+                        children: [
+                          HueIcon(
+                            [
+                              HueIconKind.presets,
+                              HueIconKind.camera,
+                              HueIconKind.album,
+                              HueIconKind.settings,
+                            ][index],
+                            size: 23,
+                            color: selected
+                                ? p.onPrimaryContainer
+                                : p.secondary,
+                          ),
+                          if (index == 3 &&
+                              CommunityActivity.unreadOf(context) > 0)
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: ExcludeSemantics(
+                                child: Container(
+                                  width: 8,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.error,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

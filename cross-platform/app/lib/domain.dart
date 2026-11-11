@@ -106,6 +106,30 @@ class HueviaCore {
     return result;
   }
 
+  Future<Json?> pickSubmission({
+    required String kind,
+    required String owner,
+  }) async {
+    if (!{'ncp', 'preview'}.contains(kind) || owner.isEmpty) {
+      throw const AppFailure('投稿文件类型或账号无效。');
+    }
+    final result = await _invoke('pickFile', {
+      'preset': kind == 'ncp',
+      'submissionKind': kind,
+      'owner': owner,
+    });
+    if (result['cancelled'] == true) return null;
+    final path = result['path'], name = result['name'], sha = result['sha256'];
+    if (path is! String ||
+        name is! String ||
+        sha is! String ||
+        !RegExp(r'^[0-9a-f]{64}$').hasMatch(sha) ||
+        !p.isWithin(p.join(root, 'submission-incoming', owner), path)) {
+      throw const AppFailure('投稿文件导入结果无效。');
+    }
+    return result;
+  }
+
   Future<Json> galleryPermission() => _invoke('galleryPermission', {});
 
   /// Originals stream to private storage; RAW pixels never enter the UI heap.

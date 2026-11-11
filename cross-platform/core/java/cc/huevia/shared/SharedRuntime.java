@@ -25,6 +25,8 @@ public final class SharedRuntime {
     private final SharedEdits edits;
     private final SharedPersonal personal;
     private final SharedVersions versions;
+    private final SharedCommunityLinks discussionLinks;
+    private final SharedSubmissions submissions;
     private String storageWarning="";
     private PhotoAdjustmentCopy.Receipt copyReceipt;
     private String copyReceiptId="",copyReceiptOwner="";
@@ -37,6 +39,7 @@ public final class SharedRuntime {
         library=new PresetLibrary(root);
         edits=new SharedEdits(root,library);
         versions=new SharedVersions(root);
+        discussionLinks=new SharedCommunityLinks(root);
         online=new OnlinePresetRepository(root,library);
         online.useManagedEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
         search=new OnlinePresetSearch(online);
@@ -44,6 +47,7 @@ public final class SharedRuntime {
         accounts=new AccountRepository(store,transport);
         community=new CommunityRepository(accounts);
         community.setInstallationId(installationId);
+        submissions=new SharedSubmissions(root,SharedSubmissions.network(accounts,community,installationId),this::guardOwner);
         try{accounts.restore();}catch(IOException failure){storageWarning=failure.getMessage();}
         personal=new SharedPersonal(root,library,accounts,installationId);
     }
@@ -55,6 +59,7 @@ public final class SharedRuntime {
     public synchronized String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException {
         Map<String,Object> p=SharedJson.object(json);Object result;
         if(operation.startsWith("personal."))return SharedJson.encode(personal.request(operation,p,cancel,progress));
+        if(operation.startsWith("submission."))return SharedJson.encode(submissions.request(operation,p,cancel));
         if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));
         if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
         if(operation.startsWith("version."))return SharedJson.encode(versions(operation,p,cancel));
@@ -80,7 +85,10 @@ public final class SharedRuntime {
                 result=map("sourceSha",draft.sourceSha,"recipe",SharedEdits.recipe(draft));break;
             }
             case "library.list":{
-                library.refresh();personal.restoreMetadata();List<Object> rows=new ArrayList<>();for(PresetRecord r:library.list())if(personal.visible(r.id))rows.add(r.toMap());
+                library.refresh();personal.restoreMetadata();List<Object> rows=new ArrayList<>();Map<String,String> links=discussionLinks.optionalSnapshot();
+                for(PresetRecord r:library.list())if(personal.visible(r.id)){
+                    Map<String,Object> value=r.toMap();if(links.containsKey(r.sha256))value.put("discussionId",links.get(r.sha256));rows.add(value);
+                }
                 result=map("items",rows,"diagnostics",library.diagnostics());break;
             }
             case "library.import":{
@@ -121,9 +129,13 @@ public final class SharedRuntime {
             }
             case "online.download":{
                 guardOwner(text(p,"owner",64));
-                PresetLibrary.AddResult added=online.download(OnlinePreset.fromMap(object(p.get("preset"))),null);
+                OnlinePreset selected=OnlinePreset.fromMap(object(p.get("preset")));
+                PresetLibrary.AddResult added=online.download(selected,null);
                 personal.added(added.record);
-                result=map("record",added.record.toMap(),"added",added.added);break;
+                Map<String,Object> record=added.record.toMap();String warning="";
+                try{CommunityRepository.id(selected.id);record.put("discussionId",selected.id);discussionLinks.remember(added.record.sha256,selected.id);}
+                catch(IOException associationFailure){warning="预设已下载，评论关联暂未保存，可在详情中重试。";}
+                result=map("record",record,"added",added.added,"discussionWarning",warning);break;
             }
             case "account.current":{
                 Object current=session(accounts.cachedSession());Map<String,Object> value=current==null?new LinkedHashMap<>():object(current);
@@ -137,8 +149,25 @@ public final class SharedRuntime {
             case "account.logout":
                 try{accounts.logout();storageWarning="";}catch(IOException failure){storageWarning=failure.getMessage();throw failure;}
                 result=map("loggedOut",true);break;
-            case "community.get":result=community.get(text(p,"path",2048),Boolean.TRUE.equals(p.get("login")));break;
+            case "community.get":
+                result=Boolean.TRUE.equals(p.get("login"))
+                    ?community.getForOwner(text(p,"path",2048),text(p,"ownerId",64))
+                    :community.get(text(p,"path",2048),false);break;
             case "community.write":result=community.writeForOwner(text(p,"method",6),text(p,"path",2048),object(p.get("body")),text(p,"ownerId",64));break;
+            case "community.discussion":{
+                guardOwner(text(p,"owner",64));String id=text(p,"id",64);requirePreset(id);PresetRecord record=library.findBySha256(id);
+                String known=discussionLinks.snapshot().get(record.sha256);
+                if(known!=null){result=map("status","linked","id",known);break;}
+                if(!"online".equals(record.source)){result=map("status","missing","message","这份预设暂未关联在线讨论。");break;}
+                OnlinePresetSearch.Snapshot catalog=search.load(Boolean.TRUE.equals(p.get("refresh")));
+                if(!catalog.available)throw new IOException(catalog.message.isEmpty()?"暂时无法加载评论关联，请稍后重试。":catalog.message);
+                result=SharedCommunityLinks.match(record.sha256,catalog.presets);
+                if("linked".equals(object(result).get("status"))){
+                    try{discussionLinks.remember(record.sha256,(String)object(result).get("id"));}
+                    catch(IOException saveFailure){object(result).put("message","评论已关联，本机保存暂未完成。");}
+                }
+                break;
+            }
             default:throw new IOException("未知的应用操作："+operation);
         }
         return SharedJson.encode(result);

@@ -9,6 +9,10 @@ import 'camera.dart';
 import 'widgets.dart';
 import 'help.dart';
 import 'preview_templates.dart';
+import 'community.dart';
+import 'community_state.dart';
+import 'submission_editor.dart';
+import 'community_activity.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.state});
@@ -59,6 +63,7 @@ class SettingsPage extends StatelessWidget {
       VoidCallback onTap, {
       String note = '',
       String value = '',
+      int unread = 0,
     }) => Material(
       color: p.card,
       child: InkWell(
@@ -101,6 +106,30 @@ class SettingsPage extends StatelessWidget {
                   ],
                 ),
               ),
+              if (unread > 0)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      minWidth: 22,
+                      minHeight: 20,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.error,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      unread > 99 ? '99+' : '$unread',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: p.dark ? p.surface : Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               if (value.isNotEmpty)
                 Text(
                   value,
@@ -244,9 +273,34 @@ class SettingsPage extends StatelessWidget {
                 row(
                   HueIconKind.presets,
                   '我的投稿',
-                  () => context.push('/account'),
+                  () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CommunityCollectionPage(
+                        state: state,
+                        kind: CommunityCollectionKind.submissions,
+                        openSubmission: (context, id) =>
+                            openSubmissionEditor(context, state, id),
+                      ),
+                    ),
+                  ),
                 ),
-                row(HueIconKind.info, '消息', () => context.push('/account')),
+                row(
+                  HueIconKind.info,
+                  '消息',
+                  () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CommunityCollectionPage(
+                        state: state,
+                        kind: CommunityCollectionKind.messages,
+                        openSubmission: (context, id) =>
+                            openSubmissionEditor(context, state, id),
+                      ),
+                    ),
+                  ),
+                  unread: CommunityActivity.unreadOf(context),
+                ),
               ]),
               heading('应用'),
               group([

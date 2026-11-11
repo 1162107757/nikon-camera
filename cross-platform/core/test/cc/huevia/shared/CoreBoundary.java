@@ -31,6 +31,8 @@ public final class CoreBoundary {
             SharedRuntime runtime=new SharedRuntime(root.toString(),new LockedStore(),new NoNetwork());
             Map<String,Object> current=SharedJson.object(runtime.request("account.current","{}"));
             yes(Boolean.TRUE.equals(current.get("logoutPending")));yes(!current.containsKey("user"));yes(!((String)current.get("storageWarning")).isEmpty());
+            rejects(()->runtime.request("community.get",SharedJson.encode(SharedRuntime.map("path","/community/messages?page=1&pageSize=20","login",true))));
+            rejects(()->runtime.request("community.get",SharedJson.encode(SharedRuntime.map("path","/community/submissions?page=1&pageSize=20","login",true,"ownerId","11111111-1111-4111-8111-111111111111"))));
             Map<String,Object> library=SharedJson.object(runtime.request("library.list","{}"));yes(((List<?>)library.get("items")).isEmpty());
             byte[] installation=Files.readAllBytes(root.resolve("account-installation.txt"));
             new SharedRuntime(root.toString(),new LockedStore(),new NoNetwork());yes(Arrays.equals(installation,Files.readAllBytes(root.resolve("account-installation.txt"))));
@@ -87,6 +89,8 @@ public final class CoreBoundary {
             checks+=CopyBoundaryTest.run(temporary);
             checks+=VersionBoundaryTest.run(temporary);
             checks+=UiStateBoundaryTest.run(temporary);
+            checks+=CommunityBoundaryTest.run(temporary);
+            checks+=SubmissionBoundaryTest.run(temporary);
             System.out.println("PASS "+checks+" shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots");
             return checks;
         }finally{

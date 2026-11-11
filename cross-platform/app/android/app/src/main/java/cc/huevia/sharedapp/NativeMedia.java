@@ -17,7 +17,15 @@ final class NativeMedia {
     private final Context context;
     private final SharedRuntime runtime;
     private final NativeExportPreview exportPreview;
-    NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;this.exportPreview=new NativeExportPreview(this.context,runtime);}
+    NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;this.exportPreview=new NativeExportPreview(this.context,runtime);MediaValidation.install(NativeMedia::validateSample);}
+    private static void validateSample(byte[] bytes)throws IOException{
+        BitmapFactory.Options options=new BitmapFactory.Options();options.inJustDecodeBounds=true;
+        BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
+        if(options.outWidth<1||options.outHeight<1||options.outWidth>16384||options.outHeight>16384||(long)options.outWidth*options.outHeight>64000000)throw new IOException("请选择有效的 PNG、JPEG 或 WebP 图片。");
+        options.inSampleSize=1;while(Math.max(options.outWidth,options.outHeight)/options.inSampleSize>256)options.inSampleSize*=2;
+        options.inJustDecodeBounds=false;Bitmap probe=BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
+        if(probe==null)throw new IOException("效果图无法解码，请重新选择。");probe.recycle();
+    }
     String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         Map<String,Object> p=SharedJson.object(json);
         if(operation.startsWith("media.exportPreview"))return exportPreview.request(operation,p,cancel,progress);

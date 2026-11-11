@@ -16,6 +16,9 @@ import '../test/help_test.dart' as help;
 import '../test/preview_templates_test.dart' as preview_templates;
 import '../test/editor_workspace_test.dart' as editor_workspace;
 import '../test/border_panel_test.dart' as border_panel;
+import '../test/community_state_test.dart' as community_state;
+import '../test/community_ui_test.dart' as community_ui;
+import '../test/submission_ui_test.dart' as submission_ui;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -44,4 +47,7 @@ void main() {
   preview_templates.main();
   editor_workspace.main();
   border_panel.main();
+  community_state.main();
+  community_ui.main();
+  submission_ui.main();
 }

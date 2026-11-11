@@ -61,6 +61,14 @@
   }
   if([call.method isEqualToString:@"pickFile"]){
     if(!self.runtime||![args[@"preset"] isKindOfClass:NSNumber.class]){reply([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"应用尚未准备好或导入类型无效。" details:nil]);return;}
+    if(args[@"submissionKind"]){
+      NSString *kind=args[@"submissionKind"],*owner=args[@"owner"];
+      if(![kind isKindOfClass:NSString.class]||![@[@"ncp",@"preview"] containsObject:kind]||![owner isKindOfClass:NSString.class]||[args[@"preset"] boolValue]!=[kind isEqualToString:@"ncp"]){reply([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"投稿文件类型无效。" details:nil]);return;}
+      dispatch_async(self.queue,^{@autoreleasepool{
+        @try{[self.runtime guardOwnerWithNSString:owner];dispatch_async(dispatch_get_main_queue(),^{[self.importPicker pickSubmission:kind owner:owner root:self.root presenter:self.presenter reply:reply];});}
+        @catch(id failure){NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"账号或投稿已变化，请重试。";dispatch_async(dispatch_get_main_queue(),^{reply([FlutterError errorWithCode:@"IMPORT_FAILED" message:message details:nil]);});}
+      }});return;
+    }
     [self.importPicker pickPreset:[args[@"preset"] boolValue] root:self.root presenter:self.presenter reply:reply];return;
   }
   if([call.method isEqualToString:@"cancel"]){NSString *job=args[@"jobId"];if([job isKindOfClass:NSString.class]){self.tasks[job].cancelled=YES;[self.camera cancelWithNSString:job];}reply(nil);return;}

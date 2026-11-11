@@ -10,6 +10,7 @@ import 'widgets.dart';
 import 'legacy_presets.dart';
 import 'legacy_sheets.dart';
 import 'legacy_preset_details.dart';
+import 'submission_editor.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key, required this.state});
@@ -552,9 +553,13 @@ class _LibraryPageState extends State<LibraryPage> {
             ),
             HueIconButton(
               kind: HueIconKind.plus,
-              label: '导入本地预设',
+              label: tab == 0 ? '导入本地预设' : '发布预设',
               filled: true,
-              onPressed: importing ? null : import,
+              onPressed: importing
+                  ? null
+                  : tab == 0
+                  ? import
+                  : () => openSubmissionEditor(context, widget.state, null),
             ),
           ],
         ],

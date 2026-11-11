@@ -40,6 +40,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
                 for(Object value:results.values())yes("success".equals(value),String.valueOf(value));
                 result.putString("stream","PASS cross-platform Flutter/native pipeline: "+results.size()+" scenario(s)\n");finish(Activity.RESULT_OK,result);return;
             }
+            pickerCancellationChecks();
             workspace=Files.createTempDirectory(getTargetContext().getFilesDir().toPath(),"migration-smoke-").toFile();
             SharedRuntime runtime=new SharedRuntime(workspace.getPath(),new AccountRepository.Store(){
                 public byte[] read(){return null;} public void write(byte[] b){} public void clear(){}
@@ -158,6 +159,27 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             finish(Activity.RESULT_OK,result);
         }catch(Throwable failure){result.putString("stream","FAIL after "+checks+" checks: "+failure+"\n");finish(Activity.RESULT_CANCELED,result);}
         finally{if(workspace!=null)try{remove(workspace,workspace.getCanonicalFile());}catch(IOException ignored){}}
+    }
+    private void pickerCancellationChecks()throws Exception{
+        List<Integer> requestCodes=new ArrayList<>();List<Object> first=new ArrayList<>(),second=new ArrayList<>();
+        NativeImportPicker[] pickerHolder=new NativeImportPicker[1];
+        runOnMainSync(()->pickerHolder[0]=new NativeImportPicker(new Activity(){@Override public void startActivityForResult(android.content.Intent intent,int request){requestCodes.add(request);}},Runnable::run));
+        NativeImportPicker picker=pickerHolder[0];
+        java.util.function.Function<List<Object>,io.flutter.plugin.common.MethodChannel.Result> reply=values->new io.flutter.plugin.common.MethodChannel.Result(){
+            public void success(Object value){values.add(value);}public void error(String code,String message,Object details){values.add(code);}public void notImplemented(){values.add("not implemented");}
+        };
+        java.lang.reflect.Field flag=NativeImportPicker.class.getDeclaredField("cancelled");flag.setAccessible(true);
+        java.lang.reflect.Method finish=NativeImportPicker.class.getDeclaredMethod("finish",int.class,String.class,Exception.class);finish.setAccessible(true);
+        runOnMainSync(()->{picker.pick(false,"unused",reply.apply(first));picker.cancel();});waitForIdleSync();
+        java.util.concurrent.atomic.AtomicBoolean old=(java.util.concurrent.atomic.AtomicBoolean)flag.get(picker);
+        yes(first.size()==1&&String.valueOf(first.get(0)).contains("cancelled"),"Picker cancellation replies exactly once");
+        runOnMainSync(()->picker.pick(true,"unused",reply.apply(second)));
+        yes(old.get()&&flag.get(picker)!=old,"Reopened picker has an independent cancellation flag");
+        yes(requestCodes.size()==2&&!requestCodes.get(0).equals(requestCodes.get(1))&&!picker.handles(requestCodes.get(0))&&picker.handles(requestCodes.get(1)),"Old system document result cannot claim a reopened picker");
+        finish.invoke(picker,1,"old worker receipt",null);waitForIdleSync();
+        yes(second.isEmpty(),"Old queued worker completion cannot finish a reopened picker");
+        runOnMainSync(()->picker.result(Activity.RESULT_CANCELED,null));waitForIdleSync();
+        yes(second.size()==1&&String.valueOf(second.get(0)).contains("cancelled"),"Reopened picker delivers its own result");
     }
     private static void remove(File file,File guard)throws IOException{
         if(!file.getCanonicalFile().toPath().startsWith(guard.toPath()))throw new IOException("Test cleanup outside workspace");

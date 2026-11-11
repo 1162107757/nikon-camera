@@ -42,6 +42,14 @@ public final class MainActivity extends FlutterActivity {
             if(call.method.equals("pickFile")){
                 Object kind=call.argument("preset");
                 if(!(kind instanceof Boolean)||runtime==null){reply.error("INVALID_ARGUMENT","应用尚未准备好或导入类型无效。",null);return;}
+                Object submission=call.argument("submissionKind");
+                if(submission!=null){
+                    Object owner=call.argument("owner");
+                    if(!(submission instanceof String)||!java.util.Arrays.asList("ncp","preview").contains(submission)||!(owner instanceof String)||((Boolean)kind)!=submission.equals("ncp")){reply.error("INVALID_ARGUMENT","投稿文件类型无效。",null);return;}
+                    try{worker.execute(()->{try{runtime.guardOwner((String)owner);runOnUiThread(()->importPicker.pickSubmission((String)submission,(String)owner,runtime.root().getPath(),reply));}
+                        catch(Exception failure){runOnUiThread(()->reply.error("IMPORT_FAILED",failure.getMessage(),null));}});}
+                    catch(RejectedExecutionException busy){reply.error("BUSY","任务较多，请稍后重试。",null);}return;
+                }
                 importPicker.pick((Boolean)kind,runtime.root().getPath(),reply);return;
             }
             Object rawJob=call.argument("jobId");
@@ -82,7 +90,7 @@ public final class MainActivity extends FlutterActivity {
         });
     }
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);super.cleanUpFlutterEngine(engine);}
-    @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);if(request==NativeImportPicker.REQUEST&&importPicker!=null)importPicker.result(result,data);}
+    @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);if(importPicker!=null&&importPicker.handles(request))importPicker.result(result,data);}
     @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}}
     @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(importPicker!=null)importPicker.cancel();if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
 }

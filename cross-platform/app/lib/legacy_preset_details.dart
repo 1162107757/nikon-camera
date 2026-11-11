@@ -6,6 +6,7 @@ import 'domain.dart';
 import 'theme.dart';
 import 'widgets.dart';
 import 'camera.dart';
+import 'community.dart';
 
 class LegacyPresetDetails extends StatefulWidget {
   const LegacyPresetDetails({
@@ -16,9 +17,11 @@ class LegacyPresetDetails extends StatefulWidget {
     required this.onCategory,
     required this.onRemove,
     required this.onDownload,
+    this.focusCommentId = '',
   });
   final AppState state;
   final Preset preset;
+  final String focusCommentId;
   final VoidCallback onShare, onCategory, onRemove, onDownload;
   @override
   State<LegacyPresetDetails> createState() => _LegacyPresetDetailsState();
@@ -205,6 +208,11 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
                         child: const Text('删除本地预设'),
                       ),
                     ],
+                    PresetDiscussion(
+                      state: widget.state,
+                      preset: preset,
+                      focusCommentId: widget.focusCommentId,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(
