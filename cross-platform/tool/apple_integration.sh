@@ -43,4 +43,8 @@ trap finish EXIT
 xcrun simctl boot "$DEVICE" || true
 xcrun simctl bootstatus "$DEVICE" -b > "$WORK/simulator-boot.log" 2>&1
 cd "$ROOT/cross-platform/app"
+# The test suite's loading budget includes Xcode compilation. Compile the
+# native simulator app first so a cold CI build cannot consume that budget
+# immediately after Dart starts. Keep the actual test assertions/timeouts.
+flutter build ios --simulator --debug --no-pub --target integration_test/native_pipeline_test.dart > "$WORK/simulator-build.log" 2>&1
 flutter test integration_test/native_pipeline_test.dart --device-id "$DEVICE" --no-pub --reporter expanded --verbose > "$WORK/simulator-tests.log" 2>&1
