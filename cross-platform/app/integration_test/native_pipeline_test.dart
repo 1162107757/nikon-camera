@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -32,6 +34,43 @@ class PipelineCore extends HueviaCore {
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  String? nativeResultRoot;
+  const nativeRunId = String.fromEnvironment('HUEVIA_NATIVE_TEST_ID');
+  if (Platform.isIOS && nativeRunId.isNotEmpty) {
+    // Observe Flutter's final integration result, including framework checks.
+    // The host reads only a fresh result from this installed test app; no
+    // XCTest reinstallation or live TCC changes are needed.
+    unawaited(
+      binding.allTestsPassed.future.then((passed) async {
+        await Future<void>.delayed(const Duration(seconds: 1));
+        if (nativeResultRoot == null) return;
+        final results = binding.results.map(
+          (name, value) => MapEntry(name, '$value'),
+        );
+        final complete =
+            passed &&
+            binding.failureMethodsDetails.isEmpty &&
+            results.length == 1 &&
+            results.values.every((value) => value == 'success');
+        await File('$nativeResultRoot/native-pipeline-result.json')
+            .writeAsString(
+              jsonEncode({
+                'schema': 1,
+                'runId': nativeRunId,
+                'success': complete,
+                'results': results,
+                'sourceCommit': const String.fromEnvironment(
+                  'HUEVIA_NATIVE_TEST_SOURCE',
+                ),
+                'fixtureSha256': const String.fromEnvironment(
+                  'HUEVIA_PHOTOKIT_SHA',
+                ),
+              }),
+              flush: true,
+            );
+      }),
+    );
+  }
   // iOS can enable platform accessibility after the first test has recorded its
   // semantics-handle baseline. Establish that platform handle before the case,
   // keep the normal test-owned handle checks, and restore the real setting.
@@ -49,6 +88,7 @@ void main() {
       debugPrint('Native pipeline: initializing');
       try {
         await core.initialize();
+        nativeResultRoot = core.root;
       } on AppFailure catch (failure) {
         fail(
           'Native initialization failed: ${failure.message}; ${failure.details}',
