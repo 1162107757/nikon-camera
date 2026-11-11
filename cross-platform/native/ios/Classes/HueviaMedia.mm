@@ -101,11 +101,98 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
 }
 @end
 
+@interface HueviaExportSession : NSObject
+@property(nonatomic,copy) NSString *identifier;
+@property(nonatomic,copy) NSString *owner;
+@property(nonatomic,copy) NSString *source;
+@property(nonatomic,copy) NSString *folder;
+@property(nonatomic,copy) NSString *jpeg;
+@property(nonatomic,copy) NSString *reference;
+@property(nonatomic,copy) NSString *model;
+@property(nonatomic,copy) NSString *spec;
+@property(nonatomic,strong) CcHueviaAlbumPhotoEditStore_Draft *draft;
+@property(nonatomic,strong) HueviaRaster *before;
+@property(nonatomic,strong) HueviaRaster *after;
+@property(nonatomic,strong) NSDictionary *sourceAttributes;
+@end
+@implementation HueviaExportSession
+@end
+
 @implementation HueviaMedia {
   CcHueviaSharedSharedRuntime *_runtime;
   NSString *_root;
+  HueviaExportSession *_exportSession;
 }
-- (instancetype)initWithRuntime:(CcHueviaSharedSharedRuntime *)runtime root:(NSString *)root {self=[super init];if(self){_runtime=runtime;_root=root;}return self;}
+- (instancetype)initWithRuntime:(CcHueviaSharedSharedRuntime *)runtime root:(NSString *)root {self=[super init];if(self){_runtime=runtime;_root=root;
+  NSString *previews=[root stringByAppendingPathComponent:@"previews"];
+  NSArray<NSString *> *abandoned=[[previews stringByResolvingSymlinksInPath] isEqual:previews]?[NSFileManager.defaultManager contentsOfDirectoryAtPath:previews error:nil]:nil;
+  for(NSString *name in abandoned){
+    if([name hasPrefix:@"export-"]&&[[NSUUID alloc] initWithUUIDString:[name substringFromIndex:7]]){
+      NSString *path=[previews stringByAppendingPathComponent:name];NSDictionary *a=[NSFileManager.defaultManager attributesOfItemAtPath:path error:nil];
+      if(![a[NSFileType] isEqual:NSFileTypeSymbolicLink])[NSFileManager.defaultManager removeItemAtPath:path error:nil];
+    }
+  }
+}return self;}
+- (void)closeExportPreview {
+  HueviaExportSession *session=_exportSession;_exportSession=nil;
+  if(session)[NSFileManager.defaultManager removeItemAtPath:session.folder error:nil];
+}
+- (void)validateExportPreview:(HueviaExportSession *)session {
+  [_runtime guardOwnerWithNSString:session.owner];
+  [_runtime privateFileWithNSString:session.source];
+  NSDictionary *now=[NSFileManager.defaultManager attributesOfItemAtPath:session.source error:nil];
+  if(!now||![now[NSFileSize] isEqual:session.sourceAttributes[NSFileSize]]||![now[NSFileModificationDate] isEqual:session.sourceAttributes[NSFileModificationDate]])fail(@"原图已变化，请重新打开成品预览。");
+}
+- (NSString *)exportFrame:(HueviaRaster *)source width:(int)width height:(int)height scale:(double)scale cx:(double)cx cy:(double)cy folder:(NSString *)folder task:(HueviaTask *)task {
+  HueviaRaster *output=[[HueviaRaster alloc] initWithWidth:width height:height root:_root];
+  // Exact one-source-pixel sampling at 100%; both modes use identical mapping.
+  for(int y=0;y<height;y++){
+    if((y&15)==0)check(task);
+    int sy=(int)std::floor(cy+(y+.5-height/2.0)/scale);
+    for(int x=0;x<width;x++){
+      int sx=(int)std::floor(cx+(x+.5-width/2.0)/scale);
+      output.pixels[y*width+x]=(sx>=0&&sy>=0&&sx<source.pixelWidth&&sy<source.pixelHeight)?source.pixels[sy*source.pixelWidth+sx]:0xff181d1b;
+    }
+  }
+  NSString *path=[folder stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".png"]];
+  @try{encode(output,path,YES,@{});check(task);return path;}@catch(id error){[NSFileManager.defaultManager removeItemAtPath:path error:nil];@throw error;}
+}
+- (NSDictionary *)exportPreviewRequest:(NSString *)operation payload:(NSDictionary *)p task:(HueviaTask *)task {
+  NSString *identifier=p[@"id"];if(![identifier isKindOfClass:NSString.class]||identifier.length>64)fail(@"成品预览标识无效。");
+  HueviaExportSession *session=_exportSession;
+  if([operation isEqual:@"media.exportPreviewClose"]){if([session.identifier isEqual:identifier])[self closeExportPreview];return @{};}
+  if(!session||![session.identifier isEqual:identifier])fail(@"成品预览已失效，请重新打开。");
+  [self validateExportPreview:session];check(task);
+  if([operation isEqual:@"media.exportPreviewCommit"]){
+    [_runtime validateSourceWithNSString:session.source withNSString:session.draft->sourceSha_];
+    NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:session.jpeg error:nil];
+    NSDictionary *metadata=@{@"path":session.jpeg,@"width":@(session.before.pixelWidth),@"height":@(session.before.pixelHeight),@"bytes":attributes[NSFileSize]?:@0,@"preview":@NO,@"model":session.model,@"exportSpec":session.spec};
+    NSString *directory=[_root stringByAppendingPathComponent:@"exports"];
+    if(![[directory stringByResolvingSymlinksInPath] isEqual:directory]||![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"成品输出目录不可用。");
+    NSString *staged=[directory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".jpg"]],*expected=hashFile(session.jpeg,task),*saved=nil;
+    @try{
+      if(![NSFileManager.defaultManager copyItemAtPath:session.jpeg toPath:staged error:nil])fail(@"无法暂存确认的成品。");
+      saved=[_runtime commitVersionWithNSString:session.source withNSString:session.owner withCcHueviaAlbumPhotoEditStore_Draft:session.draft withNSString:staged withNSString:json(metadata) withJavaUtilFunctionBooleanSupplier:task];
+    }@finally{[NSFileManager.defaultManager removeItemAtPath:staged error:nil];}
+    NSDictionary *receipt=[NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    if(![expected isEqual:receipt[@"sha256"]])fail(@"已有同设置成品与本次预览不同，请先在成品版本中核对旧结果。");
+    [_runtime markEditExportedWithNSString:session.owner withCcHueviaAlbumPhotoEditStore_Draft:session.draft];
+    [self closeExportPreview];return [NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+  }
+  if(![operation isEqual:@"media.exportPreviewFrame"])fail(@"未知的成品预览操作。");
+  for(NSString *key in @[@"width",@"height",@"scale",@"cx",@"cy"]){id value=p[key];if(value&&(![value isKindOfClass:NSNumber.class]||CFGetTypeID((__bridge CFTypeRef)value)==CFBooleanGetTypeID()||!std::isfinite([value doubleValue])))fail(@"预览视口数据无效。");}
+  int width=[p[@"width"] intValue],height=[p[@"height"] intValue];
+  if(width<1||height<1||width>4096||height>4096||uint64_t(width)*height>12000000||[p[@"width"] doubleValue]!=width||[p[@"height"] doubleValue]!=height)fail(@"预览视口尺寸过大。");
+  double fit=std::min(width/double(session.before.pixelWidth),height/double(session.before.pixelHeight));
+  double scale=p[@"scale"]?[p[@"scale"] doubleValue]:fit,cx=p[@"cx"]?[p[@"cx"] doubleValue]:.5,cy=p[@"cy"]?[p[@"cy"] doubleValue]:.5;
+  if(scale<std::min(fit,.00001)||scale>32||cx<0||cx>1||cy<0||cy>1)fail(@"预览视口数据超出范围。");
+  NSString *before=nil,*jpeg=nil;
+  @try{
+    before=[self exportFrame:session.before width:width height:height scale:scale cx:cx*session.before.pixelWidth cy:cy*session.before.pixelHeight folder:session.folder task:task];
+    jpeg=[self exportFrame:session.after width:width height:height scale:scale cx:cx*session.after.pixelWidth cy:cy*session.after.pixelHeight folder:session.folder task:task];
+    [self validateExportPreview:session];return @{@"before":before,@"jpeg":jpeg,@"width":@(width),@"height":@(height)};
+  }@catch(id error){if(before)[NSFileManager.defaultManager removeItemAtPath:before error:nil];if(jpeg)[NSFileManager.defaultManager removeItemAtPath:jpeg error:nil];@throw error;}
+}
 - (HueviaRaster *)raw:(NSString *)path owner:(NSString *)owner settings:(CcHueviaNcpRawDevelopmentSettings *)controls task:(HueviaTask *)task status:(NSString **)status {
   NSData *scope=[owner dataUsingEncoding:NSUTF8StringEncoding];unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(scope.bytes,CC_LONG(scope.length),digest);NSMutableString *scopeHash=[NSMutableString string];for(unsigned char b:digest)[scopeHash appendFormat:@"%02x",b];
   NSString *sourceHash=hashFile(path,task),*directory=[[_root stringByAppendingPathComponent:@"raw-development"] stringByAppendingPathComponent:scopeHash];
@@ -142,6 +229,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
 }
 - (NSDictionary *)request:(NSString *)operation payload:(NSString *)payload task:(HueviaTask *)task {
   NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![p isKindOfClass:NSDictionary.class])fail(@"照片请求数据无效。");
+  if([operation hasPrefix:@"media.exportPreview"]&&![operation isEqual:@"media.exportPreview"])return [self exportPreviewRequest:operation payload:p task:task];
   NSString *templateDirectory=[_root stringByAppendingPathComponent:@"preview-template"],*customTemplate=[templateDirectory stringByAppendingPathComponent:@"custom.jpg"];
   if(([operation hasPrefix:@"media.template"]||[operation isEqualToString:@"media.showcase"])&&(![[templateDirectory stringByResolvingSymlinksInPath] isEqualToString:[[_root stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"preview-template"]]||![[customTemplate stringByResolvingSymlinksInPath] isEqualToString:[[templateDirectory stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"custom.jpg"]]))fail(@"模板目录不可用。");
   if([operation hasPrefix:@"media.template"]){
@@ -232,7 +320,8 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sha];
     return [NSJSONSerialization JSONObjectWithData:[value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
   }
-  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],preview=originalView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"])fail(@"未知的照片操作。");
+  BOOL paired=[operation isEqual:@"media.exportPreview"];if(paired)[self closeExportPreview];
+  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],preview=originalView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"]&&!paired)fail(@"未知的照片操作。");
   if(!originalView&&![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");
   NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");
   CcHueviaAlbumPhotoEditStore_Draft *frozen=originalView?[_runtime originalViewWithNSString:path withNSString:owner]:[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
@@ -240,6 +329,9 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   NSString *colorStatus=@"";HueviaRaster *working=raw?[self raw:path owner:owner settings:[CcHueviaSharedSharedRawSettings parseWithNSString:@"{}"] task:task status:&colorStatus]:load(path,_root,preview?1280:0);
   if(raw&&preview){double scale=std::min(1.0,1280.0/std::max(working.pixelWidth,working.pixelHeight));working=scaled(working,std::max(1,int(std::lround(working.pixelWidth*scale))),std::max(1,int(std::lround(working.pixelHeight*scale))),_root);}
   id<CcHueviaNcpPresetPreviewProfile> profile=[frozen profile];
+  int fullWidth=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],fullHeight=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue];
+  int exif=[metadata[(__bridge id)kCGImagePropertyOrientation] intValue];if(exif<1||exif>8)exif=1;
+  CcHueviaNcpPhotoGeometry_Plan *fullPlan=[frozen->geometry_ planWithInt:(fullWidth>0?fullWidth:working.pixelWidth) withInt:(fullHeight>0?fullHeight:working.pixelHeight) withInt:exif];
   [profile renderPixelsWithCcHueviaNcpSpatialPreviewFilter_Pixels:working withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
   check(task);working=compose(working,frozen->geometry_,_root,task);
   working=[HueviaFrames apply:working border:frozen->border_ capture:[[CcHueviaSharedSharedCaptureInfo alloc] initWithNSString:json(captureData(metadata))] root:_root task:task];
@@ -248,8 +340,24 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   CcHueviaAlbumPhotoExportSpec_Resolved *resolved=[spec resolveWithInt:working.pixelWidth withInt:working.pixelHeight];working=scaled(working,resolved->width_,resolved->height_,_root);check(task);
   NSString *directory=[_root stringByAppendingPathComponent:preview?@"previews":@"exports"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建照片导出目录。");
   NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
+  if(paired){
+    [self closeExportPreview];HueviaExportSession *session=[HueviaExportSession new];session.identifier=NSUUID.UUID.UUIDString;session.owner=owner;session.source=path;session.draft=frozen;
+    session.folder=[[_root stringByAppendingPathComponent:@"previews"] stringByAppendingPathComponent:[@"export-" stringByAppendingString:session.identifier]];
+    if(![[session.folder stringByResolvingSymlinksInPath] isEqual:session.folder])fail(@"成品预览目录不可用。");
+    if(![NSFileManager.defaultManager createDirectoryAtPath:session.folder withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建成品预览目录。");
+    session.jpeg=[session.folder stringByAppendingPathComponent:@"encoded.jpg"];session.reference=[session.folder stringByAppendingPathComponent:@"reference.png"];
+    @try{
+      encode(working,session.reference,YES,@{});check(task);
+      encode(working,session.jpeg,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);
+      [_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];
+      session.before=working;session.after=load(session.jpeg,_root,0);session.sourceAttributes=[NSFileManager.defaultManager attributesOfItemAtPath:path error:nil];
+      if(session.before.pixelWidth!=session.after.pixelWidth||session.before.pixelHeight!=session.after.pixelHeight)fail(@"成品与编码前尺寸不符。");
+      session.model=[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved];session.spec=[resolved identity];
+      _exportSession=session;return @{@"id":session.identifier,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"bytes":[NSFileManager.defaultManager attributesOfItemAtPath:session.jpeg error:nil][NSFileSize]?:@0,@"quality":@(resolved->quality_),@"sha256":hashFile(session.jpeg,task),@"exportSpec":session.spec};
+    }@catch(id error){if(_exportSession==session)_exportSession=nil;[NSFileManager.defaultManager removeItemAtPath:session.folder error:nil];@throw error;}
+  }
   @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
-  [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];NSDictionary *result=@{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved],@"exportSpec":preview?@"":[resolved identity],@"rawColorStatus":colorStatus};
+  [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];NSDictionary *result=@{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"geometryWidth":@(fullPlan->width_),@"geometryHeight":@(fullPlan->height_),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved],@"exportSpec":preview?@"":[resolved identity],@"rawColorStatus":colorStatus};
   if(!preview){@try{NSString *saved=[_runtime commitVersionWithNSString:path withNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen withNSString:target withNSString:json(result) withJavaUtilFunctionBooleanSupplier:task];[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];return [NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];}@finally{[NSFileManager.defaultManager removeItemAtPath:target error:nil];}}
   return result;
 }

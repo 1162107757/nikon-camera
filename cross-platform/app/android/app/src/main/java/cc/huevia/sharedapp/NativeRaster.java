@@ -13,6 +13,9 @@ final class NativeRaster {
     private static final String[] TAGS={"DateTime","DateTimeOriginal","DateTimeDigitized","SubSecTime","SubSecTimeOriginal","SubSecTimeDigitized","OffsetTime","OffsetTimeOriginal","OffsetTimeDigitized","Make","Model","LensMake","LensModel","ExposureTime","FNumber","ISOSpeedRatings","PhotographicSensitivity","ExposureProgram","ExposureBiasValue","MeteringMode","Flash","FocalLength","FocalLengthIn35mmFilm","WhiteBalance"};
     private NativeRaster(){}
     static void render(Context context,File source,File target,PresetPreviewProfile profile,PhotoExportSpec spec,boolean preview,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        render(context,source,target,null,profile,spec,preview,cancel,progress);
+    }
+    static void render(Context context,File source,File target,File reference,PresetPreviewProfile profile,PhotoExportSpec spec,boolean preview,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         Bitmap bitmap=null;
         try{
             check(cancel);BitmapFactory.Options bounds=new BitmapFactory.Options();bounds.inJustDecodeBounds=true;BitmapFactory.decodeFile(source.getPath(),bounds);
@@ -37,6 +40,7 @@ final class NativeRaster {
             if(!border.isNone()){Bitmap framed=new PhotoBorderRenderer(context.getAssets()).apply(bitmap,border,PhotoCaptureInfo.read(source));if(framed!=bitmap)bitmap.recycle();bitmap=framed;}
             PhotoExportSpec.Resolved resolved=spec.resolve(bitmap.getWidth(),bitmap.getHeight());check(cancel);
             if(bitmap.getWidth()!=resolved.width||bitmap.getHeight()!=resolved.height){Bitmap scaled=Bitmap.createScaledBitmap(bitmap,resolved.width,resolved.height,true);if(scaled!=bitmap)bitmap.recycle();bitmap=scaled;}
+            if(reference!=null){try(FileOutputStream output=new FileOutputStream(reference)){if(!bitmap.compress(Bitmap.CompressFormat.PNG,100,output))throw new IOException("编码前像素保存失败。");output.flush();output.getFD().sync();}check(cancel);}
             try(FileOutputStream output=new FileOutputStream(target)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,resolved.quality,output))throw new IOException("效果图编码失败。");output.flush();output.getFD().sync();}
             check(cancel);ExifInterface result=new ExifInterface(target.getPath());for(String tag:TAGS){String value=original.getAttribute(tag);if(value!=null)result.setAttribute(tag,value);}
             result.setAttribute("Orientation","1");result.setAttribute("ColorSpace","1");result.setAttribute("ImageWidth",Integer.toString(bitmap.getWidth()));result.setAttribute("ImageLength",Integer.toString(bitmap.getHeight()));result.setAttribute("PixelXDimension",Integer.toString(bitmap.getWidth()));result.setAttribute("PixelYDimension",Integer.toString(bitmap.getHeight()));result.saveAttributes();PhotoExifRationals.preserve(source,target);

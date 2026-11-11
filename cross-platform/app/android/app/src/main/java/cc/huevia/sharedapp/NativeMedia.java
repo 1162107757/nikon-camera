@@ -16,9 +16,11 @@ import java.util.function.*;
 final class NativeMedia {
     private final Context context;
     private final SharedRuntime runtime;
-    NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;}
+    private final NativeExportPreview exportPreview;
+    NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;this.exportPreview=new NativeExportPreview(this.context,runtime);}
     String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         Map<String,Object> p=SharedJson.object(json);
+        if(operation.startsWith("media.exportPreview"))return exportPreview.request(operation,p,cancel,progress);
         if(operation.startsWith("media.template")){
             cc.huevia.ui.PresetPreviewRenderer templates=new cc.huevia.ui.PresetPreviewRenderer(context);
             if(operation.equals("media.templateSet")){
@@ -124,7 +126,7 @@ final class NativeMedia {
             runtime.guardOwner(owner);
             if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
-            Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity());
+            Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"geometryWidth",plan.width,"geometryHeight",plan.height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity());
             if(!preview){
                 try{
                     String saved=runtime.commitVersion(original,owner,frozen,target.getPath(),SharedJson.encode(result),cancel);

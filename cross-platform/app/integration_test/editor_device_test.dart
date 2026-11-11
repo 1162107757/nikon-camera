@@ -14,6 +14,7 @@ import '../test/ui_preferences_test.dart' as ui_preferences;
 import '../test/batch_export_test.dart' as batch_export;
 import '../test/help_test.dart' as help;
 import '../test/preview_templates_test.dart' as preview_templates;
+import '../test/editor_workspace_test.dart' as editor_workspace;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -40,4 +41,5 @@ void main() {
   batch_export.main();
   help.main();
   preview_templates.main();
+  editor_workspace.main();
 }

@@ -15,6 +15,9 @@ import 'versions.dart';
 import 'widgets.dart';
 import 'hue_icons.dart';
 import 'raw_develop.dart';
+import 'crop_workspace.dart';
+import 'split_compare.dart';
+import 'export_preview.dart';
 
 part 'legacy_editor.dart';
 
@@ -31,7 +34,7 @@ class _EditorPageState extends State<EditorPage> {
   final List<Recipe> undo = [], redo = [];
   Timer? debounce;
   StreamSubscription<dynamic>? progressEvents;
-  String? preview, error, activeJob, atmosphere;
+  String? preview, comparison, error, activeJob, atmosphere;
   int parameterIndex = 1;
   bool atmosphereLoading = false;
   final panelRevision = ValueNotifier<int>(0);
@@ -96,6 +99,7 @@ class _EditorPageState extends State<EditorPage> {
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     if (preview != null) unawaited(discardPreview(preview));
+    if (comparison != null) unawaited(discardPreview(comparison));
     if (atmosphere != null) unawaited(discardPreview(atmosphere));
     panelRevision.dispose();
     super.dispose();
@@ -136,7 +140,7 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> render() async {
     final current = revision;
-    final originalView = compare;
+    final splitting = compare;
     final frozen = recipe.clone();
     final previousJob = activeJob;
     if (previousJob != null) await widget.state.core.cancel(previousJob);
@@ -148,25 +152,51 @@ class _EditorPageState extends State<EditorPage> {
       progress = 0;
     });
     try {
-      final result = await widget.state.core.call(
-        originalView ? 'media.originalPreview' : 'media.preview',
-        {
-          'path': widget.photo.path,
-          if (!originalView) 'recipe': frozen.data,
-          'owner': owner,
-        },
-        job,
-      );
+      final result = await widget.state.core.call('media.preview', {
+        'path': widget.photo.path,
+        'recipe': frozen.data,
+        'owner': owner,
+      }, job);
       if (!mounted || current != revision || activeJob != job) {
         await discardPreview(result['path']);
         return;
       }
-      final old = preview;
+      String? reference;
+      if (splitting) {
+        final neutral = Recipe().data;
+        for (final key in ['geometry', 'border']) {
+          if (frozen.data[key] != null) neutral[key] = frozen.data[key];
+        }
+        late final Json before;
+        try {
+          before = await widget.state.core.call('media.preview', {
+            'path': widget.photo.path,
+            'recipe': neutral,
+            'owner': owner,
+          }, job);
+        } catch (_) {
+          await discardPreview(result['path']);
+          rethrow;
+        }
+        reference = before['path'] as String;
+        if (!mounted || current != revision || activeJob != job) {
+          await discardPreview(reference);
+          await discardPreview(result['path']);
+          return;
+        }
+      }
+      final old = preview, oldComparison = comparison;
       setState(() {
         preview = result['path'] as String;
+        comparison = reference;
         error = null;
       });
       panelRevision.value++;
+      if (oldComparison != null &&
+          oldComparison != preview &&
+          oldComparison != comparison) {
+        unawaited(discardPreview(oldComparison));
+      }
       if (atmosphere == null && !atmosphereLoading) {
         unawaited(loadAtmosphere(result['path'] as String));
       }
@@ -200,6 +230,46 @@ class _EditorPageState extends State<EditorPage> {
       if (await file.exists()) await file.delete();
     } on FileSystemException {
       // A preview is disposable; cleanup failure never affects the original.
+    }
+  }
+
+  Future<void> openCrop() async {
+    if (!toolsEnabled) return;
+    debounce?.cancel();
+    revision++;
+    setState(() => managingTools = true);
+    try {
+      if (activeJob != null) await widget.state.core.cancel(activeJob!);
+      if (!mounted) return;
+      final result = await hueRootPage<Json>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => CropWorkspace(
+            core: widget.state.core,
+            photo: widget.photo,
+            owner: owner,
+            recipe: recipe.clone().data,
+          ),
+        ),
+      );
+      if (result != null && mounted) {
+        if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
+          throw const AppFailure('账号已改变，请重新打开照片。');
+        }
+        checkpoint();
+        setState(() {
+          recipe.data['geometry'] = result;
+          compare = false;
+        });
+        unawaited(saveDraft().catchError((_) {}));
+      }
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) {
+        setState(() => managingTools = false);
+        unawaited(render());
+      }
     }
   }
 
@@ -395,38 +465,51 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   Future<void> export() async {
+    var inspect = false;
     final size = await showModalBottomSheet<String>(
       context: context,
       useRootNavigator: true,
       useSafeArea: true,
       showDragHandle: true,
-      builder: (sheet) => SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text('导出照片', style: Theme.of(context).textTheme.headlineSmall),
-                const SizedBox(height: 8),
-                const Text('保留原图，另存为 sRGB JPEG。'),
-                const SizedBox(height: 20),
-                FilledButton(
-                  onPressed: () => Navigator.pop(sheet, 'full'),
-                  child: const Text('完整尺寸 · JPEG 95'),
-                ),
-                const SizedBox(height: 12),
-                OutlinedButton(
-                  onPressed: () => Navigator.pop(sheet, 'share'),
-                  child: const Text('适合分享 · 长边 2048'),
-                ),
-                const SizedBox(height: 12),
-                TextButton(
-                  onPressed: () => Navigator.pop(sheet, 'custom'),
-                  child: const Text('自定义尺寸与质量'),
-                ),
-              ],
+      builder: (sheet) => StatefulBuilder(
+        builder: (sheet, refresh) => SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    '导出照片',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text('保留原图，另存为 sRGB JPEG。'),
+                  CheckboxListTile(
+                    value: inspect,
+                    title: const Text('检查成品与编码前像素'),
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (value) =>
+                        refresh(() => inspect = value == true),
+                  ),
+                  const SizedBox(height: 20),
+                  FilledButton(
+                    onPressed: () => Navigator.pop(sheet, 'full'),
+                    child: const Text('完整尺寸 · JPEG 95'),
+                  ),
+                  const SizedBox(height: 12),
+                  OutlinedButton(
+                    onPressed: () => Navigator.pop(sheet, 'share'),
+                    child: const Text('适合分享 · 长边 2048'),
+                  ),
+                  const SizedBox(height: 12),
+                  TextButton(
+                    onPressed: () => Navigator.pop(sheet, 'custom'),
+                    child: const Text('自定义尺寸与质量'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -451,13 +534,28 @@ class _EditorPageState extends State<EditorPage> {
     try {
       if (previousJob != null) await widget.state.core.cancel(previousJob);
       if (!mounted) return;
-      final result = await widget.state.core.call('media.export', {
+      final payload = <String, dynamic>{
         'path': widget.photo.path,
         'recipe': frozen.data,
         'owner': owner,
         'size': size,
         ...custom,
-      }, job);
+      };
+      final result = inspect
+          ? await hueRootPage<Json>(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ExportPreviewPage(
+                  state: widget.state,
+                  photo: widget.photo,
+                  recipe: frozen.data,
+                  owner: owner,
+                  options: {'size': size, ...custom},
+                ),
+              ),
+            )
+          : await widget.state.core.call('media.export', payload, job);
+      if (result == null) return;
       if (!mounted) return;
       await SharePlus.instance.share(
         ShareParams(
@@ -807,6 +905,11 @@ class _EditorPageState extends State<EditorPage> {
         final geometry = object(recipe.data['geometry'] ?? {});
         return Column(
           children: [
+            OutlinedButton.icon(
+              onPressed: toolsEnabled ? openCrop : null,
+              icon: const HueIcon(HueIconKind.crop),
+              label: const Text('交互裁切与构图'),
+            ),
             Wrap(
               spacing: 12,
               runSpacing: 12,

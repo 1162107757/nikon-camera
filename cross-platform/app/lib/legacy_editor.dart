@@ -240,21 +240,11 @@ extension _LegacyWorkspace on _EditorPageState {
     fit: StackFit.expand,
     children: [
       if (preview != null)
-        InteractiveViewer(
-          minScale: 1,
-          maxScale: 8,
-          child: Center(
-            child: Image.file(
-              File(preview!),
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.contain,
-              gaplessPlayback: true,
-              semanticLabel: compare ? '原图预览' : '照片效果预览',
-              errorBuilder: (_, _, _) =>
-                  TextButton(onPressed: render, child: const Text('重试预览')),
-            ),
-          ),
+        SplitCompare(
+          effect: preview!,
+          original: comparison,
+          enabled: compare,
+          onRetry: render,
         )
       else
         const Center(child: CircularProgressIndicator(color: _editorYellow)),

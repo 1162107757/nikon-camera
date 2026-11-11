@@ -121,9 +121,7 @@ void main() {
         expect(find.text('已保存的秋色'), findsOneWidget);
         // A tiny source must occupy the photo viewport, as in the original
         // editor; it must not retain its intrinsic one-pixel widget size.
-        final effectImage = find.byWidgetPredicate(
-          (widget) => widget is Image && widget.semanticLabel == '照片效果预览',
-        );
+        final effectImage = find.bySemanticsLabel('照片效果预览');
         expect(tester.getSize(effectImage).width, greaterThan(size.width * .5));
         Future<void> tapLabel(String label) async {
           await tester.ensureVisible(find.text(label));
