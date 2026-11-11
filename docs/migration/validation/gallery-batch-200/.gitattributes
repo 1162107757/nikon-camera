@@ -1,3 +1,6 @@
 *.log -text
 *.json -text
 *.png binary
+*.java -text
+*.xml -text
+*.py -text
