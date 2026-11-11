@@ -21,8 +21,10 @@ finish() {
     # exception report and unified log before the ephemeral runner is removed.
     python3 - "$WORK" "$DEVICE" "$STARTED" <<'PY'
 from pathlib import Path
-import shutil,subprocess,sys
+import shutil,subprocess,sys,time
 work,device,started=Path(sys.argv[1]),sys.argv[2],int(sys.argv[3])
+# CrashReporter may publish an .ips after the test transport has already closed.
+time.sleep(8)
 try:
     result=subprocess.run(['xcrun','simctl','spawn',device,'log','show','--last','5m','--style','compact','--predicate','process == "Runner"'],capture_output=True,timeout=25)
     (work/'simulator-native.log').write_bytes((result.stdout+result.stderr)[-4*1024*1024:])
@@ -56,4 +58,10 @@ xcrun simctl list devices available -j > "$WORK/simulator-devices.json"
 xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
   "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build > "$WORK/simulator-build.log" 2>&1
-flutter test integration_test/native_pipeline_test.dart --device-id "$DEVICE" --no-pub --reporter expanded --verbose > "$WORK/simulator-tests.log" 2>&1
+xcrun xcodebuild test -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
+  -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
+  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" -only-testing:RunnerTests \
+  -resultBundlePath "$WORK/simulator-tests.xcresult" \
+  -parallel-testing-enabled NO -test-timeouts-enabled YES \
+  -default-test-execution-time-allowance 360 -maximum-test-execution-time-allowance 360 \
+  > "$WORK/simulator-tests.log" 2>&1

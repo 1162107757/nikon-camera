@@ -9,12 +9,31 @@ import 'package:huevia/domain.dart';
 
 import 'synthetic_dng.dart';
 
+class PipelineCore extends HueviaCore {
+  @override
+  Future<Json> call(
+    String operation, [
+    Json payload = const {},
+    String? jobId,
+  ]) async {
+    debugPrint('Native operation: $operation begin');
+    try {
+      final result = await super.call(operation, payload, jobId);
+      debugPrint('Native operation: $operation complete');
+      return result;
+    } catch (failure) {
+      debugPrint('Native operation: $operation failed: $failure');
+      rethrow;
+    }
+  }
+}
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   testWidgets(
     'Native codecs and LibRaw retain originals, dimensions and white highlights',
     (tester) async {
-      final core = HueviaCore();
+      final core = PipelineCore();
       debugPrint('Native pipeline: initializing');
       try {
         await core.initialize();
