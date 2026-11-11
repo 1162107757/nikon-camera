@@ -7,6 +7,8 @@ import 'appearance.dart';
 import 'legacy_dialog.dart';
 import 'camera.dart';
 import 'widgets.dart';
+import 'help.dart';
+import 'preview_templates.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.state});
@@ -142,7 +144,10 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: const HueHeader(title: '设置'),
       body: ListenableBuilder(
-        listenable: appearanceMode,
+        listenable: Listenable.merge([
+          appearanceMode,
+          state.core.previewRevision,
+        ]),
         builder: (context, _) => SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
             20,
@@ -258,20 +263,20 @@ class SettingsPage extends StatelessWidget {
                 row(
                   HueIconKind.album,
                   '预览模板',
-                  () => explain(
+                  () => hueRootPage<void>(
                     context,
-                    '预览模板',
-                    '预设使用 10 张内置摄影样片生成手机模拟效果。展示样片与相机实拍可能存在差异。',
+                    MaterialPageRoute(
+                      builder: (_) => PreviewTemplatesPage(core: state.core),
+                    ),
                   ),
-                  value: '摄影样片 · 10 张',
+                  value: state.core.customTemplate ? '自选模板' : '摄影样片 · 10 张',
                 ),
                 row(
                   HueIconKind.help,
                   '使用帮助',
-                  () => explain(
+                  () => hueRootPage<void>(
                     context,
-                    '使用帮助',
-                    '添加 NCP、NP3 预设后，在相册选择照片进行编辑。相机连接位于「设置」；同步页用于浏览和接收相机照片。RAW 原文件会保留，显影后继续编辑。',
+                    MaterialPageRoute(builder: (_) => HelpPage(state: state)),
                   ),
                 ),
                 row(
@@ -283,10 +288,9 @@ class SettingsPage extends StatelessWidget {
                 row(
                   HueIconKind.info,
                   '关于',
-                  () => explain(
+                  () => hueRootPage<void>(
                     context,
-                    'Huevia',
-                    '管理本地预设、模拟色调、连接相机、浏览和下载照片。\n\n0.31.0-dev',
+                    MaterialPageRoute(builder: (_) => const AboutPage()),
                   ),
                 ),
               ]),

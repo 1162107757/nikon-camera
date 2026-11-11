@@ -84,9 +84,9 @@ void main() {
   testWidgets(
     'Independent source filters survive rebuilding the whole application state',
     (tester) async {
-      final (core, _) = await setup();
+      final (core, _) = (await tester.runAsync(setup))!;
       var state = AppState(core);
-      await state.initialize();
+      await tester.runAsync(state.initialize);
       await tester.pumpWidget(HueviaApp(state: state));
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('筛选预设'));
@@ -106,7 +106,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
       state = AppState(core);
-      await state.initialize();
+      await tester.runAsync(state.initialize);
       await tester.pumpWidget(HueviaApp(state: state));
       await tester.pumpAndSettle();
       expect(find.text('在线 NCP'), findsNothing);
@@ -121,14 +121,14 @@ void main() {
   testWidgets('Album sort and RAW filter survive rebuilding the application', (
     tester,
   ) async {
-    final (core, directory) = await setup();
+    final (core, directory) = (await tester.runAsync(setup))!;
     final photos = [
       Photo('${directory.path}/originals/a.nef', '原片.nef', {'raw': true}),
       Photo('${directory.path}/originals/b.jpg', '照片.jpg', {}),
     ];
     Future<void> show() async {
       final state = AppState(core);
-      await state.initialize();
+      await tester.runAsync(state.initialize);
       state.photos = photos;
       await tester.pumpWidget(HueviaApp(state: state));
       await tester.pumpAndSettle();

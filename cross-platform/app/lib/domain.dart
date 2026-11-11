@@ -29,10 +29,15 @@ class HueviaCore {
   );
   String root = '';
   Json schema = {};
+  final previewRevision = ValueNotifier<int>(0);
+  bool customTemplate = false;
+  final List<Json> recentOperations = [];
   Future<void> initialize() async {
     final response = await _invoke('initialize', {});
     root = response['root'] as String;
     schema = object(response['schema']);
+    try { await call('media.templateInfo'); }
+    catch (_) { /* Template preferences must not block opening the library. */ }
   }
 
   Future<Json> _invoke(String method, Json arguments) async {
@@ -49,11 +54,38 @@ class HueviaCore {
     String operation, [
     Json payload = const {},
     String? jobId,
-  ]) => _invoke('request', {
-    'operation': operation,
-    'payload': jsonEncode(payload),
-    'jobId': ?jobId,
-  });
+  ]) async {
+    final started = Stopwatch()..start();
+    var status = 'failed';
+    try {
+      final result = await _invoke('request', {
+        'operation': operation,
+        'payload': jsonEncode(payload),
+        'jobId': ?jobId,
+      });
+      if ([
+        'media.templateSet',
+        'media.templateReset',
+        'media.templateInfo',
+      ].contains(operation)) {
+        customTemplate = result['custom'] == true;
+        previewRevision.value++;
+      }
+      status = 'complete';
+      return result;
+    } finally {
+      recentOperations.add({
+        'operation': RegExp(r'^[a-zA-Z][a-zA-Z0-9.]{0,63}$').hasMatch(operation)
+            ? operation
+            : 'invalid',
+        'at': DateTime.now().toUtc().toIso8601String(),
+        'elapsedMs': started.elapsedMilliseconds,
+        'status': status,
+      });
+      if (recentOperations.length > 128) recentOperations.removeAt(0);
+    }
+  }
+
   Future<void> cancel(String jobId) =>
       channel.invokeMethod<void>('cancel', {'jobId': jobId});
 
@@ -207,9 +239,15 @@ class AppState extends ChangeNotifier {
     // View state is optional for a standalone/test view with no private root.
     if (core.root.isEmpty) return Future.value();
     final next = _uiCommit.then((_) async {
-      uiPreferences = await core.call('ui.preferences.set', patch);
-      uiPreferencesWarning = null;
-      notifyListeners();
+      try {
+        uiPreferences = await core.call('ui.preferences.set', patch);
+        uiPreferencesWarning = null;
+        notifyListeners();
+      } catch (failure) {
+        uiPreferencesWarning = '界面设置暂未保存，重启后可能恢复为上次设置。';
+        notifyListeners();
+        rethrow;
+      }
     });
     _uiCommit = next.then<void>((_) {}, onError: (Object _, StackTrace _) {});
     return next;

@@ -142,6 +142,30 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
 }
 - (NSDictionary *)request:(NSString *)operation payload:(NSString *)payload task:(HueviaTask *)task {
   NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![p isKindOfClass:NSDictionary.class])fail(@"照片请求数据无效。");
+  NSString *templateDirectory=[_root stringByAppendingPathComponent:@"preview-template"],*customTemplate=[templateDirectory stringByAppendingPathComponent:@"custom.jpg"];
+  if(![[templateDirectory stringByResolvingSymlinksInPath] isEqualToString:[[_root stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"preview-template"]]||![[customTemplate stringByResolvingSymlinksInPath] isEqualToString:[[templateDirectory stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"custom.jpg"]])fail(@"模板目录不可用。");
+  if([operation hasPrefix:@"media.template"]){
+    if([operation isEqualToString:@"media.templateSet"]){
+      NSString *source=[[_runtime privateFileWithNSString:p[@"path"]] getPath];unsigned long long size=[[NSFileManager.defaultManager attributesOfItemAtPath:source error:nil] fileSize];
+      if(size<4||size>20*1024*1024||isRaw(source))fail(@"请选择 20MB 以内的普通照片作为模板。");
+      if(![NSFileManager.defaultManager createDirectoryAtPath:templateDirectory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建模板目录。");
+      NSString *temporary=[templateDirectory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];
+      @try{HueviaRaster *image=load(source,_root,960);check(task);encode(image,temporary,NO,@{(__bridge id)kCGImageDestinationLossyCompressionQuality:@.95});check(task);
+        NSData *bytes=[NSData dataWithContentsOfFile:temporary options:NSDataReadingMappedIfSafe error:nil];if(!bytes||bytes.length>8*1024*1024||![bytes writeToFile:customTemplate options:NSDataWritingAtomic error:nil])fail(@"模板未能保存，原模板仍可使用。");
+      }@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
+    }else if([operation isEqualToString:@"media.templateReset"]){
+      if([NSFileManager.defaultManager fileExistsAtPath:customTemplate]&&![NSFileManager.defaultManager removeItemAtPath:customTemplate error:nil])fail(@"无法恢复内置样片，原模板仍可使用。");
+    }else if([operation isEqualToString:@"media.templateSource"]){
+      int index=p[@"index"]?[p[@"index"] intValue]:0;BOOL custom=[NSFileManager.defaultManager fileExistsAtPath:customTemplate];
+      NSArray *names=@[@"portrait-smile",@"portrait-man",@"alpine-lake",@"sunlit-forest",@"city-skyline",@"neon-street",@"coastal-water",@"pink-tulips",@"breakfast",@"rainy-tokyo"];
+      NSArray *labels=@[@"微笑人像",@"男士人像",@"高山湖泊",@"阳光森林",@"城市天际线",@"霓虹街道",@"海岸浪花",@"粉色郁金香",@"早餐静物",@"雨夜街头"];
+      if(index<0||index>=(custom?1:10))fail(@"模板样片索引无效。");
+      if(custom)return @{@"path":customTemplate,@"label":@"自选模板",@"credit":@""};
+      NSURL *url=[NSBundle.mainBundle URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"]?:[[NSBundle bundleForClass:HueviaMedia.class] URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];NSURL *image=[[NSBundle bundleWithURL:url] URLForResource:names[index] withExtension:@"jpg"];if(!image)fail(@"摄影样片尚未安装。");
+      return @{@"path":image.path,@"label":labels[index],@"credit":@"Pexels · 内置摄影样片"};
+    }else if(![operation isEqualToString:@"media.templateInfo"])fail(@"未知的模板操作。");
+    BOOL custom=[NSFileManager.defaultManager fileExistsAtPath:customTemplate];return @{@"custom":@(custom),@"count":custom?@1:@10,@"version":custom?hashFile(customTemplate,task):@"photography-v1"};
+  }
   if([operation isEqualToString:@"media.showcase"]){
     NSString *owner=p[@"owner"]?:@"",*presetID=p[@"id"],*category=p[@"category"]?:@"";
     if(![owner isKindOfClass:NSString.class]||![presetID isKindOfClass:NSString.class]||![category isKindOfClass:NSString.class])fail(@"预设预览数据无效。");
@@ -153,6 +177,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     unsigned long long seed=0;[[NSScanner scannerWithString:[presetID substringToIndex:8]] scanHexLongLong:&seed];NSString *scene=names[pool[seed%pool.count].unsignedIntegerValue];
     NSURL *bundleURL=[NSBundle.mainBundle URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"]?:[[NSBundle bundleForClass:HueviaMedia.class] URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];
     NSBundle *bundle=bundleURL?[NSBundle bundleWithURL:bundleURL]:nil;NSURL *imageURL=[bundle URLForResource:scene withExtension:@"jpg"];
+    BOOL custom=[NSFileManager.defaultManager fileExistsAtPath:customTemplate];if(custom){imageURL=[NSURL fileURLWithPath:customTemplate];scene=[@"custom-" stringByAppendingString:hashFile(customTemplate,task)];}
     if(!imageURL)fail(@"摄影样片尚未安装。");
     id<CcHueviaNcpPresetPreviewProfile> profile=[CcHueviaNcpPresetPreviewProfiles fromPresetWithByteArray:bytes];
     NSString *directory=[_root stringByAppendingPathComponent:@"preset-previews"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建预设预览目录。");

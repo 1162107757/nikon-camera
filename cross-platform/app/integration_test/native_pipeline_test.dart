@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:huevia/domain.dart';
+import 'package:huevia/batch_export.dart';
 
 import 'synthetic_dng.dart';
 
@@ -174,6 +175,53 @@ void main() {
         final source = await File('${directory.path}/source.png')
             .writeAsBytes(png!.buffer.asUint8List());
         final before = (await sha256.bind(source.openRead()).first).toString();
+        final templateBefore = await core.call('media.templateInfo');
+        expect(
+          templateBefore['custom'],
+          false,
+          reason:
+              'Run in the isolated test application with built-in templates',
+        );
+        try {
+          final revision = core.previewRevision.value;
+          final selected = await core.call('media.templateSet', {
+            'path': source.path,
+          });
+          expect(selected['custom'], true);
+          expect(selected['count'], 1);
+          expect(core.previewRevision.value, greaterThan(revision));
+          final preview = await core.call('media.templateSource');
+          final codec = await ui.instantiateImageCodec(
+            await File(preview['path'] as String).readAsBytes(),
+          );
+          final frame = await codec.getNextFrame();
+          expect(frame.image.width, lessThanOrEqualTo(960));
+          expect(frame.image.height, lessThanOrEqualTo(960));
+          frame.image.dispose();
+          codec.dispose();
+          await expectLater(
+            core.call('media.templateSet', {'path': '/outside/private.jpg'}),
+            throwsA(isA<AppFailure>()),
+          );
+          expect((await core.call('media.templateInfo'))['custom'], true);
+          await expectLater(
+            core.call('media.templateSource', {'index': 1}),
+            throwsA(isA<AppFailure>()),
+          );
+        } finally {
+          await core.call('media.templateReset');
+        }
+        final restored = await core.call('media.templateInfo');
+        expect(restored['custom'], false);
+        expect(restored['count'], 10);
+        expect(
+          await File(
+            (await core.call('media.templateSource', {'index': 9}))['path']
+                as String,
+          ).exists(),
+          true,
+        );
+        expect((await sha256.bind(source.openRead()).first).toString(), before);
         final exported = await render('media.export', {
           'path': source.path,
           'owner': '',
@@ -202,6 +250,46 @@ void main() {
           'id': exported['id'],
         });
         expect(opened['sha256'], exported['sha256']);
+        final second = await File(exported['path'] as String)
+            .copy('${directory.path}/second.jpg');
+        final batchState = AppState(core)
+          ..photos = [
+            Photo(source.path, '批量源图.png', {'width': 256, 'height': 192}),
+            Photo(second.path, '批量照片.jpg', {'width': 256, 'height': 192}),
+          ];
+        final batch = BatchExport(
+          batchState,
+          batchState.photos
+              .map(
+                (photo) => <String, dynamic>{
+                  'id': photo.path,
+                  'name': photo.name,
+                },
+              )
+              .toList(),
+          phone: false,
+        );
+        try {
+          await batch.run();
+          expect(batch.completed, 2);
+          expect(batch.failed, 0);
+          for (final item in batch.items) {
+            expect(await File(item.output!).exists(), true);
+          }
+          final saved = await core.call('version.list', {'owner': ''});
+          for (final record in (saved['items'] as List).map(object)) {
+            if (batch.items.any((item) => item.output == record['path'])) {
+              versions.add(record['id'] as String);
+            }
+          }
+          final firstOutput = batch.items.first.output;
+          await batch.run();
+          expect(batch.items.first.output, firstOutput);
+        } finally {
+          batch.dispose();
+          batchState.dispose();
+        }
+        expect((await sha256.bind(source.openRead()).first).toString(), before);
         final shared = await render('media.export', {
           'path': source.path,
           'owner': '',

@@ -11,6 +11,8 @@ import '../test/account_search_test.dart' as account_search;
 import '../test/session_race_test.dart' as session_race;
 import '../test/shell_overlays_test.dart' as shell_overlays;
 import '../test/ui_preferences_test.dart' as ui_preferences;
+import '../test/batch_export_test.dart' as batch_export;
+import '../test/help_test.dart' as help;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -34,4 +36,6 @@ void main() {
   session_race.main();
   shell_overlays.main();
   ui_preferences.main();
+  batch_export.main();
+  help.main();
 }

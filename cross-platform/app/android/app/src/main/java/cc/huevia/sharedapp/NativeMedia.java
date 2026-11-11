@@ -19,6 +19,32 @@ final class NativeMedia {
     NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;}
     String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         Map<String,Object> p=SharedJson.object(json);
+        if(operation.startsWith("media.template")){
+            cc.huevia.ui.PresetPreviewRenderer templates=new cc.huevia.ui.PresetPreviewRenderer(context);
+            if(operation.equals("media.templateSet")){
+                File source=runtime.privateFile(SharedRuntime.text(p,"path",4096));
+                if(source.length()<4||source.length()>20L*1024*1024||raw(source))throw new IOException("请选择 20MB 以内的普通照片作为模板。");
+                if(cancel.getAsBoolean())throw new InterruptedIOException("模板更新已取消。");
+                templates.setTemplate(android.net.Uri.fromFile(source));
+            }else if(operation.equals("media.templateReset")){
+                templates.resetTemplate();
+            }else if(operation.equals("media.templateSource")){
+                cc.huevia.ui.PresetShowcaseRenderer renderer=new cc.huevia.ui.PresetShowcaseRenderer(context,templates);
+                cc.huevia.ui.PresetShowcaseRenderer.Source[] scenes=renderer.sources();
+                int index=SharedRuntime.integer(p,"index",0);if(index<0||index>=scenes.length)throw new IOException("模板样片索引无效。");
+                File directory=new File(runtime.root(),"preset-previews");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建模板预览目录。");
+                File target=new File(directory,PhotoEditStore.hash(("template:"+scenes[index].cacheKey).getBytes(java.nio.charset.StandardCharsets.UTF_8))+".jpg");
+                if(Files.isSymbolicLink(directory.toPath())||Files.isSymbolicLink(target.toPath()))throw new IOException("模板预览路径无效。");
+                if(!target.isFile()){
+                    Bitmap bitmap=renderer.original(scenes[index],960);File temporary=File.createTempFile("template-",".part",directory);
+                    try{try(FileOutputStream out=new FileOutputStream(temporary)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,95,out))throw new IOException("模板预览编码失败。");out.getFD().sync();}
+                        if(cancel.getAsBoolean())throw new InterruptedIOException("模板预览已取消。");Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.REPLACE_EXISTING);
+                    }finally{bitmap.recycle();Files.deleteIfExists(temporary.toPath());}
+                }
+                return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"label",scenes[index].label,"credit",scenes[index].credit));
+            }else if(!operation.equals("media.templateInfo"))throw new IOException("未知的模板操作。");
+            return SharedJson.encode(SharedRuntime.map("custom",templates.hasCustomTemplate(),"count",templates.hasCustomTemplate()?1:10,"version",templates.versionKey()));
+        }
         if(operation.equals("media.showcase")){
             runtime.guardOwner(SharedRuntime.text(p,"owner",64));
             String id=SharedRuntime.text(p,"id",64),category=SharedRuntime.text(p,"category",64);

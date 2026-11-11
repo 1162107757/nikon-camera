@@ -8,6 +8,8 @@ parser=argparse.ArgumentParser()
 parser.add_argument('--sdk',required=True,type=Path)
 parser.add_argument('--java',required=True,type=Path)
 parser.add_argument('--offline',action='store_true')
+parser.add_argument('--workers',type=int,choices=range(1,5),default=2)
+parser.add_argument('--gradle-jvm-args',help='Optional per-build JVM memory/GC settings; does not change project defaults')
 parser.add_argument('--mode',choices=['debug','release'],default='debug')
 parser.add_argument('--target',type=Path)
 parser.add_argument('--abi',choices=['android-x64','android-arm64','android-arm'],default='android-x64')
@@ -31,7 +33,8 @@ env=dict(os.environ,JAVA_HOME=str(java),ANDROID_HOME=str(sdk),ANDROID_SDK_ROOT=s
     CI='true',FLUTTER_SUPPRESS_ANALYTICS='true')
 env['PATH']=str(java/'bin')+os.pathsep+env['PATH']
 tasks=[':app:assembleDebug',':app:assembleDebugAndroidTest'] if options.mode=='debug' else [':app:assembleRelease']
-command=[str(android/'gradlew.bat'),*tasks,'--no-daemon','--max-workers=2','-Ptarget-platform='+options.abi]
+command=[str(android/'gradlew.bat'),*tasks,'--no-daemon','--max-workers='+str(options.workers),'-Ptarget-platform='+options.abi]
+if options.gradle_jvm_args:command+=['-Dorg.gradle.jvmargs='+options.gradle_jvm_args]
 if options.target:
     target=options.target.resolve()
     if not target.is_relative_to(ROOT/'cross-platform/app') or not target.is_file():raise SystemExit('Test target must be inside the shared app')

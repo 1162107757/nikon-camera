@@ -20,16 +20,21 @@ public final class SharedCamera {
     private PtpDeviceInfo device;
     private final List<Long> handles=new ArrayList<>();
     private final Map<Long,PtpObjectInfo> observed=new LinkedHashMap<>();
-    public SharedCamera(String root,Connectors connectors)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;}
+    public SharedCamera(String root,Connectors connectors)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;ConnectionTrace.configure(new File(this.root,"camera-trace.log"));}
     public void cancel(String job){if(job!=null&&job.equals(activeJob))closeTransport();}
     /** Can run from the host lifecycle thread without changing worker-owned indexes. */
     public void closeTransport(){PhotoCameraClient current=client;if(current!=null)current.close();}
     public synchronized String request(String operation,String json,String job,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         activeJob=job;
-        try{return SharedJson.encode(execute(operation,SharedJson.object(json),cancel,progress));}
+        String stage=operation.equals("camera.connect")?"SHARED_CONNECT":operation.equals("camera.page")?"SHARED_PHOTO_PAGE":operation.equals("camera.download")?"SHARED_DOWNLOAD":"SHARED_CAMERA_REQUEST";
+        boolean traced=operation.equals("camera.connect")||operation.equals("camera.page")||operation.equals("camera.download");
+        if(traced)ConnectionTrace.mark(stage+"_BEGIN");
+        try{String result=SharedJson.encode(execute(operation,SharedJson.object(json),cancel,progress));if(traced)ConnectionTrace.mark(stage+"_COMPLETE");return result;}
+        catch(IOException|RuntimeException failure){if(traced)ConnectionTrace.mark(stage+"_FAILED");throw failure;}
         finally{activeJob="";}
     }
     private Object execute(String operation,Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        if(operation.equals("camera.diagnostics"))return SharedRuntime.map("connected",client!=null&&client.isOpen(),"totalHandles",handles.size(),"observedObjects",observed.size(),"trace",ConnectionTrace.snapshot());
         if(operation.equals("camera.disconnect")){disconnect();return SharedRuntime.map("connected",false);}
         if(operation.equals("camera.connect")){
             disconnect();String host=SharedRuntime.text(p,"host",253);int port=SharedRuntime.integer(p,"port",15740);
@@ -84,10 +89,12 @@ public final class SharedCamera {
         throw new IOException("未知的相机操作。");
     }
     private void inventory(BooleanSupplier cancel)throws IOException{
+        ConnectionTrace.mark("SHARED_INVENTORY_BEGIN");
         handles.clear();observed.clear();long[] storages=PtpStorageIds.parse(client.getData(0x1004,4096));if(storages.length>64)throw new IOException("相机存储空间数量过多。");Set<Long> unique=new LinkedHashSet<>();
         for(long storage:storages){check(cancel);byte[] data;try{data=client.getData(0x1007,1024*1024,storage,0,0);}catch(PtpResponseException error){if(error.responseCode()==0x2013)continue;throw error;}
             for(long handle:PtpObjectHandles.parse(data)){if(handle==0||handle==0xffffffffL)throw new IOException("相机返回无效照片索引。");unique.add(handle);if(unique.size()>20000)throw new IOException("本版最多浏览 20000 个相机对象。");}}
         handles.addAll(unique);Collections.reverse(handles);
+        ConnectionTrace.mark("SHARED_INVENTORY_COMPLETE");
     }
     private Object status(){return SharedRuntime.map("connected",client!=null&&client.isOpen(),"session",session,"model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size());}
     private void require(Map<String,Object> p)throws IOException{if(client==null||!client.isOpen()||!session.equals(SharedRuntime.text(p,"session",64)))throw new IOException("相机会话已改变，请重新读取照片。");}

@@ -121,6 +121,22 @@ class _LocalPresetImage extends StatefulWidget {
 
 class _LocalPresetImageState extends State<_LocalPresetImage> {
   late Future<String?> image = load();
+  @override
+  void initState() {
+    super.initState();
+    widget.core.previewRevision.addListener(templateChanged);
+  }
+
+  void templateChanged() {
+    if (mounted) setState(() => image = load());
+  }
+
+  @override
+  void dispose() {
+    widget.core.previewRevision.removeListener(templateChanged);
+    super.dispose();
+  }
+
   Future<String?> load() {
     final id = widget.preset.id,
         category = widget.preset.category,
@@ -156,6 +172,11 @@ class _LocalPresetImageState extends State<_LocalPresetImage> {
   @override
   void didUpdateWidget(covariant _LocalPresetImage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if (oldWidget.core != widget.core) {
+      oldWidget.core.previewRevision.removeListener(templateChanged);
+      widget.core.previewRevision.addListener(templateChanged);
+      image = load();
+    }
     if (oldWidget.preset.id != widget.preset.id ||
         oldWidget.preset.category != widget.preset.category ||
         oldWidget.owner != widget.owner ||

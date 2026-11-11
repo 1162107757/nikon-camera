@@ -346,12 +346,14 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
     this.actions = const [],
     this.back = false,
     this.leading,
+    this.navigation,
     this.compact = false,
   });
   final String title;
   final List<Widget> actions;
   final bool back, compact;
   final Widget? leading;
+  final Widget? navigation;
   @override
   Size get preferredSize => Size.fromHeight(
     compact
@@ -371,13 +373,14 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
           height: preferredSize.height,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              back ? 8 : 20,
+              back || navigation != null ? 8 : 20,
               compact ? 0 : 8,
               16,
               compact ? 0 : 4,
             ),
             child: Row(
               children: [
+                ?navigation,
                 if (back)
                   HueIconButton(
                     kind: HueIconKind.back,
@@ -393,7 +396,9 @@ class HueHeader extends StatelessWidget implements PreferredSizeWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: back || compact ? 18 : 26,
+                          fontSize: back || compact || navigation != null
+                              ? 18
+                              : 26,
                           height: 1.17,
                           letterSpacing: back || compact ? -.36 : -.52,
                           fontWeight: FontWeight.w500,
