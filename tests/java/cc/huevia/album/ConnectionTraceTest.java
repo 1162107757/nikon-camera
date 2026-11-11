@@ -25,6 +25,7 @@ public final class ConnectionTraceTest {
             longOriginalMetricsStayBoundedAndReload(root.resolve("long-original.log"));
             failureDoesNotEscape(root.resolve("unwritable.log"));
             categoriesNeverReadExceptionText();
+            browseDiagnosticsKeepCodesAndSurviveRoutineTraffic(root.resolve("browse.log"));
             System.out.println("PASS: " + checks + " bounded connection trace checks");
         } finally {
             ConnectionTrace.configure(null); drain();
@@ -155,6 +156,39 @@ public final class ConnectionTraceTest {
         Thread.currentThread().interrupt();
         try { equal("CANCEL", ConnectionTrace.category(new IOException("private"))); }
         finally { Thread.interrupted(); }
+    }
+
+    private static void browseDiagnosticsKeepCodesAndSurviveRoutineTraffic(Path path) throws Exception {
+        ConnectionTrace.configure(path.toFile());
+        long started = ConnectionTrace.diagnosticStarted("ALBUM_HANDLES");
+        IOException wrapped = new IOException("private-file.JPG", new cc.huevia.ptp.PtpResponseException(0x2019, 12));
+        ConnectionTrace.diagnosticFinished("ALBUM_HANDLES", started, -1, 0x1007, wrapped);
+        long op = ConnectionTrace.operationStarted(1, 0x1007, 12);
+        ConnectionTrace.operationFinished(1, 0x1007, 12, op, wrapped);
+        check(ConnectionTrace.snapshot().contains("detail=4103 response=0x2019 category=PROTOCOL"), "Browse records preserve operation and wrapped PTP response code");
+        check(ConnectionTrace.snapshot().contains("op=0x1007 tx=12") && ConnectionTrace.snapshot().contains("response=0x2019"), "Low-level operation failure also includes response code");
+        check(ConnectionTrace.diagnosticSummary().contains("相机返回忙碌（0x2019）"), "Summary describes observed camera busy response");
+        for (int i = 0; i < 1000; i++) ConnectionTrace.connectionHeartbeat(false, false);
+        ConnectionTrace.mark("REPORT_PICKER_OPEN"); drain();
+        check(ConnectionTrace.snapshot().contains("DIAG_ALBUM_HANDLES_FAILED"), "Routine heartbeats do not evict the recent browse failure");
+        check(ConnectionTrace.snapshot().lines().count() <= ConnectionTrace.MAX_EVENTS && Files.size(path) <= ConnectionTrace.MAX_BYTES, "Diagnostic retention stays within existing event and byte bounds");
+        ConnectionTrace.configure(null); ConnectionTrace.configure(path.toFile()); drain();
+        check(ConnectionTrace.snapshot().contains("response=0x2019") && ConnectionTrace.diagnosticSummary().contains("忙碌"), "Diagnostic codes survive validated history reload");
+        ConnectionTrace.diagnosticFinished("private\nsecret", started, 0, 0, new IOException("token"));
+        ConnectionTrace.diagnosticFinished("SETUP_COMMAND_ACK", started, -1, -1, new SocketTimeoutException() {
+            @Override public String getMessage() { throw new AssertionError("Never read exception text"); }
+        });
+        check(ConnectionTrace.diagnosticSummary().contains("等待相机确认超时"), "Summary distinguishes handshake timeout from album rejection");
+        check(!ConnectionTrace.snapshot().contains("private") && !ConnectionTrace.snapshot().contains("secret") && !ConnectionTrace.snapshot().contains("token"), "Diagnostics never include arbitrary stage text or exception messages");
+        ConnectionTrace.diagnosticReason("ALBUM_WAIT_OPERATION", 1, 0);
+        ConnectionTrace.diagnosticReason("ALBUM_WAIT_OPERATION", 1, 0);
+        check(ConnectionTrace.snapshot().lines().filter(line -> line.contains("DIAG_ALBUM_WAIT_OPERATION")).count() == 1, "Identical pending-operation reasons are coalesced");
+        long ready = ConnectionTrace.diagnosticStarted("ALBUM_INDEX");
+        ConnectionTrace.diagnosticFinished("ALBUM_INDEX", ready, 3, 0, null);
+        check(ConnectionTrace.diagnosticSummary().contains("照片索引已读取"), "Successful retry replaces stale failure summary");
+        equal("NO_ROUTE", ConnectionTrace.category(new java.net.NoRouteToHostException()));
+        equal("REFUSED", ConnectionTrace.category(new java.net.ConnectException()));
+        equal("PERMISSION", ConnectionTrace.category(new SecurityException()));
     }
 
     private static void normalTrafficIsBatchedAndDirtyTailIsScheduled(Path path) throws Exception {

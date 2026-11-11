@@ -1513,6 +1513,7 @@ public final class AlbumController implements AutoCloseable {
         Runnable browse = () -> {
             ConnectionInfo connected = null;
             Exception failure = null;
+            long diagnosticStart = ConnectionTrace.diagnosticStarted("ALBUM_INDEX");
             try {
                 synchronized (lifecycle) { requireCurrentSession(client, request); }
                 if (claim) {
@@ -1524,7 +1525,15 @@ public final class AlbumController implements AutoCloseable {
                     if (sessionConnectionInfo == null) sessionConnectionInfo = new ConnectionInfo("", host, port, 0, cameraProtocol(client));
                 }
                 handles = new long[0]; session = ""; deviceInfo = null;
-                connected = readConnectionSnapshot(client, host, port, client.readAlbumDeviceInfo(), request, true);
+                long infoStart = ConnectionTrace.diagnosticStarted("ALBUM_DEVICE_INFO");
+                byte[] info;
+                try {
+                    info = client.readAlbumDeviceInfo();
+                    ConnectionTrace.diagnosticFinished("ALBUM_DEVICE_INFO", infoStart, info.length, 0, null);
+                } catch (IOException | RuntimeException error) {
+                    ConnectionTrace.diagnosticFinished("ALBUM_DEVICE_INFO", infoStart, -1, -1, error); throw error;
+                }
+                connected = readConnectionSnapshot(client, host, port, info, request, true);
             } catch (Exception error) {
                 failure = error;
                 boolean preserve = false;
@@ -1539,6 +1548,8 @@ public final class AlbumController implements AutoCloseable {
                 }
                 if (!preserve) client.close();
             } finally {
+                ConnectionTrace.diagnosticFinished("ALBUM_INDEX", diagnosticStart,
+                        connected == null ? -1 : connected.totalHandles(), -1, failure);
                 synchronized (lifecycle) { if (request == generation.get()) connecting = false; }
                 notifyStateChanged();
             }
@@ -1585,21 +1596,25 @@ public final class AlbumController implements AutoCloseable {
             if (preserveSession) sessionConnectionInfo = new ConnectionInfo(parsed.model(), host, port, 0, cameraProtocol(client), parsed.manufacturer());
         }
         for (int op : new int[] {0x1004, 0x1007, 0x1008, 0x1009}) if (!parsed.supportsOperation(op)) {
-            throw new BrowseUnavailableException("相机未提供当前相册需要的照片读取能力。");
+            BrowseUnavailableException missing = new BrowseUnavailableException("相机未提供当前相册需要的照片读取能力（" + String.format(Locale.ROOT, "0x%04x", op) + "）。");
+            ConnectionTrace.diagnosticFinished("ALBUM_CAPABILITY", System.nanoTime(), -1, op, missing);
+            throw missing;
         }
         LinkedHashSet<Long> collected = new LinkedHashSet<>();
-        long[] storages = PtpStorageIds.parse(client.getData(0x1004, 4096));
+        long[] storages = PtpStorageIds.parse(readBrowseData(client, "ALBUM_STORAGE", 0x1004, 4096));
+        ConnectionTrace.diagnosticReason("ALBUM_STORAGE_COUNT", storages.length, 0);
         if (storages.length > 64) throw new IOException("相机存储空间数量超过浏览上限。");
         for (long storage : storages) {
             byte[] entries;
             try {
-                try { entries = client.getData(0x1007, 1024 * 1024, storage, 0x3801, 0); }
+                try { entries = readBrowseData(client, "ALBUM_HANDLES", 0x1007, 1024 * 1024, storage, 0x3801, 0); }
                 catch (PtpResponseException unsupportedFormat) {
                     if (unsupportedFormat.responseCode() != 0x2014) throw unsupportedFormat;
-                    entries = client.getData(0x1007, 1024 * 1024, storage, 0, 0);
+                    ConnectionTrace.diagnosticReason("ALBUM_FORMAT_FALLBACK", 0, 0x2014);
+                    entries = readBrowseData(client, "ALBUM_HANDLES", 0x1007, 1024 * 1024, storage, 0, 0);
                 }
             } catch (PtpResponseException storageError) {
-                if (storageError.responseCode() == 0x2013) continue;
+                if (storageError.responseCode() == 0x2013) { ConnectionTrace.diagnosticReason("ALBUM_STORAGE_UNAVAILABLE", 0, 0x2013); continue; }
                 throw storageError;
             }
             for (long handle : PtpObjectHandles.parse(entries)) {
@@ -1609,6 +1624,7 @@ public final class AlbumController implements AutoCloseable {
             }
         }
         long[] observedHandles = new long[collected.size()]; int i = 0;
+        ConnectionTrace.diagnosticReason("ALBUM_HANDLE_COUNT", collected.size(), storages.length);
         for (long handle : collected) observedHandles[i++] = handle;
         ConnectionInfo connected = new ConnectionInfo(parsed.model(), host, port, observedHandles.length, cameraProtocol(client), parsed.manufacturer());
         synchronized (lifecycle) {
@@ -1619,14 +1635,30 @@ public final class AlbumController implements AutoCloseable {
         return connected;
     }
 
+    private byte[] readBrowseData(PhotoCameraClient client, String stage, int operation, int limit, long... parameters) throws IOException {
+        long started = ConnectionTrace.diagnosticStarted(stage);
+        try {
+            byte[] data = client.getData(operation, limit, parameters);
+            ConnectionTrace.diagnosticFinished(stage, started, data.length, operation, null); return data;
+        } catch (IOException | RuntimeException error) {
+            ConnectionTrace.diagnosticFinished(stage, started, -1, operation, error); throw error;
+        }
+    }
+
     private PtpDeviceInfo readCameraIdentity(PhotoCameraClient client, byte[] info, int request) throws IOException {
+        long started = ConnectionTrace.diagnosticStarted("ALBUM_IDENTITY");
+        try {
         PtpDeviceInfo parsed = PtpDeviceInfo.parseRedacted(info);
         validateCameraIdentity(client, parsed);
         synchronized (lifecycle) {
             requireCurrentSession(client, request);
             deviceInfo = parsed; largeThumbnailUnavailable = false;
         }
+        ConnectionTrace.diagnosticFinished("ALBUM_IDENTITY", started, info.length, 0, null);
         return parsed;
+        } catch (IOException | RuntimeException error) {
+            ConnectionTrace.diagnosticFinished("ALBUM_IDENTITY", started, -1, -1, error); throw error;
+        }
     }
 
     private static void validateCameraIdentity(PhotoCameraClient client, PtpDeviceInfo parsed) throws IOException {

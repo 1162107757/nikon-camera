@@ -246,6 +246,8 @@ public final class PtpIpClient implements PhotoCameraClient {
             closed = false;
         }
         String phase = "连接相机 Wi-Fi 通道";
+        String diagnosticStage = "SETUP_COMMAND_SOCKET";
+        long diagnosticStart = ConnectionTrace.diagnosticStarted(diagnosticStage);
         try {
             checkClosed();
             connectionStage(ConnectionStage.CONNECTING_CAMERA);
@@ -254,6 +256,8 @@ public final class PtpIpClient implements PhotoCameraClient {
             command.setTcpNoDelay(true);
             command.setSoTimeout(15000);
             input = command.getInputStream(); output = command.getOutputStream();
+            ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, 1, port, null);
+            diagnosticStage = "SETUP_COMMAND_ACK"; diagnosticStart = ConnectionTrace.diagnosticStarted(diagnosticStage);
             byte[] name = (friendlyName + "\0").getBytes(StandardCharsets.UTF_16LE);
             ByteArrayOutputStream init = new ByteArrayOutputStream();
             init.write(guid.clone()); init.write(name); put32(init, 0x00010000);
@@ -270,11 +274,15 @@ public final class PtpIpClient implements PhotoCameraClient {
             StringBuilder camera = new StringBuilder(32);
             for (int i = 4; i < 20; i++) camera.append(String.format(java.util.Locale.ROOT, "%02x", ackData[i] & 255));
             cameraIdentity = camera.toString();
+            ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, 1, 0, null);
             phase = "连接相机事件通道";
+            diagnosticStage = "SETUP_EVENT_SOCKET"; diagnosticStart = ConnectionTrace.diagnosticStarted(diagnosticStage);
             connectionStage(ConnectionStage.CONNECTING_CAMERA);
             Socket events = connector.connect(host, port, 5000);
             install(events, true);
             events.setTcpNoDelay(true); events.setSoTimeout(15000);
+            ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, 1, port, null);
+            diagnosticStage = "SETUP_EVENT_ACK"; diagnosticStart = ConnectionTrace.diagnosticStarted(diagnosticStage);
             ByteArrayOutputStream eventInit = new ByteArrayOutputStream(); put32(eventInit, connectionNumber);
             send(events.getOutputStream(), 3, eventInit.toByteArray());
             phase = "等待相机事件通道确认";
@@ -282,11 +290,15 @@ public final class PtpIpClient implements PhotoCameraClient {
             Header eventAck = header(events.getInputStream(), eventDeadline, events, null, CONTROL_TIMEOUT);
             byte[] eventBody = body(events.getInputStream(), eventAck, 1024, eventDeadline, events, null, CONTROL_TIMEOUT);
             if (eventAck.type != 4 || eventBody.length != 0) throw new IOException("相机无线事件通道未建立。");
+            ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, 1, 0, null);
             byte[] info = null;
             if (album) {
                 phase = "读取相机信息";
+                diagnosticStage = "SETUP_DEVICE_INFO"; diagnosticStart = ConnectionTrace.diagnosticStarted(diagnosticStage);
                 info = receive(0x1001, 0, new long[0], 1024 * 1024, null, -1, null);
+                ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, info.length, 0, null);
                 phase = "打开相机会话";
+                diagnosticStage = "SETUP_OPEN_SESSION"; diagnosticStart = ConnectionTrace.diagnosticStarted(diagnosticStage);
                 long traceStart = ConnectionTrace.operationStarted(ownership.traceId, 0x1002, 0);
                 try {
                     request(0x1002, 0, new long[] {1});
@@ -297,6 +309,7 @@ public final class PtpIpClient implements PhotoCameraClient {
                     throw error;
                 }
                 sessionOpen = true;
+                ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, 1, 0, null);
             }
             checkClosed();
             events.setSoTimeout(0);
@@ -304,6 +317,7 @@ public final class PtpIpClient implements PhotoCameraClient {
             eventReader.setDaemon(true); eventReader.start();
             return info;
         } catch (IOException | RuntimeException error) {
+            ConnectionTrace.diagnosticFinished(diagnosticStage, diagnosticStart, -1, -1, error);
             closeWithReason("无线握手：" + failureText(error), false, ConnectionTrace.category(error));
             if (error instanceof SocketTimeoutException) {
                 String hint = phase.equals("等待相机确认连接") ? "请在相机上确认连接请求，并保持无线通信开启。"

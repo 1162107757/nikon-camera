@@ -245,14 +245,23 @@ public final class CameraConnectionRuntime {
         final HeldConnection source;
         synchronized (this) {
             if (preparingAlbum || album.isConnecting() || album.isConnected()) return true;
-            if (hasOperations() || (importStatus != null && importStatus.uncertain)) return false;
+            if (hasOperations() || (importStatus != null && importStatus.uncertain)) {
+                cc.huevia.album.ConnectionTrace.diagnosticReason("ALBUM_WAIT_OPERATION", hasOperations() ? 1 : 0,
+                        importStatus != null && importStatus.uncertain ? 1 : 0); return false;
+            }
             source = prepared;
             Object identity = source == null ? album.sessionConnectionInfo() : source.owner;
-            if (!retry && identity == attemptedAlbumIdentity && !albumPreparationError.isEmpty()) return false;
+            if (!retry && identity == attemptedAlbumIdentity && !albumPreparationError.isEmpty()) {
+                cc.huevia.album.ConnectionTrace.diagnosticReason("ALBUM_REQUIRES_RETRY", 0, 0); return false;
+            }
             if (album.hasLiveSession()) {
-                if (!retry && !album.browseError().isEmpty()) return false;
+                if (!retry && !album.browseError().isEmpty()) {
+                    cc.huevia.album.ConnectionTrace.diagnosticReason("ALBUM_REQUIRES_RETRY", 0, 0); return false;
+                }
             } else {
-                if (source == null || !source.owner.isPrepared()) return false;
+                if (source == null || !source.owner.isPrepared()) {
+                    cc.huevia.album.ConnectionTrace.diagnosticReason("ALBUM_NO_SESSION", 0, 0); return false;
+                }
             }
             attemptedAlbumIdentity = identity;
         }

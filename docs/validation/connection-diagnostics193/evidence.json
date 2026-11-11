@@ -1,0 +1,216 @@
+{
+  "date": "2026-11-11",
+  "package": {
+    "packageName": "cc.huevia",
+    "versionName": "0.30.34-beta",
+    "versionCode": 193,
+    "minSdk": 26,
+    "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "signatureSchemes": [
+      2,
+      3
+    ],
+    "byteLength": 31415375,
+    "sha256": "8d8c2b26e76ba2d856cb95109924cbe074ff8ab4a00a724bde0d9f82c737a99c",
+    "path": "dist/upload193/huevia-0.30.34-beta-update.apk",
+    "alignment": "zipalign -c -P 16 4 passed",
+    "fullApkSha256": "7d04d301bef54835fa5bfbc79b5b882b98b00597b857b1461be76d52bd550646",
+    "retainedPayloads": 89,
+    "removedOnlyAbi": "x86",
+    "removedLibraries": 4,
+    "published": false
+  },
+  "hostTests": {
+    "ptpip.log": [
+      "PASS: 5435 PTP/IP client checks"
+    ],
+    "trace.log": [
+      "PASS: 562 bounded connection trace checks"
+    ],
+    "album.log": [
+      "PASS: 899 production album controller checks",
+      "PASS: 33 camera capability controller checks",
+      "PASS: 25 gateway connection controller checks",
+      "PASS: 356 photo-live project store checks",
+      "PASS: 100 photo-live project folder checks",
+      "PhotoTransferProgressTest PASS 23 checks"
+    ],
+    "wifi-retention.log": [
+      "PASS: 519 camera Wi-Fi retention checks",
+      "PASS: 27 camera Wi-Fi socket-target checks",
+      "PASS: 37 selected camera gateway/self-target checks",
+      "PASS: 604 camera Wi-Fi session checks"
+    ],
+    "wifi-runtime.log": [
+      "PASS: 29 actual runtime Wi-Fi loss checks"
+    ]
+  },
+  "device": {
+    "busy": {
+      "diagnosticSummary": "读取照片索引时，相机返回忙碌（0x2019）。",
+      "diagnosticState": {
+        "wifiConnected": false,
+        "wifiRouteUnavailable": false,
+        "cameraSessionOpen": true,
+        "photoIndexReady": false,
+        "preparingAlbum": false,
+        "connecting": false,
+        "operationInProgress": false,
+        "browseErrorPresent": true,
+        "preparationErrorPresent": true,
+        "cameraModel": "Z 30",
+        "cameraAddress": "camera.test",
+        "cameraPort": 15740,
+        "photoHandles": -1
+      },
+      "operations": "[4097, 4098, 4097, 4100, 4103]",
+      "channels": 2,
+      "status": "PASS",
+      "assertions": [
+        "owned-emulator-only",
+        "installed-candidate-hash",
+        "production-shell-ready",
+        "single-initial-session-two-channels",
+        "no-existing-camera-session",
+        "connected-with-inventory-deferred-by-lease",
+        "matches-reported-default-unavailable-message",
+        "no-inventory-transaction-during-connect-lease",
+        "synthetic-browse-failure-reaches-production-state",
+        "complete-rejection-retains-existing-camera-session",
+        "unavailable-page-shows-diagnostic-export-entry",
+        "export-contains-exact-response-or-missing-capability",
+        "export-distinguishes-camera-session-from-photo-readiness",
+        "export-captures-device-sdk",
+        "summary-explains-observed-failure",
+        "production-document-result-writes-diagnostic-json",
+        "diagnostic-export-keeps-camera-session-open",
+        "no-reconnect-or-repeated-open-session",
+        "no-camera-content-or-setting-writes",
+        "owned-diagnostic-output-cleaned"
+      ],
+      "apkSha256": "8d8c2b26e76ba2d856cb95109924cbe074ff8ab4a00a724bde0d9f82c737a99c",
+      "scope": "Installed native MainActivity/runtime/controller with synthetic PTP/IP peer; no physical camera or Wi-Fi radio validation"
+    },
+    "capability": {
+      "diagnosticSummary": "相机未提供必需的照片读取操作，操作编号为 4103（十进制）。",
+      "diagnosticState": {
+        "wifiConnected": false,
+        "wifiRouteUnavailable": false,
+        "cameraSessionOpen": true,
+        "photoIndexReady": false,
+        "preparingAlbum": false,
+        "connecting": false,
+        "operationInProgress": false,
+        "browseErrorPresent": true,
+        "preparationErrorPresent": true,
+        "cameraModel": "Z 30",
+        "cameraAddress": "camera.test",
+        "cameraPort": 15740,
+        "photoHandles": -1
+      },
+      "operations": "[4097, 4098, 4097]",
+      "channels": 2,
+      "status": "PASS",
+      "assertions": [
+        "owned-emulator-only",
+        "installed-candidate-hash",
+        "production-shell-ready",
+        "single-initial-session-two-channels",
+        "no-existing-camera-session",
+        "connected-with-inventory-deferred-by-lease",
+        "matches-reported-default-unavailable-message",
+        "no-inventory-transaction-during-connect-lease",
+        "synthetic-browse-failure-reaches-production-state",
+        "complete-rejection-retains-existing-camera-session",
+        "unavailable-page-shows-diagnostic-export-entry",
+        "export-contains-exact-response-or-missing-capability",
+        "export-distinguishes-camera-session-from-photo-readiness",
+        "export-captures-device-sdk",
+        "summary-explains-observed-failure",
+        "production-document-result-writes-diagnostic-json",
+        "diagnostic-export-keeps-camera-session-open",
+        "no-reconnect-or-repeated-open-session",
+        "no-camera-content-or-setting-writes",
+        "owned-diagnostic-output-cleaned"
+      ],
+      "apkSha256": "8d8c2b26e76ba2d856cb95109924cbe074ff8ab4a00a724bde0d9f82c737a99c",
+      "scope": "Installed native MainActivity/runtime/controller with synthetic PTP/IP peer; no physical camera or Wi-Fi radio validation"
+    },
+    "success": {
+      "operations": "[4097, 4098, 4097, 4100, 4103, 4104]",
+      "channels": 2,
+      "status": "PASS",
+      "assertions": [
+        "owned-emulator-only",
+        "installed-candidate-hash",
+        "production-shell-ready",
+        "single-initial-session-two-channels",
+        "no-existing-camera-session",
+        "connected-with-inventory-deferred-by-lease",
+        "matches-reported-default-unavailable-message",
+        "no-inventory-transaction-during-connect-lease",
+        "lease-release-automatically-reads-storage-and-photo-handles",
+        "no-reconnect-or-repeated-open-session",
+        "no-camera-content-or-setting-writes",
+        "one-camera-photo-in-production-inventory",
+        "unavailable-state-clears-without-tapping-retry"
+      ],
+      "apkSha256": "8d8c2b26e76ba2d856cb95109924cbe074ff8ab4a00a724bde0d9f82c737a99c",
+      "scope": "Installed native MainActivity/runtime/controller with synthetic PTP/IP peer; no physical camera or Wi-Fi radio validation"
+    }
+  },
+  "sources": [
+    {
+      "path": "app/build.gradle",
+      "sha256": "dc652aaa9cab8eafd19389d73347badab7a44d8ab06e86761b5a1ab67de3e98c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/MainActivity.java",
+      "sha256": "94cac83c021c69cf87071f3c639306c30272351c2bf7c644dbbf43c87ece2ff3"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+      "sha256": "66fcc6ffb8deb377f90f607671eda1c143ae8fb72b0166c4ed6ed6e0c61cc821"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/CameraWifiNetwork.java",
+      "sha256": "6dddfd8ae32ad057e19987d648a364ac94dce5303aaef1fec5fada2070c192ac"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/ConnectionTrace.java",
+      "sha256": "3369ef6fd4f4cb76dd47ac9193df3c5fc7df983da895121444f4981d082a908a"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+      "sha256": "b1355ddb951df1cc6b10ebfc5ec2c04429110807b681200936a0a97cfcb6514c"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/connection/CameraConnectionRuntime.java",
+      "sha256": "e4560b576025f25b4022554b408cb19b818d2a9a3b6a35eb675af35eb416af6b"
+    },
+    {
+      "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+      "sha256": "59a961413486ecd8255d30c18e150f93bc5f0a030d2bcde097e1ac77ff9f11e7"
+    },
+    {
+      "path": "tests/java/cc/huevia/album/ConnectionTraceTest.java",
+      "sha256": "81149b642b182fa4352ff3c832db0b731e8e4c39e76e35ac384f0e7b88c32c03"
+    },
+    {
+      "path": "tests/wifi-album-device-probe/AndroidManifest.xml",
+      "sha256": "9e98c4342c4c4d9f0235bd188c46e239d990ece653577c5b5f1ec5ce260978d4"
+    },
+    {
+      "path": "tests/wifi-album-device-probe/build.ps1",
+      "sha256": "b4fa3cf571a5b6a19942f40cc0aebbacdf8cec9d83d0c056ad94ed8f769cc595"
+    },
+    {
+      "path": "tests/wifi-album-device-probe/src/cc/huevia/wifialbumqa/WifiAlbumProbe.java",
+      "sha256": "68649e395ba67de59348a2440da4a40866609f07126b6d85b5efd0f2cd86f421"
+    }
+  ],
+  "limitations": [
+    "No physical camera or user phone was attached. This adds diagnostic evidence; the real cause of the reported photo-read failure still requires the user report.",
+    "The device checks use installed production classes with synthetic PTP/IP sockets, not real Wi-Fi radio measurements."
+  ]
+}

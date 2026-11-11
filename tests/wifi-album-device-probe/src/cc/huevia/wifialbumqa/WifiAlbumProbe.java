@@ -3,6 +3,7 @@ package cc.huevia.wifialbumqa;
 import android.app.*;
 import android.content.*;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.*;
 import android.view.*;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ public final class WifiAlbumProbe extends Instrumentation {
     private Bundle args;
     private Activity activity;
     private Object client, lease, controller;
+    private File exported;
     private final JSONArray checks = new JSONArray();
     private final Peer peer = new Peer();
     @Override public void onCreate(Bundle args) { super.onCreate(args); this.args = args; start(); }
@@ -63,14 +65,42 @@ public final class WifiAlbumProbe extends Instrumentation {
             });
             onMain(() -> { call(lease, "close"); lease = null; return null; });
             boolean baseline = args.getString("expectBlocked", "false").equals("true");
+            boolean diagnosticFailure = !args.getString("failure", "").isEmpty();
             until = System.nanoTime() + (baseline ? 2_000_000_000L : 10_000_000_000L);
-            while (!(Boolean) call(controller, "isConnected") && System.nanoTime() < until) Thread.sleep(30);
+            while (!(Boolean) call(controller, "isConnected") && ((String) call(controller, "browseError")).isEmpty()
+                    && System.nanoTime() < until) Thread.sleep(30);
             boolean connected = (Boolean) call(controller, "isConnected");
-            check(baseline ? !connected && peer.count(0x1004) == 0 : connected && peer.count(0x1004) == 1 && peer.count(0x1007) == 1,
+            if (diagnosticFailure) {
+                check(!connected && !( (String) call(controller, "browseError")).isEmpty(), "synthetic-browse-failure-reaches-production-state");
+                check((Boolean) call(controller, "hasLiveSession"), "complete-rejection-retains-existing-camera-session");
+                until = System.nanoTime() + 5_000_000_000L;
+                while (!onMain(() -> text(activity.getWindow().getDecorView()).contains("导出诊断"))
+                        && System.nanoTime() < until) Thread.sleep(30);
+                check(onMain(() -> text(activity.getWindow().getDecorView()).contains("导出诊断")), "unavailable-page-shows-diagnostic-export-entry");
+                JSONObject snapshot = new JSONObject(onMain(() -> (String) call(activity, "exportReportSnapshot")));
+                JSONObject diagnostics = snapshot.getJSONObject("connectionDiagnostics");
+                String expected = args.getString("failure").equals("busy") ? "response=0x2019" : "DIAG_ALBUM_CAPABILITY_FAILED";
+                check(snapshot.getString("connectionTrace").contains(expected), "export-contains-exact-response-or-missing-capability");
+                check(diagnostics.getJSONObject("state").getBoolean("cameraSessionOpen") && !diagnostics.getJSONObject("state").getBoolean("photoIndexReady"), "export-distinguishes-camera-session-from-photo-readiness");
+                check(diagnostics.getJSONObject("device").getInt("sdkInt") == Build.VERSION.SDK_INT, "export-captures-device-sdk");
+                check(diagnostics.getString("summary").contains(args.getString("failure").equals("busy") ? "0x2019" : "必需的照片读取操作"), "summary-explains-observed-failure");
+                exported = new File(getTargetContext().getExternalFilesDir(null), "wifi-album-diagnostic-qa.json");
+                if (exported.exists()) check(exported.delete(), "old-owned-diagnostic-output-cleared");
+                onMain(() -> {
+                    call(activity, "onActivityResult", new Class<?>[] {int.class, int.class, Intent.class},
+                            102, Activity.RESULT_OK, new Intent().setData(Uri.fromFile(exported))); return null;
+                });
+                until = System.nanoTime() + 10_000_000_000L;
+                while ((!exported.isFile() || exported.length() == 0) && System.nanoTime() < until) Thread.sleep(30);
+                JSONObject written = new JSONObject(new String(java.nio.file.Files.readAllBytes(exported.toPath()), StandardCharsets.UTF_8));
+                check(written.getJSONObject("connectionDiagnostics").getString("summary").equals(diagnostics.getString("summary")), "production-document-result-writes-diagnostic-json");
+                check((Boolean) call(controller, "hasLiveSession"), "diagnostic-export-keeps-camera-session-open");
+                report.put("diagnosticSummary", diagnostics.getString("summary")).put("diagnosticState", diagnostics.getJSONObject("state"));
+            } else check(baseline ? !connected && peer.count(0x1004) == 0 : connected && peer.count(0x1004) == 1 && peer.count(0x1007) == 1,
                     baseline ? "baseline-reproduces-missing-inventory-after-lease-release" : "lease-release-automatically-reads-storage-and-photo-handles");
             check(peer.channels == 2 && peer.count(0x1002) == 1, "no-reconnect-or-repeated-open-session");
             check(peer.onlyReads(), "no-camera-content-or-setting-writes");
-            if (!baseline) {
+            if (!baseline && !diagnosticFailure) {
                 Object info = call(controller, "connectionInfo");
                 check((Integer) call(info, "totalHandles") == 1, "one-camera-photo-in-production-inventory");
                 check(onMain(() -> !text(activity.getWindow().getDecorView()).contains("照片暂不可用")), "unavailable-state-clears-without-tapping-retry");
@@ -83,6 +113,7 @@ public final class WifiAlbumProbe extends Instrumentation {
             try {
                 if (lease != null) onMain(() -> { call(lease, "close"); return null; });
                 if (client != null) call(client, "close");
+                if (exported != null && exported.exists()) check(exported.delete(), "owned-diagnostic-output-cleaned");
                 if (activity != null) onMain(() -> { activity.finish(); return null; });
                 report.put("status", passed ? "PASS" : "FAIL").put("assertions", checks).put("apkSha256", args.getString("apkSha256"))
                         .put("scope", "Installed native MainActivity/runtime/controller with synthetic PTP/IP peer; no physical camera or Wi-Fi radio validation");
@@ -121,7 +152,7 @@ public final class WifiAlbumProbe extends Instrumentation {
         synchronized Socket open() throws IOException { if (channels >= 2) throw new IOException("Unexpected reconnect"); return new FakeSocket(channels++ != 0); }
         int count(int op) { synchronized (operations) { return Collections.frequency(operations, op); } }
         boolean onlyReads() { synchronized (operations) { for (int op : operations) if (!Arrays.asList(0x1001,0x1002,0x1004,0x1007,0x1008,0x100a).contains(op)) return false; return true; } }
-        byte[] info() { return concat(le(100,2), le(10,4), le(100,2), str(""), le(0,2), le(6,4), le(0x1001,2),le(0x1002,2),le(0x1004,2),le(0x1007,2),le(0x1008,2),le(0x1009,2),le(0,4),le(0,4),le(0,4),le(0,4),str("NIKON CORPORATION"),str("Z 30"),str("test"),str("synthetic")); }
+        byte[] info() { return concat(le(100,2), le(10,4), le(100,2), str(""), le(0,2), le(6,4), le(0x1001,2),le(0x1002,2),le(0x1004,2),le(args.getString("failure", "").equals("capability") ? 0x1005 : 0x1007,2),le(0x1008,2),le(0x1009,2),le(0,4),le(0,4),le(0,4),le(0,4),str("NIKON CORPORATION"),str("Z 30"),str("test"),str("synthetic")); }
         void receive(FakeSocket socket, byte[] packet) throws IOException {
             int type = (int) u32(packet,4);
             if (type == 1) { socket.input.add(frame(2, concat(le(7,4),new byte[16],"Z 30\0".getBytes(StandardCharsets.UTF_16LE),le(0x10000,4)))); return; }
@@ -129,6 +160,9 @@ public final class WifiAlbumProbe extends Instrumentation {
             if (type != 6 || socket.event) throw new IOException("Unexpected packet type " + type);
             int op = (packet[12]&255)|((packet[13]&255)<<8); long tx=u32(packet,14); operations.add(op);
             if (op == 0x1002) { socket.input.add(frame(7,concat(le(0x2001,2),le(tx,4)))); return; }
+            if (op == 0x1007 && args.getString("failure", "").equals("busy")) {
+                socket.input.add(frame(7, concat(le(0x2019,2),le(tx,4)))); return;
+            }
             byte[] data;
             if (op==0x1001) data=info();
             else if (op==0x1004 || op==0x1007) data=concat(le(1,4),le(1,4));

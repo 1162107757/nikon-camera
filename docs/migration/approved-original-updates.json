@@ -23,6 +23,44 @@
           "gitBlob": "9223a410cb25f3414a56f2f30558ad69310482f5"
         }
       ]
+    },
+    {
+      "commit": "fdec09050ce381775e1ea1bfa36eedbc13892b72",
+      "reason": "Original Android 193 bounded camera/photo-read diagnostic repair, completed separately and retained while migrating; frozen 186 sources and prior repair pins remain unchanged.",
+      "files": [
+        {
+          "path": "app/build.gradle",
+          "gitBlob": "c762e5ab42110e1a15fa77fd7ffb36facb096787"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/MainActivity.java",
+          "gitBlob": "1a60d0d89f5ede4847511b21d2b2abb679f7883f"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+          "gitBlob": "9cd35bc95e2ab3b25aa5e96e5a25c193edb3c6e4"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/album/CameraWifiNetwork.java",
+          "gitBlob": "231963e41f5cb82f7206b39896ba97eeb41c5916"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/album/ConnectionTrace.java",
+          "gitBlob": "44682f34e0d52ad21de73a0c09729575415cbb2f"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+          "gitBlob": "239f44a43fc5417b85403aaf23411cb80bf22afe"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/connection/CameraConnectionRuntime.java",
+          "gitBlob": "a34a5fbe10eff33233acfbd01287c25e8509e462"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/ui/AlbumPanel.java",
+          "gitBlob": "d737ccb45971e20180ac01ae29de469012540499"
+        }
+      ]
     }
   ]
 }

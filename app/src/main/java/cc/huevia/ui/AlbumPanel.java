@@ -111,6 +111,7 @@ public final class AlbumPanel implements AutoCloseable {
         default boolean isLocalWorkspaceVisible() { return true; }
         default void beforeConnect(Runnable connect) { connect.run(); }
         default void onConnectionCancelled() { }
+        default void onExportDiagnostics() { }
         default void beforePhotoLive(Runnable start) { start.run(); }
         default void beforePhotoLiveProject(String projectId, Runnable start) { beforePhotoLive(start); }
         default void beforeSavePhotos(Runnable save) { save.run(); }
@@ -979,6 +980,12 @@ public final class AlbumPanel implements AutoCloseable {
                 addSpaced(empty, button("重试读取照片", true, retrySharedCamera), 16);
             } else if (!downloadedTab && !isConnected()) {
                 addSpaced(empty, connectionButton(() -> host.onConnectionRequired("浏览相机照片")), 20);
+            }
+            if (!localWorkspace && !downloadedTab && !pending && (sharedCameraConnected || hasCameraConnection()
+                    || !controller.browseError().isEmpty() || !sharedCameraError.isEmpty())) {
+                Button diagnostic = textAction("导出诊断", host::onExportDiagnostics);
+                diagnostic.setContentDescription("导出相机连接与照片读取诊断报告");
+                addSpaced(empty, diagnostic, 4);
             }
             ScrollView emptyScroll = new ScrollView(activity); emptyScroll.setFillViewport(true);
             emptyScroll.setPadding(0, 0, 0, dp(100));
@@ -2714,7 +2721,8 @@ public final class AlbumPanel implements AutoCloseable {
         }
         if (!connectionError.isEmpty()) {
             Button error = textAction((connectionError.contains("等待相机确认超时") ? "确认超时" : "连接未完成") + " · 详情", () -> {
-                new AppDialog.Builder(activity).setTitle("连接详情").setMessage(connectionError).setPositiveButton("关闭", null).show();
+                new AppDialog.Builder(activity).setTitle("连接详情").setMessage(connectionError)
+                        .setPositiveButton("导出诊断", (d, w) -> host.onExportDiagnostics()).setNegativeButton("关闭", null).show();
             });
             error.setTextColor(palette.error); error.setContentDescription("连接未完成，查看错误详情"); addSpaced(body, error, 4);
         }
