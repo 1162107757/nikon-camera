@@ -39,6 +39,14 @@ PY
 flutter config --no-enable-swift-package-manager
 cd "$ROOT/cross-platform/app"
 flutter pub get > "$WORK/pub-get.log" 2>&1
+python3 - <<'PY'
+import json
+from pathlib import Path
+plugins=json.loads(Path('.flutter-plugins-dependencies').read_text())
+if plugins.get('swift_package_manager_enabled',{}).get('ios') is not False:
+    raise SystemExit('Apple native plugins must consistently use CocoaPods')
+print('Verified project-level CocoaPods-only native plugin resolution')
+PY
 fi
 if [[ "${1:-all}" == prepare ]]; then exit 0; fi
 cd "$ROOT/cross-platform/app"
