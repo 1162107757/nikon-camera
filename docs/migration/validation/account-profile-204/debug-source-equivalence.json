@@ -1,0 +1,9 @@
+{
+  "debugSourceCommit": "12946855c220f106c87ae3e7e98bd41c91c3b4d5",
+  "releaseSourceCommit": "6d84ab39f8599f2cb209922e8b819916095c6c63",
+  "allAndroidProductionAndTestInputsIdentical": true,
+  "onlyChangedFiles": [
+    "cross-platform/core/test/avatar_apple.mm",
+    "cross-platform/tool/avatar_apple.sh"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "12946855c220f106c87ae3e7e98bd41c91c3b4d5",
+  "installedDebugPackages": [
+    {
+      "package": "cc.huevia.next",
+      "target": "integration_test/editor_device_test.dart",
+      "bytes": 156749786,
+      "sha256": "36ced4489bb1671d8e254b23cff43779662bad763e0aaa3e13da49a5c04b9c19"
+    },
+    {
+      "package": "cc.huevia.next.test",
+      "target": "integration_test/editor_device_test.dart",
+      "bytes": 41646,
+      "sha256": "f44e178e8a67996368c479a64cbbb7fbac848f3eadfb5bb475557d8b3493a212"
+    }
+  ],
+  "deviceWidgetScenarios": 51,
+  "dartTestExecutions": 75,
+  "nativeCodecChecks": 82,
+  "widgetProcessPid": 12064
+}

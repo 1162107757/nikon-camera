@@ -1,0 +1,2 @@
+FAIL after 7 checks: java.lang.AssertionError: Avatar metadata removed and orientation normalized at EXIF 1
+

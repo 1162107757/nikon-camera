@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "0b4463ccf19197864c36255327344aefeaa669dc",
+  "accepted": false,
+  "reason": "Normal release reproduced blank border thumbnails: duplicate task ID BUSY; superseded by 06399c7",
+  "files": [
+    {
+      "file": "huevia-0.31.0-dev-204-android-x64.apk",
+      "bytes": 54089166,
+      "sha256": "5baf461c80afc61598dd49c0fbdfa99ae179f60bba4f747d8250859f065bdade"
+    },
+    {
+      "file": "huevia-0.31.0-dev-204-android-arm64.apk",
+      "bytes": 50717734,
+      "sha256": "4d44fa1f7f811a6a10f83c07a3e17947a356ee9fb094ffef44e3def5ecc31f74"
+    }
+  ]
+}

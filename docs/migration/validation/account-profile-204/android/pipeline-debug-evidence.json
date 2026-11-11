@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "12946855c220f106c87ae3e7e98bd41c91c3b4d5",
+  "target": "integration_test/native_pipeline_test.dart",
+  "scenarios": 1,
+  "sequentialTaskIdReuseCalls": 16,
+  "files": [
+    {
+      "file": "debug/app-debug.apk",
+      "bytes": 122314483,
+      "sha256": "dd75750a59475e2d5368e060d3d83c5c9d1ec2facbfbfeef65d11a0fab499983"
+    },
+    {
+      "file": "androidTest/debug/app-debug-androidTest.apk",
+      "bytes": 41646,
+      "sha256": "f44e178e8a67996368c479a64cbbb7fbac848f3eadfb5bb475557d8b3493a212"
+    }
+  ]
+}

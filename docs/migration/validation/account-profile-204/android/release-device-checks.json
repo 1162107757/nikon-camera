@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "6d84ab39f8599f2cb209922e8b819916095c6c63",
+  "at": "2026-11-11T22:28:09.674995+00:00",
+  "allRecordedChecksPassed": true,
+  "androidApi": 31,
+  "installedX64ApkSha256": "c28cf2490de8dbf3629507e80d1722d30eeaba4a17412f94797672238b410b95",
+  "observedPid": 12277,
+  "ownProcessCrashEntries": 0,
+  "checks": [
+    {
+      "name": "Installed release APK matches validated x64 SHA",
+      "passed": true
+    },
+    {
+      "name": "24MP EXIF6 JPEG opens and original four border thumbnails all populate",
+      "passed": true
+    },
+    {
+      "name": "White-info frame includes Nikon text and original logo",
+      "passed": true
+    },
+    {
+      "name": "Style, information and appearance settings are accessible",
+      "passed": true
+    },
+    {
+      "name": "4000x6448 JPEG95 encoded preview completes; 100% action accepted",
+      "passed": true
+    },
+    {
+      "name": "Cancelling encoded preview returns with four thumbnails still populated",
+      "passed": true
+    },
+    {
+      "name": "Managed online catalog loads 391 entries",
+      "passed": true
+    },
+    {
+      "name": "Settings retains original guest identity card",
+      "passed": true
+    },
+    {
+      "name": "Guest account opens a separate full page without root tabs",
+      "passed": true
+    },
+    {
+      "name": "Current observed process has no crash-buffer entries",
+      "passed": true
+    }
+  ],
+  "limits": [
+    "No real authenticated avatar upload was performed",
+    "Observed current PID crash buffer only; not a peak-memory or physical Honor Magic stability result"
+  ]
+}
