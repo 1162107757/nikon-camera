@@ -18,7 +18,7 @@ before='LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);'
 if text.count(before)!=3:raise SystemExit('RAW JNI allocation adapter requires review')
 adapted=text.replace(before,'auto storage=std::make_unique<LibRaw>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);LibRaw& raw=*storage;')
 bridge=work/'huevia_raw.cpp'
-if not bridge.exists() or bridge.read_text(encoding='utf-8')!=adapted:bridge.write_text(adapted,encoding='utf-8')
+if not bridge.exists() or bridge.read_bytes()!=adapted.encode('utf-8'):bridge.write_text(adapted,encoding='utf-8',newline='\n')
 original_libs=ROOT/'app/src/main/jniLibs'/abi;destination=work/'jniLibs'/abi;destination.mkdir(parents=True,exist_ok=True)
 for library in original_libs.glob('*.so'):
     if library.name!='libhuevia_raw.so':shutil.copy2(library,destination/library.name)
@@ -34,7 +34,7 @@ headers=subprocess.check_output([str(tool/'bin/llvm-readelf.exe'),'-lW',str(outp
 loads=[int(line.split()[-1],16) for line in headers.splitlines() if line.strip().startswith('LOAD ')]
 if not loads or min(loads)<16384:raise SystemExit('RAW bridge must retain 16 KiB LOAD alignment')
 assets=work/'assets/native-runtime';assets.mkdir(parents=True,exist_ok=True)
-(assets/'huevia_raw.cpp').write_text(adapted,encoding='utf-8')
+(assets/'huevia_raw.cpp').write_text(adapted,encoding='utf-8',newline='\n')
 report={'abi':abi,'heapAllocatedLibRaw':True,'sourceBridgeSha256':hashlib.sha256(original.read_bytes()).hexdigest(),'adaptedBridgeSha256':hashlib.sha256(adapted.encode()).hexdigest(),'librarySha256':hashlib.sha256(output.read_bytes()).hexdigest(),'originalLibRawSha256':hashlib.sha256((original_libs/'libraw.so').read_bytes()).hexdigest(),'compiler':'Android NDK 28.2.13676358','minimumApi':26,'minimumLoadAlignment':min(loads),'bridgeFrameLimitBytes':131072,'originalLibrariesUnmodified':True}
 (assets/(abi+'.json')).write_text(json.dumps(report,indent=2)+'\n')
 fixture=work/'test-assets/raw-stack.dng'
