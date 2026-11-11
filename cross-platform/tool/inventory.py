@@ -33,15 +33,22 @@ def verify():
         for row in manifest['files']:
             if not row.get('gitBlob') or baseline.get(row['path'])!=row['gitBlob']:
                 raise SystemExit('Frozen original Git reference changed: '+row['path'])
+        previous=manifest['baselineCommit']
         for update in approval['updates']:
+            commit=update['commit']
+            if not re.fullmatch(r'[0-9a-f]{40}',commit) or subprocess.run(['git','merge-base','--is-ancestor',previous,commit],cwd=ROOT).returncode:
+                raise SystemExit('Original repairs must follow the frozen commit history')
+            seen=set()
             for row in update['files']:
                 path=row['path']
-                if path not in baseline or path in allowed:
+                if path not in baseline or path in seen:
                     raise SystemExit('Invalid original update path: '+path)
+                seen.add(path)
                 pinned=subprocess.check_output(['git','rev-parse',update['commit']+':'+path],cwd=ROOT,text=True).strip()
                 if pinned!=row['gitBlob']:
                     raise SystemExit('Original update does not match its pinned commit: '+path)
                 allowed[path]=pinned
+            previous=commit
     changed=[]
     for row in manifest['files']:
         path=ROOT/row['path']
