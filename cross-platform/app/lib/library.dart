@@ -97,6 +97,7 @@ class _LibraryPageState extends State<LibraryPage> {
         format = nextFormat;
         download = nextDownload;
       });
+      unawaited(rememberFilters());
       if (tab == 1) await load();
     }
   }
@@ -118,13 +119,60 @@ class _LibraryPageState extends State<LibraryPage> {
       error = null;
       notice = '';
     });
+    unawaited(rememberFilters());
     if (value == 1) unawaited(load());
+  }
+
+  void restoreFilters() {
+    final saved = widget.state.uiPreferences;
+    for (final index in [0, 1]) {
+      final row = saved[index == 0 ? 'presetLocal' : 'presetOnline'];
+      if (row is Map) {
+        filters[index] = (
+          category: row['category'] as String? ?? '',
+          format: row['format'] as String? ?? '',
+          download: row['download'] as String? ?? 'all',
+        );
+      }
+    }
+    tab = saved['presetSource'] == 'online' ? 1 : 0;
+    final selected = filters[tab];
+    if (selected != null) {
+      category = selected.category;
+      format = selected.format;
+      download = selected.download;
+    }
+  }
+
+  Future<void> rememberFilters() async {
+    filters[tab] = (category: category, format: format, download: download);
+    Json row(int index) {
+      final value =
+          filters[index] ?? (category: '', format: '', download: 'all');
+      return {
+        'category': value.category,
+        'format': value.format,
+        'download': value.download,
+      };
+    }
+
+    try {
+      await widget.state.saveUiPreferences({
+        'presetSource': tab == 1 ? 'online' : 'local',
+        'presetLocal': row(0),
+        'presetOnline': row(1),
+      });
+    } catch (failure) {
+      if (mounted) report(context, '筛选已应用，暂时无法记住筛选条件。');
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    restoreFilters();
     widget.state.addListener(refreshState);
+    if (tab == 1) unawaited(load());
   }
 
   void refreshState() {
@@ -569,6 +617,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                   borderRadius: BorderRadius.circular(18),
                                   onTap: () {
                                     setState(() => category = item);
+                                    unawaited(rememberFilters());
                                     if (tab == 1) unawaited(load());
                                   },
                                   child: Container(
@@ -729,6 +778,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           format = '';
                                           download = 'all';
                                         });
+                                        unawaited(rememberFilters());
                                         if (tab == 1) unawaited(load());
                                       }
                                     : tab == 0

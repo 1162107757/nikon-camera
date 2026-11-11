@@ -59,6 +59,8 @@ public final class SharedRuntime {
         if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
         if(operation.startsWith("version."))return SharedJson.encode(versions(operation,p,cancel));
         switch(operation){
+            case "ui.preferences.get":result=new SharedUiState(root).read();break;
+            case "ui.preferences.set":result=new SharedUiState(root).update(p);break;
             case "core.schema":return CoreEngine.schema();
             case "photo.stars":result=map("keys",new ArrayList<>(new PhotoStarStore(root).snapshot()));break;
             case "photo.star":{

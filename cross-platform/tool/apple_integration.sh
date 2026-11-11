@@ -45,10 +45,12 @@ trap finish EXIT
 xcrun simctl boot "$DEVICE" || true
 xcrun simctl bootstatus "$DEVICE" -b > "$WORK/simulator-boot.log" 2>&1
 cd "$ROOT/cross-platform/app"
+GALLERY_FIXTURE="$WORK/Huevia-QA-PhotoKit.png"
+GALLERY_SHA="$(python3 "$ROOT/cross-platform/tool/apple_gallery_fixture.py" "$GALLERY_FIXTURE")"
 # The test suite's loading budget includes Xcode compilation. Compile the
 # native simulator app first so a cold CI build cannot consume that budget
 # immediately after Dart starts. Keep the actual test assertions/timeouts.
-flutter build ios --simulator --debug --config-only --no-pub --target integration_test/native_pipeline_test.dart > "$WORK/simulator-config.log" 2>&1
+flutter build ios --simulator --debug --config-only --no-pub --target integration_test/native_pipeline_test.dart --dart-define="HUEVIA_PHOTOKIT_SHA=$GALLERY_SHA" > "$WORK/simulator-config.log" 2>&1
 # The generated JRE/LibRaw and Pods use the current host's simulator slice.
 # Match it on the app target as well; a generic multi-architecture build cannot
 # import a Swift module whose Pods were built only for the host architecture.
@@ -58,6 +60,19 @@ xcrun simctl list devices available -j > "$WORK/simulator-devices.json"
 xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
   "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build > "$WORK/simulator-build.log" 2>&1
+SIM_APP="$(python3 - "$ROOT/cross-platform/app/build/ios" <<'PY'
+from pathlib import Path
+import plistlib,sys
+for p in Path(sys.argv[1]).rglob('*.app/Info.plist'):
+    data=plistlib.loads(p.read_bytes())
+    if data.get('CFBundleIdentifier')=='cc.huevia.next' and data.get('CFBundleSupportedPlatforms')==['iPhoneSimulator']:
+        print(p.parent);break
+else:raise SystemExit('Built simulator app not found')
+PY
+)"
+xcrun simctl install "$DEVICE" "$SIM_APP"
+xcrun simctl privacy "$DEVICE" grant photos cc.huevia.next
+xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
 xcrun xcodebuild test -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
   "BUILD_DIR=$ROOT/cross-platform/app/build/ios" -only-testing:RunnerTests \
