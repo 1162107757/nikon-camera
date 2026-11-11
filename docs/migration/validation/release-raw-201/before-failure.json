@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "bef616a5778b318152043426373336af3597972b",
+  "installedApkSha256": "adadc6dbf1336da2eaeec0fdc14bc5922515041dc09659b6ee2f612a1eab1d46",
+  "case": "Previously uncached self-generated 6000x4000 DNG",
+  "failure": "INSTALLATION_ERROR: native component unavailable",
+  "cause": "JNI cancelled()/onProgress(double) were renamed to a/c by R8",
+  "crashObserved": false,
+  "smallCachedRawWasInsufficient": true
+}

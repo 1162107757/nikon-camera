@@ -7,12 +7,12 @@
 | 能力 | 现有实现依据 | 共享逻辑 | 共享界面 / 平台接入 | 验收状态 |
 | --- | --- | --- | --- | --- |
 | NCP / NP3 校验、单色与彩色预设解析 | `library/PresetFile`, `ncp/*PreviewProfile` | 直接复用 | 本地导入已接线 | 核心 JVM / Apple 原测试通过；应用待验证 |
-| 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 本地导入、分类、原样片/模拟图已接线；200 增加自选模板及恢复内置样片 | 待应用验证 |
+| 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 本地导入、分类、原样片/模拟图已接线；200 增加自选模板及恢复内置样片 | Android release 自选模板、主图更新及恢复实操通过；其余完整状态待验收 |
 | 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示及完整下载状态筛选已接线，搜索合并在途请求 | 190 两端实际 HTTPS 分页通过；Android release 详情/NP3 下载/已下载筛选通过；全部错误状态待验收 |
 | 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出/注册/图形验证已接线；QQ、头像待迁移 | 待完成 |
 | 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑复用并补充任务取消和作者校验 | 同步范围选择、两种冲突处理、删除及会话可见性已接线 | 31 项事务/权限检查通过；真实账号联网验收待完成 |
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
-| 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | Android 系统图库及 iOS PhotoKit 权限/分页/缩略图/原字节导入已接线；200 增加日期分组批选、来源/排序/筛选跨重启保存 | 安卓 12 图库与导入实操通过；200 iOS PhotoKit 的 Apple 原生验证正在执行；Android 新版部分权限与 iPhone 实机待验收 |
+| 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | Android 系统图库及 iOS PhotoKit 权限/分页/缩略图/原字节导入已接线；200 增加日期分组批选、来源/排序/筛选跨重启保存 | 安卓 12 实操、Apple 完整 CI 及真实完整授权/PhotoKit 原字节场景通过；部分/有限权限、iCloud 与实机待验收 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
 | 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；189 两端原生场景含去灰/导出通过，完整控件样式仍待对齐 |
 | 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 189 两端实际旋转/裁剪像素场景通过；全部几何组合及交互仍待验收 |
@@ -29,7 +29,7 @@
 | USB 相机发现、权限、PTP 传输、槽位读写删除 | `usb/*`, `picturecontrol/*` | 验证/保护部分已纳入 | Android USB 与 iOS ImageCaptureCore 待接入 | 待完成，不能只凭 API 存在宣称机型支持 |
 | Wi-Fi 预设槽位读写删除及会话移交 | `PictureControl*Session`, `PtpIpClient` | 原协议保护保留 | 待迁移完整确认/回读流程 | 待完成，不允许不确定写入自动重试 |
 | 遥控、实时取景、对焦、拍摄、相机参数 | `remote/*`, `RemoteCaptureActivity` | 纯 Java 协议已纳入 | 待迁移 | 待完成 |
-| 设置、主题、权限、诊断、更新、旧数据迁移 | 原 Activity、`updates/*`, `AppCrashDiagnostics` | 部分模型已纳入 | 200 增加偏好持久化、模板管理、帮助/关于/诊断二级页和脱敏 JSON 导出；更新、完整崩溃采集和旧资料迁移待完成 | 待完成 |
+| 设置、主题、权限、诊断、更新、旧数据迁移 | 原 Activity、`updates/*`, `AppCrashDiagnostics` | 部分模型已纳入 | 200 增加偏好持久化、模板管理、帮助/关于/诊断二级页和脱敏 JSON 导出；更新、完整崩溃采集和旧资料迁移待完成 | Android release 诊断 JSON 分享与偏好冷启动保存通过；其余范围待完成 |
 
 ## 已取得的证据
 
@@ -95,6 +95,19 @@
 - 在线库原因为共享接入只初始化默认地址，未启用原仓库的 managed 模式；现使用原 `useManagedEndpoint`，并验证旧开发版空/旧配置升级。格式/下载状态/未分类筛选读取完整目录，避免只筛当前分页。真实 Android release 已加载 391 份在线目录并完成详情、NP3 下载和已下载筛选；见 [190 截图及设备记录](validation/controls-online-190/README.md)。
 - 固定源码 `d82c9e478194210af85e08127bdb584d24bb0dd7`：20 个 Android 界面场景、38 项原生检查、真实线上分页和完整 RAW 场景通过。[iOS Actions 42969015766](https://github.com/1162107757/nikon-camera/actions/runs/42969015766) 的 27 项 Flutter 测试、205 项共享边界、实际 HTTPS 在线分页及原生图像/RAW 场景均通过；ARM64/x64 release APK 与未签名设备 IPA 已校验并归档于 `dist/migration190/`。
 - 同工作区另有原版 191 Wi-Fi 修复，190 使用固定提交的独立检出构建；其原 420 个输入文件保留校验通过，不将另一个任务在途代码混入本包。原版修复文件保持原样。以上仍不代表所有页面逐像素一致或全功能迁移完成。
+
+### 200 相册批选、模板与二级页面
+
+- Android 源码固定为 `bef616a5778b318152043426373336af3597972b`。增加偏好原子保存、原样式日期分组选取、最多 100 张顺序处理、配方快照、RAW 工作副本、取消及仅重试未完成项、自选预览模板、帮助/关于/许可/诊断页面及脱敏 JSON 分享。
+- Android 12 的 27 个设备界面场景和 debug 宿主的 39 项原生检查通过；release 包另外实际执行两张照片的图库导入、批量导出、FileProvider 分享接收、模板选择/恢复、过滤冷启动保存，以及合成 DNG 的显影/编辑/JPEG 导出。原图与已完成成品保留，完整系统图库发布/删除及批量编辑器仍未完成。
+- 共享核心通过 218 项边界/表面检查，原数值测试和六组 Apple/JVM 指纹继续一致。原工程 420 个冻结输入中，8 个按原版 191/193 修复提交核验，其他 412 个仍与 186 基准一致。
+- Apple 固定源码 `ed5ffe7` 的 [Actions 43022756099](https://github.com/1162107757/nikon-camera/actions/runs/43022756099) 已完整通过：41 项 Flutter 测试、系统完整授权、PhotoKit 分页/缩略图/原资源 SHA、模板方向/白底、两张批量成品及全部图像/RAW 断言。XCUITest 负责真实授权，目标应用最终结果与 nonce/源码/样片 SHA 独立验收。早期完成提示读取超时的中间失败记录保留。
+- 同机原 186/共享 200 已对照选择页、根导航与操作区，部分文字字重、日期位置和采样仍有差异。安装包、截图、精确哈希与测试边界见 [200 验证记录](validation/gallery-batch-200/README.md)。未知型号 NEF、荣耀 Magic Android 12 和实体 iPhone 仍待实机验收。
+
+### 201 未缓存 RAW 的 release JNI 修复
+
+- 用自制 6000×4000 DNG 在实际 Android 200 release 包复现未缓存显影失败。R8 把 JNI 按名称查找的 `cancelled()` / `onProgress(double)` 改为 `a` / `c`；应用捕获为原生组件不可用，没有观察到进程崩溃。既有小样片的成功不能代替这条路径的验收。
+- 201 仅增加精确回调/构造器保留规则及构建后映射校验，保留 R8/AOT；原工程不修改。Android 12 上首次显影 2400 万像素 DNG、原图/NCP/NP3 三种完整尺寸 JPEG 导出与真实分享接收均通过，原输入 SHA 不变，进程持续存活。ARM64/x64 包已校验签名、模型、ABI 和 16 KiB 对齐，见 [201 验证](validation/release-raw-201/README.md)。201 的 iOS 设备包正在用相同完整流程构建。
 
 ## 保留和交付规则
 

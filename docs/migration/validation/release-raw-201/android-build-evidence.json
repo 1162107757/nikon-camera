@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T13:07:20.452316+00:00",
+  "sourceCommit": "644a95e5eaffbe7056a1512300a2eb3829d31757",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "isolatedBuildDirectory": ".tooling/m200",
+  "artifacts": [
+    {
+      "apk": "dist/migration201/huevia-0.31.0-dev-201-android-arm64.apk",
+      "bytes": 49683998,
+      "sha256": "8f5821acccd5d6c43df2e4f1dc546dcdacbb0e1efa74d7812b03d121fd44370e",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "sourceCommit": "644a95e5eaffbe7056a1512300a2eb3829d31757",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+201",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches190": true,
+      "liteRtSha256": "70b6d8f09cfa72158b142a54c84d978670523e420267273a9948a0f40fb535c9",
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "apk": "dist/migration201/huevia-0.31.0-dev-201-android-x64.apk",
+      "bytes": 53055430,
+      "sha256": "08cd2e54b6cf3bb4c10e0abf2b6d2e45ccab89e3cf585a736b45a4b636d10211",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "sourceCommit": "644a95e5eaffbe7056a1512300a2eb3829d31757",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+201",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches190": true,
+      "liteRtSha256": "946664d75ea3966fafd5b3a9f52b6d246f99e2dd1e9ae830c50afd2bc7cea096",
+      "elfAndStoredLibraryAlignment16KiB": true
+    }
+  ],
+  "validation": {
+    "androidApi": 31,
+    "emulator": "own emulator-5584 / adb 5038; 2 GiB configured RAM",
+    "releaseUncachedRawFirstDevelopment": true,
+    "rawDimensions": [
+      6000,
+      4000
+    ],
+    "originalFixtureSha256": "9d49202acf5d8926e1dee205c4b68071972189fd5ef2d2b9abd0f009298a06ed",
+    "fullSizeJpegShareCases": [
+      "unadjusted",
+      "HOST NCP",
+      "活力电影_芒果小明 NP3"
+    ],
+    "sameProcessId": 19165,
+    "ownProcessCrashBufferBytes": 0,
+    "sampledExportPssKiB": {
+      "unadjusted": 193987,
+      "ncp": 198831
+    },
+    "samplingScope": "Export phase only; nominal two-second sampling plus dumpsys overhead, does not establish a transient peak or physical-device memory ceiling",
+    "r8NativeCallbacksVerified": true,
+    "beforeFixMappingRejectedByGuard": true,
+    "reusedRegressionEvidence": "200: 27 device widget scenarios, 39 debug native checks; not rerun as 201 release numerical tests",
+    "originalPreservation": {
+      "frozenFiles": 420,
+      "approvedRepairFiles": 8,
+      "unchangedAtBaseline": 412
+    }
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/release-raw-201/after-r8-mapping.txt",
+      "bytes": 519,
+      "sha256": "1e7d3fe481b9b9b85b99ea0f6b7cec6adfdd98ce69cb65dfd8906ab27b6b403a"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/arm64-r8-verification.json",
+      "bytes": 170,
+      "sha256": "d4a2a3c2369d8fae573d14d216d356c0748b55da0157a8260e72d5fa67776d40"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/before-failure.json",
+      "bytes": 426,
+      "sha256": "8eba60a50995f54326efaf202393197775c55b174ea33eaabb451d73933eb77d"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/before-r8-mapping.txt",
+      "bytes": 502,
+      "sha256": "6f0c9a9af039d4be66ce16bec1aaf5b33632ea00f583d0e7b3d6194c0dab5451"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/before-raw-error-offscreen.png",
+      "bytes": 103042,
+      "sha256": "98865b73e5cb2f95d388f13578f84a8a12fccceeaddc6d01f88ea280538918f4"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/before-raw-error-visible.png",
+      "bytes": 98580,
+      "sha256": "16f5b3080dbdaf2702162b0fc5c1cb79560c197db160ef9433d10669c090f2f2"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/fixture.json",
+      "bytes": 209,
+      "sha256": "8ab2e4835497076685a2e3c3b36433849e98d23a56f41ec0b9ae372985ee09f0"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/qa_fixture.py",
+      "bytes": 1899,
+      "sha256": "f2d193039bea04e9e44881ce23498def0425bada930a5abf0a7b41e22b421ad4"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-editor.png",
+      "bytes": 76375,
+      "sha256": "84fb5a3dad3f7b6e3f8473603e6369f2c3dc37bf1f6bd156395df8764f3ed844"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-filtered-editor.png",
+      "bytes": 154980,
+      "sha256": "b5b8220e6b9ca04bc2d36f37f989bb30be21a2e8b1cef29b660e399e2524fb63"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-filtered-memory.json",
+      "bytes": 3055,
+      "sha256": "9d81b0f9f43cffccf2a30a7ccb3347bcfa283d5569f381b4dae2bfc93a65582c"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-filtered-share-receipt.json",
+      "bytes": 205,
+      "sha256": "de78bf8ce8b88bda584cf09f2c0b93d4edbacea4bfe8bbbc9dc0d1116aa93b06"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-memory.json",
+      "bytes": 4258,
+      "sha256": "497e8a5ea9ad2991ee9015e3b080b88ed8673511a329d57883a0769b26dc5612"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-np3-editor.png",
+      "bytes": 462537,
+      "sha256": "5fd8c1c5b74699a14a5ce283dddc5c5250068dc70a14c0b4260f51c8e5e8ff77"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-np3-share-receipt.json",
+      "bytes": 205,
+      "sha256": "7e094b7c89ea338762072f45a0f57ea7ff9787386316936ebd8d90c5c2fc9772"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/raw24mp-share-receipt.json",
+      "bytes": 205,
+      "sha256": "1b192414069f0ae1c843919afeff5f89731b06f0b72b06986a8ab99446193b53"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/release-crash-buffer.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/migration/validation/release-raw-201/x64-r8-verification.json",
+      "bytes": 170,
+      "sha256": "d4a2a3c2369d8fae573d14d216d356c0748b55da0157a8260e72d5fa67776d40"
+    }
+  ],
+  "limits": [
+    "Honor Magic Android12 and unknown-camera NEF remain unverified",
+    "Physical ARM64 device and iPhone installation remain unverified",
+    "Full feature and pixel parity remains incomplete"
+  ]
+}

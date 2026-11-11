@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "workflowRun": 43015146837,
+  "sourceCommit": "69f1974d8e6650ef72a1180f534fefb3ea2ce94d",
+  "nativePipelinePassed": true,
+  "workflowPassed": false,
+  "xctestFailure": "All native assertions and final Flutter result passed; completion marker was not rendered by test frame policy. XCTest timed out waiting for its accessibility label.",
+  "systemConsentObserved": "XCUITest tapped Allow Full Access",
+  "evidence": [
+    {
+      "file": "consent-first-pass-result.json",
+      "bytes": 349,
+      "sha256": "5a3a93bd01bae9689810303e3c8892e209f284508c7d0a8a3031b8568c857e03"
+    },
+    {
+      "file": "consent-first-pass-initial.json",
+      "bytes": 202,
+      "sha256": "de1a1bbea145098de31914e99056619600332e1ea38601968ca3814eff455244"
+    }
+  ]
+}

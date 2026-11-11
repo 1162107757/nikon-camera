@@ -1,5 +1,7 @@
 Huevia 跨平台开发版 0.31.0-dev / 200
 
+安卓 200 已由 201 替代：后续实测发现未缓存 RAW 的 JNI 回调会被 R8 改名。请安装 dist/migration201 中的新版；本目录保留历史包和原始证据。
+
 安卓手机：huevia-0.31.0-dev-200-android-arm64.apk
 安卓模拟器：huevia-0.31.0-dev-200-android-x64.apk
 最低 Android 8（API 26）。使用开发标识 cc.huevia.next 和开发签名，可与原版并存。
@@ -13,4 +15,5 @@ Huevia 跨平台开发版 0.31.0-dev / 200
 
 Android 来源：bef616a5778b318152043426373336af3597972b
 安装包大小、SHA、签名和证据见 build-evidence.json。
-iOS 最新设备包和模拟器验证仍在执行，交付记录将单独保存。
+iOS：huevia-0.31.0-dev-200-ios-unsigned.ipa，最低 iOS 16，设备 ARM64，需要用户自签。
+iOS 源码 ed5ffe7e0b5f3835438ebe92a2b6b441a9f004de，Actions 43022756099 完整通过；41 项 Flutter 测试、真实系统授权及完整 PhotoKit/媒体/RAW 场景通过。包哈希和范围见 ios-build-evidence.json。

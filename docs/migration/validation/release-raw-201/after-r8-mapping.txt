@@ -1,0 +1,9 @@
+cc.huevia.album.RawDeveloper$NativeCallbacks -> cc.huevia.album.RawDeveloper$NativeCallbacks:
+# {"id":"sourceFile","fileName":"RawDeveloper.java"}
+    java.util.function.BooleanSupplier cancel -> a
+    java.util.function.DoubleConsumer progress -> b
+    double last -> c
+    1:8:void <init>(java.util.function.BooleanSupplier,java.util.function.DoubleConsumer):169:169 -> <init>
+    1:13:void check():171:171 -> a
+    1:23:boolean cancelled():170:170 -> cancelled
+    1:32:void onProgress(double):172:172 -> onProgress

@@ -1,0 +1,13 @@
+Huevia 跨平台开发版 0.31.0-dev / 201
+
+安卓手机：huevia-0.31.0-dev-201-android-arm64.apk
+安卓模拟器：huevia-0.31.0-dev-201-android-x64.apk
+最低 Android 8（API 26）。开发包名 cc.huevia.next，可与原版并存，也可更新先前迁移开发版。
+
+保留 200 的相册批选/批量导出、偏好保存、自选模板和帮助/关于/诊断页面。
+201 修复 R8 改名 JNI 回调导致未缓存 RAW 显影失败。已在 Android 12 实际首次显影 6000×4000 自制 DNG，并完成原图、NCP、NP3 三种完整尺寸 JPEG 导出与本地分享接收；原 DNG 不变。
+
+原版工程和历史安装包保留。本版仍未达到全部功能和全部页面逐像素对齐；荣耀 Magic、未知型号 NEF 及实际 iPhone 仍需实样/实机复测。
+Android 源码：644a95e5eaffbe7056a1512300a2eb3829d31757。
+APK 大小、SHA、签名、测试边界见 build-evidence.json。
+iOS 201 设备包正在构建，交付记录将单独保存。

@@ -2,6 +2,8 @@
 
 Android 应用源码固定为 `bef616a5778b318152043426373336af3597972b`，版本 `0.31.0-dev+200`，开发包名 `cc.huevia.next`。构建工作目录为项目内的独立检出 `.tooling/m200`。186 样式参考和 187–190 的冻结记录保持原样；191、193 独立完成的原版修复按提交及 8 个文件的 Git blob 单独核验，其余 412 个原工程文件按原基准核验。
 
+**Android 200 已由 201 替代。** 后续未缓存的大尺寸 RAW 实测发现 R8 改名了 JNI 回调，200 release 的既有小样片成功记录未覆盖这一失败路径。原安装包及冻结记录保留，修复、首次显影及三种完整尺寸导出证据见 [201 验证](../release-raw-201/README.md)。
+
 ## 本次实现
 
 - 预设来源、两套来源各自的筛选条件、相册来源/筛选/时间排序偏好使用原生原子文件保存。文件损坏时保留原文件并提示，后续写入失败不会阻塞整个保存队列。
@@ -46,9 +48,11 @@ Android 应用源码固定为 `bef616a5778b318152043426373336af3597972b`，版�
 
 ## Apple 验证
 
-当前 Apple 验证源码为 `69f1974d8e6650ef72a1180f534fefb3ea2ce94d`，托管验证仍在执行。该提交与 Android 冻结版本的差异为 Apple 原生目录规范化及集成测试配置；共享产品界面和 Android 产品输入保持一致。
+200 的 Apple 验证源码固定为 `ed5ffe7e0b5f3835438ebe92a2b6b441a9f004de`，[Actions 43022756099](https://github.com/1162107757/nikon-camera/actions/runs/43022756099) 已完整通过。该提交与 Android 冻结版本的差异为 Apple 原生目录规范化及集成测试配置；共享产品界面和 Android 产品输入保持一致。
 
-已加入 PhotosUI 声明/链接，并让原生桥返回 Java 文件保护逻辑使用的规范目录，避免真机 `/var` 与 `/private/var` 别名冲突。上一轮 `43011885096` 已通过 41 项 Mac Flutter 测试并成功生成设备 IPA，但真实 PhotoKit 完整授权断言失败：iOS 26.5 中 `simctl privacy grant photos` 成功返回后，应用仍报告尚未授权。因此改用 XCUITest 点击真正的系统完整访问选项，再运行同一套 PhotoKit/媒体断言；没有把授权断言改为跳过。
+已加入 PhotosUI 声明/链接，并让原生桥返回 Java 文件保护逻辑使用的规范目录，避免真机 `/var` 与 `/private/var` 别名冲突。`simctl privacy grant photos` 返回成功不能代替应用内授权状态，所以由 XCUITest 点击真正的系统完整访问选项，并由目标应用报告从 `none` 到 `full` 的实际变化。授权测试结束后，宿主用运行 nonce 打开门控，再直接启动同一应用完成全部原生场景；不依赖 Flutter 完成提示在 iOS 可访问性树中的展示。
+
+41 项 Flutter 测试、218 项共享边界/表面检查、六组 JVM/Apple 指纹、真实 PhotoKit 分页/缩略图/原资源 SHA，以及完整图像、模板、批量和 RAW 场景通过。原始结果、系统授权日志、设备 IPA 报告及独立核验见 `apple/ios-final-evidence.json`。中间运行曾出现原生场景成功、XCTest 提示读取超时，首次结果和整体失败状态仍保存在 `apple/consent-first-pass*.json`，不将其改记为成功。
 
 Flutter 官方 `allTestsPassed`、最终结果字典与运行 nonce/源码/样片 SHA 共同决定成功；结果缺失、失败、身份不符及场景数量不符都会拒绝。实际场景仍要求完整授权、真实 PhotoKit 资源 SHA 和全部媒体断言。[Flutter 固定版本的结果接口](https://github.com/flutter/flutter/blob/3.47.9/packages/integration_test/lib/integration_test.dart)、[Apple 有限照片访问](https://developer.apple.com/documentation/photokit/delivering-an-enhanced-privacy-experience-in-your-photos-app)
 
