@@ -226,8 +226,12 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      widget.configuration ? connectionView(context) : overview(context);
+  Widget build(BuildContext context) => widget.configuration
+      ? Theme(
+          data: hueviaTheme(Theme.of(context).brightness, home: false),
+          child: Builder(builder: connectionView),
+        )
+      : overview(context);
 
   Widget connectionView(BuildContext context) => Scaffold(
     appBar: HueHeader(

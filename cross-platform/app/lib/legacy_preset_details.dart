@@ -391,6 +391,19 @@ class _PresetTonePainter extends CustomPainter {
         paint,
       );
     }
+    paint
+      ..color = palette.secondary.withAlpha(200)
+      ..strokeWidth = 1;
+    final diagonal = plot.topRight - plot.bottomLeft;
+    for (var step = 0.0; step < diagonal.distance; step += 8) {
+      canvas.drawLine(
+        plot.bottomLeft + diagonal * (step / diagonal.distance),
+        plot.bottomLeft +
+            diagonal *
+                (math.min(step + 4, diagonal.distance) / diagonal.distance),
+        paint,
+      );
+    }
     final curve = Path();
     for (var i = 0; i < samples!.length; i++) {
       final x = plot.left + plot.width * i / (samples!.length - 1),

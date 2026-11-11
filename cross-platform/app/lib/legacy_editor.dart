@@ -165,7 +165,7 @@ extension _LegacyWorkspace on _EditorPageState {
     height:
         56 + (MediaQuery.textScalerOf(context).scale(1) - 1).clamp(0, 1) * 16,
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.only(left: 14, right: 19),
       child: Row(
         children: [
           editorButton(
@@ -178,6 +178,7 @@ extension _LegacyWorkspace on _EditorPageState {
             '编辑选项',
             toolsEnabled ? editorOptions : null,
           ),
+          const SizedBox(width: 8),
           Expanded(
             child: GestureDetector(
               onTap: toolsEnabled ? editorOptions : null,
@@ -208,12 +209,12 @@ extension _LegacyWorkspace on _EditorPageState {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           SizedBox(
             width: 80,
-            height: 52,
+            height: 48,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
               child: FilledButton(
                 style: FilledButton.styleFrom(
                   backgroundColor: _editorYellow,
@@ -327,7 +328,7 @@ extension _LegacyWorkspace on _EditorPageState {
   Widget historyBar() => SizedBox(
     height: 48,
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
           editorButton(
@@ -379,45 +380,62 @@ extension _LegacyWorkspace on _EditorPageState {
           ])
             Expanded(
               child: Semantics(
+                container: true,
+                excludeSemantics: true,
                 button: true,
                 selected: tab == entry.$1,
                 label: entry.$2,
+                onTap: toolsEnabled
+                    ? () => refreshWorkspace(() => tab = entry.$1)
+                    : null,
                 child: InkWell(
                   onTap: toolsEnabled
                       ? () => refreshWorkspace(() => tab = entry.$1)
                       : null,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 39,
-                        height: 39,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: tab == entry.$1
-                              ? const Color(0xe6111713)
-                              : const Color(0x9c101412),
-                        ),
-                        child: Center(
-                          child: HueIcon(
-                            entry.$3,
-                            size: 21,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 3),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 39,
+                          height: 39,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                             color: tab == entry.$1
-                                ? _editorYellow
-                                : _editorWhite,
+                                ? const Color(0xe6111713)
+                                : const Color(0x9c101412),
+                          ),
+                          child: Center(
+                            child: HueIcon(
+                              entry.$3,
+                              size: 21,
+                              color: tab == entry.$1
+                                  ? _editorYellow
+                                  : _editorWhite,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        entry.$2,
-                        style: TextStyle(
-                          fontSize: 11,
-                          height: 1.2,
-                          color: tab == entry.$1 ? _editorYellow : _editorWhite,
+                        const SizedBox(height: 4),
+                        SizedBox(
+                          height: 20 * scale,
+                          child: Center(
+                            child: Transform.translate(
+                              offset: const Offset(0, -1),
+                              child: Text(
+                                entry.$2,
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  height: 1.17,
+                                  color: tab == entry.$1
+                                      ? _editorYellow
+                                      : _editorWhite,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -494,6 +512,8 @@ extension _LegacyWorkspace on _EditorPageState {
                       overlayColor: const Color(0x22ffe335),
                       thumbShape: const RoundSliderThumbShape(
                         enabledThumbRadius: 7,
+                        elevation: 0,
+                        pressedElevation: 0,
                       ),
                       trackShape: const RectangularSliderTrackShape(),
                       padding: EdgeInsets.zero,
@@ -810,6 +830,50 @@ extension _LegacyWorkspace on _EditorPageState {
 
   ThemeData get workspaceTheme => Theme.of(context).copyWith(
     brightness: Brightness.dark,
+    canvasColor: const Color(0xff292724),
+    cardColor: const Color(0xff292724),
+    iconTheme: const IconThemeData(color: _editorWhite),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: _editorYellow,
+        foregroundColor: const Color(0xff191e17),
+        minimumSize: const Size(48, 48),
+        shape: const StadiumBorder(),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: _editorWhite,
+        backgroundColor: const Color(0x9c101412),
+        side: BorderSide.none,
+        minimumSize: const Size(48, 48),
+        shape: const StadiumBorder(),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: _editorWhite,
+        minimumSize: const Size(48, 48),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: const Color(0xff33302c),
+      labelStyle: const TextStyle(color: _editorMuted),
+      hintStyle: const TextStyle(color: _editorMuted),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xff4c4640)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: Color(0xff4c4640)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: _editorYellow),
+      ),
+    ),
     colorScheme: const ColorScheme.dark(
       primary: _editorYellow,
       onPrimary: Color(0xff191e17),
@@ -824,7 +888,11 @@ extension _LegacyWorkspace on _EditorPageState {
       inactiveTrackColor: const Color(0x66ffffff),
       thumbColor: Colors.white,
       trackHeight: 2,
-      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 7),
+      thumbShape: const RoundSliderThumbShape(
+        enabledThumbRadius: 7,
+        elevation: 0,
+        pressedElevation: 0,
+      ),
     ),
     scaffoldBackgroundColor: Colors.transparent,
   );

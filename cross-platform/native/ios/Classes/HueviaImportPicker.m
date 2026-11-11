@@ -48,7 +48,8 @@
       [coordinator coordinateReadingItemAtURL:url options:0 error:&error byAccessor:^(NSURL *file){
         @try {
           JavaIoFileInputStream *input=[[JavaIoFileInputStream alloc] initWithNSString:file.path];
-          receipt=[CcHueviaSharedSharedImport copyWithJavaIoInputStream:input withNSString:url.lastPathComponent withBoolean:preset withNSString:root withJavaUtilFunctionBooleanSupplier:task];
+          // J2ObjC escapes NSObject's reserved `copy` message as `copy__`.
+          receipt=[CcHueviaSharedSharedImport copy__WithJavaIoInputStream:input withNSString:url.lastPathComponent withBoolean:preset withNSString:root withJavaUtilFunctionBooleanSupplier:task];
         }@catch(id problem){failure=problem;}
       }];
       if(error&&!failure)failure=error;

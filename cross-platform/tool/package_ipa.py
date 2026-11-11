@@ -1,6 +1,6 @@
 """Package only a verified iPhoneOS ARM64 app as an unsigned self-signing IPA."""
 from pathlib import Path,PurePosixPath
-import hashlib,json,os,plistlib,struct,subprocess,zipfile
+import hashlib,json,os,plistlib,re,struct,subprocess,zipfile
 ROOT=Path(__file__).resolve().parents[2]
 app=ROOT/'cross-platform/app/build/ios/iphoneos/Runner.app'
 out=ROOT/'cross-platform/.build/mobile-apple';out.mkdir(parents=True,exist_ok=True)
@@ -17,7 +17,9 @@ for _ in range(ncmds):
     if command==0x32:platforms.append(struct.unpack_from('<I',binary,cursor+8)[0])
     cursor+=length
 if platforms!=[2]:raise SystemExit('Mach-O is not built for iPhoneOS')
-ipa=out/'huevia-0.31.0-dev-187-unsigned.ipa'
+version=info['CFBundleShortVersionString'];build=info['CFBundleVersion']
+if not re.fullmatch(r'[0-9A-Za-z.-]+',version) or not re.fullmatch(r'[0-9]+',build):raise SystemExit('Unexpected development version')
+ipa=out/f'huevia-{version}-{build}-unsigned.ipa'
 with zipfile.ZipFile(ipa,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
     for path in sorted(app.rglob('*')):
         if path.is_symlink():raise SystemExit('Unexpected app symlink; archive handling requires review')
