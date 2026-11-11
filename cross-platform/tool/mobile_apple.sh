@@ -53,6 +53,6 @@ cd "$ROOT/cross-platform/app"
 flutter analyze --no-pub > "$WORK/analyze.log" 2>&1
 flutter test --no-pub --concurrency=1 --reporter expanded > "$WORK/flutter-tests.log" 2>&1
 flutter build ios --release --no-codesign --no-pub > "$WORK/device-build.log" 2>&1
-bash "$ROOT/cross-platform/tool/apple_integration.sh"
 python3 "$ROOT/cross-platform/tool/package_ipa.py"
+bash "$ROOT/cross-platform/tool/apple_integration.sh"
 python3 "$ROOT/cross-platform/tool/inventory.py" --verify

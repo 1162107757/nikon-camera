@@ -46,5 +46,14 @@ cd "$ROOT/cross-platform/app"
 # The test suite's loading budget includes Xcode compilation. Compile the
 # native simulator app first so a cold CI build cannot consume that budget
 # immediately after Dart starts. Keep the actual test assertions/timeouts.
-flutter build ios --simulator --debug --device-id "$DEVICE" --no-pub --target integration_test/native_pipeline_test.dart --verbose > "$WORK/simulator-build.log" 2>&1
+flutter build ios --simulator --debug --config-only --no-pub --target integration_test/native_pipeline_test.dart > "$WORK/simulator-config.log" 2>&1
+# The generated JRE/LibRaw and Pods use the current host's simulator slice.
+# Match it on the app target as well; a generic multi-architecture build cannot
+# import a Swift module whose Pods were built only for the host architecture.
+SIM_ARCH="$(uname -m)"
+if [[ "$SIM_ARCH" != arm64 && "$SIM_ARCH" != x86_64 ]]; then echo "Unsupported simulator host: $SIM_ARCH"; exit 1; fi
+xcrun simctl list devices available -j > "$WORK/simulator-devices.json"
+xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
+  -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
+  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build > "$WORK/simulator-build.log" 2>&1
 flutter test integration_test/native_pipeline_test.dart --device-id "$DEVICE" --no-pub --reporter expanded --verbose > "$WORK/simulator-tests.log" 2>&1
