@@ -10,6 +10,7 @@
 #import "java/net/Socket.h"
 #import "java/net/InetSocketAddress.h"
 #import "java/io/IOException.h"
+#import "java/io/File.h"
 #import "java/lang/Throwable.h"
 #import "IOSPrimitiveArray.h"
 #import "HueviaCoreBootstrap.h"
@@ -88,6 +89,9 @@
           [CcHueviaSharedMediaValidation installWithCcHueviaSharedMediaValidation_Decoder:[[HueviaImageValidator alloc] init]];
           stage=@"account and preset runtime";
           CcHueviaSharedSharedRuntime *runtime=[[CcHueviaSharedSharedRuntime alloc] initWithNSString:self.root withCcHueviaAccountAccountRepository_Store:[[HueviaKeychain alloc] init] withCcHueviaAccountAccountRepository_Transport:[[CcHueviaAccountAccountHttpTransport alloc] init]];
+          // Return the same canonical root used by guarded Java file access.
+          // Physical iOS devices may expose /var and /private/var aliases.
+          self.root=[[runtime root] getPath];
           stage=@"camera runtime";
           CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init]];
           stage=@"media runtime";

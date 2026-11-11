@@ -3,15 +3,19 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="$ROOT/cross-platform/.build/mobile-apple"
 STARTED="$(date +%s)"
-DEVICE="$(python3 - <<'PY'
-import json,subprocess
-devices=json.loads(subprocess.check_output(['xcrun','simctl','list','devices','available','-j']))['devices']
-for runtime,rows in reversed(list(devices.items())):
-    if '.iOS-' in runtime:
-        for device in rows:
-            if device['name'].startswith('iPhone'):
-                print(device['udid']);raise SystemExit(0)
-raise SystemExit('No available iPhone simulator runtime')
+DEVICE="$(python3 - "$WORK" <<'PY'
+import json,subprocess,sys,uuid
+from pathlib import Path
+runtimes=json.loads(subprocess.check_output(['xcrun','simctl','list','runtimes','-j']))['runtimes']
+runtimes=[r for r in runtimes if r.get('isAvailable') and '.iOS-' in r['identifier']]
+if not runtimes:raise SystemExit('No available iOS simulator runtime')
+runtime=max(runtimes,key=lambda r:tuple(int(x) for x in r['version'].split('.')))
+types=runtime.get('supportedDeviceTypes',[])
+if not types:types=json.loads(subprocess.check_output(['xcrun','simctl','list','devicetypes','-j']))['devicetypes']
+device=next(t for t in types if t['name'].startswith('iPhone'))
+identifier=subprocess.check_output(['xcrun','simctl','create','Huevia-QA-'+str(uuid.uuid4()),device['identifier'],runtime['identifier']],text=True).strip()
+(Path(sys.argv[1])/'simulator-selection.json').write_text(json.dumps({'udid':identifier,'runtime':runtime['identifier'],'version':runtime['version'],'deviceType':device['identifier'],'freshDevice':True},indent=2)+'\n')
+print(identifier)
 PY
 )"
 finish() {
@@ -39,6 +43,7 @@ print('Preserved '+str(min(8,len(reports)))+' native crash report(s)')
 PY
   fi
   xcrun simctl shutdown "$DEVICE" >/dev/null 2>&1 || true
+  xcrun simctl delete "$DEVICE" >/dev/null 2>&1 || true
   exit "$code"
 }
 trap finish EXIT
@@ -73,7 +78,6 @@ else:raise SystemExit('Built simulator app not found')
 PY
 )"
 xcrun simctl install "$DEVICE" "$SIM_APP"
-xcrun simctl privacy "$DEVICE" grant photos cc.huevia.next
 xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
 # Launch the already installed/authorized app. Xcode test-host installation and
 # changing TCC while an app runs can invalidate the controlled preconditions.
@@ -82,5 +86,15 @@ xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
 CONTAINER="$(xcrun simctl get_app_container "$DEVICE" cc.huevia.next data)"
 RESULT_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-result.json"
 if [[ -e "$RESULT_FILE" ]]; then echo "Unexpected stale native test result"; exit 1; fi
+READY_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-ready.json"
+GATE_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-start"
+# Initialize the real installed app once, so its Photos client is registered.
+# The test waits at a nonce-protected gate before any photo assertions run.
+xcrun simctl launch --terminate-running-process --stdout="$WORK/simulator-warmup.log" --stderr="$WORK/simulator-warmup-stderr.log" "$DEVICE" cc.huevia.next
+python3 "$ROOT/cross-platform/tool/apple_native_result.py" --ready "$READY_FILE" "$NATIVE_RUN_ID" "$NATIVE_SOURCE" "$WORK/simulator-warmup.json"
+xcrun simctl terminate "$DEVICE" cc.huevia.next
+xcrun simctl privacy "$DEVICE" grant photos cc.huevia.next > "$WORK/gallery-permission.log" 2>&1
+xcrun simctl privacy "$DEVICE" grant photos-add cc.huevia.next >> "$WORK/gallery-permission.log" 2>&1
+printf '%s' "$NATIVE_RUN_ID" > "$GATE_FILE"
 xcrun simctl launch --terminate-running-process --stdout="$WORK/simulator-tests.log" --stderr="$WORK/simulator-tests-stderr.log" "$DEVICE" cc.huevia.next
 python3 "$ROOT/cross-platform/tool/apple_native_result.py" "$RESULT_FILE" "$NATIVE_RUN_ID" "$NATIVE_SOURCE" "$GALLERY_SHA" "$WORK/simulator-result.json"

@@ -11,6 +11,18 @@ def validate(value,run_id,source,fixture):
     return value
 
 def main():
+    if sys.argv[1]=='--ready':
+        path,run_id,source,target=Path(sys.argv[2]),*sys.argv[3:]
+        deadline=time.monotonic()+90
+        while time.monotonic()<deadline:
+            if path.is_file() and path.stat().st_size<=8192:
+                try:value=json.loads(path.read_text(encoding='utf-8'))
+                except (OSError,json.JSONDecodeError):time.sleep(.2);continue
+                if value.get('schema')!=1 or value.get('phase')!='ready' or value.get('runId')!=run_id or value.get('sourceCommit')!=source:
+                    raise SystemExit('Warm-up identity does not match this native test run')
+                Path(target).write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8');print('Native test app initialized before authorization');return
+            time.sleep(.5)
+        raise SystemExit('Native test app did not initialize within 90 seconds')
     path,run_id,source,fixture,target=Path(sys.argv[1]),*sys.argv[2:]
     deadline=time.monotonic()+360
     while time.monotonic()<deadline:
