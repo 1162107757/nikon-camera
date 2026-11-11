@@ -15,13 +15,13 @@
 | 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | Android 系统图库及 iOS PhotoKit 权限/分页/缩略图/原字节导入已接线；200 增加日期分组批选、来源/排序/筛选跨重启保存 | 安卓 12 实操、Apple 完整 CI 及真实完整授权/PhotoKit 原字节场景通过；部分/有限权限、iCloud 与实机待验收 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
 | 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；189 两端原生场景含去灰/导出通过，完整控件样式仍待对齐 |
-| 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 189 两端实际旋转/裁剪像素场景通过；全部几何组合及交互仍待验收 |
+| 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 202 恢复原比例入口、可拖动/双指缩放构图页、照片背景、旋转/翻转/拉直/透视及取消/应用流程 | 202 Android release 实操、横竖屏/大字体回归通过；返回原图恢复完整范围、拉直保留手动选区已验证；全部几何组合与实机仍待验收 |
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 待迁移编辑交互及原生表面 | 核心 JVM / Apple 原测试通过；应用待完成 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
-| 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器、iOS 三种排版/原素材字体已接线 | 189 两端三种边框原生集成通过；完整编辑面板与所有排版组合仍待验收 |
+| 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | 202 恢复四模板缩略图、六项信息、机型选择、样式/信息/外观、Logo 及历史操作；两端原生渲染和参照 Roboto 字体已接线 | 202 Android 原186对照、控件和原生检查通过，iOS 编译/原生流程通过；设备像素取整、字体回退与所有排版组合仍待验收 |
 | 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方及批量调节复制/撤销已接线；完整项目预设待迁移 | JVM 配方、复制事务与快照恢复验证通过；Apple 与旧安装资料迁移待验证 |
 | RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 189 两端合成 Bayer RAW 全链路通过；未知型号 NEF 与荣耀 Magic 实机仍待复测 |
-| 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 编解码、安全元数据、完整/分享/自定义导出及私有成品版本管理已接线；编码前精确预览待迁移 | 189 两端原生图像/成品场景通过；iOS 设备包已构建，实际手机自签安装及全部规格仍待验收 |
+| 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 202 增加同一冻结配方的编码前无损 PNG/实际 JPEG 视口、100%/200%、拖动定位、取消与确认；完整/分享/自定义导出及私有版本管理已接线 | 202 两端原生精确预览场景通过；Android release 2400万像素 EXIF6 预览/重复分享通过；实体手机自签安装、全部规格与导出设置样式仍待验收 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 原导出/成品模型复用，队列新增边界保护 | 200 接入最多 100 张顺序处理、配方快照、统一预设、RAW 工作副本、取消与仅重试未完成项、成品分享；系统发布、删除范围及完整批量编辑器待迁移 | Android 取消/重试/账号变化及真实两张图导出通过；其余范围继续保留 |
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | Wi-Fi 手动连接已接线；平台网络/生命周期待迁移 | 待完成，不扩大 Fuji 已验证能力 |
 | 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用 | 初始会话分页/接收已接线；完整库存策略与恢复待迁移 | 待完成 |
@@ -108,6 +108,13 @@
 
 - 用自制 6000×4000 DNG 在实际 Android 200 release 包复现未缓存显影失败。R8 把 JNI 按名称查找的 `cancelled()` / `onProgress(double)` 改为 `a` / `c`；应用捕获为原生组件不可用，没有观察到进程崩溃。既有小样片的成功不能代替这条路径的验收。
 - 201 仅增加精确回调/构造器保留规则及构建后映射校验，保留 R8/AOT；原工程不修改。Android 12 上首次显影 2400 万像素 DNG、原图/NCP/NP3 三种完整尺寸 JPEG 导出与真实分享接收均通过，原输入 SHA 不变，进程持续存活。ARM64/x64 包已校验签名、模型、ABI 和 16 KiB 对齐，见 [201 验证](validation/release-raw-201/README.md)。201 的 [Apple CI 43025837400](https://github.com/1162107757/nikon-camera/actions/runs/43025837400) 已完整通过；未签名 iPhoneOS ARM64 IPA 已独立核验并归档，仍未取得实体 iPhone 安装结果。
+
+### 202 边框、交互构图与编码前精确预览
+
+- 统一提交 `80739e3b5792024a34ce3355c76f969aa75d289e`。恢复原 186 边框模板、信息/机型、外观与撤销重做，补齐原构图入口、交互裁剪、照片背景、白色角柄及系统栏；分割对比和编码前/实际 JPEG 预览已接线。自查修正了弹窗/滑杆/字体差异，以及选择原图未恢复完整范围、拉直重置手动选区的问题。
+- 最终 Android 12：36 个独立界面场景、51 项原生检查通过；原生综合流程的原生输入与最终提交一致。release 另实操裁剪取消/范围恢复、白底信息边框和 2400 万像素 EXIF6 高熵 JPEG 的新预览会话、缩放、拖动、编码前切换及重复分享。进程持续存活，采样期间崩溃缓冲为空；不据此认定真实荣耀 Magic 稳定或瞬时内存峰值。
+- [Apple Actions 43086920561](https://github.com/1162107757/nikon-camera/actions/runs/43086920561) 完整通过：50 项 Flutter、218 项共享检查、真实系统照片授权及原生图像/RAW/成品流程。三端包来自同一提交，iPhoneOS ARM64 IPA 已独立核验并本地归档。Windows 一次合并调用未完成，保留日志；单文件串行 2+6 项、Android 和 Mac 均通过。
+- 包、截图、哈希及范围见 [202 验证记录](validation/editor-workspace-202/README.md)。原工程 420 个冻结文件继续按 8 个已批准修复 / 412 个原基准校验。字体回退、像素取整、完整组合，以及社区、人像、局部编辑、相机硬件等其他清单项继续保留；整体迁移尚未完成。
 
 ## 保留和交付规则
 

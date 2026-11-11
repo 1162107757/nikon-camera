@@ -1,0 +1,263 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T19:35:17.756981+00:00",
+  "sourceCommit": "80739e3b5792024a34ce3355c76f969aa75d289e",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "buildDirectory": "cross-platform/app",
+  "artifacts": [
+    {
+      "apk": "dist/migration202/huevia-0.31.0-dev-202-android-arm64.apk",
+      "bytes": 50504742,
+      "sha256": "71ee234b826d59690f10f2fc81913ae5be61202357bd4a4451a178d3ab136ec5",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "sourceCommit": "80739e3b5792024a34ce3355c76f969aa75d289e",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+202",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches190": true,
+      "liteRtSha256": "70b6d8f09cfa72158b142a54c84d978670523e420267273a9948a0f40fb535c9",
+      "referenceFontsVerified": {
+        "Roboto-Regular.ttf": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+        "Roboto-Medium.ttf": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+        "Roboto-Bold.ttf": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4"
+      },
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "apk": "dist/migration202/huevia-0.31.0-dev-202-android-x64.apk",
+      "bytes": 53876174,
+      "sha256": "8b95e0e5c1514beb9158c6c74423e303ed67d115e888320c49a5f0efead675ec",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "sourceCommit": "80739e3b5792024a34ce3355c76f969aa75d289e",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+202",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches190": true,
+      "liteRtSha256": "946664d75ea3966fafd5b3a9f52b6d246f99e2dd1e9ae830c50afd2bc7cea096",
+      "referenceFontsVerified": {
+        "Roboto-Regular.ttf": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+        "Roboto-Medium.ttf": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+        "Roboto-Bold.ttf": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4"
+      },
+      "elfAndStoredLibraryAlignment16KiB": true
+    }
+  ],
+  "validation": {
+    "androidApi": 31,
+    "emulator": "Own HueviaMigrationApi31 / emulator-5584 / adb5038; 2 GiB RAM; 192 MiB growth limit",
+    "deviceWidgetScenarios": 36,
+    "nativeCodecChecks": 51,
+    "nativePipelineScenarios": 1,
+    "nativePipelineEvidenceSource": "eecc1f495120a605b1735ffc21ea1049d601c5b6",
+    "nativeInputsUnchangedSincePipelineEvidence": true,
+    "releaseDeviceChecks": "docs/migration/validation/editor-workspace-202/android/release-device-checks.json",
+    "sampledPssRangeKiB": [
+      120579,
+      259786
+    ],
+    "sameProcessId": 7245,
+    "ownProcessCrashBufferBytes": 0,
+    "samplingScope": "Observed samples plus dumpsys overhead, not a transient peak or a physical-device memory ceiling",
+    "r8NativeCallbacksVerified": true,
+    "originalPreservation": {
+      "frozenFiles": 420,
+      "approvedRepairFiles": 8,
+      "unchangedAtBaseline": 412
+    }
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-original-border-camera-auto.png",
+      "bytes": 483697,
+      "sha256": "642ff406b238270de10cdc17f85816e34922f2d376475d99808ae67d7ba6a591"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-original-border-camera-manual.png",
+      "bytes": 186638,
+      "sha256": "643691163d359eb46a4c7daedcbc97b964da0b026fcc6b9449a9836cf797cc18"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-original-border-main.png",
+      "bytes": 693264,
+      "sha256": "0f551ff23fa335f72434e93a9f5bb68acc2897227027837efeb7e1bccc3b9f60"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-original-border-settings.png",
+      "bytes": 359634,
+      "sha256": "b7786f8ea31c28b31c01220fa32eba84ff6534777fb0ba824f636ac8e4567f99"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-original-crop.png",
+      "bytes": 584666,
+      "sha256": "981d6167e6dd1a352cbe72342769dfdb36d01784e8f52c53e5e46153a4b32974"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-border-preview-final.png",
+      "bytes": 406424,
+      "sha256": "a43e58b3936b31abeb75be97964e18f26a21ec4689cfd529a0e1c4d3279ecb0e"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-border-settings-final.png",
+      "bytes": 479567,
+      "sha256": "eaa996bb70e7da9a0cbd3efa78d3f0d3a2214707f90847d6111fe853f69ad2e2"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-border-white-info-final.png",
+      "bytes": 1052709,
+      "sha256": "7caca97c6e8ce6fe3ef441e794601094fcacc2aaa8d3b2c7c2339f4ca43a3e56"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-crop-dock-final.png",
+      "bytes": 985343,
+      "sha256": "157c1a3624f05858a873cf6e82ab5e0a916e01e3f019aa53adc3c96dc34b9647"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-crop-dragged.png",
+      "bytes": 862460,
+      "sha256": "117393a9303c9b160317190da095f07f63c0da6530119e181f65fb3d672048fb"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-crop-final.png",
+      "bytes": 917420,
+      "sha256": "4667991cbdf2f11352b91131e5d66f41a4888d05d0327558fbde64d939fcb445"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-crop-source-ratio-restored.png",
+      "bytes": 916799,
+      "sha256": "089fa81aef57ef0b7d4206dd37c0d3132fea77baf821f57e50ea7d53290ac252"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-noise-100-final.png",
+      "bytes": 6643701,
+      "sha256": "dfe08510eec20e83c90fed428f55151980a9bb31e0d80a53725c0b8d9237a807"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-noise-200-final.png",
+      "bytes": 5867636,
+      "sha256": "ae89aedff76a977d4d191429175d82a6fb1ab29ab8212c516289842248d684b0"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-noise-before-pan-final.png",
+      "bytes": 6927861,
+      "sha256": "e4a89adf7e7cb43e7c5b1c9ab74dc24d67757db334f5d01d6223ad1fb55c182d"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/202-release-noise-fit-final.png",
+      "bytes": 5201423,
+      "sha256": "eda0a4c2863719f3e9a9ce08a6519f58d696d6d308b5c2cb20bdf7475f1d1b06"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/analyze.log",
+      "bytes": 98,
+      "sha256": "65dbea352dc060019be272a6b9a7f6cec87b41ef1940b88339ced3d125cbd1c2"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/build-arm64.log",
+      "bytes": 28861,
+      "sha256": "3ef99e5d7ff16db31487a8c46d9bd874d3607c7dec57f4ebe21c3da4b3881d78"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/build-x64.log",
+      "bytes": 28852,
+      "sha256": "3a2a32158dde984d20d32f8c568c61e41ee073062308f8d5ee19aeb1c08466a1"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/core-jvm-parity.json",
+      "bytes": 759,
+      "sha256": "ecfbbc57894066afbf923c12c43713009743f20ee306df829cb5a90cc748cf90"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/core-jvm.log",
+      "bytes": 778,
+      "sha256": "8ddfaef56de9e393288ec3962dacf39e030c8390cf2d2d80402da34ab5d3d338"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/crop-after-ratio.xml",
+      "bytes": 10538,
+      "sha256": "ac1f7c46ba248cf7851bd1e95a7717d617b7eaf5653b787eda34c5ae3d06dfd7"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/crop-before-ratio.xml",
+      "bytes": 10532,
+      "sha256": "92821300c179045ab0dc4042e2ec9cf8a6664230216e4ee90e7d74722ac331f8"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/editor-2-windows.log",
+      "bytes": 318,
+      "sha256": "c0db5489106f9f8b84ad9fa5ab49182923414de69aa98b6090b2e31f49f49384"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/native-51.log",
+      "bytes": 126,
+      "sha256": "0181fb069be8656dd781e60e2167a525e01667af0f89b5fd61bd4ceba2629f66"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/native-pipeline.log",
+      "bytes": 62,
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/release-crash-buffer.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/release-device-checks.json",
+      "bytes": 2867,
+      "sha256": "3efa98bbc402ff60365d635795115e946aed7f8a9d608b9cb079aa1852d910e9"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/release-memory.json",
+      "bytes": 5436,
+      "sha256": "34dc6d896fd84fb56faa06a8c2f37c31e10352d493352616dc53040294b8be12"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/release-noise-share.json",
+      "bytes": 227,
+      "sha256": "073963e3ada40bca7c14d098c69888f50f57aec5cc72eeb90444e2fc2909fefe"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/widget-36.log",
+      "bytes": 63,
+      "sha256": "6016e092437538f65552b93be24b6300dde708b2f8c3f362a3b58c2dd2d51a21"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/windows-combined-incomplete.log",
+      "bytes": 2353,
+      "sha256": "8658037b49bc99e26314237272918452b3492e0478e63a8745106bf8b466256c"
+    },
+    {
+      "file": "docs/migration/validation/editor-workspace-202/android/workspace-6-windows.log",
+      "bytes": 553,
+      "sha256": "2133ccee4a87167db6b9e6695901608ce3a35ef4bcdebc4bfaa2500f24d99d1e"
+    }
+  ],
+  "limits": [
+    "Honor Magic Android12 and unknown-camera NEF remain unverified",
+    "Physical ARM64 device and iPhone installation remain unverified",
+    "Full feature and pixel parity remains incomplete"
+  ]
+}

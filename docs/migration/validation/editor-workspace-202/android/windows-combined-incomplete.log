@@ -1,0 +1,18 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_test.dart
+00:00 +0: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text
+00:02 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0)
+00:03 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0)
+00:09 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0) - did not complete [E]
+00:09 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Tentative crop handles, ratio, rotate and cancel at Size(812.0, 375.0) - did not complete [E]
+00:09 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Split divider clamps and preserves a common zoom transform - did not complete [E]
+00:09 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Encoded preview cancel creates no saved version - did not complete [E]
+00:09 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Encoded preview commits the frozen result - did not complete [E]
+00:09 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Account change cancels stale frame work and disables confirmation - did not complete [E]
+00:09 +2: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Account change cancels stale frame work and disables confirmation (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Encoded preview cancel creates no saved version (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Encoded preview commits the frozen result (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Split divider clamps and preserves a common zoom transform (did not complete)
+  ... and 2 more

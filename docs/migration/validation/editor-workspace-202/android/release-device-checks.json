@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "sourceCommit": "80739e3b5792024a34ce3355c76f969aa75d289e",
+  "recordedAt": "2026-11-11T19:35:17.537397+00:00",
+  "allRecordedChecksPassed": true,
+  "apk": "dist/migration202/huevia-0.31.0-dev-202-android-x64.apk",
+  "referencePackage": {
+    "applicationId": "cc.huevia",
+    "versionCode": 186,
+    "versionName": "0.30.32-beta"
+  },
+  "testedPackage": {
+    "applicationId": "cc.huevia.next",
+    "versionCode": 202,
+    "mode": "release/AOT/R8",
+    "androidApi": 31
+  },
+  "border": {
+    "templates": 4,
+    "settingsTabs": [
+      "样式",
+      "信息",
+      "外观"
+    ],
+    "settingsPanelBounds": [
+      0,
+      1017,
+      1080,
+      2214
+    ],
+    "firstSliderRowBounds": [
+      42,
+      1290,
+      1038,
+      1416
+    ],
+    "sliderRowHeightPx": 126,
+    "manualCamera": "Nikon Z6 III",
+    "whiteInformationPreviewDimensions": [
+      1200,
+      934
+    ],
+    "systemNavigationAreaUncovered": true,
+    "originalProjectUntouchedByThisSlice": true
+  },
+  "crop": {
+    "ratioEntryOpensWorkspace": true,
+    "beforeSourceRatioTap": "48% × 72%, 裁切范围，可拖动四角或边缘调整，拖动内部移动",
+    "afterSourceRatioTap": "100% × 100%, 裁切范围，可拖动四角或边缘调整，拖动内部移动",
+    "cancelReturnsWithoutCommit": true,
+    "whiteHandlesAndPhotoAtmosphereRestored": true
+  },
+  "exportPreview": {
+    "jpegAndLosslessBeforeFrames": true,
+    "fitAnd100And200Percent": true,
+    "dragAndLocator": true,
+    "darkSystemBars": true,
+    "smallBorderPreviewCancelled": true,
+    "largePreviewConfirmedAndShared": true,
+    "repeatExportMatchesPriorCandidateBytes": true,
+    "largeFixturePreviouslyImported": true,
+    "newNativePreviewSession": true,
+    "previewDisplayDimensions": [
+      4000,
+      6000
+    ],
+    "sharedEncodedDimensions": [
+      6000,
+      4000
+    ],
+    "sharedExifOrientation": 6,
+    "actualShareReceipt": {
+      "success": true,
+      "action": "android.intent.action.SEND",
+      "files": [
+        {
+          "bytes": 24161892,
+          "sha256": "d6f9d03220369652062ba1af2f3323a73539cc7089ececd99b4223aaf36be61f",
+          "mime": "image/jpeg",
+          "width": 6000,
+          "height": 4000,
+          "exifOrientation": 6
+        }
+      ]
+    }
+  },
+  "fixture": {
+    "type": "Synthetic deterministic RGB noise JPEG, not camera RAW",
+    "bytes": 57581330,
+    "sha256": "0d184bc28e37bd37a6a10a539d2e7c8d0d81d6fa3d052578300bf77acea572fd",
+    "encodedDimensions": [
+      6000,
+      4000
+    ],
+    "exifOrientation": 6,
+    "downloadSourceShaVerifiedAfterExport": true
+  },
+  "limits": [
+    "Synthetic JPEG/DNG cannot replace unknown-camera NEF",
+    "Android emulator cannot establish Honor Magic or physical ARM64 stability",
+    "No physical iPhone installation result",
+    "Full functional and pixel parity incomplete"
+  ]
+}

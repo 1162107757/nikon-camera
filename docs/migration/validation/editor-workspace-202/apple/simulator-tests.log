@@ -1,0 +1,64 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -destination id=8BD580D9-4F9C-4146-B228-D656FE8EBCF9 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES BUILD_DIR=/Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios -parallel-testing-enabled NO "-only-testing:RunnerTests/RunnerTests/testPhotoLibraryConsent" test-without-building
+
+Build settings from command line:
+    ARCHS = arm64
+    BUILD_DIR = /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator26.5
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  FlutterGeneratedPluginSwiftPackage: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:8BD580D9-4F9C-4146-B228-D656FE8EBCF9, OS:26.5, name:Huevia-QA-f555154c-659c-45db-ad14-0d84800aa172 }
+{ platform:iOS Simulator, arch:x86_64, id:8BD580D9-4F9C-4146-B228-D656FE8EBCF9, OS:26.5, name:Huevia-QA-f555154c-659c-45db-ad14-0d84800aa172 }
+2026-11-11 19:38:05.805395+0000 RunnerTests-Runner[23008:76685] [Default] Running tests...
+objc[23008]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a564310) and /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10ad5c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-11 19:38:10.869.
+Test Suite 'RunnerTests.xctest' started at 2026-11-11 19:38:10.869.
+Test Suite 'RunnerTests' started at 2026-11-11 19:38:10.870.
+Test Case '-[RunnerTests testPhotoLibraryConsent]' started.
+    t =     0.00s Start Test at 2026-11-11 19:38:10.871
+    t =     0.72s Set Up
+2026-11-11 19:38:12.173 xcodebuild[22939:76089] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-11 19:38:12.173 xcodebuild[22939:76089] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.73s Open cc.huevia.next
+    t =     0.73s     Launch cc.huevia.next
+    t =     5.29s         Setting up automation session
+    t =     6.29s         Wait for cc.huevia.next to idle
+    t =     9.39s Waiting 60.0s for Button (First Match) to exist
+    t =    10.46s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    10.46s         Checking existence of `Button (First Match)`
+    t =    10.63s         Capturing element debug description
+    t =    11.47s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    11.47s         Checking existence of `Button (First Match)`
+    t =    11.61s Tap Button (First Match)
+    t =    11.61s     Wait for com.apple.springboard to idle
+    t =    11.79s     Find the Button (First Match)
+    t =    11.85s     Check for interrupting elements affecting "Allow Full Access" Button
+    t =    11.94s     Synthesize event
+    t =    12.35s     Wait for com.apple.springboard to idle
+    t =    12.61s Wait for cc.huevia.next to become Running Foreground
+    t =    12.61s Tear Down
+Test Case '-[RunnerTests testPhotoLibraryConsent]' passed (12.875 seconds).
+Test Suite 'RunnerTests' passed at 2026-11-11 19:38:23.747.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.875 (12.877) seconds
+Test Suite 'RunnerTests.xctest' passed at 2026-11-11 19:38:23.747.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.875 (12.878) seconds
+Test Suite 'Selected tests' passed at 2026-11-11 19:38:23.747.
+	 Executed 1 test, with 0 failures (0 unexpected) in 12.875 (12.879) seconds
+2026-11-11 19:38:24.321 xcodebuild[22939:76089] [MT] IDETestOperationsObserverDebug: 23.317 elapsed -- Testing started completed.
+2026-11-11 19:38:24.321 xcodebuild[22939:76089] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-11 19:38:24.321 xcodebuild[22939:76089] [MT] IDETestOperationsObserverDebug: 23.317 sec, +23.317 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/Library/Developer/Xcode/DerivedData/Runner-bcwfnebhqpzxbcequummdswvslbl/Logs/Test/Test-Runner-2026.11.11_19-37-57-+0000.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
