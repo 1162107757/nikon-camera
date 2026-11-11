@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T19:32:44.192248+08:00",
+  "sourceCommit": "bef616a5778b318152043426373336af3597972b",
+  "apkSha256": "adadc6dbf1336da2eaeec0fdc14bc5922515041dc09659b6ee2f612a1eab1d46",
+  "actualReleaseSyntheticDngOpenDevelopExportShare": true,
+  "jpegDimensions": [
+    256,
+    192
+  ],
+  "jpegBytes": 3506,
+  "jpegSha256": "bc0afde43943dbb68e6011f70774ce024226bb505263ac705f2c552e7097d70d",
+  "evidence": [
+    {
+      "file": "docs/migration/validation/gallery-batch-200/raw-release-share-receipt.json",
+      "bytes": 201,
+      "sha256": "3e7ecad7e71b7100cf00af1f105e11020adf3184f309b93d85ca1bd2419fe470"
+    },
+    {
+      "file": "docs/migration/validation/gallery-batch-200/shared-raw-editor.png",
+      "bytes": 461023,
+      "sha256": "2ba6469a0ac7d4e0d9891850ae01d5b5e07d692afad2f0c67b1214e068b18505"
+    }
+  ],
+  "scope": "Own synthetic DNG on isolated Android 12; does not replace unknown-model NEF or Honor Magic physical-device verification"
+}

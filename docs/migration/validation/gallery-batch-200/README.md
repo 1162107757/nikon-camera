@@ -20,6 +20,7 @@ Android 应用源码固定为 `bef616a5778b318152043426373336af3597972b`，版�
 - 最终 release 包实际从手机相册选择两张自制 PNG，导入原片、完成 2/2 成品，再通过系统分享交给无网络权限的本地 QA 接收器。接收器实际读取授权 URI 并校验：JPEG 1200×800 / 70,409 字节，JPEG 1080×2340 / 98,899 字节。SHA 见 `batch-share-receipt.json`。
 - 诊断 JSON 实际通过 FileProvider 分享并被本地 QA 接收器读取，6,409 字节，SHA-256 `488ee419febeb8eb6a405879cb4f30022048eb7c7b19c18b8bcdb4f1d4cdb882`。文件为 `release-diagnostic-export.json`，接收证据为 `diagnostic-share-receipt.json`。验证只涉及隔离模拟器及本地接收器。
 - release 包的系统文件选择器已实际选择 `Huevia-QA.png`，模板页面及预设主图更新；随后实际恢复内置样片。截图见下。
+- release 包已实际打开自制 DNG、显影进入编辑器、完整尺寸导出并由本地接收器读取，JPEG 256×192 / 3,506 字节；见 `raw-release-supplement.json`。白色高光视觉正常，该样本未复现效果模型错误；未知型号 NEF 仍待实样验证。
 
 `orientation-before-fix.log` 保留了 EXIF 方向检查发现的旧失败：Android 将无有效方向标记返回为 0。最终读图接口将其规范为 1，保留原图片字节；方向和尺寸断言完整保留。
 
@@ -40,6 +41,8 @@ Android 应用源码固定为 `bef616a5778b318152043426373336af3597972b`，版�
 ![模板应用于预设](shared-template-presets.png)
 
 ![实际诊断页面](shared-diagnostics.png)
+
+![实际 RAW 编辑器](shared-raw-editor.png)
 
 ## Apple 验证
 
