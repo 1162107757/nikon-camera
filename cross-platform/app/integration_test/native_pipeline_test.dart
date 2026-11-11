@@ -34,6 +34,9 @@ void main() {
     'Native codecs and LibRaw retain originals, dimensions and white highlights',
     (tester) async {
       final core = PipelineCore();
+      debugPrint(
+        'Native pipeline: semantics baseline ${tester.binding.debugOutstandingSemanticsHandles}',
+      );
       debugPrint('Native pipeline: initializing');
       try {
         await core.initialize();
@@ -325,8 +328,15 @@ void main() {
           }
         }
         await directory.delete(recursive: true);
+        debugPrint(
+          'Native pipeline: semantics remaining ${tester.binding.debugOutstandingSemanticsHandles}',
+        );
       }
     },
+    // This exercises native codecs and files without mounting an application
+    // widget tree. Do not create an automatic semantics tree for that fixture;
+    // the separate editor/navigation widget suites retain semantics coverage.
+    semanticsEnabled: false,
     timeout: const Timeout(Duration(minutes: 5)),
   );
 }
