@@ -27,7 +27,7 @@ def device_slices(binary):
     _, cpu, _, _, count, length, _, _ = struct.unpack_from('<8I', binary)
     if cpu != 0x100000c or 32 + length > len(binary):
         raise ValueError('Invalid ARM64 Mach-O header')
-    cursor, platforms = 32, []
+    cursor, platforms, minimum = 32, [], None
     for _ in range(count):
         if cursor + 8 > 32 + length:
             raise ValueError('Truncated Mach-O command')
@@ -38,10 +38,12 @@ def device_slices(binary):
             if size < 24:
                 raise ValueError('Truncated platform build command')
             platforms.append(struct.unpack_from('<I', binary, cursor + 8)[0])
+            packed = struct.unpack_from('<I', binary, cursor + 12)[0]
+            minimum = [packed >> 16, (packed >> 8) & 255, packed & 255]
         cursor += size
     if cursor != 32 + length or platforms != [2]:
         raise ValueError('Mach-O must target iPhoneOS, not the simulator')
-    return [{'architecture': 'arm64', 'platform': 'iPhoneOS'}]
+    return [{'architecture': 'arm64', 'platform': 'iPhoneOS', 'minimumOS': minimum}]
 
 
 def verify(ipa, report, source):
@@ -89,8 +91,16 @@ def verify(ipa, report, source):
         required = {'Payload/Huevia.app/' + info['CFBundleExecutable'],
                     'Payload/Huevia.app/Frameworks/App.framework/App',
                     'Payload/Huevia.app/Frameworks/Flutter.framework/Flutter'}
+        for entry in entries:
+            if entry.filename.endswith('.framework/Info.plist'):
+                framework = plistlib.loads(archive.read(entry))
+                required.add(str(PurePosixPath(entry.filename).parent / framework['CFBundleExecutable']))
         if not required <= {b['file'] for b in binaries}:
-            raise ValueError('Application, AOT, or Flutter device executable is missing')
+            raise ValueError('Application, AOT, or declared framework device executable is missing')
+        minimum = [int(part) for part in info['MinimumOSVersion'].split('.')]
+        minimum += [0] * (3 - len(minimum))
+        if any(s['minimumOS'] > minimum for b in binaries for s in b['slices']):
+            raise ValueError('An executable requires a newer iOS than the application declares')
     return {'schema': 1, 'verified': True, 'sourceCommit': source, 'sha256': sha,
             'bytes': len(payload), 'bundleIdentifier': info['CFBundleIdentifier'],
             'version': info['CFBundleShortVersionString'], 'build': info['CFBundleVersion'],
