@@ -9,6 +9,7 @@ import 'package:huevia/domain.dart';
 import 'package:huevia/batch_export.dart';
 
 import 'synthetic_dng.dart';
+import 'synthetic_exif.dart';
 
 class PipelineCore extends HueviaCore {
   @override
@@ -199,6 +200,40 @@ void main() {
           expect(frame.image.height, lessThanOrEqualTo(960));
           frame.image.dispose();
           codec.dispose();
+          final transparentRecorder = ui.PictureRecorder();
+          ui.Canvas(transparentRecorder).drawRect(
+            const ui.Rect.fromLTWH(128, 0, 128, 192),
+            ui.Paint()..color = const ui.Color(0x80ff0000),
+          );
+          final transparentPicture = transparentRecorder.endRecording();
+          final transparentImage = await transparentPicture.toImage(256, 192);
+          final transparentBytes = await transparentImage.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
+          transparentImage.dispose();
+          transparentPicture.dispose();
+          final transparentFile = await File(
+            '${directory.path}/transparent-template.png',
+          ).writeAsBytes(transparentBytes!.buffer.asUint8List());
+          await core.call('media.templateSet', {'path': transparentFile.path});
+          final whitePreview = await core.call('media.templateSource');
+          final whiteCodec = await ui.instantiateImageCodec(
+            await File(whitePreview['path'] as String).readAsBytes(),
+          );
+          final whiteFrame = await whiteCodec.getNextFrame();
+          final whitePixels = await whiteFrame.image.toByteData(
+            format: ui.ImageByteFormat.rawRgba,
+          );
+          final whiteAt = (10 * whiteFrame.image.width + 10) * 4;
+          for (var c = 0; c < 3; c++) {
+            expect(
+              whitePixels!.getUint8(whiteAt + c),
+              greaterThan(245),
+              reason: 'Transparent template pixels use the original white background',
+            );
+          }
+          whiteFrame.image.dispose();
+          whiteCodec.dispose();
           await expectLater(
             core.call('media.templateSet', {'path': '/outside/private.jpg'}),
             throwsA(isA<AppFailure>()),
@@ -230,6 +265,30 @@ void main() {
         });
         expect(exported['width'], 256);
         expect(exported['height'], 192);
+        final orientedTemplate =
+            await File('${directory.path}/orientation6-template.jpg')
+                .writeAsBytes(
+                  jpegWithOrientation(
+                    await File(exported['path'] as String).readAsBytes(),
+                    6,
+                  ),
+                );
+        try {
+          expect(
+            (await core.call('media.info', {
+              'path': orientedTemplate.path,
+            }))['orientation'],
+            6,
+          );
+          await core.call('media.templateSet', {'path': orientedTemplate.path});
+          final source = await core.call('media.templateSource');
+          final info = await core.call('media.info', {'path': source['path']});
+          expect(info['width'], 192);
+          expect(info['height'], 256);
+          expect(info['orientation'], 1);
+        } finally {
+          await core.call('media.templateReset');
+        }
         expect(exported['model'], endsWith(':full-jpeg95-srgb-v1'));
         expect(
           exported['exportSpec'],

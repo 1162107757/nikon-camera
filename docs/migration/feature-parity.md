@@ -7,12 +7,12 @@
 | 能力 | 现有实现依据 | 共享逻辑 | 共享界面 / 平台接入 | 验收状态 |
 | --- | --- | --- | --- | --- |
 | NCP / NP3 校验、单色与彩色预设解析 | `library/PresetFile`, `ncp/*PreviewProfile` | 直接复用 | 本地导入已接线 | 核心 JVM / Apple 原测试通过；应用待验证 |
-| 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 首批页面已接线；样片编辑待迁移 | 待应用验证 |
+| 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 本地导入、分类、原样片/模拟图已接线；200 增加自选模板及恢复内置样片 | 待应用验证 |
 | 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示及完整下载状态筛选已接线，搜索合并在途请求 | 190 两端实际 HTTPS 分页通过；Android release 详情/NP3 下载/已下载筛选通过；全部错误状态待验收 |
 | 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出/注册/图形验证已接线；QQ、头像待迁移 | 待完成 |
 | 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑复用并补充任务取消和作者校验 | 同步范围选择、两种冲突处理、删除及会话可见性已接线 | 31 项事务/权限检查通过；真实账号联网验收待完成 |
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
-| 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | Android 原系统图库权限/分页/缩略图/原字节导入、私有照片日期分组、星标/搜索/RAW 筛选已接线；批选与 iOS 图库待迁移 | 安卓 12 全量图库与导入实操通过；Android 新版部分图库权限及 iOS 待验证 |
+| 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | Android 系统图库及 iOS PhotoKit 权限/分页/缩略图/原字节导入已接线；200 增加日期分组批选、来源/排序/筛选跨重启保存 | 安卓 12 图库与导入实操通过；200 iOS PhotoKit 的 Apple 原生验证正在执行；Android 新版部分权限与 iPhone 实机待验收 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
 | 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；189 两端原生场景含去灰/导出通过，完整控件样式仍待对齐 |
 | 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 189 两端实际旋转/裁剪像素场景通过；全部几何组合及交互仍待验收 |
@@ -22,18 +22,18 @@
 | 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方及批量调节复制/撤销已接线；完整项目预设待迁移 | JVM 配方、复制事务与快照恢复验证通过；Apple 与旧安装资料迁移待验证 |
 | RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 189 两端合成 Bayer RAW 全链路通过；未知型号 NEF 与荣耀 Magic 实机仍待复测 |
 | 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 编解码、安全元数据、完整/分享/自定义导出及私有成品版本管理已接线；编码前精确预览待迁移 | 189 两端原生图像/成品场景通过；iOS 设备包已构建，实际手机自签安装及全部规格仍待验收 |
-| 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 部分模型已纳入 | 待迁移 | 待完成 |
+| 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 原导出/成品模型复用，队列新增边界保护 | 200 接入最多 100 张顺序处理、配方快照、统一预设、RAW 工作副本、取消与仅重试未完成项、成品分享；系统发布、删除范围及完整批量编辑器待迁移 | Android 取消/重试/账号变化及真实两张图导出通过；其余范围继续保留 |
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | Wi-Fi 手动连接已接线；平台网络/生命周期待迁移 | 待完成，不扩大 Fuji 已验证能力 |
 | 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用 | 初始会话分页/接收已接线；完整库存策略与恢复待迁移 | 待完成 |
 | 边拍边传、项目、续传、前后台任务及持久收据 | `PhotoLive*`, `CameraConnectionService` | 部分原模型已纳入 | Android 服务与 iOS 后台生命周期待接入 | 待完成；须验证系统暂停后的恢复 |
 | USB 相机发现、权限、PTP 传输、槽位读写删除 | `usb/*`, `picturecontrol/*` | 验证/保护部分已纳入 | Android USB 与 iOS ImageCaptureCore 待接入 | 待完成，不能只凭 API 存在宣称机型支持 |
 | Wi-Fi 预设槽位读写删除及会话移交 | `PictureControl*Session`, `PtpIpClient` | 原协议保护保留 | 待迁移完整确认/回读流程 | 待完成，不允许不确定写入自动重试 |
 | 遥控、实时取景、对焦、拍摄、相机参数 | `remote/*`, `RemoteCaptureActivity` | 纯 Java 协议已纳入 | 待迁移 | 待完成 |
-| 设置、主题、权限、诊断、更新、旧数据迁移 | 原 Activity、`updates/*`, `AppCrashDiagnostics` | 部分模型已纳入 | 主题已建立；其余平台适配待完成 | 待完成 |
+| 设置、主题、权限、诊断、更新、旧数据迁移 | 原 Activity、`updates/*`, `AppCrashDiagnostics` | 部分模型已纳入 | 200 增加偏好持久化、模板管理、帮助/关于/诊断二级页和脱敏 JSON 导出；更新、完整崩溃采集和旧资料迁移待完成 | 待完成 |
 
 ## 已取得的证据
 
-- 原工程 420 个已跟踪文件内容保留，`inventory.py --verify` 通过。
+- 冻结 186 原工程的 420 个 Git blob 基准保留。200 起另用 `approved-original-updates.json` 精确登记独立完成的原版 191 / 193 修复，8 个原工程文件按固定提交核验，其余 412 个仍按原基准核验；不重写冻结清单。
 - 共享核心 Java 11 编译与原测试：2168 项 NCP、43230 项局部编辑、15575 项 RAW/JPEG 色彩、243 项 RAW 高光检查通过。
 - Apple Objective-C 翻译运行同一套原测试，6 组图像 SHA-256 与 JVM 完全一致。
 - 首次 Apple 成功记录：提交 `9a285bfe2e1726bdc34042bba596054b479d6546`，Actions run `42787370999`。

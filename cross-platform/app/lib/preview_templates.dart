@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 import 'domain.dart';
@@ -53,20 +52,9 @@ class _PreviewTemplatesPageState extends State<PreviewTemplatesPage> {
       if (reset) {
         await widget.core.call('media.templateReset');
       } else {
-        final selected = await openFile(
-          acceptedTypeGroups: const [
-            XTypeGroup(
-              label: '照片',
-              extensions: ['jpg', 'jpeg', 'png', 'heic', 'heif', 'webp'],
-              uniformTypeIdentifiers: ['public.image'],
-            ),
-          ],
-        );
+        final selected = await widget.core.pickFile(preset: false);
         if (selected == null || !mounted) return;
-        if (await selected.length() > 20 * 1024 * 1024) {
-          throw const AppFailure('请选择 20MB 以内的照片。');
-        }
-        final path = await widget.core.importFile(selected, preset: false);
+        final path = selected['path'] as String;
         await widget.core.call('media.templateSet', {'path': path});
       }
       final previous = image?['path'];
@@ -100,6 +88,8 @@ class _PreviewTemplatesPageState extends State<PreviewTemplatesPage> {
         ),
         const SizedBox(height: 8),
         const Text('预设主图使用这些照片生成手机模拟效果。更换模板后会重新生成主图。'),
+        const SizedBox(height: 8),
+        const Text('自选模板支持 20MB 以内的普通照片。'),
         const SizedBox(height: 20),
         if (image?['path'] is String) ...[
           ClipRRect(

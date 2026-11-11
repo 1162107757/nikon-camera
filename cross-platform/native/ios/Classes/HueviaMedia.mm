@@ -150,7 +150,11 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
       if(size<4||size>20*1024*1024||isRaw(source))fail(@"请选择 20MB 以内的普通照片作为模板。");
       if(![NSFileManager.defaultManager createDirectoryAtPath:templateDirectory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建模板目录。");
       NSString *temporary=[templateDirectory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];
-      @try{HueviaRaster *image=load(source,_root,960);check(task);encode(image,temporary,NO,@{(__bridge id)kCGImageDestinationLossyCompressionQuality:@.95});check(task);
+      @try{HueviaRaster *image=compose(load(source,_root,960),CcHueviaNcpPhotoGeometry_get_NONE(),_root,task);
+        // The original Android template normalizes EXIF and composites alpha
+        // onto white before encoding the private JPEG.
+        for(size_t i=0,n=size_t(image.pixelWidth)*image.pixelHeight;i<n;i++){uint32_t v=image.pixels[i],white=255-(v>>24);image.pixels[i]=0xff000000U|std::min(255U,((v>>16)&255)+white)<<16|std::min(255U,((v>>8)&255)+white)<<8|std::min(255U,(v&255)+white);}
+        check(task);encode(image,temporary,NO,@{(__bridge id)kCGImageDestinationLossyCompressionQuality:@.95});check(task);
         NSData *bytes=[NSData dataWithContentsOfFile:temporary options:NSDataReadingMappedIfSafe error:nil];if(!bytes||bytes.length>8*1024*1024||![bytes writeToFile:customTemplate options:NSDataWritingAtomic error:nil])fail(@"模板未能保存，原模板仍可使用。");
       }@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
     }else if([operation isEqualToString:@"media.templateReset"]){
