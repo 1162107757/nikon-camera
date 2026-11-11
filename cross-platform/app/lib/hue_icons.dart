@@ -38,6 +38,8 @@ enum HueIconKind {
   redo,
   compare,
   crop,
+  rotate,
+  flipHorizontal,
   curve,
   palette,
   frame,
@@ -333,6 +335,14 @@ class _Painter extends CustomPainter {
         canvas.drawRect(const Rect.fromLTRB(7, 7, 17, 17), ink);
       case HueIconKind.check:
         line([4, 12, 9, 17, 21, 5]);
+      case HueIconKind.rotate:
+        arc(3, 3, 21, 21, 45, 300);
+        line([16, 10, 21, 10, 21, 5]);
+        line([12, 7, 17, 12, 12, 17, 7, 12, 12, 7]);
+      case HueIconKind.flipHorizontal:
+        line([12, 2, 12, 22]);
+        line([8, 5, 3, 19, 8, 19, 8, 5]);
+        line([16, 5, 21, 19, 16, 19, 16, 5]);
     }
   }
 

@@ -19,6 +19,7 @@ import 'crop_workspace.dart';
 import 'split_compare.dart';
 import 'export_preview.dart';
 import 'border_panel.dart';
+import 'photo_workspace_chrome.dart';
 
 part 'legacy_editor.dart';
 
@@ -44,6 +45,8 @@ class _EditorPageState extends State<EditorPage> {
   bool managingTools = false;
   bool analyzingCleanup = false;
   double progress = 0;
+  Size? compositionFrame;
+  int compositionFrameTurns = 0;
   int tab = 0, revision = 0, hslBand = 0;
   late final String owner =
       widget.state.session['user']?['id'] as String? ?? '';
@@ -189,6 +192,14 @@ class _EditorPageState extends State<EditorPage> {
       final old = preview, oldComparison = comparison;
       setState(() {
         preview = result['path'] as String;
+        if (result['geometryWidth'] is num && result['geometryHeight'] is num) {
+          compositionFrame = Size(
+            (result['geometryWidth'] as num).toDouble(),
+            (result['geometryHeight'] as num).toDouble(),
+          );
+          compositionFrameTurns =
+              object(frozen.data['geometry'] ?? {})['turns'] as int? ?? 0;
+        }
         comparison = reference;
         error = null;
       });
@@ -234,7 +245,7 @@ class _EditorPageState extends State<EditorPage> {
     }
   }
 
-  Future<void> openCrop() async {
+  Future<void> openCrop({double initialRatio = -1}) async {
     if (!toolsEnabled) return;
     debounce?.cancel();
     revision++;
@@ -250,6 +261,7 @@ class _EditorPageState extends State<EditorPage> {
             photo: widget.photo,
             owner: owner,
             recipe: recipe.clone().data,
+            initialRatio: initialRatio,
           ),
         ),
       );

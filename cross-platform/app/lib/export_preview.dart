@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 
 import 'domain.dart';
 import 'hue_icons.dart';
+import 'photo_workspace_chrome.dart';
 
 /// The native session owns real encoded pixels. Flutter decodes only bounded
 /// viewports, including at 100%, rather than two full-resolution photographs.
@@ -246,20 +247,22 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
 
   Widget segment(String label, bool selected, VoidCallback? action) => Padding(
     padding: const EdgeInsets.all(4),
-    child: TextButton(
-      onPressed: action,
-      style: TextButton.styleFrom(
-        foregroundColor: selected
-            ? const Color(0xff2a1c12)
-            : const Color(0xfff6f1eb),
-        backgroundColor: selected
-            ? const Color(0xffffe335)
-            : Colors.transparent,
-        minimumSize: Size.zero,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        shape: const StadiumBorder(),
+    child: SizedBox.expand(
+      child: TextButton(
+        onPressed: action,
+        style: TextButton.styleFrom(
+          foregroundColor: selected
+              ? const Color(0xff2a1c12)
+              : const Color(0xfff6f1eb),
+          backgroundColor: selected
+              ? const Color(0xffffe335)
+              : Colors.transparent,
+          minimumSize: Size.zero,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          shape: const StadiumBorder(),
+        ),
+        child: Text(label),
       ),
-      child: Text(label),
     ),
   );
 
@@ -440,238 +443,243 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
     );
     return PopScope(
       canPop: !committing,
-      child: Theme(
-        data: ThemeData.dark().copyWith(
-          textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
-          colorScheme: const ColorScheme.dark(primary: Color(0xffffe335)),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 12),
-              minimumSize: const Size(48, 48),
+      child: PhotoWorkspaceSystemBars(
+        child: Theme(
+          data: ThemeData.dark().copyWith(
+            textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
+            colorScheme: const ColorScheme.dark(primary: Color(0xffffe335)),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 12),
+                minimumSize: const Size(48, 48),
+              ),
             ),
           ),
-        ),
-        child: Scaffold(
-          backgroundColor: const Color(0xff0a0908),
-          body: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, box) => Stack(
-                children: [
-                  Positioned.fill(child: canvas()),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: headerHeight,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Color(0x99000000), Colors.transparent],
+          child: Scaffold(
+            backgroundColor: const Color(0xff0a0908),
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, box) => Stack(
+                  children: [
+                    Positioned.fill(child: canvas()),
+                    Positioned(
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: headerHeight,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Color(0x99000000), Colors.transparent],
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 48,
-                            height: 48,
-                            child: IconButton(
-                              tooltip: '返回导出设置',
-                              onPressed: committing
-                                  ? null
-                                  : () => Navigator.pop(context),
-                              icon: const HueIcon(
-                                HueIconKind.back,
-                                color: Color(0xfff6f1eb),
-                                size: 22,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 48,
+                              height: 48,
+                              child: IconButton(
+                                tooltip: '返回导出设置',
+                                onPressed: committing
+                                    ? null
+                                    : () => Navigator.pop(context),
+                                icon: const HueIcon(
+                                  HueIconKind.back,
+                                  color: Color(0xfff6f1eb),
+                                  size: 22,
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  '成品预览',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  widget.photo.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xddffffff),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 52,
-                            height: 48,
-                            child: Tooltip(
-                              message: '导出并分享',
-                              child: TextButton(
-                                onPressed: enabled ? commit : null,
-                                style: TextButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                ),
-                                child: const Text('导出'),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: headerHeight + 6,
-                    left: (box.maxWidth - math.min(220, box.maxWidth - 24)) / 2,
-                    width: math.min(220, box.maxWidth - 24),
-                    height: 48,
-                    child: glass(
-                      Row(
-                        children: [
-                          Expanded(
-                            child: segment(
-                              'JPEG',
-                              !before,
-                              () => setState(() => before = false),
-                            ),
-                          ),
-                          Expanded(
-                            child: segment(
-                              '编码前',
-                              before,
-                              () => setState(() => before = true),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (session != null)
-                    Positioned(
-                      top: headerHeight + 64,
-                      right: 12,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: box.maxWidth - 24,
-                        ),
-                        child: glass(
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 7,
-                            ),
-                            child: Text(
-                              '${session!['width']}×${session!['height']} · JPEG ${session!['quality']} · ${((session!['bytes'] as num) / 1024).toStringAsFixed(1)} KB',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 11),
-                            ),
-                          ),
-                          radius: 12,
-                        ),
-                      ),
-                    ),
-                  Positioned(
-                    left: 12,
-                    bottom: 12,
-                    width: math.min(222, box.maxWidth - 24),
-                    height: 48,
-                    child: glass(
-                      Row(
-                        children: [
-                          Expanded(
-                            child: segment(
-                              '适应',
-                              scale == 0,
-                              enabled ? () => zoom(0) : null,
-                            ),
-                          ),
-                          Expanded(
-                            child: segment(
-                              '100%',
-                              scale != 0 && (scale - 1).abs() < .005,
-                              enabled ? () => zoom(1) : null,
-                            ),
-                          ),
-                          Expanded(
-                            child: segment(
-                              '200%',
-                              scale != 0 && (scale - 2).abs() < .005,
-                              enabled ? () => zoom(2) : null,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (session?['overview'] is String &&
-                      !accountChanged &&
-                      effectiveScale > fit + .0001)
-                    Positioned(
-                      right: 12,
-                      bottom: box.maxWidth < 360 ? 84 : 12,
-                      child: locator(),
-                    ),
-                  if (creating ||
-                      error != null ||
-                      (frame == null && !accountChanged))
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: glass(
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            child: ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 280),
+                            Expanded(
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    error ?? '生成中…',
-                                    textAlign: TextAlign.center,
+                                  const Text(
+                                    '成品预览',
                                     style: TextStyle(
-                                      fontSize: 12,
-                                      color: error == null
-                                          ? Colors.white
-                                          : Colors.orangeAccent,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  if (!creating &&
-                                      !accountChanged &&
-                                      session == null)
-                                    TextButton(
-                                      onPressed: create,
-                                      child: const Text('重试生成成品'),
+                                  Text(
+                                    widget.photo.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      color: Color(0xddffffff),
                                     ),
+                                  ),
                                 ],
                               ),
                             ),
-                          ),
-                          radius: 14,
+                            SizedBox(
+                              width: 52,
+                              height: 48,
+                              child: Tooltip(
+                                message: '导出并分享',
+                                child: TextButton(
+                                  onPressed: enabled ? commit : null,
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  child: const Text('导出'),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  if (creating || rendering || committing)
-                    const Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: LinearProgressIndicator(minHeight: 2),
+                    Positioned(
+                      top: headerHeight + 6,
+                      left:
+                          (box.maxWidth - math.min(220, box.maxWidth - 24)) / 2,
+                      width: math.min(220, box.maxWidth - 24),
+                      height: 48,
+                      child: glass(
+                        Row(
+                          children: [
+                            Expanded(
+                              child: segment(
+                                'JPEG',
+                                !before,
+                                () => setState(() => before = false),
+                              ),
+                            ),
+                            Expanded(
+                              child: segment(
+                                '编码前',
+                                before,
+                                () => setState(() => before = true),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                ],
+                    if (session != null)
+                      Positioned(
+                        top: headerHeight + 64,
+                        right: 12,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: box.maxWidth - 24,
+                          ),
+                          child: glass(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 7,
+                              ),
+                              child: Text(
+                                '${session!['width']}×${session!['height']} · JPEG ${session!['quality']} · ${((session!['bytes'] as num) / 1024).toStringAsFixed(1)} KB',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 11),
+                              ),
+                            ),
+                            radius: 12,
+                          ),
+                        ),
+                      ),
+                    Positioned(
+                      left: 12,
+                      bottom: 12,
+                      width: math.min(222, box.maxWidth - 24),
+                      height: 48,
+                      child: glass(
+                        Row(
+                          children: [
+                            Expanded(
+                              child: segment(
+                                '适应',
+                                scale == 0,
+                                enabled ? () => zoom(0) : null,
+                              ),
+                            ),
+                            Expanded(
+                              child: segment(
+                                '100%',
+                                scale != 0 && (scale - 1).abs() < .005,
+                                enabled ? () => zoom(1) : null,
+                              ),
+                            ),
+                            Expanded(
+                              child: segment(
+                                '200%',
+                                scale != 0 && (scale - 2).abs() < .005,
+                                enabled ? () => zoom(2) : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (session?['overview'] is String &&
+                        !accountChanged &&
+                        effectiveScale > fit + .0001)
+                      Positioned(
+                        right: 12,
+                        bottom: box.maxWidth < 360 ? 84 : 12,
+                        child: locator(),
+                      ),
+                    if (creating ||
+                        error != null ||
+                        (frame == null && !accountChanged))
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: glass(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxWidth: 280,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      error ?? '生成中…',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: error == null
+                                            ? Colors.white
+                                            : Colors.orangeAccent,
+                                      ),
+                                    ),
+                                    if (!creating &&
+                                        !accountChanged &&
+                                        session == null)
+                                      TextButton(
+                                        onPressed: create,
+                                        child: const Text('重试生成成品'),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            radius: 14,
+                          ),
+                        ),
+                      ),
+                    if (creating || rendering || committing)
+                      const Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: LinearProgressIndicator(minHeight: 2),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

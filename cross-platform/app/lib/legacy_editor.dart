@@ -8,6 +8,198 @@ extension _LegacyWorkspace on _EditorPageState {
   bool get toolsEnabled =>
       restored && !exporting && !managingTools && !analyzingCleanup;
 
+  Widget compositionDock(double scale, bool compact) {
+    final geometry = object(recipe.data['geometry'] ?? {});
+    final left = geometry['left'] as int? ?? 0,
+        top = geometry['top'] as int? ?? 0,
+        right = geometry['right'] as int? ?? 1000000,
+        bottom = geometry['bottom'] as int? ?? 1000000,
+        turns = geometry['turns'] as int? ?? 0;
+    var frameRatio = compositionFrame?.aspectRatio ?? 1.0;
+    if ((turns - compositionFrameTurns).isOdd) frameRatio = 1 / frameRatio;
+    final actual = frameRatio * (right - left) / (bottom - top);
+    const choices = [
+      ('原比例', 0.0),
+      ('1:1', 1.0),
+      ('2:3', 2 / 3),
+      ('3:2', 1.5),
+      ('9:16', 9 / 16),
+      ('2.35:1', 2.35),
+    ];
+    double? selected;
+    for (final c in choices) {
+      if ((actual - (c.$2 == 0 ? frameRatio : c.$2)).abs() < .01) {
+        selected = c.$2;
+        break;
+      }
+    }
+    final neutral =
+        turns == 0 &&
+        (geometry['angle'] ?? 0) == 0 &&
+        (geometry['horizontalPerspective'] ?? 0) == 0 &&
+        (geometry['verticalPerspective'] ?? 0) == 0 &&
+        geometry['mirrored'] != true &&
+        left == 0 &&
+        top == 0 &&
+        right == 1000000 &&
+        bottom == 1000000;
+    Widget action(
+      String label,
+      HueIconKind icon,
+      VoidCallback run, {
+      bool enabled = true,
+    }) => Expanded(
+      child: Opacity(
+        opacity: toolsEnabled && enabled ? 1 : .3,
+        child: TextButton(
+          onPressed: toolsEnabled && enabled ? run : null,
+          style: TextButton.styleFrom(
+            foregroundColor: _editorWhite,
+            padding: const EdgeInsets.symmetric(horizontal: 3),
+            minimumSize: const Size(0, 48),
+            textStyle: const TextStyle(
+              fontSize: 10.5,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              HueIcon(icon, size: 17, color: _editorWhite),
+              const SizedBox(width: 4),
+              Flexible(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: Column(
+        children: [
+          LayoutBuilder(
+            builder: (context, bounds) {
+              final width = bounds.maxWidth / 6 < 56
+                  ? 56.0
+                  : bounds.maxWidth / 6;
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for (final c in choices)
+                      SizedBox(
+                        width: width,
+                        height: compact ? 64 : 76 * scale,
+                        child: TextButton(
+                          onPressed: toolsEnabled
+                              ? () => openCrop(initialRatio: c.$2)
+                              : null,
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.only(top: 7),
+                            foregroundColor: selected == c.$2
+                                ? _editorYellow
+                                : const Color(0xc9ffffff),
+                            textStyle: const TextStyle(
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CropRatioIcon(
+                                c.$2,
+                                color: selected == c.$2
+                                    ? _editorYellow
+                                    : const Color(0xc9ffffff),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(c.$1, maxLines: 1),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+          ),
+          Row(
+            children: [
+              action(
+                '旋转 90°',
+                HueIconKind.rotate,
+                () => change(() {
+                  geometry.addAll({
+                    'turns': (turns + 1) % 4,
+                    'left': 0,
+                    'top': 0,
+                    'right': 1000000,
+                    'bottom': 1000000,
+                  });
+                  if (selected != null && selected > 0) {
+                    final normalized = selected * frameRatio;
+                    final w = normalized < 1 ? normalized : 1.0,
+                        h = (normalized < 1 ? normalized : 1.0) / normalized;
+                    geometry.addAll({
+                      'left': ((1 - w) * 500000).round(),
+                      'top': ((1 - h) * 500000).round(),
+                      'right': ((1 + w) * 500000).round(),
+                      'bottom': ((1 + h) * 500000).round(),
+                    });
+                  }
+                  recipe.data['geometry'] = geometry;
+                }),
+              ),
+              action(
+                '水平翻转',
+                HueIconKind.flipHorizontal,
+                () => change(() {
+                  geometry.addAll({
+                    'mirrored': geometry['mirrored'] != true,
+                    'left': 1000000 - right,
+                    'right': 1000000 - left,
+                  });
+                  recipe.data['geometry'] = geometry;
+                }),
+              ),
+              action(
+                '重置',
+                HueIconKind.refresh,
+                () => change(() => recipe.data.remove('geometry')),
+                enabled: !neutral,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 40 * scale,
+            width: double.infinity,
+            child: Tooltip(
+              message: '切换比例预览居中裁切，点击打开精细裁切、拉直与透视',
+              child: InkWell(
+                onTap: toolsEnabled ? openCrop : null,
+                child: const Center(
+                  child: Text(
+                    '选择比例，拖动选框或双指缩放',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 10, color: Color(0xbdffffff)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> loadAtmosphere(String image) async {
     atmosphereLoading = true;
     String? original;
@@ -942,6 +1134,8 @@ extension _LegacyWorkspace on _EditorPageState {
                           ? filterDock()
                           : tab == 4
                           ? borderDock()
+                          : tab == 3
+                          ? compositionDock(scale, compact)
                           : SingleChildScrollView(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,

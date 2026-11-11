@@ -9,6 +9,7 @@ import 'package:path/path.dart' as p;
 
 import 'domain.dart';
 import 'hue_icons.dart';
+import 'photo_workspace_chrome.dart';
 
 const _yellow = Color(0xffffe335), _white = Color(0xfff4f5f7);
 
@@ -21,11 +22,13 @@ class CropWorkspace extends StatefulWidget {
     required this.photo,
     required this.owner,
     required this.recipe,
+    this.initialRatio = -1,
   });
   final HueviaCore core;
   final Photo photo;
   final String owner;
   final Json recipe;
+  final double initialRatio;
   @override
   State<CropWorkspace> createState() => _CropWorkspaceState();
 }
@@ -38,11 +41,12 @@ class _CropWorkspaceState extends State<CropWorkspace> {
     (geometry['right'] as num? ?? 1000000) / 1000000,
     (geometry['bottom'] as num? ?? 1000000) / 1000000,
   );
-  String? image, error, job;
+  String? image, atmosphere, error, job;
   Size pixels = const Size(1, 1);
   bool busy = true;
   int generation = 0;
-  double ratio = -1;
+  int atmosphereGeneration = 0;
+  late double ratio = widget.initialRatio;
   String transform = 'angle';
   Timer? debounce;
   String get ratioName =>
@@ -81,9 +85,11 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   @override
   void dispose() {
     generation++;
+    atmosphereGeneration++;
     debounce?.cancel();
     if (job != null) unawaited(widget.core.cancel(job!));
     unawaited(discard(image));
+    unawaited(discard(atmosphere));
     super.dispose();
   }
 
@@ -126,6 +132,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
         fitRatio();
       });
       unawaited(discard(old));
+      if (atmosphere == null) unawaited(loadAtmosphere(image!));
     } catch (failure) {
       if (mounted && serial == generation) setState(() => error = '$failure');
     } finally {
@@ -135,6 +142,26 @@ class _CropWorkspaceState extends State<CropWorkspace> {
           job = null;
         });
       }
+    }
+  }
+
+  Future<void> loadAtmosphere(String source) async {
+    final serial = ++atmosphereGeneration;
+    try {
+      final result = await widget.core.call('media.atmosphere', {
+        'path': source,
+        'owner': widget.owner,
+      });
+      final path = result['path'] as String;
+      if (!mounted || serial != atmosphereGeneration) {
+        unawaited(discard(path));
+        return;
+      }
+      final old = atmosphere;
+      setState(() => atmosphere = path);
+      unawaited(discard(old));
+    } catch (_) {
+      // The crop remains usable if its decorative sample cannot be created.
     }
   }
 
@@ -192,20 +219,27 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                       foregroundColor: ratio == entry.$2
                           ? const Color(0xff2a1c12)
                           : const Color(0xccffffff),
-                      backgroundColor: ratio == entry.$2
-                          ? _yellow
-                          : const Color(0x0dffffff),
-                      shape: StadiumBorder(
-                        side: BorderSide(
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(0, 48),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    child: Container(
+                      height: 34,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: ratio == entry.$2
+                            ? _yellow
+                            : const Color(0x0dffffff),
+                        borderRadius: BorderRadius.circular(17),
+                        border: Border.all(
                           color: ratio == entry.$2
                               ? _yellow
                               : const Color(0x33ffffff),
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 13),
-                      minimumSize: const Size(48, 34),
+                      child: Text(entry.$1),
                     ),
-                    child: Text(entry.$1),
                   ),
                 ),
             ],
@@ -219,16 +253,28 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                 value: transform,
                 isExpanded: true,
                 dropdownColor: const Color(0xff292724),
-                style: const TextStyle(color: _white, fontSize: 12),
+                style: const TextStyle(
+                  color: _white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
                 underline: const SizedBox(),
+                icon: const HueIcon(HueIconKind.down, size: 12, color: _white),
+                alignment: Alignment.center,
                 items: const [
-                  DropdownMenuItem(value: 'angle', child: Text('拉直')),
+                  DropdownMenuItem(
+                    value: 'angle',
+                    alignment: Alignment.center,
+                    child: Text('拉直'),
+                  ),
                   DropdownMenuItem(
                     value: 'horizontalPerspective',
+                    alignment: Alignment.center,
                     child: Text('水平'),
                   ),
                   DropdownMenuItem(
                     value: 'verticalPerspective',
+                    alignment: Alignment.center,
                     child: Text('垂直'),
                   ),
                 ],
@@ -241,6 +287,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                 min: transform == 'angle' ? -450 : -100,
                 max: transform == 'angle' ? 450 : 100,
                 activeColor: _yellow,
+                thumbColor: Colors.white,
                 label: transform == 'angle'
                     ? '${((geometry[transform] as num? ?? 0) / 10).toStringAsFixed(1)}°'
                     : '${geometry[transform] ?? 0}',
@@ -328,10 +375,30 @@ class _CropWorkspaceState extends State<CropWorkspace> {
         SizedBox(
           width: 64,
           height: 48,
-          child: IconButton(
-            tooltip: '返回编辑照片',
-            onPressed: () => Navigator.pop(context),
-            icon: const HueIcon(HueIconKind.back, color: _white),
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 36,
+                  decoration: const BoxDecoration(
+                    color: Color(0x6e0e1513),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: IconButton(
+                  tooltip: '返回编辑照片',
+                  onPressed: () => Navigator.pop(context),
+                  icon: const HueIcon(
+                    HueIconKind.back,
+                    size: 20,
+                    color: _white,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         const Expanded(
@@ -342,101 +409,144 @@ class _CropWorkspaceState extends State<CropWorkspace> {
         SizedBox(
           width: 64,
           height: 48,
-          child: TextButton(
-            style: TextButton.styleFrom(foregroundColor: _yellow),
-            onPressed: busy || error != null
-                ? null
-                : () => Navigator.pop(context, {
-                    ...geometry,
-                    'left': (crop.left * 1000000).round(),
-                    'top': (crop.top * 1000000).round(),
-                    'right': (crop.right * 1000000).round(),
-                    'bottom': (crop.bottom * 1000000).round(),
-                  }),
-            child: const Text('应用'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: _yellow,
+                foregroundColor: const Color(0xff191e17),
+                minimumSize: Size.zero,
+                padding: EdgeInsets.zero,
+                textStyle: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+                shape: const StadiumBorder(),
+              ),
+              onPressed: busy || error != null
+                  ? null
+                  : () => Navigator.pop(context, {
+                      ...geometry,
+                      'left': (crop.left * 1000000).round(),
+                      'top': (crop.top * 1000000).round(),
+                      'right': (crop.right * 1000000).round(),
+                      'bottom': (crop.bottom * 1000000).round(),
+                    }),
+              child: const Text('应用'),
+            ),
           ),
         ),
       ],
     ),
   );
   @override
-  Widget build(BuildContext context) => Theme(
-    data: ThemeData.dark().copyWith(
-      textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
-      colorScheme: const ColorScheme.dark(primary: _yellow),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: _white,
-          minimumSize: const Size(48, 48),
-          textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+  Widget build(BuildContext context) => PhotoWorkspaceSystemBars(
+    color: const Color(0xff211f1b),
+    child: Theme(
+      data: ThemeData.dark().copyWith(
+        textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
+        colorScheme: const ColorScheme.dark(primary: _yellow),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: _white,
+            minimumSize: const Size(48, 48),
+            textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        sliderTheme: const SliderThemeData(
+          trackHeight: 2,
+          trackShape: RectangularSliderTrackShape(),
+          thumbShape: RoundSliderThumbShape(
+            enabledThumbRadius: 7,
+            elevation: 0,
+            pressedElevation: 0,
+          ),
+          overlayShape: RoundSliderOverlayShape(overlayRadius: 16),
+          thumbColor: Colors.white,
+          inactiveTrackColor: Color(0x66ffffff),
         ),
       ),
-      sliderTheme: const SliderThemeData(
-        trackHeight: 2,
-        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
-        inactiveTrackColor: Color(0x33ffffff),
-      ),
-    ),
-    child: Scaffold(
-      backgroundColor: const Color(0xff0a0908),
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, box) {
-            final canvas = Stack(
-              children: [
-                Positioned.fill(
-                  child: image == null
-                      ? const Center(child: CircularProgressIndicator())
-                      : CropCanvas(
-                          image: image!,
-                          pixels: pixels,
-                          crop: crop,
-                          enabled: !busy,
-                          aspect: ratio < 0
-                              ? null
-                              : ratio == 0
-                              ? pixels.aspectRatio
-                              : ratio,
-                          onChanged: (value) => setState(() => crop = value),
-                          onRetry: () => unawaited(render()),
-                        ),
-                ),
-                if (busy)
-                  const Align(
-                    alignment: Alignment.bottomCenter,
-                    child: LinearProgressIndicator(minHeight: 2),
-                  ),
-                Positioned(top: 0, left: 0, right: 0, child: header()),
-              ],
-            );
-            return box.maxWidth > box.maxHeight
-                ? Row(
+      child: Scaffold(
+        backgroundColor: const Color(0xff0a0908),
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            PhotoAtmosphere(image: atmosphere),
+            SafeArea(
+              child: LayoutBuilder(
+                builder: (context, box) {
+                  final canvas = Stack(
                     children: [
-                      Expanded(child: canvas),
-                      SizedBox(
-                        width: math.min(300, box.maxWidth * .45),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-                          child: controls(),
-                        ),
+                      Positioned.fill(
+                        child: image == null
+                            ? const Center(child: CircularProgressIndicator())
+                            : CropCanvas(
+                                image: image!,
+                                pixels: pixels,
+                                crop: crop,
+                                enabled: !busy,
+                                aspect: ratio < 0
+                                    ? null
+                                    : ratio == 0
+                                    ? pixels.aspectRatio
+                                    : ratio,
+                                onChanged: (value) =>
+                                    setState(() => crop = value),
+                                onRetry: () => unawaited(render()),
+                              ),
                       ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      Expanded(child: canvas),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: box.maxHeight * .48,
+                      if (busy)
+                        const Align(
+                          alignment: Alignment.bottomCenter,
+                          child: LinearProgressIndicator(minHeight: 2),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
-                          child: controls(),
-                        ),
-                      ),
+                      Positioned(top: 0, left: 0, right: 0, child: header()),
                     ],
                   );
-          },
+                  return box.maxWidth > box.maxHeight
+                      ? Row(
+                          children: [
+                            Expanded(child: canvas),
+                            SizedBox(
+                              width: math.min(300, box.maxWidth * .45),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  10,
+                                  0,
+                                  10,
+                                  8,
+                                ),
+                                child: controls(),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Expanded(child: canvas),
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxHeight: box.maxHeight * .48,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  10,
+                                  0,
+                                  10,
+                                  8,
+                                ),
+                                child: controls(),
+                              ),
+                            ),
+                          ],
+                        );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     ),
@@ -687,7 +797,7 @@ class _CropOverlay extends CustomPainter {
       Paint()..color = const Color(0x99000000),
     );
     final paint = Paint()
-      ..color = _white
+      ..color = const Color(0xccffffff)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
     canvas.drawRect(crop, paint);
@@ -695,7 +805,7 @@ class _CropOverlay extends CustomPainter {
       canvas.drawLine(
         Offset(crop.left + crop.width * i / 3, crop.top),
         Offset(crop.left + crop.width * i / 3, crop.bottom),
-        paint..color = const Color(0x88ffffff),
+        paint..color = const Color(0x66ffffff),
       );
       canvas.drawLine(
         Offset(crop.left, crop.top + crop.height * i / 3),
@@ -713,11 +823,11 @@ class _CropOverlay extends CustomPainter {
           y = p.dy == crop.top ? 1.0 : -1.0;
       canvas.drawPath(
         Path()
-          ..moveTo(p.dx, p.dy + y * 15)
+          ..moveTo(p.dx, p.dy + y * 18)
           ..lineTo(p.dx, p.dy)
-          ..lineTo(p.dx + x * 15, p.dy),
+          ..lineTo(p.dx + x * 18, p.dy),
         paint
-          ..color = _yellow
+          ..color = Colors.white
           ..strokeWidth = 3,
       );
     }
