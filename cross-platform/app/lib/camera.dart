@@ -27,6 +27,7 @@ class _CameraPageState extends State<CameraPage> {
   String? error;
   List<Json> items = [];
   int overviewTab = 0;
+  bool settingsExpanded = false;
 
   Future<void> openConnection() async {
     await hueRootPage<void>(
@@ -38,36 +39,34 @@ class _CameraPageState extends State<CameraPage> {
     if (mounted) await status();
   }
 
-  Future<void> connectionSettings() => showDialog<void>(
-    context: context,
-    builder: (dialog) => AlertDialog(
-      title: const Text('连接设置'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: host,
-              keyboardType: TextInputType.url,
-              decoration: const InputDecoration(labelText: '相机地址'),
+  Future<void> chooseProtocol() async {
+    final selected = await hueDialog<String>(
+      context: context,
+      builder: (dialog) => SimpleDialog(
+        title: const Text('选择相机类型'),
+        children: [
+          RadioGroup<String>(
+            groupValue: protocol,
+            onChanged: (value) => Navigator.pop(dialog, value),
+            child: Column(
+              children: [
+                for (final entry in [('nikon', '尼康'), ('fujifilm', '富士 X-T20')])
+                  RadioListTile<String>(title: Text(entry.$2), value: entry.$1),
+              ],
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: port,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: '端口'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(dialog),
-          child: const Text('完成'),
-        ),
-      ],
-    ),
-  );
+    );
+    if (!mounted || selected == null || selected == protocol) return;
+    setState(() {
+      protocol = selected;
+      host.text = protocol == 'nikon' ? '192.168.1.1' : '';
+      port.text = protocol == 'nikon' ? '15740' : '55740';
+      error = null;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -226,12 +225,8 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.configuration
-      ? Theme(
-          data: hueviaTheme(Theme.of(context).brightness, home: false),
-          child: Builder(builder: connectionView),
-        )
-      : overview(context);
+  Widget build(BuildContext context) =>
+      widget.configuration ? connectionView(context) : overview(context);
 
   Widget connectionView(BuildContext context) => Scaffold(
     appBar: HueHeader(
@@ -253,10 +248,16 @@ class _CameraPageState extends State<CameraPage> {
           if (busy) const LinearProgressIndicator(minHeight: 2),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+              padding: const EdgeInsets.fromLTRB(24, 2, 24, 28),
               children: [
                 if (!connected) ...[
-                  const Text('连接后可浏览照片与导入预设。', style: TextStyle(fontSize: 13)),
+                  Text(
+                    protocol == 'nikon' ? '连接后可浏览照片与导入预设。' : '连接后可浏览和下载 JPEG。',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: HuePalette.of(context).secondary,
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     '相机类型',
@@ -266,41 +267,116 @@ class _CameraPageState extends State<CameraPage> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  DropdownButtonFormField<String>(
-                    initialValue: protocol,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 20,
+                  Semantics(
+                    button: true,
+                    label: '相机类型：${protocol == 'nikon' ? '尼康' : '富士 X-T20'}',
+                    child: Material(
+                      color: HuePalette.of(context).card,
+                      borderRadius: BorderRadius.circular(16),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: busy ? null : chooseProtocol,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(minHeight: 64),
+                            child: Row(
+                              children: [
+                                HueIcon(
+                                  HueIconKind.camera,
+                                  size: 24,
+                                  color: HuePalette.of(context).ink,
+                                ),
+                                const SizedBox(width: 14),
+                                Expanded(
+                                  child: Text(
+                                    protocol == 'nikon' ? '尼康' : '富士 X-T20',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                HueIcon(
+                                  HueIconKind.chevron,
+                                  size: 18,
+                                  color: HuePalette.of(context).secondary,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: 'nikon', child: Text('尼康')),
-                      DropdownMenuItem(
-                        value: 'fujifilm',
-                        child: Text('富士 X-T20'),
-                      ),
-                    ],
-                    onChanged: busy
-                        ? null
-                        : (value) => setState(() {
-                            protocol = value!;
-                            host.text = protocol == 'nikon'
-                                ? '192.168.1.1'
-                                : '';
-                            port.text = protocol == 'nikon' ? '15740' : '55740';
-                          }),
                   ),
                   const SizedBox(height: 20),
                   FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: HuePalette.of(context).primaryContainer,
+                      foregroundColor: HuePalette.of(context)
+                          .onPrimaryContainer,
+                      minimumSize: const Size(48, 50),
+                    ),
                     onPressed: busy ? null : connect,
                     child: Text(busy ? '正在连接' : '连接相机'),
                   ),
                   const SizedBox(height: 8),
-                  OutlinedButton(
-                    onPressed: busy ? null : connectionSettings,
-                    child: const Text('连接设置'),
+                  TextButton(
+                    onPressed: busy
+                        ? null
+                        : () => setState(
+                            () => settingsExpanded = !settingsExpanded,
+                          ),
+                    style: TextButton.styleFrom(
+                      foregroundColor: HuePalette.of(context).ink,
+                    ),
+                    child: Text(settingsExpanded ? '收起连接设置' : '连接设置'),
                   ),
+                  if (settingsExpanded) ...[
+                    const SizedBox(height: 20),
+                    Text(
+                      '相机地址',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: HuePalette.of(context).secondary,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+                      decoration: BoxDecoration(
+                        color: HuePalette.of(context).card,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: host,
+                            keyboardType: TextInputType.url,
+                            decoration: const InputDecoration(
+                              labelText: 'IP 地址',
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: port,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(labelText: '端口'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      protocol == 'nikon'
+                          ? '请先在系统设置中连接相机 Wi-Fi，并保持相机 Wi-Fi 开启。'
+                          : '请先连接 X-T20 的 Wi-Fi，在机身按 OK 确认；当前支持 JPEG 浏览和下载。',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: HuePalette.of(context).secondary,
+                      ),
+                    ),
+                  ],
                 ] else ...[
                   Text(model, style: Theme.of(context).textTheme.headlineSmall),
                   const SizedBox(height: 8),
