@@ -1,7 +1,7 @@
 """Build only the coinstalled migration app without changing global SDK settings."""
 from pathlib import Path
 import argparse,os,re,subprocess,sys
-from verify_android_apk import verify
+from verify_android_apk import verify,verify_raw_jni_mapping
 
 ROOT=Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
@@ -56,5 +56,8 @@ print('Android build exit '+str(result.returncode)+'; log: '+str(log))
 if result.returncode==0:
     artifact=ROOT/'cross-platform/app/build/app/outputs/apk'/options.mode/('app-'+options.mode+'.apk')
     evidence=verify(artifact,options.abi,options.mode)
+    if options.mode=='release':
+        evidence.update(verify_raw_jni_mapping(ROOT/'cross-platform/app/build/app/outputs/mapping/release/mapping.txt'))
+        print('Verified exact RAW JNI callbacks and result constructor after R8')
     print('Verified '+evidence['abi']+' '+options.mode+' APK: '+str(evidence['bytes'])+' bytes; SHA-256 '+evidence['sha256'])
 raise SystemExit(result.returncode)

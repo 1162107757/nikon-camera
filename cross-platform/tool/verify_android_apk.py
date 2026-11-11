@@ -1,8 +1,24 @@
 """Reject a package that advertises native ABIs without its Flutter engine/AOT."""
 from pathlib import Path
-import argparse,hashlib,json,zipfile
+import argparse,hashlib,json,re,zipfile
 
 ABIS={'android-arm':('armeabi-v7a',40,1),'android-arm64':('arm64-v8a',183,2),'android-x64':('x86_64',62,2)}
+
+def verify_raw_jni_mapping(path):
+    raw=Path(path).read_bytes();mapping=raw.decode('utf-8')
+    def block(name):
+        match=re.search(r'^'+re.escape(name)+r' -> ([^:\n]+):\r?\n(.*?)(?=^[^#\s]|\Z)',mapping,re.M|re.S)
+        if not match:raise ValueError('RAW JNI class is missing from R8 mapping: '+name)
+        return match[1],match[2]
+    _,callbacks=block('cc.huevia.album.RawDeveloper$NativeCallbacks')
+    for signature,name in [('boolean cancelled()', 'cancelled'),('void onProgress(double)', 'onProgress')]:
+        if not any(signature in line and line.rstrip().endswith(' -> '+name) for line in callbacks.splitlines()):
+            raise ValueError('R8 renamed or removed the RAW JNI callback: '+name)
+    owner,info=block('cc.huevia.album.RawDeveloper$Info')
+    constructor='void <init>(int,int,int,int,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String)'
+    if owner!='cc.huevia.album.RawDeveloper$Info' or not any(constructor in line and line.rstrip().endswith(' -> <init>') for line in info.splitlines()):
+        raise ValueError('R8 changed the RAW JNI result class or constructor')
+    return {'rawJniCallbacksPreserved':True,'rawJniInfoConstructorPreserved':True,'r8MappingSha256':hashlib.sha256(raw).hexdigest()}
 
 def verify(apk,abi,mode):
     apk=Path(apk);name,machine,elf_class=ABIS[abi]
