@@ -63,20 +63,17 @@ class HueChoiceDialog<T> extends StatelessWidget {
                           child: ConstrainedBox(
                             constraints: const BoxConstraints(minHeight: 48),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 8,
-                              ),
+                              padding: const EdgeInsets.fromLTRB(20, 8, 24, 8),
                               child: Row(
                                 children: [
                                   CustomPaint(
-                                    size: const Size(20, 20),
+                                    size: const Size(22, 22),
                                     painter: _RadioMark(
                                       p,
                                       option.$1 == selected,
                                     ),
                                   ),
-                                  const SizedBox(width: 18),
+                                  const SizedBox(width: 20),
                                   Expanded(
                                     child: Text(
                                       option.$2,
@@ -99,7 +96,7 @@ class HueChoiceDialog<T> extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
               child: Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -136,12 +133,12 @@ class _RadioMark extends CustomPainter {
     final center = size.center(Offset.zero);
     final paint = Paint()..isAntiAlias = true;
     if (selected) {
-      canvas.drawCircle(center, 9, paint..color = palette.primaryContainer);
+      canvas.drawCircle(center, 9.5, paint..color = palette.primaryContainer);
       canvas.drawCircle(center, 4, paint..color = palette.onPrimaryContainer);
     } else {
       canvas.drawCircle(
         center,
-        9,
+        10.25,
         paint
           ..color = palette.secondary
           ..style = PaintingStyle.stroke

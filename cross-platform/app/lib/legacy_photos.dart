@@ -184,6 +184,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
         builder: (context, refresh) => HueFloatingSheet(
           title: '时间排序',
           titleSize: 16,
+          sorting: true,
           closeLabel: '关闭排序，放弃未应用修改',
           onReset: () => refresh(() {
             nextAdded = false;
@@ -193,6 +194,8 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
           children: [
             HueSheetChoices(
               title: '排序依据',
+              topPadding: 0,
+              bottomPadding: 4,
               values: const [('taken', '拍摄时间'), ('added', '添加时间')],
               selected: nextAdded ? 'added' : 'taken',
               columns: 2,
@@ -204,6 +207,8 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
             ),
             HueSheetChoices(
               title: '排列顺序',
+              topPadding: 10,
+              bottomPadding: 4,
               values: const [('newest', '新到旧'), ('oldest', '旧到新')],
               selected: nextOldest ? 'oldest' : 'newest',
               columns: 2,

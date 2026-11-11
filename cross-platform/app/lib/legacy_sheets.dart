@@ -12,18 +12,22 @@ class HueFloatingSheet extends StatelessWidget {
     required this.onReset,
     required this.onApply,
     this.titleSize = 18,
+    this.sorting = false,
   });
   final String title, closeLabel;
   final List<Widget> children;
   final VoidCallback onReset, onApply;
   final double titleSize;
+  final bool sorting;
 
   @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
+    final density = MediaQuery.devicePixelRatioOf(context);
+    double snap(double value) => (value * density).round() / density;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(snap(10)),
         child: Center(
           heightFactor: 1,
           child: ConstrainedBox(
@@ -44,7 +48,12 @@ class HueFloatingSheet extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(18, 10, 18, 12),
+                padding: EdgeInsets.fromLTRB(
+                  snap(18),
+                  snap(10),
+                  snap(18),
+                  snap(12),
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -82,7 +91,7 @@ class HueFloatingSheet extends StatelessWidget {
                     ),
                     Flexible(
                       child: SingleChildScrollView(
-                        padding: const EdgeInsets.only(bottom: 8),
+                        padding: EdgeInsets.only(bottom: sorting ? 0 : snap(8)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisSize: MainAxisSize.min,
@@ -91,18 +100,26 @@ class HueFloatingSheet extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: EdgeInsets.only(top: sorting ? 0 : snap(8)),
                       child: Row(
                         children: [
                           TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: Size(sorting ? 64 : 0, 48),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: sorting ? 6 : 12,
+                              ),
+                              textStyle: const TextStyle(fontSize: 14),
+                            ),
                             onPressed: onReset,
                             child: const Text('重置'),
                           ),
                           const Spacer(),
                           FilledButton(
                             style: FilledButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 28,
+                              minimumSize: Size(sorting ? 108 : 0, 48),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: sorting ? 20 : 28,
                                 vertical: 8,
                               ),
                               textStyle: const TextStyle(
@@ -138,12 +155,14 @@ class HueSheetChoices extends StatelessWidget {
     this.fontSize = 12,
     this.verticalInset = 0,
     this.boldSelection = true,
+    this.topPadding = 12,
+    this.bottomPadding = 8,
   });
   final String title, selected;
   final List<(String, String)> values;
   final ValueChanged<String> onSelected;
   final int columns;
-  final double fontSize, verticalInset;
+  final double fontSize, verticalInset, topPadding, bottomPadding;
   final bool boldSelection;
 
   @override
@@ -153,7 +172,7 @@ class HueSheetChoices extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 12, bottom: 8),
+          padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
           child: Text(
             title,
             style: TextStyle(fontSize: 12, color: p.secondary),
@@ -161,11 +180,21 @@ class HueSheetChoices extends StatelessWidget {
         ),
         LayoutBuilder(
           builder: (context, bounds) {
-            final count = (bounds.maxWidth / 76).floor().clamp(1, columns);
-            final width = (bounds.maxWidth - (count - 1) * 6) / count;
+            final scale = MediaQuery.textScalerOf(context)
+                .scale(1)
+                .clamp(1, double.infinity);
+            final density = MediaQuery.devicePixelRatioOf(context);
+            final gap = (8 * density).round() / density;
+            final count = ((bounds.maxWidth + gap) / (64 * scale + gap))
+                .floor()
+                .clamp(1, columns);
+            final width =
+                ((bounds.maxWidth - (count - 1) * gap) * density / count)
+                    .floor() /
+                density;
             return Wrap(
-              spacing: 6,
-              runSpacing: 6,
+              spacing: gap,
+              runSpacing: gap,
               children: [
                 for (final value in values)
                   SizedBox(
