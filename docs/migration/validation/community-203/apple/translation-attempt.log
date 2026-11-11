@@ -1,0 +1,9 @@
+2026-11-11T20:58:04.1837570Z Shared JVM golden: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/.build/core-jvm/golden.json
+2026-11-11T20:58:04.1838250Z Log: translation.log
+2026-11-11T20:58:04.1839100Z /Users/runner/work/nikon-camera/nikon-camera/cross-platform/core/test/cc/huevia/shared/SubmissionBoundaryTest.java:42: error: cannot find symbol
+2026-11-11T20:58:04.1839930Z         yes(!Files.exists(Path.of((String)staged.get("path"))));
+2026-11-11T20:58:04.1840350Z                               ^
+2026-11-11T20:58:04.1840620Z   symbol:   method of(java.lang.String)
+2026-11-11T20:58:04.1841020Z   location: interface java.nio.file.Path
+2026-11-11T20:58:04.1858670Z ##[error]Process completed with exit code 1.
+2026-11-11T20:58:04.2001600Z ##[group]Run shopt -s nullglob

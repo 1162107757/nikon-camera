@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "sourceCommit": "12394417e68eedfb780739e60490746676ab06e5",
+  "androidSourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+  "testOnlyPortabilityFix": {
+    "androidSourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+    "appleSourceCommit": "12394417e68eedfb780739e60490746676ab06e5",
+    "changedProductionFiles": [],
+    "testOnlyFile": "cross-platform/core/test/cc/huevia/shared/SubmissionBoundaryTest.java",
+    "change": "Path.of to equivalent Paths.get for J2ObjC API support",
+    "exactReplacementVerified": true
+  },
+  "workflow": {
+    "id": 43101080164,
+    "head_sha": "12394417e68eedfb780739e60490746676ab06e5",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/1162107757/nikon-camera/actions/runs/43101080164"
+  },
+  "artifactId": 13893237286,
+  "artifactZipSha256": "9ce299d5d3350df33218bdc5b7a6d9adf080ae8bd7e72896027d892b81af6ef7",
+  "artifact": {
+    "file": "dist/migration203/huevia-0.31.0-dev-203-ios-unsigned.ipa",
+    "bytes": 29235002,
+    "sha256": "dfba0c494cb6cb20ebd531620795fd7e5ab4e262099810e850bb4c246bfc76f0"
+  },
+  "platform": "iPhoneOS",
+  "architecture": "arm64",
+  "minimumOS": "16.0",
+  "signing": "unsigned; user self-signing required",
+  "validation": {
+    "macFlutterTests": 73,
+    "sharedBoundaryChecks": 276,
+    "nativePipelineScenarios": 1,
+    "xctestSystemConsentPassed": true,
+    "nativeFinalResultPassed": true,
+    "nativeFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb",
+    "androidProductionInputsUnchanged": true,
+    "deviceInstallationVerified": false,
+    "communityAuthenticatedMutationsVerified": false
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/community-203/apple/analyze.log",
+      "bytes": 97,
+      "sha256": "96325d9d27918636db04c811a9f587170c28b988ac74e06b794d9a77a8fa3f16"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/flutter-tests.log",
+      "bytes": 15522,
+      "sha256": "f7571b99ff42c3e00a088ecd578602cf2f79ca3fd28b42ffa6bcc6b650240578"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/device-build.log",
+      "bytes": 893,
+      "sha256": "824c56f4dc648b2cf4900c5b94d6664ae444e37339d7311e9e51d57bcf5d5e62"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "c2f6cec65b1450e0a826455519fbd1f29b9dd6a172c098475fa0b1d5874813a3"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "e20f2f84600f21b3da801410c56da9eaefdb286da63e87f68dc0b55d40f77b14"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/simulator-selection.json",
+      "bytes": 228,
+      "sha256": "1966552837c492e9355274a20317b5be292972cebc16a16c1925a29576ee6abd"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/simulator-initial-access.json",
+      "bytes": 347,
+      "sha256": "87317cb05cd89d52fe5827961b2b498275feec68a6a052fd7b994a99a08f0869"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "677b6e67f7301b8a29eae88e18624278ecd2edcdc8058a3489f7bc4dfdc72dcc"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/simulator-tests.log",
+      "bytes": 5360,
+      "sha256": "dde031b75d0f14f6deeeab65c52893d6fa21d5a609cde294d7d1b1837d0947b1"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/Huevia-QA-PhotoKit.png",
+      "bytes": 121307,
+      "sha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/core-parity.json",
+      "bytes": 884,
+      "sha256": "735349c5d66b1467c06f2fd117fe12418333e5900a1b9ca330a1e5091892be76"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/ipa-independent-verification.json",
+      "bytes": 3181,
+      "sha256": "8642c5c2b7011f224a45a11c200a82f097e9182d7d32c09091f2e1c836b760b5"
+    },
+    {
+      "file": "docs/migration/validation/community-203/apple/test-portability.json",
+      "bytes": 368,
+      "sha256": "1028d6687c91894e2140f0c45079f2c4485adbb48572417deaaa93c10c05cd71"
+    }
+  ],
+  "limits": [
+    "Full feature and visual parity remains incomplete",
+    "Limited/iCloud states and physical iPhone remain unverified",
+    "Honor Magic Android 12 and unknown-camera NEF remain unverified"
+  ]
+}

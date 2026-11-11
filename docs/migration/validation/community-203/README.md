@@ -1,6 +1,6 @@
 # 203 社区、投稿与边框复查
 
-源码固定为 `9578fe80205c84b134c4da598e783991af18bcce`。Android ARM64 / x64 release 包位于 `dist/migration203/`，完整哈希见 `android-build-evidence.json`。原工程 420 个冻结文件仍按 8 个已批准修复 / 412 个原基准核验，旧安装包和旧验证记录不覆盖。
+Android 源码固定为 `9578fe80205c84b134c4da598e783991af18bcce`，Apple 源码为 `12394417e68eedfb780739e60490746676ab06e5`；仅新增一处测试用 `Path.of` 到等价 `Paths.get` 的 J2ObjC 兼容替换，生产输入一致，精确差异核验见 `apple/test-portability.json`。Android ARM64 / x64 release 包及未签名 IPA 位于 `dist/migration203/`，完整哈希见两份构建证据。原工程 420 个冻结文件仍按 8 个已批准修复 / 412 个原基准核验，旧安装包和旧验证记录不覆盖。
 
 ## 已接入
 
@@ -23,6 +23,8 @@
 
 ## iOS 与验收范围
 
-203 首次 [Actions 43097948378](https://github.com/1162107757/nikon-camera/actions/runs/43097948378) 在分配编译任务前出现 GitHub 内部启动错误，无编译日志或产物；同一源码已重试 [43098532616](https://github.com/1162107757/nikon-camera/actions/runs/43098532616)。取得产物后独立检查 iPhoneOS ARM64、版本、字体/模型、无签名状态和原生验收结果，再追加 Apple 证据。
+203 首次 [Actions 43097948378](https://github.com/1162107757/nikon-camera/actions/runs/43097948378) 在分配编译任务前出现 GitHub 内部启动错误；[43098532616](https://github.com/1162107757/nikon-camera/actions/runs/43098532616) 随后发现新增测试中的 `Path.of` 不在 J2ObjC 支持的 API 中。只修正该测试调用后，[43101080164](https://github.com/1162107757/nikon-camera/actions/runs/43101080164) 完整成功：73 项 Flutter、276 项共享检查、真实系统照片授权及原生图像/RAW/导出流程通过。
+
+IPA 已下载并独立检查 iPhoneOS ARM64、最低 iOS 16、版本 203、Roboto/模型字节、无签名状态、nonce/源码/样片 SHA 和最终原生结果。IPA 为 29,235,002 字节，SHA-256 `dfba0c494cb6cb20ebd531620795fd7e5ab4e262099810e850bb4c246bfc76f0`；ZIP 摘要与 GitHub 记录匹配。15 份 Apple 证据及对应元数据在 `apple/`，并保留翻译失败片段。
 
 未使用真实账户发布评论、举报或投稿。已登录写入以受控接口及持久化故障测试验证，真实账户联网及审核流程仍待验收。荣耀 Magic Android 12、未知相机 NEF、实体 ARM64 手机和自签 iPhone 尚未验证；本轮不据模拟器结果宣布全部迁移或所有像素状态完成。

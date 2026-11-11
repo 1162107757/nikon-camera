@@ -1,0 +1,8 @@
+{
+  "androidSourceCommit": "9578fe80205c84b134c4da598e783991af18bcce",
+  "appleSourceCommit": "12394417e68eedfb780739e60490746676ab06e5",
+  "changedProductionFiles": [],
+  "testOnlyFile": "cross-platform/core/test/cc/huevia/shared/SubmissionBoundaryTest.java",
+  "change": "Path.of to equivalent Paths.get for J2ObjC API support",
+  "exactReplacementVerified": true
+}
