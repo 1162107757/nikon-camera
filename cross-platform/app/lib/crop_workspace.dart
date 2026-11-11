@@ -44,6 +44,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   String? image, atmosphere, error, job;
   Size pixels = const Size(1, 1);
   bool busy = true;
+  bool fitPending = true;
   int generation = 0;
   int atmosphereGeneration = 0;
   late double ratio = widget.initialRatio;
@@ -129,7 +130,10 @@ class _CropWorkspaceState extends State<CropWorkspace> {
           ((result['geometryWidth'] ?? result['width']) as num).toDouble(),
           ((result['geometryHeight'] ?? result['height']) as num).toDouble(),
         );
-        fitRatio();
+        if (fitPending) {
+          fitRatio();
+          fitPending = false;
+        }
       });
       unawaited(discard(old));
       if (atmosphere == null) unawaited(loadAtmosphere(image!));
@@ -168,17 +172,17 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   void fitRatio() {
     if (ratio < 0) return;
     final normalized = ratio == 0 ? 1.0 : ratio / pixels.aspectRatio;
-    double w = crop.width, h = crop.height;
-    if (w / h > normalized) {
-      w = h * normalized;
-    } else {
-      h = w / normalized;
-    }
-    crop = Rect.fromCenter(center: crop.center, width: w, height: h);
+    final w = math.min(1.0, normalized), h = w / normalized;
+    final l = (crop.center.dx - w / 2).clamp(0.0, 1 - w),
+        t = (crop.center.dy - h / 2).clamp(0.0, 1 - h);
+    crop = Rect.fromLTWH(l, t, w, h);
   }
 
-  void mutate(VoidCallback action) {
-    setState(action);
+  void mutate(VoidCallback action, {bool refit = false}) {
+    setState(() {
+      action();
+      fitPending |= refit;
+    });
     debounce?.cancel();
     // Disable applying/hit testing until the new geometry has been rendered.
     generation++;
@@ -317,7 +321,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                         geometry['turns'] =
                             ((geometry['turns'] as int? ?? 0) + 1) % 4;
                         crop = const Rect.fromLTRB(0, 0, 1, 1);
-                      }),
+                      }, refit: true),
                 child: const Text('旋转 90°'),
               ),
             ),
@@ -597,7 +601,20 @@ class _CropCanvasState extends State<CropCanvas> {
         : 0;
     if ((p.dy - r.top).abs() <= 24) edges |= top;
     if ((p.dy - r.bottom).abs() <= 24) edges |= bottom;
-    if (!r.inflate(24).contains(p)) edges = -1;
+    var nearest = 30.0;
+    for (final corner in [
+      (r.topLeft, left | top),
+      (r.topRight, right | top),
+      (r.bottomLeft, left | bottom),
+      (r.bottomRight, right | bottom),
+    ]) {
+      final distance = (p - corner.$1).distance;
+      if (distance < nearest) {
+        nearest = distance;
+        edges = corner.$2;
+      }
+    }
+    if (!r.inflate(30).contains(p)) edges = -1;
     start = widget.crop;
     down = p;
   }
@@ -613,10 +630,12 @@ class _CropCanvasState extends State<CropCanvas> {
       return;
     }
     double l = start.left, t = start.top, r = start.right, b = start.bottom;
-    if (edges & left != 0) l = (l + dx).clamp(0.0, r - .025);
-    if (edges & right != 0) r = (r + dx).clamp(l + .025, 1.0);
-    if (edges & top != 0) t = (t + dy).clamp(0.0, b - .025);
-    if (edges & bottom != 0) b = (b + dy).clamp(t + .025, 1.0);
+    final minW = math.min(.1, 48 / frame.width),
+        minH = math.min(.1, 48 / frame.height);
+    if (edges & left != 0) l = (l + dx).clamp(0.0, r - math.min(r, minW));
+    if (edges & right != 0) r = (r + dx).clamp(l + math.min(1 - l, minW), 1.0);
+    if (edges & top != 0) t = (t + dy).clamp(0.0, b - math.min(b, minH));
+    if (edges & bottom != 0) b = (b + dy).clamp(t + math.min(1 - t, minH), 1.0);
     final aspect = widget.aspect;
     if (aspect != null) {
       final normalized = aspect / widget.pixels.aspectRatio;
@@ -627,17 +646,24 @@ class _CropCanvasState extends State<CropCanvas> {
         edges & top != 0 ? start.bottom : start.top,
       );
       final growLeft = edges & left != 0, growUp = edges & top != 0;
-      var w = r - l, h = b - t;
-      if (edges & (left | right) != 0) {
-        h = w / normalized;
-      } else {
-        w = h * normalized;
-      }
       final limitW = growLeft ? anchor.dx : 1 - anchor.dx,
           limitH = growUp ? anchor.dy : 1 - anchor.dy;
-      final factor = math.min(1.0, math.min(limitW / w, limitH / h));
-      w *= factor;
-      h *= factor;
+      final horizontal = edges & (left | right) != 0,
+          vertical = edges & (top | bottom) != 0;
+      final desired = horizontal && vertical
+          ? math.max(r - l, (b - t) * normalized)
+          : horizontal
+          ? r - l
+          : (b - t) * normalized;
+      final minimum = math.max(
+        math.min(limitW, minW),
+        math.min(limitH, minH) * normalized,
+      );
+      final w = math.min(
+            math.min(limitW, limitH * normalized),
+            math.max(minimum, desired),
+          ),
+          h = w / normalized;
       l = growLeft ? anchor.dx - w : anchor.dx;
       r = l + w;
       t = growUp ? anchor.dy - h : anchor.dy;

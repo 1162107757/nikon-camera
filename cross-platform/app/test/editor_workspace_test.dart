@@ -188,6 +188,15 @@ void main() {
         const Offset(45, 30),
       );
       await tester.pump();
+      await tester.ensureVisible(find.text('原图'));
+      await tester.tap(find.text('原图'));
+      await tester.pump();
+      // Original PhotoCropDialog expands the chosen ratio around the current
+      // center; returning to the source ratio must reveal the complete frame.
+      expect(
+        tester.widget<CropCanvas>(find.byType(CropCanvas)).crop,
+        const Rect.fromLTRB(0, 0, 1, 1),
+      );
       await tester.ensureVisible(find.text('1:1'));
       await tester.tap(find.text('1:1'));
       await tester.pump();
@@ -215,6 +224,28 @@ void main() {
       expect(
         tester.widget<CropCanvas>(find.byType(CropCanvas)).crop.width,
         lessThan(beforePinch.width),
+      );
+      final beforeStraighten = tester
+          .widget<CropCanvas>(find.byType(CropCanvas))
+          .crop;
+      await tester.drag(
+        find.byType(Slider),
+        const Offset(100, 0),
+        touchSlopX: 64,
+      );
+      await settle(tester);
+      await tester.pumpAndSettle();
+      expect(
+        object(
+          object(
+            core.calls.lastWhere((c) => c.$1 == 'media.preview').$2['recipe'],
+          )['geometry'],
+        )['angle'],
+        isNot(0),
+      );
+      expect(
+        tester.widget<CropCanvas>(find.byType(CropCanvas)).crop,
+        beforeStraighten,
       );
       await tester.tap(find.text('应用'));
       await tester.pumpAndSettle();
