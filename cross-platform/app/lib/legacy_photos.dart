@@ -23,13 +23,38 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
   bool oldest = false, added = false;
   int nextOffset = 0, generation = 0;
   String access = 'none', query = '', filter = '', error = '';
+  String alternateBasis = 'added';
+  bool canAsk = true;
+  StreamSubscription<dynamic>? galleryChanges;
+  String get alternateLabel =>
+      phone && alternateBasis == 'modified' ? '修改时间' : '添加时间';
   List<Json> phonePhotos = [];
   final Set<String> pendingStars = {};
 
   @override
   void initState() {
     super.initState();
+    final saved = state.uiPreferences['album'];
+    if (saved is Map) {
+      phone = saved['source'] == 'phone';
+      filter = saved['filter'] as String? ?? '';
+      added = saved['added'] == true;
+      oldest = saved['oldest'] == true;
+    }
     WidgetsBinding.instance.addObserver(this);
+    if (state.core.root.isNotEmpty) {
+      galleryChanges = state.core.galleryChanges.listen((event) {
+        if (!mounted ||
+            !phone ||
+            event is! Map ||
+            event['kind'] != 'galleryChanged') {
+          return;
+        }
+        generation++;
+        setState(() => loading = false);
+        unawaited(readAccess());
+      }, onError: (Object _) {});
+    }
     unawaited(state.refreshStars().catchError((Object _) {}));
     unawaited(readAccess());
   }
@@ -37,6 +62,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
   @override
   void dispose() {
     generation++;
+    galleryChanges?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -46,13 +72,37 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     if (phase == AppLifecycleState.resumed) unawaited(readAccess());
   }
 
+  Future<void> rememberAlbum() async {
+    try {
+      await state.saveUiPreferences({
+        'album': {
+          'source': phone ? 'phone' : 'app',
+          'filter': filter,
+          'added': added,
+          'oldest': oldest,
+        },
+      });
+    } catch (failure) {
+      if (mounted) report(context, '相册设置已应用，暂时无法记住这些设置。');
+    }
+  }
+
   Future<void> readAccess() async {
     try {
       final result = await state.core.call('gallery.access');
       if (!mounted) return;
       final previous = access;
-      setState(() => access = result['access'] as String);
-      if (phone && access != 'none' && previous != access) await loadPhone();
+      setState(() {
+        access = result['access'] as String;
+        alternateBasis = result['alternateBasis'] as String? ?? 'added';
+        canAsk = result['canAsk'] != false;
+        if (access == 'none' || previous != access) {
+          generation++;
+          loading = false;
+          phonePhotos = [];
+        }
+      });
+      if (phone && access != 'none') await loadPhone();
     } catch (_) {
       /* The system file picker remains available without library permission. */
     }
@@ -90,7 +140,11 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     try {
       final result = await state.core.galleryPermission();
       if (!mounted) return;
-      setState(() => access = result['access'] as String);
+      setState(() {
+        access = result['access'] as String;
+        canAsk = result['canAsk'] != false;
+        alternateBasis = result['alternateBasis'] as String? ?? 'added';
+      });
       await loadPhone();
     } catch (failure) {
       if (mounted) report(context, failure);
@@ -99,6 +153,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
 
   void source(int index) {
     setState(() => phone = index == 1);
+    unawaited(rememberAlbum());
     if (phone && access != 'none') unawaited(loadPhone());
   }
 
@@ -196,7 +251,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
               title: '排序依据',
               topPadding: 0,
               bottomPadding: 4,
-              values: const [('taken', '拍摄时间'), ('added', '添加时间')],
+              values: [('taken', '拍摄时间'), ('added', alternateLabel)],
               selected: nextAdded ? 'added' : 'taken',
               columns: 2,
               fontSize: 14,
@@ -238,6 +293,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
         added = nextAdded;
         oldest = nextOldest;
       });
+      unawaited(rememberAlbum());
       if (phone) await loadPhone();
     }
   }
@@ -271,6 +327,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
       if (result == 'star') await state.starPhoto(photo, !marked);
       if (result == 'filter' && mounted) {
         setState(() => filter = filter == 'starred' ? '' : 'starred');
+        unawaited(rememberAlbum());
       }
     } catch (failure) {
       if (mounted) report(context, failure);
@@ -286,15 +343,18 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
       final rows = phone
           ? phonePhotos
                 .where(
-                  (row) => (row['name'] as String).toLowerCase().contains(
-                    query.toLowerCase(),
-                  ),
+                  (row) =>
+                      (row['name'] as String).toLowerCase().contains(
+                        query.toLowerCase(),
+                      ) &&
+                      (filter != 'raw' || row['raw'] == true),
                 )
                 .toList()
           : state.photos
                 .where(
                   (photo) =>
                       photo.name.toLowerCase().contains(query.toLowerCase()) &&
+                      (filter != 'raw' || photo.info['raw'] == true) &&
                       (filter != 'starred' ||
                           state.starredPhotos.contains(photo.starKey)),
                 )
@@ -347,6 +407,10 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                   unawaited(permission());
                 } else if (value == 'stars') {
                   setState(() => filter = filter == 'starred' ? '' : 'starred');
+                  unawaited(rememberAlbum());
+                } else if (value == 'rawFilter') {
+                  setState(() => filter = filter == 'raw' ? '' : 'raw');
+                  unawaited(rememberAlbum());
                 } else if (phone) {
                   unawaited(loadPhone());
                 } else {
@@ -361,6 +425,10 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                     value: 'stars',
                     child: Text(filter == 'starred' ? '显示全部照片' : '只看星标照片'),
                   ),
+                PopupMenuItem(
+                  value: 'rawFilter',
+                  child: Text(filter == 'raw' ? '显示全部照片' : '只看 RAW 照片'),
+                ),
                 if (phone)
                   const PopupMenuItem(value: 'permission', child: Text('权限设置')),
               ],
@@ -410,7 +478,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                     HueIconButton(
                       kind: HueIconKind.sort,
                       label:
-                          '排序，${added ? '添加时间' : '拍摄时间'}，${oldest ? '旧到新' : '新到旧'}',
+                          '排序，${added ? alternateLabel : '拍摄时间'}，${oldest ? '旧到新' : '新到旧'}',
                       disc: false,
                       iconSize: 20,
                       onPressed: sort,
@@ -421,6 +489,11 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
             ),
             if (importing || loading)
               const LinearProgressIndicator(minHeight: 2),
+            if (phone && access == 'limited')
+              TextButton(
+                onPressed: permission,
+                child: const Text('已允许部分照片 · 管理可访问的照片'),
+              ),
             Expanded(
               child: rows.isEmpty
                   ? LayoutBuilder(
@@ -493,7 +566,11 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
                                       : phone
                                       ? permission
                                       : () => source(1),
-                                  child: Text(phone ? '允许访问照片' : '浏览手机照片'),
+                                  child: Text(
+                                    phone
+                                        ? (canAsk ? '允许访问照片' : '前往照片权限设置')
+                                        : '浏览手机照片',
+                                  ),
                                 ),
                                 if (phone)
                                   SizedBox(

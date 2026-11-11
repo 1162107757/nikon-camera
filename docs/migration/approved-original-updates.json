@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "baselineCommit": "6fb5003d8be85fcbb0fa3b4d99aef63cc1751f3c",
+  "updates": [
+    {
+      "commit": "5cd6c97f23e339cc2f3be6e0ee36b56cab421ead",
+      "reason": "Original Android 191 Wi-Fi repair, carried into migration after user requested continuing the remaining work; original frozen 186 manifest is retained.",
+      "files": [
+        {
+          "path": "app/build.gradle",
+          "gitBlob": "20954f3688302f0894a0298bfe1dd576f3d8356d"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/MainActivity.java",
+          "gitBlob": "d1a14d8b5bb587edce1793bdfaf9821eef4073e9"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/album/AlbumController.java",
+          "gitBlob": "01312a0eaec3b8bcad0aa4a6b2aa89eb8ad7d6b6"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/album/PtpIpClient.java",
+          "gitBlob": "9223a410cb25f3414a56f2f30558ad69310482f5"
+        }
+      ]
+    }
+  ]
+}

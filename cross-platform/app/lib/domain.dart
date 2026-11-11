@@ -24,6 +24,9 @@ class HueviaCore {
   static const channel = MethodChannel('cc.huevia/core');
   static const events = EventChannel('cc.huevia/events');
   static final progress = events.receiveBroadcastStream();
+  Stream<dynamic> get galleryChanges => progress.where(
+    (event) => event is Map && event['kind'] == 'galleryChanged',
+  );
   String root = '';
   Json schema = {};
   Future<void> initialize() async {
@@ -197,6 +200,21 @@ class AppState extends ChangeNotifier {
   List<Photo> photos = [];
   Set<String> starredPhotos = {};
   Json session = {};
+  Json uiPreferences = {};
+  String? uiPreferencesWarning;
+  Future<void> _uiCommit = Future.value();
+  Future<void> saveUiPreferences(Json patch) {
+    // View state is optional for a standalone/test view with no private root.
+    if (core.root.isEmpty) return Future.value();
+    final next = _uiCommit.then((_) async {
+      uiPreferences = await core.call('ui.preferences.set', patch);
+      uiPreferencesWarning = null;
+      notifyListeners();
+    });
+    _uiCommit = next.then<void>((_) {}, onError: (Object _, StackTrace _) {});
+    return next;
+  }
+
   Future<void> _photoCommit = Future.value();
   Future<T> _serialPhotos<T>(Future<T> Function() operation) {
     final next = _photoCommit.then((_) => operation());
@@ -212,6 +230,12 @@ class AppState extends ChangeNotifier {
     notifyListeners();
     try {
       await core.initialize();
+      try {
+        uiPreferences = await core.call('ui.preferences.get');
+        uiPreferencesWarning = null;
+      } catch (error) {
+        uiPreferencesWarning = '$error';
+      }
       await refreshLibrary();
       session = await core.call('account.current');
       final index = File(p.join(core.root, 'photos-index.json'));

@@ -86,6 +86,70 @@ void main() {
       }
 
       try {
+        if (Platform.isIOS) {
+          final access = await core.call('gallery.access');
+          expect(access['access'], 'full');
+          expect(access['alternateBasis'], 'modified');
+          Json? fixture;
+          for (var attempt = 0; attempt < 20 && fixture == null; attempt++) {
+            final page = await core.call('gallery.page', {
+              'offset': 0,
+              'refresh': true,
+            });
+            final matches = (page['items'] as List)
+                .map(object)
+                .where((row) => row['name'] == 'Huevia-QA-PhotoKit.png');
+            if (matches.isNotEmpty) fixture = matches.first;
+            if (fixture == null) {
+              await Future<void>.delayed(const Duration(milliseconds: 500));
+            }
+          }
+          expect(
+            fixture,
+            isNotNull,
+            reason: 'simctl seeded PhotoKit fixture must be visible',
+          );
+          final thumb = await core.call('gallery.thumbnail', {
+            'id': fixture!['id'],
+          });
+          final thumbnailCodec = await ui.instantiateImageCodec(
+            await File(thumb['path'] as String).readAsBytes(),
+          );
+          final thumbnail = await thumbnailCodec.getNextFrame();
+          expect(thumbnail.image.width, lessThanOrEqualTo(384));
+          expect(thumbnail.image.height, lessThanOrEqualTo(384));
+          thumbnail.image.dispose();
+          thumbnailCodec.dispose();
+          final imported = await core.call('gallery.import', {
+            'id': fixture['id'],
+          });
+          if (imported['created'] == true) {
+            outputs.add(imported['path'] as String);
+          }
+          const expected = String.fromEnvironment('HUEVIA_PHOTOKIT_SHA');
+          expect(expected, matches(RegExp('^[0-9a-f]{64}\$')));
+          expect(imported['sha256'], expected);
+          expect(
+            (await sha256
+                    .bind(File(imported['path'] as String).openRead())
+                    .first)
+                .toString(),
+            expected,
+          );
+          final importedInfo = await core.call('media.info', {
+            'path': imported['path'],
+          });
+          expect(importedInfo['width'], 256);
+          expect(importedInfo['height'], 192);
+          try {
+            await core.call('gallery.import', {
+              'id': 'not-observed-in-library',
+            });
+            fail('A gallery identifier not returned by paging was accepted');
+          } on AppFailure catch (failure) {
+            expect(failure.message, isNotEmpty);
+          }
+        }
         final recorder = ui.PictureRecorder(), canvas = ui.Canvas(recorder);
         final paint = ui.Paint();
         for (var y = 0; y < 192; y++) {

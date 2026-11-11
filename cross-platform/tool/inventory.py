@@ -18,18 +18,46 @@ def capture():
     print(json.dumps({'preservedFiles':len(files),'javaFiles':len(classes),'javaLines':sum(p['lines'] for p in classes),'withoutAndroidReferences':sum(not p['androidApiReferences'] for p in classes)}))
 def verify():
     manifest=json.loads((OUT/'preserved-projects.json').read_text(encoding='utf-8'))
+    # Keep the frozen 186 record. Separately identify original-project repairs
+    # authorized after migration started; every accepted blob must be pinned.
+    allowed={}
+    updates=OUT/'approved-original-updates.json'
+    if updates.is_file():
+        approval=json.loads(updates.read_text(encoding='utf-8'))
+        if approval.get('baselineCommit')!=manifest['baselineCommit']:
+            raise SystemExit('Original update baseline does not match the frozen manifest')
+        baseline={}
+        for entry in subprocess.check_output(['git','ls-tree','-r','-z',manifest['baselineCommit'],'--','app','ios'],cwd=ROOT).split(b'\0'):
+            if entry:
+                meta,path=entry.decode().split('\t',1);baseline[path]=meta.split()[2]
+        for row in manifest['files']:
+            if not row.get('gitBlob') or baseline.get(row['path'])!=row['gitBlob']:
+                raise SystemExit('Frozen original Git reference changed: '+row['path'])
+        for update in approval['updates']:
+            for row in update['files']:
+                path=row['path']
+                if path not in baseline or path in allowed:
+                    raise SystemExit('Invalid original update path: '+path)
+                pinned=subprocess.check_output(['git','rev-parse',update['commit']+':'+path],cwd=ROOT,text=True).strip()
+                if pinned!=row['gitBlob']:
+                    raise SystemExit('Original update does not match its pinned commit: '+path)
+                allowed[path]=pinned
     changed=[]
     for row in manifest['files']:
         path=ROOT/row['path']
         if not path.is_file():changed.append(row['path']);continue
-        if digest(path)==row['sha256']:continue
+        if row['path'] not in allowed and digest(path)==row['sha256']:continue
         # Git may check text out with LF on macOS and CRLF on Windows. Accept
         # that conversion only when Git's canonical blob is still identical.
         actual=subprocess.check_output(['git','hash-object','--path',row['path'],row['path']],cwd=ROOT,text=True).strip()
-        expected=row.get('gitBlob')
+        expected=allowed.get(row['path'],row.get('gitBlob'))
         if not expected or actual!=expected:changed.append(row['path'])
     if changed:raise SystemExit('Original project changed: '+', '.join(changed))
-    print('Original Android/iOS files unchanged: '+str(len(manifest['files'])))
+    if allowed:
+        print('Frozen original Git reference preserved: '+str(len(manifest['files']))+
+              '; approved original repairs verified: '+str(len(allowed))+
+              '; other original files unchanged: '+str(len(manifest['files'])-len(allowed)))
+    else:print('Original Android/iOS files unchanged: '+str(len(manifest['files'])))
 if __name__=='__main__':
     import sys
     verify() if '--verify' in sys.argv else capture()

@@ -2,6 +2,7 @@
 #import "HueviaKeychain.h"
 #import "HueviaMedia.h"
 #import "HueviaImportPicker.h"
+#import "HueviaGallery.h"
 #import "cc/huevia/account/AccountHttpTransport.h"
 #import "cc/huevia/shared/CoreEngine.h"
 #import "cc/huevia/shared/SharedCamera.h"
@@ -33,6 +34,7 @@
 @property(nonatomic,strong) HueviaMedia *media;
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) HueviaImportPicker *importPicker;
+@property(nonatomic,strong) HueviaGallery *gallery;
 @property(nonatomic,weak) UIViewController *presenter;
 @end
 
@@ -52,6 +54,10 @@
 - (FlutterError *)onCancelWithArguments:(id)arguments {self.events=nil;return nil;}
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
+  if([call.method isEqualToString:@"galleryPermission"]){
+    if(!self.gallery){reply([FlutterError errorWithCode:@"NOT_READY" message:@"应用尚未准备好。" details:nil]);return;}
+    [self.gallery requestPermissionFrom:self.presenter reply:reply];return;
+  }
   if([call.method isEqualToString:@"pickFile"]){
     if(!self.runtime||![args[@"preset"] isKindOfClass:NSNumber.class]){reply([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"应用尚未准备好或导入类型无效。" details:nil]);return;}
     [self.importPicker pickPreset:[args[@"preset"] boolValue] root:self.root presenter:self.presenter reply:reply];return;
@@ -86,7 +92,10 @@
           CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init]];
           stage=@"media runtime";
           HueviaMedia *media=[[HueviaMedia alloc] initWithRuntime:runtime root:self.root];
-          self.runtime=runtime;self.camera=camera;self.media=media;
+          HueviaGallery *gallery=[[HueviaGallery alloc] initWithRoot:self.root];
+          __weak HueviaCorePlugin *weakHost=self;
+          gallery.changed=^{dispatch_async(dispatch_get_main_queue(),^{HueviaCorePlugin *host=weakHost;if(host.events)host.events(@{@"kind":@"galleryChanged"});});};
+          self.runtime=runtime;self.camera=camera;self.media=media;self.gallery=gallery;
         }
         stage=@"bridge schema";
         NSData *schema=[[CcHueviaSharedCoreEngine schema] dataUsingEncoding:NSUTF8StringEncoding];
@@ -98,6 +107,7 @@
         if(![operation isKindOfClass:NSString.class]||![payload isKindOfClass:NSString.class]||payload.length>4*1024*1024)@throw [[JavaIoIOException alloc] initWithNSString:@"操作数据无效。"];
         stage=operation;
         if([operation hasPrefix:@"media."]){NSDictionary *data=[self.media request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
+        else if([operation hasPrefix:@"gallery."]){NSDictionary *data=[self.gallery request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation hasPrefix:@"camera."])value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
         else value=[self.runtime requestWithNSString:operation withNSString:payload withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
       }
