@@ -29,7 +29,14 @@ class PipelineCore extends HueviaCore {
 }
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  // iOS can enable platform accessibility after the first test has recorded its
+  // semantics-handle baseline. Establish that platform handle before the case,
+  // keep the normal test-owned handle checks, and restore the real setting.
+  setUpAll(() {
+    binding.platformDispatcher.semanticsEnabledTestValue = true;
+  });
+  tearDownAll(binding.platformDispatcher.clearSemanticsEnabledTestValue);
   testWidgets(
     'Native codecs and LibRaw retain originals, dimensions and white highlights',
     (tester) async {
@@ -333,10 +340,6 @@ void main() {
         );
       }
     },
-    // This exercises native codecs and files without mounting an application
-    // widget tree. Do not create an automatic semantics tree for that fixture;
-    // the separate editor/navigation widget suites retain semantics coverage.
-    semanticsEnabled: false,
     timeout: const Timeout(Duration(minutes: 5)),
   );
 }
