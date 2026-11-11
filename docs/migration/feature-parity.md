@@ -8,7 +8,7 @@
 | --- | --- | --- | --- | --- |
 | NCP / NP3 校验、单色与彩色预设解析 | `library/PresetFile`, `ncp/*PreviewProfile` | 直接复用 | 本地导入已接线 | 核心 JVM / Apple 原测试通过；应用待验证 |
 | 本地预设、分类、样片、删除、文件分享 | `library/PresetLibrary` | 直接复用 | 首批页面已接线；样片编辑待迁移 | 待应用验证 |
-| 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示已接线，搜索合并在途请求 | 应用联网验收待完成 |
+| 在线预设、分页、搜索、分类、缓存、下载 | `OnlinePresetRepository`, `OnlinePresetSearch` | 原逻辑已纳入 | 分页/下载、完整目录搜索、缓存提示及完整下载状态筛选已接线，搜索合并在途请求 | 190 两端实际 HTTPS 分页通过；Android release 详情/NP3 下载/已下载筛选通过；全部错误状态待验收 |
 | 账户登录、注册、人机验证、QQ、头像、退出隔离 | `account/*` | Repository 直接复用 | 登录/退出/注册/图形验证已接线；QQ、头像待迁移 | 待完成 |
 | 个人预设同步、云端移除、冲突处理 | `PersonalPresetSync`, `PersonalPresetApi` | 原逻辑复用并补充任务取消和作者校验 | 同步范围选择、两种冲突处理、删除及会话可见性已接线 | 31 项事务/权限检查通过；真实账号联网验收待完成 |
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
@@ -88,6 +88,13 @@
 - Android 12 通过 38 项原生检查，新增请求 512 KiB 栈的独立线程执行实际 RAW 信息读取、无缓存显影、高光白色及原图 SHA 检查；16 个设备界面场景和完整 Flutter/native 图像场景通过。最终 ARM64/x64 独立 release/R8/AOT 包内的桥接源码、动态库哈希、ABI 和签名均已校验；最终 x64 包实际完成 DNG 自动显影、编辑、完整 JPEG 导出和系统分享。见 [189 构建及验证记录](validation/android12-raw-stack-189-20261111.json)。
 - Apple 应用提交 `1c424600dd284041ede82fa99a444ac37b94c63b` 的 [Actions `42963383351`](https://github.com/1162107757/nikon-camera/actions/runs/42963383351) 已完整通过：23 项 Flutter 测试、201 项共享边界、全部原核心检查及六组 JVM/Apple 指纹一致；原生 XCTest 的完整图片/RAW/去灰/几何/边框/复制/成品场景成功。测试套件在用例前固定系统语义状态、结束后还原，保留默认语义句柄清理检查及全部图像断言。已校验并交付 189 iPhoneOS ARM64 release/AOT 未签名 IPA，最低 iOS 16，供用户自签；尚未在实体 iPhone 安装。精确包哈希和证据见 [Apple 189 记录](validation/apple-mobile-189-20261111.json)。
 - 上述修复尚不能证明荣耀 Magic 实机闪退全部解决；合成 DNG 也不能代替用户未知型号 NEF。全功能与逐页样式验收继续以 [样式清单](visual-acceptance.md) 为准，未完成项目不标记通过。
+
+### 190 筛选遮挡、在线库与二级弹窗
+
+- 预设筛选和相册排序被四入口遮挡的问题已复现并修复：所有底部面板使用根导航，长选项与底部操作区分别布局。恢复原筛选分组/网格、下载状态、排序选择、外观及相机类型单选样式；本地和在线条件在当前页面会话中分别保存，筛选空态可清除条件。
+- 在线库原因为共享接入只初始化默认地址，未启用原仓库的 managed 模式；现使用原 `useManagedEndpoint`，并验证旧开发版空/旧配置升级。格式/下载状态/未分类筛选读取完整目录，避免只筛当前分页。真实 Android release 已加载 391 份在线目录并完成详情、NP3 下载和已下载筛选；见 [190 截图及设备记录](validation/controls-online-190/README.md)。
+- 固定源码 `d82c9e478194210af85e08127bdb584d24bb0dd7`：20 个 Android 界面场景、38 项原生检查、真实线上分页和完整 RAW 场景通过。[iOS Actions 42969015766](https://github.com/1162107757/nikon-camera/actions/runs/42969015766) 的 27 项 Flutter 测试、205 项共享边界、实际 HTTPS 在线分页及原生图像/RAW 场景均通过；ARM64/x64 release APK 与未签名设备 IPA 已校验并归档于 `dist/migration190/`。
+- 同工作区另有原版 191 Wi-Fi 修复，190 使用固定提交的独立检出构建；其原 420 个输入文件保留校验通过，不将另一个任务在途代码混入本包。原版修复文件保持原样。以上仍不代表所有页面逐像素一致或全功能迁移完成。
 
 ## 保留和交付规则
 

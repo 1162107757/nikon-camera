@@ -1,0 +1,166 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T14:26:14.994532+08:00",
+  "sourceCommit": "d82c9e478194210af85e08127bdb584d24bb0dd7",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "isolatedBuildDirectory": ".tooling/cross-platform190-build",
+  "originalInputTrackedFilesPreserved": 420,
+  "parallelOriginal191ChangesExcluded": true,
+  "artifacts": [
+    {
+      "apk": "dist/migration190/huevia-0.31.0-dev-190-android-arm64.apk",
+      "bytes": 49552926,
+      "sha256": "f0967a2397fc477435de0fe118a152231b9bf0fafbe89368d6f8e48d4560a9c6",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+190",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "nativeRuntime": {
+        "abi": "arm64-v8a",
+        "heapAllocatedLibRaw": true,
+        "sourceBridgeSha256": "7a752e712a2c2f6f507169a2300fc1489a07951d99fb0881d1fba50c6b4b299e",
+        "adaptedBridgeSha256": "87554bdfd2a18a6d98292ea496300894a586d338462f6f80cc8d3946bfc6929f",
+        "librarySha256": "fe66ffa34d45f4068afa9e44dcb97566e98ad395800089b85b51effc6d95bfa5",
+        "originalLibRawSha256": "ad3ea533d84368cf7f3520e7dbe10499419fac89c0b4d55a730a66c71d2356a9",
+        "compiler": "Android NDK 28.2.13676358",
+        "minimumApi": 26,
+        "minimumLoadAlignment": 16384,
+        "bridgeFrameLimitBytes": 131072,
+        "originalLibrariesUnmodified": true
+      },
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches189": true,
+      "liteRtSha256": "70b6d8f09cfa72158b142a54c84d978670523e420267273a9948a0f40fb535c9"
+    },
+    {
+      "apk": "dist/migration190/huevia-0.31.0-dev-190-android-x64.apk",
+      "bytes": 52923832,
+      "sha256": "bfba5ce3c4c16ea8d01be2f378b7a17b0894886b2428c7bd13e0f266189fd6f6",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+190",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "signatureVerified": true,
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signing": "Android Debug development certificate",
+      "nativeRuntime": {
+        "abi": "x86_64",
+        "heapAllocatedLibRaw": true,
+        "sourceBridgeSha256": "7a752e712a2c2f6f507169a2300fc1489a07951d99fb0881d1fba50c6b4b299e",
+        "adaptedBridgeSha256": "87554bdfd2a18a6d98292ea496300894a586d338462f6f80cc8d3946bfc6929f",
+        "librarySha256": "c5c9c11d40b59b0eeade2bf963c0246f439a30612668e3c6b71bc2a1a25da35e",
+        "originalLibRawSha256": "0ec020741f27216cddb91a221659be8c00aced2edc005f01969a25a8b465c6f3",
+        "compiler": "Android NDK 28.2.13676358",
+        "minimumApi": 26,
+        "minimumLoadAlignment": 16384,
+        "bridgeFrameLimitBytes": 131072,
+        "originalLibrariesUnmodified": true
+      },
+      "modelsMatchOriginal186": {
+        "face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+        "face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+      },
+      "liteRtReleaseLibraryMatches189": true,
+      "liteRtSha256": "946664d75ea3966fafd5b3a9f52b6d246f99e2dd1e9ae830c50afd2bc7cea096"
+    }
+  ],
+  "validation": {
+    "androidApi": 31,
+    "os": "Android 12",
+    "emulator": "emulator-5584; isolated adb server 5038",
+    "widgetScenarios": 20,
+    "nativeChecks": 38,
+    "flutterNativePipelineScenarios": 1,
+    "liveManagedFeedRead": true,
+    "releaseOnlineLibraryTotalObserved": 391,
+    "releaseOnlineDetailDownloadAndSavedFilter": true,
+    "rootModalNavigationOcclusionFixed": true,
+    "portraitLandscapeDoubleTextScale": true,
+    "flutterAnalysis": "No issues found",
+    "sharedBoundaryChecks": 205,
+    "isolatedEmulatorUsesExistingHostProxy": true
+  },
+  "styleReview": {
+    "reference": "Original Android 186 on same emulator",
+    "perPixelParityComplete": false,
+    "residualDifferences": "Small text-metric and header offsets remain; full per-state visual acceptance is still pending."
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/controls-online-190/android-native.log",
+      "bytes": 126,
+      "sha256": "79d952fdc7f8e2844ea816d6ea84b49b44a6383016cf2448ffe86efda6b412f3"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/android-pipeline.log",
+      "bytes": 62,
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/android-widget.log",
+      "bytes": 63,
+      "sha256": "921fce215f931958b4cbb6a7f0bca446957b0b2ca4df77daa0f8233bae2b5673"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/original-appearance.png",
+      "bytes": 162873,
+      "sha256": "0c71a5fcd3bdb1c152d9cb98a43f68f3942f2cfaeb6df9b08f6d409699be894a"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/original-filter.png",
+      "bytes": 349535,
+      "sha256": "5c9005be960a99aea4245d25393f49242de684a47f46ae3263507c7575100d8b"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/original-sort.png",
+      "bytes": 148858,
+      "sha256": "aa6a30f93c87e1015c88457f9a6c528bdff87440a1cc8b670d5625f0e64c2fe7"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/shared-appearance.png",
+      "bytes": 170184,
+      "sha256": "13377295daadf74f76d137f35cb57d55d54a979c49ef7b4f1c9ce39d949c7501"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/shared-downloaded.png",
+      "bytes": 128790,
+      "sha256": "d9d066703370ce6da2e91210f672f25c14c88a2b7aac990fdcff42c73b56b3b6"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/shared-filter.png",
+      "bytes": 578380,
+      "sha256": "81100e43c0d5becf21113156b24ab22e1d0c56834107f8cf7bac7c6ea21ef728"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/shared-online.png",
+      "bytes": 163653,
+      "sha256": "8eb6f7b5e59ee05a4c3980fd6c7122bee4d0913d60b7184f57e13bb0d2bf0cc2"
+    },
+    {
+      "file": "docs/migration/validation/controls-online-190/shared-sort.png",
+      "bytes": 121043,
+      "sha256": "15d325b4e83a99aa00b1d8c4ccd7187faf41f48b989dd8999da74971848c8083"
+    }
+  ],
+  "limits": [
+    "Honor Magic physical-device verification and unknown-model NEF remain pending.",
+    "Full feature migration and all secondary-screen states remain incomplete; see feature-parity.md and visual-acceptance.md.",
+    "Android release uses a separate development package and signing certificate.",
+    "Build inputs were fixed before the independent original Android 191 Wi-Fi repair; no changes from that task are mixed into build 190."
+  ]
+}

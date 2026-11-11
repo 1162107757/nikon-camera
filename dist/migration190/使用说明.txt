@@ -1,0 +1,16 @@
+Huevia 跨平台迁移开发版 190
+
+安卓真机：huevia-0.31.0-dev-190-android-arm64.apk
+安卓 x86_64 模拟器：huevia-0.31.0-dev-190-android-x64.apk
+iOS 自签：huevia-0.31.0-190-unsigned.ipa，最低 iOS 16。
+
+修复预设筛选、相册排序被底部四入口遮挡，以及内置在线库无法加载。
+补齐下载状态筛选、本地/在线独立条件，继续还原外观、相机类型和筛选/排序弹窗。
+Android 12 通过 20 个界面场景、38 项原生检查和真实在线库/RAW 全流程；最终 release 实际完成在线浏览、详情、下载与已下载筛选。
+iOS Actions 42969015766 完整通过：27 项 Flutter 测试、真实在线分页、RAW/导出场景及 205 项共享边界检查。
+
+Android 为 release/R8/AOT 开发包，开发签名；iOS 为实际 iPhoneOS ARM64 release/AOT 未签名包，需自行签名。独立标识 cc.huevia.next。
+固定源码 d82c9e478194210af85e08127bdb584d24bb0dd7；Android 使用隔离目录，排除另一任务的原版 191 在途修改。
+旧安装包和验证记录保留。精确哈希见 build-evidence.json 与 ios-build-evidence.json。
+
+仍是迁移开发版。全部功能、所有二级页面样式、荣耀 Magic 实机、未知型号 NEF 及实体 iPhone 安装尚未完成验收。未完成项见 docs/migration/feature-parity.md 和 visual-acceptance.md。

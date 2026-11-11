@@ -1,0 +1,92 @@
+2026-11-11 06:13:01.969210+0000 Runner[35763:104435] flutter: Native pipeline: semantics baseline 2
+2026-11-11 06:13:01.969732+0000 Runner[35763:104435] flutter: Native pipeline: initializing
+2026-11-11 06:13:02.132078+0000 Runner[35763:104435] flutter: Native operation: online.page begin
+2026-11-11 06:13:04.174499+0000 Runner[35763:104435] flutter: Native operation: online.page complete
+2026-11-11 06:13:04.792907+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 0)
+2026-11-11 06:13:04.793436+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:04.919190+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:04.919432+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:04.920142+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 0)
+2026-11-11 06:13:04.920272+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:04.944580+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:04.944810+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:04.945083+0000 Runner[35763:104435] flutter: Native operation: version.open begin
+2026-11-11 06:13:04.951345+0000 Runner[35763:104435] flutter: Native operation: version.open complete
+2026-11-11 06:13:04.951620+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 0)
+2026-11-11 06:13:04.951767+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:05.042024+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:05.042187+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:05.042741+0000 Runner[35763:104435] flutter: Native pipeline: media.cleanupAnalyze begin (border 0)
+2026-11-11 06:13:05.042889+0000 Runner[35763:104435] flutter: Native operation: media.cleanupAnalyze begin
+2026-11-11 06:13:05.084112+0000 Runner[35763:104435] flutter: Native operation: media.cleanupAnalyze complete
+2026-11-11 06:13:05.084268+0000 Runner[35763:104435] flutter: Native pipeline: media.cleanupAnalyze completed
+2026-11-11 06:13:05.084535+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 0)
+2026-11-11 06:13:05.084628+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:05.109906+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:05.110059+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:05.505628+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 0)
+2026-11-11 06:13:05.506008+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:05.532843+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:05.532988+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:05.533124+0000 Runner[35763:104435] flutter: Native operation: draft.load begin
+2026-11-11 06:13:05.535852+0000 Runner[35763:104435] flutter: Native operation: draft.load complete
+2026-11-11 06:13:05.536000+0000 Runner[35763:104435] flutter: Native pipeline: media.originalPreview begin (border 0)
+2026-11-11 06:13:05.536141+0000 Runner[35763:104435] flutter: Native operation: media.originalPreview begin
+2026-11-11 06:13:05.542634+0000 Runner[35763:104435] flutter: Native operation: media.originalPreview complete
+2026-11-11 06:13:05.542810+0000 Runner[35763:104435] flutter: Native pipeline: media.originalPreview completed
+2026-11-11 06:13:05.641068+0000 Runner[35763:104435] flutter: Native operation: draft.load begin
+2026-11-11 06:13:05.644080+0000 Runner[35763:104435] flutter: Native operation: draft.load complete
+2026-11-11 06:13:05.671496+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 1)
+2026-11-11 06:13:05.671701+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:05.720483+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:05.720629+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:05.720787+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 2)
+2026-11-11 06:13:05.720879+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:05.758478+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:05.758664+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:05.758914+0000 Runner[35763:104435] flutter: Native pipeline: media.export begin (border 3)
+2026-11-11 06:13:05.759032+0000 Runner[35763:104435] flutter: Native operation: media.export begin
+2026-11-11 06:13:05.796170+0000 Runner[35763:104435] flutter: Native operation: media.export complete
+2026-11-11 06:13:05.796309+0000 Runner[35763:104435] flutter: Native pipeline: media.export completed
+2026-11-11 06:13:05.822773+0000 Runner[35763:104435] flutter: Native operation: draft.save begin
+2026-11-11 06:13:05.831441+0000 Runner[35763:104435] flutter: Native operation: draft.save complete
+2026-11-11 06:13:05.831598+0000 Runner[35763:104435] flutter: Native operation: draft.load begin
+2026-11-11 06:13:05.835189+0000 Runner[35763:104435] flutter: Native operation: draft.load complete
+2026-11-11 06:13:05.835361+0000 Runner[35763:104435] flutter: Native operation: photo.copy begin
+2026-11-11 06:13:06.377938+0000 Runner[35763:104435] flutter: Native operation: photo.copy complete
+2026-11-11 06:13:06.378302+0000 Runner[35763:104435] flutter: Native operation: draft.load begin
+2026-11-11 06:13:06.386278+0000 Runner[35763:104435] flutter: Native operation: draft.load complete
+2026-11-11 06:13:06.386702+0000 Runner[35763:104435] flutter: Native operation: photo.copyUndo begin
+2026-11-11 06:13:06.404848+0000 Runner[35763:104435] flutter: Native operation: photo.copyUndo complete
+2026-11-11 06:13:06.405052+0000 Runner[35763:104435] flutter: Native operation: draft.load begin
+2026-11-11 06:13:06.409877+0000 Runner[35763:104435] flutter: Native operation: draft.load complete
+2026-11-11 06:13:06.524437+0000 Runner[35763:104435] flutter: Native operation: media.info begin
+2026-11-11 06:13:06.539772+0000 Runner[35763:104435] flutter: Native operation: media.info complete
+2026-11-11 06:13:06.540043+0000 Runner[35763:104435] flutter: Native pipeline: media.rawDevelop begin (border 0)
+2026-11-11 06:13:06.540273+0000 Runner[35763:104435] flutter: Native operation: media.rawDevelop begin
+2026-11-11 06:13:06.856939+0000 Runner[35763:104435] flutter: Native operation: media.rawDevelop complete
+2026-11-11 06:13:06.857158+0000 Runner[35763:104435] flutter: Native pipeline: media.rawDevelop completed
+2026-11-11 06:13:07.060463+0000 Runner[35763:104435] flutter: Native pipeline: media.rawDevelop begin (border 0)
+2026-11-11 06:13:07.060652+0000 Runner[35763:104435] flutter: Native operation: media.rawDevelop begin
+2026-11-11 06:13:07.149371+0000 Runner[35763:104435] flutter: Native operation: media.rawDevelop complete
+2026-11-11 06:13:07.149633+0000 Runner[35763:104435] flutter: Native pipeline: media.rawDevelop completed
+2026-11-11 06:13:07.231890+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.243654+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.243843+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.365953+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.366103+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.372666+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.372810+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.378460+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.378591+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.384228+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.384358+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.389716+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.389830+0000 Runner[35763:104435] flutter: Native operation: version.delete begin
+2026-11-11 06:13:07.440960+0000 Runner[35763:104435] flutter: Native operation: version.delete complete
+2026-11-11 06:13:07.447542+0000 Runner[35763:104435] flutter: Native pipeline: semantics remaining 2
+2026-11-11 06:13:09.053147+0000 Runner[35763:104435] Huevia native pipeline result: testNativeCodecsAndLibrawRetainOriginalsDimensionsAndWhiteHighlights PASS
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.007 (0.008) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.007 (0.009) seconds
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.007 (0.010) seconds
+** TEST SUCCEEDED **
