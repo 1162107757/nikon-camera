@@ -11,7 +11,19 @@ import 'package:huevia/theme.dart';
 class DraftCore extends HueviaCore {
   DraftCore(String directory) {
     root = directory;
-    schema = {'parameters': []};
+    schema = {
+      'parameters': List.generate(
+        17,
+        (i) => {
+          'index': i,
+          'name': i == 1 ? 'EXPOSURE' : 'BRIGHTNESS',
+          'label': i == 1 ? '曝光' : '参数$i',
+          'min': -100,
+          'max': 100,
+          'help': '参数说明',
+        },
+      ),
+    };
   }
   final List<(String, Json)> calls = [];
   @override
@@ -106,7 +118,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
-        expect(find.text('已保存的秋色 · 草稿'), findsOneWidget);
+        expect(find.text('已保存的秋色'), findsOneWidget);
         Future<void> tapLabel(String label) async {
           await tester.ensureVisible(find.text(label));
           await tester.pumpAndSettle();
@@ -114,6 +126,7 @@ void main() {
           await tester.pumpAndSettle();
         }
 
+        await tapLabel('调节');
         await tapLabel('曲线');
         expect(tester.takeException(), isNull);
         await tapLabel('重置此通道');
@@ -123,7 +136,9 @@ void main() {
               .$2['recipe']['curves'],
           hasLength(4),
         );
-        await tapLabel('构图');
+        await tester.tap(find.byTooltip('完成'));
+        await tester.pumpAndSettle();
+        await tapLabel('裁切');
         await tapLabel('水平翻转');
         final geometry = core.calls
             .lastWhere((c) => c.$1 == 'media.preview')
@@ -131,10 +146,15 @@ void main() {
         expect(geometry['left'], 200000);
         expect(geometry['right'], 800000);
         expect(geometry['mirrored'], true);
+        await tapLabel('调节');
         await tapLabel('HSL');
         expect(find.text('洋红'), findsOneWidget);
         expect(tester.takeException(), isNull);
+        await tester.tap(find.byTooltip('完成'));
+        await tester.pumpAndSettle();
         await tapLabel('滤镜');
+        await tester.tap(find.byTooltip('查看全部滤镜'));
+        await tester.pumpAndSettle();
         await tester.tap(find.byType(DropdownButtonFormField<String>));
         await tester.pumpAndSettle();
         await tester.tap(find.text('无滤镜').last);
@@ -148,6 +168,8 @@ void main() {
             .$2['recipe'];
         expect(newRecipe['presetId'], 'available');
         expect(newRecipe['strength'], 100);
+        await tester.tap(find.byTooltip('完成'));
+        await tester.pumpAndSettle();
         await tester.tap(find.byTooltip('对比原图'));
         await tester.pumpAndSettle();
         final originalRequest = core.calls
@@ -162,6 +184,7 @@ void main() {
               .$2['recipe']['presetId'],
           'available',
         );
+        await tapLabel('调节');
         await tapLabel('去灰');
         await tapLabel('分析并应用');
         await tester.ensureVisible(find.byTooltip('减小总强度'));

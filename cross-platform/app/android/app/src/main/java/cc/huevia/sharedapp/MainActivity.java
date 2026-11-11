@@ -21,6 +21,8 @@ public final class MainActivity extends FlutterActivity {
     private NativeMedia media;
     private SharedCamera camera;
     private NativeImportPicker importPicker;
+    private NativeGallery gallery;
+    private MethodChannel.Result galleryPermission;
     private volatile EventChannel.EventSink events;
     @Override public void configureFlutterEngine(FlutterEngine engine){
         super.configureFlutterEngine(engine);
@@ -30,6 +32,13 @@ public final class MainActivity extends FlutterActivity {
             public void onCancel(Object args){events=null;}
         });
         new MethodChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/core").setMethodCallHandler((call,reply)->{
+            if(call.method.equals("galleryPermission")){
+                if(gallery==null){reply.error("NOT_READY","应用尚未准备好。",null);return;}
+                if(galleryPermission!=null){reply.error("BUSY","请完成当前照片权限选择。",null);return;}
+                galleryPermission=reply;
+                String permission=android.os.Build.VERSION.SDK_INT>=33?android.Manifest.permission.READ_MEDIA_IMAGES:android.Manifest.permission.READ_EXTERNAL_STORAGE;
+                requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:new String[]{permission},49318);return;
+            }
             if(call.method.equals("pickFile")){
                 Object kind=call.argument("preset");
                 if(!(kind instanceof Boolean)||runtime==null){reply.error("INVALID_ARGUMENT","应用尚未准备好或导入类型无效。",null);return;}
@@ -46,6 +55,7 @@ public final class MainActivity extends FlutterActivity {
                     Object value;
                     if(call.method.equals("initialize")){
                         if(runtime==null){File root=new File(getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(this),new AccountHttpTransport(),AccountInstallation.id(this));media=new NativeMedia(this,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(this);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);});}
+                        if(gallery==null)gallery=new NativeGallery(this,runtime);
                         value=SharedJson.encode(SharedRuntime.map("root",runtime.root().getPath(),"schema",SharedJson.object(CoreEngine.schema()),"platform","android"));
                     }else{
                         if(runtime==null)throw new IOException("应用尚未初始化。");
@@ -60,6 +70,7 @@ public final class MainActivity extends FlutterActivity {
                         };
                         if(operation.startsWith("media."))value=media.request(operation,payload,cancelled::get,progress);
                         else if(operation.startsWith("camera."))value=camera.request(operation,payload,identity,cancelled::get,progress);
+                        else if(operation.startsWith("gallery."))value=gallery.request(operation,payload,cancelled::get);
                         else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
                     main.post(()->reply.success(value));
@@ -72,5 +83,6 @@ public final class MainActivity extends FlutterActivity {
     }
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);super.cleanUpFlutterEngine(engine);}
     @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);if(request==NativeImportPicker.REQUEST&&importPicker!=null)importPicker.result(result,data);}
-    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(importPicker!=null)importPicker.cancel();if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
+    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}}
+    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(importPicker!=null)importPicker.cancel();if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
 }

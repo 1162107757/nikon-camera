@@ -18,7 +18,44 @@ final class NativeMedia {
     private final SharedRuntime runtime;
     NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;}
     String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
-        Map<String,Object> p=SharedJson.object(json);File source=runtime.privateFile(SharedRuntime.text(p,"path",4096));
+        Map<String,Object> p=SharedJson.object(json);
+        if(operation.equals("media.showcase")){
+            runtime.guardOwner(SharedRuntime.text(p,"owner",64));
+            String id=SharedRuntime.text(p,"id",64),category=SharedRuntime.text(p,"category",64);
+            byte[] bytes=runtime.preset(id);if(bytes.length==0)throw new IOException("请选择预设。");
+            cc.huevia.ui.PresetShowcaseRenderer renderer=new cc.huevia.ui.PresetShowcaseRenderer(context,new cc.huevia.ui.PresetPreviewRenderer(context));
+            cc.huevia.ui.PresetShowcaseRenderer.Source scene=renderer.source(id,category);
+            File directory=new File(runtime.root(),"preset-previews");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建预设预览目录。");
+            boolean original=Boolean.TRUE.equals(p.get("original"));
+            int edge=SharedRuntime.integer(p,"edge",480);if(edge!=480&&edge!=960)throw new IOException("预览尺寸无效。");
+            File target=new File(directory,PhotoEditStore.hash((id+":"+scene.cacheKey+":"+PresetPreviewProfiles.MODEL_VERSION+":"+original+":"+edge).getBytes(java.nio.charset.StandardCharsets.UTF_8))+".jpg");
+            if(Files.isSymbolicLink(target.toPath()))throw new IOException("预设预览路径无效。");
+            if(!target.isFile()){
+                if(cancel.getAsBoolean())throw new InterruptedIOException("预览已取消。");
+                Bitmap bitmap=original?renderer.original(scene,edge):renderer.render(bytes,scene,edge);File temporary=File.createTempFile("showcase-",".part",directory);
+                try{try(FileOutputStream out=new FileOutputStream(temporary)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,90,out))throw new IOException("预设预览编码失败。");out.getFD().sync();}
+                    if(cancel.getAsBoolean())throw new InterruptedIOException("预览已取消。");Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.REPLACE_EXISTING);
+                }finally{bitmap.recycle();Files.deleteIfExists(temporary.toPath());}
+            }
+            return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"credit",scene.credit,"scene",scene.id));
+        }
+        File source=runtime.privateFile(SharedRuntime.text(p,"path",4096));
+        if(operation.equals("media.atmosphere")){
+            runtime.guardOwner(SharedRuntime.text(p,"owner",64));
+            if(!source.toPath().startsWith(new File(runtime.root(),"previews").getCanonicalFile().toPath()))throw new IOException("编辑背景只能读取有界预览。");
+            BitmapFactory.Options dimensions=bounds(source);if(Math.max(dimensions.outWidth,dimensions.outHeight)>1280)throw new IOException("编辑背景预览超过尺寸限制。");
+            Bitmap bitmap=BitmapFactory.decodeFile(source.getPath()),small=null,blurred=null;
+            if(bitmap==null)throw new IOException("无法读取编辑背景预览。");
+            File target=new File(source.getParentFile(),"atmosphere-"+UUID.randomUUID()+".png");boolean complete=false;
+            try{
+                float ratio=Math.min(1f,64f/Math.max(bitmap.getWidth(),bitmap.getHeight()));int width=Math.max(1,Math.round(bitmap.getWidth()*ratio)),height=Math.max(1,Math.round(bitmap.getHeight()*ratio));
+                small=Bitmap.createScaledBitmap(bitmap,width,height,true);int[] pixels=new int[width*height];small.getPixels(pixels,0,width,0,0,width,height);
+                blurred=Bitmap.createBitmap(SharedAtmosphere.blur(pixels,width,height),width,height,Bitmap.Config.ARGB_8888);
+                if(cancel.getAsBoolean())throw new InterruptedIOException("编辑背景生成已取消。");
+                try(FileOutputStream output=new FileOutputStream(target)){if(!blurred.compress(Bitmap.CompressFormat.PNG,100,output))throw new IOException("无法保存编辑背景。");output.getFD().sync();}
+                complete=true;return SharedJson.encode(SharedRuntime.map("path",target.getPath()));
+            }finally{if(blurred!=null)blurred.recycle();if(small!=null&&small!=bitmap)small.recycle();bitmap.recycle();if(!complete)Files.deleteIfExists(target.toPath());}
+        }
         if(operation.equals("media.info")){
             if(raw(source)){RawDeveloper.Info info=RawDeveloper.inspect(source);return SharedJson.encode(SharedRuntime.map("width",info.width,"height",info.height,"raw",true,"make",info.make,"model",info.model));}
             BitmapFactory.Options bounds=bounds(source);return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1)));

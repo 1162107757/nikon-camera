@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/services.dart';
 
 import 'domain.dart';
 import 'editor.dart';
@@ -11,13 +12,16 @@ import 'photos.dart';
 import 'profile.dart';
 import 'camera.dart';
 import 'theme.dart';
+import 'settings.dart';
+import 'appearance.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
   PaintingBinding.instance.imageCache.maximumSizeBytes = 32 << 20;
   final state = AppState(HueviaCore());
   runApp(HueviaApp(state: state));
-  unawaited(state.initialize());
+  unawaited(state.initialize().then((_) => readAppearance(state.core.root)));
 }
 
 class HueviaApp extends StatefulWidget {
@@ -48,10 +52,14 @@ class _HueviaAppState extends State<HueviaApp> {
             builder: (_, _) => CameraPage(state: widget.state),
           ),
           GoRoute(
-            path: '/account',
-            builder: (_, _) => AccountPage(state: widget.state),
+            path: '/settings',
+            builder: (_, _) => SettingsPage(state: widget.state),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/account',
+        builder: (_, _) => AccountPage(state: widget.state),
       ),
       GoRoute(
         path: '/photo/:id',
@@ -63,8 +71,17 @@ class _HueviaAppState extends State<HueviaApp> {
           return photo == null
               ? const Scaffold(body: Center(child: Text('照片已不可用，请返回相册重新选择。')))
               : photo.info['raw'] == true
-              ? RawDevelopPage(state: widget.state, photo: photo)
-              : EditorPage(state: widget.state, photo: photo);
+              ? RawDevelopPage(
+                  key: ValueKey('raw-${photo.id}'),
+                  state: widget.state,
+                  photo: photo,
+                  automaticallyEdit: true,
+                )
+              : EditorPage(
+                  key: ValueKey('edit-${photo.id}'),
+                  state: widget.state,
+                  photo: photo,
+                );
         },
       ),
     ],
@@ -77,15 +94,21 @@ class _HueviaAppState extends State<HueviaApp> {
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: widget.state,
+    listenable: Listenable.merge([widget.state, appearanceMode]),
     builder: (context, _) => MaterialApp.router(
       title: 'Huevia',
       debugShowCheckedModeBanner: false,
       theme: hueviaTheme(Brightness.light),
       darkTheme: hueviaTheme(Brightness.dark),
+      themeMode: appearanceMode.value,
       routerConfig: router,
       builder: (context, child) {
-        if (widget.state.ready) return child!;
+        if (widget.state.ready) {
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: Theme.of(context).appBarTheme.systemOverlayStyle!,
+            child: child!,
+          );
+        }
         return Scaffold(
           body: SafeArea(
             child: Center(
@@ -132,28 +155,144 @@ class HomeFrame extends StatelessWidget {
   const HomeFrame({super.key, required this.location, required this.child});
   final String location;
   final Widget child;
-  static const paths = ['/presets', '/photos', '/camera', '/account'];
+  static const paths = ['/presets', '/camera', '/photos', '/settings'];
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: child,
-    bottomNavigationBar: NavigationBar(
-      selectedIndex: paths.indexOf(location).clamp(0, 3),
-      onDestinationSelected: (index) => context.go(paths[index]),
-      destinations: const [
-        NavigationDestination(icon: Icon(Icons.tune_rounded), label: '预设'),
-        NavigationDestination(
-          icon: Icon(Icons.photo_library_outlined),
-          label: '照片',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.camera_alt_outlined),
-          label: '相机',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.person_outline_rounded),
-          label: '我的',
-        ),
-      ],
+    body: SafeArea(
+      child: LayoutBuilder(
+        builder: (context, bounds) {
+          final rail = bounds.maxWidth >= 600;
+          final scale = MediaQuery.textScalerOf(context).scale(1);
+          final p = HuePalette.of(context);
+          final density = MediaQuery.devicePixelRatioOf(context);
+          double snap(double value) => (value * density).round() / density;
+          final height = snap(
+            65.0 + ((scale - 1.2).clamp(0, double.infinity) * 24).round(),
+          );
+          final width = snap((bounds.maxWidth - 48).clamp(0.0, 360.0));
+          final innerPixels = ((width - 2 * snap(4)) * density).round();
+          final navigation = Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rail ? 8 : snap(4),
+              vertical: rail ? 6 : snap(4),
+            ),
+            child: Flex(
+              direction: rail ? Axis.vertical : Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (var i = 0; i < paths.length; i++)
+                  if (rail)
+                    _destination(context, i, true)
+                  else
+                    SizedBox(
+                      width:
+                          ((innerPixels * (i + 1) / 4).floor() -
+                              (innerPixels * i / 4).floor()) /
+                          density,
+                      child: _destination(context, i, false),
+                    ),
+              ],
+            ),
+          );
+          return Stack(
+            children: [
+              Positioned.fill(
+                left: rail ? 80 : 0,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 720),
+                    child: child,
+                  ),
+                ),
+              ),
+              if (rail)
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: 80,
+                  child: ColoredBox(color: p.glass, child: navigation),
+                )
+              else
+                Positioned(
+                  left:
+                      ((bounds.maxWidth - width) * density / 2).floor() /
+                      density,
+                  bottom: snap(14),
+                  child: SizedBox(
+                    width: width,
+                    height: height,
+                    child: HueGlass(child: navigation),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
     ),
   );
+
+  Widget _destination(BuildContext context, int index, bool rail) {
+    final selected = paths.indexOf(location) == index;
+    final p = HuePalette.of(context);
+    final label = ['预设', '同步', '相册', '设置'][index];
+    final item = Semantics(
+      button: true,
+      selected: selected,
+      label: label,
+      excludeSemantics: true,
+      onTap: () => context.go(paths[index]),
+      child: Material(
+        color: selected && !rail ? p.primaryContainer : Colors.transparent,
+        borderRadius: BorderRadius.circular(40),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(40),
+          onTap: () => context.go(paths[index]),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 54,
+                  height: 26,
+                  decoration: rail && selected
+                      ? BoxDecoration(
+                          color: p.primaryContainer,
+                          borderRadius: BorderRadius.circular(16),
+                        )
+                      : null,
+                  child: Center(
+                    child: HueIcon(
+                      [
+                        HueIconKind.presets,
+                        HueIconKind.camera,
+                        HueIconKind.album,
+                        HueIconKind.settings,
+                      ][index],
+                      size: 23,
+                      color: selected ? p.onPrimaryContainer : p.secondary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 11,
+                    height: 1.2,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
+                    color: selected
+                        ? (rail ? p.ink : p.onPrimaryContainer)
+                        : p.secondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    return rail ? SizedBox(height: 72, child: item) : item;
+  }
 }

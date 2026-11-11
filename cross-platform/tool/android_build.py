@@ -18,7 +18,9 @@ if not (sdk/'platform-tools/adb.exe').is_file() or not (java/'bin/java.exe').is_
     raise SystemExit('A complete Windows Android SDK and JDK are required')
 flutter=ROOT/'.tooling/cross-platform187/flutter-sdk';android=ROOT/'cross-platform/app/android'
 local=android/'local.properties';text=local.read_text(encoding='utf-8') if local.exists() else ''
-for name,value in [('sdk.dir',sdk.as_posix()),('flutter.sdk',flutter.as_posix())]:
+version=re.search(r'(?m)^version:\s*([^+\s]+)\+(\d+)\s*$',(android.parent/'pubspec.yaml').read_text(encoding='utf-8'))
+if not version:raise SystemExit('The app version must include its build number')
+for name,value in [('sdk.dir',sdk.as_posix()),('flutter.sdk',flutter.as_posix()),('flutter.versionName',version[1]),('flutter.versionCode',version[2])]:
     pattern=r'(?m)^'+re.escape(name)+r'=.*$'
     if re.search(pattern,text):text=re.sub(pattern,lambda _:name+'='+value,text)
     else:text+='\n'+name+'='+value+'\n'

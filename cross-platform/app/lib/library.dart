@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:go_router/go_router.dart';
 
 import 'domain.dart';
 import 'theme.dart';
 import 'widgets.dart';
+import 'legacy_presets.dart';
+import 'legacy_preset_details.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key, required this.state});
@@ -25,6 +28,88 @@ class _LibraryPageState extends State<LibraryPage> {
   List<String> categories = [];
   Timer? searchDelay;
   String notice = '';
+  bool searching = false;
+  String format = '';
+
+  Future<void> showFilters(List<String> choices) async {
+    var nextCategory = category, nextFormat = format;
+    final accepted = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheet) => StatefulBuilder(
+        builder: (context, refresh) => SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  '筛选预设',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 24),
+                const Text('文件格式'),
+                const SizedBox(height: 12),
+                CapsuleSwitch(
+                  labels: const ['全部', 'NCP', 'NP3'],
+                  selected: ['', 'NCP', 'NP3'].indexOf(nextFormat),
+                  onSelected: (index) =>
+                      refresh(() => nextFormat = ['', 'NCP', 'NP3'][index]),
+                ),
+                const SizedBox(height: 24),
+                const Text('预设分类'),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  children: [
+                    for (final value in ['', ...choices])
+                      ChoiceChip(
+                        label: Text(value.isEmpty ? '全部' : value),
+                        selected: nextCategory == value,
+                        onSelected: (_) => refresh(() => nextCategory = value),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                FilledButton(
+                  onPressed: () => Navigator.pop(sheet, true),
+                  child: const Text('应用筛选'),
+                ),
+                TextButton(
+                  onPressed: () => refresh(() {
+                    nextCategory = '';
+                    nextFormat = '';
+                  }),
+                  child: const Text('重置'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (accepted == true && mounted) {
+      setState(() {
+        category = nextCategory;
+        format = nextFormat;
+      });
+      if (tab == 1) await load();
+    }
+  }
+
+  void selectSource(int value) {
+    searchDelay?.cancel();
+    generation++;
+    pendingLoad = null;
+    setState(() {
+      tab = value;
+      category = '';
+      busy = false;
+    });
+    if (value == 1) unawaited(load());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -94,7 +179,7 @@ class _LibraryPageState extends State<LibraryPage> {
                 'page': next ? page + 1 : 1,
                 'pageSize': 24,
                 'category': category,
-                'fileFormat': '',
+                'fileFormat': format,
               },
       );
       if (!mounted || request != generation) return;
@@ -125,11 +210,90 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> import() async {
+    final selected = await hueDialog<bool>(
+      context: context,
+      builder: (dialog) {
+        final palette = HuePalette.of(dialog);
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        '添加预设',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    HueIconButton(
+                      kind: HueIconKind.close,
+                      label: '关闭添加预设',
+                      disc: false,
+                      iconSize: 20,
+                      onPressed: () => Navigator.pop(dialog),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Material(
+                  color: palette.container,
+                  borderRadius: BorderRadius.circular(14),
+                  child: ListTile(
+                    minVerticalPadding: 14,
+                    leading: const HueIcon(HueIconKind.file),
+                    title: const Text('从文件导入', style: TextStyle(fontSize: 14)),
+                    subtitle: const Text(
+                      'NCP · NP3',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    trailing: const HueIcon(HueIconKind.chevron, size: 16),
+                    onTap: () => Navigator.pop(dialog, true),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '仅保存到本机',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: palette.secondary,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(dialog);
+                        context.push('/account');
+                      },
+                      child: const Text('登录同步', style: TextStyle(fontSize: 12)),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    if (selected == true) await importFile();
+  }
+
+  Future<void> importFile() async {
     if (importing) return;
     setState(() => importing = true);
     try {
       if (!await widget.state.pickPreset()) return;
-      if (mounted) report(context, '预设已加入本地库');
+      if (mounted && widget.state.presets.isNotEmpty) {
+        await detail(widget.state.presets.first);
+      }
     } catch (error) {
       if (mounted) report(context, error);
     } finally {
@@ -137,102 +301,53 @@ class _LibraryPageState extends State<LibraryPage> {
     }
   }
 
-  Future<void> detail(Preset preset) => showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    showDragHandle: true,
-    builder: (sheet) => SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
-          24,
-          0,
-          24,
-          24 + MediaQuery.viewInsetsOf(sheet).bottom,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(preset.name, style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 8),
-            Text(
-              '${preset.format} · ${preset.category.isEmpty ? '未分类' : preset.category}${preset.author.isEmpty ? '' : ' · ${preset.author}'}',
-            ),
-            if (preset.description.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Text(preset.description),
+  Future<void> detail(Preset preset) => hueRootPage<void>(
+    context,
+    MaterialPageRoute(
+      builder: (page) => LegacyPresetDetails(
+        state: widget.state,
+        preset: preset,
+        onCategory: () => editCategory(preset),
+        onRemove: () {
+          Navigator.pop(page);
+          unawaited(remove(preset));
+        },
+        onShare: () async {
+          try {
+            final file = await widget.state.core.call('library.export', {
+              'id': preset.id,
+            });
+            if (!mounted) return;
+            await SharePlus.instance.share(
+              ShareParams(
+                sharePositionOrigin: shareAnchor(context),
+                files: [XFile(file['path'] as String)],
+                fileNameOverrides: [file['name'] as String],
               ),
-            const SizedBox(height: 16),
-            if (preset.online)
-              FilledButton.icon(
-                icon: const Icon(Icons.download_outlined),
-                label: const Text('保存到我的预设'),
-                onPressed: () async {
-                  Navigator.pop(sheet);
-                  try {
-                    await widget.state.core.call('online.download', {
-                      'preset': preset.data,
-                      'owner':
-                          widget.state.session['user']?['id'] as String? ?? '',
-                    });
-                    await widget.state.refreshLibrary();
-                    if (mounted) report(context, '预设已保存');
-                  } catch (error) {
-                    if (mounted) report(context, error);
-                  }
-                },
-              )
-            else ...[
-              FilledButton.icon(
-                icon: const Icon(Icons.ios_share_rounded),
-                label: const Text('分享预设文件'),
-                onPressed: () async {
-                  Navigator.pop(sheet);
-                  try {
-                    final file = await widget.state.core.call(
-                      'library.export',
-                      {'id': preset.id},
-                    );
-                    if (!mounted) return;
-                    await SharePlus.instance.share(
-                      ShareParams(
-                        sharePositionOrigin: shareAnchor(context),
-                        files: [XFile(file['path'] as String)],
-                        fileNameOverrides: [file['name'] as String],
-                      ),
-                    );
-                  } catch (error) {
-                    if (mounted) report(context, error);
-                  }
-                },
-              ),
-              const SizedBox(height: 8),
-              OutlinedButton(
-                onPressed: () async {
-                  Navigator.pop(sheet);
-                  await editCategory(preset);
-                },
-                child: const Text('编辑分类'),
-              ),
-              const SizedBox(height: 8),
-              TextButton(
-                onPressed: () async {
-                  Navigator.pop(sheet);
-                  await remove(preset);
-                },
-                child: const Text('移除预设'),
-              ),
-            ],
-          ],
-        ),
+            );
+          } catch (failure) {
+            if (mounted) report(context, failure);
+          }
+        },
+        onDownload: () async {
+          try {
+            await widget.state.core.call('online.download', {
+              'preset': preset.data,
+              'owner': widget.state.session['user']?['id'] as String? ?? '',
+            });
+            await widget.state.refreshLibrary();
+            if (page.mounted) Navigator.pop(page);
+          } catch (failure) {
+            if (mounted) report(context, failure);
+          }
+        },
       ),
     ),
   );
   Future<void> editCategory(Preset preset) async {
     final owner = widget.state.session['user']?['id'] as String? ?? '';
     final input = TextEditingController(text: preset.category);
-    final value = await showDialog<String>(
+    final value = await hueDialog<String>(
       context: context,
       builder: (dialog) => AlertDialog(
         title: const Text('预设分类'),
@@ -269,7 +384,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
   Future<void> remove(Preset preset) async {
     final owner = widget.state.session['user']?['id'] as String? ?? '';
-    final value = await showDialog<bool>(
+    final value = await hueDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
         title: const Text('移除预设？'),
@@ -308,7 +423,12 @@ class _LibraryPageState extends State<LibraryPage> {
     final rows = source
         .where(
           (preset) =>
-              (tab == 1 || category.isEmpty || preset.category == category) &&
+              (format.isEmpty || preset.format == format) &&
+              (tab == 1 ||
+                  category.isEmpty ||
+                  (category == '未分类'
+                      ? preset.category.isEmpty
+                      : preset.category == category)) &&
               (tab == 1 ||
                   query.isEmpty ||
                   '${preset.name} ${preset.author} ${preset.category}'
@@ -317,212 +437,275 @@ class _LibraryPageState extends State<LibraryPage> {
         )
         .toList();
     final allCategories = {
-      ...source.map((preset) => preset.category).where((s) => s.isNotEmpty),
+      ...source.map(
+        (preset) => preset.category.isEmpty ? '未分类' : preset.category,
+      ),
       ...categories,
     }.toList();
+    final palette = HuePalette.of(context);
+    final compact = MediaQuery.sizeOf(context).height < 480;
     return Scaffold(
-      appBar: AppBar(
-        bottom: importing
-            ? const PreferredSize(
-                preferredSize: Size.fromHeight(3),
-                child: LinearProgressIndicator(),
+      appBar: HueHeader(
+        title: '预设',
+        compact: compact,
+        leading: searching
+            ? TextField(
+                autofocus: true,
+                onChanged: searchChanged,
+                decoration: const InputDecoration(
+                  hintText: '搜索预设',
+                  isDense: true,
+                ),
               )
             : null,
-        title: const Text('预设库'),
         actions: [
-          IconButton(
-            onPressed: importing ? null : import,
-            tooltip: '导入预设',
-            icon: const Icon(Icons.add_rounded),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        top: false,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerScrolled) => [
-            SliverToBoxAdapter(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CapsuleSwitch(
-                      labels: const ['我的预设', '在线预设'],
-                      selected: tab,
-                      onSelected: (value) {
-                        searchDelay?.cancel();
-                        generation++;
-                        pendingLoad = null;
-                        setState(() {
-                          tab = value;
-                          category = '';
-                          busy = false;
-                        });
-                        if (value == 1) unawaited(load());
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-                    child: TextField(
-                      onChanged: searchChanged,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search_rounded),
-                        hintText: '搜索预设名称',
-                        isDense: true,
-                      ),
-                    ),
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 4,
-                    ),
-                    child: Row(
-                      children: [
-                        for (final item in ['', ...allCategories])
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: ChoiceChip(
-                              label: Text(item.isEmpty ? '全部' : item),
-                              selected: category == item,
-                              onSelected: (_) {
-                                setState(() => category = item);
-                                if (tab == 1) unawaited(load());
-                              },
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  if (notice.isNotEmpty && error == null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 8,
-                      ),
-                      child: Text(notice),
-                    ),
-                  if (error != null)
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          Text(error!),
-                          TextButton(
-                            onPressed: busy ? null : load,
-                            child: const Text('重新加载'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  if (busy) const LinearProgressIndicator(minHeight: 2),
-                ],
-              ),
+          if (searching)
+            TextButton(
+              onPressed: () {
+                setState(() => searching = false);
+                searchChanged('');
+              },
+              child: const Text('取消'),
+            )
+          else ...[
+            HueIconButton(
+              kind: HueIconKind.search,
+              label: '搜索预设',
+              onPressed: () => setState(() => searching = true),
+            ),
+            HueIconButton(
+              kind: HueIconKind.plus,
+              label: '导入本地预设',
+              filled: true,
+              onPressed: importing ? null : import,
             ),
           ],
-          body: RefreshIndicator(
-            onRefresh: () =>
-                tab == 0 ? widget.state.refreshLibrary() : load(refresh: true),
-            child: rows.isEmpty
-                ? ListView(
-                    children: [
-                      const SizedBox(height: 72),
-                      Icon(
-                        tab == 0 ? Icons.tune_rounded : Icons.cloud_outlined,
-                        size: 40,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                      const SizedBox(height: 16),
-                      Center(
-                        child: Text(
-                          busy
-                              ? '正在读取预设'
-                              : tab == 0
-                              ? '把喜欢的色彩收进来'
-                              : '暂时没有符合条件的预设',
+        ],
+      ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerScrolled) => [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CapsuleSwitch(
+                    labels: const ['在线预设', '我的预设'],
+                    selected: 1 - tab,
+                    onSelected: (value) => selectSource(1 - value),
+                  ),
+                ),
+                if (tab == 0)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      height: 44,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () => context.push('/account'),
+                          child: Text(
+                            widget.state.session['user'] == null
+                                ? '仅保存在本机 · 登录后可同步云端 ›'
+                                : '个人预设 · 管理云端同步 ›',
+                            style: TextStyle(
+                              fontSize: 12,
+                              height: 1.2,
+                              color: palette.secondary,
+                            ),
+                          ),
                         ),
                       ),
-                      if (tab == 0)
-                        Center(
-                          child: TextButton(
-                            onPressed: importing ? null : import,
-                            child: const Text('导入 NCP / NP3'),
+                    ),
+                  ),
+                const SizedBox(height: 10),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.fromLTRB(20, 2, 20, 10),
+                  child: Row(
+                    children: [
+                      for (final item in ['', ...allCategories])
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: SizedBox(
+                            height: 48,
+                            child: Center(
+                              child: Material(
+                                color: category == item
+                                    ? palette.primaryContainer
+                                    : palette.container,
+                                borderRadius: BorderRadius.circular(18),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(18),
+                                  onTap: () {
+                                    setState(() => category = item);
+                                    if (tab == 1) unawaited(load());
+                                  },
+                                  child: Container(
+                                    constraints: const BoxConstraints(
+                                      minWidth: 48,
+                                    ),
+                                    height: 36,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      item.isEmpty ? '全部' : item,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        height: 1.2,
+                                        fontWeight: category == item
+                                            ? FontWeight.w700
+                                            : FontWeight.w400,
+                                        color: category == item
+                                            ? palette.onPrimaryContainer
+                                            : palette.ink,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                     ],
-                  )
-                : LayoutBuilder(
-                    builder: (context, constraints) => GridView.builder(
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: (constraints.maxWidth / 180)
-                            .floor()
-                            .clamp(2, 5),
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        mainAxisExtent:
-                            228 +
-                            (MediaQuery.textScalerOf(context).scale(14) - 14) *
-                                3,
-                      ),
-                      itemCount: rows.length + (hasMore && tab == 1 ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index == rows.length) {
-                          return Center(
-                            child: OutlinedButton(
-                              onPressed: busy ? null : () => load(next: true),
-                              child: const Text('加载更多'),
-                            ),
-                          );
-                        }
-                        final preset = rows[index];
-                        return Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: InkWell(
-                            onTap: () => detail(preset),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: SizedBox.expand(
-                                    child: PresetImage(preset: preset),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        preset.name,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text(
-                                        '${preset.format} · ${preset.category.isEmpty ? '未分类' : preset.category}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 2, 20, 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          tab == 0 ? '我的色彩' : '发现色彩',
+                          style: TextStyle(
+                            fontSize: 13,
+                            height: 1.2,
+                            fontWeight: FontWeight.w700,
+                            color: palette.ink,
                           ),
-                        );
-                      },
+                        ),
+                      ),
+                      Text(
+                        '${rows.length} 份',
+                        style: TextStyle(
+                          fontSize: 12,
+                          height: 1.2,
+                          color: palette.secondary,
+                        ),
+                      ),
+                      HueIconButton(
+                        kind: HueIconKind.adjust,
+                        label: '筛选预设',
+                        disc: false,
+                        iconSize: 20,
+                        onPressed: () => showFilters(allCategories),
+                      ),
+                    ],
+                  ),
+                ),
+                if (notice.isNotEmpty && error == null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 8,
+                    ),
+                    child: Text(notice),
+                  ),
+                if (error != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(error!),
+                  ),
+                if (busy || importing)
+                  const LinearProgressIndicator(minHeight: 2),
+              ],
+            ),
+          ),
+        ],
+        body: RefreshIndicator(
+          onRefresh: () =>
+              tab == 0 ? widget.state.refreshLibrary() : load(refresh: true),
+          child: rows.isEmpty
+              ? LayoutBuilder(
+                  builder: (context, bounds) => SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(
+                      bottom: hueNavigationInset(context),
+                    ),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight:
+                            (bounds.maxHeight - hueNavigationInset(context))
+                                .clamp(0, double.infinity),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            HueIcon(
+                              HueIconKind.presets,
+                              size: 32,
+                              color: palette.secondary,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              busy
+                                  ? '正在读取预设'
+                                  : tab == 0
+                                  ? '把喜欢的色彩带在身边'
+                                  : '暂时没有在线预设',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 18,
+                                height: 1.2,
+                                fontWeight: FontWeight.w700,
+                                color: palette.ink,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              tab == 0
+                                  ? '添加 NCP、NP3，或从在线预设库下载喜欢的色彩。'
+                                  : error ?? '检查网络后重新加载。',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14,
+                                height: 1.2,
+                                color: palette.secondary,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              child: OutlinedButton(
+                                onPressed: busy || importing
+                                    ? null
+                                    : tab == 0
+                                    ? import
+                                    : load,
+                                child: Text(tab == 0 ? '添加本地预设' : '重新加载'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-          ),
+                )
+              : LegacyPresetGrid(
+                  rows: rows,
+                  core: widget.state.core,
+                  owner: widget.state.session['user']?['id'] as String? ?? '',
+                  onOpen: detail,
+                  onRemove: remove,
+                  onMore: hasMore && tab == 1 && !busy
+                      ? () => load(next: true)
+                      : null,
+                ),
         ),
       ),
     );

@@ -9,10 +9,12 @@
 #import "cc/huevia/shared/SharedRawSettings.h"
 #import "cc/huevia/shared/SharedCleanup.h"
 #import "cc/huevia/shared/SharedExportModel.h"
+#import "cc/huevia/shared/SharedAtmosphere.h"
 #import "cc/huevia/ncp/RawDevelopmentSettings.h"
 #import "cc/huevia/ncp/PhotoGeometry.h"
 #import "cc/huevia/ncp/PhotoBorder.h"
 #import "cc/huevia/ncp/PresetPreviewProfile.h"
+#import "cc/huevia/ncp/PresetPreviewProfiles.h"
 #import "cc/huevia/ncp/RawJpegColorMatch.h"
 #import "cc/huevia/album/PhotoExportSpec.h"
 #import "cc/huevia/album/PhotoEditStore.h"
@@ -139,8 +141,41 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   return raster;
 }
 - (NSDictionary *)request:(NSString *)operation payload:(NSString *)payload task:(HueviaTask *)task {
-  NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![p isKindOfClass:NSDictionary.class]||![p[@"path"] isKindOfClass:NSString.class])fail(@"照片请求数据无效。");
+  NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![p isKindOfClass:NSDictionary.class])fail(@"照片请求数据无效。");
+  if([operation isEqualToString:@"media.showcase"]){
+    NSString *owner=p[@"owner"]?:@"",*presetID=p[@"id"],*category=p[@"category"]?:@"";
+    if(![owner isKindOfClass:NSString.class]||![presetID isKindOfClass:NSString.class]||![category isKindOfClass:NSString.class])fail(@"预设预览数据无效。");
+    [_runtime guardOwnerWithNSString:owner];IOSByteArray *bytes=[_runtime presetWithNSString:presetID];
+    if(presetID.length!=64||bytes.length==0)fail(@"请选择预设。");
+    NSArray<NSString *> *names=@[@"portrait-smile",@"portrait-man",@"alpine-lake",@"sunlit-forest",@"city-skyline",@"neon-street",@"coastal-water",@"pink-tulips",@"breakfast",@"rainy-tokyo"];
+    NSArray<NSNumber *> *pool=@[@0,@1,@2,@3,@4,@5,@6,@7,@8,@9];NSString *tag=[[category stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet] lowercaseString];
+    if([@[@"人像",@"portrait"] containsObject:tag])pool=@[@0,@1];else if([@[@"风景",@"landscape"] containsObject:tag])pool=@[@2,@3,@6];else if([@[@"夜景",@"night"] containsObject:tag])pool=@[@5,@9];else if([@[@"日常",@"daily"] containsObject:tag])pool=@[@0,@4,@6,@7,@8];
+    unsigned long long seed=0;[[NSScanner scannerWithString:[presetID substringToIndex:8]] scanHexLongLong:&seed];NSString *scene=names[pool[seed%pool.count].unsignedIntegerValue];
+    NSURL *bundleURL=[NSBundle.mainBundle URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"]?:[[NSBundle bundleForClass:HueviaMedia.class] URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];
+    NSBundle *bundle=bundleURL?[NSBundle bundleWithURL:bundleURL]:nil;NSURL *imageURL=[bundle URLForResource:scene withExtension:@"jpg"];
+    if(!imageURL)fail(@"摄影样片尚未安装。");
+    id<CcHueviaNcpPresetPreviewProfile> profile=[CcHueviaNcpPresetPreviewProfiles fromPresetWithByteArray:bytes];
+    NSString *directory=[_root stringByAppendingPathComponent:@"preset-previews"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建预设预览目录。");
+    NSString *model=[[profile modelVersion] stringByReplacingOccurrencesOfString:@"[^a-zA-Z0-9_-]" withString:@"_" options:NSRegularExpressionSearch range:NSMakeRange(0,[[profile modelVersion] length])];
+    BOOL original=[p[@"original"] boolValue];int edge=p[@"edge"]?[p[@"edge"] intValue]:480;if(edge!=480&&edge!=960)fail(@"预览尺寸无效。");
+    NSString *target=[directory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@-photography-v1-%@-%d-%d.jpg",presetID,scene,model,edge,original]];
+    if(![NSFileManager.defaultManager fileExistsAtPath:target]){
+      HueviaRaster *raster=load(imageURL.path,_root,edge);if(!original)[profile renderPixelsWithCcHueviaNcpSpatialPreviewFilter_Pixels:raster withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
+      NSString *temporary=[directory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];
+      @try{check(task);encode(raster,temporary,NO,@{(__bridge id)kCGImageDestinationLossyCompressionQuality:@.9});[_runtime guardOwnerWithNSString:owner];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存预设预览。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
+    }
+    return @{@"path":target,@"scene":scene};
+  }
+  if(![p[@"path"] isKindOfClass:NSString.class])fail(@"照片路径无效。");
   NSString *path=[[_runtime privateFileWithNSString:p[@"path"]] getPath];BOOL raw=isRaw(path);NSDictionary *metadata=properties(path);check(task);
+  if([operation isEqualToString:@"media.atmosphere"]){
+    [_runtime guardOwnerWithNSString:p[@"owner"]?:@""];
+    if(![path hasPrefix:[[_root stringByAppendingPathComponent:@"previews"] stringByAppendingString:@"/"]]||std::max([metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue])>1280)fail(@"编辑背景只能读取有界预览。");
+    HueviaRaster *small=load(path,_root,64);IOSIntArray *blurred=[CcHueviaSharedSharedAtmosphere blurWithIntArray:pixels(small) withInt:small.pixelWidth withInt:small.pixelHeight];
+    for(int i=0;i<blurred.length;i++)small.pixels[i]=uint32_t(IOSIntArray_Get(blurred,i));
+    NSString *target=[[_root stringByAppendingPathComponent:@"previews"] stringByAppendingPathComponent:[NSString stringWithFormat:@"atmosphere-%@.png",NSUUID.UUID.UUIDString]];
+    @try{check(task);encode(small,target,YES,@{});return @{@"path":target};}@catch(id error){[NSFileManager.defaultManager removeItemAtPath:target error:nil];@throw error;}
+  }
   if([operation isEqualToString:@"media.info"]){
     if(raw){HueviaRawInfo info;char error[1024];if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);return @{@"width":@(info.width),@"height":@(info.height),@"raw":@YES,@"make":[NSString stringWithUTF8String:info.make]?:@"",@"model":[NSString stringWithUTF8String:info.model]?:@""};}
     int width=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue];validSize(width,height);return @{@"width":@(width),@"height":@(height),@"raw":@NO,@"orientation":metadata[(__bridge id)kCGImagePropertyOrientation]?:@1};

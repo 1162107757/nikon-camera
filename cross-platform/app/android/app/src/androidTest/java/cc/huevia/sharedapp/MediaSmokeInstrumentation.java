@@ -28,8 +28,10 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
         Bundle result=new Bundle();File workspace=null;
         try{
             if(integration){
-                startActivitySync(new android.content.Intent().setClassName(getTargetContext(),"cc.huevia.sharedapp.MainActivity").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
-                Object pending=Class.forName("dev.flutter.plugins.integration_test.IntegrationTestPlugin").getField("testResults").get(null);
+                // Flutter can keep the main queue active while the tests run;
+                // launch without startActivitySync's queue-idle barrier.
+                runOnMainSync(()->getTargetContext().startActivity(new android.content.Intent().setClassName(getTargetContext(),"cc.huevia.sharedapp.MainActivity").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)));
+                Object pending=Class.forName("dev.flutter.plugins.integration_test.IntegrationTestPlugin",true,getTargetContext().getClassLoader()).getField("testResults").get(null);
                 Map<?,?> results=(Map<?,?>)((Future<?>)pending).get(5,TimeUnit.MINUTES);
                 result.putString("testResults",SharedJson.encode(results));
                 yes(!results.isEmpty(),"Flutter native suite produced results");
@@ -76,6 +78,17 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             Map<String,Object> originalView=SharedJson.object(media.request("media.originalPreview",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner","")),()->false,p->{}));
             yes(((Number)originalView.get("width")).intValue()==256&&((Number)originalView.get("height")).intValue()==192,"original comparison ignores edited geometry");
             yes(draft.equals(SharedJson.object(runtime.request("draft.load",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner",""))))),"original comparison preserves complete draft");
+            Map<String,Object> atmosphere=SharedJson.object(media.request("media.atmosphere",SharedJson.encode(SharedRuntime.map("path",originalView.get("path"),"owner","")),()->false,p->{}));
+            Bitmap background=BitmapFactory.decodeFile((String)atmosphere.get("path"));
+            yes(background!=null&&background.getWidth()==64&&background.getHeight()==48,"editor atmosphere is bounded to original 64px sample");background.recycle();
+            yes(draft.equals(SharedJson.object(runtime.request("draft.load",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner",""))))),"atmosphere leaves effect draft intact");
+            try{media.request("media.atmosphere",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner","")),()->false,p->{});throw new AssertionError("Full source accepted as atmosphere");}catch(IOException expected){checks++;}
+            int backgroundCount=new File(workspace,"previews").list().length;
+            try{media.request("media.atmosphere",SharedJson.encode(SharedRuntime.map("path",originalView.get("path"),"owner","")),()->true,p->{});throw new AssertionError("Atmosphere cancellation ignored");}catch(InterruptedIOException expected){checks++;}
+            yes(new File(workspace,"previews").list().length==backgroundCount,"cancelled atmosphere leaves no file");
+            NativeGallery gallery=new NativeGallery(getTargetContext(),runtime);
+            yes(SharedJson.object(gallery.access()).containsKey("access"),"gallery reports scoped access");
+            try{gallery.request("gallery.import",SharedJson.encode(SharedRuntime.map("id","content://unlisted/photo")),()->false);throw new AssertionError("Unknown gallery URI accepted");}catch(IOException expected){checks++;}
             File large=new File(workspace,"large.jpg");Bitmap largeImage=Bitmap.createBitmap(3000,2000,Bitmap.Config.ARGB_8888);
             try(FileOutputStream out=new FileOutputStream(large)){largeImage.eraseColor(Color.rgb(120,130,140));if(!largeImage.compress(Bitmap.CompressFormat.JPEG,95,out))throw new IOException("large fixture encode");}finally{largeImage.recycle();}
             Map<String,Object> bounded=SharedJson.object(media.request("media.originalPreview",SharedJson.encode(SharedRuntime.map("path",large.getPath(),"owner","")),()->false,p->{}));

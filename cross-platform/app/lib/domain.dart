@@ -68,6 +68,8 @@ class HueviaCore {
     return result;
   }
 
+  Future<Json> galleryPermission() => _invoke('galleryPermission', {});
+
   /// Originals stream to private storage; RAW pixels never enter the UI heap.
   Future<String> importFile(XFile selected, {required bool preset}) async {
     if (root.isEmpty) throw const AppFailure('应用尚未准备好。');
@@ -336,7 +338,10 @@ class AppState extends ChangeNotifier {
           return renamed;
         }
         final info = await core.call('media.info', {'path': path});
-        final photo = Photo(path, name, info);
+        final photo = Photo(path, name, {
+          ...info,
+          'addedAt': DateTime.now().millisecondsSinceEpoch,
+        });
         final next = [photo, ...photos];
         await _persistPhotos(next);
         photos = next;
@@ -352,7 +357,10 @@ class AppState extends ChangeNotifier {
         }
         final existing = photos.where((photo) => photo.path == path);
         if (existing.isNotEmpty) return existing.first;
-        final photo = Photo(path, name, info);
+        final photo = Photo(path, name, {
+          ...info,
+          'addedAt': DateTime.now().millisecondsSinceEpoch,
+        });
         final next = <Photo>[photo, ...photos];
         await _persistPhotos(next);
         photos = next;

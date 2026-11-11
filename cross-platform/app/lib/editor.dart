@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart' as p;
 
@@ -12,6 +13,10 @@ import 'recipes.dart';
 import 'copy_adjustments.dart';
 import 'versions.dart';
 import 'widgets.dart';
+import 'hue_icons.dart';
+import 'raw_develop.dart';
+
+part 'legacy_editor.dart';
 
 class EditorPage extends StatefulWidget {
   const EditorPage({super.key, required this.state, required this.photo});
@@ -26,7 +31,11 @@ class _EditorPageState extends State<EditorPage> {
   final List<Recipe> undo = [], redo = [];
   Timer? debounce;
   StreamSubscription<dynamic>? progressEvents;
-  String? preview, error, activeJob;
+  String? preview, error, activeJob, atmosphere;
+  int parameterIndex = 1;
+  bool atmosphereLoading = false;
+  final panelRevision = ValueNotifier<int>(0);
+  void refreshWorkspace(VoidCallback update) => setState(update);
   bool exporting = false, rendering = false, compare = false, restored = false;
   bool managingTools = false;
   bool analyzingCleanup = false;
@@ -87,6 +96,8 @@ class _EditorPageState extends State<EditorPage> {
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     if (preview != null) unawaited(discardPreview(preview));
+    if (atmosphere != null) unawaited(discardPreview(atmosphere));
+    panelRevision.dispose();
     super.dispose();
   }
 
@@ -116,6 +127,7 @@ class _EditorPageState extends State<EditorPage> {
       error = null;
     });
     revision++;
+    panelRevision.value++;
     debounce?.cancel();
     debounce = Timer(const Duration(milliseconds: 180), () {
       unawaited(render());
@@ -154,6 +166,10 @@ class _EditorPageState extends State<EditorPage> {
         preview = result['path'] as String;
         error = null;
       });
+      panelRevision.value++;
+      if (atmosphere == null && !atmosphereLoading) {
+        unawaited(loadAtmosphere(result['path'] as String));
+      }
       if (old != null &&
           old != result['path'] &&
           p.isWithin(p.join(widget.state.core.root, 'previews'), old)) {
@@ -297,7 +313,7 @@ class _EditorPageState extends State<EditorPage> {
     ];
     var automatic = border['automatic'] != false,
         visible = border['visible'] as int? ?? 63;
-    final accepted = await showDialog<bool>(
+    final accepted = await hueDialog<bool>(
       context: context,
       builder: (dialog) => StatefulBuilder(
         builder: (context, refresh) => AlertDialog(
@@ -465,7 +481,7 @@ class _EditorPageState extends State<EditorPage> {
     final edge = TextEditingController(text: '2048'),
         form = GlobalKey<FormState>();
     var quality = 95;
-    final result = await showDialog<Json>(
+    final result = await hueDialog<Json>(
       context: context,
       builder: (dialog) => StatefulBuilder(
         builder: (context, refresh) => AlertDialog(
@@ -591,8 +607,8 @@ class _EditorPageState extends State<EditorPage> {
       ),
     ],
   );
-  Widget controls() {
-    switch (tab) {
+  Widget controls({int? tool}) {
+    switch (tool ?? tab) {
       case 7:
         final settings = object(
           recipe.data['cleanup'] ?? {'amount': 100, 'haze': 100, 'noise': 100},
@@ -737,7 +753,7 @@ class _EditorPageState extends State<EditorPage> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () => showDialog<void>(
+                          onPressed: () => hueDialog<void>(
                             context: context,
                             builder: (dialog) => AlertDialog(
                               title: Text(name),
@@ -1045,228 +1061,5 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final image = preview;
-    final visual = Stack(
-      fit: StackFit.expand,
-      children: [
-        ColoredBox(color: Theme.of(context).colorScheme.surfaceContainer),
-        if (image != null)
-          InteractiveViewer(
-            minScale: 1,
-            maxScale: 8,
-            child: Center(
-              child: Image.file(
-                File(image),
-                fit: BoxFit.contain,
-                gaplessPlayback: true,
-                semanticLabel: compare ? '原图预览' : '照片效果预览',
-                errorBuilder: (_, _, _) => Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.image_not_supported_outlined),
-                        const SizedBox(height: 12),
-                        const Text('预览无法读取，请重试。'),
-                        TextButton(
-                          onPressed: rendering || exporting || analyzingCleanup
-                              ? null
-                              : () {
-                                  setState(() => compare = false);
-                                  unawaited(restored ? render() : restore());
-                                },
-                          child: const Text('重新生成预览'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        else
-          const Center(child: CircularProgressIndicator()),
-        if (rendering || exporting || analyzingCleanup)
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: LinearProgressIndicator(
-              value: progress > 0 ? progress : null,
-              minHeight: 3,
-            ),
-          ),
-      ],
-    );
-    final panel = Column(
-      children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
-          child: Row(
-            children: [
-              for (var i = 0; i < 8; i++)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: ChoiceChip(
-                    label: Text(
-                      ['滤镜', '调节', '调色盘', '构图', '边框', '曲线', 'HSL', '去灰'][i],
-                    ),
-                    selected: tab == i,
-                    onSelected: (_) => setState(() => tab = i),
-                  ),
-                ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView(
-            key: ValueKey('editor-panel-$tab'),
-            padding: const EdgeInsets.all(20),
-            children: [
-              controls(),
-              if (error != null) ...[
-                const SizedBox(height: 16),
-                Text(
-                  error!,
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
-                ),
-                TextButton(
-                  onPressed:
-                      rendering ||
-                          exporting ||
-                          analyzingCleanup ||
-                          managingTools
-                      ? null
-                      : restored
-                      ? render
-                      : restore,
-                  child: const Text('重试预览'),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ],
-    );
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('编辑'),
-        actions: [
-          IconButton(
-            tooltip: '撤销',
-            onPressed:
-                undo.isEmpty || exporting || managingTools || analyzingCleanup
-                ? null
-                : () {
-                    redo.add(recipe.clone());
-                    final previous = undo.removeLast();
-                    change(() => recipe = previous, snapshot: false);
-                  },
-            icon: const Icon(Icons.undo_rounded),
-          ),
-          IconButton(
-            tooltip: '重做',
-            onPressed:
-                redo.isEmpty || exporting || managingTools || analyzingCleanup
-                ? null
-                : () {
-                    undo.add(recipe.clone());
-                    final next = redo.removeLast();
-                    change(() => recipe = next, snapshot: false);
-                  },
-            icon: const Icon(Icons.redo_rounded),
-          ),
-          IconButton(
-            tooltip: compare ? '显示效果' : '对比原图',
-            isSelected: compare,
-            onPressed:
-                widget.photo.info['raw'] == true ||
-                    !restored ||
-                    exporting ||
-                    managingTools ||
-                    analyzingCleanup
-                ? null
-                : () {
-                    setState(() => compare = !compare);
-                    revision++;
-                    debounce?.cancel();
-                    unawaited(render());
-                  },
-            icon: const Icon(Icons.compare_rounded),
-          ),
-          IconButton(
-            tooltip: '导出照片',
-            onPressed:
-                exporting ||
-                    managingTools ||
-                    analyzingCleanup ||
-                    preview == null
-                ? null
-                : export,
-            icon: const Icon(Icons.ios_share_rounded),
-          ),
-          PopupMenuButton<String>(
-            tooltip: '编辑选项',
-            enabled:
-                restored && !exporting && !managingTools && !analyzingCleanup,
-            onSelected: (value) => openTool(
-              copying: value == 'copy',
-              savedVersions: value == 'versions',
-            ),
-            itemBuilder: (_) => const [
-              PopupMenuItem(value: 'recipes', child: Text('我的配方')),
-              PopupMenuItem(value: 'copy', child: Text('复制当前调节')),
-              PopupMenuItem(value: 'versions', child: Text('成品版本')),
-            ],
-          ),
-        ],
-      ),
-      body: SafeArea(
-        top: false,
-        child: LayoutBuilder(
-          builder: (context, constraints) => constraints.maxWidth > 680
-              ? Row(
-                  children: [
-                    Expanded(child: visual),
-                    SizedBox(width: 340, child: panel),
-                  ],
-                )
-              : Column(
-                  children: [
-                    Expanded(flex: 5, child: visual),
-                    Expanded(flex: 4, child: panel),
-                  ],
-                ),
-        ),
-      ),
-      bottomNavigationBar: exporting
-          ? SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 8,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text('正在生成效果图 ${(progress * 100).round()}%'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        if (activeJob != null) {
-                          unawaited(widget.state.core.cancel(activeJob!));
-                        }
-                      },
-                      child: const Text('取消'),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : null,
-    );
-  }
+  Widget build(BuildContext context) => legacyWorkspace(context);
 }

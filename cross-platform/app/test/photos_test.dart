@@ -62,20 +62,39 @@ void main() {
       }
 
       await show();
-      await tester.tap(find.byTooltip('标记星标').first);
+      final hold = await tester.startGesture(
+        tester.getCenter(
+          find.byKey(const ValueKey('photo-/private/originals/first.jpg')),
+        ),
+      );
+      await tester.pump(const Duration(seconds: 1));
+      await hold.up();
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('标记星标'));
       await tester.pumpAndSettle();
       expect(model.starredPhotos, hasLength(1));
-      await tester.tap(find.text('星标').last);
+      await tester.tap(find.byTooltip('相册更多操作'));
       await tester.pumpAndSettle();
-      expect(find.text('走廊.jpg'), findsOneWidget);
-      expect(find.text('阴天.nef'), findsNothing);
+      await tester.tap(find.text('只看星标照片'));
+      await tester.pumpAndSettle();
+      expect(find.bySemanticsLabel(RegExp('^走廊.jpg')), findsOneWidget);
+      expect(find.bySemanticsLabel(RegExp('^阴天.nef')), findsNothing);
+      await tester.tap(find.byTooltip('搜索照片'));
+      await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField), '不存在');
+      await tester.tap(find.text('搜索'));
       await tester.pumpAndSettle();
-      expect(find.text('没有符合条件的照片'), findsOneWidget);
+      expect(find.text('没有匹配的照片'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
       await show();
-      expect(find.byTooltip('取消星标'), findsOneWidget);
+      await tester.longPress(
+        find.byKey(const ValueKey('photo-/private/originals/first.jpg')),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('取消星标'), findsOneWidget);
+      await tester.tapAt(const Offset(10, 10));
+      await tester.pumpAndSettle();
       model.photos.insert(
         0,
         const Photo('/private/originals/new.jpg', '新增.jpg', {

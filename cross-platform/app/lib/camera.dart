@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'domain.dart';
 import 'widgets.dart';
+import 'theme.dart';
 
 class CameraPage extends StatefulWidget {
-  const CameraPage({super.key, required this.state});
+  const CameraPage({
+    super.key,
+    required this.state,
+    this.configuration = false,
+  });
   final AppState state;
+  final bool configuration;
   @override
   State<CameraPage> createState() => _CameraPageState();
 }
@@ -20,6 +26,48 @@ class _CameraPageState extends State<CameraPage> {
   int offset = 0, epoch = 0;
   String? error;
   List<Json> items = [];
+  int overviewTab = 0;
+
+  Future<void> openConnection() async {
+    await hueRootPage<void>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CameraPage(state: widget.state, configuration: true),
+      ),
+    );
+    if (mounted) await status();
+  }
+
+  Future<void> connectionSettings() => showDialog<void>(
+    context: context,
+    builder: (dialog) => AlertDialog(
+      title: const Text('连接设置'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: host,
+              keyboardType: TextInputType.url,
+              decoration: const InputDecoration(labelText: '相机地址'),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: port,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: '端口'),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(dialog),
+          child: const Text('完成'),
+        ),
+      ],
+    ),
+  );
   @override
   void initState() {
     super.initState();
@@ -178,9 +226,13 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('相机'),
+  Widget build(BuildContext context) =>
+      widget.configuration ? connectionView(context) : overview(context);
+
+  Widget connectionView(BuildContext context) => Scaffold(
+    appBar: HueHeader(
+      title: 'Wi-Fi 无线连接',
+      back: true,
       actions: [
         if (connected)
           IconButton(
@@ -197,27 +249,32 @@ class _CameraPageState extends State<CameraPage> {
           if (busy) const LinearProgressIndicator(minHeight: 2),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
               children: [
                 if (!connected) ...[
+                  const Text('连接后可浏览照片与导入预设。', style: TextStyle(fontSize: 13)),
+                  const SizedBox(height: 20),
                   Text(
-                    '连接相机 Wi-Fi',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    '相机类型',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: HuePalette.of(context).secondary,
+                    ),
                   ),
-                  const SizedBox(height: 12),
-                  const Text('先在系统设置中连接相机 Wi-Fi，然后返回这里。'),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
                     initialValue: protocol,
-                    decoration: const InputDecoration(labelText: '相机协议'),
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'nikon',
-                        child: Text('尼康 · PTP/IP'),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 20,
                       ),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'nikon', child: Text('尼康')),
                       DropdownMenuItem(
                         value: 'fujifilm',
-                        child: Text('富士 X-T20 · 实验性照片读取'),
+                        child: Text('富士 X-T20'),
                       ),
                     ],
                     onChanged: busy
@@ -230,25 +287,15 @@ class _CameraPageState extends State<CameraPage> {
                             port.text = protocol == 'nikon' ? '15740' : '55740';
                           }),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: host,
-                    enabled: !busy,
-                    keyboardType: TextInputType.url,
-                    autocorrect: false,
-                    decoration: const InputDecoration(labelText: '相机地址'),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: port,
-                    enabled: !busy,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: '端口'),
-                  ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   FilledButton(
                     onPressed: busy ? null : connect,
                     child: Text(busy ? '正在连接' : '连接相机'),
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton(
+                    onPressed: busy ? null : connectionSettings,
+                    child: const Text('连接设置'),
                   ),
                 ] else ...[
                   Text(model, style: Theme.of(context).textTheme.headlineSmall),
@@ -343,4 +390,189 @@ class _CameraPageState extends State<CameraPage> {
       ),
     ),
   );
+
+  Widget overview(BuildContext context) {
+    final p = HuePalette.of(context);
+    final compact = MediaQuery.sizeOf(context).height < 480;
+    return Scaffold(
+      appBar: HueHeader(
+        title: '同步',
+        compact: compact,
+        actions: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  color: connected ? const Color(0xff42735b) : p.secondary,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 6),
+              Text(
+                connected ? '$model · 已连接' : '未连接',
+                style: TextStyle(fontSize: 11, color: p.secondary),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 2, 20, 0),
+            child: CapsuleSwitch(
+              labels: const ['相机照片', '边拍边传', '已下载'],
+              selected: overviewTab,
+              onSelected: (value) => setState(() => overviewTab = value),
+            ),
+          ),
+          if (overviewTab == 0)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+              child: InkWell(
+                onTap: openConnection,
+                borderRadius: BorderRadius.circular(14),
+                child: Container(
+                  constraints: const BoxConstraints(minHeight: 72),
+                  padding: const EdgeInsets.fromLTRB(0, 10, 2, 10),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: p.container,
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        child: const HueIcon(HueIconKind.camera),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              '遥控拍摄',
+                              style: TextStyle(
+                                fontSize: 14,
+                                height: 1.2,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              '实时取景与快门',
+                              style: TextStyle(
+                                fontSize: 11,
+                                height: 1.2,
+                                color: p.secondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      HueIcon(HueIconKind.chevron, color: p.primary),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          Expanded(
+            child: connected && overviewTab == 0
+                ? ListView(
+                    padding: EdgeInsets.fromLTRB(
+                      20,
+                      10,
+                      20,
+                      100 + hueNavigationInset(context),
+                    ),
+                    children: [
+                      Text(
+                        '共 ${items.length} 张',
+                        style: TextStyle(fontSize: 12, color: p.secondary),
+                      ),
+                      for (final item in items)
+                        ListTile(
+                          title: Text(item['name'] as String),
+                          onTap: () => download(item),
+                        ),
+                      if (hasMore)
+                        OutlinedButton(
+                          onPressed: busy ? null : () => page(next: true),
+                          child: const Text('读取更多照片'),
+                        ),
+                    ],
+                  )
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(28, 44, 28, 100),
+                    child: Column(
+                      children: [
+                        if (!compact)
+                          Container(
+                            width: 84,
+                            height: 84,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: p.card,
+                              borderRadius: BorderRadius.circular(26),
+                            ),
+                            child: HueIcon(
+                              overviewTab == 2
+                                  ? HueIconKind.album
+                                  : HueIconKind.camera,
+                              size: 34,
+                              color: p.secondary,
+                            ),
+                          ),
+                        SizedBox(height: compact ? 0 : 16),
+                        Text(
+                          overviewTab == 2
+                              ? '还没有已下载照片'
+                              : overviewTab == 1
+                              ? '边拍边传'
+                              : '连接相机，开始浏览',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: compact ? 18 : 19,
+                            height: 1.2,
+                            fontWeight: FontWeight.w700,
+                            color: p.ink,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          overviewTab == 2
+                              ? '从相机下载的原图会保存在这里，\n断开连接也能继续查看。'
+                              : overviewTab == 1
+                              ? '连接相机后，接收拍摄的照片。'
+                              : '在底部「设置」中连接相机 Wi-Fi，\n照片会显示在这里。',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.5,
+                            color: p.secondary,
+                          ),
+                        ),
+                        if (overviewTab != 2) ...[
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: double.infinity,
+                            child: FilledButton(
+                              onPressed: openConnection,
+                              child: const Text('连接相机'),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
 }

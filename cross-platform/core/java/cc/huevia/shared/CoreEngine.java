@@ -22,7 +22,7 @@ public final class CoreEngine {
     public static String inspectPreset(byte[] bytes)throws IOException{
         PresetFile file=PresetFile.validate(bytes);Map<String,Object> result=new LinkedHashMap<>();
         result.put("format",file.fileFormat);result.put("version",file.version);result.put("registrationName",file.registrationName);
-        try{PresetPreviewProfile profile=PresetPreviewProfiles.fromPreset(bytes);result.put("previewSupported",true);result.put("registrationName",profile.registrationName());result.put("model",profile.modelVersion());}
+        try{PresetPreviewProfile profile=PresetPreviewProfiles.fromPreset(bytes);result.put("previewSupported",true);result.put("registrationName",profile.registrationName());result.put("model",profile.modelVersion());List<Double> tone=new ArrayList<>();for(int i=0;i<=256;i++)tone.add(profile.mapTone(i/256.0));result.put("toneSamples",tone);}
         catch(IOException unsupported){result.put("previewSupported",false);result.put("reason",unsupported.getMessage());}
         return SharedJson.encode(result);
     }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'domain.dart';
+import 'widgets.dart';
 
 class RecipesPage extends StatefulWidget {
   const RecipesPage({
@@ -64,7 +65,7 @@ class _RecipesPageState extends State<RecipesPage> {
 
   Future<void> nameRecipe([Json? item]) async {
     var enteredName = item?['name'] as String? ?? '';
-    final name = await showDialog<String>(
+    final name = await hueDialog<String>(
       context: context,
       builder: (dialog) => AlertDialog(
         title: Text(item == null ? '保存当前配方' : '重命名配方'),
@@ -103,7 +104,7 @@ class _RecipesPageState extends State<RecipesPage> {
   }
 
   Future<void> remove(Json item) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await hueDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
         title: const Text('删除配方？'),

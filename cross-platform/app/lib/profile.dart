@@ -6,6 +6,9 @@ import 'domain.dart';
 import 'widgets.dart';
 import 'registration.dart';
 import 'personal_sync.dart';
+import 'theme.dart';
+
+part 'legacy_account.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key, required this.state});
@@ -18,6 +21,8 @@ class _AccountPageState extends State<AccountPage> {
   final username = TextEditingController(), password = TextEditingController();
   String? error;
   bool busy = false;
+  bool passwordLogin = false, passwordVisible = false;
+  void refreshAccount(VoidCallback mutation) => setState(mutation);
   @override
   void dispose() {
     username.dispose();
@@ -71,6 +76,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     final user = widget.state.session['user'];
+    if (user == null) return legacyAccount(context);
     final warning = widget.state.session['storageWarning'] as String? ?? '';
     return Scaffold(
       appBar: AppBar(title: const Text('我的')),

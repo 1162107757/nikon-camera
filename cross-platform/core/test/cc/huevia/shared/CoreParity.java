@@ -13,7 +13,7 @@ public final class CoreParity {
         PhotoLocalEditsTest.main(new String[0]);
         RawJpegColorMatchTest.main(new String[0]);
         RawHighlightColorTest.main(new String[0]);
-        int boundaryChecks=CoreBoundary.run();
+        int boundaryChecks=CoreBoundary.run()+AtmosphereChecks.run();
         Map<String,Object> result=new LinkedHashMap<>();result.put("schema",1);result.put("engine",CoreEngine.VERSION);
         result.put("rawColorModel",RawJpegColorMatch.MODEL);result.put("tests","original-ncp-local-edits-raw-color-highlight");
         result.put("boundaryChecks",boundaryChecks);

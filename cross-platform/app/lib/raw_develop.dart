@@ -8,11 +8,18 @@ import 'package:go_router/go_router.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'theme.dart';
 
 class RawDevelopPage extends StatefulWidget {
-  const RawDevelopPage({super.key, required this.state, required this.photo});
+  const RawDevelopPage({
+    super.key,
+    required this.state,
+    required this.photo,
+    this.automaticallyEdit = false,
+  });
   final AppState state;
   final Photo photo;
+  final bool automaticallyEdit;
   @override
   State<RawDevelopPage> createState() => _RawDevelopPageState();
 }
@@ -50,7 +57,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         setState(() => progress = (value['progress'] as num).toDouble());
       }
     }, onError: (_) {});
-    unawaited(render());
+    unawaited(widget.automaticallyEdit ? openEditor() : render());
   }
 
   @override
@@ -180,7 +187,11 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         'lastDevelopment': result['settings'],
       });
       if (mounted) {
-        context.push(working.editorLocation);
+        if (widget.automaticallyEdit) {
+          context.replace(working.editorLocation);
+        } else {
+          context.push(working.editorLocation);
+        }
       }
     } catch (failure) {
       if (mounted) setState(() => error = '$failure');
@@ -248,6 +259,25 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       );
   @override
   Widget build(BuildContext context) {
+    if (widget.automaticallyEdit && error == null) {
+      return Scaffold(
+        backgroundColor: const Color(0xff242b27),
+        appBar: HueHeader(title: widget.photo.name, back: true),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(
+                value: progress > 0 ? progress : null,
+                color: const Color(0xffffe335),
+              ),
+              const SizedBox(height: 16),
+              const Text('正在显影 RAW…', style: TextStyle(color: Colors.white)),
+            ],
+          ),
+        ),
+      );
+    }
     final image = Stack(
       fit: StackFit.expand,
       children: [
