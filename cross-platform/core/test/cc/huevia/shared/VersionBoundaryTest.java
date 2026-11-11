@@ -68,7 +68,10 @@ public final class VersionBoundaryTest {
         // Paths in saved records survive an application-container relocation.
         Path relocated=temporary.resolve("relocated-versions");Files.move(root,relocated);SharedRuntime restored=runtime(relocated);
         Map<String,Object> moved=call(restored,"version.open","owner","","id",second.get("id"));
-        yes(((String)moved.get("path")).startsWith(relocated.toString())&&((String)moved.get("sourcePath")).startsWith(relocated.toString()));
+        // macOS temp roots can be aliases (/var -> /private/var). Runtime paths
+        // deliberately use the canonical container, on both JVM and Apple.
+        Path canonicalRelocated=relocated.toFile().getCanonicalFile().toPath();
+        yes(new File((String)moved.get("path")).toPath().startsWith(canonicalRelocated)&&new File((String)moved.get("sourcePath")).toPath().startsWith(canonicalRelocated));
         Path record=new File((String)moved.get("path")).getParentFile().toPath().resolve("manifest.json");Files.writeString(record,"{}");
         List<?> damaged=(List<?>)call(restored,"version.list","owner","").get("items");yes(damaged.size()==1&&((Map<?,?>)damaged.get(0)).containsKey("error"));
         call(restored,"version.delete","owner","","id",second.get("id"));yes(((List<?>)call(restored,"version.list","owner","").get("items")).isEmpty());
