@@ -308,6 +308,70 @@ void main() {
       },
     );
   }
+  testWidgets('Border thumbnails resume after a temporary busy operation', (
+    tester,
+  ) async {
+    final core = BorderCore(
+      Directory.systemTemp.createTempSync('huevia-border-resume-'),
+    );
+    final state = WorkspaceState(core);
+    final pending = Completer<Json>();
+    core.delayedPreview = pending;
+    var enabled = true;
+    StateSetter refresh = (_) {};
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: SizedBox(
+            height: 184,
+            child: StatefulBuilder(
+              builder: (context, update) {
+                refresh = update;
+                return BorderPanel(
+                  state: state,
+                  photo: Photo(core.source.path, 'own.png', {}),
+                  owner: '',
+                  recipe: {'border': {}, 'geometry': {}},
+                  enabled: enabled,
+                  canUndo: false,
+                  canRedo: false,
+                  onUndo: () {},
+                  onRedo: () {},
+                  onDragStart: () {},
+                  onChanged: (_, _) {},
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+    await settle(tester);
+    expect(core.previewJobs, hasLength(1));
+    refresh(() => enabled = false);
+    await tester.pump();
+    // An unrelated application notification while exporting is not an account
+    // change and must not erase the already identified capture information.
+    state.notifyListeners();
+    await tester.pump();
+    expect(find.text('Nikon Z6 III'), findsOneWidget);
+    final abandoned = core.copy();
+    core.delayedPreview = null;
+    pending.complete({'path': abandoned});
+    await settle(tester);
+    refresh(() => enabled = true);
+    await settle(tester);
+    await settle(tester);
+    expect(find.textContaining('边框预览失败'), findsNothing);
+    expect(core.previewJobs, hasLength(5));
+    expect(core.previewJobs.toSet(), hasLength(5));
+    expect(find.byType(Image), findsNWidgets(4));
+    expect(File(abandoned).existsSync(), false);
+    expect(tester.takeException(), isNull);
+    await cleanup(tester, core.directory);
+    state.dispose();
+  });
+
   testWidgets(
     'Account changes reject pending border thumbnails and field commits',
     (tester) async {

@@ -3,6 +3,14 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="$ROOT/cross-platform/.build/core-ios"
 J2OBJCC="$ROOT/.tooling/cross-platform187/j2objc-3.1/dist/j2objcc"
+failure_logs() {
+  code=$?
+  if [[ "$code" != 0 ]]; then
+    for file in "$WORK"/avatar*.log; do echo "Log: $(basename "$file")"; tail -n 35 "$file"; done
+  fi
+  exit "$code"
+}
+trap failure_logs EXIT
 # Exercise the production ImageIO avatar adapter directly, with owned images
 # and no signed-in session or production test API. Keep the toolchain cache
 # independent of these checks; they run after core_ios.sh prepares the runtime.

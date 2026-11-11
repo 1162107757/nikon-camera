@@ -56,4 +56,5 @@ jobs:
             cross-platform/.build/mobile-apple/
             cross-platform/.build/core-ios/parity.json
             cross-platform/.build/core-ios/translation.log
+            cross-platform/.build/core-ios/avatar*.log
           retention-days: 7

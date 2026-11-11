@@ -95,10 +95,10 @@ class _BorderPanelState extends State<BorderPanel> {
   bool dragging = false, loading = true;
   final sheetRevision = ValueNotifier<int>(0);
   HueviaCore get core => widget.state.core;
-  bool get ready =>
+  bool get sameOwner =>
       mounted &&
-      widget.enabled &&
       (widget.state.session['user']?['id'] as String? ?? '') == widget.owner;
+  bool get ready => sameOwner && widget.enabled;
   Json copy(Json data) => object(jsonDecode(jsonEncode(data)));
   Json get recipe => {...copy(widget.recipe), 'border': copy(border)};
   List<String> get fields =>
@@ -141,7 +141,7 @@ class _BorderPanelState extends State<BorderPanel> {
 
   void accountChanged() {
     if (!mounted) return;
-    if (!ready) {
+    if (!sameOwner) {
       generation++;
       captureGeneration++;
       debounce?.cancel();
@@ -220,7 +220,11 @@ class _BorderPanelState extends State<BorderPanel> {
 
   Json frozenBorder(Json value) => copy(object(value['border'] ?? {}));
   Future<void> render(Json frozen, int serial) async {
-    if (!ready || serial != generation) return;
+    if (serial != generation) return;
+    if (!ready) {
+      thumbKey = '';
+      return;
+    }
     final identity = 'border-${DateTime.now().microsecondsSinceEpoch}';
     String? activeJob;
     final results = <String>[];
@@ -262,7 +266,10 @@ class _BorderPanelState extends State<BorderPanel> {
       }
     } finally {
       if (job == activeJob) job = null;
-      if (!accepted) unawaited(discard(results));
+      if (!accepted) {
+        if (serial == generation) thumbKey = '';
+        unawaited(discard(results));
+      }
     }
   }
 
