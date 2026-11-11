@@ -20,17 +20,21 @@ public final class SharedImport {
         if(!"ncp".equals(kind)&&!"preview".equals(kind)){if(input!=null)input.close();throw new IOException("投稿文件类型无效。");}
         return copyOwned(input,name,"ncp".equals(kind),directory,cancel,kind,owner);
     }
+    public static String stageAvatar(InputStream input,String name,String owner,String directory,BooleanSupplier cancel)throws IOException{
+        return copyOwned(input,name,false,directory,cancel,"avatar",owner);
+    }
     private static String copyOwned(InputStream input,String name,boolean preset,String directory,BooleanSupplier cancel,String submissionKind,String owner)throws IOException{
         try(InputStream source=Objects.requireNonNull(input)){
             check(cancel);
-            boolean submission=!submissionKind.isEmpty();
-            if(submission){cc.huevia.community.CommunityRepository.id(owner);if(!submissionKind.equals("ncp")&&!submissionKind.equals("preview"))throw new IOException("投稿文件类型无效。");}
+            boolean submission=!submissionKind.isEmpty(),avatar=submissionKind.equals("avatar");
+            if(submission){cc.huevia.community.CommunityRepository.id(owner);if(!submissionKind.equals("ncp")&&!submissionKind.equals("preview")&&!avatar)throw new IOException("投稿文件类型无效。");}
             if(name==null||name.isEmpty()||name.length()>1024||name.indexOf('/')>=0||name.indexOf('\\')>=0||!StandardCharsets.UTF_8.newEncoder().canEncode(name)||name.codePoints().anyMatch(Character::isISOControl))throw new IOException("所选文件名称无效。");
             int dot=name.lastIndexOf('.');String ext=dot<0?"":name.substring(dot+1).toLowerCase(Locale.ROOT);
-            if(submission?(preset?!ext.equals("ncp"):!Arrays.asList("jpg","jpeg","png","webp").contains(ext)):(preset?!ext.equals("ncp")&&!ext.equals("np3"):!PHOTOS.contains(ext)))throw new IOException("请选择受支持的文件格式。");
-            long limit=preset?1024*1024:submission?4L*1024*1024:1024L*1024*1024;
+            if(!avatar&&(submission?(preset?!ext.equals("ncp"):!Arrays.asList("jpg","jpeg","png","webp").contains(ext)):(preset?!ext.equals("ncp")&&!ext.equals("np3"):!PHOTOS.contains(ext))))throw new IOException("请选择受支持的文件格式。");
+            if(avatar&&ext.isEmpty())ext="image";
+            long limit=preset?1024*1024:avatar?20L*1024*1024:submission?4L*1024*1024:1024L*1024*1024;
             File base=new File(directory).getCanonicalFile();
-            if(submission){File parent=new File(base,"submission-incoming");if(!parent.getCanonicalFile().getParentFile().equals(base)||Files.isSymbolicLink(parent.toPath())||!parent.isDirectory()&&!parent.mkdirs())throw new IOException("无法创建投稿文件导入目录。");base=parent.getCanonicalFile();}
+            if(submission){File parent=new File(base,avatar?"avatar-incoming":"submission-incoming");if(!parent.getCanonicalFile().getParentFile().equals(base)||Files.isSymbolicLink(parent.toPath())||!parent.isDirectory()&&!parent.mkdirs())throw new IOException("无法创建账号图片导入目录。");base=parent.getCanonicalFile();}
             File folder=new File(base,submission?owner:preset?"incoming":"originals");
             if(!folder.getCanonicalFile().getParentFile().equals(base)||Files.isSymbolicLink(folder.toPath())||!folder.isDirectory()&&!folder.mkdirs())throw new IOException("无法创建文件导入目录。");
             File temp=File.createTempFile("import-",".part",folder);

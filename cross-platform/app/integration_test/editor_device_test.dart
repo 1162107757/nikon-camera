@@ -19,6 +19,7 @@ import '../test/border_panel_test.dart' as border_panel;
 import '../test/community_state_test.dart' as community_state;
 import '../test/community_ui_test.dart' as community_ui;
 import '../test/submission_ui_test.dart' as submission_ui;
+import '../test/account_profile_test.dart' as account_profile;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -50,4 +51,5 @@ void main() {
   community_state.main();
   community_ui.main();
   submission_ui.main();
+  account_profile.main();
 }

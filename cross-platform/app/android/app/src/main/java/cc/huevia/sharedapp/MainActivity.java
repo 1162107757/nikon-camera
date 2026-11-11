@@ -39,6 +39,13 @@ public final class MainActivity extends FlutterActivity {
                 String permission=android.os.Build.VERSION.SDK_INT>=33?android.Manifest.permission.READ_MEDIA_IMAGES:android.Manifest.permission.READ_EXTERNAL_STORAGE;
                 requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:new String[]{permission},49318);return;
             }
+            if(call.method.equals("pickAvatar")){
+                Object owner=call.argument("owner"),updatedAt=call.argument("updatedAt");
+                if(runtime==null||!(owner instanceof String)||!(updatedAt instanceof String)){reply.error("INVALID_ARGUMENT","账号尚未准备好。",null);return;}
+                try{worker.execute(()->{try{runtime.guardProfile((String)owner,(String)updatedAt);runOnUiThread(()->importPicker.pickAvatar((String)owner,(String)updatedAt,runtime,runtime.root().getPath(),reply));}
+                    catch(Exception failure){runOnUiThread(()->reply.error("AVATAR_FAILED",failure.getMessage(),null));}});}
+                catch(RejectedExecutionException busy){reply.error("BUSY","任务较多，请稍后重试。",null);}return;
+            }
             if(call.method.equals("pickFile")){
                 Object kind=call.argument("preset");
                 if(!(kind instanceof Boolean)||runtime==null){reply.error("INVALID_ARGUMENT","应用尚未准备好或导入类型无效。",null);return;}

@@ -27,6 +27,7 @@ public final class SharedRuntime {
     private final SharedVersions versions;
     private final SharedCommunityLinks discussionLinks;
     private final SharedSubmissions submissions;
+    private final SharedProfile profile;
     private String storageWarning="";
     private PhotoAdjustmentCopy.Receipt copyReceipt;
     private String copyReceiptId="",copyReceiptOwner="";
@@ -48,10 +49,13 @@ public final class SharedRuntime {
         community=new CommunityRepository(accounts);
         community.setInstallationId(installationId);
         submissions=new SharedSubmissions(root,SharedSubmissions.network(accounts,community,installationId),this::guardOwner);
+        profile=new SharedProfile(root,accounts,installationId);
         try{accounts.restore();}catch(IOException failure){storageWarning=failure.getMessage();}
         personal=new SharedPersonal(root,library,accounts,installationId);
     }
     public File root(){return root;}
+    public synchronized void guardProfile(String owner,String updatedAt)throws IOException{profile.guard(owner,updatedAt);}
+    public synchronized String prepareAvatar(String owner,String updatedAt,byte[] jpeg)throws IOException{return SharedJson.encode(profile.prepare(owner,updatedAt,jpeg));}
     public byte[] preset(String id)throws IOException{if(id==null||id.isEmpty())return new byte[0];requirePreset(id);return library.readPreset(id);}
     public synchronized String request(String operation,String json)throws IOException {
         return request(operation,json,()->false,value->{});
@@ -142,12 +146,16 @@ public final class SharedRuntime {
                 value.put("storageWarning",storageWarning);value.put("logoutPending",accounts.isLogoutPending());result=value;break;
             }
             case "account.challenge":result=accounts.challenge(installationId);break;
-            case "account.login":result=authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));break;
+            case "account.login":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));break;
             case "account.register":result=authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
             case "account.qq":result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
-            case "account.refresh":result=authenticated(accounts.refresh());break;
+            case "account.refresh":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.refresh());break;
+            case "account.avatarCommit":result=authenticated(profile.commit(text(p,"owner",64),text(p,"receipt",64),text(p,"sha256",64)));break;
+            case "account.avatarReset":result=authenticated(profile.reset(text(p,"owner",64),text(p,"updatedAt",64)));break;
+            case "account.avatarDiscard":profile.discardForOwner(text(p,"owner",64),text(p,"receipt",64));result=map("discarded",true);break;
             case "account.logout":
-                try{accounts.logout();storageWarning="";}catch(IOException failure){storageWarning=failure.getMessage();throw failure;}
+                if(p.containsKey("owner")&&!accounts.isLogoutPending())guardOwner(text(p,"owner",64));
+                try{accounts.logout();storageWarning="";}catch(IOException failure){storageWarning=failure.getMessage();throw failure;}finally{profile.clear();}
                 result=map("loggedOut",true);break;
             case "community.get":
                 result=Boolean.TRUE.equals(p.get("login"))
@@ -281,7 +289,7 @@ public final class SharedRuntime {
     public static int integer(Map<String,Object> m,String key,int fallback)throws IOException{Object v=m.get(key);if(v==null)return fallback;if(!(v instanceof Number)||((Number)v).doubleValue()!=((Number)v).intValue())throw new IOException("操作数字无效："+key);return ((Number)v).intValue();}
     private static Object session(AccountRepository.Session session){
         if(session==null)return null;AccountRepository.User u=session.user;
-        return map("user",map("id",u.id,"username",u.username,"nickname",u.nickname,"avatarUrl",u.avatarUrl,"avatarSource",u.avatarSource,"provider",u.provider,"updatedAt",u.updatedAt),"expiresAt",session.expiresAt,"verified",session.verified);
+        return map("user",map("id",u.id,"username",u.username,"nickname",u.nickname,"avatarUrl",u.avatarUrl,"avatarSource",u.avatarSource,"provider",u.provider,"updatedAt",u.updatedAt,"createdAt",u.createdAt,"lastLoginAt",u.lastLoginAt,"loginCount",u.loginCount,"status",u.status),"expiresAt",session.expiresAt,"verified",session.verified);
     }
     private Object authenticated(AccountRepository.Session value){storageWarning="";return session(value);}
     private static Object onlineMap(OnlinePreset r){return map("id",r.id,"name",r.name,"description",r.description,"fileUrl",r.fileUrl,"sha256",r.sha256,"byteLength",r.byteLength,"previewUrl",r.previewUrl,"compatibleModels",r.compatibleModels,"category",r.category,"authorName",r.authorName,"source",r.source,"fileFormat",r.fileFormat);}

@@ -50,6 +50,27 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context), user = state.session['user'];
+    final pendingLogout = state.session['logoutPending'] == true;
+    final identity = user is Map ? object(user) : <String, dynamic>{};
+    final nickname = identity['nickname'] as String? ?? '';
+    final username = identity['username'] as String? ?? '';
+    final accountName = identity['provider'] == 'qq'
+        ? 'QQ 账号'
+        : username.isEmpty
+        ? '账号已登录'
+        : '@$username';
+    final accountTitle = pendingLogout
+        ? '退出未完成'
+        : user == null
+        ? '未登录'
+        : nickname.isEmpty
+        ? username
+        : nickname;
+    final accountSubtitle = pendingLogout
+        ? '本机登录信息尚未清除，请重试退出登录'
+        : user == null
+        ? '登录或注册，也可继续以游客使用'
+        : '$accountName${state.session['verified'] == true ? ' · 登录状态已验证' : ' · 已保存登录信息，待联网核验'}';
     Widget heading(String label) => Padding(
       padding: const EdgeInsets.fromLTRB(12, 24, 12, 9),
       child: Text(
@@ -210,10 +231,7 @@ class SettingsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              user == null
-                                  ? '未登录'
-                                  : (user['nickname'] as String?) ??
-                                        user['username'] as String,
+                              accountTitle,
                               style: TextStyle(
                                 fontSize: 15,
                                 height: 1.2,
@@ -223,7 +241,7 @@ class SettingsPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              user == null ? '登录或注册，也可继续以游客使用' : '管理账号与个人预设',
+                              accountSubtitle,
                               style: TextStyle(
                                 fontSize: 11,
                                 height: 1.2,

@@ -130,6 +130,32 @@ class HueviaCore {
     return result;
   }
 
+  Future<Json?> pickAvatar({
+    required String owner,
+    required String updatedAt,
+  }) async {
+    final result = await _invoke('pickAvatar', {
+      'owner': owner,
+      'updatedAt': updatedAt,
+    });
+    if (result['cancelled'] == true) return null;
+    final path = result['path'],
+        receipt = result['receipt'],
+        sha = result['sha256'];
+    if (path is! String ||
+        receipt is! String ||
+        sha is! String ||
+        !RegExp(r'^[0-9a-f]{64}$').hasMatch(sha) ||
+        !RegExp(r'^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$')
+            .hasMatch(receipt) ||
+        result['owner'] != owner ||
+        result['updatedAt'] != updatedAt ||
+        !p.isWithin(p.join(root, 'profile-pending', owner), path)) {
+      throw const AppFailure('头像预览结果无效，请重新选择。');
+    }
+    return result;
+  }
+
   Future<Json> galleryPermission() => _invoke('galleryPermission', {});
 
   /// Originals stream to private storage; RAW pixels never enter the UI heap.

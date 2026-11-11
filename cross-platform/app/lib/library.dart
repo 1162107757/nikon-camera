@@ -11,6 +11,7 @@ import 'legacy_presets.dart';
 import 'legacy_sheets.dart';
 import 'legacy_preset_details.dart';
 import 'submission_editor.dart';
+import 'personal_sync.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key, required this.state});
@@ -586,7 +587,15 @@ class _LibraryPageState extends State<LibraryPage> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: InkWell(
-                          onTap: () => context.push('/account'),
+                          onTap: () => widget.state.session['user'] == null
+                              ? context.push('/account')
+                              : hueRootPage<void>(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>
+                                        PersonalSyncPage(state: widget.state),
+                                  ),
+                                ),
                           child: Text(
                             widget.state.session['user'] == null
                                 ? '仅保存在本机 · 登录后可同步云端 ›'

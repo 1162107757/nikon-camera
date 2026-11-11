@@ -59,6 +59,14 @@
     if(!self.gallery){reply([FlutterError errorWithCode:@"NOT_READY" message:@"应用尚未准备好。" details:nil]);return;}
     [self.gallery requestPermissionFrom:self.presenter reply:reply];return;
   }
+  if([call.method isEqualToString:@"pickAvatar"]){
+    NSString *owner=args[@"owner"],*updatedAt=args[@"updatedAt"];
+    if(!self.runtime||![owner isKindOfClass:NSString.class]||![updatedAt isKindOfClass:NSString.class]){reply([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"账号尚未准备好。" details:nil]);return;}
+    dispatch_async(self.queue,^{@autoreleasepool{
+      @try{[self.runtime guardProfileWithNSString:owner withNSString:updatedAt];dispatch_async(dispatch_get_main_queue(),^{[self.importPicker pickAvatarForOwner:owner updatedAt:updatedAt runtime:self.runtime root:self.root presenter:self.presenter reply:reply];});}
+      @catch(id failure){NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"账号资料已改变，请重试。";dispatch_async(dispatch_get_main_queue(),^{reply([FlutterError errorWithCode:@"AVATAR_FAILED" message:message details:nil]);});}
+    }});return;
+  }
   if([call.method isEqualToString:@"pickFile"]){
     if(!self.runtime||![args[@"preset"] isKindOfClass:NSNumber.class]){reply([FlutterError errorWithCode:@"INVALID_ARGUMENT" message:@"应用尚未准备好或导入类型无效。" details:nil]);return;}
     if(args[@"submissionKind"]){

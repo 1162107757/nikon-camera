@@ -46,6 +46,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
                 public byte[] read(){return null;} public void write(byte[] b){} public void clear(){}
             },(method,path,token,body)->{throw new IOException("Network is outside this codec test");});
             NativeMedia media=new NativeMedia(getTargetContext(),runtime);
+            if(android.os.Build.VERSION.SDK_INT>=29)avatarPreparationChecks(workspace);
             File source=new File(workspace,"source.png");Bitmap image=Bitmap.createBitmap(256,192,Bitmap.Config.ARGB_8888);
             for(int y=0;y<192;y++)for(int x=0;x<256;x++)image.setPixel(x,y,Color.rgb(20+x/2,20+y/2,40+(x+y)/4));
             try(FileOutputStream out=new FileOutputStream(source)){yes(image.compress(Bitmap.CompressFormat.PNG,100,out),"source encode");}finally{image.recycle();}
@@ -180,6 +181,38 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
         yes(second.isEmpty(),"Old queued worker completion cannot finish a reopened picker");
         runOnMainSync(()->picker.result(Activity.RESULT_CANCELED,null));waitForIdleSync();
         yes(second.size()==1&&String.valueOf(second.get(0)).contains("cancelled"),"Reopened picker delivers its own result");
+    }
+    private void avatarPreparationChecks(File workspace)throws Exception{
+        android.content.ContentResolver resolver=getTargetContext().getContentResolver();
+        Bitmap fixture=Bitmap.createBitmap(1280,960,Bitmap.Config.ARGB_8888);
+        try{
+            int[] pixels=new int[1280*960];for(int y=0;y<960;y++)for(int x=0;x<1280;x++)pixels[y*1280+x]=Color.rgb(x*255/1279,y*255/959,((x/80+y/60)%2)*200+20);
+            fixture.setPixels(pixels,0,1280,0,0,1280,960);
+            File base=new File(workspace,"avatar-base.jpg");try(OutputStream output=new FileOutputStream(base)){if(!fixture.compress(Bitmap.CompressFormat.JPEG,94,output))throw new IOException("Avatar fixture encoding failed");}
+            for(int orientation=1;orientation<=8;orientation++){
+                File input=new File(workspace,"avatar-"+orientation+".jpg");Files.copy(base.toPath(),input.toPath());
+                ExifInterface exif=new ExifInterface(input.getPath());exif.setAttribute(ExifInterface.TAG_ORIENTATION,String.valueOf(orientation));exif.setAttribute(ExifInterface.TAG_MAKE,"Owned QA");exif.setAttribute(ExifInterface.TAG_MODEL,"Avatar204");exif.setAttribute(ExifInterface.TAG_DATETIME_ORIGINAL,"2026:01:01 00:00:00");
+                exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE,"1/1,2/1,3/1");exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE_REF,"N");exif.saveAttributes();
+                String before=PhotoEditStore.hashFile(input);android.net.Uri uri=null;cc.huevia.account.AvatarImages.Prepared original=null;
+                try{
+                    android.content.ContentValues values=new android.content.ContentValues();values.put(android.provider.MediaStore.Images.Media.DISPLAY_NAME,"Huevia-QA-Avatar204-"+orientation+".jpg");values.put(android.provider.MediaStore.Images.Media.MIME_TYPE,"image/jpeg");values.put(android.provider.MediaStore.Images.Media.RELATIVE_PATH,"Pictures/HueviaQA204");values.put(android.provider.MediaStore.Images.Media.IS_PENDING,1);
+                    uri=resolver.insert(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);if(uri==null)throw new IOException("Cannot publish owned avatar fixture");
+                    try(InputStream source=new FileInputStream(input);OutputStream output=resolver.openOutputStream(uri)){if(output==null)throw new IOException("Cannot open owned avatar fixture");byte[] buffer=new byte[8192];int n;while((n=source.read(buffer))!=-1)output.write(buffer,0,n);}
+                    values.clear();values.put(android.provider.MediaStore.Images.Media.IS_PENDING,0);resolver.update(uri,values,null,null);
+                    original=cc.huevia.account.AvatarImages.prepare(getTargetContext(),uri);
+                    byte[] actual=NativeAvatar.prepare(input,()->false);
+                    yes(Arrays.equals(actual,original.jpeg),"Avatar JPEG matches original URI implementation at EXIF "+orientation);
+                    ExifInterface clean=new ExifInterface(new ByteArrayInputStream(actual));
+                    int marker=clean.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
+                    yes(clean.getAttribute(ExifInterface.TAG_GPS_LATITUDE)==null&&clean.getAttribute(ExifInterface.TAG_MAKE)==null&&clean.getAttribute(ExifInterface.TAG_MODEL)==null&&clean.getAttribute(ExifInterface.TAG_DATETIME_ORIGINAL)==null&&(marker==ExifInterface.ORIENTATION_NORMAL||marker==ExifInterface.ORIENTATION_UNDEFINED),"Avatar metadata removed and orientation normalized at EXIF "+orientation+"; output marker="+marker);
+                    yes(before.equals(PhotoEditStore.hashFile(input)),"Avatar source unchanged at EXIF "+orientation);
+                }finally{if(original!=null){original.close();original.preview.recycle();}if(uri!=null)resolver.delete(uri,null,null);}
+            }
+            File tiny=new File(workspace,"avatar-tiny.png");Bitmap small=Bitmap.createBitmap(32,32,Bitmap.Config.ARGB_8888);
+            try(OutputStream output=new FileOutputStream(tiny)){small.compress(Bitmap.CompressFormat.PNG,100,output);}finally{small.recycle();}
+            boolean rejected=false;try{NativeAvatar.prepare(tiny,()->false);}catch(IOException expected){rejected=true;}yes(rejected,"Avatar rejects a source below original 64 pixel minimum");
+            rejected=false;try{NativeAvatar.prepare(base,()->true);}catch(InterruptedIOException expected){rejected=true;}yes(rejected,"Avatar cancellation stops before decoding");
+        }finally{fixture.recycle();}
     }
     private static void remove(File file,File guard)throws IOException{
         if(!file.getCanonicalFile().toPath().startsWith(guard.toPath()))throw new IOException("Test cleanup outside workspace");
