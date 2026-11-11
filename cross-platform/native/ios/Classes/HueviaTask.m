@@ -2,6 +2,9 @@
 #include <math.h>
 @implementation HueviaTask {double _lastEmission;double _lastValue;BOOL _emitted;}
 - (bool)getAsBoolean {return self.cancelled;}
+- (id<JavaUtilFunctionDoubleConsumer>)andThenWithJavaUtilFunctionDoubleConsumer:(id<JavaUtilFunctionDoubleConsumer>)after {
+  return JavaUtilFunctionDoubleConsumer_andThenWithJavaUtilFunctionDoubleConsumer_(self,after);
+}
 - (void)acceptWithDouble:(double)value {
   if(!isfinite(value))return;value=fmax(0,fmin(1,value));double now=NSProcessInfo.processInfo.systemUptime;
   if(_emitted&&(value==_lastValue||(value<1&&now-_lastEmission<.06)))return;

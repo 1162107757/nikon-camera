@@ -5,6 +5,7 @@
 #import "HueviaTask.h"
 #import "java/io/IOException.h"
 #import "java/io/InterruptedIOException.h"
+#import "java/lang/NullPointerException.h"
 
 namespace {
 int checks = 0;
@@ -56,6 +57,12 @@ int main(void) {@autoreleasepool {
   [NSFileManager.defaultManager createDirectoryAtPath:root withIntermediateDirectories:NO attributes:nil error:nil];
   int result=0;
   @try {
+    NSMutableArray *order=[NSMutableArray array];HueviaTask *first=[[HueviaTask alloc] init],*after=[[HueviaTask alloc] init];
+    first.progress=^(double value){[order addObject:@"first"];};after.progress=^(double value){[order addObject:@"after"];};
+    [[first andThenWithJavaUtilFunctionDoubleConsumer:after] acceptWithDouble:.5];
+    check([order isEqualToArray:@[@"first",@"after"]],@"Native progress consumers must preserve Java andThen ordering");
+    BOOL rejected=NO;@try{[first andThenWithJavaUtilFunctionDoubleConsumer:nil];}@catch(JavaLangNullPointerException *failure){rejected=YES;}
+    check(rejected,@"Native progress consumer composition must reject null");
     CGImageRef original=fixture(800,600,NO);
     const int expected[8][4]={{0,1,2,3},{1,0,3,2},{3,2,1,0},{2,3,0,1},{0,2,1,3},{2,0,3,1},{3,1,2,0},{1,3,0,2}};
     for(int orientation=1;orientation<=8;orientation++) {
