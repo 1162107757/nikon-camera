@@ -10,4 +10,7 @@ Huevia 跨平台开发版 0.31.0-dev / 201
 原版工程和历史安装包保留。本版仍未达到全部功能和全部页面逐像素对齐；荣耀 Magic、未知型号 NEF 及实际 iPhone 仍需实样/实机复测。
 Android 源码：644a95e5eaffbe7056a1512300a2eb3829d31757。
 APK 大小、SHA、签名、测试边界见 build-evidence.json。
-iOS 201 设备包正在构建，交付记录将单独保存。
+iOS：huevia-0.31.0-dev-201-ios-unsigned.ipa，最低 iOS 16，设备 ARM64，需要用户自签。
+iOS 源码：2b8286c0e96103bceb38779f645e169676366bae。
+Actions 43025837400 完整通过：41 项 Flutter 测试、218 项共享边界/表面检查、真实系统照片授权和完整 PhotoKit/图像/RAW 场景。
+IPA 已独立核验主程序、AOT、Flutter 及其他原生框架的 ARM64/iPhoneOS 切片；哈希和详细范围见 ios-build-evidence.json。尚未在实体 iPhone 安装。

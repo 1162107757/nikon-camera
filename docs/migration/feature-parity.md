@@ -107,7 +107,7 @@
 ### 201 未缓存 RAW 的 release JNI 修复
 
 - 用自制 6000×4000 DNG 在实际 Android 200 release 包复现未缓存显影失败。R8 把 JNI 按名称查找的 `cancelled()` / `onProgress(double)` 改为 `a` / `c`；应用捕获为原生组件不可用，没有观察到进程崩溃。既有小样片的成功不能代替这条路径的验收。
-- 201 仅增加精确回调/构造器保留规则及构建后映射校验，保留 R8/AOT；原工程不修改。Android 12 上首次显影 2400 万像素 DNG、原图/NCP/NP3 三种完整尺寸 JPEG 导出与真实分享接收均通过，原输入 SHA 不变，进程持续存活。ARM64/x64 包已校验签名、模型、ABI 和 16 KiB 对齐，见 [201 验证](validation/release-raw-201/README.md)。201 的 iOS 设备包正在用相同完整流程构建。
+- 201 仅增加精确回调/构造器保留规则及构建后映射校验，保留 R8/AOT；原工程不修改。Android 12 上首次显影 2400 万像素 DNG、原图/NCP/NP3 三种完整尺寸 JPEG 导出与真实分享接收均通过，原输入 SHA 不变，进程持续存活。ARM64/x64 包已校验签名、模型、ABI 和 16 KiB 对齐，见 [201 验证](validation/release-raw-201/README.md)。201 的 [Apple CI 43025837400](https://github.com/1162107757/nikon-camera/actions/runs/43025837400) 已完整通过；未签名 iPhoneOS ARM64 IPA 已独立核验并归档，仍未取得实体 iPhone 安装结果。
 
 ## 保留和交付规则
 

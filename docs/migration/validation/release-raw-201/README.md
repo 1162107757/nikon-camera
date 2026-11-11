@@ -28,4 +28,8 @@ Android 源码固定为 `644a95e5eaffbe7056a1512300a2eb3829d31757`，应用版�
 
 ## Apple 与剩余范围
 
-200 的系统授权、41 项 Flutter 测试及完整 PhotoKit/媒体/RAW CI 已通过；201 正在按同一流程构建设备 IPA。完整迁移及逐像素一致仍未完成，见 [功能清单](../../feature-parity.md) 和 [视觉清单](../../visual-acceptance.md)。荣耀 Magic Android 12、未知型号 NEF、实体 iPhone、有限照片权限/iCloud 仍需对应实样或硬件验收。
+201 的 Apple 源码固定为 `2b8286c0e96103bceb38779f645e169676366bae`，[Actions 43025837400](https://github.com/1162107757/nikon-camera/actions/runs/43025837400) 已完整通过。41 项 Flutter 测试、218 项共享边界/表面检查、六组 JVM/Apple 指纹、真实系统照片授权及完整 PhotoKit/图像/RAW 场景通过。XCUITest 只处理真实系统授权，目标应用报告有效完整授权；宿主直接启动同一应用执行全部断言，以最终结果、源码、nonce 和样片 SHA 验收。
+
+设备 IPA 已保存到 `dist/migration201/huevia-0.31.0-dev-201-ios-unsigned.ipa`：27,225,741 字节，SHA-256 `321c1e4669daeb1d3f1d2eca433a175a6ad384011c3e9b68b5ef1fc568b3408e`。最低 iOS 16，需要用户自签。下载归档的 SHA 与 Actions 元数据一致，并独立检查主程序、AOT、Flutter 和其他框架的所有 ARM64/iPhoneOS 切片及最低版本；不是模拟器包。源码/包/实际测试结果及 14 份精确证据见 `apple/ios-final-evidence.json`。
+
+完整迁移及逐像素一致仍未完成，见 [功能清单](../../feature-parity.md) 和 [视觉清单](../../visual-acceptance.md)。荣耀 Magic Android 12、未知型号 NEF、实体 iPhone、有限照片权限/iCloud 仍需对应实样或硬件验收。

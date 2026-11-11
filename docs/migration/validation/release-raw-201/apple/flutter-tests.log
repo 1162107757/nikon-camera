@@ -1,0 +1,57 @@
+00:00 +0: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/versions_test.dart
+00:00 +0: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/versions_test.dart: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(375.0, 812.0)
+00:01 +1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/versions_test.dart: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(812.0, 375.0)
+00:01 +2: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart
+00:02 +2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch freezes every recipe before export and retains per-photo adjustments
+00:02 +3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch retries failures without repeating completed outputs or changing frozen settings
+00:02 +4: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Cancellation keeps completed outputs and resumes only remaining photos
+00:02 +5: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Changing account prevents remaining exports and all later retries
+00:02 +6: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch refuses duplicate sources and an unbounded selection
+00:02 +7: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 1.0)
+00:04 +8: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 2.0)
+00:04 +9: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Album selection groups photos and opens a full-page batch with fixed actions at (Size(812.0, 375.0), 2.0)
+00:04 +10: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/copy_adjustments_test.dart
+00:05 +10: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/copy_adjustments_test.dart: Copy scope and owner stay pinned; newer edits survive undo at Size(375.0, 812.0)
+00:06 +11: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/copy_adjustments_test.dart: Copy scope and owner stay pinned; newer edits survive undo at Size(812.0, 375.0)
+00:06 +12: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/native_import_test.dart
+00:08 +12: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/native_import_test.dart: Native document import keeps the provider filename and the owner from picker opening
+00:08 +13: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/native_import_test.dart: Cancelled or invalid native picks cannot register photos outside the private originals
+00:08 +14: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preview_templates_test.dart
+00:08 +14: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preview_templates_test.dart: Template selection uses streamed native picking, handles cancellation and restores built-ins
+00:09 +15: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/recipes_test.dart
+00:10 +15: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/recipes_test.dart: Save and apply a recipe at Size(375.0, 812.0) with large text and a pinned owner
+00:11 +16: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/recipes_test.dart: Save and apply a recipe at Size(812.0, 375.0) with large text and a pinned owner
+00:11 +17: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart
+00:18 +17: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart: Registration failures retain credentials and refresh only the challenge answer
+00:19 +18: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart: Online search can display a match beyond the loaded feed page
+00:20 +19: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart
+00:21 +19: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart: Independent source filters survive rebuilding the whole application state
+00:22 +20: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart: Album sort and RAW filter survive rebuilding the application
+00:23 +21: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart: A failed preference commit does not block subsequent partial updates
+00:23 +22: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart
+00:24 +22: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart: Photo index survives a changed application container path
+00:24 +23: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart: Concurrent imports commit a complete index and retain distinct originals
+00:24 +24: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart: Index write failure leaves the visible library intact and permits retry
+00:24 +25: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart
+00:25 +25: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Frozen export recipe retains independent advanced edits
+00:25 +26: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: File import retains exact original bytes and rejects a corrupt collision
+00:26 +27: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Offline navigation remains usable at Size(375.0, 812.0), Brightness.light, text 1.0
+00:27 +28: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Offline navigation remains usable at Size(812.0, 375.0), Brightness.dark, text 2.0
+00:27 +29: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Offline navigation remains usable at Size(375.0, 812.0), Brightness.dark, text 2.0
+00:28 +30: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart
+00:29 +30: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: An old camera status cannot replace a newly established session
+00:30 +31: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+00:30 +32: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart
+00:31 +32: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 1.0)
+00:33 +33: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 2.0)
+00:33 +34: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Root sheets cover navigation and retain fixed actions at (Size(812.0, 375.0), 2.0)
+00:34 +35: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Online download filtering loads the complete catalog and source filters remain separate
+00:34 +36: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/help_test.dart
+00:36 +36: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/help_test.dart: Diagnostic reports exclude payloads, credentials, device addresses and unexpected native fields
+00:36 +37: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/help_test.dart: Help opens readable diagnostics and about opens a separate license page
+00:38 +38: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart
+00:39 +38: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text
+00:41 +39: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text
+00:42 +40: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photos_test.dart
+00:43 +40: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photos_test.dart: Photo stars survive reload, combine with search, and keep stable editor links
+00:45 +41: All tests passed!

@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "verified": true,
+  "sourceCommit": "2b8286c0e96103bceb38779f645e169676366bae",
+  "sha256": "321c1e4669daeb1d3f1d2eca433a175a6ad384011c3e9b68b5ef1fc568b3408e",
+  "bytes": 27225741,
+  "bundleIdentifier": "cc.huevia.next",
+  "version": "0.31.0",
+  "build": "201",
+  "minimumOS": "16.0",
+  "binaries": [
+    {
+      "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+      "sha256": "554d7730734f4b3984abd2f9049eb37b618716f7611b6bbe9680f98f3c047047",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+      "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+      "sha256": "95a864c1b8e8b6bb6e74f01270723c908e4019683a28e570d7160c06aef73a89",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Runner",
+      "sha256": "ac3304a62627e2bef0b026b8da8306497a882edc2106a84ebb82e0fba2d2bcfe",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            16,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "deviceInstallationVerified": false,
+  "fullParityComplete": false
+}
