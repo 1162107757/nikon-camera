@@ -1,1 +1,2 @@
 *.log -text
+ios-crash-summary.json -text
