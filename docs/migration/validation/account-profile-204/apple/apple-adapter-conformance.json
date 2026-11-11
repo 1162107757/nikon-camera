@@ -1,0 +1,18 @@
+{
+  "androidSourceCommit": "6d84ab39f8599f2cb209922e8b819916095c6c63",
+  "appleSourceCommit": "0b2fd3a3fd48761b445a105e664b4941e2cc6e44",
+  "androidInputsIdentical": true,
+  "reason": "Apple native task implements the existing Java default consumer method; direct native verification includes ordering and null handling",
+  "changedFiles": [
+    {
+      "file": "cross-platform/core/test/avatar_apple.mm",
+      "beforeGitBlob": "8c784b48fb296489a47d52aa435ee174eba4762b",
+      "afterGitBlob": "cbef507a639dc9f26e889211e582912bde670491"
+    },
+    {
+      "file": "cross-platform/native/ios/Classes/HueviaTask.m",
+      "beforeGitBlob": "bad840843e643e872fc3770064cf9534778b3ea6",
+      "afterGitBlob": "39bb38a5cbc7c2d8cd894d6bb17719bb58f35d56"
+    }
+  ]
+}

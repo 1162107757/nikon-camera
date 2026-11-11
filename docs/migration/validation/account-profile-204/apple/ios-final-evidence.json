@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "sourceCommit": "0b2fd3a3fd48761b445a105e664b4941e2cc6e44",
+  "androidSourceCommit": "6d84ab39f8599f2cb209922e8b819916095c6c63",
+  "appleAdapterConformanceFix": {
+    "androidSourceCommit": "6d84ab39f8599f2cb209922e8b819916095c6c63",
+    "appleSourceCommit": "0b2fd3a3fd48761b445a105e664b4941e2cc6e44",
+    "androidInputsIdentical": true,
+    "reason": "Apple native task implements the existing Java default consumer method; direct native verification includes ordering and null handling",
+    "changedFiles": [
+      {
+        "file": "cross-platform/core/test/avatar_apple.mm",
+        "beforeGitBlob": "8c784b48fb296489a47d52aa435ee174eba4762b",
+        "afterGitBlob": "cbef507a639dc9f26e889211e582912bde670491"
+      },
+      {
+        "file": "cross-platform/native/ios/Classes/HueviaTask.m",
+        "beforeGitBlob": "bad840843e643e872fc3770064cf9534778b3ea6",
+        "afterGitBlob": "39bb38a5cbc7c2d8cd894d6bb17719bb58f35d56"
+      }
+    ]
+  },
+  "workflow": {
+    "id": 43111433791,
+    "head_sha": "0b2fd3a3fd48761b445a105e664b4941e2cc6e44",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/1162107757/nikon-camera/actions/runs/43111433791"
+  },
+  "artifactId": 13896823816,
+  "artifactZipSha256": "b512d989b7fd7081add274958b8b60697f4675c2394224f1bffc63a2ca02e5c6",
+  "artifact": {
+    "file": "dist/migration204/huevia-0.31.0-dev-204-ios-unsigned.ipa",
+    "bytes": 29265131,
+    "sha256": "94a1496d0418cbaa4b0ddcd7a9113a19d550254202bff3a6c06025399d30807f"
+  },
+  "platform": "iPhoneOS",
+  "architecture": "arm64",
+  "minimumOS": "16.0",
+  "signing": "unsigned; user self-signing required",
+  "validation": {
+    "macFlutterTests": 80,
+    "sharedBoundaryChecks": 319,
+    "appleNativeAvatarChecks": 38,
+    "realAccountAvatarMutationsVerified": false,
+    "nativePipelineScenarios": 1,
+    "xctestSystemConsentPassed": true,
+    "nativeFinalResultPassed": true,
+    "nativeFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb",
+    "androidProductionInputsUnchanged": true,
+    "deviceInstallationVerified": false,
+    "communityAuthenticatedMutationsVerified": false
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/analyze.log",
+      "bytes": 97,
+      "sha256": "15dd104fbdaf1d641f1e359dd023809ffe0a4ebae44dd48185e29108dcf78638"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/flutter-tests.log",
+      "bytes": 16907,
+      "sha256": "cbc62bc864dfc63f4dd84ea9f648a306d047b5e9bc21f5296ae48ba7d8d9d663"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/device-build.log",
+      "bytes": 893,
+      "sha256": "4f1b87940bd874177246c239763b9a5e64800be87b49f432790b2585cda85fa6"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "31769aa2f42cffc20ecbab9ea30a4e70c8757421bb813a5bd1aa652a9a756af7"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "e20f2f84600f21b3da801410c56da9eaefdb286da63e87f68dc0b55d40f77b14"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/simulator-selection.json",
+      "bytes": 228,
+      "sha256": "313d4d82bd1db38692ed1a154ae0ba982e98e887ae5955578f74666d32475a26"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/simulator-initial-access.json",
+      "bytes": 347,
+      "sha256": "4dfa8339de26ee657dee8420c3f9061407c1ef8649b6fd87448f738af283da4d"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "74d6743202a7b2bc9d769838a7372556c6a145c49f54daa16f70d0f7732988dc"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/simulator-tests.log",
+      "bytes": 5325,
+      "sha256": "c273edec3442274b34d7b7695b57f84a26b7f452057dd8d64e18d9cd101aadda"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/Huevia-QA-PhotoKit.png",
+      "bytes": 121307,
+      "sha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/core-parity.json",
+      "bytes": 884,
+      "sha256": "8453466a9b7332f3ad83ff5f1d225437c7ef477fa830ee5d69e2b0732249d9ce"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/ipa-independent-verification.json",
+      "bytes": 3181,
+      "sha256": "180d8b62c9ee36400b92a202258dc0ac865b4c1ed75b4d1f7ffb61d96ccdd896"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/avatar-build.log",
+      "bytes": 51,
+      "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b"
+    },
+    {
+      "file": "docs/migration/validation/account-profile-204/apple/apple-adapter-conformance.json",
+      "bytes": 759,
+      "sha256": "9bd4ac1315687daf274f1ffc2a0f03b1cd3c3ad9adae9e586124a6295965c321"
+    }
+  ],
+  "limits": [
+    "Full feature and visual parity remains incomplete",
+    "Limited/iCloud states and physical iPhone remain unverified",
+    "Honor Magic Android 12 and unknown-camera NEF remain unverified"
+  ]
+}

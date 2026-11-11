@@ -1,0 +1,14 @@
+{
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "bundleIdentifier": "cc.huevia.next",
+  "version": "0.31.0",
+  "build": "204",
+  "platform": "iPhoneOS",
+  "architecture": "arm64",
+  "minimumOS": "16.0",
+  "sha256": "94a1496d0418cbaa4b0ddcd7a9113a19d550254202bff3a6c06025399d30807f",
+  "bytes": 29265131,
+  "sourceCommit": "0b2fd3a3fd48761b445a105e664b4941e2cc6e44",
+  "flutterRevision": "c197ca5199e9ee5661e865596c9c07294dfab51c"
+}
