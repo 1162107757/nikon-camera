@@ -292,7 +292,11 @@ void main() {
         expect(object(recipe['border'])['brand'], 'NIKON');
         expect(checkpoints, greaterThanOrEqualTo(3));
         expect(mutations, isNotEmpty);
-        expect(tester.takeException(), isNull);
+      final exception = tester.takeException();
+      if (exception is FlutterError) {
+        debugPrint(exception.diagnostics.map((d) => d.toStringDeep()).join('\n'));
+      }
+      expect(exception, isNull);
         await cleanup(tester, core.directory);
         state.dispose();
       },

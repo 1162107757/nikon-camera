@@ -379,6 +379,7 @@ class _BorderPanelState extends State<BorderPanel> {
       context: context,
       builder: (dialog) => AlertDialog(
         title: Text(_names[index + 1]),
+        scrollable: true,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -824,6 +825,7 @@ class _BorderPanelState extends State<BorderPanel> {
                                   context: context,
                                   builder: (dialog) => AlertDialog(
                                     title: const Text('自定义机型'),
+                                  scrollable: true,
                                     content: TextField(
                                       controller: input,
                                       maxLength: 96,
