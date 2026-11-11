@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:huevia/domain.dart';
@@ -38,8 +38,8 @@ void main() {
   const nativeRunId = String.fromEnvironment('HUEVIA_NATIVE_TEST_ID');
   if (Platform.isIOS && nativeRunId.isNotEmpty) {
     // Observe Flutter's final integration result, including framework checks.
-    // The host reads only a fresh result from this installed test app; no
-    // XCTest reinstallation or live TCC changes are needed.
+    // The host accepts only this app's fresh nonce/source/fixture result.
+    // XCUITest handles consent; the app verifies its effective PhotoKit access.
     unawaited(
       binding.allTestsPassed.future.then((passed) async {
         await Future<void>.delayed(const Duration(seconds: 1));
@@ -68,6 +68,14 @@ void main() {
               }),
               flush: true,
             );
+        runApp(
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Center(
+              child: Text(complete ? 'HUEVIA_NATIVE_PASS' : 'HUEVIA_NATIVE_FAIL'),
+            ),
+          ),
+        );
       }),
     );
   }
@@ -102,17 +110,8 @@ void main() {
           }),
           flush: true,
         );
-        final gate = File('${core.root}/native-pipeline-start');
-        final deadline = DateTime.now().add(const Duration(seconds: 180));
-        while (!await gate.exists() ||
-            await gate.readAsString() != nativeRunId) {
-          if (DateTime.now().isAfter(deadline)) {
-            fail(
-              'Host did not establish the authorized native-test preconditions',
-            );
-          }
-          await Future<void>.delayed(const Duration(milliseconds: 250));
-        }
+        final permission = await core.galleryPermission();
+        expect(permission['access'], 'full');
       }
     } on AppFailure catch (failure) {
       fail(

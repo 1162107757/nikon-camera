@@ -30,8 +30,8 @@ def main():
             if path.stat().st_size>128*1024:raise SystemExit('Simulator result exceeds 128 KiB')
             try:value=json.loads(path.read_text(encoding='utf-8'))
             except (OSError,json.JSONDecodeError):time.sleep(.2);continue
-            validate(value,run_id,source,fixture)
             Path(target).write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8')
+            validate(value,run_id,source,fixture)
             print('PASS Apple native Flutter pipeline: 1 real scenario; final result, source and PhotoKit fixture verified')
             return
         time.sleep(1)

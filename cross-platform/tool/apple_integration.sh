@@ -66,7 +66,7 @@ if [[ "$SIM_ARCH" != arm64 && "$SIM_ARCH" != x86_64 ]]; then echo "Unsupported s
 xcrun simctl list devices available -j > "$WORK/simulator-devices.json"
 xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
-  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build > "$WORK/simulator-build.log" 2>&1
+  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" build-for-testing > "$WORK/simulator-build.log" 2>&1
 SIM_APP="$(python3 - "$ROOT/cross-platform/app/build/ios" <<'PY'
 from pathlib import Path
 import plistlib,sys
@@ -79,22 +79,20 @@ PY
 )"
 xcrun simctl install "$DEVICE" "$SIM_APP"
 xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
-# Launch the already installed/authorized app. Xcode test-host installation and
-# changing TCC while an app runs can invalidate the controlled preconditions.
-# Flutter's public final-result future records actual post-check results in the
-# app's own container. The host accepts only this run ID/source/fixture SHA.
+# XCUITest accepts the real system Photos prompt; the app reports its own
+# PhotoKit status and runs the complete Dart pipeline after consent.
+xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
+  -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
+  "BUILD_DIR=$ROOT/cross-platform/app/build/ios" -parallel-testing-enabled NO \
+  -only-testing:RunnerTests/RunnerTests/testNativePipeline test-without-building > "$WORK/simulator-tests.log" 2>&1 &
+TEST_PID=$!
+# Keep the fresh app's final report even if an XCTest assertion fails.
+TEST_STATUS=0
+wait "$TEST_PID" || TEST_STATUS=$?
 CONTAINER="$(xcrun simctl get_app_container "$DEVICE" cc.huevia.next data)"
 RESULT_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-result.json"
-if [[ -e "$RESULT_FILE" ]]; then echo "Unexpected stale native test result"; exit 1; fi
 READY_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-ready.json"
-GATE_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-start"
-# Initialize the real installed app once, so its Photos client is registered.
-# The test waits at a nonce-protected gate before any photo assertions run.
-xcrun simctl launch --terminate-running-process --stdout="$WORK/simulator-warmup.log" --stderr="$WORK/simulator-warmup-stderr.log" "$DEVICE" cc.huevia.next
-python3 "$ROOT/cross-platform/tool/apple_native_result.py" --ready "$READY_FILE" "$NATIVE_RUN_ID" "$NATIVE_SOURCE" "$WORK/simulator-warmup.json"
-xcrun simctl terminate "$DEVICE" cc.huevia.next
-xcrun simctl privacy "$DEVICE" grant photos cc.huevia.next > "$WORK/gallery-permission.log" 2>&1
-xcrun simctl privacy "$DEVICE" grant photos-add cc.huevia.next >> "$WORK/gallery-permission.log" 2>&1
-printf '%s' "$NATIVE_RUN_ID" > "$GATE_FILE"
-xcrun simctl launch --terminate-running-process --stdout="$WORK/simulator-tests.log" --stderr="$WORK/simulator-tests-stderr.log" "$DEVICE" cc.huevia.next
+if [[ -e "$READY_FILE" ]]; then cp "$READY_FILE" "$WORK/simulator-initial-access.json"; fi
+if [[ "$TEST_STATUS" != 0 && ! -e "$RESULT_FILE" ]]; then exit "$TEST_STATUS"; fi
 python3 "$ROOT/cross-platform/tool/apple_native_result.py" "$RESULT_FILE" "$NATIVE_RUN_ID" "$NATIVE_SOURCE" "$GALLERY_SHA" "$WORK/simulator-result.json"
+if [[ "$TEST_STATUS" != 0 ]]; then exit "$TEST_STATUS"; fi
