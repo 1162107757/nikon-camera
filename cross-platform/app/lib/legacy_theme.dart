@@ -241,8 +241,21 @@ ThemeData hueviaTheme(Brightness brightness, {bool home = true}) {
       ),
     ),
     dialogTheme: DialogThemeData(
-      backgroundColor: p.surface,
+      backgroundColor: p.card,
       elevation: 0,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      constraints: const BoxConstraints.tightFor(width: 520),
+      barrierColor: Colors.black.withValues(alpha: p.dark ? .42 : .28),
+      titleTextStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: p.ink,
+      ),
+      contentTextStyle: TextStyle(
+        fontSize: 14,
+        color: p.secondary,
+        height: 1.2,
+      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
     ),
     bottomSheetTheme: BottomSheetThemeData(

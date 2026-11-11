@@ -38,7 +38,7 @@ public final class SharedRuntime {
         edits=new SharedEdits(root,library);
         versions=new SharedVersions(root);
         online=new OnlinePresetRepository(root,library);
-        online.initializeDefaultEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
+        online.useManagedEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
         search=new OnlinePresetSearch(online);
         installationId=installationId(root,installation);
         accounts=new AccountRepository(store,transport);
@@ -113,6 +113,7 @@ public final class SharedRuntime {
             case "online.search":{
                 OnlinePresetSearch.Snapshot snapshot=search.load(Boolean.TRUE.equals(p.get("refresh")));
                 String category=text(p,"category",100);if(category.isEmpty())category=PresetCategories.ALL;
+                else if(PresetCategories.UNCATEGORIZED.equals(category))category="";
                 List<Object> rows=new ArrayList<>();for(OnlinePreset r:snapshot.matching(text(p,"query",256),category))rows.add(onlineMap(r));
                 result=map("items",rows,"categories",new ArrayList<>(snapshot.categories),"fromCache",snapshot.fromCache,"available",snapshot.available,"message",snapshot.message);break;
             }

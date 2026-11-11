@@ -113,6 +113,8 @@ extension _LegacyWorkspace on _EditorPageState {
   Future<void> editorOptions() async {
     final value = await showModalBottomSheet<String>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       backgroundColor: const Color(0xff292724),
       builder: (sheet) => SafeArea(
         child: Column(
@@ -657,6 +659,8 @@ extension _LegacyWorkspace on _EditorPageState {
   Future<void> advancedTool(int page) async {
     await showModalBottomSheet<void>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       isScrollControlled: true,
       backgroundColor: const Color(0xff292724),
       builder: (sheet) => Theme(

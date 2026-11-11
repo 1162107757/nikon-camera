@@ -8,6 +8,7 @@ import 'domain.dart';
 import 'theme.dart';
 import 'widgets.dart';
 import 'legacy_presets.dart';
+import 'legacy_sheets.dart';
 import 'legacy_preset_details.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class LibraryPage extends StatefulWidget {
 }
 
 class _LibraryPageState extends State<LibraryPage> {
-  int tab = 0, page = 1, generation = 0;
+  int tab = 0, page = 1, generation = 0, onlineTotal = 0;
   String category = '', query = '';
   String? error;
   bool busy = false, hasMore = false, requestInFlight = false;
@@ -29,63 +30,64 @@ class _LibraryPageState extends State<LibraryPage> {
   Timer? searchDelay;
   String notice = '';
   bool searching = false;
-  String format = '';
+  String format = '', download = 'all';
+  final filters = <int, ({String category, String format, String download})>{};
 
   Future<void> showFilters(List<String> choices) async {
-    var nextCategory = category, nextFormat = format;
+    FocusManager.instance.primaryFocus?.unfocus();
+    var nextCategory = category, nextFormat = format, nextDownload = download;
+    final ordered = <String>[
+      for (final value in ['人像', '风景', '胶片', '黑白', '日常', '夜景'])
+        if (choices.contains(value)) value,
+      ...choices.where(
+        (value) =>
+            !['人像', '风景', '胶片', '黑白', '日常', '夜景', '未分类', ''].contains(value),
+      ),
+      if (choices.contains('未分类')) '未分类',
+    ];
     final accepted = await showModalBottomSheet<bool>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.transparent,
       builder: (sheet) => StatefulBuilder(
-        builder: (context, refresh) => SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  '筛选预设',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 24),
-                const Text('文件格式'),
-                const SizedBox(height: 12),
-                CapsuleSwitch(
-                  labels: const ['全部', 'NCP', 'NP3'],
-                  selected: ['', 'NCP', 'NP3'].indexOf(nextFormat),
-                  onSelected: (index) =>
-                      refresh(() => nextFormat = ['', 'NCP', 'NP3'][index]),
-                ),
-                const SizedBox(height: 24),
-                const Text('预设分类'),
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  children: [
-                    for (final value in ['', ...choices])
-                      ChoiceChip(
-                        label: Text(value.isEmpty ? '全部' : value),
-                        selected: nextCategory == value,
-                        onSelected: (_) => refresh(() => nextCategory = value),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                FilledButton(
-                  onPressed: () => Navigator.pop(sheet, true),
-                  child: const Text('应用筛选'),
-                ),
-                TextButton(
-                  onPressed: () => refresh(() {
-                    nextCategory = '';
-                    nextFormat = '';
-                  }),
-                  child: const Text('重置'),
-                ),
-              ],
+        builder: (context, refresh) => HueFloatingSheet(
+          title: '筛选',
+          closeLabel: '关闭筛选，放弃未应用修改',
+          onReset: () => refresh(() {
+            nextCategory = '';
+            nextFormat = '';
+            nextDownload = 'all';
+          }),
+          onApply: () => Navigator.pop(sheet, true),
+          children: [
+            HueSheetChoices(
+              title: '风格',
+              values: [('', '全部'), for (final value in ordered) (value, value)],
+              selected: nextCategory,
+              columns: 4,
+              onSelected: (value) => refresh(() => nextCategory = value),
             ),
-          ),
+            if (tab == 1)
+              HueSheetChoices(
+                title: '下载状态',
+                values: const [
+                  ('all', '全部'),
+                  ('missing', '未下载'),
+                  ('saved', '已下载'),
+                ],
+                selected: nextDownload,
+                onSelected: (value) => refresh(() => nextDownload = value),
+              ),
+            HueSheetChoices(
+              title: '预设类型',
+              values: const [('', '全部'), ('NCP', 'NCP'), ('NP3', 'NP3')],
+              selected: nextFormat,
+              onSelected: (value) => refresh(() => nextFormat = value),
+            ),
+          ],
         ),
       ),
     );
@@ -93,19 +95,28 @@ class _LibraryPageState extends State<LibraryPage> {
       setState(() {
         category = nextCategory;
         format = nextFormat;
+        download = nextDownload;
       });
       if (tab == 1) await load();
     }
   }
 
   void selectSource(int value) {
+    if (value == tab) return;
+    filters[tab] = (category: category, format: format, download: download);
+    final selected =
+        filters[value] ?? (category: '', format: '', download: 'all');
     searchDelay?.cancel();
     generation++;
     pendingLoad = null;
     setState(() {
       tab = value;
-      category = '';
+      category = selected.category;
+      format = selected.format;
+      download = selected.download;
       busy = false;
+      error = null;
+      notice = '';
     });
     if (value == 1) unawaited(load());
   }
@@ -170,7 +181,11 @@ class _LibraryPageState extends State<LibraryPage> {
       error = null;
     });
     try {
-      final searching = query.trim().isNotEmpty;
+      final searching =
+          query.trim().isNotEmpty ||
+          format.isNotEmpty ||
+          download != 'all' ||
+          category == '未分类';
       final value = await widget.state.core.call(
         searching ? 'online.search' : 'online.page',
         searching
@@ -190,6 +205,7 @@ class _LibraryPageState extends State<LibraryPage> {
         online = next ? [...online, ...rows] : rows;
         page = value['page'] as int? ?? 1;
         hasMore = value['hasMore'] == true;
+        onlineTotal = (value['total'] as num?)?.toInt() ?? rows.length;
         categories = List<String>.from(value['categories'] as List)
             .where((item) => item.isNotEmpty)
             .toList();
@@ -420,10 +436,17 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   Widget build(BuildContext context) {
     final source = tab == 0 ? widget.state.presets : online;
+    final saved = widget.state.presets
+        .map((preset) => preset.data['sha256'] ?? preset.id)
+        .toSet();
     final rows = source
         .where(
           (preset) =>
               (format.isEmpty || preset.format == format) &&
+              (tab == 0 ||
+                  download == 'all' ||
+                  (saved.contains(preset.data['sha256']) ==
+                      (download == 'saved'))) &&
               (tab == 1 ||
                   category.isEmpty ||
                   (category == '未分类'
@@ -440,8 +463,14 @@ class _LibraryPageState extends State<LibraryPage> {
       ...source.map(
         (preset) => preset.category.isEmpty ? '未分类' : preset.category,
       ),
-      ...categories,
+      if (tab == 1) ...categories,
+      if (category.isNotEmpty) category,
     }.toList();
+    final activeFilters =
+        category.isNotEmpty || format.isNotEmpty || download != 'all';
+    final displayedCount = tab == 1 && download == 'all' && format.isEmpty
+        ? onlineTotal
+        : rows.length;
     final palette = HuePalette.of(context);
     final compact = MediaQuery.sizeOf(context).height < 480;
     return Scaffold(
@@ -589,7 +618,7 @@ class _LibraryPageState extends State<LibraryPage> {
                         ),
                       ),
                       Text(
-                        '${rows.length} 份',
+                        '$displayedCount 份',
                         style: TextStyle(
                           fontSize: 12,
                           height: 1.2,
@@ -598,7 +627,12 @@ class _LibraryPageState extends State<LibraryPage> {
                       ),
                       HueIconButton(
                         kind: HueIconKind.adjust,
-                        label: '筛选预设',
+                        label:
+                            category.isNotEmpty ||
+                                format.isNotEmpty ||
+                                download != 'all'
+                            ? '筛选预设，已应用条件'
+                            : '筛选预设',
                         disc: false,
                         iconSize: 20,
                         onPressed: () => showFilters(allCategories),
@@ -655,6 +689,8 @@ class _LibraryPageState extends State<LibraryPage> {
                             Text(
                               busy
                                   ? '正在读取预设'
+                                  : activeFilters && error == null
+                                  ? '没有符合条件的预设'
                                   : tab == 0
                                   ? '把喜欢的色彩带在身边'
                                   : '暂时没有在线预设',
@@ -668,7 +704,9 @@ class _LibraryPageState extends State<LibraryPage> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              tab == 0
+                              activeFilters && error == null
+                                  ? '试试其他筛选条件。'
+                                  : tab == 0
                                   ? '添加 NCP、NP3，或从在线预设库下载喜欢的色彩。'
                                   : error ?? '检查网络后重新加载。',
                               textAlign: TextAlign.center,
@@ -684,10 +722,25 @@ class _LibraryPageState extends State<LibraryPage> {
                               child: OutlinedButton(
                                 onPressed: busy || importing
                                     ? null
+                                    : activeFilters && error == null
+                                    ? () {
+                                        setState(() {
+                                          category = '';
+                                          format = '';
+                                          download = 'all';
+                                        });
+                                        if (tab == 1) unawaited(load());
+                                      }
                                     : tab == 0
                                     ? import
                                     : load,
-                                child: Text(tab == 0 ? '添加本地预设' : '重新加载'),
+                                child: Text(
+                                  activeFilters && error == null
+                                      ? '清除筛选'
+                                      : tab == 0
+                                      ? '添加本地预设'
+                                      : '重新加载',
+                                ),
                               ),
                             ),
                           ],

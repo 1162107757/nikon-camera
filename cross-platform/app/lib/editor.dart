@@ -397,6 +397,8 @@ class _EditorPageState extends State<EditorPage> {
   Future<void> export() async {
     final size = await showModalBottomSheet<String>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       showDragHandle: true,
       builder: (sheet) => SafeArea(
         child: SingleChildScrollView(

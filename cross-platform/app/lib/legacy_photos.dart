@@ -8,6 +8,7 @@ import 'package:path/path.dart' as path;
 import 'domain.dart';
 import 'theme.dart';
 import 'widgets.dart';
+import 'legacy_sheets.dart';
 
 class PhotosPage extends StatefulWidget {
   const PhotosPage({super.key, required this.state});
@@ -174,160 +175,57 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     var nextAdded = added, nextOldest = oldest;
     final accepted = await showModalBottomSheet<bool>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       barrierColor: Colors.transparent,
       builder: (sheet) => StatefulBuilder(
-        builder: (context, refresh) {
-          final p = HuePalette.of(context);
-          Widget pair(
-            List<String> labels,
-            bool selected,
-            void Function(bool) update,
-          ) => Row(
-            children: [
-              for (var i = 0; i < 2; i++)
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 3,
-                      vertical: 6,
-                    ),
-                    child: SizedBox(
-                      height: 36,
-                      child: Material(
-                        color: selected == (i == 1) ? p.action : p.card,
-                        borderRadius: BorderRadius.circular(24),
-                        child: InkWell(
-                          onTap: () => refresh(() => update(i == 1)),
-                          borderRadius: BorderRadius.circular(24),
-                          child: Center(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  labels[i],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: selected == (i == 1)
-                                        ? p.onAction
-                                        : p.ink,
-                                  ),
-                                ),
-                                if (selected == (i == 1)) ...[
-                                  const SizedBox(width: 8),
-                                  HueIcon(
-                                    HueIconKind.check,
-                                    size: 16,
-                                    color: p.onAction,
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          );
-          return SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Center(
-                heightFactor: 1,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 520),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: p.surface,
-                      borderRadius: BorderRadius.circular(28),
-                      border: Border.all(color: p.card),
-                    ),
-                    padding: const EdgeInsets.fromLTRB(14, 8, 14, 12),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Center(
-                          child: Container(
-                            width: 30,
-                            height: 3,
-                            color: p.outline,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            const Expanded(
-                              child: Text(
-                                '时间排序',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                            HueIconButton(
-                              kind: HueIconKind.close,
-                              label: '关闭排序，放弃未应用修改',
-                              disc: false,
-                              iconSize: 20,
-                              onPressed: () => Navigator.pop(sheet),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          '排序依据',
-                          style: TextStyle(fontSize: 12, color: p.secondary),
-                        ),
-                        pair(
-                          ['拍摄时间', '添加时间'],
-                          nextAdded,
-                          (value) => nextAdded = value,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          '排列顺序',
-                          style: TextStyle(fontSize: 12, color: p.secondary),
-                        ),
-                        pair(
-                          ['新到旧', '旧到新'],
-                          nextOldest,
-                          (value) => nextOldest = value,
-                        ),
-                        if (!phone && nextAdded)
-                          Text(
-                            '旧照片没有入库记录时，添加时间使用现存文件时间。',
-                            style: TextStyle(fontSize: 12, color: p.secondary),
-                          ),
-                        Row(
-                          children: [
-                            TextButton(
-                              onPressed: () => refresh(() {
-                                nextAdded = false;
-                                nextOldest = false;
-                              }),
-                              child: const Text('重置'),
-                            ),
-                            const Spacer(),
-                            SizedBox(
-                              width: 108,
-                              child: FilledButton(
-                                onPressed: () => Navigator.pop(sheet, true),
-                                child: const Text('应用'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+        builder: (context, refresh) => HueFloatingSheet(
+          title: '时间排序',
+          titleSize: 16,
+          closeLabel: '关闭排序，放弃未应用修改',
+          onReset: () => refresh(() {
+            nextAdded = false;
+            nextOldest = false;
+          }),
+          onApply: () => Navigator.pop(sheet, true),
+          children: [
+            HueSheetChoices(
+              title: '排序依据',
+              values: const [('taken', '拍摄时间'), ('added', '添加时间')],
+              selected: nextAdded ? 'added' : 'taken',
+              columns: 2,
+              fontSize: 14,
+              verticalInset: 6,
+              boldSelection: false,
+              onSelected: (value) =>
+                  refresh(() => nextAdded = value == 'added'),
+            ),
+            HueSheetChoices(
+              title: '排列顺序',
+              values: const [('newest', '新到旧'), ('oldest', '旧到新')],
+              selected: nextOldest ? 'oldest' : 'newest',
+              columns: 2,
+              fontSize: 14,
+              verticalInset: 6,
+              boldSelection: false,
+              onSelected: (value) =>
+                  refresh(() => nextOldest = value == 'oldest'),
+            ),
+            if (!phone && nextAdded)
+              Padding(
+                padding: const EdgeInsets.only(top: 4, bottom: 6),
+                child: Text(
+                  '旧照片没有入库记录时，添加时间使用现存文件时间。',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: HuePalette.of(context).secondary,
                   ),
                 ),
               ),
-            ),
-          );
-        },
+          ],
+        ),
       ),
     );
     if (accepted == true && mounted) {
@@ -345,6 +243,8 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
     final marked = state.starredPhotos.contains(photo.starKey);
     final result = await showModalBottomSheet<String>(
       context: context,
+      useRootNavigator: true,
+      useSafeArea: true,
       builder: (sheet) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,

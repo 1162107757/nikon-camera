@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'domain.dart';
 import 'widgets.dart';
+import 'legacy_dialog.dart';
 import 'theme.dart';
 
 class CameraPage extends StatefulWidget {
@@ -40,23 +41,11 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> chooseProtocol() async {
-    final selected = await hueDialog<String>(
+    final selected = await hueChoice<String>(
       context: context,
-      builder: (dialog) => SimpleDialog(
-        title: const Text('选择相机类型'),
-        children: [
-          RadioGroup<String>(
-            groupValue: protocol,
-            onChanged: (value) => Navigator.pop(dialog, value),
-            child: Column(
-              children: [
-                for (final entry in [('nikon', '尼康'), ('fujifilm', '富士 X-T20')])
-                  RadioListTile<String>(title: Text(entry.$2), value: entry.$1),
-              ],
-            ),
-          ),
-        ],
-      ),
+      title: '选择相机类型',
+      selected: protocol,
+      choices: const [('nikon', '尼康'), ('fujifilm', '富士 X-T20')],
     );
     if (!mounted || selected == null || selected == protocol) return;
     setState(() {

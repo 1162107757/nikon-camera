@@ -52,6 +52,14 @@ void main() {
           'Native initialization failed: ${failure.message}; ${failure.details}',
         );
       }
+      // Read-only smoke against the same managed feed used by the real screen.
+      // This catches a configured URL whose managed paging mode was not enabled.
+      final feed = await core.call('online.page', {'page': 1, 'pageSize': 2});
+      expect(feed['page'], 1);
+      expect(feed['items'], isA<List>());
+      expect((feed['items'] as List).length, lessThanOrEqualTo(2));
+      expect(feed['categories'], isA<List>());
+      expect(feed['total'], greaterThanOrEqualTo(0));
       final directory = await Directory(
         '${core.root}/originals/integration-${DateTime.now().microsecondsSinceEpoch}',
       ).create(recursive: true);

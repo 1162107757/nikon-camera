@@ -4,46 +4,27 @@ import 'package:go_router/go_router.dart';
 import 'domain.dart';
 import 'theme.dart';
 import 'appearance.dart';
+import 'legacy_dialog.dart';
 import 'camera.dart';
 import 'widgets.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.state});
   final AppState state;
-  Future<void> appearance(BuildContext context) => showDialog<void>(
-    context: context,
-    builder: (dialog) => SimpleDialog(
-      title: const Text('外观'),
-      children: [
-        RadioGroup<ThemeMode>(
-          groupValue: appearanceMode.value,
-          onChanged: (value) async {
-            if (value == null) return;
-            await setAppearance(state.core.root, value);
-            if (dialog.mounted) Navigator.pop(dialog);
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (final mode in ThemeMode.values)
-                RadioListTile<ThemeMode>(
-                  value: mode,
-                  title: Text(switch (mode) {
-                    ThemeMode.system => '跟随系统',
-                    ThemeMode.light => '浅色',
-                    ThemeMode.dark => '深色',
-                  }),
-                ),
-            ],
-          ),
-        ),
-        TextButton(
-          onPressed: () => Navigator.pop(dialog),
-          child: const Text('取消'),
-        ),
+  Future<void> appearance(BuildContext context) async {
+    final selected = await hueChoice<ThemeMode>(
+      context: context,
+      title: '外观',
+      selected: appearanceMode.value,
+      choices: const [
+        (ThemeMode.system, '跟随系统'),
+        (ThemeMode.light, '浅色'),
+        (ThemeMode.dark, '深色'),
       ],
-    ),
-  );
+    );
+    if (selected != null) await setAppearance(state.core.root, selected);
+  }
+
   void explain(BuildContext context, String title, String text) {
     showDialog<void>(
       context: context,

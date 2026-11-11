@@ -34,6 +34,15 @@ public final class CoreBoundary {
             Map<String,Object> library=SharedJson.object(runtime.request("library.list","{}"));yes(((List<?>)library.get("items")).isEmpty());
             byte[] installation=Files.readAllBytes(root.resolve("account-installation.txt"));
             new SharedRuntime(root.toString(),new LockedStore(),new NoNetwork());yes(Arrays.equals(installation,Files.readAllBytes(root.resolve("account-installation.txt"))));
+            // Upgrade an existing migration install, including a disabled or
+            // stale endpoint. Initialization must not contact the network.
+            Path onlineConfig=root.resolve("online-presets/config.json");
+            for(String previous:new String[]{"","https://example.invalid/catalog.json"}){
+                Files.write(onlineConfig,SharedJson.encode(SharedRuntime.map("schemaVersion",1,"endpoint",previous)).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                new SharedRuntime(root.toString(),new LockedStore(),new NoNetwork());
+                yes(cc.huevia.library.OnlinePresetRepository.MANAGED_CATALOG_URL.equals(SharedJson.object(new String(Files.readAllBytes(onlineConfig),java.nio.charset.StandardCharsets.UTF_8)).get("endpoint")));
+                yes(Arrays.equals(installation,Files.readAllBytes(root.resolve("account-installation.txt"))));
+            }
             Path outside=temporary.resolve("outside.ncp");Files.write(outside,new byte[]{1,2,3,4});
             rejects(()->runtime.privateFile(outside.toString()));
             rejects(()->runtime.request("library.import",SharedJson.encode(SharedRuntime.map("path",outside.toString(),"name","outside.ncp"))));
