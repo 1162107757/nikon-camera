@@ -68,6 +68,9 @@ void main() {
               }),
               flush: true,
             );
+        // The test binding normally renders only during a test pump. Publish
+        // the XCTest completion marker after all assertions/cleanup finished.
+        binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
         runApp(
           Directionality(
             textDirection: TextDirection.ltr,
