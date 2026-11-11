@@ -1,0 +1,263 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-11T10:07:27.820267Z",
+  "application": {
+    "version": "0.31.0-dev",
+    "build": 200,
+    "platform": "android",
+    "systemVersion": "sdk_phone64_x86_64-userdebug 12 SE1A.220826.006.A1 10064458 test-keys"
+  },
+  "library": {
+    "presets": 2,
+    "photos": 4,
+    "rawPhotos": 1
+  },
+  "state": {
+    "ready": true,
+    "signedIn": false,
+    "viewSettingsWarning": false,
+    "accountStorageWarning": false
+  },
+  "gallery": {
+    "access": "full",
+    "canAsk": false,
+    "alternateBasis": "unknown"
+  },
+  "camera": {
+    "available": true,
+    "connected": false,
+    "totalHandles": 0,
+    "observedObjects": 0,
+    "trace": [
+      "wall_ms=1794387555343 mono_ms=37365558 event=TRACE_CONFIGURED",
+      "wall_ms=1794388757491 mono_ms=38567705 event=TRACE_CONFIGURED",
+      "wall_ms=1794389137698 mono_ms=38947912 event=TRACE_CONFIGURED",
+      "wall_ms=1794389638256 mono_ms=39448470 event=TRACE_CONFIGURED",
+      "wall_ms=1794391233191 mono_ms=41043406 event=TRACE_CONFIGURED"
+    ]
+  },
+  "operations": [
+    {
+      "operation": "media.templateInfo",
+      "at": "2026-11-11T10:00:33.772418Z",
+      "elapsedMs": 248,
+      "status": "complete"
+    },
+    {
+      "operation": "ui.preferences.get",
+      "at": "2026-11-11T10:00:33.795239Z",
+      "elapsedMs": 22,
+      "status": "complete"
+    },
+    {
+      "operation": "library.list",
+      "at": "2026-11-11T10:00:33.898906Z",
+      "elapsedMs": 103,
+      "status": "complete"
+    },
+    {
+      "operation": "account.current",
+      "at": "2026-11-11T10:00:33.909145Z",
+      "elapsedMs": 10,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-11T10:00:34.184591Z",
+      "elapsedMs": 98,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-11T10:00:34.201165Z",
+      "elapsedMs": 18,
+      "status": "complete"
+    },
+    {
+      "operation": "photo.stars",
+      "at": "2026-11-11T10:01:04.043183Z",
+      "elapsedMs": 44,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.access",
+      "at": "2026-11-11T10:01:04.050141Z",
+      "elapsedMs": 51,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.page",
+      "at": "2026-11-11T10:01:04.154674Z",
+      "elapsedMs": 104,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.thumbnail",
+      "at": "2026-11-11T10:01:04.307862Z",
+      "elapsedMs": 12,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.thumbnail",
+      "at": "2026-11-11T10:01:04.309614Z",
+      "elapsedMs": 1,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.thumbnail",
+      "at": "2026-11-11T10:01:04.316765Z",
+      "elapsedMs": 7,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.thumbnail",
+      "at": "2026-11-11T10:01:06.770453Z",
+      "elapsedMs": 10,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.thumbnail",
+      "at": "2026-11-11T10:01:06.774695Z",
+      "elapsedMs": 4,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.thumbnail",
+      "at": "2026-11-11T10:01:06.781166Z",
+      "elapsedMs": 6,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.import",
+      "at": "2026-11-11T10:02:21.660641Z",
+      "elapsedMs": 153,
+      "status": "complete"
+    },
+    {
+      "operation": "media.info",
+      "at": "2026-11-11T10:02:21.677468Z",
+      "elapsedMs": 16,
+      "status": "complete"
+    },
+    {
+      "operation": "draft.load",
+      "at": "2026-11-11T10:02:21.725121Z",
+      "elapsedMs": 33,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.import",
+      "at": "2026-11-11T10:02:21.750052Z",
+      "elapsedMs": 24,
+      "status": "complete"
+    },
+    {
+      "operation": "media.info",
+      "at": "2026-11-11T10:02:21.759703Z",
+      "elapsedMs": 9,
+      "status": "complete"
+    },
+    {
+      "operation": "draft.load",
+      "at": "2026-11-11T10:02:21.863699Z",
+      "elapsedMs": 5,
+      "status": "complete"
+    },
+    {
+      "operation": "media.export",
+      "at": "2026-11-11T10:02:22.930739Z",
+      "elapsedMs": 1066,
+      "status": "complete"
+    },
+    {
+      "operation": "media.export",
+      "at": "2026-11-11T10:02:24.260557Z",
+      "elapsedMs": 1330,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateInfo",
+      "at": "2026-11-11T10:03:51.963330Z",
+      "elapsedMs": 21,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateSource",
+      "at": "2026-11-11T10:03:52.045025Z",
+      "elapsedMs": 81,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateSet",
+      "at": "2026-11-11T10:05:07.282560Z",
+      "elapsedMs": 571,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateInfo",
+      "at": "2026-11-11T10:05:07.286360Z",
+      "elapsedMs": 3,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateSource",
+      "at": "2026-11-11T10:05:07.416391Z",
+      "elapsedMs": 129,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-11T10:05:29.871102Z",
+      "elapsedMs": 594,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-11T10:05:30.001040Z",
+      "elapsedMs": 130,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateInfo",
+      "at": "2026-11-11T10:05:49.927072Z",
+      "elapsedMs": 11,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateSource",
+      "at": "2026-11-11T10:05:49.930547Z",
+      "elapsedMs": 3,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateReset",
+      "at": "2026-11-11T10:05:52.576954Z",
+      "elapsedMs": 28,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateInfo",
+      "at": "2026-11-11T10:05:52.583337Z",
+      "elapsedMs": 6,
+      "status": "complete"
+    },
+    {
+      "operation": "media.templateSource",
+      "at": "2026-11-11T10:05:52.592324Z",
+      "elapsedMs": 8,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.access",
+      "at": "2026-11-11T10:07:27.812493Z",
+      "elapsedMs": 11,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.diagnostics",
+      "at": "2026-11-11T10:07:27.819866Z",
+      "elapsedMs": 18,
+      "status": "complete"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+Huevia 跨平台开发版 0.31.0-dev / 200
+
+安卓手机：huevia-0.31.0-dev-200-android-arm64.apk
+安卓模拟器：huevia-0.31.0-dev-200-android-x64.apk
+最低 Android 8（API 26）。使用开发标识 cc.huevia.next 和开发签名，可与原版并存。
+
+本轮新增：iOS 相册接入；来源/筛选/排序记忆；相册分组批选、批量导出与重试；自选模板和恢复；帮助、关于和诊断 JSON 导出。
+原图保留，批量 JPEG 成品保存到应用内成品版本，可通过系统分享导出。
+
+原工程及 187–190 历史包保留。200 按固定提交纳入独立完成的原版 191 / 193 修复。
+本次属于迁移开发迭代，完整功能和逐像素对齐仍在进行。剩余范围见 docs/migration/feature-parity.md；截图和测试范围见 docs/migration/validation/gallery-batch-200/README.md。
+荣耀 Magic Android 12、未知相机 NEF 实样和实际 iPhone 仍需实机复测。
+
+Android 来源：bef616a5778b318152043426373336af3597972b
+安装包大小、SHA、签名和证据见 build-evidence.json。
+iOS 最新设备包和模拟器验证仍在执行，交付记录将单独保存。

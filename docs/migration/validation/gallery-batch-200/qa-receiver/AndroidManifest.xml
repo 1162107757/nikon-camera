@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.shareqa">
+ <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="31"/>
+ <application android:label="Huevia QA Receiver" android:debuggable="true" android:theme="@android:style/Theme.Material.Light.NoActionBar">
+  <activity android:name=".ShareReceiver" android:exported="true">
+   <intent-filter><action android:name="android.intent.action.SEND"/><action android:name="android.intent.action.SEND_MULTIPLE"/><category android:name="android.intent.category.DEFAULT"/><data android:mimeType="application/json"/><data android:mimeType="image/*"/></intent-filter>
+  </activity>
+ </application>
+</manifest>
