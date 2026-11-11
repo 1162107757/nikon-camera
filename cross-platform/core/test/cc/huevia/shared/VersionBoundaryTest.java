@@ -72,7 +72,7 @@ public final class VersionBoundaryTest {
         // deliberately use the canonical container, on both JVM and Apple.
         Path canonicalRelocated=relocated.toFile().getCanonicalFile().toPath();
         yes(new File((String)moved.get("path")).toPath().startsWith(canonicalRelocated)&&new File((String)moved.get("sourcePath")).toPath().startsWith(canonicalRelocated));
-        Path record=new File((String)moved.get("path")).getParentFile().toPath().resolve("manifest.json");Files.writeString(record,"{}");
+        Path record=new File((String)moved.get("path")).getParentFile().toPath().resolve("manifest.json");Files.write(record,new byte[]{'{','}'});
         List<?> damaged=(List<?>)call(restored,"version.list","owner","").get("items");yes(damaged.size()==1&&((Map<?,?>)damaged.get(0)).containsKey("error"));
         call(restored,"version.delete","owner","","id",second.get("id"));yes(((List<?>)call(restored,"version.list","owner","").get("items")).isEmpty());
         Path snapshotRoot=temporary.resolve("version-inactive-state");SharedRuntime snapshots=runtime(snapshotRoot);

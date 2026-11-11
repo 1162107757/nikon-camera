@@ -22,7 +22,7 @@ public final class PersonalSyncBoundaryTest {
         Map<String,Object> server=new LinkedHashMap<>();int[] puts={0},deletes={0};
         PersonalPresetSync.Backend backend=new PersonalPresetSync.Backend(){
             private void owner(String id)throws IOException{if(!alice.equals(id))throw new IOException("Wrong account at backend boundary");}
-            public List<Map<String,Object>> list(String id,String after)throws IOException{owner(id);return server.isEmpty()||!after.isEmpty()?List.of():List.of(new LinkedHashMap<>(server));}
+            public List<Map<String,Object>> list(String id,String after)throws IOException{owner(id);return server.isEmpty()||!after.isEmpty()?Collections.emptyList():Collections.singletonList(new LinkedHashMap<>(server));}
             public byte[] download(String id,String sha)throws IOException{owner(id);yes(sha.equals(hash));return bytes.clone();}
             public long put(String id,String sha,Map<String,Object> metadata,byte[] value,long revision)throws IOException{
                 owner(id);yes(sha.equals(hash));yes(Arrays.equals(bytes,value));long current=server.isEmpty()?0:((Number)server.get("revision")).longValue();

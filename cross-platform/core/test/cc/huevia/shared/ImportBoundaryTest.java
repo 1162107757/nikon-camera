@@ -20,7 +20,7 @@ public final class ImportBoundaryTest {
     }
     public static int run(Path temporary)throws Exception{
         checks=0;Path root=temporary.resolve("native-import");byte[] bytes=NcpCompatibilityFixtures.ncp();Source source=new Source(bytes);
-        Map<String,Object> receipt=SharedJson.object(SharedImport.copy(source,"秋色.NCP",true,root.toString(),()->false));Path saved=Path.of((String)receipt.get("path"));
+        Map<String,Object> receipt=SharedJson.object(SharedImport.copy(source,"秋色.NCP",true,root.toString(),()->false));Path saved=Paths.get((String)receipt.get("path"));
         yes(source.closed&&source.maximumRead<=65536);yes(receipt.get("name").equals("秋色.NCP"));yes(saved.getFileName().toString().endsWith(".ncp"));yes(Arrays.equals(Files.readAllBytes(saved),bytes));yes(Boolean.TRUE.equals(receipt.get("created")));
         Files.setLastModifiedTime(saved,java.nio.file.attribute.FileTime.fromMillis(1234567890000L));
         Map<String,Object> duplicate=SharedJson.object(SharedImport.copy(new Source(bytes),"别名.ncp",true,root.toString(),()->false));yes(Boolean.FALSE.equals(duplicate.get("created")));yes(Files.getLastModifiedTime(saved).toMillis()==1234567890000L);
