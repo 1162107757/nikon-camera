@@ -15,10 +15,13 @@ trap failure_logs EXIT
 # and no signed-in session or production test API. Keep the toolchain cache
 # independent of these checks; they run after core_ios.sh prepares the runtime.
 "$J2OBJCC" -O2 -fobjc-arc -I"$ROOT/cross-platform/native/ios/Classes" \
+  -c "$ROOT/cross-platform/native/ios/Classes/HueviaTask.m" \
+  -o "$WORK/avatar-task.o" > "$WORK/avatar-build.log" 2>&1
+"$J2OBJCC" -O2 -fobjc-arc -I"$ROOT/cross-platform/native/ios/Classes" \
   "$ROOT/cross-platform/core/test/avatar_apple.mm" \
   "$ROOT/cross-platform/native/ios/Classes/HueviaAvatar.mm" \
-  "$ROOT/cross-platform/native/ios/Classes/HueviaTask.m" \
+  "$WORK/avatar-task.o" \
   -framework ImageIO -framework CoreGraphics -ljre_emul -lc++ \
-  -o "$WORK/avatar-checks" > "$WORK/avatar-build.log" 2>&1
+  -o "$WORK/avatar-checks" >> "$WORK/avatar-build.log" 2>&1
 "$WORK/avatar-checks" > "$WORK/avatar.log" 2>&1
 cat "$WORK/avatar.log"

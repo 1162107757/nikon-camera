@@ -23,7 +23,7 @@ CGImageRef fixture(size_t width, size_t height, BOOL transparent) {
   }
   CGColorSpaceRef color=CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
   CGDataProviderRef provider=CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
-  CGImageRef image=CGImageCreate(width,height,8,32,width*4,color,kCGImageAlphaPremultipliedLast|kCGBitmapByteOrder32Big,provider,NULL,false,kCGRenderingIntentDefault);
+  CGImageRef image=CGImageCreate(width,height,8,32,width*4,color,(CGBitmapInfo)(kCGImageAlphaPremultipliedLast|kCGBitmapByteOrder32Big),provider,NULL,false,kCGRenderingIntentDefault);
   CGDataProviderRelease(provider);CGColorSpaceRelease(color);return image;
 }
 NSData *encode(CGImageRef image, NSString *type, NSDictionary *properties) {
@@ -74,9 +74,9 @@ int main(void) {@autoreleasepool {
       NSDictionary *tiff=properties[(__bridge id)kCGImagePropertyTIFFDictionary],*exif=properties[(__bridge id)kCGImagePropertyExifDictionary];
       int marker=[properties[(__bridge id)kCGImagePropertyOrientation] intValue];
       check(marker<=1&&!properties[(__bridge id)kCGImagePropertyGPSDictionary]&&!tiff[(__bridge id)kCGImagePropertyTIFFMake]&&!tiff[(__bridge id)kCGImagePropertyTIFFModel]&&!exif[(__bridge id)kCGImagePropertyExifDateTimeOriginal],@"Avatar must remove source metadata and normalize orientation");
-      NSData *rgba=pixels(image);const unsigned char *bytes=(const unsigned char *)rgba.bytes;BOOL matches=YES;
-      for(int q=0;q<4;q++){size_t x=q%2?384:128,y=q/2?384:128;matches &= quadrantColor(bytes+(y*512+x)*4)==expected[orientation-1][q];}
-      check(matches,[NSString stringWithFormat:@"EXIF %d must preserve manually expected quadrant positions",orientation]);
+      NSData *rgba=pixels(image);const unsigned char *bytes=(const unsigned char *)rgba.bytes;BOOL matches=YES;NSMutableArray *observed=[NSMutableArray array];
+      for(int q=0;q<4;q++){size_t x=q%2?384:128,y=q/2?384:128;int actual=quadrantColor(bytes+(y*512+x)*4);[observed addObject:@(actual)];matches &= actual==expected[orientation-1][q];}
+      check(matches,[NSString stringWithFormat:@"EXIF %d quadrants %@ must match [%d,%d,%d,%d]",orientation,observed,expected[orientation-1][0],expected[orientation-1][1],expected[orientation-1][2],expected[orientation-1][3]]);
       check([[NSData dataWithContentsOfFile:path] isEqualToData:input],@"Avatar preparation must preserve the original bytes");
       CGImageRelease(image);CFRelease(source);
     }
