@@ -172,12 +172,12 @@ extension _LegacyWorkspace on _EditorPageState {
         children: [
           editorButton(
             HueIconKind.close,
-            '关闭编辑',
+            '返回相册',
             () => Navigator.maybePop(context),
           ),
           editorButton(
             HueIconKind.more,
-            '编辑选项',
+            '更多照片操作和重置',
             toolsEnabled ? editorOptions : null,
           ),
           const SizedBox(width: 8),
@@ -193,7 +193,7 @@ extension _LegacyWorkspace on _EditorPageState {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 13,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                       color: _editorWhite,
                       height: 1.3,
                     ),
@@ -224,7 +224,10 @@ extension _LegacyWorkspace on _EditorPageState {
                   disabledBackgroundColor: _editorYellow.withValues(alpha: .4),
                   minimumSize: Size.zero,
                   padding: EdgeInsets.zero,
-                  textStyle: const TextStyle(fontSize: 13),
+                  textStyle: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 onPressed: toolsEnabled && preview != null ? export : null,
                 child: const Text('导出'),

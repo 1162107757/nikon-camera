@@ -278,16 +278,106 @@ class _BorderPanelState extends State<BorderPanel> {
     return true;
   }
 
-  Widget button(String label, VoidCallback? action, {bool selected = false}) =>
-      TextButton(
-        onPressed: action,
-        style: TextButton.styleFrom(
-          foregroundColor: selected ? _accent : _text,
-          minimumSize: const Size(48, 48),
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          textStyle: const TextStyle(fontSize: 12),
+  Widget button(
+    String label,
+    VoidCallback? action, {
+    bool selected = false,
+    bool accent = false,
+    bool muted = false,
+  }) => TextButton(
+    onPressed: action,
+    style: TextButton.styleFrom(
+      foregroundColor: selected || accent
+          ? _accent
+          : muted
+          ? _muted
+          : _text,
+      minimumSize: const Size(48, 48),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      textStyle: TextStyle(
+        fontSize: 12,
+        fontWeight: selected ? FontWeight.w500 : FontWeight.normal,
+      ),
+    ),
+    child: Text(label),
+  );
+
+  Widget sliderFace(Widget child) => SizedBox(
+    height: 48,
+    child: SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        trackHeight: 2,
+        trackShape: const RectangularSliderTrackShape(),
+        activeTrackColor: _accent,
+        inactiveTrackColor: const Color(0xff565450),
+        thumbColor: _accent,
+        thumbShape: const RoundSliderThumbShape(
+          enabledThumbRadius: 9,
+          elevation: 0,
+          pressedElevation: 0,
         ),
-        child: Text(label),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+        showValueIndicator: ShowValueIndicator.never,
+      ),
+      child: child,
+    ),
+  );
+
+  InputDecoration inputDecoration(String hint) => InputDecoration(
+    hintText: hint,
+    counterText: '',
+    filled: true,
+    fillColor: const Color(0xff292724),
+    hintStyle: const TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.normal,
+      color: _muted,
+    ),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide.none,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide.none,
+    ),
+  );
+
+  Widget cameraMode(String label, bool selected, VoidCallback action) =>
+      SizedBox(
+        height: 48,
+        child: Center(
+          child: SizedBox(
+            width: double.infinity,
+            child: TextButton(
+              onPressed: action,
+              style: TextButton.styleFrom(
+                minimumSize: const Size(48, 32),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                backgroundColor: selected ? _accent : const Color(0xff292724),
+                foregroundColor: selected ? const Color(0xff352016) : _muted,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(
+                    color: selected
+                        ? Colors.transparent
+                        : const Color(0x30ffffff),
+                  ),
+                ),
+                textStyle: TextStyle(
+                  fontSize: 12,
+                  fontWeight: selected ? FontWeight.w500 : FontWeight.normal,
+                ),
+              ),
+              child: Text(label),
+            ),
+          ),
+        ),
       );
   Widget row(int index, {bool checkbox = false}) {
     final display = value(index),
@@ -371,10 +461,44 @@ class _BorderPanelState extends State<BorderPanel> {
 
   double get textScale =>
       MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 2.0);
+  Widget primaryAction({
+    required Widget child,
+    required VoidCallback? onPressed,
+  }) => SizedBox(
+    height: 48,
+    child: Center(
+      child: SizedBox(
+        width: double.infinity,
+        child: TextButton(
+          onPressed: onPressed,
+          style: TextButton.styleFrom(
+            backgroundColor: _accent,
+            foregroundColor: const Color(0xff352016),
+            alignment: Alignment.centerLeft,
+            minimumSize: const Size(48, 34),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            textStyle: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          child: child,
+        ),
+      ),
+    ),
+  );
+
   Future<void> editField(int index) async {
     if (!ready) return;
     final initial = jsonEncode(border),
         input = TextEditingController(text: fields[index]);
+    input.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: input.text.length,
+    );
     final result = await hueDialog<String>(
       context: context,
       builder: (dialog) => AlertDialog(
@@ -392,8 +516,11 @@ class _BorderPanelState extends State<BorderPanel> {
               controller: input,
               autofocus: true,
               maxLength: 96,
-              style: const TextStyle(fontSize: 13),
-              decoration: const InputDecoration(hintText: '留空使用原图'),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.normal,
+              ),
+              decoration: inputDecoration('留空使用原图'),
             ),
           ],
         ),
@@ -500,22 +627,31 @@ class _BorderPanelState extends State<BorderPanel> {
                       children: [
                         for (var i = 0; i < 3; i++)
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: tab == i
-                                        ? _accent
-                                        : Colors.transparent,
-                                    width: 2,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: button(
+                                    ['样式', '信息', '外观'][i],
+                                    () => refresh(() => tab = i),
+                                    selected: tab == i,
+                                    muted: tab != i,
                                   ),
                                 ),
-                              ),
-                              child: button(
-                                ['样式', '信息', '外观'][i],
-                                () => refresh(() => tab = i),
-                                selected: tab == i,
-                              ),
+                                if (tab == i)
+                                  Positioned(
+                                    bottom: 5,
+                                    child: Container(
+                                      width: 18,
+                                      height: 2,
+                                      decoration: BoxDecoration(
+                                        color: _accent,
+                                        borderRadius: BorderRadius.circular(1),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                         IconButton(
@@ -523,14 +659,24 @@ class _BorderPanelState extends State<BorderPanel> {
                           onPressed: ready && widget.canUndo
                               ? widget.onUndo
                               : null,
-                          icon: const HueIcon(HueIconKind.undo, color: _text),
+                          icon: HueIcon(
+                            HueIconKind.undo,
+                            color: ready && widget.canUndo
+                                ? _text
+                                : _text.withValues(alpha: .35),
+                          ),
                         ),
                         IconButton(
                           tooltip: '重做边框调整',
                           onPressed: ready && widget.canRedo
                               ? widget.onRedo
                               : null,
-                          icon: const HueIcon(HueIconKind.redo, color: _text),
+                          icon: HueIcon(
+                            HueIconKind.redo,
+                            color: ready && widget.canRedo
+                                ? _text
+                                : _text.withValues(alpha: .35),
+                          ),
                         ),
                       ],
                     ),
@@ -576,36 +722,39 @@ class _BorderPanelState extends State<BorderPanel> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Slider(
-                                          key: ValueKey(
-                                            'border-appearance-${entry.$1}',
+                                        child: sliderFace(
+                                          Slider(
+                                            activeColor: _accent,
+                                            key: ValueKey(
+                                              'border-appearance-${entry.$1}',
+                                            ),
+                                            value:
+                                                (border[entry.$1] as num? ??
+                                                        100)
+                                                    .toDouble(),
+                                            min: entry.$3,
+                                            max: entry.$4,
+                                            semanticFormatterCallback: (v) =>
+                                                '${v.round()}%',
+                                            onChangeStart: !ready
+                                                ? null
+                                                : (_) {
+                                                    dragging = true;
+                                                    widget.onDragStart();
+                                                  },
+                                            onChanged: !ready
+                                                ? null
+                                                : (v) => apply({
+                                                    ...border,
+                                                    entry.$1: v.round(),
+                                                  }, snapshot: false),
+                                            onChangeEnd: !ready
+                                                ? null
+                                                : (_) {
+                                                    dragging = false;
+                                                    schedule();
+                                                  },
                                           ),
-                                          value:
-                                              (border[entry.$1] as num? ?? 100)
-                                                  .toDouble(),
-                                          min: entry.$3,
-                                          max: entry.$4,
-                                          label: '${border[entry.$1] ?? 100}%',
-                                          semanticFormatterCallback: (v) =>
-                                              '${v.round()}%',
-                                          onChangeStart: !ready
-                                              ? null
-                                              : (_) {
-                                                  dragging = true;
-                                                  widget.onDragStart();
-                                                },
-                                          onChanged: !ready
-                                              ? null
-                                              : (v) => apply({
-                                                  ...border,
-                                                  entry.$1: v.round(),
-                                                }, snapshot: false),
-                                          onChangeEnd: !ready
-                                              ? null
-                                              : (_) {
-                                                  dragging = false;
-                                                  schedule();
-                                                },
                                         ),
                                       ),
                                       SizedBox(
@@ -624,6 +773,7 @@ class _BorderPanelState extends State<BorderPanel> {
                                 button(
                                   'Logo · ${_logos[border['logo'] as int? ?? 0]}',
                                   ready ? logo : null,
+                                  accent: true,
                                 ),
                                 button(
                                   '恢复默认',
@@ -632,6 +782,7 @@ class _BorderPanelState extends State<BorderPanel> {
                                       : () => apply({
                                           'template': border['template'] ?? 0,
                                         }),
+                                  accent: true,
                                 ),
                               ],
                       ),
@@ -647,16 +798,25 @@ class _BorderPanelState extends State<BorderPanel> {
     dragging = false;
   }
 
-  double cameraHeight(BuildContext context, bool manual) => math.min(
-    manual ? 560.0 : 204.0,
-    math.max(
-      80.0,
-      MediaQuery.sizeOf(context).height -
-          MediaQuery.paddingOf(context).vertical -
-          MediaQuery.viewInsetsOf(context).bottom -
-          32,
-    ),
-  );
+  double cameraHeight(BuildContext context, bool manual) {
+    final screen = MediaQuery.sizeOf(context);
+    final view = View.of(context);
+    // The original dialog's display metrics exclude the system navigation bar.
+    // Read the view inset because the sheet removes padding from its children.
+    final height =
+        screen.height - view.viewPadding.bottom / view.devicePixelRatio;
+    return math.min(
+      manual ? height * (screen.height < 520 ? .95 : .76) - 24 : 176.0,
+      math.max(
+        80.0,
+        screen.height -
+            MediaQuery.paddingOf(context).vertical -
+            MediaQuery.viewInsetsOf(context).bottom -
+            32,
+      ),
+    );
+  }
+
   bool compactCamera(BuildContext context, bool manual) =>
       cameraHeight(context, manual) < (manual ? 440 * textScale : 190);
 
@@ -705,32 +865,42 @@ class _BorderPanelState extends State<BorderPanel> {
                     ),
                     Row(
                       children: [
-                        for (final entry in [('自动', false), ('手动', true)])
-                          Expanded(
-                            child: button(
-                              entry.$1,
-                              () => refresh(() => manual = entry.$2),
-                              selected: manual == entry.$2,
-                            ),
+                        Expanded(
+                          child: cameraMode(
+                            '自动',
+                            !manual,
+                            () => refresh(() => manual = false),
                           ),
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: cameraMode(
+                            '手动',
+                            manual,
+                            () => refresh(() => manual = true),
+                          ),
+                        ),
                       ],
                     ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        (capture['model'] as String? ?? '').isEmpty
-                            ? '原图无机型信息'
-                            : '识别：${friendlyCamera(capture['model'] as String)}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 11.5, color: _muted),
+                    SizedBox(
+                      height: 32,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          (capture['model'] as String? ?? '').isEmpty
+                              ? '原图无机型信息'
+                              : '识别：${friendlyCamera(capture['model'] as String)}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 11.5, color: _muted),
+                        ),
                       ),
                     ),
                     if (!manual) ...[
                       if (!compactCamera(context, manual)) const Spacer(),
                       SizedBox(
                         width: double.infinity,
-                        child: FilledButton(
+                        child: primaryAction(
                           onPressed: !ready
                               ? null
                               : () => Navigator.pop(sheet, {
@@ -744,7 +914,13 @@ class _BorderPanelState extends State<BorderPanel> {
                     ] else ...[
                       TextField(
                         controller: search,
-                        decoration: const InputDecoration(hintText: '搜索机型'),
+                        maxLength: 96,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
+                          color: _text,
+                        ),
+                        decoration: inputDecoration('搜索机型'),
                         onChanged: (_) => refresh(() {}),
                       ),
                       SizedBox(
@@ -767,6 +943,7 @@ class _BorderPanelState extends State<BorderPanel> {
                                     model = '';
                                   }),
                                   selected: brand == entry.$1,
+                                  muted: brand != entry.$1,
                                 ),
                               ),
                           ],
@@ -793,11 +970,16 @@ class _BorderPanelState extends State<BorderPanel> {
                                 ))
                               ListTile(
                                 dense: true,
-                                contentPadding: EdgeInsets.zero,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
                                 title: Text(
                                   friendlyCamera(m),
                                   style: TextStyle(
                                     fontSize: 12,
+                                    fontWeight: model == m
+                                        ? FontWeight.w500
+                                        : FontWeight.normal,
                                     color: model == m ? _accent : _text,
                                   ),
                                 ),
@@ -825,12 +1007,17 @@ class _BorderPanelState extends State<BorderPanel> {
                                   context: context,
                                   builder: (dialog) => AlertDialog(
                                     title: const Text('自定义机型'),
-                                  scrollable: true,
+                                    scrollable: true,
                                     content: TextField(
                                       controller: input,
                                       maxLength: 96,
-                                      decoration: const InputDecoration(
-                                        hintText: '输入机型，最多 96 个字符',
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal,
+                                        color: _text,
+                                      ),
+                                      decoration: inputDecoration(
+                                        '输入机型，最多 96 个字符',
                                       ),
                                     ),
                                     actions: [
@@ -864,10 +1051,11 @@ class _BorderPanelState extends State<BorderPanel> {
                                   });
                                 }
                               },
+                        accent: true,
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: FilledButton(
+                        child: primaryAction(
                           onPressed: !ready
                               ? null
                               : () {

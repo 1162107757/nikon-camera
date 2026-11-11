@@ -33,8 +33,22 @@ Future<T?> hueBottomSheet<T>({
   final navigator = Navigator.of(context, rootNavigator: true);
   final route = ModalBottomSheetRoute<T>(
     builder: (sheet) => Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(sheet).bottom),
-      child: builder(sheet),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.viewInsetsOf(sheet).bottom > 0
+            ? MediaQuery.viewInsetsOf(sheet).bottom
+            : MediaQuery.viewPaddingOf(sheet).bottom,
+      ),
+      child: Material(
+        color: const Color(0xff242321),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(22)),
+        ),
+        child: MediaQuery.removePadding(
+          context: sheet,
+          removeBottom: true,
+          child: Builder(builder: builder),
+        ),
+      ),
     ),
     capturedThemes: InheritedTheme.capture(
       from: context,
@@ -44,9 +58,10 @@ Future<T?> hueBottomSheet<T>({
     isScrollControlled: true,
     useSafeArea: true,
     showDragHandle: false,
-    backgroundColor: const Color(0xff242321),
+    backgroundColor: Colors.transparent,
+    modalBarrierColor: const Color.fromRGBO(0, 0, 0, .35),
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      borderRadius: BorderRadius.all(Radius.circular(22)),
     ),
   );
   final result = await navigator.push(route);
