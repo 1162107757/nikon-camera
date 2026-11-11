@@ -553,7 +553,7 @@ class _CameraPageState extends State<CameraPage> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,
-                            height: 1.5,
+                            height: 1.48,
                             color: p.secondary,
                           ),
                         ),
@@ -562,6 +562,9 @@ class _CameraPageState extends State<CameraPage> {
                           SizedBox(
                             width: double.infinity,
                             child: FilledButton(
+                              style: FilledButton.styleFrom(
+                                minimumSize: const Size(48, 50),
+                              ),
                               onPressed: openConnection,
                               child: const Text('连接相机'),
                             ),

@@ -197,7 +197,7 @@ extension _LegacyWorkspace on _EditorPageState {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    '${p.extension(widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片',
+                    '${p.extension(widget.photo.info['rawSource'] as String? ?? widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片',
                     style: const TextStyle(
                       fontSize: 10,
                       color: _editorMuted,
@@ -243,6 +243,8 @@ extension _LegacyWorkspace on _EditorPageState {
           child: Center(
             child: Image.file(
               File(preview!),
+              width: double.infinity,
+              height: double.infinity,
               fit: BoxFit.contain,
               gaplessPlayback: true,
               semanticLabel: compare ? '原图预览' : '照片效果预览',
