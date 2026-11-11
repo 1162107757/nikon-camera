@@ -50,6 +50,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             Map<String,Object> request=SharedRuntime.map("path",source.getPath(),"owner","","size","full","recipe",SharedRuntime.map("schema",1));
             Map<String,Object> info=SharedJson.object(media.request("media.info",SharedJson.encode(request),()->false,p->{}));
             yes(((Number)info.get("width")).intValue()==256&&((Number)info.get("height")).intValue()==192,"inspect dimensions");
+            yes(((Number)info.get("orientation")).intValue()==1,"Missing/undefined EXIF is neutral orientation");
             Map<String,Object> neutral=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             File output=new File((String)neutral.get("path"));yes(output.isFile()&&!output.equals(source),"private separate export");
             Map<String,Object> repeated=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));

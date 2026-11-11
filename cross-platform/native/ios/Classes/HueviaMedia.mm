@@ -208,7 +208,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   }
   if([operation isEqualToString:@"media.info"]){
     if(raw){HueviaRawInfo info;char error[1024];if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);return @{@"width":@(info.width),@"height":@(info.height),@"raw":@YES,@"make":[NSString stringWithUTF8String:info.make]?:@"",@"model":[NSString stringWithUTF8String:info.model]?:@""};}
-    int width=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue];validSize(width,height);return @{@"width":@(width),@"height":@(height),@"raw":@NO,@"orientation":metadata[(__bridge id)kCGImagePropertyOrientation]?:@1};
+    int width=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue],orientation=[metadata[(__bridge id)kCGImagePropertyOrientation] intValue];if(orientation<1||orientation>8)orientation=1;validSize(width,height);return @{@"width":@(width),@"height":@(height),@"raw":@NO,@"orientation":@(orientation)};
   }
   if([operation isEqualToString:@"media.rawPreview"]||[operation isEqualToString:@"media.rawDevelop"]){
     if(!raw||![p[@"settings"] isKindOfClass:NSDictionary.class])fail(@"RAW 显影请求无效。");

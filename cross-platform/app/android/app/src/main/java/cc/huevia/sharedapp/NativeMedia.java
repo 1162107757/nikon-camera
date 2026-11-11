@@ -84,7 +84,8 @@ final class NativeMedia {
         }
         if(operation.equals("media.info")){
             if(raw(source)){RawDeveloper.Info info=RawDeveloper.inspect(source);return SharedJson.encode(SharedRuntime.map("width",info.width,"height",info.height,"raw",true,"make",info.make,"model",info.model));}
-            BitmapFactory.Options bounds=bounds(source);return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1)));
+            BitmapFactory.Options bounds=bounds(source);int orientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(orientation<1||orientation>8)orientation=1;
+            return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",orientation));
         }
         if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop"))return rawDevelop(operation,p,source,cancel,progress);
         if(operation.equals("media.cleanupAnalyze")){
