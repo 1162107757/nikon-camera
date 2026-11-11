@@ -48,7 +48,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           theme: hueviaTheme(Brightness.light),
-          home: CameraPage(state: AppState(core)),
+          home: CameraPage(state: AppState(core), configuration: true),
         ),
       );
       await tester.tap(find.text('连接相机'));

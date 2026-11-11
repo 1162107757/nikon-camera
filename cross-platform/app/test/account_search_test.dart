@@ -113,6 +113,8 @@ void main() {
     await tester.tap(find.text('在线预设'));
     await tester.pumpAndSettle();
     expect(find.text('第一页预设'), findsOneWidget);
+    await tester.tap(find.byTooltip('搜索预设'));
+    await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), '远处');
     await tester.pump(const Duration(milliseconds: 250));
     await tester.pumpAndSettle();

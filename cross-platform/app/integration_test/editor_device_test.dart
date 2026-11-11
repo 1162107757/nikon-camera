@@ -7,6 +7,8 @@ import '../test/recipes_test.dart' as recipes;
 import '../test/shared_app_test.dart' as shared_app;
 import '../test/copy_adjustments_test.dart' as copy_adjustments;
 import '../test/versions_test.dart' as versions;
+import '../test/account_search_test.dart' as account_search;
+import '../test/session_race_test.dart' as session_race;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -26,4 +28,6 @@ void main() {
   shared_app.main();
   copy_adjustments.main();
   versions.main();
+  account_search.main();
+  session_race.main();
 }
