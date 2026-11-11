@@ -1,0 +1,55 @@
+{
+  "configuration": {
+    "at": "2026-11-11T03:13:28.378Z",
+    "mode": "--readback",
+    "status": "Active",
+    "configurationPreserved": [
+      "Environment",
+      "Role",
+      "MemorySize",
+      "Timeout",
+      "InitTimeout",
+      "ClsLogsetId",
+      "ClsTopicId",
+      "LogFormat",
+      "LogType",
+      "IgnoreSysLog",
+      "InstanceConcurrencyConfig"
+    ],
+    "memoryMiB": 256,
+    "appVersionChanged": false
+  },
+  "archive": {
+    "entries": 51,
+    "allEntriesMatch": true,
+    "sha256": "cbc721270e45a21f3ed7ed1a396178e034c7d28e9931b2660451ca2302e4f041"
+  },
+  "overlay": {
+    "changed": [
+      {
+        "path": "server/index.mjs",
+        "beforeSha256": "77b246b123c51e1ed73bcda77d827537fd9ba024bb45c90d553e9ea4c18c7fd2",
+        "afterSha256": "de40a1675a0af6c29736c68004024f0f3674f074093e0aec0f77831213c202f2"
+      },
+      {
+        "path": "server/releases.mjs",
+        "beforeSha256": "45780454f152dfbed8af1f8b8dd8361c304a12b901a673a9bb92996bb4570277",
+        "afterSha256": "cc02f2c210ce32a63732b39799bbe7247089d1dac30028c01c831d6cc869375a"
+      },
+      {
+        "path": "server/cos-release-storage.mjs",
+        "beforeSha256": "5424b005423adb33b28d948e29e4102df112135f284ad66fa66351b4f973e2e2",
+        "afterSha256": "c35f55dd61c8e644d40bf620d3e9a6cb0ee77664642a09ac804e71223ad4412b"
+      },
+      {
+        "path": "server/request-observer.mjs",
+        "beforeSha256": null,
+        "afterSha256": "aac92476f8e4fc23485ecbea8cd7ed889bb8adad143d7ba7fc338d46ed87c2c8"
+      }
+    ],
+    "unchangedEntries": 47,
+    "entryCount": 51,
+    "nextBytes": 30587322,
+    "nextSha256": "8dc03c9441fe262629f1ea44edbd962264865157761bdef2237dc3886f6a6103"
+  }
+}

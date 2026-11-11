@@ -1,0 +1,26 @@
+{
+  "environment": "Local Windows Node.js 20.20.2; synthetic data; separate before/after processes",
+  "before": {
+    "mode": "before",
+    "concurrency": 8,
+    "objectBytes": 31411279,
+    "sourceReads": 8,
+    "largeBufferConcats": 8,
+    "peakRssBytes": 342102016,
+    "elapsedMs": 359,
+    "allRedirectsValid": true,
+    "syntheticDataOnly": true
+  },
+  "after": {
+    "mode": "after",
+    "concurrency": 8,
+    "objectBytes": 31411279,
+    "sourceReads": 1,
+    "largeBufferConcats": 0,
+    "peakRssBytes": 83636224,
+    "elapsedMs": 64,
+    "allRedirectsValid": true,
+    "syntheticDataOnly": true
+  },
+  "peakReductionFraction": 0.7555225631877013
+}

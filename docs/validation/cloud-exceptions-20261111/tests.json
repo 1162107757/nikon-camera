@@ -1,0 +1,32 @@
+{
+  "focused": {
+    "tests": 23,
+    "pass": 23,
+    "fail": 0,
+    "skipped": 0,
+    "skipReasons": []
+  },
+  "full": {
+    "tests": 221,
+    "pass": 214,
+    "fail": 0,
+    "skipped": 7,
+    "skipReasons": [
+      "existing signed APK yields server-parsed manifest, pinned identity, full-file SHA and both verified schemes # SKIP",
+      "valid certificate is insufficient: modifications to protected content, v2 signature and v3 signature fail # SKIP",
+      "v3 stripping, unpinned signer, wrong package, oversized input and truncated archives are rejected # SKIP",
+      "current APK uses the Huevia install ID with the existing pinned signing certificate # SKIP",
+      "signed universal RAW APK over 4 MiB uploads across chunk 8 and retains exact signature, bytes and SHA # SKIP",
+      "bundled signed APKs retain publication, integrity, budgets and withdrawal checks; other files use private storage # SKIP",
+      "release HTTP: active administrators/CSRF, bounded durable chunks, actual metadata, immutable versions, public integrity and withdrawal # SKIP"
+    ]
+  },
+  "realApkCapacity": {
+    "tests": 2,
+    "pass": 2,
+    "fail": 0,
+    "skipped": 0,
+    "skipReasons": []
+  },
+  "syntaxModules": 80
+}

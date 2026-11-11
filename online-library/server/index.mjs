@@ -3,6 +3,7 @@ import { CloudBaseStore, CloudBaseStorage } from './cloudbase.mjs';
 import { createHandler } from './app.mjs';
 import { createQqVerifier } from './qq.mjs';
 import { releaseStorageFromEnv, withReleaseCredentials } from './cos-release-storage.mjs';
+import { observeRequest } from './request-observer.mjs';
 
 const environmentId = process.env.CLOUDBASE_ENV_ID || 'nikon-d8girdjsr252fd90e';
 const publicBaseUrl = process.env.PUBLIC_BASE_URL || 'https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com';
@@ -16,7 +17,10 @@ const handler = createHandler({ store, storage, releaseStorage, environmentId, p
   trustedProxyAddresses: process.env.TRUSTED_PROXY_ADDRESSES ? process.env.TRUSTED_PROXY_ADDRESSES.split(',').map(value=>value.trim()).filter(Boolean) : undefined,
   trustedForwardedProxyAddresses: process.env.TRUSTED_FORWARDED_PROXY_ADDRESSES ? process.env.TRUSTED_FORWARDED_PROXY_ADDRESSES.split(',').map(value=>value.trim()).filter(Boolean) : undefined,
   qqVerifier: createQqVerifier({ appId: process.env.QQ_APP_ID }) });
-const server = createServer((req, res) => withReleaseCredentials(req, () => handler(req, res)));
+const server = createServer((req, res) => {
+  observeRequest(req, res);
+  return withReleaseCredentials(req, () => handler(req, res));
+});
 server.headersTimeout = 15000;
 server.requestTimeout = 45000;
 server.keepAliveTimeout = 5000;

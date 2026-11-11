@@ -38,6 +38,7 @@ export class CosReleaseStorage {
     this.region = region; this.bucket = bucket; this.prefix = prefix; this.origin = origin.origin;
     this.fixedCredentials = secretId && secretKey ? { secretId, secretKey, securityToken } : null;
     this.injectedClient = client; this.fetch = fetchImpl;
+    this.pendingVerifications = new Map();
   }
   key(path) {
     if (typeof path !== 'string' || !(APK.test(path) || CHUNK.test(path))) throw unavailable();
@@ -101,6 +102,37 @@ export class CosReleaseStorage {
       for await (const chunk of response.body) { size += chunk.length; if (size > maximum) throw unavailable(); chunks.push(chunk); }
       if (declared !== null && size !== declared) throw unavailable();
       return Buffer.concat(chunks, size);
+    } catch { throw unavailable(); }
+    finally { try { if (response?.body && !response.body.locked) await response.body.cancel(); } catch {} }
+  }
+  async verify(path, byteLength, sha256) {
+    const match = typeof path === 'string' && APK.exec(path);
+    if (!match || match[1] !== sha256 || !Number.isSafeInteger(byteLength) || byteLength < 1 || byteLength > MAX_APK_BYTES) throw unavailable();
+    this.key(path);
+    // Each caller must still have valid request-scoped credentials. Sharing a
+    // read never shares download URLs or skips a later request's integrity check.
+    this.context();
+    const key = `${path}:${byteLength}`, pending = this.pendingVerifications.get(key);
+    if (pending) return pending;
+    const task = this.verifyObject(path, byteLength, sha256);
+    this.pendingVerifications.set(key, task);
+    try { return await task; }
+    finally { if (this.pendingVerifications.get(key) === task) this.pendingVerifications.delete(key); }
+  }
+  async verifyObject(path, byteLength, sha256) {
+    let response;
+    try {
+      response = await this.fetch(await this.signedGet(path, 60, {}), { redirect: 'error', signal: AbortSignal.timeout(60000) });
+      if (response.status !== 200) throw unavailable();
+      const declared = response.headers.get('content-length');
+      if (declared !== null && (!/^[1-9][0-9]*$/.test(declared) || Number(declared) !== byteLength)) return false;
+      const digest = createHash('sha256'); let size = 0;
+      for await (const chunk of response.body) {
+        size += chunk.byteLength;
+        if (size > byteLength) return false;
+        digest.update(chunk);
+      }
+      return size === byteLength && digest.digest('hex') === sha256;
     } catch { throw unavailable(); }
     finally { try { if (response?.body && !response.body.locked) await response.body.cancel(); } catch {} }
   }

@@ -103,6 +103,7 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     if (!file) return false;
     if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); throw new ServiceError(405, 'METHOD_NOT_ALLOWED', '请使用 GET 下载安装包。'); }
     if (!UUID.test(file[1])) throw new ServiceError(404, 'RELEASE_NOT_FOUND', '版本不存在或已下架。');
+    if (req.aborted || res.destroyed) return true;
     res.setHeader('Cache-Control', 'no-store, max-age=0');
     const row = await releases.row(file[1]);
     if (row?.status !== 'published') throw new ServiceError(404, 'RELEASE_NOT_FOUND', '版本不存在或已下架。');
@@ -111,12 +112,18 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     const etag = `"sha256-${row.sha256}"`, unchanged = req.headers['if-none-match'] === etag;
     // Count every request, but a 304 transfers no package and must not consume its byte allowance.
     await budget(req, 'download', unchanged ? 0 : row.byte_length, row.sha256);
+    if (req.aborted || res.destroyed) return true;
     if (unchanged) { res.writeHead(304, { ETag: etag }); res.end(); return true; }
     // A reviewed APK may ship with the function when the object store is unavailable.
     // It follows the same publication, budget, integrity and withdrawal checks.
-    let data;
+    let data, verified = false;
     const large = row.byte_length > APK_INLINE_BYTES || storage.preferSignedDownloads === true;
-    if (large) {
+    if (large && typeof storage.verify === 'function') {
+      // Verify the actual private object without retaining a complete APK (or
+      // its chunks) in memory for every concurrent signed-download request.
+      if (await storage.verify(row.storage_path, row.byte_length, row.sha256) !== true) throw new ServiceError(503, 'RELEASE_FILE_CHANGED', '安装包校验失败，请联系管理员。');
+      verified = true;
+    } else if (large) {
       // A bundled copy cannot prove the signed object's bytes. COS always serves
       // the real private object, including small historical APKs.
       data = await storage.get(row.storage_path, MAX_APK_BYTES);
@@ -127,7 +134,8 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
         data = await storage.get(row.storage_path, MAX_APK_BYTES);
       }
     }
-    if (data.length !== row.byte_length || digest(data) !== row.sha256) throw new ServiceError(503, 'RELEASE_FILE_CHANGED', '安装包校验失败，请联系管理员。');
+    if (!verified && (!data || data.length !== row.byte_length || digest(data) !== row.sha256)) throw new ServiceError(503, 'RELEASE_FILE_CHANGED', '安装包校验失败，请联系管理员。');
+    if (req.aborted || res.destroyed) return true;
     let downloadUrl;
     if (large) {
       if ((await releases.row(row.id))?.status !== 'published') throw new ServiceError(404, 'RELEASE_NOT_FOUND', '这个版本已下架。');

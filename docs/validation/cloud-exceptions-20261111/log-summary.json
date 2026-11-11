@@ -1,0 +1,80 @@
+{
+  "timezone": "Asia/Shanghai",
+  "from": "2026-11-10T10:50:38.503000+08:00",
+  "to": "2026-11-11T10:50:38.503000+08:00",
+  "allMatchingErrorsReturned": true,
+  "statusCounts": [
+    {
+      "status_code": 200,
+      "ret_code": 0,
+      "lines": 38217,
+      "requests": 12739,
+      "function_name": "nikon-preset-library"
+    },
+    {
+      "status_code": 202,
+      "ret_code": 2,
+      "lines": 13333,
+      "requests": 12896,
+      "function_name": "nikon-preset-library"
+    },
+    {
+      "status_code": 499,
+      "ret_code": 3,
+      "lines": 441,
+      "requests": 147,
+      "function_name": "nikon-preset-library"
+    },
+    {
+      "function_name": "huevia-data-backup",
+      "status_code": 202,
+      "ret_code": 2,
+      "lines": 24,
+      "requests": 1
+    },
+    {
+      "lines": 9,
+      "requests": 3,
+      "function_name": "nikon-preset-library",
+      "status_code": 434,
+      "ret_code": -1
+    },
+    {
+      "function_name": "huevia-data-backup",
+      "status_code": 200,
+      "ret_code": 0,
+      "lines": 3,
+      "requests": 1
+    }
+  ],
+  "oom": {
+    "requests": 3,
+    "sameContainer": true,
+    "memoryLimitBytes": 268435456,
+    "firstAt": "2026-11-10T20:26:24.354000+08:00",
+    "lastAt": "2026-11-10T20:26:29.185000+08:00"
+  },
+  "requestCanceled": {
+    "requests": 147,
+    "minMs": 1.0,
+    "medianMs": 200.0,
+    "maxMs": 6791.0
+  },
+  "backup": {
+    "complete": true,
+    "tables": 35,
+    "files": 917,
+    "durationMs": 137788.0,
+    "memoryBytes": 402894848
+  },
+  "handledApplicationErrorCodes": {
+    "USERNAME_TAKEN": 4,
+    "CHALLENGE_REQUIRED": 10,
+    "CHALLENGE_INVALID": 4,
+    "NOT_FOUND": 282,
+    "LOGIN_REQUIRED": 8,
+    "ABUSE_THROTTLED": 1,
+    "METHOD_NOT_ALLOWED": 1
+  },
+  "rawBodiesOrClientIdentifiersRecorded": false
+}

@@ -1,0 +1,56 @@
+{
+  "startedAt": 1794366805743,
+  "finishedAt": 1794366823685,
+  "concurrency": 8,
+  "accesses": [
+    {
+      "status": 307,
+      "latencyMs": 1855
+    },
+    {
+      "status": 307,
+      "latencyMs": 3825
+    },
+    {
+      "status": 307,
+      "latencyMs": 3971
+    },
+    {
+      "status": 307,
+      "latencyMs": 2678
+    },
+    {
+      "status": 307,
+      "latencyMs": 4775
+    },
+    {
+      "status": 307,
+      "latencyMs": 3271
+    },
+    {
+      "status": 307,
+      "latencyMs": 3357
+    },
+    {
+      "status": 307,
+      "latencyMs": 4244
+    }
+  ],
+  "cosStatus": 200,
+  "packageName": "cc.huevia",
+  "versionCode": 186,
+  "byteLength": 31411279,
+  "sha256": "ca6262e510e9c751cd5b40eb93e2a90e5b3b7a3ae6229cc794878960ea6b2b15",
+  "signerSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "conditional": [
+    {
+      "origin": "https://huevia.cc",
+      "status": 304
+    },
+    {
+      "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+      "status": 304
+    }
+  ],
+  "signedUrlsOrCredentialsRecorded": false
+}
