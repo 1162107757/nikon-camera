@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:huevia/domain.dart';
@@ -68,17 +68,6 @@ void main() {
               }),
               flush: true,
             );
-        // The test binding normally renders only during a test pump. Publish
-        // the XCTest completion marker after all assertions/cleanup finished.
-        binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
-        runApp(
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: Center(
-              child: Text(complete ? 'HUEVIA_NATIVE_PASS' : 'HUEVIA_NATIVE_FAIL'),
-            ),
-          ),
-        );
       }),
     );
   }
@@ -101,6 +90,11 @@ void main() {
       await core.initialize();
       nativeResultRoot = core.root;
       if (Platform.isIOS && nativeRunId.isNotEmpty) {
+        final initialAccess = await core.call('gallery.access');
+        final permission = initialAccess['access'] == 'full'
+            ? initialAccess
+            : await core.galleryPermission();
+        expect(permission['access'], 'full');
         await File('${core.root}/native-pipeline-ready.json').writeAsString(
           jsonEncode({
             'schema': 1,
@@ -109,12 +103,22 @@ void main() {
             'sourceCommit': const String.fromEnvironment(
               'HUEVIA_NATIVE_TEST_SOURCE',
             ),
-            'access': await core.call('gallery.access'),
+            'initialAccess': initialAccess,
+            'access': permission,
           }),
           flush: true,
         );
-        final permission = await core.galleryPermission();
-        expect(permission['access'], 'full');
+        // The consent-only UI test must finish before the host directly
+        // launches this same authorized app for the complete native scenario.
+        final gate = File('${core.root}/native-pipeline-start');
+        final deadline = DateTime.now().add(const Duration(seconds: 180));
+        while (!await gate.exists() ||
+            await gate.readAsString() != nativeRunId) {
+          if (DateTime.now().isAfter(deadline)) {
+            fail('Host did not start the authorized native scenario');
+          }
+          await Future<void>.delayed(const Duration(milliseconds: 250));
+        }
       }
     } on AppFailure catch (failure) {
       fail(

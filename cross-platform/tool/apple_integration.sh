@@ -79,20 +79,21 @@ PY
 )"
 xcrun simctl install "$DEVICE" "$SIM_APP"
 xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
-# XCUITest accepts the real system Photos prompt; the app reports its own
-# PhotoKit status and runs the complete Dart pipeline after consent.
+# XCUITest accepts the real system Photos prompt. Dart waits at the host gate;
+# its final framework result is verified independently after a direct launch.
 xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
   "BUILD_DIR=$ROOT/cross-platform/app/build/ios" -parallel-testing-enabled NO \
-  -only-testing:RunnerTests/RunnerTests/testNativePipeline test-without-building > "$WORK/simulator-tests.log" 2>&1 &
-TEST_PID=$!
-# Keep the fresh app's final report even if an XCTest assertion fails.
-TEST_STATUS=0
-wait "$TEST_PID" || TEST_STATUS=$?
+  -only-testing:RunnerTests/RunnerTests/testPhotoLibraryConsent test-without-building > "$WORK/simulator-tests.log" 2>&1
 CONTAINER="$(xcrun simctl get_app_container "$DEVICE" cc.huevia.next data)"
 RESULT_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-result.json"
 READY_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-ready.json"
-if [[ -e "$READY_FILE" ]]; then cp "$READY_FILE" "$WORK/simulator-initial-access.json"; fi
-if [[ "$TEST_STATUS" != 0 && ! -e "$RESULT_FILE" ]]; then exit "$TEST_STATUS"; fi
+GATE_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-start"
+python3 "$ROOT/cross-platform/tool/apple_native_result.py" --ready "$READY_FILE" "$NATIVE_RUN_ID" "$NATIVE_SOURCE" "$WORK/simulator-initial-access.json"
+# The first launch performed consent only, so a native final result would be
+# stale or indicate that the gate was bypassed.
+if [[ -e "$RESULT_FILE" || -e "$GATE_FILE" ]]; then echo "Unexpected pre-gate native result"; exit 1; fi
+xcrun simctl terminate "$DEVICE" cc.huevia.next >/dev/null 2>&1 || true
+printf '%s' "$NATIVE_RUN_ID" > "$GATE_FILE"
+xcrun simctl launch --terminate-running-process --stdout="$WORK/simulator-pipeline.log" --stderr="$WORK/simulator-pipeline-stderr.log" "$DEVICE" cc.huevia.next
 python3 "$ROOT/cross-platform/tool/apple_native_result.py" "$RESULT_FILE" "$NATIVE_RUN_ID" "$NATIVE_SOURCE" "$GALLERY_SHA" "$WORK/simulator-result.json"
-if [[ "$TEST_STATUS" != 0 ]]; then exit "$TEST_STATUS"; fi

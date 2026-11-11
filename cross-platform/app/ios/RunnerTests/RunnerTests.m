@@ -4,9 +4,9 @@
 @end
 
 @implementation RunnerTests
-- (void)testNativePipeline {
+- (void)testPhotoLibraryConsent {
   self.continueAfterFailure = NO;
-  self.executionTimeAllowance = 420;
+  self.executionTimeAllowance = 120;
   XCUIApplication *app = [[XCUIApplication alloc] initWithBundleIdentifier:@"cc.huevia.next"];
   [app launch];
   // Exercise the actual iOS consent sheet. A successful simctl TCC write does
@@ -18,7 +18,6 @@
   if (!presented) NSLog(@"Photos consent UI: %@", system.debugDescription);
   XCTAssertTrue(presented, @"The real full-library permission choice must be presented.");
   [allow tap];
-  XCUIElement *complete = app.staticTexts[@"HUEVIA_NATIVE_PASS"];
-  XCTAssertTrue([complete waitForExistenceWithTimeout:300], @"Dart must finish every native assertion and publish its final result.");
+  XCTAssertTrue([app waitForState:XCUIApplicationStateRunningForeground timeout:15], @"The target must remain in the foreground after consent.");
 }
 @end

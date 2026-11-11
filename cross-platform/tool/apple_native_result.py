@@ -20,7 +20,9 @@ def main():
                 except (OSError,json.JSONDecodeError):time.sleep(.2);continue
                 if value.get('schema')!=1 or value.get('phase')!='ready' or value.get('runId')!=run_id or value.get('sourceCommit')!=source:
                     raise SystemExit('Warm-up identity does not match this native test run')
-                Path(target).write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8');print('Native test app initialized before authorization');return
+                if value.get('access',{}).get('access')!='full':
+                    raise SystemExit('The target app did not observe effective full PhotoKit authorization')
+                Path(target).write_text(json.dumps(value,indent=2)+'\n',encoding='utf-8');print('Target app observed effective full PhotoKit authorization');return
             time.sleep(.5)
         raise SystemExit('Native test app did not initialize within 90 seconds')
     path,run_id,source,fixture,target=Path(sys.argv[1]),*sys.argv[2:]
