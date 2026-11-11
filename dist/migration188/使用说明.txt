@@ -1,0 +1,12 @@
+Huevia 跨平台迁移开发版 0.31.0-dev / 188
+
+安卓真机优先使用 huevia-0.31.0-dev-188-android-arm64.apk。
+huevia-0.31.0-dev-188-android-x64.apk 用于 x86_64 安卓模拟器。
+两者均为 release/R8/AOT 开发包，使用开发证书，包名 cc.huevia.next；与原版并存。
+
+本轮主要恢复原版主页面和编辑器样式，并修正 RAW 小图显示、来源格式及详情页底部导航遮挡。
+已在 Android 12 模拟器安装、截图对照并运行 16 个界面场景；最终 x64 包实际完成 DNG 显影、编辑、完整 JPEG 导出及系统分享。
+ARM64 已完成编译、架构和签名校验，尚无荣耀 Magic 实机验证。
+
+整体迁移和全部页面样式对齐尚未完成。社区、相机硬件完整流程、人像与局部编辑等进度见 docs/migration/feature-parity.md。
+本目录 build-evidence.json 记录精确源码版本、包哈希及验证范围。原版工程和 187 包保留。

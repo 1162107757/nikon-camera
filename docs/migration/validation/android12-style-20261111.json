@@ -1,0 +1,258 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T10:48:06.510589+08:00",
+  "sourceCommit": "362897f106f8c7ee45cb1a67a486afb471152180",
+  "branch": "codex/cross-platform-migration",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "original": {
+    "sourceCommit": "6fb5003d8be85fcbb0fa3b4d99aef63cc1751f3c",
+    "version": "0.30.32-beta+186",
+    "applicationId": "cc.huevia",
+    "trackedFilesPreserved": 420,
+    "apkSha256": "ca6262e510e9c751cd5b40eb93e2a90e5b3b7a3ae6229cc794878960ea6b2b15"
+  },
+  "device": {
+    "model": "Isolated Android SDK emulator",
+    "os": "Android 12",
+    "api": 31,
+    "abi": "x86_64",
+    "resolution": [
+      1080,
+      2340
+    ],
+    "densityDpi": 420,
+    "devicePixelRatio": 2.625,
+    "adbServerPort": 5038,
+    "serial": "emulator-5584",
+    "originalAndMigrationCoInstalled": true
+  },
+  "artifacts": [
+    {
+      "apk": "dist/migration188/huevia-0.31.0-dev-188-android-arm64.apk",
+      "bytes": 49611227,
+      "sha256": "a3fbcba982eab11a5187ff8823330ffb32b9d8d24cec5a48ed6767c0ff863803",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "signatureVerified": true,
+      "signing": "Android Debug development certificate",
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+188",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "sourceCommit": "362897f"
+    },
+    {
+      "apk": "dist/migration188/huevia-0.31.0-dev-188-android-x64.apk",
+      "bytes": 52982659,
+      "sha256": "4662ad414a35845a7413a192782fc4f8e580f353a3ff49b59e90383a06fba5e4",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "signatureVerified": true,
+      "signing": "Android Debug development certificate",
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "applicationId": "cc.huevia.next",
+      "version": "0.31.0-dev+188",
+      "minSdk": 26,
+      "targetSdk": 35,
+      "sourceCommit": "362897f"
+    }
+  ],
+  "validation": {
+    "flutterAnalysis": "No issues found",
+    "androidWidgetScenarios": 16,
+    "androidNativeMediaChecks": 34,
+    "androidFlutterNativePipelineScenarios": 1,
+    "jvmBoundaryChecks": 201,
+    "originalNcpChecks": 2168,
+    "originalLocalEditChecks": 43230,
+    "originalRawJpegColourChecks": 15575,
+    "originalRawHighlightChecks": 243,
+    "releaseGui": [
+      "cold start",
+      "four original home destinations",
+      "native preset showcase rendering and detail route without bottom navigation",
+      "Wi-Fi protocol card and inline address settings",
+      "login welcome and password layout",
+      "private photo library and native phone gallery",
+      "synthetic DNG opens directly into working editor",
+      "small RAW preview fits viewport and keeps DNG subtitle",
+      "full JPEG export and Android share sheet"
+    ],
+    "releaseProcessAliveAfterGuiCheck": true,
+    "releaseProcessCrashBufferEmpty": true,
+    "androidNativeMediaImplementationCommit": "a4dede5126782da40f62bb945d7b41a47b036871",
+    "androidPipelineImplementationCommit": "a4dede5126782da40f62bb945d7b41a47b036871",
+    "nativeLogScope": "Captured during this style pass; native Android implementation is unchanged by subsequent viewport and connection layout refinements."
+  },
+  "measuredLayoutPixels": {
+    "homeNavOuter": {
+      "height": 171,
+      "bottom": 2177
+    },
+    "homeNavCells": [
+      [
+        78,
+        2017,
+        308,
+        2166
+      ],
+      [
+        308,
+        2017,
+        539,
+        2166
+      ],
+      [
+        539,
+        2017,
+        770,
+        2166
+      ],
+      [
+        770,
+        2017,
+        1001,
+        2166
+      ]
+    ],
+    "editorViewport": [
+      0,
+      210,
+      1080,
+      1429
+    ],
+    "editorHistoryRow": [
+      0,
+      1429,
+      1080,
+      1555
+    ],
+    "editorModes": [
+      0,
+      1555,
+      1080,
+      1731
+    ],
+    "editorDock": [
+      0,
+      1731,
+      1080,
+      2214
+    ],
+    "localPresetCard": {
+      "android186": [
+        47,
+        813,
+        524,
+        1451
+      ],
+      "shared188": [
+        47,
+        814,
+        524,
+        1453
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "file": "docs/migration/validation/style-android12-188/android-native.log",
+      "bytes": 126,
+      "sha256": "43d61bc5ebc73672b53bc2dcf6a423e996b5f36be942a95ea5db3e78df88f8ec"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/android-pipeline.log",
+      "bytes": 62,
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/android-widget.log",
+      "bytes": 63,
+      "sha256": "1c6ded6d14069a467bab9a3d799072a4c5a3673fc834464e2408415fbaa55691"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/connection-android186.png",
+      "bytes": 69227,
+      "sha256": "6e008ba22560c1c453c5d050a715439e2a079c0fc0604959cb70e740943fbcb7"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/connection-shared188.png",
+      "bytes": 70863,
+      "sha256": "937e398de4b8af8d7abf68168425891844d8ec76a87dc51010eb085ac39c22be"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/editor-raw-android186.png",
+      "bytes": 205865,
+      "sha256": "6a633048f89e4d071b27d8ed39ecd030291fe325c5e057a1816f442d6bd52c11"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/editor-raw-shared188.png",
+      "bytes": 478887,
+      "sha256": "9382459df560c08e7c02f34f0aa4019d30006b5806ffded68a5e7ee21a0f21b0"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/password-android186.png",
+      "bytes": 154261,
+      "sha256": "1773ba044abf752ee1e7a99cc84f5f9725f0b3ad1c967a34476dd7ae38f8d1e9"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/password-shared188.png",
+      "bytes": 158026,
+      "sha256": "1b83b8fbcc1b4ecdf2165752741fbec9bda87f0b734f831d6be8a8aa18a73203"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/presets-android186.png",
+      "bytes": 331608,
+      "sha256": "59a9ebe952cc808efe5a5e64446985c3d8510fa5cc26f3a4d02ce14880e3b39f"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/presets-shared188.png",
+      "bytes": 346614,
+      "sha256": "4eebc1d9c9f53b4aab52b9cb294b2451d4ce5973402048a27fc413772c1957e7"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/settings-android186.png",
+      "bytes": 170119,
+      "sha256": "f5f2c223a9286a8cca0d9ac305e5ace815f12262b1e1775be1fc844dce474f73"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/settings-shared188.png",
+      "bytes": 179450,
+      "sha256": "e6a989cb428b9d11f6f6f548230bfd093c176277b52bc501803a0d7c78dfd1ee"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/sync-android186.png",
+      "bytes": 125163,
+      "sha256": "c0d3a5b96a8d6a65ba2090505e30ccc987f700004816f451df788cf7571335c4"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/sync-shared188.png",
+      "bytes": 135088,
+      "sha256": "b01f821edf13def163e35256651420315fcd9c59e935ce57b91bdc0b7cae17ab"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/welcome-android186.png",
+      "bytes": 153220,
+      "sha256": "708194a3b373cac6868d3fd01f4d55c402f99c562a16b36a99964ef82055adaf"
+    },
+    {
+      "file": "docs/migration/validation/style-android12-188/welcome-shared188.png",
+      "bytes": 159280,
+      "sha256": "69758bddca195767fdab312f601cdd23790272e43d2aa2b5a855cea534d5da9a"
+    }
+  ],
+  "limits": [
+    "Seven screenshot pairs document reviewed pages, not all product screens or pixel-identical rendering. Font rasterization and small rounding differences remain.",
+    "Native camera hardware, full community/account flows, local masks/portrait editing and original export preview still require migration and visual acceptance; see feature-parity.md.",
+    "Phone-library browsing is implemented on Android; the iOS gallery adapter remains pending.",
+    "Android ARM64 is compiled and structurally verified; Honor Magic physical-device stability is unverified.",
+    "RAW input is a synthetic DNG and does not replace the unknown-model user NEF.",
+    "Separate development bundle/signing; original projects and existing artifacts are preserved."
+  ]
+}
