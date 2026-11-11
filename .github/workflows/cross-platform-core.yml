@@ -12,6 +12,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
       - name: Build and compare the original Java core on Apple
         run: bash cross-platform/tool/core_ios.sh
       - name: Save exact translation and parity evidence
