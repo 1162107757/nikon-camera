@@ -46,9 +46,13 @@ Android 应用源码固定为 `bef616a5778b318152043426373336af3597972b`，版�
 
 ## Apple 验证
 
-最新 Apple 提交为 `c8916738d1ef108e263bf0861ed29803b57f3161`，托管验证仍在执行。该提交与 Android 冻结版本的差异为 Apple 原生目录规范化及集成测试配置；共享产品界面和 Android 产品输入保持一致。
+当前 Apple 验证源码为 `69f1974d8e6650ef72a1180f534fefb3ea2ce94d`，托管验证仍在执行。该提交与 Android 冻结版本的差异为 Apple 原生目录规范化及集成测试配置；共享产品界面和 Android 产品输入保持一致。
 
-已加入 PhotosUI 声明/链接，并让原生桥返回 Java 文件保护逻辑使用的规范目录，避免真机 `/var` 与 `/private/var` 别名冲突。模拟器使用最新可用 iOS 运行时创建新设备，在安装的应用初始化后、应用停止期间建立照片权限，再直接启动应用执行完整场景。Flutter 官方 `allTestsPassed`、最终结果字典与运行 nonce/源码/样片 SHA 共同决定成功；结果缺失、失败、身份不符及场景数量不符都会拒绝。实际场景仍要求完整授权、真实 PhotoKit 资源 SHA 和全部媒体断言。[Flutter 固定版本的结果接口](https://github.com/flutter/flutter/blob/3.47.9/packages/integration_test/lib/integration_test.dart)、[Apple 有限照片访问](https://developer.apple.com/documentation/photokit/delivering-an-enhanced-privacy-experience-in-your-photos-app)
+已加入 PhotosUI 声明/链接，并让原生桥返回 Java 文件保护逻辑使用的规范目录，避免真机 `/var` 与 `/private/var` 别名冲突。上一轮 `43011885096` 已通过 41 项 Mac Flutter 测试并成功生成设备 IPA，但真实 PhotoKit 完整授权断言失败：iOS 26.5 中 `simctl privacy grant photos` 成功返回后，应用仍报告尚未授权。因此改用 XCUITest 点击真正的系统完整访问选项，再运行同一套 PhotoKit/媒体断言；没有把授权断言改为跳过。
+
+Flutter 官方 `allTestsPassed`、最终结果字典与运行 nonce/源码/样片 SHA 共同决定成功；结果缺失、失败、身份不符及场景数量不符都会拒绝。实际场景仍要求完整授权、真实 PhotoKit 资源 SHA 和全部媒体断言。[Flutter 固定版本的结果接口](https://github.com/flutter/flutter/blob/3.47.9/packages/integration_test/lib/integration_test.dart)、[Apple 有限照片访问](https://developer.apple.com/documentation/photokit/delivering-an-enhanced-privacy-experience-in-your-photos-app)
+
+下载后的 IPA 另用 `cross-platform/tool/verify_ipa.py` 独立核验。除了源码、大小和哈希，还逐个检查主程序、Flutter、AOT 及其他原生框架的全部 Mach-O 切片，要求 ARM64/iPhoneOS；模拟器二进制、缺少 AOT、元数据不符或开发内核会被拒绝。此检查不代表已在实际 iPhone 安装。
 
 ## 保留范围
 
