@@ -39,7 +39,7 @@ final class SubmissionBoundaryTest {
         byte[] ncp=NcpCompatibilityFixtures.ncp();Map<String,Object> staged=SharedJson.object(SharedImport.stageSubmission(new ByteArrayInputStream(ncp),"test.ncp","ncp",OWNER,root.toString(),()->false));
         yes(((String)staged.get("path")).contains("submission-incoming"));
         Map<String,Object> attach=new LinkedHashMap<>(staged);attach.put("kind","ncp");request(flow,"attach",attach);
-        yes(!Files.exists(Path.of((String)staged.get("path"))));
+        yes(!Files.exists(Paths.get((String)staged.get("path"))));
         SharedImport.stageSubmission(new ByteArrayInputStream(ncp),"test.ncp","ncp",OWNER,root.toString(),()->false);
         rejects(()->request(flow,"attach",SharedRuntime.map("kind","ncp","path",staged.get("path"),"name","../bad.ncp")));
         Map<String,Object> other=SharedJson.object(SharedImport.stageSubmission(new ByteArrayInputStream(ncp),"test.ncp","ncp",OTHER,root.toString(),()->false));
