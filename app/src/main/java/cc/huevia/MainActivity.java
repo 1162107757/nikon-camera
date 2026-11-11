@@ -59,6 +59,7 @@ import cc.huevia.album.CameraWifiNetwork;
 import cc.huevia.album.AlbumController;
 import cc.huevia.album.PtpIpClient;
 import cc.huevia.album.ConnectionTrace;
+import cc.huevia.album.ConnectionInfo;
 import cc.huevia.connection.CameraWifiSession;
 import cc.huevia.connection.CameraConnectionRuntime;
 import cc.huevia.connection.CameraConnectionPreferences;
@@ -393,7 +394,7 @@ public final class MainActivity extends Activity {
         usb = (UsbManager) getSystemService(USB_SERVICE);
         wifi = new CameraWifiNetwork(this);
         File traceDirectory = getExternalFilesDir(null);
-        if (traceDirectory != null) ConnectionTrace.configure(new File(traceDirectory, "connection-trace.log"));
+        ConnectionTrace.configure(new File(traceDirectory == null ? getFilesDir() : traceDirectory, "connection-trace.log"));
         presetPreviews = new PresetPreviewRenderer(this);
         presetShowcases = new PresetShowcaseRenderer(this, presetPreviews);
         account = new AccountPanel(this, new AccountPanel.Host() {
@@ -449,6 +450,7 @@ public final class MainActivity extends Activity {
         }
         restorePresetHomeFilters(state);
         album = new AlbumPanel(this, new AlbumPanel.Host() {
+            @Override public void onExportDiagnostics() { exportReport(); }
             @Override public int bottomNavigationInset() { return albumBottomNavigationInset(); }
             @Override public AutoCloseable beginPhotoWork() { return connections.beginPhotoOperation(); }
             @Override public void beforePhotoLive(Runnable start) {
@@ -3780,7 +3782,23 @@ public final class MainActivity extends Activity {
         try { value = report.isEmpty() ? new JSONObject() : new JSONObject(report); }
         catch (org.json.JSONException oldTextReport) { value = new JSONObject().put("originalReport", report); }
         if (!value.has("appVersion")) value.put("appVersion", appVersion());
-        return value.put("reportExportAppVersion", appVersion()).put("connectionTrace", ConnectionTrace.snapshot()).toString(2);
+        ConnectionInfo camera = connections.album.sessionConnectionInfo();
+        ConnectionInfo photos = connections.album.connectionInfo();
+        JSONObject state = new JSONObject().put("wifiConnected", connections.wifiSession.isConnected())
+                .put("wifiRouteUnavailable", connections.wifiSession.isRouteUnavailable())
+                .put("cameraSessionOpen", connections.album.hasLiveSession()).put("photoIndexReady", connections.album.isConnected())
+                .put("preparingAlbum", connections.isPreparingAlbum()).put("connecting", connections.album.isConnecting())
+                .put("operationInProgress", connections.hasOperations()).put("browseErrorPresent", !connections.album.browseError().isEmpty())
+                .put("preparationErrorPresent", !connections.albumPreparationError().isEmpty())
+                .put("cameraModel", camera == null ? "" : camera.model())
+                .put("cameraAddress", camera == null ? "" : camera.host()).put("cameraPort", camera == null ? 0 : camera.port())
+                .put("photoHandles", photos == null ? -1 : photos.totalHandles());
+        JSONObject device = new JSONObject().put("manufacturer", Build.MANUFACTURER).put("model", Build.MODEL)
+                .put("androidRelease", Build.VERSION.RELEASE).put("sdkInt", Build.VERSION.SDK_INT);
+        JSONObject diagnostics = new JSONObject().put("schemaVersion", 1).put("capturedAtMs", System.currentTimeMillis())
+                .put("summary", ConnectionTrace.diagnosticSummary()).put("state", state).put("device", device);
+        return value.put("reportExportAppVersion", appVersion()).put("connectionDiagnostics", diagnostics)
+                .put("connectionTrace", ConnectionTrace.snapshot()).toString(2);
     }
 
     private String appVersion() {

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 
-/** Bounded, opt-in connection timing evidence. Never records camera data or exception messages. */
+/** Bounded local connection evidence. Never records camera data or exception messages. */
 public final class ConnectionTrace {
     static final int MAX_EVENTS = 256;
     static final int MAX_BYTES = 64 * 1024;
@@ -30,8 +30,9 @@ public final class ConnectionTrace {
     private static final Pattern TOKEN = Pattern.compile("[A-Z][A-Z0-9_]{0,63}");
     private static final Pattern LINE = Pattern.compile("wall_ms=[0-9]+ mono_ms=[0-9]+ event=[A-Z][A-Z0-9_]{0,63}"
             + "(?: conn=[0-9]+)?(?: op=0x[0-9a-f]{4} tx=[0-9]+)?(?: elapsed_ms=[0-9]+)?"
+            + "(?: count=[0-9]+)?(?: detail=[0-9]+)?(?: response=0x[0-9a-f]{4})?"
             + "(?: bytes=[0-9]+ total_bytes=[0-9]+ payload_read_ms=[0-9]+ sink_write_ms=[0-9]+ progress_callback_ms=[0-9]+ timeouts=[0-9]+)?"
-            + "(?: category=(?:EOF|TIMEOUT|IO|CANCEL|EXPLICIT|PROTOCOL))?");
+            + "(?: category=(?:EOF|TIMEOUT|IO|CANCEL|EXPLICIT|PROTOCOL|REFUSED|NO_ROUTE|PERMISSION))?");
     private static final AtomicLong IDS = new AtomicLong();
     private static final ScheduledExecutorService WRITER = Executors.newSingleThreadScheduledExecutor(task -> {
         Thread thread = new Thread(task, "camera-connection-trace"); thread.setDaemon(true); return thread;
@@ -73,6 +74,77 @@ public final class ConnectionTrace {
         State state = enabled;
         if (state == null) return "";
         synchronized (state) { return joined(state.lines); }
+    }
+
+    public static long diagnosticStarted(String stage) {
+        diagnostic("DIAG_" + stage + "_BEGIN", -1, -1, -1, null);
+        return System.nanoTime();
+    }
+
+    public static void diagnosticFinished(String stage, long started, long count, long detail, Throwable failure) {
+        diagnostic("DIAG_" + stage + (failure == null ? "_OK" : "_FAILED"),
+                Math.max(0, (System.nanoTime() - started) / 1_000_000L), count, detail, failure);
+    }
+
+    /** Fixed reason tokens and numbers only. Repeated identical wait states are coalesced. */
+    public static void diagnosticReason(String reason, long count, long detail) {
+        State state = enabled;
+        if (state == null || reason == null || !TOKEN.matcher(reason).matches()) return;
+        String key = reason + ":" + count + ":" + detail;
+        synchronized (state) {
+            if (key.equals(state.lastDiagnosticReason)) return;
+            state.lastDiagnosticReason = key;
+        }
+        diagnostic("DIAG_" + reason, -1, count, detail, null);
+    }
+
+    private static void diagnostic(String event, long elapsed, long count, long detail, Throwable failure) {
+        State state = enabled;
+        if (state == null || !TOKEN.matcher(event).matches()) return;
+        String fields = (elapsed < 0 ? "" : " elapsed_ms=" + elapsed)
+                + (count < 0 ? "" : " count=" + count) + (detail < 0 ? "" : " detail=" + detail)
+                + responseField(failure) + (failure == null ? "" : " category=" + category(failure));
+        synchronized (state) { if (event.endsWith("_BEGIN")) state.lastDiagnosticReason = ""; }
+        add(state, event, fields, event.endsWith("_FAILED"));
+    }
+
+    /** A description of observed evidence, not a guess about the physical camera. No file I/O. */
+    public static String diagnosticSummary() {
+        String[] lines = snapshot().split("\n");
+        for (int i = lines.length - 1; i >= 0; i--) {
+            String line = lines[i];
+            if (line.contains("event=DIAG_ALBUM_INDEX_FAILED")) continue;
+            if (line.contains("event=DIAG_ALBUM_INDEX_OK")) return "照片索引已读取。若图片仍未显示，请同时检查后续缩略图日志。";
+            if (line.contains("event=DIAG_") && line.contains("_FAILED")) {
+                String stage = line.contains("ALBUM_STORAGE") ? "读取存储卡" : line.contains("ALBUM_HANDLES") ? "读取照片索引"
+                        : line.contains("ALBUM_CAPABILITY") ? "检查照片读取能力" : line.contains("ALBUM_IDENTITY") ? "识别相机信息"
+                        : line.contains("DEVICE_INFO") ? "读取相机信息" : line.contains("COMMAND_SOCKET") ? "建立相机网络通道"
+                        : line.contains("COMMAND_ACK") ? "等待相机确认" : line.contains("EVENT_SOCKET") ? "建立事件通道"
+                        : line.contains("EVENT_ACK") ? "等待事件通道确认" : line.contains("OPEN_SESSION") ? "打开相机会话" : "读取相机照片";
+                if (line.contains("response=0x2019")) return stage + "时，相机返回忙碌（0x2019）。";
+                if (line.contains("response=")) return stage + "失败，相机返回 " + field(line, "response") + "。";
+                if (line.contains("category=TIMEOUT")) return stage + "超时；日志包含耗时及前后阶段。";
+                if (line.contains("category=REFUSED")) return stage + "被拒绝，请核对相机无线状态及其他相机应用。";
+                if (line.contains("category=NO_ROUTE")) return stage + "失败，当前网络无法到达相机。";
+                if (line.contains("ALBUM_CAPABILITY")) return "相机未提供必需的照片读取操作，操作编号为 " + field(line, "detail") + "（十进制）。";
+                return stage + "未完成，错误分类为 " + field(line, "category") + "。";
+            }
+            if (line.contains("event=DIAG_ALBUM_INDEX_BEGIN")) return "照片列表读取已开始，尚未记录完成结果。";
+        }
+        return "尚无本次照片读取的诊断结果，请重试读取照片后导出。";
+    }
+
+    private static String field(String line, String key) {
+        for (String token : line.split(" ")) if (token.startsWith(key + "=")) return token.substring(key.length() + 1);
+        return "UNKNOWN";
+    }
+
+    private static String responseField(Throwable failure) {
+        for (int i = 0; failure != null && i < 6; i++, failure = failure.getCause()) {
+            if (failure instanceof cc.huevia.ptp.PtpResponseException)
+                return " response=0x" + String.format(Locale.ROOT, "%04x", ((cc.huevia.ptp.PtpResponseException) failure).responseCode() & 0xffff);
+        }
+        return "";
     }
 
     static long nextConnectionId() { return IDS.incrementAndGet(); }
@@ -118,7 +190,7 @@ public final class ConnectionTrace {
     static void operationFinished(long connection, int operation, long transaction, long started, Throwable failure) {
         long millis = Math.max(0, (System.nanoTime() - started) / 1_000_000L);
         structured(failure == null ? "PTP_OP_COMPLETE" : "PTP_OP_FAILED", connection, operation, transaction,
-                millis, failure == null ? null : category(failure));
+                millis, failure == null ? null : category(failure), responseField(failure));
     }
 
     static void pingReplied(long connection, boolean eventChannel) {
@@ -135,25 +207,36 @@ public final class ConnectionTrace {
     }
 
     static String category(Throwable failure) {
-        if (Thread.currentThread().isInterrupted() || failure instanceof InterruptedException
-                || failure instanceof java.io.InterruptedIOException && !(failure instanceof SocketTimeoutException)) return "CANCEL";
-        if (failure instanceof SocketTimeoutException) return "TIMEOUT";
-        if (failure instanceof EOFException) return "EOF";
-        if (failure instanceof cc.huevia.ptp.PtpResponseException
-                || failure instanceof cc.huevia.ptp.PtpProtocolException) return "PROTOCOL";
+        if (Thread.currentThread().isInterrupted()) return "CANCEL";
+        for (int i = 0; failure != null && i < 6; i++, failure = failure.getCause()) {
+            if (failure instanceof InterruptedException || failure instanceof java.io.InterruptedIOException
+                    && !(failure instanceof SocketTimeoutException)) return "CANCEL";
+            if (failure instanceof SocketTimeoutException) return "TIMEOUT";
+            if (failure instanceof EOFException) return "EOF";
+            if (failure instanceof java.net.NoRouteToHostException) return "NO_ROUTE";
+            if (failure instanceof java.net.ConnectException) return "REFUSED";
+            if (failure instanceof SecurityException) return "PERMISSION";
+            if (failure instanceof cc.huevia.ptp.PtpProtocolException) return "PROTOCOL";
+        }
         return "IO";
     }
 
     private static void structured(String event, long connection, int operation, long transaction, long elapsed, String category) {
+        structured(event, connection, operation, transaction, elapsed, category, "");
+    }
+
+    private static void structured(String event, long connection, int operation, long transaction, long elapsed, String category, String response) {
         State state = enabled;
         if (state == null) return;
         StringBuilder fields = new StringBuilder(100).append(" conn=").append(Math.max(0, connection));
         if (operation >= 0) fields.append(" op=0x").append(String.format(Locale.ROOT, "%04x", operation & 0xffff))
                 .append(" tx=").append(Math.max(0, transaction));
         if (elapsed >= 0) fields.append(" elapsed_ms=").append(elapsed);
+        fields.append(response);
         if (category != null) {
             if (!category.equals("EOF") && !category.equals("TIMEOUT") && !category.equals("IO") && !category.equals("CANCEL")
-                    && !category.equals("EXPLICIT") && !category.equals("PROTOCOL")) category = "IO";
+                    && !category.equals("EXPLICIT") && !category.equals("PROTOCOL") && !category.equals("REFUSED")
+                    && !category.equals("NO_ROUTE") && !category.equals("PERMISSION")) category = "IO";
             fields.append(" category=").append(category);
         }
         add(state, event, fields.toString(), event.equals("PTP_OP_FAILED") || event.equals("PTP_CLOSED"));
@@ -252,7 +335,17 @@ public final class ConnectionTrace {
         // The fixed schema is ASCII, so character lengths equal UTF-8 byte lengths.
         int bytes = 0;
         for (String line : lines) bytes += line.length() + 1;
-        while (lines.size() > MAX_EVENTS || bytes > MAX_BYTES) bytes -= lines.removeFirst().length() + 1;
+        int diagnostics = 0;
+        for (String line : lines) if (line.contains(" event=DIAG_")) diagnostics++;
+        while (lines.size() > MAX_EVENTS || bytes > MAX_BYTES) {
+            // Keep up to 64 recent setup/browse records when routine heartbeats fill the ring.
+            java.util.Iterator<String> iterator = lines.iterator();
+            while (iterator.hasNext()) {
+                String line = iterator.next(); boolean diagnostic = line.contains(" event=DIAG_");
+                if (diagnostic && diagnostics <= 64) continue;
+                iterator.remove(); bytes -= line.length() + 1; if (diagnostic) diagnostics--; break;
+            }
+        }
     }
 
     private static String joined(Iterable<String> lines) {
@@ -264,6 +357,7 @@ public final class ConnectionTrace {
     private static final class State {
         final File file;
         final ArrayDeque<String> lines = new ArrayDeque<>();
+        String lastDiagnosticReason = "";
         long revision, attemptedRevision, lastWrite, ticket;
         boolean loaded, writing, urgent;
         ScheduledFuture<?> pending;

@@ -218,13 +218,16 @@ public final class CameraWifiNetwork {
         if (port < 1 || port > 65535) throw new IOException("相机端口应为 1–65535。");
         final Network network;
         final long revision;
+        final boolean appOwned;
         synchronized (CameraWifiNetwork.class) {
+            appOwned = routeOwner != null;
             if (routeOwner != null) {
                 if (requestedNetwork == null || !isWifi(requestedNetwork)) throw new IOException("相机 Wi-Fi 尚未就绪或已断开，请重新连接相机。");
                 network = requestedNetwork;
             } else network = selectWifi(host.trim());
             revision = routeRevision;
         }
+        ConnectionTrace.diagnosticReason("WIFI_ROUTE_SELECTED", appOwned ? 1 : 2, port);
         return (requestedHost, requestedPort, timeout) -> {
             boolean allowedPort = requestedPort == port
                     || fujiPhotoChannels && (requestedPort == 55741 || requestedPort == 55742);
