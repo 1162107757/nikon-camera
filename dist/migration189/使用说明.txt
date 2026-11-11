@@ -12,3 +12,8 @@ Android 12 模拟器通过 38 项原生检查（含请求 512 KB 栈的 RAW 显�
 尚无荣耀 Magic 实机证据；合成 DNG 也不能替代未知型号的用户 NEF。
 完整功能迁移、全部页面样式对齐仍在进行，见 docs/migration/visual-acceptance.md。
 原工程、187 与 188 包及其验证记录均保留。精确包哈希与验证范围见 build-evidence.json。
+
+iOS 自签包：huevia-0.31.0-189-unsigned.ipa，最低 iOS 16。
+这是实际 iPhoneOS ARM64 release/AOT 未签名包，需自行签名后安装，尚未作实体 iPhone 安装验收。
+Actions 42963383351 完整通过：23 项 Flutter 测试、完整原生图像/RAW 场景、Apple/JVM 原核心指纹一致。
+精确源码、构建与 IPA 哈希见 ios-build-evidence.json。

@@ -14,14 +14,14 @@
 | 社区详情、评论回复、赞、收藏、投稿、举报 | `community/*`, `ui/CommunityPanel` | 原逻辑已纳入 | 待迁移全部页面 | 待完成 |
 | 本地/系统照片导入、原图身份、分组、星标、筛选 | `LocalPhotoRepository`, `PhotoLibraryCatalog` | 部分原模型已纳入 | Android 原系统图库权限/分页/缩略图/原字节导入、私有照片日期分组、星标/搜索/RAW 筛选已接线；批选与 iOS 图库待迁移 | 安卓 12 全量图库与导入实操通过；Android 新版部分图库权限及 iOS 待验证 |
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
-| 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；两端应用集成待复跑 |
-| 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 待应用像素验收 |
+| 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；189 两端原生场景含去灰/导出通过，完整控件样式仍待对齐 |
+| 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 旋转/翻转/拉直/透视、百分比裁剪已接线；交互裁剪框待完善 | 189 两端实际旋转/裁剪像素场景通过；全部几何组合及交互仍待验收 |
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 待迁移编辑交互及原生表面 | 核心 JVM / Apple 原测试通过；应用待完成 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
-| 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器、iOS 三种排版/原素材字体已接线 | 安卓三种边框集成通过；iOS 待应用验证 |
+| 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | Android 原渲染器、iOS 三种排版/原素材字体已接线 | 189 两端三种边框原生集成通过；完整编辑面板与所有排版组合仍待验收 |
 | 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方及批量调节复制/撤销已接线；完整项目预设待迁移 | JVM 配方、复制事务与快照恢复验证通过；Apple 与旧安装资料迁移待验证 |
-| RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 安卓 12 合成 Bayer RAW 全链路通过；iOS 同场景待验证，未知型号 NEF 待实样复测 |
-| 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 编解码、安全元数据、完整/分享/自定义导出及私有成品版本管理已接线；编码前精确预览待迁移 | 安卓原生及 Flutter 集成通过；iOS 最新版本未编译 |
+| RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 适配和共享显影控制已接线；外部 JPEG 参考配对待迁移 | 189 两端合成 Bayer RAW 全链路通过；未知型号 NEF 与荣耀 Magic 实机仍待复测 |
+| 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoExportPreview`, `PhotoExportSpec` | 导出规格与滤镜直接复用 | 编解码、安全元数据、完整/分享/自定义导出及私有成品版本管理已接线；编码前精确预览待迁移 | 189 两端原生图像/成品场景通过；iOS 设备包已构建，实际手机自签安装及全部规格仍待验收 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 部分模型已纳入 | 待迁移 | 待完成 |
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | Wi-Fi 手动连接已接线；平台网络/生命周期待迁移 | 待完成，不扩大 Fuji 已验证能力 |
 | 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用 | 初始会话分页/接收已接线；完整库存策略与恢复待迁移 | 待完成 |
@@ -37,7 +37,7 @@
 - 共享核心 Java 11 编译与原测试：2168 项 NCP、43230 项局部编辑、15575 项 RAW/JPEG 色彩、243 项 RAW 高光检查通过。
 - Apple Objective-C 翻译运行同一套原测试，6 组图像 SHA-256 与 JVM 完全一致。
 - 首次 Apple 成功记录：提交 `9a285bfe2e1726bdc34042bba596054b479d6546`，Actions run `42787370999`。
-- 此证据仅证明共享核心。完整 Android APK、iOS 应用和 IPA 仍需构建与应用级验证。
+- 首次证据仅证明共享核心；后续应用构建、实际场景与 189 结果分别列在下面，不能据此认定全功能对齐。
 
 ### 首次应用构建与后续检查（开发记录）
 
@@ -86,6 +86,7 @@
 
 - 原生 XCTest 复现并取得 Actions `42955921950` 的 iOS 崩溃报告：`media.info` 读取 DNG 时，`LibRaw::LibRaw` 在工作线程触碰栈保护页，出现 `EXC_BAD_ACCESS / SIGBUS`。两端迁移桥接的三处大对象均改为堆分配，不改显影算法、参数或像素断言。Android 仅重新构建迁移 JNI 桥接，继续链接原版 LibRaw；原 `app/`、`ios/` 的 420 个已跟踪文件及 187/188 安装包保持原样。
 - Android 12 通过 38 项原生检查，新增请求 512 KiB 栈的独立线程执行实际 RAW 信息读取、无缓存显影、高光白色及原图 SHA 检查；16 个设备界面场景和完整 Flutter/native 图像场景通过。最终 ARM64/x64 独立 release/R8/AOT 包内的桥接源码、动态库哈希、ABI 和签名均已校验；最终 x64 包实际完成 DNG 自动显影、编辑、完整 JPEG 导出和系统分享。见 [189 构建及验证记录](validation/android12-raw-stack-189-20261111.json)。
+- Apple 应用提交 `1c424600dd284041ede82fa99a444ac37b94c63b` 的 [Actions `42963383351`](https://github.com/1162107757/nikon-camera/actions/runs/42963383351) 已完整通过：23 项 Flutter 测试、201 项共享边界、全部原核心检查及六组 JVM/Apple 指纹一致；原生 XCTest 的完整图片/RAW/去灰/几何/边框/复制/成品场景成功。测试套件在用例前固定系统语义状态、结束后还原，保留默认语义句柄清理检查及全部图像断言。已校验并交付 189 iPhoneOS ARM64 release/AOT 未签名 IPA，最低 iOS 16，供用户自签；尚未在实体 iPhone 安装。精确包哈希和证据见 [Apple 189 记录](validation/apple-mobile-189-20261111.json)。
 - 上述修复尚不能证明荣耀 Magic 实机闪退全部解决；合成 DNG 也不能代替用户未知型号 NEF。全功能与逐页样式验收继续以 [样式清单](visual-acceptance.md) 为准，未完成项目不标记通过。
 
 ## 保留和交付规则

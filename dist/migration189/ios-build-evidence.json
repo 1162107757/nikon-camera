@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "collectedAt": "2026-11-11T13:17:37.575701+08:00",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "sourceCommit": "1c424600dd284041ede82fa99a444ac37b94c63b",
+  "runId": 42963383351,
+  "runUrl": "https://github.com/1162107757/nikon-camera/actions/runs/42963383351",
+  "artifactId": 13830826517,
+  "artifactZipSha256": "ec3d3a4a175f5387bf5335da9f2bb0be7c9a9b37a877cd865be0583c1d9b9db4",
+  "ipa": "dist/migration189/huevia-0.31.0-189-unsigned.ipa",
+  "bytes": 27144296,
+  "sha256": "ac59038a8fbb03eb62fafdc020087b7557bb483f5d96c01bfd4baf5c9de4e91e",
+  "bundleIdentifier": "cc.huevia.next",
+  "version": "0.31.0",
+  "build": "189",
+  "minimumOS": "16.0",
+  "unsigned": true,
+  "executable": {
+    "architecture": "arm64",
+    "machOPlatform": "iPhoneOS",
+    "cpuType": 16777228,
+    "buildPlatforms": [
+      2
+    ]
+  },
+  "flutterAot": {
+    "architecture": "arm64",
+    "machOPlatform": "iPhoneOS",
+    "container": "universal Mach-O",
+    "slices": [
+      {
+        "architecture": "arm64",
+        "machOPlatform": "iPhoneOS",
+        "cpuType": 16777228,
+        "buildPlatforms": [
+          2
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "flutterWidgetAndStateTests": 23,
+    "iOSSimulatorNativePipelineScenarios": 1,
+    "appleCoreGoldenMatchesJvm": true,
+    "sharedBoundaryChecks": 201,
+    "fingerprints": {
+      "identity": "ed6fda2bd7fefa210bf3ad601b5210d6167c8160e3fd7a40a39779f4c60de3a9",
+      "plus-one-ev": "750741e865ce3558e4a9d0e8c7df589a362af8f0139a4f78707fa2e21edd5b37",
+      "colour": "999a0fea6e7c89ac606c13bfcdfd9f35a8a8ae2da909409e3d5f7dd4cdedeea5",
+      "spatial-detail": "244e182c643b84620743dddbf352e6481a8e59b8a350401327b07946f79b2ebb",
+      "curves": "8b610894b219bd66a9f4b73ab35097de219879e2f1c5a3586395c357417da9ba",
+      "local-radial": "3e535f58fd801171a08d38e9da045ff108040a9ad3eaf2c5f9d1aa1dd69456d8"
+    },
+    "originalTrackedFilesPreserved": 420,
+    "nativeTestRunner": "XCTest",
+    "automaticSemanticsHandleChecksEnabled": true,
+    "platformSemanticsPinnedBeforeTest": true,
+    "platformSemanticsRestoredAfterSuite": true,
+    "loggedSemanticsHandlesAtCallbackStart": 2,
+    "loggedSemanticsHandlesBeforeAutomaticDisposal": 2
+  },
+  "limits": [
+    "Unsigned iPhoneOS development IPA for user self-signing; not physically installed here.",
+    "Whole feature and visual parity remain incomplete; see migration feature-parity.md and visual-acceptance.md.",
+    "iOS PhotoKit gallery, full camera/background/USB/remote flows and local/portrait UI remain pending.",
+    "RAW integration uses a synthetic DNG; the unknown-model user NEF and Honor Magic physical device remain unverified."
+  ],
+  "jobId": 130334921224,
+  "evidence": [
+    {
+      "file": "docs/migration/validation/apple-mobile-189/simulator-result.txt",
+      "bytes": 9162,
+      "sha256": "9cb634992b08811fd9265cb83a029f0feddb09fcfc178764cc285ecefe95742a"
+    },
+    {
+      "file": "docs/migration/validation/apple-mobile-189/core-parity.json",
+      "bytes": 903,
+      "sha256": "e40d33442d7aa8d6a9e1a84793f1592ccc279fa33e5d9310e02ede3fc0860b98"
+    }
+  ]
+}
