@@ -698,6 +698,21 @@ extension _LegacyWorkspace on _EditorPageState {
     );
   }
 
+  Widget borderDock() => BorderPanel(
+    state: widget.state,
+    photo: widget.photo,
+    owner: owner,
+    recipe: recipe.data,
+    enabled: toolsEnabled,
+    canUndo: undo.isNotEmpty,
+    canRedo: redo.isNotEmpty,
+    onUndo: () => history(false),
+    onRedo: () => history(true),
+    onDragStart: checkpoint,
+    onChanged: (border, snapshot) =>
+        change(() => recipe.data['border'] = border, snapshot: snapshot),
+  );
+
   Widget filterDock() => Column(
     children: [
       SizedBox(
@@ -922,6 +937,8 @@ extension _LegacyWorkspace on _EditorPageState {
                           ? adjustmentDock(scale, compact)
                           : tab == 0
                           ? filterDock()
+                          : tab == 4
+                          ? borderDock()
                           : SingleChildScrollView(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,

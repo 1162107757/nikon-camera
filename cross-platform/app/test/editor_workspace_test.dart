@@ -64,6 +64,7 @@ class WorkspaceCore extends HueviaCore {
         'height': exportSize.height.toInt(),
         'bytes': 10000,
         'quality': 95,
+        'overview': copy(),
       };
     }
     if (operation == 'media.exportPreviewFrame') {
@@ -91,6 +92,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Future<void> settle(WidgetTester tester) async {
     await tester.pump(const Duration(milliseconds: 350));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 40)),
+    );
+    await tester.pump(const Duration(milliseconds: 100));
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 40)),
     );
@@ -186,6 +191,31 @@ void main() {
       await tester.ensureVisible(find.text('1:1'));
       await tester.tap(find.text('1:1'));
       await tester.pump();
+      final beforePinch = tester
+          .widget<CropCanvas>(find.byType(CropCanvas))
+          .crop;
+      final center = tester.getCenter(find.byType(Image));
+      final first = await tester.startGesture(
+        center - const Offset(40, 0),
+        pointer: 1,
+      );
+      final second = await tester.startGesture(
+        center + const Offset(40, 0),
+        pointer: 2,
+      );
+      await first.moveTo(center - const Offset(30, 0));
+      await tester.pump();
+      await second.moveTo(center + const Offset(15, 0));
+      await tester.pump();
+      await first.moveTo(center - const Offset(15, 0));
+      await tester.pump();
+      await first.up();
+      await second.up();
+      await tester.pump();
+      expect(
+        tester.widget<CropCanvas>(find.byType(CropCanvas)).crop.width,
+        lessThan(beforePinch.width),
+      );
       await tester.tap(find.text('应用'));
       await tester.pumpAndSettle();
       expect(received, isNotNull);
@@ -322,9 +352,9 @@ void main() {
         await tester.pump();
         expect(find.bySemanticsLabel('编码前的实际像素'), findsOneWidget);
         if (commit) {
-          await tester.tap(find.text('导出并分享'));
+          await tester.tap(find.byTooltip('导出并分享'));
         } else {
-          await tester.pageBack();
+          await tester.tap(find.byTooltip('返回导出设置'));
         }
         await settle(tester);
         await tester.pumpAndSettle();
@@ -368,7 +398,7 @@ void main() {
       final stale = core.frame();
       core.delayFrame!.complete(stale);
       await settle(tester);
-      await tester.tap(find.text('导出并分享'));
+      await tester.tap(find.byTooltip('导出并分享'));
       await tester.pump();
       expect(
         core.calls.where((c) => c.$1 == 'media.exportPreviewCommit'),

@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'hue_icons.dart';
 
 const _yellow = Color(0xffffe335), _white = Color(0xfff4f5f7);
 
@@ -44,6 +45,18 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   double ratio = -1;
   String transform = 'angle';
   Timer? debounce;
+  String get ratioName =>
+      <double, String>{
+        -1: '自由',
+        0: '原图',
+        1: '1:1',
+        4 / 3: '4:3',
+        2 / 3: '2:3',
+        1.5: '3:2',
+        9 / 16: '9:16',
+        2.35: '电影 · 2.35:1',
+      }[ratio] ??
+      '自由';
   @override
   void initState() {
     super.initState();
@@ -112,7 +125,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
         );
         fitRatio();
       });
-      await discard(old);
+      unawaited(discard(old));
     } catch (failure) {
       if (mounted && serial == generation) setState(() => error = '$failure');
     } finally {
@@ -166,21 +179,86 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                 ('9:16', 9 / 16),
                 ('电影 · 2.35:1', 2.35),
               ])
-                TextButton(
-                  onPressed: busy
-                      ? null
-                      : () => setState(() {
-                          ratio = entry.$2;
-                          fitRatio();
-                        }),
-                  style: TextButton.styleFrom(
-                    foregroundColor: ratio == entry.$2 ? _yellow : _white,
-                    minimumSize: const Size(48, 48),
+                Padding(
+                  padding: const EdgeInsets.only(right: 6),
+                  child: TextButton(
+                    onPressed: busy
+                        ? null
+                        : () => setState(() {
+                            ratio = entry.$2;
+                            fitRatio();
+                          }),
+                    style: TextButton.styleFrom(
+                      foregroundColor: ratio == entry.$2
+                          ? const Color(0xff2a1c12)
+                          : const Color(0xccffffff),
+                      backgroundColor: ratio == entry.$2
+                          ? _yellow
+                          : const Color(0x0dffffff),
+                      shape: StadiumBorder(
+                        side: BorderSide(
+                          color: ratio == entry.$2
+                              ? _yellow
+                              : const Color(0x33ffffff),
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 13),
+                      minimumSize: const Size(48, 34),
+                    ),
+                    child: Text(entry.$1),
                   ),
-                  child: Text(entry.$1),
                 ),
             ],
           ),
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 72,
+              child: DropdownButton<String>(
+                value: transform,
+                isExpanded: true,
+                dropdownColor: const Color(0xff292724),
+                style: const TextStyle(color: _white, fontSize: 12),
+                underline: const SizedBox(),
+                items: const [
+                  DropdownMenuItem(value: 'angle', child: Text('拉直')),
+                  DropdownMenuItem(
+                    value: 'horizontalPerspective',
+                    child: Text('水平'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'verticalPerspective',
+                    child: Text('垂直'),
+                  ),
+                ],
+                onChanged: (value) => setState(() => transform = value!),
+              ),
+            ),
+            Expanded(
+              child: Slider(
+                value: (geometry[transform] as num? ?? 0).toDouble(),
+                min: transform == 'angle' ? -450 : -100,
+                max: transform == 'angle' ? 450 : 100,
+                activeColor: _yellow,
+                label: transform == 'angle'
+                    ? '${((geometry[transform] as num? ?? 0) / 10).toStringAsFixed(1)}°'
+                    : '${geometry[transform] ?? 0}',
+                onChanged: (value) =>
+                    mutate(() => geometry[transform] = value.round()),
+              ),
+            ),
+            SizedBox(
+              width: 60,
+              child: Text(
+                transform == 'angle'
+                    ? '${((geometry[transform] as num? ?? 0) / 10).toStringAsFixed(1)}°'
+                    : '${(geometry[transform] as num? ?? 0) >= 0 ? "+" : ""}${geometry[transform] ?? 0}',
+                textAlign: TextAlign.end,
+                style: const TextStyle(color: _white, fontSize: 12),
+              ),
+            ),
+          ],
         ),
         Row(
           children: [
@@ -201,72 +279,22 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                 onPressed: busy
                     ? null
                     : () => mutate(() {
-                        geometry['mirrored'] = geometry['mirrored'] != true;
-                        crop = Rect.fromLTRB(
-                          1 - crop.right,
-                          crop.top,
-                          1 - crop.left,
-                          crop.bottom,
-                        );
-                      }),
-                child: const Text('水平翻转'),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: busy
-                    ? null
-                    : () => mutate(() {
                         geometry = {};
                         crop = const Rect.fromLTRB(0, 0, 1, 1);
                         ratio = -1;
+                        transform = 'angle';
                       }),
                 child: const Text('重置'),
               ),
             ),
           ],
         ),
-        Row(
-          children: [
-            SizedBox(
-              width: 104,
-              child: DropdownButton<String>(
-                value: transform,
-                isExpanded: true,
-                dropdownColor: const Color(0xff292724),
-                style: const TextStyle(color: _white, fontSize: 12),
-                items: const [
-                  DropdownMenuItem(value: 'angle', child: Text('拉直')),
-                  DropdownMenuItem(
-                    value: 'horizontalPerspective',
-                    child: Text('水平透视'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'verticalPerspective',
-                    child: Text('垂直透视'),
-                  ),
-                ],
-                onChanged: (value) => setState(() => transform = value!),
-              ),
-            ),
-            Expanded(
-              child: Slider(
-                value: (geometry[transform] as num? ?? 0).toDouble(),
-                min: transform == 'angle' ? -450 : -100,
-                max: transform == 'angle' ? 450 : 100,
-                activeColor: _yellow,
-                label: transform == 'angle'
-                    ? '${((geometry[transform] as num? ?? 0) / 10).toStringAsFixed(1)}°'
-                    : '${geometry[transform] ?? 0}',
-                onChanged: (value) =>
-                    mutate(() => geometry[transform] = value.round()),
-              ),
-            ),
-          ],
-        ),
-        Text(
-          '裁切范围 ${(crop.width * 100).toStringAsFixed(1)}% × ${(crop.height * 100).toStringAsFixed(1)}%',
-          style: const TextStyle(color: _white, fontSize: 12),
+        ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 22),
+          child: Text(
+            '$ratioName · 保留${(crop.width * crop.height * 100).round()}%${(geometry['horizontalPerspective'] ?? 0) != 0 || (geometry['verticalPerspective'] ?? 0) != 0 ? " · 透视" : ""}',
+            style: const TextStyle(color: _white, fontSize: 11),
+          ),
         ),
         if (error != null)
           Padding(
@@ -284,25 +312,38 @@ class _CropWorkspaceState extends State<CropWorkspace> {
       ],
     ),
   );
-  @override
-  Widget build(BuildContext context) => Theme(
-    data: ThemeData.dark().copyWith(
-      colorScheme: const ColorScheme.dark(primary: _yellow),
+
+  Widget header() => Container(
+    height: 54,
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0x88000000), Colors.transparent],
+      ),
     ),
-    child: Scaffold(
-      backgroundColor: const Color(0xff242b27),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: _white,
-        title: const Text('构图', style: TextStyle(fontSize: 13)),
-        centerTitle: true,
-        leading: IconButton(
-          tooltip: '返回编辑照片',
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back),
+    alignment: Alignment.topCenter,
+    child: Row(
+      children: [
+        SizedBox(
+          width: 64,
+          height: 48,
+          child: IconButton(
+            tooltip: '返回编辑照片',
+            onPressed: () => Navigator.pop(context),
+            icon: const HueIcon(HueIconKind.back, color: _white),
+          ),
         ),
-        actions: [
-          TextButton(
+        const Expanded(
+          child: Center(
+            child: Text('构图', style: TextStyle(fontSize: 13, color: _white)),
+          ),
+        ),
+        SizedBox(
+          width: 64,
+          height: 48,
+          child: TextButton(
+            style: TextButton.styleFrom(foregroundColor: _yellow),
             onPressed: busy || error != null
                 ? null
                 : () => Navigator.pop(context, {
@@ -314,10 +355,31 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                   }),
             child: const Text('应用'),
           ),
-        ],
+        ),
+      ],
+    ),
+  );
+  @override
+  Widget build(BuildContext context) => Theme(
+    data: ThemeData.dark().copyWith(
+      textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
+      colorScheme: const ColorScheme.dark(primary: _yellow),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: _white,
+          minimumSize: const Size(48, 48),
+          textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
       ),
+      sliderTheme: const SliderThemeData(
+        trackHeight: 2,
+        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
+        inactiveTrackColor: Color(0x33ffffff),
+      ),
+    ),
+    child: Scaffold(
+      backgroundColor: const Color(0xff0a0908),
       body: SafeArea(
-        top: false,
         child: LayoutBuilder(
           builder: (context, box) {
             final canvas = Stack(
@@ -344,6 +406,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                     alignment: Alignment.bottomCenter,
                     child: LinearProgressIndicator(minHeight: 2),
                   ),
+                Positioned(top: 0, left: 0, right: 0, child: header()),
               ],
             );
             return box.maxWidth > box.maxHeight
@@ -351,9 +414,9 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                     children: [
                       Expanded(child: canvas),
                       SizedBox(
-                        width: math.min(320, box.maxWidth * .45),
+                        width: math.min(300, box.maxWidth * .45),
                         child: Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 8),
                           child: controls(),
                         ),
                       ),
@@ -405,7 +468,9 @@ class CropCanvas extends StatefulWidget {
 class _CropCanvasState extends State<CropCanvas> {
   Rect frame = Rect.zero, start = Rect.zero;
   Offset down = Offset.zero;
-  int edges = 0;
+  int edges = 0, pointers = 0;
+  double scaleStart = 1;
+  bool multiTouch = false;
   static const left = 1, top = 2, right = 4, bottom = 8;
   Rect get actual => Rect.fromLTRB(
     frame.left + widget.crop.left * frame.width,
@@ -413,8 +478,8 @@ class _CropCanvasState extends State<CropCanvas> {
     frame.left + widget.crop.right * frame.width,
     frame.top + widget.crop.bottom * frame.height,
   );
-  void begin(DragStartDetails d) {
-    final r = actual, p = d.localPosition;
+  void begin(Offset p) {
+    final r = actual;
     edges = (p.dx - r.left).abs() <= 24
         ? left
         : (p.dx - r.right).abs() <= 24
@@ -427,10 +492,10 @@ class _CropCanvasState extends State<CropCanvas> {
     down = p;
   }
 
-  void update(DragUpdateDetails d) {
+  void update(Offset p) {
     if (edges < 0 || frame.isEmpty) return;
-    final dx = (d.localPosition.dx - down.dx) / frame.width,
-        dy = (d.localPosition.dy - down.dy) / frame.height;
+    final dx = (p.dx - down.dx) / frame.width,
+        dy = (p.dy - down.dy) / frame.height;
     if (edges == 0) {
       final x = (start.left + dx).clamp(0.0, 1 - start.width),
           y = (start.top + dy).clamp(0.0, 1 - start.height);
@@ -487,6 +552,41 @@ class _CropCanvasState extends State<CropCanvas> {
 
   void nudge(double dx, double dy, {double resize = 0}) =>
       widget.onChanged(shifted(dx, dy, resize: resize));
+
+  void scale(ScaleUpdateDetails details) {
+    if (frame.isEmpty) return;
+    if (details.pointerCount != pointers) {
+      pointers = details.pointerCount;
+      multiTouch |= pointers > 1;
+      start = widget.crop;
+      scaleStart = details.scale;
+      return;
+    }
+    if (pointers < 2) {
+      if (!multiTouch) update(details.localFocalPoint);
+      return;
+    }
+    final minFactor = math.max(.05 / start.width, .05 / start.height),
+        maxFactor = math.min(1 / start.width, 1 / start.height),
+        factor = (details.scale / scaleStart).clamp(
+          math.min(minFactor, maxFactor),
+          maxFactor,
+        ),
+        w = start.width * factor,
+        h = start.height * factor,
+        fx = ((details.localFocalPoint.dx - frame.left) / frame.width).clamp(
+          0.0,
+          1.0,
+        ),
+        fy = ((details.localFocalPoint.dy - frame.top) / frame.height).clamp(
+          0.0,
+          1.0,
+        ),
+        l = (fx + (start.left - fx) * factor).clamp(0.0, 1 - w),
+        t = (fy + (start.top - fy) * factor).clamp(0.0, 1 - h);
+    widget.onChanged(Rect.fromLTWH(l, t, w, h));
+  }
+
   String label(Rect r) =>
       '${(r.width * 100).round()}% × ${(r.height * 100).round()}%';
 
@@ -496,9 +596,12 @@ class _CropCanvasState extends State<CropCanvas> {
       final size = applyBoxFit(
         BoxFit.contain,
         widget.pixels,
-        Size(math.max(1, box.maxWidth - 48), math.max(1, box.maxHeight - 48)),
+        Size(math.max(1, box.maxWidth - 24), math.max(1, box.maxHeight - 90)),
       ).destination;
-      frame = Alignment.center.inscribe(size, Offset.zero & box.biggest);
+      frame = Alignment.center.inscribe(
+        size,
+        Rect.fromLTWH(0, 78, box.maxWidth, math.max(1, box.maxHeight - 90)),
+      );
       return Focus(
         autofocus: true,
         onKeyEvent: (_, event) {
@@ -534,8 +637,15 @@ class _CropCanvasState extends State<CropCanvas> {
             dragStartBehavior: DragStartBehavior.down,
             key: const ValueKey('crop-canvas'),
             behavior: HitTestBehavior.opaque,
-            onPanStart: widget.enabled ? begin : null,
-            onPanUpdate: widget.enabled ? update : null,
+            onScaleStart: widget.enabled
+                ? (details) {
+                    begin(details.localFocalPoint);
+                    pointers = details.pointerCount;
+                    scaleStart = 1;
+                    multiTouch = pointers > 1;
+                  }
+                : null,
+            onScaleUpdate: widget.enabled ? scale : null,
             child: Stack(
               children: [
                 Positioned.fromRect(

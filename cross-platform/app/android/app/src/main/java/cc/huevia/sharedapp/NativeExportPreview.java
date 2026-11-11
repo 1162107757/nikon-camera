@@ -107,8 +107,12 @@ final class NativeExportPreview {
             s.width=s.before.getWidth();s.height=s.before.getHeight();
             if(s.width!=s.after.getWidth()||s.height!=s.after.getHeight())throw new IOException("成品与编码前尺寸不符。");
             PhotoExportSpec.Resolved resolved=spec.resolve(s.width,s.height);s.spec=resolved.identity();s.model=SharedExportModel.of(profile,resolved);
+            double overviewScale=Math.min(1,256.0/Math.max(s.width,s.height));
+            int overviewWidth=Math.max(1,(int)Math.round(s.width*overviewScale)),overviewHeight=Math.max(1,(int)Math.round(s.height*overviewScale));
+            File overview=new File(s.folder,"overview.png");
+            surface(s.after,overview,overviewWidth,overviewHeight,Math.min(overviewWidth/(double)s.width,overviewHeight/(double)s.height),s.width/2.0,s.height/2.0,cancel);
             session=s;ready=true;return SharedJson.encode(SharedRuntime.map("id",s.id,"width",s.width,"height",s.height,
-                "bytes",s.jpeg.length(),"sha256",PhotoEditStore.hashFile(s.jpeg),"quality",resolved.quality,"exportSpec",s.spec));
+                "overview",overview.getPath(),"bytes",s.jpeg.length(),"sha256",PhotoEditStore.hashFile(s.jpeg),"quality",resolved.quality,"exportSpec",s.spec));
         }finally{if(!ready){if(s.before!=null)s.before.recycle();if(s.after!=null)s.after.recycle();remove(s.folder);}}
     }
     private static double number(Map<String,Object> p,String key,double fallback,double min,double max)throws IOException{
@@ -129,7 +133,7 @@ final class NativeExportPreview {
     private static void surface(BitmapRegionDecoder decoder,File file,int w,int h,double scale,double cx,double cy,BooleanSupplier cancel)throws IOException{
         Bitmap canvasBitmap=null,tile=null;
         try{
-            check(cancel);canvasBitmap=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);Canvas canvas=new Canvas(canvasBitmap);canvas.drawColor(0xff181d1b);
+            check(cancel);canvasBitmap=Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);Canvas canvas=new Canvas(canvasBitmap);canvas.drawColor(0xff0a0908);
             int sample=1;while(sample<64&&sample*2*scale<=1)sample*=2;
             // Include JPEG chroma neighbours, preserving all real pixels at 100%.
             int halo=32*sample;

@@ -33,6 +33,7 @@ python3 - "$ROOT" <<'PY'
 import sys,shutil
 from pathlib import Path
 root=Path(sys.argv[1]);shutil.copytree(root/'app/src/main/assets/photo-borders',root/'cross-platform/native/ios/Assets/photo-borders',dirs_exist_ok=True)
+shutil.copytree(root/'cross-platform/app/assets/fonts',root/'cross-platform/native/ios/Assets/reference-fonts',dirs_exist_ok=True)
 shutil.copytree(root/'app/src/main/assets/preset-showcase',root/'cross-platform/native/ios/Assets/preset-showcase',dirs_exist_ok=True)
 PY
 # The hosted runner is disposable; this setting does not change a user machine.

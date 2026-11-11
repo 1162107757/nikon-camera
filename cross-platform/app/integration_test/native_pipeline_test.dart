@@ -385,6 +385,19 @@ void main() {
           final width = rotated ? 192 : 256, height = rotated ? 256 : 192;
           expect(inspected['width'], width);
           expect(inspected['height'], height);
+          final overviewFile = File(inspected['overview'] as String);
+          final overviewCodec = await ui.instantiateImageCodec(
+            await overviewFile.readAsBytes(),
+          );
+          final overviewImage = (await overviewCodec.getNextFrame()).image;
+          expect(overviewImage.width, lessThanOrEqualTo(256));
+          expect(overviewImage.height, lessThanOrEqualTo(256));
+          expect(
+            (overviewImage.width * height - overviewImage.height * width).abs(),
+            lessThanOrEqualTo(width),
+          );
+          overviewImage.dispose();
+          overviewCodec.dispose();
           expect(
             await core.call('version.list', {'owner': ''}),
             versionsBefore,
@@ -480,6 +493,36 @@ void main() {
         outputs.add(geometryPreview['path'] as String);
         expect(geometryPreview['geometryWidth'], 192);
         expect(geometryPreview['geometryHeight'], 256);
+        final capture = await core.call('media.borderInfo', {
+          'path': source.path,
+          'owner': '',
+        });
+        expect(capture['brand'], '');
+        expect(capture['model'], '');
+        expect(capture['fields'], orderedEquals(List.filled(5, '')));
+        final smallPreview = await core.call('media.preview', {
+          'path': orientedTemplate.path,
+          'owner': '',
+          'maxEdge': 128,
+          'recipe': {'schema': 1},
+        });
+        outputs.add(smallPreview['path'] as String);
+        expect(
+          (smallPreview['width'] as num) <= 128 &&
+              (smallPreview['height'] as num) <= 128,
+          true,
+        );
+        for (final edge in [127, 1281]) {
+          await expectLater(
+            core.call('media.preview', {
+              'path': source.path,
+              'owner': '',
+              'maxEdge': edge,
+              'recipe': {'schema': 1},
+            }),
+            throwsA(anything),
+          );
+        }
         expect(exported['model'], endsWith(':full-jpeg95-srgb-v1'));
         expect(
           exported['exportSpec'],

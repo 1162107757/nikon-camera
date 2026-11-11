@@ -54,6 +54,7 @@ def verify(ipa, report, source):
     if report.get('sourceCommit') != source:
         raise ValueError('Build source differs from the selected Actions run')
     binaries = []
+    reference_fonts = []
     with zipfile.ZipFile(ipa) as archive:
         entries = archive.infolist()
         if len({e.filename for e in entries}) != len(entries):
@@ -88,6 +89,23 @@ def verify(ipa, report, source):
         for key in ('NSPhotoLibraryUsageDescription', 'NSPhotoLibraryAddUsageDescription'):
             if not isinstance(info.get(key), str) or not info[key].strip():
                 raise ValueError('PhotoKit usage description is missing')
+        if str(info['CFBundleVersion']).isdigit() and int(info['CFBundleVersion']) >= 202:
+            font_root = Path(__file__).resolve().parents[1] / 'app/assets/fonts'
+            manifest = json.loads((font_root / 'reference-fonts.json').read_text(encoding='utf-8'))
+            for font in manifest['files']:
+                matches = [entry.filename for entry in entries
+                           if entry.filename.endswith('/' + font['file'])]
+                flutter = [name for name in matches if '/flutter_assets/assets/fonts/' in name]
+                native = [name for name in matches if 'HueviaNativeAssets.bundle/' in name]
+                native_root = [name for name in native if name.endswith('HueviaNativeAssets.bundle/' + font['file'])]
+                if len(flutter) != 1 or len(native_root) != 1 or len(native) not in (1, 2):
+                    raise ValueError('Reference font is missing from Flutter or native border assets: ' + font['file'])
+                for name in flutter + native:
+                    data = archive.read(name)
+                    if len(data) != font['bytes'] or hashlib.sha256(data).hexdigest() != font['sha256']:
+                        raise ValueError('Reference font differs from the frozen Android source: ' + name)
+                reference_fonts.append({'file': font['file'], 'sha256': font['sha256'],
+                                        'flutterAsset': flutter[0], 'nativeAssets': native})
         required = {'Payload/Huevia.app/' + info['CFBundleExecutable'],
                     'Payload/Huevia.app/Frameworks/App.framework/App',
                     'Payload/Huevia.app/Frameworks/Flutter.framework/Flutter'}
@@ -105,6 +123,7 @@ def verify(ipa, report, source):
             'bytes': len(payload), 'bundleIdentifier': info['CFBundleIdentifier'],
             'version': info['CFBundleShortVersionString'], 'build': info['CFBundleVersion'],
             'minimumOS': info['MinimumOSVersion'], 'binaries': binaries,
+            'referenceFonts': reference_fonts,
             'deviceInstallationVerified': False, 'fullParityComplete': False}
 
 

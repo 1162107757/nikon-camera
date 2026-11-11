@@ -98,8 +98,15 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             request.put("recipe",SharedRuntime.map("border",SharedRuntime.map("template",3)));
             Map<String,Object> framed=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             yes(((Number)framed.get("height")).intValue()==192+Math.round(256*.112f),"original border dimensions");
-            File orient=new File(workspace,"orientation.jpg");Files.copy(output.toPath(),orient.toPath());ExifInterface exif=new ExifInterface(orient.getPath());exif.setAttribute(ExifInterface.TAG_ORIENTATION,"6");exif.saveAttributes();
+            File orient=new File(workspace,"orientation.jpg");Files.copy(output.toPath(),orient.toPath());ExifInterface exif=new ExifInterface(orient.getPath());exif.setAttribute(ExifInterface.TAG_ORIENTATION,"6");
+            exif.setAttribute("Make","NIKON");exif.setAttribute("Model","NIKON Z 6_3");exif.setAttribute("FocalLength","50/1");exif.setAttribute("FNumber","1.8");exif.setAttribute("ExposureTime","0.008");exif.setAttribute("ISOSpeedRatings","200");exif.setAttribute("DateTimeOriginal","2026:11:11 12:34:56");exif.saveAttributes();
             request.put("path",orient.getPath());request.put("recipe",SharedRuntime.map("schema",1));
+            Map<String,Object> capture=SharedJson.object(media.request("media.borderInfo",SharedJson.encode(request),()->false,p->{}));
+            yes("NIKON".equals(capture.get("brand"))&&"NIKON Z 6_3".equals(capture.get("model")),"border reads actual original camera metadata");
+            yes(Arrays.asList("50mm","F1.8","1/125s","ISO200","2026-11-11 12:34:56").equals(capture.get("fields")),"border capture field formatting matches original: "+SharedJson.encode(capture));
+            request.put("maxEdge",128);Map<String,Object> thumbnail=SharedJson.object(media.request("media.preview",SharedJson.encode(request),()->false,p->{}));
+            yes(((Number)thumbnail.get("width")).intValue()==96&&((Number)thumbnail.get("height")).intValue()==128,"bounded EXIF-oriented border thumbnail");
+            request.put("maxEdge",127);try{media.request("media.preview",SharedJson.encode(request),()->false,p->{});throw new AssertionError("unbounded thumbnail accepted");}catch(IOException expected){checks++;}request.remove("maxEdge");
             Map<String,Object> rotated=SharedJson.object(media.request("media.export",SharedJson.encode(request),()->false,p->{}));
             yes(((Number)rotated.get("width")).intValue()==192&&((Number)rotated.get("height")).intValue()==256,"EXIF orientation applied once");
             int count=new File(workspace,"exports").list().length;

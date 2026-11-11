@@ -69,6 +69,17 @@ flutter:
     enable-swift-package-manager: false
   assets:
     - assets/legacy/huevia_launcher.png
+    - assets/fonts/Roboto-APACHE-2.0.txt
+    - assets/fonts/reference-fonts.json
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

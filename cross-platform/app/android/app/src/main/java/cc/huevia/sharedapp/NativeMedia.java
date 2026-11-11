@@ -89,6 +89,13 @@ final class NativeMedia {
             BitmapFactory.Options bounds=bounds(source);int orientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(orientation<1||orientation>8)orientation=1;
             return SharedJson.encode(SharedRuntime.map("width",bounds.outWidth,"height",bounds.outHeight,"raw",false,"orientation",orientation));
         }
+        if(operation.equals("media.borderInfo")){
+            String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
+            PhotoCaptureInfo capture=PhotoCaptureInfo.read(source);List<String> fields=new ArrayList<>();
+            for(int i=0;i<5;i++)fields.add(capture.field(PhotoBorder.NONE,i));
+            runtime.guardOwner(owner);
+            return SharedJson.encode(SharedRuntime.map("brand",capture.brand,"model",capture.model,"fields",fields));
+        }
         if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop"))return rawDevelop(operation,p,source,cancel,progress);
         if(operation.equals("media.cleanupAnalyze")){
             String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
@@ -102,6 +109,8 @@ final class NativeMedia {
         boolean originalView=operation.equals("media.originalPreview");
         if(!originalView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
         boolean preview=originalView||operation.equals("media.preview");
+        int previewEdge=SharedRuntime.integer(p,"maxEdge",1280);
+        if(preview&&(previewEdge<128||previewEdge>1280))throw new IOException("预览边长必须在 128 到 1280 之间。");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
         PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
         if(!preview)runtime.validateSource(original,frozen.sourceSha);
@@ -116,7 +125,7 @@ final class NativeMedia {
             PhotoGeometry.Plan plan=GeometryPreviewProfile.geometry(profile).plan(sourceBounds.outWidth,sourceBounds.outHeight,sourceOrientation);
             int[] canvas=BorderPreviewProfile.border(profile).dimensions(plan.width,plan.height);
             PhotoExportSpec.Resolved resolved=spec.resolve(canvas[0],canvas[1]);
-            if(preview||!"image/jpeg".equals(bounds(source).outMimeType))NativeRaster.render(context,source,temporary,profile,spec,preview,cancel,progress);
+            if(preview||!"image/jpeg".equals(bounds(source).outMimeType))NativeRaster.render(context,source,temporary,null,profile,spec,preview,previewEdge,cancel,progress);
             else PhotoPresetRenderer.forContext(context).render(source,temporary,profile,spec,cancel,progress::accept);
             if(cancel.getAsBoolean())throw new InterruptedIOException("照片处理已取消。");
             BitmapFactory.Options info=bounds(temporary,100_000_000);

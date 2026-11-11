@@ -26,6 +26,34 @@ Future<T?> hueDialog<T>({
   return result;
 }
 
+Future<T?> hueBottomSheet<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+}) async {
+  final navigator = Navigator.of(context, rootNavigator: true);
+  final route = ModalBottomSheetRoute<T>(
+    builder: (sheet) => Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(sheet).bottom),
+      child: builder(sheet),
+    ),
+    capturedThemes: InheritedTheme.capture(
+      from: context,
+      to: navigator.context,
+    ),
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    isScrollControlled: true,
+    useSafeArea: true,
+    showDragHandle: false,
+    backgroundColor: const Color(0xff242321),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+    ),
+  );
+  final result = await navigator.push(route);
+  await route.completed;
+  return result;
+}
+
 Rect? shareAnchor(BuildContext context) {
   final box = context.findRenderObject();
   return box is RenderBox && box.hasSize && !box.size.isEmpty

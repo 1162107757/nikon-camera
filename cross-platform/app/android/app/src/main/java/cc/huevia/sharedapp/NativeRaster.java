@@ -16,6 +16,9 @@ final class NativeRaster {
         render(context,source,target,null,profile,spec,preview,cancel,progress);
     }
     static void render(Context context,File source,File target,File reference,PresetPreviewProfile profile,PhotoExportSpec spec,boolean preview,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        render(context,source,target,reference,profile,spec,preview,1280,cancel,progress);
+    }
+    static void render(Context context,File source,File target,File reference,PresetPreviewProfile profile,PhotoExportSpec spec,boolean preview,int previewEdge,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         Bitmap bitmap=null;
         try{
             check(cancel);BitmapFactory.Options bounds=new BitmapFactory.Options();bounds.inJustDecodeBounds=true;BitmapFactory.decodeFile(source.getPath(),bounds);
@@ -24,7 +27,7 @@ final class NativeRaster {
             long free=target.getParentFile().getUsableSpace();if(free>0&&free<needed)throw new IOException("存储空间不足，无法生成完整效果图。");
             ExifInterface original=new ExifInterface(source.getPath());int orientation=original.getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(orientation<1||orientation>8)orientation=1;
             BitmapFactory.Options options=new BitmapFactory.Options();options.inSampleSize=1;
-            if(preview)while(Math.max(bounds.outWidth,bounds.outHeight)/options.inSampleSize>1280)options.inSampleSize*=2;
+            if(preview)while(Math.max(bounds.outWidth,bounds.outHeight)/options.inSampleSize>previewEdge)options.inSampleSize*=2;
             options.inMutable=true;options.inScaled=false;options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);
             bitmap=BitmapFactory.decodeFile(source.getPath(),options);if(bitmap==null||!bitmap.isMutable()||bitmap.getConfig()!=Bitmap.Config.ARGB_8888||!ColorSpace.get(ColorSpace.Named.SRGB).equals(bitmap.getColorSpace()))throw new IOException("无法读取完整 sRGB 像素。");
             if(!preview&&(bitmap.getWidth()!=bounds.outWidth||bitmap.getHeight()!=bounds.outHeight))throw new IOException("原图尺寸不符，未缩小图片。");

@@ -7,16 +7,29 @@
 #include <vector>
 
 namespace {
+UIFont *referenceFont(CGFloat size,BOOL bold);
 void draw(CGContextRef context,CGImageRef image,CGRect rect){CGContextSaveGState(context);CGContextTranslateCTM(context,rect.origin.x,rect.origin.y+rect.size.height);CGContextScaleCTM(context,1,-1);CGContextDrawImage(context,CGRectMake(0,0,rect.size.width,rect.size.height),image);CGContextRestoreGState(context);}
 void text(NSString *value,CGFloat x,CGFloat baseline,CGFloat size,CGFloat max,UIColor *color,BOOL bold,NSString *face=nil){
   if(!value.length||max<=0)return;
-  UIFont *font=face?[UIFont fontWithName:face size:size]:[UIFont systemFontOfSize:size weight:bold?UIFontWeightBold:UIFontWeightRegular];
+  UIFont *font=face?[UIFont fontWithName:face size:size]:referenceFont(size,bold);
   if(!font)@throw [[JavaIoIOException alloc] initWithNSString:@"边框参数字体不可用。"];
   CGFloat width=[value sizeWithAttributes:@{NSFontAttributeName:font}].width;
   if(width>max)font=[font fontWithSize:size*max/width];
   [value drawAtPoint:CGPointMake(x,baseline-font.ascender) withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:color}];
 }
 NSBundle *assets(){NSURL *url=[NSBundle.mainBundle URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];if(!url)url=[[NSBundle bundleForClass:HueviaFrames.class] URLForResource:@"HueviaNativeAssets" withExtension:@"bundle"];return url?[NSBundle bundleWithURL:url]:nil;}
+UIFont *referenceFont(CGFloat size,BOOL bold){
+  static dispatch_once_t once;
+  dispatch_once(&once,^{
+    for(NSString *name in @[@"Roboto-Regular",@"Roboto-Bold"]){
+      NSURL *url=[assets() URLForResource:name withExtension:@"ttf"];
+      if(url){CFErrorRef error=NULL;CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url,kCTFontManagerScopeProcess,&error);if(error)CFRelease(error);}
+    }
+  });
+  UIFont *font=[UIFont fontWithName:bold?@"Roboto-Bold":@"Roboto-Regular" size:size];
+  if(!font)@throw [[JavaIoIOException alloc] initWithNSString:@"安卓参考边框字体不可用。"];
+  return font;
+}
 NSString *parameterFont(){
   static NSString *name;static dispatch_once_t once;
   dispatch_once(&once,^{
@@ -40,8 +53,8 @@ CGFloat brand(CGContextRef context,CcHueviaNcpPhotoBorder *b,CcHueviaSharedShare
     draw(context,image.CGImage,CGRectMake(x,y,width,height));return width;
   }
   NSString *label=[name isEqualToString:@"CANON"]?@"Canon":name;
-  UIFont *font=[UIFont boldSystemFontOfSize:height];CGFloat width=[label sizeWithAttributes:@{NSFontAttributeName:font}].width;
-  if(width>max){height*=max/width;width=max;font=[UIFont boldSystemFontOfSize:height];}
+  UIFont *font=referenceFont(height,YES);CGFloat width=[label sizeWithAttributes:@{NSFontAttributeName:font}].width;
+  if(width>max){height*=max/width;width=max;font=referenceFont(height,YES);}
   [label drawAtPoint:CGPointMake(x,y+(height-font.lineHeight)/2) withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:white?UIColor.whiteColor:UIColor.blackColor}];return width;
 }
 void box(uint32_t *pixels,int width,int height,int radius){
@@ -94,11 +107,12 @@ void background(CGContextRef context,HueviaRaster *photo,CcHueviaNcpPhotoBorder 
       CGContextSaveGState(context);CGContextAddPath(context,clip);CGContextClip(context);draw(context,image,rect);CGContextRestoreGState(context);CGPathRelease(clip);
       if(b->template__==1){
         CGFloat logoHeight=w*.027*m,baseline=y+h+w*.048*m;NSString *model=[b showsWithInt:0]?[info modelWithCcHueviaNcpPhotoBorder:b]:@"",*maker=[info brandWithCcHueviaNcpPhotoBorder:b];
-        UIFont *font=[UIFont systemFontOfSize:w*.021*m];CGFloat modelWidth=std::min(w*.58,[model sizeWithAttributes:@{NSFontAttributeName:font}].width);
-        CGFloat logoWidth=!maker.length?0:[maker isEqualToString:@"NIKON"]?(b->logo_==1?logoHeight:logoHeight*(1600.0/443)):std::min(w*.25,[maker sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:logoHeight]}].width);
+        UIFont *font=referenceFont(w*.021*m,NO);CGFloat modelWidth=std::min(w*.58,[model sizeWithAttributes:@{NSFontAttributeName:font}].width);
+        NSString *brandLabel=[maker isEqualToString:@"CANON"]?@"Canon":maker;
+        CGFloat logoWidth=!maker.length?0:[maker isEqualToString:@"NIKON"]?(b->logo_==1?logoHeight:logoHeight*(1600.0/443)):std::min(w*.25,[brandLabel sizeWithAttributes:@{NSFontAttributeName:referenceFont(logoHeight,YES)}].width);
         CGFloat gap=!model.length||logoWidth==0?0:w*.02,start=(output.pixelWidth-logoWidth-gap-modelWidth)/2;
         brand(context,b,info,start,baseline-logoHeight,logoHeight,YES,w*.25);text(model,start+logoWidth+gap,baseline,w*.021*m,w*.58,UIColor.whiteColor,NO);
-        NSString *line=[info parametersWithCcHueviaNcpPhotoBorder:b];CGFloat lineWidth=std::min(w*.82,[line sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:w*.018*m]}].width);text(line,(output.pixelWidth-lineWidth)/2,baseline+w*.028*m,w*.018*m,w*.82,UIColor.whiteColor,NO);
+        NSString *line=[info parametersWithCcHueviaNcpPhotoBorder:b];CGFloat lineWidth=std::min(w*.82,[line sizeWithAttributes:@{NSFontAttributeName:referenceFont(w*.018*m,NO)}].width);text(line,(output.pixelWidth-lineWidth)/2,baseline+w*.028*m,w*.018*m,w*.82,UIColor.whiteColor,NO);
       }else{
         brand(context,b,info,w*.085*m,y+h*.16,w*.049*m,YES,x-w*.125*m);
         NSString *names[3]={@"F",@"ISO",@"S"};int fields[3]={1,3,2};

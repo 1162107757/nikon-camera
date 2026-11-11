@@ -18,6 +18,7 @@ import 'raw_develop.dart';
 import 'crop_workspace.dart';
 import 'split_compare.dart';
 import 'export_preview.dart';
+import 'border_panel.dart';
 
 part 'legacy_editor.dart';
 
@@ -368,99 +369,6 @@ class _EditorPageState extends State<EditorPage> {
         });
         if (succeeded) unawaited(render());
       }
-    }
-  }
-
-  Future<void> editBorderText() async {
-    final border = object(recipe.clone().data['border'] ?? {});
-    final fields = List<String>.from(
-      border['fields'] as List? ?? List.filled(5, ''),
-    );
-    final inputs = [
-      TextEditingController(text: border['brand'] as String? ?? ''),
-      TextEditingController(text: border['model'] as String? ?? ''),
-      ...fields.map((text) => TextEditingController(text: text)),
-    ];
-    var automatic = border['automatic'] != false,
-        visible = border['visible'] as int? ?? 63;
-    final accepted = await hueDialog<bool>(
-      context: context,
-      builder: (dialog) => StatefulBuilder(
-        builder: (context, refresh) => AlertDialog(
-          title: const Text('拍摄信息'),
-          content: SizedBox(
-            width: 420,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: const Text('自动读取原图信息'),
-                    value: automatic,
-                    onChanged: (value) => refresh(() => automatic = value),
-                  ),
-                  for (var i = 0; i < inputs.length; i++)
-                    TextField(
-                      controller: inputs[i],
-                      enabled: !automatic,
-                      maxLength: 96,
-                      decoration: InputDecoration(
-                        labelText: [
-                          '品牌',
-                          '型号',
-                          '焦距',
-                          '光圈',
-                          '快门',
-                          'ISO',
-                          '拍摄时间',
-                        ][i],
-                      ),
-                    ),
-                  for (var i = 0; i < 6; i++)
-                    CheckboxListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(
-                        '显示${['型号', '焦距', '光圈', '快门', 'ISO', '拍摄时间'][i]}',
-                      ),
-                      value: (visible & (1 << i)) != 0,
-                      onChanged: (value) => refresh(() {
-                        visible = value == true
-                            ? visible | (1 << i)
-                            : visible & ~(1 << i);
-                      }),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialog, false),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () => Navigator.pop(dialog, true),
-              child: const Text('应用'),
-            ),
-          ],
-        ),
-      ),
-    );
-    if (accepted == true && mounted) {
-      change(() {
-        border.addAll({
-          'automatic': automatic,
-          'visible': visible,
-          'brand': inputs[0].text,
-          'model': inputs[1].text,
-          'fields': inputs.skip(2).map((input) => input.text).toList(),
-        });
-        recipe.data['border'] = border;
-      });
-    }
-    for (final input in inputs) {
-      input.dispose();
     }
   }
 
@@ -1078,90 +986,7 @@ class _EditorPageState extends State<EditorPage> {
           ],
         );
       default:
-        final border = object(recipe.data['border'] ?? {});
-        return Column(
-          children: [
-            DropdownButtonFormField<int>(
-              key: ValueKey('border-${border['template']}'),
-              initialValue: border['template'] as int? ?? 0,
-              decoration: const InputDecoration(labelText: '边框样式'),
-              items: [
-                for (var i = 0; i < 4; i++)
-                  DropdownMenuItem(
-                    value: i,
-                    child: Text(['无边框', '模糊居中', '模糊侧栏', '白底信息'][i]),
-                  ),
-              ],
-              onChanged: exporting
-                  ? null
-                  : (value) => change(() {
-                      border['template'] = value;
-                      recipe.data['border'] = border;
-                    }),
-            ),
-            const SizedBox(height: 16),
-            slider(
-              '边距',
-              (border['margin'] as int? ?? 100).toDouble(),
-              50,
-              160,
-              (value) => change(() {
-                border['margin'] = value.round();
-                recipe.data['border'] = border;
-              }, snapshot: false),
-            ),
-            for (final entry in [
-              ('corner', '圆角', 200.0),
-              ('shadow', '阴影', 150.0),
-              ('blur', '模糊', 200.0),
-            ])
-              slider(
-                entry.$2,
-                (border[entry.$1] as int? ?? 100).toDouble(),
-                0,
-                entry.$3,
-                (value) => change(() {
-                  border[entry.$1] = value.round();
-                  recipe.data['border'] = border;
-                }, snapshot: false),
-              ),
-            DropdownButtonFormField<int>(
-              key: ValueKey('logo-${border['logo']}'),
-              initialValue: border['logo'] as int? ?? 0,
-              decoration: const InputDecoration(labelText: '品牌标识'),
-              items: [
-                for (var i = 0; i < 4; i++)
-                  DropdownMenuItem(
-                    value: i,
-                    child: Text(
-                      ['自动', 'Nikon 黄色方形', 'Nikon 白色文字', 'Nikon 黑色文字'][i],
-                    ),
-                  ),
-              ],
-              onChanged: exporting
-                  ? null
-                  : (value) => change(() {
-                      border['logo'] = value;
-                      recipe.data['border'] = border;
-                    }),
-            ),
-            const SizedBox(height: 12),
-            OutlinedButton(
-              onPressed: exporting ? null : editBorderText,
-              child: const Text('拍摄信息与显示项目'),
-            ),
-            TextButton(
-              onPressed: exporting
-                  ? null
-                  : () => change(
-                      () => recipe.data['border'] = {
-                        'template': border['template'] ?? 0,
-                      },
-                    ),
-              child: const Text('重置边框设置'),
-            ),
-          ],
-        );
+        return SizedBox(height: 280, child: borderDock());
     }
   }
 

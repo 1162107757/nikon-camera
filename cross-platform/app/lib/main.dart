@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/services.dart';
 
@@ -17,6 +18,11 @@ import 'appearance.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  LicenseRegistry.addLicense(() async* {
+    yield LicenseEntryWithLineBreaks([
+      'Roboto reference fonts',
+    ], await rootBundle.loadString('assets/fonts/Roboto-APACHE-2.0.txt'));
+  });
   unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
   PaintingBinding.instance.imageCache.maximumSizeBytes = 32 << 20;
   final state = AppState(HueviaCore());

@@ -1,0 +1,34 @@
+{
+  "source": "Own Android API31 emulator /system/fonts/Roboto-Regular.ttf",
+  "upstream": "https://android.googlesource.com/platform/external/roboto-fonts/+/refs/tags/android-12.0.0_r1/",
+  "licenseSource": "https://android.googlesource.com/platform/external/roboto-fonts/+/refs/tags/android-12.0.0_r1/NOTICE",
+  "sourceSha256": "f10a4d95fb922a38aeeae842005dfdc4c7ef1e7a66308f6379d749c44133b876",
+  "sourceVersion": "Version 3.002; 2020",
+  "copyright": "Copyright 2011 Google Inc. All Rights Reserved.",
+  "changes": "Static upright instances; name records identify their weights. Glyph outlines come from the reference Android variable font.",
+  "generator": "fonttools 4.68.0",
+  "fixedAxes": {
+    "wdth": 100,
+    "ital": 0
+  },
+  "files": [
+    {
+      "file": "Roboto-Regular.ttf",
+      "weight": 400,
+      "bytes": 363720,
+      "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a"
+    },
+    {
+      "file": "Roboto-Medium.ttf",
+      "weight": 500,
+      "bytes": 364008,
+      "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59"
+    },
+    {
+      "file": "Roboto-Bold.ttf",
+      "weight": 700,
+      "bytes": 365876,
+      "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4"
+    }
+  ]
+}
