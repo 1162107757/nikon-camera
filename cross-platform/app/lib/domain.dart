@@ -281,6 +281,7 @@ class AppState extends ChangeNotifier {
   AppState(this.core);
   final HueviaCore core;
   bool ready = false;
+  bool cameraRaw = false;
   String? failure;
   List<Preset> presets = [];
   List<Photo> photos = [];

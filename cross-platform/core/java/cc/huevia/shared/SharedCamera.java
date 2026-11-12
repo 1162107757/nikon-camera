@@ -12,22 +12,27 @@ import java.util.function.*;
 /** Shared read-only Wi-Fi session. Handles are scoped to the connection that enumerated them. */
 public final class SharedCamera {
     public interface Connectors { PtpIpClient.SocketConnector create(String host,int port,boolean fuji)throws IOException; }
+    interface Clients { PhotoCameraClient create(PtpIpClient.SocketConnector connector,boolean fuji); }
     private final File root;
     private final Connectors connectors;
+    private final Clients clients;
+    private final SharedCameraPreviews previews;
     private volatile PhotoCameraClient client;
     private volatile String activeJob="";
     private String session="";
     private PtpDeviceInfo device;
+    private boolean largeThumbnailUnavailable;
     private final List<Long> handles=new ArrayList<>();
     private final Map<Long,PtpObjectInfo> observed=new LinkedHashMap<>();
-    public SharedCamera(String root,Connectors connectors)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;ConnectionTrace.configure(new File(this.root,"camera-trace.log"));}
+    public SharedCamera(String root,Connectors connectors)throws IOException{this(root,connectors,(connector,fuji)->fuji?new FujifilmPhotoClient(connector):new PtpIpClient(connector));ConnectionTrace.configure(new File(this.root,"camera-trace.log"));}
+    SharedCamera(String root,Connectors connectors,Clients clients)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;this.clients=clients;previews=new SharedCameraPreviews(this.root);}
     public void cancel(String job){if(job!=null&&job.equals(activeJob))closeTransport();}
     /** Can run from the host lifecycle thread without changing worker-owned indexes. */
     public void closeTransport(){PhotoCameraClient current=client;if(current!=null)current.close();}
     public synchronized String request(String operation,String json,String job,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         activeJob=job;
-        String stage=operation.equals("camera.connect")?"SHARED_CONNECT":operation.equals("camera.page")?"SHARED_PHOTO_PAGE":operation.equals("camera.download")?"SHARED_DOWNLOAD":"SHARED_CAMERA_REQUEST";
-        boolean traced=operation.equals("camera.connect")||operation.equals("camera.page")||operation.equals("camera.download");
+        String stage=operation.equals("camera.connect")?"SHARED_CONNECT":operation.equals("camera.page")?"SHARED_PHOTO_PAGE":operation.equals("camera.thumbnail")?"SHARED_THUMBNAIL":operation.equals("camera.download")?"SHARED_DOWNLOAD":"SHARED_CAMERA_REQUEST";
+        boolean traced=operation.equals("camera.connect")||operation.equals("camera.page")||operation.equals("camera.download")||operation.equals("camera.thumbnail");
         if(traced)ConnectionTrace.mark(stage+"_BEGIN");
         try{String result=SharedJson.encode(execute(operation,SharedJson.object(json),cancel,progress));if(traced)ConnectionTrace.mark(stage+"_COMPLETE");return result;}
         catch(IOException|RuntimeException failure){if(traced)ConnectionTrace.mark(stage+"_FAILED");throw failure;}
@@ -41,18 +46,19 @@ public final class SharedCamera {
             if(host.isEmpty()||port<1||port>65535)throw new IOException("相机地址或端口无效。");
             String protocol=SharedRuntime.text(p,"protocol",32);if(!protocol.equals("nikon")&&!protocol.equals("fujifilm"))throw new IOException("请选择受支持的相机协议。");
             boolean fuji=protocol.equals("fujifilm");PtpIpClient.SocketConnector connector=connectors.create(host,port,fuji);
-            PhotoCameraClient next=fuji?new FujifilmPhotoClient(connector):new PtpIpClient(connector);client=next;
+            PhotoCameraClient next=clients.create(connector,fuji);client=next;
             try{
                 byte[] guid=guid();device=PtpDeviceInfo.parseRedacted(next.connect(host,port,guid,"Huevia"));
                 if(!fuji&&!device.isNikonCamera())throw new IOException("相机未确认尼康协议身份。");
                 for(int op:new int[]{0x1004,0x1007,0x1008,0x1009})if(!device.supportsOperation(op))throw new IOException("相机未提供照片读取能力。");
-                session=UUID.randomUUID().toString();inventory(cancel);return status();
+                session=UUID.randomUUID().toString();largeThumbnailUnavailable=false;inventory(cancel);return status();
             }catch(IOException|RuntimeException failure){next.close();client=null;session="";throw failure;}
         }
         if(operation.equals("camera.status"))return status();
         require(p);PhotoCameraClient current=client;
         if(operation.equals("camera.page")){
             int offset=SharedRuntime.integer(p,"offset",0),limit=SharedRuntime.integer(p,"limit",24);
+            if(Boolean.TRUE.equals(p.get("refresh"))){if(offset!=0)throw new IOException("刷新相机目录须从第一页开始。");inventory(cancel);}
             if(offset<0||offset>handles.size()||limit<1||limit>60)throw new IOException("相机分页参数无效。");
             List<Object> rows=new ArrayList<>();int cursor=offset,scanned=0;boolean raw=Boolean.TRUE.equals(p.get("raw"));
             current.beginPhotoPage();try{
@@ -63,6 +69,21 @@ public final class SharedCamera {
                 }
             }finally{current.endPhotoPage();}
             return SharedRuntime.map("session",session,"items",rows,"nextOffset",cursor,"hasMore",cursor<handles.size(),"totalHandles",handles.size());
+        }
+        if(operation.equals("camera.thumbnail")){
+            check(cancel);long handle=number(p,"handle");PtpObjectInfo info=observed.get(handle);
+            if(info==null)throw new IOException("照片不属于当前浏览会话。");
+            String key=previews.key(session,handle,info.toBytes());File cached=Boolean.TRUE.equals(p.get("refresh"))?null:previews.cached(key);
+            if(cached!=null)return SharedRuntime.map("session",session,"handle",handle,"path",cached.getPath());
+            same(info,PtpObjectInfo.parse(current.getData(0x1008,65536,handle)));check(cancel);
+            byte[] jpeg=null;
+            if(device.isNikonCamera()&&device.supportsOperation(0x90c4)&&!largeThumbnailUnavailable){
+                try{jpeg=current.getLargeThumbnail(handle);}
+                catch(PtpResponseException unsupported){int code=unsupported.responseCode();if(code!=0x2005&&code!=0x2010)throw unsupported;if(code==0x2005)largeThumbnailUnavailable=true;}
+            }
+            if(jpeg==null){check(cancel);if(!device.supportsOperation(0x100a))throw new IOException("相机未提供缩略图，可接收原文件后查看。");jpeg=current.getData(0x100a,8*1024*1024,handle);}
+            check(cancel);same(info,PtpObjectInfo.parse(current.getData(0x1008,65536,handle)));check(cancel);
+            File preview=previews.store(key,jpeg,cancel);return SharedRuntime.map("session",session,"handle",handle,"path",preview.getPath());
         }
         if(operation.equals("camera.download")){
             long handle=number(p,"handle");PtpObjectInfo before=observed.get(handle);
@@ -90,10 +111,10 @@ public final class SharedCamera {
     }
     private void inventory(BooleanSupplier cancel)throws IOException{
         ConnectionTrace.mark("SHARED_INVENTORY_BEGIN");
-        handles.clear();observed.clear();long[] storages=PtpStorageIds.parse(client.getData(0x1004,4096));if(storages.length>64)throw new IOException("相机存储空间数量过多。");Set<Long> unique=new LinkedHashSet<>();
+        long[] storages=PtpStorageIds.parse(client.getData(0x1004,4096));if(storages.length>64)throw new IOException("相机存储空间数量过多。");Set<Long> unique=new LinkedHashSet<>();
         for(long storage:storages){check(cancel);byte[] data;try{data=client.getData(0x1007,1024*1024,storage,0,0);}catch(PtpResponseException error){if(error.responseCode()==0x2013)continue;throw error;}
             for(long handle:PtpObjectHandles.parse(data)){if(handle==0||handle==0xffffffffL)throw new IOException("相机返回无效照片索引。");unique.add(handle);if(unique.size()>20000)throw new IOException("本版最多浏览 20000 个相机对象。");}}
-        handles.addAll(unique);Collections.reverse(handles);
+        check(cancel);handles.clear();observed.clear();handles.addAll(unique);Collections.reverse(handles);
         ConnectionTrace.mark("SHARED_INVENTORY_COMPLETE");
     }
     private Object status(){return SharedRuntime.map("connected",client!=null&&client.isOpen(),"session",session,"model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size());}

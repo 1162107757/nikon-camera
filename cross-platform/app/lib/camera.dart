@@ -7,6 +7,7 @@ import 'widgets.dart';
 import 'legacy_dialog.dart';
 import 'theme.dart';
 import 'help.dart';
+import 'camera_previews.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({
@@ -24,7 +25,10 @@ class _CameraPageState extends State<CameraPage> {
   final host = TextEditingController(text: '192.168.1.1'),
       port = TextEditingController(text: '15740');
   String protocol = 'nikon', session = '', model = '', job = '';
-  bool busy = false, connected = false, raw = false, hasMore = false;
+  bool busy = false, connected = false, hasMore = false;
+  bool get raw => widget.state.cameraRaw;
+  set raw(bool value) => widget.state.cameraRaw = value;
+  late final CameraPreviews previews;
   int offset = 0, epoch = 0;
   String? error;
   List<Json> items = [];
@@ -60,12 +64,14 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void initState() {
     super.initState();
+    previews = CameraPreviews(widget.state.core);
     unawaited(status());
   }
 
   @override
   void dispose() {
     epoch++;
+    previews.dispose();
     host.dispose();
     port.dispose();
     if (busy && job.isNotEmpty) unawaited(widget.state.core.cancel(job));
@@ -82,6 +88,7 @@ class _CameraPageState extends State<CameraPage> {
         session = result['session'] as String;
         model = result['model'] as String;
       });
+      previews.setSession(session);
       if (connected) await page();
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
@@ -107,7 +114,8 @@ class _CameraPageState extends State<CameraPage> {
         session = result['session'] as String;
         model = result['model'] as String;
       });
-      await page();
+      previews.setSession(session);
+      await page(refresh: false);
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
@@ -120,13 +128,19 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
-  Future<void> page({bool next = false}) async {
+  Future<void> page({bool next = false, bool refresh = true}) async {
     final request = ++epoch, expectedSession = session;
     final identity = 'camera-page-${DateTime.now().microsecondsSinceEpoch}';
+    if (!next) previews.reset(session);
     setState(() {
       busy = true;
       error = null;
       job = identity;
+      if (!next) {
+        items = [];
+        offset = 0;
+        hasMore = false;
+      }
     });
     try {
       final result = await widget.state.core.call('camera.page', {
@@ -134,6 +148,7 @@ class _CameraPageState extends State<CameraPage> {
         'offset': next ? offset : 0,
         'limit': 24,
         'raw': raw,
+        'refresh': !next && refresh,
       }, identity);
       if (!mounted || request != epoch || session != expectedSession) return;
       final rows = (result['items'] as List).map(object).toList();
@@ -201,6 +216,7 @@ class _CameraPageState extends State<CameraPage> {
           session = '';
           items = [];
         });
+        previews.reset('');
       }
     } catch (failure) {
       if (mounted && request == epoch) report(context, failure);
@@ -372,41 +388,12 @@ class _CameraPageState extends State<CameraPage> {
                   const SizedBox(height: 8),
                   const Text('已连接 · 原文件按字节接收'),
                   const SizedBox(height: 20),
-                  Wrap(
-                    spacing: 12,
-                    children: [
-                      ChoiceChip(
-                        label: const Text('JPEG'),
-                        selected: !raw,
-                        onSelected: busy
-                            ? null
-                            : (_) {
-                                setState(() => raw = false);
-                                unawaited(page());
-                              },
-                      ),
-                      ChoiceChip(
-                        label: const Text('RAW / NEF'),
-                        selected: raw,
-                        onSelected: busy
-                            ? null
-                            : (_) {
-                                setState(() => raw = true);
-                                unawaited(page());
-                              },
-                      ),
-                      IconButton(
-                        tooltip: '刷新照片',
-                        onPressed: busy ? null : () => page(),
-                        icon: const Icon(Icons.refresh_rounded),
-                      ),
-                    ],
-                  ),
+                  photoTools(),
                   const SizedBox(height: 16),
-                  if (items.isEmpty && !busy)
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 32),
-                      child: Text('当前列表没有照片。'),
+                  if (items.isEmpty && !busy && error == null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32),
+                      child: Text(emptyMessage),
                     ),
                   for (final item in items)
                     Padding(
@@ -417,8 +404,9 @@ class _CameraPageState extends State<CameraPage> {
                             horizontal: 16,
                             vertical: 8,
                           ),
-                          leading: Icon(
-                            raw ? Icons.raw_on_outlined : Icons.image_outlined,
+                          leading: CameraThumbnail(
+                            previews: previews,
+                            photo: item,
                           ),
                           title: Text(item['name'] as String),
                           subtitle: Text(
@@ -471,6 +459,45 @@ class _CameraPageState extends State<CameraPage> {
     ),
   );
 
+  String get emptyMessage => hasMore
+      ? '尚未找到${raw ? ' RAW / NEF ' : ' JPEG '}照片，请继续读取相机目录。'
+      : raw
+      ? '未找到 RAW / NEF 照片，可切换到 JPEG 查看。'
+      : '未找到 JPEG 照片，可切换到 RAW / NEF 查看。';
+
+  Widget photoTools() => Wrap(
+    spacing: 12,
+    runSpacing: 4,
+    crossAxisAlignment: WrapCrossAlignment.center,
+    children: [
+      ChoiceChip(
+        label: const Text('JPEG'),
+        selected: !raw,
+        onSelected: busy
+            ? null
+            : (_) {
+                setState(() => raw = false);
+                unawaited(page());
+              },
+      ),
+      ChoiceChip(
+        label: const Text('RAW / NEF'),
+        selected: raw,
+        onSelected: busy
+            ? null
+            : (_) {
+                setState(() => raw = true);
+                unawaited(page());
+              },
+      ),
+      IconButton(
+        tooltip: '刷新照片',
+        onPressed: busy ? null : () => page(),
+        icon: const Icon(Icons.refresh_rounded),
+      ),
+    ],
+  );
+
   Widget overview(BuildContext context) {
     final p = HuePalette.of(context);
     final compact = MediaQuery.sizeOf(context).height < 480;
@@ -509,6 +536,7 @@ class _CameraPageState extends State<CameraPage> {
               onSelected: (value) => setState(() => overviewTab = value),
             ),
           ),
+          if (busy) const LinearProgressIndicator(minHeight: 2),
           if (overviewTab == 0)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
@@ -571,14 +599,49 @@ class _CameraPageState extends State<CameraPage> {
                       100 + hueNavigationInset(context),
                     ),
                     children: [
+                      photoTools(),
+                      const SizedBox(height: 12),
                       Text(
-                        '共 ${items.length} 张',
+                        '${raw ? 'RAW / NEF' : 'JPEG'} · 已读取 ${items.length} 张',
                         style: TextStyle(fontSize: 12, color: p.secondary),
                       ),
+                      if (error != null) ...[
+                        const SizedBox(height: 12),
+                        Text(
+                          error!,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: busy ? null : () => page(),
+                          child: const Text('重试读取照片'),
+                        ),
+                      ],
+                      if (items.isEmpty && !busy && error == null)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24),
+                          child: Text(emptyMessage),
+                        ),
                       for (final item in items)
                         ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                          ),
+                          leading: CameraThumbnail(
+                            previews: previews,
+                            photo: item,
+                          ),
                           title: Text(item['name'] as String),
-                          onTap: () => download(item),
+                          subtitle: Text(
+                            '${item['width']} × ${item['height']}',
+                          ),
+                          onTap: busy ? null : () => download(item),
+                          trailing: IconButton(
+                            tooltip: '接收原文件',
+                            onPressed: busy ? null : () => download(item),
+                            icon: const Icon(Icons.download_outlined),
+                          ),
                         ),
                       if (hasMore)
                         OutlinedButton(
