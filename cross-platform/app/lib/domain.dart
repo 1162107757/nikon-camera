@@ -9,6 +9,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
+import 'camera_live.dart';
+
 typedef Json = Map<String, dynamic>;
 Json object(Object? value) => Map<String, dynamic>.from(value! as Map);
 
@@ -282,8 +284,12 @@ class Recipe {
 
 class AppState extends ChangeNotifier {
   final cameraVisible = ValueNotifier<bool>(false);
+  CameraLive? _cameraLive;
+  CameraLive get cameraLive => _cameraLive ??= CameraLive(this);
+  bool get cameraLiveActive => _cameraLive?.active ?? false;
   @override
   void dispose() {
+    _cameraLive?.dispose();
     cameraVisible.dispose();
     super.dispose();
   }

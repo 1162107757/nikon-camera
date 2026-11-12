@@ -29,6 +29,7 @@ public final class SharedProjects {
     private final File root;
     private final PhotoLiveProjectStore projects;
     private final SharedEdits edits;
+    private final SharedLiveIngest live;
     private final Map<String,PhotoProjectPresetStore> stores=new LinkedHashMap<>();
     private final Map<String,Lease> leases=new LinkedHashMap<>();
     private static final class Lease {
@@ -40,6 +41,7 @@ public final class SharedProjects {
         this.runtime=runtime;root=runtime.root();
         projects=new PhotoLiveProjectStore(directory("photo-live-projects"),directory("originals"));
         edits=new SharedEdits(root,new PresetLibrary(root));
+        live=new SharedLiveIngest(root);
     }
     private File directory(String relative)throws IOException{
         File file=new File(root,relative),canonical=file.getCanonicalFile();
@@ -62,6 +64,7 @@ public final class SharedProjects {
         }
         if(operation.equals("project.create"))return summary(projects.create(SharedRuntime.text(payload,"name",240)),store);
         String id=SharedRuntime.text(payload,"projectId",36);PhotoLiveProject project=projects.get(id);
+        if(operation.startsWith("project.live."))return live(owner,id,operation,payload,cancel);
         if(operation.equals("project.rename"))return summary(projects.rename(id,SharedRuntime.text(payload,"name",240)),store);
         if(operation.equals("project.open"))return open(project,store);
         if(operation.equals("project.setPreset")){
@@ -143,6 +146,44 @@ public final class SharedProjects {
         File source=runtime.privateFile(path);
         if(!source.getParentFile().equals(new File(root,"originals").getCanonicalFile()))throw new IOException("请选择应用相册中已保存的 JPEG 原图。");
         return source;
+    }
+    private Map<String,Object> live(String owner,String id,String operation,Map<String,Object> payload,BooleanSupplier cancel)throws IOException{
+        Map<String,Object> result=live.request(operation,owner,id,payload,cancel,new SharedLiveIngest.Project(){
+            public Map<String,Object> preset()throws IOException{
+                PhotoProjectPresetStore.Config config=store(owner).config(id);
+                if(!config.presetId.isEmpty())defaultBytes(owner,config.presetId);
+                return SharedRuntime.map("presetId",config.presetId,"presetName",config.presetName);
+            }
+            public void validate(Map<String,Object> item,Map<String,Object> receipt)throws IOException{liveSource(item,receipt);}
+            public String apply(Map<String,Object> item,Map<String,Object> receipt)throws IOException{
+                File source=liveSource(item,receipt);String identity=runtime.sourceIdentity(source.getPath(),true);
+                DownloadedPhoto association=null;
+                for(DownloadedPhoto existing:projects.get(id).photos)if(existing.file().equals(source)){association=existing;break;}
+                projects.record(id,identity,association==null?SharedProjectPhoto.completed(source,(String)item.get("name")):association);
+                String preset=(String)item.get("presetId"),name=(String)item.get("presetName");
+                if(preset.isEmpty())return ""; // Original-first receive never requires an effect task.
+                // A second camera object with identical immutable source bytes is
+                // the same project original. Keep its first queued/saved snapshot.
+                for(PhotoProjectPresetStore.Task existing:store(owner).tasks(id))if(existing.identity.equals(identity))return existing.key();
+                byte[] bytes=defaultBytes(owner,preset);
+                edits.retainPreset(owner,new PhotoEditStore.Draft(identity,bytes,name,100,false));
+                PhotoProjectPresetStore.Task task=new PhotoProjectPresetStore.Task(id,identity,preset,name,source.getName(),(String)item.get("name"),source.length(),"queued","","",System.currentTimeMillis(),PhotoSaveTarget.APP_ONLY);
+                return store(owner).queue(task).key();
+            }
+        });
+        int queued=0;for(PhotoProjectPresetStore.Task task:store(owner).tasks(id))if(task.status.equals("queued")||task.status.equals("processing"))queued++;
+        result.put("queuedCount",queued);return result;
+    }
+    private File liveSource(Map<String,Object> item,Map<String,Object> receipt)throws IOException{
+        String sha=SharedRuntime.text(receipt,"sha256",64);if(!sha.matches("[0-9a-f]{64}"))throw new IOException("相机原文件校验无效。");
+        String path=SharedRuntime.text(receipt,"path",4096);
+        if(path.isEmpty()){
+            if(!(sha+".jpg").equals(SharedRuntime.text(receipt,"sourceFileName",80)))throw new IOException("自动收片原文件记录无效。");
+            path=new File(root,"originals/"+sha+".jpg").getPath();
+        }
+        File source=source(path);
+        if(!source.getName().equals(sha+".jpg")||!(item.get("bytes") instanceof Number)||source.length()!=((Number)item.get("bytes")).longValue()||!runtime.sourceIdentity(source.getPath(),true).equals(sha))throw new IOException("自动收片原文件已变化，未加入项目。");
+        SharedProjectPhoto.completed(source,(String)item.get("name"));return source;
     }
     private File defaultFile(String owner,String id)throws IOException{
         if(!id.matches("[0-9a-f]{64}"))throw new IOException("项目预设快照身份无效。");

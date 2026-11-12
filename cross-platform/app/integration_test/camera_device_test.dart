@@ -12,6 +12,7 @@ import '../test/project_presets_test.dart' as projects;
 import '../test/raw_reference_test.dart' as raw_reference;
 import '../test/raw_reference_ui_test.dart' as raw_reference_ui;
 import '../test/app_stability_test.dart' as stability;
+import '../test/camera_live_test.dart' as live;
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -27,4 +28,5 @@ void main() {
   raw_reference.main();
   raw_reference_ui.main();
   stability.main();
+  live.main();
 }

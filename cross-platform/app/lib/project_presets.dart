@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'domain.dart';
 import 'project_presets_model.dart';
+import 'camera_live_card.dart';
 import 'theme.dart';
 import 'versions.dart';
 import 'widgets.dart';
@@ -24,16 +25,33 @@ class ProjectPresetsPage extends StatefulWidget {
 
 class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
   late ProjectPresetsModel model = ProjectPresetsModel(widget.state);
+  String liveRevision = '';
   @override
   void initState() {
     super.initState();
+    widget.state.cameraLive.addListener(liveChanged);
     unawaited(model.refresh());
   }
 
   @override
   void dispose() {
+    widget.state.cameraLive.removeListener(liveChanged);
     model.dispose();
     super.dispose();
+  }
+
+  void liveChanged() {
+    if (!mounted) return;
+    final live = widget.state.cameraLive;
+    final revision =
+        '${live.token}:${live.completed}:${live.queued}:${live.failed}';
+    if (live.projectId == model.selected &&
+        revision != liveRevision &&
+        !model.busy) {
+      liveRevision = revision;
+      unawaited(model.refresh());
+    }
+    setState(() {});
   }
 
   Future<void> name({bool rename = false}) async {
@@ -91,7 +109,11 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
     runSpacing: 8,
     children: [
       OutlinedButton.icon(
-        onPressed: model.busy || model.project == null || model.invalid
+        onPressed:
+            model.busy ||
+                model.project == null ||
+                model.invalid ||
+                widget.state.cameraLiveActive
             ? null
             : addPhotos,
         icon: const Icon(Icons.add_photo_alternate_outlined),
@@ -99,7 +121,8 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
       ),
       FilledButton(
         onPressed:
-            model.busy ||
+            widget.state.cameraLiveActive ||
+                model.busy ||
                 model.photos.isEmpty ||
                 (model.project?['presetId'] as String? ?? '').isEmpty ||
                 model.invalid
@@ -109,14 +132,16 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
       ),
       if (model.pending > 0)
         OutlinedButton(
-          onPressed: model.busy || model.invalid
+          onPressed:
+              model.busy || model.invalid || widget.state.cameraLiveActive
               ? null
               : () => unawaited(model.process()),
           child: Text('继续处理 ${model.pending} 张'),
         ),
       if (model.failed > 0)
         OutlinedButton(
-          onPressed: model.busy || model.invalid
+          onPressed:
+              model.busy || model.invalid || widget.state.cameraLiveActive
               ? null
               : () => unawaited(model.process(retry: true)),
           child: Text('重试未完成 ${model.failed} 张'),
@@ -217,7 +242,7 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
               isExpanded: true,
               decoration: const InputDecoration(labelText: '项目默认预设'),
               items: [
-                const DropdownMenuItem(value: '', child: Text('不使用默认预设')),
+                DropdownMenuItem(value: '', child: const Text('不使用默认预设')),
                 if (presetId.isNotEmpty &&
                     !widget.state.presets.any(
                       (preset) => preset.id == presetId,
@@ -247,6 +272,14 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
                     },
             ),
             const SizedBox(height: 12),
+            CameraLiveCard(
+              state: widget.state,
+              projectId: model.selected,
+              projectName: project?['name'] as String? ?? '',
+              hasPreset: presetId.isNotEmpty,
+              enabled: !model.busy && !model.invalid,
+            ),
+            const SizedBox(height: 8),
             Text(
               '原图保留在应用相册；套用默认预设会另存成品，保留照片当前编辑。',
               style: TextStyle(fontSize: 12, height: 1.5, color: p.secondary),

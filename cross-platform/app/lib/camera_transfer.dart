@@ -102,6 +102,12 @@ class CameraTransfer extends ChangeNotifier {
 
   Future<void> start(String session, Json item, {required bool raw}) async {
     if (busy || !_alive) return;
+    if (state.cameraLiveActive) {
+      phase = CameraTransferPhase.failed;
+      error = '请先停止边拍边传，再手动下载照片。';
+      _changed();
+      return;
+    }
     final size = item['bytes'];
     if (session.isEmpty ||
         size is! int ||

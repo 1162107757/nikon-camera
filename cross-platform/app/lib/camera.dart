@@ -75,6 +75,7 @@ class _CameraPageState extends State<CameraPage> {
     super.initState();
     previews = CameraPreviews(widget.state.core);
     transfer = CameraTransfer(widget.state);
+    widget.state.cameraLive.addListener(liveChanged);
     if (!widget.configuration) {
       widget.state.cameraVisible.addListener(visibilityChanged);
     }
@@ -84,6 +85,7 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void dispose() {
     epoch++;
+    widget.state.cameraLive.removeListener(liveChanged);
     if (!widget.configuration) {
       widget.state.cameraVisible.removeListener(visibilityChanged);
     }
@@ -96,12 +98,22 @@ class _CameraPageState extends State<CameraPage> {
     super.dispose();
   }
 
+  void liveChanged() {
+    if (!mounted) return;
+    if (widget.state.cameraLiveActive) {
+      previews.pause();
+    } else if (widget.configuration || widget.state.cameraVisible.value) {
+      previews.resume();
+    }
+    setState(() {});
+  }
+
   void visibilityChanged() {
     if (!widget.state.cameraVisible.value) {
       previews.pause();
       return;
     }
-    if (transfer.busy) return;
+    if (transfer.busy || widget.state.cameraLiveActive) return;
     previews.resume();
     if (!busy) unawaited(status(reload: false));
   }
@@ -203,7 +215,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> download(Json item) async {
-    if (busy || transfer.busy) return;
+    if (busy || transfer.busy || widget.state.cameraLiveActive) return;
     final request = ++epoch;
     previews.pause();
     setState(() {
@@ -252,6 +264,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> disconnect() async {
+    if (widget.state.cameraLiveActive) await widget.state.cameraLive.stop();
     final request = ++epoch;
     setState(() => busy = true);
     try {
