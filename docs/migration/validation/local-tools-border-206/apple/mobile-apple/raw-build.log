@@ -1,0 +1,13 @@
+libtool: warning: 'src_integration_rawspeed_glue.cpp.o' has no symbols
+libtool: warning: 'src_write_apply_profile.cpp.o' has no symbols
+libtool: warning: 'src_x3f_x3f_parse_process.cpp.o' has no symbols
+libtool: warning: 'src_x3f_x3f_utils_patched.cpp.o' has no symbols
+Verified LibRaw 0.22.3 and prepared 79 original sources
+Built LibRaw for arm64-apple-ios16.0
+libtool: warning: 'src_integration_rawspeed_glue.cpp.o' has no symbols
+libtool: warning: 'src_write_apply_profile.cpp.o' has no symbols
+libtool: warning: 'src_x3f_x3f_parse_process.cpp.o' has no symbols
+libtool: warning: 'src_x3f_x3f_utils_patched.cpp.o' has no symbols
+Built LibRaw for arm64-apple-ios16.0-simulator
+xcframework successfully written out to: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/native/ios/Frameworks/LibRaw.xcframework
+Prepared source, licences and both Apple LibRaw platform slices

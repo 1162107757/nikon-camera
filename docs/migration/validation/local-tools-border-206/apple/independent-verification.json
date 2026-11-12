@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "verified": true,
+  "sourceCommit": "1d69c6eeab6c5575a4b09b461329ff3082878589",
+  "sha256": "d6b70aa068088408d4c43a25be747f78ac8f8fbdd46d5fa7f922fb88f6660ac9",
+  "bytes": 29381442,
+  "bundleIdentifier": "cc.huevia.next",
+  "version": "0.31.0",
+  "build": "206",
+  "minimumOS": "16.0",
+  "binaries": [
+    {
+      "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+      "sha256": "ad80829457ed638faebab01500a5775c04ffe50b754c7a46f7170873588e5c88",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+      "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+      "sha256": "2425b4a6fbfaf59031865442b0667e6305eb82b04e17f0a87e6ff58c960fac4e",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Runner",
+      "sha256": "2876726f213b3d3f69800f69add63dc673772394b44247da0e52f52dee9173b2",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            16,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "referenceFonts": [
+    {
+      "file": "Roboto-Regular.ttf",
+      "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+      ]
+    },
+    {
+      "file": "Roboto-Medium.ttf",
+      "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+      ]
+    },
+    {
+      "file": "Roboto-Bold.ttf",
+      "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+      ]
+    }
+  ],
+  "deviceInstallationVerified": false,
+  "fullParityComplete": false,
+  "runId": 43143275667,
+  "jobId": 130936479349,
+  "artifactId": 13911004597,
+  "archiveSha256": "765321934c90b25231c77b2e3057383ae760f22797ebb7ca7a617cd8cf0b50ba",
+  "archiveBytes": 29629768,
+  "flutterChecks": 137,
+  "nativeAvatarChecks": 38,
+  "sharedChecks": 446,
+  "simulatorScenarioChecks": 1,
+  "photoKitInitial": "none",
+  "photoKitConsent": "full",
+  "photoKitFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb",
+  "ipa": "dist/migration206/huevia-0.31.0-dev-206-ios-unsigned.ipa"
+}

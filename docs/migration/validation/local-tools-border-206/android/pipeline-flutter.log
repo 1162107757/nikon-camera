@@ -1,0 +1,275 @@
+11-12 02:55:47.383 20410 20410 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 02:55:47.383 20410 20410 I flutter :     The application opted out of Impeller by either using the
+11-12 02:55:47.383 20410 20410 I flutter :     `--no-enable-impeller` flag or the
+11-12 02:55:47.383 20410 20410 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 02:55:47.383 20410 20410 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 02:55:47.383 20410 20410 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 02:55:47.383 20410 20410 I flutter :     the issue.
+11-12 02:55:47.383 20410 20410 I flutter : 
+11-12 02:55:47.383 20410 20410 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 02:55:47.383 20410 20410 I flutter : 
+11-12 02:55:47.635 20410 20439 I flutter : The Dart VM service is listening on http://127.0.0.1:44555/qKH8Zah6nIk=/
+11-12 02:55:48.486 20410 20410 I flutter : 00:00 +0: (setUpAll)
+11-12 02:55:48.529 20410 20410 I flutter : 00:00 +1: Native codecs and LibRaw retain originals, dimensions and white highlights
+11-12 02:55:49.032 20410 20410 I flutter : Native pipeline: semantics baseline 2
+11-12 02:55:49.034 20410 20410 I flutter : Native pipeline: initializing
+11-12 02:55:49.465 20410 20410 I flutter : Native operation: media.templateInfo begin
+11-12 02:55:49.499 20410 20410 I flutter : Native operation: media.templateInfo complete
+11-12 02:55:49.500 20410 20410 I flutter : Native operation: online.page begin
+11-12 02:55:49.974 20410 20410 I flutter : Native operation: online.page complete
+11-12 02:55:50.557 20410 20410 I flutter : Native operation: media.templateInfo begin
+11-12 02:55:50.565 20410 20410 I flutter : Native operation: media.templateInfo complete
+11-12 02:55:50.566 20410 20410 I flutter : Native operation: media.templateSet begin
+11-12 02:55:50.626 20410 20410 I flutter : Native operation: media.templateSet complete
+11-12 02:55:50.629 20410 20410 I flutter : Native operation: media.templateSource begin
+11-12 02:55:50.655 20410 20410 I flutter : Native operation: media.templateSource complete
+11-12 02:55:50.723 20410 20410 I flutter : Native operation: media.templateSet begin
+11-12 02:55:50.773 20410 20410 I flutter : Native operation: media.templateSet complete
+11-12 02:55:50.774 20410 20410 I flutter : Native operation: media.templateSource begin
+11-12 02:55:50.789 20410 20410 I flutter : Native operation: media.templateSource complete
+11-12 02:55:50.902 20410 20410 I flutter : Native operation: media.templateSet begin
+11-12 02:55:50.929 20410 20410 I flutter : Native operation: media.templateSet failed: 文件不在应用资料目录内。
+11-12 02:55:50.932 20410 20410 I flutter : Native operation: media.templateInfo begin
+11-12 02:55:50.942 20410 20410 I flutter : Native operation: media.templateInfo complete
+11-12 02:55:50.943 20410 20410 I flutter : Native operation: media.templateSource begin
+11-12 02:55:50.956 20410 20410 I flutter : Native operation: media.templateSource failed: 模板样片索引无效。
+11-12 02:55:50.957 20410 20410 I flutter : Native operation: media.templateReset begin
+11-12 02:55:50.990 20410 20410 I flutter : Native operation: media.templateReset complete
+11-12 02:55:50.991 20410 20410 I flutter : Native operation: media.templateInfo begin
+11-12 02:55:51.008 20410 20410 I flutter : Native operation: media.templateInfo complete
+11-12 02:55:51.009 20410 20410 I flutter : Native operation: media.templateSource begin
+11-12 02:55:51.023 20410 20410 I flutter : Native operation: media.templateSource complete
+11-12 02:55:51.046 20410 20410 I flutter : Native pipeline: media.export begin (border 0)
+11-12 02:55:51.046 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:51.307 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:51.308 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:51.337 20410 20410 I flutter : Native operation: media.info begin
+11-12 02:55:51.357 20410 20410 I flutter : Native operation: media.info complete
+11-12 02:55:51.358 20410 20410 I flutter : Native operation: media.templateSet begin
+11-12 02:55:51.406 20410 20410 I flutter : Native operation: media.templateSet complete
+11-12 02:55:51.407 20410 20410 I flutter : Native operation: media.templateSource begin
+11-12 02:55:51.423 20410 20410 I flutter : Native operation: media.templateSource complete
+11-12 02:55:51.425 20410 20410 I flutter : Native operation: media.info begin
+11-12 02:55:51.440 20410 20410 I flutter : Native operation: media.info complete
+11-12 02:55:51.441 20410 20410 I flutter : Native operation: media.templateReset begin
+11-12 02:55:51.473 20410 20410 I flutter : Native operation: media.templateReset complete
+11-12 02:55:51.473 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:51.625 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:51.625 20410 20410 I flutter : Native operation: media.exportPreview begin
+11-12 02:55:51.757 20410 20410 I flutter : Native operation: media.exportPreview complete
+11-12 02:55:51.779 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:51.877 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:51.880 20410 20410 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 02:55:51.943 20410 20410 I flutter : Native operation: media.exportPreviewFrame complete
+11-12 02:55:52.115 20410 20410 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 02:55:52.129 20410 20410 I flutter : Native operation: media.exportPreviewFrame failed: 预览视口尺寸过大。
+11-12 02:55:52.130 20410 20410 I flutter : Native pipeline: media.exportPreviewCommit begin (border 0)
+11-12 02:55:52.130 20410 20410 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 02:55:52.223 20410 20410 I flutter : Native operation: media.exportPreviewCommit complete
+11-12 02:55:52.225 20410 20410 I flutter : Native pipeline: media.exportPreviewCommit completed
+11-12 02:55:52.248 20410 20410 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 02:55:52.273 20410 20410 I flutter : Native operation: media.exportPreviewCommit failed: 成品预览已失效，请重新打开。
+11-12 02:55:52.274 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:52.391 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:52.392 20410 20410 I flutter : Native operation: media.exportPreview begin
+11-12 02:55:52.541 20410 20410 I flutter : Native operation: media.exportPreview complete
+11-12 02:55:52.559 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:52.677 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:52.679 20410 20410 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 02:55:52.724 20410 20410 I flutter : Native operation: media.exportPreviewFrame complete
+11-12 02:55:52.767 20410 20410 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 02:55:52.774 20410 20410 I flutter : Native operation: media.exportPreviewFrame failed: 预览视口尺寸过大。
+11-12 02:55:52.775 20410 20410 I flutter : Native pipeline: media.exportPreviewCommit begin (border 0)
+11-12 02:55:52.776 20410 20410 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 02:55:52.855 20410 20410 I flutter : Native operation: media.exportPreviewCommit complete
+11-12 02:55:52.856 20410 20410 I flutter : Native pipeline: media.exportPreviewCommit completed
+11-12 02:55:52.877 20410 20410 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 02:55:52.889 20410 20410 I flutter : Native operation: media.exportPreviewCommit failed: 成品预览已失效，请重新打开。
+11-12 02:55:52.890 20410 20410 I flutter : Native operation: media.exportPreview begin
+11-12 02:55:53.005 20410 20410 I flutter : Native operation: media.exportPreview complete
+11-12 02:55:53.006 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:53.125 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:53.126 20410 20410 I flutter : Native operation: media.exportPreviewClose begin
+11-12 02:55:53.141 20410 20410 I flutter : Native operation: media.exportPreviewClose complete
+11-12 02:55:53.143 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:53.257 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:53.260 20410 20410 I flutter : Native operation: media.preview begin
+11-12 02:55:53.342 20410 20410 I flutter : Native operation: media.preview complete
+11-12 02:55:53.343 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:53.356 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:53.357 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:53.483 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:53.483 20410 20410 I flutter : Native operation: local.seedRegion begin
+11-12 02:55:53.509 20410 20410 I flutter : Native operation: local.seedRegion complete
+11-12 02:55:53.510 20410 20410 I flutter : Native operation: local.change begin
+11-12 02:55:53.543 20410 20410 I flutter : Native operation: local.change complete
+11-12 02:55:53.544 20410 20410 I flutter : Native pipeline: media.localPreview begin (border 3)
+11-12 02:55:53.545 20410 20410 I flutter : Native operation: media.localPreview begin
+11-12 02:55:53.672 20410 20410 I flutter : Native operation: media.localPreview complete
+11-12 02:55:53.673 20410 20410 I flutter : Native pipeline: media.localPreview completed
+11-12 02:55:53.673 20410 20410 I flutter : Native operation: local.overlay begin
+11-12 02:55:53.757 20410 20410 I flutter : Native operation: local.overlay complete
+11-12 02:55:53.776 20410 20410 I flutter : Native pipeline: media.localPreview begin (border 0)
+11-12 02:55:53.777 20410 20410 I flutter : Native operation: media.localPreview begin
+11-12 02:55:53.873 20410 20410 I flutter : Native operation: media.localPreview complete
+11-12 02:55:53.873 20410 20410 I flutter : Native pipeline: media.localPreview completed
+11-12 02:55:54.019 20410 20410 I flutter : Native operation: local.change begin
+11-12 02:55:54.041 20410 20410 I flutter : Native operation: local.change complete
+11-12 02:55:54.041 20410 20410 I flutter : Native pipeline: media.localPreview begin (border 3)
+11-12 02:55:54.041 20410 20410 I flutter : Native operation: media.localPreview begin
+11-12 02:55:54.193 20410 20410 I flutter : Native operation: media.localPreview complete
+11-12 02:55:54.193 20410 20410 I flutter : Native pipeline: media.localPreview completed
+11-12 02:55:54.229 20410 20410 I flutter : Native operation: local.change begin
+11-12 02:55:54.258 20410 20410 I flutter : Native operation: local.change complete
+11-12 02:55:54.259 20410 20410 I flutter : Native pipeline: media.localPreview begin (border 3)
+11-12 02:55:54.259 20410 20410 I flutter : Native operation: media.localPreview begin
+11-12 02:55:54.374 20410 20410 I flutter : Native operation: media.localPreview complete
+11-12 02:55:54.374 20410 20410 I flutter : Native pipeline: media.localPreview completed
+11-12 02:55:54.375 20410 20410 I flutter : Native operation: local.change begin
+11-12 02:55:54.409 20410 20410 I flutter : Native operation: local.change complete
+11-12 02:55:54.411 20410 20410 I flutter : Native pipeline: media.cleanupAnalyze begin (border 3)
+11-12 02:55:54.412 20410 20410 I flutter : Native operation: media.cleanupAnalyze begin
+11-12 02:55:54.589 20410 20410 I flutter : Native operation: media.cleanupAnalyze complete
+11-12 02:55:54.590 20410 20410 I flutter : Native pipeline: media.cleanupAnalyze completed
+11-12 02:55:54.590 20410 20410 I flutter : Native operation: media.cleanupAnalyze begin
+11-12 02:55:54.604 20410 20410 I flutter : Native operation: media.cleanupAnalyze failed: 局部区域已变化，请重新选择。
+11-12 02:55:54.605 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:54.623 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:54.624 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:54.742 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:54.760 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.790 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.792 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.825 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.825 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.855 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.856 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.873 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.874 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.890 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.891 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.924 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.925 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.958 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.958 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:54.980 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:54.981 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.008 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.009 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.025 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.026 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.041 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.041 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.074 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.075 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.093 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.094 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.125 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.126 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.142 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.142 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.157 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.158 20410 20410 I flutter : Native operation: media.borderInfo begin
+11-12 02:55:55.172 20410 20410 I flutter : Native operation: media.borderInfo complete
+11-12 02:55:55.173 20410 20410 I flutter : Native operation: media.preview begin
+11-12 02:55:55.258 20410 20410 I flutter : Native operation: media.preview complete
+11-12 02:55:55.259 20410 20410 I flutter : Native operation: media.preview begin
+11-12 02:55:55.274 20410 20410 I flutter : Native operation: media.preview failed: 预览边长必须在 128 到 1280 之间。
+11-12 02:55:55.276 20410 20410 I flutter : Native operation: media.preview begin
+11-12 02:55:55.291 20410 20410 I flutter : Native operation: media.preview failed: 预览边长必须在 128 到 1280 之间。
+11-12 02:55:55.292 20410 20410 I flutter : Native pipeline: media.export begin (border 0)
+11-12 02:55:55.292 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:55.405 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:55.406 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:55.406 20410 20410 I flutter : Native operation: version.open begin
+11-12 02:55:55.426 20410 20410 I flutter : Native operation: version.open complete
+11-12 02:55:55.443 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:55.455 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:55.460 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:55.473 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:55.479 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:55.607 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:55.609 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:55.757 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:55.762 20410 20410 I flutter : Native operation: version.list begin
+11-12 02:55:55.871 20410 20410 I flutter : Native operation: version.list complete
+11-12 02:55:55.891 20410 20410 I flutter : Native pipeline: media.export begin (border 0)
+11-12 02:55:55.892 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:56.075 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:56.077 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:56.079 20410 20410 I flutter : Native pipeline: media.cleanupAnalyze begin (border 0)
+11-12 02:55:56.079 20410 20410 I flutter : Native operation: media.cleanupAnalyze begin
+11-12 02:55:56.156 20410 20410 I flutter : Native operation: media.cleanupAnalyze complete
+11-12 02:55:56.156 20410 20410 I flutter : Native pipeline: media.cleanupAnalyze completed
+11-12 02:55:56.157 20410 20410 I flutter : Native pipeline: media.export begin (border 0)
+11-12 02:55:56.157 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:56.304 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:56.305 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:56.306 20410 20410 I flutter : Native pipeline: media.export begin (border 0)
+11-12 02:55:56.306 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:56.439 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:56.440 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:56.440 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:56.455 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:56.455 20410 20410 I flutter : Native pipeline: media.originalPreview begin (border 0)
+11-12 02:55:56.455 20410 20410 I flutter : Native operation: media.originalPreview begin
+11-12 02:55:56.522 20410 20410 I flutter : Native operation: media.originalPreview complete
+11-12 02:55:56.522 20410 20410 I flutter : Native pipeline: media.originalPreview completed
+11-12 02:55:56.522 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:56.542 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:56.575 20410 20410 I flutter : Native pipeline: media.export begin (border 1)
+11-12 02:55:56.576 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:56.757 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:56.758 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:56.758 20410 20410 I flutter : Native pipeline: media.export begin (border 2)
+11-12 02:55:56.759 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:56.961 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:56.962 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:56.962 20410 20410 I flutter : Native pipeline: media.export begin (border 3)
+11-12 02:55:56.962 20410 20410 I flutter : Native operation: media.export begin
+11-12 02:55:57.156 20410 20410 I flutter : Native operation: media.export complete
+11-12 02:55:57.156 20410 20410 I flutter : Native pipeline: media.export completed
+11-12 02:55:57.181 20410 20410 I flutter : Native operation: draft.save begin
+11-12 02:55:57.205 20410 20410 I flutter : Native operation: draft.save complete
+11-12 02:55:57.206 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:57.223 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:57.223 20410 20410 I flutter : Native operation: photo.copy begin
+11-12 02:55:57.274 20410 20410 I flutter : Native operation: photo.copy complete
+11-12 02:55:57.275 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:57.293 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:57.293 20410 20410 I flutter : Native operation: photo.copyUndo begin
+11-12 02:55:57.325 20410 20410 I flutter : Native operation: photo.copyUndo complete
+11-12 02:55:57.325 20410 20410 I flutter : Native operation: draft.load begin
+11-12 02:55:57.339 20410 20410 I flutter : Native operation: draft.load complete
+11-12 02:55:57.423 20410 20410 I flutter : Native operation: media.info begin
+11-12 02:55:57.473 20410 20410 I flutter : Native operation: media.info complete
+11-12 02:55:57.474 20410 20410 I flutter : Native pipeline: media.rawDevelop begin (border 0)
+11-12 02:55:57.474 20410 20410 I flutter : Native operation: media.rawDevelop begin
+11-12 02:55:57.574 20410 20410 I flutter : Native operation: media.rawDevelop complete
+11-12 02:55:57.574 20410 20410 I flutter : Native pipeline: media.rawDevelop completed
+11-12 02:55:57.613 20410 20410 I flutter : Native pipeline: media.rawDevelop begin (border 0)
+11-12 02:55:57.616 20410 20410 I flutter : Native operation: media.rawDevelop begin
+11-12 02:55:57.727 20410 20410 I flutter : Native operation: media.rawDevelop complete
+11-12 02:55:57.728 20410 20410 I flutter : Native pipeline: media.rawDevelop completed
+11-12 02:55:57.749 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.781 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.782 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.809 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.809 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.836 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.837 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.856 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.857 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.874 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.876 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.905 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.905 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.923 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.923 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.940 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.941 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.954 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:57.954 20410 20410 I flutter : Native operation: version.delete begin
+11-12 02:55:57.974 20410 20410 I flutter : Native operation: version.delete complete
+11-12 02:55:58.044 20410 20410 I flutter : Native pipeline: semantics remaining 2
+11-12 02:55:58.173 20410 20410 I flutter : 00:09 +2: (tearDownAll)

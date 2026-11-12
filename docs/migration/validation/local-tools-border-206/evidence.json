@@ -1,0 +1,549 @@
+{
+  "schema": 1,
+  "milestone": 206,
+  "sourceCommit": "1d69c6eeab6c5575a4b09b461329ff3082878589",
+  "fullMigrationComplete": false,
+  "artifacts": [
+    {
+      "apk": "dist/migration206/huevia-0.31.0-dev-206-android-arm64.apk",
+      "bytes": 50979878,
+      "sha256": "edc6585000a755b7851aac8d992c541477bf385f565a81c1e8e00a6e09e52fed",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "rawJniCallbacksPreserved": true,
+      "rawJniInfoConstructorPreserved": true,
+      "r8MappingSha256": "8eb24f0d29357e38dde3d373a76c2e499e86708eb66a7797233d31e4b07fb5bc",
+      "sourceCommit": "1d69c6eeab6c5575a4b09b461329ff3082878589",
+      "fonts": [
+        "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+        "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+        "assets/photo-borders/parameters.ttf"
+      ],
+      "models": [
+        "assets/portrait/face_landmarks_detector.tflite"
+      ],
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "apk": "dist/migration206/huevia-0.31.0-dev-206-android-x64.apk",
+      "bytes": 54285774,
+      "sha256": "93b088f6209ad1df0f28afc3f72069329d02b2141f40c74a1e436f13e98379f6",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "rawJniCallbacksPreserved": true,
+      "rawJniInfoConstructorPreserved": true,
+      "r8MappingSha256": "8eb24f0d29357e38dde3d373a76c2e499e86708eb66a7797233d31e4b07fb5bc",
+      "sourceCommit": "1d69c6eeab6c5575a4b09b461329ff3082878589",
+      "fonts": [
+        "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+        "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+        "assets/photo-borders/parameters.ttf"
+      ],
+      "models": [
+        "assets/portrait/face_landmarks_detector.tflite"
+      ],
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "schema": 1,
+      "verified": true,
+      "sourceCommit": "1d69c6eeab6c5575a4b09b461329ff3082878589",
+      "sha256": "d6b70aa068088408d4c43a25be747f78ac8f8fbdd46d5fa7f922fb88f6660ac9",
+      "bytes": 29381442,
+      "bundleIdentifier": "cc.huevia.next",
+      "version": "0.31.0",
+      "build": "206",
+      "minimumOS": "16.0",
+      "binaries": [
+        {
+          "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+          "sha256": "ad80829457ed638faebab01500a5775c04ffe50b754c7a46f7170873588e5c88",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+          "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+          "sha256": "2425b4a6fbfaf59031865442b0667e6305eb82b04e17f0a87e6ff58c960fac4e",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Runner",
+          "sha256": "2876726f213b3d3f69800f69add63dc673772394b44247da0e52f52dee9173b2",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                16,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "referenceFonts": [
+        {
+          "file": "Roboto-Regular.ttf",
+          "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+          ]
+        },
+        {
+          "file": "Roboto-Medium.ttf",
+          "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+          ]
+        },
+        {
+          "file": "Roboto-Bold.ttf",
+          "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+          ]
+        }
+      ],
+      "deviceInstallationVerified": false,
+      "fullParityComplete": false,
+      "runId": 43143275667,
+      "jobId": 130936479349,
+      "artifactId": 13911004597,
+      "archiveSha256": "765321934c90b25231c77b2e3057383ae760f22797ebb7ca7a617cd8cf0b50ba",
+      "archiveBytes": 29629768,
+      "flutterChecks": 137,
+      "nativeAvatarChecks": 38,
+      "sharedChecks": 446,
+      "simulatorScenarioChecks": 1,
+      "photoKitInitial": "none",
+      "photoKitConsent": "full",
+      "photoKitFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb",
+      "ipa": "dist/migration206/huevia-0.31.0-dev-206-ios-unsigned.ipa"
+    }
+  ],
+  "checks": {
+    "sharedGolden": 446,
+    "localCommandsIncluded": 123,
+    "androidWidgetScenarios": 62,
+    "androidFlutterIncludingTeardown": 133,
+    "androidMedia": 82,
+    "androidNativePipeline": 1,
+    "appleFlutter": 137,
+    "appleNativeAvatar": 38,
+    "appleNativePipeline": 1,
+    "originalFrozen": 420,
+    "approvedRepairs": 8,
+    "otherOriginalUnchanged": 412
+  },
+  "ci": {
+    "run": 43143275667,
+    "job": 130936479349,
+    "artifact": 13911004597,
+    "conclusion": "success",
+    "archiveBytes": 29629768,
+    "archiveSha256": "765321934c90b25231c77b2e3057383ae760f22797ebb7ca7a617cd8cf0b50ba"
+  },
+  "evidenceFiles": [
+    {
+      "path": "docs/migration/validation/local-tools-border-206/analyze.log",
+      "bytes": 36,
+      "sha256": "75bfaea98de986e4dce9f7bee9047a5b536a2a43b4e2cbcb5cecbccdda1bc5a1"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/arm64-badging.log",
+      "bytes": 5807,
+      "sha256": "85424eb25926c12b3c5f2b2a16e3cc3d0435eb22f0276297f944a4f58be8a983"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/arm64-signature.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/arm64-zipalign.log",
+      "bytes": 19021,
+      "sha256": "2b8fb559ad06c706b1606c98e1f1e0e1e9aa6e8002a0bdc67f272bc8b23b8001"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/arm64.json",
+      "bytes": 1010,
+      "sha256": "4d0418175f1df1cfcc00d94a79ef2df9fcb39b8e5e59c02a2a9ebfa567a58191"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/before-100.png",
+      "bytes": 213470,
+      "sha256": "d821f82663106a818e9b49d0edb814a8968691552af4e6ebc6f909aa1d4ffb17"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/before-100.xml",
+      "bytes": 6963,
+      "sha256": "17a7762d388585891911ec1ead005899021d46c6da5b1ceeef6a85078319adf6"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/border-pixel-samples.json",
+      "bytes": 1573,
+      "sha256": "18b42af8d514838cf5bd2c8ad94f3c9c76658df395ea3d7386be5c7b55364cb9"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/candidate-border-thumbnails.png",
+      "bytes": 1068906,
+      "sha256": "73e299af452159ee9afb76c5c93840a575d00fed27d741b264a31ced28754340"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/clone-cancelled.xml",
+      "bytes": 3691,
+      "sha256": "a8bfe42a0624470704c85c18aeeee247c409034ded577630d27bdfaa0ecfd2aa"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/codecs.log",
+      "bytes": 126,
+      "sha256": "67de62b175eb87e52f729b7011f3e5770a9be904dfc762eaa9e683a7ad594e44"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/final-logo.png",
+      "bytes": 391237,
+      "sha256": "53cb034ead647412f0b2f9161f9c1201f6636b808c24496698b9659ead81cd92"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/final-logo.xml",
+      "bytes": 4959,
+      "sha256": "3733ed4b0eccc083ee7fa8cb6d79c38bb81c9e8512d8e9b35c3422c0b4ca9a2a"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/jpeg.png",
+      "bytes": 385679,
+      "sha256": "e32ebf7044403fa741228eeacc7b168a251cad55b3f0b5d81042cb02a716d105"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/jpeg.xml",
+      "bytes": 6963,
+      "sha256": "bfe30beb1ef46dc414204c234092441c35826a0da2f332a3c4dc6d798ec6892a"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/original-logo.png",
+      "bytes": 285021,
+      "sha256": "685015300e536358b92dac205118fd1d4eb291c31a22b0b3dca4a9ba73f3cedf"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/original-logo.xml",
+      "bytes": 5543,
+      "sha256": "df2597355be376c60e5a906efa5cb7c9e61a258012a27a17a761aa3aab7d2b49"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/pipeline-apk.json",
+      "bytes": 229,
+      "sha256": "17860619f90a9a00b78379ea8e79e527c30efcae315d50331f1a0371fc25f663"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/pipeline-flutter.log",
+      "bytes": 24283,
+      "sha256": "e466d58b8347af579bce9c369f5f86996b91ac1d0618fa13725566672d36db26"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/pipeline.log",
+      "bytes": 62,
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/rejected-candidate-logo.png",
+      "bytes": 388154,
+      "sha256": "96a2823be5c222660e571cd90af8a35112cc82c907387604d23b8bb286831bb9"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-arm64-gradle.log",
+      "bytes": 28861,
+      "sha256": "376a15accb3f07c9c213ed6d6a5246fa5293a2c25d58d66c9942da675245d9c5"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-arm64-mapping.txt",
+      "bytes": 8643129,
+      "sha256": "8eb24f0d29357e38dde3d373a76c2e499e86708eb66a7797233d31e4b07fb5bc"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-crash-buffer.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-device.json",
+      "bytes": 790,
+      "sha256": "a84e719aeee92cae6764143502b45fc1d501ec1f1a6f004a9ec9eea26eaa3c45"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-memory.log",
+      "bytes": 3051,
+      "sha256": "f312bb02e4410b9f94e5cf92a9d270fc78a35c9420041d11eed694f8cf29e830"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-x64-gradle.log",
+      "bytes": 28852,
+      "sha256": "56c6f8e44dcb35886fc943b3a28b6d58ce0ce0b8fc960d7e01d9d588fbb4b202"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/release-x64-mapping.txt",
+      "bytes": 8643129,
+      "sha256": "8eb24f0d29357e38dde3d373a76c2e499e86708eb66a7797233d31e4b07fb5bc"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/reopened-gradient.png",
+      "bytes": 1102562,
+      "sha256": "84a0b65805eb07e10d90433861a52d61ec5ff7634d1896f818c159c1b720f5be"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/tentative-clone.png",
+      "bytes": 923666,
+      "sha256": "bb662de113b3d1429479a9220afda7f89ca56079f471edf4844b00af82fabf0d"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/tentative-clone.xml",
+      "bytes": 11425,
+      "sha256": "04a9baa99f0ef7244053fa1ae763f4db084c8f04674813ff6862cea4a962b034"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/widgets-apk.json",
+      "bytes": 227,
+      "sha256": "efe45d954e1a984abf7c05c6a112565b15874a36ec54f770e58f9a138493d70e"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/widgets-flutter.log",
+      "bytes": 18649,
+      "sha256": "ca97ce8ae77f2cfcef963cf86b1a82f68fc5980e94011c3ef930869e2ebe0235"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/widgets-gradle.log",
+      "bytes": 23350,
+      "sha256": "a4527ce99917b8a0a1280db5e34b94db7e8eceae37c1d8edadbe56ca55a776ba"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/widgets.log",
+      "bytes": 63,
+      "sha256": "c424febdb4bc7b82d9c763fcc994af43644e3c5dcc003322df21a786b01c3060"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/x64-badging.log",
+      "bytes": 5804,
+      "sha256": "8b9e820176539aeb777c31fba95b50680f162055ffdd1915d9346f6ead6af885"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/x64-signature.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/x64-zipalign.log",
+      "bytes": 18995,
+      "sha256": "2c6757bc2ac1e372a7520ccab5b8cdbd93764d5d5f68b98db16ed5a4f0b91342"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/android/x64.json",
+      "bytes": 1005,
+      "sha256": "fb7642e733d02df1fe95dc0db9dcb0d2ce5b8699a5d32d3c67c9c77ba15005ed"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/actions.log",
+      "bytes": 25405,
+      "sha256": "3a34d1e137c48bef3346b39d67a356ae3954244daeefeb9ebc1b9b8269f075cf"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/core-ios/avatar-build.log",
+      "bytes": 51,
+      "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/core-ios/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/core-ios/parity.json",
+      "bytes": 884,
+      "sha256": "9b80d59aa1ee5f686b6b1020991ae46f3c9aea18332520baaa55bb7277fb954e"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/core-ios/translation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/independent-verification.json",
+      "bytes": 3820,
+      "sha256": "5a5d3722c00e26787305abba40221f5494d02de0c2052211486180327471b3b2"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/analyze.log",
+      "bytes": 97,
+      "sha256": "41758fdf0e29ade168f4966859b62e36799c0ffd8684033ff09fd609ff1a64b8"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/device-build.log",
+      "bytes": 893,
+      "sha256": "419cbf6a624e3760ab8561c246398b3f34d01296144d701814b173475ed7388f"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/flutter-bootstrap.log",
+      "bytes": 319,
+      "sha256": "4123ebb13d399425c71c85e3ebc0cbf2c65761247d0f2adb3b6a6dd5f70efa2c"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/flutter-tests.log",
+      "bytes": 28408,
+      "sha256": "8fe6dfe5772f6fc4e028dd271cab3c0e067fe9c1b9716708a87c674d98652618"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/Huevia-QA-PhotoKit.png",
+      "bytes": 121307,
+      "sha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "3746bcfa5e31094f0c63f901a8a8b268efaadf28e47214cc17697be05db4bd17"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "e20f2f84600f21b3da801410c56da9eaefdb286da63e87f68dc0b55d40f77b14"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/pub-get.log",
+      "bytes": 1748,
+      "sha256": "df8beb77038544edead3a5f79756fcdd2b71e48e7465496acb3da42239267c20"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/raw-build.log",
+      "bytes": 886,
+      "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-boot.log",
+      "bytes": 12799,
+      "sha256": "ed0e6a73ae640b2d2dc7f0be24aa57fb0071a9781f32aa479f5b17ce57bdb05d"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-build.log",
+      "bytes": 5123129,
+      "sha256": "0543b325f0188e64397f8ada61830c9b6d1b1fddfcf97df20fb025b099c21e18"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-config.log",
+      "bytes": 270,
+      "sha256": "c542c4d1c025f8264bad639986b461ce1e0925ec741ee802fd2d0f5ef7b85846"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-devices.json",
+      "bytes": 33550,
+      "sha256": "872834e60e9ab26f54674aa720d25292fc01db45a5f6411ef9c0fd4f89dcf60c"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-initial-access.json",
+      "bytes": 347,
+      "sha256": "99664a9cb7ecc157174b090c9d1005f062c4c0546f7d4cf9025d221784683b79"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-pipeline-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "402624f83b0fa886f405bf76de441c6c4f789a45ff30bbf016bc207a49826be6"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-selection.json",
+      "bytes": 228,
+      "sha256": "60cd7ffba8ac609080864395049b908664881df3338830226446f7ecff853dad"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/apple/mobile-apple/simulator-tests.log",
+      "bytes": 4888,
+      "sha256": "c4bef4722b90962ce674d46407ce411442fe9b7462cc3a789de906786c56b7e6"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/jvm-checks.log",
+      "bytes": 1147,
+      "sha256": "3a426594a7e08b7dce5c6576efc09b6ddca19b11231f7744be4cb956549d0fe5"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/jvm-golden.json",
+      "bytes": 759,
+      "sha256": "38005fd662281c7819ea9ff24e4dc5cf26b20e02b5c791b0b15e65c77bd860a9"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/original-preservation.json",
+      "bytes": 165,
+      "sha256": "1a71eb5f312704d2d6726d6b46d83378e1bcb74dc16d959fa5203dae9f72dd3e"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/original-preservation.log",
+      "bytes": 122,
+      "sha256": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7"
+    },
+    {
+      "path": "docs/migration/validation/local-tools-border-206/source-check.log",
+      "bytes": 56,
+      "sha256": "3f7673d973785adf90d86a03b409bbca1da3511b6b9afc2029a9547fc31e9d87"
+    }
+  ]
+}

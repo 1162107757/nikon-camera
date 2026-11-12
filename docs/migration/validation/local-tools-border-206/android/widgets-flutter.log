@@ -1,0 +1,145 @@
+11-12 02:50:44.722 20251 20251 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 02:50:44.722 20251 20251 I flutter :     The application opted out of Impeller by either using the
+11-12 02:50:44.722 20251 20251 I flutter :     `--no-enable-impeller` flag or the
+11-12 02:50:44.722 20251 20251 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 02:50:44.722 20251 20251 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 02:50:44.722 20251 20251 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 02:50:44.722 20251 20251 I flutter :     the issue.
+11-12 02:50:44.722 20251 20251 I flutter : 
+11-12 02:50:44.722 20251 20251 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 02:50:44.722 20251 20251 I flutter : 
+11-12 02:50:44.962 20251 20281 I flutter : The Dart VM service is listening on http://127.0.0.1:37777/pQS5OpJYPBw=/
+11-12 02:50:46.019 20251 20251 I flutter : 00:00 +0: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text
+11-12 02:51:04.591 20251 20251 I flutter : 00:18 +1: Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text
+11-12 02:51:18.769 20251 20251 I flutter : 00:32 +2: Photo stars survive reload, combine with search, and keep stable editor links
+11-12 02:51:25.361 20251 20251 I flutter : 00:39 +3: Save and apply a recipe at Size(375.0, 812.0) with large text and a pinned owner
+11-12 02:51:27.834 20251 20251 I flutter : 00:41 +4: Save and apply a recipe at Size(812.0, 375.0) with large text and a pinned owner
+11-12 02:51:30.528 20251 20251 I flutter : 00:44 +5: Frozen export recipe retains independent advanced edits
+11-12 02:51:30.537 20251 20251 I flutter : 00:44 +6: File import retains exact original bytes and rejects a corrupt collision
+11-12 02:51:31.360 20251 20251 I flutter : 00:45 +7: Offline navigation remains usable at Size(375.0, 812.0), Brightness.light, text 1.0
+11-12 02:51:34.622 20251 20251 I flutter : 00:48 +8: Offline navigation remains usable at Size(812.0, 375.0), Brightness.dark, text 2.0
+11-12 02:51:37.086 20251 20251 I flutter : 00:51 +9: Offline navigation remains usable at Size(375.0, 812.0), Brightness.dark, text 2.0
+11-12 02:51:39.238 20251 20251 I flutter : 00:53 +10: Copy scope and owner stay pinned; newer edits survive undo at Size(375.0, 812.0)
+11-12 02:51:43.021 20251 20251 I flutter : 00:57 +11: Copy scope and owner stay pinned; newer edits survive undo at Size(812.0, 375.0)
+11-12 02:51:47.489 20251 20251 I flutter : 01:01 +12: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(375.0, 812.0)
+11-12 02:51:52.586 20251 20251 I flutter : 01:06 +13: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(812.0, 375.0)
+11-12 02:51:57.440 20251 20251 I flutter : 01:11 +14: Registration failures retain credentials and refresh only the challenge answer
+11-12 02:51:59.691 20251 20251 I flutter : 01:13 +15: Online search can display a match beyond the loaded feed page
+11-12 02:52:01.423 20251 20251 I flutter : 01:15 +16: An old camera status cannot replace a newly established session
+11-12 02:52:02.086 20251 20251 I flutter : 01:16 +17: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+11-12 02:52:03.510 20251 20251 I flutter : 01:17 +18: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 1.0)
+11-12 02:52:06.585 20251 20251 I flutter : 01:20 +19: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 2.0)
+11-12 02:52:09.355 20251 20251 I flutter : 01:23 +20: Root sheets cover navigation and retain fixed actions at (Size(812.0, 375.0), 2.0)
+11-12 02:52:12.014 20251 20251 I flutter : 01:26 +21: Online download filtering loads the complete catalog and source filters remain separate
+11-12 02:52:15.406 20251 20251 I flutter : 01:29 +22: Independent source filters survive rebuilding the whole application state
+11-12 02:52:20.372 20251 20251 I flutter : 01:34 +23: Album sort and RAW filter survive rebuilding the application
+11-12 02:52:26.410 20251 20251 I flutter : 01:40 +24: A failed preference commit does not block subsequent partial updates
+11-12 02:52:26.446 20251 20251 I flutter : 01:40 +25: Batch freezes every recipe before export and retains per-photo adjustments
+11-12 02:52:26.487 20251 20251 I flutter : 01:40 +26: Batch retries failures without repeating completed outputs or changing frozen settings
+11-12 02:52:26.510 20251 20251 I flutter : 01:40 +27: Cancellation keeps completed outputs and resumes only remaining photos
+11-12 02:52:26.519 20251 20251 I flutter : 01:40 +28: Changing account prevents remaining exports and all later retries
+11-12 02:52:26.542 20251 20251 I flutter : 01:40 +29: Batch refuses duplicate sources and an unbounded selection
+11-12 02:52:26.561 20251 20251 I flutter : 01:40 +30: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 1.0)
+11-12 02:52:28.568 20251 20251 I flutter : 01:42 +31: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 2.0)
+11-12 02:52:30.455 20251 20251 I flutter : 01:44 +32: Album selection groups photos and opens a full-page batch with fixed actions at (Size(812.0, 375.0), 2.0)
+11-12 02:52:33.574 20251 20251 I flutter : 01:47 +33: Diagnostic reports exclude payloads, credentials, device addresses and unexpected native fields
+11-12 02:52:33.956 20251 20251 I flutter : 01:47 +34: Help opens readable diagnostics and about opens a separate license page
+11-12 02:52:38.924 20251 20251 I flutter : 01:52 +35: Template selection uses streamed native picking, handles cancellation and restores built-ins
+11-12 02:52:41.143 20251 20251 I flutter : 01:55 +36: Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0)
+11-12 02:52:49.394 20251 20251 I flutter : 02:03 +37: Tentative crop handles, ratio, rotate and cancel at Size(812.0, 375.0)
+11-12 02:52:57.754 20251 20251 I flutter : 02:11 +38: Split divider clamps and preserves a common zoom transform
+11-12 02:52:59.169 20251 20251 I flutter : 02:13 +39: Encoded preview cancel creates no saved version
+11-12 02:53:04.337 20251 20251 I flutter : 02:18 +40: Encoded preview commits the frozen result
+11-12 02:53:09.761 20251 20251 I flutter : 02:23 +41: Account change cancels stale frame work and disables confirmation
+11-12 02:53:12.139 20251 20251 I flutter : 02:26 +42: Original border strip, fields, settings and camera at (Size(375.0, 812.0), 1.0)
+11-12 02:53:30.266 20251 20251 I flutter : 02:44 +43: Original border strip, fields, settings and camera at (Size(812.0, 375.0), 2.0)
+11-12 02:53:51.266 20251 20251 I flutter : 03:05 +44: Border thumbnails resume after a temporary busy operation
+11-12 02:53:55.397 20251 20251 I flutter : 03:09 +45: Account changes reject pending border thumbnails and field commits
+11-12 02:54:00.090 20251 20251 I flutter : 03:14 +46: Reply recipient uses the explicit target and unavailable marker
+11-12 02:54:00.103 20251 20251 I flutter : 03:14 +47: Concurrent comment confirmation sends once and cannot reuse another owner receipt
+11-12 02:54:00.116 20251 20251 I flutter : 03:14 +48: Failed comment retry retains its key; editing creates a new reviewed body
+11-12 02:54:00.124 20251 20251 I flutter : 03:14 +49: Account change rejects an in-flight comment result and invalid reply IDs never send
+11-12 02:54:00.132 20251 20251 I flutter : 03:14 +50: Private list switches owner without allowing an old page to replace the new request
+11-12 02:54:00.157 20251 20251 I flutter : 03:14 +51: Failed next page preserves rows and retries the same page with duplicate IDs merged
+11-12 02:54:00.165 20251 20251 I flutter : 03:14 +52: Reply previews do not skip page one and a wrong response page never advances the cursor
+11-12 02:54:00.174 20251 20251 I flutter : 03:14 +53: Read acknowledgements survive paging but cannot replace a newer unread count
+11-12 02:54:00.183 20251 20251 I flutter : 03:14 +54: Malformed read acknowledgement does not mark unrelated messages read
+11-12 02:54:00.190 20251 20251 I flutter : 03:14 +55: Read-all accepts the server acknowledgement and refreshes the real unread count
+11-12 02:54:00.196 20251 20251 I flutter : 03:14 +56: Single read acknowledgement refreshes the badge without assuming a returned count
+11-12 02:54:00.204 20251 20251 I flutter : 03:14 +57: Disposed discussion ignores a pending page and never schedules another request
+11-12 02:54:00.228 20251 20251 I flutter : 03:14 +58: Comment modal clears private text after account switch at (Size(375.0, 812.0), 1.0)
+11-12 02:54:02.295 20251 20251 I flutter : 03:16 +59: Comment modal clears private text after account switch at (Size(812.0, 375.0), 2.0)
+11-12 02:54:04.329 20251 20251 I flutter : 03:18 +60: Comment send failure preserves the reviewed text and retry key
+11-12 02:54:06.734 20251 20251 I flutter : 03:20 +61: Root message page retains read failure and never retries it in a build loop
+11-12 02:54:13.160 20251 20251 I flutter : 03:27 +62: Submission next page replaces rows and stops at the actual final page
+11-12 02:54:15.547 20251 20251 I flutter : 03:29 +63: Autosave is serial and old responses cannot replace newer typing
+11-12 02:54:16.342 20251 20251 I flutter : 03:30 +64: Uncertain save restores native receipt and locks edits until retry
+11-12 02:54:16.367 20251 20251 I flutter : 03:30 +65: Picker result from an old account is discarded and private fields clear
+11-12 02:54:16.454 20251 20251 I flutter : 03:30 +66: Submission fields preserve comma input without overflow at (Size(375.0, 812.0), 1.0)
+11-12 02:54:17.712 20251 20251 I flutter : 03:31 +67: Submission fields preserve comma input without overflow at (Size(812.0, 375.0), 2.0)
+11-12 02:54:18.981 20251 20251 I flutter : 03:32 +68: Foreground unread polling stops in background and rejects a stale count
+11-12 02:54:21.418 20251 20251 I flutter : 03:35 +69: Avatar uploads only after review and ignores a second concurrent confirmation
+11-12 02:54:21.438 20251 20251 I flutter : 03:35 +70: Late avatar selection from another account is discarded without a write
+11-12 02:54:21.449 20251 20251 I flutter : 03:35 +71: Failed avatar upload preserves the reviewed receipt for an explicit retry
+11-12 02:54:21.456 20251 20251 I flutter : 03:35 +72: Profile and avatar preview purge old account details at (Size(375.0, 812.0), 1.0)
+11-12 02:54:23.000 20251 20251 I flutter : 03:36 +73: Profile and avatar preview purge old account details at (Size(812.0, 375.0), 2.0)
+11-12 02:54:24.547 20251 20251 I flutter : 03:38 +74: Logout confirmation cannot log out an account selected after the dialog opened
+11-12 02:54:25.795 20251 20251 I flutter : 03:39 +75: region samples serialize fingerprints and freeze each history position
+11-12 02:54:25.833 20251 20251 I flutter : 03:39 +76: account changes discard in-flight results and prevent later commands
+11-12 02:54:25.849 20251 20251 I flutter : 03:39 +77: failed binary validation stops the queue without changing the draft
+11-12 02:54:25.861 20251 20251 I flutter : 03:39 +78: scope adjustments preserve global settings and undo the original binary snapshot
+11-12 02:54:36.159 20251 20251 I flutter : 03:50 +79: Selection coverage agrees with original Java: empty-6400x4000
+11-12 02:54:36.171 20251 20251 I flutter : 03:50 +80: Selection coverage agrees with original Java: empty-inverted-6400x4000
+11-12 02:54:36.178 20251 20251 I flutter : 03:50 +81: Selection coverage agrees with original Java: soft-dot-6400x4000
+11-12 02:54:36.194 20251 20251 I flutter : 03:50 +82: Selection coverage agrees with original Java: polyline-6400x4000
+11-12 02:54:36.210 20251 20251 I flutter : 03:50 +83: Selection coverage agrees with original Java: add-erase-6400x4000
+11-12 02:54:36.215 20251 20251 I flutter : 03:50 +84: Selection coverage agrees with original Java: ordered-shapes-6400x4000
+11-12 02:54:36.227 20251 20251 I flutter : 03:50 +85: Selection coverage agrees with original Java: ordered-inverted-6400x4000
+11-12 02:54:36.238 20251 20251 I flutter : 03:50 +86: Selection coverage agrees with original Java: subtract-only-6400x4000
+11-12 02:54:36.242 20251 20251 I flutter : 03:50 +87: Selection coverage agrees with original Java: thin-edge-6400x4000
+11-12 02:54:36.252 20251 20251 I flutter : 03:50 +88: Selection coverage agrees with original Java: bounded-long-path-6400x4000
+11-12 02:54:36.261 20251 20251 I flutter : 03:50 +89: Selection coverage agrees with original Java: empty-3200x6400
+11-12 02:54:36.268 20251 20251 I flutter : 03:50 +90: Selection coverage agrees with original Java: empty-inverted-3200x6400
+11-12 02:54:36.276 20251 20251 I flutter : 03:50 +91: Selection coverage agrees with original Java: soft-dot-3200x6400
+11-12 02:54:36.285 20251 20251 I flutter : 03:50 +92: Selection coverage agrees with original Java: polyline-3200x6400
+11-12 02:54:36.297 20251 20251 I flutter : 03:50 +93: Selection coverage agrees with original Java: add-erase-3200x6400
+11-12 02:54:36.309 20251 20251 I flutter : 03:50 +94: Selection coverage agrees with original Java: ordered-shapes-3200x6400
+11-12 02:54:36.314 20251 20251 I flutter : 03:50 +95: Selection coverage agrees with original Java: ordered-inverted-3200x6400
+11-12 02:54:36.322 20251 20251 I flutter : 03:50 +96: Selection coverage agrees with original Java: subtract-only-3200x6400
+11-12 02:54:36.326 20251 20251 I flutter : 03:50 +97: Selection coverage agrees with original Java: thin-edge-3200x6400
+11-12 02:54:36.333 20251 20251 I flutter : 03:50 +98: Selection coverage agrees with original Java: bounded-long-path-3200x6400
+11-12 02:54:36.338 20251 20251 I flutter : 03:50 +99: Selection overlay stays bounded and uses premultiplied original cyan
+11-12 02:54:36.550 20251 20251 I flutter : 03:50 +100: Empty inverted selections do not cover the photo and reject unbounded inputs
+11-12 02:54:36.558 20251 20251 I flutter : 03:50 +101: Original replace mode clears once for brush and explicit rearming clears again
+11-12 02:54:36.576 20251 20251 I flutter : 03:50 +102: Add and subtract are inverted with the visible selection as in the original
+11-12 02:54:36.584 20251 20251 I flutter : 03:50 +103: Pointer cancellation for pinch restores the selection, history and replace state
+11-12 02:54:36.590 20251 20251 I flutter : 03:50 +104: Shape corners flip around their opposite corner and movement remains in frame
+11-12 02:54:36.598 20251 20251 I flutter : 03:50 +105: An empty shape tap preserves the original; new shapes keep stroke ordering
+11-12 02:54:36.603 20251 20251 I flutter : 03:50 +106: Feather changes only the active shape and one slider gesture records one undo
+11-12 02:54:36.612 20251 20251 I flutter : 03:50 +107: Original point and history limits remain bounded and overflow preserves prior data
+11-12 02:54:36.681 20251 20251 I flutter : 03:50 +108: Clearing an existing region remains confirmable while an empty new region does not
+11-12 02:54:36.685 20251 20251 I flutter : 03:50 +109: Original selection page draws and confirms once at (Size(375.0, 812.0), 1.0)
+11-12 02:54:39.706 20251 20251 I flutter : 03:53 +110: Original selection page draws and confirms once at (Size(812.0, 375.0), 2.0)
+11-12 02:54:42.703 20251 20251 I flutter : 03:56 +111: Pinch cancels a partial stroke and a later tap can still draw a single dot
+11-12 02:54:46.117 20251 20251 I flutter : 04:00 +112: Account change purges the image and prevents a late selection result from popping another page
+11-12 02:54:49.248 20251 20251 I flutter : 04:03 +113: System back discards an in-flight confirmation without popping the editor behind it
+11-12 02:54:51.664 20251 20251 I flutter : 04:05 +114: The mask worker coalesces updates and never renders two masks concurrently
+11-12 02:54:54.586 20251 20251 I flutter : 04:08 +115: legacy brush uses original 2dp sampling, source-relative radius and one gesture history
+11-12 02:54:54.609 20251 20251 I flutter : 04:08 +116: multi-touch cancellation restores selection and clone source without adding history
+11-12 02:54:54.618 20251 20251 I flutter : 04:08 +117: radial resizing preserves aspect ratio and repeated move events stay anchored
+11-12 02:54:54.629 20251 20251 I flutter : 04:08 +118: linear endpoint protection and parameter selection follow the original editor
+11-12 02:54:54.640 20251 20251 I flutter : 04:08 +119: clone requires a sample point and moves each endpoint independently
+11-12 02:54:54.646 20251 20251 I flutter : 04:08 +120: original brush and collection limits remain bounded
+11-12 02:54:55.174 20251 20251 I flutter : 04:09 +121: undo stays bounded and a new edit clears redo without erasing selection metadata
+11-12 02:54:55.190 20251 20251 I flutter : 04:09 +122: invalid viewport or pointer data never starts or corrupts a gesture
+11-12 02:54:55.194 20251 20251 I flutter : 04:09 +123: only newest pending tools render, one worker runs, and every command preserves the frozen binary base
+11-12 02:54:55.224 20251 20251 I flutter : 04:09 +124: interactive output cannot be applied until the same tools receive a full-quality frame
+11-12 02:54:55.293 20251 20251 I flutter : 04:09 +125: account invalidation redacts the view and discards a late frame without starting another render
+11-12 02:54:55.332 20251 20251 I flutter : 04:09 +126: failed validation preserves the old photograph and retries without a draft save
+11-12 02:54:55.344 20251 20251 I flutter : 04:09 +127: retry regenerates a corrupt file even when validated tools are unchanged
+11-12 02:54:55.349 20251 20251 I flutter : 04:09 +128: legacy gradient validates and previews without a draft write, then Apply returns only validated tools
+11-12 02:54:58.520 20251 20251 I flutter : 04:12 +129: Cancel discards tentative tools and a late account-owned preview cannot enable Apply
+11-12 02:55:02.193 20251 20251 I flutter : 04:16 +130: clone source and target, history and landscape large text retain reachable original controls
+11-12 02:55:07.456 20251 20251 I flutter : 04:21 +131: two-finger navigation cancels a partial stroke and lifting one finger does not resume painting
+11-12 02:55:09.957 20251 20251 I flutter : 04:23 +132: (tearDownAll)
+11-12 02:55:09.979 20251 20251 I flutter : 04:23 +133: All tests passed!

@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "1d69c6eeab6c5575a4b09b461329ff3082878589",
+  "apkSha256": "93b088f6209ad1df0f28afc3f72069329d02b2141f40c74a1e436f13e98379f6",
+  "pid": "20915",
+  "currentPidCrashRecords": 0,
+  "ownFixture": "Huevia-QA.png,1200x800",
+  "checks": [
+    "guest391",
+    "four border thumbnails",
+    "Logo native dark card/48dp choices",
+    "native exact flat photo/card/sheet/slider dim samples",
+    "saved gradient1 +1.1 survives reinstall/reopen",
+    "tentative clone source/target preview; Cancel leaves only saved gradient",
+    "final source real1200x934 JPEG95 88.2KB; before100percent; Cancel returns Editor (original settings return pending207)"
+  ],
+  "memory": [
+    "TOTAL PSS:   117493            TOTAL RSS:   228236       TOTAL SWAP PSS:      505"
+  ]
+}
