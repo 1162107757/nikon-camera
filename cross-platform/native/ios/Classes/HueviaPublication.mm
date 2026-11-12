@@ -70,9 +70,17 @@ void publicationDatedCopy(NSString *source,NSString *target,NSDate *date,HueviaT
       &&CGImageMetadataSetValueMatchingImageProperty(updated,kCGImagePropertyExifDictionary,kCGImagePropertyExifDateTimeDigitized,(__bridge CFTypeRef)clock);
     if(!valid)publicationFail(@"无法记录本次导出时间，未保存副本。");
     destination=CGImageDestinationCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:temporary],CFSTR("public.jpeg"),1,NULL);
-    CFErrorRef error=NULL;NSDictionary *options=@{(id)kCGImageDestinationMetadata:(__bridge id)updated,(id)kCGImageDestinationMergeMetadata:@YES,(id)kCGImageDestinationDateTime:date,(id)kCGImageMetadataShouldExcludeGPS:@YES};
+    // DateTime is mutually exclusive with Metadata (and does not accept NSDate).
+    // Supply the three updated date tags through the metadata object alone.
+    // https://developer.apple.com/documentation/imageio/kcgimagedestinationdatetime
+    CFErrorRef error=NULL;NSDictionary *options=@{(id)kCGImageDestinationMetadata:(__bridge id)updated,(id)kCGImageDestinationMergeMetadata:@YES,(id)kCGImageMetadataShouldExcludeGPS:@YES};
     BOOL copied=destination&&CGImageDestinationCopyImageSource(destination,image,(__bridge CFDictionaryRef)options,&error);if(error)CFRelease(error);
     if(!copied)publicationFail(@"无法写入导出时间，原成品仍保留。");
+    CGImageSourceRef checked=CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:temporary],(__bridge CFDictionaryRef)@{(id)kCGImageSourceShouldCache:@NO});
+    NSDictionary *properties=checked?CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(checked,0,NULL)):nil;if(checked)CFRelease(checked);
+    format.dateFormat=@"yyyy:MM:dd HH:mm:ss";NSString *expected=[format stringFromDate:date];
+    NSDictionary *tiff=properties[(id)kCGImagePropertyTIFFDictionary],*exif=properties[(id)kCGImagePropertyExifDictionary];
+    if(![tiff[(id)kCGImagePropertyTIFFDateTime] isEqual:expected]||![exif[(id)kCGImagePropertyExifDateTimeOriginal] isEqual:expected]||![exif[(id)kCGImagePropertyExifDateTimeDigitized] isEqual:expected])publicationFail(@"导出时间未能核对，原成品仍保留。");
     publicationCheck(task);
     if([fm fileExistsAtPath:target]){
       if(![publicationFileHash(target,task) isEqual:publicationFileHash(temporary,task)])publicationFail(@"暂存副本已变化，未覆盖或删除。");
