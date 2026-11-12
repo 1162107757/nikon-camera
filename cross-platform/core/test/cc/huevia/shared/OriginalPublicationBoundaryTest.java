@@ -22,7 +22,7 @@ public final class OriginalPublicationBoundaryTest {
         Map<String,Object> input=SharedRuntime.map("owner","","path",source.toString(),"expectedSourceSha",sha,"operationId","a".repeat(32));
         String versions=runtime.request("version.list","{\"owner\":\"\"}"),draft=runtime.request("draft.load",SharedJson.encode(input));
         Map<String,Object> prepared=SharedJson.object(runtime.prepareOriginalPublication(SharedJson.encode(input),()->false));
-        Path snapshot=Path.of((String)prepared.get("path"));
+        Path snapshot=new java.io.File((String)prepared.get("path")).toPath();
         yes(!snapshot.equals(source)&&Arrays.equals(Files.readAllBytes(snapshot),bytes));
         yes(sha.equals(prepared.get("sourceSha"))&&sha.equals(prepared.get("sha256")));
         yes(prepared.equals(SharedJson.object(runtime.prepareOriginalPublication(SharedJson.encode(input),()->false))));
@@ -48,7 +48,7 @@ public final class OriginalPublicationBoundaryTest {
         input.put("operationId","b".repeat(32));
         Map<String,Object> second=SharedJson.object(runtime.prepareOriginalPublication(SharedJson.encode(input),()->false));yes(!second.get("id").equals(prepared.get("id")));
         // Snapshot lifetime is independent of the source's later removal.
-        Files.delete(other);yes(Arrays.equals(Files.readAllBytes(Path.of((String)second.get("path"))),changed));
+        Files.delete(other);yes(Arrays.equals(Files.readAllBytes(new java.io.File((String)second.get("path")).toPath()),changed));
         rejected(runtime,input);
         byte[] invalid={1,2,3,4};String invalidSha=PhotoEditStore.hash(invalid);Path invalidJpeg=originals.resolve(invalidSha+".jpg");Files.write(invalidJpeg,invalid);
         input.put("path",invalidJpeg.toString());input.put("expectedSourceSha",invalidSha);input.put("operationId","c".repeat(32));rejected(runtime,input);
