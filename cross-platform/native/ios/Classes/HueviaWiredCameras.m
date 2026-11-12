@@ -123,8 +123,11 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   if(self.closing==done)self.closing=nil;
 }
 - (void)close {
-  BOOL wasOpen=self.open;self.open=NO;if(!wasOpen)return;ICCameraDevice *device=self.device;
-  dispatch_semaphore_t done=dispatch_semaphore_create(0);self.closing=done;
+  ICCameraDevice *device;dispatch_semaphore_t done;
+  @synchronized(self){
+    if(!self.open)return;self.open=NO;device=self.device;
+    done=dispatch_semaphore_create(0);self.closing=done;
+  }
   // Reads use ICCameraFile's data API, not the macOS-only download API.
   // Keep this client alive until its unretained delegate is cleared on main.
   // The worker observes open=NO; a reconnect waits for OS close completion.
