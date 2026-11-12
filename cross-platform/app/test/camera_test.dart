@@ -75,9 +75,19 @@ Future<CameraCore> fixture() async {
 
 Future<void> settleImages(WidgetTester tester) async {
   await tester.pumpAndSettle();
-  await tester.runAsync(
-    () => Future<void>.delayed(const Duration(milliseconds: 80)),
-  );
+  // File decoding finishes outside the fake clock on desktop test hosts.
+  // Advance both clocks until a real image frame arrives, rather than relying
+  // on one fixed delay that races a busy CI runner.
+  for (var attempt = 0; attempt < 50; attempt++) {
+    final decoded = tester
+        .widgetList<RawImage>(find.byType(RawImage))
+        .any((image) => image.image != null);
+    if (decoded || find.byType(Image).evaluate().isEmpty) break;
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await tester.pump(const Duration(milliseconds: 16));
+  }
   await tester.pumpAndSettle();
 }
 
