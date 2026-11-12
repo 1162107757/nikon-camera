@@ -86,38 +86,51 @@ class BorderPanel extends StatefulWidget {
 }
 
 class _BorderPanelState extends State<BorderPanel> {
-  int sheetDepth = 0;
+  final sheetBarriers = <ValueNotifier<Color>>[];
+  int dialogDepth = 0;
+  void refreshBarriers() {
+    for (var i = 0; i < sheetBarriers.length; i++) {
+      sheetBarriers[i].value = dialogDepth == 0 && i == sheetBarriers.length - 1
+          ? const Color.fromRGBO(0, 0, 0, .35)
+          : Colors.transparent;
+    }
+  }
+
   Future<T?> borderSheet<T>(WidgetBuilder builder) async {
-    final nested = sheetDepth > 0;
-    sheetDepth++;
+    final barrier = ValueNotifier<Color>(Colors.transparent);
+    sheetBarriers.add(barrier);
+    refreshBarriers();
     try {
       return await hueBottomSheet<T>(
         context: context,
         builder: builder,
-        barrierColor: nested
-            ? Colors.transparent
-            : const Color.fromRGBO(0, 0, 0, .35),
+        barrierColorListenable: barrier,
       );
     } finally {
-      sheetDepth--;
+      sheetBarriers.remove(barrier);
+      barrier.dispose();
+      refreshBarriers();
     }
   }
 
-  Future<T?> borderDialog<T>(WidgetBuilder builder) => hueDialog<T>(
-    context: context,
-    // Android's top dialog owns the effective dim; Flutter otherwise stacks
-    // both barriers and makes the photo much darker than the original.
-    barrierColor: Color.fromRGBO(
-      0,
-      0,
-      0,
-      sheetDepth > 0 ? (.42 - .35) / (1 - .35) : .42,
-    ),
-    builder: (dialog) => Theme(
-      data: hueviaTheme(Brightness.dark, home: false),
-      child: Builder(builder: builder),
-    ),
-  );
+  Future<T?> borderDialog<T>(WidgetBuilder builder) async {
+    dialogDepth++;
+    refreshBarriers();
+    try {
+      return await hueDialog<T>(
+        context: context,
+        barrierColor: const Color.fromRGBO(0, 0, 0, .42),
+        builder: (dialog) => Theme(
+          data: hueviaTheme(Brightness.dark, home: false),
+          child: Builder(builder: builder),
+        ),
+      );
+    } finally {
+      dialogDepth--;
+      refreshBarriers();
+    }
+  }
+
   late Json border = copy(object(widget.recipe['border'] ?? {}));
   Json capture = {};
   List<String> thumbnails = [];

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 
 import 'domain.dart';
 
@@ -32,9 +33,11 @@ Future<T?> hueBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   Color barrierColor = const Color.fromRGBO(0, 0, 0, .35),
+  ValueListenable<Color>? barrierColorListenable,
 }) async {
   final navigator = Navigator.of(context, rootNavigator: true);
-  final route = ModalBottomSheetRoute<T>(
+  final route = _HueBottomSheetRoute<T>(
+    barrierColorListenable: barrierColorListenable,
     builder: (sheet) => Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.viewInsetsOf(sheet).bottom > 0
@@ -70,6 +73,34 @@ Future<T?> hueBottomSheet<T>({
   final result = await navigator.push(route);
   await route.completed;
   return result;
+}
+
+/// Native windows let the uppermost modal own dimming for all lower windows.
+/// Rebuild the existing route barrier rather than adding another dim layer.
+class _HueBottomSheetRoute<T> extends ModalBottomSheetRoute<T> {
+  _HueBottomSheetRoute({
+    required super.builder,
+    super.capturedThemes,
+    super.barrierLabel,
+    required super.isScrollControlled,
+    super.useSafeArea,
+    super.showDragHandle,
+    super.backgroundColor,
+    super.modalBarrierColor,
+    super.shape,
+    this.barrierColorListenable,
+  }) {
+    barrierColorListenable?.addListener(barrierChanged);
+  }
+  final ValueListenable<Color>? barrierColorListenable;
+  @override
+  Color get barrierColor => barrierColorListenable?.value ?? super.barrierColor;
+  void barrierChanged() => changedInternalState();
+  @override
+  void dispose() {
+    barrierColorListenable?.removeListener(barrierChanged);
+    super.dispose();
+  }
 }
 
 Rect? shareAnchor(BuildContext context) {

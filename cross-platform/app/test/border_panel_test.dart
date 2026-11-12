@@ -256,6 +256,16 @@ void main() {
           tester.widget<Text>(find.text('白色')).style?.fontWeight,
           FontWeight.w400,
         );
+        final activeBarriers = tester
+            .widgetList<ModalBarrier>(find.byType(ModalBarrier))
+            .where((barrier) => (barrier.color?.a ?? 0) > .001)
+            .toList();
+        expect(
+          activeBarriers,
+          hasLength(1),
+          reason:
+              'The upper window must dim both the photo and the lower sheet.',
+        );
         final transmission = tester
             .widgetList<ModalBarrier>(find.byType(ModalBarrier))
             .fold<double>(
@@ -284,6 +294,12 @@ void main() {
         await tester.pumpAndSettle();
         await settle(tester);
         expect(object(recipe['border'])['logo'], 2);
+        final restoredBarriers = tester
+            .widgetList<ModalBarrier>(find.byType(ModalBarrier))
+            .where((barrier) => (barrier.color?.a ?? 0) > .001)
+            .toList();
+        expect(restoredBarriers, hasLength(1));
+        expect(restoredBarriers.single.color!.a, closeTo(.35, .01));
         await tester.tap(find.text('信息'));
         await tester.pumpAndSettle();
         final showIso = find.byWidgetPredicate(
