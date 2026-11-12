@@ -114,7 +114,9 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (void)abortProtocolWithJavaIoIOException:(JavaIoIOException *)failure {[self close];}
 - (void)close {
   BOOL wasOpen=self.open;self.open=NO;if(!wasOpen)return;ICCameraDevice *device=self.device;
-  dispatch_async(dispatch_get_main_queue(),^{[device cancelDownload];[device requestCloseSession];});
+  // Reads use ICCameraFile's data API, not the macOS-only download API.
+  // Closing the iOS session retires pending reads; wait: observes open=NO.
+  dispatch_async(dispatch_get_main_queue(),^{[device requestCloseSession];});
   id<JavaLangRunnable> listener=self.closed;self.closed=nil;if(listener)[listener run];
 }
 - (void)deviceDidBecomeReadyWithCompleteContentCatalog:(ICCameraDevice *)device {dispatch_semaphore_signal(self.ready);}
