@@ -1,0 +1,7 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_test.dart
+00:00 +0 -1: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_test.dart [E]
+  Failed to load "D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_test.dart": Connection closed before test suite loaded.
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_test.dart: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_test.dart

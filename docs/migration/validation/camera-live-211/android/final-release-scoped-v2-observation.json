@@ -1,0 +1,457 @@
+{
+  "schema": 1,
+  "sourceCommit": "db8e2ef3766a228bd2dd93f6e1e139b697d3ff18",
+  "utc": "2026-11-12T15:45:05.286818+00:00",
+  "scope": "Delivered x64 release on owned Android12/API31 emulator with controlled211 PTP/IP peer; not physical Nikon/Fuji/iPhone, Honor Magic, background lifecycle or real RAW acceptance",
+  "pid": 2199,
+  "installedApkMatchesDelivered": true,
+  "installedApkBytes": 54679022,
+  "installedApkSha256": "9954265b93133ff35a5b1df40746dc450f8aab40e97609af8cc6731c0537bc16",
+  "crashMarkers": 0,
+  "crashObservationScope": "current final release PID only",
+  "memoryKiBOnePoint": {
+    "PSS": 127212,
+    "RSS": 239116
+  },
+  "projectId": "f1968af1-179a-4a67-8734-9eef90265169",
+  "cameraId": "d45c018057175898499eb7ef6ca1d2d32bcb531e191ec204c73969cd4490bad6",
+  "liveJournalChecksumValid": true,
+  "liveActive": false,
+  "projectJournalChecksumValid": true,
+  "taskJournalChecksumValid": true,
+  "projectDefaultPresetEmpty": true,
+  "allOriginalsUnchangedAfterOutputVerification": true,
+  "preexistingWhitelistVerification": {
+    "sources": [
+      {
+        "bytes": 2830,
+        "sha256": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    ],
+    "tasks": 1,
+    "versions": [
+      {
+        "id": "1d037107be3274d47b629c0258e2989b31b9aafa474d02db48dd1cdf86a46975",
+        "sourceSha": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5",
+        "effect": {
+          "bytes": 5343,
+          "sha256": "d45bec84099201aa517f6828b5c36506594dca5b51018a49db7525221e686a6e",
+          "decodedDimensions": [
+            256,
+            192
+          ]
+        }
+      }
+    ],
+    "baselineNote": "Explicit whitelist of the owned 210 Project-1794488664855705.JPG fixture, identified after the first observer scope failure. This is not an independent pre-211 device snapshot. Immutable source/version identities and full project/task rows are checked exactly."
+  },
+  "projectTotalPhotoCount": 10,
+  "projectTotalTaskCount": 9,
+  "originalTemporaryFiles": 0,
+  "completedHandles": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "renderedHandles": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "originalOnlyHandles": [
+    11
+  ],
+  "unreceivedHandles": [
+    1,
+    2,
+    12,
+    101
+  ],
+  "sourceCompatibility": {
+    "priorSource": "8117cf8dc234607fc6ee0a24d9bd5ef6858b8b4e",
+    "priorCompletedHandles": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "finalSource": "db8e2ef3766a228bd2dd93f6e1e139b697d3ff18",
+    "verifiedUnchangedScope": [
+      "cross-platform/core/java",
+      "cross-platform/native",
+      "cross-platform/app/android/app/src/main",
+      "cross-platform/app/lib/camera_live.dart",
+      "cross-platform/app/lib/camera_transfer.dart",
+      "cross-platform/app/lib/project_presets_model.dart",
+      "cross-platform/app/lib/domain.dart"
+    ],
+    "productionDifferencesInVerifiedScope": [],
+    "allCrossPlatformChangedFiles": [
+      "cross-platform/app/lib/camera.dart",
+      "cross-platform/app/lib/camera_live_card.dart",
+      "cross-platform/app/lib/project_presets.dart",
+      "cross-platform/app/test/camera_live_test.dart"
+    ],
+    "scopeNote": "Earlier candidate received these originals. Final package resumes/reuses them; this does not claim their initial transfer was first exercised in the final package."
+  },
+  "controlledOriginals": [
+    {
+      "handle": 3,
+      "objectKey": "d64e3d1c8a2c5f3aa1365a664b37ba524c2460fd491da4ada0fcb4ff48077172",
+      "original": {
+        "bytes": 268806,
+        "sha256": "d2867e7e16e2ac7eaf27c6200701e8d3833e3be420b2b8865be9263d6286cd11",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:d2867e7e16e2ac7eaf27c6200701e8d3833e3be420b2b8865be9263d6286cd11:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 8,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "ca9fc495a3fbb9f227a2fe69ccd7bedf7728ea74f664491bfa06eb777ef6c094",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 4,
+      "objectKey": "0d37d25b39c835a3539120eaff2c74ab6ac02213402c473500316e1bd34d0ace",
+      "original": {
+        "bytes": 268806,
+        "sha256": "053333a58ff4cd08c0e5046c43e76079809dd9856ccfe2e092042d4570442085",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:053333a58ff4cd08c0e5046c43e76079809dd9856ccfe2e092042d4570442085:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 3,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "4f80badfed97c6e1e65f052e82021df7579d7591e81b77cb69cd2285a0412dd0",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 5,
+      "objectKey": "03f2acc60b6e26ebd1b0d7e9f9567e74bfbe69646fdbb47053cc43e094f39b3d",
+      "original": {
+        "bytes": 268806,
+        "sha256": "d427048ea68d062ff6cd0cbd8512023cb722fb1ada1f2f77878013e73266d52f",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:d427048ea68d062ff6cd0cbd8512023cb722fb1ada1f2f77878013e73266d52f:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 3,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "83403639cc0135360419554905d63a57e7bad08a1343b3c603c9fb3f904a8883",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 6,
+      "objectKey": "a7ce5151120d78e53fac66c1d02c3215df4ca77a507f0a1c09972575b99513a7",
+      "original": {
+        "bytes": 1055290,
+        "sha256": "c8ff274761ce249863e00172eaddbb193ef2b1d0d5bcac0a36f2d35e06b58e9b",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:c8ff274761ce249863e00172eaddbb193ef2b1d0d5bcac0a36f2d35e06b58e9b:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 0,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "43f1c53aea6d06b261ee6316b3ed44562cee5bf92dbe5527a3efeadb779eeeb3",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 7,
+      "objectKey": "3abad1f4fb45632482fe110c329734d73931cf188c59b226a85920d80ba8f994",
+      "original": {
+        "bytes": 530966,
+        "sha256": "be630990c8874d5cc47058b638887ea715e73bdc51a9b91b1d6807cc154c5b12",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:be630990c8874d5cc47058b638887ea715e73bdc51a9b91b1d6807cc154c5b12:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 2,
+      "downloadCompleted": 1,
+      "partialAttempts": 1,
+      "objectAddedDeliveries": 1,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "07594f473be08d1c735d4afedbab592ccf2f46da47b022bb319636ab26db0aed",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 8,
+      "objectKey": "5014666a218add5636139ca6d81cae482633e9bf5b17061aaa8677b95b114090",
+      "original": {
+        "bytes": 126650,
+        "sha256": "e40cac3c9556bbb9e18816a48828264d9c76ff81d24d98a02b3133add84fbb7c",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:e40cac3c9556bbb9e18816a48828264d9c76ff81d24d98a02b3133add84fbb7c:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 0,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "cdae3e7ed1dcdb68f7f9d52699f01d14f9f67d870facad3e2830b6fa144636f3",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 9,
+      "objectKey": "146dabdf3b7adfd8ee4521388f78ec1ac6bb8edf0ec5ef74effb08dba307bb56",
+      "original": {
+        "bytes": 530966,
+        "sha256": "2ffcec42c94d14093cf905b17528b19ac7c77b9ea3146afc3e79111f2512343f",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:2ffcec42c94d14093cf905b17528b19ac7c77b9ea3146afc3e79111f2512343f:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 2,
+      "downloadCompleted": 1,
+      "partialAttempts": 1,
+      "objectAddedDeliveries": 1,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "eebc02e8aefb43fb28dcc234afe45268bb3b069c54738fc955a04fde346c2801",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 10,
+      "objectKey": "4c65981f81ee7de60e17f91789627533387ef5563ab5f6959d05eab11a18c5df",
+      "original": {
+        "bytes": 126650,
+        "sha256": "e6bcc62c58a6b44f380529c688000e11299777b372b5fe3031cde7c1b6130a44",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "f1968af1-179a-4a67-8734-9eef90265169:e6bcc62c58a6b44f380529c688000e11299777b372b5fe3031cde7c1b6130a44:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 0,
+      "originalOnly": false,
+      "savedVersions": 1,
+      "versionId": "5e76c844369aa43dcf19614f455dc1ec2902dcaecd8c106188a68e87fa38d892",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "effect": {
+        "bytes": 11871,
+        "sha256": "31c5ad4a2c1c4d2eaf442bb5d42b07279babe460a677284b9eba9d46ff2ce4db",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      }
+    },
+    {
+      "handle": 11,
+      "objectKey": "b84a32da7ee7926e9f3941cf1f1a21e39a0e7e9b9f433c51e3df62aa2d7a073a",
+      "original": {
+        "bytes": 1579614,
+        "sha256": "2a0983fbf778a10b0e50165500cb226bcaa185513e770df7651628a9deddb73f",
+        "decodedDimensions": [
+          256,
+          192
+        ]
+      },
+      "photoIndexEntries": 1,
+      "projectEntries": 1,
+      "receiptStatus": "done",
+      "taskKey": "",
+      "downloadAttempts": 1,
+      "downloadCompleted": 1,
+      "partialAttempts": 0,
+      "objectAddedDeliveries": 1,
+      "originalOnly": true,
+      "savedVersions": 0
+    }
+  ],
+  "expectations": {
+    "downloadAttempts": {
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 2,
+      "8": 1,
+      "9": 2,
+      "10": 1,
+      "11": 1,
+      "1": 0,
+      "2": 0,
+      "12": 0,
+      "101": 0
+    },
+    "downloadCompleted": {
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+      "9": 1,
+      "10": 1,
+      "11": 1,
+      "1": 0,
+      "2": 0,
+      "12": 0,
+      "101": 0
+    },
+    "partialAttempts": {
+      "9": 1,
+      "7": 1
+    },
+    "noEventHandles": [
+      6,
+      8,
+      10
+    ],
+    "duplicateEventHandles": [
+      3,
+      4,
+      5
+    ],
+    "stoppedRequired": true
+  },
+  "protocol": {
+    "peerRun": "run1",
+    "snapshotGuidSha256": "c29e9a9f872f8aabc1ec3253f8f8c45b01a424593ca9a0d13ad91a3b298f32ba",
+    "connections": 4,
+    "connectionCountScope": "Command handshakes include abandoned setup attempts; this count alone does not imply duplicate original reception. OpenSession and per-handle original counts are recorded separately.",
+    "operationCounts": {
+      "0x1001": 3,
+      "0x1002": 3,
+      "0x1004": 155,
+      "0x1007": 465,
+      "0x1008": 256,
+      "0x90c4": 10,
+      "0x1009": 11
+    },
+    "peerLogBytes": 161233,
+    "peerLogSha256": "fa6ae4238a36d7bcdd49cecca1d20f68e6d794902cafd1bebbd6f865b76beb91"
+  },
+  "privacy": "Only controlled peer objects, guest project records and current own process diagnostics exported. No account files or user-provided diagnostic JSON copied."
+}

@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "8117cf8dc234607fc6ee0a24d9bd5ef6858b8b4e",
+  "pid": 1350,
+  "instrumentExit": 0,
+  "nativeIntegrationPassed": true,
+  "crashMarkers": 0,
+  "terminalConsoleSummaryCaptured": true,
+  "completedFlutterTestsBeforeTeardown": 55,
+  "failedFlutterTests": 0,
+  "flutterErrorMarkers": 0,
+  "teardownReached": true
+}

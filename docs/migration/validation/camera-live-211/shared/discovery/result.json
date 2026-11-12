@@ -1,0 +1,27 @@
+{
+  "scope": "SharedCamera live discovery only, frozen after active unavailable fix",
+  "checks": {
+    "newDiscovery": 80,
+    "existingCamera": 30,
+    "existingTransfer": 60
+  },
+  "compiler": "JDK17 --release11 UTF-8",
+  "jvmHeap": "256MiB",
+  "files": [
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCamera.java",
+      "bytes": 18229,
+      "sha256": "4cc65b6df0e511d5c9dc9e8f9ebaea3de3be7480b42aa037848c2170c323f4c9"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCameraLiveDiscovery.java",
+      "bytes": 20700,
+      "sha256": "5730c4e3e98203a4d4d4e055ed90ec3928d02e8f2aeddc72de96ec97f5c814a1"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CameraLiveDiscoveryBoundaryTest.java",
+      "bytes": 19823,
+      "sha256": "33340675bc89640c96160f074cd9812677eb661a89cd57601927ad1b58ec7b74"
+    }
+  ]
+}

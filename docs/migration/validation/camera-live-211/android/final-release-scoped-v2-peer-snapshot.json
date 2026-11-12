@@ -1,0 +1,215 @@
+{
+  "fixture": "owned synthetic JPEG/PTP-IP; no physical Nikon or RAW sensor data",
+  "guidSha256": "c29e9a9f872f8aabc1ec3253f8f8c45b01a424593ca9a0d13ad91a3b298f32ba",
+  "storages": [
+    1,
+    2
+  ],
+  "unavailableStorages": [],
+  "commandConnections": [
+    4
+  ],
+  "eventConnections": [
+    4
+  ],
+  "pacing": {
+    "chunkBytes": 8192,
+    "delaySeconds": 0.2
+  },
+  "counts": {
+    "commands": {
+      "0x1001": 3,
+      "0x1002": 3,
+      "0x1004": 155,
+      "0x1007": 465,
+      "0x1008": 256,
+      "0x90c4": 10,
+      "0x1009": 11
+    },
+    "downloadAttempts": {
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 2,
+      "8": 1,
+      "9": 2,
+      "10": 1,
+      "11": 1
+    },
+    "downloadCompleted": {
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1,
+      "9": 1,
+      "10": 1,
+      "11": 1
+    },
+    "objectAddedSent": 18,
+    "eventPongs": 191,
+    "connections": 4,
+    "downloadBytesSent": 4789322
+  },
+  "objects": [
+    {
+      "handle": 1,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0001.JPG",
+      "bytes": 126650,
+      "sha256": "9b9374b672ab3db173cbe1a3973d97ad567847fa5515b896306f036623bc5627",
+      "metadataSha256": "e956ad7830e6e20206ad1d7ff8a621c95056801b8c4b077b2d55a7b9a90cd68c",
+      "fault": null
+    },
+    {
+      "handle": 2,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0002.JPG",
+      "bytes": 126650,
+      "sha256": "5c4f4ae6cd1651b8c842c2de129370246249e1da0807dcb13f45ce0ea19c6793",
+      "metadataSha256": "0a72950d243e8f96be16dc051349ee420cb0f01df3aa8890edd677a51a9dd1aa",
+      "fault": null
+    },
+    {
+      "handle": 101,
+      "generation": 0,
+      "raw": true,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0101.NEF",
+      "bytes": 27000000,
+      "sha256": null,
+      "metadataSha256": "e0bd554e8ed8d2220515613fd5f59c94b0110a2b82755dc54c56654f03f49dae",
+      "fault": null
+    },
+    {
+      "handle": 3,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0003.JPG",
+      "bytes": 268806,
+      "sha256": "d2867e7e16e2ac7eaf27c6200701e8d3833e3be420b2b8865be9263d6286cd11",
+      "metadataSha256": "48b5c8e09674fb76787495bff09f4ffb028ac57a384fdf81de353c8a8860cdbd",
+      "fault": null
+    },
+    {
+      "handle": 4,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0004.JPG",
+      "bytes": 268806,
+      "sha256": "053333a58ff4cd08c0e5046c43e76079809dd9856ccfe2e092042d4570442085",
+      "metadataSha256": "0b40da92d0ecca6a655ba21c6de48d51ed8b8d6fbebff4cd8948de083302fbbc",
+      "fault": null
+    },
+    {
+      "handle": 5,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0005.JPG",
+      "bytes": 268806,
+      "sha256": "d427048ea68d062ff6cd0cbd8512023cb722fb1ada1f2f77878013e73266d52f",
+      "metadataSha256": "83deea747eb9bbac1c21a54d31d4471904dcc3db727c3686963dd871bc5c3cb0",
+      "fault": null
+    },
+    {
+      "handle": 6,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0006.JPG",
+      "bytes": 1055290,
+      "sha256": "c8ff274761ce249863e00172eaddbb193ef2b1d0d5bcac0a36f2d35e06b58e9b",
+      "metadataSha256": "267899ea7afac6af4ec2616db1fe248a40f62af9e8d48e3e6775157fd8240376",
+      "fault": null
+    },
+    {
+      "handle": 7,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0007.JPG",
+      "bytes": 530966,
+      "sha256": "be630990c8874d5cc47058b638887ea715e73bdc51a9b91b1d6807cc154c5b12",
+      "metadataSha256": "e4b018949d79a673962dcb39120d47f2fed6a5041638b4ab2fb571df743a6000",
+      "fault": null
+    },
+    {
+      "handle": 8,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0008.JPG",
+      "bytes": 126650,
+      "sha256": "e40cac3c9556bbb9e18816a48828264d9c76ff81d24d98a02b3133add84fbb7c",
+      "metadataSha256": "050382fb0fea5f9a7fd9ccb2e847ace2855d45ca2410b4ebf4cbaae74c569a56",
+      "fault": null
+    },
+    {
+      "handle": 9,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0009.JPG",
+      "bytes": 530966,
+      "sha256": "2ffcec42c94d14093cf905b17528b19ac7c77b9ea3146afc3e79111f2512343f",
+      "metadataSha256": "6f9e9b045c9e5571c82ba314d87b5117a2ebfcd093fdc5801f305de0c1b058c8",
+      "fault": null
+    },
+    {
+      "handle": 10,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0010.JPG",
+      "bytes": 126650,
+      "sha256": "e6bcc62c58a6b44f380529c688000e11299777b372b5fe3031cde7c1b6130a44",
+      "metadataSha256": "6eec20402c44b8b4fc31a431e7b9ade710995c988d83064752c181db522946b2",
+      "fault": null
+    },
+    {
+      "handle": 11,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0011.JPG",
+      "bytes": 1579614,
+      "sha256": "2a0983fbf778a10b0e50165500cb226bcaa185513e770df7651628a9deddb73f",
+      "metadataSha256": "6affbc06e17d5b08f917fc1e7899bd5f7c187b77b10425a0a32914b9ae40dd22",
+      "fault": null
+    },
+    {
+      "handle": 12,
+      "generation": 0,
+      "raw": false,
+      "storage": 1,
+      "ready": true,
+      "name": "Huevia-A1-0012.JPG",
+      "bytes": 126650,
+      "sha256": "7e977d48cff6d730e41a8210743f60c3df8123648b8a1ecdd89ae12e83430863",
+      "metadataSha256": "4e0e81a9379df802808c63907a3a9cbf00d2c3a8402b9fcff67bf3fc4b2b0dab",
+      "fault": null
+    }
+  ],
+  "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\211-peer-run1-operations.jsonl"
+}

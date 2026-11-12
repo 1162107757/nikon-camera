@@ -1,0 +1,174 @@
+11-12 07:45:03.989 24679 24679 I flutter : #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2095:7)
+11-12 15:21:38.851   339   339 D Zygote  : Forked child process 2095
+11-12 15:21:38.852   531   561 I ActivityManager: Start proc 2095:cc.huevia.next/u0a105 for added application cc.huevia.next
+11-12 15:21:38.880  2095  2095 I cc.huevia.next: Late-enabling -Xcheck:jni
+11-12 15:21:38.988  2095  2095 W cc.huevia.next: Unexpected CPU variant for X86 using defaults: x86_64
+11-12 15:21:39.016   433   460 I adbd    : jdwp connection from 2095
+11-12 15:21:39.069  2095  2095 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10105; state: ENABLED
+11-12 15:21:39.088  2095  2095 W ActivityThread: Package uses different ABI(s) than its instrumentation: package[cc.huevia.next]: x86_64, null instrumentation[cc.huevia.next.test]: null, null
+11-12 15:21:39.950  2095  2095 V GraphicsEnvironment: ANGLE Developer option for 'cc.huevia.next' set to: 'default'
+11-12 15:21:39.950  2095  2095 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-12 15:21:40.437  2095  2095 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 15:21:40.440  2095  2095 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 15:21:40.643  2095  2112 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-12 15:21:40.649  2095  2112 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-12 15:21:40.673  2095  2112 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-12 15:21:41.270  2095  2117 I ResourceExtractor: Found extracted resources res_timestamp-211-1794495950934
+11-12 15:21:41.287  2095  2117 I ResourceExtractor: Resource version mismatch res_timestamp-211-1794496896620
+11-12 15:21:41.337  2095  2116 W cc.huevia.next: Verification of java.io.File com.getkeepsafe.relinker.ReLinkerInstance.getWorkaroundLibDir(android.content.Context) took 111.863ms (71.52 bytecodes/s) (1472B approximate peak alloc)
+11-12 15:21:41.345  2095  2116 D FlutterJNI: Beginning load of flutter...
+11-12 15:21:41.607  2095  2116 D FlutterJNI: flutter (null) was loaded normally!
+11-12 15:21:41.664  2095  2118 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-12 15:21:42.841  2095  2117 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+11-12 15:21:42.843  2095  2117 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+11-12 15:21:43.047  2095  2117 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+11-12 15:21:43.196  2095  2095 W cc.huevia.next: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (blocked, linking, denied)
+11-12 15:21:43.204  2095  2095 W cc.huevia.next: type=1400 audit(0.0:2065): avc: denied { read } for name="max_map_count" dev="proc" ino=534344 scontext=u:r:untrusted_app:s0:c105,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=cc.huevia.next
+11-12 15:21:43.239  2095  2095 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 15:21:43.239  2095  2095 I flutter :     The application opted out of Impeller by either using the
+11-12 15:21:43.239  2095  2095 I flutter :     `--no-enable-impeller` flag or the
+11-12 15:21:43.239  2095  2095 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 15:21:43.239  2095  2095 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 15:21:43.239  2095  2095 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 15:21:43.239  2095  2095 I flutter :     the issue.
+11-12 15:21:43.239  2095  2095 I flutter : 
+11-12 15:21:43.239  2095  2095 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 15:21:43.239  2095  2095 I flutter : 
+11-12 15:21:43.252  2095  2095 D HostConnection: createUnique: call
+11-12 15:21:43.259  2095  2095 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b2a50, tid 2095
+11-12 15:21:43.294  2095  2095 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 15:21:43.308  2095  2095 D EGL_emulation: eglCreateContext: 0x7b52174b3b90: maj 3 min 0 rcv 3
+11-12 15:21:43.312  2095  2095 D EGL_emulation: eglCreateContext: 0x7b52174b1790: maj 3 min 0 rcv 3
+11-12 15:21:43.322  2095  2121 D HostConnection: createUnique: call
+11-12 15:21:43.325  2095  2121 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b1a90, tid 2121
+11-12 15:21:43.408  2095  2121 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 15:21:43.409  2095  2121 D EGL_emulation: eglMakeCurrent: 0x7b52174b1790: ver 3 0 (tinfo 0x7b54303b8100) (first time)
+11-12 15:21:43.728  2095  2126 I flutter : The Dart VM service is listening on http://127.0.0.1:38881/7G4Hmcr-Nqg=/
+11-12 15:21:45.052  2095  2095 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+11-12 15:21:45.054  2095  2095 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+11-12 15:21:45.054  2095  2095 W cc.huevia.next: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+11-12 15:21:45.054  2095  2095 W cc.huevia.next: Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+11-12 15:21:45.070  2095  2095 D AccessibilityBridge: Setting not found: accessibility_display_inversion_enabled, using default: 0
+11-12 15:21:45.109  2095  2095 D FlutterRenderer: Width is zero. 0,0
+11-12 15:21:45.684  2095  2095 I flutter : 00:00 +0: RAW-only camera has an explicit JPEG hint and can show RAW thumbnails in the overview
+11-12 15:21:48.596  2095  2095 I Choreographer: Skipped 205 frames!  The application may be doing too much work on its main thread.
+11-12 15:21:48.822  2095  2095 D FlutterRenderer: Width is zero. 0,0
+11-12 15:21:48.851  2095  2111 D HostConnection: createUnique: call
+11-12 15:21:48.852  2095  2111 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174ba9d0, tid 2111
+11-12 15:21:48.859  2095  2111 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 15:21:48.860  2095  2111 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-12 15:21:48.860  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:21:48.864  2095  2111 D EGL_emulation: eglCreateContext: 0x7b52174b19d0: maj 3 min 0 rcv 3
+11-12 15:21:48.871  2095  2111 D EGL_emulation: eglMakeCurrent: 0x7b52174b19d0: ver 3 0 (tinfo 0x7b54303b8180) (first time)
+11-12 15:21:48.884  2095  2111 I Gralloc4: mapper 4.x is not supported
+11-12 15:21:48.889  2095  2111 D HostConnection: createUnique: call
+11-12 15:21:48.891  2095  2111 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b1b50, tid 2111
+11-12 15:21:48.892  2095  2111 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-12 15:21:48.892  2095  2111 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3efffe000 size 0x2000
+11-12 15:21:48.900  2095  2111 W Gralloc4: allocator 4.x is not supported
+11-12 15:21:48.919  2095  2111 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 15:21:48.920  2095  2120 D HostConnection: createUnique: call
+11-12 15:21:48.923  2095  2120 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b16d0, tid 2120
+11-12 15:21:48.958  2095  2120 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 15:21:48.963  2095  2120 D EGL_emulation: eglMakeCurrent: 0x7b52174b3b90: ver 3 0 (tinfo 0x7b54303b8200) (first time)
+11-12 15:21:48.969  2095  2120 D EGL_emulation: eglCreateContext: 0x7b52174b1850: maj 3 min 0 rcv 3
+11-12 15:21:49.019  2095  2130 D ProfileInstaller: Installing profile for cc.huevia.next
+11-12 15:21:50.735  2095  2095 I Choreographer: Skipped 114 frames!  The application may be doing too much work on its main thread.
+11-12 15:21:50.747  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:21:50.872  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:21:52.835  2095  2120 D EGL_emulation: app_time_stats: avg=545.23ms min=74.16ms max=1227.97ms count=3
+11-12 15:21:54.104  2095  2120 D EGL_emulation: app_time_stats: avg=253.70ms min=76.14ms max=424.36ms count=5
+11-12 15:21:54.160  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:21:55.130  2095  2120 D EGL_emulation: app_time_stats: avg=199.07ms min=72.46ms max=275.50ms count=5
+11-12 15:21:55.501  2095  2095 I flutter : 00:09 +1: Connection page remembers RAW selection and shows the same thumbnail
+11-12 15:21:55.760  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:21:55.794  2095  2111 D EGL_emulation: app_time_stats: avg=2151.57ms min=1599.42ms max=2703.72ms count=2
+11-12 15:21:56.222  2095  2120 D EGL_emulation: app_time_stats: avg=181.86ms min=86.32ms max=355.42ms count=6
+11-12 15:21:56.621  2095  2095 I flutter : 00:10 +2: Overview exposes read errors and retries the camera inventory
+11-12 15:21:57.363  2095  2120 D EGL_emulation: app_time_stats: avg=142.53ms min=34.51ms max=194.42ms count=8
+11-12 15:21:58.114  2095  2095 I flutter : 00:12 +3: Thumbnail errors retry only the preview and keep the source untouched
+11-12 15:21:58.516  2095  2120 D EGL_emulation: app_time_stats: avg=143.96ms min=44.18ms max=246.94ms count=8
+11-12 15:21:59.531  2095  2120 D EGL_emulation: app_time_stats: avg=168.75ms min=128.24ms max=240.40ms count=6
+11-12 15:21:59.759  2095  2095 I flutter : 00:14 +4: Original three-column square camera grid fits small screens without file details
+11-12 15:22:00.772  2095  2095 I flutter : 00:15 +5: Downloaded tab displays saved originals after the camera is disconnected
+11-12 15:22:00.807  2095  2120 D EGL_emulation: app_time_stats: avg=317.12ms min=20.08ms max=1013.93ms count=4
+11-12 15:22:01.967  2095  2120 D EGL_emulation: app_time_stats: avg=193.25ms min=83.86ms max=323.56ms count=6
+11-12 15:22:02.279  2095  2095 I flutter : 00:16 +6: Visible thumbnails share one serialized camera read and one future per object
+11-12 15:22:02.309  2095  2095 I flutter : 00:16 +7: A changed session retires queued reads and discards an old active reply
+11-12 15:22:02.322  2095  2095 I flutter : 00:16 +8: Wrong-session and external preview paths are rejected and explicit retry refreshes
+11-12 15:22:02.337  2095  2095 I flutter : 00:16 +9: Disposing a thumbnail list drains its active read without disconnecting the camera
+11-12 15:22:02.346  2095  2095 I flutter : 00:16 +10: A failed preview is retained until explicit retry instead of flooding the camera
+11-12 15:22:02.362  2095  2095 I flutter : 00:16 +11: An old camera status cannot replace a newly established session
+11-12 15:22:02.972  2095  2120 D EGL_emulation: app_time_stats: avg=143.09ms min=43.68ms max=226.16ms count=7
+11-12 15:22:03.324  2095  2095 I flutter : 00:17 +12: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+11-12 15:22:03.563  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:22:03.584  2095  2111 D EGL_emulation: app_time_stats: avg=7789.80ms min=7789.80ms max=7789.80ms count=1
+11-12 15:22:04.018  2095  2120 D EGL_emulation: app_time_stats: avg=208.92ms min=116.11ms max=361.62ms count=5
+11-12 15:22:05.150  2095  2120 D EGL_emulation: app_time_stats: avg=188.51ms min=111.67ms max=347.94ms count=6
+11-12 15:22:05.227  2095  2095 I flutter : 00:19 +13: Real job progress waits for receipt, metadata and durable catalog save
+11-12 15:22:05.275  2095  2095 I flutter : 00:19 +14: Late receive response is ignored after cancel
+11-12 15:22:05.284  2095  2095 I flutter : 00:19 +15: Late receive response is ignored after owner
+11-12 15:22:05.292  2095  2095 I flutter : 00:19 +16: Late receive response is ignored after dispose
+11-12 15:22:05.298  2095  2095 I flutter : 00:19 +17: Invalid metadata and mismatched receipt show failure
+11-12 15:22:05.307  2095  2095 I flutter : 00:19 +18: Download card displays real byte count and stop action on small screens
+11-12 15:22:05.446  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:22:05.477  2095  2111 D EGL_emulation: app_time_stats: avg=1893.12ms min=1893.12ms max=1893.12ms count=1
+11-12 15:22:05.670  2095  2095 I flutter : 00:19 +19: Fresh editor loads online recipes and uses SHA identity without a personal-library import
+11-12 15:22:05.689  2095  2095 I flutter : 00:20 +20: Filter thumbnails preserve adjustments, use tentative small renders and never save the draft
+11-12 15:22:05.718  2095  2095 I flutter : 00:20 +21: Offline catalog failure is retryable and late owner replies are suppressed
+11-12 15:22:05.744  2095  2095 I flutter : 00:20 +22: Online cards without preview URLs generate the checked recipe showcase
+11-12 15:22:06.185  2095  2120 D EGL_emulation: app_time_stats: avg=147.44ms min=30.74ms max=422.19ms count=7
+11-12 15:22:06.327  2095  2095 I flutter : 00:20 +23: Four home tabs preserve an active camera page and do not cancel its connection
+11-12 15:22:07.091  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:22:07.116  2095  2111 D EGL_emulation: app_time_stats: avg=1637.68ms min=1637.68ms max=1637.68ms count=1
+11-12 15:22:08.781  2095  2120 D EGL_emulation: app_time_stats: avg=865.38ms min=43.43ms max=2409.91ms count=3
+11-12 15:22:10.163  2095  2120 D EGL_emulation: app_time_stats: avg=228.92ms min=28.41ms max=415.79ms count=6
+11-12 15:22:11.597  2095  2120 D EGL_emulation: app_time_stats: avg=716.67ms min=264.02ms max=1169.31ms count=2
+11-12 15:22:12.418  2095  2095 I flutter : 00:26 +24: Camera viewer receiving card fits 568x320 landscape at text scale 1.6
+11-12 15:22:13.264  2095  2095 I flutter : 00:27 +25: Camera viewer receiving card fits 568x320 landscape at text scale 2.0
+11-12 15:22:13.310  2095  2120 D EGL_emulation: app_time_stats: avg=213.98ms min=41.11ms max=860.04ms count=8
+11-12 15:22:14.074  2095  2095 I flutter : 00:28 +26: Project retry keeps frozen recipes and never renders an already saved result
+11-12 15:22:14.141  2095  2095 I flutter : 00:28 +27: Late native export is not committed after project stop
+11-12 15:22:14.166  2095  2095 I flutter : 00:28 +28: Late native export is not committed after project account
+11-12 15:22:14.189  2095  2095 I flutter : 00:28 +29: Late native export is not committed after project dispose
+11-12 15:22:14.211  2095  2095 I flutter : 00:28 +30: Embedded project manager scrolls its controls on a small screen with enlarged text
+11-12 15:22:14.375  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:22:14.392  2095  2111 D EGL_emulation: app_time_stats: avg=7276.24ms min=7276.24ms max=7276.24ms count=1
+11-12 15:22:15.137  2095  2095 I flutter : 00:29 +31: Reference uses root-relative persistence and restores a moved iOS container
+11-12 15:22:15.161  2095  2095 I flutter : 00:29 +32: Reference rejects escaped paths and malformed content identities
+11-12 15:22:15.169  2095  2095 I flutter : 00:29 +33: RAW reference requires explicit same-capture confirmation, persists and can restore embedded reference
+11-12 15:22:15.203  2095  2120 D EGL_emulation: app_time_stats: avg=946.08ms min=929.74ms max=962.42ms count=2
+11-12 15:22:15.743  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:22:15.779  2095  2111 D EGL_emulation: app_time_stats: avg=1385.51ms min=1385.51ms max=1385.51ms count=1
+11-12 15:22:24.330  2095  2095 I flutter : 00:38 +34: Android crash evidence retains type, code locations and OS memory reasons without private messages
+11-12 15:22:24.343  2095  2095 I flutter : 00:38 +35: iOS exception and delivered MetricKit summaries exclude symbols, paths and exception reasons
+11-12 15:22:24.360  2095  2095 I flutter : 00:38 +36: Dart records do not serialize exception messages or absolute file locations
+11-12 15:22:24.369  2095  2095 I flutter : 00:38 +37: Record count, stack count, numeric range and individual frames stay bounded
+11-12 15:22:24.407  2095  2095 I flutter : 00:38 +38: Native journal is best effort and unavailable collectors preserve safe diagnostics
+11-12 15:22:24.441  2095  2095 I flutter : 00:38 +39: Installing capture twice keeps existing Flutter and platform error handlers in charge
+11-12 15:22:24.468  2095  2095 I flutter : 00:38 +40: Foreground camera live Arming ignores existing inventory; repeated new shots save and process once
+11-12 15:22:24.544  2095  2095 I flutter : 00:38 +41: Foreground camera live Disconnect waits; matching trusted reconnect restores old cursor before new reception
+11-12 15:22:24.553  2095  2095 I flutter : 00:38 +42: Foreground camera live Untrusted reconnect is blocked instead of merging another camera session
+11-12 15:22:24.560  2095  2095 I flutter : 00:38 +43: Foreground camera live Explicit stop discards a late download reply without committing to the stopped project
+11-12 15:22:24.575  2095  2095 I flutter : 00:38 +44: Foreground camera live Owner changes invalidate in-flight work before registration or project commit
+11-12 15:22:24.591  2095  2095 I flutter : 00:38 +45: Foreground camera live Background pauses discovery; foreground reconciliation receives missed notifications
+11-12 15:22:24.601  2095  2095 I flutter : 00:38 +46: Foreground camera live Receipt from an old watch never enters the album and blocks automatic retry
+11-12 15:22:24.614  2095  2095 I flutter : 00:38 +47: Foreground camera live An existing durable producer requires explicit resume
+11-12 15:22:24.621  2095  2095 I flutter : 00:38 +48: Foreground camera live Stopping during watch creation compensates its late native success
+11-12 15:22:24.639  2095  2095 I flutter : 00:38 +49: Foreground camera live Stopping during durable start compensates its late token and active journal
+11-12 15:22:24.648  2095  2095 I flutter : 00:38 +50: Foreground camera live A lost cancel response still retires the durable producer
+11-12 15:22:24.661  2095  2095 I flutter : 00:38 +51: Foreground camera live A connected camera verification error pauses instead of redownloading forever
+11-12 15:22:24.673  2095  2095 I flutter : 00:38 +52: Foreground camera live No default preset receives originals; later defaults only affect new candidates
+11-12 15:22:24.691  2095  2095 I flutter : 00:39 +53: Foreground camera live Starting without a default preset remains available
+11-12 15:22:24.741  2095  2120 D EGL_emulation: app_time_stats: avg=9537.82ms min=9537.82ms max=9537.82ms count=1
+11-12 15:22:24.877  2095  2095 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 15:22:24.898  2095  2111 D EGL_emulation: app_time_stats: avg=9118.72ms min=9118.72ms max=9118.72ms count=1
+11-12 15:22:25.002  2095  2095 I flutter : 00:39 +54: Foreground camera live Disconnected live capture offers reconnection without discarding its journal
+11-12 15:22:25.339  2095  2095 I flutter : 00:39 +55: Foreground camera live Live reception card fits a narrow screen with large text and exposes stop
+11-12 15:22:25.576  2095  2095 I flutter : 00:39 +56: (tearDownAll)
+11-12 15:22:25.628   531   818 I ActivityManager: Killing 2095:cc.huevia.next/u0a105 (adj 0): stop cc.huevia.next due to finished inst
+11-12 15:22:25.637  2095  2095 I flutter : 00:39 +57: All tests passed!
+11-12 15:22:25.887   531 11835 V ActivityManager: Got obituary of 2095:cc.huevia.next
+11-12 15:22:25.908   339   339 I Zygote  : Process 2095 exited due to signal 9 (Killed)
+11-12 15:22:25.931   531   562 I libprocessgroup: Successfully killed process cgroup uid 10105 pid 2095 in 293ms
+11-12 15:22:26.034   531   552 W ActivityManager: setHasOverlayUi called on unknown pid: 2095

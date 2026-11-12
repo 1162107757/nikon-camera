@@ -1,0 +1,12 @@
+exit 1
+Traceback (most recent call last):
+  File "D:\dev\ai-project\nikon-camera\.tooling\cross-platform187\observe211.py", line 357, in <module>
+    main(parser.parse_args())
+    ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\dev\ai-project\nikon-camera\.tooling\cross-platform187\observe211.py", line 282, in main
+    require(indexed[0].get('path')==source_path,'indexed original points outside canonical source path')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\dev\ai-project\nikon-camera\.tooling\cross-platform187\observe211.py", line 34, in require
+    if not condition:raise AssertionError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: indexed original points outside canonical source path

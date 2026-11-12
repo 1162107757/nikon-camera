@@ -1,0 +1,357 @@
+"""Read-only final A1 proof aggregation for the owned Android31 emulator/211 peer.
+
+Does not drive UI, mutate app files, start a server, build, or render images.
+Only the guest project's controlled peer SHA/keys are written to proof outputs.
+Requires explicit expected handles; it never infers a desired pass from observed data.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime
+import hashlib
+import io
+import json
+from pathlib import Path, PurePosixPath
+import re
+import struct
+import subprocess
+import urllib.request
+
+from PIL import Image
+
+R=Path('D:/dev/ai-project/nikon-camera');T=R/'.tooling/cross-platform187'
+A=['D:/dev/Android/Sdk/platform-tools/adb.exe','-P','5038','-s','127.0.0.1:5585']
+APP='/data/user/0/cc.huevia.next/files/huevia-shared'
+OWNER=hashlib.sha256(b'').hexdigest()
+SOURCE='db8e2ef3766a228bd2dd93f6e1e139b697d3ff18'
+GUID_SHA=hashlib.sha256(bytes.fromhex('211a102030405060708090a0b0c0d0e0')).hexdigest()
+HEX=re.compile(r'[0-9a-f]{64}')
+UUID=re.compile(r'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+
+
+def sha(data):return hashlib.sha256(data).hexdigest()
+def require(condition,message):
+    if not condition:raise AssertionError(message)
+def text(*args):return subprocess.check_output(A+list(args),encoding='utf-8',errors='replace',timeout=45)
+def remote(path):
+    require(path.startswith(APP+'/') and '..' not in PurePosixPath(path).parts and not re.search(r'[\s\x00-\x1f]',path),'remote path escaped owned app scope')
+    return subprocess.check_output(A+['exec-out','su','0','cat',path],timeout=45)
+def remote_files(path,maxdepth=3):
+    require(path.startswith(APP+'/') and '..' not in PurePosixPath(path).parts and not re.search(r'[\s\x00-\x1f]',path),'find path escaped owned app scope')
+    return text('shell','su','0','find',path,'-maxdepth',str(maxdepth),'-type','f').splitlines()
+def ids(value):
+    if not value:return set()
+    result=[int(part) for part in value.split(',')]
+    require(len(result)==len(set(result)) and all(0<n<0xffffffff for n in result),'handle list is invalid or duplicated')
+    return set(result)
+def counts(value):
+    result={}
+    for part in value.split(',') if value else []:
+        handle,number=map(int,part.split(':'))
+        require(0<handle<0xffffffff and 0<=number<=100 and handle not in result,'invalid expected count map')
+        result[handle]=number
+    return result
+def json_save(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+
+
+class Binary:
+    def __init__(self,data):self.data=data;self.position=0
+    def read(self,size):
+        require(size>=0 and self.position+size<=len(self.data),'truncated binary record')
+        value=self.data[self.position:self.position+size];self.position+=size;return value
+    def integer(self):return struct.unpack('>i',self.read(4))[0]
+    def long(self):return struct.unpack('>q',self.read(8))[0]
+    def utf(self):
+        size=struct.unpack('>H',self.read(2))[0]
+        # DataOutputStream.writeUTF uses modified UTF-8/CESU-8, not ordinary UTF-8.
+        value=self.read(size).replace(b'\xc0\x80',b'\0').decode('utf-8','surrogatepass')
+        return value.encode('utf-16','surrogatepass').decode('utf-16')
+    def bounded_count(self,limit):
+        count=self.integer();require(0<=count<=limit,'binary count exceeds schema limit');return count
+    def end(self):require(self.position==len(self.data),'binary record contains trailing bytes')
+
+
+def checked_binary(data,magics,limit):
+    require(40<=len(data)<=limit,'binary record byte limit')
+    outer=Binary(data);magic=outer.integer();require(magic in magics,'unsupported binary schema')
+    length=outer.integer();require(length==len(data)-40,'binary payload length differs')
+    payload=outer.read(length);checksum=outer.read(32);outer.end()
+    require(hashlib.sha256(payload).digest()==checksum,'binary envelope checksum mismatch')
+    return magic,Binary(payload)
+
+
+def project_record(data,project_id):
+    _,reader=checked_binary(data,{0x504c5031},16*1024*1024)
+    identity,name,created=reader.utf(),reader.utf(),reader.long()
+    require(identity==project_id and created>=0,'project identity/timestamp differs')
+    rows=[]
+    for _ in range(reader.bounded_count(20000)):
+        row={'identity':reader.utf(),'sourceFileName':reader.utf(),'name':reader.utf(),'bytes':reader.long(),'sha256':reader.utf()}
+        require(HEX.fullmatch(row['identity']) and HEX.fullmatch(row['sha256']),'invalid project source identity')
+        rows.append(row)
+    reader.end();require(len({row['identity'] for row in rows})==len(rows),'duplicate project source identities')
+    require(len({row['sourceFileName'] for row in rows})==len(rows),'duplicate project source files')
+    return {'id':identity,'createdAt':created,'photos':rows,'checksumValid':True}
+
+
+def task_record(data,project_id):
+    magic,reader=checked_binary(data,{0x50505031,0x50505032},32*1024*1024)
+    configs=[];previous=''
+    for _ in range(reader.bounded_count(1024)):
+        row={'projectId':reader.utf(),'presetId':reader.utf(),'presetName':reader.utf(),'enabledSince':reader.long()}
+        require(row['projectId']>previous,'duplicate/unsorted project configs');previous=row['projectId']
+        if row['projectId']==project_id:configs.append(row)
+    tasks=[];previous=''
+    for _ in range(reader.bounded_count(20000)):
+        row={key:reader.utf() for key in ['projectId','identity','presetId','presetName','sourceFileName','name']}
+        row['sourceBytes']=reader.long()
+        row.update({key:reader.utf() for key in ['status','resultFileName','error']});row['updatedAt']=reader.long()
+        row['saveTarget']=reader.utf() if magic==0x50505032 else 'PHONE_ALBUM'
+        row['key']=row['projectId']+':'+row['identity']+':'+row['presetId']
+        require(row['key']>previous,'duplicate/unsorted task keys');previous=row['key']
+        if row['projectId']==project_id:tasks.append(row)
+    reader.end();return {'configs':configs,'tasks':tasks,'checksumValid':True}
+
+
+def decode_live(data,project_id,camera_id):
+    require(32<=len(data)<=32*1024*1024,'live envelope byte limit')
+    outer=json.loads(data);payload=outer.get('payload');require(isinstance(payload,str),'live payload is not a string')
+    require(sha(payload.encode('utf-8'))==outer.get('sha256'),'live envelope checksum differs')
+    state=json.loads(payload)
+    require(state.get('schema')==1 and state.get('projectId')==project_id and state.get('cameraId')==camera_id,'live identity differs')
+    entries={};pages=[state.get('entries',{})]+state.get('entryPages',[])
+    require(len(pages)<=21,'too many live entry pages')
+    for page in pages:
+        require(isinstance(page,dict) and len(page)<=1000,'invalid live entry page')
+        for key,value in page.items():
+            require(HEX.fullmatch(key) and key not in entries and value.get('objectKey')==key,'duplicate/invalid live object identity')
+            entries[key]=value
+    require(len(entries)<=20000,'too many live entries')
+    state['entries']=entries;state.pop('entryPages',None)
+    return state
+
+
+def jpeg_record(data,expected_sha,expected_bytes):
+    require(len(data)==expected_bytes and sha(data)==expected_sha,'JPEG original/output bytes or SHA differs')
+    with Image.open(io.BytesIO(data)) as image:
+        require(image.format=='JPEG','file does not decode as JPEG');image.load();size=list(image.size)
+    return {'bytes':len(data),'sha256':expected_sha,'decodedDimensions':size}
+
+
+def main(args):
+    require(UUID.fullmatch(args.project_id),'explicit controlled project UUID required')
+    require(re.fullmatch(r'211-[a-z0-9-]{1,70}',args.prefix),'invalid output prefix')
+    require(re.fullmatch(r'[A-Za-z0-9_-]{1,64}',args.peer_run),'invalid peer run tag')
+    require(re.fullmatch(r'[0-9a-f]{40}',args.expected_source),'invalid expected source')
+    completed,unreceived=ids(args.completed),ids(args.unreceived)
+    original_only=ids(args.original_only);rendered=ids(args.rendered) if args.rendered is not None else completed-original_only
+    require(completed and completed.isdisjoint(unreceived),'completed/unreceived handles overlap or are empty')
+    require(original_only.isdisjoint(rendered) and original_only|rendered==completed,'rendered/original-only handles must exactly partition completed')
+    expected_attempts={handle:1 for handle in completed};expected_attempts.update({handle:0 for handle in unreceived});expected_attempts.update(counts(args.attempts))
+    expected_completions={handle:1 for handle in completed};expected_completions.update({handle:0 for handle in unreceived});expected_completions.update(counts(args.completions))
+    expected_partials=counts(args.partials)
+    for handle in ids(args.partial_handles):expected_partials.setdefault(handle,1)
+    monitored=completed|unreceived|set(expected_attempts)|set(expected_completions)|set(expected_partials)
+    require(set(expected_partials)<=completed,'expected partial handles must eventually be completed in this final observation')
+    metadata_path=Path(args.metadata);metadata_path=metadata_path if metadata_path.is_absolute() else R/metadata_path
+    metadata=json.loads(metadata_path.read_text(encoding='utf-8-sig'))
+    require(metadata['sourceCommit']==args.expected_source,'APK metadata is not the frozen final source')
+    require(metadata.get('mode')=='release' and metadata.get('abi')=='x86_64','final x64 release metadata required')
+    prior_handles=ids(args.prior_source_handles);compatibility=None
+    if args.prior_source:
+        require(re.fullmatch(r'[0-9a-f]{40}',args.prior_source) and prior_handles and prior_handles<=completed,'invalid earlier candidate source/handle scope')
+        scope=['cross-platform/core/java','cross-platform/native','cross-platform/app/android/app/src/main',
+               'cross-platform/app/lib/camera_live.dart','cross-platform/app/lib/camera_transfer.dart',
+               'cross-platform/app/lib/project_presets_model.dart','cross-platform/app/lib/domain.dart']
+        differences=subprocess.check_output(['git','diff','--name-only',args.prior_source,args.expected_source,'--',*scope],cwd=R,text=True).splitlines()
+        require(not differences,'candidate-to-final discovery/transfer/controller/native production differs')
+        changes=subprocess.check_output(['git','diff','--name-only',args.prior_source,args.expected_source,'--','cross-platform'],cwd=R,text=True).splitlines()
+        compatibility={'priorSource':args.prior_source,'priorCompletedHandles':sorted(prior_handles),'finalSource':args.expected_source,'verifiedUnchangedScope':scope,'productionDifferencesInVerifiedScope':differences,'allCrossPlatformChangedFiles':changes,
+                       'scopeNote':'Earlier candidate received these originals. Final package resumes/reuses them; this does not claim their initial transfer was first exercised in the final package.'}
+    else:require(not prior_handles,'prior source handles require an explicit prior source commit')
+    paths=[line.removeprefix('package:') for line in text('shell','pm','path','cc.huevia.next').splitlines() if line.startswith('package:')]
+    require(len(paths)==1 and re.fullmatch(r'/data/app/[A-Za-z0-9/_.~+=-]+\.apk',paths[0]),'unexpected installed APK path/split APKs')
+    apk=subprocess.check_output(A+['exec-out','cat',paths[0]],timeout=60)
+    require(len(apk)==metadata['bytes'] and sha(apk)==metadata['sha256'],'installed APK differs from delivered final release')
+    pid=text('shell','pidof','cc.huevia.next').strip();require(pid.isdigit(),'single running own app PID required')
+    logs=text('logcat','-d','--pid='+pid,'-v','threadtime');crashes=text('logcat','-d','-b','crash','--pid='+pid,'-v','threadtime')
+    markers=len(re.findall(r'FATAL EXCEPTION|Fatal signal|OutOfMemoryError',logs+crashes));require(markers==0,'crash marker in observed final release PID')
+    memory=text('shell','dumpsys','meminfo','cc.huevia.next')
+    mem={key:int(value) for key,value in re.findall(r'TOTAL (PSS|RSS):\s*(\d+)',memory)}
+    with urllib.request.urlopen('http://127.0.0.1:15751/status',timeout=5) as response:peer=json.load(response)
+    require(peer.get('guidSha256')==GUID_SHA and str(peer.get('fixture','')).startswith('owned synthetic JPEG/PTP-IP'),'unexpected peer fixture identity')
+    if args.expected_connections is not None:require(peer['counts']['connections']==args.expected_connections,'controlled peer connection count differs')
+    peer_log=T/f'211-peer-{args.peer_run}-operations.jsonl'
+    require(Path(peer.get('log','')).resolve()==peer_log.resolve(),'peer run tag does not match live controlled server')
+    protocol_bytes=peer_log.read_bytes();require(protocol_bytes.endswith(b'\n'),'peer log ends in a concurrent partial line; retry after idle')
+    protocol=[json.loads(line) for line in protocol_bytes.splitlines()]
+    require(not any(row.get('phase')=='fixture-error' for row in protocol),'peer fixture errors present')
+    objects={int(row['handle']):row for row in peer['objects']}
+    require(monitored<=set(objects),'an expected handle is absent from the controlled peer snapshot')
+    for handle,expected in expected_attempts.items():require(int(peer['counts']['downloadAttempts'].get(str(handle),0))==expected,f'handle {handle} original attempt count differs')
+    for handle,expected in expected_completions.items():require(int(peer['counts']['downloadCompleted'].get(str(handle),0))==expected,f'handle {handle} original completion count differs')
+    partials={handle:sum(row.get('phase')=='injected-download-disconnect' and row.get('handle')==handle for row in protocol) for handle in monitored}
+    for handle in monitored:require(partials[handle]==expected_partials.get(handle,0),f'handle {handle} injected partial count differs')
+    events={handle:sum(int(row.get('deliveries',0)) for row in protocol if row.get('phase')=='object-added' and row.get('handle')==handle) for handle in monitored}
+    for handle in ids(args.no_event):require(handle in completed and events.get(handle,0)==0,f'handle {handle} was expected to complete without an ObjectAdded notification')
+    for handle in ids(args.duplicate_events):require(handle in completed and events.get(handle,0)>=2,f'handle {handle} did not receive duplicate event deliveries')
+    live_dir=f'{APP}/shared-live-ingest/{OWNER}/{args.project_id}'
+    if args.camera_id:
+        require(HEX.fullmatch(args.camera_id),'invalid camera ID');live_paths=[live_dir+'/'+args.camera_id+'.json']
+    else:
+        live_paths=[path for path in remote_files(live_dir,1) if re.fullmatch(re.escape(live_dir)+r'/[0-9a-f]{64}\.json',path)]
+        require(len(live_paths)==1,'project has multiple/no camera journals; pass explicit camera ID')
+    live_bytes=remote(live_paths[0]);camera_id=PurePosixPath(live_paths[0]).stem
+    live=decode_live(live_bytes,args.project_id,camera_id)
+    require(live.get('trustedCamera') is True,'controlled peer must have trusted camera identity')
+    if args.expect_stopped:require(live.get('active') is False,'explicitly stopped live journal expected')
+    by_handle={}
+    for key,entry in live['entries'].items():
+        handle=int(entry['handle'])
+        if handle in monitored:by_handle.setdefault(handle,[]).append(entry)
+    require(not any(by_handle.get(handle) for handle in unreceived),'a forbidden handle entered the live journal')
+    require(set(by_handle)==completed,'live entries differ from expected completed handles')
+    require(all(len(rows)==1 for rows in by_handle.values()),'duplicate/reused handle entries require explicit separate-generation verification')
+    index=json.loads(remote(APP+'/photos-index.json'));require(isinstance(index,list),'photo index is not a list')
+    project_path=f'{APP}/photo-live-projects/{args.project_id}.project';project_bytes=remote(project_path)
+    project=project_record(project_bytes,args.project_id)
+    tasks_path=f'{APP}/shared-project-presets/{OWNER}/project-presets.bin';tasks_bytes=remote(tasks_path)
+    task_state=task_record(tasks_bytes,args.project_id)
+    if args.expect_default_empty:require(not task_state['configs'],'expected empty default preset is still configured')
+    tasks_by_key={task['key']:task for task in task_state['tasks']}
+    require(len(tasks_by_key)==len(task_state['tasks']),'duplicate relevant task keys')
+    source_set={objects[handle]['sha256'] for handle in completed}
+    require(len(source_set)==len(completed) and all(isinstance(value,str) and HEX.fullmatch(value) for value in source_set),'this verifier requires distinct immutable JPEG fixture bytes')
+    preexisting={'sources':[],'tasks':0,'versions':[],'baselineNote':None}
+    all_project_photos=project['photos'];all_project_tasks=task_state['tasks']
+    old_photos=[row for row in all_project_photos if row['sha256'] not in source_set]
+    old_tasks=[row for row in all_project_tasks if row['identity'] not in source_set]
+    if args.preexisting_baseline:
+        baseline_path=Path(args.preexisting_baseline);baseline_path=baseline_path if baseline_path.is_absolute() else R/baseline_path
+        baseline=json.loads(baseline_path.read_text(encoding='utf-8-sig'))
+        require(baseline.get('schema')==1 and baseline.get('projectId')==args.project_id,'pre-existing whitelist project differs')
+        expected_photos=baseline.get('photos',[]);expected_tasks=baseline.get('tasks',[])
+        require(isinstance(expected_photos,list) and isinstance(expected_tasks,list),'pre-existing whitelist rows must be lists')
+        old_shas={row['sha256'] for row in expected_photos}
+        require(len(old_shas)==len(expected_photos) and old_shas.isdisjoint(source_set) and all(HEX.fullmatch(value) for value in old_shas),'pre-existing source whitelist is duplicated/invalid/overlapping')
+        require({row['sha256']:row for row in old_photos}=={row['sha256']:row for row in expected_photos} and len(old_photos)==len(expected_photos),'pre-existing project rows differ from explicit exact whitelist')
+        require(len({row['key'] for row in expected_tasks})==len(expected_tasks) and all(row['identity'] in old_shas for row in expected_tasks),'pre-existing task whitelist is duplicated/unbound')
+        require({row['key']:row for row in old_tasks}=={row['key']:row for row in expected_tasks} and len(old_tasks)==len(expected_tasks),'pre-existing project tasks differ from explicit exact whitelist')
+        for row in expected_photos:
+            require(row['identity']==row['sha256'] and row['sourceFileName']==row['sha256']+'.jpg','pre-existing source whitelist must name exact immutable original')
+            preexisting['sources'].append(jpeg_record(remote(APP+'/originals/'+row['sourceFileName']),row['sha256'],row['bytes']))
+        expected_old_versions=baseline.get('versions',[])
+        require(isinstance(expected_old_versions,list),'pre-existing version whitelist must be a list')
+        task_versions={row['resultFileName'][:-8] for row in expected_tasks if row['status']=='saved' and row['resultFileName'].endswith('.version')}
+        require({row['id'] for row in expected_old_versions}==task_versions and len(expected_old_versions)==len(task_versions),'pre-existing saved versions differ from explicit task whitelist')
+        for expected in expected_old_versions:
+            require(all(isinstance(expected.get(key),str) and HEX.fullmatch(expected[key]) for key in ['id','sourceSha','effectKey','sha256','manifestSha256']) and expected['sourceSha'] in old_shas,'pre-existing version identity invalid')
+            version_dir=f'{APP}/photo-versions/{OWNER}/'+expected['id']
+            raw=remote(version_dir+'/manifest.json');version=json.loads(raw)
+            require(sha(raw)==expected['manifestSha256']==remote(version_dir+'/manifest.sha256').decode('ascii'),'pre-existing manifest bytes differ from whitelist')
+            require(all(version.get(key)==expected[key] for key in ['id','sourceSha','effectKey','sha256','bytes','width','height']),'pre-existing version metadata differs from whitelist')
+            preexisting['versions'].append({'id':expected['id'],'sourceSha':expected['sourceSha'],'effect':jpeg_record(remote(version_dir+'/effect-'+expected['effectKey']+'__Effect.JPG'),expected['sha256'],expected['bytes'])})
+        preexisting['tasks']=len(expected_tasks);preexisting['baselineNote']=baseline.get('note')
+    else:require(not old_photos and not old_tasks,'existing project data requires an explicit --preexisting-baseline whitelist; never delete originals to satisfy this check')
+    project['photos']=[row for row in all_project_photos if row['sha256'] in source_set]
+    task_state['tasks']=[row for row in all_project_tasks if row['identity'] in source_set]
+    require({row['sha256'] for row in project['photos']}==source_set and len(project['photos'])==len(completed),'controlled project photos do not exactly match completed peer originals')
+    manifests={};version_root=f'{APP}/photo-versions/{OWNER}'
+    expected_version_ids={task['resultFileName'][:-8] for task in task_state['tasks'] if task['status']=='saved' and task['resultFileName'].endswith('.version')}
+    for path in remote_files(version_root,2):
+        if not re.fullmatch(re.escape(version_root)+r'/[0-9a-f]{64}/manifest\.json',path):continue
+        raw=remote(path)
+        try:row=json.loads(raw)
+        except (json.JSONDecodeError,UnicodeError):
+            require(PurePosixPath(path).parent.name not in expected_version_ids,'referenced controlled version manifest is not valid JSON');continue
+        # Other guest test-fixture records are inspected only in memory and never exported.
+        if not isinstance(row,dict) or row.get('sourceSha') not in source_set:
+            require(PurePosixPath(path).parent.name not in expected_version_ids,'referenced controlled version source identity differs');continue
+        require(row.get('schema')==1 and row.get('id')==PurePosixPath(path).parent.name,'relevant version identity differs')
+        require(sha(raw)==remote(str(PurePosixPath(path).parent/'manifest.sha256')).decode('ascii'),'relevant manifest checksum differs')
+        manifests.setdefault(row['sourceSha'],[]).append((row,path))
+    results=[]
+    for handle in sorted(completed):
+        item=objects[handle];entry=by_handle[handle][0];source_sha=item['sha256'];source_name=source_sha+'.jpg'
+        require(entry.get('status')=='done' and entry.get('sha256')==source_sha and entry.get('sourceFileName')==source_name,'live completion receipt differs from peer original')
+        require(entry.get('bytes')==item['bytes'] and entry.get('raw') is False,'live original size/format differs')
+        source_path=APP+'/originals/'+source_name;original=remote(source_path)
+        verified=jpeg_record(original,source_sha,item['bytes'])
+        indexed=[row for row in index if PurePosixPath(str(row.get('path',''))).name==source_name]
+        require(len(indexed)==1,'completed original has missing/duplicate photo index entries')
+        require(indexed[0].get('path') in [source_path,'originals/'+source_name],'indexed original points outside exact owned original path')
+        project_rows=[row for row in project['photos'] if row['sha256']==source_sha]
+        require(len(project_rows)==1 and project_rows[0]['sourceFileName']==source_name and project_rows[0]['bytes']==item['bytes'],'project original record differs')
+        tasks=[task for task in task_state['tasks'] if task['identity']==source_sha]
+        versions=manifests.get(source_sha,[])
+        result={'handle':handle,'objectKey':entry['objectKey'],'original':verified,'photoIndexEntries':len(indexed),'projectEntries':len(project_rows),'receiptStatus':entry['status'],'taskKey':entry.get('taskKey',''),'downloadAttempts':expected_attempts[handle],'downloadCompleted':expected_completions[handle],'partialAttempts':partials[handle],'objectAddedDeliveries':events[handle]}
+        if handle in original_only:
+            require(not entry.get('presetId') and not entry.get('taskKey') and not tasks and not versions,'original-only receive created a preset/effect task')
+            result['originalOnly']=True;result['savedVersions']=0
+        else:
+            require(len(tasks)==1 and len(versions)==1,'rendered source has duplicate/missing tasks or versions')
+            task=tasks[0];version,manifest_path=versions[0]
+            require(task['status']=='saved' and task['key']==entry.get('taskKey') and task['sourceFileName']==source_name and task['sourceBytes']==item['bytes'],'saved task does not match live receipt/source')
+            require(task['presetId']==entry.get('presetId') and task['resultFileName']==version['id']+'.version','task default/result binding differs')
+            require(version['source']=='originals/'+source_name and version['draftIdentity']==source_sha+':'+task['presetId']+':100','version recipe/source binding differs')
+            effect_key=sha((source_sha+'\n'+task['presetId']+'\n'+version['model']).encode('utf-8'))
+            require(version['effectKey']==effect_key,'version effect identity differs')
+            version_id=sha(('huevia-saved-version-v1\n'+effect_key+'\n'+version['draftIdentity']+'\n'+version['exportSpec']).encode('utf-8'))
+            require(version['id']==version_id,'version immutable identity differs')
+            output_path=str(PurePosixPath(manifest_path).parent/('effect-'+effect_key+'__Effect.JPG'))
+            output=jpeg_record(remote(output_path),version['sha256'],version['bytes'])
+            require(output['decodedDimensions']==[version['width'],version['height']],'saved output decoded dimensions differ')
+            result.update({'originalOnly':False,'savedVersions':1,'versionId':version_id,'presetId':task['presetId'],'effect':output})
+        require(sha(remote(source_path))==source_sha,'original changed while checking project output')
+        results.append(result)
+    require(len(task_state['tasks'])==len(rendered),'project journal contains extra/missing effect tasks')
+    for handle in unreceived:
+        source_sha=objects[handle].get('sha256')
+        if source_sha:
+            require(not any(PurePosixPath(str(row.get('path',''))).name==source_sha+'.jpg' for row in index),'unreceived fixture unexpectedly exists in photo index')
+            require(not any(row['sha256']==source_sha for row in project['photos']),'unreceived fixture unexpectedly joined project')
+    top_files=remote_files(APP+'/originals',1);temporary=[PurePosixPath(path).name for path in top_files if path.endswith('.part')]
+    require(not temporary,'incomplete top-level original temporary files remain')
+    for row in old_photos:require(sha(remote(APP+'/originals/'+row['sourceFileName']))==row['sha256'],'pre-existing original changed during verification')
+    require(remote(live_paths[0])==live_bytes and remote(project_path)==project_bytes and remote(tasks_path)==tasks_bytes,'project/receipt/task journals changed during observation; collect only after idle')
+    record={'schema':1,'sourceCommit':args.expected_source,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'scope':'Delivered x64 release on owned Android12/API31 emulator with controlled211 PTP/IP peer; not physical Nikon/Fuji/iPhone, Honor Magic, background lifecycle or real RAW acceptance',
+            'pid':int(pid),'installedApkMatchesDelivered':True,'installedApkBytes':len(apk),'installedApkSha256':metadata['sha256'],
+            'crashMarkers':markers,'crashObservationScope':'current final release PID only','memoryKiBOnePoint':mem,
+            'projectId':args.project_id,'cameraId':camera_id,'liveJournalChecksumValid':True,'liveActive':live.get('active'),
+            'projectJournalChecksumValid':project['checksumValid'],'taskJournalChecksumValid':task_state['checksumValid'],
+            'projectDefaultPresetEmpty':not task_state['configs'],'allOriginalsUnchangedAfterOutputVerification':True,
+            'preexistingWhitelistVerification':preexisting,'projectTotalPhotoCount':len(all_project_photos),'projectTotalTaskCount':len(all_project_tasks),
+            'originalTemporaryFiles':0,'completedHandles':sorted(completed),'renderedHandles':sorted(rendered),'originalOnlyHandles':sorted(original_only),'unreceivedHandles':sorted(unreceived),
+            'sourceCompatibility':compatibility,
+            'controlledOriginals':results,
+            'expectations':{'downloadAttempts':expected_attempts,'downloadCompleted':expected_completions,'partialAttempts':expected_partials,'noEventHandles':sorted(ids(args.no_event)),'duplicateEventHandles':sorted(ids(args.duplicate_events)),'stoppedRequired':args.expect_stopped},
+            'protocol':{'peerRun':args.peer_run,'snapshotGuidSha256':peer['guidSha256'],'connections':peer['counts']['connections'],'connectionCountScope':'Command handshakes include abandoned setup attempts; this count alone does not imply duplicate original reception. OpenSession and per-handle original counts are recorded separately.','operationCounts':peer['counts']['commands'],'peerLogBytes':len(protocol_bytes),'peerLogSha256':sha(protocol_bytes)},
+            'privacy':'Only controlled peer objects, guest project records and current own process diagnostics exported. No account files or user-provided diagnostic JSON copied.'}
+    outputs={T/(args.prefix+'-observation.json'):record,T/(args.prefix+'-peer-snapshot.json'):peer,
+             T/(args.prefix+'-controlled-project.json'):{'projectId':args.project_id,'cameraId':camera_id,'active':live.get('active'),'entries':[entry for handle in sorted(completed) for entry in by_handle[handle]],'photos':project['photos'],'tasks':task_state['tasks']}}
+    raw_outputs={T/(args.prefix+'-logcat.log'):logs.encode('utf-8'),T/(args.prefix+'-crash.log'):crashes.encode('utf-8'),T/(args.prefix+'-memory.log'):memory.encode('utf-8'),T/(args.prefix+'-peer.log'):protocol_bytes}
+    require(not any(path.exists() for path in list(outputs)+list(raw_outputs)),'observation output already exists; use a new211 prefix rather than overwriting evidence')
+    for path,value in outputs.items():json_save(path,value)
+    for path,value in raw_outputs.items():path.write_bytes(value)
+    print(json.dumps({'pass':True,'source':args.expected_source,'installedApkMatches':True,'completed':sorted(completed),'rendered':sorted(rendered),'originalOnly':sorted(original_only),'unreceived':sorted(unreceived),'crashMarkers':markers,'observation':str(T/(args.prefix+'-observation.json'))}))
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--project-id',required=True);parser.add_argument('--metadata',required=True)
+    parser.add_argument('--expected-source',default=SOURCE);parser.add_argument('--camera-id')
+    parser.add_argument('--completed','--expected-completed-handles',required=True,help='exact completed handles, comma separated')
+    parser.add_argument('--unreceived','--expected-unreceived-handles',default='',help='forbidden baseline/stopped handles, comma separated')
+    parser.add_argument('--original-only','--no-effect-handles',default='');parser.add_argument('--rendered',default=None)
+    parser.add_argument('--attempts',default='',help='handle:count pairs; default once per completed and zero per forbidden')
+    parser.add_argument('--completions',default='',help='handle:count pairs; default once per completed and zero per forbidden')
+    parser.add_argument('--partials',default='',help='expected injected partial transfers, e.g.7:1')
+    parser.add_argument('--partial-handles','--expected-partial-handles',default='',help='handles each expected to have one injected partial transfer')
+    parser.add_argument('--no-event',default='');parser.add_argument('--duplicate-events',default='')
+    parser.add_argument('--expect-stopped',action='store_true');parser.add_argument('--expect-default-empty',action='store_true')
+    parser.add_argument('--peer-run',default='run1');parser.add_argument('--prefix',default='211-final-release')
+    parser.add_argument('--prior-source');parser.add_argument('--prior-source-handles',default='')
+    parser.add_argument('--preexisting-baseline',help='explicit exact whitelist JSON for owned pre-existing project/photo/task/version rows')
+    parser.add_argument('--expected-connections',type=int)
+    main(parser.parse_args())

@@ -1,0 +1,1 @@
+PASS 108 live ingest checks; durable cursors, explicit resume/stop, source receipts, frozen defaults, duplicate-source suppression and intent recovery

@@ -1,0 +1,1139 @@
+{"utc": "2026-11-12T15:11:57.016086+00:00", "channel": "command", "phase": "ready", "connection": 1}
+{"utc": "2026-11-12T15:11:58.087367+00:00", "channel": "event", "phase": "ready", "connection": 1}
+{"utc": "2026-11-12T15:11:58.768611+00:00", "channel": "command", "connection": 1, "operation": "0x1001", "transaction": 0, "parameters": []}
+{"utc": "2026-11-12T15:11:58.813422+00:00", "channel": "command", "connection": 1, "operation": "0x1002", "transaction": 0, "parameters": [1]}
+{"utc": "2026-11-12T15:11:58.977742+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 1, "parameters": []}
+{"utc": "2026-11-12T15:11:59.049370+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 2, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:11:59.099957+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 3, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:11:59.353148+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 4, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:11:59.633918+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 5, "parameters": [2]}
+{"utc": "2026-11-12T15:11:59.723328+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 6, "parameters": [1]}
+{"utc": "2026-11-12T15:12:00.174993+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 7, "parameters": [2]}
+{"utc": "2026-11-12T15:12:00.241108+00:00", "channel": "command", "connection": 1, "operation": "0x90c4", "transaction": 8, "parameters": [2]}
+{"utc": "2026-11-12T15:12:00.352505+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 9, "parameters": [2]}
+{"utc": "2026-11-12T15:12:00.783304+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 10, "parameters": [1]}
+{"utc": "2026-11-12T15:12:00.927649+00:00", "channel": "command", "connection": 1, "operation": "0x90c4", "transaction": 11, "parameters": [1]}
+{"utc": "2026-11-12T15:12:01.012012+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 12, "parameters": [1]}
+{"utc": "2026-11-12T15:12:03.089912+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:08.096089+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:13.102356+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:18.115508+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:23.129918+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:28.136409+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:33.152015+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:35.918205+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 13, "parameters": []}
+{"utc": "2026-11-12T15:12:35.936515+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 14, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:12:35.945833+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 15, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:12:35.962769+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 16, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:12:36.083734+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 17, "parameters": [2]}
+{"utc": "2026-11-12T15:12:36.127679+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 18, "parameters": [1]}
+{"utc": "2026-11-12T15:12:38.165264+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:43.179257+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:48.186903+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:53.200220+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:12:58.208716+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:00.866760+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 19, "parameters": []}
+{"utc": "2026-11-12T15:13:00.880628+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 20, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:00.913501+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 21, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:00.924066+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 22, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:03.218417+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:04.190545+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 23, "parameters": []}
+{"utc": "2026-11-12T15:13:04.196410+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 24, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:04.204134+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 25, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:04.208545+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 26, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:04.212487+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 27, "parameters": [1]}
+{"utc": "2026-11-12T15:13:07.258214+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 28, "parameters": []}
+{"utc": "2026-11-12T15:13:07.265613+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 29, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:07.272625+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 30, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:07.277422+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 31, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:07.280912+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 32, "parameters": [2]}
+{"utc": "2026-11-12T15:13:08.234334+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:10.350438+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 33, "parameters": []}
+{"utc": "2026-11-12T15:13:10.360959+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 34, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:10.366010+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 35, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:10.374683+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 36, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:10.379711+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 37, "parameters": [1]}
+{"utc": "2026-11-12T15:13:13.240927+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:13.415295+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 38, "parameters": []}
+{"utc": "2026-11-12T15:13:13.424986+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 39, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:13.430506+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 40, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:13.441234+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 41, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:13.446801+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 42, "parameters": [2]}
+{"utc": "2026-11-12T15:13:16.474636+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 43, "parameters": []}
+{"utc": "2026-11-12T15:13:16.483724+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 44, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:16.490967+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 45, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:16.494329+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 46, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:16.498582+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 47, "parameters": [1]}
+{"utc": "2026-11-12T15:13:18.249830+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:19.544850+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 48, "parameters": []}
+{"utc": "2026-11-12T15:13:19.552403+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 49, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:19.561108+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 50, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:19.565508+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 51, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:19.572363+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 52, "parameters": [2]}
+{"utc": "2026-11-12T15:13:22.609087+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 53, "parameters": []}
+{"utc": "2026-11-12T15:13:22.613784+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 54, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:22.619207+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 55, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:22.623299+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 56, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:22.629492+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 57, "parameters": [1]}
+{"utc": "2026-11-12T15:13:23.255568+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:25.657835+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 58, "parameters": []}
+{"utc": "2026-11-12T15:13:25.667095+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 59, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:25.673252+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 60, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:25.678174+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 61, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:25.686447+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 62, "parameters": [2]}
+{"utc": "2026-11-12T15:13:28.258236+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:28.718685+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 63, "parameters": []}
+{"utc": "2026-11-12T15:13:28.728344+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 64, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:28.736217+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 65, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:28.742378+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 66, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:28.752064+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 67, "parameters": [1]}
+{"utc": "2026-11-12T15:13:31.781620+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 68, "parameters": []}
+{"utc": "2026-11-12T15:13:31.786371+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 69, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:31.790094+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 70, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:31.795825+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 71, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:31.803061+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 72, "parameters": [2]}
+{"utc": "2026-11-12T15:13:33.273575+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:33.985864+00:00", "action": "add", "handle": 3, "readyAfterSeconds": 0.0, "raw": false, "sha256": "d2867e7e16e2ac7eaf27c6200701e8d3833e3be420b2b8865be9263d6286cd11"}
+{"utc": "2026-11-12T15:13:33.986289+00:00", "channel": "event", "phase": "object-added", "handle": 3, "repeats": 3, "deliveries": 3}
+{"utc": "2026-11-12T15:13:33.987115+00:00", "action": "add", "handle": 4, "readyAfterSeconds": 0.0, "raw": false, "sha256": "053333a58ff4cd08c0e5046c43e76079809dd9856ccfe2e092042d4570442085"}
+{"utc": "2026-11-12T15:13:33.987536+00:00", "channel": "event", "phase": "object-added", "handle": 4, "repeats": 3, "deliveries": 3}
+{"utc": "2026-11-12T15:13:33.988704+00:00", "action": "add", "handle": 5, "readyAfterSeconds": 0.0, "raw": false, "sha256": "d427048ea68d062ff6cd0cbd8512023cb722fb1ada1f2f77878013e73266d52f"}
+{"utc": "2026-11-12T15:13:33.989175+00:00", "channel": "event", "phase": "object-added", "handle": 5, "repeats": 3, "deliveries": 3}
+{"utc": "2026-11-12T15:13:34.830749+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 73, "parameters": []}
+{"utc": "2026-11-12T15:13:34.854537+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 74, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:34.860511+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 75, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:34.866458+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 76, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:34.874360+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 77, "parameters": [3]}
+{"utc": "2026-11-12T15:13:34.880012+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 78, "parameters": [4]}
+{"utc": "2026-11-12T15:13:34.886738+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 79, "parameters": [5]}
+{"utc": "2026-11-12T15:13:37.918168+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 80, "parameters": []}
+{"utc": "2026-11-12T15:13:37.927269+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 81, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:37.934060+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 82, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:37.940151+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 83, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:37.948987+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 84, "parameters": [3]}
+{"utc": "2026-11-12T15:13:37.957556+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 85, "parameters": [4]}
+{"utc": "2026-11-12T15:13:37.963594+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 86, "parameters": [5]}
+{"utc": "2026-11-12T15:13:38.012279+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 87, "parameters": [3]}
+{"utc": "2026-11-12T15:13:38.023309+00:00", "channel": "command", "connection": 1, "operation": "0x1009", "transaction": 88, "parameters": [3]}
+{"utc": "2026-11-12T15:13:38.288430+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:40.696225+00:00", "channel": "command", "connection": 1, "phase": "object-sent", "handle": 3, "bytes": 268806, "sha256": "d2867e7e16e2ac7eaf27c6200701e8d3833e3be420b2b8865be9263d6286cd11"}
+{"utc": "2026-11-12T15:13:40.721053+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 89, "parameters": [3]}
+{"utc": "2026-11-12T15:13:41.272350+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 90, "parameters": [4]}
+{"utc": "2026-11-12T15:13:41.340543+00:00", "channel": "command", "connection": 1, "operation": "0x1009", "transaction": 91, "parameters": [4]}
+{"utc": "2026-11-12T15:13:43.292701+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:44.010114+00:00", "channel": "command", "connection": 1, "phase": "object-sent", "handle": 4, "bytes": 268806, "sha256": "053333a58ff4cd08c0e5046c43e76079809dd9856ccfe2e092042d4570442085"}
+{"utc": "2026-11-12T15:13:44.044090+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 92, "parameters": [4]}
+{"utc": "2026-11-12T15:13:44.338405+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 93, "parameters": [5]}
+{"utc": "2026-11-12T15:13:44.372341+00:00", "channel": "command", "connection": 1, "operation": "0x1009", "transaction": 94, "parameters": [5]}
+{"utc": "2026-11-12T15:13:47.038358+00:00", "channel": "command", "connection": 1, "phase": "object-sent", "handle": 5, "bytes": 268806, "sha256": "d427048ea68d062ff6cd0cbd8512023cb722fb1ada1f2f77878013e73266d52f"}
+{"utc": "2026-11-12T15:13:47.080736+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 95, "parameters": [5]}
+{"utc": "2026-11-12T15:13:48.303379+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:52.563084+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 96, "parameters": []}
+{"utc": "2026-11-12T15:13:52.573390+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 97, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:52.579047+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 98, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:52.584943+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 99, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:52.590286+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 100, "parameters": [1]}
+{"utc": "2026-11-12T15:13:53.309386+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:55.621238+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 101, "parameters": []}
+{"utc": "2026-11-12T15:13:55.628969+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 102, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:55.636686+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 103, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:55.640556+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 104, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:55.644811+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 105, "parameters": [2]}
+{"utc": "2026-11-12T15:13:58.315810+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:13:58.682660+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 106, "parameters": []}
+{"utc": "2026-11-12T15:13:58.693926+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 107, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:13:58.704325+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 108, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:13:58.711512+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 109, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:13:58.716781+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 110, "parameters": [3]}
+{"utc": "2026-11-12T15:14:01.746286+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 111, "parameters": []}
+{"utc": "2026-11-12T15:14:01.754595+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 112, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:01.759686+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 113, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:01.766193+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 114, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:01.772506+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 115, "parameters": [4]}
+{"utc": "2026-11-12T15:14:03.323520+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:04.803007+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 116, "parameters": []}
+{"utc": "2026-11-12T15:14:04.809238+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 117, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:04.817465+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 118, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:04.825587+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 119, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:04.830545+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 120, "parameters": [5]}
+{"utc": "2026-11-12T15:14:07.864253+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 121, "parameters": []}
+{"utc": "2026-11-12T15:14:07.868824+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 122, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:07.873705+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 123, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:07.877875+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 124, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:07.885392+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 125, "parameters": [1]}
+{"utc": "2026-11-12T15:14:08.335066+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:10.915095+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 126, "parameters": []}
+{"utc": "2026-11-12T15:14:10.920528+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 127, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:10.927535+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 128, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:10.931560+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 129, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:10.938585+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 130, "parameters": [2]}
+{"utc": "2026-11-12T15:14:13.342929+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:13.966143+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 131, "parameters": []}
+{"utc": "2026-11-12T15:14:13.976235+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 132, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:13.979884+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 133, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:13.984982+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 134, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:13.989159+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 135, "parameters": [3]}
+{"utc": "2026-11-12T15:14:17.020812+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 136, "parameters": []}
+{"utc": "2026-11-12T15:14:17.031331+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 137, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:17.037714+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 138, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:17.042527+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 139, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:17.046678+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 140, "parameters": [4]}
+{"utc": "2026-11-12T15:14:18.345529+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:20.073814+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 141, "parameters": []}
+{"utc": "2026-11-12T15:14:20.082194+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 142, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:20.089459+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 143, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:20.096160+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 144, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:20.101974+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 145, "parameters": [5]}
+{"utc": "2026-11-12T15:14:23.127546+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 146, "parameters": []}
+{"utc": "2026-11-12T15:14:23.135085+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 147, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:23.141072+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 148, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:23.146424+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 149, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:23.152519+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 150, "parameters": [1]}
+{"utc": "2026-11-12T15:14:23.348696+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:26.180266+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 151, "parameters": []}
+{"utc": "2026-11-12T15:14:26.186598+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 152, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:26.195226+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 153, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:26.201733+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 154, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:26.205738+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 155, "parameters": [2]}
+{"utc": "2026-11-12T15:14:28.353011+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:29.230564+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 156, "parameters": []}
+{"utc": "2026-11-12T15:14:29.238781+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 157, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:29.244320+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 158, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:29.251506+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 159, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:29.257016+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 160, "parameters": [3]}
+{"utc": "2026-11-12T15:14:32.293064+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 161, "parameters": []}
+{"utc": "2026-11-12T15:14:32.301322+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 162, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:32.308191+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 163, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:32.313272+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 164, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:32.318906+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 165, "parameters": [4]}
+{"utc": "2026-11-12T15:14:33.361658+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:35.356341+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 166, "parameters": []}
+{"utc": "2026-11-12T15:14:35.361900+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 167, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:35.369430+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 168, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:35.374115+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 169, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:35.380040+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 170, "parameters": [5]}
+{"utc": "2026-11-12T15:14:38.366805+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:38.406047+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 171, "parameters": []}
+{"utc": "2026-11-12T15:14:38.412176+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 172, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:38.417588+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 173, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:38.422191+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 174, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:38.426432+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 175, "parameters": [1]}
+{"utc": "2026-11-12T15:14:41.459150+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 176, "parameters": []}
+{"utc": "2026-11-12T15:14:41.465073+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 177, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:41.471990+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 178, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:41.476478+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 179, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:41.484619+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 180, "parameters": [2]}
+{"utc": "2026-11-12T15:14:43.374119+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:44.516747+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 181, "parameters": []}
+{"utc": "2026-11-12T15:14:44.524977+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 182, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:44.530985+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 183, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:44.538630+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 184, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:44.543294+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 185, "parameters": [3]}
+{"utc": "2026-11-12T15:14:47.580186+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 186, "parameters": []}
+{"utc": "2026-11-12T15:14:47.586531+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 187, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:47.591143+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 188, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:47.596241+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 189, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:47.602964+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 190, "parameters": [4]}
+{"utc": "2026-11-12T15:14:48.379126+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:50.641373+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 191, "parameters": []}
+{"utc": "2026-11-12T15:14:50.649050+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 192, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:50.654423+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 193, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:50.660127+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 194, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:50.665374+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 195, "parameters": [5]}
+{"utc": "2026-11-12T15:14:50.745226+00:00", "action": "pacing", "delaySeconds": 0.16, "chunkBytes": 8192}
+{"utc": "2026-11-12T15:14:50.751557+00:00", "action": "add", "handle": 6, "readyAfterSeconds": 8.0, "raw": false, "sha256": "c8ff274761ce249863e00172eaddbb193ef2b1d0d5bcac0a36f2d35e06b58e9b"}
+{"utc": "2026-11-12T15:14:53.385770+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:53.694542+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 196, "parameters": []}
+{"utc": "2026-11-12T15:14:53.705449+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 197, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:53.711056+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 198, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:53.717054+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 199, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:53.722724+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 200, "parameters": [6]}
+{"utc": "2026-11-12T15:14:56.756082+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 201, "parameters": []}
+{"utc": "2026-11-12T15:14:56.761799+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 202, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:56.770612+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 203, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:56.777439+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 204, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:56.782161+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 205, "parameters": [6]}
+{"utc": "2026-11-12T15:14:58.386637+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:14:59.812164+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 206, "parameters": []}
+{"utc": "2026-11-12T15:14:59.821373+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 207, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:14:59.826082+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 208, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:14:59.831597+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 209, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:14:59.839669+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 210, "parameters": [6]}
+{"utc": "2026-11-12T15:15:02.871127+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 211, "parameters": []}
+{"utc": "2026-11-12T15:15:02.880568+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 212, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:02.886890+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 213, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:02.899158+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 214, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:02.905335+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 215, "parameters": [6]}
+{"utc": "2026-11-12T15:15:02.968500+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 216, "parameters": [6]}
+{"utc": "2026-11-12T15:15:02.998966+00:00", "channel": "command", "connection": 1, "operation": "0x1009", "transaction": 217, "parameters": [6]}
+{"utc": "2026-11-12T15:15:03.390641+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:08.404429+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:13.412811+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:18.427204+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:23.435534+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:23.704414+00:00", "channel": "command", "connection": 1, "phase": "object-sent", "handle": 6, "bytes": 1055290, "sha256": "c8ff274761ce249863e00172eaddbb193ef2b1d0d5bcac0a36f2d35e06b58e9b"}
+{"utc": "2026-11-12T15:15:23.734092+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 218, "parameters": [6]}
+{"utc": "2026-11-12T15:15:28.053780+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 219, "parameters": []}
+{"utc": "2026-11-12T15:15:28.058423+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 220, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:28.062704+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 221, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:28.070665+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 222, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:28.076111+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 223, "parameters": [1]}
+{"utc": "2026-11-12T15:15:28.443666+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:31.107229+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 224, "parameters": []}
+{"utc": "2026-11-12T15:15:31.119882+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 225, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:31.126901+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 226, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:31.135097+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 227, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:31.141586+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 228, "parameters": [2]}
+{"utc": "2026-11-12T15:15:33.446944+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:34.179011+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 229, "parameters": []}
+{"utc": "2026-11-12T15:15:34.187971+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 230, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:34.194208+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 231, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:34.198849+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 232, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:34.204969+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 233, "parameters": [3]}
+{"utc": "2026-11-12T15:15:37.236347+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 234, "parameters": []}
+{"utc": "2026-11-12T15:15:37.242434+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 235, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:37.248234+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 236, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:37.252971+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 237, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:37.258822+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 238, "parameters": [4]}
+{"utc": "2026-11-12T15:15:38.449245+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:40.288933+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 239, "parameters": []}
+{"utc": "2026-11-12T15:15:40.296913+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 240, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:40.304210+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 241, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:40.311964+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 242, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:40.316438+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 243, "parameters": [5]}
+{"utc": "2026-11-12T15:15:43.343404+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 244, "parameters": []}
+{"utc": "2026-11-12T15:15:43.353341+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 245, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:43.359091+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 246, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:43.364695+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 247, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:43.369164+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 248, "parameters": [6]}
+{"utc": "2026-11-12T15:15:43.464214+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:46.396640+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 249, "parameters": []}
+{"utc": "2026-11-12T15:15:46.405691+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 250, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:46.413485+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 251, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:46.417793+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 252, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:46.422135+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 253, "parameters": [1]}
+{"utc": "2026-11-12T15:15:48.476184+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:49.453650+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 254, "parameters": []}
+{"utc": "2026-11-12T15:15:49.458992+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 255, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:49.463038+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 256, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:49.468653+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 257, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:49.473083+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 258, "parameters": [2]}
+{"utc": "2026-11-12T15:15:52.510710+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 259, "parameters": []}
+{"utc": "2026-11-12T15:15:52.527128+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 260, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:52.533067+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 261, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:52.545979+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 262, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:52.551936+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 263, "parameters": [3]}
+{"utc": "2026-11-12T15:15:53.477152+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:55.597307+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 264, "parameters": []}
+{"utc": "2026-11-12T15:15:55.605604+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 265, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:55.613173+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 266, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:55.624109+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 267, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:55.629657+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 268, "parameters": [4]}
+{"utc": "2026-11-12T15:15:58.482655+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:15:58.660620+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 269, "parameters": []}
+{"utc": "2026-11-12T15:15:58.672871+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 270, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:15:58.677273+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 271, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:15:58.685919+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 272, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:15:58.689623+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 273, "parameters": [5]}
+{"utc": "2026-11-12T15:16:01.728318+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 274, "parameters": []}
+{"utc": "2026-11-12T15:16:01.734432+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 275, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:01.741222+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 276, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:01.749114+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 277, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:01.754436+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 278, "parameters": [6]}
+{"utc": "2026-11-12T15:16:03.492465+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:04.793183+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 279, "parameters": []}
+{"utc": "2026-11-12T15:16:04.800548+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 280, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:04.806321+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 281, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:04.813612+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 282, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:04.818587+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 283, "parameters": [1]}
+{"utc": "2026-11-12T15:16:07.845509+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 284, "parameters": []}
+{"utc": "2026-11-12T15:16:07.854469+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 285, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:07.861975+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 286, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:07.866807+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 287, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:07.875118+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 288, "parameters": [2]}
+{"utc": "2026-11-12T15:16:08.494278+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:10.905177+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 289, "parameters": []}
+{"utc": "2026-11-12T15:16:10.911787+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 290, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:10.919346+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 291, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:10.924855+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 292, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:10.929408+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 293, "parameters": [3]}
+{"utc": "2026-11-12T15:16:13.495846+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:13.962773+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 294, "parameters": []}
+{"utc": "2026-11-12T15:16:13.972528+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 295, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:13.980259+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 296, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:13.984972+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 297, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:13.988665+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 298, "parameters": [4]}
+{"utc": "2026-11-12T15:16:17.016788+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 299, "parameters": []}
+{"utc": "2026-11-12T15:16:17.024607+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 300, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:17.032109+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 301, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:17.039813+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 302, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:17.045237+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 303, "parameters": [5]}
+{"utc": "2026-11-12T15:16:18.505518+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:19.407759+00:00", "action": "add", "handle": 7, "readyAfterSeconds": 12.0, "raw": false, "sha256": "be630990c8874d5cc47058b638887ea715e73bdc51a9b91b1d6807cc154c5b12"}
+{"utc": "2026-11-12T15:16:19.408313+00:00", "channel": "event", "phase": "object-added", "handle": 7, "repeats": 1, "deliveries": 1}
+{"utc": "2026-11-12T15:16:19.412705+00:00", "action": "fault", "handle": 7, "fault": {"afterBytes": 16384, "once": true}}
+{"utc": "2026-11-12T15:16:20.087909+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 304, "parameters": []}
+{"utc": "2026-11-12T15:16:20.108628+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 305, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:20.115578+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 306, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:20.121150+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 307, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:20.128100+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 308, "parameters": [7]}
+{"utc": "2026-11-12T15:16:23.181998+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 309, "parameters": []}
+{"utc": "2026-11-12T15:16:23.193991+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 310, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:23.202992+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 311, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:23.210559+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 312, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:23.218367+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 313, "parameters": [7]}
+{"utc": "2026-11-12T15:16:23.506933+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:26.257912+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 314, "parameters": []}
+{"utc": "2026-11-12T15:16:26.264922+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 315, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:26.273987+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 316, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:26.278629+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 317, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:26.283816+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 318, "parameters": [7]}
+{"utc": "2026-11-12T15:16:28.519964+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:29.327979+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 319, "parameters": []}
+{"utc": "2026-11-12T15:16:29.335543+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 320, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:29.342930+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 321, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:29.354333+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 322, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:29.360188+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 323, "parameters": [7]}
+{"utc": "2026-11-12T15:16:32.399783+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 324, "parameters": []}
+{"utc": "2026-11-12T15:16:32.410844+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 325, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:32.418503+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 326, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:32.426889+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 327, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:32.434193+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 328, "parameters": [7]}
+{"utc": "2026-11-12T15:16:33.532809+00:00", "channel": "event", "phase": "ping", "connection": 1}
+{"utc": "2026-11-12T15:16:35.467963+00:00", "channel": "command", "connection": 1, "operation": "0x1004", "transaction": 329, "parameters": []}
+{"utc": "2026-11-12T15:16:35.476425+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 330, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:16:35.482006+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 331, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:16:35.488836+00:00", "channel": "command", "connection": 1, "operation": "0x1007", "transaction": 332, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:16:35.496450+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 333, "parameters": [7]}
+{"utc": "2026-11-12T15:16:35.540273+00:00", "channel": "command", "connection": 1, "operation": "0x1008", "transaction": 334, "parameters": [7]}
+{"utc": "2026-11-12T15:16:35.557212+00:00", "channel": "command", "connection": 1, "operation": "0x1009", "transaction": 335, "parameters": [7]}
+{"utc": "2026-11-12T15:16:35.878828+00:00", "channel": "command", "connection": 1, "phase": "injected-download-disconnect", "handle": 7, "bytes": 16384}
+{"utc": "2026-11-12T15:16:35.879441+00:00", "action": "drop-connections", "connectionIds": [1]}
+{"utc": "2026-11-12T15:16:35.879873+00:00", "channel": "event", "phase": "closed", "connection": 1}
+{"utc": "2026-11-12T15:17:26.690730+00:00", "action": "add", "handle": 8, "readyAfterSeconds": 0.0, "raw": false, "sha256": "e40cac3c9556bbb9e18816a48828264d9c76ff81d24d98a02b3133add84fbb7c"}
+{"utc": "2026-11-12T15:28:33.648753+00:00", "channel": "command", "phase": "ready", "connection": 2}
+{"utc": "2026-11-12T15:28:33.906800+00:00", "channel": "command", "phase": "closed", "connection": 2}
+{"utc": "2026-11-12T15:31:46.881914+00:00", "channel": "command", "phase": "ready", "connection": 3}
+{"utc": "2026-11-12T15:31:47.877069+00:00", "channel": "event", "phase": "ready", "connection": 3}
+{"utc": "2026-11-12T15:31:48.402001+00:00", "channel": "command", "connection": 3, "operation": "0x1001", "transaction": 0, "parameters": []}
+{"utc": "2026-11-12T15:31:48.432604+00:00", "channel": "command", "connection": 3, "operation": "0x1002", "transaction": 0, "parameters": [1]}
+{"utc": "2026-11-12T15:31:48.459379+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 1, "parameters": []}
+{"utc": "2026-11-12T15:31:48.475574+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 2, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:31:48.497759+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 3, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:31:48.522634+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 4, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:31:48.593339+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 5, "parameters": [8]}
+{"utc": "2026-11-12T15:31:48.619943+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 6, "parameters": [7]}
+{"utc": "2026-11-12T15:31:48.659193+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 7, "parameters": [6]}
+{"utc": "2026-11-12T15:31:48.676061+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 8, "parameters": [5]}
+{"utc": "2026-11-12T15:31:48.684561+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 9, "parameters": [4]}
+{"utc": "2026-11-12T15:31:48.698760+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 10, "parameters": [3]}
+{"utc": "2026-11-12T15:31:48.718271+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 11, "parameters": [2]}
+{"utc": "2026-11-12T15:31:48.727226+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 12, "parameters": [1]}
+{"utc": "2026-11-12T15:31:48.828526+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 13, "parameters": [8]}
+{"utc": "2026-11-12T15:31:48.848585+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 14, "parameters": [8]}
+{"utc": "2026-11-12T15:31:48.889177+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 15, "parameters": [8]}
+{"utc": "2026-11-12T15:31:49.078000+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 16, "parameters": [7]}
+{"utc": "2026-11-12T15:31:49.094705+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 17, "parameters": [7]}
+{"utc": "2026-11-12T15:31:49.127024+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 18, "parameters": [7]}
+{"utc": "2026-11-12T15:31:49.214841+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 19, "parameters": [6]}
+{"utc": "2026-11-12T15:31:49.270360+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 20, "parameters": [6]}
+{"utc": "2026-11-12T15:31:49.323175+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 21, "parameters": [6]}
+{"utc": "2026-11-12T15:31:49.453816+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 22, "parameters": [5]}
+{"utc": "2026-11-12T15:31:49.479539+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 23, "parameters": [5]}
+{"utc": "2026-11-12T15:31:49.497962+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 24, "parameters": [5]}
+{"utc": "2026-11-12T15:31:49.592502+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 25, "parameters": [4]}
+{"utc": "2026-11-12T15:31:49.616899+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 26, "parameters": [4]}
+{"utc": "2026-11-12T15:31:49.630197+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 27, "parameters": [4]}
+{"utc": "2026-11-12T15:31:49.713440+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 28, "parameters": [3]}
+{"utc": "2026-11-12T15:31:49.730550+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 29, "parameters": [3]}
+{"utc": "2026-11-12T15:31:49.746120+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 30, "parameters": [3]}
+{"utc": "2026-11-12T15:31:49.811391+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 31, "parameters": [2]}
+{"utc": "2026-11-12T15:31:49.821005+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 32, "parameters": [2]}
+{"utc": "2026-11-12T15:31:49.845420+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 33, "parameters": [2]}
+{"utc": "2026-11-12T15:31:49.942505+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 34, "parameters": [1]}
+{"utc": "2026-11-12T15:31:49.963903+00:00", "channel": "command", "connection": 3, "operation": "0x90c4", "transaction": 35, "parameters": [1]}
+{"utc": "2026-11-12T15:31:49.982309+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 36, "parameters": [1]}
+{"utc": "2026-11-12T15:31:52.888339+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:31:57.901612+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:02.916042+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:07.925388+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:12.932307+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:17.943576+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:22.950219+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:27.955916+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:30.075637+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 37, "parameters": []}
+{"utc": "2026-11-12T15:32:30.092105+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 38, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:32:30.100646+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 39, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:32:30.130571+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 40, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:32:30.164966+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 41, "parameters": [8]}
+{"utc": "2026-11-12T15:32:30.213608+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 42, "parameters": [7]}
+{"utc": "2026-11-12T15:32:30.254949+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 43, "parameters": [6]}
+{"utc": "2026-11-12T15:32:30.363570+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 44, "parameters": [5]}
+{"utc": "2026-11-12T15:32:30.447928+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 45, "parameters": [4]}
+{"utc": "2026-11-12T15:32:30.494293+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 46, "parameters": [3]}
+{"utc": "2026-11-12T15:32:30.558565+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 47, "parameters": [2]}
+{"utc": "2026-11-12T15:32:30.635427+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 48, "parameters": [1]}
+{"utc": "2026-11-12T15:32:32.973568+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:37.984561+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:42.998319+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:48.003037+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:53.007222+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:32:58.014233+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:03.019378+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:08.029622+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:11.532785+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 49, "parameters": []}
+{"utc": "2026-11-12T15:33:11.561014+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 50, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:11.595449+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 51, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:11.628042+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 52, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:13.041252+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:14.737914+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 53, "parameters": []}
+{"utc": "2026-11-12T15:33:14.742936+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 54, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:14.748044+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 55, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:14.753547+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 56, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:14.759329+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 57, "parameters": [7]}
+{"utc": "2026-11-12T15:33:14.765639+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 58, "parameters": [3]}
+{"utc": "2026-11-12T15:33:14.774658+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 59, "parameters": [4]}
+{"utc": "2026-11-12T15:33:14.781746+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 60, "parameters": [5]}
+{"utc": "2026-11-12T15:33:14.788448+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 61, "parameters": [6]}
+{"utc": "2026-11-12T15:33:14.794894+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 62, "parameters": [8]}
+{"utc": "2026-11-12T15:33:17.830948+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 63, "parameters": []}
+{"utc": "2026-11-12T15:33:17.834979+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 64, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:17.840725+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 65, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:17.846964+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 66, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:17.854277+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 67, "parameters": [7]}
+{"utc": "2026-11-12T15:33:17.861425+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 68, "parameters": [3]}
+{"utc": "2026-11-12T15:33:17.870866+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 69, "parameters": [4]}
+{"utc": "2026-11-12T15:33:17.875945+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 70, "parameters": [5]}
+{"utc": "2026-11-12T15:33:17.881944+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 71, "parameters": [6]}
+{"utc": "2026-11-12T15:33:17.886819+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 72, "parameters": [8]}
+{"utc": "2026-11-12T15:33:17.984037+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 73, "parameters": [7]}
+{"utc": "2026-11-12T15:33:18.034700+00:00", "channel": "command", "connection": 3, "operation": "0x1009", "transaction": 74, "parameters": [7]}
+{"utc": "2026-11-12T15:33:18.053159+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:23.055612+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:28.066659+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:28.471393+00:00", "channel": "command", "connection": 3, "phase": "object-sent", "handle": 7, "bytes": 530966, "sha256": "be630990c8874d5cc47058b638887ea715e73bdc51a9b91b1d6807cc154c5b12"}
+{"utc": "2026-11-12T15:33:28.497892+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 75, "parameters": [7]}
+{"utc": "2026-11-12T15:33:28.907331+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 76, "parameters": [8]}
+{"utc": "2026-11-12T15:33:28.923420+00:00", "channel": "command", "connection": 3, "operation": "0x1009", "transaction": 77, "parameters": [8]}
+{"utc": "2026-11-12T15:33:31.492307+00:00", "channel": "command", "connection": 3, "phase": "object-sent", "handle": 8, "bytes": 126650, "sha256": "e40cac3c9556bbb9e18816a48828264d9c76ff81d24d98a02b3133add84fbb7c"}
+{"utc": "2026-11-12T15:33:31.519466+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 78, "parameters": [8]}
+{"utc": "2026-11-12T15:33:33.082552+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:36.418305+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 79, "parameters": []}
+{"utc": "2026-11-12T15:33:36.425696+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 80, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:36.429732+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 81, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:36.433605+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 82, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:36.437783+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 83, "parameters": [1]}
+{"utc": "2026-11-12T15:33:38.097419+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:39.476784+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 84, "parameters": []}
+{"utc": "2026-11-12T15:33:39.486068+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 85, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:39.493117+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 86, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:39.498655+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 87, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:39.503630+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 88, "parameters": [2]}
+{"utc": "2026-11-12T15:33:42.538986+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 89, "parameters": []}
+{"utc": "2026-11-12T15:33:42.546947+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 90, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:42.558810+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 91, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:42.568629+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 92, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:42.582013+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 93, "parameters": [3]}
+{"utc": "2026-11-12T15:33:43.108647+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:45.612921+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 94, "parameters": []}
+{"utc": "2026-11-12T15:33:45.621212+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 95, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:45.649581+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 96, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:45.667246+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 97, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:45.674596+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 98, "parameters": [4]}
+{"utc": "2026-11-12T15:33:48.122341+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:48.707103+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 99, "parameters": []}
+{"utc": "2026-11-12T15:33:48.717489+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 100, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:48.721218+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 101, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:48.724800+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 102, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:48.729900+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 103, "parameters": [5]}
+{"utc": "2026-11-12T15:33:51.764452+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 104, "parameters": []}
+{"utc": "2026-11-12T15:33:51.771123+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 105, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:51.777173+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 106, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:51.782116+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 107, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:51.786714+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 108, "parameters": [6]}
+{"utc": "2026-11-12T15:33:53.133257+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:33:54.820055+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 109, "parameters": []}
+{"utc": "2026-11-12T15:33:54.826030+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 110, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:54.831521+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 111, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:54.838037+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 112, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:54.844226+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 113, "parameters": [7]}
+{"utc": "2026-11-12T15:33:57.878001+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 114, "parameters": []}
+{"utc": "2026-11-12T15:33:57.884205+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 115, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:33:57.888364+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 116, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:33:57.892503+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 117, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:33:57.900768+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 118, "parameters": [8]}
+{"utc": "2026-11-12T15:33:58.146184+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:34:00.931556+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 119, "parameters": []}
+{"utc": "2026-11-12T15:34:00.939456+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 120, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:34:00.945210+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 121, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:34:00.948674+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 122, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:34:00.957865+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 123, "parameters": [1]}
+{"utc": "2026-11-12T15:34:03.147174+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:34:03.992919+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 124, "parameters": []}
+{"utc": "2026-11-12T15:34:04.000822+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 125, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:34:04.006735+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 126, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:34:04.013146+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 127, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:34:04.020245+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 128, "parameters": [2]}
+{"utc": "2026-11-12T15:34:05.274255+00:00", "action": "add", "handle": 9, "readyAfterSeconds": 5.0, "raw": false, "sha256": "2ffcec42c94d14093cf905b17528b19ac7c77b9ea3146afc3e79111f2512343f"}
+{"utc": "2026-11-12T15:34:05.274795+00:00", "channel": "event", "phase": "object-added", "handle": 9, "repeats": 1, "deliveries": 1}
+{"utc": "2026-11-12T15:34:05.279715+00:00", "action": "fault", "handle": 9, "fault": {"afterBytes": 16384, "once": true}}
+{"utc": "2026-11-12T15:34:07.057800+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 129, "parameters": []}
+{"utc": "2026-11-12T15:34:07.062481+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 130, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:34:07.070527+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 131, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:34:07.074935+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 132, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:34:07.079170+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 133, "parameters": [9]}
+{"utc": "2026-11-12T15:34:08.160968+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:34:10.111831+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 134, "parameters": []}
+{"utc": "2026-11-12T15:34:10.120988+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 135, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:34:10.125797+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 136, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:34:10.130546+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 137, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:34:10.138367+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 138, "parameters": [9]}
+{"utc": "2026-11-12T15:34:13.167569+00:00", "channel": "event", "phase": "ping", "connection": 3}
+{"utc": "2026-11-12T15:34:13.179892+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 139, "parameters": []}
+{"utc": "2026-11-12T15:34:13.187415+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 140, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:34:13.193885+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 141, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:34:13.201965+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 142, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:34:13.207199+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 143, "parameters": [9]}
+{"utc": "2026-11-12T15:34:16.239284+00:00", "channel": "command", "connection": 3, "operation": "0x1004", "transaction": 144, "parameters": []}
+{"utc": "2026-11-12T15:34:16.244281+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 145, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:34:16.252187+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 146, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:34:16.258471+00:00", "channel": "command", "connection": 3, "operation": "0x1007", "transaction": 147, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:34:16.265014+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 148, "parameters": [9]}
+{"utc": "2026-11-12T15:34:16.329783+00:00", "channel": "command", "connection": 3, "operation": "0x1008", "transaction": 149, "parameters": [9]}
+{"utc": "2026-11-12T15:34:16.353485+00:00", "channel": "command", "connection": 3, "operation": "0x1009", "transaction": 150, "parameters": [9]}
+{"utc": "2026-11-12T15:34:16.675458+00:00", "channel": "command", "connection": 3, "phase": "injected-download-disconnect", "handle": 9, "bytes": 16384}
+{"utc": "2026-11-12T15:34:16.676200+00:00", "action": "drop-connections", "connectionIds": [3]}
+{"utc": "2026-11-12T15:34:16.676622+00:00", "channel": "event", "phase": "closed", "connection": 3}
+{"utc": "2026-11-12T15:35:09.636315+00:00", "action": "add", "handle": 10, "readyAfterSeconds": 0.0, "raw": false, "sha256": "e6bcc62c58a6b44f380529c688000e11299777b372b5fe3031cde7c1b6130a44"}
+{"utc": "2026-11-12T15:35:59.729797+00:00", "channel": "command", "phase": "ready", "connection": 4}
+{"utc": "2026-11-12T15:36:00.744647+00:00", "channel": "event", "phase": "ready", "connection": 4}
+{"utc": "2026-11-12T15:36:01.250943+00:00", "channel": "command", "connection": 4, "operation": "0x1001", "transaction": 0, "parameters": []}
+{"utc": "2026-11-12T15:36:01.285134+00:00", "channel": "command", "connection": 4, "operation": "0x1002", "transaction": 0, "parameters": [1]}
+{"utc": "2026-11-12T15:36:01.362254+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 1, "parameters": []}
+{"utc": "2026-11-12T15:36:01.429948+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 2, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:01.453139+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 3, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:01.480936+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 4, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:01.557505+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 5, "parameters": [10]}
+{"utc": "2026-11-12T15:36:01.615087+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 6, "parameters": [9]}
+{"utc": "2026-11-12T15:36:01.666313+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 7, "parameters": [8]}
+{"utc": "2026-11-12T15:36:01.694429+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 8, "parameters": [7]}
+{"utc": "2026-11-12T15:36:01.725432+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 9, "parameters": [6]}
+{"utc": "2026-11-12T15:36:01.767020+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 10, "parameters": [5]}
+{"utc": "2026-11-12T15:36:01.801282+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 11, "parameters": [4]}
+{"utc": "2026-11-12T15:36:01.822392+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 12, "parameters": [3]}
+{"utc": "2026-11-12T15:36:01.830022+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 13, "parameters": [2]}
+{"utc": "2026-11-12T15:36:01.867194+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 14, "parameters": [1]}
+{"utc": "2026-11-12T15:36:02.222425+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 15, "parameters": []}
+{"utc": "2026-11-12T15:36:02.229601+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 16, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:02.265456+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 17, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:02.279614+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 18, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:02.473130+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 19, "parameters": [9]}
+{"utc": "2026-11-12T15:36:02.529393+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 20, "parameters": [3]}
+{"utc": "2026-11-12T15:36:02.549831+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 21, "parameters": [4]}
+{"utc": "2026-11-12T15:36:02.580863+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 22, "parameters": [5]}
+{"utc": "2026-11-12T15:36:02.609542+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 23, "parameters": [6]}
+{"utc": "2026-11-12T15:36:02.643180+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 24, "parameters": [7]}
+{"utc": "2026-11-12T15:36:02.661406+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 25, "parameters": [8]}
+{"utc": "2026-11-12T15:36:02.665040+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 26, "parameters": [10]}
+{"utc": "2026-11-12T15:36:05.756212+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:05.771904+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 27, "parameters": []}
+{"utc": "2026-11-12T15:36:05.794103+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 28, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:05.798133+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 29, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:05.827473+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 30, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:05.845183+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 31, "parameters": [9]}
+{"utc": "2026-11-12T15:36:05.862846+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 32, "parameters": [3]}
+{"utc": "2026-11-12T15:36:05.893345+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 33, "parameters": [4]}
+{"utc": "2026-11-12T15:36:05.907336+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 34, "parameters": [5]}
+{"utc": "2026-11-12T15:36:05.929677+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 35, "parameters": [6]}
+{"utc": "2026-11-12T15:36:05.941142+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 36, "parameters": [7]}
+{"utc": "2026-11-12T15:36:05.950339+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 37, "parameters": [8]}
+{"utc": "2026-11-12T15:36:05.962266+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 38, "parameters": [10]}
+{"utc": "2026-11-12T15:36:06.203154+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 39, "parameters": [9]}
+{"utc": "2026-11-12T15:36:06.250493+00:00", "channel": "command", "connection": 4, "operation": "0x1009", "transaction": 40, "parameters": [9]}
+{"utc": "2026-11-12T15:36:10.762548+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:15.766965+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:16.711590+00:00", "channel": "command", "connection": 4, "phase": "object-sent", "handle": 9, "bytes": 530966, "sha256": "2ffcec42c94d14093cf905b17528b19ac7c77b9ea3146afc3e79111f2512343f"}
+{"utc": "2026-11-12T15:36:16.758078+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 41, "parameters": [9]}
+{"utc": "2026-11-12T15:36:17.350497+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 42, "parameters": [10]}
+{"utc": "2026-11-12T15:36:17.417625+00:00", "channel": "command", "connection": 4, "operation": "0x1009", "transaction": 43, "parameters": [10]}
+{"utc": "2026-11-12T15:36:19.994634+00:00", "channel": "command", "connection": 4, "phase": "object-sent", "handle": 10, "bytes": 126650, "sha256": "e6bcc62c58a6b44f380529c688000e11299777b372b5fe3031cde7c1b6130a44"}
+{"utc": "2026-11-12T15:36:20.026717+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 44, "parameters": [10]}
+{"utc": "2026-11-12T15:36:20.774098+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:24.958395+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 45, "parameters": []}
+{"utc": "2026-11-12T15:36:24.983179+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 46, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:25.012268+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 47, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:25.043801+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 48, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:25.052459+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 49, "parameters": [1]}
+{"utc": "2026-11-12T15:36:25.785882+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:28.109772+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 50, "parameters": []}
+{"utc": "2026-11-12T15:36:28.129695+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 51, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:28.138024+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 52, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:28.153430+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 53, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:28.165790+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 54, "parameters": [2]}
+{"utc": "2026-11-12T15:36:30.787580+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:31.234113+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 55, "parameters": []}
+{"utc": "2026-11-12T15:36:31.247562+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 56, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:31.256557+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 57, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:31.261323+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 58, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:31.316100+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 59, "parameters": [3]}
+{"utc": "2026-11-12T15:36:34.409575+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 60, "parameters": []}
+{"utc": "2026-11-12T15:36:34.428480+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 61, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:34.444231+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 62, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:34.458869+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 63, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:34.501255+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 64, "parameters": [4]}
+{"utc": "2026-11-12T15:36:35.805392+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:37.563360+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 65, "parameters": []}
+{"utc": "2026-11-12T15:36:37.579591+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 66, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:37.600793+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 67, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:37.653595+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 68, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:37.667342+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 69, "parameters": [5]}
+{"utc": "2026-11-12T15:36:40.768458+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 70, "parameters": []}
+{"utc": "2026-11-12T15:36:40.779754+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 71, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:40.806541+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 72, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:40.817002+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 73, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:40.817636+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:40.839664+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 74, "parameters": [6]}
+{"utc": "2026-11-12T15:36:43.920917+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 75, "parameters": []}
+{"utc": "2026-11-12T15:36:43.950272+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 76, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:43.966850+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 77, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:43.982954+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 78, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:43.991401+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 79, "parameters": [7]}
+{"utc": "2026-11-12T15:36:45.823979+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:47.058495+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 80, "parameters": []}
+{"utc": "2026-11-12T15:36:47.071767+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 81, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:47.089698+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 82, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:47.094017+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 83, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:47.100650+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 84, "parameters": [8]}
+{"utc": "2026-11-12T15:36:50.219021+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 85, "parameters": []}
+{"utc": "2026-11-12T15:36:50.260680+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 86, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:50.282609+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 87, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:50.311021+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 88, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:50.320843+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 89, "parameters": [9]}
+{"utc": "2026-11-12T15:36:50.829165+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:53.442225+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 90, "parameters": []}
+{"utc": "2026-11-12T15:36:53.457120+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 91, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:53.491592+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 92, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:53.505642+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 93, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:53.511505+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 94, "parameters": [10]}
+{"utc": "2026-11-12T15:36:55.831298+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:36:56.573692+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 95, "parameters": []}
+{"utc": "2026-11-12T15:36:56.598388+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 96, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:56.610730+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 97, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:56.618172+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 98, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:56.625445+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 99, "parameters": [1]}
+{"utc": "2026-11-12T15:36:59.748597+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 100, "parameters": []}
+{"utc": "2026-11-12T15:36:59.761240+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 101, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:36:59.779549+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 102, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:36:59.796793+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 103, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:36:59.817812+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 104, "parameters": [2]}
+{"utc": "2026-11-12T15:37:00.846490+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:02.934382+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 105, "parameters": []}
+{"utc": "2026-11-12T15:37:02.959024+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 106, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:02.979935+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 107, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:03.006563+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 108, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:03.015111+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 109, "parameters": [3]}
+{"utc": "2026-11-12T15:37:05.859702+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:06.119566+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 110, "parameters": []}
+{"utc": "2026-11-12T15:37:06.133215+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 111, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:06.145089+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 112, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:06.175909+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 113, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:06.213343+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 114, "parameters": [4]}
+{"utc": "2026-11-12T15:37:09.331812+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 115, "parameters": []}
+{"utc": "2026-11-12T15:37:09.344875+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 116, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:09.353404+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 117, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:09.366589+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 118, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:09.387316+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 119, "parameters": [5]}
+{"utc": "2026-11-12T15:37:10.868263+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:12.444219+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 120, "parameters": []}
+{"utc": "2026-11-12T15:37:12.466432+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 121, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:12.479913+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 122, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:12.503335+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 123, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:12.523344+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 124, "parameters": [6]}
+{"utc": "2026-11-12T15:37:15.598823+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 125, "parameters": []}
+{"utc": "2026-11-12T15:37:15.613320+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 126, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:15.666255+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 127, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:15.710446+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 128, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:15.744105+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 129, "parameters": [7]}
+{"utc": "2026-11-12T15:37:15.872019+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:18.821455+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 130, "parameters": []}
+{"utc": "2026-11-12T15:37:18.835209+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 131, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:18.842636+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 132, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:18.848930+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 133, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:18.871384+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 134, "parameters": [8]}
+{"utc": "2026-11-12T15:37:20.878068+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:21.931875+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 135, "parameters": []}
+{"utc": "2026-11-12T15:37:21.949975+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 136, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:21.957748+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 137, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:21.965353+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 138, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:21.978612+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 139, "parameters": [9]}
+{"utc": "2026-11-12T15:37:23.355767+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 140, "parameters": []}
+{"utc": "2026-11-12T15:37:23.375341+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 141, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:23.421939+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 142, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:23.436015+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 143, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:23.458571+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 144, "parameters": [10]}
+{"utc": "2026-11-12T15:37:23.474606+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 145, "parameters": [9]}
+{"utc": "2026-11-12T15:37:23.489608+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 146, "parameters": [8]}
+{"utc": "2026-11-12T15:37:23.517782+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 147, "parameters": [7]}
+{"utc": "2026-11-12T15:37:23.574255+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 148, "parameters": [6]}
+{"utc": "2026-11-12T15:37:23.594485+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 149, "parameters": [5]}
+{"utc": "2026-11-12T15:37:23.627352+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 150, "parameters": [4]}
+{"utc": "2026-11-12T15:37:23.672751+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 151, "parameters": [3]}
+{"utc": "2026-11-12T15:37:23.736183+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 152, "parameters": [2]}
+{"utc": "2026-11-12T15:37:23.832682+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 153, "parameters": [1]}
+{"utc": "2026-11-12T15:37:25.050575+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 154, "parameters": []}
+{"utc": "2026-11-12T15:37:25.058547+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 155, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:25.063131+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 156, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:25.067440+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 157, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:25.071263+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 158, "parameters": [10]}
+{"utc": "2026-11-12T15:37:25.886679+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:28.101098+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 159, "parameters": []}
+{"utc": "2026-11-12T15:37:28.105357+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 160, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:28.111779+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 161, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:28.116765+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 162, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:28.121586+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 163, "parameters": [1]}
+{"utc": "2026-11-12T15:37:30.901666+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:31.149757+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 164, "parameters": []}
+{"utc": "2026-11-12T15:37:31.157185+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 165, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:31.164970+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 166, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:31.168554+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 167, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:31.174901+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 168, "parameters": [2]}
+{"utc": "2026-11-12T15:37:34.205310+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 169, "parameters": []}
+{"utc": "2026-11-12T15:37:34.213322+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 170, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:34.227593+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 171, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:34.246998+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 172, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:34.253304+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 173, "parameters": [3]}
+{"utc": "2026-11-12T15:37:35.908072+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:37.299827+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 174, "parameters": []}
+{"utc": "2026-11-12T15:37:37.307299+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 175, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:37.312417+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 176, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:37.318219+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 177, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:37.325799+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 178, "parameters": [4]}
+{"utc": "2026-11-12T15:37:40.356502+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 179, "parameters": []}
+{"utc": "2026-11-12T15:37:40.365282+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 180, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:40.370191+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 181, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:40.374692+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 182, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:40.380737+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 183, "parameters": [5]}
+{"utc": "2026-11-12T15:37:40.921747+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:43.436863+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 184, "parameters": []}
+{"utc": "2026-11-12T15:37:43.460476+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 185, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:43.536675+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 186, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:43.548037+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 187, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:43.553218+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 188, "parameters": [6]}
+{"utc": "2026-11-12T15:37:45.939669+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:46.639681+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 189, "parameters": []}
+{"utc": "2026-11-12T15:37:46.645758+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 190, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:46.655669+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 191, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:46.662998+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 192, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:46.669845+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 193, "parameters": [7]}
+{"utc": "2026-11-12T15:37:49.710305+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 194, "parameters": []}
+{"utc": "2026-11-12T15:37:49.716708+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 195, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:49.722714+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 196, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:49.728141+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 197, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:49.733509+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 198, "parameters": [8]}
+{"utc": "2026-11-12T15:37:50.948401+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:52.765917+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 199, "parameters": []}
+{"utc": "2026-11-12T15:37:52.770733+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 200, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:52.776686+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 201, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:52.781274+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 202, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:52.786051+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 203, "parameters": [9]}
+{"utc": "2026-11-12T15:37:55.819938+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 204, "parameters": []}
+{"utc": "2026-11-12T15:37:55.826718+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 205, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:55.834127+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 206, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:55.842397+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 207, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:55.848815+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 208, "parameters": [10]}
+{"utc": "2026-11-12T15:37:55.948432+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:37:58.889702+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 209, "parameters": []}
+{"utc": "2026-11-12T15:37:58.902803+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 210, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:37:58.912240+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 211, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:37:58.921642+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 212, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:37:58.926701+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 213, "parameters": [1]}
+{"utc": "2026-11-12T15:38:00.961236+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:01.964493+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 214, "parameters": []}
+{"utc": "2026-11-12T15:38:01.969085+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 215, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:01.975451+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 216, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:01.979825+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 217, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:01.988080+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 218, "parameters": [2]}
+{"utc": "2026-11-12T15:38:05.020827+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 219, "parameters": []}
+{"utc": "2026-11-12T15:38:05.029819+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 220, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:05.034725+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 221, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:05.039066+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 222, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:05.043037+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 223, "parameters": [3]}
+{"utc": "2026-11-12T15:38:05.968144+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:08.077147+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 224, "parameters": []}
+{"utc": "2026-11-12T15:38:08.082448+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 225, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:08.086896+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 226, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:08.093813+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 227, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:08.098359+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 228, "parameters": [4]}
+{"utc": "2026-11-12T15:38:10.983323+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:11.127584+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 229, "parameters": []}
+{"utc": "2026-11-12T15:38:11.136318+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 230, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:11.141657+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 231, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:11.146334+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 232, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:11.150538+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 233, "parameters": [5]}
+{"utc": "2026-11-12T15:38:14.178533+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 234, "parameters": []}
+{"utc": "2026-11-12T15:38:14.190196+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 235, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:14.202758+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 236, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:14.206457+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 237, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:14.211075+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 238, "parameters": [6]}
+{"utc": "2026-11-12T15:38:15.998881+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:17.237399+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 239, "parameters": []}
+{"utc": "2026-11-12T15:38:17.245605+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 240, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:17.253698+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 241, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:17.261586+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 242, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:17.269248+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 243, "parameters": [7]}
+{"utc": "2026-11-12T15:38:20.302182+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 244, "parameters": []}
+{"utc": "2026-11-12T15:38:20.308154+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 245, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:20.313331+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 246, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:20.317237+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 247, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:20.323013+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 248, "parameters": [8]}
+{"utc": "2026-11-12T15:38:21.011532+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:23.360956+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 249, "parameters": []}
+{"utc": "2026-11-12T15:38:23.367301+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 250, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:23.378885+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 251, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:23.384370+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 252, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:23.390971+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 253, "parameters": [9]}
+{"utc": "2026-11-12T15:38:26.014075+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:26.425892+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 254, "parameters": []}
+{"utc": "2026-11-12T15:38:26.439010+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 255, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:26.444402+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 256, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:26.447748+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 257, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:26.458835+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 258, "parameters": [10]}
+{"utc": "2026-11-12T15:38:29.490777+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 259, "parameters": []}
+{"utc": "2026-11-12T15:38:29.500783+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 260, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:29.508808+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 261, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:29.521143+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 262, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:29.526756+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 263, "parameters": [1]}
+{"utc": "2026-11-12T15:38:31.030226+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:32.561993+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 264, "parameters": []}
+{"utc": "2026-11-12T15:38:32.579968+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 265, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:32.584632+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 266, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:32.590806+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 267, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:32.594663+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 268, "parameters": [2]}
+{"utc": "2026-11-12T15:38:35.627069+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 269, "parameters": []}
+{"utc": "2026-11-12T15:38:35.633717+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 270, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:35.639832+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 271, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:35.647886+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 272, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:35.652394+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 273, "parameters": [3]}
+{"utc": "2026-11-12T15:38:36.033571+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:36.100470+00:00", "channel": "event", "phase": "object-added", "handle": 3, "repeats": 5, "deliveries": 5}
+{"utc": "2026-11-12T15:38:36.105708+00:00", "action": "pacing", "delaySeconds": 0.2, "chunkBytes": 8192}
+{"utc": "2026-11-12T15:38:36.114654+00:00", "action": "add", "handle": 11, "readyAfterSeconds": 0.0, "raw": false, "sha256": "2a0983fbf778a10b0e50165500cb226bcaa185513e770df7651628a9deddb73f"}
+{"utc": "2026-11-12T15:38:36.115161+00:00", "channel": "event", "phase": "object-added", "handle": 11, "repeats": 1, "deliveries": 1}
+{"utc": "2026-11-12T15:38:38.682852+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 274, "parameters": []}
+{"utc": "2026-11-12T15:38:38.693812+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 275, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:38.699601+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 276, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:38.705007+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 277, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:38.710366+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 278, "parameters": [3]}
+{"utc": "2026-11-12T15:38:38.717459+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 279, "parameters": [11]}
+{"utc": "2026-11-12T15:38:41.035550+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:41.757255+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 280, "parameters": []}
+{"utc": "2026-11-12T15:38:41.767731+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 281, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:38:41.776999+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 282, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:38:41.781409+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 283, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:38:41.800716+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 284, "parameters": [11]}
+{"utc": "2026-11-12T15:38:41.866890+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 285, "parameters": [11]}
+{"utc": "2026-11-12T15:38:41.885273+00:00", "channel": "command", "connection": 4, "operation": "0x1009", "transaction": 286, "parameters": [11]}
+{"utc": "2026-11-12T15:38:46.050871+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:51.056869+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:38:56.067546+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:01.078467+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:06.081702+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:11.085759+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:16.087564+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:20.583407+00:00", "channel": "command", "connection": 4, "phase": "object-sent", "handle": 11, "bytes": 1579614, "sha256": "2a0983fbf778a10b0e50165500cb226bcaa185513e770df7651628a9deddb73f"}
+{"utc": "2026-11-12T15:39:20.609413+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 287, "parameters": [11]}
+{"utc": "2026-11-12T15:39:21.102813+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:24.115023+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 288, "parameters": []}
+{"utc": "2026-11-12T15:39:24.121271+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 289, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:24.129626+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 290, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:24.135227+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 291, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:24.140513+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 292, "parameters": [4]}
+{"utc": "2026-11-12T15:39:26.106739+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:27.172155+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 293, "parameters": []}
+{"utc": "2026-11-12T15:39:27.179490+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 294, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:27.185001+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 295, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:27.190389+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 296, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:27.194460+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 297, "parameters": [5]}
+{"utc": "2026-11-12T15:39:30.223698+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 298, "parameters": []}
+{"utc": "2026-11-12T15:39:30.231719+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 299, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:30.237486+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 300, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:30.243897+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 301, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:30.251122+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 302, "parameters": [6]}
+{"utc": "2026-11-12T15:39:31.111626+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:33.290337+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 303, "parameters": []}
+{"utc": "2026-11-12T15:39:33.298239+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 304, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:33.305317+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 305, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:33.310278+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 306, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:33.315156+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 307, "parameters": [7]}
+{"utc": "2026-11-12T15:39:36.116718+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:36.341898+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 308, "parameters": []}
+{"utc": "2026-11-12T15:39:36.348974+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 309, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:36.357183+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 310, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:36.364441+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 311, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:36.374227+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 312, "parameters": [8]}
+{"utc": "2026-11-12T15:39:39.410998+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 313, "parameters": []}
+{"utc": "2026-11-12T15:39:39.417494+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 314, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:39.426041+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 315, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:39.434188+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 316, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:39.438579+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 317, "parameters": [9]}
+{"utc": "2026-11-12T15:39:41.120488+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:42.470686+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 318, "parameters": []}
+{"utc": "2026-11-12T15:39:42.478544+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 319, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:42.488018+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 320, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:42.495548+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 321, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:42.504844+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 322, "parameters": [10]}
+{"utc": "2026-11-12T15:39:45.551355+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 323, "parameters": []}
+{"utc": "2026-11-12T15:39:45.556910+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 324, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:45.561717+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 325, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:45.566670+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 326, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:45.575734+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 327, "parameters": [11]}
+{"utc": "2026-11-12T15:39:46.132472+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:48.608321+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 328, "parameters": []}
+{"utc": "2026-11-12T15:39:48.617337+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 329, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:48.621983+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 330, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:48.626474+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 331, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:48.633705+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 332, "parameters": [1]}
+{"utc": "2026-11-12T15:39:51.133798+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:51.675317+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 333, "parameters": []}
+{"utc": "2026-11-12T15:39:51.680688+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 334, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:51.689759+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 335, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:51.695914+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 336, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:51.702041+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 337, "parameters": [2]}
+{"utc": "2026-11-12T15:39:54.738423+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 338, "parameters": []}
+{"utc": "2026-11-12T15:39:54.748090+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 339, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:54.753488+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 340, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:54.762470+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 341, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:54.770607+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 342, "parameters": [3]}
+{"utc": "2026-11-12T15:39:56.141556+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:39:57.817767+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 343, "parameters": []}
+{"utc": "2026-11-12T15:39:57.825515+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 344, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:39:57.829288+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 345, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:39:57.836764+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 346, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:39:57.846312+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 347, "parameters": [4]}
+{"utc": "2026-11-12T15:40:00.880427+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 348, "parameters": []}
+{"utc": "2026-11-12T15:40:00.889553+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 349, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:00.895148+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 350, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:00.900116+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 351, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:00.910274+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 352, "parameters": [5]}
+{"utc": "2026-11-12T15:40:01.148419+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:03.942531+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 353, "parameters": []}
+{"utc": "2026-11-12T15:40:03.950013+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 354, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:03.961568+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 355, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:03.966043+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 356, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:03.971481+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 357, "parameters": [6]}
+{"utc": "2026-11-12T15:40:06.158109+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:07.001567+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 358, "parameters": []}
+{"utc": "2026-11-12T15:40:07.009023+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 359, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:07.014135+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 360, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:07.021936+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 361, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:07.027644+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 362, "parameters": [7]}
+{"utc": "2026-11-12T15:40:10.060312+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 363, "parameters": []}
+{"utc": "2026-11-12T15:40:10.071474+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 364, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:10.075966+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 365, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:10.081008+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 366, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:10.085366+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 367, "parameters": [8]}
+{"utc": "2026-11-12T15:40:11.162371+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:13.121710+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 368, "parameters": []}
+{"utc": "2026-11-12T15:40:13.128764+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 369, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:13.136482+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 370, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:13.142687+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 371, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:13.153206+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 372, "parameters": [9]}
+{"utc": "2026-11-12T15:40:16.170876+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:16.187232+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 373, "parameters": []}
+{"utc": "2026-11-12T15:40:16.213077+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 374, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:16.220674+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 375, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:16.225890+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 376, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:16.230035+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 377, "parameters": [10]}
+{"utc": "2026-11-12T15:40:19.261806+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 378, "parameters": []}
+{"utc": "2026-11-12T15:40:19.269479+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 379, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:19.278709+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 380, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:19.292371+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 381, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:19.307037+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 382, "parameters": [11]}
+{"utc": "2026-11-12T15:40:21.186582+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:22.345197+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 383, "parameters": []}
+{"utc": "2026-11-12T15:40:22.351696+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 384, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:22.360430+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 385, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:22.364844+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 386, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:22.369391+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 387, "parameters": [1]}
+{"utc": "2026-11-12T15:40:25.400103+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 388, "parameters": []}
+{"utc": "2026-11-12T15:40:25.405931+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 389, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:25.410077+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 390, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:25.416943+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 391, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:25.421868+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 392, "parameters": [2]}
+{"utc": "2026-11-12T15:40:26.202536+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:28.458795+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 393, "parameters": []}
+{"utc": "2026-11-12T15:40:28.466617+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 394, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:28.471191+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 395, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:28.476795+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 396, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:28.481732+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 397, "parameters": [3]}
+{"utc": "2026-11-12T15:40:31.203234+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:31.517950+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 398, "parameters": []}
+{"utc": "2026-11-12T15:40:31.526578+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 399, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:31.530574+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 400, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:31.541297+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 401, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:31.545922+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 402, "parameters": [4]}
+{"utc": "2026-11-12T15:40:34.582518+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 403, "parameters": []}
+{"utc": "2026-11-12T15:40:34.590123+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 404, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:34.596548+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 405, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:34.604567+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 406, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:34.608848+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 407, "parameters": [5]}
+{"utc": "2026-11-12T15:40:36.212221+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:37.638662+00:00", "channel": "command", "connection": 4, "operation": "0x1004", "transaction": 408, "parameters": []}
+{"utc": "2026-11-12T15:40:37.646524+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 409, "parameters": [1, 14337, 0]}
+{"utc": "2026-11-12T15:40:37.652587+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 410, "parameters": [2, 14337, 0]}
+{"utc": "2026-11-12T15:40:37.661071+00:00", "channel": "command", "connection": 4, "operation": "0x1007", "transaction": 411, "parameters": [2, 0, 0]}
+{"utc": "2026-11-12T15:40:37.666382+00:00", "channel": "command", "connection": 4, "operation": "0x1008", "transaction": 412, "parameters": [6]}
+{"utc": "2026-11-12T15:40:41.225664+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:41.319462+00:00", "action": "add", "handle": 12, "readyAfterSeconds": 0.0, "raw": false, "sha256": "7e977d48cff6d730e41a8210743f60c3df8123648b8a1ecdd89ae12e83430863"}
+{"utc": "2026-11-12T15:40:41.319936+00:00", "channel": "event", "phase": "object-added", "handle": 12, "repeats": 1, "deliveries": 1}
+{"utc": "2026-11-12T15:40:46.233606+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:51.243812+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:40:56.244223+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:01.254631+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:06.257967+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:11.273234+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:16.278704+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:21.289999+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:26.304480+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:31.306399+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:36.318268+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:41.325295+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:46.340178+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:51.344217+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:41:56.357008+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:01.360230+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:06.375401+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:11.387670+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:16.401192+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:21.416247+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:26.423824+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:31.427612+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:36.441997+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:41.444960+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:46.455830+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:51.463608+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:42:56.480039+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:01.483150+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:06.487253+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:11.499024+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:16.505962+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:21.509373+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:26.515693+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:31.522765+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:36.529527+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:41.542481+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:46.546205+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:51.561147+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:43:56.573139+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:01.577905+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:06.589626+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:11.597439+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:16.598684+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:21.599168+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:26.604313+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:31.617680+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:36.631578+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:41.641176+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:46.653089+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:51.661444+00:00", "channel": "event", "phase": "ping", "connection": 4}
+{"utc": "2026-11-12T15:44:56.672473+00:00", "channel": "event", "phase": "ping", "connection": 4}

@@ -1,0 +1,311 @@
+﻿2026-11-12T15:20:55.5883270Z Current runner version: '2.338.2'
+2026-11-12T15:20:55.5898780Z ##[group]Runner Image Provisioner
+2026-11-12T15:20:55.5899310Z Hosted Compute Agent
+2026-11-12T15:20:55.5899690Z Version: 20261028.624
+2026-11-12T15:20:55.5900170Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-12T15:20:55.5900710Z Build Date: 2026-10-28T21:51:42Z
+2026-11-12T15:20:55.5901240Z Worker ID: {dfaf82ae-d135-49f6-bfde-672d939ff97f}
+2026-11-12T15:20:55.5901730Z Region: westus
+2026-11-12T15:20:55.5902090Z Cloud: MacCloud
+2026-11-12T15:20:55.5902460Z ##[endgroup]
+2026-11-12T15:20:55.5903350Z ##[group]Operating System
+2026-11-12T15:20:55.5903750Z macOS
+2026-11-12T15:20:55.5904090Z 26.7.2
+2026-11-12T15:20:55.5904410Z 25G332
+2026-11-12T15:20:55.5904750Z ##[endgroup]
+2026-11-12T15:20:55.5905100Z ##[group]Runner Image
+2026-11-12T15:20:55.5905500Z Image: macos-26-arm64
+2026-11-12T15:20:55.5906080Z Version: 20261102.0473.1
+2026-11-12T15:20:55.5906920Z Included Software: https://github.com/actions/runner-images/blob/macos-26-arm64/20261102.0473/images/macos/macos-26-arm64-Readme.md
+2026-11-12T15:20:55.5908040Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-26-arm64%2F20261102.0473
+2026-11-12T15:20:55.5908710Z ##[endgroup]
+2026-11-12T15:20:55.5909430Z ##[group]GITHUB_TOKEN Permissions
+2026-11-12T15:20:55.5910510Z Contents: read
+2026-11-12T15:20:55.5910870Z Metadata: read
+2026-11-12T15:20:55.5911230Z ##[endgroup]
+2026-11-12T15:20:55.5912560Z Secret source: Actions
+2026-11-12T15:20:55.5913130Z Cache mode: write
+2026-11-12T15:20:55.5913570Z Prepare workflow directory
+2026-11-12T15:20:55.6250320Z Prepare all required actions
+2026-11-12T15:20:55.6287510Z Getting action download info
+2026-11-12T15:20:55.8376660Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-12T15:20:56.2273260Z Download action repository 'actions/cache@5a3ec84eff668545956fd18022155c47e93e2684' (SHA:5a3ec84eff668545956fd18022155c47e93e2684)
+2026-11-12T15:20:56.3556130Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-12T15:20:56.6078810Z Complete job name: apple-app
+2026-11-12T15:20:56.6811360Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-11-12T15:20:56.6812430Z with:
+2026-11-12T15:20:56.6812830Z   fetch-depth: 0
+2026-11-12T15:20:56.6813170Z   repository: 1162107757/nikon-camera
+2026-11-12T15:20:56.6816380Z   token: ***
+2026-11-12T15:20:56.6816690Z   ssh-strict: true
+2026-11-12T15:20:56.6817010Z   ssh-user: git
+2026-11-12T15:20:56.6817330Z   persist-credentials: true
+2026-11-12T15:20:56.6817680Z   clean: true
+2026-11-12T15:20:56.6818010Z   sparse-checkout-cone-mode: true
+2026-11-12T15:20:56.6818390Z   fetch-tags: false
+2026-11-12T15:20:56.6818710Z   show-progress: true
+2026-11-12T15:20:56.6819040Z   lfs: false
+2026-11-12T15:20:56.6819350Z   submodules: false
+2026-11-12T15:20:56.6819680Z   set-safe-directory: true
+2026-11-12T15:20:56.6820140Z   allow-unsafe-pr-checkout: false
+2026-11-12T15:20:56.6820700Z ##[endgroup]
+2026-11-12T15:20:57.5430420Z Syncing repository: 1162107757/nikon-camera
+2026-11-12T15:20:57.5432720Z ##[group]Getting Git version info
+2026-11-12T15:20:57.5433430Z Working directory is '/Users/runner/work/nikon-camera/nikon-camera'
+2026-11-12T15:20:57.5434520Z [command]/opt/homebrew/bin/git version
+2026-11-12T15:20:57.6045090Z git version 2.56.0
+2026-11-12T15:20:57.6060070Z ##[endgroup]
+2026-11-12T15:20:57.6073600Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/98c60d21-350d-4e88-8fa0-d5ef994ee598/.gitconfig'
+2026-11-12T15:20:57.6079710Z Temporarily overriding HOME='/Users/runner/work/_temp/98c60d21-350d-4e88-8fa0-d5ef994ee598' before making global git config changes
+2026-11-12T15:20:57.6080830Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T15:20:57.6090250Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/nikon-camera/nikon-camera
+2026-11-12T15:20:57.6300450Z Deleting the contents of '/Users/runner/work/nikon-camera/nikon-camera'
+2026-11-12T15:20:57.6308070Z ##[group]Initializing the repository
+2026-11-12T15:20:57.6316120Z [command]/opt/homebrew/bin/git init /Users/runner/work/nikon-camera/nikon-camera
+2026-11-12T15:20:57.6628070Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-12T15:20:57.6629200Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-12T15:20:57.6630100Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-12T15:20:57.6630700Z hint: call:
+2026-11-12T15:20:57.6632490Z hint:
+2026-11-12T15:20:57.6633270Z hint: 	git config --global init.defaultBranch <name>
+2026-11-12T15:20:57.6633810Z hint:
+2026-11-12T15:20:57.6634370Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-12T15:20:57.6635460Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-12T15:20:57.6636140Z hint:
+2026-11-12T15:20:57.6636880Z hint: 	git branch -m <name>
+2026-11-12T15:20:57.6637410Z hint:
+2026-11-12T15:20:57.6638170Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-12T15:20:57.6645710Z Initialized empty Git repository in /Users/runner/work/nikon-camera/nikon-camera/.git/
+2026-11-12T15:20:57.6657000Z [command]/opt/homebrew/bin/git remote add origin https://github.com/1162107757/nikon-camera
+2026-11-12T15:20:57.6755920Z ##[endgroup]
+2026-11-12T15:20:57.6756790Z ##[group]Disabling automatic garbage collection
+2026-11-12T15:20:57.6765220Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-12T15:20:57.6863690Z ##[endgroup]
+2026-11-12T15:20:57.6881800Z ##[group]Setting up auth
+2026-11-12T15:20:57.6883100Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T15:20:57.7027450Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T15:20:57.8848010Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T15:20:57.8947350Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T15:20:58.0424060Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T15:20:58.0691220Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T15:20:58.2233870Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-12T15:20:58.2560180Z ##[endgroup]
+2026-11-12T15:20:58.2662200Z ##[group]Fetching the repository
+2026-11-12T15:20:58.2766870Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-12T15:21:08.9359640Z From https://github.com/1162107757/nikon-camera
+2026-11-12T15:21:08.9363300Z  * [new branch]      codex/cross-platform-200 -> origin/codex/cross-platform-200
+2026-11-12T15:21:08.9375650Z  * [new branch]      codex/cross-platform-migration -> origin/codex/cross-platform-migration
+2026-11-12T15:21:08.9378390Z  * [new branch]      codex/features212 -> origin/codex/features212
+2026-11-12T15:21:08.9382270Z  * [new branch]      codex/ios-unsigned-20261108t055033 -> origin/codex/ios-unsigned-20261108t055033
+2026-11-12T15:21:08.9385200Z  * [new branch]      feature/detail-on-demand -> origin/feature/detail-on-demand
+2026-11-12T15:21:08.9386750Z  * [new branch]      feature/phase1-wb-picker-dehaze -> origin/feature/phase1-wb-picker-dehaze
+2026-11-12T15:21:08.9387720Z  * [new branch]      master            -> origin/master
+2026-11-12T15:21:08.9425400Z [command]/opt/homebrew/bin/git branch --list --remote origin/codex/cross-platform-migration
+2026-11-12T15:21:08.9544160Z   origin/codex/cross-platform-migration
+2026-11-12T15:21:08.9556620Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/codex/cross-platform-migration
+2026-11-12T15:21:08.9620190Z db8e2ef3766a228bd2dd93f6e1e139b697d3ff18
+2026-11-12T15:21:08.9623590Z ##[endgroup]
+2026-11-12T15:21:08.9624210Z ##[group]Determining the checkout info
+2026-11-12T15:21:08.9624840Z ##[endgroup]
+2026-11-12T15:21:08.9654050Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-12T15:21:08.9782370Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-12T15:21:08.9888520Z ##[group]Checking out the ref
+2026-11-12T15:21:08.9896050Z [command]/opt/homebrew/bin/git checkout --progress --force -B codex/cross-platform-migration refs/remotes/origin/codex/cross-platform-migration
+2026-11-12T15:21:10.1481660Z Updating files:  15% (1205/7845)
+2026-11-12T15:21:10.1931280Z Updating files:  16% (1256/7845)
+2026-11-12T15:21:10.2936790Z Updating files:  17% (1334/7845)
+2026-11-12T15:21:10.3815000Z Updating files:  18% (1413/7845)
+2026-11-12T15:21:10.4234230Z Updating files:  19% (1491/7845)
+2026-11-12T15:21:10.6701470Z Updating files:  20% (1569/7845)
+2026-11-12T15:21:10.7807140Z Updating files:  21% (1648/7845)
+2026-11-12T15:21:10.9182210Z Updating files:  22% (1726/7845)
+2026-11-12T15:21:11.0185480Z Updating files:  23% (1805/7845)
+2026-11-12T15:21:11.0361520Z Updating files:  23% (1873/7845)
+2026-11-12T15:21:11.0974010Z Updating files:  24% (1883/7845)
+2026-11-12T15:21:11.1916170Z Updating files:  25% (1962/7845)
+2026-11-12T15:21:11.2529370Z Updating files:  26% (2040/7845)
+2026-11-12T15:21:11.2682130Z Updating files:  27% (2119/7845)
+2026-11-12T15:21:11.2938720Z Updating files:  28% (2197/7845)
+2026-11-12T15:21:11.3106570Z Updating files:  29% (2276/7845)
+2026-11-12T15:21:11.3299780Z Updating files:  30% (2354/7845)
+2026-11-12T15:21:11.3547900Z Updating files:  31% (2432/7845)
+2026-11-12T15:21:11.3771110Z Updating files:  32% (2511/7845)
+2026-11-12T15:21:11.4019010Z Updating files:  33% (2589/7845)
+2026-11-12T15:21:11.4316990Z Updating files:  34% (2668/7845)
+2026-11-12T15:21:11.4496430Z Updating files:  35% (2746/7845)
+2026-11-12T15:21:11.4622370Z Updating files:  36% (2825/7845)
+2026-11-12T15:21:11.4772560Z Updating files:  37% (2903/7845)
+2026-11-12T15:21:11.4880100Z Updating files:  38% (2982/7845)
+2026-11-12T15:21:11.5083590Z Updating files:  39% (3060/7845)
+2026-11-12T15:21:11.5567950Z Updating files:  40% (3138/7845)
+2026-11-12T15:21:11.5744920Z Updating files:  41% (3217/7845)
+2026-11-12T15:21:11.5910300Z Updating files:  42% (3295/7845)
+2026-11-12T15:21:11.6063620Z Updating files:  43% (3374/7845)
+2026-11-12T15:21:11.6176380Z Updating files:  44% (3452/7845)
+2026-11-12T15:21:11.6293830Z Updating files:  45% (3531/7845)
+2026-11-12T15:21:11.6396080Z Updating files:  46% (3609/7845)
+2026-11-12T15:21:11.6568600Z Updating files:  47% (3688/7845)
+2026-11-12T15:21:11.6668030Z Updating files:  48% (3766/7845)
+2026-11-12T15:21:11.6789330Z Updating files:  49% (3845/7845)
+2026-11-12T15:21:11.6893520Z Updating files:  50% (3923/7845)
+2026-11-12T15:21:11.7017800Z Updating files:  51% (4001/7845)
+2026-11-12T15:21:11.7195130Z Updating files:  52% (4080/7845)
+2026-11-12T15:21:11.7357530Z Updating files:  53% (4158/7845)
+2026-11-12T15:21:11.7479150Z Updating files:  54% (4237/7845)
+2026-11-12T15:21:11.7681170Z Updating files:  55% (4315/7845)
+2026-11-12T15:21:11.7795080Z Updating files:  56% (4394/7845)
+2026-11-12T15:21:11.7887650Z Updating files:  57% (4472/7845)
+2026-11-12T15:21:11.7984190Z Updating files:  58% (4551/7845)
+2026-11-12T15:21:11.8113630Z Updating files:  59% (4629/7845)
+2026-11-12T15:21:11.8224820Z Updating files:  60% (4707/7845)
+2026-11-12T15:21:11.8325340Z Updating files:  61% (4786/7845)
+2026-11-12T15:21:11.8414310Z Updating files:  62% (4864/7845)
+2026-11-12T15:21:11.8539260Z Updating files:  63% (4943/7845)
+2026-11-12T15:21:11.8696120Z Updating files:  64% (5021/7845)
+2026-11-12T15:21:11.8880920Z Updating files:  65% (5100/7845)
+2026-11-12T15:21:11.9082690Z Updating files:  66% (5178/7845)
+2026-11-12T15:21:11.9216680Z Updating files:  67% (5257/7845)
+2026-11-12T15:21:11.9377220Z Updating files:  68% (5335/7845)
+2026-11-12T15:21:11.9589300Z Updating files:  69% (5414/7845)
+2026-11-12T15:21:11.9697020Z Updating files:  70% (5492/7845)
+2026-11-12T15:21:11.9815770Z Updating files:  71% (5570/7845)
+2026-11-12T15:21:11.9962230Z Updating files:  72% (5649/7845)
+2026-11-12T15:21:12.0112260Z Updating files:  73% (5727/7845)
+2026-11-12T15:21:12.0135120Z Updating files:  74% (5806/7845)
+2026-11-12T15:21:12.0261910Z Updating files:  74% (5819/7845)
+2026-11-12T15:21:12.0432410Z Updating files:  75% (5884/7845)
+2026-11-12T15:21:12.0594140Z Updating files:  76% (5963/7845)
+2026-11-12T15:21:12.0701050Z Updating files:  77% (6041/7845)
+2026-11-12T15:21:12.0791110Z Updating files:  78% (6120/7845)
+2026-11-12T15:21:12.0904620Z Updating files:  79% (6198/7845)
+2026-11-12T15:21:12.1081870Z Updating files:  80% (6276/7845)
+2026-11-12T15:21:12.1221500Z Updating files:  81% (6355/7845)
+2026-11-12T15:21:12.1379420Z Updating files:  82% (6433/7845)
+2026-11-12T15:21:12.1523040Z Updating files:  83% (6512/7845)
+2026-11-12T15:21:12.1807520Z Updating files:  84% (6590/7845)
+2026-11-12T15:21:12.2046550Z Updating files:  85% (6669/7845)
+2026-11-12T15:21:12.2319240Z Updating files:  86% (6747/7845)
+2026-11-12T15:21:12.2865320Z Updating files:  87% (6826/7845)
+2026-11-12T15:21:12.3091800Z Updating files:  88% (6904/7845)
+2026-11-12T15:21:12.3300210Z Updating files:  89% (6983/7845)
+2026-11-12T15:21:12.3484740Z Updating files:  90% (7061/7845)
+2026-11-12T15:21:12.3683390Z Updating files:  91% (7139/7845)
+2026-11-12T15:21:12.4064340Z Updating files:  92% (7218/7845)
+2026-11-12T15:21:12.4228130Z Updating files:  93% (7296/7845)
+2026-11-12T15:21:12.4340490Z Updating files:  94% (7375/7845)
+2026-11-12T15:21:12.4476620Z Updating files:  95% (7453/7845)
+2026-11-12T15:21:12.4646890Z Updating files:  96% (7532/7845)
+2026-11-12T15:21:12.4817530Z Updating files:  97% (7610/7845)
+2026-11-12T15:21:12.5048730Z Updating files:  98% (7689/7845)
+2026-11-12T15:21:12.5170170Z Updating files:  99% (7767/7845)
+2026-11-12T15:21:12.5170940Z Updating files: 100% (7845/7845)
+2026-11-12T15:21:12.5171470Z Updating files: 100% (7845/7845), done.
+2026-11-12T15:21:12.5422300Z Switched to a new branch 'codex/cross-platform-migration'
+2026-11-12T15:21:12.5443280Z branch 'codex/cross-platform-migration' set up to track 'origin/codex/cross-platform-migration'.
+2026-11-12T15:21:12.5545850Z ##[endgroup]
+2026-11-12T15:21:12.5773790Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-12T15:21:12.5938750Z db8e2ef3766a228bd2dd93f6e1e139b697d3ff18
+2026-11-12T15:21:12.6355450Z ##[group]Run echo "xcode=$(xcodebuild -version | tr '\n ' '--')" >> "$GITHUB_OUTPUT"
+2026-11-12T15:21:12.6356060Z [36;1mecho "xcode=$(xcodebuild -version | tr '\n ' '--')" >> "$GITHUB_OUTPUT"[0m
+2026-11-12T15:21:12.6403750Z shell: /bin/bash -e {0}
+2026-11-12T15:21:12.6404080Z ##[endgroup]
+2026-11-12T15:21:13.0167340Z ##[group]Run actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684
+2026-11-12T15:21:13.0167720Z with:
+2026-11-12T15:21:13.0168190Z   path: .tooling/cross-platform187/j2objc-3.1/dist
+.tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
+cross-platform/.build/raw-apple
+
+2026-11-12T15:21:13.0169060Z   key: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--6179b5157334bd11ba1c84927f1828aaa2ac7c019b9a9c3b2e010b17736940db
+2026-11-12T15:21:13.0169620Z   enableCrossOsArchive: false
+2026-11-12T15:21:13.0169890Z   fail-on-cache-miss: false
+2026-11-12T15:21:13.0170150Z   lookup-only: false
+2026-11-12T15:21:13.0170390Z ##[endgroup]
+2026-11-12T15:21:13.1491200Z (node:1236) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T15:21:13.1493670Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T15:21:13.3199940Z Cache hit for: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--6179b5157334bd11ba1c84927f1828aaa2ac7c019b9a9c3b2e010b17736940db
+2026-11-12T15:21:13.3283150Z (node:1236) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-12T15:21:14.4586800Z Received 134217728 of 215279159 (62.3%), 119.4 MBs/sec
+2026-11-12T15:21:15.2141150Z Received 215279159 of 215279159 (100.0%), 112.3 MBs/sec
+2026-11-12T15:21:15.2284940Z Cache Size: ~205 MB (215279159 B)
+2026-11-12T15:21:15.2391570Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/d6dfd5e4-5cae-4b5e-8bad-50e01cfff16c/cache.tzst -P -C /Users/runner/work/nikon-camera/nikon-camera --delay-directory-restore --use-compress-program unzstd
+2026-11-12T15:21:18.9619050Z Cache restored successfully
+2026-11-12T15:21:18.9768450Z Cache restored from key: huevia-apple-native-v1-ARM64-Xcode-26.6-Build-version-17F113--6179b5157334bd11ba1c84927f1828aaa2ac7c019b9a9c3b2e010b17736940db
+2026-11-12T15:21:18.9929520Z ##[group]Run bash cross-platform/tool/mobile_apple.sh prepare
+2026-11-12T15:21:18.9930020Z [36;1mbash cross-platform/tool/mobile_apple.sh prepare[0m
+2026-11-12T15:21:18.9983370Z shell: /bin/bash -e {0}
+2026-11-12T15:21:18.9983630Z ##[endgroup]
+2026-11-12T15:21:19.5686440Z Valid UTF-8 text and platform configuration: 576 files
+2026-11-12T15:21:27.6273310Z From https://github.com/flutter/flutter
+2026-11-12T15:21:27.6274820Z  * branch              c197ca5199e9ee5661e865596c9c07294dfab51c -> FETCH_HEAD
+2026-11-12T15:21:31.7110630Z From https://github.com/flutter/flutter
+2026-11-12T15:21:31.7117160Z  * [new tag]           3.47.9     -> 3.47.9
+2026-11-12T15:22:16.4552940Z Frozen original Git reference preserved: 420; approved original repairs verified: 8; other original files unchanged: 412
+2026-11-12T15:25:02.3421150Z PASS original JVM tests translated to Objective-C and matching image fingerprints
+2026-11-12T15:25:09.0307110Z PASS 38 Apple native avatar checks; eight EXIF transforms, dimensions, metadata, unchanged source, cancellation and white background
+2026-11-12T15:26:55.0329020Z WIFI_STAGE echo-connect
+2026-11-12T15:26:55.0332010Z PASS 24 Apple Wi-Fi stream checks; exact bytes, offsets, segmented reads, timeout, refusal and concurrent close
+2026-11-12T15:27:01.0322610Z Staged verified generated core and pinned JRE runtime for the Apple host
+2026-11-12T15:27:19.5025330Z Setting "enable-swift-package-manager" value to "false".
+2026-11-12T15:27:19.5145960Z 
+2026-11-12T15:27:19.5149700Z You may need to restart any open editors for them to read new settings.
+2026-11-12T15:27:37.6080110Z Verified project-level CocoaPods-only native plugin resolution
+2026-11-12T15:27:37.6293270Z ##[group]Run bash cross-platform/tool/mobile_apple.sh build
+2026-11-12T15:27:37.6293830Z [36;1mbash cross-platform/tool/mobile_apple.sh build[0m
+2026-11-12T15:27:37.8311120Z shell: /bin/bash -e {0}
+2026-11-12T15:27:37.8311770Z ##[endgroup]
+2026-11-12T15:27:38.4685700Z Valid UTF-8 text and platform configuration: 576 files
+2026-11-12T15:34:50.5194500Z {"developmentBuild": true, "fullParityComplete": false, "bundleIdentifier": "cc.huevia.next", "version": "0.31.0", "build": "211", "platform": "iPhoneOS", "architecture": "arm64", "minimumOS": "16.0", "sha256": "0c16ed2a127b44232a77729e364db34119b6f343301afc037c50e92fe4d6eab1", "bytes": 29638281, "sourceCommit": "db8e2ef3766a228bd2dd93f6e1e139b697d3ff18", "flutterRevision": "c197ca5199e9ee5661e865596c9c07294dfab51c"}
+2026-11-12T15:48:29.6000400Z Target app observed effective full PhotoKit authorization
+2026-11-12T15:48:31.0146890Z cc.huevia.next: 49291
+2026-11-12T15:48:38.8188430Z PASS Apple native Flutter pipeline: 1 real scenario; final result, source and PhotoKit fixture verified
+2026-11-12T15:48:45.6897410Z Frozen original Git reference preserved: 420; approved original repairs verified: 8; other original files unchanged: 412
+2026-11-12T15:48:45.8365660Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-11-12T15:48:45.8372340Z with:
+2026-11-12T15:48:45.8374010Z   name: huevia-cross-platform-ios-development
+2026-11-12T15:48:45.8379540Z   path: cross-platform/.build/mobile-apple/
+cross-platform/.build/core-ios/parity.json
+cross-platform/.build/core-ios/translation.log
+cross-platform/.build/core-ios/avatar*.log
+
+2026-11-12T15:48:45.8382130Z   retention-days: 7
+2026-11-12T15:48:45.8383370Z   if-no-files-found: warn
+2026-11-12T15:48:45.8385700Z   compression-level: 6
+2026-11-12T15:48:45.8386730Z   overwrite: false
+2026-11-12T15:48:45.8388780Z   include-hidden-files: false
+2026-11-12T15:48:45.8390570Z ##[endgroup]
+2026-11-12T15:48:47.1970450Z (node:50009) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T15:48:47.1973600Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T15:48:47.2210640Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-12T15:48:47.2214810Z The least common ancestor is /Users/runner/work/nikon-camera/nikon-camera/cross-platform/.build. This will be the root directory of the artifact
+2026-11-12T15:48:47.2220700Z With the provided path, there will be 25 files uploaded
+2026-11-12T15:48:47.2224240Z Artifact name is valid!
+2026-11-12T15:48:47.2225270Z Root directory input is valid!
+2026-11-12T15:48:47.4666030Z Beginning upload of artifact content to blob storage
+2026-11-12T15:48:47.7400100Z (node:50009) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-12T15:48:47.9885920Z Uploaded bytes 8388608
+2026-11-12T15:48:48.3845350Z Uploaded bytes 16777216
+2026-11-12T15:48:48.5307620Z Uploaded bytes 25165824
+2026-11-12T15:48:48.6767780Z Uploaded bytes 29901790
+2026-11-12T15:48:48.6930690Z Finished uploading artifact content to blob storage!
+2026-11-12T15:48:48.6932260Z SHA256 digest of uploaded artifact zip is ad08c7feb5d937197428960e1aa19406bae62fd1a8f86ebc9613cb4c6c0790a1
+2026-11-12T15:48:48.6933290Z Finalizing artifact upload
+2026-11-12T15:48:49.1272650Z Artifact huevia-cross-platform-ios-development.zip successfully finalized. Artifact ID 13958104905
+2026-11-12T15:48:49.1278560Z Artifact huevia-cross-platform-ios-development has been successfully uploaded! Final size is 29901790 bytes. Artifact ID is 13958104905
+2026-11-12T15:48:49.1301130Z Artifact download URL: https://github.com/1162107757/nikon-camera/actions/runs/43246481303/artifacts/13958104905
+2026-11-12T15:48:49.1616540Z Post job cleanup.
+2026-11-12T15:48:49.2960830Z [command]/opt/homebrew/bin/git version
+2026-11-12T15:48:49.3048600Z git version 2.56.0
+2026-11-12T15:48:49.3067790Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/ef31a057-d53d-459e-bd9e-3d3848bd0fe2/.gitconfig'
+2026-11-12T15:48:49.3076140Z Temporarily overriding HOME='/Users/runner/work/_temp/ef31a057-d53d-459e-bd9e-3d3848bd0fe2' before making global git config changes
+2026-11-12T15:48:49.3076980Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T15:48:49.3079680Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/nikon-camera/nikon-camera
+2026-11-12T15:48:49.3189350Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T15:48:49.3289270Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T15:48:49.4757560Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T15:48:49.4835180Z http.https://github.com/.extraheader
+2026-11-12T15:48:49.4841860Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-12T15:48:49.4928800Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T15:48:49.6404570Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T15:48:49.6485920Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T15:48:49.7907690Z Cleaning up orphan processes
+2026-11-12T15:48:54.5392970Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684, actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

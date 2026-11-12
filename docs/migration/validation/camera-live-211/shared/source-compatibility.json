@@ -1,0 +1,9 @@
+{
+  "finalSource": "db8e2ef3766a228bd2dd93f6e1e139b697d3ff18",
+  "priorSource": "8117cf8dc234607fc6ee0a24d9bd5ef6858b8b4e",
+  "emptyProductionDiffs": {
+    "coreAndNative": "",
+    "liveController": ""
+  },
+  "afterLocalFreezeMayAllowOtherChat212Edits": true
+}

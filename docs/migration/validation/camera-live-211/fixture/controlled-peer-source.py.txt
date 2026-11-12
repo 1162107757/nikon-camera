@@ -1,0 +1,441 @@
+"""Owned, controllable Nikon-shaped PTP/IP peer for A1 acceptance (not real hardware).
+
+Run: python camera211_peer.py run1 [--port 15750 --control-port 15751]
+Control: GET /status, POST /action with JSON {"action":"add", ...}.
+No external media, writes or network requests are used. Only a bounded self-made
+JPEG is transferable; synthetic NEF entries are metadata-only.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime
+import hashlib
+import io
+import json
+from pathlib import Path
+import re
+import socket
+import socketserver
+import struct
+import threading
+import time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+from PIL import Image
+
+ROOT = Path('D:/dev/ai-project/nikon-camera/.tooling/cross-platform187')
+GUID = bytes.fromhex('211a102030405060708090a0b0c0d0e0')
+
+
+def u16(value): return struct.pack('<H', value)
+def u32(value): return struct.pack('<I', value)
+def ptp_string(value): return bytes([len(value) + 1]) + (value + '\0').encode('utf-16le') if value else b'\0'
+def packet(kind, data=b''): return struct.pack('<II', len(data) + 8, kind) + data
+def sha(data): return hashlib.sha256(data).hexdigest()
+
+
+def read_exact(sock, count):
+    result = bytearray()
+    while len(result) < count:
+        data = sock.recv(count - len(result))
+        if not data: raise EOFError('peer connection closed')
+        result.extend(data)
+    return bytes(result)
+
+
+def receive(sock):
+    length, kind = struct.unpack('<II', read_exact(sock, 8))
+    if not 8 <= length <= 1024 * 1024: raise ValueError('invalid fixture packet length')
+    return kind, read_exact(sock, length - 8)
+
+
+def own_preview():
+    image = Image.new('RGB', (256, 192))
+    image.putdata([(int(x * 255 / 255), int(y * 255 / 191), 220 if (x // 24 + y // 24) % 2 else 40)
+                   for y in range(192) for x in range(256)])
+    output = io.BytesIO(); image.save(output, 'JPEG', quality=92)
+    return output.getvalue()
+
+
+PREVIEW = own_preview()
+
+
+class Item:
+    def __init__(self, handle, *, generation=0, raw=False, storage=1, delay=0, pending='busy', extra=120000):
+        self.handle, self.generation, self.raw, self.storage = handle, generation, raw, storage
+        self.ready_at = time.monotonic() + delay
+        self.pending = pending
+        self.name = f'Huevia-A1-{handle:04d}.' + ('NEF' if raw else 'JPG')
+        identity = f'Owned Huevia A1 handle={handle} generation={generation}\n'.encode()
+        padding = (identity * (extra // len(identity) + 1))[:extra]
+        comments = b''.join(b'\xff\xfe' + struct.pack('>H', len(padding[i:i + 60000]) + 2) + padding[i:i + 60000]
+                            for i in range(0, len(padding), 60000))
+        self.jpeg = PREVIEW[:-2] + comments + PREVIEW[-2:]
+        self.fault = None
+
+    @property
+    def ready(self): return time.monotonic() >= self.ready_at
+
+    def metadata(self):
+        captured = (datetime.datetime(2026, 11, 12, 11) + datetime.timedelta(seconds=self.handle * 10 + self.generation)).strftime('%Y%m%dT%H%M%S')
+        size = 27000000 if self.raw else len(self.jpeg)
+        if not self.ready and self.pending == 'zero': size = 0
+        return b''.join([u32(self.storage), u16(0xb103 if self.raw else 0x3801), u16(0), u32(size),
+                         u16(0x3801), u32(len(PREVIEW)), u32(256), u32(192),
+                         u32(6048 if self.raw else 256), u32(4024 if self.raw else 192),
+                         u32(14 if self.raw else 24), u32(0), u16(0), u32(0), u32(self.handle),
+                         ptp_string(self.name), ptp_string(captured), ptp_string(captured), ptp_string('')])
+
+
+class Fixture:
+    def __init__(self, tag):
+        if not re.fullmatch(r'[A-Za-z0-9_-]{1,64}', tag): raise ValueError('invalid run tag')
+        self.log = ROOT / f'211-peer-{tag}-operations.jsonl'
+        if self.log.exists(): raise FileExistsError('use a new tag to preserve the previous run')
+        self.lock = threading.RLock()
+        self.items = {1: Item(1), 2: Item(2), 101: Item(101, raw=True)}
+        self.next_handle = 3
+        self.next_connection = 1
+        self.connections = {}
+        self.events = {}
+        self.unavailable = set()
+        self.storages = {1, 2}
+        self.delay = .08
+        self.chunk_bytes = 8192
+        self.all_raw_only = False
+        self.counts = {'commands': {}, 'downloadAttempts': {}, 'downloadCompleted': {},
+                       'objectAddedSent': 0, 'eventPongs': 0, 'connections': 0, 'downloadBytesSent': 0}
+
+    def record(self, **values):
+        with self.lock:
+            with self.log.open('a', encoding='utf-8') as output:
+                output.write(json.dumps({'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), **values}, ensure_ascii=False) + '\n')
+
+    def snapshot(self):
+        with self.lock:
+            return {'fixture': 'owned synthetic JPEG/PTP-IP; no physical Nikon or RAW sensor data',
+                    'guidSha256': sha(GUID), 'storages': sorted(self.storages), 'unavailableStorages': sorted(self.unavailable),
+                    'commandConnections': sorted(self.connections), 'eventConnections': sorted(self.events),
+                    'pacing': {'chunkBytes': self.chunk_bytes, 'delaySeconds': self.delay},
+                    'counts': json.loads(json.dumps(self.counts)),
+                    'objects': [{'handle': item.handle, 'generation': item.generation, 'raw': item.raw,
+                                 'storage': item.storage, 'ready': item.ready, 'name': item.name,
+                                 'bytes': 27000000 if item.raw else len(item.jpeg), 'sha256': None if item.raw else sha(item.jpeg),
+                                 'metadataSha256': sha(item.metadata()), 'fault': item.fault}
+                                for item in self.items.values()], 'log': str(self.log)}
+
+    def add(self, payload):
+        with self.lock:
+            handle = int(payload.get('handle', self.next_handle))
+            if not 0 < handle < 0xffffffff or handle in self.items or len(self.items) >= 1000:
+                raise ValueError('handle already exists/out of range or fixture full')
+            self.next_handle = max(self.next_handle, handle + 1)
+            delay = float(payload.get('readyAfterSeconds', 0)); extra = int(payload.get('extraBytes', 120000))
+            if not 0 <= delay <= 120 or not 0 <= extra <= 2 * 1024 * 1024: raise ValueError('delay/padding out of range')
+            pending = payload.get('pending', 'busy')
+            if pending not in ['busy', 'zero']: raise ValueError('invalid pending mode')
+            storage = int(payload.get('storage', 1))
+            if storage not in self.storages: raise ValueError('unknown storage')
+            item = Item(handle, raw=payload.get('raw', False) is True, storage=storage, delay=delay, pending=pending, extra=extra)
+            self.items[handle] = item
+            self.record(action='add', handle=handle, readyAfterSeconds=delay, raw=item.raw, sha256=None if item.raw else sha(item.jpeg))
+        if payload.get('event', True): self.emit(handle, int(payload.get('duplicates', 1)))
+        return handle
+
+    def emit(self, handle, repeats=1):
+        if not 0 < handle < 0xffffffff or not 1 <= repeats <= 50: raise ValueError('invalid event')
+        # PtpIpClient eventLoop expects type8, uint16code+uint32tx+uint32handle (exactly10 payload bytes).
+        body = u16(0x4002) + u32(0) + u32(handle)
+        with self.lock: clients = list(self.events.items())
+        sent = 0
+        for connection, (sock, sending) in clients:
+            try:
+                with sending:
+                    for _ in range(repeats): sock.sendall(packet(8, body)); sent += 1
+            except OSError: continue
+        with self.lock: self.counts['objectAddedSent'] += sent
+        self.record(channel='event', phase='object-added', handle=handle, repeats=repeats, deliveries=sent)
+
+    def close_connections(self, connection=None):
+        with self.lock:
+            ids = list(self.connections) if connection is None else [connection]
+            sockets = [self.connections[key] for key in ids if key in self.connections]
+            sockets += [self.events[key][0] for key in ids if key in self.events]
+        for sock in sockets:
+            try: sock.shutdown(socket.SHUT_RDWR)
+            except OSError: pass
+            try: sock.close()
+            except OSError: pass
+        self.record(action='drop-connections', connectionIds=ids)
+
+    def action(self, payload):
+        action = payload.get('action')
+        if action == 'add': return {'added': [self.add(payload)]}
+        if action == 'add-many':
+            count = int(payload.get('count', 3))
+            if not 1 <= count <= 30 or 'handle' in payload: raise ValueError('invalid count or fixed handle')
+            return {'added': [self.add(payload) for _ in range(count)]}
+        if action == 'event': self.emit(int(payload['handle']), int(payload.get('duplicates', 1))); return {'sent': True}
+        if action == 'drop': self.close_connections(); return {'dropped': True}
+        with self.lock:
+            if action == 'remove':
+                item = self.items.pop(int(payload['handle']), None)
+                if item is None: raise ValueError('unknown handle')
+                self.record(action='remove', handle=item.handle); return {'removed': item.handle}
+            if action == 'mutate':
+                handle = int(payload['handle']); old = self.items[handle]
+                item = Item(handle, generation=old.generation + 1, raw=old.raw, storage=old.storage)
+                self.items[handle] = item; self.record(action='mutate', handle=handle, generation=item.generation)
+            elif action == 'fault':
+                item = self.items[int(payload['handle'])]
+                if payload.get('clear', False):
+                    item.fault = None; self.record(action='fault-clear', handle=item.handle); return {'cleared': True}
+                after = int(payload.get('afterBytes', 16384))
+                if not 0 <= after < len(item.jpeg): raise ValueError('fault offset out of range')
+                item.fault = {'afterBytes': after, 'once': payload.get('once', True) is True}
+                self.record(action='fault', handle=item.handle, fault=item.fault); return {'fault': item.fault}
+            elif action == 'storage':
+                storage = int(payload['storage'])
+                if storage not in self.storages: raise ValueError('unknown storage')
+                if payload.get('available', True): self.unavailable.discard(storage)
+                else: self.unavailable.add(storage)
+                self.record(action='storage', storage=storage, available=storage not in self.unavailable); return {'changed': True}
+            elif action == 'pacing':
+                delay = float(payload.get('delaySeconds', self.delay)); chunk = int(payload.get('chunkBytes', self.chunk_bytes))
+                if not 0 <= delay <= 2 or not 512 <= chunk <= 65536: raise ValueError('invalid pacing')
+                self.delay, self.chunk_bytes = delay, chunk
+                self.record(action='pacing', delaySeconds=delay, chunkBytes=chunk); return {'changed': True}
+            elif action == 'inventory-mode':
+                self.all_raw_only = payload.get('allReturnsRawOnly', False) is True
+                return {'allReturnsRawOnly': self.all_raw_only}
+            else: raise ValueError('unsupported action')
+        if payload.get('event', True): self.emit(handle, int(payload.get('duplicates', 1)))
+        return {'mutated': handle}
+
+    @staticmethod
+    def device():
+        ops = [0x1001, 0x1002, 0x1003, 0x1004, 0x1007, 0x1008, 0x1009, 0x100a, 0x90c4]
+        return b''.join([u16(100), u32(10), u16(100), ptp_string('Owned Huevia A1 peer'), u16(0),
+                         u32(len(ops)), *(u16(op) for op in ops), u32(1), u16(0x4002),
+                         u32(0), u32(0), u32(0), ptp_string('NIKON CORPORATION'),
+                         ptp_string('Z 6_2 A1 QA'), ptp_string('1'), ptp_string('')])
+
+
+class Peer(socketserver.BaseRequestHandler):
+    def handle(self):
+        fixture = self.server.fixture; sock = self.request; connection = None; channel = 'handshake'
+        try:
+            kind, data = receive(sock)
+            if kind == 1:
+                channel = 'command'
+                with fixture.lock:
+                    connection = fixture.next_connection; fixture.next_connection += 1
+                    fixture.connections[connection] = sock; fixture.counts['connections'] += 1
+                sock.sendall(packet(2, u32(connection) + GUID + ('Huevia-A1-QA\0').encode('utf-16le') + u32(0x10000)))
+                fixture.record(channel=channel, phase='ready', connection=connection)
+                self.commands(fixture, sock, connection)
+            elif kind == 3 and len(data) == 4:
+                channel = 'event'; connection = struct.unpack('<I', data)[0]
+                with fixture.lock:
+                    if connection not in fixture.connections: raise ValueError('event has no command connection')
+                    sending = threading.Lock(); fixture.events[connection] = (sock, sending)
+                sock.sendall(packet(4)); fixture.record(channel=channel, phase='ready', connection=connection)
+                done = threading.Event()
+                def ping():
+                    while not done.wait(5):
+                        try:
+                            with sending: sock.sendall(packet(13))
+                            fixture.record(channel=channel, phase='ping', connection=connection)
+                        except OSError: return
+                threading.Thread(target=ping, daemon=True).start()
+                try:
+                    while True:
+                        kind, data = receive(sock)
+                        if kind == 13:
+                            with sending: sock.sendall(packet(14))
+                        elif kind == 14:
+                            with fixture.lock: fixture.counts['eventPongs'] += 1
+                        else: raise ValueError('unexpected client event packet')
+                finally: done.set()
+            else: raise ValueError('unexpected handshake')
+        except (EOFError, ConnectionError, OSError):
+            fixture.record(channel=channel, phase='closed', connection=connection)
+        except Exception as error:
+            fixture.record(channel=channel, phase='fixture-error', connection=connection, error=type(error).__name__, detail=str(error)[:200])
+        finally:
+            with fixture.lock:
+                if channel == 'command': fixture.connections.pop(connection, None)
+                elif channel == 'event': fixture.events.pop(connection, None)
+
+    def commands(self, fixture, sock, connection):
+        while True:
+            kind, data = receive(sock)
+            if kind == 13: sock.sendall(packet(14)); continue
+            if kind != 6 or len(data) < 10 or (len(data) - 10) % 4: raise ValueError('invalid operation packet')
+            phase, operation, tx = struct.unpack_from('<IHI', data)
+            params = list(struct.unpack('<' + 'I' * ((len(data) - 10) // 4), data[10:]))
+            fixture.record(channel='command', connection=connection, operation=hex(operation), transaction=tx, parameters=params)
+            with fixture.lock:
+                key = hex(operation); fixture.counts['commands'][key] = fixture.counts['commands'].get(key, 0) + 1
+                payload, code, item = None, 0x2001, None
+                if operation == 0x1001: payload = fixture.device()
+                elif operation in [0x1002, 0x1003]: pass
+                elif operation == 0x1004: payload = u32(len(fixture.storages)) + b''.join(u32(x) for x in sorted(fixture.storages))
+                elif operation == 0x1007 and len(params) == 3:
+                    storage, format_, _ = params
+                    if storage in fixture.unavailable: code = 0x2013
+                    else:
+                        items = [x for x in fixture.items.values() if storage in [0xffffffff, x.storage]]
+                        if format_ == 0x3801: items = [x for x in items if not x.raw]
+                        elif format_ == 0 and fixture.all_raw_only: items = [x for x in items if x.raw]
+                        elif format_ not in [0, 0x3801]: items = []
+                        payload = u32(len(items)) + b''.join(u32(x.handle) for x in items)
+                elif operation in [0x1008, 0x1009, 0x100a, 0x90c4] and len(params) == 1:
+                    item = fixture.items.get(params[0])
+                    if item is None: code = 0x2009
+                    elif item.storage in fixture.unavailable: code = 0x2013
+                    elif not item.ready and item.pending == 'busy': code = 0x2019
+                    elif operation == 0x1008: payload = item.metadata()
+                    elif operation in [0x100a, 0x90c4]: payload = PREVIEW
+                    elif item.raw: code = 0x2005
+                else: code = 0x2005
+            if operation == 0x1009 and code == 0x2001:
+                with fixture.lock:
+                    key = str(item.handle); fixture.counts['downloadAttempts'][key] = fixture.counts['downloadAttempts'].get(key, 0) + 1
+                    fault = item.fault.copy() if item.fault else None
+                    if fault and fault['once']: item.fault = None
+                    chunk_size, delay = fixture.chunk_bytes, fixture.delay
+                data = item.jpeg; sock.sendall(packet(9, u32(tx) + struct.pack('<Q', len(data))))
+                sent = 0
+                while sent < len(data):
+                    if fault and sent >= fault['afterBytes']:
+                        fixture.record(channel='command', connection=connection, phase='injected-download-disconnect', handle=item.handle, bytes=sent)
+                        fixture.close_connections(connection); return
+                    end = min(len(data), sent + chunk_size)
+                    if fault: end = min(end, fault['afterBytes'])
+                    chunk = data[sent:end]
+                    sock.sendall(packet(12 if end == len(data) else 10, u32(tx) + chunk)); sent = end
+                    with fixture.lock: fixture.counts['downloadBytesSent'] += len(chunk)
+                    if delay: time.sleep(delay)
+                with fixture.lock: fixture.counts['downloadCompleted'][key] = fixture.counts['downloadCompleted'].get(key, 0) + 1
+                fixture.record(channel='command', connection=connection, phase='object-sent', handle=item.handle, bytes=sent, sha256=sha(data))
+            elif payload is not None:
+                sock.sendall(packet(9, u32(tx) + struct.pack('<Q', len(payload))) + packet(12, u32(tx) + payload))
+            sock.sendall(packet(7, u16(code) + u32(tx)))
+
+
+class Server(socketserver.ThreadingTCPServer):
+    allow_reuse_address = True
+    daemon_threads = True
+
+
+class Control(BaseHTTPRequestHandler):
+    def log_message(self, *args): pass
+    def reply(self, code, value):
+        data = json.dumps(value, ensure_ascii=False).encode('utf-8')
+        self.send_response(code); self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(data))); self.end_headers(); self.wfile.write(data)
+    def do_GET(self):
+        if self.path != '/status': return self.reply(404, {'error': 'not found'})
+        self.reply(200, self.server.fixture.snapshot())
+    def do_POST(self):
+        if self.path != '/action': return self.reply(404, {'error': 'not found'})
+        try:
+            length = int(self.headers.get('Content-Length', '0'))
+            if not 1 <= length <= 32768: raise ValueError('invalid body length')
+            value = json.loads(self.rfile.read(length))
+            if not isinstance(value, dict): raise ValueError('JSON object required')
+            result = self.server.fixture.action(value)
+            self.reply(200, {'ok': True, **result, 'status': self.server.fixture.snapshot()})
+        except (ValueError, KeyError, TypeError) as error: self.reply(400, {'error': str(error)[:200]})
+
+
+def serve(tag, port, control_port):
+    fixture = Fixture(tag)
+    with Server(('127.0.0.1', port), Peer) as server, ThreadingHTTPServer(('127.0.0.1', control_port), Control) as control:
+        server.fixture = control.fixture = fixture
+        thread = threading.Thread(target=control.serve_forever, daemon=True); thread.start()
+        print(json.dumps({'ready': True, 'ptp': f'10.0.2.2:{server.server_address[1]}',
+                          'control': f'http://127.0.0.1:{control.server_address[1]}', 'log': str(fixture.log),
+                          'baseline': [1, 2, 101], 'guidSha256': sha(GUID)}), flush=True)
+        try: server.serve_forever()
+        except KeyboardInterrupt: pass
+        finally:
+            fixture.close_connections(); control.shutdown(); thread.join(timeout=2)
+            summary = ROOT / f'211-peer-{tag}-summary.json'
+            summary.write_text(json.dumps(fixture.snapshot(), indent=2) + '\n', encoding='utf-8')
+
+
+def self_test():
+    fixture = Fixture('selftest-' + str(time.time_ns())); fixture.delay = 0
+    with Server(('127.0.0.1', 0), Peer) as server, ThreadingHTTPServer(('127.0.0.1', 0), Control) as control:
+        server.fixture = control.fixture = fixture
+        thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+        control_thread = threading.Thread(target=control.serve_forever, daemon=True); control_thread.start()
+        address = server.server_address; tx = 0; sockets = []
+        def connect():
+            command = socket.create_connection(address, timeout=3); sockets.append(command)
+            command.sendall(packet(1, bytes(16) + ptp_string('QA') + u32(0x10000)))
+            kind, body = receive(command); assert kind == 2 and body[4:20] == GUID
+            connection = struct.unpack_from('<I', body)[0]
+            event = socket.create_connection(address, timeout=3); sockets.append(event)
+            event.sendall(packet(3, u32(connection))); assert receive(event) == (4, b'')
+            return command, event
+        def call(command, operation, *params):
+            nonlocal tx
+            tx += 1; command.sendall(packet(6, u32(1) + u16(operation) + u32(tx) + b''.join(u32(x) for x in params)))
+            result = b''; announced = None
+            while True:
+                kind, data = receive(command)
+                if kind == 9: assert struct.unpack_from('<I', data)[0] == tx; announced = struct.unpack_from('<Q', data, 4)[0]
+                elif kind in [10, 12]: assert struct.unpack_from('<I', data)[0] == tx; result += data[4:]
+                elif kind == 7:
+                    code, seen = struct.unpack('<HI', data); assert seen == tx
+                    if announced is not None: assert announced == len(result)
+                    return code, result
+                else: raise AssertionError(kind)
+        try:
+            import urllib.request
+            control_url = f'http://127.0.0.1:{control.server_address[1]}'
+            with urllib.request.urlopen(control_url + '/status', timeout=3) as response:
+                assert [row['handle'] for row in json.load(response)['objects']] == [1, 2, 101]
+            request = urllib.request.Request(control_url + '/action', data=b'{"action":"pacing","delaySeconds":0}', headers={'Content-Type': 'application/json'})
+            with urllib.request.urlopen(request, timeout=3) as response: assert json.load(response)['ok']
+            command, event = connect(); assert call(command, 0x1001)[0] == 0x2001
+            assert call(command, 0x1007, 1, 0x3801, 0)[1] == u32(2) + u32(1) + u32(2)
+            handle = fixture.add({'duplicates': 2}); expected = (8, u16(0x4002) + u32(0) + u32(handle))
+            assert receive(event) == expected and receive(event) == expected
+            assert call(command, 0x1009, handle)[1] == fixture.items[handle].jpeg
+            with Image.open(io.BytesIO(fixture.items[handle].jpeg)) as decoded:
+                decoded.load(); assert decoded.size == (256, 192)
+            assert fixture.counts['downloadCompleted'][str(handle)] == 1
+            busy = fixture.add({'event': False, 'readyAfterSeconds': 60}); assert call(command, 0x1008, busy)[0] == 0x2019
+            zero = fixture.add({'event': False, 'readyAfterSeconds': 60, 'pending': 'zero'})
+            assert struct.unpack_from('<I', call(command, 0x1008, zero)[1], 8)[0] == 0
+            before = fixture.items[handle].metadata(); fixture.action({'action': 'mutate', 'handle': handle, 'event': False})
+            assert fixture.items[handle].metadata() != before
+            fixture.action({'action': 'fault', 'handle': handle, 'afterBytes': 8192})
+            try: call(command, 0x1009, handle); raise AssertionError('fault did not close stream')
+            except (EOFError, ConnectionError, OSError): pass
+            command, event = connect(); assert call(command, 0x1009, handle)[1] == fixture.items[handle].jpeg
+            fixture.action({'action': 'storage', 'storage': 2, 'available': False})
+            assert call(command, 0x1007, 2, 0x3801, 0)[0] == 0x2013
+            assert not any('fixture-error' in line for line in fixture.log.read_text(encoding='utf-8').splitlines())
+            print(json.dumps({'selfTest': 'PASS', 'checks': ['handshake-stable-guid', 'jpeg-baseline', 'duplicate-object-added-packet',
+                'exact-original-bytes', 'busy-metadata', 'incomplete-zero-size', 'reused-handle-changed-metadata',
+                'mid-download-drop', 'same-guid-reconnect-completes', 'unavailable-storage', 'http-status-action', 'actual-jpeg-decode'], 'log': str(fixture.log)}))
+        finally:
+            fixture.close_connections()
+            for sock in sockets:
+                try: sock.close()
+                except OSError: pass
+            server.shutdown(); control.shutdown(); thread.join(timeout=3); control_thread.join(timeout=3)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('tag', nargs='?', default='run1'); parser.add_argument('--port', type=int, default=15750)
+    parser.add_argument('--control-port', type=int, default=15751); parser.add_argument('--self-test', action='store_true')
+    args = parser.parse_args()
+    if args.self_test: self_test()
+    else: serve(args.tag, args.port, args.control_port)

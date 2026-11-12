@@ -1,0 +1,1 @@
+PASS observer parser checks: Java modified UTF8 with NUL/emoji, project binary envelope, task binary envelope, live entryPages/envelope, corrupt checksum rejection, explicit expected maps. Final observation/ADB/HTTP NOT executed.

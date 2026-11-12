@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "projectId": "f1968af1-179a-4a67-8734-9eef90265169",
+  "note": "Explicit whitelist of the owned 210 Project-1794488664855705.JPG fixture, identified after the first observer scope failure. This is not an independent pre-211 device snapshot. Immutable source/version identities and full project/task rows are checked exactly.",
+  "photos": [
+    {
+      "identity": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5",
+      "sourceFileName": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5.jpg",
+      "name": "Project-1794488664855705.JPG",
+      "bytes": 2830,
+      "sha256": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5"
+    }
+  ],
+  "tasks": [
+    {
+      "projectId": "f1968af1-179a-4a67-8734-9eef90265169",
+      "identity": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5",
+      "presetId": "714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee",
+      "presetName": "HOST NCP",
+      "sourceFileName": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5.jpg",
+      "name": "Project-1794488664855705.JPG",
+      "sourceBytes": 2830,
+      "status": "saved",
+      "resultFileName": "1d037107be3274d47b629c0258e2989b31b9aafa474d02db48dd1cdf86a46975.version",
+      "error": "",
+      "updatedAt": 1794488665928,
+      "saveTarget": "APP_ONLY",
+      "key": "f1968af1-179a-4a67-8734-9eef90265169:38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5:714ff8bb2a928b5dcfeb763f41546250326012e257bfd94165f2ae2eae5a34ee"
+    }
+  ],
+  "versions": [
+    {
+      "id": "1d037107be3274d47b629c0258e2989b31b9aafa474d02db48dd1cdf86a46975",
+      "sourceSha": "38ac6b1ad43b1d1d89e2e8b47f05961f1b16f071d08a858d362d596f70ca93d5",
+      "effectKey": "5fe00962e0b56e60285e0bfafafdfbe70d75154d1c4fe06a1809aa4dbae4ccdb",
+      "sha256": "d45bec84099201aa517f6828b5c36506594dca5b51018a49db7525221e686a6e",
+      "bytes": 5343,
+      "width": 256,
+      "height": 192,
+      "manifestSha256": "ffc42945adbe843db5a1587aa973535d1b668a06b73fd6aac6b90c2060dfd0b2"
+    }
+  ]
+}

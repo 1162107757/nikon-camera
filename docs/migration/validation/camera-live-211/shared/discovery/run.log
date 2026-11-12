@@ -1,0 +1,3 @@
+PASS 30 shared camera checks; RAW-only browse, JPEG previews, fallback, refresh, session isolation and bounded cache
+PASS 60 camera transfer checks; separate JPEG indexes, generic JPEG metadata, fallback, unavailable cards, exact bytes, real progress and cancelled partial cleanup
+PASS 80 camera live discovery checks; handle baselines, event-only hints, stable descriptors, missed events, independent browsing, reconnect, storage recovery and scoped downloads

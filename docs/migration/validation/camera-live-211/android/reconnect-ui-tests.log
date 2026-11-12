@@ -1,0 +1,18 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_live_test.dart
+00:00 +0: Foreground camera live Arming ignores existing inventory; repeated new shots save and process once
+00:00 +1: Foreground camera live Disconnect waits; matching trusted reconnect restores old cursor before new reception
+00:00 +2: Foreground camera live Untrusted reconnect is blocked instead of merging another camera session
+00:00 +3: Foreground camera live Explicit stop discards a late download reply without committing to the stopped project
+00:00 +4: Foreground camera live Owner changes invalidate in-flight work before registration or project commit
+00:00 +5: Foreground camera live Background pauses discovery; foreground reconciliation receives missed notifications
+00:00 +6: Foreground camera live Receipt from an old watch never enters the album and blocks automatic retry
+00:00 +7: Foreground camera live An existing durable producer requires explicit resume
+00:00 +8: Foreground camera live Stopping during watch creation compensates its late native success
+00:00 +9: Foreground camera live Stopping during durable start compensates its late token and active journal
+00:00 +10: Foreground camera live A lost cancel response still retires the durable producer
+00:00 +11: Foreground camera live A connected camera verification error pauses instead of redownloading forever
+00:00 +12: Foreground camera live No default preset receives originals; later defaults only affect new candidates
+00:00 +13: Foreground camera live Starting without a default preset remains available
+00:00 +14: Foreground camera live Disconnected live capture offers reconnection without discarding its journal
+00:00 +15: Foreground camera live Live reception card fits a narrow screen with large text and exposes stop
+00:00 +16: All tests passed!

@@ -4,7 +4,7 @@
 用户要求整体迁移、全部功能对齐安卓，原工程保留，交付可自签 IPA。
 本清单记录开发状态，未验证的功能不能作为完成或缩减范围处理。
 
-当前 210 生产源码冻结为 `86211035f8eaa6e008e609b4b4b2496dd8b97b66`。Android ARM64 / x64 release 已打包，普通 x64 安装后的检查范围见文末；同源码的 [Apple Actions 43225130892](https://github.com/1162107757/nikon-camera/actions/runs/43225130892) 已通过，IPA 已下载并完成独立核验。真正未迁移的 13 项开发缺口、已实现待实体/账户验收和视觉细节分别列在 [210 剩余工作](remaining-work-210.md)。
+当前 211 生产源码冻结为 `db8e2ef3766a228bd2dd93f6e1e139b697d3ff18`。A1 的 Nikon 前台自动 JPEG 收片已经接线，统一 JVM 878 项（872 边界 + 6 氛围）、本轮新增 Dart 状态/控件检查 16 项和分析检查通过；Android 安装 56 项、普通包实际收片及最终 Apple CI/IPA 独立核验通过（215 项 Flutter、878 项共享核心、24 项原生 Wi-Fi、38 项头像、1 个实际原生综合场景）。其余 12 项开发缺口与实体/账户/样式验收见 [211 剩余工作](remaining-work-211.md)。210 及以前的构建、安装和冻结证据按历史保留。
 
 | 能力 | 现有实现依据 | 共享逻辑 | 共享界面 / 平台接入 | 验收状态 |
 | --- | --- | --- | --- | --- |
@@ -21,13 +21,13 @@
 | 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 205 接入原画笔/圆形/矩形选区、区域参数范围及主图选区叠层；206 补齐原画笔/径向/渐变/取样修复、蒙版管理及双指导航；自动修补仍待迁移 | 206 的 446 项共享检查、Android 62 个界面场景、82 项原生检查、Apple 137 项 Flutter 及双方实际图像流程通过；全部交互和像素取整继续验收 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
 | 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | 202 恢复四模板、信息、机型、样式/信息/外观、Logo 及历史操作；206 修复深色弹窗、48dp 选项与上层窗口统一遮罩 | 206 release 对照的照片/卡片/下层面板/滑杆取样与原版一致，双方应用和原生流程通过；仍有 1–2 物理像素取整差异，字体回退与所有组合尚未验收 |
-| 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy`, `PhotoLiveProjectStore`, `PhotoProjectPresetStore` | 原模型复用；项目默认预设、任务和成品收据持久化 | 原格式草稿、撤销重做、账户配方及批量调节复制/撤销已接线；210 接通项目创建/改名、默认预设快照、手动加入 1–100 张已保存 JPEG、前台处理/取消/重试及原图/成品查看 | 原配方、复制事务与快照恢复验证通过；210 普通 x64 release 已保存项目成品重开通过。自动相机入片、后台运行及旧安装资料迁移仍缺，进程终止/账户切换等恢复边界待验收 |
+| 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy`, `PhotoLiveProjectStore`, `PhotoProjectPresetStore` | 原模型复用；项目默认预设、任务和成品收据持久化 | 210 的手动项目、草稿/撤销和处理闭环保留；211 接通 Nikon 前台新片自动入项目，候选冻结当时默认状态，无默认只收原图、有默认另存效果 | 210 普通 x64 release 成品重开证据保留；211 核心、Dart、安装/普通包及 Apple 验证通过。后台运行、旧安装资料迁入及完整生命周期恢复仍缺 |
 | RAW / NEF 信息、显影、白平衡、高光、JPEG 色彩匹配 | `RawDeveloper`, LibRaw C++, `RawJpegColorMatch` | 色彩与安全规则直接复用 | 两端 LibRaw 显影控制已接线；210 增加手选同次拍摄 JPEG、明确确认、RAW/JPEG SHA 绑定、相对路径恢复及回到内嵌参考；两端接入匹配与高光拒绝规则 | 既有两端合成 Bayer RAW 全链路通过；210 Android 真实 native pipeline 场景及 Apple CI 通过。未知型号 NEF 偏粉、真实同拍/错配样本及荣耀 Magic 实机仍待验收；自动库存配对和 RAW 原格式发布仍缺 |
 | 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoVersionExport`, `PhotoExportSpec` | 原规格、色彩及导出模型复用 | 207 恢复原快捷/高级设置、四档画质、当前/原图/保存版本多选；冻结配方的只读实际 JPEG/编码前预览，完成返回并保留设置；208 接入独立于编辑设置的原始 JPEG 直接相册保存 | 208 最终 Apple 160 项 Flutter 和真实原生流程、Android 69 项全套界面加最终导出专项 7 项通过；release 核对原始 JPEG 字节、EXIF、不同保存副本及边框保留。对应颜色已对照，仍有字体字面宽度和布局 1–3px 差异，完整样式与实体设备验收未完成 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 原导出/成品模型复用，队列新增边界保护 | 200 接入最多 100 张顺序处理、取消和重试；207 接入单图多版本系统相册保存及持久操作标识；208 接入原始 JPEG 精确保存。多照片批量系统发布、RAW 原始格式/目标及源文件配对、删除范围和完整批量编辑器待迁移 | Android 撤销读取权限后实际保存、重复请求核对、不同操作的新副本及两版本 release 保存通过；Apple 实际 PhotoKit 发布/重复核对/新副本通过；只添加权限独立场景及其余范围继续保留 |
-| Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | 手动连接复用 Android 相机 Wi-Fi 网络选择；210 增加 iOS Wi-Fi 接口 Socket、本地网络用途说明/设置入口，四个根标签保留页面和连接状态 | 210 Android release 切换标签时连接及在途下载持续通过，Apple CI 通过。物理断网/恢复、系统挂起/终止及机型兼容仍待迁移/验收，不扩大 Fuji 已验证能力 |
-| 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用；210 分格式枚举与进度回传 | 209 预览/缓存基础上，210 恢复原自适应方形网格（常规宽度三列起）、独立 JPEG/RAW 列表与预览、单图查看/下载、接收进度及标签切换后持续显示 | 209 自建 PTP/IP 的缩略图回退与不下载原片证据保留；210 普通 x64 release 经受控相机端完成三列网格、独立 JPEG/RAW 和跨标签下载进度检查。真实 JPEG+RAW/双卡库存、完整相邻图浏览、批选和持久下载恢复仍待完成/验收 |
-| 边拍边传、项目、续传、前后台任务及持久收据 | `PhotoLive*`, `CameraConnectionService` | 210 复用原项目/默认预设存储，增加账户隔离的任务与成品收据 | 手动项目的选择、处理和成品查看已接通；相机新片监听/自动入项目、Android 服务、iOS 后台生命周期和下载续传仍未接通 | 210 Android release 项目已保存成品可重开；不得将手动前台项目等同边拍边传。系统暂停/进程退出恢复、真实自动传片仍待开发与验收 |
+| Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用；211 增加可信 GUID 与会话绑定 | 210 的手动连接、iOS Wi-Fi Socket/权限入口和根标签保活保留；211 的 Nikon 自动流程同可信 GUID 重连时按持久游标补片，未知 GUID 不跨会话恢复，Fuji 自动收片禁用 | 210 已取得的 release/Apple 证据保留；211 安装/普通包和 Apple 验证通过；实体断网/恢复继续验收。平台后台保护/完整系统终止恢复仍需开发，不扩大 Fuji 能力 |
+| 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用；211 自动接收复用原字节校验及持久收据 | 209/210 的三列预览、JPEG/RAW 独立浏览与单图接收保留；211 新片自动接收只针对 JPEG，显示实际字节进度并避免与手动下载争用 | 210 受控端实操证据保留；211 安装/普通包及 Apple 验证通过，实体 JPEG+RAW/双卡/大库存继续验收。相邻查看、多选批量、目标及完整下载队列恢复仍缺 |
+| 边拍边传、项目、续传、前后台任务及持久收据 | `PhotoLive*`, `SharedCameraLiveDiscovery`, `SharedLiveIngest`, `CameraLive` | 211 接入旧库存基线、事件加盘点、稳定描述符、原图 SHA、持久收据及项目去重 | Nikon 前台自动 JPEG 接收、无默认只收原图/有默认另存效果、可信重连补片、进度及明确开始/停止/恢复已接线；候选冻结默认状态，未知 GUID 不跨会话恢复，Fuji 自动禁用 | 统一 JVM 878 项（含发现 80、收据 108）与本轮新增 Dart 16 项通过；Android 安装 56 项、普通包 9 原图/8 成品/1 仅原图及最终 Apple CI/IPA 独立核验通过。A2 后台与系统终止完整恢复、A6 批量/保存目标仍缺，不能据此宣称完整边拍边传全部验收 |
 | USB 相机发现、权限、PTP 传输、槽位读写删除 | `usb/*`, `picturecontrol/*` | 验证/保护部分已纳入 | Android USB 与 iOS ImageCaptureCore 待接入 | 待完成，不能只凭 API 存在宣称机型支持 |
 | Wi-Fi 预设槽位读写删除及会话移交 | `PictureControl*Session`, `PtpIpClient` | 原协议保护保留 | 待迁移完整确认/回读流程 | 待完成，不允许不确定写入自动重试 |
 | 遥控、实时取景、对焦、拍摄、相机参数 | `remote/*`, `RemoteCaptureActivity` | 纯 Java 协议已纳入 | 待迁移 | 待完成 |
@@ -171,3 +171,11 @@
 - 诊断 schema 1 保持兼容并增加 `appStability`：有界记录 Flutter 异常，Android 复用原崩溃与系统退出收集，iOS 接入 NSException 和已投递的 MetricKit 信息，保留既有异常处理链。普通 x64 release 已实际导出、核对新诊断 JSON；采集时不导出异常原文、原始路径或照片内容。尚未以实体设备验证真实 OOM/ANR/原生信号崩溃、MetricKit 投递或荣耀 Magic 闪退，Windows 测试宿主退出也不能计作应用闪退。
 - Android debug 的 40 项 Flutter 控件/状态检查和 1 个真实 native pipeline 综合场景通过；原工程库存仍为 420 个输入，其中 8 个按已批准的原版修复提交核验、412 个按原冻结基准核验。同源码 Apple [Actions 43225130892 / job 131206252370](https://github.com/1162107757/nikon-camera/actions/runs/43225130892/job/131206252370) 已通过，产物 `13950705702` 已下载并完成独立核验：199 项 Flutter、690 项共享核心、24 项原生 Wi-Fi 流、38 项原生头像和 1 个真实 PhotoKit/图像/RAW/项目综合场景通过，PhotoKit 实际从未授权转为完整授权。IPA 的源码、build 210、iPhoneOS ARM64、iOS16+ 和未签名状态均核对通过；仍需实体 iPhone 复测相机。
 - 整体迁移未完成。[210 剩余工作](remaining-work-210.md) 的 13 项开发缺口继续保留；未知 NEF、荣耀 Magic Android 12、实体 iPhone 与相机、真实账户、权限/后台生命周期，以及字形/取整和全部二级状态仍须分别验收。根标签保活、手动项目和新诊断可用，不能作为这些范围已完成的证明。
+
+## 211：Nikon 前台自动边拍边传
+
+- 生产源码冻结于 `db8e2ef3766a228bd2dd93f6e1e139b697d3ff18`。本轮只推进 A1；[211 剩余工作](remaining-work-211.md) 继续保留 A2–A13 共 12 项开发缺口，210 与更早冻结记录不改。
+- 通过原相机对象事件及周期盘点发现新 JPEG，初次已有库存建立基线，不主动补收旧照片；稳定描述符、会话和对象身份校验后接收原字节，以 SHA 和持久收据去重加入项目。对象重复、handle 复用、缺失和迟到回复有独立边界检查。
+- 按原版保留“无默认预设也可开始收片”：原图始终保存；无默认时不创建效果任务，有默认时冻结候选当时的预设并另存成品，切换默认只影响之后的新候选。根标签保活、前台发现暂停/恢复、实际字节进度、明确开始/停止/继续入口已接线。同可信 GUID 重连可按持久游标补片，未知 GUID 不允许跨会话恢复，Fuji 自动收片禁用。
+- 统一 JVM 878 项通过（872 边界 + 6 氛围），其中发现 80 项、收据 108 项；本轮新增 Dart 状态/控件检查 16 项通过，分析无问题。Android 安装 56 项及普通包实操通过，核对 9 新原图/8 成品/1 仅原图及断流补片；Apple [Actions 43246481303](https://github.com/1162107757/nikon-camera/actions/runs/43246481303) 通过，215 项 Flutter、878 项共享核心、24 项原生 Wi-Fi、38 项头像及 1 个真实原生综合场景，PhotoKit 未授权→完整授权；IPA 下载与源码/架构/最低版本/未签名/资源独立核验完成。证据见 [211 冻结记录](validation/camera-live-211/README.md)。
+- 本轮接线不是 A2 后台服务/系统终止完整恢复，也不是 A6 相机批选、完整下载队列和保存目标。实体 Nikon/iPhone 连拍、掉线、双卡及大库存仍未验收；未知 NEF 高光、荣耀 Magic Android 12 闪退和所有原版样式结论保持原边界。

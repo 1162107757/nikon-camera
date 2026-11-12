@@ -1,0 +1,5 @@
+compile exit 0
+java exit 0
+PASS actual original PtpIpClient conformance: device, baseline, no implicit original read, duplicate wire events, exact JPEG SHA, recoverable busy, interrupted transfer and stable reconnect
+
+peer log D:\dev\ai-project\nikon-camera\.tooling\cross-platform187\211-peer-java-probe-1794494699421649900-operations.jsonl
