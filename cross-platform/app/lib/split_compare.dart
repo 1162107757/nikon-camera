@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,11 +13,15 @@ class SplitCompare extends StatefulWidget {
     this.original,
     this.enabled = false,
     this.onRetry,
+    this.selection,
+    this.selectionSize,
   });
   final String effect;
   final String? original;
   final bool enabled;
   final VoidCallback? onRetry;
+  final ui.Image? selection;
+  final Size? selectionSize;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
@@ -53,7 +58,31 @@ class _SplitCompareState extends State<SplitCompare> {
         child: SizedBox(
           width: box.maxWidth,
           height: box.maxHeight,
-          child: image(path),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              image(path),
+              if (!widget.enabled &&
+                  widget.selection != null &&
+                  widget.selectionSize != null)
+                IgnorePointer(
+                  child: ExcludeSemantics(
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: SizedBox(
+                        width: widget.selectionSize!.width,
+                        height: widget.selectionSize!.height,
+                        child: RawImage(
+                          image: widget.selection,
+                          fit: BoxFit.fill,
+                          filterQuality: FilterQuality.low,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       );
       return Stack(

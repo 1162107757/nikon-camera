@@ -35,6 +35,9 @@ class DraftCore extends HueviaCore {
     String? jobId,
   ]) async {
     calls.add((operation, payload));
+    if (operation == 'local.describe') {
+      return {'localData': '', 'sha256': 'empty', 'regions': []};
+    }
     if (operation == 'draft.load') {
       return {
         'sourceSha': 'photo-sha',

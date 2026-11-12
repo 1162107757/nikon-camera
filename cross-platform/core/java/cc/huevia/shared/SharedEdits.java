@@ -40,6 +40,13 @@ public final class SharedEdits {
         return freeze(source,owner,json,id->true);
     }
     public PhotoEditStore.Draft freeze(File source,String owner,String json,Predicate<String> visible)throws IOException{
+        return prepare(source,owner,json,visible,true);
+    }
+    /** Tentative workspaces resolve the same preset bytes without saving edits. */
+    public PhotoEditStore.Draft snapshot(File source,String owner,String json,Predicate<String> visible)throws IOException{
+        return prepare(source,owner,json,visible,false);
+    }
+    private PhotoEditStore.Draft prepare(File source,String owner,String json,Predicate<String> visible,boolean persist)throws IOException{
         String sha=sourceIdentity(source,false);SharedRecipe recipe=new SharedRecipe(json);PhotoEditStore store=new PhotoEditStore(root,owner);
         PhotoEditStore.Draft previous=store.read(sha);byte[] bytes;String name;
         if(recipe.presetId.isEmpty()){bytes=new byte[0];name="无滤镜";}
@@ -57,8 +64,11 @@ public final class SharedEdits {
         }
         PhotoEditStore.Draft next=new PhotoEditStore.Draft(sha,bytes,name,recipe.strength,recipe.adjustments,recipe.geometry,recipe.border,recipe.local,false);
         if(previous!=null&&previous.exported&&previous.identity().equals(next.identity()))next=new PhotoEditStore.Draft(sha,bytes,name,recipe.strength,recipe.adjustments,recipe.geometry,recipe.border,recipe.local,true);
-        if(previous!=null)retainPreset(owner,previous);retainPreset(owner,next);
-        store.save(next);return next;
+        if(persist){
+            if(previous!=null)retainPreset(owner,previous);retainPreset(owner,next);
+            store.save(next);
+        }
+        return next;
     }
     public void markExported(String owner,PhotoEditStore.Draft frozen)throws IOException{new PhotoEditStore(root,owner).markExported(frozen);}
     public static Map<String,Object> recipe(PhotoEditStore.Draft d)throws IOException{

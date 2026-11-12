@@ -7,6 +7,11 @@ import cc.huevia.album.PhotoEditStore;
 import cc.huevia.album.PhotoRecipeStore;
 import cc.huevia.album.PhotoStarStore;
 import cc.huevia.album.PhotoAdjustmentCopy;
+import cc.huevia.ncp.PhotoBorder;
+import cc.huevia.ncp.PhotoGeometry;
+import cc.huevia.ncp.PhotoBodyShape;
+import cc.huevia.ncp.PhotoLocalEdits;
+import cc.huevia.ncp.AdjustmentRegion;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -67,6 +72,7 @@ public final class SharedRuntime {
         if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));
         if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
         if(operation.startsWith("version."))return SharedJson.encode(versions(operation,p,cancel));
+        if(operation.startsWith("local."))return SharedJson.encode(SharedLocalEdits.request(operation,p,cancel));
         switch(operation){
             case "ui.preferences.get":result=new SharedUiState(root).read();break;
             case "ui.preferences.set":result=new SharedUiState(root).update(p);break;
@@ -273,6 +279,22 @@ public final class SharedRuntime {
     public synchronized String sourceIdentity(String path,boolean force)throws IOException{return edits.sourceIdentity(privateFile(path),force);}
     public synchronized PhotoEditStore.Draft originalView(String path,String owner)throws IOException{
         guardOwner(owner);return new PhotoEditStore.Draft(sourceIdentity(path,false),null,"无滤镜",0,false);
+    }
+    public synchronized PhotoEditStore.Draft localView(String path,String owner,String json)throws IOException{
+        guardOwner(owner);
+        PhotoEditStore.Draft frozen=edits.snapshot(privateFile(path),owner,json,personal::visible);
+        PhotoLocalEdits local=frozen.localEdits;
+        if(!local.portrait.bodyShape.isNeutral())local=local.withPortrait(local.portrait.withBodyShape(PhotoBodyShape.NONE));
+        // Original local tools paint in the EXIF-oriented source before crop,
+        // border and global body shaping. The stored recipe is left intact.
+        return new PhotoEditStore.Draft(frozen.sourceSha,frozen.presetBytes(),frozen.name,frozen.strength,frozen.adjustments,PhotoGeometry.NONE,PhotoBorder.NONE,local,false);
+    }
+    public synchronized AdjustmentRegion cleanupRegion(String path,String owner,String json,String regionId)throws IOException{
+        guardOwner(owner);
+        PhotoEditStore.Draft frozen=edits.snapshot(privateFile(path),owner,json,personal::visible);
+        if(regionId==null||regionId.isEmpty())return null;
+        for(AdjustmentRegion region:frozen.localEdits.regions())if(region.id.equals(regionId))return region;
+        throw new IOException("局部区域已变化，请重新选择。");
     }
     public synchronized PhotoEditStore.Draft freezeEdit(String path,String owner,String json)throws IOException{guardOwner(owner);return edits.freeze(privateFile(path),owner,json,personal::visible);}
     public synchronized void guardOwner(String owner)throws IOException{

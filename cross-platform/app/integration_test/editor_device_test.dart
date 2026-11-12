@@ -20,6 +20,11 @@ import '../test/community_state_test.dart' as community_state;
 import '../test/community_ui_test.dart' as community_ui;
 import '../test/submission_ui_test.dart' as submission_ui;
 import '../test/account_profile_test.dart' as account_profile;
+import '../test/local_adjustments_test.dart' as local_adjustments;
+import '../test/local_editor_test.dart' as local_editor;
+import '../test/selection_mask_test.dart' as selection_mask;
+import '../test/selection_editor_test.dart' as selection_editor;
+import '../test/selection_workspace_test.dart' as selection_workspace;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -52,4 +57,9 @@ void main() {
   community_ui.main();
   submission_ui.main();
   account_profile.main();
+  local_adjustments.main();
+  local_editor.main();
+  selection_mask.main();
+  selection_editor.main();
+  selection_workspace.main();
 }

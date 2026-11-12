@@ -26,6 +26,15 @@ public final class CleanupBoundaryTest {
         yes(adjusted.adjustments.cleanup.analysis.equals(recipe.adjustments.cleanup.analysis));
         Surface tiny=new Surface(2,2,1);Map<String,Object> small=SharedJson.object(SharedCleanup.analyze(tiny,tiny,()->false));yes(((Number)small.get("patchCount")).intValue()==0);
         boolean cancelled=false;try{SharedCleanup.analyze(original,overview,()->true);}catch(InterruptedIOException expected){cancelled=true;}yes(cancelled);
+        AdjustmentRegion full=new AdjustmentRegion("full","全图",true,1,Collections.emptyList(),PhotoAdjustments.NONE,PhotoPortrait.NONE,PhotoPortrait.Settings.NONE,null,
+                Collections.singletonList(new SelectionShape(SelectionShape.Kind.RECTANGLE,0,0,1,1,0,false,0)),false);
+        Map<String,Object> fullResult=SharedJson.object(SharedCleanup.analyze(original,overview,full,()->false));
+        yes(fullResult.get("cleanupData").equals(result.get("cleanupData")));
+        AdjustmentRegion empty=AdjustmentRegion.create("空选区");
+        int reads=original.reads;
+        Map<String,Object> emptyResult=SharedJson.object(SharedCleanup.analyze(original,overview,empty,()->false));
+        yes(((Number)emptyResult.get("patchCount")).intValue()==0);yes(original.reads==reads);
+        yes(Arrays.equals(before,original.values));
         return checks;
     }
 }

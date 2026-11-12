@@ -318,21 +318,24 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   if([operation isEqualToString:@"media.cleanupAnalyze"]){
     NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class])fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
     NSString *sha=[_runtime sourceIdentityWithNSString:path withBoolean:true],*status=@"";
+    NSString *regionId=p[@"regionId"]?:@"";if(![regionId isKindOfClass:NSString.class]||regionId.length>64)fail(@"局部区域标识无效。");
+    CcHueviaNcpAdjustmentRegion *region=nil;
+    if(regionId.length){if(![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");region=[_runtime cleanupRegionWithNSString:path withNSString:owner withNSString:json(p[@"recipe"]) withNSString:regionId];}
     HueviaRaster *source=raw?[self raw:path owner:owner settings:[CcHueviaSharedSharedRawSettings parseWithNSString:@"{}"] task:task status:&status]:load(path,_root,0);
     int sample=1;while((std::max(source.pixelWidth,source.pixelHeight)+sample-1)/sample>512)sample*=2;
     HueviaRaster *small=scaled(source,(source.pixelWidth+sample-1)/sample,(source.pixelHeight+sample-1)/sample,_root);
     HueviaRaster *overview=compose(small,CcHueviaNcpPhotoGeometry_get_NONE(),_root,task);
-    NSString *value=[CcHueviaSharedSharedCleanup analyzeWithCcHueviaNcpSpatialPreviewFilter_Pixels:source withCcHueviaNcpSpatialPreviewFilter_Pixels:overview withJavaUtilFunctionBooleanSupplier:task];
+    NSString *value=[CcHueviaSharedSharedCleanup analyzeWithCcHueviaNcpSpatialPreviewFilter_Pixels:source withCcHueviaNcpSpatialPreviewFilter_Pixels:overview withCcHueviaNcpAdjustmentRegion:region withJavaUtilFunctionBooleanSupplier:task];
     check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sha];
     return [NSJSONSerialization JSONObjectWithData:[value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
   }
   BOOL paired=[operation isEqual:@"media.exportPreview"];if(paired)[self closeExportPreview];
-  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],preview=originalView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"]&&!paired)fail(@"未知的照片操作。");
+  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],localView=[operation isEqualToString:@"media.localPreview"],preview=originalView||localView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"]&&!paired)fail(@"未知的照片操作。");
   id requestedEdge=p[@"maxEdge"];if(requestedEdge&&![requestedEdge isKindOfClass:NSNumber.class])fail(@"预览边长无效。");
   double edge=requestedEdge?[requestedEdge doubleValue]:1280;if(!std::isfinite(edge)||edge!=std::floor(edge)||edge<128||edge>1280)fail(@"预览边长必须在 128 到 1280 之间。");int previewEdge=(int)edge;
   if(!originalView&&![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");
   NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");
-  CcHueviaAlbumPhotoEditStore_Draft *frozen=originalView?[_runtime originalViewWithNSString:path withNSString:owner]:[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
+  CcHueviaAlbumPhotoEditStore_Draft *frozen=originalView?[_runtime originalViewWithNSString:path withNSString:owner]:localView?[_runtime localViewWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])]:[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
   if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];
   NSString *colorStatus=@"";HueviaRaster *working=raw?[self raw:path owner:owner settings:[CcHueviaSharedSharedRawSettings parseWithNSString:@"{}"] task:task status:&colorStatus]:load(path,_root,preview?previewEdge:0);
   if(raw&&preview){double scale=std::min(1.0,previewEdge/(double)std::max(working.pixelWidth,working.pixelHeight));working=scaled(working,std::max(1,int(std::lround(working.pixelWidth*scale))),std::max(1,int(std::lround(working.pixelHeight*scale))),_root);}
@@ -340,6 +343,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   int fullWidth=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],fullHeight=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue];
   int exif=[metadata[(__bridge id)kCGImagePropertyOrientation] intValue];if(exif<1||exif>8)exif=1;
   CcHueviaNcpPhotoGeometry_Plan *fullPlan=[frozen->geometry_ planWithInt:(fullWidth>0?fullWidth:working.pixelWidth) withInt:(fullHeight>0?fullHeight:working.pixelHeight) withInt:exif];
+  CcHueviaNcpPhotoGeometry_Plan *uncomposed=[CcHueviaNcpPhotoGeometry_get_NONE() planWithInt:(fullWidth>0?fullWidth:working.pixelWidth) withInt:(fullHeight>0?fullHeight:working.pixelHeight) withInt:exif];
   [profile renderPixelsWithCcHueviaNcpSpatialPreviewFilter_Pixels:working withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
   check(task);working=compose(working,frozen->geometry_,_root,task);
   working=[HueviaFrames apply:working border:frozen->border_ capture:[[CcHueviaSharedSharedCaptureInfo alloc] initWithNSString:json(captureData(metadata))] root:_root task:task];
@@ -370,6 +374,6 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
   [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];NSDictionary *result=@{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"geometryWidth":@(fullPlan->width_),@"geometryHeight":@(fullPlan->height_),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved],@"exportSpec":preview?@"":[resolved identity],@"rawColorStatus":colorStatus};
   if(!preview){@try{NSString *saved=[_runtime commitVersionWithNSString:path withNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen withNSString:target withNSString:json(result) withJavaUtilFunctionBooleanSupplier:task];[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];return [NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];}@finally{[NSFileManager.defaultManager removeItemAtPath:target error:nil];}}
-  return result;
+  NSMutableDictionary *withSource=[result mutableCopy];withSource[@"sourceWidth"]=@(uncomposed->width_);withSource[@"sourceHeight"]=@(uncomposed->height_);return withSource;
 }
 @end

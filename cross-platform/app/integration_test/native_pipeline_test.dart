@@ -493,6 +493,132 @@ void main() {
         outputs.add(geometryPreview['path'] as String);
         expect(geometryPreview['geometryWidth'], 192);
         expect(geometryPreview['geometryHeight'], 256);
+        expect(geometryPreview['sourceWidth'], 256);
+        expect(geometryPreview['sourceHeight'], 192);
+        final localDraftBefore = await core.call('draft.load', {
+          'path': source.path,
+          'owner': '',
+        });
+        final localVersionsBefore = await core.call('version.list', {
+          'owner': '',
+        });
+        final localSeed = await core.call('local.seedRegion', {
+          'localData': '',
+        });
+        final regionSeed = object(localSeed['seed']);
+        final localValues = List.filled(17, 0)..[1] = 10;
+        final local = await core.call('local.change', {
+          'localData': '',
+          'expectedSha': localSeed['sha256'],
+          'action': 'addRegion',
+          'value': {
+            ...regionSeed,
+            'shapes': [
+              {
+                'kind': 'rectangle',
+                'left': 0,
+                'top': 0,
+                'right': .45,
+                'bottom': 1,
+                'feather': 0,
+                'subtract': false,
+                'strokeIndex': 0,
+              },
+            ],
+            'adjustments': {'values': localValues},
+          },
+        });
+        final localRecipe = {
+          'schema': 1,
+          'localData': local['localData'],
+          'geometry': {'turns': 1, 'right': 500000},
+          'border': {'template': 3},
+        };
+        final localFrame = await render('media.localPreview', {
+          'path': source.path,
+          'owner': '',
+          'recipe': localRecipe,
+        });
+        expect(localFrame['width'], 256);
+        expect(localFrame['height'], 192);
+        expect(localFrame['geometryWidth'], 256);
+        expect(localFrame['geometryHeight'], 192);
+        final localOverlay = await core.call('local.overlay', {
+          'recipe': localRecipe,
+          'regionId': regionSeed['id'],
+          'sourceWidth': localFrame['sourceWidth'],
+          'sourceHeight': localFrame['sourceHeight'],
+          'outputWidth': 4000,
+          'outputHeight': 6000,
+        });
+        expect(localOverlay['width'], 213);
+        expect(localOverlay['height'], 320);
+        final overlayBytes = base64Decode(localOverlay['rgba'] as String);
+        expect(overlayBytes.length, 213 * 320 * 4);
+        expect(
+          List.generate(
+            overlayBytes.length ~/ 4,
+            (i) => overlayBytes[i * 4 + 3],
+          ).any((alpha) => alpha > 0),
+          isTrue,
+        );
+        final localNeutral = await render('media.localPreview', {
+          'path': source.path,
+          'owner': '',
+          'recipe': {'schema': 1},
+        });
+        Future<List<int>> localPixel(Json frame, int x, int y) async {
+          final codec = await ui.instantiateImageCodec(
+            await File(frame['path'] as String).readAsBytes(),
+          );
+          final decoded = await codec.getNextFrame();
+          try {
+            final bytes = (await decoded.image.toByteData(
+              format: ui.ImageByteFormat.rawRgba,
+            ))!;
+            final at = (y * decoded.image.width + x) * 4;
+            return List.generate(3, (c) => bytes.getUint8(at + c));
+          } finally {
+            decoded.image.dispose();
+            codec.dispose();
+          }
+        }
+
+        final inside = await localPixel(localFrame, 50, 90);
+        final insideBefore = await localPixel(localNeutral, 50, 90);
+        expect(inside[0], greaterThan(insideBefore[0] + 10));
+        final outside = await localPixel(localFrame, 210, 90);
+        final outsideBefore = await localPixel(localNeutral, 210, 90);
+        for (var c = 0; c < 3; c++) {
+          expect((outside[c] - outsideBefore[c]).abs(), lessThanOrEqualTo(3));
+        }
+        final regionalCleanup = await render('media.cleanupAnalyze', {
+          'path': source.path,
+          'owner': '',
+          'recipe': localRecipe,
+          'regionId': regionSeed['id'],
+        });
+        expect(regionalCleanup['sourceWidth'], 256);
+        expect(regionalCleanup['sourceHeight'], 192);
+        expect(regionalCleanup['patchCount'], greaterThan(0));
+        await expectLater(
+          core.call('media.cleanupAnalyze', {
+            'path': source.path,
+            'owner': '',
+            'recipe': localRecipe,
+            'regionId': 'missing-region',
+          }),
+          throwsA(isA<AppFailure>()),
+        );
+        expect(
+          await core.call('draft.load', {'path': source.path, 'owner': ''}),
+          localDraftBefore,
+        );
+        expect(
+          await core.call('version.list', {'owner': ''}),
+          localVersionsBefore,
+        );
+        expect((await sha256.bind(source.openRead()).first).toString(), before);
         final capture = await core.call('media.borderInfo', {
           'path': source.path,
           'owner': '',

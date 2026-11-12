@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,15 +14,19 @@ import 'recipes.dart';
 import 'copy_adjustments.dart';
 import 'versions.dart';
 import 'widgets.dart';
-import 'hue_icons.dart';
 import 'raw_develop.dart';
 import 'crop_workspace.dart';
 import 'split_compare.dart';
 import 'export_preview.dart';
 import 'border_panel.dart';
 import 'photo_workspace_chrome.dart';
+import 'local_adjustments.dart';
+import 'selection_workspace.dart';
+import 'theme.dart';
+import 'workspace_tools.dart';
 
 part 'legacy_editor.dart';
+part 'local_editor.dart';
 
 class EditorPage extends StatefulWidget {
   const EditorPage({super.key, required this.state, required this.photo});
@@ -44,6 +49,18 @@ class _EditorPageState extends State<EditorPage> {
   bool exporting = false, rendering = false, compare = false, restored = false;
   bool managingTools = false;
   bool analyzingCleanup = false;
+  final scopeAnchor = GlobalKey();
+  Json localState = {};
+  String? selectedRegionId;
+  Recipe? regionAdjustments;
+  LocalAdjustmentQueue? localQueue;
+  bool leaving = false, allowPop = false;
+  Json? displayedOverlay;
+  ui.Image? regionLayer;
+  String? regionLayerJob;
+  int regionLayerGeneration = 0;
+  int displayedRevision = -1;
+  bool regionLayerVisible = true, adjustingParameter = false;
   double progress = 0;
   Size? compositionFrame;
   int compositionFrameTurns = 0;
@@ -61,6 +78,7 @@ class _EditorPageState extends State<EditorPage> {
   @override
   void initState() {
     super.initState();
+    widget.state.addListener(editorOwnerChanged);
     progressEvents = HueviaCore.progress.listen((event) {
       final value = object(event);
       if (mounted && value['jobId'] == activeJob) {
@@ -87,6 +105,7 @@ class _EditorPageState extends State<EditorPage> {
         });
         recipe = Recipe(data: object(migrated['recipe']));
       }
+      await reloadLocalState();
       if (mounted) {
         setState(() => restored = true);
         await render();
@@ -98,6 +117,8 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   void dispose() {
+    widget.state.removeListener(editorOwnerChanged);
+    clearRegionLayer();
     debounce?.cancel();
     if (restored && !exporting) unawaited(saveDraft().catchError((_) {}));
     unawaited(progressEvents?.cancel());
@@ -110,6 +131,7 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   Future<void> saveDraft() async {
+    await settleLocalAdjustments();
     if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
       throw const AppFailure('账号已改变，请重新打开照片。');
     }
@@ -121,14 +143,23 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   void checkpoint() {
-    undo.add(recipe.clone());
+    final snapshot = recipe.clone();
+    localQueue?.fillSnapshot(snapshot);
+    undo.add(snapshot);
     if (undo.length > 40) undo.removeAt(0);
     redo.clear();
   }
 
   void change(void Function() mutation, {bool snapshot = true}) {
-    if (exporting || managingTools || analyzingCleanup || !restored) return;
+    if (exporting ||
+        managingTools ||
+        analyzingCleanup ||
+        !restored ||
+        !sameOwner) {
+      return;
+    }
     if (snapshot) checkpoint();
+    clearRegionLayer();
     setState(() {
       compare = false;
       mutation();
@@ -143,7 +174,16 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   Future<void> render() async {
+    if (managingTools || !sameOwner) return;
+    clearRegionLayer();
     final current = revision;
+    try {
+      await settleLocalAdjustments();
+    } catch (failure) {
+      if (mounted && current == revision) setState(() => error = '$failure');
+      return;
+    }
+    if (!mounted || current != revision) return;
     final splitting = compare;
     final frozen = recipe.clone();
     final previousJob = activeJob;
@@ -201,8 +241,17 @@ class _EditorPageState extends State<EditorPage> {
               object(frozen.data['geometry'] ?? {})['turns'] as int? ?? 0;
         }
         comparison = reference;
+        displayedOverlay = {
+          'recipe': frozen.data,
+          'sourceWidth': result['sourceWidth'],
+          'sourceHeight': result['sourceHeight'],
+          'outputWidth': result['width'],
+          'outputHeight': result['height'],
+        };
+        displayedRevision = current;
         error = null;
       });
+      unawaited(refreshRegionLayer());
       panelRevision.value++;
       if (oldComparison != null &&
           oldComparison != preview &&
@@ -238,6 +287,7 @@ class _EditorPageState extends State<EditorPage> {
     }
     try {
       final file = File(path);
+      await ResizeImage(FileImage(file), width: 1280).evict();
       await FileImage(file).evict();
       if (await file.exists()) await file.delete();
     } on FileSystemException {
@@ -251,6 +301,7 @@ class _EditorPageState extends State<EditorPage> {
     revision++;
     setState(() => managingTools = true);
     try {
+      await settleLocalAdjustments();
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
       if (!mounted) return;
       final result = await hueRootPage<Json>(
@@ -295,6 +346,7 @@ class _EditorPageState extends State<EditorPage> {
     revision++;
     setState(() => managingTools = true);
     try {
+      await settleLocalAdjustments();
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
       if (!mounted) return;
       final applied = await Navigator.push<Json>(
@@ -332,6 +384,7 @@ class _EditorPageState extends State<EditorPage> {
           compare = false;
           recipe = Recipe(data: applied);
         });
+        await reloadLocalState();
       }
     } catch (failure) {
       if (mounted) report(context, failure);
@@ -357,18 +410,38 @@ class _EditorPageState extends State<EditorPage> {
       error = null;
     });
     try {
+      await settleLocalAdjustments();
+      if (!mounted || !sameOwner) return;
+      final regionId = selectedRegionId;
       if (oldJob != null) await widget.state.core.cancel(oldJob);
       final result = await widget.state.core.call('media.cleanupAnalyze', {
         'path': widget.photo.path,
         'owner': owner,
+        'regionId': regionId ?? '',
+        'recipe': recipe.clone().data,
       }, job);
-      if (!mounted || activeJob != job) return;
+      if (!mounted ||
+          !sameOwner ||
+          activeJob != job ||
+          regionId != selectedRegionId) {
+        return;
+      }
       checkpoint();
       setState(() {
         compare = false;
-        recipe.data['cleanupData'] = result['cleanupData'];
-        recipe.data['cleanup'] = {'amount': 100, 'haze': 100, 'noise': 100};
+        adjustmentRecipe.data['cleanupData'] = result['cleanupData'];
+        adjustmentRecipe.data['cleanup'] = {
+          'amount': 100,
+          'haze': 100,
+          'noise': 100,
+        };
       });
+      if (regionId != null) {
+        await localQueue!.change(regionId, {
+          'adjustments': adjustmentRecipe.clone().data,
+        });
+      }
+      panelRevision.value++;
       succeeded = true;
     } catch (failure) {
       if (mounted && activeJob == job) setState(() => error = '$failure');
@@ -385,6 +458,14 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   Future<void> export() async {
+    if (!toolsEnabled) return;
+    try {
+      await settleLocalAdjustments();
+    } catch (failure) {
+      if (mounted) report(context, failure);
+      return;
+    }
+    if (!mounted) return;
     var inspect = false;
     final size = await showModalBottomSheet<String>(
       context: context,
@@ -606,7 +687,11 @@ class _EditorPageState extends State<EditorPage> {
               max: max,
               onChangeStart: exporting || managingTools || analyzingCleanup
                   ? null
-                  : (_) => (start ?? checkpoint)(),
+                  : (_) {
+                      beginParameterGesture();
+                      (start ?? checkpoint)();
+                    },
+              onChangeEnd: (_) => endParameterGesture(),
               onChanged: exporting || managingTools || analyzingCleanup
                   ? null
                   : changed,
@@ -631,7 +716,8 @@ class _EditorPageState extends State<EditorPage> {
     switch (tool ?? tab) {
       case 7:
         final settings = object(
-          recipe.data['cleanup'] ?? {'amount': 100, 'haze': 100, 'noise': 100},
+          adjustmentRecipe.data['cleanup'] ??
+              {'amount': 100, 'haze': 100, 'noise': 100},
         );
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -646,7 +732,7 @@ class _EditorPageState extends State<EditorPage> {
               label: Text(
                 analyzingCleanup
                     ? '正在分析原图…'
-                    : recipe.data['cleanupData'] == null
+                    : adjustmentRecipe.data['cleanupData'] == null
                     ? '分析并应用'
                     : '重新分析原图',
               ),
@@ -658,7 +744,7 @@ class _EditorPageState extends State<EditorPage> {
                     : () => widget.state.core.cancel(activeJob!),
                 child: const Text('取消分析'),
               ),
-            if (recipe.data['cleanupData'] != null) ...[
+            if (adjustmentRecipe.data['cleanupData'] != null) ...[
               for (final entry in [
                 ('amount', '总强度'),
                 ('haze', '去灰'),
@@ -669,17 +755,17 @@ class _EditorPageState extends State<EditorPage> {
                   (settings[entry.$1] as int? ?? 100).toDouble(),
                   0,
                   100,
-                  (value) => change(() {
+                  (value) => changeAdjustment(() {
                     settings[entry.$1] = value.round();
-                    recipe.data['cleanup'] = settings;
+                    adjustmentRecipe.data['cleanup'] = settings;
                   }, snapshot: false),
                 ),
               TextButton(
                 onPressed: exporting || analyzingCleanup
                     ? null
-                    : () => change(() {
-                        recipe.data.remove('cleanupData');
-                        recipe.data.remove('cleanup');
+                    : () => changeAdjustment(() {
+                        adjustmentRecipe.data.remove('cleanupData');
+                        adjustmentRecipe.data.remove('cleanup');
                       }),
                 child: const Text('重置自动去灰'),
               ),
@@ -754,7 +840,7 @@ class _EditorPageState extends State<EditorPage> {
                   final parameter = object(raw),
                       index = parameter['index'] as int,
                       name = parameter['label'] as String,
-                      value = recipe.values[index];
+                      value = adjustmentRecipe.values[index];
                   return Column(
                     children: [
                       slider(
@@ -762,8 +848,8 @@ class _EditorPageState extends State<EditorPage> {
                         value.toDouble(),
                         (parameter['min'] as num).toDouble(),
                         (parameter['max'] as num).toDouble(),
-                        (v) => change(
-                          () => recipe.setValue(index, v.round()),
+                        (v) => changeAdjustment(
+                          () => adjustmentRecipe.setValue(index, v.round()),
                           snapshot: false,
                         ),
                         display: index == 1
@@ -800,7 +886,8 @@ class _EditorPageState extends State<EditorPage> {
         );
       case 2:
         final palette = object(
-          recipe.data['palette'] ?? {'color': 0, 'tone': 0, 'amount': 100},
+          adjustmentRecipe.data['palette'] ??
+              {'color': 0, 'tone': 0, 'amount': 100},
         );
         return Column(
           children: [
@@ -814,9 +901,9 @@ class _EditorPageState extends State<EditorPage> {
                 (palette[entry.$1] as int).toDouble(),
                 entry.$3,
                 100,
-                (value) => change(() {
+                (value) => changeAdjustment(() {
                   palette[entry.$1] = value.round();
-                  recipe.data['palette'] = palette;
+                  adjustmentRecipe.data['palette'] = palette;
                 }, snapshot: false),
               ),
           ],
@@ -943,18 +1030,20 @@ class _EditorPageState extends State<EditorPage> {
       case 5:
         return CurveControl(
           curves:
-              (recipe.data['curves'] as List? ??
+              (adjustmentRecipe.data['curves'] as List? ??
                       List.generate(4, (_) => [0, 0, 255, 255]))
                   .map((row) => List<int>.from(row as List))
                   .toList(),
-          enabled: !exporting && restored,
+          enabled: toolsEnabled,
           onStart: checkpoint,
-          onChanged: (value) =>
-              change(() => recipe.data['curves'] = value, snapshot: false),
+          onChanged: (value) => changeAdjustment(
+            () => adjustmentRecipe.data['curves'] = value,
+            snapshot: false,
+          ),
         );
       case 6:
         final values = List<int>.from(
-          recipe.data['hsl'] as List? ?? List.filled(24, 0),
+          adjustmentRecipe.data['hsl'] as List? ?? List.filled(24, 0),
         );
         return Column(
           children: [
@@ -968,7 +1057,12 @@ class _EditorPageState extends State<EditorPage> {
                       ['红', '橙', '黄', '绿', '青', '蓝', '紫', '洋红'][band],
                     ),
                     selected: hslBand == band,
-                    onSelected: (_) => setState(() => hslBand = band),
+                    onSelected: toolsEnabled
+                        ? (_) {
+                            setState(() => hslBand = band);
+                            panelRevision.value++;
+                          }
+                        : null,
                   ),
               ],
             ),
@@ -979,19 +1073,19 @@ class _EditorPageState extends State<EditorPage> {
                 values[hslBand * 3 + axis].toDouble(),
                 -100,
                 100,
-                (value) => change(() {
+                (value) => changeAdjustment(() {
                   values[hslBand * 3 + axis] = value.round();
-                  recipe.data['hsl'] = values;
+                  adjustmentRecipe.data['hsl'] = values;
                 }, snapshot: false),
               ),
             TextButton(
               onPressed: exporting
                   ? null
-                  : () => change(() {
+                  : () => changeAdjustment(() {
                       for (var axis = 0; axis < 3; axis++) {
                         values[hslBand * 3 + axis] = 0;
                       }
-                      recipe.data['hsl'] = values;
+                      adjustmentRecipe.data['hsl'] = values;
                     }),
               child: const Text('重置此颜色'),
             ),
@@ -1003,5 +1097,11 @@ class _EditorPageState extends State<EditorPage> {
   }
 
   @override
-  Widget build(BuildContext context) => legacyWorkspace(context);
+  Widget build(BuildContext context) => PopScope(
+    canPop: allowPop,
+    onPopInvokedWithResult: (didPop, _) {
+      if (!didPop) unawaited(leaveEditor());
+    },
+    child: legacyWorkspace(context),
+  );
 }

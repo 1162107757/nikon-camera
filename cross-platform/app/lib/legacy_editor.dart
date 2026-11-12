@@ -6,7 +6,12 @@ const _editorMuted = Color(0xffc8cdca);
 
 extension _LegacyWorkspace on _EditorPageState {
   bool get toolsEnabled =>
-      restored && !exporting && !managingTools && !analyzingCleanup;
+      restored &&
+      sameOwner &&
+      !leaving &&
+      !exporting &&
+      !managingTools &&
+      !analyzingCleanup;
 
   Widget compositionDock(double scale, bool compact) {
     final geometry = object(recipe.data['geometry'] ?? {});
@@ -294,12 +299,31 @@ extension _LegacyWorkspace on _EditorPageState {
     ),
   );
 
-  void history(bool forward) {
+  Future<void> history(bool forward) async {
     if (!toolsEnabled || (forward ? redo : undo).isEmpty) return;
-    final source = forward ? redo : undo;
-    (forward ? undo : redo).add(recipe.clone());
-    final next = source.removeLast();
-    change(() => recipe = next, snapshot: false);
+    debounce?.cancel();
+    revision++;
+    refreshWorkspace(() => managingTools = true);
+    try {
+      await settleLocalAdjustments();
+      if (!mounted || !sameOwner) return;
+      final source = forward ? redo : undo;
+      (forward ? undo : redo).add(recipe.clone());
+      final next = source.removeLast();
+      refreshWorkspace(() {
+        recipe = next;
+        compare = false;
+      });
+      await reloadLocalState();
+      panelRevision.value++;
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) {
+        refreshWorkspace(() => managingTools = false);
+        unawaited(render());
+      }
+    }
   }
 
   Future<void> editorOptions() async {
@@ -332,7 +356,7 @@ extension _LegacyWorkspace on _EditorPageState {
     );
     if (!mounted || value == null) return;
     if (value == 'reset') {
-      change(() => recipe = Recipe());
+      await resetPhoto();
     } else if (value == 'raw') {
       final source = widget.photo.info['rawSource'] as String;
       final matches = widget.state.photos.where(
@@ -362,11 +386,7 @@ extension _LegacyWorkspace on _EditorPageState {
       padding: const EdgeInsets.only(left: 14, right: 19),
       child: Row(
         children: [
-          editorButton(
-            HueIconKind.close,
-            '返回相册',
-            () => Navigator.maybePop(context),
-          ),
+          editorButton(HueIconKind.close, '返回相册', leaveEditor),
           editorButton(
             HueIconKind.more,
             '更多照片操作和重置',
@@ -380,7 +400,7 @@ extension _LegacyWorkspace on _EditorPageState {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.photo.name,
+                    sameOwner ? widget.photo.name : '账号已改变',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -392,7 +412,9 @@ extension _LegacyWorkspace on _EditorPageState {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    '${p.extension(widget.photo.info['rawSource'] as String? ?? widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片',
+                    sameOwner
+                        ? '${p.extension(widget.photo.info['rawSource'] as String? ?? widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片'
+                        : '请返回相册',
                     style: const TextStyle(
                       fontSize: 10,
                       color: _editorMuted,
@@ -439,10 +461,34 @@ extension _LegacyWorkspace on _EditorPageState {
           effect: preview!,
           original: comparison,
           enabled: compare,
+          selection: regionLayer,
+          selectionSize:
+              displayedOverlay == null ||
+                  displayedOverlay!['outputWidth'] is! num ||
+                  displayedOverlay!['outputHeight'] is! num
+              ? null
+              : Size(
+                  (displayedOverlay!['outputWidth'] as num).toDouble(),
+                  (displayedOverlay!['outputHeight'] as num).toDouble(),
+                ),
           onRetry: render,
         )
-      else
+      else if (sameOwner)
         const Center(child: CircularProgressIndicator(color: _editorYellow)),
+      if (canShowRegionLayer)
+        Positioned(
+          right: 72,
+          bottom: 12,
+          child: WorkspaceTool(
+            icon: 'eye',
+            selected: regionLayerVisible,
+            tooltip: regionLayerVisible ? '隐藏选区，保留调整' : '显示选区',
+            onPressed: () {
+              refreshWorkspace(() => regionLayerVisible = !regionLayerVisible);
+              unawaited(refreshRegionLayer());
+            },
+          ),
+        ),
       Positioned(
         top: 9,
         right: 9,
@@ -545,7 +591,7 @@ extension _LegacyWorkspace on _EditorPageState {
           editorButton(
             HueIconKind.refresh,
             '恢复原图',
-            toolsEnabled ? () => change(() => recipe = Recipe()) : null,
+            toolsEnabled ? resetPhoto : null,
           ),
         ],
       ),
@@ -639,7 +685,7 @@ extension _LegacyWorkspace on _EditorPageState {
     final parameter = parameters.firstWhere(
       (row) => row['index'] == parameterIndex,
     );
-    final value = recipe.values[parameterIndex];
+    final value = adjustmentRecipe.values[parameterIndex];
     final label = parameter['label'] as String;
     final readout = parameterIndex == 1
         ? '${value >= 0 ? '+' : ''}${(value / 10).toStringAsFixed(1)} EV'
@@ -653,11 +699,12 @@ extension _LegacyWorkspace on _EditorPageState {
       -6,
       -2,
       -7,
+      -8,
       ...parameters
           .map((row) => row['index'] as int)
           .where((index) => ![1, 2, 9, 7].contains(index)),
     ];
-    const special = {-5: '曲线', -6: 'HSL', -2: '调色盘', -7: '去灰'};
+    const special = {-5: '曲线', -6: 'HSL', -2: '调色盘', -7: '去灰', -8: '局部'};
     return Column(
       children: [
         SizedBox(
@@ -666,17 +713,45 @@ extension _LegacyWorkspace on _EditorPageState {
             padding: const EdgeInsets.symmetric(horizontal: 21),
             child: Row(
               children: [
-                Text(
-                  label,
-                  style: const TextStyle(fontSize: 12, color: _editorWhite),
+                Expanded(
+                  child: InkWell(
+                    onTap: toolsEnabled ? () => parameterHelp(parameter) : null,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        selectedRegionId == null
+                            ? label
+                            : '$label · $adjustmentScope',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: _editorWhite,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                const Spacer(),
-                Text(
-                  readout,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: _editorYellow,
-                    fontWeight: FontWeight.bold,
+                const SizedBox(width: 8),
+                Tooltip(
+                  message: '点击输入数值，长按查看参数说明',
+                  child: InkWell(
+                    onTap: toolsEnabled
+                        ? () => exactParameter(parameter)
+                        : null,
+                    onLongPress: toolsEnabled
+                        ? () => parameterHelp(parameter)
+                        : null,
+                    child: Center(
+                      child: Text(
+                        readout,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: _editorYellow,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -709,11 +784,19 @@ extension _LegacyWorkspace on _EditorPageState {
                       min: (parameter['min'] as num).toDouble(),
                       max: (parameter['max'] as num).toDouble(),
                       value: value.toDouble(),
-                      onChangeStart: toolsEnabled ? (_) => checkpoint() : null,
+                      onChangeStart: toolsEnabled
+                          ? (_) {
+                              beginParameterGesture();
+                              checkpoint();
+                            }
+                          : null,
+                      onChangeEnd: (_) => endParameterGesture(),
                       onChanged: toolsEnabled
-                          ? (next) => change(
-                              () =>
-                                  recipe.setValue(parameterIndex, next.round()),
+                          ? (next) => changeAdjustment(
+                              () => adjustmentRecipe.setValue(
+                                parameterIndex,
+                                next.round(),
+                              ),
                               snapshot: false,
                             )
                           : null,
@@ -721,23 +804,14 @@ extension _LegacyWorkspace on _EditorPageState {
                   ),
                 ),
                 const SizedBox(width: 16),
-                editorButton(
-                  HueIconKind.brush,
-                  '$label说明',
-                  () => showDialog<void>(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text(label),
-                      content: Text(parameter['help'] as String),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('知道了'),
-                        ),
-                      ],
-                    ),
+                KeyedSubtree(
+                  key: scopeAnchor,
+                  child: editorButton(
+                    HueIconKind.brush,
+                    '调节范围：$adjustmentScope',
+                    toolsEnabled ? showRegionScope : null,
+                    disk: false,
                   ),
-                  disk: false,
                 ),
               ],
             ),
@@ -763,7 +837,11 @@ extension _LegacyWorkspace on _EditorPageState {
                         onTap: toolsEnabled
                             ? () {
                                 if (index < 0) {
-                                  advancedTool(-index);
+                                  if (index == -8) {
+                                    editSelection();
+                                  } else {
+                                    advancedTool(-index);
+                                  }
                                 } else {
                                   refreshWorkspace(
                                     () => parameterIndex = index,
@@ -772,7 +850,9 @@ extension _LegacyWorkspace on _EditorPageState {
                               }
                             : null,
                         onLongPress: toolsEnabled && index >= 0
-                            ? () => change(() => recipe.setValue(index, 0))
+                            ? () => changeAdjustment(
+                                () => adjustmentRecipe.setValue(index, 0),
+                              )
                             : null,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 6),
@@ -785,6 +865,7 @@ extension _LegacyWorkspace on _EditorPageState {
                                         -6: HueIconKind.saturation,
                                         -2: HueIconKind.palette,
                                         -7: HueIconKind.cleanup,
+                                        -8: HueIconKind.brush,
                                       }[index]!
                                     : parameterIcon(
                                         parameters[index]['name'] as String,

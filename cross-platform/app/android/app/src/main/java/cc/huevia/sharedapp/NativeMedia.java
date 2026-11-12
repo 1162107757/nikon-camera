@@ -108,19 +108,21 @@ final class NativeMedia {
         if(operation.equals("media.cleanupAnalyze")){
             String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
             String sha=runtime.sourceIdentity(source.getPath(),true);File pixels=source;
+            String regionId=SharedRuntime.text(p,"regionId",64);
+            cc.huevia.ncp.AdjustmentRegion region=regionId.isEmpty()?null:runtime.cleanupRegion(source.getPath(),owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))),regionId);
             if(raw(source))pixels=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,progress).workingFile;
             String pixelSha=PhotoEditStore.hashFile(pixels);
-            PhotoCleanup.Analysis analysis=PhotoCleanupAnalyzer.analyze(pixels,pixelSha,null,cancel);
+            PhotoCleanup.Analysis analysis=PhotoCleanupAnalyzer.analyze(pixels,pixelSha,region,cancel);
             runtime.guardOwner(owner);runtime.validateSource(source.getPath(),sha);
             return SharedCleanup.result(analysis);
         }
-        boolean originalView=operation.equals("media.originalPreview");
-        if(!originalView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
-        boolean preview=originalView||operation.equals("media.preview");
+        boolean originalView=operation.equals("media.originalPreview"),localView=operation.equals("media.localPreview");
+        if(!originalView&&!localView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
+        boolean preview=originalView||localView||operation.equals("media.preview");
         int previewEdge=SharedRuntime.integer(p,"maxEdge",1280);
         if(preview&&(previewEdge<128||previewEdge>1280))throw new IOException("预览边长必须在 128 到 1280 之间。");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
-        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
         if(!preview)runtime.validateSource(original,frozen.sourceSha);
         if(raw(source))source=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
         File directory=new File(runtime.root(),preview?"previews":"exports");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片输出目录。");
@@ -131,6 +133,7 @@ final class NativeMedia {
             BitmapFactory.Options sourceBounds=bounds(source);
             int sourceOrientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(sourceOrientation<1||sourceOrientation>8)sourceOrientation=1;
             PhotoGeometry.Plan plan=GeometryPreviewProfile.geometry(profile).plan(sourceBounds.outWidth,sourceBounds.outHeight,sourceOrientation);
+            PhotoGeometry.Plan uncomposed=PhotoGeometry.NONE.plan(sourceBounds.outWidth,sourceBounds.outHeight,sourceOrientation);
             int[] canvas=BorderPreviewProfile.border(profile).dimensions(plan.width,plan.height);
             PhotoExportSpec.Resolved resolved=spec.resolve(canvas[0],canvas[1]);
             if(preview||!"image/jpeg".equals(bounds(source).outMimeType))NativeRaster.render(context,source,temporary,null,profile,spec,preview,previewEdge,cancel,progress);
@@ -144,6 +147,7 @@ final class NativeMedia {
             if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
             Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"geometryWidth",plan.width,"geometryHeight",plan.height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity());
+            if(preview){result.put("sourceWidth",uncomposed.width);result.put("sourceHeight",uncomposed.height);}
             if(!preview){
                 try{
                     String saved=runtime.commitVersion(original,owner,frozen,target.getPath(),SharedJson.encode(result),cancel);
