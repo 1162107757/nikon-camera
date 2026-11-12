@@ -153,7 +153,10 @@ void main() {
           fail('$operation failed: ${failure.message}; ${failure.details}');
         }
         if (result['path'] is String) outputs.add(result['path'] as String);
-        if (result['id'] is String) versions.add(result['id'] as String);
+        if (operation == 'media.export') {
+          expect(result['id'], matches(r'^[0-9a-f]{64}$'));
+          versions.add(result['id'] as String);
+        }
         debugPrint('Native pipeline: $operation completed');
         return result;
       }
