@@ -155,6 +155,16 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             yes(rawResult[0]==256&&rawResult[1]==192,"RAW inspection/development on a requested 512 KiB stack");
             yes(rawResult[5]==0,"Small-stack check executes the decoder without a prior development cache");
             yes(Math.min(rawResult[2],Math.min(rawResult[3],rawResult[4]))>220&&Math.max(rawResult[2],Math.max(rawResult[3],rawResult[4]))-Math.min(rawResult[2],Math.min(rawResult[3],rawResult[4]))<15,"Small-stack RAW saturated highlights stay white");
+            double previousLight=-1;
+            for(int ev:new int[]{-20,-10,0,10,20,30,50}){
+                cc.huevia.ncp.RawDevelopmentSettings rawEvControls=cc.huevia.ncp.RawDevelopmentSettings.DEFAULT.withColorMode(cc.huevia.ncp.RawDevelopmentSettings.ColorMode.NEUTRAL).withExposure(ev);
+                RawDeveloper.Result adjusted=RawDeveloper.develop(boundedContext,rawInput,"safe-ev-regression",rawEvControls,()->false,p->{});
+                Bitmap pixels=BitmapFactory.decodeFile(adjusted.workingFile.getPath());yes(pixels!=null,"RAW EV output decodes");
+                try{int middle=pixels.getPixel(pixels.getWidth()/5,pixels.getHeight()/2);double light=.2126*Color.red(middle)+.7152*Color.green(middle)+.0722*Color.blue(middle);
+                    yes(light+1>=previousLight,"Increasing RAW EV preserves monotonic brightness");previousLight=light;
+                    if(ev>=0){int white=pixels.getPixel(pixels.getWidth()*9/10,pixels.getHeight()/2);yes(Math.min(Color.red(white),Math.min(Color.green(white),Color.blue(white)))>220,"Positive RAW EV never turns saturated white black");}
+                }finally{pixels.recycle();}
+            }
             yes(rawBefore.equals(PhotoEditStore.hashFile(rawInput)),"Small-stack RAW source bytes unchanged");
             result.putString("stream","PASS "+checks+" Android media checks; codecs, original renderer, geometry, EXIF, draft, cancellation, unchanged source, LibRaw ABI\n");
             finish(Activity.RESULT_OK,result);

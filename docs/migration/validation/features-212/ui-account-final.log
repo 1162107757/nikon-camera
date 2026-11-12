@@ -1,0 +1,7 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/account_search_test.dart
+00:00 +0: Registration failures retain credentials and refresh only the challenge answer
+00:01 +1: Registration commits login even if refreshing the preset library fails
+00:01 +2: An expired challenge refreshes the proof and visibly retains the failure
+00:01 +3: Online search can display a match beyond the loaded feed page
+00:01 +4: All tests passed!
+[   +4 ms] test package returned with exit code 0

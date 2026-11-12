@@ -16,15 +16,22 @@ work=ROOT/'cross-platform/.build/raw-android';work.mkdir(parents=True,exist_ok=T
 original=ROOT/'app/src/main/cpp/huevia_raw.cpp';text=original.read_text(encoding='utf-8-sig')
 before='LibRaw raw(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);'
 if text.count(before)!=3:raise SystemExit('RAW JNI allocation adapter requires review')
-adapted=text.replace(before,'auto storage=std::make_unique<LibRaw>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);LibRaw& raw=*storage;')
+adapted=text.replace(before,'auto storage=std::make_unique<HueviaRawProcessor>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);auto& raw=*storage;')
+# Migration-only fixes; the preserved original JNI source/library is untouched.
+safety=ROOT/'cross-platform/native/ios/Classes/HueviaRawSafety.h'
+adapted=adapted.replace('#include <libraw/libraw.h>', '#include <libraw/libraw.h>\n#include "HueviaRawSafety.h"')
+old='double gain=std::pow(2,exposure/10.0),linear=std::min(8.0,std::max(.25,gain));params.exp_correc=exposure!=0;params.exp_shift=static_cast<float>(linear);params.exp_preser=0;params.bright=static_cast<float>(gain/linear);'
+if adapted.count(old)!=1:raise SystemExit('RAW exposure adapter requires review')
+adapted=adapted.replace(old,'hueviaRawSafety(raw,exposure,highlights);')
+adapted=adapted.replace('return env->NewStringUTF(LibRaw::version());','return env->NewStringUTF(LIBRAW_VERSION_STR \"-huevia-safe-ev-v3\");')
 bridge=work/'huevia_raw.cpp'
 if not bridge.exists() or bridge.read_bytes()!=adapted.encode('utf-8'):bridge.write_text(adapted,encoding='utf-8',newline='\n')
 original_libs=ROOT/'app/src/main/jniLibs'/abi;destination=work/'jniLibs'/abi;destination.mkdir(parents=True,exist_ok=True)
 for library in original_libs.glob('*.so'):
     if library.name!='libhuevia_raw.so':shutil.copy2(library,destination/library.name)
-flags=['--target='+triple+'26','--sysroot='+str(tool/'sysroot'),'-std=c++17','-O2','-fPIC','-pthread','-DNDEBUG','-DUSE_ZLIB','-DLIBRAW_NODLL','-ffunction-sections','-fdata-sections','-Wframe-larger-than=131072','-Werror=frame-larger-than','-I'+str(source)]
+flags=['--target='+triple+'26','--sysroot='+str(tool/'sysroot'),'-std=c++17','-O2','-fPIC','-pthread','-DNDEBUG','-DUSE_ZLIB','-DLIBRAW_NODLL','-ffunction-sections','-fdata-sections','-Wframe-larger-than=131072','-Werror=frame-larger-than','-I'+str(source),'-I'+str(safety.parent)]
 link=['-shared','-Wl,--build-id=sha1','-Wl,--no-undefined','-Wl,-z,max-page-size=16384','-Wl,-z,common-page-size=16384','-nostdlib++','-lc++_shared','-lz','-lm','-latomic']
-identity=hashlib.sha256((adapted+json.dumps(flags)+json.dumps(link)+(ndk/'source.properties').read_text()+hashlib.sha256((original_libs/'libraw.so').read_bytes()).hexdigest()).encode()).hexdigest()
+identity=hashlib.sha256((adapted+safety.read_text(encoding='utf-8')+json.dumps(flags)+json.dumps(link)+(ndk/'source.properties').read_text()+hashlib.sha256((original_libs/'libraw.so').read_bytes()).hexdigest()).encode()).hexdigest()
 output=destination/'libhuevia_raw.so';stamp=work/(abi+'.identity')
 if not output.is_file() or not stamp.is_file() or stamp.read_text()!=identity:
     subprocess.run([str(compiler),*flags,str(bridge),'-L'+str(original_libs),'-lraw','-ljnigraphics','-llog',*link,'-Wl,-soname,libhuevia_raw.so','-o',str(output)],check=True)
@@ -35,6 +42,7 @@ loads=[int(line.split()[-1],16) for line in headers.splitlines() if line.strip()
 if not loads or min(loads)<16384:raise SystemExit('RAW bridge must retain 16 KiB LOAD alignment')
 assets=work/'assets/native-runtime';assets.mkdir(parents=True,exist_ok=True)
 (assets/'huevia_raw.cpp').write_text(adapted,encoding='utf-8',newline='\n')
+shutil.copy2(safety,assets/'HueviaRawSafety.h')
 report={'abi':abi,'heapAllocatedLibRaw':True,'sourceBridgeSha256':hashlib.sha256(original.read_bytes()).hexdigest(),'adaptedBridgeSha256':hashlib.sha256(adapted.encode()).hexdigest(),'librarySha256':hashlib.sha256(output.read_bytes()).hexdigest(),'originalLibRawSha256':hashlib.sha256((original_libs/'libraw.so').read_bytes()).hexdigest(),'compiler':'Android NDK 28.2.13676358','minimumApi':26,'minimumLoadAlignment':min(loads),'bridgeFrameLimitBytes':131072,'originalLibrariesUnmodified':True}
 (assets/(abi+'.json')).write_text(json.dumps(report,indent=2)+'\n')
 fixture=work/'test-assets/raw-stack.dng'

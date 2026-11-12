@@ -20,6 +20,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       confirm = TextEditingController(),
       answer = TextEditingController();
   final errorFocus = FocusNode();
+  final errorKey = GlobalKey();
+  bool signedIn = false;
   bool busy = false, loading = false;
   String proof = '';
   String? error;
@@ -90,7 +92,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Future<void> submit() async {
-    if (!form.currentState!.validate()) return;
+    if (busy || loading || signedIn || !form.currentState!.validate()) return;
     if (proof.isEmpty) {
       setState(() => error = '请先获取验证码。');
       return;
@@ -106,12 +108,44 @@ class _RegistrationPageState extends State<RegistrationPage> {
         'challengeId': proof,
         'challengeAnswer': answer.text.trim(),
       });
-      if (mounted) Navigator.pop(context, session);
+      widget.state.acceptAuthenticatedSession(session);
+      unawaited(widget.state.refreshLibrary().catchError((Object _) {}));
+      if (mounted) {
+        signedIn = true;
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context, session);
+        } else {
+          setState(() {});
+        }
+      }
     } catch (failure) {
       if (mounted) {
-        setState(() => error = '$failure');
+        final details = failure is AppFailure ? failure.details : null;
+        final code = details is Map ? details['accountCode'] : null;
+        var message = '$failure';
+        if (code == 'CHALLENGE_INVALID' ||
+            code == 'CHALLENGE_EXPIRED' ||
+            code == 'CHALLENGE_REQUIRED') {
+          await challenge();
+          if (!mounted) return;
+          message += proof.isEmpty
+              ? '\n获取新验证码失败，请点击刷新后重试。'
+              : '\n已更换验证码，请重新填写后注册。';
+        }
+        setState(() => error = message);
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) errorFocus.requestFocus();
+          if (!mounted) return;
+          FocusManager.instance.primaryFocus?.unfocus();
+          errorFocus.requestFocus();
+          final target = errorKey.currentContext;
+          if (target != null)
+            unawaited(
+              Scrollable.ensureVisible(
+                target,
+                duration: const Duration(milliseconds: 180),
+                alignment: .5,
+              ),
+            );
         });
       }
     } finally {
@@ -122,143 +156,153 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('注册账号')),
-    body: SafeArea(
-      top: false,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 480),
-            child: Form(
-              key: form,
-              child: AutofillGroup(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      '建立你的预设收藏',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    const SizedBox(height: 24),
-                    TextFormField(
-                      controller: username,
-                      enabled: !busy,
-                      autofillHints: const [AutofillHints.newUsername],
-                      autocorrect: false,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: '用户名',
-                        helperText: '3–32 位，字母开头，可含数字与下划线',
-                      ),
-                      validator: (value) =>
-                          RegExp(r'^[A-Za-z][A-Za-z0-9_]{2,31}$')
-                              .hasMatch(value?.trim() ?? '')
-                          ? null
-                          : '请输入有效用户名。',
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: password,
-                      enabled: !busy,
-                      obscureText: true,
-                      autofillHints: const [AutofillHints.newPassword],
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: '密码',
-                        helperText: '8–128 个字符',
-                      ),
-                      validator: (value) =>
-                          value != null &&
-                              value.length >= 8 &&
-                              value.length <= 128
-                          ? null
-                          : '密码需为 8–128 个字符。',
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: confirm,
-                      enabled: !busy,
-                      obscureText: true,
-                      autofillHints: const [AutofillHints.newPassword],
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(labelText: '确认密码'),
-                      validator: (value) =>
-                          value == password.text ? null : '两次输入的密码不同。',
-                    ),
-                    const SizedBox(height: 24),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 80,
-                            child: image != null
-                                ? Image.memory(
-                                    image!,
-                                    fit: BoxFit.contain,
-                                    semanticLabel: '注册图片验证码',
-                                    errorBuilder: (_, _, _) => const Center(
-                                      child: Text('验证码无法显示，请刷新。'),
-                                    ),
-                                  )
-                                : Center(
-                                    child: loading
-                                        ? const CircularProgressIndicator()
-                                        : const Text('点击刷新获取验证码'),
-                                  ),
+    body: signedIn
+        ? const Center(child: Text('注册成功，已登录'))
+        : SafeArea(
+            top: false,
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 480),
+                  child: Form(
+                    key: form,
+                    child: AutofillGroup(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            '建立你的预设收藏',
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                        ),
-                        IconButton(
-                          tooltip: '刷新验证码',
-                          onPressed: busy || loading ? null : challenge,
-                          icon: const Icon(Icons.refresh_rounded),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: answer,
-                      enabled: !busy,
-                      autocorrect: false,
-                      textCapitalization: TextCapitalization.characters,
-                      textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(labelText: '图片验证码'),
-                      validator: (value) =>
-                          RegExp(r'^[A-Za-z0-9]{4,8}$')
-                              .hasMatch(value?.trim() ?? '')
-                          ? null
-                          : '请输入图片中的验证码。',
-                      onFieldSubmitted: (_) {
-                        if (!busy && !loading) unawaited(submit());
-                      },
-                    ),
-                    if (error != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Focus(
-                          focusNode: errorFocus,
-                          child: Semantics(
-                            liveRegion: true,
-                            child: Text(
-                              error!,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.error,
+                          const SizedBox(height: 24),
+                          TextFormField(
+                            controller: username,
+                            enabled: !busy,
+                            autofillHints: const [AutofillHints.newUsername],
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            decoration: const InputDecoration(
+                              labelText: '用户名',
+                              helperText: '3–32 位，字母开头，可含数字与下划线',
+                            ),
+                            validator: (value) =>
+                                RegExp(r'^[A-Za-z][A-Za-z0-9_]{2,31}$')
+                                    .hasMatch(value?.trim() ?? '')
+                                ? null
+                                : '请输入有效用户名。',
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: password,
+                            enabled: !busy,
+                            obscureText: true,
+                            autofillHints: const [AutofillHints.newPassword],
+                            textInputAction: TextInputAction.next,
+                            decoration: const InputDecoration(
+                              labelText: '密码',
+                              helperText: '8–128 个字符',
+                            ),
+                            validator: (value) =>
+                                value != null &&
+                                    value.length >= 8 &&
+                                    value.length <= 128
+                                ? null
+                                : '密码需为 8–128 个字符。',
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: confirm,
+                            enabled: !busy,
+                            obscureText: true,
+                            autofillHints: const [AutofillHints.newPassword],
+                            textInputAction: TextInputAction.next,
+                            decoration: const InputDecoration(
+                              labelText: '确认密码',
+                            ),
+                            validator: (value) =>
+                                value == password.text ? null : '两次输入的密码不同。',
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: 80,
+                                  child: image != null
+                                      ? Image.memory(
+                                          image!,
+                                          fit: BoxFit.contain,
+                                          semanticLabel: '注册图片验证码',
+                                          errorBuilder: (_, _, _) =>
+                                              const Center(
+                                                child: Text('验证码无法显示，请刷新。'),
+                                              ),
+                                        )
+                                      : Center(
+                                          child: loading
+                                              ? const CircularProgressIndicator()
+                                              : const Text('点击刷新获取验证码'),
+                                        ),
+                                ),
+                              ),
+                              IconButton(
+                                tooltip: '刷新验证码',
+                                onPressed: busy || loading ? null : challenge,
+                                icon: const Icon(Icons.refresh_rounded),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: answer,
+                            enabled: !busy,
+                            autocorrect: false,
+                            textCapitalization: TextCapitalization.characters,
+                            textInputAction: TextInputAction.done,
+                            decoration: const InputDecoration(
+                              labelText: '图片验证码',
+                            ),
+                            validator: (value) =>
+                                RegExp(r'^[A-Za-z0-9]{4,8}$')
+                                    .hasMatch(value?.trim() ?? '')
+                                ? null
+                                : '请输入图片中的验证码。',
+                            onFieldSubmitted: (_) {
+                              if (!busy && !loading) unawaited(submit());
+                            },
+                          ),
+                          if (error != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Focus(
+                                key: errorKey,
+                                focusNode: errorFocus,
+                                child: Semantics(
+                                  liveRegion: true,
+                                  child: Text(
+                                    error!,
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .error,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
+                          const SizedBox(height: 24),
+                          FilledButton(
+                            onPressed: busy || loading ? null : submit,
+                            child: Text(busy ? '正在注册' : '注册并登录'),
                           ),
-                        ),
+                        ],
                       ),
-                    const SizedBox(height: 24),
-                    FilledButton(
-                      onPressed: busy || loading ? null : submit,
-                      child: Text(busy ? '正在注册' : '注册并登录'),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
-    ),
   );
 }

@@ -35,6 +35,10 @@ class HueviaCore {
   final previewRevision = ValueNotifier<int>(0);
   bool customTemplate = false;
   final List<Json> recentOperations = [];
+  Future<void> requestUsbPermission(String id) async {
+    await _invoke('cameraUsbPermission', {'id': id});
+  }
+
   Future<void> openCameraSettings() =>
       channel.invokeMethod<void>('cameraSettings');
   Future<void> initialize() async {
@@ -237,6 +241,7 @@ class Preset {
   const Preset(this.data, {this.online = false});
   final Json data;
   final bool online;
+  bool get pinned => !online && data['pinned'] == true;
   String get id => data['id'] as String;
   String get name => (data[online ? 'name' : 'displayName'] ?? '') as String;
   String get category => (data['category'] ?? '') as String;
@@ -371,6 +376,30 @@ class AppState extends ChangeNotifier {
     presets = (value['items'] as List)
         .map((row) => Preset(object(row)))
         .toList();
+    notifyListeners();
+  }
+
+  Future<void> pinPreset(Preset preset, bool pinned) async {
+    final owner = session['user']?['id'] as String? ?? '';
+    await core.call('library.pin', {
+      'id': preset.id,
+      'owner': owner,
+      'pinned': pinned,
+    });
+    await refreshLibrary();
+  }
+
+  void acceptAuthenticatedSession(Json value) {
+    final user = value['user'];
+    if (user is! Map ||
+        user['id'] is! String ||
+        (user['id'] as String).isEmpty ||
+        value['verified'] != true ||
+        value['logoutPending'] == true) {
+      throw const AppFailure('未取得有效登录状态，请重试登录。');
+    }
+    if (session['user']?['id'] != user['id']) presets = [];
+    session = object(value);
     notifyListeners();
   }
 

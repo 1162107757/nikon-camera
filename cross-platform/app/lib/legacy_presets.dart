@@ -30,7 +30,7 @@ class LegacyPresetGrid extends StatelessWidget {
         onTap: () => onOpen(preset),
         onLongPress: preset.online ? null : () => onRemove(preset),
         label:
-            '${preset.name}，${preset.category.isEmpty ? '未分类' : preset.category}，查看预设',
+            '${preset.name}，${preset.pinned ? '已置顶，' : ''}${preset.category.isEmpty ? '未分类' : preset.category}，查看预设',
         button: true,
         child: InkWell(
           onTap: () => onOpen(preset),
@@ -51,6 +51,28 @@ class LegacyPresetGrid extends StatelessWidget {
                         owner: owner,
                         showBadge: true,
                       ),
+                      if (preset.pinned)
+                        Positioned(
+                          top: 8,
+                          left: 8,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: palette.card,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              '置顶',
+                              style: TextStyle(
+                                color: palette.ink,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

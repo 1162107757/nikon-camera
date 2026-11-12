@@ -71,12 +71,13 @@ class _AccountPageState extends State<AccountPage> {
       error = null;
     });
     try {
-      await widget.state.core.call('account.login', {
+      final session = await widget.state.core.call('account.login', {
         'username': username.text.trim(),
         'password': password.text,
         'owner': owner,
       });
-      await widget.state.refreshSession();
+      widget.state.acceptAuthenticatedSession(session);
+      unawaited(widget.state.refreshLibrary().catchError((Object _) {}));
       if (mounted) {
         setState(() {
           password.clear();

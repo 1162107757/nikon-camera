@@ -1,0 +1,4 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/.tooling/features212/work/cross-platform/app/test/wired_camera_test.dart
+00:00 +0: USB discovery can refresh after attach, obtains permission and connects the selected device
+00:00 +1: USB permission denial is visible and does not open a camera session
+00:00 +2: All tests passed!

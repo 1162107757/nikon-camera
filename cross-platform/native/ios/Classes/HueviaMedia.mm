@@ -208,7 +208,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   NSString *sourceHash=hashFile(path,task),*directory=[[_root stringByAppendingPathComponent:@"raw-development"] stringByAppendingPathComponent:scopeHash];
   if(reference)[reference verifySourceWithNSString:sourceHash];
   if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建 RAW 显影目录。");
-  NSString *identity=hashText([NSString stringWithFormat:@"%@-%@-%s-camera-jpeg-white-v2-%@",sourceHash,[controls identity],HueviaRawVersion(),reference?reference->sha256_:@"embedded"]),*cached=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".png"]],*receipt=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".json"]];
+  NSString *identity=hashText([NSString stringWithFormat:@"%@-%@-%s-raw-safe-highlights-ev-v3-camera-jpeg-white-v2-%@",sourceHash,[controls identity],HueviaRawVersion(),reference?reference->sha256_:@"embedded"]),*cached=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".png"]],*receipt=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".json"]];
   if([NSFileManager.defaultManager fileExistsAtPath:cached]){@try{
     NSDictionary *attrs=[NSFileManager.defaultManager attributesOfItemAtPath:receipt error:nil];if([attrs[NSFileSize] unsignedLongLongValue]>4096)fail(@"RAW 缓存记录无效。");
     NSData *data=[NSData dataWithContentsOfFile:receipt];NSDictionary *record=data?[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]:nil;

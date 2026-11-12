@@ -136,7 +136,10 @@ public final class SharedRuntime {
                 for(PresetRecord r:library.list())if(personal.visible(r.id)){
                     Map<String,Object> value=r.toMap();if(links.containsKey(r.sha256))value.put("discussionId",links.get(r.sha256));rows.add(value);
                 }
-                result=map("items",rows,"diagnostics",library.diagnostics());break;
+                List<String> diagnostics=new ArrayList<>(library.diagnostics());
+                try{new SharedPresetPins(root).order(SharedPersonal.currentOwner(accounts),rows);}
+                catch(IOException unavailable){diagnostics.add("置顶排序暂不可用，已按原顺序显示预设。");}
+                result=map("items",rows,"diagnostics",diagnostics);break;
             }
             case "library.import":{
                 guardOwner(text(p,"owner",64));
@@ -146,9 +149,16 @@ public final class SharedRuntime {
                 personal.added(added.record);
                 result=map("record",added.record.toMap(),"added",added.added);break;
             }
+            case "library.pin":{
+                String owner=text(p,"owner",64);guardOwner(owner);String id=text(p,"id",64);requirePreset(id);
+                if(!(p.get("pinned") instanceof Boolean))throw new IOException("请选择置顶状态。");
+                new SharedPresetPins(root).set(owner,id,Boolean.TRUE.equals(p.get("pinned")));result=map("id",id,"pinned",p.get("pinned"));break;
+            }
             case "library.remove":{
                 guardOwner(text(p,"owner",64));String id=text(p,"id",64);requirePreset(id);
-                PresetLibrary.RemoveResult removed=library.remove(id);personal.deleted(id);result=map("warnings",removed.cleanupWarnings);break;
+                PresetLibrary.RemoveResult removed=library.remove(id);personal.deleted(id);List<String> warnings=new ArrayList<>(removed.cleanupWarnings);
+                try{new SharedPresetPins(root).set(text(p,"owner",64),id,false);}catch(IOException unavailable){warnings.add("预设已删除，置顶记录暂未清理。");}
+                result=map("warnings",warnings);break;
             }
             case "library.category":{
                 guardOwner(text(p,"owner",64));String id=text(p,"id",64);requirePreset(id);PresetRecord changed=library.setCategory(id,text(p,"category",100));personal.added(changed);result=changed.toMap();break;

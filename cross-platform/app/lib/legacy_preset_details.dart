@@ -28,7 +28,21 @@ class LegacyPresetDetails extends StatefulWidget {
 }
 
 class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
-  bool original = false;
+  bool original = false, pinning = false;
+  late bool pinned = widget.preset.pinned;
+  Future<void> togglePin() async {
+    if (pinning) return;
+    setState(() => pinning = true);
+    try {
+      await widget.state.pinPreset(widget.preset, !pinned);
+      if (mounted) setState(() => pinned = !pinned);
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) setState(() => pinning = false);
+    }
+  }
+
   late final Future<Json> inspection = widget.preset.online
       ? Future.value({})
       : widget.state.core.call('library.inspect', {'id': widget.preset.id});
@@ -199,6 +213,21 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
                       subtitle: Text('按相机能力与预设格式检查兼容性。'),
                     ),
                     if (!preset.online) ...[
+                      ListTile(
+                        leading: Icon(
+                          pinned ? Icons.push_pin : Icons.push_pin_outlined,
+                        ),
+                        title: Text(
+                          pinning
+                              ? '正在保存置顶状态'
+                              : pinned
+                              ? '取消置顶'
+                              : '置顶预设',
+                        ),
+                        subtitle: const Text('可置顶多个预设，在我的预设中优先显示'),
+                        enabled: !pinning,
+                        onTap: togglePin,
+                      ),
                       TextButton(
                         onPressed: widget.onShare,
                         child: const Text('分享预设文件'),

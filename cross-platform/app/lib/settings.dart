@@ -268,12 +268,8 @@ class SettingsPage extends StatelessWidget {
                 row(
                   HueIconKind.usb,
                   'USB 数据线连接',
-                  () => explain(
-                    context,
-                    'USB 数据线连接',
-                    '此安装包暂不支持 USB 相机连接。可在 Wi-Fi 无线连接中连接相机。',
-                  ),
-                  note: '导入预设',
+                  connect,
+                  note: '接收 JPEG / NEF 照片',
                 ),
                 row(
                   HueIconKind.wifi,

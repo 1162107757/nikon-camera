@@ -16,6 +16,8 @@
 #import "HueviaCoreBootstrap.h"
 #import "HueviaWifiSocket.h"
 #import "HueviaStability.h"
+#import "HueviaWiredCameras.h"
+#import "cc/huevia/account/AccountException.h"
 
 @interface HueviaCorePlugin ()
 @property(nonatomic,strong) dispatch_queue_t queue;
@@ -23,6 +25,7 @@
 @property(nonatomic,copy) FlutterEventSink events;
 @property(nonatomic,strong) CcHueviaSharedSharedRuntime *runtime;
 @property(nonatomic,strong) CcHueviaSharedSharedCamera *camera;
+@property(nonatomic,strong) HueviaWiredCameras *wired;
 @property(nonatomic,strong) HueviaMedia *media;
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) HueviaImportPicker *importPicker;
@@ -47,12 +50,14 @@
 - (FlutterError *)onCancelWithArguments:(id)arguments {self.events=nil;return nil;}
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
+  if([call.method isEqualToString:@"cameraUsbPermission"]){reply(@"{\"granted\":true}");return;}
   if([call.method isEqualToString:@"cameraSettings"]){
     [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success){
       reply(success?nil:[FlutterError errorWithCode:@"SETTINGS_FAILED" message:@"请在 iPhone 设置中打开本应用的本地网络权限。" details:nil]);
     }];return;
   }
-  if([call.method isEqualToString:@"request"]&&[args[@"operation"] isEqualToString:@"camera.connect"]&&![NSUserDefaults.standardUserDefaults boolForKey:@"HueviaCameraNetworkIntroduction"]){
+  NSDictionary *connectionPayload=[args[@"payload"] isKindOfClass:NSString.class]?[NSJSONSerialization JSONObjectWithData:[args[@"payload"] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil]:nil;
+  if([call.method isEqualToString:@"request"]&&[args[@"operation"] isEqualToString:@"camera.connect"]&&![connectionPayload[@"transport"] isEqual:@"usb"]&&![NSUserDefaults.standardUserDefaults boolForKey:@"HueviaCameraNetworkIntroduction"]){
     UIAlertController *intro=[UIAlertController alertControllerWithTitle:@"允许访问相机的本地网络" message:@"请先连接相机 Wi-Fi。接下来的系统授权弹窗请选择“允许”，才能读取和下载相机照片。\n\n如果此前选择了“不允许”，请到 iPhone 设置 → Huevia → 本地网络中开启后重试。" preferredStyle:UIAlertControllerStyleAlert];
     [intro addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){reply([FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil]);}]];
     [intro addAction:[UIAlertAction actionWithTitle:@"继续连接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
@@ -120,7 +125,8 @@
           // Physical iOS devices may expose /var and /private/var aliases.
           self.root=[[runtime root] getPath];
           stage=@"camera runtime";
-          CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init]];
+          self.wired=[[HueviaWiredCameras alloc] init];
+          CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init] withCcHueviaSharedSharedCamera_WiredConnections:self.wired];
           stage=@"media runtime";
           HueviaMedia *media=[[HueviaMedia alloc] initWithRuntime:runtime root:self.root];
           HueviaGallery *gallery=[[HueviaGallery alloc] initWithRoot:self.root];
@@ -147,6 +153,7 @@
     }@catch(id failure){
       NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"操作未完成，请重试。";
       NSMutableDictionary *details=[@{@"stage":stage,@"nativeType":NSStringFromClass([failure class])} mutableCopy];
+      if([failure isKindOfClass:CcHueviaAccountAccountException.class]){details[@"accountCode"]=((CcHueviaAccountAccountException *)failure)->code_;details[@"status"]=@(((CcHueviaAccountAccountException *)failure)->status_);}
       if([call.method isEqualToString:@"initialize"])details[@"reason"]=[failure description]?:@"unknown";
 #if DEBUG
       // Native debug integration failures must retain their actual exception,

@@ -7,7 +7,6 @@ extension _LegacyAccount on _AccountPageState {
       MaterialPageRoute(builder: (_) => RegistrationPage(state: widget.state)),
     );
     if (!mounted || session == null) return;
-    await widget.state.refreshSession();
     if (mounted) refreshAccount(password.clear);
   }
 

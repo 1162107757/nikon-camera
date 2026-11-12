@@ -1187,6 +1187,42 @@ void main() {
       );
       frame.image.dispose();
       codec.dispose();
+      double previousMidtone = -1;
+      for (final ev in [-20, -10, 0, 10, 20, 30, 50]) {
+        final adjusted = await render('media.rawDevelop', {
+          'path': raw.path,
+          'owner': '',
+          'settings': {'colorMode': 'NEUTRAL', 'exposure': ev},
+        });
+        final adjustedCodec = await ui.instantiateImageCodec(
+          await File(adjusted['path'] as String).readAsBytes(),
+        );
+        final adjustedFrame = await adjustedCodec.getNextFrame();
+        final adjustedData = await adjustedFrame.image.toByteData(
+          format: ui.ImageByteFormat.rawRgba,
+        );
+        final w = adjustedFrame.image.width, h = adjustedFrame.image.height;
+        final data = adjustedData!.buffer.asUint8List();
+        final mid = ((h ~/ 2) * w + w ~/ 5) * 4;
+        final light =
+            .2126 * data[mid] + .7152 * data[mid + 1] + .0722 * data[mid + 2];
+        expect(
+          light + 1,
+          greaterThanOrEqualTo(previousMidtone),
+          reason: 'Increasing RAW EV cannot darken the same midtone',
+        );
+        previousMidtone = light;
+        if (ev >= 0) {
+          final white = ((h ~/ 2) * w + w * 9 ~/ 10) * 4;
+          expect(
+            data.sublist(white, white + 3).reduce((a, b) => a < b ? a : b),
+            greaterThan(220),
+            reason: 'Achromatic clipped RAW highlights do not turn black at positive EV',
+          );
+        }
+        adjustedFrame.image.dispose();
+        adjustedCodec.dispose();
+      }
       // A JPEG produced from this exact synthetic RAW is explicit same-frame
       // evidence. External references never replace sensor spatial detail.
       final jpegReference = await File(

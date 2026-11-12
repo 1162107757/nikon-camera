@@ -4,6 +4,8 @@
 <dict>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>用于识别通过数据线连接的相机，并将原始照片导入 Huevia。</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>连接相机 Wi-Fi、读取照片与传输预设。</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -1,0 +1,182 @@
+{
+  "codeSourceCommit": "0d90fedb89b37bfe1ee0ee6b7bfca3e6dfce6aab",
+  "allChangedSourceFilesMatchCommit": true,
+  "sourceFiles": [
+    {
+      "path": "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/MediaSmokeInstrumentation.java",
+      "sha256": "d74a03516a58592dfefe101d912ac3392c6fefd096fd0734567df4512bb8ada3"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/AndroidManifest.xml",
+      "sha256": "7392939932fa5a8c48f0a2d1550c3510c03e7028ba48f70a3030ca7a065c4225"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+      "sha256": "5a814b17ddc3a9f4da4b16170a19c3f39afab5c237aa25dffd639221b392a011"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeUsbCamera.java",
+      "sha256": "d0bd1ffcdd06f11e651787beedb1fd3252c0fb734e7a3a68f7e4e87cbec51a20"
+    },
+    {
+      "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+      "sha256": "5edfe7ffdd78a128ed2b3a43dab03deb1e9fe46698f420757d77bd9753a03ddb"
+    },
+    {
+      "path": "cross-platform/app/ios/Runner/Info.plist",
+      "sha256": "7f25ddb5ea034fd2757667ee95b749d1ec88c9aba9bcd435f12e7e77142b048e"
+    },
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "sha256": "19eb7b7862a595f83cd231c3d9d66cd64266e6164c80e4029fc0dd94d58300ec"
+    },
+    {
+      "path": "cross-platform/app/lib/domain.dart",
+      "sha256": "b8d1036d31f0d233a2e2a5e5b804abd6f2df67485df8a428137e57658a72b4fd"
+    },
+    {
+      "path": "cross-platform/app/lib/help.dart",
+      "sha256": "5c275658310e5e34376f7a0e2a08d9eaad45018dfd0b818dd68f9976a193a3ad"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_account.dart",
+      "sha256": "ffb6d1012dab544a9f0ed943ee5df43fdd0c9815d0fc02dfeedb620a617f0dad"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_preset_details.dart",
+      "sha256": "bbe2b1e23411d4ef737132dc48a727b73aabcc8aec4df83bdb6d0cbf16154330"
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_presets.dart",
+      "sha256": "d2c229b5f6c548f1f1dc762129126aedbc177cb188aaa1e707f8a42493c1c9b5"
+    },
+    {
+      "path": "cross-platform/app/lib/library.dart",
+      "sha256": "df1d328d1607a1f6bc57516e25ea3444580923b55560ade5cc5dfa146f53ef3c"
+    },
+    {
+      "path": "cross-platform/app/lib/profile.dart",
+      "sha256": "3ec18f1af97ab9a8617d6ab485660dff823631c0fcafacc65894bfa44c16cd38"
+    },
+    {
+      "path": "cross-platform/app/lib/registration.dart",
+      "sha256": "f3bb5c25aa0f26ac746edeb63490f02305932daf14a5fd4ebae0da268c9da113"
+    },
+    {
+      "path": "cross-platform/app/lib/settings.dart",
+      "sha256": "34e7f9a2e4b434e494bf84c6b0d3968f402f8e260ebcbdbb7c2ebfa1ea18a319"
+    },
+    {
+      "path": "cross-platform/app/lib/wired_camera.dart",
+      "sha256": "d2366730de10e08bec05b734e8af2a09752e8118f97a63f31ff0be1182637229"
+    },
+    {
+      "path": "cross-platform/app/pubspec.yaml",
+      "sha256": "a078b6753734e19f6f33ec33f3260ab2cb534db65a97fcd22c46846e57ed1f21"
+    },
+    {
+      "path": "cross-platform/app/test/account_search_test.dart",
+      "sha256": "a6e3974c1022bb097a85765c1296174b1a51cbaf817afcfa9d76c70a70e3372e"
+    },
+    {
+      "path": "cross-platform/app/test/preset_pins_test.dart",
+      "sha256": "611d9783d58d09a78e61bfa5a5034aec1211cbbf0a03f0016584a5fe8f26a83d"
+    },
+    {
+      "path": "cross-platform/app/test/wired_camera_test.dart",
+      "sha256": "f1bc3e9e1addbe0e905efc95b95f0b207f70d272c251db702d81481777ed87a7"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedCamera.java",
+      "sha256": "dbd9744f564e20efcdbf7915a40268c94adf1b13353587410cd64ecd4eefd6ef"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedPresetPins.java",
+      "sha256": "72f6c86eaddea8037b924b33983232a9e151544e067119016de1237d37eaa479"
+    },
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedRuntime.java",
+      "sha256": "31d981284c9a8367a574a228e76d4518f77ce6fbfb8d44f45188f6c50ae2e8c8"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/CoreBoundary.java",
+      "sha256": "c9ce29291b5e8525fd092aa957acb69b982725b03a2dfb47acf7950772be4647"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/PresetPinsBoundaryTest.java",
+      "sha256": "ce08b3a3b0ec63fce191c05f829a320c8a67781dfd964da37140d468b699c55a"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/RegistrationBoundaryTest.java",
+      "sha256": "cf2ed6a67db0245af56eb5812c86f8a587db9b40d3a6add9a6ce48da31b13a0c"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/WiredCameraBoundaryTest.java",
+      "sha256": "d6f0bef496599a4962e701458644888dd3f2f8834861fe0bfed2ad6284e93dba"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+      "sha256": "706ddaaaa42a52e6291d33e3afa769ea429d3b7b7380451ca76a3eabd9018ea8"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaMedia.mm",
+      "sha256": "e32de88f26939ec782bb141e3d259c31cdae5faafbcf4cc250aa32c76bdbca2f"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRaw.cpp",
+      "sha256": "09c15f01ec0177f2bd8305aa98a1cacc5afbff181046349ec5b9090c49ac0c03"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaRawSafety.h",
+      "sha256": "a882261f39cbe0c1d688beee9392fee7532f9400d12856e40b159b042ad38e2d"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWiredCameras.h",
+      "sha256": "db8bc1a5b88c75eac43186bf8882b26df00f420b11c278fa149f393215a6ea4d"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaWiredCameras.m",
+      "sha256": "496007e6be5d64efcf77d295888a4693436a84995020c5d7ab0aa660a2e49ec4"
+    },
+    {
+      "path": "cross-platform/native/ios/huevia_core.podspec",
+      "sha256": "3d1886501e9ae94698e7a6a302852359666738421ee3dc02229444409afe2d4d"
+    },
+    {
+      "path": "cross-platform/native/tests/raw_safety_test.cpp",
+      "sha256": "f436fb421a4be26f0f182014b7a95d0682c6dea355ebc221ad34801700fd5d1e"
+    },
+    {
+      "path": "cross-platform/tool/raw_android.py",
+      "sha256": "cdffbdc16675f89dcbe182a464c6f2c8f6b9e215b2d9e551e0e027c62ae50a7a"
+    }
+  ],
+  "android": [
+    {
+      "path": "dist/migration212/huevia-0.31.0-dev-212-android-arm64.apk",
+      "abi": "arm64",
+      "sha256": "7905833a98540c9c360126183631692fce5657917bb22b446a6237371bd94831",
+      "bytes": 51309171,
+      "signingAnd16KiBAlignmentVerified": true,
+      "rawJniMappingVerified": true
+    },
+    {
+      "path": "dist/migration212/huevia-0.31.0-dev-212-android-x64.apk",
+      "abi": "x64",
+      "sha256": "43a9aa2e459fdfec2301dc69ec63ef0513d2235920b2577b8b10e5b94eb8a578",
+      "bytes": 54680603,
+      "signingAnd16KiBAlignmentVerified": true,
+      "rawJniMappingVerified": true
+    }
+  ],
+  "originalCodeBase": "db8e2ef3766a228bd2dd93f6e1e139b697d3ff18",
+  "preserved211DocumentationCommit": "728275f68173a729170555647de887b1678a73c7",
+  "device": {
+    "kind": "Android emulator",
+    "sdk": 31,
+    "pageSize": 4096,
+    "installedReleaseSha256": "43a9aa2e459fdfec2301dc69ec63ef0513d2235920b2577b8b10e5b94eb8a578",
+    "wiredDiscoveryNoDeviceStateVerified": true,
+    "physicalUsbTransferVerified": false
+  }
+}

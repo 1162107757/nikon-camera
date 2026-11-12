@@ -12,6 +12,9 @@ import java.util.function.*;
 /** Shared read-only Wi-Fi session. Handles are scoped to the connection that enumerated them. */
 public final class SharedCamera {
     public interface Connectors { PtpIpClient.SocketConnector create(String host,int port,boolean fuji)throws IOException; }
+    public interface WiredConnections { String devices()throws IOException; PhotoCameraClient create(String id)throws IOException; }
+    private WiredConnections wired;
+    private String transport="wifi";
     interface Clients { PhotoCameraClient create(PtpIpClient.SocketConnector connector,boolean fuji); }
     private final File root;
     private final Connectors connectors;
@@ -29,6 +32,7 @@ public final class SharedCamera {
     private final List<Long> handles=new ArrayList<>();
     private final Map<Long,PtpObjectInfo> observed=new LinkedHashMap<>();
     public SharedCamera(String root,Connectors connectors)throws IOException{this(root,connectors,(connector,fuji)->fuji?new FujifilmPhotoClient(connector):new PtpIpClient(connector));ConnectionTrace.configure(new File(this.root,"camera-trace.log"));}
+    public SharedCamera(String root,Connectors connectors,WiredConnections wired)throws IOException{this(root,connectors);this.wired=wired;}
     SharedCamera(String root,Connectors connectors,Clients clients)throws IOException{this(root,connectors,clients,System::nanoTime);}
     SharedCamera(String root,Connectors connectors,Clients clients,LongSupplier clock)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;this.clients=clients;this.clock=clock;previews=new SharedCameraPreviews(this.root);}
     public void cancel(String job){if(job!=null&&job.equals(activeJob))closeTransport();}
@@ -44,14 +48,20 @@ public final class SharedCamera {
         finally{activeJob="";}
     }
     private Object execute(String operation,Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        if(operation.equals("camera.usb.devices")){if(wired==null)throw new IOException("本平台未提供 USB 相机接口。");return SharedJson.object(wired.devices());}
         if(operation.equals("camera.diagnostics"))return SharedRuntime.map("connected",client!=null&&client.isOpen(),"totalHandles",handles.size(),"observedObjects",observed.size(),"trace",ConnectionTrace.snapshot());
         if(operation.equals("camera.disconnect")){disconnect();return SharedRuntime.map("connected",false);}
         if(operation.equals("camera.connect")){
-            disconnect();String host=SharedRuntime.text(p,"host",253);int port=SharedRuntime.integer(p,"port",15740);
-            if(host.isEmpty()||port<1||port>65535)throw new IOException("相机地址或端口无效。");
-            String protocol=SharedRuntime.text(p,"protocol",32);if(!protocol.equals("nikon")&&!protocol.equals("fujifilm"))throw new IOException("请选择受支持的相机协议。");
-            boolean fuji=protocol.equals("fujifilm");PtpIpClient.SocketConnector connector=connectors.create(host,port,fuji);
-            PhotoCameraClient next=clients.create(connector,fuji);client=next;
+            String selected=SharedRuntime.text(p,"transport",16);boolean usb=selected.equals("usb");
+            if(!selected.isEmpty()&&!selected.equals("wifi")&&!usb)throw new IOException("相机连接方式无效。");
+            String host=usb?"usb":SharedRuntime.text(p,"host",253);int port=usb?0:SharedRuntime.integer(p,"port",15740);
+            if(!usb&&(host.isEmpty()||port<1||port>65535))throw new IOException("相机地址或端口无效。");
+            String protocol=SharedRuntime.text(p,"protocol",32);if(!protocol.equals("nikon")&&!protocol.equals("fujifilm")||usb&&!protocol.equals("nikon"))throw new IOException("请选择受支持的相机协议。");
+            if(usb&&wired==null)throw new IOException("本平台未提供 USB 相机接口。");
+            if(usb&&live!=null)throw new IOException("请先停止边拍边传，再切换为有线连接。");
+            String usbId=usb?SharedRuntime.text(p,"deviceId",256):"";if(usb&&usbId.isEmpty())throw new IOException("请选择 USB 相机。");
+            disconnect();boolean fuji=protocol.equals("fujifilm");transport=usb?"usb":"wifi";
+            PhotoCameraClient next=usb?wired.create(usbId):clients.create(connectors.create(host,port,fuji),fuji);client=next;
             try{
                 byte[] guid=guid();device=PtpDeviceInfo.parseRedacted(next.connect(host,port,guid,"Huevia"));
                 if(!fuji&&!device.isNikonCamera())throw new IOException("相机未确认尼康协议身份。");
@@ -62,6 +72,7 @@ public final class SharedCamera {
         if(operation.equals("camera.status"))return status();
         require(p);PhotoCameraClient current=client;
         if(operation.equals("camera.live.start")){
+            if(transport.equals("usb"))throw new IOException("有线连接请从相机照片中接收原文件，边拍边传请使用 Wi-Fi。");
             if(!device.isNikonCamera())throw new IOException("富士 X-T20 的无线模式暂不支持边拍边传，请拍摄后手动接收。");
             if(live!=null)throw new IOException("边拍边传已开启，请先停止当前拍摄项目。");
             SharedCameraLiveDiscovery next=new SharedCameraLiveDiscovery(current,device,session,clock);
@@ -155,7 +166,7 @@ public final class SharedCamera {
         indexedRaw=raw;indexReady=true;unavailableStorages=unavailable;
         ConnectionTrace.mark("SHARED_INVENTORY_COMPLETE");
     }
-    private Object status(){boolean connected=client!=null&&client.isOpen();return SharedRuntime.map("connected",connected,"session",session,"model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size(),"cameraId",connected&&device!=null?SharedCameraLiveDiscovery.cameraId(client,device,session):"","trustedCamera",connected&&SharedCameraLiveDiscovery.trusted(client),"supportsLive",connected&&device!=null&&device.isNikonCamera(),"live",live!=null);}
+    private Object status(){boolean connected=client!=null&&client.isOpen();return SharedRuntime.map("connected",connected,"session",session,"model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size(),"cameraId",connected&&device!=null?SharedCameraLiveDiscovery.cameraId(client,device,session):"","trustedCamera",connected&&SharedCameraLiveDiscovery.trusted(client),"transport",transport,"supportsLive",connected&&device!=null&&device.isNikonCamera()&&!transport.equals("usb"),"live",live!=null);}
     private void require(Map<String,Object> p)throws IOException{if(client==null||!client.isOpen()||!session.equals(SharedRuntime.text(p,"session",64)))throw new IOException("相机会话已改变，请重新读取照片。");}
     public void disconnect(){if(live!=null){live.stop();live=null;}PhotoCameraClient current=client;client=null;if(current!=null)current.close();session="";device=null;handles.clear();observed.clear();indexReady=false;indexedRaw=false;unavailableStorages=0;}
     private static void check(BooleanSupplier cancel)throws IOException{if(cancel.getAsBoolean())throw new InterruptedIOException("相机操作已取消。");}

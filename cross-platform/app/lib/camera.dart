@@ -9,6 +9,7 @@ import 'theme.dart';
 import 'help.dart';
 import 'camera_previews.dart';
 import 'camera_transfer.dart';
+import 'wired_camera.dart';
 import 'camera_grid.dart';
 import 'camera_live.dart';
 import 'photo_grid.dart';
@@ -146,7 +147,9 @@ class _CameraPageState extends State<CameraPage> {
     }
   }
 
-  Future<void> connect() async {
+  Future<void> connectWired(String id) => connect(usbId: id);
+
+  Future<void> connect({String? usbId}) async {
     final request = ++epoch;
     setState(() {
       busy = true;
@@ -157,7 +160,9 @@ class _CameraPageState extends State<CameraPage> {
       final result = await widget.state.core.call('camera.connect', {
         'host': host.text.trim(),
         'port': int.tryParse(port.text) ?? 0,
-        'protocol': protocol,
+        'protocol': usbId == null ? protocol : 'nikon',
+        if (usbId != null) 'transport': 'usb',
+        if (usbId != null) 'deviceId': usbId,
       }, job);
       if (!mounted || request != epoch) return;
       setState(() {
@@ -305,7 +310,7 @@ class _CameraPageState extends State<CameraPage> {
 
   Widget connectionView(BuildContext context) => Scaffold(
     appBar: HueHeader(
-      title: 'Wi-Fi 无线连接',
+      title: '连接相机',
       back: true,
       actions: [
         if (connected)
@@ -329,6 +334,17 @@ class _CameraPageState extends State<CameraPage> {
               children: [
                 CameraTransferCard(transfer: transfer),
                 if (!connected) ...[
+                  WiredCameraPicker(
+                    core: widget.state.core,
+                    enabled: !busy,
+                    onConnect: (id) => connectWired(id),
+                  ),
+                  const Divider(height: 32),
+                  Text(
+                    'Wi-Fi 无线连接',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 12),
                   Text(
                     protocol == 'nikon' ? '连接后可浏览照片与导入预设。' : '连接后可浏览和下载 JPEG。',
                     style: TextStyle(
@@ -807,7 +823,7 @@ class _CameraPageState extends State<CameraPage> {
                               ? '从相机下载的原图会保存在这里，\n断开连接也能继续查看。'
                               : overviewTab == 1
                               ? '连接相机后，接收拍摄的照片。'
-                              : '在底部「设置」中连接相机 Wi-Fi，\n照片会显示在这里。',
+                              : '连接相机 Wi-Fi 或使用 USB 数据线，\n照片会显示在这里。',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 14,

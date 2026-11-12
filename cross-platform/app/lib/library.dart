@@ -9,6 +9,7 @@ import 'theme.dart';
 import 'widgets.dart';
 import 'legacy_presets.dart';
 import 'legacy_sheets.dart';
+import 'legacy_dialog.dart';
 import 'legacy_preset_details.dart';
 import 'submission_editor.dart';
 import 'personal_sync.dart';
@@ -410,6 +411,27 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
     ),
   );
+  Future<void> presetActions(Preset preset) async {
+    final action = await hueChoice<String>(
+      context: context,
+      title: preset.name,
+      selected: '',
+      choices: [('pin', preset.pinned ? '取消置顶' : '置顶预设'), ('remove', '删除本地预设')],
+    );
+    if (!mounted || action == null) return;
+    if (action == 'remove') {
+      await remove(preset);
+      return;
+    }
+    if (action == 'pin') {
+      try {
+        await widget.state.pinPreset(preset, !preset.pinned);
+      } catch (failure) {
+        if (mounted) report(context, failure);
+      }
+    }
+  }
+
   Future<void> editCategory(Preset preset) async {
     final owner = widget.state.session['user']?['id'] as String? ?? '';
     final input = TextEditingController(text: preset.category);
@@ -818,7 +840,7 @@ class _LibraryPageState extends State<LibraryPage> {
                   core: widget.state.core,
                   owner: widget.state.session['user']?['id'] as String? ?? '',
                   onOpen: detail,
-                  onRemove: remove,
+                  onRemove: presetActions,
                   onMore: hasMore && tab == 1 && !busy
                       ? () => load(next: true)
                       : null,

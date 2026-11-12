@@ -1,0 +1,4 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/.tooling/features212/work/cross-platform/app/test/preset_pins_test.dart
+00:00 +0: Long-press can pin multiple presets and shows their persisted state
+00:00 +1: All tests passed!
+[   +4 ms] test package returned with exit code 0
