@@ -18,7 +18,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @interface HueviaWiredClient : NSObject <CcHueviaAlbumPhotoCameraClient,ICCameraDeviceDelegate>
 @property(nonatomic,strong) ICCameraDevice *device;
 @property(atomic) BOOL open;
-@property(nonatomic,strong) id<JavaLangRunnable> closed;
+@property(atomic,strong) id<JavaLangRunnable> closed;
 @property(nonatomic,strong) dispatch_semaphore_t ready;
 @property(atomic,strong) dispatch_semaphore_t closing;
 @property(atomic,strong) NSError *sessionError;
@@ -27,7 +27,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @end
 @interface HueviaWiredCameras ()
 @property(nonatomic,strong) ICDeviceBrowser *browser;
-@property(nonatomic,strong) HueviaWiredClient *active;
+@property(atomic,strong) HueviaWiredClient *active;
 @property(nonatomic,strong) dispatch_semaphore_t discovery;
 @end
 
@@ -60,7 +60,10 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 }
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didAddDevice:(ICDevice *)device moreComing:(BOOL)moreComing {if(self.discovery&&supported(device))dispatch_semaphore_signal(self.discovery);}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didRemoveDevice:(ICDevice *)device moreGoing:(BOOL)moreGoing {if(self.active.device==device)[self.active close];}
-- (void)dealloc {[_active close];[_browser stop];}
+- (void)dealloc {
+  [_active close];ICDeviceBrowser *browser=_browser;
+  mainSync(^{browser.delegate=nil;[browser stop];});
+}
 @end
 
 @implementation HueviaWiredClient
