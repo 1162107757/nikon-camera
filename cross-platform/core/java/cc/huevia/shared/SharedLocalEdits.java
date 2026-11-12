@@ -33,6 +33,13 @@ public final class SharedLocalEdits {
                     case "setRegion":{int index=regionIndex(p,start);next=start.withRegion(index,region(value,start.regions().get(index)));selected=index;selectedType="region";break;}
                     case "removeRegion":{int index=regionIndex(p,start);next=start.removeRegion(index);selected=-1;selectedType="region";break;}
                     case "clearTools":next=new PhotoLocalEdits(Collections.emptyList(),Collections.emptyList(),start.portrait,start.regions(),start.patches());break;
+                    case "replaceTools":{
+                        List<?> requestedMasks=list(value.get("masks"),PhotoLocalEdits.MAX_MASKS,"蒙版"),requestedClones=list(value.get("clones"),PhotoLocalEdits.MAX_CLONES,"取样修复");
+                        List<PhotoLocalEdits.Mask> masks=new ArrayList<>();List<PhotoLocalEdits.Clone> clones=new ArrayList<>();
+                        for(Object item:requestedMasks){check(cancel);masks.add(mask(SharedRuntime.object(item),null));}
+                        for(Object item:requestedClones){check(cancel);clones.add(clone(SharedRuntime.object(item),null));}
+                        next=new PhotoLocalEdits(masks,clones,start.portrait,start.regions(),start.patches());break;
+                    }
                     default:throw new IOException("未知的局部编辑操作。");
                 }
             }catch(IllegalArgumentException bad){throw new IOException(bad.getMessage()==null?"局部编辑参数无效。":bad.getMessage(),bad);}

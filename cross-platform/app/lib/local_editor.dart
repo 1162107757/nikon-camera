@@ -437,6 +437,7 @@ extension _LocalWorkspace on _EditorPageState {
             enabled: selectedRegion != null,
             child: const Text('删除当前区域'),
           ),
+          const PopupMenuItem(value: 'legacy', child: Text('渐变与取样修复')),
         ],
       );
       if (!mounted || choice == null || !sameOwner) return;
@@ -458,6 +459,8 @@ extension _LocalWorkspace on _EditorPageState {
           selectedRegionId = null;
           installLocalState(next);
         });
+      } else if (choice == 'legacy') {
+        await openLegacyTools();
       } else {
         await editSelection(existing: choice == 'edit' || choice == 'view');
       }
@@ -537,6 +540,84 @@ extension _LocalWorkspace on _EditorPageState {
         recipe.data['localData'] = next['localData'];
         selectedRegionId = result.regionId;
         installLocalState(next);
+        compare = false;
+      });
+      panelRevision.value++;
+      unawaited(saveDraft().catchError((_) {}));
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (ownedFrame != null) await discardPreview(ownedFrame);
+      if (ownedAtmosphere != null) await discardPreview(ownedAtmosphere);
+      if (mounted) {
+        refreshWorkspace(() => managingTools = false);
+        unawaited(render());
+      }
+    }
+  }
+
+  Future<void> openLegacyTools() async {
+    if (!toolsEnabled) return;
+    debounce?.cancel();
+    revision++;
+    refreshWorkspace(() => managingTools = true);
+    String? ownedFrame, ownedAtmosphere;
+    final job = 'local-tools-frame-${DateTime.now().microsecondsSinceEpoch}';
+    try {
+      await settleLocalAdjustments();
+      if (activeJob != null) await widget.state.core.cancel(activeJob!);
+      if (!mounted || !sameOwner) return;
+      final frozen = recipe.clone().data;
+      final fingerprint = jsonEncode(frozen);
+      bool current() =>
+          mounted && sameOwner && jsonEncode(recipe.data) == fingerprint;
+      final base = await widget.state.core.call('local.describe', {
+        'localData': frozen['localData'] ?? '',
+      });
+      if (!current()) return;
+      final frame = await widget.state.core.call('media.localPreview', {
+        'path': widget.photo.path,
+        'owner': owner,
+        'recipe': frozen,
+        'maxEdge': 1280,
+      }, job);
+      ownedFrame = frame['path'] as String;
+      if (!current()) return;
+      try {
+        final background = await widget.state.core.call('media.atmosphere', {
+          'path': ownedFrame,
+          'owner': owner,
+        }, '$job-atmosphere');
+        ownedAtmosphere = background['path'] as String;
+      } catch (_) {
+        // Atmosphere is optional; the bounded source-coordinate frame is not.
+      }
+      if (!mounted || !current()) return;
+      await precacheImage(
+        ResizeImage(FileImage(File(ownedFrame)), width: 1280),
+        context,
+      );
+      if (!mounted || !current()) return;
+      final page = LegacyLocalWorkspace(
+        state: widget.state,
+        photo: widget.photo,
+        owner: owner,
+        recipe: frozen,
+        localState: base,
+        frame: frame,
+        atmosphere: ownedAtmosphere,
+        isCurrent: current,
+      );
+      ownedFrame = ownedAtmosphere = null;
+      final result = await hueRootPage<Json>(
+        context,
+        MaterialPageRoute(builder: (_) => page),
+      );
+      if (result == null || !current()) return;
+      if (result['localData'] != (recipe.data['localData'] ?? '')) checkpoint();
+      refreshWorkspace(() {
+        recipe.data['localData'] = result['localData'];
+        installLocalState(result);
         compare = false;
       });
       panelRevision.value++;

@@ -1113,74 +1113,75 @@ extension _LegacyWorkspace on _EditorPageState {
     ],
   );
 
-  ThemeData get workspaceTheme => Theme.of(context).copyWith(
-    brightness: Brightness.dark,
-    canvasColor: const Color(0xff292724),
-    cardColor: const Color(0xff292724),
-    iconTheme: const IconThemeData(color: _editorWhite),
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        backgroundColor: _editorYellow,
-        foregroundColor: const Color(0xff191e17),
-        minimumSize: const Size(48, 48),
-        shape: const StadiumBorder(),
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: _editorWhite,
-        backgroundColor: const Color(0x9c101412),
-        side: BorderSide.none,
-        minimumSize: const Size(48, 48),
-        shape: const StadiumBorder(),
-      ),
-    ),
-    textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: _editorWhite,
-        minimumSize: const Size(48, 48),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: const Color(0xff33302c),
-      labelStyle: const TextStyle(color: _editorMuted),
-      hintStyle: const TextStyle(color: _editorMuted),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xff4c4640)),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Color(0xff4c4640)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: _editorYellow),
-      ),
-    ),
-    colorScheme: const ColorScheme.dark(
-      primary: _editorYellow,
-      onPrimary: Color(0xff191e17),
-      surface: Color(0xff292724),
-      onSurface: _editorWhite,
-      secondary: _editorYellow,
-    ),
-    textTheme: Theme.of(context).textTheme
-        .apply(bodyColor: _editorWhite, displayColor: _editorWhite),
-    sliderTheme: SliderTheme.of(context).copyWith(
-      activeTrackColor: _editorYellow,
-      inactiveTrackColor: const Color(0x66ffffff),
-      thumbColor: Colors.white,
-      trackHeight: 2,
-      thumbShape: const RoundSliderThumbShape(
-        enabledThumbRadius: 7,
-        elevation: 0,
-        pressedElevation: 0,
-      ),
-    ),
-    scaffoldBackgroundColor: Colors.transparent,
-  );
+  ThemeData get workspaceTheme =>
+      hueviaTheme(Brightness.dark, home: false).copyWith(
+        brightness: Brightness.dark,
+        canvasColor: const Color(0xff292724),
+        cardColor: const Color(0xff292724),
+        iconTheme: const IconThemeData(color: _editorWhite),
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            backgroundColor: _editorYellow,
+            foregroundColor: const Color(0xff191e17),
+            minimumSize: const Size(48, 48),
+            shape: const StadiumBorder(),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: _editorWhite,
+            backgroundColor: const Color(0x9c101412),
+            side: BorderSide.none,
+            minimumSize: const Size(48, 48),
+            shape: const StadiumBorder(),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: _editorWhite,
+            minimumSize: const Size(48, 48),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: const Color(0xff33302c),
+          labelStyle: const TextStyle(color: _editorMuted),
+          hintStyle: const TextStyle(color: _editorMuted),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xff4c4640)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xff4c4640)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: _editorYellow),
+          ),
+        ),
+        colorScheme: const ColorScheme.dark(
+          primary: _editorYellow,
+          onPrimary: Color(0xff191e17),
+          surface: Color(0xff292724),
+          onSurface: _editorWhite,
+          secondary: _editorYellow,
+        ),
+        textTheme: Theme.of(context).textTheme
+            .apply(bodyColor: _editorWhite, displayColor: _editorWhite),
+        sliderTheme: SliderTheme.of(context).copyWith(
+          activeTrackColor: _editorYellow,
+          inactiveTrackColor: const Color(0x66ffffff),
+          thumbColor: Colors.white,
+          trackHeight: 2,
+          thumbShape: const RoundSliderThumbShape(
+            enabledThumbRadius: 7,
+            elevation: 0,
+            pressedElevation: 0,
+          ),
+        ),
+        scaffoldBackgroundColor: Colors.transparent,
+      );
 
   Widget legacyWorkspace(BuildContext context) {
     final scale = MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 2.0);

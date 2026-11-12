@@ -12,10 +12,12 @@ Future<T?> hueRootPage<T>(BuildContext context, Route<T> route) =>
 Future<T?> hueDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
+  Color? barrierColor,
 }) async {
   final route = DialogRoute<T>(
     context: context,
     builder: builder,
+    barrierColor: barrierColor ?? const Color(0x8a000000),
     themes: InheritedTheme.capture(
       from: context,
       to: Navigator.of(context, rootNavigator: true).context,
@@ -29,6 +31,7 @@ Future<T?> hueDialog<T>({
 Future<T?> hueBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
+  Color barrierColor = const Color.fromRGBO(0, 0, 0, .35),
 }) async {
   final navigator = Navigator.of(context, rootNavigator: true);
   final route = ModalBottomSheetRoute<T>(
@@ -59,7 +62,7 @@ Future<T?> hueBottomSheet<T>({
     useSafeArea: true,
     showDragHandle: false,
     backgroundColor: Colors.transparent,
-    modalBarrierColor: const Color.fromRGBO(0, 0, 0, .35),
+    modalBarrierColor: barrierColor,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(22)),
     ),

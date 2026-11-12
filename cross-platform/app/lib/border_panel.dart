@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
-import 'hue_icons.dart';
+import 'theme.dart';
+import 'legacy_dialog.dart';
 import 'widgets.dart';
 
 const _text = Color(0xffffffff),
@@ -85,6 +86,38 @@ class BorderPanel extends StatefulWidget {
 }
 
 class _BorderPanelState extends State<BorderPanel> {
+  int sheetDepth = 0;
+  Future<T?> borderSheet<T>(WidgetBuilder builder) async {
+    final nested = sheetDepth > 0;
+    sheetDepth++;
+    try {
+      return await hueBottomSheet<T>(
+        context: context,
+        builder: builder,
+        barrierColor: nested
+            ? Colors.transparent
+            : const Color.fromRGBO(0, 0, 0, .35),
+      );
+    } finally {
+      sheetDepth--;
+    }
+  }
+
+  Future<T?> borderDialog<T>(WidgetBuilder builder) => hueDialog<T>(
+    context: context,
+    // Android's top dialog owns the effective dim; Flutter otherwise stacks
+    // both barriers and makes the photo much darker than the original.
+    barrierColor: Color.fromRGBO(
+      0,
+      0,
+      0,
+      sheetDepth > 0 ? (.42 - .35) / (1 - .35) : .42,
+    ),
+    builder: (dialog) => Theme(
+      data: hueviaTheme(Brightness.dark, home: false),
+      child: Builder(builder: builder),
+    ),
+  );
   late Json border = copy(object(widget.recipe['border'] ?? {}));
   Json capture = {};
   List<String> thumbnails = [];
@@ -509,9 +542,8 @@ class _BorderPanelState extends State<BorderPanel> {
       baseOffset: 0,
       extentOffset: input.text.length,
     );
-    final result = await hueDialog<String>(
-      context: context,
-      builder: (dialog) => AlertDialog(
+    final result = await borderDialog<String>(
+      (dialog) => AlertDialog(
         title: Text(_names[index + 1]),
         scrollable: true,
         content: Column(
@@ -562,31 +594,11 @@ class _BorderPanelState extends State<BorderPanel> {
 
   Future<void> logo() async {
     final initial = jsonEncode(border);
-    final result = await hueDialog<int>(
-      context: context,
-      builder: (dialog) => AlertDialog(
-        title: const Text('Logo 样式'),
-        scrollable: true,
-        content: SizedBox(
-          width: 320,
-          child: RadioGroup<int>(
-            groupValue: border['logo'] as int? ?? 0,
-            onChanged: (v) => Navigator.pop(dialog, v),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (var i = 0; i < _logos.length; i++)
-                  RadioListTile<int>(value: i, title: Text(_logos[i])),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialog),
-            child: const Text('取消'),
-          ),
-        ],
+    final result = await borderDialog<int>(
+      (dialog) => HueChoiceDialog<int>(
+        title: 'Logo 样式',
+        selected: border['logo'] as int? ?? 0,
+        choices: [for (var i = 0; i < _logos.length; i++) (i, _logos[i])],
       ),
     );
     if (result != null && unchanged(initial)) {
@@ -597,9 +609,8 @@ class _BorderPanelState extends State<BorderPanel> {
   Future<void> settings() async {
     if (!ready) return;
     var tab = 2;
-    await hueBottomSheet<void>(
-      context: context,
-      builder: (sheet) => StatefulBuilder(
+    await borderSheet<void>(
+      (sheet) => StatefulBuilder(
         builder: (context, refresh) => ValueListenableBuilder<int>(
           valueListenable: sheetRevision,
           builder: (context, _, _) => SafeArea(
@@ -841,9 +852,8 @@ class _BorderPanelState extends State<BorderPanel> {
             ? border['model'] as String? ?? ''
             : capture['model'] as String? ?? '';
     if (!_cameras.containsKey(brand)) brand = 'NIKON';
-    final result = await hueBottomSheet<Json>(
-      context: context,
-      builder: (sheet) => StatefulBuilder(
+    final result = await borderSheet<Json>(
+      (sheet) => StatefulBuilder(
         builder: (context, refresh) => ValueListenableBuilder<int>(
           valueListenable: sheetRevision,
           builder: (context, _, _) => SafeArea(
@@ -1013,9 +1023,8 @@ class _BorderPanelState extends State<BorderPanel> {
                                 final input = TextEditingController(
                                   text: model,
                                 );
-                                final custom = await hueDialog<String>(
-                                  context: context,
-                                  builder: (dialog) => AlertDialog(
+                                final custom = await borderDialog<String>(
+                                  (dialog) => AlertDialog(
                                     title: const Text('自定义机型'),
                                     scrollable: true,
                                     content: TextField(

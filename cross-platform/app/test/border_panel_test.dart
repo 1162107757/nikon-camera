@@ -238,6 +238,46 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.text('Logo · 跟随模板'));
         await tester.pumpAndSettle();
+        // The editor stays dark even when its owning MaterialApp is light.
+        // Native Logo choices are 48dp rows with readable, regular-weight text.
+        expect(
+          Theme.of(tester.element(find.text('Logo 样式'))).brightness,
+          Brightness.dark,
+        );
+        expect(
+          tester.widget<Dialog>(find.byType(Dialog).last).backgroundColor,
+          const Color(0xff292724),
+        );
+        expect(
+          tester.widget<Text>(find.text('白色')).style?.color,
+          const Color(0xfff6f1eb),
+        );
+        expect(
+          tester.widget<Text>(find.text('白色')).style?.fontWeight,
+          FontWeight.w400,
+        );
+        final transmission = tester
+            .widgetList<ModalBarrier>(find.byType(ModalBarrier))
+            .fold<double>(
+              1,
+              (value, barrier) => value * (1 - (barrier.color?.a ?? 0)),
+            );
+        expect(1 - transmission, closeTo(.42, .01));
+        if (setting.$2 == 1) {
+          expect(
+            tester
+                .getSize(
+                  find
+                      .ancestor(
+                        of: find.text('白色'),
+                        matching: find.byType(InkWell),
+                      )
+                      .first,
+                )
+                .height,
+            48,
+          );
+        }
         await tester.ensureVisible(find.text('白色'));
         await tester.pumpAndSettle();
         await tester.tap(find.text('白色'));

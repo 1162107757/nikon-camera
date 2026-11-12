@@ -592,6 +592,73 @@ void main() {
         for (var c = 0; c < 3; c++) {
           expect((outside[c] - outsideBefore[c]).abs(), lessThanOrEqualTo(3));
         }
+        final gradientTools = await core.call('local.change', {
+          'localData': local['localData'],
+          'expectedSha': local['sha256'],
+          'action': 'replaceTools',
+          'value': {
+            'masks': [
+              {
+                'kind': 'linear',
+                'x0': .5,
+                'y0': .5,
+                'x1': .7,
+                'y1': .5,
+                'radius': .08,
+                'feather': .7,
+                'inverted': false,
+                'enabled': true,
+                'exposure': 10,
+                'temperature': 0,
+                'saturation': 0,
+                'points': [],
+              },
+            ],
+            'clones': [],
+          },
+        });
+        expect(gradientTools['regions'], local['regions']);
+        final gradientFrame = await render('media.localPreview', {
+          'path': source.path,
+          'owner': '',
+          'recipe': {...localRecipe, 'localData': gradientTools['localData']},
+        });
+        final gradientPixel = await localPixel(gradientFrame, 210, 90);
+        expect(gradientPixel[0], greaterThan(outside[0] + 10));
+        final cloneTools = await core.call('local.change', {
+          'localData': gradientTools['localData'],
+          'expectedSha': gradientTools['sha256'],
+          'action': 'replaceTools',
+          'value': {
+            'masks': gradientTools['masks'],
+            'clones': [
+              {
+                'sourceX': .25,
+                'sourceY': .4,
+                'targetX': .75,
+                'targetY': .4,
+                'radius': .06,
+                'feather': .6,
+                'enabled': true,
+              },
+            ],
+          },
+        });
+        expect(cloneTools['regions'], local['regions']);
+        final cloneFrame = await render('media.localPreview', {
+          'path': source.path,
+          'owner': '',
+          'recipe': {...localRecipe, 'localData': cloneTools['localData']},
+        });
+        expect(cloneFrame['width'], localFrame['width']);
+        expect(cloneFrame['height'], localFrame['height']);
+        final restoredTools = await core.call('local.change', {
+          'localData': cloneTools['localData'],
+          'expectedSha': cloneTools['sha256'],
+          'action': 'replaceTools',
+          'value': {'masks': [], 'clones': []},
+        });
+        expect(restoredTools['localData'], local['localData']);
         final regionalCleanup = await render('media.cleanupAnalyze', {
           'path': source.path,
           'owner': '',

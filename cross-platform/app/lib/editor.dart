@@ -22,6 +22,7 @@ import 'border_panel.dart';
 import 'photo_workspace_chrome.dart';
 import 'local_adjustments.dart';
 import 'selection_workspace.dart';
+import 'legacy_local_workspace.dart';
 import 'theme.dart';
 import 'workspace_tools.dart';
 

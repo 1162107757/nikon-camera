@@ -47,7 +47,21 @@ public final class LocalEditsBoundaryTest {
         PhotoPortrait portrait=PhotoPortrait.NONE.withSkinSmoothing(25).withBodyShape(body);
         PhotoLocalEdits complex=new PhotoLocalEdits(read(moved).masks(),read(moved).clones(),portrait,Collections.singletonList(region),Collections.singletonList(patch));
         String complexData=encode(complex);Map<String,Object> described=describe(complexData);yes(described.get("localData").equals(complexData));yes(described.get("regionCount").equals(1)&&described.get("patchCount").equals(1)&&described.get("hasPortrait").equals(true));
+        Map<String,Object> sameTools=change(described,"replaceTools",-1,SharedRuntime.map("masks",described.get("masks"),"clones",described.get("clones")));
+        yes(sameTools.get("localData").equals(complexData));yes(sameTools.get("sha256").equals(described.get("sha256")));
+        Map<String,Object> replacementMask=SharedRuntime.map("kind","brush","points",Arrays.asList(.2,.3,.4,.5),"radius",.06,"feather",.6,"exposure",12);
+        Map<String,Object> replacementClone=SharedRuntime.map("sourceX",.2,"sourceY",.3,"targetX",.8,"targetY",.7,"radius",.06,"feather",.6,"enabled",true);
+        Map<String,Object> replaced=change(described,"replaceTools",-1,SharedRuntime.map("masks",Collections.singletonList(replacementMask),"clones",Collections.singletonList(replacementClone)));
+        PhotoLocalEdits expectedTools=new PhotoLocalEdits(Collections.singletonList(PhotoLocalEdits.Mask.brush(new double[]{.2,.3,.4,.5},.06,.6).parameters(12,0,0)),Collections.singletonList(new PhotoLocalEdits.Clone(.2,.3,.8,.7,.06,.6,true)),portrait,Collections.singletonList(region),Collections.singletonList(patch));
+        yes(replaced.get("localData").equals(encode(expectedTools)));yes(read(replaced).equals(expectedTools));
+        yes(described.get("localData").equals(complexData));
+        rejects(()->change(described,"replaceTools",-1,SharedRuntime.map("masks",Collections.emptyList())));
+        rejects(()->change(described,"replaceTools",-1,SharedRuntime.map("masks",Collections.nCopies(17,replacementMask),"clones",Collections.emptyList())));
+        rejects(()->change(described,"replaceTools",-1,SharedRuntime.map("masks",Collections.emptyList(),"clones",Collections.nCopies(65,replacementClone))));
+        AtomicInteger replaceCancel=new AtomicInteger();checks++;
+        try{SharedLocalEdits.request("local.change",SharedRuntime.map("localData",described.get("localData"),"expectedSha",described.get("sha256"),"action","replaceTools","value",SharedRuntime.map("masks",described.get("masks"),"clones",described.get("clones"))),()->replaceCancel.getAndIncrement()>1);throw new AssertionError("Cancelled batch replacement accepted");}catch(InterruptedIOException expected){}
         PhotoLocalEdits cleared=read(change(described,"clearTools",-1,Collections.emptyMap()));
+        yes(change(described,"replaceTools",-1,SharedRuntime.map("masks",Collections.emptyList(),"clones",Collections.emptyList())).get("localData").equals(encode(cleared)));
         yes(cleared.masks().isEmpty()&&cleared.clones().isEmpty());yes(cleared.portrait.equals(portrait));yes(cleared.regions().equals(Collections.singletonList(region)));yes(cleared.patches().equals(Collections.singletonList(patch)));
         Map<String,Object> raw=SharedRuntime.map("localData",moved.get("localData"),"expectedSha",brush.get("sha256"),"action","removeMask","index",0);
         rejects(()->SharedLocalEdits.request("local.change",raw,()->false));

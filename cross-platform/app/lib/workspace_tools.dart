@@ -44,6 +44,9 @@ class _Glyph extends CustomPainter {
         canvas.drawLine(Offset(x, y), Offset(x1, y1), ink);
     void path(Path value) => canvas.drawPath(value, ink);
     switch (name) {
+      case 'add':
+        line(12, 5, 12, 19);
+        line(5, 12, 19, 12);
       case 'close':
         line(5, 5, 19, 19);
         line(19, 5, 5, 19);

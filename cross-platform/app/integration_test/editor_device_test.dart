@@ -25,6 +25,9 @@ import '../test/local_editor_test.dart' as local_editor;
 import '../test/selection_mask_test.dart' as selection_mask;
 import '../test/selection_editor_test.dart' as selection_editor;
 import '../test/selection_workspace_test.dart' as selection_workspace;
+import '../test/legacy_local_editor_test.dart' as legacy_local_editor;
+import '../test/legacy_local_preview_test.dart' as legacy_local_preview;
+import '../test/legacy_local_workspace_test.dart' as legacy_local_workspace;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -62,4 +65,7 @@ void main() {
   selection_mask.main();
   selection_editor.main();
   selection_workspace.main();
+  legacy_local_editor.main();
+  legacy_local_preview.main();
+  legacy_local_workspace.main();
 }
