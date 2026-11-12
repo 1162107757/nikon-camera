@@ -97,6 +97,7 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
   galleryCheck(task);
   if([operation isEqualToString:@"gallery.access"])return [self access];
   if([operation isEqualToString:@"gallery.publish"]){if(!self.publication)galleryFail(@"应用尚未准备好。");return [self.publication publish:p task:task];}
+  if([operation isEqualToString:@"gallery.publishOriginal"]){if(!self.publication)galleryFail(@"应用尚未准备好。");return [self.publication publishOriginal:p task:task];}
   if(!canRead()){self.index=nil;[self.known removeAllObjects];galleryFail(@"请允许访问照片，或选择指定照片。");}
   if([operation isEqualToString:@"gallery.page"]){
     id requested=p[@"offset"]?:@0;

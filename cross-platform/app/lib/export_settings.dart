@@ -11,6 +11,7 @@ import 'domain.dart';
 import 'export_preview.dart';
 import 'export_save.dart';
 import 'export_settings_model.dart';
+import 'original_save.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -125,6 +126,27 @@ Widget _copy(
     fontWeight: weight ?? FontWeight.w400,
   ),
 );
+
+Widget _originalAction(
+  BuildContext context,
+  String label,
+  VoidCallback? action, {
+  bool primary = false,
+}) {
+  final p = HuePalette.of(context);
+  return TextButton(
+    onPressed: action,
+    style: TextButton.styleFrom(
+      minimumSize: const Size(64, 48),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      foregroundColor: primary ? p.onPrimaryContainer : p.secondary,
+      backgroundColor: primary ? p.primaryContainer : Colors.transparent,
+      textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    child: Text(label),
+  );
+}
 
 Widget _exportButton(
   String label,
@@ -791,7 +813,64 @@ class _AdvancedExportState extends State<_AdvancedExport> {
         'path': source,
         'expectedSourceSha': ?expected,
       });
-      if (!mounted || !model.current) return;
+      if (!mounted ||
+          !model.current ||
+          ModalRoute.of(context)?.isCurrent != true) {
+        return;
+      }
+      final format = checked['format'];
+      if (format == 'JPG' || format == 'JPEG') {
+        final accepted = await hueDialog<bool>(
+          context: context,
+          barrierColor: Colors.black.withValues(
+            alpha: HuePalette.of(context).dark ? .42 : .28,
+          ),
+          builder: (dialog) => AlertDialog(
+            scrollable: true,
+            actionsPadding: const EdgeInsets.all(8),
+            buttonPadding: const EdgeInsets.only(left: 4),
+            title: const Text('保存 JPEG 原始文件？'),
+            content: const Text(
+              '不会应用当前滤镜、调节、构图与边框，也不使用上方尺寸和质量设置。完整保留原文件内容及其已有信息（可能包含定位）。',
+              style: TextStyle(height: 1.4),
+            ),
+            actions: [
+              _originalAction(dialog, '取消', () => Navigator.pop(dialog, false)),
+              _originalAction(
+                dialog,
+                '保存原始文件',
+                () => Navigator.pop(dialog, true),
+                primary: true,
+              ),
+            ],
+          ),
+        );
+        if (accepted != true ||
+            !mounted ||
+            !model.current ||
+            ModalRoute.of(context)?.isCurrent != true) {
+          return;
+        }
+        final save = OriginalSave(
+          model.state,
+          model.owner,
+          checked['path'] as String,
+          checked['sourceSha'] as String,
+          source == model.photo.path ? model.photo.name : path.basename(source),
+        );
+        try {
+          await hueDialog<void>(
+            context: context,
+            barrierColor: Colors.black.withValues(
+              alpha: HuePalette.of(context).dark ? .42 : .28,
+            ),
+            builder: (_) => _OriginalProgress(save: save),
+          );
+        } finally {
+          save.dispose();
+        }
+        return;
+      }
       await SharePlus.instance.share(
         ShareParams(
           sharePositionOrigin: shareAnchor(context),
@@ -1241,6 +1320,76 @@ class _AdvancedExportState extends State<_AdvancedExport> {
         _copy(value, 13, p.ink),
       ],
     ),
+  );
+}
+
+class _OriginalProgress extends StatefulWidget {
+  const _OriginalProgress({required this.save});
+  final OriginalSave save;
+  @override
+  State<_OriginalProgress> createState() => _OriginalProgressState();
+}
+
+class _OriginalProgressState extends State<_OriginalProgress> {
+  @override
+  void initState() {
+    super.initState();
+    unawaited(widget.save.run());
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: widget.save,
+    builder: (context, _) {
+      final save = widget.save;
+      return PopScope(
+        canPop: !save.busy,
+        child: AlertDialog(
+          actionsPadding: const EdgeInsets.all(8),
+          buttonPadding: const EdgeInsets.only(left: 4),
+          title: Text(
+            save.invalid
+                ? '账号已变化'
+                : save.done
+                ? '已保存到手机相册'
+                : '保存 JPEG 原始文件',
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (!save.invalid) Text(save.filename),
+                if (save.busy)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16),
+                    child: LinearProgressIndicator(),
+                  ),
+                if (save.error != null && !save.invalid) Text(save.error!),
+                if (save.invalid) const Text('请返回后重新打开照片。'),
+              ],
+            ),
+          ),
+          actions: [
+            if (save.busy)
+              _originalAction(
+                context,
+                '停止保存',
+                save.stopped ? null : save.cancel,
+              ),
+            if (!save.busy && !save.done && !save.invalid)
+              _originalAction(context, '重试保存', save.run, primary: true),
+            if (!save.busy)
+              _originalAction(
+                context,
+                save.done ? '完成' : '关闭',
+                () => Navigator.pop(context),
+                primary: save.done,
+              ),
+          ],
+        ),
+      );
+    },
   );
 }
 

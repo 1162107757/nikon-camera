@@ -7,4 +7,5 @@
 + (NSDictionary *)saveAccess;
 + (void)requestSavePermission:(void (^)(NSDictionary *result))reply;
 - (NSDictionary *)publish:(NSDictionary *)parameters task:(HueviaTask *)task;
+- (NSDictionary *)publishOriginal:(NSDictionary *)parameters task:(HueviaTask *)task;
 @end

@@ -30,6 +30,13 @@ public final class SharedGalleryPublication {
         if(total!=bytes||!expectedSha.contentEquals(actual))throw new IOException("相册副本已被修改，未覆盖或删除。");
     }
     public static String publish(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,boolean extra,BooleanSupplier cancel)throws IOException {
+        return publish(context,verified,owner,version,filename,expectedSha,bytes,extra,false,cancel);
+    }
+    /** A fresh explicit original action gets its own exact-publisher key, without EXIF rewriting. */
+    public static String publishOriginal(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,BooleanSupplier cancel)throws IOException {
+        return publish(context,verified,owner,version,filename,expectedSha,bytes,false,true,cancel);
+    }
+    private static String publish(Context context,File verified,String owner,String version,String filename,String expectedSha,long bytes,boolean extra,boolean original,BooleanSupplier cancel)throws IOException {
         if(version==null||!version.matches("[0-9a-f]{64}")||expectedSha==null||!expectedSha.matches("[0-9a-f]{64}")||bytes<4||bytes>512L*1024*1024)throw new IOException("成品保存信息无效。");
         File root=context.getFilesDir().getCanonicalFile(),directory=new File(root,"photo-export-staging");
         if(Files.isSymbolicLink(directory.toPath())||(!directory.isDirectory()&&!directory.mkdirs())||!root.equals(directory.getCanonicalFile().getParentFile()))throw new IOException("相册暂存目录无效。");
@@ -59,7 +66,7 @@ public final class SharedGalleryPublication {
             while(name.getBytes(StandardCharsets.UTF_8).length>180)name=name.substring(0,name.offsetByCodePoints(name.length(),-1));
             if(!name.toLowerCase(java.util.Locale.ROOT).matches(".*\\.jpe?g"))name+=".jpg";
             PhotoLiveGallery publisher=new PhotoLiveGallery(context);DownloadedPhoto photo=new DownloadedPhoto(stage,name,"","");
-            String uri=publisher.publish(photo,extra);PhotoLiveGallery.PublicationState status=publisher.publicationStatus(photo);
+            String uri=original?publisher.publishExact(photo):publisher.publish(photo,extra);PhotoLiveGallery.PublicationState status=original?publisher.exactPublicationStatus(photo):publisher.publicationStatus(photo);
             if((status.status!=PhotoLiveGallery.PublicationStatus.PUBLISHED&&status.status!=PhotoLiveGallery.PublicationStatus.EXISTING_SOURCE)||!uri.equals(status.uri))throw new IOException("相册副本尚未核对完成，应用内成品仍然保留，请重试。");
             check(cancel);return uri;
         } finally {

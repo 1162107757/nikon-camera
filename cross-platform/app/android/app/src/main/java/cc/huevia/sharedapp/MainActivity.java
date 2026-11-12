@@ -92,7 +92,7 @@ public final class MainActivity extends FlutterActivity {
                         };
                         if(operation.startsWith("media."))value=media.request(operation,payload,cancelled::get,progress);
                         else if(operation.startsWith("camera."))value=camera.request(operation,payload,identity,cancelled::get,progress);
-                        else if(operation.startsWith("gallery.")){value=gallery.request(operation,payload,cancelled::get,identity);if(operation.equals("gallery.publish"))main.post(()->{EventChannel.EventSink sink=events;if(sink!=null)sink.success(SharedRuntime.map("kind","galleryChanged"));});}
+                        else if(operation.startsWith("gallery.")){value=gallery.request(operation,payload,cancelled::get,identity);if(operation.equals("gallery.publish")||operation.equals("gallery.publishOriginal"))main.post(()->{EventChannel.EventSink sink=events;if(sink!=null)sink.success(SharedRuntime.map("kind","galleryChanged"));});}
                         else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
                     complete(identity,cancelled,()->reply.success(value));

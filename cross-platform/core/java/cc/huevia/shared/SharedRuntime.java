@@ -79,17 +79,7 @@ public final class SharedRuntime {
             return SharedJson.encode(SharedExportSpecs.describe(frozen,p,cancel));
         }
         switch(operation){
-            case "source.inspect":{
-                if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");
-                String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
-                File directory=new File(root,"originals").getCanonicalFile();
-                if(!directory.equals(source.getParentFile())||!source.getName().matches("[0-9a-f]{64}\\.(jpg|jpeg|png|nef|nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)"))throw new IOException("只能导出原图库中的完整照片。");
-                if(source.length()<1||source.length()>512L*1024*1024)throw new IOException("原始文件大小无效。");
-                String sha=sourceIdentity(source.getPath(),true),expected=text(p,"expectedSourceSha",64);
-                if(!source.getName().startsWith(sha)||(!expected.isEmpty()&&!expected.equals(sha)))throw new IOException("原始文件已变化，未导出。");
-                if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");guardOwner(owner);
-                result=map("path",source.getPath(),"sourceSha",sha,"bytes",source.length(),"format",source.getName().substring(65).toUpperCase(Locale.ROOT));break;
-            }
+            case "source.inspect":result=inspectOriginal(p,cancel);break;
             case "ui.preferences.get":result=new SharedUiState(root).read();break;
             case "ui.preferences.set":result=new SharedUiState(root).update(p);break;
             case "core.schema":return CoreEngine.schema();
@@ -283,6 +273,30 @@ public final class SharedRuntime {
         File file=privateFile(path);
         if(!file.toPath().startsWith(new File(root,"originals").getCanonicalFile().toPath()))throw new IOException("只能选择应用原图库中的照片。");
         return file;
+    }
+    private Map<String,Object> inspectOriginal(Map<String,Object> p,BooleanSupplier cancel)throws IOException {
+        if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");
+        String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
+        File directory=new File(root,"originals").getCanonicalFile();
+        if(Files.isSymbolicLink(new File(root,"originals").toPath())||!directory.equals(source.getParentFile())||!source.getName().matches("[0-9a-f]{64}\\.(jpg|jpeg|png|nef|nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)"))throw new IOException("只能导出原图库中的完整照片。");
+        if(source.length()<1||source.length()>512L*1024*1024)throw new IOException("原始文件大小无效。");
+        String sha=sourceIdentity(source.getPath(),true),expected=text(p,"expectedSourceSha",64);
+        if(!source.getName().startsWith(sha)||(!expected.isEmpty()&&!expected.equals(sha)))throw new IOException("原始文件已变化，未导出。");
+        if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");guardOwner(owner);
+        return map("path",source.getPath(),"sourceSha",sha,"bytes",source.length(),"format",source.getName().substring(65).toUpperCase(Locale.ROOT));
+    }
+    /** Native publication entry points, never a rendered version or editor write. */
+    public synchronized String prepareOriginalPublication(String json,BooleanSupplier cancel)throws IOException {
+        Map<String,Object> p=SharedJson.object(json);String owner=text(p,"owner",64),expected=text(p,"expectedSourceSha",64);
+        if(!expected.matches("[0-9a-f]{64}"))throw new IOException("请重新打开照片后保存原始文件。");
+        Map<String,Object> inspected=inspectOriginal(p,cancel);
+        Map<String,Object> prepared=SharedOriginalPublication.prepare(root,owner,inspected,text(p,"operationId",32),cancel);
+        guardOwner(owner);return SharedJson.encode(prepared);
+    }
+    public synchronized void releaseOriginalPublication(String json)throws IOException {
+        Map<String,Object> p=SharedJson.object(json);String owner=text(p,"owner",64);guardOwner(owner);
+        if(!(p.get("bytes") instanceof Number))throw new IOException("原始文件保存大小无效。");
+        SharedOriginalPublication.release(root,owner,text(p,"operationId",32),text(p,"sha256",64),((Number)p.get("bytes")).longValue());
     }
     public File privateFile(String path)throws IOException {
         File original=new File(path),file=original.getCanonicalFile();

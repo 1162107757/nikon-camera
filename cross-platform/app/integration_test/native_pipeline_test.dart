@@ -426,6 +426,96 @@ void main() {
           publication['uri'] ?? publication['identifier'],
         );
         expect(repeatedPublication['verified'], isTrue);
+        final originalBytes = jpegWithOrientation(
+          await File(exported['path'] as String).readAsBytes(),
+          6,
+        );
+        final originalSha = sha256.convert(originalBytes).toString();
+        final originalJpeg = await File('${core.root}/originals/$originalSha.jpg')
+            .writeAsBytes(originalBytes);
+        outputs.add(originalJpeg.path);
+        final originalOperation = sha256
+            .convert(
+              utf8.encode(
+                'native-original-${DateTime.now().microsecondsSinceEpoch}',
+              ),
+            )
+            .toString()
+            .substring(0, 32);
+        final originalRequest = <String, dynamic>{
+          'owner': '',
+          'path': originalJpeg.path,
+          'expectedSourceSha': originalSha,
+          'filename': 'Huevia-QA-original-208.jpg',
+          'operationId': originalOperation,
+        };
+        final versionsBeforeOriginal = await core.call('version.list', {
+          'owner': '',
+        });
+        final savedOriginal = await render(
+          'gallery.publishOriginal',
+          originalRequest,
+        );
+        expect(savedOriginal['published'], true);
+        expect(savedOriginal['verified'], true);
+        final retryOriginal = await render(
+          'gallery.publishOriginal',
+          originalRequest,
+        );
+        expect(
+          retryOriginal['uri'] ?? retryOriginal['identifier'],
+          savedOriginal['uri'] ?? savedOriginal['identifier'],
+        );
+        expect(
+          retryOriginal['verified'],
+          true,
+          reason: 'Native resource bytes match the original JPEG including its EXIF orientation',
+        );
+        final anotherOriginal = await render('gallery.publishOriginal', {
+          ...originalRequest,
+          'operationId': sha256
+              .convert(utf8.encode('another-$originalOperation'))
+              .toString()
+              .substring(0, 32),
+        });
+        expect(
+          anotherOriginal['uri'] ?? anotherOriginal['identifier'],
+          isNot(savedOriginal['uri'] ?? savedOriginal['identifier']),
+        );
+        await expectLater(
+          core.call('gallery.publishOriginal', {
+            ...originalRequest,
+            'expectedSourceSha': '0' * 64,
+          }),
+          throwsA(isA<AppFailure>()),
+        );
+        await expectLater(
+          core.call('gallery.publishOriginal', {
+            ...originalRequest,
+            'owner': 'another',
+          }),
+          throwsA(isA<AppFailure>()),
+        );
+        await expectLater(
+          core.call('gallery.publishOriginal', {
+            ...originalRequest,
+            'extraCopy': true,
+          }),
+          throwsA(isA<AppFailure>()),
+        );
+        expect(
+          await core.call('version.list', {'owner': ''}),
+          versionsBeforeOriginal,
+        );
+        expect(await File(originalJpeg.path).readAsBytes(), originalBytes);
+        expect(
+          await core.call('draft.load', {'path': source.path, 'owner': ''}),
+          isNotNull,
+        );
+        // ignore: avoid_print
+        print(
+          'Native original JPEG fixtures: ${savedOriginal['uri'] ?? savedOriginal['identifier']} | ${anotherOriginal['uri'] ?? anotherOriginal['identifier']} SHA=$originalSha',
+        );
         final copyOperation = sha256
             .convert(
               utf8.encode(

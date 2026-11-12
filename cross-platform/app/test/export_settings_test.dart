@@ -25,6 +25,11 @@ class ExportUiCore extends ExportFormCore {
   );
   late final imageFile = File('${directory.path}/source.png');
   int copies = 0;
+  String originalFormat = 'PNG';
+  bool failOriginal = false;
+  Completer<Json>? pendingInspection;
+  @override
+  Future<Json> gallerySavePermission() async => {'granted': true};
   String copy() =>
       imageFile.copySync('${directory.path}/preview-${copies++}.png').path;
   void cleanup() {
@@ -40,6 +45,20 @@ class ExportUiCore extends ExportFormCore {
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'source.inspect') {
+      calls.add((operation, exportCopy(payload), jobId));
+      if (pendingInspection != null) return pendingInspection!.future;
+      return {
+        'path': imageFile.path,
+        'sourceSha': source,
+        'format': originalFormat,
+      };
+    }
+    if (operation == 'gallery.publishOriginal') {
+      calls.add((operation, exportCopy(payload), jobId));
+      if (failOriginal) throw const AppFailure('test storage full');
+      return {'published': true, 'uri': 'content://own/1'};
+    }
     if (operation.startsWith('media.exportPreview')) {
       calls.add((operation, exportCopy(payload), jobId));
       if (operation == 'media.exportPreview') {
@@ -81,16 +100,18 @@ void main() {
     WidgetTester tester, {
     Size size = const Size(412, 892),
     double textScale = 1,
+    String name = 'own.png',
   }) async {
     tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     final core = ExportUiCore();
+    core.originalFormat = name.endsWith('.jpg') ? 'JPG' : 'PNG';
     final actual = ExportFormState(core);
     final form = ExportSettings(
       state: actual,
-      photo: Photo(core.imageFile.path, 'own.png', {}),
+      photo: Photo(core.imageFile.path, name, {}),
       owner: '',
       recipe: {
         'schema': 1,
@@ -125,6 +146,96 @@ void main() {
     await tester.pumpAndSettle();
     return (core, form);
   }
+
+  testWidgets(
+    'original JPEG confirmation can be cancelled without saving or changing settings',
+    (tester) async {
+      final (core, form) = await open(tester, name: 'own.jpg');
+      await tester.tap(find.text('更多设置'));
+      await reach(tester, find.text('JPEG'));
+      await tester.ensureVisible(find.text('原始文件'));
+      await tester.ensureVisible(find.text('JPEG').last);
+      await tester.tap(find.text('JPEG').last);
+      await tester.pumpAndSettle();
+      expect(find.text('保存 JPEG 原始文件？'), findsOneWidget);
+      expect(find.textContaining('可能包含定位'), findsOneWidget);
+      await tester.tap(find.text('取消'));
+      await tester.pumpAndSettle();
+      expect(
+        core.calls.where((c) => c.$1 == 'gallery.publishOriginal'),
+        isEmpty,
+      );
+      expect(form.chosen.single.id, 'current');
+      expect(find.text('完整尺寸'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'confirmed original JPEG saves directly and retries the same task without rendering',
+    (tester) async {
+      final (core, form) = await open(
+        tester,
+        name: 'own.jpg',
+        size: const Size(320, 568),
+        textScale: 1.6,
+      );
+      core.failOriginal = true;
+      await tester.ensureVisible(find.text('更多设置'));
+      await tester.tap(find.text('更多设置'));
+      await reach(tester, find.text('JPEG'));
+      await tester.ensureVisible(find.text('JPEG').last);
+      await tester.tap(find.text('JPEG').last);
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('保存原始文件'));
+      await tester.tap(find.text('保存原始文件'));
+      await reach(tester, find.text('重试保存'));
+      expect(find.text('test storage full'), findsOneWidget);
+      final first = core.calls
+          .singleWhere((c) => c.$1 == 'gallery.publishOriginal')
+          .$2;
+      core.failOriginal = false;
+      await tester.tap(find.text('重试保存'));
+      await tester.pumpAndSettle();
+      expect(find.text('已保存到手机相册'), findsOneWidget);
+      expect(
+        core.calls.where((c) => c.$1 == 'gallery.publishOriginal').last.$2,
+        first,
+      );
+      expect(core.calls.where((c) => c.$1.startsWith('media.export')), isEmpty);
+      await tester.tap(find.text('完成'));
+      await tester.pumpAndSettle();
+      expect(form.chosen.single.id, 'current');
+      expect(find.text('完整尺寸'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'late original inspection cannot open a confirmation over a closed export page',
+    (tester) async {
+      final (core, _) = await open(tester, name: 'own.jpg');
+      await tester.tap(find.text('更多设置'));
+      await reach(tester, find.text('JPEG'));
+      await tester.ensureVisible(find.text('JPEG').last);
+      core.pendingInspection = Completer<Json>();
+      await tester.tap(find.text('JPEG').last);
+      await tester.pump();
+      Navigator.of(tester.element(find.byTooltip('取消导出'))).pop();
+      core.pendingInspection!.complete({
+        'path': core.imageFile.path,
+        'sourceSha': core.source,
+        'format': 'JPG',
+      });
+      await tester.pumpAndSettle();
+      expect(find.text('保存 JPEG 原始文件？'), findsNothing);
+      expect(find.text('打开导出'), findsOneWidget);
+      expect(
+        core.calls.where((c) => c.$1 == 'gallery.publishOriginal'),
+        isEmpty,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets(
     'quick export restores original qualities and versions and reopens the same selections',

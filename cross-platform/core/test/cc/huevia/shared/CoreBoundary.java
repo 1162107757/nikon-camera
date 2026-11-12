@@ -86,6 +86,7 @@ public final class CoreBoundary {
             checks+=PhotoBoundaryTest.run(temporary);
             checks+=ImportBoundaryTest.run(temporary);
             checks+=ExportBoundaryTest.run(temporary);
+            checks+=OriginalPublicationBoundaryTest.run(temporary);
             checks+=CopyBoundaryTest.run(temporary);
             checks+=VersionBoundaryTest.run(temporary);
             checks+=UiStateBoundaryTest.run(temporary);
