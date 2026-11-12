@@ -149,26 +149,23 @@ Widget _exportButton(
           : card
           ? p.card
           : p.container,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
+      padding: EdgeInsets.symmetric(horizontal: download ? 12 : 14),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius),
       ),
     ),
     child: primary
-        ? Stack(
-            alignment: Alignment.center,
+        ? Row(
             children: [
-              if (download)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: HueIcon(
-                    HueIconKind.download,
-                    size: 24,
-                    color: p.onPrimaryContainer,
-                  ),
+              if (download) ...[
+                HueIcon(
+                  HueIconKind.download,
+                  size: 24,
+                  color: p.onPrimaryContainer,
                 ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: download ? 25 : 0),
+                const SizedBox(width: 7),
+              ],
+              Expanded(
                 child: Center(
                   child: _copy(
                     label,
