@@ -1,0 +1,19 @@
+﻿2026-11-12T17:10:23.2439910Z ##[group]Run bash cross-platform/tool/mobile_apple.sh prepare
+2026-11-12T17:10:23.2440590Z [36;1mbash cross-platform/tool/mobile_apple.sh prepare[0m
+2026-11-12T17:10:23.2488280Z shell: /bin/bash -e {0}
+2026-11-12T17:10:23.2488520Z ##[endgroup]
+2026-11-12T17:10:23.8067080Z Valid UTF-8 text and platform configuration: 633 files
+2026-11-12T17:10:31.3787460Z From https://github.com/flutter/flutter
+2026-11-12T17:10:31.3789100Z  * branch              c197ca5199e9ee5661e865596c9c07294dfab51c -> FETCH_HEAD
+2026-11-12T17:10:35.1484360Z From https://github.com/flutter/flutter
+2026-11-12T17:10:35.1485120Z  * [new tag]           3.47.9     -> 3.47.9
+2026-11-12T17:11:21.1998050Z Frozen original Git reference preserved: 420; approved original repairs verified: 8; other original files unchanged: 412
+2026-11-12T17:14:17.8364260Z PASS original JVM tests translated to Objective-C and matching image fingerprints
+2026-11-12T17:14:22.9666670Z PASS 38 Apple native avatar checks; eight EXIF transforms, dimensions, metadata, unchanged source, cancellation and white background
+2026-11-12T17:16:28.8431370Z WIFI_STAGE echo-connect
+2026-11-12T17:16:28.8436340Z PASS 24 Apple Wi-Fi stream checks; exact bytes, offsets, segmented reads, timeout, refusal and concurrent close
+2026-11-12T17:16:35.0245230Z Staged verified generated core and pinned JRE runtime for the Apple host
+2026-11-12T17:16:49.2307010Z Setting "enable-swift-package-manager" value to "false".
+2026-11-12T17:16:49.2308430Z
+2026-11-12T17:16:49.2308770Z You may need to restart any open editors for them to read new settings.
+2026-11-12T17:17:05.7723320Z Verified project-level CocoaPods-only native plugin resolution

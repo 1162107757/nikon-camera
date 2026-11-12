@@ -40,4 +40,3 @@ Signer #1 public key SHA-1 digest: 8b7a5494932155c1e3e2d2c95b42aff760673513
 Signer #1 public key MD5 digest: a9f6917c6ea10ce5f88c7d9d823dd86b
 
 x64: zipalign.exe
-

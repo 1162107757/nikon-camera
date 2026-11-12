@@ -1,0 +1,28 @@
+{
+  "run": 43266496822,
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43266496822",
+  "sourceCommit": "39553b42e4ebbf8a4ff9f11994a0521c02ddf9e6",
+  "conclusion": "success",
+  "flutterTestsPassed": 220,
+  "nativeScenariosPassed": 1,
+  "productionChangesFromAndroidSource": [
+    "cross-platform/native/ios/Classes/HueviaWiredCameras.m"
+  ],
+  "allChangesFromAndroidSource": [
+    "cross-platform/README.md",
+    "cross-platform/app/test/session_race_test.dart",
+    "cross-platform/native/ios/Classes/HueviaWiredCameras.m",
+    "dist/migration212/ARTIFACTS.json",
+    "dist/migration212/README.md",
+    "docs/migration/feature-parity.md",
+    "docs/migration/validation/features-212/README.md",
+    "docs/migration/validation/features-212/android-artifacts.json",
+    "docs/migration/validation/features-212/android-native-smoke.log",
+    "docs/migration/validation/features-212/android-package-verification.log",
+    "docs/migration/validation/features-212/android-release-wired.png",
+    "docs/migration/validation/features-212/android-signing-alignment.json",
+    "docs/migration/validation/features-212/flutter-analyze.log",
+    "docs/migration/validation/features-212/real-nef-inputs.json",
+    "docs/migration/validation/features-212/ui-session-race.log"
+  ]
+}
