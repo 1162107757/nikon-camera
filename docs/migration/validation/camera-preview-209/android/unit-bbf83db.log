@@ -1,0 +1,7 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart
+00:00 +0: Visible thumbnails share one serialized camera read and one future per object
+00:00 +1: A changed session retires queued reads and discards an old active reply
+00:00 +2: Wrong-session and external preview paths are rejected and explicit retry refreshes
+00:00 +3: Disposing a thumbnail list drains its active read without disconnecting the camera
+00:00 +4: A failed preview is retained until explicit retry instead of flooding the camera
+00:00 +5: All tests passed!

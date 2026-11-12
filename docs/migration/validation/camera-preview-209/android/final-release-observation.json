@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "sourceCommit": "6ccb354c310cad025061f89315eb06aebc2a6fb3",
+  "utc": "2026-11-12T10:57:04.587469+00:00",
+  "pid": 29864,
+  "installedApkMatchesDelivered": true,
+  "installedApkBytes": 54449646,
+  "installedApkSha256": "f29cdf7b31ac2b3fd31859ea4a0b743bfc8821d9d9ef0549d5779d820e460254",
+  "crashMarkers": 0,
+  "memoryKiBOnePoint": {
+    "PSS": 117498,
+    "RSS": 228124
+  },
+  "scope": "Android 12/API31 emulator and an own read-only Nikon-shaped PTP/IP TCP peer. Not a physical Nikon Z6II, Honor Magic or iPhone verification.",
+  "ui": {
+    "rawConnectionThumbnails": 3,
+    "rawOverviewThumbnails": 3,
+    "rawFilterRetainedAcrossRoute": true,
+    "afterFreshInventoryThumbnails": 4,
+    "jpegEmptyMessageNamesRawFilter": true,
+    "firstThumbnailColouredPixelRatio": 0.6667,
+    "fullPixelParity": false
+  },
+  "protocol": {
+    "operationCounts": {
+      "0x1001": 1,
+      "0x1002": 1,
+      "0x1004": 3,
+      "0x1007": 3,
+      "0x1008": 18,
+      "0x1009": 0,
+      "0x100a": 1,
+      "0x90c4": 4
+    },
+    "originalDownloadRequests": 0,
+    "standardPreviewFallbackVerified": true,
+    "peerEventPongs": 98,
+    "snapshotLines": 228,
+    "snapshotSha256": "807de75c44e20c983dc2b207bada656992a24edafe77a6ca3aefeadbf4059da1",
+    "fixtureJpegBytes": 73360,
+    "fixtureJpegSha256": "8365a78fa8254efdf4de19b0d3814e44bf71360208887977558139afc6222abb",
+    "fixtureDescription": "Self-generated checker/gradient JPEG, served as the camera preview of synthetic NEF metadata; no real sensor RAW is present in the peer."
+  }
+}

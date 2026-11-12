@@ -1,0 +1,203 @@
+11-12 10:39:41.561   339   339 D Zygote  : Forked child process 29864
+11-12 10:39:41.607 29864 29864 W cc.huevia.next: Unexpected CPU variant for X86 using defaults: x86_64
+11-12 10:39:41.670   433   460 I adbd    : jdwp connection from 29864
+11-12 10:39:41.714   531   561 I ActivityManager: Start proc 29864:cc.huevia.next/u0a105 for pre-top-activity {cc.huevia.next/cc.huevia.sharedapp.MainActivity}
+11-12 10:39:42.088 29864 29864 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10105; state: ENABLED
+11-12 10:39:42.155 29864 29864 V GraphicsEnvironment: ANGLE Developer option for 'cc.huevia.next' set to: 'default'
+11-12 10:39:42.156 29864 29864 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-12 10:39:42.177 29864 29864 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 10:39:42.178 29864 29864 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 10:39:42.446 29864 29886 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-12 10:39:42.449 29864 29886 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-12 10:39:42.450 29864 29886 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-12 10:39:42.696 29864 29888 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-12 10:39:42.772 29864 29864 W cc.huevia.next: type=1400 audit(0.0:1808): avc: denied { read } for name="max_map_count" dev="proc" ino=353826 scontext=u:r:untrusted_app:s0:c105,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=cc.huevia.next
+11-12 10:39:42.824 29864 29864 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 10:39:42.824 29864 29864 I flutter :     The application opted out of Impeller by either using the
+11-12 10:39:42.824 29864 29864 I flutter :     `--no-enable-impeller` flag or the
+11-12 10:39:42.824 29864 29864 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 10:39:42.824 29864 29864 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 10:39:42.824 29864 29864 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 10:39:42.824 29864 29864 I flutter :     the issue.
+11-12 10:39:42.824 29864 29864 I flutter : 
+11-12 10:39:42.824 29864 29864 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 10:39:42.824 29864 29864 I flutter : 
+11-12 10:39:42.828 29864 29864 D HostConnection: createUnique: call
+11-12 10:39:42.851 29864 29864 D HostConnection: HostConnection::get() New Host Connection established 0x7b5217499010, tid 29864
+11-12 10:39:42.863 29864 29864 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:39:42.893 29864 29864 D EGL_emulation: eglCreateContext: 0x7b521749abd0: maj 3 min 0 rcv 3
+11-12 10:39:42.920 29864 29864 D EGL_emulation: eglCreateContext: 0x7b521749af90: maj 3 min 0 rcv 3
+11-12 10:39:42.937 29864 29890 D HostConnection: createUnique: call
+11-12 10:39:42.937 29864 29890 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b2d50, tid 29890
+11-12 10:39:43.003 29864 29890 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:39:43.028 29864 29890 D EGL_emulation: eglMakeCurrent: 0x7b521749af90: ver 3 0 (tinfo 0x7b54325b4100) (first time)
+11-12 10:39:43.382 29864 29864 I Choreographer: Skipped 68 frames!  The application may be doing too much work on its main thread.
+11-12 10:39:43.475 29864 29884 D HostConnection: createUnique: call
+11-12 10:39:43.477 29864 29884 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b1c10, tid 29884
+11-12 10:39:43.487 29864 29884 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:39:43.491 29864 29884 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-12 10:39:43.496 29864 29884 D EGL_emulation: eglCreateContext: 0x7b52174b1790: maj 3 min 0 rcv 3
+11-12 10:39:43.500 29864 29884 D EGL_emulation: eglMakeCurrent: 0x7b52174b1790: ver 3 0 (tinfo 0x7b54325b4180) (first time)
+11-12 10:39:43.529 29864 29889 I Gralloc4: mapper 4.x is not supported
+11-12 10:39:43.533 29864 29889 D HostConnection: createUnique: call
+11-12 10:39:43.534 29864 29889 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b7910, tid 29889
+11-12 10:39:43.535 29864 29889 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-12 10:39:43.536 29864 29889 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3efffe000 size 0x2000
+11-12 10:39:43.541 29864 29889 W Gralloc4: allocator 4.x is not supported
+11-12 10:39:43.556 29864 29884 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:39:43.559 29864 29889 D HostConnection: createUnique: call
+11-12 10:39:43.560 29864 29889 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b8090, tid 29889
+11-12 10:39:43.568 29864 29889 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:39:43.572 29864 29889 D EGL_emulation: eglMakeCurrent: 0x7b521749abd0: ver 3 0 (tinfo 0x7b54325b4200) (first time)
+11-12 10:39:43.579 29864 29889 D EGL_emulation: eglCreateContext: 0x7b52174b6f50: maj 3 min 0 rcv 3
+11-12 10:39:43.706 29864 29871 I cc.huevia.next: Background young concurrent copying GC freed 27543(1328KB) AllocSpace objects, 0(0B) LOS objects, 91% free, 2307KB/26MB, paused 5.396ms total 104.772ms
+11-12 10:39:44.114 29864 29889 E BLASTBufferQueue: [SurfaceView[cc.huevia.next/cc.huevia.sharedapp.MainActivity]#1](f:0,a:0) rejecting buffer:active_size=1080x2340, requested_size=1080x2340 buffer{size=1080x2214 transform=0}
+11-12 10:39:46.256 29864 29884 D EGL_emulation: app_time_stats: avg=917.02ms min=610.84ms max=1223.19ms count=2
+11-12 10:39:47.741 29864 29889 D EGL_emulation: app_time_stats: avg=451.35ms min=32.24ms max=2913.44ms count=8
+11-12 10:39:48.309 29864 29884 D EGL_emulation: app_time_stats: avg=2050.38ms min=2050.38ms max=2050.38ms count=1
+11-12 10:39:48.656 29864 29946 D ProfileInstaller: Installing profile for cc.huevia.next
+11-12 10:39:49.484 29864 29889 D EGL_emulation: app_time_stats: avg=290.30ms min=61.50ms max=955.41ms count=6
+11-12 10:39:49.694 29864 29884 D EGL_emulation: app_time_stats: avg=1377.69ms min=1377.69ms max=1377.69ms count=1
+11-12 10:39:50.605 29864 29889 D EGL_emulation: app_time_stats: avg=560.31ms min=213.33ms max=907.29ms count=2
+11-12 10:39:51.286 29864 29884 D EGL_emulation: app_time_stats: avg=1588.85ms min=1588.85ms max=1588.85ms count=1
+11-12 10:39:52.404 29864 29889 D EGL_emulation: app_time_stats: avg=255.85ms min=10.43ms max=1109.96ms count=7
+11-12 10:39:52.473 29864 29884 D EGL_emulation: app_time_stats: avg=1186.33ms min=1186.33ms max=1186.33ms count=1
+11-12 10:39:53.548 29864 29889 D EGL_emulation: app_time_stats: avg=571.97ms min=81.57ms max=1062.37ms count=2
+11-12 10:39:54.199 29864 29884 D EGL_emulation: app_time_stats: avg=1725.72ms min=1725.72ms max=1725.72ms count=1
+11-12 10:39:55.260 29864 29889 D EGL_emulation: app_time_stats: avg=190.16ms min=31.60ms max=1037.33ms count=9
+11-12 10:39:55.309 29864 29884 D EGL_emulation: app_time_stats: avg=1100.35ms min=1100.35ms max=1100.35ms count=1
+11-12 10:40:21.525 29864 29884 D EGL_emulation: app_time_stats: avg=26215.04ms min=26215.04ms max=26215.04ms count=1
+11-12 10:40:21.544 29864 29889 D EGL_emulation: app_time_stats: avg=13141.68ms min=124.16ms max=26159.21ms count=2
+11-12 10:40:22.576 29864 29889 D EGL_emulation: app_time_stats: avg=1032.31ms min=1032.31ms max=1032.31ms count=1
+11-12 10:40:22.645 29864 29884 D EGL_emulation: app_time_stats: avg=1117.26ms min=1117.26ms max=1117.26ms count=1
+11-12 10:40:23.642 29864 29864 D InputMethodManager: showSoftInput() view=le{b123f3f VFE...... .F....ID 0,0-1080,2340 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+11-12 10:40:23.669 29864 29884 D EGL_emulation: app_time_stats: avg=1023.38ms min=1023.38ms max=1023.38ms count=1
+11-12 10:40:23.692 29864 29889 D EGL_emulation: app_time_stats: avg=556.33ms min=100.78ms max=1011.88ms count=2
+11-12 10:40:23.951 29864 29864 D InsetsController: show(ime(), fromIme=true)
+11-12 10:40:24.808 29864 29889 D EGL_emulation: app_time_stats: avg=159.20ms min=34.83ms max=573.49ms count=7
+11-12 10:40:25.810 29864 29889 D EGL_emulation: app_time_stats: avg=76.37ms min=42.96ms max=112.86ms count=13
+11-12 10:40:26.003 29864 29884 D EGL_emulation: app_time_stats: avg=289.93ms min=15.95ms max=1499.93ms count=8
+11-12 10:40:26.953 29864 29889 D EGL_emulation: app_time_stats: avg=228.64ms min=83.02ms max=516.40ms count=5
+11-12 10:40:27.963 29864 29889 D EGL_emulation: app_time_stats: avg=252.27ms min=25.63ms max=507.76ms count=4
+11-12 10:40:28.062 29864 29884 D EGL_emulation: app_time_stats: avg=255.60ms min=30.04ms max=1169.97ms count=8
+11-12 10:40:29.043 29864 29864 D InputMethodManager: showSoftInput() view=le{b123f3f VFE...... .F...... 0,0-1080,2340 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+11-12 10:40:29.123 29864 29889 D EGL_emulation: app_time_stats: avg=289.87ms min=124.96ms max=494.26ms count=4
+11-12 10:40:29.141 29864 29864 D InsetsController: show(ime(), fromIme=true)
+11-12 10:40:29.186 29864 29884 D EGL_emulation: app_time_stats: avg=1123.74ms min=1123.74ms max=1123.74ms count=1
+11-12 10:40:30.215 29864 29889 D EGL_emulation: app_time_stats: avg=81.21ms min=27.64ms max=221.54ms count=13
+11-12 10:40:30.562 29864 29884 D EGL_emulation: app_time_stats: avg=171.47ms min=18.76ms max=949.65ms count=8
+11-12 10:40:31.319 29864 29889 D EGL_emulation: app_time_stats: avg=137.42ms min=44.29ms max=349.25ms count=8
+11-12 10:40:32.356 29864 29889 D EGL_emulation: app_time_stats: avg=345.53ms min=96.53ms max=501.17ms count=3
+11-12 10:40:32.421 29864 29884 D EGL_emulation: app_time_stats: avg=232.28ms min=40.58ms max=1113.68ms count=8
+11-12 10:40:33.449 29864 29889 D EGL_emulation: app_time_stats: avg=364.17ms min=94.96ms max=532.48ms count=3
+11-12 10:40:34.448 29864 29884 D EGL_emulation: app_time_stats: avg=2024.53ms min=2024.53ms max=2024.53ms count=1
+11-12 10:40:34.460 29864 29889 D EGL_emulation: app_time_stats: avg=75.05ms min=14.01ms max=342.99ms count=13
+11-12 10:40:35.484 29864 29889 D EGL_emulation: app_time_stats: avg=35.70ms min=13.11ms max=123.71ms count=27
+11-12 10:40:35.715 29864 29884 D EGL_emulation: app_time_stats: avg=1266.65ms min=1266.65ms max=1266.65ms count=1
+11-12 10:41:25.958 29864 29884 D EGL_emulation: app_time_stats: avg=50243.31ms min=50243.31ms max=50243.31ms count=1
+11-12 10:41:26.009 29864 29889 D EGL_emulation: app_time_stats: avg=8416.48ms min=22.27ms max=50297.73ms count=6
+11-12 10:41:27.035 29864 29889 D EGL_emulation: app_time_stats: avg=1025.59ms min=1025.59ms max=1025.59ms count=1
+11-12 10:41:27.378 29864 29884 D EGL_emulation: app_time_stats: avg=1414.35ms min=1414.35ms max=1414.35ms count=1
+11-12 10:41:28.701 29864 29889 D EGL_emulation: app_time_stats: avg=827.30ms min=446.46ms max=1208.13ms count=2
+11-12 10:41:29.937 29864 29889 D EGL_emulation: app_time_stats: avg=306.36ms min=66.98ms max=945.50ms count=4
+11-12 10:41:30.001 29864 29884 D EGL_emulation: app_time_stats: avg=2538.82ms min=2538.82ms max=2538.82ms count=1
+11-12 10:41:30.950 29864 29889 D EGL_emulation: app_time_stats: avg=949.11ms min=949.11ms max=949.11ms count=1
+11-12 10:41:31.113 29864 29884 D EGL_emulation: app_time_stats: avg=1111.69ms min=1111.69ms max=1111.69ms count=1
+11-12 10:41:33.467 29864 29889 D EGL_emulation: app_time_stats: avg=1258.04ms min=188.41ms max=2327.67ms count=2
+11-12 10:42:57.754 29864 29884 D EGL_emulation: app_time_stats: avg=86639.00ms min=86639.00ms max=86639.00ms count=1
+11-12 10:42:57.794 29864 29889 D EGL_emulation: app_time_stats: avg=14052.60ms min=46.94ms max=83833.24ms count=6
+11-12 10:42:58.854 29864 29889 D EGL_emulation: app_time_stats: avg=1059.66ms min=1059.66ms max=1059.66ms count=1
+11-12 10:42:58.867 29864 29884 D EGL_emulation: app_time_stats: avg=1112.71ms min=1112.71ms max=1112.71ms count=1
+11-12 10:44:06.522 29864 29884 D EGL_emulation: app_time_stats: avg=67654.38ms min=67654.38ms max=67654.38ms count=1
+11-12 10:44:06.563 29864 29889 D EGL_emulation: app_time_stats: avg=33853.97ms min=49.79ms max=67658.16ms count=2
+11-12 10:44:07.579 29864 29889 D EGL_emulation: app_time_stats: avg=1015.99ms min=1015.99ms max=1015.99ms count=1
+11-12 10:44:07.663 29864 29884 D EGL_emulation: app_time_stats: avg=1140.57ms min=1140.57ms max=1140.57ms count=1
+11-12 10:44:09.145 29864 29889 D EGL_emulation: app_time_stats: avg=782.81ms min=119.48ms max=1446.14ms count=2
+11-12 10:44:09.317 29864 29884 D EGL_emulation: app_time_stats: avg=1650.23ms min=1650.23ms max=1650.23ms count=1
+11-12 10:44:10.416 29864 29889 D EGL_emulation: app_time_stats: avg=308.49ms min=41.90ms max=1054.34ms count=4
+11-12 10:44:10.495 29864 29884 D EGL_emulation: app_time_stats: avg=1176.79ms min=1176.79ms max=1176.79ms count=1
+11-12 10:44:33.694 29864 29884 D EGL_emulation: app_time_stats: avg=23198.19ms min=23198.19ms max=23198.19ms count=1
+11-12 10:44:33.737 29864 29889 D EGL_emulation: app_time_stats: avg=11660.19ms min=106.59ms max=23213.79ms count=2
+11-12 10:44:34.762 29864 29889 D EGL_emulation: app_time_stats: avg=1024.45ms min=1024.45ms max=1024.45ms count=1
+11-12 10:44:34.804 29864 29884 D EGL_emulation: app_time_stats: avg=1109.33ms min=1109.33ms max=1109.33ms count=1
+11-12 10:44:35.880 29864 29889 D EGL_emulation: app_time_stats: avg=558.79ms min=83.26ms max=1034.31ms count=2
+11-12 10:44:36.506 29864 29884 D EGL_emulation: app_time_stats: avg=1701.51ms min=1701.51ms max=1701.51ms count=1
+11-12 10:44:37.556 29864 29889 D EGL_emulation: app_time_stats: avg=209.14ms min=20.24ms max=1031.71ms count=8
+11-12 10:44:37.631 29864 29884 D EGL_emulation: app_time_stats: avg=1124.11ms min=1124.11ms max=1124.11ms count=1
+11-12 10:44:39.142 29864 29884 D EGL_emulation: app_time_stats: avg=1511.25ms min=1511.25ms max=1511.25ms count=1
+11-12 10:44:39.166 29864 29889 D EGL_emulation: app_time_stats: avg=804.97ms min=89.45ms max=1520.49ms count=2
+11-12 10:44:40.188 29864 29889 D EGL_emulation: app_time_stats: avg=1021.82ms min=1021.82ms max=1021.82ms count=1
+11-12 10:44:40.295 29864 29884 D EGL_emulation: app_time_stats: avg=1149.45ms min=1149.45ms max=1149.45ms count=1
+11-12 10:45:06.381 29864 29889 D EGL_emulation: app_time_stats: avg=13096.10ms min=143.15ms max=26049.06ms count=2
+11-12 10:45:07.624 29864 29884 D EGL_emulation: app_time_stats: avg=27328.54ms min=27328.54ms max=27328.54ms count=1
+11-12 10:45:07.631 29864 29889 D EGL_emulation: app_time_stats: avg=55.13ms min=16.77ms max=321.61ms count=22
+11-12 10:45:08.704 29864 29889 D EGL_emulation: app_time_stats: avg=357.71ms min=22.53ms max=1021.71ms count=3
+11-12 10:45:08.777 29864 29884 D EGL_emulation: app_time_stats: avg=1152.16ms min=1152.16ms max=1152.16ms count=1
+11-12 10:45:44.215 29864 29884 D EGL_emulation: app_time_stats: avg=35436.79ms min=35436.79ms max=35436.79ms count=1
+11-12 10:45:44.245 29864 29889 D EGL_emulation: app_time_stats: avg=17767.04ms min=79.78ms max=35454.31ms count=2
+11-12 10:45:45.303 29864 29889 D EGL_emulation: app_time_stats: avg=1055.10ms min=1055.10ms max=1055.10ms count=1
+11-12 10:45:45.411 29864 29884 D EGL_emulation: app_time_stats: avg=1196.04ms min=1196.04ms max=1196.04ms count=1
+11-12 10:45:46.377 29864 29889 D EGL_emulation: app_time_stats: avg=536.96ms min=132.19ms max=941.73ms count=2
+11-12 10:45:47.046 29864 29884 D EGL_emulation: app_time_stats: avg=1634.85ms min=1634.85ms max=1634.85ms count=1
+11-12 10:45:48.118 29864 29889 D EGL_emulation: app_time_stats: avg=248.40ms min=20.27ms max=1062.56ms count=7
+11-12 10:45:48.185 29864 29884 D EGL_emulation: app_time_stats: avg=1106.87ms min=1106.87ms max=1106.87ms count=1
+11-12 10:47:54.802 29864 29889 D EGL_emulation: app_time_stats: avg=63341.85ms min=83.57ms max=126600.12ms count=2
+11-12 10:47:55.859 29864 29884 D EGL_emulation: app_time_stats: avg=127672.90ms min=127672.90ms max=127672.90ms count=1
+11-12 10:47:55.877 29864 29889 D EGL_emulation: app_time_stats: avg=65.08ms min=14.99ms max=345.62ms count=16
+11-12 10:47:56.981 29864 29884 D EGL_emulation: app_time_stats: avg=1122.67ms min=1122.67ms max=1122.67ms count=1
+11-12 10:47:56.987 29864 29889 D EGL_emulation: app_time_stats: avg=1096.00ms min=1096.00ms max=1096.00ms count=1
+11-12 10:47:58.006 29864 29889 D EGL_emulation: app_time_stats: avg=509.39ms min=22.58ms max=996.20ms count=2
+11-12 10:47:58.540 29864 29884 D EGL_emulation: app_time_stats: avg=1558.87ms min=1558.87ms max=1558.87ms count=1
+11-12 10:47:59.628 29864 29884 D EGL_emulation: app_time_stats: avg=1086.66ms min=1086.66ms max=1086.66ms count=1
+11-12 10:47:59.631 29864 29889 D EGL_emulation: app_time_stats: avg=231.83ms min=24.98ms max=1088.07ms count=7
+11-12 10:48:00.639 29864 29889 D EGL_emulation: app_time_stats: avg=503.92ms min=28.61ms max=979.22ms count=2
+11-12 10:48:01.264 29864 29884 D EGL_emulation: app_time_stats: avg=1636.37ms min=1636.37ms max=1636.37ms count=1
+11-12 10:48:02.303 29864 29889 D EGL_emulation: app_time_stats: avg=118.62ms min=14.17ms max=1019.07ms count=14
+11-12 10:48:02.372 29864 29884 D EGL_emulation: app_time_stats: avg=1107.73ms min=1107.73ms max=1107.73ms count=1
+11-12 10:48:03.374 29864 29889 D EGL_emulation: app_time_stats: avg=535.24ms min=78.88ms max=991.60ms count=2
+11-12 10:48:36.306 29864 29884 D EGL_emulation: app_time_stats: avg=33933.12ms min=33933.12ms max=33933.12ms count=1
+11-12 10:48:36.310 29864 29889 D EGL_emulation: app_time_stats: avg=1934.95ms min=9.06ms max=32555.81ms count=17
+11-12 10:48:37.354 29864 29889 D EGL_emulation: app_time_stats: avg=1043.71ms min=1043.71ms max=1043.71ms count=1
+11-12 10:48:37.415 29864 29884 D EGL_emulation: app_time_stats: avg=1108.78ms min=1108.78ms max=1108.78ms count=1
+11-12 10:48:38.382 29864 29864 D InputMethodManager: showSoftInput() view=le{b123f3f VFE...... .F...... 0,0-1080,2340 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+11-12 10:48:38.452 29864 29889 D EGL_emulation: app_time_stats: avg=547.93ms min=92.20ms max=1003.66ms count=2
+11-12 10:48:38.633 29864 29864 D InsetsController: show(ime(), fromIme=true)
+11-12 10:48:38.683 29864 29884 D EGL_emulation: app_time_stats: avg=1263.52ms min=1263.52ms max=1263.52ms count=1
+11-12 10:48:39.468 29864 29889 D EGL_emulation: app_time_stats: avg=92.06ms min=48.37ms max=180.49ms count=11
+11-12 10:48:40.468 29864 29884 D EGL_emulation: app_time_stats: avg=219.25ms min=14.46ms max=1301.02ms count=8
+11-12 10:48:40.609 29864 29889 D EGL_emulation: app_time_stats: avg=74.99ms min=38.29ms max=279.43ms count=15
+11-12 10:48:41.835 29864 29889 D EGL_emulation: app_time_stats: avg=174.88ms min=27.80ms max=502.99ms count=7
+11-12 10:48:42.204 29864 29884 D EGL_emulation: app_time_stats: avg=130.16ms min=10.15ms max=1107.39ms count=13
+11-12 10:48:43.152 29864 29864 D InputMethodManager: showSoftInput() view=le{b123f3f VFE...... .F...... 0,0-1080,2340 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+11-12 10:48:43.221 29864 29889 D EGL_emulation: app_time_stats: avg=276.74ms min=61.13ms max=497.83ms count=5
+11-12 10:48:43.312 29864 29864 D InsetsController: show(ime(), fromIme=true)
+11-12 10:48:43.361 29864 29884 D EGL_emulation: app_time_stats: avg=1156.75ms min=1156.75ms max=1156.75ms count=1
+11-12 10:48:44.222 29864 29889 D EGL_emulation: app_time_stats: avg=76.12ms min=30.30ms max=177.71ms count=13
+11-12 10:48:44.953 29864 29884 D EGL_emulation: app_time_stats: avg=175.73ms min=18.62ms max=1192.80ms count=9
+11-12 10:48:45.292 29864 29889 D EGL_emulation: app_time_stats: avg=97.02ms min=27.21ms max=388.42ms count=11
+11-12 10:48:46.636 29864 29889 D EGL_emulation: app_time_stats: avg=222.59ms min=14.05ms max=502.03ms count=6
+11-12 10:48:46.716 29864 29884 D EGL_emulation: app_time_stats: avg=159.55ms min=16.60ms max=1122.06ms count=11
+11-12 10:48:47.797 29864 29889 D EGL_emulation: app_time_stats: avg=289.92ms min=43.52ms max=511.46ms count=4
+11-12 10:48:48.671 29864 29884 D EGL_emulation: app_time_stats: avg=1954.71ms min=1954.71ms max=1954.71ms count=1
+11-12 10:48:48.847 29864 29889 D EGL_emulation: app_time_stats: avg=29.76ms min=10.19ms max=55.94ms count=34
+11-12 10:48:49.882 29864 29889 D EGL_emulation: app_time_stats: avg=31.95ms min=6.75ms max=181.73ms count=30
+11-12 10:48:51.575 29864 29889 D EGL_emulation: app_time_stats: avg=165.61ms min=12.27ms max=957.24ms count=10
+11-12 10:48:51.626 29864 29884 D EGL_emulation: app_time_stats: avg=2954.65ms min=2954.65ms max=2954.65ms count=1
+11-12 10:49:52.047 29864 29884 D EGL_emulation: app_time_stats: avg=60406.69ms min=60406.69ms max=60406.69ms count=1
+11-12 10:49:52.065 29864 29889 D EGL_emulation: app_time_stats: avg=30245.27ms min=59.77ms max=60430.77ms count=2
+11-12 10:49:53.146 29864 29889 D EGL_emulation: app_time_stats: avg=1080.19ms min=1080.19ms max=1080.19ms count=1
+11-12 10:49:53.166 29864 29884 D EGL_emulation: app_time_stats: avg=1118.99ms min=1118.99ms max=1118.99ms count=1
+11-12 10:49:54.833 29864 29889 D EGL_emulation: app_time_stats: avg=843.18ms min=48.26ms max=1638.09ms count=2
+11-12 10:49:55.475 29864 29884 D EGL_emulation: app_time_stats: avg=2308.61ms min=2308.61ms max=2308.61ms count=1
+11-12 10:49:56.574 29864 29889 D EGL_emulation: app_time_stats: avg=193.37ms min=27.89ms max=1067.69ms count=9
+11-12 10:49:56.583 29864 29884 D EGL_emulation: app_time_stats: avg=1107.66ms min=1107.66ms max=1107.66ms count=1
+11-12 10:50:26.325 29864 29884 D EGL_emulation: app_time_stats: avg=29738.71ms min=29738.71ms max=29738.71ms count=1
+11-12 10:50:26.371 29864 29889 D EGL_emulation: app_time_stats: avg=14892.68ms min=37.63ms max=29747.74ms count=2
+11-12 10:50:27.374 29864 29889 D EGL_emulation: app_time_stats: avg=1003.09ms min=1003.09ms max=1003.09ms count=1
+11-12 10:50:27.452 29864 29884 D EGL_emulation: app_time_stats: avg=1124.94ms min=1124.94ms max=1124.94ms count=1
+11-12 10:50:28.564 29864 29889 D EGL_emulation: app_time_stats: avg=593.42ms min=85.82ms max=1101.01ms count=2
+11-12 10:50:29.399 29864 29884 D EGL_emulation: app_time_stats: avg=1942.80ms min=1942.80ms max=1942.80ms count=1
+11-12 10:50:29.667 29864 29889 D EGL_emulation: app_time_stats: avg=72.48ms min=30.31ms max=179.29ms count=14
+11-12 10:50:30.817 29864 29889 D EGL_emulation: app_time_stats: avg=287.30ms min=23.64ms max=1054.52ms count=4
+11-12 10:50:30.841 29864 29884 D EGL_emulation: app_time_stats: avg=1434.41ms min=1434.41ms max=1434.41ms count=1
+11-12 10:56:14.635 29864 29875 I cc.huevia.next: Explicit concurrent copying GC freed 186523(9194KB) AllocSpace objects, 410(12MB) LOS objects, 49% free, 2611KB/5222KB, paused 540us total 17.098ms

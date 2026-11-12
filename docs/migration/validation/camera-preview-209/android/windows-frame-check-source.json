@@ -1,0 +1,7 @@
+{
+  "sourceCommit": "5ad0c600de6f837ba01289473d0851ec15dfc0e7",
+  "test": "test/camera_test.dart --plain-name RAW-only camera",
+  "passed": 1,
+  "terminalSummary": "+1: All tests passed!",
+  "scope": "Single decoded-thumbnail scenario only; the separate Windows multi-file host run did not complete."
+}

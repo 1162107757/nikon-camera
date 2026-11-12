@@ -1,0 +1,22 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart
+00:00 +0: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: RAW-only camera has an explicit JPEG hint and can show RAW thumbnails in the overview
+00:01 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Connection page remembers RAW selection and shows the same thumbnail
+00:01 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Overview exposes read errors and retries the camera inventory
+00:02 +3: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Thumbnail errors retry only the preview and keep the source untouched
+00:15 +4: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Thumbnail errors retry only the preview and keep the source untouched
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Thumbnail errors retry only the preview and keep the source untouched
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Thumbnail errors retry only the preview and keep the source untouched - did not complete [E]
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart: Camera controls and thumbnail rows fit a small screen with enlarged text - did not complete [E]
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Visible thumbnails share one serialized camera read and one future per object - did not complete [E]
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: A changed session retires queued reads and discards an old active reply - did not complete [E]
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Wrong-session and external preview paths are rejected and explicit retry refreshes - did not complete [E]
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Disposing a thumbnail list drains its active read without disconnecting the camera - did not complete [E]
+00:16 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: A failed preview is retained until explicit retry instead of flooding the camera - did not complete [E]
+00:16 +5: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: A changed session retires queued reads and discards an old active reply (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: A failed preview is retained until explicit retry instead of flooding the camera (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Disposing a thumbnail list drains its active read without disconnecting the camera (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Visible thumbnails share one serialized camera read and one future per object (did not complete)
+  ... and 3 more

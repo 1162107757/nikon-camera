@@ -1,0 +1,23 @@
+{
+  "utc": "2026-11-12T11:00:43.126145+00:00",
+  "results": [
+    {
+      "milestone": 206,
+      "verifiedFiles": 70,
+      "mismatches": 0,
+      "manifestSha256": "fda85ff0a45b58dedbd75b37cad58006e96e0b8debf6ece5bebf83229732a4e3"
+    },
+    {
+      "milestone": 207,
+      "verifiedFiles": 84,
+      "mismatches": 0,
+      "manifestSha256": "77c4dc9f7b81b4fa2b33634d54eeb402c7e6f30154abdc8c48f1834853ec7926"
+    },
+    {
+      "milestone": 208,
+      "verifiedFiles": 92,
+      "mismatches": 0,
+      "manifestSha256": "8294dede7df9a2885bc054806a749cfd8c5f1a886ea67ab5b2815b0a3ab181ec"
+    }
+  ]
+}

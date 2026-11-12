@@ -24,7 +24,7 @@
 | 完整尺寸/分享/自定义导出、成品与编码前预览 | `PhotoPresetRenderer`, `PhotoVersionExport`, `PhotoExportSpec` | 原规格、色彩及导出模型复用 | 207 恢复原快捷/高级设置、四档画质、当前/原图/保存版本多选；冻结配方的只读实际 JPEG/编码前预览，完成返回并保留设置；208 接入独立于编辑设置的原始 JPEG 直接相册保存 | 208 最终 Apple 160 项 Flutter 和真实原生流程、Android 69 项全套界面加最终导出专项 7 项通过；release 核对原始 JPEG 字节、EXIF、不同保存副本及边框保留。对应颜色已对照，仍有字体字面宽度和布局 1–3px 差异，完整样式与实体设备验收未完成 |
 | 批量处理、取消、重试、作品/原图、系统图库发布及删除范围 | `PhotoPresetBatch`, `PhotoLiveGallery`, `PhotoEffectGallery` | 原导出/成品模型复用，队列新增边界保护 | 200 接入最多 100 张顺序处理、取消和重试；207 接入单图多版本系统相册保存及持久操作标识；208 接入原始 JPEG 精确保存。多照片批量系统发布、RAW 原始格式/目标及源文件配对、删除范围和完整批量编辑器待迁移 | Android 撤销读取权限后实际保存、重复请求核对、不同操作的新副本及两版本 release 保存通过；Apple 实际 PhotoKit 发布/重复核对/新副本通过；只添加权限独立场景及其余范围继续保留 |
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用 | Wi-Fi 手动连接已接线；平台网络/生命周期待迁移 | 待完成，不扩大 Fuji 已验证能力 |
-| 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用 | 初始会话分页/接收已接线；完整库存策略与恢复待迁移 | 待完成 |
+| 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用 | 209 接入 JPEG/RAW 相机预览、首页与连接页共享筛选、实际目录刷新、串行预览和有界缓存；完整库存策略、下载管理与恢复待迁移 | Android 12 交付 release 经自建 PTP/IP 验证：3→4 张预览、标准预览回退、GetObject 原片下载为 0；共享相机 30 项检查通过。实体 Z 6_2 / iPhone 相机仍待验收，详见 209 记录 |
 | 边拍边传、项目、续传、前后台任务及持久收据 | `PhotoLive*`, `CameraConnectionService` | 部分原模型已纳入 | Android 服务与 iOS 后台生命周期待接入 | 待完成；须验证系统暂停后的恢复 |
 | USB 相机发现、权限、PTP 传输、槽位读写删除 | `usb/*`, `picturecontrol/*` | 验证/保护部分已纳入 | Android USB 与 iOS ImageCaptureCore 待接入 | 待完成，不能只凭 API 存在宣称机型支持 |
 | Wi-Fi 预设槽位读写删除及会话移交 | `PictureControl*Session`, `PtpIpClient` | 原协议保护保留 | 待迁移完整确认/回读流程 | 待完成，不允许不确定写入自动重试 |
@@ -149,3 +149,12 @@
 - Android 完整 69 个界面场景与最终导出专项 7 个场景、16 项独立状态测试、82 项原生媒体及 1 个真实原生综合场景通过。最终 Apple 160 项 Flutter、535 项共享核心、38 项原生头像和真实 PhotoKit 综合场景通过；共享图像数值指纹与 207 一致。具体测试源码边界及 teardown 汇总行限制见冻结记录。
 - 实际安装交付 x64 release，带边框编辑前后保持 192×278；两次保存产生不同资源，均与自制原始 EXIF 6 JPEG 的 4290 字节完全一致。原始确认恢复在编辑器上方显示；同屏样式仍有字体字面宽度及 1–3px 位置差异，未认证全像素一致。
 - RAW 独立格式/目标和下载配对、多照片系统发布、完整批量编辑器及项目预设、推理模型全流程、相机 Wi-Fi/USB 和服务生命周期仍有未迁移范围。仅添加权限独立验证、实体 iPhone、荣耀 Magic Android 12 和未知机型 NEF 实物验证仍待完成。
+
+## 209：相机 RAW 缩略图与筛选衔接
+
+- 针对 Wi-Fi 已连接 Z 6_2、JPEG 页为空而 RAW 只有文件名的反馈，补上相机生成的 JPEG 缩略图读取。首页和连接页共用 JPEG / RAW 筛选；空页提示另一种格式，读取失败显示原因和重试，刷新会重新枚举目录。
+- 预览优先使用原 Nikon 高清预览并按原响应码回退标准缩略图，按会话和元数据隔离缓存；单个 8MiB、总计 32MiB / 64 文件，界面按 256×256 上限解码。滚动不关闭正在读取的相机连接，缩略图不下载 NEF 原文件。
+- Android 两包源码为 `6ccb354c310cad025061f89315eb06aebc2a6fb3`。实际安装 x64 release 经自建 TCP 相机验证连接页和首页 3 张缩略图、RAW 选择保留及刷新后 4 张，原片下载次数为 0。7 个 Android 界面场景通过，共享核心 565 项、其中相机 30 项通过。
+- Apple 后续验证提交仅更改测试等待图片首帧的方式，生产代码与 Android 包一致。各包与测试的真实源码、最终 Apple 结果及截图见 [209 记录](validation/camera-preview-209/README.md)。实体相机和 iPhone Wi-Fi、全部原版网格样式、自动恢复、边拍边传、遥控及下载管理仍有待迁移/验收范围。
+
+- 209 最终 Apple [Actions 43204328202](https://github.com/1162107757/nikon-camera/actions/runs/43204328202) 通过：170 项 Flutter、565 项共享核心、38 项原生头像和实际原生综合场景。该结果不代替实体相机 Wi-Fi 验收。

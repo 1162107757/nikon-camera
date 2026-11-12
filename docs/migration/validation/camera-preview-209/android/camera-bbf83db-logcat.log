@@ -1,0 +1,104 @@
+11-12 10:27:17.569   339   339 D Zygote  : Forked child process 29287
+11-12 10:27:17.570   531   561 I ActivityManager: Start proc 29287:cc.huevia.next/u0a105 for added application cc.huevia.next
+11-12 10:27:17.580 29287 29287 I cc.huevia.next: Late-enabling -Xcheck:jni
+11-12 10:27:17.607 29287 29287 W cc.huevia.next: Unexpected CPU variant for X86 using defaults: x86_64
+11-12 10:27:17.618   433   460 I adbd    : jdwp connection from 29287
+11-12 10:27:17.664 29287 29287 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10105; state: ENABLED
+11-12 10:27:17.682 29287 29287 W ActivityThread: Package uses different ABI(s) than its instrumentation: package[cc.huevia.next]: x86_64, null instrumentation[cc.huevia.next.test]: null, null
+11-12 10:27:18.055 29287 29287 V GraphicsEnvironment: ANGLE Developer option for 'cc.huevia.next' set to: 'default'
+11-12 10:27:18.055 29287 29287 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-12 10:27:18.384 29287 29287 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 10:27:18.387 29287 29287 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 10:27:18.794 29287 29306 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-12 10:27:18.829 29287 29306 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-12 10:27:18.866 29287 29306 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-12 10:27:19.103 29287 29307 D FlutterJNI: Beginning load of flutter...
+11-12 10:27:19.113 29287 29308 I ResourceExtractor: Found extracted resources res_timestamp-209-1794478964978
+11-12 10:27:19.118 29287 29308 I ResourceExtractor: Resource version mismatch res_timestamp-209-1794479236312
+11-12 10:27:19.148 29287 29307 D FlutterJNI: flutter (null) was loaded normally!
+11-12 10:27:19.182 29287 29309 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-12 10:27:19.983 29287 29308 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+11-12 10:27:19.987 29287 29308 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+11-12 10:27:20.097 29287 29308 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+11-12 10:27:20.291 29287 29287 W cc.huevia.next: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (blocked, linking, denied)
+11-12 10:27:20.296 29287 29287 W cc.huevia.next: type=1400 audit(0.0:1776): avc: denied { read } for name="max_map_count" dev="proc" ino=353826 scontext=u:r:untrusted_app:s0:c105,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=cc.huevia.next
+11-12 10:27:20.324 29287 29287 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 10:27:20.324 29287 29287 I flutter :     The application opted out of Impeller by either using the
+11-12 10:27:20.324 29287 29287 I flutter :     `--no-enable-impeller` flag or the
+11-12 10:27:20.324 29287 29287 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 10:27:20.324 29287 29287 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 10:27:20.324 29287 29287 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 10:27:20.324 29287 29287 I flutter :     the issue.
+11-12 10:27:20.324 29287 29287 I flutter : 
+11-12 10:27:20.324 29287 29287 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 10:27:20.324 29287 29287 I flutter : 
+11-12 10:27:20.334 29287 29287 D HostConnection: createUnique: call
+11-12 10:27:20.341 29287 29287 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b2c90, tid 29287
+11-12 10:27:20.349 29287 29287 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:27:20.356 29287 29287 D EGL_emulation: eglCreateContext: 0x7b52174b1c10: maj 3 min 0 rcv 3
+11-12 10:27:20.364 29287 29287 D EGL_emulation: eglCreateContext: 0x7b52174b1f10: maj 3 min 0 rcv 3
+11-12 10:27:20.373 29287 29311 D HostConnection: createUnique: call
+11-12 10:27:20.376 29287 29311 D HostConnection: HostConnection::get() New Host Connection established 0x7b521749abd0, tid 29311
+11-12 10:27:20.391 29287 29311 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:27:20.392 29287 29311 D EGL_emulation: eglMakeCurrent: 0x7b52174b1f10: ver 3 0 (tinfo 0x7b5430241100) (first time)
+11-12 10:27:20.689 29287 29316 I flutter : The Dart VM service is listening on http://127.0.0.1:35383/PODYZhyvTww=/
+11-12 10:27:21.363 29287 29287 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+11-12 10:27:21.364 29287 29287 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+11-12 10:27:21.367 29287 29287 W cc.huevia.next: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+11-12 10:27:21.367 29287 29287 W cc.huevia.next: Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+11-12 10:27:21.391 29287 29287 D AccessibilityBridge: Setting not found: accessibility_display_inversion_enabled, using default: 0
+11-12 10:27:21.415 29287 29287 D FlutterRenderer: Width is zero. 0,0
+11-12 10:27:22.009 29287 29287 I flutter : 00:00 +0: RAW-only camera has an explicit JPEG hint and can show RAW thumbnails in the overview
+11-12 10:27:24.651 29287 29287 I Choreographer: Skipped 192 frames!  The application may be doing too much work on its main thread.
+11-12 10:27:24.828 29287 29287 D FlutterRenderer: Width is zero. 0,0
+11-12 10:27:24.847 29287 29304 D HostConnection: createUnique: call
+11-12 10:27:24.848 29287 29304 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b1e50, tid 29304
+11-12 10:27:24.860 29287 29304 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:27:24.861 29287 29304 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-12 10:27:24.869 29287 29304 D EGL_emulation: eglCreateContext: 0x7b52174ba9d0: maj 3 min 0 rcv 3
+11-12 10:27:24.874 29287 29304 D EGL_emulation: eglMakeCurrent: 0x7b52174ba9d0: ver 3 0 (tinfo 0x7b5430241180) (first time)
+11-12 10:27:24.884 29287 29304 I Gralloc4: mapper 4.x is not supported
+11-12 10:27:24.889 29287 29304 D HostConnection: createUnique: call
+11-12 10:27:24.891 29287 29304 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174bb090, tid 29304
+11-12 10:27:24.892 29287 29304 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-12 10:27:24.892 29287 29304 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3efffe000 size 0x2000
+11-12 10:27:24.895 29287 29304 W Gralloc4: allocator 4.x is not supported
+11-12 10:27:24.897 29287 29287 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 10:27:24.914 29287 29304 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:27:24.998 29287 29310 D HostConnection: createUnique: call
+11-12 10:27:25.002 29287 29310 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b97d0, tid 29310
+11-12 10:27:25.011 29287 29310 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 10:27:25.014 29287 29310 D EGL_emulation: eglMakeCurrent: 0x7b52174b1c10: ver 3 0 (tinfo 0x7b5430241200) (first time)
+11-12 10:27:25.018 29287 29310 D EGL_emulation: eglCreateContext: 0x7b52174bafd0: maj 3 min 0 rcv 3
+11-12 10:27:26.020 29287 29320 D ProfileInstaller: Installing profile for cc.huevia.next
+11-12 10:27:26.115 29287 29287 I Choreographer: Skipped 76 frames!  The application may be doing too much work on its main thread.
+11-12 10:27:26.127 29287 29287 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 10:27:26.149 29287 29287 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 10:27:28.140 29287 29310 D EGL_emulation: app_time_stats: avg=480.96ms min=15.33ms max=1284.30ms count=3
+11-12 10:27:29.122 29287 29287 I flutter : 00:07 +1: Connection page remembers RAW selection and shows the same thumbnail
+11-12 10:27:29.165 29287 29310 D EGL_emulation: app_time_stats: avg=205.00ms min=19.84ms max=287.21ms count=5
+11-12 10:27:30.220 29287 29287 I flutter : 00:08 +2: Overview exposes read errors and retries the camera inventory
+11-12 10:27:30.257 29287 29310 D EGL_emulation: app_time_stats: avg=155.70ms min=27.04ms max=256.62ms count=7
+11-12 10:27:31.277 29287 29310 D EGL_emulation: app_time_stats: avg=169.52ms min=76.23ms max=219.89ms count=6
+11-12 10:27:31.746 29287 29287 I flutter : 00:09 +3: Thumbnail errors retry only the preview and keep the source untouched
+11-12 10:27:32.394 29287 29310 D EGL_emulation: app_time_stats: avg=138.28ms min=36.76ms max=224.23ms count=8
+11-12 10:27:33.369 29287 29287 I flutter : 00:11 +4: Camera controls and thumbnail rows fit a small screen with enlarged text
+11-12 10:27:33.399 29287 29310 D EGL_emulation: app_time_stats: avg=143.37ms min=41.00ms max=207.33ms count=7
+11-12 10:27:34.363 29287 29287 I flutter : 00:12 +5: Visible thumbnails share one serialized camera read and one future per object
+11-12 10:27:34.382 29287 29287 I flutter : 00:12 +6: A changed session retires queued reads and discards an old active reply
+11-12 10:27:34.389 29287 29287 I flutter : 00:12 +7: Wrong-session and external preview paths are rejected and explicit retry refreshes
+11-12 10:27:34.396 29287 29287 I flutter : 00:12 +8: Disposing a thumbnail list drains its active read without disconnecting the camera
+11-12 10:27:34.410 29287 29287 I flutter : 00:12 +9: A failed preview is retained until explicit retry instead of flooding the camera
+11-12 10:27:34.423 29287 29287 I flutter : 00:12 +10: An old camera status cannot replace a newly established session
+11-12 10:27:34.452 29287 29310 D EGL_emulation: app_time_stats: avg=1052.74ms min=1052.74ms max=1052.74ms count=1
+11-12 10:27:35.326 29287 29287 I flutter : 00:13 +11: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+11-12 10:27:35.568 29287 29310 D EGL_emulation: app_time_stats: avg=185.57ms min=108.17ms max=281.68ms count=6
+11-12 10:27:35.656 29287 29287 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 10:27:36.630 29287 29310 D EGL_emulation: app_time_stats: avg=265.30ms min=126.28ms max=386.21ms count=4
+11-12 10:27:37.363 29287 29287 I flutter : 00:15 +12: (tearDownAll)
+11-12 10:27:37.388 29287 29287 I flutter : 00:15 +13: All tests passed!
+11-12 10:27:37.388   531   814 I ActivityManager: Killing 29287:cc.huevia.next/u0a105 (adj 0): stop cc.huevia.next due to finished inst
+11-12 10:27:37.449   531   562 I libprocessgroup: Successfully killed process cgroup uid 10105 pid 29287 in 60ms
+11-12 10:27:37.537   339   339 I Zygote  : Process 29287 exited due to signal 9 (Killed)
+11-12 10:27:37.636   531   814 V ActivityManager: Got obituary of 29287:cc.huevia.next
+11-12 10:27:37.647   531   552 W ActivityManager: setHasOverlayUi called on unknown pid: 29287
