@@ -134,6 +134,11 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
             try{media.request("media.export",SharedJson.encode(request),()->true,p->{});throw new AssertionError("Cancellation ignored");}catch(InterruptedIOException expected){checks++;}
             yes(new File(workspace,"exports").list().length==count,"cancel leaves no partial output");
             yes(before.equals(PhotoEditStore.hashFile(source)),"original bytes unchanged");
+            byte[] usbIdentity=NativeUsbCamera.describeDevice("NIKON CORPORATION","USB Nikon fixture","1","",new int[]{0x1004,0x1007,0x1008,0x1009},new int[0]);
+            cc.huevia.ptp.PtpDeviceInfo usbInfo=cc.huevia.ptp.PtpDeviceInfo.parseRedacted(usbIdentity);
+            yes(usbInfo.isNikonCamera(),"Android MTP identity uses the supported unknown vendor extension rather than an invented value");
+            yes(usbInfo.supportsOperation(0x1009),"Android MTP identity preserves actual read operations");
+            yes(!cc.huevia.ptp.PtpDeviceInfo.parseRedacted(NativeUsbCamera.describeDevice("OTHER","fixture","1","",new int[]{0x1009},new int[0])).isNikonCamera(),"Unknown USB vendor extension does not bypass the Nikon manufacturer check");
             yes(RawDeveloper.available(),"LibRaw loaded for device ABI");yes(RawDeveloper.libraryVersion().contains("0.22.3"),"original LibRaw version");
             final File smallStackRoot=workspace;
             android.content.Context boundedContext=new android.content.ContextWrapper(getTargetContext()){

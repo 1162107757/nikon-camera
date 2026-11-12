@@ -88,7 +88,7 @@ final class NativeUsbCamera implements SharedCamera.WiredConnections {
         @Override public void setOnClosed(Runnable listener){closed=listener;}
         @Override public void setOnObjectAdded(LongConsumer listener){}
         @Override public byte[] readAlbumDeviceInfo()throws IOException{require();return deviceInfo();}
-        private byte[] deviceInfo(){Writer out=new Writer();out.u16(100).u32(0).u16(100).text("").u16(0);out.array16(info.getOperationsSupported()).array16(info.getEventsSupported()).array16(new int[0]).array16(new int[0]).array16(new int[0]);out.text(info.getManufacturer()).text(info.getModel()).text(info.getVersion()).text(info.getSerialNumber());return out.bytes();}
+        private byte[] deviceInfo(){return describeDevice(info.getManufacturer(),info.getModel(),info.getVersion(),info.getSerialNumber(),info.getOperationsSupported(),info.getEventsSupported());}
         @Override public byte[] getData(int operation,int max,long... p)throws IOException{
             MtpDevice current=require();byte[] bytes;
             if(operation==0x1004&&p.length==0){bytes=array(current.getStorageIds());}
@@ -113,6 +113,14 @@ final class NativeUsbCamera implements SharedCamera.WiredConnections {
         }
         @Override public void abortProtocol(IOException failure){close();}
         @Override public void close(){open=false;MtpDevice current=mtp;mtp=null;if(current!=null)current.close();Runnable listener=closed;closed=null;if(listener!=null)listener.run();}
+    }
+    static byte[] describeDevice(String maker,String model,String version,String serial,int[] operations,int[] events){
+        // MtpDeviceInfo omits the PTP vendor-extension ID. Preserve that as the
+        // existing unknown-ID sentinel, never invent a Nikon extension number.
+        // create() separately verifies the real USB Nikon VID and PTP interface.
+        Writer out=new Writer();out.u16(100).u32(0xffffffffL).u16(100).text("").u16(0);
+        out.array16(operations).array16(events).array16(new int[0]).array16(new int[0]).array16(new int[0]);
+        out.text(maker).text(model).text(version).text(serial);return out.bytes();
     }
     private static String date(long seconds){if(seconds<=0)return "";SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd'T'HHmmss",Locale.ROOT);format.setTimeZone(TimeZone.getTimeZone("UTC"));return format.format(new Date(seconds));}
     private static byte[] array(int[] values)throws IOException{if(values==null)throw new IOException("USB 相机目录读取失败，请重连。");if(values.length>20000)throw new IOException("USB 相机目录超出本版读取范围。");Writer out=new Writer().u32(values.length);for(int value:values)out.u32(Integer.toUnsignedLong(value));return out.bytes();}
