@@ -1,0 +1,815 @@
+{
+  "schema": 1,
+  "milestone": 210,
+  "sourceCommit": "86211035f8eaa6e008e609b4b4b2496dd8b97b66",
+  "fullMigrationComplete": false,
+  "artifacts": [
+    {
+      "apk": "dist/migration210/huevia-0.31.0-dev-210-android-arm64.apk",
+      "bytes": 51225670,
+      "sha256": "d404385705130d1e33541ea211d5b6bfc8863883243eb939f2fbfa24a5092831",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "rawJniCallbacksPreserved": true,
+      "rawJniInfoConstructorPreserved": true,
+      "r8MappingSha256": "ec1683c82da5f4d2c8e45770b3fb0593d44d8ce3490914b7072d4b9ff7192055",
+      "sourceCommit": "86211035f8eaa6e008e609b4b4b2496dd8b97b66",
+      "fonts": [
+        "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+        "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+        "assets/photo-borders/parameters.ttf"
+      ],
+      "models": [
+        "assets/portrait/face_landmarks_detector.tflite"
+      ],
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "apk": "dist/migration210/huevia-0.31.0-dev-210-android-x64.apk",
+      "bytes": 54662638,
+      "sha256": "155f232d43e6aa42ca1b6473f5592b8517276a76f2a6f42733618b7a516a7422",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "rawJniCallbacksPreserved": true,
+      "rawJniInfoConstructorPreserved": true,
+      "r8MappingSha256": "ec1683c82da5f4d2c8e45770b3fb0593d44d8ce3490914b7072d4b9ff7192055",
+      "sourceCommit": "86211035f8eaa6e008e609b4b4b2496dd8b97b66",
+      "fonts": [
+        "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+        "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+        "assets/photo-borders/parameters.ttf"
+      ],
+      "models": [
+        "assets/portrait/face_landmarks_detector.tflite"
+      ],
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "schema": 1,
+      "verified": true,
+      "sourceCommit": "86211035f8eaa6e008e609b4b4b2496dd8b97b66",
+      "sha256": "22fa4ffbdc8b47a30122f26ce42079ded551d8e0fb861ff96768280a384c5232",
+      "bytes": 29575051,
+      "bundleIdentifier": "cc.huevia.next",
+      "version": "0.31.0",
+      "build": "210",
+      "minimumOS": "16.0",
+      "binaries": [
+        {
+          "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+          "sha256": "16698021af2ddfe802ca722d05698817f38a546ae93e98acb2a0cfa3055982e1",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+          "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+          "sha256": "eb1a299dce5c07a100d198ca1a49f762431215b720c47959b13784593912a6ca",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Runner",
+          "sha256": "52c626b25f4a8e2d2b08f6d02ad8c518a5cfeec2b9f71103787489d848a641dd",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                16,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "referenceFonts": [
+        {
+          "file": "Roboto-Regular.ttf",
+          "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+          ]
+        },
+        {
+          "file": "Roboto-Medium.ttf",
+          "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+          ]
+        },
+        {
+          "file": "Roboto-Bold.ttf",
+          "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+          ]
+        }
+      ],
+      "deviceInstallationVerified": false,
+      "fullParityComplete": false,
+      "runId": 43225130892,
+      "jobId": 131206252370,
+      "artifactId": 13950705702,
+      "archiveSha256": "8de4dec3812a001a3bb107678569016027e5410b8ce11d35098c57a48a7acaa6",
+      "archiveBytes": 29833315,
+      "flutterChecks": 199,
+      "nativeAvatarChecks": 38,
+      "sharedChecks": 690,
+      "nativeWifiChecks": 24,
+      "simulatorScenarioChecks": 1,
+      "photoKitInitial": "none",
+      "photoKitConsent": "full",
+      "photoKitFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb",
+      "ipa": "dist/migration210/huevia-0.31.0-dev-210-ios-unsigned.ipa"
+    }
+  ],
+  "checks": {
+    "sharedGolden": 690,
+    "sharedBoundary": 684,
+    "sharedAtmosphere": 6,
+    "cameraTransferBoundary": 60,
+    "rawReferenceBoundary": 21,
+    "projectsBoundary": 36,
+    "androidFlutterBeforeTeardown": 40,
+    "androidFailedFlutterTests": 0,
+    "androidWidgetScenarios": 15,
+    "androidWidgetSource": "af1518300954f41fbbd409ca24e0abcb0d0666c3",
+    "androidNativePipeline": 1,
+    "androidNativePipelineSource": "c33c4546120e5225cf95f4841639f22b1e7f8d84",
+    "androidReleaseInstalledHashMatches": true,
+    "androidReleaseIndependentJpegCells": 3,
+    "androidReleaseRawCells": 2,
+    "androidReleaseExplicitOriginalDownloads": 1,
+    "androidReleaseTransferBytes": 433384,
+    "androidReleaseProgressAcrossTabs": [
+      17,
+      56,
+      100
+    ],
+    "appleFlutter": 199,
+    "appleNativeWifiStreams": 24,
+    "appleNativeAvatar": 38,
+    "appleActualNativePipeline": 1,
+    "originalFrozen": 420,
+    "approvedOriginalRepairs": 8,
+    "otherOriginalUnchanged": 412,
+    "utf8AndConfigFiles": 533
+  },
+  "validationSourceScope": "Android installed control/state tests use af15183 whose Dart production is identical to delivery. Android actual native pipeline uses c33c454 whose native/shared production is identical to delivery; subsequent viewer layout changes are covered by af15183 and final Mac tests. Both release APKs and IPA use exact source8621103. Android release QA used a controlled own PTP/IP peer, not physical Nikon, Honor Magic or iPhone acceptance.",
+  "physicalFeedback": {
+    "209RawThumbnails": "User confirmed normal",
+    "209IosConnection": "User confirmed connection after checking local-network permission",
+    "210PhysicalAcceptance": "pending"
+  },
+  "privacy": "User-provided diagnostic JSON was analyzed locally and never included. final-diagnostics-redacted.json contains only controlled emulator-generated data.",
+  "attempts": {
+    "windowsHostIncomplete": "Retained failures/incomplete engine runs are not counted as passes; final Mac and installed Android tests cover the final code.",
+    "androidB888": "39 passed / 1 failed: missing mock fell through to real native collector, original bridge-only result was inaccurate; fixed explicit unavailable mock in test-only af15183, final af15183 rerun passed40/failed0 with no Flutter error markers.",
+    "androidC33": "Intentional force-stop at busy-spinner RAW modal test after 31 completed checks; fixed bounded test waiting; final af15183 rerun passed40/failed0.",
+    "apple43216755891": "Failed fixture compile warning promoted to error; fixed.",
+    "apple43217580067": "Refused-connection waiting-state classification caused timeout; fixed.",
+    "apple43219940073": "Close returned valid EOF -1 but fixture expected exception; assertion fixed, bounded waiting and production waiter signalling strengthened.",
+    "apple43222670646": "195 passed / 2 failed of197: RAW modal busy spinner waiting and search assertion affected by legitimate preview request; fixed. Final run passed199."
+  },
+  "ci": {
+    "run": 43225130892,
+    "job": 131206252370,
+    "artifact": 13950705702,
+    "conclusion": "success",
+    "archiveBytes": 29833315,
+    "archiveSha256": "8de4dec3812a001a3bb107678569016027e5410b8ce11d35098c57a48a7acaa6"
+  },
+  "remainingWork": "docs/migration/remaining-work-210.md",
+  "evidenceFiles": [
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/arm64-badging.log",
+      "bytes": 5893,
+      "sha256": "f1ccce49ef93bcc2637c26f5260d2a791cd444b36d56928bac7d3f549d448462"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/arm64-signature.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/arm64-zipalign.log",
+      "bytes": 19021,
+      "sha256": "e5867bee11cef30c441da9c1eb668ab73463ad36873969b60e0c248f9c9837aa"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/arm64.json",
+      "bytes": 1010,
+      "sha256": "f93ae8868db60d5dd528fa1edc93a7be33d87a573e76abc43bccec65ea44cbd1"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/camera-af15183-apk.json",
+      "bytes": 229,
+      "sha256": "a1f64d0c46395c90505b08539ea15ef508b66ccdfa5ca9925531818d07faede7"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/camera-af15183-gradle.log",
+      "bytes": 23350,
+      "sha256": "edc5e85d149fa81b1842b34f0238d4b3ce0933b520a4530906863902f090ade6"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/camera-af15183-instrument.log",
+      "bytes": 63,
+      "sha256": "f092a7bdd135e5acedde6e3d2642b2aefa799824505b61757dfdf4920d8c694a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/camera-af15183-logcat.log",
+      "bytes": 21930,
+      "sha256": "f3af2f71e0e7f193ed003e680def853b983d3ccd38d825305bee3646a958b620"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/camera-af15183-result.json",
+      "bytes": 340,
+      "sha256": "88e8705782bfa189418d7a2e63dabb811ea67d3c8ec93ed45040e8eefe790994"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/camera-viewer-layout-fixed.log",
+      "bytes": 296,
+      "sha256": "607082ac5238be51f3b1dc338f68ed72139763581dc7715eb8de98f93c7bb126"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/downloaded-grid.log",
+      "bytes": 201,
+      "sha256": "ee61b682effe1653e25ebef58f796116c4b53a8258872cacf1be7bda5932f9d4"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/editor-pure.log",
+      "bytes": 419,
+      "sha256": "902902962e115f11e605842534496b83d5cf4d741b7666f821d9bd9030996b9a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-camera-viewer.png",
+      "bytes": 347625,
+      "sha256": "ee5f2f35a803385714bf0d0618d004f3b7572a1b4baf64ae88dd9581cc8ad478"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-diagnostics-redacted.json",
+      "bytes": 37565,
+      "sha256": "57d4b75dc5300bb8224116418a01750710cd7f3514a970f64470e3009909230e"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-diagnostics.png",
+      "bytes": 270590,
+      "sha256": "b6d8c5c482e17b10ba4864dc1642a87dbd0646212adb85a06393e63fd9a74818"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-download-complete.png",
+      "bytes": 202135,
+      "sha256": "60aa1bb1ad8728237100e9d8b2f15cb23255f974a8ad161f4408cc9d204b926a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-download-complete.xml",
+      "bytes": 13362,
+      "sha256": "1a0494f9319b1c8c0367e5b85785eb42f435185669ff288b3bcde0a97523a360"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-download-tab-events.json",
+      "bytes": 788,
+      "sha256": "2bf2f920f30ae318783cea03f133d006ecb74609fc918eab071b7b5c8eeaa30b"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-downloaded.png",
+      "bytes": 573449,
+      "sha256": "f347db0f2ff3fa62f6f1408765dbd52d47356d334226ab336736dc188fdf8bcc"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-downloaded.xml",
+      "bytes": 10629,
+      "sha256": "3b473a7d8df03a3ea3b9f73aa426d5f46db2ce23ba8a9a081de4a6753b6ce956"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-editor-filter-applied.png",
+      "bytes": 1133089,
+      "sha256": "bd9bd98f2f8fda971a3002f1e84c383cf6731c4d8afa516c71d7c4e8630960f0"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-editor-presets.png",
+      "bytes": 1168541,
+      "sha256": "7acff708aaef494519eb9d0f0c652c0cf6457d4ee0138350c30004557117343a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-editor-presets.xml",
+      "bytes": 14766,
+      "sha256": "db109f8e00146ee173c419de38d928595750d12ee6e4ed7afbb84c78dd71918d"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-grid-progress-after-tab.png",
+      "bytes": 201296,
+      "sha256": "a2d5fb5edfc74e93a3d52d28285a5ca60b4db880b284afb00231e502c2d2c811"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-grid-progress-before-tab.png",
+      "bytes": 200954,
+      "sha256": "328a6abefc294e64930ec33ce2a526aec0ec99b57c42cee797642f0532805211"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-home-during-download.png",
+      "bytes": 1414263,
+      "sha256": "496fbc5e09b5ba4e5b636a2effdff7ae1f3d6da5defe1bc734622afd8f47ecb2"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-home-previews.png",
+      "bytes": 1413985,
+      "sha256": "70eb66fe11c8667fb2b72ce25f8b15eafeeb4f3be5aa149cc51600e274f3b88e"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-jpeg-config.png",
+      "bytes": 123541,
+      "sha256": "cc12832f967bba3a9dff68b99529677b71969041c66615956024cd17643cb466"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-jpeg-config.xml",
+      "bytes": 10309,
+      "sha256": "c5000a724d3f736afa1e5ae314fb9919cfed80a1cd68e7d679965b1c9c0e74bd"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-jpeg-grid.png",
+      "bytes": 169497,
+      "sha256": "8998f7015938df36cb47422d03597987eb337f356f0a1c7ba20822fd6265a5d2"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-jpeg-grid.xml",
+      "bytes": 12601,
+      "sha256": "9b598dae75bd60a9163747367307a09c15227994ae65e7dc2de582008f7480f3"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-project-record.png",
+      "bytes": 53575,
+      "sha256": "0ae6e94bbd3a5f71ce7adb4a749b55b8997682982d11271af1fe7fb8c0f3ea1d"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-project-record.xml",
+      "bytes": 5325,
+      "sha256": "be106608144ca3d427c79942d842e98f8aa17a82a2d74a0cb08317bfe782e852"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-project-result.png",
+      "bytes": 151669,
+      "sha256": "3a7def0c694b00e2a8d2bf2de41ba5073c1a0eb81577c12018a0bf9d0951f233"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-projects.png",
+      "bytes": 232720,
+      "sha256": "3fd7567ef26dfe8aecdf20f00bf358579a0ba38f471a3bf65863ae696c9af688"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-projects.xml",
+      "bytes": 11659,
+      "sha256": "615ea7357e83632a70b2d1a5c0656bd70ecb22e1ff6bb725f1df0fdb1e026e1d"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-raw-grid.png",
+      "bytes": 167914,
+      "sha256": "acf2fb8caeede8c451f13a73c308da1988b4dcaeaf6f41d1ec46a77920eedbf2"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-raw-grid.xml",
+      "bytes": 11891,
+      "sha256": "e32cd016bb7268a73a718327185423d6ac258b7f2c2de04e243d2b6168de94a5"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-release-crash.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-release-logcat.log",
+      "bytes": 33848,
+      "sha256": "2290275fd9c4920da8fa1ffddd47af2320529ca942ef8b897c6ff07eaa73a1c1"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-release-memory.log",
+      "bytes": 3064,
+      "sha256": "8966a761f6127c3c1165b6c84bd1e0b5352bfd857efc8223e4bdc4ceb8b340a0"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-release-observation.json",
+      "bytes": 2701,
+      "sha256": "ec7302f9f4ae195a92ef8e7b7d7af142eabcfb1bebb3b11665151cf6fb8c3b7f"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-release-peer.log",
+      "bytes": 35162,
+      "sha256": "3780cc84fb57e85725b9e66afedfc9e2e9ca216693f37595a334040a343c334b"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/final-viewer-progress.png",
+      "bytes": 377059,
+      "sha256": "cc09b41d7eebd194770bb67e5160634e26ad00ed9dd14a5e37b2f9e0f4afca78"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/grid-small.log",
+      "bytes": 209,
+      "sha256": "3046eeeefb28934203ad4375bfc7254f79682aa4d78fd767c016df01a844f902"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/integrated-analyze-final.log",
+      "bytes": 98,
+      "sha256": "e9dc67dc5addb3410e64ea90de82f98826c949ff672413ea3deeedefe36cb95f"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/native-c33c454-apk.json",
+      "bytes": 231,
+      "sha256": "8051e21844af1c2dd1c47016375571ae9d6c526d5ef20e3fad0fe81addcc08b7"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/native-c33c454-gradle.log",
+      "bytes": 23350,
+      "sha256": "26999cd64c7c5bdbd699e26e19113ffaa9ab19ba0edc6e65d8fc66dde2c22781"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/native-c33c454-instrument.log",
+      "bytes": 62,
+      "sha256": "2924dca536c5fa81392b57d6ab5cfe1516c425c44209841fda431070bbd55eee"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/native-c33c454-logcat.log",
+      "bytes": 50638,
+      "sha256": "c6c1caddfa4f9a31afa99766b9703552e7827380e486ce803d9d5b687bbafff9"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/native-c33c454-result.json",
+      "bytes": 211,
+      "sha256": "2385b504bc4359ce57b73ab853f414090e228bfa5d4dc0be57f7ad9ceb879c52"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/navigation-widget.log",
+      "bytes": 218,
+      "sha256": "801482f51fae56e3b432ad80091331f6518e14fe1b39212c57d8a5849275e492"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/release-arm64-gradle.log",
+      "bytes": 28861,
+      "sha256": "4be672934a21d2948abefcd6ff50ad99de66e1f9d92b8fa5341929b9e94f7df3"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/release-arm64-mapping.txt",
+      "bytes": 8983232,
+      "sha256": "ec1683c82da5f4d2c8e45770b3fb0593d44d8ce3490914b7072d4b9ff7192055"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/release-x64-gradle.log",
+      "bytes": 29031,
+      "sha256": "8dfbb9883f6331b7582963eb16a2d2b29d757dc5eeb82a41bd841e769e14f062"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/release-x64-mapping.txt",
+      "bytes": 8983232,
+      "sha256": "ec1683c82da5f4d2c8e45770b3fb0593d44d8ce3490914b7072d4b9ff7192055"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/search-preview-test-fixed.log",
+      "bytes": 201,
+      "sha256": "411049debfd7a7d2573faa42a39d6e977ebb384892e77a3e75eb7ecd1a5cf1e3"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/showcase-widget.log",
+      "bytes": 210,
+      "sha256": "af8cce712114b7d6909ba273e93a7dcce5033faa7e43005636c1f42884af0e4b"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/stability-isolation-analyze.log",
+      "bytes": 98,
+      "sha256": "dd12adf50e143c500ec01d79d0d42f3449d81a176f63165e4b25e89c344204ab"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/stability-unavailable-fixed.log",
+      "bytes": 706,
+      "sha256": "e57e374c26f2b12f3006592e17bf32fcd9d032f5f76c8d0eadbc0df84519412a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/transfer-pure.log",
+      "bytes": 446,
+      "sha256": "ad3f22a1724ef0e5f7c8617ea564b8870b686537802a2004d57290a27937eace"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/widget-final.log",
+      "bytes": 209,
+      "sha256": "a0ddd0dd9d57cb558ac4d3d9a856e1dd750f03acb2f73e647e769fdd118266b2"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/x64-badging.log",
+      "bytes": 5890,
+      "sha256": "7d6783090474deb20648bb0263d9d03e2b36fa8f597f9e8f23b5c54ac2da20e7"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/x64-signature.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/x64-zipalign.log",
+      "bytes": 18995,
+      "sha256": "6ecca459c7bfba13e720d49c557fa144c61aba575e5308bc33209eda0c0d1806"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/android/x64.json",
+      "bytes": 1005,
+      "sha256": "1ef1e9f87fb4a489781f37a27a7a1f3025cfeadf7cb816e33f02d28603a1b721"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/actions-job.log",
+      "bytes": 25727,
+      "sha256": "51d8e0ce95845c544c5af68b98baa7aa026fe3ef0b749a7e0b67c82def9db9e2"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/artifact-api.json",
+      "bytes": 972,
+      "sha256": "11c4090401c666554bd1687222cc3b4258643f599ea84ca48435da7a2da9e8b9"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/core-ios/avatar-build.log",
+      "bytes": 51,
+      "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/core-ios/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/core-ios/parity.json",
+      "bytes": 884,
+      "sha256": "dda0bfae98b482d01ed31e970f5ea6df7b45215b98bba003894f66560ebdf94f"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/core-ios/translation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/independent-verification.json",
+      "bytes": 3847,
+      "sha256": "ea8da0e0ac9a87fded981f4ba448f3c6310eaabef25d70975723b487d0b93423"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/analyze.log",
+      "bytes": 97,
+      "sha256": "6ae433335af66f1f63b09948674c9c4506c3ae2a09d0de2b93c364ca0dacef52"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/device-build.log",
+      "bytes": 893,
+      "sha256": "1e58d5431bdec2d55585c45c566f949e52b71607cb7036fcbe112db4fa9ce7b2"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/flutter-bootstrap.log",
+      "bytes": 319,
+      "sha256": "4123ebb13d399425c71c85e3ebc0cbf2c65761247d0f2adb3b6a6dd5f70efa2c"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/flutter-tests.log",
+      "bytes": 41386,
+      "sha256": "122acd2ca54e9df103e51efccd1518f81e7d0c3735412f18e3eb4e4cf8fb688b"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/Huevia-QA-PhotoKit.png",
+      "bytes": 121307,
+      "sha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "e9645619d99ab571a5e7f90707b16b8ef57711636b1983530a6d54193ed683a5"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "e20f2f84600f21b3da801410c56da9eaefdb286da63e87f68dc0b55d40f77b14"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/pub-get.log",
+      "bytes": 1748,
+      "sha256": "61289f55d8edbb04d5bca15ea4a6c0f5c728221818888aee30057b6729b53b2e"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/raw-build.log",
+      "bytes": 886,
+      "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-boot.log",
+      "bytes": 4525,
+      "sha256": "a6bbb20f92f2a7099ab1039efe583feb825aa982f77dd58a3b9384778e7cb438"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-build.log",
+      "bytes": 5303171,
+      "sha256": "34ff5e765e33a8f1d77de09fb4bb5be32f907fc4f2a74869af22608f4212a59c"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-config.log",
+      "bytes": 270,
+      "sha256": "c542c4d1c025f8264bad639986b461ce1e0925ec741ee802fd2d0f5ef7b85846"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-devices.json",
+      "bytes": 33550,
+      "sha256": "da67bfedb23354d016e174f3c42f9da7cca5577262d00ecbefa3fb7dc726b4fd"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-initial-access.json",
+      "bytes": 347,
+      "sha256": "9e146a37e1e960dc01066c2036fbb46ee6e7bbdf86ec0fc17b841365a73c707e"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-pipeline-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "8b7962c84d8dcbaf608c0ac56eb46da0746674ea3d29f952c071771ebfa4e580"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-selection.json",
+      "bytes": 228,
+      "sha256": "b21295774826163b8eabfc4f18f0886eb676e7d9d869b59f8806641af02b6a9c"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/apple/mobile-apple/simulator-tests.log",
+      "bytes": 5797,
+      "sha256": "a6f323fb7316bad744602ab7eb8075f16fdfaca216bda3821a4bf3edec2b903b"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/apple-job-131177847225.log",
+      "bytes": 27253,
+      "sha256": "0f6ae69baaad4ce846c655b39d82888ebb3779692eb857bb64651db67213747a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/apple-job-131180640126.log",
+      "bytes": 25854,
+      "sha256": "7e6bf8dc01da05c20ff06d476025aae9ae31cee913f1a244d52d665f821970be"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/apple-job-131188598909.log",
+      "bytes": 26937,
+      "sha256": "efff2ac15f1a0ce2605478a430df1d06b8a51b7f024f02fc4b971bf404b498b3"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/apple-job-131197887040.log",
+      "bytes": 37322,
+      "sha256": "cf7e0d0453574936b2c6c4ed20d1443e88a13bc44dac16d1e5b360a18e5d304e"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/b888-review-correction.json",
+      "bytes": 567,
+      "sha256": "955cf912770e035d745f090f06d7fc48822c368d7f536bd932c3ffae9a43d0a7"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/c33-mac-flutter-tests.log",
+      "bytes": 46248,
+      "sha256": "705cc7bdaeeec9aa969a1ce453e4b05450bc3d22850c16858c8ed5edc042c4b6"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-b888569-apk.json",
+      "bytes": 229,
+      "sha256": "f1e1dba58743e3517ed7fc63d4cb249094cf97730bac4d6643e9f97ae96493aa"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-b888569-gradle.log",
+      "bytes": 23350,
+      "sha256": "432e48a996d119d3140cb3b9d8f8c24f5d6b71ea14920c969232178fe3bfc63d"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-b888569-instrument.log",
+      "bytes": 63,
+      "sha256": "f092a7bdd135e5acedde6e3d2642b2aefa799824505b61757dfdf4920d8c694a"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-b888569-logcat.log",
+      "bytes": 23319,
+      "sha256": "421fdb8ee153ad4a70ac62e4ecc591e28903905d3844793ecab3c3a9d4d917b0"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-b888569-result.json",
+      "bytes": 285,
+      "sha256": "de9199cda31871f7ca97e6f6eed1c1060a1e91c6f1c948e53259cfe1a8a88f15"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-c33c454-before-intentional-stop.log",
+      "bytes": 19713,
+      "sha256": "c5e8358eea9f4c691b0ee287ec7212d46efba8ae471cf6186dff27d8aa61588e"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-c33c454-intentional-stop.json",
+      "bytes": 300,
+      "sha256": "0966dbde26ef0603cfa3aff30300c8ab1a5f78c41ff7560f3ac9487df0abe847"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/camera-c33c454-result.json",
+      "bytes": 212,
+      "sha256": "44f990f0d89fc2b2b135f2a4c7015b2142c6d2c50813c9547e0f283edc2904f0"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/editor-regression.log",
+      "bytes": 860,
+      "sha256": "199d384bee2c64b92bbce7a3b8d5fb6ed9380aa041d9448001c453f41568a430"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/grid-viewer.log",
+      "bytes": 583,
+      "sha256": "f01f70330cbb5b6caad954250246ed866183d3ef18ab971edaecc3b73e35d5a7"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/attempts/transfer-widget.log",
+      "bytes": 12378,
+      "sha256": "f388a0cfd8969701c55b7c42cd0b13e303f22424e5670f8a1c9d2fed7d5aa2b6"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/README.md",
+      "bytes": 8422,
+      "sha256": "3fc63165eed01b808dd7b148625372f6209d38ec7dec71f2c4cf15424ab2b99f"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/shared/core-golden.json",
+      "bytes": 759,
+      "sha256": "344f966533f247831a49566e11bb912fd3a0241b3beff8ba71001a6defd19723"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/shared/final-inventory.log",
+      "bytes": 122,
+      "sha256": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/shared/final-source-check.log",
+      "bytes": 56,
+      "sha256": "da523ab565a7a977fb12a58212355b9c4172207452ff9cad500ad04906f52fa1"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/shared/integrated-core.log",
+      "bytes": 1727,
+      "sha256": "1d78cf27961a7e61641e1af8c5ccf0a085a62037b8eb390b4521f2e4cf553f38"
+    },
+    {
+      "path": "docs/migration/validation/camera-grid-projects-210/shared/source-compatibility.json",
+      "bytes": 420,
+      "sha256": "8fc930c17dbc66c99e54308ffb5ffd63e307e6a0d86d2b29d86d69a55442e8ea"
+    }
+  ]
+}

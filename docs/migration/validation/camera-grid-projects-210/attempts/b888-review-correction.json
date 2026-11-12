@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "b8885698686fb519ed89431c493475ea0060edc9",
+  "review": "withdrawn inaccurate runner summary; raw logs retained",
+  "passedBeforeTeardown": 39,
+  "failedBeforeTeardown": 1,
+  "failedTest": "Native journal is best effort and unavailable collectors preserve safe diagnostics",
+  "cause": "Removing mock falls through to real Android native collector; assertion expected available=false",
+  "fix": "Explicit MissingPluginException mock and unconditional handler cleanup; test-only af15183",
+  "originalResultNativeIntegrationPassedIsInvalid": true
+}

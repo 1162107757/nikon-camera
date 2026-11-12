@@ -1,0 +1,7 @@
+{
+  "sourceCommit": "c33c4546120e5225cf95f4841639f22b1e7f8d84",
+  "pid": 31571,
+  "abortedByAgent": true,
+  "reason": "UI test hung after 31 completed checks at RAW reference UI async boundary; no product fatal marker. Agent fixing test timing.",
+  "utc": "2026-11-12T13:04:07.365897+00:00"
+}

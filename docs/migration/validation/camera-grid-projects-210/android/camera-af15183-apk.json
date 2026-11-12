@@ -1,0 +1,6 @@
+{
+  "sourceCommit": "af1518300954f41fbbd409ca24e0abcb0d0666c3",
+  "bytes": 157207088,
+  "sha256": "cabb6e7fcccbbd16bf465cd4f30cd892ce1c13c051957009184a3ae718f5dc0b",
+  "target": "integration_test/camera_device_test.dart"
+}

@@ -1,0 +1,9 @@
+{
+  "delivery": "86211035f8eaa6e008e609b4b4b2496dd8b97b66",
+  "androidWidget": "af1518300954f41fbbd409ca24e0abcb0d0666c3",
+  "androidNativePipeline": "c33c4546120e5225cf95f4841639f22b1e7f8d84",
+  "widgetDartProductionDiff": [],
+  "nativeAndSharedProductionDiff": [],
+  "nativeScope": "cross-platform/core/java, cross-platform/native, cross-platform/app/android/app/src/main",
+  "goldenImageFingerprintsEqual209": true
+}

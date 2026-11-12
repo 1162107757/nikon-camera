@@ -1,0 +1,8 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/app_stability_test.dart
+00:00 +0: Android crash evidence retains type, code locations and OS memory reasons without private messages
+00:00 +1: iOS exception and delivered MetricKit summaries exclude symbols, paths and exception reasons
+00:00 +2: Dart records do not serialize exception messages or absolute file locations
+00:00 +3: Record count, stack count, numeric range and individual frames stay bounded
+00:00 +4: Native journal is best effort and unavailable collectors preserve safe diagnostics
+00:00 +5: Installing capture twice keeps existing Flutter and platform error handlers in charge
+00:00 +6: All tests passed!

@@ -1,0 +1,6 @@
+{
+  "sourceCommit": "c33c4546120e5225cf95f4841639f22b1e7f8d84",
+  "bytes": 122526295,
+  "sha256": "c7572f76dfcddcbf29c13bd904c39352efe674bce93c5d7598bd082a90cd866e",
+  "target": "integration_test/native_pipeline_test.dart"
+}

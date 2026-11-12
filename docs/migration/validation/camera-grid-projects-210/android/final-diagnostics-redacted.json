@@ -1,0 +1,807 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-12T13:29:57.870741Z",
+  "application": {
+    "version": "0.31.0-dev",
+    "build": 210,
+    "platform": "android",
+    "systemVersion": "sdk_phone64_x86_64-userdebug 12 SE1A.220826.006.A1 10064458 test-keys"
+  },
+  "library": {
+    "presets": 2,
+    "photos": 9,
+    "rawPhotos": 2
+  },
+  "state": {
+    "ready": true,
+    "signedIn": false,
+    "viewSettingsWarning": false,
+    "accountStorageWarning": false
+  },
+  "gallery": {
+    "access": "full",
+    "canAsk": false,
+    "alternateBasis": "unknown"
+  },
+  "camera": {
+    "available": true,
+    "connected": true,
+    "totalHandles": 3,
+    "observedObjects": 3,
+    "trace": [
+      "wall_ms=1794479759312 mono_ms=53111548 event=DIAG_SETUP_COMMAND_SOCKET_BEGIN",
+      "wall_ms=1794479759419 mono_ms=53111655 event=DIAG_SETUP_COMMAND_SOCKET_OK elapsed_ms=106 count=1 detail=15749",
+      "wall_ms=1794479759420 mono_ms=53111655 event=DIAG_SETUP_COMMAND_ACK_BEGIN",
+      "wall_ms=1794479759911 mono_ms=53112147 event=DIAG_SETUP_COMMAND_ACK_OK elapsed_ms=491 count=1 detail=0",
+      "wall_ms=1794479759911 mono_ms=53112147 event=DIAG_SETUP_EVENT_SOCKET_BEGIN",
+      "wall_ms=1794479760413 mono_ms=53112649 event=DIAG_SETUP_EVENT_SOCKET_OK elapsed_ms=501 count=1 detail=15749",
+      "wall_ms=1794479760413 mono_ms=53112649 event=DIAG_SETUP_EVENT_ACK_BEGIN",
+      "wall_ms=1794479760922 mono_ms=53113158 event=DIAG_SETUP_EVENT_ACK_OK elapsed_ms=508 count=1 detail=0",
+      "wall_ms=1794479760923 mono_ms=53113158 event=DIAG_SETUP_DEVICE_INFO_BEGIN",
+      "wall_ms=1794479760945 mono_ms=53113180 event=DIAG_SETUP_DEVICE_INFO_OK elapsed_ms=20 count=135 detail=0",
+      "wall_ms=1794479760945 mono_ms=53113180 event=DIAG_SETUP_OPEN_SESSION_BEGIN",
+      "wall_ms=1794479760968 mono_ms=53113213 event=DIAG_SETUP_OPEN_SESSION_OK elapsed_ms=22 count=1 detail=0",
+      "wall_ms=1794480033568 mono_ms=53385803 event=DIAG_WIFI_ROUTE_SELECTED count=2 detail=15749",
+      "wall_ms=1794480033582 mono_ms=53385817 event=DIAG_SETUP_COMMAND_SOCKET_BEGIN",
+      "wall_ms=1794480033742 mono_ms=53385977 event=DIAG_SETUP_COMMAND_SOCKET_OK elapsed_ms=159 count=1 detail=15749",
+      "wall_ms=1794480033742 mono_ms=53385977 event=DIAG_SETUP_COMMAND_ACK_BEGIN",
+      "wall_ms=1794480034243 mono_ms=53386479 event=DIAG_SETUP_COMMAND_ACK_OK elapsed_ms=501 count=1 detail=0",
+      "wall_ms=1794480034243 mono_ms=53386479 event=DIAG_SETUP_EVENT_SOCKET_BEGIN",
+      "wall_ms=1794480034759 mono_ms=53386994 event=DIAG_SETUP_EVENT_SOCKET_OK elapsed_ms=515 count=1 detail=15749",
+      "wall_ms=1794480034759 mono_ms=53386994 event=DIAG_SETUP_EVENT_ACK_BEGIN",
+      "wall_ms=1794480035260 mono_ms=53387496 event=DIAG_SETUP_EVENT_ACK_OK elapsed_ms=501 count=1 detail=0",
+      "wall_ms=1794480035260 mono_ms=53387496 event=DIAG_SETUP_DEVICE_INFO_BEGIN",
+      "wall_ms=1794480035277 mono_ms=53387513 event=DIAG_SETUP_DEVICE_INFO_OK elapsed_ms=17 count=135 detail=0",
+      "wall_ms=1794480035278 mono_ms=53387513 event=DIAG_SETUP_OPEN_SESSION_BEGIN",
+      "wall_ms=1794480035289 mono_ms=53387524 event=DIAG_SETUP_OPEN_SESSION_OK elapsed_ms=10 count=1 detail=0",
+      "wall_ms=1794480527734 mono_ms=53879970 event=DIAG_WIFI_ROUTE_SELECTED count=2 detail=15749",
+      "wall_ms=1794480527736 mono_ms=53879971 event=DIAG_SETUP_COMMAND_SOCKET_BEGIN",
+      "wall_ms=1794480527852 mono_ms=53880087 event=DIAG_SETUP_COMMAND_SOCKET_OK elapsed_ms=116 count=1 detail=15749",
+      "wall_ms=1794480527852 mono_ms=53880088 event=DIAG_SETUP_COMMAND_ACK_BEGIN",
+      "wall_ms=1794480528363 mono_ms=53880599 event=DIAG_SETUP_COMMAND_ACK_OK elapsed_ms=510 count=1 detail=0",
+      "wall_ms=1794480528363 mono_ms=53880599 event=DIAG_SETUP_EVENT_SOCKET_BEGIN",
+      "wall_ms=1794480528869 mono_ms=53881105 event=DIAG_SETUP_EVENT_SOCKET_OK elapsed_ms=504 count=1 detail=15749",
+      "wall_ms=1794480528869 mono_ms=53881105 event=DIAG_SETUP_EVENT_ACK_BEGIN",
+      "wall_ms=1794480529376 mono_ms=53881612 event=DIAG_SETUP_EVENT_ACK_OK elapsed_ms=506 count=1 detail=0",
+      "wall_ms=1794480529377 mono_ms=53881612 event=DIAG_SETUP_DEVICE_INFO_BEGIN",
+      "wall_ms=1794480529396 mono_ms=53881632 event=DIAG_SETUP_DEVICE_INFO_OK elapsed_ms=19 count=135 detail=0",
+      "wall_ms=1794480529398 mono_ms=53881633 event=DIAG_SETUP_OPEN_SESSION_BEGIN",
+      "wall_ms=1794480529415 mono_ms=53881651 event=DIAG_SETUP_OPEN_SESSION_OK elapsed_ms=17 count=1 detail=0",
+      "wall_ms=1794486376749 mono_ms=59728984 event=DIAG_WIFI_ROUTE_SELECTED count=2 detail=15749",
+      "wall_ms=1794486376757 mono_ms=59728993 event=DIAG_SETUP_COMMAND_SOCKET_BEGIN",
+      "wall_ms=1794486376961 mono_ms=59729197 event=DIAG_SETUP_COMMAND_SOCKET_OK elapsed_ms=203 count=1 detail=15749",
+      "wall_ms=1794486376961 mono_ms=59729197 event=DIAG_SETUP_COMMAND_ACK_BEGIN",
+      "wall_ms=1794486377489 mono_ms=59729724 event=DIAG_SETUP_COMMAND_ACK_OK elapsed_ms=526 count=1 detail=0",
+      "wall_ms=1794486377489 mono_ms=59729724 event=DIAG_SETUP_EVENT_SOCKET_BEGIN",
+      "wall_ms=1794486377979 mono_ms=59730214 event=DIAG_SETUP_EVENT_SOCKET_OK elapsed_ms=489 count=1 detail=15749",
+      "wall_ms=1794486377979 mono_ms=59730214 event=DIAG_SETUP_EVENT_ACK_BEGIN",
+      "wall_ms=1794486378469 mono_ms=59730705 event=DIAG_SETUP_EVENT_ACK_OK elapsed_ms=490 count=1 detail=0",
+      "wall_ms=1794486378470 mono_ms=59730705 event=DIAG_SETUP_DEVICE_INFO_BEGIN",
+      "wall_ms=1794486378503 mono_ms=59730739 event=DIAG_SETUP_DEVICE_INFO_OK elapsed_ms=33 count=135 detail=0",
+      "wall_ms=1794486378504 mono_ms=59730739 event=DIAG_SETUP_OPEN_SESSION_BEGIN",
+      "wall_ms=1794486378514 mono_ms=59730749 event=DIAG_SETUP_OPEN_SESSION_OK elapsed_ms=9 count=1 detail=0",
+      "wall_ms=1794489577978 mono_ms=62930215 event=DIAG_WIFI_ROUTE_SELECTED count=2 detail=15749",
+      "wall_ms=1794489577995 mono_ms=62930230 event=DIAG_SETUP_COMMAND_SOCKET_BEGIN",
+      "wall_ms=1794489578080 mono_ms=62930315 event=DIAG_SETUP_COMMAND_SOCKET_OK elapsed_ms=84 count=1 detail=15749",
+      "wall_ms=1794489578080 mono_ms=62930315 event=DIAG_SETUP_COMMAND_ACK_BEGIN",
+      "wall_ms=1794489578591 mono_ms=62930826 event=DIAG_SETUP_COMMAND_ACK_OK elapsed_ms=510 count=1 detail=0",
+      "wall_ms=1794489578595 mono_ms=62930830 event=DIAG_SETUP_EVENT_SOCKET_BEGIN",
+      "wall_ms=1794489579092 mono_ms=62931328 event=DIAG_SETUP_EVENT_SOCKET_OK elapsed_ms=497 count=1 detail=15749",
+      "wall_ms=1794489579093 mono_ms=62931328 event=DIAG_SETUP_EVENT_ACK_BEGIN",
+      "wall_ms=1794489579601 mono_ms=62931837 event=DIAG_SETUP_EVENT_ACK_OK elapsed_ms=508 count=1 detail=0",
+      "wall_ms=1794489579602 mono_ms=62931837 event=DIAG_SETUP_DEVICE_INFO_BEGIN",
+      "wall_ms=1794489579619 mono_ms=62931855 event=DIAG_SETUP_DEVICE_INFO_OK elapsed_ms=17 count=135 detail=0",
+      "wall_ms=1794489579619 mono_ms=62931855 event=DIAG_SETUP_OPEN_SESSION_BEGIN",
+      "wall_ms=1794489579630 mono_ms=62931866 event=DIAG_SETUP_OPEN_SESSION_OK elapsed_ms=10 count=1 detail=0",
+      "wall_ms=1794489591286 mono_ms=62943522 event=SHARED_PHOTO_PAGE_COMPLETE",
+      "wall_ms=1794489591374 mono_ms=62943610 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489591394 mono_ms=62943630 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489591451 mono_ms=62943687 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489591484 mono_ms=62943720 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489591499 mono_ms=62943734 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489591500 mono_ms=62943735 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489594131 mono_ms=62946367 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489599138 mono_ms=62951374 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489604147 mono_ms=62956383 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489609159 mono_ms=62961395 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489614171 mono_ms=62966406 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489615762 mono_ms=62967997 event=SHARED_PHOTO_PAGE_BEGIN",
+      "wall_ms=1794489615762 mono_ms=62967997 event=SHARED_INVENTORY_BEGIN",
+      "wall_ms=1794489615769 mono_ms=62968004 event=PTP_OP_BEGIN conn=1 op=0x1004 tx=20",
+      "wall_ms=1794489615800 mono_ms=62968036 event=PTP_OP_COMPLETE conn=1 op=0x1004 tx=20 elapsed_ms=31",
+      "wall_ms=1794489615803 mono_ms=62968038 event=PTP_OP_BEGIN conn=1 op=0x1007 tx=21",
+      "wall_ms=1794489615813 mono_ms=62968048 event=PTP_OP_COMPLETE conn=1 op=0x1007 tx=21 elapsed_ms=9",
+      "wall_ms=1794489615814 mono_ms=62968050 event=SHARED_INVENTORY_COMPLETE",
+      "wall_ms=1794489615815 mono_ms=62968050 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=22",
+      "wall_ms=1794489615857 mono_ms=62968092 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=22 elapsed_ms=42",
+      "wall_ms=1794489615878 mono_ms=62968114 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=23",
+      "wall_ms=1794489615944 mono_ms=62968180 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=23 elapsed_ms=65",
+      "wall_ms=1794489615958 mono_ms=62968193 event=SHARED_PHOTO_PAGE_COMPLETE",
+      "wall_ms=1794489615996 mono_ms=62968233 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489616005 mono_ms=62968240 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=24",
+      "wall_ms=1794489616050 mono_ms=62968286 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=24 elapsed_ms=45",
+      "wall_ms=1794489616051 mono_ms=62968286 event=PTP_OP_BEGIN conn=1 op=0x90c4 tx=25",
+      "wall_ms=1794489616144 mono_ms=62968380 event=PTP_OP_COMPLETE conn=1 op=0x90c4 tx=25 elapsed_ms=92",
+      "wall_ms=1794489616145 mono_ms=62968380 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=26",
+      "wall_ms=1794489616179 mono_ms=62968414 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=26 elapsed_ms=33",
+      "wall_ms=1794489616251 mono_ms=62968487 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489616261 mono_ms=62968496 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489616261 mono_ms=62968497 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=27",
+      "wall_ms=1794489616291 mono_ms=62968526 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=27 elapsed_ms=29",
+      "wall_ms=1794489616291 mono_ms=62968527 event=PTP_OP_BEGIN conn=1 op=0x90c4 tx=28",
+      "wall_ms=1794489616389 mono_ms=62968624 event=PTP_OP_COMPLETE conn=1 op=0x90c4 tx=28 elapsed_ms=97",
+      "wall_ms=1794489616389 mono_ms=62968625 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=29",
+      "wall_ms=1794489616430 mono_ms=62968666 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=29 elapsed_ms=40",
+      "wall_ms=1794489616480 mono_ms=62968715 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489619182 mono_ms=62971418 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489621633 mono_ms=62973869 event=SHARED_PHOTO_PAGE_BEGIN",
+      "wall_ms=1794489621634 mono_ms=62973870 event=SHARED_INVENTORY_BEGIN",
+      "wall_ms=1794489621634 mono_ms=62973870 event=PTP_OP_BEGIN conn=1 op=0x1004 tx=30",
+      "wall_ms=1794489621723 mono_ms=62973963 event=PTP_OP_COMPLETE conn=1 op=0x1004 tx=30 elapsed_ms=88",
+      "wall_ms=1794489621728 mono_ms=62973964 event=PTP_OP_BEGIN conn=1 op=0x1007 tx=31",
+      "wall_ms=1794489621752 mono_ms=62973987 event=PTP_OP_COMPLETE conn=1 op=0x1007 tx=31 elapsed_ms=23",
+      "wall_ms=1794489621752 mono_ms=62973988 event=SHARED_INVENTORY_COMPLETE",
+      "wall_ms=1794489621752 mono_ms=62973988 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=32",
+      "wall_ms=1794489621784 mono_ms=62974020 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=32 elapsed_ms=31",
+      "wall_ms=1794489621801 mono_ms=62974037 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=33",
+      "wall_ms=1794489621811 mono_ms=62974046 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=33 elapsed_ms=6",
+      "wall_ms=1794489621812 mono_ms=62974047 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=34",
+      "wall_ms=1794489621827 mono_ms=62974063 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=34 elapsed_ms=6",
+      "wall_ms=1794489621830 mono_ms=62974065 event=SHARED_PHOTO_PAGE_COMPLETE",
+      "wall_ms=1794489621862 mono_ms=62974097 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489621864 mono_ms=62974100 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489621878 mono_ms=62974113 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489621888 mono_ms=62974123 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489621931 mono_ms=62974167 event=SHARED_THUMBNAIL_BEGIN",
+      "wall_ms=1794489621936 mono_ms=62974171 event=SHARED_THUMBNAIL_COMPLETE",
+      "wall_ms=1794489624189 mono_ms=62976427 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489629203 mono_ms=62981439 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489634208 mono_ms=62986443 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489639213 mono_ms=62991449 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489644218 mono_ms=62996454 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489649215 mono_ms=63001451 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489654227 mono_ms=63006463 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489659239 mono_ms=63011475 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489664254 mono_ms=63016490 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489669263 mono_ms=63021499 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489674266 mono_ms=63026502 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489679271 mono_ms=63031507 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489684279 mono_ms=63036514 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489689286 mono_ms=63041522 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489694290 mono_ms=63046526 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489699298 mono_ms=63051534 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489699899 mono_ms=63052135 event=SHARED_DOWNLOAD_BEGIN",
+      "wall_ms=1794489699900 mono_ms=63052135 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=35",
+      "wall_ms=1794489699927 mono_ms=63052162 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=35 elapsed_ms=27",
+      "wall_ms=1794489699933 mono_ms=63052168 event=PTP_OP_BEGIN conn=1 op=0x1009 tx=36",
+      "wall_ms=1794489699987 mono_ms=63052222 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=55 bytes=8192 total_bytes=433384 payload_read_ms=0 sink_write_ms=0 progress_callback_ms=0 timeouts=0",
+      "wall_ms=1794489702207 mono_ms=63054443 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=2276 bytes=81920 total_bytes=433384 payload_read_ms=55 sink_write_ms=0 progress_callback_ms=21 timeouts=0",
+      "wall_ms=1794489704214 mono_ms=63056449 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=4282 bytes=147456 total_bytes=433384 payload_read_ms=115 sink_write_ms=10 progress_callback_ms=33 timeouts=0",
+      "wall_ms=1794489704312 mono_ms=63056548 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489706468 mono_ms=63058703 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=6536 bytes=221184 total_bytes=433384 payload_read_ms=191 sink_write_ms=12 progress_callback_ms=78 timeouts=0",
+      "wall_ms=1794489708475 mono_ms=63060711 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=8543 bytes=286720 total_bytes=433384 payload_read_ms=258 sink_write_ms=13 progress_callback_ms=90 timeouts=0",
+      "wall_ms=1794489709323 mono_ms=63061559 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489710475 mono_ms=63062711 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=10543 bytes=352256 total_bytes=433384 payload_read_ms=311 sink_write_ms=14 progress_callback_ms=109 timeouts=0",
+      "wall_ms=1794489712487 mono_ms=63064722 event=PTP_ORIGINAL_PROGRESS conn=1 op=0x1009 tx=36 elapsed_ms=12555 bytes=417792 total_bytes=433384 payload_read_ms=345 sink_write_ms=14 progress_callback_ms=118 timeouts=0",
+      "wall_ms=1794489713219 mono_ms=63065454 event=PTP_ORIGINAL_COMPLETE conn=1 op=0x1009 tx=36 elapsed_ms=13287 bytes=433384 total_bytes=433384 payload_read_ms=357 sink_write_ms=14 progress_callback_ms=119 timeouts=0",
+      "wall_ms=1794489713219 mono_ms=63065455 event=PTP_OP_COMPLETE conn=1 op=0x1009 tx=36 elapsed_ms=13287",
+      "wall_ms=1794489713234 mono_ms=63065470 event=PTP_OP_BEGIN conn=1 op=0x1008 tx=37",
+      "wall_ms=1794489713240 mono_ms=63065475 event=PTP_OP_COMPLETE conn=1 op=0x1008 tx=37 elapsed_ms=5",
+      "wall_ms=1794489713251 mono_ms=63065487 event=SHARED_DOWNLOAD_COMPLETE",
+      "wall_ms=1794489714355 mono_ms=63066590 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489719347 mono_ms=63071583 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489724361 mono_ms=63076597 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489729373 mono_ms=63081609 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489734390 mono_ms=63086625 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489739406 mono_ms=63091641 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489744411 mono_ms=63096647 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489749424 mono_ms=63101659 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489754430 mono_ms=63106666 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489759439 mono_ms=63111675 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489764454 mono_ms=63116690 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489769463 mono_ms=63121699 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489774473 mono_ms=63126708 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489779493 mono_ms=63131729 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489784491 mono_ms=63136727 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489789502 mono_ms=63141738 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489794508 mono_ms=63146745 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489799524 mono_ms=63151759 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489804530 mono_ms=63156767 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489809535 mono_ms=63161771 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489814546 mono_ms=63166782 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489819554 mono_ms=63171790 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489824563 mono_ms=63176799 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489829566 mono_ms=63181801 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489834567 mono_ms=63186803 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489839572 mono_ms=63191809 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489844588 mono_ms=63196823 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489849590 mono_ms=63201826 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489854595 mono_ms=63206831 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489859603 mono_ms=63211838 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489864603 mono_ms=63216839 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489869607 mono_ms=63221843 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489874616 mono_ms=63226852 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489879618 mono_ms=63231854 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489884619 mono_ms=63236855 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489889623 mono_ms=63241859 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489894627 mono_ms=63246862 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489899643 mono_ms=63251879 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489904651 mono_ms=63256887 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489909659 mono_ms=63261895 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489914664 mono_ms=63266901 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489919675 mono_ms=63271911 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489924687 mono_ms=63276923 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489929693 mono_ms=63281929 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489934695 mono_ms=63286933 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489939707 mono_ms=63291943 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489944711 mono_ms=63296947 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489949723 mono_ms=63301959 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489954736 mono_ms=63306972 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489959744 mono_ms=63311979 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489964754 mono_ms=63316989 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489969769 mono_ms=63322005 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489974774 mono_ms=63327010 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489979778 mono_ms=63332014 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489984794 mono_ms=63337029 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489989798 mono_ms=63342033 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489994803 mono_ms=63347039 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794489999806 mono_ms=63352042 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490004815 mono_ms=63357051 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490009822 mono_ms=63362057 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490014829 mono_ms=63367065 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490019844 mono_ms=63372080 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490024859 mono_ms=63377095 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490029871 mono_ms=63382106 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490034881 mono_ms=63387118 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490039890 mono_ms=63392127 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490044902 mono_ms=63397138 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490049914 mono_ms=63402150 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490054918 mono_ms=63407155 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490059923 mono_ms=63412159 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490064938 mono_ms=63417174 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490069952 mono_ms=63422188 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490074954 mono_ms=63427190 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490079972 mono_ms=63432207 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490084963 mono_ms=63437199 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490089971 mono_ms=63442206 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490094975 mono_ms=63447210 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490099992 mono_ms=63452228 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490105001 mono_ms=63457237 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490110006 mono_ms=63462242 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490115020 mono_ms=63467257 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490120030 mono_ms=63472266 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490125035 mono_ms=63477271 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490130052 mono_ms=63482287 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490135058 mono_ms=63487293 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490140058 mono_ms=63492294 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490145072 mono_ms=63497308 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490150070 mono_ms=63502306 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490155074 mono_ms=63507309 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490160080 mono_ms=63512316 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490165084 mono_ms=63517320 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490170095 mono_ms=63522331 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490175102 mono_ms=63527338 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490180116 mono_ms=63532354 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490185130 mono_ms=63537366 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490190143 mono_ms=63542379 event=PTP_EVENT_PING_REPLY conn=1",
+      "wall_ms=1794490195154 mono_ms=63547390 event=PTP_EVENT_PING_REPLY conn=1"
+    ]
+  },
+  "appStability": {
+    "schema": 1,
+    "available": true,
+    "platform": "android",
+    "sdk": 31,
+    "manufacturer": "unknown",
+    "model": "Android SDK built for x86_64",
+    "currentAppVersion": "0.31.0-dev",
+    "processExitHistoryAvailable": true,
+    "processExitHistory": []
+  },
+  "operations": [
+    {
+      "operation": "media.templateInfo",
+      "at": "2026-11-12T13:16:51.443495Z",
+      "elapsedMs": 162,
+      "status": "complete"
+    },
+    {
+      "operation": "ui.preferences.get",
+      "at": "2026-11-12T13:16:51.524157Z",
+      "elapsedMs": 80,
+      "status": "complete"
+    },
+    {
+      "operation": "library.list",
+      "at": "2026-11-12T13:16:51.629362Z",
+      "elapsedMs": 105,
+      "status": "complete"
+    },
+    {
+      "operation": "account.current",
+      "at": "2026-11-12T13:16:51.723191Z",
+      "elapsedMs": 94,
+      "status": "complete"
+    },
+    {
+      "operation": "online.page",
+      "at": "2026-11-12T13:16:54.858276Z",
+      "elapsedMs": 2980,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:54.909698Z",
+      "elapsedMs": 9,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:54.916412Z",
+      "elapsedMs": 6,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:54.969785Z",
+      "elapsedMs": 53,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:54.999389Z",
+      "elapsedMs": 30,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.021151Z",
+      "elapsedMs": 20,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.026518Z",
+      "elapsedMs": 5,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.034269Z",
+      "elapsedMs": 7,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.052428Z",
+      "elapsedMs": 18,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.061793Z",
+      "elapsedMs": 9,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.094051Z",
+      "elapsedMs": 32,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.162884Z",
+      "elapsedMs": 68,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:16:55.204676Z",
+      "elapsedMs": 41,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.status",
+      "at": "2026-11-12T13:17:43.591511Z",
+      "elapsedMs": 42,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.status",
+      "at": "2026-11-12T13:18:30.389502Z",
+      "elapsedMs": 37,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:31.655964Z",
+      "elapsedMs": 76,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:31.663605Z",
+      "elapsedMs": 7,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:31.675716Z",
+      "elapsedMs": 11,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:31.701810Z",
+      "elapsedMs": 26,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:31.718665Z",
+      "elapsedMs": 16,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:31.728393Z",
+      "elapsedMs": 15,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:35.565199Z",
+      "elapsedMs": 232,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:35.600934Z",
+      "elapsedMs": 35,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:35.606006Z",
+      "elapsedMs": 4,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:35.613635Z",
+      "elapsedMs": 7,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:35.647303Z",
+      "elapsedMs": 33,
+      "status": "complete"
+    },
+    {
+      "operation": "media.showcase",
+      "at": "2026-11-12T13:19:35.664297Z",
+      "elapsedMs": 18,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.connect",
+      "at": "2026-11-12T13:19:39.671472Z",
+      "elapsedMs": 1761,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.page",
+      "at": "2026-11-12T13:19:39.796885Z",
+      "elapsedMs": 125,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:19:40.155607Z",
+      "elapsedMs": 342,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:19:40.461491Z",
+      "elapsedMs": 306,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:19:40.675920Z",
+      "elapsedMs": 214,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.status",
+      "at": "2026-11-12T13:19:51.087823Z",
+      "elapsedMs": 12,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.page",
+      "at": "2026-11-12T13:19:51.297196Z",
+      "elapsedMs": 208,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:19:51.401619Z",
+      "elapsedMs": 46,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:19:51.492496Z",
+      "elapsedMs": 90,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:19:51.502362Z",
+      "elapsedMs": 8,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.page",
+      "at": "2026-11-12T13:20:15.963445Z",
+      "elapsedMs": 215,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:20:16.260748Z",
+      "elapsedMs": 278,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:20:16.541220Z",
+      "elapsedMs": 280,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.page",
+      "at": "2026-11-12T13:20:21.838319Z",
+      "elapsedMs": 219,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:20:21.876021Z",
+      "elapsedMs": 24,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:20:21.895503Z",
+      "elapsedMs": 22,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.thumbnail",
+      "at": "2026-11-12T13:20:21.940201Z",
+      "elapsedMs": 41,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.download",
+      "at": "2026-11-12T13:21:53.258653Z",
+      "elapsedMs": 13383,
+      "status": "complete"
+    },
+    {
+      "operation": "media.info",
+      "at": "2026-11-12T13:21:53.306574Z",
+      "elapsedMs": 47,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.status",
+      "at": "2026-11-12T13:21:53.318435Z",
+      "elapsedMs": 8,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.catalog",
+      "at": "2026-11-12T13:22:53.024755Z",
+      "elapsedMs": 2416,
+      "status": "complete"
+    },
+    {
+      "operation": "draft.load",
+      "at": "2026-11-12T13:22:53.056844Z",
+      "elapsedMs": 2447,
+      "status": "complete"
+    },
+    {
+      "operation": "local.describe",
+      "at": "2026-11-12T13:22:53.074844Z",
+      "elapsedMs": 15,
+      "status": "complete"
+    },
+    {
+      "operation": "media.preview",
+      "at": "2026-11-12T13:22:53.878649Z",
+      "elapsedMs": 803,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:54.028249Z",
+      "elapsedMs": 918,
+      "status": "complete"
+    },
+    {
+      "operation": "media.originalPreview",
+      "at": "2026-11-12T13:22:54.594526Z",
+      "elapsedMs": 715,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:54.655030Z",
+      "elapsedMs": 626,
+      "status": "complete"
+    },
+    {
+      "operation": "media.atmosphere",
+      "at": "2026-11-12T13:22:54.739886Z",
+      "elapsedMs": 145,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:55.245546Z",
+      "elapsedMs": 590,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:55.674691Z",
+      "elapsedMs": 429,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:55.827615Z",
+      "elapsedMs": 153,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:56.213479Z",
+      "elapsedMs": 385,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:56.348833Z",
+      "elapsedMs": 135,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:56.749238Z",
+      "elapsedMs": 400,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:57.094798Z",
+      "elapsedMs": 345,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:57.498790Z",
+      "elapsedMs": 404,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:57.742034Z",
+      "elapsedMs": 243,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:58.136320Z",
+      "elapsedMs": 395,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:58.399631Z",
+      "elapsedMs": 262,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:58.983989Z",
+      "elapsedMs": 584,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:22:59.172022Z",
+      "elapsedMs": 188,
+      "status": "complete"
+    },
+    {
+      "operation": "editor.prepare",
+      "at": "2026-11-12T13:22:59.833303Z",
+      "elapsedMs": 658,
+      "status": "complete"
+    },
+    {
+      "operation": "media.reviewPreview",
+      "at": "2026-11-12T13:23:00.050958Z",
+      "elapsedMs": 213,
+      "status": "complete"
+    },
+    {
+      "operation": "media.preview",
+      "at": "2026-11-12T13:24:34.621882Z",
+      "elapsedMs": 2639,
+      "status": "complete"
+    },
+    {
+      "operation": "draft.save",
+      "at": "2026-11-12T13:24:38.245417Z",
+      "elapsedMs": 32,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.status",
+      "at": "2026-11-12T13:24:38.266606Z",
+      "elapsedMs": 5,
+      "status": "complete"
+    },
+    {
+      "operation": "draft.save",
+      "at": "2026-11-12T13:24:38.552526Z",
+      "elapsedMs": 225,
+      "status": "complete"
+    },
+    {
+      "operation": "project.list",
+      "at": "2026-11-12T13:24:40.867976Z",
+      "elapsedMs": 24,
+      "status": "complete"
+    },
+    {
+      "operation": "project.open",
+      "at": "2026-11-12T13:24:40.889976Z",
+      "elapsedMs": 21,
+      "status": "complete"
+    },
+    {
+      "operation": "project.result",
+      "at": "2026-11-12T13:26:37.963937Z",
+      "elapsedMs": 41,
+      "status": "complete"
+    },
+    {
+      "operation": "media.originalPreview",
+      "at": "2026-11-12T13:26:38.121172Z",
+      "elapsedMs": 149,
+      "status": "complete"
+    },
+    {
+      "operation": "gallery.access",
+      "at": "2026-11-12T13:29:57.856898Z",
+      "elapsedMs": 47,
+      "status": "complete"
+    },
+    {
+      "operation": "camera.diagnostics",
+      "at": "2026-11-12T13:29:57.867709Z",
+      "elapsedMs": 56,
+      "status": "complete"
+    }
+  ]
+}

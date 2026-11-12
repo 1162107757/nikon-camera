@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "sourceCommit": "86211035f8eaa6e008e609b4b4b2496dd8b97b66",
+  "utc": "2026-11-12T13:34:48.177993+00:00",
+  "scope": "Delivered x64 release on Android 12/API31 emulator and own Nikon-shaped PTP/IP peer; not physical Nikon, Honor Magic or iPhone acceptance",
+  "pid": 31828,
+  "installedApkMatchesDelivered": true,
+  "installedApkBytes": 54662638,
+  "installedApkSha256": "155f232d43e6aa42ca1b6473f5592b8517276a76f2a6f42733618b7a516a7422",
+  "crashMarkers": 0,
+  "memoryKiBOnePoint": {
+    "PSS": 147316,
+    "RSS": 259080
+  },
+  "grids": {
+    "210-final-jpeg-grid.xml": {
+      "visibleThumbnails": 3,
+      "boundsPixels": [
+        [
+          53,
+          806,
+          364,
+          1117
+        ],
+        [
+          385,
+          806,
+          696,
+          1117
+        ],
+        [
+          717,
+          806,
+          1028,
+          1117
+        ]
+      ],
+      "filenameAndDimensionsHidden": true
+    },
+    "210-final-raw-grid.xml": {
+      "visibleThumbnails": 2,
+      "boundsPixels": [
+        [
+          53,
+          806,
+          364,
+          1117
+        ],
+        [
+          385,
+          806,
+          696,
+          1117
+        ]
+      ],
+      "filenameAndDimensionsHidden": true
+    }
+  },
+  "download": {
+    "sourceBytes": 433384,
+    "sourceSha256": "07d34d570cb589d81c038020fae1a374e0761d6c2cac8ea50aa8180a59cd42eb",
+    "peerBytesMatch": true,
+    "originalRetainedAfterEditorUse": true,
+    "durableCatalogContainsOriginal": true,
+    "viewerProgressPercent": 17,
+    "afterTabSwitchPercent": 56,
+    "completedPercent": 100,
+    "previewBackAndHomeTabSwitchDidNotDisconnect": true
+  },
+  "ui": {
+    "homePreviewsVisible": true,
+    "onlineEditorPresetsVisible": true,
+    "editorFilterAppliedMeanPixelDifference": 22.0422,
+    "savedPhotosTabPopulated": true,
+    "retainedProjectDefaultVisible": true,
+    "persistedProjectResultOpened": true,
+    "diagnosticStabilityFieldsPresent": true
+  },
+  "protocol": {
+    "operationCounts": {
+      "0x1001": 1,
+      "0x1002": 1,
+      "0x1004": 4,
+      "0x1007": 4,
+      "0x1008": 23,
+      "0x1009": 1,
+      "0x100a": 0,
+      "0x90c4": 5
+    },
+    "onlyExplicitDownloadIssuedGetObject": true,
+    "singleCameraConnectionAcrossEditorAndTabs": true,
+    "peerPongs": 181,
+    "peerSnapshotSha256": "3780cc84fb57e85725b9e66afedfc9e2e9ca216693f37595a334040a343c334b",
+    "fixtureDescription": "Owned synthetic gradient/checker JPEG with valid JPEG comment segments for paced transfer, independent JPEG handles and synthetic NEF metadata. No physical RAW sensor data in the peer."
+  }
+}

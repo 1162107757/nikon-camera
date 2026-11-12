@@ -1,0 +1,5 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_presets_test.dart
+00:00 +0: Fresh editor loads online recipes and uses SHA identity without a personal-library import
+00:00 +1: Filter thumbnails preserve adjustments, use tentative small renders and never save the draft
+00:00 +2: Offline catalog failure is retryable and late owner replies are suppressed
+00:00 +3: All tests passed!

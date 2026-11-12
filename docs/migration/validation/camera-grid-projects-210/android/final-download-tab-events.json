@@ -1,0 +1,30 @@
+[
+  {
+    "utc": "2026-11-12T13:21:43.462252+00:00",
+    "screenshot": "210-final-viewer-progress.png"
+  },
+  {
+    "utc": "2026-11-12T13:21:43.542871+00:00",
+    "action": "Return to grid during receive"
+  },
+  {
+    "utc": "2026-11-12T13:21:44.446511+00:00",
+    "screenshot": "210-final-grid-progress-before-tab.png"
+  },
+  {
+    "utc": "2026-11-12T13:21:44.520528+00:00",
+    "action": "Switch to Presets during receive"
+  },
+  {
+    "utc": "2026-11-12T13:21:46.717355+00:00",
+    "screenshot": "210-final-home-during-download.png"
+  },
+  {
+    "utc": "2026-11-12T13:21:46.796121+00:00",
+    "action": "Return to Sync during receive"
+  },
+  {
+    "utc": "2026-11-12T13:21:48.326173+00:00",
+    "screenshot": "210-final-grid-progress-after-tab.png"
+  }
+]
