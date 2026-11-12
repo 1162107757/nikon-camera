@@ -23,6 +23,7 @@ public final class MainActivity extends FlutterActivity {
     private NativeImportPicker importPicker;
     private NativeGallery gallery;
     private MethodChannel.Result galleryPermission;
+    private MethodChannel.Result gallerySavePermission;
     private volatile EventChannel.EventSink events;
     @Override public void configureFlutterEngine(FlutterEngine engine){
         super.configureFlutterEngine(engine);
@@ -32,9 +33,15 @@ public final class MainActivity extends FlutterActivity {
             public void onCancel(Object args){events=null;}
         });
         new MethodChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/core").setMethodCallHandler((call,reply)->{
+            if(call.method.equals("gallerySavePermission")){
+                if(gallery==null){reply.error("NOT_READY","应用尚未准备好。",null);return;}
+                if(android.os.Build.VERSION.SDK_INT>=29||checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED){reply.success(SharedJson.encode(SharedRuntime.map("granted",true)));return;}
+                if(galleryPermission!=null||gallerySavePermission!=null){reply.error("BUSY","请完成当前照片权限选择。",null);return;}
+                gallerySavePermission=reply;requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE},49319);return;
+            }
             if(call.method.equals("galleryPermission")){
                 if(gallery==null){reply.error("NOT_READY","应用尚未准备好。",null);return;}
-                if(galleryPermission!=null){reply.error("BUSY","请完成当前照片权限选择。",null);return;}
+                if(galleryPermission!=null||gallerySavePermission!=null){reply.error("BUSY","请完成当前照片权限选择。",null);return;}
                 galleryPermission=reply;
                 String permission=android.os.Build.VERSION.SDK_INT>=33?android.Manifest.permission.READ_MEDIA_IMAGES:android.Manifest.permission.READ_EXTERNAL_STORAGE;
                 requestPermissions(android.os.Build.VERSION.SDK_INT>=34?new String[]{permission,android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}:new String[]{permission},49318);return;
@@ -62,7 +69,7 @@ public final class MainActivity extends FlutterActivity {
             Object rawJob=call.argument("jobId");
             if(rawJob!=null&&!(rawJob instanceof String)){reply.error("INVALID_ARGUMENT","任务标识格式无效。",null);return;}
             String job=(String)rawJob;
-            if(call.method.equals("cancel")){if(job!=null){AtomicBoolean flag=jobs.get(job);if(flag!=null)flag.set(true);if(camera!=null)camera.cancel(job);}reply.success(null);return;}
+            if(call.method.equals("cancel")){if(job!=null){AtomicBoolean flag=jobs.get(job);if(flag!=null)flag.set(true);if(camera!=null)camera.cancel(job);if(gallery!=null)gallery.cancel(job);}reply.success(null);return;}
             final String identity=job==null?UUID.randomUUID().toString():job;
             AtomicBoolean cancelled=new AtomicBoolean();if(jobs.putIfAbsent(identity,cancelled)!=null){reply.error("BUSY","该任务正在执行。",null);return;}
             try{worker.execute(()->{
@@ -85,7 +92,7 @@ public final class MainActivity extends FlutterActivity {
                         };
                         if(operation.startsWith("media."))value=media.request(operation,payload,cancelled::get,progress);
                         else if(operation.startsWith("camera."))value=camera.request(operation,payload,identity,cancelled::get,progress);
-                        else if(operation.startsWith("gallery."))value=gallery.request(operation,payload,cancelled::get);
+                        else if(operation.startsWith("gallery.")){value=gallery.request(operation,payload,cancelled::get,identity);if(operation.equals("gallery.publish"))main.post(()->{EventChannel.EventSink sink=events;if(sink!=null)sink.success(SharedRuntime.map("kind","galleryChanged"));});}
                         else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
                     complete(identity,cancelled,()->reply.success(value));
@@ -101,8 +108,8 @@ public final class MainActivity extends FlutterActivity {
         // A late finalizer for this task must never remove its replacement.
         main.post(()->{jobs.remove(identity,task);deliver.run();});
     }
-    @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);super.cleanUpFlutterEngine(engine);}
+    @Override public void cleanUpFlutterEngine(FlutterEngine engine){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();super.cleanUpFlutterEngine(engine);}
     @Override protected void onActivityResult(int request,int result,android.content.Intent data){super.onActivityResult(request,result,data);if(importPicker!=null&&importPicker.handles(request))importPicker.result(result,data);}
-    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}}
-    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(importPicker!=null)importPicker.cancel();if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
+    @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}}
+    @Override protected void onDestroy(){for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(camera!=null)camera.closeTransport();worker.shutdown();super.onDestroy();}
 }

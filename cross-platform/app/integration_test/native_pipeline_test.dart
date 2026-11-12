@@ -337,12 +337,147 @@ void main() {
           true,
         );
         expect((await sha256.bind(source.openRead()).first).toString(), before);
+        final frozenDraft = await core.call('draft.load', {
+          'path': source.path,
+          'owner': '',
+        });
+        final review = await render('media.exportPreview', {
+          'path': source.path,
+          'owner': '',
+          'recipe': {'schema': 1},
+          'size': 'full',
+          'snapshot': true,
+          'expectedSourceSha': before,
+        });
+        await expectLater(
+          core.call('media.exportPreviewCommit', {'id': review['id']}),
+          throwsA(isA<AppFailure>()),
+        );
+        await core.call('media.exportPreviewClose', {'id': review['id']});
+        expect(
+          await core.call('draft.load', {'path': source.path, 'owner': ''}),
+          frozenDraft,
+        );
+        await render('media.export', {
+          'path': source.path,
+          'owner': '',
+          'recipe': {'schema': 1},
+          'size': 'full',
+          'snapshot': true,
+          'expectedSourceSha': before,
+        });
+        expect(
+          await core.call('draft.load', {'path': source.path, 'owner': ''}),
+          frozenDraft,
+        );
+        await expectLater(
+          core.call('media.export', {
+            'path': source.path,
+            'owner': '',
+            'recipe': {'schema': 1},
+            'size': 'full',
+            'snapshot': true,
+            'expectedSourceSha': '0' * 64,
+          }),
+          throwsA(isA<AppFailure>()),
+        );
+        expect(
+          await core.call('draft.load', {'path': source.path, 'owner': ''}),
+          frozenDraft,
+        );
         final exported = await render('media.export', {
           'path': source.path,
           'owner': '',
           'size': 'full',
           'recipe': {'schema': 1},
         });
+        final saveAccess = await core.gallerySavePermission();
+        expect(saveAccess['granted'], isTrue);
+        final publication = await render('gallery.publish', {
+          'owner': '',
+          'id': exported['id'],
+          'filename': 'Huevia-QA-native-publish.jpg',
+        });
+        expect(publication['published'], isTrue);
+        expect(publication['verified'], isTrue);
+        final publishedAddress =
+            publication[Platform.isAndroid ? 'uri' : 'identifier'] as String;
+        expect(publishedAddress, isNotEmpty);
+        if (Platform.isAndroid) {
+          expect(Uri.parse(publishedAddress).scheme, 'content');
+          expect(Uri.parse(publishedAddress).host, 'media');
+          expect(
+            Uri.parse(publishedAddress).path,
+            matches(r'^/(external|external_primary)/images/media/[0-9]+$'),
+          );
+        }
+        // ignore: avoid_print
+        print('Native publication fixture address: $publishedAddress');
+        final repeatedPublication = await render('gallery.publish', {
+          'owner': '',
+          'id': exported['id'],
+          'filename': 'Huevia-QA-native-publish.jpg',
+        });
+        expect(
+          repeatedPublication['uri'] ?? repeatedPublication['identifier'],
+          publication['uri'] ?? publication['identifier'],
+        );
+        expect(repeatedPublication['verified'], isTrue);
+        final copyOperation = sha256
+            .convert(
+              utf8.encode(
+                'native-copy-${DateTime.now().microsecondsSinceEpoch}',
+              ),
+            )
+            .toString()
+            .substring(0, 32);
+        final freshCopy = await render('gallery.publish', {
+          'owner': '',
+          'id': exported['id'],
+          'filename': 'Huevia-QA-native-copy.jpg',
+          'extraCopy': true,
+          'operationId': copyOperation,
+        });
+        final freshAddress =
+            freshCopy[Platform.isAndroid ? 'uri' : 'identifier'] as String;
+        expect(freshAddress, isNotEmpty);
+        expect(freshAddress, isNot(publishedAddress));
+        final copyRetry = await render('gallery.publish', {
+          'owner': '',
+          'id': exported['id'],
+          'filename': 'Huevia-QA-native-copy.jpg',
+          'extraCopy': true,
+          'operationId': copyOperation,
+        });
+        expect(
+          copyRetry[Platform.isAndroid ? 'uri' : 'identifier'],
+          freshAddress,
+        );
+        final otherOperation = sha256
+            .convert(utf8.encode('native-other-$copyOperation'))
+            .toString()
+            .substring(0, 32);
+        final anotherCopy = await render('gallery.publish', {
+          'owner': '',
+          'id': exported['id'],
+          'filename': 'Huevia-QA-native-copy.jpg',
+          'extraCopy': true,
+          'operationId': otherOperation,
+        });
+        final anotherAddress =
+            anotherCopy[Platform.isAndroid ? 'uri' : 'identifier'] as String;
+        expect(anotherAddress, isNotEmpty);
+        expect(anotherAddress, isNot(freshAddress));
+        // ignore: avoid_print
+        print(
+          'Native dated fixture addresses: $freshAddress | $anotherAddress',
+        );
+        final publishedVersion = await core.call('version.open', {
+          'owner': '',
+          'id': exported['id'],
+        });
+        expect(publishedVersion['sha256'], exported['sha256']);
+        expect((await sha256.bind(source.openRead()).first).toString(), before);
         expect(exported['width'], 256);
         expect(exported['height'], 192);
         final orientedTemplate =

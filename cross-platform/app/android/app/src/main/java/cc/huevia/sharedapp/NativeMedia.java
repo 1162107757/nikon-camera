@@ -116,13 +116,16 @@ final class NativeMedia {
             runtime.guardOwner(owner);runtime.validateSource(source.getPath(),sha);
             return SharedCleanup.result(analysis);
         }
-        boolean originalView=operation.equals("media.originalPreview"),localView=operation.equals("media.localPreview");
-        if(!originalView&&!localView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
-        boolean preview=originalView||localView||operation.equals("media.preview");
+        boolean originalView=operation.equals("media.originalPreview"),localView=operation.equals("media.localPreview"),reviewView=operation.equals("media.reviewPreview");
+        if(!originalView&&!localView&&!reviewView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
+        boolean preview=originalView||localView||reviewView||operation.equals("media.preview");
         int previewEdge=SharedRuntime.integer(p,"maxEdge",1280);
         if(preview&&(previewEdge<128||previewEdge>1280))throw new IOException("预览边长必须在 128 到 1280 之间。");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
-        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        if(p.containsKey("snapshot")&&!(p.get("snapshot") instanceof Boolean))throw new IOException("导出快照标识无效。");
+        boolean snapshot=Boolean.TRUE.equals(p.get("snapshot"));
+        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):reviewView||snapshot?runtime.reviewView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        if(snapshot&&!frozen.sourceSha.equals(SharedRuntime.text(p,"expectedSourceSha",64)))throw new IOException("原图与打开导出设置时不同，请重新打开照片。");
         if(!preview)runtime.validateSource(original,frozen.sourceSha);
         if(raw(source))source=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
         File directory=new File(runtime.root(),preview?"previews":"exports");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片输出目录。");
@@ -151,7 +154,7 @@ final class NativeMedia {
             if(!preview){
                 try{
                     String saved=runtime.commitVersion(original,owner,frozen,target.getPath(),SharedJson.encode(result),cancel);
-                    runtime.markEditExported(owner,frozen);return saved;
+                    if(!snapshot)runtime.markEditExported(owner,frozen);return saved;
                 }finally{Files.deleteIfExists(target.toPath());}
             }
             return SharedJson.encode(result);

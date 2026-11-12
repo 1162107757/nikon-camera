@@ -114,6 +114,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
 @property(nonatomic,strong) HueviaRaster *before;
 @property(nonatomic,strong) HueviaRaster *after;
 @property(nonatomic,strong) NSDictionary *sourceAttributes;
+@property(nonatomic) BOOL snapshot;
 @end
 @implementation HueviaExportSession
 @end
@@ -164,6 +165,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   if(!session||![session.identifier isEqual:identifier])fail(@"成品预览已失效，请重新打开。");
   [self validateExportPreview:session];check(task);
   if([operation isEqual:@"media.exportPreviewCommit"]){
+    if(session.snapshot)fail(@"此窗口仅预览，请返回导出设置后保存。");
     [_runtime validateSourceWithNSString:session.source withNSString:session.draft->sourceSha_];
     NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:session.jpeg error:nil];
     NSDictionary *metadata=@{@"path":session.jpeg,@"width":@(session.before.pixelWidth),@"height":@(session.before.pixelHeight),@"bytes":attributes[NSFileSize]?:@0,@"preview":@NO,@"model":session.model,@"exportSpec":session.spec};
@@ -330,12 +332,14 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     return [NSJSONSerialization JSONObjectWithData:[value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
   }
   BOOL paired=[operation isEqual:@"media.exportPreview"];if(paired)[self closeExportPreview];
-  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],localView=[operation isEqualToString:@"media.localPreview"],preview=originalView||localView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"]&&!paired)fail(@"未知的照片操作。");
+  BOOL originalView=[operation isEqualToString:@"media.originalPreview"],localView=[operation isEqualToString:@"media.localPreview"],reviewView=[operation isEqualToString:@"media.reviewPreview"],preview=originalView||localView||reviewView||[operation isEqualToString:@"media.preview"];if(!preview&&![operation isEqualToString:@"media.export"]&&!paired)fail(@"未知的照片操作。");
   id requestedEdge=p[@"maxEdge"];if(requestedEdge&&![requestedEdge isKindOfClass:NSNumber.class])fail(@"预览边长无效。");
   double edge=requestedEdge?[requestedEdge doubleValue]:1280;if(!std::isfinite(edge)||edge!=std::floor(edge)||edge<128||edge>1280)fail(@"预览边长必须在 128 到 1280 之间。");int previewEdge=(int)edge;
   if(!originalView&&![p[@"recipe"] isKindOfClass:NSDictionary.class])fail(@"编辑设置无效。");
   NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");
-  CcHueviaAlbumPhotoEditStore_Draft *frozen=originalView?[_runtime originalViewWithNSString:path withNSString:owner]:localView?[_runtime localViewWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])]:[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
+  id snapshotValue=p[@"snapshot"];if(snapshotValue&&CFGetTypeID((__bridge CFTypeRef)snapshotValue)!=CFBooleanGetTypeID())fail(@"导出快照标识无效。");BOOL snapshot=[snapshotValue boolValue];
+  CcHueviaAlbumPhotoEditStore_Draft *frozen=originalView?[_runtime originalViewWithNSString:path withNSString:owner]:localView?[_runtime localViewWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])]:(reviewView||snapshot)?[_runtime reviewViewWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])]:[_runtime freezeEditWithNSString:path withNSString:owner withNSString:json(p[@"recipe"])];
+  if(snapshot&&![frozen->sourceSha_ isEqual:p[@"expectedSourceSha"]])fail(@"原图与打开导出设置时不同，请重新打开照片。");
   if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];
   NSString *colorStatus=@"";HueviaRaster *working=raw?[self raw:path owner:owner settings:[CcHueviaSharedSharedRawSettings parseWithNSString:@"{}"] task:task status:&colorStatus]:load(path,_root,preview?previewEdge:0);
   if(raw&&preview){double scale=std::min(1.0,previewEdge/(double)std::max(working.pixelWidth,working.pixelHeight));working=scaled(working,std::max(1,int(std::lround(working.pixelWidth*scale))),std::max(1,int(std::lround(working.pixelHeight*scale))),_root);}
@@ -354,7 +358,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
   if(paired){
     [self closeExportPreview];HueviaExportSession *session=[HueviaExportSession new];session.identifier=NSUUID.UUID.UUIDString;session.owner=owner;session.source=path;session.draft=frozen;
-    session.folder=[[_root stringByAppendingPathComponent:@"previews"] stringByAppendingPathComponent:[@"export-" stringByAppendingString:session.identifier]];
+    session.snapshot=snapshot;session.folder=[[_root stringByAppendingPathComponent:@"previews"] stringByAppendingPathComponent:[@"export-" stringByAppendingString:session.identifier]];
     if(![[session.folder stringByResolvingSymlinksInPath] isEqual:session.folder])fail(@"成品预览目录不可用。");
     if(![NSFileManager.defaultManager createDirectoryAtPath:session.folder withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建成品预览目录。");
     session.jpeg=[session.folder stringByAppendingPathComponent:@"encoded.jpg"];session.reference=[session.folder stringByAppendingPathComponent:@"reference.png"];
@@ -373,7 +377,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   }
   @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,resolved->quality_/100.0));check(task);[_runtime guardOwnerWithNSString:owner];if(!preview)[_runtime validateSourceWithNSString:path withNSString:frozen->sourceSha_];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存效果图。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
   [task acceptWithDouble:1];NSDictionary *attributes=[NSFileManager.defaultManager attributesOfItemAtPath:target error:nil];NSDictionary *result=@{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"geometryWidth":@(fullPlan->width_),@"geometryHeight":@(fullPlan->height_),@"bytes":attributes[NSFileSize]?:@0,@"preview":@(preview),@"model":preview?[profile modelVersion]:[CcHueviaSharedSharedExportModel ofWithCcHueviaNcpPresetPreviewProfile:profile withCcHueviaAlbumPhotoExportSpec_Resolved:resolved],@"exportSpec":preview?@"":[resolved identity],@"rawColorStatus":colorStatus};
-  if(!preview){@try{NSString *saved=[_runtime commitVersionWithNSString:path withNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen withNSString:target withNSString:json(result) withJavaUtilFunctionBooleanSupplier:task];[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];return [NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];}@finally{[NSFileManager.defaultManager removeItemAtPath:target error:nil];}}
+  if(!preview){@try{NSString *saved=[_runtime commitVersionWithNSString:path withNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen withNSString:target withNSString:json(result) withJavaUtilFunctionBooleanSupplier:task];if(!snapshot)[_runtime markEditExportedWithNSString:owner withCcHueviaAlbumPhotoEditStore_Draft:frozen];return [NSJSONSerialization JSONObjectWithData:[saved dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];}@finally{[NSFileManager.defaultManager removeItemAtPath:target error:nil];}}
   NSMutableDictionary *withSource=[result mutableCopy];withSource[@"sourceWidth"]=@(uncomposed->width_);withSource[@"sourceHeight"]=@(uncomposed->height_);return withSource;
 }
 @end

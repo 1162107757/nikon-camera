@@ -20,11 +20,13 @@ class ExportPreviewPage extends StatefulWidget {
     required this.recipe,
     required this.owner,
     required this.options,
+    this.reviewOnly = false,
   });
   final AppState state;
   final Photo photo;
   final Json recipe, options;
   final String owner;
+  final bool reviewOnly;
   @override
   State<ExportPreviewPage> createState() => _ExportPreviewPageState();
 }
@@ -118,6 +120,7 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
         'owner': widget.owner,
         'recipe': widget.recipe,
         ...widget.options,
+        if (widget.reviewOnly) 'snapshot': true,
       }, job);
       if (!mounted || serial != revision || accountChanged) {
         await close(result['id'] as String);
@@ -207,6 +210,10 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
   }
 
   Future<void> commit() async {
+    if (widget.reviewOnly) {
+      Navigator.pop(context);
+      return;
+    }
     if (session == null || committing || accountChanged || creating) return;
     debounce?.cancel();
     // Keep the frame queue drained before committing its owning session.
@@ -360,6 +367,8 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
               }
             : null,
         child: Semantics(
+          container: true,
+          explicitChildNodes: true,
           image: true,
           label: before ? '编码前的实际像素' : '实际 JPEG 解码像素',
           child: frame == null
@@ -496,6 +505,7 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
                             Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
                                     '成品预览',
@@ -520,13 +530,15 @@ class _ExportPreviewPageState extends State<ExportPreviewPage> {
                               width: 52,
                               height: 48,
                               child: Tooltip(
-                                message: '导出并分享',
+                                message: widget.reviewOnly
+                                    ? '完成预览，返回导出设置'
+                                    : '导出并分享',
                                 child: TextButton(
                                   onPressed: enabled ? commit : null,
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
                                   ),
-                                  child: const Text('导出'),
+                                  child: Text(widget.reviewOnly ? '完成' : '导出'),
                                 ),
                               ),
                             ),

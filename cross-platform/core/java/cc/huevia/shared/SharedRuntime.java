@@ -73,7 +73,23 @@ public final class SharedRuntime {
         if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
         if(operation.startsWith("version."))return SharedJson.encode(versions(operation,p,cancel));
         if(operation.startsWith("local."))return SharedJson.encode(SharedLocalEdits.request(operation,p,cancel));
+        if(operation.equals("export.describe")) {
+            if(cancel.getAsBoolean())throw new InterruptedIOException("导出设置已取消。");
+            PhotoEditStore.Draft frozen=reviewView(text(p,"path",32768),text(p,"owner",64),SharedJson.encode(object(p.get("recipe"))));
+            return SharedJson.encode(SharedExportSpecs.describe(frozen,p,cancel));
+        }
         switch(operation){
+            case "source.inspect":{
+                if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");
+                String owner=text(p,"owner",64);guardOwner(owner);File source=privateFile(text(p,"path",4096));
+                File directory=new File(root,"originals").getCanonicalFile();
+                if(!directory.equals(source.getParentFile())||!source.getName().matches("[0-9a-f]{64}\\.(jpg|jpeg|png|nef|nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)"))throw new IOException("只能导出原图库中的完整照片。");
+                if(source.length()<1||source.length()>512L*1024*1024)throw new IOException("原始文件大小无效。");
+                String sha=sourceIdentity(source.getPath(),true),expected=text(p,"expectedSourceSha",64);
+                if(!source.getName().startsWith(sha)||(!expected.isEmpty()&&!expected.equals(sha)))throw new IOException("原始文件已变化，未导出。");
+                if(cancel.getAsBoolean())throw new InterruptedIOException("原始文件检查已取消。");guardOwner(owner);
+                result=map("path",source.getPath(),"sourceSha",sha,"bytes",source.length(),"format",source.getName().substring(65).toUpperCase(Locale.ROOT));break;
+            }
             case "ui.preferences.get":result=new SharedUiState(root).read();break;
             case "ui.preferences.set":result=new SharedUiState(root).update(p);break;
             case "core.schema":return CoreEngine.schema();
@@ -279,6 +295,9 @@ public final class SharedRuntime {
     public synchronized String sourceIdentity(String path,boolean force)throws IOException{return edits.sourceIdentity(privateFile(path),force);}
     public synchronized PhotoEditStore.Draft originalView(String path,String owner)throws IOException{
         guardOwner(owner);return new PhotoEditStore.Draft(sourceIdentity(path,false),null,"无滤镜",0,false);
+    }
+    public synchronized PhotoEditStore.Draft reviewView(String path,String owner,String json)throws IOException{
+        guardOwner(owner);return edits.snapshot(privateFile(path),owner,json,personal::visible);
     }
     public synchronized PhotoEditStore.Draft localView(String path,String owner,String json)throws IOException{
         guardOwner(owner);

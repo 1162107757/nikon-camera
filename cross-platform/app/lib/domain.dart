@@ -157,6 +157,7 @@ class HueviaCore {
   }
 
   Future<Json> galleryPermission() => _invoke('galleryPermission', {});
+  Future<Json> gallerySavePermission() => _invoke('gallerySavePermission', {});
 
   /// Originals stream to private storage; RAW pixels never enter the UI heap.
   Future<String> importFile(XFile selected, {required bool preset}) async {

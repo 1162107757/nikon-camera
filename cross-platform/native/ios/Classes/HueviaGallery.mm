@@ -1,4 +1,5 @@
 #import "HueviaGallery.h"
+#import "HueviaPublication.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
@@ -40,11 +41,22 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
 @property(nonatomic,strong) NSMutableOrderedSet<NSString *> *known;
 @property(atomic) BOOL dirty;
 @property(nonatomic) BOOL permissionPending;
+@property(nonatomic,strong) HueviaPublication *publication;
 - (NSDictionary *)thumbnail:(PHAsset *)asset resource:(PHAssetResource *)resource task:(HueviaTask *)task;
 - (NSDictionary *)importAsset:(PHAsset *)asset resource:(PHAssetResource *)resource task:(HueviaTask *)task;
 @end
 
 @implementation HueviaGallery
+- (void)configurePublicationWithRuntime:(CcHueviaSharedSharedRuntime *)runtime {self.publication=[[HueviaPublication alloc] initWithRoot:self.root runtime:runtime];}
+- (void)requestSavePermission:(FlutterResult)reply {
+  NSAssert(NSThread.isMainThread,@"Photos permission belongs to the main thread");
+  if(self.permissionPending){reply([FlutterError errorWithCode:@"BUSY" message:@"请先完成当前照片权限选择。" details:nil]);return;}
+  self.permissionPending=YES;
+  [HueviaPublication requestSavePermission:^(NSDictionary *result){
+    self.permissionPending=NO;
+    reply([[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:result options:0 error:nil] encoding:NSUTF8StringEncoding]);
+  }];
+}
 - (instancetype)initWithRoot:(NSString *)root {
   self=[super init];if(self){_root=[root copy];_known=[NSMutableOrderedSet orderedSet];NSString *incoming=privateDirectory(root,@"incoming");for(NSString *name in [NSFileManager.defaultManager contentsOfDirectoryAtPath:incoming error:nil])if([name hasPrefix:@"photokit-"]&&[name hasSuffix:@".part"]){BOOL directory=NO;NSString *path=[incoming stringByAppendingPathComponent:name];if([NSFileManager.defaultManager fileExistsAtPath:path isDirectory:&directory]&&!directory)[NSFileManager.defaultManager removeItemAtPath:path error:nil];}[PHPhotoLibrary.sharedPhotoLibrary registerChangeObserver:self];}return self;
 }
@@ -84,6 +96,7 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
   if(![p isKindOfClass:NSDictionary.class])galleryFail(@"相册操作数据无效。");
   galleryCheck(task);
   if([operation isEqualToString:@"gallery.access"])return [self access];
+  if([operation isEqualToString:@"gallery.publish"]){if(!self.publication)galleryFail(@"应用尚未准备好。");return [self.publication publish:p task:task];}
   if(!canRead()){self.index=nil;[self.known removeAllObjects];galleryFail(@"请允许访问照片，或选择指定照片。");}
   if([operation isEqualToString:@"gallery.page"]){
     id requested=p[@"offset"]?:@0;

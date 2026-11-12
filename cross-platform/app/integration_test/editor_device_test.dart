@@ -28,6 +28,9 @@ import '../test/selection_workspace_test.dart' as selection_workspace;
 import '../test/legacy_local_editor_test.dart' as legacy_local_editor;
 import '../test/legacy_local_preview_test.dart' as legacy_local_preview;
 import '../test/legacy_local_workspace_test.dart' as legacy_local_workspace;
+import '../test/export_settings_model_test.dart' as export_model;
+import '../test/export_save_test.dart' as export_save;
+import '../test/export_settings_test.dart' as export_forms;
 
 // Reuse the actual widget regressions on Android when the Windows test engine
 // cannot finish. Native image/RAW behavior has its separate integration suite.
@@ -68,4 +71,7 @@ void main() {
   legacy_local_editor.main();
   legacy_local_preview.main();
   legacy_local_workspace.main();
+  export_model.main();
+  export_save.main();
+  export_forms.main();
 }

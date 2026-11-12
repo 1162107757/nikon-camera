@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import cc.huevia.album.LocalPhotoRepository;
 import cc.huevia.album.PhotoSort;
 import cc.huevia.album.PhotoEditStore;
+import cc.huevia.album.SharedGalleryPublication;
+import cc.huevia.album.SharedGalleryCopies;
 import cc.huevia.library.SharedJson;
 import cc.huevia.shared.*;
 import java.io.*;
@@ -19,10 +21,34 @@ final class NativeGallery {
     private final SharedRuntime runtime;
     private final LocalPhotoRepository repository;
     private final LinkedHashMap<String,LocalPhotoRepository.PhonePhoto> known=new LinkedHashMap<>();
+    private final Object publicationLock=new Object();
+    private Thread publicationThread;
+    private String publicationJob;
     NativeGallery(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;repository=new LocalPhotoRepository(this.context);}
     String access()throws IOException{return SharedJson.encode(SharedRuntime.map("access",repository.access().name().toLowerCase(Locale.ROOT)));}
     synchronized String request(String operation,String json,BooleanSupplier cancel)throws IOException{
+        return request(operation,json,cancel,"");
+    }
+    void cancel(String job){synchronized(publicationLock){if(job!=null&&job.equals(publicationJob)&&publicationThread!=null)publicationThread.interrupt();}}
+    void cancelAll(){synchronized(publicationLock){if(publicationThread!=null)publicationThread.interrupt();}}
+    synchronized String request(String operation,String json,BooleanSupplier cancel,String job)throws IOException{
         Map<String,Object> p=SharedJson.object(json);
+        if(operation.equals("gallery.publish")){
+            synchronized(publicationLock){publicationThread=Thread.currentThread();publicationJob=job;}
+            try {
+                if(cancel.getAsBoolean())throw new InterruptedIOException("保存照片已取消。");
+                String owner=SharedRuntime.text(p,"owner",64),id=SharedRuntime.text(p,"id",64);runtime.guardOwner(owner);
+                Map<String,Object> saved=SharedJson.object(runtime.request("version.open",SharedJson.encode(SharedRuntime.map("owner",owner,"id",id)),cancel,value->{}));
+                if(cancel.getAsBoolean())throw new InterruptedIOException("保存照片已取消。");
+                runtime.guardOwner(owner);
+                Object extra=p.get("extraCopy");if(extra!=null&&!(extra instanceof Boolean))throw new IOException("导出副本选项无效。");
+                String filename=SharedRuntime.text(p,"filename",256),sha=(String)saved.get("sha256");File source=new File((String)saved.get("path"));long bytes=((Number)saved.get("bytes")).longValue();
+                String uri=Boolean.TRUE.equals(extra)?SharedGalleryCopies.publish(context,source,owner,id,SharedRuntime.text(p,"operationId",32),filename,sha,bytes,cancel):SharedGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,false,cancel);
+                runtime.guardOwner(owner);
+                repository.invalidatePhoneIndex();
+                return SharedJson.encode(SharedRuntime.map("id",id,"published",true,"uri",uri,"verified",true));
+            } finally {synchronized(publicationLock){publicationJob=null;publicationThread=null;Thread.interrupted();}}
+        }
         if(operation.equals("gallery.access"))return access();
         if(operation.equals("gallery.page")){
             if(Boolean.TRUE.equals(p.get("refresh")))repository.invalidatePhoneIndex();

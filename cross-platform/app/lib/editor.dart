@@ -5,7 +5,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
@@ -17,7 +16,8 @@ import 'widgets.dart';
 import 'raw_develop.dart';
 import 'crop_workspace.dart';
 import 'split_compare.dart';
-import 'export_preview.dart';
+import 'export_settings.dart';
+import 'export_settings_model.dart';
 import 'border_panel.dart';
 import 'photo_workspace_chrome.dart';
 import 'local_adjustments.dart';
@@ -458,117 +458,35 @@ class _EditorPageState extends State<EditorPage> {
     }
   }
 
+  bool exportWindowOpen = false;
   Future<void> export() async {
-    if (!toolsEnabled) return;
-    try {
-      await settleLocalAdjustments();
-    } catch (failure) {
-      if (mounted) report(context, failure);
-      return;
-    }
-    if (!mounted) return;
-    var inspect = false;
-    final size = await showModalBottomSheet<String>(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (sheet) => StatefulBuilder(
-        builder: (sheet, refresh) => SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    '导出照片',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(height: 8),
-                  const Text('保留原图，另存为 sRGB JPEG。'),
-                  CheckboxListTile(
-                    value: inspect,
-                    title: const Text('检查成品与编码前像素'),
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (value) =>
-                        refresh(() => inspect = value == true),
-                  ),
-                  const SizedBox(height: 20),
-                  FilledButton(
-                    onPressed: () => Navigator.pop(sheet, 'full'),
-                    child: const Text('完整尺寸 · JPEG 95'),
-                  ),
-                  const SizedBox(height: 12),
-                  OutlinedButton(
-                    onPressed: () => Navigator.pop(sheet, 'share'),
-                    child: const Text('适合分享 · 长边 2048'),
-                  ),
-                  const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () => Navigator.pop(sheet, 'custom'),
-                    child: const Text('自定义尺寸与质量'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    if (size == null || !mounted) return;
-    final custom = size == 'custom'
-        ? await customExportOptions()
-        : <String, dynamic>{};
-    if (custom == null || !mounted) return;
+    if (!toolsEnabled || exportWindowOpen) return;
+    exportWindowOpen = true;
     debounce?.cancel();
     final previousJob = activeJob;
-    final job = 'export-${DateTime.now().microsecondsSinceEpoch}';
-    final frozen = recipe.clone();
     revision++;
     setState(() {
-      exporting = true;
       rendering = false;
-      progress = 0;
-      activeJob = job;
+      activeJob = null;
     });
+    ExportSettings? settings;
     try {
+      await settleLocalAdjustments();
       if (previousJob != null) await widget.state.core.cancel(previousJob);
-      if (!mounted) return;
-      final payload = <String, dynamic>{
-        'path': widget.photo.path,
-        'recipe': frozen.data,
-        'owner': owner,
-        'size': size,
-        ...custom,
-      };
-      final result = inspect
-          ? await hueRootPage<Json>(
-              context,
-              MaterialPageRoute(
-                builder: (_) => ExportPreviewPage(
-                  state: widget.state,
-                  photo: widget.photo,
-                  recipe: frozen.data,
-                  owner: owner,
-                  options: {'size': size, ...custom},
-                ),
-              ),
-            )
-          : await widget.state.core.call('media.export', payload, job);
-      if (result == null) return;
-      if (!mounted) return;
-      await SharePlus.instance.share(
-        ShareParams(
-          sharePositionOrigin: shareAnchor(context),
-          files: [XFile(result['path'] as String)],
-          text: '${widget.photo.name} · Huevia',
-        ),
+      if (!mounted || !sameOwner || leaving) return;
+      settings = ExportSettings(
+        state: widget.state,
+        photo: widget.photo,
+        owner: owner,
+        recipe: recipe.clone().data,
+        isCurrent: () => mounted && sameOwner && !leaving,
       );
+      await showLegacyExport(context, settings, preview: preview);
     } catch (failure) {
-      if (mounted) report(context, failure);
+      if (mounted && sameOwner) report(context, failure);
     } finally {
+      settings?.dispose();
+      exportWindowOpen = false;
       if (mounted) {
         setState(() {
           exporting = false;
@@ -577,74 +495,6 @@ class _EditorPageState extends State<EditorPage> {
         });
       }
     }
-  }
-
-  Future<Json?> customExportOptions() async {
-    final edge = TextEditingController(text: '2048'),
-        form = GlobalKey<FormState>();
-    var quality = 95;
-    final result = await hueDialog<Json>(
-      context: context,
-      builder: (dialog) => StatefulBuilder(
-        builder: (context, refresh) => AlertDialog(
-          title: const Text('自定义导出'),
-          content: Form(
-            key: form,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('设置长边上限，保留较小照片的尺寸。'),
-                  const SizedBox(height: 16),
-                  TextFormField(
-                    controller: edge,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: '长边 640–8192 px',
-                    ),
-                    validator: (value) {
-                      final parsed = int.tryParse(value ?? '');
-                      return parsed == null || parsed < 640 || parsed > 8192
-                          ? '请输入 640–8192 之间的整数。'
-                          : null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  Text('JPEG 质量 $quality'),
-                  Slider(
-                    min: 70,
-                    max: 100,
-                    divisions: 30,
-                    value: quality.toDouble(),
-                    onChanged: (value) =>
-                        refresh(() => quality = value.round()),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialog),
-              child: const Text('取消'),
-            ),
-            FilledButton(
-              onPressed: () {
-                if (form.currentState!.validate()) {
-                  Navigator.pop(dialog, {
-                    'longEdge': int.parse(edge.text),
-                    'quality': quality,
-                  });
-                }
-              },
-              child: const Text('导出'),
-            ),
-          ],
-        ),
-      ),
-    );
-    edge.dispose();
-    return result;
   }
 
   Widget slider(

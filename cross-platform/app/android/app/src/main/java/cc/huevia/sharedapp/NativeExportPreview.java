@@ -21,6 +21,7 @@ final class NativeExportPreview {
         File folder,jpeg,reference;
         BitmapRegionDecoder before,after; int width,height,orientation;
         long length,modified;
+        boolean snapshot;
     }
     NativeExportPreview(Context context,SharedRuntime runtime){
         this.context=context;this.runtime=runtime;
@@ -58,6 +59,7 @@ final class NativeExportPreview {
         valid(s);
         if(operation.equals("media.exportPreviewFrame"))return frame(s,p,cancel);
         if(operation.equals("media.exportPreviewCommit")){
+            if(s.snapshot)throw new IOException("此窗口仅预览，请返回导出设置后保存。");
             runtime.validateSource(s.source,s.draft.sourceSha);
             Map<String,Object> result=SharedRuntime.map("path",s.jpeg.getPath(),"width",s.width,"height",s.height,
                 "bytes",s.jpeg.length(),"preview",false,"model",s.model,"exportSpec",s.spec);
@@ -75,7 +77,10 @@ final class NativeExportPreview {
     }
     private String create(Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         close();Session s=new Session();s.owner=SharedRuntime.text(p,"owner",64);s.source=SharedRuntime.text(p,"path",4096);
-        File source=runtime.privateFile(s.source);s.draft=runtime.freezeEdit(s.source,s.owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        if(p.containsKey("snapshot")&&!(p.get("snapshot") instanceof Boolean))throw new IOException("预览快照标识无效。");
+        s.snapshot=Boolean.TRUE.equals(p.get("snapshot"));
+        File source=runtime.privateFile(s.source);s.draft=s.snapshot?runtime.reviewView(s.source,s.owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(s.source,s.owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        if(s.snapshot&&!s.draft.sourceSha.equals(SharedRuntime.text(p,"expectedSourceSha",64)))throw new IOException("原图与打开导出设置时不同，请重新打开照片。");
         runtime.validateSource(s.source,s.draft.sourceSha);s.length=source.length();s.modified=source.lastModified();
         if(source.getName().toLowerCase(Locale.ROOT).matches(".*\\.(nef|nrw|dng|arw|cr2|cr3|raf|rw2|orf|pef|srw)$"))throw new IOException("请完成 RAW 显影后预览成品。");
         s.id=UUID.randomUUID().toString();s.folder=new File(new File(runtime.root(),"previews"),"export-"+s.id);

@@ -55,6 +55,10 @@
 - (FlutterError *)onCancelWithArguments:(id)arguments {self.events=nil;return nil;}
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
+  if([call.method isEqualToString:@"gallerySavePermission"]){
+    if(!self.gallery){reply([FlutterError errorWithCode:@"NOT_READY" message:@"应用尚未准备好。" details:nil]);return;}
+    [self.gallery requestSavePermission:reply];return;
+  }
   if([call.method isEqualToString:@"galleryPermission"]){
     if(!self.gallery){reply([FlutterError errorWithCode:@"NOT_READY" message:@"应用尚未准备好。" details:nil]);return;}
     [self.gallery requestPermissionFrom:self.presenter reply:reply];return;
@@ -113,6 +117,7 @@
           stage=@"media runtime";
           HueviaMedia *media=[[HueviaMedia alloc] initWithRuntime:runtime root:self.root];
           HueviaGallery *gallery=[[HueviaGallery alloc] initWithRoot:self.root];
+          [gallery configurePublicationWithRuntime:runtime];
           __weak HueviaCorePlugin *weakHost=self;
           gallery.changed=^{dispatch_async(dispatch_get_main_queue(),^{HueviaCorePlugin *host=weakHost;if(host.events)host.events(@{@"kind":@"galleryChanged"});});};
           self.runtime=runtime;self.camera=camera;self.media=media;self.gallery=gallery;
