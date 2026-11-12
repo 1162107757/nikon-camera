@@ -1,0 +1,53 @@
+[
+  {
+    "uri": "content://media/external_primary/images/media/85",
+    "bytes": 4373,
+    "sha256": "6fe48ad48993ada758f8985aecfeab8507958318d0272a56441bb737849326a3",
+    "metadata": {
+      "306": "",
+      "36867": "",
+      "36868": "",
+      "36880": "",
+      "36881": "",
+      "36882": "",
+      "37520": "",
+      "37521": "",
+      "37522": ""
+    },
+    "mediaStore": "Row: 0 _id=85, _display_name=Huevia_Huevia-QA-native-publish_9a9919dd335a.jpg, _size=4373, mime_type=image/jpeg, owner_package_name=cc.huevia.next, datetaken=NULL, date_added=1794460035"
+  },
+  {
+    "uri": "content://media/external_primary/images/media/91",
+    "bytes": 4540,
+    "sha256": "c1ca5e799530d248c118f2e8db108905a75271635e6bd75bfae61f29654a1e20",
+    "metadata": {
+      "306": "2026:11:12 06:59:47",
+      "36867": "2026:11:12 06:59:47",
+      "36868": "2026:11:12 06:59:47",
+      "36880": "+00:00",
+      "36881": "+00:00",
+      "36882": "+00:00",
+      "37520": "991",
+      "37521": "991",
+      "37522": "991"
+    },
+    "mediaStore": "Row: 0 _id=91, _display_name=Huevia_Huevia-QA-native-copy_5f586cfaad65.jpg, _size=4540, mime_type=image/jpeg, owner_package_name=cc.huevia.next, datetaken=1794466787991, date_added=1794466788"
+  },
+  {
+    "uri": "content://media/external_primary/images/media/92",
+    "bytes": 4540,
+    "sha256": "e001ed2cc9dcee3f38cbef8da47a44d2b92afa859d61e24d82dfea9dd541a8f5",
+    "metadata": {
+      "306": "2026:11:12 06:59:48",
+      "36867": "2026:11:12 06:59:48",
+      "36868": "2026:11:12 06:59:48",
+      "36880": "+00:00",
+      "36881": "+00:00",
+      "36882": "+00:00",
+      "37520": "496",
+      "37521": "496",
+      "37522": "496"
+    },
+    "mediaStore": "Row: 0 _id=92, _display_name=Huevia_Huevia-QA-native-copy_050f671ac7e7.jpg, _size=4540, mime_type=image/jpeg, owner_package_name=cc.huevia.next, datetaken=1794466788496, date_added=1794466788"
+  }
+]

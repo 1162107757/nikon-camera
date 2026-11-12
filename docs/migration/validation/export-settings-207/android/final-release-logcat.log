@@ -1,0 +1,236 @@
+11-12 08:00:10.366   339   339 D Zygote  : Forked child process 24853
+11-12 08:00:10.397   531   561 I ActivityManager: Start proc 24853:cc.huevia.next/u0a105 for pre-top-activity {cc.huevia.next/cc.huevia.sharedapp.MainActivity}
+11-12 08:00:10.435 24853 24853 W cc.huevia.next: Unexpected CPU variant for X86 using defaults: x86_64
+11-12 08:00:10.444   433   460 I adbd    : jdwp connection from 24853
+11-12 08:00:10.556 24853 24853 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10105; state: ENABLED
+11-12 08:00:10.788 24853 24853 V GraphicsEnvironment: ANGLE Developer option for 'cc.huevia.next' set to: 'default'
+11-12 08:00:10.788 24853 24853 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-12 08:00:10.814 24853 24853 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 08:00:10.815 24853 24853 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 08:00:10.898 24853 24870 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-12 08:00:10.901 24853 24870 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-12 08:00:10.913 24853 24870 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-12 08:00:11.020 24853 24872 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-12 08:00:11.060 24853 24853 W cc.huevia.next: type=1400 audit(0.0:1475): avc: denied { read } for name="max_map_count" dev="proc" ino=353826 scontext=u:r:untrusted_app:s0:c105,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=cc.huevia.next
+11-12 08:00:11.090 24853 24853 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 08:00:11.090 24853 24853 I flutter :     The application opted out of Impeller by either using the
+11-12 08:00:11.090 24853 24853 I flutter :     `--no-enable-impeller` flag or the
+11-12 08:00:11.090 24853 24853 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 08:00:11.090 24853 24853 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 08:00:11.090 24853 24853 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 08:00:11.090 24853 24853 I flutter :     the issue.
+11-12 08:00:11.090 24853 24853 I flutter : 
+11-12 08:00:11.090 24853 24853 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 08:00:11.090 24853 24853 I flutter : 
+11-12 08:00:11.092 24853 24853 D HostConnection: createUnique: call
+11-12 08:00:11.098 24853 24853 D HostConnection: HostConnection::get() New Host Connection established 0x7b521749f850, tid 24853
+11-12 08:00:11.104 24853 24853 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 08:00:11.115 24853 24853 D EGL_emulation: eglCreateContext: 0x7b521749e890: maj 3 min 0 rcv 3
+11-12 08:00:11.118 24853 24853 D EGL_emulation: eglCreateContext: 0x7b521749f310: maj 3 min 0 rcv 3
+11-12 08:00:11.150 24853 24874 D HostConnection: createUnique: call
+11-12 08:00:11.151 24853 24874 D HostConnection: HostConnection::get() New Host Connection established 0x7b521749e050, tid 24874
+11-12 08:00:11.168 24853 24874 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 08:00:11.171 24853 24874 D EGL_emulation: eglMakeCurrent: 0x7b521749f310: ver 3 0 (tinfo 0x7b544162b100) (first time)
+11-12 08:00:11.345 24853 24868 D HostConnection: createUnique: call
+11-12 08:00:11.347 24853 24868 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b70d0, tid 24868
+11-12 08:00:11.354 24853 24868 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 08:00:11.356 24853 24868 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-12 08:00:11.360 24853 24868 D EGL_emulation: eglCreateContext: 0x7b52174b7f10: maj 3 min 0 rcv 3
+11-12 08:00:11.363 24853 24868 D EGL_emulation: eglMakeCurrent: 0x7b52174b7f10: ver 3 0 (tinfo 0x7b544162b180) (first time)
+11-12 08:00:11.381 24853 24868 I Gralloc4: mapper 4.x is not supported
+11-12 08:00:11.382 24853 24868 D HostConnection: createUnique: call
+11-12 08:00:11.386 24853 24868 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b73d0, tid 24868
+11-12 08:00:11.387 24853 24868 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-12 08:00:11.387 24853 24868 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3efffe000 size 0x2000
+11-12 08:00:11.390 24853 24868 W Gralloc4: allocator 4.x is not supported
+11-12 08:00:11.400 24853 24868 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 08:00:11.400 24853 24873 D HostConnection: createUnique: call
+11-12 08:00:11.403 24853 24873 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b7550, tid 24873
+11-12 08:00:11.410 24853 24873 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 08:00:11.415 24853 24873 D EGL_emulation: eglMakeCurrent: 0x7b521749e890: ver 3 0 (tinfo 0x7b544162b200) (first time)
+11-12 08:00:11.419 24853 24873 D EGL_emulation: eglCreateContext: 0x7b52174b8150: maj 3 min 0 rcv 3
+11-12 08:00:11.824 24853 24873 E BLASTBufferQueue: [SurfaceView[cc.huevia.next/cc.huevia.sharedapp.MainActivity]#1](f:0,a:0) rejecting buffer:active_size=1080x2340, requested_size=1080x2340 buffer{size=1080x2214 transform=0}
+11-12 08:00:12.620 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 39618(2136KB) AllocSpace objects, 4(80KB) LOS objects, 91% free, 2342KB/26MB, paused 17.050ms total 125.221ms
+11-12 08:00:14.498 24853 24873 D EGL_emulation: app_time_stats: avg=529.32ms min=74.82ms max=1992.31ms count=5
+11-12 08:00:16.590 24853 24891 D ProfileInstaller: Installing profile for cc.huevia.next
+11-12 08:01:03.153 24853 24868 D EGL_emulation: app_time_stats: avg=25537.82ms min=416.88ms max=50658.75ms count=2
+11-12 08:01:03.209 24853 24873 D EGL_emulation: app_time_stats: avg=12177.43ms min=32.44ms max=48478.17ms count=4
+11-12 08:01:04.264 24853 24873 D EGL_emulation: app_time_stats: avg=1054.84ms min=1054.84ms max=1054.84ms count=1
+11-12 08:01:04.301 24853 24868 D EGL_emulation: app_time_stats: avg=1146.61ms min=1146.61ms max=1146.61ms count=1
+11-12 08:01:05.306 24853 24873 D EGL_emulation: app_time_stats: avg=520.86ms min=56.33ms max=985.39ms count=2
+11-12 08:01:06.248 24853 24868 D EGL_emulation: app_time_stats: avg=1947.45ms min=1947.45ms max=1947.45ms count=1
+11-12 08:01:06.762 24853 24873 D EGL_emulation: app_time_stats: avg=161.66ms min=28.03ms max=468.77ms count=9
+11-12 08:01:07.364 24853 24868 D EGL_emulation: app_time_stats: avg=1096.82ms min=1096.82ms max=1096.82ms count=1
+11-12 08:01:08.709 24853 24868 D EGL_emulation: app_time_stats: avg=1345.30ms min=1345.30ms max=1345.30ms count=1
+11-12 08:01:08.744 24853 24873 D EGL_emulation: app_time_stats: avg=660.41ms min=28.46ms max=1347.77ms count=3
+11-12 08:01:09.794 24853 24873 D EGL_emulation: app_time_stats: avg=1049.82ms min=1049.82ms max=1049.82ms count=1
+11-12 08:01:09.800 24853 24868 D EGL_emulation: app_time_stats: avg=1090.43ms min=1090.43ms max=1090.43ms count=1
+11-12 08:01:44.742 24853 24868 D EGL_emulation: app_time_stats: avg=34942.27ms min=34942.27ms max=34942.27ms count=1
+11-12 08:01:44.812 24853 24873 D EGL_emulation: app_time_stats: avg=17508.26ms min=59.76ms max=34956.75ms count=2
+11-12 08:01:45.892 24853 24868 D EGL_emulation: app_time_stats: avg=1146.02ms min=1146.02ms max=1146.02ms count=1
+11-12 08:01:45.907 24853 24873 D EGL_emulation: app_time_stats: avg=1095.48ms min=1095.48ms max=1095.48ms count=1
+11-12 08:02:40.225 24853 24873 D EGL_emulation: app_time_stats: avg=27158.66ms min=26.87ms max=54290.46ms count=2
+11-12 08:02:41.227 24853 24873 D EGL_emulation: app_time_stats: avg=58.64ms min=23.98ms max=285.34ms count=17
+11-12 08:02:41.447 24853 24868 D EGL_emulation: app_time_stats: avg=55554.58ms min=55554.58ms max=55554.58ms count=1
+11-12 08:02:42.490 24853 24873 D EGL_emulation: app_time_stats: avg=631.11ms min=267.24ms max=994.98ms count=2
+11-12 08:02:42.549 24853 24868 D EGL_emulation: app_time_stats: avg=1101.39ms min=1101.39ms max=1101.39ms count=1
+11-12 08:03:10.732 24853 24868 D EGL_emulation: app_time_stats: avg=28182.97ms min=28182.97ms max=28182.97ms count=1
+11-12 08:03:10.788 24853 24873 D EGL_emulation: app_time_stats: avg=14148.64ms min=89.87ms max=28207.41ms count=2
+11-12 08:03:11.806 24853 24873 D EGL_emulation: app_time_stats: avg=1017.64ms min=1017.64ms max=1017.64ms count=1
+11-12 08:03:11.868 24853 24868 D EGL_emulation: app_time_stats: avg=1128.29ms min=1128.29ms max=1128.29ms count=1
+11-12 08:03:12.878 24853 24868 D EGL_emulation: app_time_stats: avg=1009.61ms min=1009.61ms max=1009.61ms count=1
+11-12 08:03:13.314 24853 24873 D EGL_emulation: app_time_stats: avg=753.12ms min=79.81ms max=1426.44ms count=2
+11-12 08:03:14.324 24853 24873 D EGL_emulation: app_time_stats: avg=47.73ms min=26.07ms max=121.99ms count=21
+11-12 08:03:15.339 24853 24873 D EGL_emulation: app_time_stats: avg=50.34ms min=37.95ms max=63.59ms count=20
+11-12 08:03:16.361 24853 24873 D EGL_emulation: app_time_stats: avg=50.81ms min=25.86ms max=89.62ms count=20
+11-12 08:03:17.886 24853 24873 D EGL_emulation: app_time_stats: avg=107.41ms min=21.70ms max=838.83ms count=14
+11-12 08:03:17.896 24853 24868 D EGL_emulation: app_time_stats: avg=2507.96ms min=559.50ms max=4456.42ms count=2
+11-12 08:04:03.740 24853 24868 D EGL_emulation: app_time_stats: avg=45832.07ms min=45832.07ms max=45832.07ms count=1
+11-12 08:04:03.778 24853 24873 D EGL_emulation: app_time_stats: avg=22945.73ms min=41.87ms max=45849.59ms count=2
+11-12 08:04:04.841 24853 24868 D EGL_emulation: app_time_stats: avg=1094.53ms min=1094.53ms max=1094.53ms count=1
+11-12 08:04:04.886 24853 24873 D EGL_emulation: app_time_stats: avg=1107.95ms min=1107.95ms max=1107.95ms count=1
+11-12 08:04:05.961 24853 24873 D EGL_emulation: app_time_stats: avg=537.16ms min=37.03ms max=1037.30ms count=2
+11-12 08:04:06.890 24853 24868 D EGL_emulation: app_time_stats: avg=2041.01ms min=2041.01ms max=2041.01ms count=1
+11-12 08:04:06.992 24853 24873 D EGL_emulation: app_time_stats: avg=58.93ms min=29.91ms max=102.51ms count=17
+11-12 08:04:08.043 24853 24873 D EGL_emulation: app_time_stats: avg=49.23ms min=20.09ms max=89.51ms count=21
+11-12 08:04:08.133 24853 24868 D EGL_emulation: app_time_stats: avg=1240.08ms min=1240.08ms max=1240.08ms count=1
+11-12 08:04:09.101 24853 24873 D EGL_emulation: app_time_stats: avg=75.09ms min=34.97ms max=402.27ms count=14
+11-12 08:04:10.026 24853 24868 D EGL_emulation: app_time_stats: avg=1892.19ms min=1892.19ms max=1892.19ms count=1
+11-12 08:04:10.112 24853 24873 D EGL_emulation: app_time_stats: avg=71.92ms min=36.62ms max=143.82ms count=14
+11-12 08:04:10.179 24853 24860 I cc.huevia.next: Background concurrent copying GC freed 85434(4693KB) AllocSpace objects, 170(19MB) LOS objects, 49% free, 3077KB/6154KB, paused 17.867ms total 811.769ms
+11-12 08:04:11.125 24853 24873 D EGL_emulation: app_time_stats: avg=43.82ms min=24.96ms max=77.49ms count=23
+11-12 08:04:12.580 24853 24873 D EGL_emulation: app_time_stats: avg=120.69ms min=37.35ms max=810.34ms count=12
+11-12 08:04:12.646 24853 24868 D EGL_emulation: app_time_stats: avg=2618.03ms min=2618.03ms max=2618.03ms count=1
+11-12 08:04:13.668 24853 24873 D EGL_emulation: app_time_stats: avg=543.95ms min=105.25ms max=982.64ms count=2
+11-12 08:04:13.813 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 12977(622KB) AllocSpace objects, 15(2036KB) LOS objects, 16% free, 5167KB/6154KB, paused 5.468ms total 151.470ms
+11-12 08:04:14.211 24853 24860 I cc.huevia.next: Background concurrent copying GC freed 115494(3686KB) AllocSpace objects, 1(20KB) LOS objects, 49% free, 4405KB/8810KB, paused 523us total 367.780ms
+11-12 08:04:14.317 24853 24868 D EGL_emulation: app_time_stats: avg=1670.10ms min=1670.10ms max=1670.10ms count=1
+11-12 08:04:15.463 24853 24873 D EGL_emulation: app_time_stats: avg=223.74ms min=38.32ms max=827.20ms count=8
+11-12 08:04:15.520 24853 24868 D EGL_emulation: app_time_stats: avg=1201.57ms min=1201.57ms max=1201.57ms count=1
+11-12 08:04:52.014 24853 24868 D EGL_emulation: app_time_stats: avg=36493.81ms min=36493.81ms max=36493.81ms count=1
+11-12 08:04:52.058 24853 24873 D EGL_emulation: app_time_stats: avg=18295.67ms min=116.91ms max=36474.42ms count=2
+11-12 08:04:53.115 24853 24868 D EGL_emulation: app_time_stats: avg=1099.01ms min=1099.01ms max=1099.01ms count=1
+11-12 08:04:53.119 24853 24873 D EGL_emulation: app_time_stats: avg=1060.45ms min=1060.45ms max=1060.45ms count=1
+11-12 08:04:54.308 24853 24873 D EGL_emulation: app_time_stats: avg=395.21ms min=44.48ms max=913.89ms count=3
+11-12 08:04:54.472 24853 24868 D EGL_emulation: app_time_stats: avg=1356.14ms min=1356.14ms max=1356.14ms count=1
+11-12 08:06:10.625 24853 24868 D EGL_emulation: app_time_stats: avg=38074.92ms min=384.15ms max=75765.70ms count=2
+11-12 08:06:10.630 24853 24873 D EGL_emulation: app_time_stats: avg=5451.24ms min=25.10ms max=75736.19ms count=14
+11-12 08:06:11.692 24853 24873 D EGL_emulation: app_time_stats: avg=1061.03ms min=1061.03ms max=1061.03ms count=1
+11-12 08:06:11.722 24853 24868 D EGL_emulation: app_time_stats: avg=1096.78ms min=1096.78ms max=1096.78ms count=1
+11-12 08:06:13.425 24853 24868 D EGL_emulation: app_time_stats: avg=1701.88ms min=1701.88ms max=1701.88ms count=1
+11-12 08:06:13.455 24853 24873 D EGL_emulation: app_time_stats: avg=881.47ms min=39.79ms max=1723.14ms count=2
+11-12 08:06:14.492 24853 24873 D EGL_emulation: app_time_stats: avg=1036.95ms min=1036.95ms max=1036.95ms count=1
+11-12 08:06:14.526 24853 24868 D EGL_emulation: app_time_stats: avg=1093.16ms min=1093.16ms max=1093.16ms count=1
+11-12 08:06:15.537 24853 24868 D EGL_emulation: app_time_stats: avg=1007.37ms min=1007.37ms max=1007.37ms count=1
+11-12 08:06:16.116 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 119940(3989KB) AllocSpace objects, 13(1320KB) LOS objects, 65% free, 3041KB/8810KB, paused 493us total 124.954ms
+11-12 08:06:16.340 24853 24873 D EGL_emulation: app_time_stats: avg=614.78ms min=56.44ms max=934.85ms count=3
+11-12 08:06:17.366 24853 24873 D EGL_emulation: app_time_stats: avg=40.30ms min=25.98ms max=107.95ms count=25
+11-12 08:06:18.325 24853 24868 D EGL_emulation: app_time_stats: avg=1393.57ms min=619.80ms max=2167.33ms count=2
+11-12 08:06:18.371 24853 24873 D EGL_emulation: app_time_stats: avg=45.26ms min=30.33ms max=73.00ms count=22
+11-12 08:06:20.279 24853 24868 D EGL_emulation: app_time_stats: avg=1954.11ms min=1954.11ms max=1954.11ms count=1
+11-12 08:06:20.330 24853 24873 D EGL_emulation: app_time_stats: avg=195.48ms min=31.62ms max=1526.71ms count=10
+11-12 08:06:21.399 24853 24868 D EGL_emulation: app_time_stats: avg=1118.71ms min=1118.71ms max=1118.71ms count=1
+11-12 08:06:21.412 24853 24873 D EGL_emulation: app_time_stats: avg=1081.30ms min=1081.30ms max=1081.30ms count=1
+11-12 08:06:22.564 24853 24873 D EGL_emulation: app_time_stats: avg=575.96ms min=40.99ms max=1110.94ms count=2
+11-12 08:06:23.135 24853 24868 D EGL_emulation: app_time_stats: avg=1735.99ms min=1735.99ms max=1735.99ms count=1
+11-12 08:06:24.184 24853 24873 D EGL_emulation: app_time_stats: avg=115.44ms min=34.95ms max=1011.93ms count=14
+11-12 08:06:24.249 24853 24868 D EGL_emulation: app_time_stats: avg=1113.96ms min=1113.96ms max=1113.96ms count=1
+11-12 08:06:25.309 24853 24873 D EGL_emulation: app_time_stats: avg=562.18ms min=107.03ms max=1017.33ms count=2
+11-12 08:06:25.828 24853 24860 I cc.huevia.next: NativeAlloc concurrent copying GC freed 13689(665KB) AllocSpace objects, 11(1184KB) LOS objects, 49% free, 2926KB/5852KB, paused 638us total 420.903ms
+11-12 08:06:25.968 24853 24868 D EGL_emulation: app_time_stats: avg=1719.11ms min=1719.11ms max=1719.11ms count=1
+11-12 08:06:26.343 24853 24873 D EGL_emulation: app_time_stats: avg=46.24ms min=31.68ms max=72.04ms count=22
+11-12 08:06:27.157 24853 24868 D EGL_emulation: app_time_stats: avg=1187.04ms min=1187.04ms max=1187.04ms count=1
+11-12 08:06:27.347 24853 24873 D EGL_emulation: app_time_stats: avg=41.65ms min=30.90ms max=82.14ms count=24
+11-12 08:06:28.881 24853 24868 D EGL_emulation: app_time_stats: avg=1723.68ms min=1723.68ms max=1723.68ms count=1
+11-12 08:06:28.919 24853 24873 D EGL_emulation: app_time_stats: avg=261.88ms min=29.00ms max=1332.00ms count=6
+11-12 08:06:29.935 24853 24873 D EGL_emulation: app_time_stats: avg=1015.35ms min=1015.35ms max=1015.35ms count=1
+11-12 08:06:29.979 24853 24868 D EGL_emulation: app_time_stats: avg=1096.59ms min=1096.59ms max=1096.59ms count=1
+11-12 08:06:30.993 24853 24868 D EGL_emulation: app_time_stats: avg=1011.30ms min=1011.30ms max=1011.30ms count=1
+11-12 08:06:31.041 24853 24873 D EGL_emulation: app_time_stats: avg=551.84ms min=79.45ms max=1024.22ms count=2
+11-12 08:06:32.504 24853 24873 D EGL_emulation: app_time_stats: avg=205.58ms min=9.36ms max=1019.77ms count=7
+11-12 08:06:32.556 24853 24868 D EGL_emulation: app_time_stats: avg=779.32ms min=468.10ms max=1090.54ms count=2
+11-12 08:06:34.264 24853 24868 D EGL_emulation: app_time_stats: avg=1707.01ms min=1707.01ms max=1707.01ms count=1
+11-12 08:06:34.282 24853 24873 D EGL_emulation: app_time_stats: avg=888.86ms min=77.79ms max=1699.93ms count=2
+11-12 08:06:35.305 24853 24873 D EGL_emulation: app_time_stats: avg=1022.34ms min=1022.34ms max=1022.34ms count=1
+11-12 08:06:35.345 24853 24868 D EGL_emulation: app_time_stats: avg=1080.75ms min=1080.75ms max=1080.75ms count=1
+11-12 08:06:36.315 24853 24873 D EGL_emulation: app_time_stats: avg=504.97ms min=52.13ms max=957.81ms count=2
+11-12 08:06:36.716 24853 24868 D EGL_emulation: app_time_stats: avg=685.39ms min=390.20ms max=980.58ms count=2
+11-12 08:07:30.339 24853 24868 D EGL_emulation: app_time_stats: avg=53618.12ms min=53618.12ms max=53618.12ms count=1
+11-12 08:07:30.354 24853 24873 D EGL_emulation: app_time_stats: avg=3859.35ms min=18.17ms max=53233.16ms count=14
+11-12 08:07:31.444 24853 24868 D EGL_emulation: app_time_stats: avg=1104.52ms min=1104.52ms max=1104.52ms count=1
+11-12 08:07:31.486 24853 24873 D EGL_emulation: app_time_stats: avg=1131.58ms min=1131.58ms max=1131.58ms count=1
+11-12 08:07:32.495 24853 24873 D EGL_emulation: app_time_stats: avg=331.80ms min=39.91ms max=907.75ms count=3
+11-12 08:07:32.908 24853 24868 D EGL_emulation: app_time_stats: avg=1464.14ms min=1464.14ms max=1464.14ms count=1
+11-12 08:07:34.382 24853 24873 D EGL_emulation: app_time_stats: avg=117.74ms min=22.23ms max=1017.99ms count=16
+11-12 08:07:34.443 24853 24868 D EGL_emulation: app_time_stats: avg=511.09ms min=83.70ms max=1094.80ms count=3
+11-12 08:07:35.392 24853 24873 D EGL_emulation: app_time_stats: avg=504.31ms min=79.93ms max=928.68ms count=2
+11-12 08:07:35.504 24853 24868 D EGL_emulation: app_time_stats: avg=1060.90ms min=1060.90ms max=1060.90ms count=1
+11-12 08:07:35.646 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 67702(2368KB) AllocSpace objects, 6(312KB) LOS objects, 31% free, 4032KB/5852KB, paused 17.972ms total 197.339ms
+11-12 08:07:36.420 24853 24873 D EGL_emulation: app_time_stats: avg=49.48ms min=26.39ms max=175.74ms count=20
+11-12 08:07:37.270 24853 24868 D EGL_emulation: app_time_stats: avg=882.04ms min=591.21ms max=1172.88ms count=2
+11-12 08:07:37.443 24853 24873 D EGL_emulation: app_time_stats: avg=37.68ms min=26.88ms max=76.76ms count=27
+11-12 08:07:37.607 24853 24860 I cc.huevia.next: Background concurrent copying GC freed 8271(424KB) AllocSpace objects, 19(2164KB) LOS objects, 49% free, 3095KB/6190KB, paused 2.706ms total 247.924ms
+11-12 08:07:38.456 24853 24873 D EGL_emulation: app_time_stats: avg=43.37ms min=25.33ms max=63.04ms count=23
+11-12 08:07:39.052 24853 24868 D EGL_emulation: app_time_stats: avg=1779.78ms min=1779.78ms max=1779.78ms count=1
+11-12 08:07:39.492 24853 24873 D EGL_emulation: app_time_stats: avg=44.24ms min=32.64ms max=77.43ms count=23
+11-12 08:07:40.649 24853 24868 D EGL_emulation: app_time_stats: avg=1591.21ms min=1591.21ms max=1591.21ms count=1
+11-12 08:07:40.656 24853 24873 D EGL_emulation: app_time_stats: avg=193.63ms min=33.99ms max=917.26ms count=6
+11-12 08:07:42.503 24853 24868 D EGL_emulation: app_time_stats: avg=1851.79ms min=1851.79ms max=1851.79ms count=1
+11-12 08:07:42.536 24853 24873 D EGL_emulation: app_time_stats: avg=939.85ms min=36.12ms max=1843.57ms count=2
+11-12 08:07:43.557 24853 24873 D EGL_emulation: app_time_stats: avg=1020.50ms min=1020.50ms max=1020.50ms count=1
+11-12 08:07:43.591 24853 24868 D EGL_emulation: app_time_stats: avg=1087.43ms min=1087.43ms max=1087.43ms count=1
+11-12 08:07:44.597 24853 24868 D EGL_emulation: app_time_stats: avg=997.75ms min=997.75ms max=997.75ms count=1
+11-12 08:07:44.674 24853 24873 D EGL_emulation: app_time_stats: avg=371.32ms min=79.89ms max=917.72ms count=3
+11-12 08:07:46.119 24853 24873 D EGL_emulation: app_time_stats: avg=288.81ms min=19.50ms max=1024.22ms count=5
+11-12 08:07:46.165 24853 24868 D EGL_emulation: app_time_stats: avg=784.16ms min=472.10ms max=1096.21ms count=2
+11-12 08:07:47.128 24853 24873 D EGL_emulation: app_time_stats: avg=504.40ms min=68.44ms max=940.36ms count=2
+11-12 08:07:47.331 24853 24868 D EGL_emulation: app_time_stats: avg=582.83ms min=188.62ms max=977.03ms count=2
+11-12 08:07:48.187 24853 24873 D EGL_emulation: app_time_stats: avg=74.67ms min=28.66ms max=188.32ms count=14
+11-12 08:07:49.255 24853 24873 D EGL_emulation: app_time_stats: avg=1068.41ms min=1068.41ms max=1068.41ms count=1
+11-12 08:07:49.256 24853 24868 D EGL_emulation: app_time_stats: avg=962.01ms min=816.16ms max=1107.86ms count=2
+11-12 08:09:38.411 24853 24873 D EGL_emulation: app_time_stats: avg=54577.74ms min=39.55ms max=109115.93ms count=2
+11-12 08:09:38.947 24853 24868 D EGL_emulation: app_time_stats: avg=109690.41ms min=109690.41ms max=109690.41ms count=1
+11-12 08:09:40.112 24853 24873 D EGL_emulation: app_time_stats: avg=281.96ms min=28.18ms max=1126.06ms count=6
+11-12 08:09:40.126 24853 24868 D EGL_emulation: app_time_stats: avg=1179.09ms min=1179.09ms max=1179.09ms count=1
+11-12 08:09:41.929 24853 24868 D EGL_emulation: app_time_stats: avg=1802.68ms min=1802.68ms max=1802.68ms count=1
+11-12 08:09:41.990 24853 24873 D EGL_emulation: app_time_stats: avg=936.68ms min=62.55ms max=1810.81ms count=2
+11-12 08:09:43.029 24853 24873 D EGL_emulation: app_time_stats: avg=1038.74ms min=1038.74ms max=1038.74ms count=1
+11-12 08:09:43.076 24853 24868 D EGL_emulation: app_time_stats: avg=1146.41ms min=1146.41ms max=1146.41ms count=1
+11-12 08:09:44.055 24853 24873 D EGL_emulation: app_time_stats: avg=341.12ms min=45.86ms max=892.42ms count=3
+11-12 08:09:44.383 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 66593(2353KB) AllocSpace objects, 11(540KB) LOS objects, 21% free, 4848KB/6190KB, paused 5.157ms total 44.637ms
+11-12 08:09:45.062 24853 24873 D EGL_emulation: app_time_stats: avg=36.30ms min=17.77ms max=90.03ms count=27
+11-12 08:09:45.531 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 3885(187KB) AllocSpace objects, 15(2036KB) LOS objects, 38% free, 3790KB/6190KB, paused 9.113ms total 76.378ms
+11-12 08:09:46.064 24853 24873 D EGL_emulation: app_time_stats: avg=32.23ms min=15.25ms max=91.83ms count=29
+11-12 08:09:46.199 24853 24860 I cc.huevia.next: Background concurrent copying GC freed 60019(2015KB) AllocSpace objects, 11(1296KB) LOS objects, 49% free, 3065KB/6131KB, paused 4.829ms total 131.977ms
+11-12 08:09:46.967 24853 24853 E flutter : [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'num' in type cast
+11-12 08:09:46.967 24853 24853 E flutter : #0      _EditorPageState.initState.<anonymous closure>.<anonymous closure> (package:huevia/editor.dart:86)
+11-12 08:09:46.967 24853 24853 E flutter : #1      State.setState (package:flutter/src/widgets/framework.dart:1201)
+11-12 08:09:46.967 24853 24853 E flutter : #2      _EditorPageState.initState.<anonymous closure> (package:huevia/editor.dart:86)
+11-12 08:09:46.967 24853 24853 E flutter : #3      _RootZone.runUnaryGuarded (dart:async/zone.dart:963)
+11-12 08:09:46.967 24853 24853 E flutter : #4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381)
+11-12 08:09:46.967 24853 24853 E flutter : #5      _DelayedData.perform (dart:async/stream_impl.dart:573)
+11-12 08:09:46.967 24853 24853 E flutter : #6      _PendingEvents.handleNext (dart:async/stream_impl.dart:678)
+11-12 08:09:46.967 24853 24853 E flutter : #7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649)
+11-12 08:09:46.967 24853 24853 E flutter : #8      _microtaskLoop (dart:async/schedule_microtask.dart:40)
+11-12 08:09:46.967 24853 24853 E flutter : #9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:49)
+11-12 08:09:46.967 24853 24853 E flutter : 
+11-12 08:09:47.090 24853 24873 D EGL_emulation: app_time_stats: avg=34.86ms min=12.95ms max=61.54ms count=29
+11-12 08:09:47.196 24853 24860 I cc.huevia.next: Background young concurrent copying GC freed 23919(830KB) AllocSpace objects, 24(2164KB) LOS objects, 33% free, 4047KB/6131KB, paused 543us total 161.265ms
+11-12 08:09:47.993 24853 24860 I cc.huevia.next: Background concurrent copying GC freed 47570(1572KB) AllocSpace objects, 17(1496KB) LOS objects, 49% free, 3645KB/7291KB, paused 33.413ms total 307.772ms
+11-12 08:09:48.138 24853 24873 D EGL_emulation: app_time_stats: avg=35.27ms min=14.08ms max=59.82ms count=28
+11-12 08:09:48.873 24853 24853 E flutter : [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'num' in type cast
+11-12 08:09:48.873 24853 24853 E flutter : #0      _EditorPageState.initState.<anonymous closure>.<anonymous closure> (package:huevia/editor.dart:86)
+11-12 08:09:48.873 24853 24853 E flutter : #1      State.setState (package:flutter/src/widgets/framework.dart:1201)
+11-12 08:09:48.873 24853 24853 E flutter : #2      _EditorPageState.initState.<anonymous closure> (package:huevia/editor.dart:86)
+11-12 08:09:48.873 24853 24853 E flutter : #3      _RootZone.runUnaryGuarded (dart:async/zone.dart:963)
+11-12 08:09:48.873 24853 24853 E flutter : #4      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381)
+11-12 08:09:48.873 24853 24853 E flutter : #5      _DelayedData.perform (dart:async/stream_impl.dart:573)
+11-12 08:09:48.873 24853 24853 E flutter : #6      _PendingEvents.handleNext (dart:async/stream_impl.dart:678)
+11-12 08:09:48.873 24853 24853 E flutter : #7      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649)
+11-12 08:09:48.873 24853 24853 E flutter : #8      _microtaskLoop (dart:async/schedule_microtask.dart:40)
+11-12 08:09:48.873 24853 24853 E flutter : #9      _startMicrotaskLoop (dart:async/schedule_microtask.dart:49)
+11-12 08:09:48.873 24853 24853 E flutter : 
+11-12 08:10:50.244 24853 24868 D EGL_emulation: app_time_stats: avg=67167.60ms min=67167.60ms max=67167.60ms count=1
+11-12 08:10:50.270 24853 24873 D EGL_emulation: app_time_stats: avg=2700.50ms min=23.55ms max=61296.82ms count=23
+11-12 08:10:51.313 24853 24873 D EGL_emulation: app_time_stats: avg=1042.70ms min=1042.70ms max=1042.70ms count=1
+11-12 08:10:51.354 24853 24868 D EGL_emulation: app_time_stats: avg=1109.88ms min=1109.88ms max=1109.88ms count=1

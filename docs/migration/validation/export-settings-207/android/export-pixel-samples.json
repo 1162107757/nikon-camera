@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "sourceCommit": "38594afc49c9deae79e14b46f147bf45d0936225",
+  "size": [
+    1080,
+    2340
+  ],
+  "devicePixelRatio": 2.625,
+  "files": [
+    {
+      "file": "207-original-export-settings.png",
+      "sha256": "fcd581a637abefde790522953273f990c6f9675d86b42ade3df27159f7f1eb59"
+    },
+    {
+      "file": "207-final-release-quick.png",
+      "sha256": "ef0f74dbce2d9917fd0dd817707aaa50f85c1b8f8944df59b9bfd6dd91e7c5f4"
+    }
+  ],
+  "colorSamples": [
+    {
+      "name": "editor-background",
+      "position": [
+        40,
+        250
+      ],
+      "original": [
+        43,
+        33,
+        40
+      ],
+      "next": [
+        43,
+        33,
+        40
+      ],
+      "equal": true
+    },
+    {
+      "name": "sheet-surface",
+      "position": [
+        50,
+        2070
+      ],
+      "original": [
+        255,
+        255,
+        255
+      ],
+      "next": [
+        255,
+        255,
+        255
+      ],
+      "equal": true
+    },
+    {
+      "name": "more-container",
+      "position": [
+        90,
+        1940
+      ],
+      "original": [
+        239,
+        237,
+        233
+      ],
+      "next": [
+        239,
+        237,
+        233
+      ],
+      "equal": true
+    },
+    {
+      "name": "primary-container",
+      "position": [
+        70,
+        2100
+      ],
+      "original": [
+        244,
+        214,
+        192
+      ],
+      "next": [
+        244,
+        214,
+        192
+      ],
+      "equal": true
+    },
+    {
+      "name": "masked-export-control",
+      "position": [
+        860,
+        110
+      ],
+      "original": [
+        133,
+        118,
+        28
+      ],
+      "next": [
+        133,
+        118,
+        28
+      ],
+      "equal": true
+    }
+  ],
+  "quickPrimaryInk": {
+    "originalBounds": [
+      457,
+      2081,
+      706,
+      2116
+    ],
+    "nextBounds": [
+      454,
+      2080,
+      708,
+      2114
+    ],
+    "originalCenterX": 581.5,
+    "nextCenterX": 581.0,
+    "centerDelta": -0.5
+  },
+  "confirmedGeometry": {
+    "quickFooterOriginal": [
+      58,
+      2030,
+      1022,
+      2167
+    ],
+    "quickFooterNext": [
+      58,
+      2030,
+      1022,
+      2167
+    ]
+  },
+  "limitations": [
+    "The original quick form has two version rows; the test app has five saved/current/original rows. Only corresponding regions and fixed footer positions are compared.",
+    "Glyph ink extents differ by up to 3 physical pixels; advanced card top differs by 2 physical pixels. This is not full pixel parity certification.",
+    "Thumbnail content, labels, status-bar clock and image-dependent system-navigation color are not equivalent test inputs."
+  ]
+}

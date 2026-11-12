@@ -1,0 +1,626 @@
+{
+  "schema": 1,
+  "milestone": 207,
+  "sourceCommit": "38594afc49c9deae79e14b46f147bf45d0936225",
+  "fullMigrationComplete": false,
+  "artifacts": [
+    {
+      "apk": "dist/migration207/huevia-0.31.0-dev-207-android-arm64.apk",
+      "bytes": 51078214,
+      "sha256": "19b8c2c61c5bc804851ca31ec273d8a04344f792c35d6c99cab22da862d06f5d",
+      "abi": "arm64-v8a",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "rawJniCallbacksPreserved": true,
+      "rawJniInfoConstructorPreserved": true,
+      "r8MappingSha256": "841e74074a53df7172cca123fc3e6453e7e8a94d6ea60ade121920be9b1b0db6",
+      "sourceCommit": "38594afc49c9deae79e14b46f147bf45d0936225",
+      "fonts": [
+        "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+        "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+        "assets/photo-borders/parameters.ttf"
+      ],
+      "models": [
+        "assets/portrait/face_landmarks_detector.tflite"
+      ],
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "apk": "dist/migration207/huevia-0.31.0-dev-207-android-x64.apk",
+      "bytes": 54449646,
+      "sha256": "b477ee3ea64804b9bcf172c2f6ad1843aefc537008d1d9ed26aaaf3866013291",
+      "abi": "x86_64",
+      "mode": "release",
+      "nativeLibraries": 8,
+      "verified": true,
+      "rawJniCallbacksPreserved": true,
+      "rawJniInfoConstructorPreserved": true,
+      "r8MappingSha256": "841e74074a53df7172cca123fc3e6453e7e8a94d6ea60ade121920be9b1b0db6",
+      "sourceCommit": "38594afc49c9deae79e14b46f147bf45d0936225",
+      "fonts": [
+        "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+        "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+        "assets/photo-borders/parameters.ttf"
+      ],
+      "models": [
+        "assets/portrait/face_landmarks_detector.tflite"
+      ],
+      "elfAndStoredLibraryAlignment16KiB": true
+    },
+    {
+      "schema": 1,
+      "verified": true,
+      "sourceCommit": "38594afc49c9deae79e14b46f147bf45d0936225",
+      "sha256": "64642d4a6e515537e92fca229e1ad1501e363677903f21f2ea61b87be1fabcf2",
+      "bytes": 29443534,
+      "bundleIdentifier": "cc.huevia.next",
+      "version": "0.31.0",
+      "build": "207",
+      "minimumOS": "16.0",
+      "binaries": [
+        {
+          "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+          "sha256": "2ebc19f6b8349e08a4f01ec7c56fcfa30c710a4a66fd4188badd9862761c028c",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+          "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+          "sha256": "187c5b95e42b5b3cb8fc261ce95a4959cdb399b87420d03f9d0d34edd5f443aa",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                15,
+                0,
+                0
+              ]
+            }
+          ]
+        },
+        {
+          "file": "Payload/Huevia.app/Runner",
+          "sha256": "2ee8d5385d067028bb15facaecca98dc79a8502a1e5923bc0def10c64c322019",
+          "slices": [
+            {
+              "architecture": "arm64",
+              "platform": "iPhoneOS",
+              "minimumOS": [
+                16,
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      ],
+      "referenceFonts": [
+        {
+          "file": "Roboto-Regular.ttf",
+          "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+          ]
+        },
+        {
+          "file": "Roboto-Medium.ttf",
+          "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+          ]
+        },
+        {
+          "file": "Roboto-Bold.ttf",
+          "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+          "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+          "nativeAssets": [
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+            "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+          ]
+        }
+      ],
+      "deviceInstallationVerified": false,
+      "fullParityComplete": false,
+      "runId": 43178284420,
+      "jobId": 131047919516,
+      "artifactId": 13926521046,
+      "archiveSha256": "79b7beb6c9156e318b38abd7f1f5f0a675f5423c4367fefdafe85c6ed15e5685",
+      "archiveBytes": 29686293,
+      "flutterChecks": 151,
+      "nativeAvatarChecks": 38,
+      "sharedChecks": 507,
+      "simulatorScenarioChecks": 1,
+      "photoKitInitial": "none",
+      "photoKitConsent": "full",
+      "photoKitFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb",
+      "ipa": "dist/migration207/huevia-0.31.0-dev-207-ios-unsigned.ipa"
+    }
+  ],
+  "checks": {
+    "sharedGolden": 507,
+    "localCommandsIncluded": 123,
+    "androidFullWidgetScenarios": 66,
+    "androidFullFlutterIncludingTeardown": 146,
+    "androidFullWidgetSource": "a8e4e810401461bc576c8a997b60b5e8ef500aeb",
+    "androidFinalExportWidgetScenarios": 4,
+    "androidFinalExportFlutterIncludingTeardown": 15,
+    "androidFinalExportSource": "38594afc49c9deae79e14b46f147bf45d0936225",
+    "androidNativeMedia": 82,
+    "androidNativePipeline": 1,
+    "androidNativeSource": "5fe6036d2f43123cb0885e9c0d8f46a6b7b6dedd",
+    "androidReadPermissionDuringPublication": false,
+    "appleFlutter": 151,
+    "appleNativeAvatar": 38,
+    "appleNativePipeline": 1,
+    "originalFrozen": 420,
+    "approvedRepairs": 8,
+    "otherOriginalUnchanged": 412
+  },
+  "validationSourceScope": "Full Android widgets precede the native test-cleanup fix, final export typography and Apple-only metadata repair. The four changed export widgets were rerun on the final source; all production Android native/core code is identical to the recorded native test source.",
+  "ci": {
+    "run": 43178284420,
+    "job": 131047919516,
+    "artifact": 13926521046,
+    "conclusion": "success",
+    "archiveBytes": 29686293,
+    "archiveSha256": "79b7beb6c9156e318b38abd7f1f5f0a675f5423c4367fefdafe85c6ed15e5685"
+  },
+  "evidenceFiles": [
+    {
+      "path": "docs/migration/validation/export-settings-207/android/android-published-fixtures.json",
+      "bytes": 1950,
+      "sha256": "ab582d6e1fda648d5de35a495a45d06d308729e63eac67e35b895f58bf957596"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/arm64-badging.log",
+      "bytes": 5893,
+      "sha256": "dbcd127dd35aa099ac0de3bc9a83d5236650620f61e38fa30f9c8ebccdb9cb0e"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/arm64-signature.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/arm64-zipalign.log",
+      "bytes": 19021,
+      "sha256": "58de5b1af67d0fb9a7a8647a03ae40f02a1a2d35510b1e3bf78907f073b8b8e6"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/arm64.json",
+      "bytes": 1010,
+      "sha256": "10b5776e8c292a447f75ede1d546941eca285ed4da7eb8fb49b30c426195e6cc"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/codecs-final-apk.json",
+      "bytes": 277,
+      "sha256": "ac064f220b728663b7975ad819aeb21fd59dcdeeaa8485064279ac1be02d6a1a"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/codecs-final-instrument.log",
+      "bytes": 126,
+      "sha256": "67de62b175eb87e52f729b7011f3e5770a9be904dfc762eaa9e683a7ad594e44"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/codecs-final-run.log",
+      "bytes": 225,
+      "sha256": "e13de80111e49aaeb504146aceeeeebd2bc952a8e8f0ef2b8b62d2da63329b20"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/export-pixel-samples.json",
+      "bytes": 2784,
+      "sha256": "84d0ef71cff5ed6a0415d003a994aa6b7fb4a48209aa339fed1a2b863189c8d6"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-crash.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-logcat.log",
+      "bytes": 31977,
+      "sha256": "533482b73acd3561045610c547239dc536feeb2b613999e1d21775b3fe527997"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-media-store.log",
+      "bytes": 1981,
+      "sha256": "4b49ef599b3a4d9f893abc43e239da299523144dda14af894092f5296e2636fc"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-memory.log",
+      "bytes": 3051,
+      "sha256": "f71dd7e99763e1eaedfebdd7dc388ff1a5d1476405b0c3174f8ef4b30dfff321"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-more.png",
+      "bytes": 162853,
+      "sha256": "3ccd28218c692220a9830f0dcddb6d21bff09cd2bac24b3bbd15396c0820cb06"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-multi-selection.png",
+      "bytes": 339380,
+      "sha256": "61eb97679a477bb1ae87e5b4721ab0312cefa9593d6eccb48198ff199ee83bf9"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-observation.json",
+      "bytes": 2558,
+      "sha256": "a5c31442caec24b721415af7d8315feb93304130c74c8f339c6e03de99a5dd38"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-preview-before100.png",
+      "bytes": 215092,
+      "sha256": "e9b23a3cdf9adb4222fb32b123bd314c854e8ff385ec72d4ba70b07e7b5cbea5"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-preview-return.png",
+      "bytes": 162853,
+      "sha256": "3ccd28218c692220a9830f0dcddb6d21bff09cd2bac24b3bbd15396c0820cb06"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-preview.png",
+      "bytes": 386322,
+      "sha256": "c16389fffc891151bec557eb6e732b26663de582ba23c3e5aabbc8f119009734"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-quick.png",
+      "bytes": 333841,
+      "sha256": "ef0f74dbce2d9917fd0dd817707aaa50f85c1b8f8944df59b9bfd6dd91e7c5f4"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-reopened-export.png",
+      "bytes": 333683,
+      "sha256": "a94e75d0a79f2ab35d35a66703c37bd582af977386b3eb2d15cfcdf94aa7b9ef"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/final-release-save-multi.png",
+      "bytes": 595317,
+      "sha256": "b1eadf7f8ae34f2100fe067c8b5157e06630468983233d18c58375e5b70e6354"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/forms-source385-apk.json",
+      "bytes": 210,
+      "sha256": "02e1ffd231ce3d0bb56ba9c15c2276c42fda1f6c478b391d2da25fed7f2a0171"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/forms-source385-gradle.log",
+      "bytes": 23350,
+      "sha256": "6666e3b0171d95461d124b9318f741d32af3a0dfa7038a0ec00a17891d04fac0"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/forms-source385-logcat.log",
+      "bytes": 106421,
+      "sha256": "0da8db0f68aa086bfcad4566a109cb37477c7fb087365cf5a8d73c9aac36c504"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/forms-source385-result.json",
+      "bytes": 130,
+      "sha256": "7d3c951e2e20d8d2c7f5f34cb9ef7b4a442b0a28de72c0d4dcc222c8ee84b7c4"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/forms-source385-run.log",
+      "bytes": 161,
+      "sha256": "02b3fd8a941246b70fa37a348e38b729d1507581cef445d1c61a3315e1109c62"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/original-export-more.png",
+      "bytes": 171617,
+      "sha256": "6200602ba4ba3dffb4f26fa717a72cd03671cf43f8c97573c1112d2a9d4d3c90"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/original-export-preview.png",
+      "bytes": 387898,
+      "sha256": "1a361ceee72b8bc1f62e54bc50817ffd8e0e2f08833cc028868acb4883145f10"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/original-export-settings.png",
+      "bytes": 326145,
+      "sha256": "fcd581a637abefde790522953273f990c6f9675d86b42ade3df27159f7f1eb59"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/own-publication-85.jpg",
+      "bytes": 4373,
+      "sha256": "6fe48ad48993ada758f8985aecfeab8507958318d0272a56441bb737849326a3"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/own-publication-91.jpg",
+      "bytes": 4540,
+      "sha256": "c1ca5e799530d248c118f2e8db108905a75271635e6bd75bfae61f29654a1e20"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/own-publication-92.jpg",
+      "bytes": 4540,
+      "sha256": "e001ed2cc9dcee3f38cbef8da47a44d2b92afa859d61e24d82dfea9dd541a8f5"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/own-release-103.jpg",
+      "bytes": 90460,
+      "sha256": "ad0f36338fe81122f2bab34ebdd0cfec3cedff8aff56d35f86f282b7246cd0b3"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/own-release-104.jpg",
+      "bytes": 73360,
+      "sha256": "8365a78fa8254efdf4de19b0d3814e44bf71360208887977558139afc6222abb"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/pipeline-final-apk.json",
+      "bytes": 212,
+      "sha256": "636b5b04b0e6907c33274feb15b3ad25d0bd4c0de6f719a7c3a4397cd15cc70b"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/pipeline-final-gradle.log",
+      "bytes": 23350,
+      "sha256": "f1f4e683c2011558e5ec704c31410a81dacba25b003ece50bf26633c36686969"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/pipeline-final-logcat.log",
+      "bytes": 40373,
+      "sha256": "e6900bd216770fd8f38aa7ae847835c64907d1a69e51f7c96990ee1813c19815"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/pipeline-final-permission.json",
+      "bytes": 249,
+      "sha256": "e93e5f5a1f0c4bdd41abc91413e8630115f16cb41fd56db745584a90baaff752"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/pipeline-final-run.log",
+      "bytes": 161,
+      "sha256": "13ba8a8cb9502b203718271788863101c6a57ee28a0ebbaac58559cdff7be257"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/release-arm64-gradle.log",
+      "bytes": 29034,
+      "sha256": "308f2148cba0fd58b8d251a080e50fd829604304e16601b25730d0d5638aa892"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/release-arm64-mapping.txt",
+      "bytes": 8819871,
+      "sha256": "841e74074a53df7172cca123fc3e6453e7e8a94d6ea60ade121920be9b1b0db6"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/release-x64-gradle.log",
+      "bytes": 28852,
+      "sha256": "6c8ab93627fd9ee0ab9013ff5694c93ff670fd28502075df50239bdfed8c4b4f"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/release-x64-mapping.txt",
+      "bytes": 8819871,
+      "sha256": "841e74074a53df7172cca123fc3e6453e7e8a94d6ea60ade121920be9b1b0db6"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/source385-analysis.log",
+      "bytes": 98,
+      "sha256": "902a570ba8d30168ddda87bf5e732e604414f11e8fb6febd88babcbd8ea15558"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/widgets-rc2-apk.json",
+      "bytes": 210,
+      "sha256": "31eeaa62842402527697412bc068de66d6c47cdf04b50435de4a870e7dcb0544"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/widgets-rc2-gradle.log",
+      "bytes": 23350,
+      "sha256": "a712ab10741af09e90b97d7c46e0122cb808a7aa94a631e8b1e47e3ca89865f0"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/widgets-rc2-logcat.log",
+      "bytes": 819946,
+      "sha256": "9cf30b04db0ace60cbd786bb515771774e65b8d7f3768e0fe68b61af70a336c2"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/widgets-rc2-run.log",
+      "bytes": 162,
+      "sha256": "28d7e7602f65ea7a8993e77caf02cfbfb47cc1a775cd93b2498abd6ef27fc518"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/x64-badging.log",
+      "bytes": 5890,
+      "sha256": "35b8ad667cd307fd020192db17d5b337d78a16f1be6efee92a7293808ff1d236"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/x64-signature.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/x64-zipalign.log",
+      "bytes": 18995,
+      "sha256": "d5664b86c82ec946aacc53a642939c517db33d44c8b5c132067c607ee8b034c8"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/android/x64.json",
+      "bytes": 1005,
+      "sha256": "6492c47d442ed9d10493a65b4c6ecd8461f321cdb980e9c23e6fa60f9a9065df"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/core-ios/avatar-build.log",
+      "bytes": 51,
+      "sha256": "ea4090f75f622fb03e64dffcdf8ee0ea79fdd5f11d3163ab1ca96a582531a60b"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/core-ios/avatar.log",
+      "bytes": 133,
+      "sha256": "007f45b16b32d0f4231d10f890517cd49dc105c5b69ad805dadb25799aedfdd4"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/core-ios/parity.json",
+      "bytes": 884,
+      "sha256": "cfd636a342028f679bedecdad75a8703bfe4725e8d243a469a61fe8331552b5a"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/core-ios/translation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/independent-verification.json",
+      "bytes": 3820,
+      "sha256": "fae19597bf52c37897aad825353807a96721d77969ee4d60c1714d2f5ab96a8c"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/analyze.log",
+      "bytes": 97,
+      "sha256": "62b78c6c041ae4ac6891a199df664c9ae63ea2cede4bc58a488b1b97826e984c"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/device-build.log",
+      "bytes": 893,
+      "sha256": "5c83587a52f787c895ccdedde6cd72cf9b641785757ea90d66ed640daf6901ea"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/flutter-bootstrap.log",
+      "bytes": 319,
+      "sha256": "4123ebb13d399425c71c85e3ebc0cbf2c65761247d0f2adb3b6a6dd5f70efa2c"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/flutter-tests.log",
+      "bytes": 31513,
+      "sha256": "5a8ade5866e42e6b99b140fec2c81b70f33b12bd341aa940e415ba79aab4598e"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/flutter-version.json",
+      "bytes": 664,
+      "sha256": "b7403dadf5c0f69ca742286b52247d27d018775233d7b9fb38f35ce69316c419"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/Huevia-QA-PhotoKit.png",
+      "bytes": 121307,
+      "sha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "929882d4c8f067c5df8fa97e765c74339046ca8e368b4a2cdefb02d7c4730cbd"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/native-runtime.json",
+      "bytes": 884,
+      "sha256": "e20f2f84600f21b3da801410c56da9eaefdb286da63e87f68dc0b55d40f77b14"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/pub-get.log",
+      "bytes": 1748,
+      "sha256": "2ee17041025e70a5890ae16f6f7ffea827d3026a304c6408dd986b7c921eaa8d"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/raw-build.log",
+      "bytes": 886,
+      "sha256": "c27296de7136f0effac26561bf421eb89e81120155e7b80bf9e1e6f6b73eac49"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-boot.log",
+      "bytes": 4018,
+      "sha256": "ad56cf84e777eff5b0eeebe0e11d86faf938ba25fe166c017265dcd049f744ac"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-build.log",
+      "bytes": 5157828,
+      "sha256": "ded130d34baba9708ed27bcda2596796fcb2543cfffa6007d2702629e38badbd"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-config.log",
+      "bytes": 270,
+      "sha256": "c542c4d1c025f8264bad639986b461ce1e0925ec741ee802fd2d0f5ef7b85846"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-devices.json",
+      "bytes": 33550,
+      "sha256": "92398544f0780401a5c88333a0a5fa5b20065edda0034d7485807091bdd4e805"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-initial-access.json",
+      "bytes": 347,
+      "sha256": "c9a5cf81af5df42868eeb635a36bcf5b072e3cda9731dfa122c1fae0413423a2"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-pipeline-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-result.json",
+      "bytes": 349,
+      "sha256": "8dee5f5181d4ff0191754c9040f752ba10af750c9884878347796f2b23e8b6cb"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-selection.json",
+      "bytes": 228,
+      "sha256": "2a57d963e1185ba123691a385e2005693004473c0306363b8fedbd066d9526f8"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/apple/mobile-apple/simulator-tests.log",
+      "bytes": 5360,
+      "sha256": "7a6e5acc233015a67f9b715ef5f719cc8c454744c21b25d717b7902b2eb4ed12"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/original-preservation.json",
+      "bytes": 165,
+      "sha256": "468ff8a1f7694e5a110b7500bb1dde0faca9e439359d5da68227aa09be66b042"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/README.md",
+      "bytes": 5668,
+      "sha256": "1cc30e65795bcd4d7029e7e6efa8df11498b789e2927cbe916bf663132475ab7"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/shared/core-final.log",
+      "bytes": 1147,
+      "sha256": "e1068a39a0c6da32a59c2bc9b5925c094b3935b02d80877660adab821e6e3ea0"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/shared/core-golden-38594af.json",
+      "bytes": 759,
+      "sha256": "96571f3dc192db7ae4897133814694f50bbed0d55f913f5bc474e35b9d094eaf"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/shared/source385-check.log",
+      "bytes": 56,
+      "sha256": "8852e8b5a7df214282c6cb1f01d43be42b93fa4fce4c01058093719246e952d3"
+    },
+    {
+      "path": "docs/migration/validation/export-settings-207/shared/source385-inventory.log",
+      "bytes": 122,
+      "sha256": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7"
+    }
+  ]
+}

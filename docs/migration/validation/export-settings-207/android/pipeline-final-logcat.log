@@ -1,0 +1,388 @@
+11-12 06:59:40.516   339   339 D Zygote  : Forked child process 23049
+11-12 06:59:40.518   531   561 I ActivityManager: Start proc 23049:cc.huevia.next/u0a105 for added application cc.huevia.next
+11-12 06:59:40.526 23049 23049 I cc.huevia.next: Late-enabling -Xcheck:jni
+11-12 06:59:40.548 23049 23049 W cc.huevia.next: Unexpected CPU variant for X86 using defaults: x86_64
+11-12 06:59:40.555   433   460 I adbd    : jdwp connection from 23049
+11-12 06:59:40.588 23049 23049 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10105; state: ENABLED
+11-12 06:59:40.597 23049 23049 W ActivityThread: Package uses different ABI(s) than its instrumentation: package[cc.huevia.next]: x86_64, null instrumentation[cc.huevia.next.test]: null, null
+11-12 06:59:40.891 23049 23049 V GraphicsEnvironment: ANGLE Developer option for 'cc.huevia.next' set to: 'default'
+11-12 06:59:40.891 23049 23049 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-12 06:59:41.197 23049 23049 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 06:59:41.198 23049 23049 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 06:59:41.512 23049 23068 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-12 06:59:41.535 23049 23068 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-12 06:59:41.540 23049 23068 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-12 06:59:41.667 23049 23070 I ResourceExtractor: Found extracted resources res_timestamp-207-1794466530868
+11-12 06:59:41.667 23049 23070 I ResourceExtractor: Resource version mismatch res_timestamp-207-1794466779575
+11-12 06:59:41.680 23049 23069 D FlutterJNI: Beginning load of flutter...
+11-12 06:59:41.726 23049 23069 D FlutterJNI: flutter (null) was loaded normally!
+11-12 06:59:41.732 23049 23071 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-12 06:59:42.416 23049 23070 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+11-12 06:59:42.419 23049 23070 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+11-12 06:59:42.496 23049 23070 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+11-12 06:59:42.624 23049 23049 W cc.huevia.next: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (blocked, linking, denied)
+11-12 06:59:42.628 23049 23049 W cc.huevia.next: type=1400 audit(0.0:1345): avc: denied { read } for name="max_map_count" dev="proc" ino=353826 scontext=u:r:untrusted_app:s0:c105,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=cc.huevia.next
+11-12 06:59:42.659 23049 23049 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 06:59:42.659 23049 23049 I flutter :     The application opted out of Impeller by either using the
+11-12 06:59:42.659 23049 23049 I flutter :     `--no-enable-impeller` flag or the
+11-12 06:59:42.659 23049 23049 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 06:59:42.659 23049 23049 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 06:59:42.659 23049 23049 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 06:59:42.659 23049 23049 I flutter :     the issue.
+11-12 06:59:42.659 23049 23049 I flutter : 
+11-12 06:59:42.659 23049 23049 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 06:59:42.659 23049 23049 I flutter : 
+11-12 06:59:42.667 23049 23049 D HostConnection: createUnique: call
+11-12 06:59:42.671 23049 23049 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174aefd0, tid 23049
+11-12 06:59:42.686 23049 23049 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 06:59:42.695 23049 23049 D EGL_emulation: eglCreateContext: 0x7b52174b28d0: maj 3 min 0 rcv 3
+11-12 06:59:42.699 23049 23049 D EGL_emulation: eglCreateContext: 0x7b52174b2450: maj 3 min 0 rcv 3
+11-12 06:59:42.705 23049 23073 D HostConnection: createUnique: call
+11-12 06:59:42.706 23049 23073 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b25d0, tid 23073
+11-12 06:59:42.787 23049 23073 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 06:59:42.801 23049 23073 D EGL_emulation: eglMakeCurrent: 0x7b52174b2450: ver 3 0 (tinfo 0x7b5430241100) (first time)
+11-12 06:59:42.951 23049 23078 I flutter : The Dart VM service is listening on http://127.0.0.1:44653/uDyoYhkYizg=/
+11-12 06:59:43.420 23049 23049 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+11-12 06:59:43.421 23049 23049 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+11-12 06:59:43.422 23049 23049 W cc.huevia.next: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+11-12 06:59:43.422 23049 23049 W cc.huevia.next: Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+11-12 06:59:43.430 23049 23049 D AccessibilityBridge: Setting not found: accessibility_display_inversion_enabled, using default: 0
+11-12 06:59:43.448 23049 23049 D FlutterRenderer: Width is zero. 0,0
+11-12 06:59:43.881 23049 23049 I flutter : 00:00 +0: (setUpAll)
+11-12 06:59:43.931 23049 23049 I flutter : 00:00 +1: Native codecs and LibRaw retain originals, dimensions and white highlights
+11-12 06:59:44.513 23049 23049 I flutter : Native pipeline: semantics baseline 2
+11-12 06:59:44.514 23049 23049 I flutter : Native pipeline: initializing
+11-12 06:59:44.548 23049 23049 I Choreographer: Skipped 63 frames!  The application may be doing too much work on its main thread.
+11-12 06:59:44.682 23049 23049 D FlutterRenderer: Width is zero. 0,0
+11-12 06:59:44.697 23049 23066 D HostConnection: createUnique: call
+11-12 06:59:44.699 23049 23049 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 06:59:44.708 23049 23066 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b2750, tid 23066
+11-12 06:59:44.716 23049 23066 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 06:59:44.727 23049 23066 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-12 06:59:44.732 23049 23066 D EGL_emulation: eglCreateContext: 0x7b52174b2bd0: maj 3 min 0 rcv 3
+11-12 06:59:44.742 23049 23072 I Gralloc4: mapper 4.x is not supported
+11-12 06:59:44.742 23049 23072 D HostConnection: createUnique: call
+11-12 06:59:44.743 23049 23072 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b3710, tid 23072
+11-12 06:59:44.743 23049 23072 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-12 06:59:44.744 23049 23072 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3efffe000 size 0x2000
+11-12 06:59:44.746 23049 23066 D EGL_emulation: eglMakeCurrent: 0x7b52174b2bd0: ver 3 0 (tinfo 0x7b5430241180) (first time)
+11-12 06:59:44.747 23049 23072 W Gralloc4: allocator 4.x is not supported
+11-12 06:59:44.755 23049 23072 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 06:59:44.755 23049 23072 D HostConnection: createUnique: call
+11-12 06:59:44.756 23049 23072 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b2390, tid 23072
+11-12 06:59:44.763 23049 23072 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 06:59:44.765 23049 23072 D EGL_emulation: eglMakeCurrent: 0x7b52174b28d0: ver 3 0 (tinfo 0x7b5430241200) (first time)
+11-12 06:59:44.769 23049 23072 D EGL_emulation: eglCreateContext: 0x7b52174b22d0: maj 3 min 0 rcv 3
+11-12 06:59:44.882 23049 23049 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 06:59:44.998 23049 23049 I flutter : Native operation: media.templateInfo begin
+11-12 06:59:45.041 23049 23049 I flutter : Native operation: media.templateInfo complete
+11-12 06:59:45.041 23049 23049 I flutter : Native operation: online.page begin
+11-12 06:59:45.585 23049 23049 I flutter : Native operation: online.page complete
+11-12 06:59:46.225 23049 23049 I flutter : Native operation: media.templateInfo begin
+11-12 06:59:46.241 23049 23049 I flutter : Native operation: media.templateInfo complete
+11-12 06:59:46.242 23049 23049 I flutter : Native operation: media.templateSet begin
+11-12 06:59:46.294 23049 23049 I flutter : Native operation: media.templateSet complete
+11-12 06:59:46.296 23049 23049 I flutter : Native operation: media.templateSource begin
+11-12 06:59:46.312 23049 23049 I flutter : Native operation: media.templateSource complete
+11-12 06:59:46.359 23049 23088 D ProfileInstaller: Installing profile for cc.huevia.next
+11-12 06:59:46.394 23049 23049 I flutter : Native operation: media.templateSet begin
+11-12 06:59:46.463 23049 23049 I flutter : Native operation: media.templateSet complete
+11-12 06:59:46.464 23049 23049 I flutter : Native operation: media.templateSource begin
+11-12 06:59:46.479 23049 23049 I flutter : Native operation: media.templateSource complete
+11-12 06:59:46.615 23049 23049 I flutter : Native operation: media.templateSet begin
+11-12 06:59:46.643 23049 23049 I flutter : Native operation: media.templateSet failed: 文件不在应用资料目录内。
+11-12 06:59:46.644 23049 23049 I flutter : Native operation: media.templateInfo begin
+11-12 06:59:46.656 23049 23049 I flutter : Native operation: media.templateInfo complete
+11-12 06:59:46.658 23049 23049 I flutter : Native operation: media.templateSource begin
+11-12 06:59:46.681 23049 23049 I flutter : Native operation: media.templateSource failed: 模板样片索引无效。
+11-12 06:59:46.682 23049 23049 I flutter : Native operation: media.templateReset begin
+11-12 06:59:46.716 23049 23049 I flutter : Native operation: media.templateReset complete
+11-12 06:59:46.717 23049 23049 I flutter : Native operation: media.templateInfo begin
+11-12 06:59:46.746 23049 23049 I flutter : Native operation: media.templateInfo complete
+11-12 06:59:46.747 23049 23049 I flutter : Native operation: media.templateSource begin
+11-12 06:59:46.780 23049 23049 I flutter : Native operation: media.templateSource complete
+11-12 06:59:46.816 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:46.895 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:46.897 23049 23049 I flutter : Native pipeline: media.exportPreview begin (border 0)
+11-12 06:59:46.897 23049 23049 I flutter : Native operation: media.exportPreview begin
+11-12 06:59:47.081 23049 23049 I flutter : Native operation: media.exportPreview complete
+11-12 06:59:47.081 23049 23049 I flutter : Native pipeline: media.exportPreview completed
+11-12 06:59:47.082 23049 23049 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 06:59:47.095 23049 23049 I flutter : Native operation: media.exportPreviewCommit failed: 此窗口仅预览，请返回导出设置后保存。
+11-12 06:59:47.097 23049 23049 I flutter : Native operation: media.exportPreviewClose begin
+11-12 06:59:47.110 23049 23049 I flutter : Native operation: media.exportPreviewClose complete
+11-12 06:59:47.111 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:47.127 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:47.129 23049 23049 I flutter : Native pipeline: media.export begin (border 0)
+11-12 06:59:47.130 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:47.275 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:47.278 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:47.279 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:47.313 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:47.315 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:47.344 23049 23049 I flutter : Native operation: media.export failed: 原图与打开导出设置时不同，请重新打开照片。
+11-12 06:59:47.346 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:47.381 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:47.382 23049 23049 I flutter : Native pipeline: media.export begin (border 0)
+11-12 06:59:47.382 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:47.575 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:47.576 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:47.585 23049 23049 I flutter : Native pipeline: gallery.publish begin (border 0)
+11-12 06:59:47.586 23049 23049 I flutter : Native operation: gallery.publish begin
+11-12 06:59:47.744 23049 23049 I flutter : Native operation: gallery.publish complete
+11-12 06:59:47.746 23049 23049 I flutter : Native pipeline: gallery.publish completed
+11-12 06:59:47.754 23049 23049 I flutter : Native publication fixture address: content://media/external_primary/images/media/85
+11-12 06:59:47.755 23049 23049 I flutter : Native pipeline: gallery.publish begin (border 0)
+11-12 06:59:47.755 23049 23049 I flutter : Native operation: gallery.publish begin
+11-12 06:59:47.964 23049 23049 I flutter : Native operation: gallery.publish complete
+11-12 06:59:47.965 23049 23049 I flutter : Native pipeline: gallery.publish completed
+11-12 06:59:47.968 23049 23049 I flutter : Native pipeline: gallery.publish begin (border 0)
+11-12 06:59:47.969 23049 23049 I flutter : Native operation: gallery.publish begin
+11-12 06:59:48.408 23049 23049 I flutter : Native operation: gallery.publish complete
+11-12 06:59:48.408 23049 23049 I flutter : Native pipeline: gallery.publish completed
+11-12 06:59:48.410 23049 23049 I flutter : Native pipeline: gallery.publish begin (border 0)
+11-12 06:59:48.410 23049 23049 I flutter : Native operation: gallery.publish begin
+11-12 06:59:48.477 23049 23049 I flutter : Native operation: gallery.publish complete
+11-12 06:59:48.479 23049 23049 I flutter : Native pipeline: gallery.publish completed
+11-12 06:59:48.480 23049 23049 I flutter : Native pipeline: gallery.publish begin (border 0)
+11-12 06:59:48.480 23049 23049 I flutter : Native operation: gallery.publish begin
+11-12 06:59:48.912 23049 23049 I flutter : Native operation: gallery.publish complete
+11-12 06:59:48.913 23049 23049 I flutter : Native pipeline: gallery.publish completed
+11-12 06:59:48.914 23049 23049 I flutter : Native dated fixture addresses: content://media/external_primary/images/media/91 | content://media/external_primary/images/media/92
+11-12 06:59:48.915 23049 23049 I flutter : Native operation: version.open begin
+11-12 06:59:48.947 23049 23049 I flutter : Native operation: version.open complete
+11-12 06:59:49.007 23049 23049 I flutter : Native operation: media.info begin
+11-12 06:59:49.026 23049 23049 I flutter : Native operation: media.info complete
+11-12 06:59:49.027 23049 23049 I flutter : Native operation: media.templateSet begin
+11-12 06:59:49.091 23049 23049 I flutter : Native operation: media.templateSet complete
+11-12 06:59:49.091 23049 23049 I flutter : Native operation: media.templateSource begin
+11-12 06:59:49.113 23049 23049 I flutter : Native operation: media.templateSource complete
+11-12 06:59:49.113 23049 23049 I flutter : Native operation: media.info begin
+11-12 06:59:49.146 23049 23049 I flutter : Native operation: media.info complete
+11-12 06:59:49.147 23049 23049 I flutter : Native operation: media.templateReset begin
+11-12 06:59:49.179 23049 23049 I flutter : Native operation: media.templateReset complete
+11-12 06:59:49.180 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:49.431 23049 23056 I cc.huevia.next: Background concurrent copying GC freed 527963(17MB) AllocSpace objects, 124(7216KB) LOS objects, 49% free, 5986KB/11MB, paused 1.812ms total 137.513ms
+11-12 06:59:49.468 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:49.469 23049 23049 I flutter : Native operation: media.exportPreview begin
+11-12 06:59:49.596 23049 23049 I flutter : Native operation: media.exportPreview complete
+11-12 06:59:49.630 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:49.869 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:49.872 23049 23049 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 06:59:49.911 23049 23049 I flutter : Native operation: media.exportPreviewFrame complete
+11-12 06:59:50.011 23049 23049 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 06:59:50.024 23049 23049 I flutter : Native operation: media.exportPreviewFrame failed: 预览视口尺寸过大。
+11-12 06:59:50.025 23049 23049 I flutter : Native pipeline: media.exportPreviewCommit begin (border 0)
+11-12 06:59:50.025 23049 23049 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 06:59:50.096 23049 23049 I flutter : Native operation: media.exportPreviewCommit complete
+11-12 06:59:50.096 23049 23049 I flutter : Native pipeline: media.exportPreviewCommit completed
+11-12 06:59:50.120 23049 23049 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 06:59:50.143 23049 23049 I flutter : Native operation: media.exportPreviewCommit failed: 成品预览已失效，请重新打开。
+11-12 06:59:50.145 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:50.408 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:50.408 23049 23049 I flutter : Native operation: media.exportPreview begin
+11-12 06:59:50.563 23049 23049 I flutter : Native operation: media.exportPreview complete
+11-12 06:59:50.596 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:50.810 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:50.812 23049 23049 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 06:59:50.865 23049 23049 I flutter : Native operation: media.exportPreviewFrame complete
+11-12 06:59:50.927 23049 23049 I flutter : Native operation: media.exportPreviewFrame begin
+11-12 06:59:50.966 23049 23049 I flutter : Native operation: media.exportPreviewFrame failed: 预览视口尺寸过大。
+11-12 06:59:50.967 23049 23049 I flutter : Native pipeline: media.exportPreviewCommit begin (border 0)
+11-12 06:59:50.968 23049 23049 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 06:59:51.011 23049 23049 I flutter : Native operation: media.exportPreviewCommit complete
+11-12 06:59:51.011 23049 23049 I flutter : Native pipeline: media.exportPreviewCommit completed
+11-12 06:59:51.038 23049 23049 I flutter : Native operation: media.exportPreviewCommit begin
+11-12 06:59:51.042 23049 23049 I flutter : Native operation: media.exportPreviewCommit failed: 成品预览已失效，请重新打开。
+11-12 06:59:51.043 23049 23049 I flutter : Native operation: media.exportPreview begin
+11-12 06:59:51.210 23049 23049 I flutter : Native operation: media.exportPreview complete
+11-12 06:59:51.211 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:51.514 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:51.514 23049 23049 I flutter : Native operation: media.exportPreviewClose begin
+11-12 06:59:51.530 23049 23049 I flutter : Native operation: media.exportPreviewClose complete
+11-12 06:59:51.531 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:51.752 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:51.755 23049 23049 I flutter : Native operation: media.preview begin
+11-12 06:59:51.892 23049 23049 I flutter : Native operation: media.preview complete
+11-12 06:59:51.894 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:51.911 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:51.911 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:52.130 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:52.131 23049 23049 I flutter : Native operation: local.seedRegion begin
+11-12 06:59:52.163 23049 23049 I flutter : Native operation: local.seedRegion complete
+11-12 06:59:52.163 23049 23049 I flutter : Native operation: local.change begin
+11-12 06:59:52.197 23049 23049 I flutter : Native operation: local.change complete
+11-12 06:59:52.197 23049 23049 I flutter : Native pipeline: media.localPreview begin (border 3)
+11-12 06:59:52.200 23049 23049 I flutter : Native operation: media.localPreview begin
+11-12 06:59:52.361 23049 23049 I flutter : Native operation: media.localPreview complete
+11-12 06:59:52.361 23049 23049 I flutter : Native pipeline: media.localPreview completed
+11-12 06:59:52.363 23049 23049 I flutter : Native operation: local.overlay begin
+11-12 06:59:52.432 23049 23049 I flutter : Native operation: local.overlay complete
+11-12 06:59:52.454 23049 23049 I flutter : Native pipeline: media.localPreview begin (border 0)
+11-12 06:59:52.455 23049 23049 I flutter : Native operation: media.localPreview begin
+11-12 06:59:52.545 23049 23049 I flutter : Native operation: media.localPreview complete
+11-12 06:59:52.547 23049 23049 I flutter : Native pipeline: media.localPreview completed
+11-12 06:59:52.732 23049 23049 I flutter : Native operation: local.change begin
+11-12 06:59:52.761 23049 23049 I flutter : Native operation: local.change complete
+11-12 06:59:52.762 23049 23049 I flutter : Native pipeline: media.localPreview begin (border 3)
+11-12 06:59:52.763 23049 23049 I flutter : Native operation: media.localPreview begin
+11-12 06:59:52.911 23049 23049 I flutter : Native operation: media.localPreview complete
+11-12 06:59:52.912 23049 23049 I flutter : Native pipeline: media.localPreview completed
+11-12 06:59:52.959 23049 23049 I flutter : Native operation: local.change begin
+11-12 06:59:52.981 23049 23049 I flutter : Native operation: local.change complete
+11-12 06:59:52.982 23049 23049 I flutter : Native pipeline: media.localPreview begin (border 3)
+11-12 06:59:52.983 23049 23049 I flutter : Native operation: media.localPreview begin
+11-12 06:59:53.093 23049 23049 I flutter : Native operation: media.localPreview complete
+11-12 06:59:53.094 23049 23049 I flutter : Native pipeline: media.localPreview completed
+11-12 06:59:53.095 23049 23049 I flutter : Native operation: local.change begin
+11-12 06:59:53.112 23049 23049 I flutter : Native operation: local.change complete
+11-12 06:59:53.113 23049 23049 I flutter : Native pipeline: media.cleanupAnalyze begin (border 3)
+11-12 06:59:53.114 23049 23049 I flutter : Native operation: media.cleanupAnalyze begin
+11-12 06:59:53.296 23049 23049 I flutter : Native operation: media.cleanupAnalyze complete
+11-12 06:59:53.297 23049 23049 I flutter : Native pipeline: media.cleanupAnalyze completed
+11-12 06:59:53.297 23049 23049 I flutter : Native operation: media.cleanupAnalyze begin
+11-12 06:59:53.327 23049 23049 I flutter : Native operation: media.cleanupAnalyze failed: 局部区域已变化，请重新选择。
+11-12 06:59:53.328 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:53.343 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:53.346 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:53.528 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:53.545 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.567 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.570 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.595 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.596 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.609 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.611 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.629 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.630 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.645 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.646 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.663 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.664 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.679 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.681 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.696 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.696 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.710 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.711 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.745 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.746 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.764 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.764 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.795 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.795 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.812 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.813 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.827 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.828 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.846 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.847 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.862 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.863 23049 23049 I flutter : Native operation: media.borderInfo begin
+11-12 06:59:53.895 23049 23049 I flutter : Native operation: media.borderInfo complete
+11-12 06:59:53.896 23049 23049 I flutter : Native operation: media.preview begin
+11-12 06:59:53.999 23049 23049 I flutter : Native operation: media.preview complete
+11-12 06:59:54.000 23049 23049 I flutter : Native operation: media.preview begin
+11-12 06:59:54.014 23049 23049 I flutter : Native operation: media.preview failed: 预览边长必须在 128 到 1280 之间。
+11-12 06:59:54.016 23049 23049 I flutter : Native operation: media.preview begin
+11-12 06:59:54.047 23049 23049 I flutter : Native operation: media.preview failed: 预览边长必须在 128 到 1280 之间。
+11-12 06:59:54.048 23049 23049 I flutter : Native pipeline: media.export begin (border 0)
+11-12 06:59:54.048 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:54.180 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:54.181 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:54.182 23049 23049 I flutter : Native operation: version.open begin
+11-12 06:59:54.212 23049 23049 I flutter : Native operation: version.open complete
+11-12 06:59:54.235 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:54.263 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:54.265 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:54.297 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:54.299 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:54.448 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:54.449 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:54.630 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:54.637 23049 23049 I flutter : Native operation: version.list begin
+11-12 06:59:54.846 23049 23049 I flutter : Native operation: version.list complete
+11-12 06:59:54.876 23049 23049 I flutter : Native pipeline: media.export begin (border 0)
+11-12 06:59:54.876 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:55.011 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:55.014 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:55.015 23049 23049 I flutter : Native pipeline: media.cleanupAnalyze begin (border 0)
+11-12 06:59:55.015 23049 23049 I flutter : Native operation: media.cleanupAnalyze begin
+11-12 06:59:55.095 23049 23049 I flutter : Native operation: media.cleanupAnalyze complete
+11-12 06:59:55.096 23049 23049 I flutter : Native pipeline: media.cleanupAnalyze completed
+11-12 06:59:55.096 23049 23049 I flutter : Native pipeline: media.export begin (border 0)
+11-12 06:59:55.097 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:55.244 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:55.246 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:55.247 23049 23049 I flutter : Native pipeline: media.export begin (border 0)
+11-12 06:59:55.247 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:55.377 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:55.379 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:55.379 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:55.395 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:55.396 23049 23049 I flutter : Native pipeline: media.originalPreview begin (border 0)
+11-12 06:59:55.396 23049 23049 I flutter : Native operation: media.originalPreview begin
+11-12 06:59:55.479 23049 23049 I flutter : Native operation: media.originalPreview complete
+11-12 06:59:55.479 23049 23049 I flutter : Native pipeline: media.originalPreview completed
+11-12 06:59:55.479 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:55.492 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:55.543 23049 23049 I flutter : Native pipeline: media.export begin (border 1)
+11-12 06:59:55.543 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:55.763 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:55.764 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:55.764 23049 23049 I flutter : Native pipeline: media.export begin (border 2)
+11-12 06:59:55.765 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:55.930 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:55.931 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:55.931 23049 23049 I flutter : Native pipeline: media.export begin (border 3)
+11-12 06:59:55.931 23049 23049 I flutter : Native operation: media.export begin
+11-12 06:59:56.130 23049 23049 I flutter : Native operation: media.export complete
+11-12 06:59:56.131 23049 23049 I flutter : Native pipeline: media.export completed
+11-12 06:59:56.165 23049 23049 I flutter : Native operation: draft.save begin
+11-12 06:59:56.213 23049 23049 I flutter : Native operation: draft.save complete
+11-12 06:59:56.214 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:56.227 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:56.228 23049 23049 I flutter : Native operation: photo.copy begin
+11-12 06:59:56.292 23049 23049 I flutter : Native operation: photo.copy complete
+11-12 06:59:56.293 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:56.310 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:56.311 23049 23049 I flutter : Native operation: photo.copyUndo begin
+11-12 06:59:56.343 23049 23049 I flutter : Native operation: photo.copyUndo complete
+11-12 06:59:56.346 23049 23049 I flutter : Native operation: draft.load begin
+11-12 06:59:56.363 23049 23049 I flutter : Native operation: draft.load complete
+11-12 06:59:56.452 23049 23049 I flutter : Native operation: media.info begin
+11-12 06:59:56.475 23049 23049 I flutter : Native operation: media.info complete
+11-12 06:59:56.479 23049 23049 I flutter : Native pipeline: media.rawDevelop begin (border 0)
+11-12 06:59:56.479 23049 23049 I flutter : Native operation: media.rawDevelop begin
+11-12 06:59:56.579 23049 23082 D ExifInterface: No image meets the size requirements of a thumbnail image.
+11-12 06:59:56.609 23049 23049 I flutter : Native operation: media.rawDevelop complete
+11-12 06:59:56.611 23049 23049 I flutter : Native pipeline: media.rawDevelop completed
+11-12 06:59:56.662 23049 23049 I flutter : Native pipeline: media.rawDevelop begin (border 0)
+11-12 06:59:56.663 23049 23049 I flutter : Native operation: media.rawDevelop begin
+11-12 06:59:56.741 23049 23082 D ExifInterface: No image meets the size requirements of a thumbnail image.
+11-12 06:59:56.756 23049 23049 I flutter : Native operation: media.rawDevelop complete
+11-12 06:59:56.756 23049 23049 I flutter : Native pipeline: media.rawDevelop completed
+11-12 06:59:56.778 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:56.846 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:56.846 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:56.879 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:56.880 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:56.897 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:56.897 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:56.927 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:56.927 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:56.963 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:56.963 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:56.994 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:56.995 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:57.012 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:57.013 23049 23049 I flutter : Native operation: version.delete begin
+11-12 06:59:57.048 23049 23049 I flutter : Native operation: version.delete complete
+11-12 06:59:57.150 23049 23049 I flutter : Native pipeline: semantics remaining 2
+11-12 06:59:57.292 23049 23049 I flutter : 00:13 +2: (tearDownAll)
+11-12 06:59:57.319 23049 23049 I flutter : 00:13 +3: All tests passed!
+11-12 06:59:57.323   531 10910 I ActivityManager: Killing 23049:cc.huevia.next/u0a105 (adj 0): stop cc.huevia.next due to finished inst
+11-12 06:59:57.372   531   562 I libprocessgroup: Successfully killed process cgroup uid 10105 pid 23049 in 47ms
+11-12 06:59:57.475   339   339 I Zygote  : Process 23049 exited due to signal 9 (Killed)
+11-12 06:59:57.476   531 10910 V ActivityManager: Got obituary of 23049:cc.huevia.next
+11-12 06:59:57.503   531   552 W ActivityManager: setHasOverlayUi called on unknown pid: 23049

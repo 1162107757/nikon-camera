@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "sourceCommit": "38594afc49c9deae79e14b46f147bf45d0936225",
+  "utc": "2026-11-12T08:12:09.895492+00:00",
+  "pid": 24853,
+  "installedApkBytes": 54449646,
+  "installedApkSha256": "b477ee3ea64804b9bcf172c2f6ad1843aefc537008d1d9ed26aaaf3866013291",
+  "installedApkMatchesDelivered": true,
+  "crashMarkers": 0,
+  "memoryKiBOnePoint": {
+    "PSS": 120435,
+    "RSS": 231680
+  },
+  "memoryScope": "One process observation; not a duration, stress test or physical Honor Magic verification.",
+  "preview": {
+    "width": 1200,
+    "height": 934,
+    "quality": 95,
+    "displayBytes": "88.2 KB",
+    "jpegFrameReady": true,
+    "beforeFrameAt100Percent": true,
+    "doneReturnedToSettings": true
+  },
+  "selectedVersions": [
+    "current",
+    "original"
+  ],
+  "saved": 2,
+  "total": 2,
+  "publishedFixtures": [
+    {
+      "uri": "content://media/external_primary/images/media/103",
+      "width": 1200,
+      "height": 934,
+      "bytes": 90460,
+      "sha256": "ad0f36338fe81122f2bab34ebdd0cfec3cedff8aff56d35f86f282b7246cd0b3",
+      "dates": {
+        "306": "2026:11:12 08:09:46",
+        "36867": "2026:11:12 08:09:46",
+        "36868": "2026:11:12 08:09:46",
+        "36880": "+00:00",
+        "36881": "+00:00",
+        "36882": "+00:00",
+        "37520": "027",
+        "37521": "027",
+        "37522": "027"
+      },
+      "mediaStore": "Row: 0 _id=103, _display_name=Huevia_Huevia-QA_0cd016950e84.jpg, _size=90460, mime_type=image/jpeg, width=1200, height=934, owner_package_name=cc.huevia.next, datetaken=1794470986027"
+    },
+    {
+      "uri": "content://media/external_primary/images/media/104",
+      "width": 1200,
+      "height": 800,
+      "bytes": 73360,
+      "sha256": "8365a78fa8254efdf4de19b0d3814e44bf71360208887977558139afc6222abb",
+      "dates": {
+        "306": "2026:11:12 08:09:47",
+        "36867": "2026:11:12 08:09:47",
+        "36868": "2026:11:12 08:09:47",
+        "36880": "+00:00",
+        "36881": "+00:00",
+        "36882": "+00:00",
+        "37520": "721",
+        "37521": "721",
+        "37522": "721"
+      },
+      "mediaStore": "Row: 0 _id=104, _display_name=Huevia_Huevia-QA_c491a5d5541a.jpg, _size=73360, mime_type=image/jpeg, width=1200, height=800, owner_package_name=cc.huevia.next, datetaken=1794470987721"
+    }
+  ],
+  "fullPixelParity": false,
+  "physicalHonorMagicVerified": false,
+  "physicalIPhoneVerified": false,
+  "reopenedEditorBorderRetained": true,
+  "reopenedExportDimensions": [
+    1200,
+    934
+  ]
+}
