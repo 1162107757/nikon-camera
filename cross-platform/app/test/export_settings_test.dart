@@ -63,6 +63,20 @@ class ExportUiCore extends ExportFormCore {
 }
 
 void main() {
+  Future<void> reach(WidgetTester tester, Finder destination) async {
+    // Route completion and the next page's async work can finish after the
+    // transition's last scheduled frame on a real device under build load.
+    for (
+      var attempt = 0;
+      attempt < 50 && destination.evaluate().isEmpty;
+      attempt++
+    ) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(destination, findsWidgets);
+    await tester.pumpAndSettle();
+  }
+
   Future<(ExportUiCore, ExportSettings)> open(
     WidgetTester tester, {
     Size size = const Size(412, 892),
@@ -123,7 +137,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(form.selected, {'current', 'original'});
       await tester.tap(find.text('更多设置'));
-      await tester.pumpAndSettle();
+      await reach(tester, find.text('完整尺寸'));
       expect(find.text('1200 × 934 px'), findsOneWidget);
       expect(find.text('1200 × 800 px'), findsOneWidget);
       await tester.tap(find.text('更改导出版本'));
@@ -141,7 +155,7 @@ void main() {
     (tester) async {
       final (core, _) = await open(tester);
       await tester.tap(find.text('更多设置'));
-      await tester.pumpAndSettle();
+      await reach(tester, find.text('自定义'));
       await tester.tap(find.text('自定义'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextField).first, '1000');
