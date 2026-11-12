@@ -51,7 +51,9 @@ void main() {
           home: CameraPage(state: AppState(core), configuration: true),
         ),
       );
-      await tester.tap(find.text('连接相机'));
+      final connect = find.widgetWithText(FilledButton, '连接相机');
+      await tester.ensureVisible(connect);
+      await tester.tap(connect);
       await tester.pumpAndSettle();
       expect(find.text('已连接 · 原文件按字节接收'), findsOneWidget);
       core.initialCamera.complete({
