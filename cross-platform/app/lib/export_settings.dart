@@ -136,6 +136,7 @@ Widget _exportButton(
   bool card = false,
   double height = 48,
   double radius = 12,
+  FontWeight primaryWeight = FontWeight.w700,
 }) => SizedBox(
   height: height,
   child: TextButton(
@@ -162,7 +163,7 @@ Widget _exportButton(
                   alignment: Alignment.centerLeft,
                   child: HueIcon(
                     HueIconKind.download,
-                    size: 18,
+                    size: 24,
                     color: p.onPrimaryContainer,
                   ),
                 ),
@@ -173,7 +174,7 @@ Widget _exportButton(
                     label,
                     14,
                     action == null ? p.secondary : p.onPrimaryContainer,
-                    weight: FontWeight.w700,
+                    weight: primaryWeight,
                     lines: 2,
                     align: TextAlign.center,
                   ),
@@ -838,6 +839,7 @@ class _AdvancedExportState extends State<_AdvancedExport> {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 56,
+          leadingWidth: 72,
           leading: IconButton(
             tooltip: '返回编辑，取消导出设置',
             onPressed: busy ? null : () => Navigator.pop(context),
@@ -878,6 +880,16 @@ class _AdvancedExportState extends State<_AdvancedExport> {
                               child: SizedBox(
                                 height: 48,
                                 child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: p.ink,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                    ),
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                   onPressed: busy
                                       ? null
                                       : () => Navigator.pop(
@@ -1152,6 +1164,7 @@ class _AdvancedExportState extends State<_AdvancedExport> {
                       primary: true,
                       height: 52,
                       radius: 16,
+                      primaryWeight: FontWeight.w500,
                     ),
                   ),
                 ),
