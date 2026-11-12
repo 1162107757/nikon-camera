@@ -11,7 +11,7 @@ final class SharedCameraPreviews {
     static final int MAX_BYTES=8*1024*1024,MAX_FILES=64;
     static final long CACHE_BYTES=32L*1024*1024;
     private final File root;
-    SharedCameraPreviews(File root){this.root=root;}
+    SharedCameraPreviews(File root)throws IOException{this.root=root.getCanonicalFile();}
     String key(String session,long handle,byte[] metadata){
         try{MessageDigest hash=MessageDigest.getInstance("SHA-256");hash.update((session+"\n"+handle+"\n").getBytes(java.nio.charset.StandardCharsets.UTF_8));hash.update(metadata);StringBuilder text=new StringBuilder();for(byte b:hash.digest())text.append(String.format(Locale.ROOT,"%02x",b&255));return text.toString();}
         catch(NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}

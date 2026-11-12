@@ -43,6 +43,7 @@ final class CameraBoundaryTest {
         byte[] large=new byte[SharedCameraPreviews.MAX_BYTES];large[0]=(byte)255;large[1]=(byte)216;large[large.length-2]=(byte)255;large[large.length-1]=(byte)217;
         for(int i=0;i<5;i++)cache.store(cache.key(session,1000+i,new byte[]{2}),large,()->false);
         long cachedBytes=0;for(File cached:Objects.requireNonNull(new File(root,"camera-previews").listFiles()))cachedBytes+=cached.length();yes(cachedBytes<=SharedCameraPreviews.CACHE_BYTES);
+        String aliasKey=cache.key(session,9000,new byte[]{3});cache.store(aliasKey,peer.jpeg,()->false);yes(new SharedCameraPreviews(new File(root,"../camera")).cached(aliasKey)!=null);
         yes(!new File(root,"originals").exists()&&!new File(root,"versions").exists());yes(peer.originals==0);
         camera.disconnect();rejects(()->call(camera,"camera.thumbnail",thumb));
         System.out.println("PASS "+checks+" shared camera checks; RAW-only browse, JPEG previews, fallback, refresh, session isolation and bounded cache");return checks;
