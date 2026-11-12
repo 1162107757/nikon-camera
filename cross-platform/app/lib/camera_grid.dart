@@ -128,63 +128,70 @@ class _CameraPhotoViewerState extends State<CameraPhotoViewer> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(title: const Text('相机预览')),
     body: SafeArea(
-      child: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder<CameraPreview>(
-              future: image,
-              builder: (context, snapshot) {
-                final path = snapshot.data?.path;
-                if (path != null) {
-                  return InteractiveViewer(
-                    child: Center(
-                      child: Image.file(
-                        File(path),
-                        fit: BoxFit.contain,
-                        cacheWidth: 1280,
-                        semanticLabel: '${widget.photo['name']} 相机预览',
+      child: LayoutBuilder(
+        builder: (context, bounds) => Column(
+          children: [
+            Expanded(
+              child: FutureBuilder<CameraPreview>(
+                future: image,
+                builder: (context, snapshot) {
+                  final path = snapshot.data?.path;
+                  if (path != null) {
+                    return InteractiveViewer(
+                      child: Center(
+                        child: Image.file(
+                          File(path),
+                          fit: BoxFit.contain,
+                          cacheWidth: 1280,
+                          semanticLabel: '${widget.photo['name']} 相机预览',
+                        ),
                       ),
+                    );
+                  }
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return Center(
+                    child: TextButton(
+                      onPressed: () => setState(
+                        () => image = widget.previews.load(
+                          widget.photo,
+                          refresh: true,
+                        ),
+                      ),
+                      child: const Text('重试相机预览'),
                     ),
                   );
-                }
-                if (snapshot.connectionState != ConnectionState.done) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return Center(
-                  child: TextButton(
-                    onPressed: () => setState(
-                      () => image = widget.previews.load(
-                        widget.photo,
-                        refresh: true,
-                      ),
-                    ),
-                    child: const Text('重试相机预览'),
-                  ),
-                );
-              },
-            ),
-          ),
-          Flexible(
-            flex: 0,
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: CameraTransferCard(transfer: widget.transfer),
-            ),
-          ),
-          AnimatedBuilder(
-            animation: widget.transfer,
-            builder: (context, _) => Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-              child: FilledButton.icon(
-                onPressed: widget.transfer.busy
-                    ? null
-                    : () => unawaited(widget.onDownload()),
-                icon: const Icon(Icons.download_outlined),
-                label: const Text('接收原文件'),
+                },
               ),
             ),
-          ),
-        ],
+            ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: bounds.maxHeight * .65),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: AnimatedBuilder(
+                  animation: widget.transfer,
+                  builder: (context, _) => Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CameraTransferCard(transfer: widget.transfer),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 16),
+                        child: FilledButton.icon(
+                          onPressed: widget.transfer.busy
+                              ? null
+                              : () => unawaited(widget.onDownload()),
+                          icon: const Icon(Icons.download_outlined),
+                          label: const Text('接收原文件'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );

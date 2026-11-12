@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,20 +7,9 @@ import 'package:huevia/raw_develop.dart';
 import 'package:huevia/theme.dart';
 
 class ReferenceUiCore extends HueviaCore {
-  ReferenceUiCore(this.directory) {
-    root = directory.path;
-    Directory('$root/previews').createSync();
-    Directory('$root/originals').createSync();
-    image = File('$root/fixture.png')
-      ..writeAsBytesSync(
-        base64Decode(
-          'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
-        ),
-      );
+  ReferenceUiCore() {
+    root = '/raw-reference-test';
   }
-  final Directory directory;
-  late File image;
-  int previews = 0;
   final calls = <(String, Json)>[];
   @override
   Stream<dynamic> get operationProgress => const Stream.empty();
@@ -36,12 +23,9 @@ class ReferenceUiCore extends HueviaCore {
   ]) async {
     calls.add((operation, payload));
     if (operation == 'media.rawPreview') {
-      return {
-        'path': image.copySync('$root/previews/${previews++}.png').path,
-        'rawColorStatus': payload['reference'] == null
-            ? 'NO_REFERENCE'
-            : 'EXTERNAL_MATCHED',
-      };
+      // Image decoding and disposal are exercised by the native DNG scenario.
+      // This control-flow test stays wholly inside the widget test clock.
+      throw const AppFailure('此测试不生成预览像素。');
     }
     if (operation == 'media.rawReferenceInfo') {
       return {
@@ -81,10 +65,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      final directory = Directory.systemTemp.createTempSync(
-        'huevia-raw-reference-ui-',
-      );
-      final core = ReferenceUiCore(directory);
+      final core = ReferenceUiCore();
       final raw = Photo('${core.root}/originals/source.nef', 'SOURCE.NEF', {
         'raw': true,
       });
@@ -101,18 +82,26 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      Future<void> finishRouteAnimations() async {
+        // Choosing a reference intentionally keeps an indeterminate spinner
+        // alive behind the modal. It cannot reach pumpAndSettle's idle state.
+        for (var frame = 0; frame < 3; frame++) {
+          await tester.pump(const Duration(milliseconds: 300));
+        }
+      }
+
       Future<void> select() async {
         await tester.ensureVisible(find.text('选择 JPEG 参考'));
         await tester.tap(find.text('选择 JPEG 参考'));
-        await tester.pumpAndSettle();
+        await finishRouteAnimations();
         await tester.tap(find.text('PAIR.JPG'));
-        await tester.pumpAndSettle();
+        await finishRouteAnimations();
       }
 
       await select();
       expect(find.text('确认同一次拍摄'), findsOneWidget);
       await tester.tap(find.text('取消'));
-      await tester.pumpAndSettle();
+      await finishRouteAnimations();
       expect(state.updates, 0);
       expect(
         core.calls.any((call) => call.$1 == 'media.rawReferenceInfo'),
@@ -120,7 +109,7 @@ void main() {
       );
       await select();
       await tester.tap(find.text('使用此 JPEG'));
-      await tester.pumpAndSettle();
+      await finishRouteAnimations();
       expect(state.updates, 1);
       expect(
         state.photos.first.info['rawJpegReference']['relativePath'],
@@ -133,7 +122,7 @@ void main() {
       expect(request['reference']['path'], jpeg.path);
       await tester.ensureVisible(find.text('恢复内嵌参考'));
       await tester.tap(find.text('恢复内嵌参考'));
-      await tester.pumpAndSettle();
+      await finishRouteAnimations();
       expect(state.photos.first.info['rawJpegReference'], isNull);
       expect(
         core.calls
@@ -145,16 +134,6 @@ void main() {
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       state.dispose();
-      tester.binding.imageCache.clear();
-      tester.binding.imageCache.clearLiveImages();
-      await tester.runAsync(() async {
-        await Future<void>.delayed(const Duration(milliseconds: 80));
-        try {
-          directory.deleteSync(recursive: true);
-        } on FileSystemException {
-          if (!Platform.isWindows) rethrow;
-        }
-      });
     },
   );
 }

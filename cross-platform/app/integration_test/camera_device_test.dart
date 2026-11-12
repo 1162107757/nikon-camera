@@ -7,6 +7,7 @@ import '../test/session_race_test.dart' as races;
 import '../test/camera_transfer_test.dart' as transfer;
 import '../test/editor_presets_test.dart' as filters;
 import '../test/camera_navigation_test.dart' as navigation;
+import '../test/camera_viewer_layout_test.dart' as viewer;
 import '../test/project_presets_test.dart' as projects;
 import '../test/raw_reference_test.dart' as raw_reference;
 import '../test/raw_reference_ui_test.dart' as raw_reference_ui;
@@ -21,6 +22,7 @@ void main() {
   transfer.main();
   filters.main();
   navigation.main();
+  viewer.main();
   projects.main();
   raw_reference.main();
   raw_reference_ui.main();
