@@ -143,9 +143,9 @@ class _CameraThumbnailState extends State<CameraThumbnail> {
     }
   }
 
-  void retry() => setState(
-    () => future = widget.previews.load(widget.photo, refresh: true),
-  );
+  void retry() => setState(() {
+    future = widget.previews.load(widget.photo, refresh: true);
+  });
 
   @override
   Widget build(BuildContext context) => ClipRRect(
