@@ -125,9 +125,11 @@ class CameraThumbnail extends StatefulWidget {
     super.key,
     required this.previews,
     required this.photo,
+    this.size = 64,
   });
   final CameraPreviews previews;
   final Json photo;
+  final double size;
   @override
   State<CameraThumbnail> createState() => _CameraThumbnailState();
 }
@@ -157,7 +159,7 @@ class _CameraThumbnailState extends State<CameraThumbnail> {
   Widget build(BuildContext context) => ClipRRect(
     borderRadius: BorderRadius.circular(10),
     child: SizedBox.square(
-      dimension: 64,
+      dimension: widget.size,
       child: ColoredBox(
         color: HuePalette.of(context).container,
         child: FutureBuilder<CameraPreview>(

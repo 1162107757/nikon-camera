@@ -9,6 +9,10 @@ import 'theme.dart';
 import 'help.dart';
 import 'camera_previews.dart';
 import 'camera_transfer.dart';
+import 'camera_grid.dart';
+import 'photo_grid.dart';
+
+import 'package:go_router/go_router.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({
@@ -464,31 +468,12 @@ class _CameraPageState extends State<CameraPage> {
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Text(emptyMessage),
                     ),
-                  for (final item in items)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Card(
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          leading: CameraThumbnail(
-                            previews: previews,
-                            photo: item,
-                          ),
-                          title: Text(item['name'] as String),
-                          subtitle: Text(
-                            '${item['width']} × ${item['height']} · ${((item['bytes'] as num) / 1024 / 1024).toStringAsFixed(1)} MB',
-                          ),
-                          trailing: IconButton(
-                            tooltip: '接收原文件',
-                            onPressed: busy ? null : () => download(item),
-                            icon: const Icon(Icons.download_outlined),
-                          ),
-                        ),
-                      ),
-                    ),
+                  CameraPhotoGrid(
+                    items: items,
+                    previews: previews,
+                    transfer: transfer,
+                    onDownload: download,
+                  ),
                   if (hasMore)
                     OutlinedButton(
                       onPressed: busy ? null : () => page(next: true),
@@ -563,6 +548,40 @@ class _CameraPageState extends State<CameraPage> {
         tooltip: '刷新照片',
         onPressed: busy ? null : () => page(),
         icon: const Icon(Icons.refresh_rounded),
+      ),
+    ],
+  );
+
+  Widget downloadedPhotos() => Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: CameraTransferCard(transfer: transfer),
+      ),
+      Expanded(
+        child: PhotoMasonry(
+          rows: [
+            for (final photo in widget.state.photos)
+              {
+                'id': photo.path,
+                'name': photo.name,
+                'raw': photo.info['raw'] == true,
+                'date': photo.info['addedAt'] ?? 0,
+              },
+          ],
+          phone: false,
+          core: widget.state.core,
+          onOpen: (row) async {
+            await context.push<void>(
+              '/photo/${Uri.encodeComponent(widget.state.photos.firstWhere((photo) => photo.path == row['id']).id)}',
+            );
+          },
+          onLongPress: (row) async {
+            await context.push<void>(
+              '/photo/${Uri.encodeComponent(widget.state.photos.firstWhere((photo) => photo.path == row['id']).id)}',
+            );
+          },
+        ),
       ),
     ],
   );
@@ -660,7 +679,9 @@ class _CameraPageState extends State<CameraPage> {
               ),
             ),
           Expanded(
-            child: connected && overviewTab == 0
+            child: overviewTab == 2 && widget.state.photos.isNotEmpty
+                ? downloadedPhotos()
+                : connected && overviewTab == 0
                 ? ListView(
                     controller: listScroll,
                     padding: EdgeInsets.fromLTRB(
@@ -699,26 +720,12 @@ class _CameraPageState extends State<CameraPage> {
                           padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Text(emptyMessage),
                         ),
-                      for (final item in items)
-                        ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                          ),
-                          leading: CameraThumbnail(
-                            previews: previews,
-                            photo: item,
-                          ),
-                          title: Text(item['name'] as String),
-                          subtitle: Text(
-                            '${item['width']} × ${item['height']}',
-                          ),
-                          onTap: busy ? null : () => download(item),
-                          trailing: IconButton(
-                            tooltip: '接收原文件',
-                            onPressed: busy ? null : () => download(item),
-                            icon: const Icon(Icons.download_outlined),
-                          ),
-                        ),
+                      CameraPhotoGrid(
+                        items: items,
+                        previews: previews,
+                        transfer: transfer,
+                        onDownload: download,
+                      ),
                       if (hasMore)
                         OutlinedButton(
                           onPressed: busy ? null : () => page(next: true),

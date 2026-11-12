@@ -60,6 +60,10 @@ static void socketFailure(nw_error_t error) {
     if(finished)return;
     if(state==nw_connection_state_ready){connected=YES;finished=YES;dispatch_semaphore_signal(ready);}
     else if(state==nw_connection_state_failed||state==nw_connection_state_cancelled){failure=error;finished=YES;dispatch_semaphore_signal(ready);}
+    else if(state==nw_connection_state_waiting&&error&&nw_error_get_error_domain(error)==nw_error_domain_posix){
+      int code=nw_error_get_error_code(error);
+      if(code==ECONNREFUSED||code==EACCES||code==EPERM){failure=error;finished=YES;dispatch_semaphore_signal(ready);}
+    }
     // A waiting path can become usable after the local-network permission prompt.
   });
   nw_connection_set_queue(_connection,_networkQueue);nw_connection_start(_connection);

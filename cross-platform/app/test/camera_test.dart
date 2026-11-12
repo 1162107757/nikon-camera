@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/camera.dart';
+import 'package:huevia/camera_previews.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/theme.dart';
 
@@ -122,7 +123,7 @@ void main() {
       expect(find.text('未找到 JPEG 照片，可切换到 RAW / NEF 查看。'), findsOneWidget);
       await tester.tap(find.text('RAW / NEF'));
       await settleImages(tester);
-      expect(find.text('DSC_6522.NEF'), findsOneWidget);
+      expect(find.text('DSC_6522.NEF'), findsNothing);
       expect(
         find.byWidgetPredicate(
           (widget) =>
@@ -138,6 +139,12 @@ void main() {
       );
       expect(actual.cameraRaw, isTrue);
       expect(core.calls.any((call) => call.$1 == 'camera.download'), isFalse);
+      await tester.tap(find.byType(CameraThumbnail));
+      await settleImages(tester);
+      expect(find.text('相机预览'), findsOneWidget);
+      expect(core.calls.any((call) => call.$1 == 'camera.download'), isFalse);
+      await tester.pageBack();
+      await tester.pumpAndSettle();
       await tester.pumpWidget(const SizedBox());
       actual.dispose();
     },
@@ -181,7 +188,7 @@ void main() {
     core.failPage = false;
     await tester.tap(find.text('重试读取照片'));
     await settleImages(tester);
-    expect(find.text('DSC_6522.NEF'), findsOneWidget);
+    expect(find.text('DSC_6522.NEF'), findsNothing);
     expect(find.text('相机读取超时'), findsNothing);
     expect(
       core.calls
@@ -223,7 +230,7 @@ void main() {
     },
   );
   testWidgets(
-    'Camera controls and thumbnail rows fit a small screen with enlarged text',
+    'Original three-column square camera grid fits small screens without file details',
     (tester) async {
       tester.view.physicalSize = const Size(320, 568);
       tester.view.devicePixelRatio = 1;
@@ -232,7 +239,43 @@ void main() {
       final core = await fixture();
       final state = AppState(core)..cameraRaw = true;
       await open(tester, state, scale: 1.6);
-      expect(find.text('DSC_6522.NEF'), findsOneWidget);
+      expect(find.text('DSC_6522.NEF'), findsNothing);
+      final grid = tester.widget<GridView>(find.byType(GridView));
+      expect(
+        (grid.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount)
+            .crossAxisCount,
+        3,
+      );
+      expect(find.textContaining('6048'), findsNothing);
+      final cell = tester.getSize(find.byType(CameraThumbnail));
+      expect(cell.width, closeTo(cell.height, .01));
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      state.dispose();
+    },
+  );
+  testWidgets(
+    'Downloaded tab displays saved originals after the camera is disconnected',
+    (tester) async {
+      final core = await fixture();
+      final state = AppState(core)
+        ..photos = [
+          Photo(core.preview.path, 'SAVED.JPG', {
+            'raw': false,
+            'addedAt': DateTime.now().millisecondsSinceEpoch,
+          }),
+        ];
+      await open(tester, state);
+      await tester.tap(find.text('已下载'));
+      await settleImages(tester);
+      expect(find.text('还没有已下载照片'), findsNothing);
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is Semantics && widget.properties.label == 'SAVED.JPG',
+        ),
+        findsOneWidget,
+      );
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       state.dispose();
