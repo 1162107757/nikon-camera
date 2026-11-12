@@ -10,6 +10,7 @@ import 'help.dart';
 import 'camera_previews.dart';
 import 'camera_transfer.dart';
 import 'camera_grid.dart';
+import 'camera_live.dart';
 import 'photo_grid.dart';
 import 'project_presets.dart';
 
@@ -43,6 +44,7 @@ class _CameraPageState extends State<CameraPage> {
   List<Json> items = [];
   int overviewTab = 0;
   bool settingsExpanded = false;
+  CameraLivePhase? lastLivePhase;
 
   Future<void> openConnection() async {
     await hueRootPage<void>(
@@ -100,6 +102,14 @@ class _CameraPageState extends State<CameraPage> {
 
   void liveChanged() {
     if (!mounted) return;
+    final phase = widget.state.cameraLive.phase;
+    if (phase != lastLivePhase &&
+        (phase == CameraLivePhase.waiting ||
+            phase == CameraLivePhase.blocked) &&
+        !busy) {
+      unawaited(status(reload: false));
+    }
+    lastLivePhase = phase;
     if (widget.state.cameraLiveActive) {
       previews.pause();
     } else if (widget.configuration || widget.state.cameraVisible.value) {
@@ -694,7 +704,11 @@ class _CameraPageState extends State<CameraPage> {
             ),
           Expanded(
             child: overviewTab == 1
-                ? ProjectPresetsPage(state: widget.state, embedded: true)
+                ? ProjectPresetsPage(
+                    state: widget.state,
+                    embedded: true,
+                    onConnect: openConnection,
+                  )
                 : overviewTab == 2 && widget.state.photos.isNotEmpty
                 ? downloadedPhotos()
                 : connected && overviewTab == 0

@@ -16,10 +16,12 @@ class CameraLiveCard extends StatefulWidget {
     required this.projectName,
     required this.hasPreset,
     this.enabled = true,
+    this.onConnect,
   });
   final AppState state;
   final String projectId, projectName;
   final bool hasPreset, enabled;
+  final Future<void> Function()? onConnect;
   @override
   State<CameraLiveCard> createState() => _CameraLiveCardState();
 }
@@ -83,7 +85,7 @@ class _CameraLiveCardState extends State<CameraLiveCard> {
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   live.active ? live.title : '边拍边传',
@@ -151,6 +153,12 @@ class _CameraLiveCardState extends State<CameraLiveCard> {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
+                      if (live.phase == CameraLivePhase.waiting &&
+                          widget.onConnect != null)
+                        OutlinedButton(
+                          onPressed: () => unawaited(widget.onConnect!()),
+                          child: const Text('连接相机'),
+                        ),
                       if (live.phase == CameraLivePhase.blocked)
                         OutlinedButton(
                           onPressed: () => unawaited(live.retry()),

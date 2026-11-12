@@ -482,6 +482,38 @@ void main() {
       await tester.pumpWidget(const SizedBox.shrink());
     });
     testWidgets(
+      'Disconnected live capture offers reconnection without discarding its journal',
+      (tester) async {
+        final live = state.controller;
+        await live.start('project-one', '拍摄');
+        core.connected = false;
+        await live.pollOnce();
+        var opened = false;
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: hueviaTheme(Brightness.light),
+            home: Scaffold(
+              body: CameraLiveCard(
+                state: state,
+                projectId: 'project-one',
+                projectName: '拍摄',
+                hasPreset: true,
+                onConnect: () async {
+                  opened = true;
+                },
+              ),
+            ),
+          ),
+        );
+        await tester.tap(find.text('连接相机'));
+        await tester.pump();
+        expect(opened, true);
+        expect(live.active, true);
+        expect(core.persistentActive, true);
+        await tester.pumpWidget(const SizedBox.shrink());
+      },
+    );
+    testWidgets(
       'Live reception card fits a narrow screen with large text and exposes stop',
       (tester) async {
         final live = state.controller;
@@ -512,6 +544,7 @@ void main() {
         );
         expect(find.text('2.0 KB / 4.0 KB'), findsOneWidget);
         expect(find.text('停止边拍边传'), findsOneWidget);
+        expect(tester.getSize(find.byType(Card)).width, 320);
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox.shrink());
       },

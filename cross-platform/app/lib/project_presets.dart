@@ -16,9 +16,11 @@ class ProjectPresetsPage extends StatefulWidget {
     super.key,
     required this.state,
     this.embedded = false,
+    this.onConnect,
   });
   final AppState state;
   final bool embedded;
+  final Future<void> Function()? onConnect;
   @override
   State<ProjectPresetsPage> createState() => _ProjectPresetsPageState();
 }
@@ -278,6 +280,7 @@ class _ProjectPresetsPageState extends State<ProjectPresetsPage> {
               projectName: project?['name'] as String? ?? '',
               hasPreset: presetId.isNotEmpty,
               enabled: !model.busy && !model.invalid,
+              onConnect: widget.onConnect,
             ),
             const SizedBox(height: 8),
             Text(
