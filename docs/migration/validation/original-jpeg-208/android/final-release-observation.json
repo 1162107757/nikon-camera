@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "sourceCommit": "1e5acb6c57e63f9a586235109f19b2f66336fdc1",
+  "utc": "2026-11-12T09:50:12.477518+00:00",
+  "pid": 28132,
+  "installedApkBytes": 54449646,
+  "installedApkSha256": "34b4a2d7fe95c006dc84d0899399f8de697e7dda16f85a0fe1391246c80346f1",
+  "installedApkMatchesDelivered": true,
+  "crashMarkers": 0,
+  "memoryKiBOnePoint": {
+    "PSS": 114633,
+    "RSS": 224988
+  },
+  "memoryScope": "One process observation; not a duration/stress test or physical Honor Magic verification.",
+  "sourceFixtureUri": "content://media/external_primary/images/media/110",
+  "originalBytesVerified": true,
+  "newExplicitActionResourcesDistinct": true,
+  "publishedFixtures": [
+    {
+      "uri": "content://media/external_primary/images/media/110",
+      "bytes": 4290,
+      "sha256": "8be09418408a2f3cc1e101aa2fb5382b11665952bb301bdc258b6bf272f5791f",
+      "encodedWidth": 256,
+      "encodedHeight": 192,
+      "exifOrientation": 6,
+      "mediaStore": "Row: 22 _id=110, _display_name=Huevia_Huevia-QA-original-208_99b2f74fea10.jpg, _size=4290, mime_type=image/jpeg, width=256, height=192, owner_package_name=cc.huevia.next"
+    },
+    {
+      "uri": "content://media/external_primary/images/media/122",
+      "bytes": 4290,
+      "sha256": "8be09418408a2f3cc1e101aa2fb5382b11665952bb301bdc258b6bf272f5791f",
+      "encodedWidth": 256,
+      "encodedHeight": 192,
+      "exifOrientation": 6,
+      "mediaStore": "Row: 26 _id=122, _display_name=Huevia_Huevia_Huevia-QA-original-208_99_449f4784d979.jpg, _size=4290, mime_type=image/jpeg, width=256, height=192, owner_package_name=cc.huevia.next"
+    },
+    {
+      "uri": "content://media/external_primary/images/media/123",
+      "bytes": 4290,
+      "sha256": "8be09418408a2f3cc1e101aa2fb5382b11665952bb301bdc258b6bf272f5791f",
+      "encodedWidth": 256,
+      "encodedHeight": 192,
+      "exifOrientation": 6,
+      "mediaStore": "Row: 27 _id=123, _display_name=Huevia_Huevia_Huevia-QA-original-208_99_7ff5de054e7e.jpg, _size=4290, mime_type=image/jpeg, width=256, height=192, owner_package_name=cc.huevia.next"
+    }
+  ],
+  "editing": {
+    "whiteInfoBorderRetained": true,
+    "renderedDimensionsBeforeAndAfter": [
+      192,
+      278
+    ],
+    "sourceEncodedDimensions": [
+      256,
+      192
+    ],
+    "sourceExifOrientation": 6,
+    "cancelReturnsToEditor": true,
+    "doneReturnsToEditor": true,
+    "previewBeforeAndAfterPixelIdentical": true,
+    "previewComparisonBefore": "208-final-release-cancelled.png",
+    "previewComparisonAfter": "208-final-release-editor-after.png",
+    "initialCaptureNote": "editor-before.png was captured before the asynchronous border preview finished and is retained as an intermediate image; the settled cancelled.png was captured before either actual save."
+  },
+  "fullPixelParity": false,
+  "physicalHonorMagicVerified": false,
+  "physicalIPhoneVerified": false
+}

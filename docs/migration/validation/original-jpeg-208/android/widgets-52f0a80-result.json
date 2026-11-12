@@ -1,0 +1,8 @@
+{
+  "pid": 27188,
+  "sourceCommit": "52f0a8087359bf01d4016c4c65f7dce1f5710d41",
+  "widgetScenarios": 69,
+  "allTestsPassed": true,
+  "crashMarkers": 0,
+  "testsIncludingTeardown": 150
+}

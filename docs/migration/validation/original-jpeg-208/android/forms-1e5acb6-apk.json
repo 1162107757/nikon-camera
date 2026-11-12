@@ -1,0 +1,6 @@
+{
+  "sourceCommit": "1e5acb6c57e63f9a586235109f19b2f66336fdc1",
+  "bytes": 136573016,
+  "sha256": "445f6970f4bfceebdc1c3fae2827030f6fbcf7527a0217e08ef7a7862a8695dd",
+  "target": "integration_test/export_device_test.dart"
+}

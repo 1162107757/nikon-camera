@@ -1,0 +1,25 @@
+{
+  "apk": "dist/migration208/huevia-0.31.0-dev-208-android-x64.apk",
+  "bytes": 54449646,
+  "sha256": "34b4a2d7fe95c006dc84d0899399f8de697e7dda16f85a0fe1391246c80346f1",
+  "abi": "x86_64",
+  "mode": "release",
+  "nativeLibraries": 8,
+  "verified": true,
+  "rawJniCallbacksPreserved": true,
+  "rawJniInfoConstructorPreserved": true,
+  "r8MappingSha256": "bdd31959508b7477f915d0feb885ad0ed9774d3b2e99238abf9bac389af5e06d",
+  "sourceCommit": "1e5acb6c57e63f9a586235109f19b2f66336fdc1",
+  "fonts": [
+    "assets/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+    "assets/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+    "assets/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+    "assets/flutter_assets/fonts/MaterialIcons-Regular.otf",
+    "assets/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf",
+    "assets/photo-borders/parameters.ttf"
+  ],
+  "models": [
+    "assets/portrait/face_landmarks_detector.tflite"
+  ],
+  "elfAndStoredLibraryAlignment16KiB": true
+}

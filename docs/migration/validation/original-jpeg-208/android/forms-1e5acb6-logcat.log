@@ -1,0 +1,1238 @@
+11-12 09:37:33.472   339   339 D Zygote  : Forked child process 28028
+11-12 09:37:33.481   531   561 I ActivityManager: Start proc 28028:cc.huevia.next/u0a105 for added application cc.huevia.next
+11-12 09:37:33.487 28028 28028 I cc.huevia.next: Late-enabling -Xcheck:jni
+11-12 09:37:33.512 28028 28028 W cc.huevia.next: Unexpected CPU variant for X86 using defaults: x86_64
+11-12 09:37:33.521   433   460 I adbd    : jdwp connection from 28028
+11-12 09:37:33.558 28028 28028 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10105; state: ENABLED
+11-12 09:37:33.569 28028 28028 W ActivityThread: Package uses different ABI(s) than its instrumentation: package[cc.huevia.next]: x86_64, null instrumentation[cc.huevia.next.test]: null, null
+11-12 09:37:33.877 28028 28028 V GraphicsEnvironment: ANGLE Developer option for 'cc.huevia.next' set to: 'default'
+11-12 09:37:33.878 28028 28028 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-12 09:37:34.198 28028 28028 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 09:37:34.200 28028 28028 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-12 09:37:34.396 28028 28046 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+11-12 09:37:34.397 28028 28046 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+11-12 09:37:34.476 28028 28046 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+11-12 09:37:35.211 28028 28063 I ResourceExtractor: Found extracted resources res_timestamp-208-1794475509119
+11-12 09:37:35.214 28028 28063 I ResourceExtractor: Resource version mismatch res_timestamp-208-1794476252121
+11-12 09:37:35.241 28028 28062 D FlutterJNI: Beginning load of flutter...
+11-12 09:37:35.273 28028 28062 D FlutterJNI: flutter (null) was loaded normally!
+11-12 09:37:35.297 28028 28064 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-12 09:37:35.931 28028 28063 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+11-12 09:37:35.932 28028 28063 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+11-12 09:37:36.016 28028 28063 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+11-12 09:37:36.179 28028 28028 W cc.huevia.next: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (blocked, linking, denied)
+11-12 09:37:36.180 28028 28028 W cc.huevia.next: type=1400 audit(0.0:1693): avc: denied { read } for name="max_map_count" dev="proc" ino=353826 scontext=u:r:untrusted_app:s0:c105,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=cc.huevia.next
+11-12 09:37:36.212 28028 28028 I flutter : [IMPORTANT:flutter/shell/common/shell.cc(528)] [Action Required]: Impeller opt-out deprecated.
+11-12 09:37:36.212 28028 28028 I flutter :     The application opted out of Impeller by either using the
+11-12 09:37:36.212 28028 28028 I flutter :     `--no-enable-impeller` flag or the
+11-12 09:37:36.212 28028 28028 I flutter :     `io.flutter.embedding.android.EnableImpeller` `AndroidManifest.xml` entry.
+11-12 09:37:36.212 28028 28028 I flutter :     These options are going to go away in an upcoming Flutter release. Remove
+11-12 09:37:36.212 28028 28028 I flutter :     the explicit opt-out. If you need to opt-out, please report a bug describing
+11-12 09:37:36.212 28028 28028 I flutter :     the issue.
+11-12 09:37:36.212 28028 28028 I flutter : 
+11-12 09:37:36.212 28028 28028 I flutter :     https://github.com/flutter/flutter/issues/new?template=02_bug.yml
+11-12 09:37:36.212 28028 28028 I flutter : 
+11-12 09:37:36.219 28028 28028 D HostConnection: createUnique: call
+11-12 09:37:36.222 28028 28028 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b2a50, tid 28028
+11-12 09:37:36.228 28028 28028 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 09:37:36.238 28028 28028 D EGL_emulation: eglCreateContext: 0x7b52174b3b90: maj 3 min 0 rcv 3
+11-12 09:37:36.241 28028 28028 D EGL_emulation: eglCreateContext: 0x7b52174b1790: maj 3 min 0 rcv 3
+11-12 09:37:36.251 28028 28076 D HostConnection: createUnique: call
+11-12 09:37:36.252 28028 28076 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b1d90, tid 28076
+11-12 09:37:36.256 28028 28076 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 09:37:36.257 28028 28076 D EGL_emulation: eglMakeCurrent: 0x7b52174b1790: ver 3 0 (tinfo 0x7b54303b8100) (first time)
+11-12 09:37:36.522 28028 28081 I flutter : The Dart VM service is listening on http://127.0.0.1:45687/XO-v8nZmQC8=/
+11-12 09:37:37.024 28028 28028 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+11-12 09:37:37.024 28028 28028 W cc.huevia.next: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+11-12 09:37:37.025 28028 28028 W cc.huevia.next: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+11-12 09:37:37.026 28028 28028 W cc.huevia.next: Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+11-12 09:37:37.040 28028 28028 D AccessibilityBridge: Setting not found: accessibility_display_inversion_enabled, using default: 0
+11-12 09:37:37.056 28028 28028 D FlutterRenderer: Width is zero. 0,0
+11-12 09:37:37.548 28028 28028 I flutter : 00:00 +0: inspection freezes the current recipe, lists original/saved versions and never writes a draft or export
+11-12 09:37:37.692 28028 28028 I flutter : 00:00 +1: multiple chosen versions retain independent frozen recipes and the original compact quality ceiling
+11-12 09:37:37.741 28028 28028 I flutter : 00:00 +2: a recipe being resolved pins selection and quality until the complete export snapshot is ready
+11-12 09:37:37.778 28028 28028 I flutter : 00:00 +3: account switch redacts all recipes and a late saved-version reply cannot revive the old form
+11-12 09:37:37.823 28028 28028 I flutter : 00:00 +4: a saved recipe from another source is rejected without silently exporting the current image
+11-12 09:37:37.841 28028 28028 I flutter : 00:00 +5: history loading can retry, while a changed source invalidates the existing frozen form
+11-12 09:37:37.886 28028 28028 I flutter : 00:00 +6: failed album publication stops the queue and retries the same frozen version and operation
+11-12 09:37:37.946 28028 28028 I flutter : 00:00 +7: a new explicit export gets a different album operation for identical settings
+11-12 09:37:37.977 28028 28028 I flutter : 00:00 +8: permission denial never renders or saves and can be retried
+11-12 09:37:37.989 28028 28028 I flutter : 00:00 +9: owner change cancels a live publication and suppresses its late acknowledgement
+11-12 09:37:38.005 28028 28028 I flutter : 00:00 +10: original JPEG confirmation can be cancelled without saving or changing settings
+11-12 09:37:40.624 28028 28028 I Choreographer: Skipped 212 frames!  The application may be doing too much work on its main thread.
+11-12 09:37:40.790 28028 28028 D FlutterRenderer: Width is zero. 0,0
+11-12 09:37:40.819 28028 28045 D HostConnection: createUnique: call
+11-12 09:37:40.820 28028 28045 D HostConnection: HostConnection::get() New Host Connection established 0x7b521749af90, tid 28045
+11-12 09:37:40.834 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:40.843 28028 28045 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 09:37:40.845 28028 28045 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-12 09:37:40.851 28028 28045 D EGL_emulation: eglCreateContext: 0x7b5217499a90: maj 3 min 0 rcv 3
+11-12 09:37:40.860 28028 28075 I Gralloc4: mapper 4.x is not supported
+11-12 09:37:40.863 28028 28045 D EGL_emulation: eglMakeCurrent: 0x7b5217499a90: ver 3 0 (tinfo 0x7b54303b8180) (first time)
+11-12 09:37:40.864 28028 28075 D HostConnection: createUnique: call
+11-12 09:37:40.867 28028 28075 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b6950, tid 28075
+11-12 09:37:40.867 28028 28075 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-12 09:37:40.868 28028 28075 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3efffe000 size 0x2000
+11-12 09:37:40.871 28028 28075 W Gralloc4: allocator 4.x is not supported
+11-12 09:37:40.903 28028 28075 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 09:37:40.904 28028 28075 D HostConnection: createUnique: call
+11-12 09:37:40.906 28028 28075 D HostConnection: HostConnection::get() New Host Connection established 0x7b52174b6b90, tid 28075
+11-12 09:37:40.923 28028 28075 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_ignored_handles ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_vulkan_queue_submit_with_commands ANDROID_EMU_sync_buffer_data ANDROID_EMU_vulkan_async_qsri ANDROID_EMU_read_color_buffer_dma ANDROID_EMU_hwc_color_transform GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0 
+11-12 09:37:40.928 28028 28075 D EGL_emulation: eglMakeCurrent: 0x7b52174b3b90: ver 3 0 (tinfo 0x7b54303b8200) (first time)
+11-12 09:37:40.936 28028 28075 D EGL_emulation: eglCreateContext: 0x7b52174b82d0: maj 3 min 0 rcv 3
+11-12 09:37:41.928 28028 28085 D ProfileInstaller: Installing profile for cc.huevia.next
+11-12 09:37:42.054 28028 28028 I Choreographer: Skipped 75 frames!  The application may be doing too much work on its main thread.
+11-12 09:37:42.067 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:42.218 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:42.219 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:42.220 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 412.0, 829.0)
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=0 flags=262144
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 412.0, 591.0)
+11-12 09:37:42.221 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 238.0, 0.0, 1.0]
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 20.0)
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 43.0, 0.0, 1.0]
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 342.0, 29.0, 0.0, 1.0]
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 55.999756, 17.0)
+11-12 09:37:42.222 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 91.5, 0.0, 1.0]
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 75.146484, 14.0)
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 112.5, 0.0, 1.0]
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 15.0)
+11-12 09:37:42.223 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 149.0, 0.0, 1.0]
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 168.0, 0.0, 1.0]
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 224.0, 0.0, 1.0]
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 280.0, 0.0, 1.0]
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 16.0)
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 344.0, 0.0, 1.0]
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 13.0)
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 345.5, 0.0, 1.0]
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:42.224 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 368.0, 0.0, 1.0]
+11-12 09:37:42.225 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:37:42.225 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:42.225 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:37:42.225 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(252.0, 0.0, 300.0, 48.0)
+11-12 09:37:42.225 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 46.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 416.0, 0.0, 1.0]
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 114.0, 416.0, 0.0, 1.0]
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:42.227 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 206.0, 416.0, 0.0, 1.0]
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 298.0, 416.0, 0.0, 1.0]
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 464.0, 0.0, 1.0]
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2097352
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 52.0)
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 521.0, 0.0, 1.0]
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:42.228 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.230 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:37:42.230 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:42.230 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:37:42.230 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 301.0)
+11-12 09:37:42.230 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:42.256 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:43.540 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:45.563 28028 28028 I flutter : 00:08 +11: confirmed original JPEG saves directly and retries the same task without rendering
+11-12 09:37:45.735 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:46.115 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:37:46.116 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.116 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:37:46.116 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:37:46.116 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:37:46.116 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:37:46.117 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:46.118 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:37:46.118 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:37:46.118 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:37:46.118 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 320.0, 505.0)
+11-12 09:37:46.118 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=8388624 flags=262144
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 320.0, 505.0)
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 228.0, 33.0)
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 36.5, 0.0, 1.0]
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 250.0, 29.0, 0.0, 1.0]
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 89.56244, 27.0)
+11-12 09:37:46.119 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 85.0, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 120.156006, 23.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 116.0, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 23.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 155.0, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 56.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 182.0, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 56.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 238.0, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 56.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 294.0, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 25.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 353.5, 0.0, 1.0]
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 228.0, 21.0)
+11-12 09:37:46.120 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 355.5, 0.0, 1.0]
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 48.0)
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 382.0, 0.0, 1.0]
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(183.0, 0.0, 231.0, 48.0)
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 34.5, 0.0, 0.0, 1.0]
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 430.0, 0.0, 1.0]
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 91.0, 430.0, 0.0, 1.0]
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:37:46.121 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 160.0, 430.0, 0.0, 1.0]
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 229.0, 430.0, 0.0, 1.0]
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 27.0)
+11-12 09:37:46.123 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 478.0, 0.0, 1.0]
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2105544
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 52.0)
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 535.0, 0.0, 1.0]
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 320.0, 63.0)
+11-12 09:37:46.124 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:47.039 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:50.566 28028 28028 I flutter : 00:13 +12: late original inspection cannot open a confirmation after leaving its editor route
+11-12 09:37:50.680 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:51.020 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:37:51.020 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.020 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:37:51.020 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:37:51.020 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:51.020 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:51.023 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 412.0, 829.0)
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=0 flags=262144
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 412.0, 585.3402)
+11-12 09:37:51.024 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 243.65982, 0.0, 1.0]
+11-12 09:37:51.028 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:37:51.028 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.028 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.028 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 20.0)
+11-12 09:37:51.028 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 43.0, 0.0, 1.0]
+11-12 09:37:51.030 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:37:51.030 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.030 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.030 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:37:51.030 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 342.0, 29.0, 0.0, 1.0]
+11-12 09:37:51.031 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:37:51.031 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.031 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.031 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 55.999756, 17.0)
+11-12 09:37:51.031 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 91.5, 0.0, 1.0]
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 75.146484, 14.0)
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 112.5, 0.0, 1.0]
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 15.0)
+11-12 09:37:51.032 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 149.0, 0.0, 1.0]
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:51.033 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 168.0, 0.0, 1.0]
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 224.0, 0.0, 1.0]
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 280.0, 0.0, 1.0]
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 16.0)
+11-12 09:37:51.034 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 344.0, 0.0, 1.0]
+11-12 09:37:51.038 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.038 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.038 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.038 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 13.0)
+11-12 09:37:51.038 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 345.5, 0.0, 1.0]
+11-12 09:37:51.042 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.042 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.042 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:37:51.042 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:51.042 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 368.0, 0.0, 1.0]
+11-12 09:37:51.043 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:37:51.043 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:51.043 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:37:51.043 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(252.0, 0.0, 300.0, 48.0)
+11-12 09:37:51.043 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 46.0, 0.0, 0.0, 1.0]
+11-12 09:37:51.045 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.045 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:51.045 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:37:51.045 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:37:51.045 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 416.0, 0.0, 1.0]
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:51.046 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 114.0, 416.0, 0.0, 1.0]
+11-12 09:37:51.048 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:37:51.048 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.048 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.048 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:51.048 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 206.0, 416.0, 0.0, 1.0]
+11-12 09:37:51.050 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:37:51.050 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.050 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.050 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:51.050 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 298.0, 416.0, 0.0, 1.0]
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 464.0, 0.0, 1.0]
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2097352
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 52.0)
+11-12 09:37:51.051 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 521.0, 0.0, 1.0]
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 301.0)
+11-12 09:37:51.052 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:52.137 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:53.806 28028 28028 I flutter : 00:16 +13: quick export restores original qualities and versions and reopens the same selections
+11-12 09:37:53.923 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:54.288 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:37:54.291 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.291 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:37:54.291 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:37:54.291 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:54.291 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:54.292 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.292 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:37:54.292 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:37:54.292 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:54.292 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 412.0, 829.0)
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=0 flags=262144
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 412.0, 591.0)
+11-12 09:37:54.294 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 238.0, 0.0, 1.0]
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 20.0)
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 43.0, 0.0, 1.0]
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 342.0, 29.0, 0.0, 1.0]
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 55.999756, 17.0)
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 91.5, 0.0, 1.0]
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 75.146484, 14.0)
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 112.5, 0.0, 1.0]
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 15.0)
+11-12 09:37:54.295 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 149.0, 0.0, 1.0]
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 168.0, 0.0, 1.0]
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 224.0, 0.0, 1.0]
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 280.0, 0.0, 1.0]
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 16.0)
+11-12 09:37:54.296 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 344.0, 0.0, 1.0]
+11-12 09:37:54.298 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.298 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.298 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.298 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 13.0)
+11-12 09:37:54.298 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 345.5, 0.0, 1.0]
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 368.0, 0.0, 1.0]
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(252.0, 0.0, 300.0, 48.0)
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 46.0, 0.0, 0.0, 1.0]
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 416.0, 0.0, 1.0]
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:54.299 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 114.0, 416.0, 0.0, 1.0]
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 206.0, 416.0, 0.0, 1.0]
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:54.300 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 298.0, 416.0, 0.0, 1.0]
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 464.0, 0.0, 1.0]
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2097352
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 52.0)
+11-12 09:37:54.301 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 521.0, 0.0, 1.0]
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 301.0)
+11-12 09:37:54.306 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:56.036 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:57.169 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 86
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:57.171 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=64 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=65 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=66 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 412.0, 829.0)
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=67 identifier=null label=null actions=0 flags=262144
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 412.0, 577.8275)
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 251.1725, 0.0, 1.0]
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=68 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 20.0)
+11-12 09:37:57.172 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 43.0, 0.0, 1.0]
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=69 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 342.0, 29.0, 0.0, 1.0]
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=70 identifier=null label=已选 2 个版本 actions=0 flags=0
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 84.81317, 17.0)
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 91.5, 0.0, 1.0]
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=71 identifier=null label=保留原图，生成新照片 actions=0 flags=0
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 120.000916, 14.0)
+11-12 09:37:57.173 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 112.5, 0.0, 1.0]
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=72 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 15.0)
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 149.0, 0.0, 1.0]
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=73 identifier=null label=当前编辑
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:57.174 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 168.0, 0.0, 1.0]
+11-12 09:37:57.175 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=74 identifier=null label=原图
+11-12 09:37:57.175 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097155
+11-12 09:37:57.175 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.175 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.175 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:57.175 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 224.0, 0.0, 1.0]
+11-12 09:37:57.177 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=75 identifier=null label=保存的胶片
+11-12 09:37:57.177 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:37:57.177 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.177 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.177 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:57.177 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 280.0, 0.0, 1.0]
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=76 identifier=null label=画质 actions=0 flags=0
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 16.0)
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 344.0, 0.0, 1.0]
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=77 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 13.0)
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 345.5, 0.0, 1.0]
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=78 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:57.178 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 368.0, 0.0, 1.0]
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=79 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(252.0, 0.0, 300.0, 48.0)
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 46.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=86 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:37:57.179 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=80 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 416.0, 0.0, 1.0]
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=81 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:57.181 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 114.0, 416.0, 0.0, 1.0]
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=82 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 206.0, 416.0, 0.0, 1.0]
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=83 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:57.182 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 298.0, 416.0, 0.0, 1.0]
+11-12 09:37:57.185 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=84 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:37:57.185 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.185 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.185 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:57.185 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 464.0, 0.0, 1.0]
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=85 identifier=null label=导出到手机相册 actions=4194305 flags=2097352
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 52.0)
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 521.0, 0.0, 1.0]
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=62 identifier=null label=null actions=0 flags=0
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:57.187 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.188 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=63 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:37:57.188 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:57.188 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:37:57.188 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 301.0)
+11-12 09:37:57.188 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:57.843 28028 28028 I flutter : 00:20 +14: preview Done returns to custom settings without committing or resetting inputs
+11-12 09:37:58.018 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:37:58.893 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:58.893 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:58.894 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.894 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:58.894 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:37:58.894 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:58.894 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 412.0, 829.0)
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=0 flags=262144
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 412.0, 591.0)
+11-12 09:37:58.896 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 238.0, 0.0, 1.0]
+11-12 09:37:58.897 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:37:58.897 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.897 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.897 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 20.0)
+11-12 09:37:58.897 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 43.0, 0.0, 1.0]
+11-12 09:37:58.898 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:37:58.898 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.898 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.898 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:37:58.898 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 342.0, 29.0, 0.0, 1.0]
+11-12 09:37:58.899 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:37:58.899 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.899 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.899 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 55.999756, 17.0)
+11-12 09:37:58.899 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 91.5, 0.0, 1.0]
+11-12 09:37:58.900 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:37:58.900 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.900 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.900 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 75.146484, 14.0)
+11-12 09:37:58.900 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 112.5, 0.0, 1.0]
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 15.0)
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 149.0, 0.0, 1.0]
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 168.0, 0.0, 1.0]
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:58.901 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 224.0, 0.0, 1.0]
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 280.0, 0.0, 1.0]
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 16.0)
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 344.0, 0.0, 1.0]
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 13.0)
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 345.5, 0.0, 1.0]
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 368.0, 0.0, 1.0]
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(252.0, 0.0, 300.0, 48.0)
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 46.0, 0.0, 0.0, 1.0]
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:37:58.903 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 416.0, 0.0, 1.0]
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 114.0, 416.0, 0.0, 1.0]
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 206.0, 416.0, 0.0, 1.0]
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 298.0, 416.0, 0.0, 1.0]
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:37:58.904 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 464.0, 0.0, 1.0]
+11-12 09:37:58.906 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2097352
+11-12 09:37:58.906 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:37:58.906 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:37:58.906 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 52.0)
+11-12 09:37:58.906 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 521.0, 0.0, 1.0]
+11-12 09:37:59.006 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:37:59.006 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:37:59.006 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:37:59.006 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:37:59.006 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:37:59.014 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:37:59.014 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:37:59.014 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:37:59.014 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 301.0)
+11-12 09:37:59.014 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:00.345 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:38:03.763 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:38:03.808 28028 28045 D EGL_emulation: app_time_stats: avg=2640.83ms min=1876.20ms max=3405.46ms count=2
+11-12 09:38:04.728 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:38:05.897 28028 28028 I flutter : 00:28 +15: slow version inspection keeps the quick modal open and a close cannot later open advanced settings
+11-12 09:38:06.029 28028 28028 D FlutterJNI: Sending viewport metrics to the engine.
+11-12 09:38:06.039 28028 28045 D EGL_emulation: app_time_stats: avg=1115.24ms min=936.77ms max=1293.71ms count=2
+11-12 09:38:06.414 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:38:06.415 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.415 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:38:06.415 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:38:06.415 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:38:06.415 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:06.417 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.417 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:38:06.417 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:38:06.417 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:38:06.417 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 412.0, 829.0)
+11-12 09:38:06.418 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:38:06.419 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=0 flags=262144
+11-12 09:38:06.419 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:38:06.419 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:38:06.419 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 412.0, 591.0)
+11-12 09:38:06.419 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 238.0, 0.0, 1.0]
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 20.0)
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 43.0, 0.0, 1.0]
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:38:06.420 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 342.0, 29.0, 0.0, 1.0]
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 55.999756, 17.0)
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 91.5, 0.0, 1.0]
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 75.146484, 14.0)
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 112.5, 0.0, 1.0]
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 15.0)
+11-12 09:38:06.421 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 149.0, 0.0, 1.0]
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 168.0, 0.0, 1.0]
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:38:06.422 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 224.0, 0.0, 1.0]
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 56.0)
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 280.0, 0.0, 1.0]
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 16.0)
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 344.0, 0.0, 1.0]
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 320.0, 13.0)
+11-12 09:38:06.424 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 345.5, 0.0, 1.0]
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 368.0, 0.0, 1.0]
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(252.0, 0.0, 300.0, 48.0)
+11-12 09:38:06.425 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 46.0, 0.0, 0.0, 1.0]
+11-12 09:38:06.428 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.428 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:38:06.428 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:38:06.428 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:38:06.428 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 416.0, 0.0, 1.0]
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:38:06.429 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 114.0, 416.0, 0.0, 1.0]
+11-12 09:38:06.430 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:38:06.430 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.430 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.430 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:38:06.430 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 206.0, 416.0, 0.0, 1.0]
+11-12 09:38:06.431 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:38:06.431 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.431 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.431 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 92.0, 48.0)
+11-12 09:38:06.431 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 298.0, 416.0, 0.0, 1.0]
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 48.0)
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 464.0, 0.0, 1.0]
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2097352
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 368.0, 52.0)
+11-12 09:38:06.433 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 521.0, 0.0, 1.0]
+11-12 09:38:06.434 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:38:06.434 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:38:06.434 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:38:06.434 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 412.0, 892.0)
+11-12 09:38:06.434 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:06.435 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:38:06.435 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:38:06.435 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:38:06.435 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 412.0, 301.0)
+11-12 09:38:06.435 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:07.194 28028 28028 I flutter : 00:29 +16: narrow enlarged-text quick export scrolls every version and confirmation into view
+11-12 09:38:07.630 28028 28028 E AccessibilityBridge: transform has not been initialized for id = 29
+11-12 09:38:07.630 28028 28028 I AccessibilityBridge: Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.630 28028 28028 I AccessibilityBridge: Semantics tree:  +-- headingLevel=0
+11-12 09:38:07.630 28028 28028 I AccessibilityBridge: Semantics tree:  +-- textDirection=UNKNOWN
+11-12 09:38:07.630 28028 28028 I AccessibilityBridge: Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:38:07.630 28028 28028 I AccessibilityBridge: Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:  SemanticsNode id=1 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:    +-- headingLevel=0
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:    +-- textDirection=LTR
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:    +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=7 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:38:07.631 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:07.632 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=8 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.632 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:38:07.632 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=UNKNOWN
+11-12 09:38:07.632 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:38:07.632 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:        SemanticsNode id=9 identifier=null label=Dialog actions=0 flags=6144
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:          +-- headingLevel=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:          +-- textDirection=LTR
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 320.0, 505.0)
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 63.0, 0.0, 1.0]
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:          SemanticsNode id=10 identifier=null label=null actions=8388624 flags=262144
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            +-- headingLevel=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            +-- textDirection=UNKNOWN
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 320.0, 500.1638)
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 4.83622, 0.0, 1.0]
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=11 identifier=null label=导出照片 actions=0 flags=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 228.0, 33.0)
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 36.5, 0.0, 1.0]
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=12 identifier=null label=null actions=4194305 flags=2097352
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 250.0, 29.0, 0.0, 1.0]
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=13 identifier=null label=当前编辑 actions=0 flags=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 89.56244, 27.0)
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 85.0, 0.0, 1.0]
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=14 identifier=null label=1200 × 934 px actions=0 flags=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 120.156006, 23.0)
+11-12 09:38:07.634 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 82.0, 116.0, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=15 identifier=null label=导出版本 · 可多选 actions=0 flags=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 23.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 155.0, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=16 identifier=null label=当前编辑
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: 当前编辑
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: 当前 actions=4194305 flags=2097155
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 56.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 182.0, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=17 identifier=null label=原图
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: 原图 actions=4194305 flags=2097153
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 56.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 238.0, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=18 identifier=null label=保存的胶片
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: 保存的胶片 actions=4194305 flags=2097153
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 56.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 294.0, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=19 identifier=null label=画质 actions=0 flags=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 48.0, 25.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 353.5, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=20 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 228.0, 21.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 70.0, 355.5, 0.0, 1.0]
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=21 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=UNKNOWN
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 48.0)
+11-12 09:38:07.635 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 382.0, 0.0, 1.0]
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=22 identifier=null label=null actions=4194496 flags=10485952
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=LTR
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(183.0, 0.0, 231.0, 48.0)
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 34.5, 0.0, 0.0, 1.0]
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              SemanticsNode id=29 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- headingLevel=0
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- textDirection=null
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:                +-- transform=null
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=23 identifier=null label=轻量 actions=4194305 flags=2097352
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 430.0, 0.0, 1.0]
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=24 identifier=null label=均衡 actions=4194305 flags=2097352
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 91.0, 430.0, 0.0, 1.0]
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=25 identifier=null label=高清 actions=4194305 flags=2097352
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:38:07.636 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 160.0, 430.0, 0.0, 1.0]
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=26 identifier=null label=原画 actions=4194305 flags=2097352
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 69.0, 48.0)
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 229.0, 430.0, 0.0, 1.0]
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=27 identifier=null label=更多设置 actions=4194305 flags=2097352
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 22.16378)
+11-12 09:38:07.637 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 478.0, 0.0, 1.0]
+11-12 09:38:07.638 28028 28028 I AccessibilityBridge: Semantics tree:            SemanticsNode id=28 identifier=null label=导出到手机相册 actions=4194305 flags=2105544
+11-12 09:38:07.638 28028 28028 I AccessibilityBridge: Semantics tree:              +-- headingLevel=0
+11-12 09:38:07.638 28028 28028 I AccessibilityBridge: Semantics tree:              +-- textDirection=LTR
+11-12 09:38:07.638 28028 28028 I AccessibilityBridge: Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 276.0, 52.0)
+11-12 09:38:07.638 28028 28028 I AccessibilityBridge: Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 22.0, 535.0, 0.0, 1.0]
+11-12 09:38:07.642 28028 28028 I AccessibilityBridge: Semantics tree:    SemanticsNode id=5 identifier=null label=null actions=0 flags=0
+11-12 09:38:07.642 28028 28028 I AccessibilityBridge: Semantics tree:      +-- headingLevel=0
+11-12 09:38:07.642 28028 28028 I AccessibilityBridge: Semantics tree:      +-- textDirection=UNKNOWN
+11-12 09:38:07.642 28028 28028 I AccessibilityBridge: Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 320.0, 568.0)
+11-12 09:38:07.642 28028 28028 I AccessibilityBridge: Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:07.647 28028 28028 I AccessibilityBridge: Semantics tree:      SemanticsNode id=6 identifier=null label=Dismiss actions=262145 flags=0
+11-12 09:38:07.647 28028 28028 I AccessibilityBridge: Semantics tree:        +-- headingLevel=0
+11-12 09:38:07.647 28028 28028 I AccessibilityBridge: Semantics tree:        +-- textDirection=LTR
+11-12 09:38:07.647 28028 28028 I AccessibilityBridge: Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 320.0, 63.0)
+11-12 09:38:07.647 28028 28028 I AccessibilityBridge: Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+11-12 09:38:08.495 28028 28028 I flutter : 00:30 +17: original save has no rendering and retries one immutable publication action
+11-12 09:38:08.531 28028 28028 I flutter : 00:30 +18: denied permission does not stage or publish an original
+11-12 09:38:08.553 28028 28028 I flutter : 00:31 +19: separate confirmed actions have independent receipt keys
+11-12 09:38:08.563 28028 28028 I flutter : 00:31 +20: owner change cancels a native save and hides a late acknowledgement
+11-12 09:38:08.583 28028 28028 I flutter : 00:31 +21: stopping a save retains its action for retry after an ambiguous result
+11-12 09:38:08.605 28028 28028 I flutter : 00:31 +22: a missing system receipt stays retryable
+11-12 09:38:08.627 28028 28028 I flutter : 00:31 +23: (tearDownAll)
+11-12 09:38:08.662   531  1149 I ActivityManager: Killing 28028:cc.huevia.next/u0a105 (adj 0): stop cc.huevia.next due to finished inst
+11-12 09:38:08.717   531   562 I libprocessgroup: Successfully killed process cgroup uid 10105 pid 28028 in 47ms
+11-12 09:38:09.110   531 11835 V ActivityManager: Got obituary of 28028:cc.huevia.next
+11-12 09:38:09.139   339   339 I Zygote  : Process 28028 exited due to signal 9 (Killed)
+11-12 09:38:09.178   531   552 W ActivityManager: setHasOverlayUi called on unknown pid: 28028

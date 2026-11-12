@@ -1,0 +1,6 @@
+{
+  "sourceCommit": "52f0a8087359bf01d4016c4c65f7dce1f5710d41",
+  "bytes": 147046391,
+  "sha256": "81de8aaab58826951bccf6b893067cd6017c53880f40a2344c79d0ecb58fd709",
+  "target": "cross-platform/app/integration_test/editor_device_test.dart"
+}

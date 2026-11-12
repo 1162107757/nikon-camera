@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "1e5acb6c57e63f9a586235109f19b2f66336fdc1",
+  "pid": 28028,
+  "widgetScenarios": 7,
+  "crashMarkers": 0,
+  "nativeIntegrationPassed": true,
+  "terminalConsoleSummaryCaptured": false,
+  "completedCasesBeforeTeardown": 23
+}

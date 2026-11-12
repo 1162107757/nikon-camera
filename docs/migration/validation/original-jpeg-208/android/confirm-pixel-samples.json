@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "sourceCommit": "1e5acb6c57e63f9a586235109f19b2f66336fdc1",
+  "screenPixels": [
+    1080,
+    2340
+  ],
+  "devicePixelRatio": 2.625,
+  "nativeReference": {
+    "package": "cc.huevia",
+    "versionCode": 186,
+    "versionName": "0.30.32-beta"
+  },
+  "cardVerticalBounds": {
+    "original": [
+      928,
+      1349
+    ],
+    "next": [
+      926,
+      1351
+    ]
+  },
+  "primaryButtonBounds": {
+    "original": [
+      738,
+      1212,
+      1006,
+      1338
+    ],
+    "next": [
+      739,
+      1215,
+      1007,
+      1341
+    ]
+  },
+  "firstBodyLineInkBounds": {
+    "original": [
+      108,
+      1040,
+      786,
+      1073
+    ],
+    "next": [
+      108,
+      1042,
+      800,
+      1075
+    ]
+  },
+  "titleInkBounds": {
+    "original": [
+      107,
+      985,
+      498,
+      1022
+    ],
+    "next": [
+      107,
+      983,
+      498,
+      1020
+    ]
+  },
+  "balancedLineLengths": [
+    19,
+    19,
+    18
+  ],
+  "samples": {
+    "card": {
+      "point": [
+        540,
+        950
+      ],
+      "original": [
+        255,
+        255,
+        255
+      ],
+      "next": [
+        255,
+        255,
+        255
+      ]
+    },
+    "primaryFill": {
+      "point": [
+        820,
+        1230
+      ],
+      "original": [
+        244,
+        214,
+        192
+      ],
+      "next": [
+        244,
+        214,
+        192
+      ]
+    }
+  },
+  "fullPixelParity": false,
+  "note": "Card and primary fill colours match. Native and Flutter Chinese glyph advances still differ (14 pixels over the first line); vertical/button offsets are 1\u20133 pixels. This is not a full UI parity certificate."
+}

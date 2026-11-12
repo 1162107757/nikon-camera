@@ -1,0 +1,19 @@
+{
+  "utc": "2026-11-12T09:52:49.885533+00:00",
+  "results": [
+    {
+      "milestone": 206,
+      "manifest": "docs/migration/validation/local-tools-border-206/evidence.json",
+      "manifestSha256": "fda85ff0a45b58dedbd75b37cad58006e96e0b8debf6ece5bebf83229732a4e3",
+      "verifiedFiles": 70,
+      "mismatches": 0
+    },
+    {
+      "milestone": 207,
+      "manifest": "docs/migration/validation/export-settings-207/evidence.json",
+      "manifestSha256": "77c4dc9f7b81b4fa2b33634d54eeb402c7e6f30154abdc8c48f1834853ec7926",
+      "verifiedFiles": 84,
+      "mismatches": 0
+    }
+  ]
+}
