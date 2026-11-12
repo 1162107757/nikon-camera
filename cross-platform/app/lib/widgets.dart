@@ -134,7 +134,7 @@ class PresetImage extends StatelessWidget {
   final bool original, showBadge, detail;
   @override
   Widget build(BuildContext context) {
-    if (!preset.online && core != null) {
+    if (core != null && (!preset.online || preset.preview.isEmpty)) {
       return _LocalPresetImage(
         preset: preset,
         core: core!,
@@ -144,15 +144,24 @@ class PresetImage extends StatelessWidget {
         detail: detail,
       );
     }
-    Widget fallback() => ColoredBox(
-      color: Theme.of(context).colorScheme.surfaceContainer,
-      child: Center(
-        child: Text(
-          preset.format,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-      ),
-    );
+    Widget fallback() => core != null
+        ? _LocalPresetImage(
+            preset: preset,
+            core: core!,
+            owner: owner,
+            original: original,
+            showBadge: showBadge,
+            detail: detail,
+          )
+        : ColoredBox(
+            color: Theme.of(context).colorScheme.surfaceContainer,
+            child: Center(
+              child: Text(
+                preset.format,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+          );
     final uri = Uri.tryParse(preset.preview);
     if (uri == null) return fallback();
     if (uri.scheme == 'https' && uri.userInfo.isEmpty) {
@@ -231,7 +240,8 @@ class _LocalPresetImageState extends State<_LocalPresetImage> {
       }
       try {
         final value = await core.call('media.showcase', {
-          'id': id,
+          'id': widget.preset.online ? widget.preset.data['sha256'] : id,
+          if (widget.preset.online) 'preset': widget.preset.data,
           'category': category,
           'owner': owner,
           'original': original,

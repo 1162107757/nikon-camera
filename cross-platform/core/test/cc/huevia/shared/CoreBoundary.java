@@ -74,6 +74,21 @@ public final class CoreBoundary {
             rejects(()->runtime.freezeEdit(source.getPath(),"alice",edit));
             String sourceSha=edits.sourceIdentity(source,false);Files.write(source.toPath(),new byte[]{40,30,20,10});
             yes(!sourceSha.equals(edits.sourceIdentity(source,true)));
+            // Online editor use must retain immutable bytes in photo history,
+            // without silently importing a preset into My Presets.
+            Path recipeCache=root.resolve("online-presets/recipes");Files.createDirectories(recipeCache);
+            Files.write(recipeCache.resolve(presetId+".ncp"),original);
+            Map<String,Object> onlinePreset=SharedRuntime.map("id","online-fixture","name","Online frozen","fileUrl","https://example.invalid/fixture.ncp","sha256",presetId,"byteLength",original.length,"fileFormat","NCP");
+            yes(Arrays.equals(original,runtime.showcasePreset(presetId,SharedJson.encode(onlinePreset))));
+            rejects(()->runtime.showcasePreset("0".repeat(64),SharedJson.encode(onlinePreset)));
+            Map<String,Object> prepared=SharedJson.object(runtime.request("editor.prepare",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner","","preset",onlinePreset))));
+            yes(presetId.equals(prepared.get("id")));
+            yes(((List<?>)SharedJson.object(runtime.request("library.list","{}")).get("items")).isEmpty());
+            PhotoEditStore.Draft onlineDraft=runtime.freezeEdit(source.getPath(),"",SharedJson.encode(SharedRuntime.map("presetId",presetId,"strength",85)));
+            yes(Arrays.equals(original,onlineDraft.presetBytes()));yes(onlineDraft.strength==85);
+            SharedRuntime reopenedRuntime=new SharedRuntime(root.toString(),new LockedStore(),new NoNetwork());
+            yes(Arrays.equals(original,reopenedRuntime.freezeEdit(source.getPath(),"",SharedJson.encode(SharedRuntime.map("presetId",presetId))).presetBytes()));
+            rejects(()->runtime.request("editor.prepare",SharedJson.encode(SharedRuntime.map("path",source.getPath(),"owner","other","preset",onlinePreset))));
             yes(SharedRawSettings.parse("{}").equals(cc.huevia.ncp.RawDevelopmentSettings.DEFAULT));
             cc.huevia.ncp.RawDevelopmentSettings rawSettings=SharedRawSettings.parse("{\"whiteBalance\":\"CUSTOM\",\"temperature\":4800,\"tint\":10,\"exposure\":5,\"colorMode\":\"NEUTRAL\"}");
             yes(SharedRawSettings.parse(SharedRawSettings.json(rawSettings)).equals(rawSettings));
@@ -88,6 +103,7 @@ public final class CoreBoundary {
             checks+=ExportBoundaryTest.run(temporary);
             checks+=OriginalPublicationBoundaryTest.run(temporary);
             checks+=CameraBoundaryTest.run(temporary);
+            checks+=CameraTransferBoundaryTest.run(temporary);
             checks+=CopyBoundaryTest.run(temporary);
             checks+=VersionBoundaryTest.run(temporary);
             checks+=UiStateBoundaryTest.run(temporary);

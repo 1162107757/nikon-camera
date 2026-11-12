@@ -25,6 +25,7 @@ import 'selection_workspace.dart';
 import 'legacy_local_workspace.dart';
 import 'theme.dart';
 import 'workspace_tools.dart';
+import 'editor_presets.dart';
 
 part 'legacy_editor.dart';
 part 'local_editor.dart';
@@ -66,6 +67,44 @@ class _EditorPageState extends State<EditorPage> {
   Size? compositionFrame;
   int compositionFrameTurns = 0;
   int tab = 0, revision = 0, hslBand = 0;
+  late final EditorPresets filters;
+  bool onlineFilters = true, preparingFilter = false;
+  String filterCategory = '';
+  List<Preset> get filterRows =>
+      (onlineFilters ? filters.online : widget.state.presets)
+          .where(
+            (preset) =>
+                filterCategory.isEmpty || preset.category == filterCategory,
+          )
+          .toList();
+  List<Preset> get allFilters => <String, Preset>{
+    for (final preset in [...filters.online, ...widget.state.presets])
+      filters.identity(preset): preset,
+  }.values.toList();
+  void filtersChanged() {
+    if (!mounted) return;
+    setState(() {});
+    panelRevision.value++;
+  }
+
+  Future<void> selectFilter(Preset? preset) async {
+    if (!toolsEnabled || preparingFilter) return;
+    setState(() => preparingFilter = true);
+    try {
+      final id = preset == null ? '' : await filters.prepare(preset);
+      if (!mounted || !sameOwner) return;
+      change(() {
+        recipe.data['presetId'] = id;
+        recipe.data['presetName'] = preset?.name ?? '无滤镜';
+        recipe.data['strength'] = preset == null ? 0 : 100;
+      });
+    } catch (failure) {
+      if (mounted && sameOwner) setState(() => error = '$failure');
+    } finally {
+      if (mounted) setState(() => preparingFilter = false);
+    }
+  }
+
   late final String owner =
       widget.state.session['user']?['id'] as String? ?? '';
   late final File legacyDraft = File(
@@ -79,6 +118,9 @@ class _EditorPageState extends State<EditorPage> {
   @override
   void initState() {
     super.initState();
+    filters = EditorPresets(widget.state, widget.photo)
+      ..addListener(filtersChanged);
+    unawaited(filters.load());
     widget.state.addListener(editorOwnerChanged);
     progressEvents = HueviaCore.progress.listen((event) {
       final value = object(event);
@@ -119,6 +161,8 @@ class _EditorPageState extends State<EditorPage> {
   @override
   void dispose() {
     widget.state.removeListener(editorOwnerChanged);
+    filters.removeListener(filtersChanged);
+    filters.dispose();
     clearRegionLayer();
     debounce?.cancel();
     if (restored && !exporting) unawaited(saveDraft().catchError((_) {}));
@@ -634,16 +678,17 @@ class _EditorPageState extends State<EditorPage> {
               items: [
                 const DropdownMenuItem(value: '', child: Text('无滤镜')),
                 if ((recipe.data['presetId'] as String).isNotEmpty &&
-                    !widget.state.presets.any(
-                      (preset) => preset.id == recipe.data['presetId'],
+                    !allFilters.any(
+                      (preset) =>
+                          filters.identity(preset) == recipe.data['presetId'],
                     ))
                   DropdownMenuItem(
                     value: recipe.data['presetId'] as String,
                     child: Text('${recipe.data['presetName'] ?? '已保存滤镜'} · 草稿'),
                   ),
-                ...widget.state.presets.map(
+                ...allFilters.map(
                   (preset) => DropdownMenuItem(
-                    value: preset.id,
+                    value: filters.identity(preset),
                     child: Text(
                       preset.name,
                       maxLines: 1,
@@ -652,23 +697,27 @@ class _EditorPageState extends State<EditorPage> {
                   ),
                 ),
               ],
-              onChanged: exporting
+              onChanged: !toolsEnabled
                   ? null
-                  : (value) => change(() {
-                      final selected = value ?? '';
-                      if ((recipe.data['presetId'] as String).isEmpty &&
-                          selected.isNotEmpty) {
-                        recipe.data['strength'] = 100;
-                      }
-                      recipe.data['presetId'] = selected;
-                      if (selected.isEmpty) recipe.data['presetName'] = '无滤镜';
-                      for (final preset in widget.state.presets) {
-                        if (preset.id == selected) {
-                          recipe.data['presetName'] = preset.name;
-                        }
-                      }
-                    }),
+                  : (value) {
+                      if (value == recipe.data['presetId']) return;
+                      unawaited(
+                        selectFilter(
+                          value == null || value.isEmpty
+                              ? null
+                              : allFilters.firstWhere(
+                                  (preset) => filters.identity(preset) == value,
+                                ),
+                        ),
+                      );
+                    },
             ),
+            if (filters.loading) const LinearProgressIndicator(),
+            if (filters.error != null)
+              TextButton(
+                onPressed: () => unawaited(filters.load()),
+                child: const Text('在线滤镜加载失败，重试'),
+              ),
             const SizedBox(height: 16),
             slider(
               '滤镜强度',

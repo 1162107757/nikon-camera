@@ -58,7 +58,7 @@ final class NativeMedia {
         if(operation.equals("media.showcase")){
             runtime.guardOwner(SharedRuntime.text(p,"owner",64));
             String id=SharedRuntime.text(p,"id",64),category=SharedRuntime.text(p,"category",64);
-            byte[] bytes=runtime.preset(id);if(bytes.length==0)throw new IOException("请选择预设。");
+            byte[] bytes=runtime.showcasePreset(id,p.containsKey("preset")?SharedJson.encode(p.get("preset")):"");if(bytes.length==0)throw new IOException("请选择预设。");
             cc.huevia.ui.PresetShowcaseRenderer renderer=new cc.huevia.ui.PresetShowcaseRenderer(context,new cc.huevia.ui.PresetPreviewRenderer(context));
             cc.huevia.ui.PresetShowcaseRenderer.Source scene=renderer.source(id,category);
             File directory=new File(runtime.root(),"preset-previews");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建预设预览目录。");

@@ -24,6 +24,7 @@ class HueviaCore {
   static const channel = MethodChannel('cc.huevia/core');
   static const events = EventChannel('cc.huevia/events');
   static final progress = events.receiveBroadcastStream();
+  Stream<dynamic> get operationProgress => progress;
   Stream<dynamic> get galleryChanges => progress.where(
     (event) => event is Map && event['kind'] == 'galleryChanged',
   );
@@ -32,6 +33,8 @@ class HueviaCore {
   final previewRevision = ValueNotifier<int>(0);
   bool customTemplate = false;
   final List<Json> recentOperations = [];
+  Future<void> openCameraSettings() =>
+      channel.invokeMethod<void>('cameraSettings');
   Future<void> initialize() async {
     final response = await _invoke('initialize', {});
     root = response['root'] as String;
@@ -278,6 +281,13 @@ class Recipe {
 }
 
 class AppState extends ChangeNotifier {
+  final cameraVisible = ValueNotifier<bool>(false);
+  @override
+  void dispose() {
+    cameraVisible.dispose();
+    super.dispose();
+  }
+
   AppState(this.core);
   final HueviaCore core;
   bool ready = false;

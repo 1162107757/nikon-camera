@@ -28,6 +28,7 @@ PY
 if [[ "${1:-all}" != build ]]; then
 bash "$ROOT/cross-platform/tool/core_ios.sh"
 bash "$ROOT/cross-platform/tool/avatar_apple.sh"
+bash "$ROOT/cross-platform/tool/wifi_apple.sh"
 python3 "$ROOT/cross-platform/tool/prepare_apple_plugin.py"
 python3 "$ROOT/cross-platform/tool/raw_apple.py" > "$WORK/raw-build.log" 2>&1
 python3 - "$ROOT" <<'PY'

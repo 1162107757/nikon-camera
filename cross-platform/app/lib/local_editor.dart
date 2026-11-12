@@ -361,7 +361,11 @@ extension _LocalWorkspace on _EditorPageState {
   }
 
   void editorOwnerChanged() {
-    if (!mounted || sameOwner) return;
+    if (!mounted) return;
+    if (sameOwner) {
+      filtersChanged();
+      return;
+    }
     debounce?.cancel();
     clearRegionLayer();
     revision++;

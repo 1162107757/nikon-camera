@@ -8,6 +8,7 @@ import 'legacy_dialog.dart';
 import 'theme.dart';
 import 'help.dart';
 import 'camera_previews.dart';
+import 'camera_transfer.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({
@@ -29,8 +30,11 @@ class _CameraPageState extends State<CameraPage> {
   bool get raw => widget.state.cameraRaw;
   set raw(bool value) => widget.state.cameraRaw = value;
   late final CameraPreviews previews;
+  late final CameraTransfer transfer;
+  final listScroll = ScrollController();
   int offset = 0, epoch = 0;
   String? error;
+  String? warning;
   List<Json> items = [];
   int overviewTab = 0;
   bool settingsExpanded = false;
@@ -65,31 +69,51 @@ class _CameraPageState extends State<CameraPage> {
   void initState() {
     super.initState();
     previews = CameraPreviews(widget.state.core);
+    transfer = CameraTransfer(widget.state);
+    if (!widget.configuration) {
+      widget.state.cameraVisible.addListener(visibilityChanged);
+    }
     unawaited(status());
   }
 
   @override
   void dispose() {
     epoch++;
+    if (!widget.configuration) {
+      widget.state.cameraVisible.removeListener(visibilityChanged);
+    }
     previews.dispose();
+    transfer.dispose();
+    listScroll.dispose();
     host.dispose();
     port.dispose();
     if (busy && job.isNotEmpty) unawaited(widget.state.core.cancel(job));
     super.dispose();
   }
 
-  Future<void> status() async {
+  void visibilityChanged() {
+    if (!widget.state.cameraVisible.value) {
+      previews.pause();
+      return;
+    }
+    if (transfer.busy) return;
+    previews.resume();
+    if (!busy) unawaited(status(reload: false));
+  }
+
+  Future<void> status({bool reload = true}) async {
     final request = ++epoch;
     try {
       final result = await widget.state.core.call('camera.status');
       if (!mounted || request != epoch) return;
+      final changed = session != result['session'];
       setState(() {
         connected = result['connected'] == true;
         session = result['session'] as String;
         model = result['model'] as String;
       });
       previews.setSession(session);
-      if (connected) await page();
+      if (connected && (reload || changed || items.isEmpty)) await page();
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
     }
@@ -135,6 +159,7 @@ class _CameraPageState extends State<CameraPage> {
     setState(() {
       busy = true;
       error = null;
+      warning = null;
       job = identity;
       if (!next) {
         items = [];
@@ -156,6 +181,9 @@ class _CameraPageState extends State<CameraPage> {
         items = next ? [...items, ...rows] : rows;
         offset = result['nextOffset'] as int;
         hasMore = result['hasMore'] == true;
+        warning = (result['unavailableStorages'] as num? ?? 0) > 0
+            ? '部分存储卡暂不可读，请保持相机待机后刷新照片。'
+            : null;
       });
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
@@ -170,32 +198,45 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> download(Json item) async {
+    if (busy || transfer.busy) return;
     final request = ++epoch;
+    previews.pause();
     setState(() {
       busy = true;
       error = null;
-      job = 'camera-download-${DateTime.now().microsecondsSinceEpoch}';
+      job = '';
     });
-    try {
-      final result = await widget.state.core.call('camera.download', {
-        'session': session,
-        'handle': item['handle'],
-        'raw': raw,
-      }, job);
-      final info = await widget.state.core.call('media.info', {
-        'path': result['path'],
-      });
-      await widget.state.registerPhoto(
-        result['path'] as String,
-        result['name'] as String,
-        info,
+    if (listScroll.hasClients) {
+      unawaited(
+        listScroll.animateTo(
+          0,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOut,
+        ),
       );
-      if (mounted && request == epoch) {
-        report(context, '${item['name']} 已保存到应用照片库');
+    }
+    try {
+      await transfer.start(session, item, raw: raw);
+      if (!mounted || request != epoch) return;
+      final result = await widget.state.core.call('camera.status');
+      if (!mounted || request != epoch) return;
+      setState(() {
+        connected = result['connected'] == true;
+        session = result['session'] as String;
+        model = result['model'] as String;
+        if (!connected) {
+          items = [];
+          offset = 0;
+          hasMore = false;
+        }
+      });
+      if (!connected) {
+        previews.reset('');
       }
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
+      previews.resume();
       if (mounted && request == epoch) {
         setState(() {
           busy = false;
@@ -251,11 +292,14 @@ class _CameraPageState extends State<CameraPage> {
       top: false,
       child: Column(
         children: [
-          if (busy) const LinearProgressIndicator(minHeight: 2),
+          if (busy && !transfer.busy)
+            const LinearProgressIndicator(minHeight: 2),
           Expanded(
             child: ListView(
+              controller: listScroll,
               padding: const EdgeInsets.fromLTRB(24, 2, 24, 28),
               children: [
+                CameraTransferCard(transfer: transfer),
                 if (!connected) ...[
                   Text(
                     protocol == 'nikon' ? '连接后可浏览照片与导入预设。' : '连接后可浏览和下载 JPEG。',
@@ -338,6 +382,27 @@ class _CameraPageState extends State<CameraPage> {
                     ),
                     child: Text(settingsExpanded ? '收起连接设置' : '连接设置'),
                   ),
+                  if (Theme.of(context).platform == TargetPlatform.iOS) ...[
+                    Text(
+                      '首次连接请允许“本地网络”访问；如果曾拒绝授权，请在设置中开启后重试。',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: HuePalette.of(context).secondary,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: busy
+                          ? null
+                          : () async {
+                              try {
+                                await widget.state.core.openCameraSettings();
+                              } catch (failure) {
+                                if (context.mounted) report(context, failure);
+                              }
+                            },
+                      child: const Text('打开本地网络权限设置'),
+                    ),
+                  ],
                   if (settingsExpanded) ...[
                     const SizedBox(height: 20),
                     Text(
@@ -390,7 +455,11 @@ class _CameraPageState extends State<CameraPage> {
                   const SizedBox(height: 20),
                   photoTools(),
                   const SizedBox(height: 16),
-                  if (items.isEmpty && !busy && error == null)
+                  if (warning != null) Text(warning!),
+                  if (items.isEmpty &&
+                      !busy &&
+                      error == null &&
+                      warning == null)
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Text(emptyMessage),
@@ -536,12 +605,13 @@ class _CameraPageState extends State<CameraPage> {
               onSelected: (value) => setState(() => overviewTab = value),
             ),
           ),
-          if (busy) const LinearProgressIndicator(minHeight: 2),
+          if (busy && !transfer.busy)
+            const LinearProgressIndicator(minHeight: 2),
           if (overviewTab == 0)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
               child: InkWell(
-                onTap: openConnection,
+                onTap: busy ? null : openConnection,
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
                   constraints: const BoxConstraints(minHeight: 72),
@@ -592,6 +662,7 @@ class _CameraPageState extends State<CameraPage> {
           Expanded(
             child: connected && overviewTab == 0
                 ? ListView(
+                    controller: listScroll,
                     padding: EdgeInsets.fromLTRB(
                       20,
                       10,
@@ -599,6 +670,7 @@ class _CameraPageState extends State<CameraPage> {
                       100 + hueNavigationInset(context),
                     ),
                     children: [
+                      CameraTransferCard(transfer: transfer),
                       photoTools(),
                       const SizedBox(height: 12),
                       Text(
@@ -618,7 +690,11 @@ class _CameraPageState extends State<CameraPage> {
                           child: const Text('重试读取照片'),
                         ),
                       ],
-                      if (items.isEmpty && !busy && error == null)
+                      if (warning != null) Text(warning!),
+                      if (items.isEmpty &&
+                          !busy &&
+                          error == null &&
+                          warning == null)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Text(emptyMessage),
@@ -651,9 +727,11 @@ class _CameraPageState extends State<CameraPage> {
                     ],
                   )
                 : SingleChildScrollView(
+                    controller: listScroll,
                     padding: const EdgeInsets.fromLTRB(28, 44, 28, 100),
                     child: Column(
                       children: [
+                        CameraTransferCard(transfer: transfer),
                         if (!compact)
                           Container(
                             width: 84,

@@ -23,6 +23,7 @@ public final class SharedRuntime {
     private final File root;
     private final PresetLibrary library;
     private final OnlinePresetRepository online;
+    private final EditorPresetCatalog editorCatalog;
     private final AccountRepository accounts;
     private final CommunityRepository community;
     private final OnlinePresetSearch search;
@@ -48,6 +49,7 @@ public final class SharedRuntime {
         discussionLinks=new SharedCommunityLinks(root);
         online=new OnlinePresetRepository(root,library);
         online.useManagedEndpoint(OnlinePresetRepository.MANAGED_CATALOG_URL);
+        editorCatalog=new EditorPresetCatalog(root,library);
         search=new OnlinePresetSearch(online);
         installationId=installationId(root,installation);
         accounts=new AccountRepository(store,transport);
@@ -62,6 +64,13 @@ public final class SharedRuntime {
     public synchronized void guardProfile(String owner,String updatedAt)throws IOException{profile.guard(owner,updatedAt);}
     public synchronized String prepareAvatar(String owner,String updatedAt,byte[] jpeg)throws IOException{return SharedJson.encode(profile.prepare(owner,updatedAt,jpeg));}
     public byte[] preset(String id)throws IOException{if(id==null||id.isEmpty())return new byte[0];requirePreset(id);return library.readPreset(id);}
+    /** Online effects use checked recipe bytes without adding to the personal library. */
+    public synchronized byte[] showcasePreset(String id,String descriptor)throws IOException{
+        if(descriptor==null||descriptor.isEmpty())return preset(id);
+        OnlinePreset selected=OnlinePreset.fromMap(SharedJson.object(descriptor));
+        if(!selected.sha256.equals(id))throw new IOException("预设预览身份已变化。");
+        return editorCatalog.read(selected);
+    }
     public synchronized String request(String operation,String json)throws IOException {
         return request(operation,json,()->false,value->{});
     }
@@ -79,6 +88,23 @@ public final class SharedRuntime {
             return SharedJson.encode(SharedExportSpecs.describe(frozen,p,cancel));
         }
         switch(operation){
+            case "editor.catalog":{
+                OnlinePresetRepository.CatalogResult catalog=editorCatalog.load();
+                List<Object> rows=new ArrayList<>();for(OnlinePreset r:catalog.presets)rows.add(onlineMap(r));
+                result=map("items",rows,"status",catalog.status,"message",catalog.message);break;
+            }
+            case "editor.prepare":{
+                String owner=text(p,"owner",64);guardOwner(owner);
+                File source=privateFile(text(p,"path",4096));
+                OnlinePreset selected=OnlinePreset.fromMap(object(p.get("preset")));
+                byte[] bytes=editorCatalog.read(selected);
+                if(cancel.getAsBoolean())throw new InterruptedIOException("滤镜准备已取消。");
+                guardOwner(owner);
+                // The existing account/photo-scoped history keeps immutable bytes
+                // for undo, reopening and export, including offline use.
+                edits.retainPreset(owner,new PhotoEditStore.Draft(edits.sourceIdentity(source,false),bytes,selected.name,100,false));
+                result=map("id",selected.sha256,"name",selected.name);break;
+            }
             case "source.inspect":result=inspectOriginal(p,cancel);break;
             case "ui.preferences.get":result=new SharedUiState(root).read();break;
             case "ui.preferences.set":result=new SharedUiState(root).update(p);break;

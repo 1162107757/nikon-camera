@@ -233,7 +233,17 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![p isKindOfClass:NSDictionary.class])fail(@"照片请求数据无效。");
   if([operation hasPrefix:@"media.exportPreview"]&&![operation isEqual:@"media.exportPreview"])return [self exportPreviewRequest:operation payload:p task:task];
   NSString *templateDirectory=[_root stringByAppendingPathComponent:@"preview-template"],*customTemplate=[templateDirectory stringByAppendingPathComponent:@"custom.jpg"];
-  if(([operation hasPrefix:@"media.template"]||[operation isEqualToString:@"media.showcase"])&&(![[templateDirectory stringByResolvingSymlinksInPath] isEqualToString:[[_root stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"preview-template"]]||![[customTemplate stringByResolvingSymlinksInPath] isEqualToString:[[templateDirectory stringByResolvingSymlinksInPath] stringByAppendingPathComponent:@"custom.jpg"]]))fail(@"模板目录不可用。");
+  if([operation hasPrefix:@"media.template"]||[operation isEqualToString:@"media.showcase"]){
+    // A fresh install has no template directory. Resolving its absent leaf can
+    // preserve /var while resolving the existing parent returns /private/var.
+    // Inspect the two fixed children instead of comparing those path aliases.
+    NSFileManager *files=NSFileManager.defaultManager;
+    for(NSString *candidate in @[templateDirectory,customTemplate]){
+      NSDictionary *attributes=[files attributesOfItemAtPath:candidate error:nil];
+      NSString *type=attributes[NSFileType];
+      if(type&&![type isEqual:(candidate==templateDirectory?NSFileTypeDirectory:NSFileTypeRegular)])fail(@"模板目录不可用。");
+    }
+  }
   if([operation hasPrefix:@"media.template"]){
     if([operation isEqualToString:@"media.templateSet"]){
       NSString *source=[[_runtime privateFileWithNSString:p[@"path"]] getPath];unsigned long long size=[[NSFileManager.defaultManager attributesOfItemAtPath:source error:nil] fileSize];
@@ -263,7 +273,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   if([operation isEqualToString:@"media.showcase"]){
     NSString *owner=p[@"owner"]?:@"",*presetID=p[@"id"],*category=p[@"category"]?:@"";
     if(![owner isKindOfClass:NSString.class]||![presetID isKindOfClass:NSString.class]||![category isKindOfClass:NSString.class])fail(@"预设预览数据无效。");
-    [_runtime guardOwnerWithNSString:owner];IOSByteArray *bytes=[_runtime presetWithNSString:presetID];
+    [_runtime guardOwnerWithNSString:owner];IOSByteArray *bytes=[_runtime showcasePresetWithNSString:presetID withNSString:p[@"preset"]?json(p[@"preset"]):@""];
     if(presetID.length!=64||bytes.length==0)fail(@"请选择预设。");
     NSArray<NSString *> *names=@[@"portrait-smile",@"portrait-man",@"alpine-lake",@"sunlit-forest",@"city-skyline",@"neon-street",@"coastal-water",@"pink-tulips",@"breakfast",@"rainy-tokyo"];
     NSArray<NSNumber *> *pool=@[@0,@1,@2,@3,@4,@5,@6,@7,@8,@9];NSString *tag=[[category stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet] lowercaseString];

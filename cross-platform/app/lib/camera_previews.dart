@@ -29,7 +29,7 @@ class CameraPreviews {
   final HueviaCore core;
   String _session = '';
   int _generation = 0, _sequence = 0;
-  bool _running = false, _disposed = false;
+  bool _running = false, _disposed = false, _paused = false;
   final _pending = <_PreviewRequest>[];
   final _futures = <String, Future<CameraPreview>>{};
 
@@ -45,6 +45,12 @@ class CameraPreviews {
 
   void setSession(String session) {
     if (_session != session) reset(session);
+  }
+
+  void pause() => _paused = true;
+  void resume() {
+    _paused = false;
+    if (!_disposed) unawaited(_drain());
   }
 
   Future<CameraPreview> load(Json photo, {bool refresh = false}) {
@@ -72,7 +78,7 @@ class CameraPreviews {
     if (_running) return;
     _running = true;
     try {
-      while (!_disposed && _pending.isNotEmpty) {
+      while (!_disposed && !_paused && _pending.isNotEmpty) {
         final request = _pending.removeAt(0);
         CameraPreview preview;
         try {

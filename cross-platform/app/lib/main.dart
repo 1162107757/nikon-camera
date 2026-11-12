@@ -42,25 +42,44 @@ class _HueviaAppState extends State<HueviaApp> {
   late final GoRouter router = GoRouter(
     initialLocation: '/presets',
     routes: [
-      ShellRoute(
-        builder: (context, state, child) =>
-            HomeFrame(location: state.uri.path, child: child),
-        routes: [
-          GoRoute(
-            path: '/presets',
-            builder: (_, _) => LibraryPage(state: widget.state),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigation) => HomeFrame(
+          location: state.uri.path,
+          navigation: navigation,
+          child: navigation,
+        ),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/presets',
+                builder: (_, _) => LibraryPage(state: widget.state),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/photos',
-            builder: (_, _) => PhotosPage(state: widget.state),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/camera',
+                builder: (_, _) => CameraPage(state: widget.state),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/camera',
-            builder: (_, _) => CameraPage(state: widget.state),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/photos',
+                builder: (_, _) => PhotosPage(state: widget.state),
+              ),
+            ],
           ),
-          GoRoute(
-            path: '/settings',
-            builder: (_, _) => SettingsPage(state: widget.state),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/settings',
+                builder: (_, _) => SettingsPage(state: widget.state),
+              ),
+            ],
           ),
         ],
       ),
@@ -93,8 +112,21 @@ class _HueviaAppState extends State<HueviaApp> {
       ),
     ],
   );
+  void routeChanged() {
+    widget.state.cameraVisible.value =
+        router.routeInformationProvider.value.uri.path == '/camera';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    router.routerDelegate.addListener(routeChanged);
+    routeChanged();
+  }
+
   @override
   void dispose() {
+    router.routerDelegate.removeListener(routeChanged);
     router.dispose();
     super.dispose();
   }
@@ -159,9 +191,15 @@ class _HueviaAppState extends State<HueviaApp> {
 }
 
 class HomeFrame extends StatelessWidget {
-  const HomeFrame({super.key, required this.location, required this.child});
+  const HomeFrame({
+    super.key,
+    required this.location,
+    required this.child,
+    this.navigation,
+  });
   final String location;
   final Widget child;
+  final StatefulNavigationShell? navigation;
   static const paths = ['/presets', '/camera', '/photos', '/settings'];
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -243,18 +281,26 @@ class HomeFrame extends StatelessWidget {
     final selected = paths.indexOf(location) == index;
     final p = HuePalette.of(context);
     final label = ['预设', '同步', '相册', '设置'][index];
+    void select() {
+      if (navigation != null) {
+        navigation!.goBranch(index);
+      } else {
+        context.go(paths[index]);
+      }
+    }
+
     final item = Semantics(
       button: true,
       selected: selected,
       label: label,
       excludeSemantics: true,
-      onTap: () => context.go(paths[index]),
+      onTap: select,
       child: Material(
         color: selected && !rail ? p.primaryContainer : Colors.transparent,
         borderRadius: BorderRadius.circular(40),
         child: InkWell(
           borderRadius: BorderRadius.circular(40),
-          onTap: () => context.go(paths[index]),
+          onTap: select,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: Column(

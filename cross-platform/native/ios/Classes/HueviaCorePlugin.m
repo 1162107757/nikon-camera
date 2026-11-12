@@ -14,17 +14,7 @@
 #import "java/lang/Throwable.h"
 #import "IOSPrimitiveArray.h"
 #import "HueviaCoreBootstrap.h"
-
-@interface HueviaSockets : NSObject <CcHueviaSharedSharedCamera_Connectors,CcHueviaAlbumPtpIpClient_SocketConnector>
-@end
-@implementation HueviaSockets
-- (id<CcHueviaAlbumPtpIpClient_SocketConnector>)createWithNSString:(NSString *)host withInt:(int32_t)port withBoolean:(bool)fuji {return self;}
-- (JavaNetSocket *)connectWithNSString:(NSString *)host withInt:(int32_t)port withInt:(int32_t)timeout {
-  JavaNetSocket *socket=[[JavaNetSocket alloc] init];
-  @try {[socket connectWithJavaNetSocketAddress:[[JavaNetInetSocketAddress alloc] initWithNSString:host withInt:port] withInt:timeout];return socket;}
-  @catch(id failure){[socket close];@throw failure;}
-}
-@end
+#import "HueviaWifiSocket.h"
 
 @interface HueviaCorePlugin ()
 @property(nonatomic,strong) dispatch_queue_t queue;
@@ -55,6 +45,21 @@
 - (FlutterError *)onCancelWithArguments:(id)arguments {self.events=nil;return nil;}
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
+  if([call.method isEqualToString:@"cameraSettings"]){
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success){
+      reply(success?nil:[FlutterError errorWithCode:@"SETTINGS_FAILED" message:@"请在 iPhone 设置中打开本应用的本地网络权限。" details:nil]);
+    }];return;
+  }
+  if([call.method isEqualToString:@"request"]&&[args[@"operation"] isEqualToString:@"camera.connect"]&&![NSUserDefaults.standardUserDefaults boolForKey:@"HueviaCameraNetworkIntroduction"]){
+    UIAlertController *intro=[UIAlertController alertControllerWithTitle:@"允许访问相机的本地网络" message:@"请先连接相机 Wi-Fi。接下来的系统授权弹窗请选择“允许”，才能读取和下载相机照片。\n\n如果此前选择了“不允许”，请到 iPhone 设置 → Huevia → 本地网络中开启后重试。" preferredStyle:UIAlertControllerStyleAlert];
+    [intro addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){reply([FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil]);}]];
+    [intro addAction:[UIAlertAction actionWithTitle:@"继续连接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+      // This records only that the explanation was shown, never permission state.
+      [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"HueviaCameraNetworkIntroduction"];
+      [self handleMethodCall:call result:reply];
+    }]];
+    [self.presenter presentViewController:intro animated:YES completion:nil];return;
+  }
   if([call.method isEqualToString:@"gallerySavePermission"]){
     if(!self.gallery){reply([FlutterError errorWithCode:@"NOT_READY" message:@"应用尚未准备好。" details:nil]);return;}
     [self.gallery requestSavePermission:reply];return;

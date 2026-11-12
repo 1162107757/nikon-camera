@@ -11,6 +11,7 @@ extension _LegacyWorkspace on _EditorPageState {
       !leaving &&
       !exporting &&
       !managingTools &&
+      !preparingFilter &&
       !analyzingCleanup;
 
   Widget compositionDock(double scale, bool compact) {
@@ -994,19 +995,68 @@ extension _LegacyWorkspace on _EditorPageState {
       SizedBox(
         height: 48,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           child: Row(
             children: [
-              const Text(
-                '我的',
-                style: TextStyle(fontSize: 11, color: _editorYellow),
+              for (final source in [(false, '我的'), (true, '在线')])
+                TextButton(
+                  onPressed: toolsEnabled
+                      ? () => refreshWorkspace(() {
+                          onlineFilters = source.$1;
+                          filterCategory = '';
+                        })
+                      : null,
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(48, 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  child: Text(
+                    source.$2,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: onlineFilters == source.$1
+                          ? _editorYellow
+                          : _editorWhite,
+                    ),
+                  ),
+                ),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final category in <String>{
+                        '',
+                        ...(onlineFilters
+                                ? filters.online
+                                : widget.state.presets)
+                            .map((preset) => preset.category)
+                            .where((value) => value.isNotEmpty),
+                      })
+                        TextButton(
+                          onPressed: toolsEnabled
+                              ? () => refreshWorkspace(
+                                  () => filterCategory = category,
+                                )
+                              : null,
+                          style: TextButton.styleFrom(
+                            minimumSize: const Size(44, 48),
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                          ),
+                          child: Text(
+                            category.isEmpty ? '全部' : category,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: filterCategory == category
+                                  ? _editorYellow
+                                  : _editorWhite,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(width: 18),
-              const Text(
-                '全部',
-                style: TextStyle(fontSize: 11, color: _editorWhite),
-              ),
-              const Spacer(),
               editorButton(
                 HueIconKind.presets,
                 '查看全部滤镜',
@@ -1017,65 +1067,86 @@ extension _LegacyWorkspace on _EditorPageState {
           ),
         ),
       ),
+      if (onlineFilters &&
+          (filters.loading ||
+              filters.error != null ||
+              filters.notice.isNotEmpty))
+        SizedBox(
+          height: 26,
+          child: InkWell(
+            onTap: () => unawaited(filters.load()),
+            child: Text(
+              filters.loading
+                  ? '正在加载在线滤镜…'
+                  : filters.error != null
+                  ? '在线滤镜加载失败 · 轻点重试'
+                  : filters.notice,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 10, color: _editorMuted),
+            ),
+          ),
+        ),
+      if (preparingFilter) const LinearProgressIndicator(minHeight: 2),
       Expanded(
-        child: ListView(
+        child: ListView.builder(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 18),
-          children: [
-            for (final preset in <Preset?>[null, ...widget.state.presets])
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: SizedBox(
-                  width: 68,
-                  child: InkWell(
-                    onTap: toolsEnabled
-                        ? () => change(() {
-                            recipe.data['presetId'] = preset?.id ?? '';
-                            recipe.data['presetName'] = preset?.name ?? '无滤镜';
-                            recipe.data['strength'] = 100;
-                          })
-                        : null,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9),
-                              border:
-                                  recipe.data['presetId'] == (preset?.id ?? '')
-                                  ? Border.all(color: const Color(0xffbbb9a1))
-                                  : null,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: preview == null
-                                  ? const SizedBox.expand()
-                                  : Image.file(
-                                      File(preview!),
-                                      width: 68,
-                                      fit: BoxFit.cover,
-                                      cacheWidth: 160,
-                                      excludeFromSemantics: true,
-                                    ),
-                            ),
+          itemCount: filterRows.length + 1,
+          itemBuilder: (context, index) {
+            final preset = index == 0 ? null : filterRows[index - 1];
+            final id = preset == null ? '' : filters.identity(preset);
+            final thumbRecipe = recipe.clone().data
+              ..['presetId'] = ''
+              ..['presetName'] = ''
+              ..['strength'] = 0;
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: SizedBox(
+                width: 68,
+                child: InkWell(
+                  onTap: toolsEnabled
+                      ? () => unawaited(selectFilter(preset))
+                      : null,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(9),
+                            border: recipe.data['presetId'] == id
+                                ? Border.all(color: const Color(0xffbbb9a1))
+                                : null,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: restored && sameOwner
+                                ? EditorPresetThumbnail(
+                                    key: ValueKey(id),
+                                    catalog: filters,
+                                    preset: preset,
+                                    recipe: thumbRecipe,
+                                  )
+                                : const SizedBox.expand(),
                           ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          preset?.name ?? '原图',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: _editorWhite,
-                          ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        preset?.name ?? '原图',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: _editorWhite,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-          ],
+            );
+          },
         ),
       ),
       SizedBox(
