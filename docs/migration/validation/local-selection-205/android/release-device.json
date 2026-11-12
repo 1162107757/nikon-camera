@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "494f1d74cc5bfa154962c820f650c727622962d5",
+  "at": "2026-11-12T01:09:02.110999+00:00",
+  "device": "Own Android12/API31 x86_64 emulator; not Honor Magic hardware",
+  "pid": 14735,
+  "installedApkSha256": "98c75205ebe2cb069d8a74b98242f2a1093c78352617029c51138480e95ece9d",
+  "candidateApkSha256": "98c75205ebe2cb069d8a74b98242f2a1093c78352617029c51138480e95ece9d",
+  "currentPidCrashRecords": 0,
+  "memorySample": [
+    "TOTAL PSS:   128218            TOTAL RSS:   240952       TOTAL SWAP PSS:      489"
+  ],
+  "limits": "Current-process log buffer and one memory sample, not peak memory or broad stability proof",
+  "manualScenarios": [
+    "Online391guestpresets",
+    "samePNGfixture original186/205brush/circle layout",
+    "create ellipse, explicitcomplete",
+    "scoped exact+0.8EV; fullimage unchanged scope",
+    "main mask hide/show",
+    "allfour actualborderthumbs",
+    "blurcenter/side/whiteInfo",
+    "style/info/appearance/logo dialogs",
+    "actual1200x934 JPEG95 encoded/before100% view",
+    "cancel export returns allfour thumbs",
+    "close/reopen draft retains region1 +0.8EV"
+  ]
+}

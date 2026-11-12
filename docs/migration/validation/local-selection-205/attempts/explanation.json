@@ -1,0 +1,6 @@
+{
+  "nativeDraftMutation": "The first added native scenario exposed freezeEdit saving tentative recipes. SharedEdits.snapshot and both localView/cleanupRegion now resolve without saving; a different tentative geometry/border/values and missing-region failure leave prior drafts intact.",
+  "testHarness": "Earlier Windows attempts include a guarded expect inside an asynchronous fake, an isolated event-channel mock omission, and insufficient codec callback polling. Those harness issues were corrected. Latest focused Windows parent test, complete Android suite and Mac suite passed.",
+  "hostEngine": "An isolated Windows editor run ended without completion. It is retained, not counted as a pass or as an Honor crash.",
+  "screenshots": "Only settled-page images enter accepted evidence. Early transition screenshots remain privately in .tooling and are not asserted as final UI."
+}

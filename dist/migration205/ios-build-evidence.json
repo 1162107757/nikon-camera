@@ -1,0 +1,130 @@
+{
+  "sourceCommit": "494f1d74cc5bfa154962c820f650c727622962d5",
+  "developmentBuild": true,
+  "fullParityComplete": false,
+  "run": 43124388294,
+  "job": 130872655682,
+  "artifact": 13902379793,
+  "archiveBytes": 29602621,
+  "archiveSha256": "05a6b98eb284c6cc661abaad37acdcc317bdf2740abeb0318d93cb5b9407cc14",
+  "ipa": {
+    "file": "dist/migration205/huevia-0.31.0-dev-205-ios-unsigned.ipa",
+    "bytes": 29358788,
+    "sha256": "8bcb1354df362128210b1a5a91e8f72e0b62781236fe529c1426d74468593164"
+  },
+  "verification": {
+    "schema": 1,
+    "verified": true,
+    "sourceCommit": "494f1d74cc5bfa154962c820f650c727622962d5",
+    "sha256": "8bcb1354df362128210b1a5a91e8f72e0b62781236fe529c1426d74468593164",
+    "bytes": 29358788,
+    "bundleIdentifier": "cc.huevia.next",
+    "version": "0.31.0",
+    "build": "205",
+    "minimumOS": "16.0",
+    "binaries": [
+      {
+        "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+        "sha256": "c966d62fd7458198932b6497ce13616696d7df0e032dd0b795199fcffe5383f7",
+        "slices": [
+          {
+            "architecture": "arm64",
+            "platform": "iPhoneOS",
+            "minimumOS": [
+              15,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+        "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+        "slices": [
+          {
+            "architecture": "arm64",
+            "platform": "iPhoneOS",
+            "minimumOS": [
+              15,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+        "sha256": "ca012bf0e532ca1aea56f14c9d377762324c4db96f05946e7815f44b51278bcd",
+        "slices": [
+          {
+            "architecture": "arm64",
+            "platform": "iPhoneOS",
+            "minimumOS": [
+              15,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      {
+        "file": "Payload/Huevia.app/Runner",
+        "sha256": "0177fee660deaf44622503f4a4bfc7c510d862645d2f3857f5bb6099abfea1aa",
+        "slices": [
+          {
+            "architecture": "arm64",
+            "platform": "iPhoneOS",
+            "minimumOS": [
+              16,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    ],
+    "referenceFonts": [
+      {
+        "file": "Roboto-Regular.ttf",
+        "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+        "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+        "nativeAssets": [
+          "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+          "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+        ]
+      },
+      {
+        "file": "Roboto-Medium.ttf",
+        "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+        "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+        "nativeAssets": [
+          "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+          "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+        ]
+      },
+      {
+        "file": "Roboto-Bold.ttf",
+        "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+        "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+        "nativeAssets": [
+          "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+          "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+        ]
+      }
+    ],
+    "deviceInstallationVerified": false,
+    "fullParityComplete": false,
+    "runId": 43124388294,
+    "jobId": 130872655682,
+    "artifactId": 13902379793,
+    "archiveSha256": "05a6b98eb284c6cc661abaad37acdcc317bdf2740abeb0318d93cb5b9407cc14",
+    "flutterChecks": 120,
+    "nativeAvatarChecks": 38,
+    "sharedChecks": 436,
+    "simulatorScenarioChecks": 1,
+    "photoKitInitial": "none",
+    "photoKitConsent": "full",
+    "photoKitFixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+  }
+}

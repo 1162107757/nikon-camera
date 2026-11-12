@@ -1,0 +1,10 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_test.dart
+00:00 +0: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text
+00:06 +0: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text - did not complete [E]
+00:06 +0: Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text - did not complete [E]
+00:06 +0: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text (did not complete)
+No tests were found.

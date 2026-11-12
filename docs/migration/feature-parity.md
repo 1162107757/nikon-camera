@@ -16,7 +16,7 @@
 | 17 项基础调节、预设强度 | `PhotoAdjustments`, `StrengthPreviewProfile` | 直接复用 | 首批编辑器已接线 | 核心 JVM / Apple 指纹一致；应用待验证 |
 | 曲线、HSL、调色盘、自动去灰 | `PhotoCurves`, `PhotoHsl`, `PhotoCleanup` | 直接复用 | 四通道曲线、八色 HSL、调色盘、原像素去灰/噪点分析与三项强度已接线 | 核心和界面检查通过；189 两端原生场景含去灰/导出通过，完整控件样式仍待对齐 |
 | 裁剪、旋转、翻转、拉直、透视 | `PhotoGeometry`, `PhotoComposition` | 计划与模型直接复用 | 202 恢复原比例入口、可拖动/双指缩放构图页、照片背景、旋转/翻转/拉直/透视及取消/应用流程 | 202 Android release 实操、横竖屏/大字体回归通过；返回原图恢复完整范围、拉直保留手动选区已验证；全部几何组合与实机仍待验收 |
-| 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 205 接入原画笔/圆形/矩形选区、区域参数范围及主图选区叠层；渐变/取样与自动修补交互待迁移 | 共享选区与二进制检查通过；205 最终 Android/Apple 应用及视觉验收进行中 |
+| 局部蒙版、克隆、修复、调整区域 | `PhotoLocalEdits`, `PhotoPatch` | 原模型与滤镜直接复用 | 205 接入原画笔/圆形/矩形选区、区域参数范围及主图选区叠层；渐变/取样与自动修补交互待迁移 | 436 项共享检查、Android 58 个界面场景、原生流程及 Apple 应用通过；完整交互和视觉差异继续处理 |
 | 人像、肤色、瑕疵、身体与脸部模型 | `PhotoPortrait*`, `PhotoFace*`, `PhotoBodyAnalysis` | 纯 Java 部分已纳入 | iOS 模型推理及双方界面待迁移 | 待完成 |
 | 边框、自动拍摄信息、标识、排版 | `PhotoBorder`, `PhotoBorderRenderer` | 模型直接复用 | 202 恢复四模板缩略图、六项信息、机型选择、样式/信息/外观、Logo 及历史操作；两端原生渲染和参照 Roboto 字体已接线 | 202 Android 原186对照、控件和原生检查通过，iOS 编译/原生流程通过；设备像素取整、字体回退与所有排版组合仍待验收 |
 | 草稿、撤销重做、项目预设、调整复制 | `PhotoEditStore`, `PhotoRecipeStore`, `PhotoAdjustmentCopy` | 原模型已纳入 | 原格式草稿、撤销重做、账户配方及批量调节复制/撤销已接线；完整项目预设待迁移 | JVM 配方、复制事务与快照恢复验证通过；Apple 与旧安装资料迁移待验证 |

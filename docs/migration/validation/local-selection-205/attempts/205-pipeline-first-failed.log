@@ -1,0 +1,145 @@
+FAIL after 2 checks: java.lang.AssertionError: ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: {
+            'sourceSha':
+'4bcebd5e0edec972db2946ddf20dc6a644b100ddd31765dd99d238f0bc59b413',
+            'recipe': {
+              'schema': 1,
+              'presetId': '',
+              'presetName': '无滤镜',
+              'strength': 0,
+              'values': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0],
+              'hsl': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              'curves': [[0, 0, 255, 255], [0, 0, 255, 255], [0,
+0, 255, 255], [0, 0, 255, 255]],
+              'palette': {'color': 0, 'tone': 0, 'amount': 100},
+              'geometry': {
+                'turns': 1,
+                'angle': 0,
+                'left': 0,
+                'top': 0,
+                'right': 1000000,
+                'bottom': 1000000,
+                'horizontalPerspective': 0,
+                'verticalPerspective': 0,
+                'mirrored': false
+              },
+              'border': {
+                'template': 0,
+                'automatic': true,
+                'brand': '',
+                'model': '',
+                'fields': ['', '', '', '', ''],
+                'visible': 63,
+                'logo': 0,
+                'margin': 100,
+                'corner': 100,
+                'shadow': 100,
+                'blur': 100
+              }
+            }
+          }
+  Actual: {
+            'sourceSha':
+'4bcebd5e0edec972db2946ddf20dc6a644b100ddd31765dd99d238f0bc59b413',
+            'recipe': {
+              'schema': 1,
+              'presetId': '',
+              'presetName': '无滤镜',
+              'strength': 0,
+              'values': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0],
+              'hsl': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              'curves': [[0, 0, 255, 255], [0, 0, 255, 255], [0,
+0, 255, 255], [0, 0, 255, 255]],
+              'palette': {'color': 0, 'tone': 0, 'amount': 100},
+              'geometry': {
+                'turns': 1,
+                'angle': 0,
+                'left': 0,
+                'top': 0,
+                'right': 500000,
+                'bottom': 1000000,
+                'horizontalPerspective': 0,
+                'verticalPerspective': 0,
+                'mirrored': false
+              },
+              'border': {
+                'template': 3,
+                'automatic': true,
+                'brand': '',
+                'model': '',
+                'fields': ['', '', '', '', ''],
+                'visible': 63,
+                'logo': 0,
+                'margin': 100,
+                'corner': 100,
+                'shadow': 100,
+                'blur': 100
+              },
+              'localData':
+'AAAABgAAAAAAAAAAUFJUMQAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAJDcyMzNiNjFkLTEyZTEtNDg0MS04MDY3LTg4ZDQ0NDg1NjRlOAAI5Yy65Z+fIDEBP/AAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3Bob3RvLXBvaW50LWN1cnZlcy1wY2hpcC12MQAAAAQAAAAAAAAAAAAAAP8AAAD/AAAABAAAAAAAAAAAAAAA/wAAAP8AAAAEAAAAAAAAAAAAAAD/AAAA/wAAAAQAAAAAAAAAAAAAAP8AAAD/ABhwaG90by1oc2wtZWlnaHQtYmFuZHMtdjEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAABkAQBkZABQUlQxAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEYAAAAAAAEBAAAAAAAAAAAAAAAAAAAAAD/czMzMzMzNP/AAAAAAAAAAAAAAAAAAAAAAAAAA'
+            }
+          }
+   Which: at location ['recipe'] is {
+            'schema': 1,
+            'presetId': '',
+            'presetName': '无滤镜',
+            'strength': 0,
+            'values': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0],
+            'hsl': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0, 0, 0, 0, 0, 0, 0, 0, 0],
+            'curves': [[0, 0, 255, 255], [0, 0, 255, 255], [0, 0,
+255, 255], [0, 0, 255, 255]],
+            'palette': {'color': 0, 'tone': 0, 'amount': 100},
+            'geometry': {
+              'turns': 1,
+              'angle': 0,
+              'left': 0,
+              'top': 0,
+              'right': 500000,
+              'bottom': 1000000,
+              'horizontalPerspective': 0,
+              'verticalPerspective': 0,
+              'mirrored': false
+            },
+            'border': {
+              'template': 3,
+              'automatic': true,
+              'brand': '',
+              'model': '',
+              'fields': ['', '', '', '', ''],
+              'visible': 63,
+              'logo': 0,
+              'margin': 100,
+              'corner': 100,
+              'shadow': 100,
+              'blur': 100
+            },
+            'localData':
+'AAAABgAAAAAAAAAAUFJUMQAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAJDcyMzNiNjFkLTEyZTEtNDg0MS04MDY3LTg4ZDQ0NDg1NjRlOAAI5Yy65Z+fIDEBP/AAAAAAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG3Bob3RvLXBvaW50LWN1cnZlcy1wY2hpcC12MQAAAAQAAAAAAAAAAAAAAP8AAAD/AAAABAAAAAAAAAAAAAAA/wAAAP8AAAAEAAAAAAAAAAAAAAD/AAAA/wAAAAQAAAAAAAAAAAAAAP8AAAD/ABhwaG90by1oc2wtZWlnaHQtYmFuZHMtdjEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAABkAQBkZABQUlQxAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEYAAAAAAAEBAAAAAAAAAAAAAAAAAAAAAD/czMzMzMzNP/AAAAAAAAAAAAAAAAAAAAAAAAAA'
+          } which has different length and has extra map key
+'localData'
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/dev/ai-project/nikon-camera/cross-platform/app/integration_test/native_pipeline_test.dart:592:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///D:/dev/ai-project/nikon-camera/cross-platform/app/integration_test/native_pipeline_test.dart line 592
+The test description was:
+  Native codecs and LibRaw retain originals, dimensions and white
+  highlights
+═════════════════════════════════════════════════════════════════
+
+
