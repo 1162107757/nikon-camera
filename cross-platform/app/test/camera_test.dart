@@ -57,9 +57,10 @@ class CameraCore extends HueviaCore {
 }
 
 Future<CameraCore> fixture() async {
-  final directory = await Directory.systemTemp.createTemp('huevia-camera-ui-');
-  final cache = await Directory('${directory.path}/camera-previews').create();
-  final image = await File('${cache.path}/fixture.png').writeAsBytes(
+  final directory = Directory.systemTemp.createTempSync('huevia-camera-ui-');
+  final cache = Directory('${directory.path}/camera-previews')..createSync();
+  final image = File('${cache.path}/fixture.png');
+  image.writeAsBytesSync(
     base64Decode(
       'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
     ),
@@ -86,8 +87,6 @@ Future<void> open(
   bool configuration = false,
   double scale = 1,
 }) async {
-  final semantics = tester.ensureSemantics();
-  addTearDown(semantics.dispose);
   await tester.pumpWidget(
     MaterialApp(
       theme: hueviaTheme(Brightness.light),
@@ -114,7 +113,13 @@ void main() {
       await tester.tap(find.text('RAW / NEF'));
       await settleImages(tester);
       expect(find.text('DSC_6522.NEF'), findsOneWidget);
-      expect(find.bySemanticsLabel('DSC_6522.NEF 缩略图'), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is Image && widget.semanticLabel == 'DSC_6522.NEF 缩略图',
+        ),
+        findsOneWidget,
+      );
       expect(
         tester
             .widgetList<RawImage>(find.byType(RawImage))
@@ -139,7 +144,13 @@ void main() {
             .selected,
         isTrue,
       );
-      expect(find.bySemanticsLabel('DSC_6522.NEF 缩略图'), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is Image && widget.semanticLabel == 'DSC_6522.NEF 缩略图',
+        ),
+        findsOneWidget,
+      );
       expect(
         core.calls.firstWhere((call) => call.$1 == 'camera.page').$2['raw'],
         isTrue,
@@ -182,7 +193,13 @@ void main() {
       core.failThumbnail = false;
       await tester.tap(find.byIcon(Icons.image_not_supported_outlined));
       await settleImages(tester);
-      expect(find.bySemanticsLabel('DSC_6522.NEF 缩略图'), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is Image && widget.semanticLabel == 'DSC_6522.NEF 缩略图',
+        ),
+        findsOneWidget,
+      );
       expect(
         core.calls
             .where((call) => call.$1 == 'camera.thumbnail')
