@@ -1388,6 +1388,7 @@ class _OriginalNotice extends StatelessWidget {
     builder: (context, constraints) {
       final style = Theme.of(context).textTheme.bodyMedium!.copyWith(
         fontSize: 14,
+        letterSpacing: 0,
         height: 1.4 + 3 / 14,
         color: HuePalette.of(context).secondary,
       );
