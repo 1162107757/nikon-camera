@@ -1,10 +1,10 @@
 {
-  "codeSourceCommit": "0d90fedb89b37bfe1ee0ee6b7bfca3e6dfce6aab",
+  "codeSourceCommit": "3492f3be2479a1698fdca9369008a5eef5bc2de0",
   "allChangedSourceFilesMatchCommit": true,
   "sourceFiles": [
     {
       "path": "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/MediaSmokeInstrumentation.java",
-      "sha256": "d74a03516a58592dfefe101d912ac3392c6fefd096fd0734567df4512bb8ada3"
+      "sha256": "667a62e619f44aa2446daa370d992d94bf68512a3f41daa67b940c54f4fd3601"
     },
     {
       "path": "cross-platform/app/android/app/src/main/AndroidManifest.xml",
@@ -16,7 +16,7 @@
     },
     {
       "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeUsbCamera.java",
-      "sha256": "d0bd1ffcdd06f11e651787beedb1fd3252c0fb734e7a3a68f7e4e87cbec51a20"
+      "sha256": "10a5869d3506f953d6fd9a4a718cb5e05dcdfcaf0dd27528576c83b88e8da1a8"
     },
     {
       "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
@@ -28,7 +28,7 @@
     },
     {
       "path": "cross-platform/app/lib/camera.dart",
-      "sha256": "19eb7b7862a595f83cd231c3d9d66cd64266e6164c80e4029fc0dd94d58300ec"
+      "sha256": "d418afa401761a3e1237fbf84ec5afb43341afc44ead6513c08ede8bf2c0c87e"
     },
     {
       "path": "cross-platform/app/lib/domain.dart",
@@ -60,7 +60,7 @@
     },
     {
       "path": "cross-platform/app/lib/registration.dart",
-      "sha256": "f3bb5c25aa0f26ac746edeb63490f02305932daf14a5fd4ebae0da268c9da113"
+      "sha256": "c4679c6dc2a91c6f78f7c5eb235d7eb81746cf8b2b4b84a61910fa52d5894243"
     },
     {
       "path": "cross-platform/app/lib/settings.dart",
@@ -76,7 +76,7 @@
     },
     {
       "path": "cross-platform/app/test/account_search_test.dart",
-      "sha256": "a6e3974c1022bb097a85765c1296174b1a51cbaf817afcfa9d76c70a70e3372e"
+      "sha256": "e9ee6fd356f9f9346e62c18f95998d0d1ee12b095e090d7f86727e051361c0a5"
     },
     {
       "path": "cross-platform/app/test/preset_pins_test.dart",
@@ -155,18 +155,42 @@
     {
       "path": "dist/migration212/huevia-0.31.0-dev-212-android-arm64.apk",
       "abi": "arm64",
-      "sha256": "7905833a98540c9c360126183631692fce5657917bb22b446a6237371bd94831",
+      "sha256": "1666b4850f1c1d76626c5e3b3fefa2fd3c6ba145730ca4c4dce2c9f0f68f18fe",
       "bytes": 51309171,
       "signingAnd16KiBAlignmentVerified": true,
-      "rawJniMappingVerified": true
+      "rawJniMappingVerified": true,
+      "verification": {
+        "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\migration212\\huevia-0.31.0-dev-212-android-arm64.apk",
+        "bytes": 51309171,
+        "sha256": "1666b4850f1c1d76626c5e3b3fefa2fd3c6ba145730ca4c4dce2c9f0f68f18fe",
+        "abi": "arm64-v8a",
+        "mode": "release",
+        "nativeLibraries": 8,
+        "verified": true,
+        "rawJniCallbacksPreserved": true,
+        "rawJniInfoConstructorPreserved": true,
+        "r8MappingSha256": "decd82d0ddba7b0018c22f2f7aa02d866776bed6de4e601d8d970f277d436309"
+      }
     },
     {
       "path": "dist/migration212/huevia-0.31.0-dev-212-android-x64.apk",
       "abi": "x64",
-      "sha256": "43a9aa2e459fdfec2301dc69ec63ef0513d2235920b2577b8b10e5b94eb8a578",
+      "sha256": "437c20e89dd60735205afd2bdfdad02e7475d3ed53bbf369f0e0608336dcb04d",
       "bytes": 54680603,
       "signingAnd16KiBAlignmentVerified": true,
-      "rawJniMappingVerified": true
+      "rawJniMappingVerified": true,
+      "verification": {
+        "apk": "D:\\dev\\ai-project\\nikon-camera\\dist\\migration212\\huevia-0.31.0-dev-212-android-x64.apk",
+        "bytes": 54680603,
+        "sha256": "437c20e89dd60735205afd2bdfdad02e7475d3ed53bbf369f0e0608336dcb04d",
+        "abi": "x86_64",
+        "mode": "release",
+        "nativeLibraries": 8,
+        "verified": true,
+        "rawJniCallbacksPreserved": true,
+        "rawJniInfoConstructorPreserved": true,
+        "r8MappingSha256": "decd82d0ddba7b0018c22f2f7aa02d866776bed6de4e601d8d970f277d436309"
+      }
     }
   ],
   "originalCodeBase": "db8e2ef3766a228bd2dd93f6e1e139b697d3ff18",
@@ -175,8 +199,12 @@
     "kind": "Android emulator",
     "sdk": 31,
     "pageSize": 4096,
-    "installedReleaseSha256": "43a9aa2e459fdfec2301dc69ec63ef0513d2235920b2577b8b10e5b94eb8a578",
+    "installedReleaseSha256": "437c20e89dd60735205afd2bdfdad02e7475d3ed53bbf369f0e0608336dcb04d",
     "wiredDiscoveryNoDeviceStateVerified": true,
-    "physicalUsbTransferVerified": false
-  }
+    "physicalUsbTransferVerified": false,
+    "nativeSmokeAssertions": 104,
+    "nativeSmokeSourceCommit": "70462ca3bc82c4b7683dbeae0ec7ffba491bd62d",
+    "nativeSmokeAndroidInputsMatchFinal": true
+  },
+  "sourceFilesHashBasis": "SHA-256 of repository Git blob text (LF); working-tree CRLF normalised for comparison"
 }

@@ -1,0 +1,43 @@
+arm64: apksigner.bat
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+Signer #1 certificate SHA-256 digest: 76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75
+Signer #1 certificate SHA-1 digest: dd32a8843ac735234b0cdb36fbdb6358ff84674a
+Signer #1 certificate MD5 digest: 84c2cfda7312206ad9967803c1018021
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: 31ec9755ec795dcb9ee313a1cd4aaf5ca6ed30bef6427cf90d0efa517e485405
+Signer #1 public key SHA-1 digest: 8b7a5494932155c1e3e2d2c95b42aff760673513
+Signer #1 public key MD5 digest: a9f6917c6ea10ce5f88c7d9d823dd86b
+
+arm64: zipalign.exe
+
+
+x64: apksigner.bat
+Verifies
+Verified using v1 scheme (JAR signing): false
+Verified using v2 scheme (APK Signature Scheme v2): true
+Verified using v3 scheme (APK Signature Scheme v3): false
+Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+Verified using v4 scheme (APK Signature Scheme v4): false
+Verified for SourceStamp: false
+Number of signers: 1
+Signer #1 certificate DN: C=US, O=Android, CN=Android Debug
+Signer #1 certificate SHA-256 digest: 76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75
+Signer #1 certificate SHA-1 digest: dd32a8843ac735234b0cdb36fbdb6358ff84674a
+Signer #1 certificate MD5 digest: 84c2cfda7312206ad9967803c1018021
+Signer #1 key algorithm: RSA
+Signer #1 key size (bits): 2048
+Signer #1 public key SHA-256 digest: 31ec9755ec795dcb9ee313a1cd4aaf5ca6ed30bef6427cf90d0efa517e485405
+Signer #1 public key SHA-1 digest: 8b7a5494932155c1e3e2d2c95b42aff760673513
+Signer #1 public key MD5 digest: a9f6917c6ea10ce5f88c7d9d823dd86b
+
+x64: zipalign.exe
+

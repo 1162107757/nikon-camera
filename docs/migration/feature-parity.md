@@ -4,7 +4,7 @@
 用户要求整体迁移、全部功能对齐安卓，原工程保留，交付可自签 IPA。
 本清单记录开发状态，未验证的功能不能作为完成或缩减范围处理。
 
-当前 211 生产源码冻结为 `db8e2ef3766a228bd2dd93f6e1e139b697d3ff18`。A1 的 Nikon 前台自动 JPEG 收片已经接线，统一 JVM 878 项（872 边界 + 6 氛围）、本轮新增 Dart 状态/控件检查 16 项和分析检查通过；Android 安装 56 项、普通包实际收片及最终 Apple CI/IPA 独立核验通过（215 项 Flutter、878 项共享核心、24 项原生 Wi-Fi、38 项头像、1 个实际原生综合场景）。其余 12 项开发缺口与实体/账户/样式验收见 [211 剩余工作](remaining-work-211.md)。210 及以前的构建、安装和冻结证据按历史保留。
+211 的生产源码冻结为 `db8e2ef3766a228bd2dd93f6e1e139b697d3ff18`。A1 的 Nikon 前台自动 JPEG 收片已经接线，统一 JVM 878 项（872 边界 + 6 氛围）、本轮新增 Dart 状态/控件检查 16 项和分析检查通过；Android 安装 56 项、普通包实际收片及最终 Apple CI/IPA 独立核验通过（215 项 Flutter、878 项共享核心、24 项原生 Wi-Fi、38 项头像、1 个实际原生综合场景）。其余 12 项开发缺口与实体/账户/样式验收见 [211 剩余工作](remaining-work-211.md)。210 及以前的构建、安装和冻结证据按历史保留。
 
 | 能力 | 现有实现依据 | 共享逻辑 | 共享界面 / 平台接入 | 验收状态 |
 | --- | --- | --- | --- | --- |
@@ -28,7 +28,7 @@
 | Nikon Wi-Fi、Fuji X-T20、网络切换与连接保护 | `PtpIpClient`, `FujifilmPhotoClient`, `CameraWifiSession` | 原协议直接复用；211 增加可信 GUID 与会话绑定 | 210 的手动连接、iOS Wi-Fi Socket/权限入口和根标签保活保留；211 的 Nikon 自动流程同可信 GUID 重连时按持久游标补片，未知 GUID 不跨会话恢复，Fuji 自动收片禁用 | 210 已取得的 release/Apple 证据保留；211 安装/普通包和 Apple 验证通过；实体断网/恢复继续验收。平台后台保护/完整系统终止恢复仍需开发，不扩大 Fuji 能力 |
 | 相机相册、缩略图、JPEG/NEF 原文件下载 | `AlbumController`, `PhotoCameraClient` | 原协议与解析直接复用；211 自动接收复用原字节校验及持久收据 | 209/210 的三列预览、JPEG/RAW 独立浏览与单图接收保留；211 新片自动接收只针对 JPEG，显示实际字节进度并避免与手动下载争用 | 210 受控端实操证据保留；211 安装/普通包及 Apple 验证通过，实体 JPEG+RAW/双卡/大库存继续验收。相邻查看、多选批量、目标及完整下载队列恢复仍缺 |
 | 边拍边传、项目、续传、前后台任务及持久收据 | `PhotoLive*`, `SharedCameraLiveDiscovery`, `SharedLiveIngest`, `CameraLive` | 211 接入旧库存基线、事件加盘点、稳定描述符、原图 SHA、持久收据及项目去重 | Nikon 前台自动 JPEG 接收、无默认只收原图/有默认另存效果、可信重连补片、进度及明确开始/停止/恢复已接线；候选冻结默认状态，未知 GUID 不跨会话恢复，Fuji 自动禁用 | 统一 JVM 878 项（含发现 80、收据 108）与本轮新增 Dart 16 项通过；Android 安装 56 项、普通包 9 原图/8 成品/1 仅原图及最终 Apple CI/IPA 独立核验通过。A2 后台与系统终止完整恢复、A6 批量/保存目标仍缺，不能据此宣称完整边拍边传全部验收 |
-| USB 相机发现、权限、PTP 传输、槽位读写删除 | `usb/*`, `picturecontrol/*` | 验证/保护部分已纳入 | Android USB 与 iOS ImageCaptureCore 待接入 | 待完成，不能只凭 API 存在宣称机型支持 |
+| USB 相机发现、权限、PTP 传输、槽位读写删除 | `usb/*`, `picturecontrol/*`, `NativeUsbCamera`, `HueviaWiredCameras` | 212 新增照片读取；预设/槽位验证保护保留 | 212 接入 Android USB/MTP 与 iOS ImageCaptureCore 的手动 JPEG/NEF 照片读取；预设传输及槽位读写删除仍待接线 | Android 实装系统发现空设备态及原文件共享夹具通过，Apple 编译待完成；实体相机兼容/吞吐未验，不宣称 A3 预设/槽位迁移完成 |
 | Wi-Fi 预设槽位读写删除及会话移交 | `PictureControl*Session`, `PtpIpClient` | 原协议保护保留 | 待迁移完整确认/回读流程 | 待完成，不允许不确定写入自动重试 |
 | 遥控、实时取景、对焦、拍摄、相机参数 | `remote/*`, `RemoteCaptureActivity` | 纯 Java 协议已纳入 | 待迁移 | 待完成 |
 | 设置、主题、权限、诊断、更新、旧数据迁移 | 原 Activity、`updates/*`, `AppCrashDiagnostics` | Android 复用原崩溃/系统退出采集；Flutter 和 iOS 新增有界脱敏采集 | 200 的设置/帮助/诊断基础上，210 接入 Flutter 异常、Android 原收集器、iOS NSException 与系统已投递的 MetricKit 崩溃/退出统计；保留原异常处理链，schema 1 增加 `appStability`。更新和旧安装资料迁移仍未完成 | 210 普通 x64 release 已实际导出并检查新诊断 JSON；该记录不等于真实 OOM/ANR/原生崩溃或 iOS MetricKit 投递验收。荣耀 Magic、实体 iPhone 崩溃复测、升级迁移/回滚继续保留 |
@@ -179,3 +179,10 @@
 - 按原版保留“无默认预设也可开始收片”：原图始终保存；无默认时不创建效果任务，有默认时冻结候选当时的预设并另存成品，切换默认只影响之后的新候选。根标签保活、前台发现暂停/恢复、实际字节进度、明确开始/停止/继续入口已接线。同可信 GUID 重连可按持久游标补片，未知 GUID 不允许跨会话恢复，Fuji 自动收片禁用。
 - 统一 JVM 878 项通过（872 边界 + 6 氛围），其中发现 80 项、收据 108 项；本轮新增 Dart 状态/控件检查 16 项通过，分析无问题。Android 安装 56 项及普通包实操通过，核对 9 新原图/8 成品/1 仅原图及断流补片；Apple [Actions 43246481303](https://github.com/1162107757/nikon-camera/actions/runs/43246481303) 通过，215 项 Flutter、878 项共享核心、24 项原生 Wi-Fi、38 项头像及 1 个真实原生综合场景，PhotoKit 未授权→完整授权；IPA 下载与源码/架构/最低版本/未签名/资源独立核验完成。证据见 [211 冻结记录](validation/camera-live-211/README.md)。
 - 本轮接线不是 A2 后台服务/系统终止完整恢复，也不是 A6 相机批选、完整下载队列和保存目标。实体 Nikon/iPhone 连拍、掉线、双卡及大库存仍未验收；未知 NEF 高光、荣耀 Magic Android 12 闪退和所有原版样式结论保持原边界。
+
+
+## 212：预设置顶、RAW、账号与有线照片
+
+本轮是用户新增的四项跨端需求。功能提交为 `2e93006327cfdaa41415d524aebb6dc6b85907af`，Android 系统 MTP 身份适配补充于 `70462ca3bc82c4b7683dbeae0ec7ffba491bd62d`，最终 Android 包源码为 `3492f3be2479a1698fdca9369008a5eef5bc2de0`。我的预设支持多个置顶，RAW 中性高光零色度保护和固定白点 EV 修复，注册/登录状态即时提交及验证码原因保留，设置接入 USB 手动原图接收。最终 Android 两 ABI release 和 104 项原生检查已完成；Apple 候选 `62bf1511a1b1dec3c5d80b05daf8b1d9923f710e` 补充旧测试的按钮定位及 iOS 会话关闭 API 适配，其他生产输入与 Android 一致，构建及 IPA 尚待验证。详见 [212 验证记录](validation/features-212/README.md)。
+
+USB 照片接收属于新增范围，不替代 A3 的预设导入/槽位读写；不据此删除 [211 的 12 项开发缺口](remaining-work-211.md)，原有 211 冻结证据继续按历史保留。

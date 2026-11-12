@@ -1,0 +1,37 @@
+{
+  "scope": "Existing neutral LibRaw fixtures; not user-reported originals or JPEG colour matching",
+  "samples": [
+    {
+      "camera": "Nikon Z6",
+      "fixture": ".tooling/raw-native/samples/nikon-z6-lossless-14bit.NEF",
+      "sha256Before": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+      "sha256After": "c079345fc93f53a4f0d322f8ddaae505f920c36015f25b58befccaa61db1af31",
+      "bytes": 30164134,
+      "resolution": [
+        6064,
+        4040
+      ],
+      "exposureEV": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "camera": "Nikon Z6II",
+      "fixture": ".tooling/ncp-preview123/nx-reference/DSC_6182.NEF",
+      "sha256Before": "142656e30e8735fa29684a3b46145eba0a7b219a947ce6bf45d68a387ceb72e5",
+      "sha256After": "142656e30e8735fa29684a3b46145eba0a7b219a947ce6bf45d68a387ceb72e5",
+      "bytes": 28315223,
+      "resolution": [
+        6064,
+        4040
+      ],
+      "exposureEV": [
+        0,
+        1,
+        3
+      ]
+    }
+  ]
+}

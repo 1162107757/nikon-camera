@@ -1,0 +1,4 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/session_race_test.dart
+00:00 +0: An old camera status cannot replace a newly established session
+00:00 +1: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+00:00 +2: All tests passed!
