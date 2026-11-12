@@ -138,7 +138,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           FocusManager.instance.primaryFocus?.unfocus();
           errorFocus.requestFocus();
           final target = errorKey.currentContext;
-          if (target != null)
+          if (target != null) {
             unawaited(
               Scrollable.ensureVisible(
                 target,
@@ -146,6 +146,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 alignment: .5,
               ),
             );
+          }
         });
       }
     } finally {

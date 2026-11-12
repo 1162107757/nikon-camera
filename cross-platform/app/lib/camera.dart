@@ -162,7 +162,7 @@ class _CameraPageState extends State<CameraPage> {
         'port': int.tryParse(port.text) ?? 0,
         'protocol': usbId == null ? protocol : 'nikon',
         if (usbId != null) 'transport': 'usb',
-        if (usbId != null) 'deviceId': usbId,
+        'deviceId': ?usbId,
       }, job);
       if (!mounted || request != epoch) return;
       setState(() {

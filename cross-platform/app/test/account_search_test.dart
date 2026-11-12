@@ -26,16 +26,18 @@ class TestCore extends HueviaCore {
           'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
         };
       case 'account.register':
-        if (registerSuccess)
+        if (registerSuccess) {
           return {
             'user': {'id': 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'},
             'verified': true,
           };
-        if (expiredChallenge)
+        }
+        if (expiredChallenge) {
           throw const AppFailure(
             '验证码不正确或已过期，请换一张后重试。',
             details: {'accountCode': 'CHALLENGE_EXPIRED'},
           );
+        }
         throw const AppFailure('验证码已过期，请刷新后重试。');
       case 'online.page':
         return {
