@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as path;
 
 import 'domain.dart';
 import 'export_settings_model.dart';
@@ -52,6 +53,7 @@ class ExportSave extends ChangeNotifier {
     if (state.session['logoutPending'] == true ||
         (state.session['user']?['id'] as String? ?? '') != owner) {
       invalid = true;
+      error = null;
       for (final item in items) {
         item.version = item.receipt = null;
         item.error = null;
@@ -134,7 +136,8 @@ class ExportSave extends ChangeNotifier {
           final receipt = await call('gallery.publish', {
             'owner': owner,
             'id': item.version!['id'],
-            'filename': item.input.photo.name,
+            'filename':
+                '${path.basenameWithoutExtension(item.input.photo.name)}.jpg',
             'extraCopy': true,
             'operationId': item.operation,
           });

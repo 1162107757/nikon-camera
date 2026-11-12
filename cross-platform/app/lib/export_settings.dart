@@ -74,15 +74,14 @@ Future<void> showLegacyExport(
       }
       return;
     }
-    final next = await hueRootPage<_ExportAction>(
-      context,
-      MaterialPageRoute(
-        builder: (_) => Theme(
-          data: theme,
-          child: _AdvancedExport(model: model, preview: preview),
-        ),
+    final advancedRoute = MaterialPageRoute<_ExportAction>(
+      builder: (_) => Theme(
+        data: theme,
+        child: _AdvancedExport(model: model, preview: preview),
       ),
     );
+    final next = await hueRootPage<_ExportAction>(context, advancedRoute);
+    await advancedRoute.completed;
     if (next != _ExportAction.versions) return;
   }
 }
@@ -259,7 +258,21 @@ class _QuickExport extends StatelessWidget {
                     as String? ??
                 ''
           : '';
-      void finish(_ExportAction action) => Navigator.pop(context, action);
+      Future<void> finish(_ExportAction action) async {
+        if (!model.enabled || model.selected.isEmpty) return;
+        try {
+          // Keep the modal in place while saved recipes are being inspected.
+          await model.freezeSelected();
+          if (context.mounted &&
+              model.current &&
+              ModalRoute.of(context)?.isCurrent == true) {
+            Navigator.pop(context, action);
+          }
+        } catch (_) {
+          /* The model displays the validation failure in this sheet. */
+        }
+      }
+
       return ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: MediaQuery.sizeOf(context).height - 48,
@@ -1175,6 +1188,17 @@ class _AdvancedExportState extends State<_AdvancedExport> {
 
   Widget _dimensions(ExportVariant variant, HuePalette p) {
     final d = variant.description;
+    if (mode == 2) {
+      final e = int.tryParse(edge.text), q = int.tryParse(quality.text);
+      if (e == null ||
+          e < 640 ||
+          e > maximum ||
+          q == null ||
+          q < 70 ||
+          q > 100) {
+        return _copy('—', model.chosen.length == 1 ? 20 : 12, p.ink);
+      }
+    }
     final w = d['fullWidth'] as int,
         h = d['fullHeight'] as int,
         full = math.max(w, h);

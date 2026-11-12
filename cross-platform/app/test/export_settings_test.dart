@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -171,6 +172,29 @@ void main() {
       expect(core.calls.any((c) => c.$1 == 'media.exportPreviewClose'), true);
       await tester.tap(find.byTooltip('取消导出'));
       await tester.pumpAndSettle();
+    },
+  );
+  testWidgets(
+    'slow version inspection keeps the quick modal open and a close cannot later open advanced settings',
+    (tester) async {
+      final (core, form) = await open(tester);
+      await tester.tap(find.text('保存的胶片'));
+      core.pendingRecipe = Completer<Json>();
+      await tester.tap(find.text('更多设置'));
+      await tester.pump();
+      expect(form.freezing, true);
+      expect(find.text('导出版本 · 可多选'), findsOneWidget);
+      expect(find.text('完整尺寸'), findsNothing);
+      await tester.ensureVisible(find.byTooltip('取消导出，返回照片'));
+      await tester.tap(find.byTooltip('取消导出，返回照片'));
+      core.pendingRecipe!.complete({
+        'sourceSha': core.source,
+        'recipe': core.savedRecipe,
+      });
+      await tester.pumpAndSettle();
+      expect(find.text('打开导出'), findsOneWidget);
+      expect(find.text('完整尺寸'), findsNothing);
+      expect(core.calls.any((c) => c.$1 == 'media.export'), false);
     },
   );
   testWidgets(

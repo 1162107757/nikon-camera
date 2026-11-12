@@ -247,6 +247,7 @@ class ExportSettings extends ChangeNotifier {
     } else {
       selected.remove(id);
     }
+    error = null;
     changed();
   }
 

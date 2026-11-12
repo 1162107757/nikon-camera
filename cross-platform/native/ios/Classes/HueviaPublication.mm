@@ -52,6 +52,8 @@ void publicationCleanup(NSString *path,NSDictionary *record,HueviaTask *task){
       [publicationFileHash(path,task) isEqual:record[@"sha256"]])[NSFileManager.defaultManager removeItemAtPath:path error:nil];
 }
 void publicationDatedCopy(NSString *source,NSString *target,NSDate *date,HueviaTask *task){
+  // Apple's QA1895: CopyImageSource edits JPEG metadata without recompression.
+  // https://developer.apple.com/library/archive/qa/qa1895/_index.html
   publicationCheck(task);NSFileManager *fm=NSFileManager.defaultManager;
   if(![target.stringByResolvingSymlinksInPath isEqual:target])publicationFail(@"导出副本不能是链接。");
   NSString *temporary=[target.stringByDeletingLastPathComponent stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];
@@ -157,7 +159,7 @@ NSDate *publicationCaptureDate(NSURL *url){
         if(!prior&&[NSFileManager.defaultManager fileExistsAtPath:frozen])publicationFail(@"导出暂存缺少记录，未覆盖或删除。");
         NSMutableDictionary *prepared=[@{@"schema":@1,@"state":@"preparing",@"asset":@"",@"sourceSha":originalSha,@"sourceBytes":@(originalBytes),@"date":@([capture timeIntervalSince1970])} mutableCopy];
         NSError *error=nil;if(!publicationWrite(journal,prepared,&error))publicationFail(@"无法记录导出副本，请检查存储空间。");
-        publicationDatedCopy(source,frozen,capture,task);sha=publicationFileHash(frozen,task);bytes=[NSFileManager.defaultManager attributesOfItemAtPath:frozen error:nil][NSFileSize].unsignedLongLongValue;
+        publicationDatedCopy(source,frozen,capture,task);sha=publicationFileHash(frozen,task);bytes=[[NSFileManager.defaultManager attributesOfItemAtPath:frozen error:nil][NSFileSize] unsignedLongLongValue];
         if(bytes<4||bytes>512ULL*1024*1024)publicationFail(@"导出副本大小无效。");
         prepared[@"sha256"]=sha;prepared[@"bytes"]=@(bytes);prepared[@"state"]=@"prepared";
         if(!publicationWrite(journal,prepared,&error))publicationFail(@"导出副本记录暂不可写，请稍后重试。");prior=prepared;
