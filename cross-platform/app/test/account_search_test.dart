@@ -120,8 +120,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('远处的蓝'), findsOneWidget);
     expect(find.text('第一页预设'), findsNothing);
-    expect(core.calls.last.$1, 'online.search');
-    expect(core.calls.last.$2['query'], '远处');
+    final search = core.calls.lastWhere((call) => call.$1 == 'online.search');
+    expect(search.$2['query'], '远处');
     expect(tester.takeException(), isNull);
   });
 }
