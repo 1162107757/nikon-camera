@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/app_stability.dart';
 
@@ -150,6 +151,9 @@ void main() {
   test('Native journal is best effort and unavailable collectors preserve safe diagnostics', () async {
     final messenger =
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+    addTearDown(
+      () => messenger.setMockMethodCallHandler(AppStability.channel, null),
+    );
     Map<dynamic, dynamic>? persisted;
     messenger.setMockMethodCallHandler(AppStability.channel, (call) async {
       if (call.method == 'recordFlutter') {
@@ -173,7 +177,9 @@ void main() {
     expect(value['available'], true);
     expect(jsonEncode(persisted).contains('private'), false);
     expect(jsonEncode(value).contains('secret'), false);
-    messenger.setMockMethodCallHandler(AppStability.channel, null);
+    messenger.setMockMethodCallHandler(AppStability.channel, (_) async {
+      throw MissingPluginException('Test collector unavailable');
+    });
     final unavailable = await AppStability.snapshot();
     expect(unavailable['available'], false);
     expect(unavailable['lastFlutterError']['type'], 'StateError');
