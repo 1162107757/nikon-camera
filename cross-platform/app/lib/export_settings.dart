@@ -15,7 +15,7 @@ import 'original_save.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
-enum _ExportAction { save, more, versions }
+enum _ExportAction { save, more, versions, original }
 
 Brightness _exportBrightness(BuildContext context) =>
     switch (appearanceMode.value) {
@@ -75,14 +75,25 @@ Future<void> showLegacyExport(
       }
       return;
     }
+    (String, String?)? original;
     final advancedRoute = MaterialPageRoute<_ExportAction>(
       builder: (_) => Theme(
         data: theme,
-        child: _AdvancedExport(model: model, preview: preview),
+        child: _AdvancedExport(
+          model: model,
+          preview: preview,
+          onOriginal: (source, expected) => original = (source, expected),
+        ),
       ),
     );
     final next = await hueRootPage<_ExportAction>(context, advancedRoute);
     await advancedRoute.completed;
+    if (next == _ExportAction.original &&
+        original != null &&
+        context.mounted &&
+        model.current) {
+      await _saveOriginal(context, model, original!.$1, original!.$2, theme);
+    }
     if (next != _ExportAction.versions) return;
   }
 }
@@ -104,6 +115,69 @@ Future<void> _save(
     );
   } finally {
     queue.dispose();
+  }
+}
+
+/// The original closes the export windows before confirming over the editor.
+Future<void> _saveOriginal(
+  BuildContext context,
+  ExportSettings model,
+  String source,
+  String? expected,
+  ThemeData theme,
+) async {
+  bool current() =>
+      context.mounted &&
+      model.current &&
+      ModalRoute.of(context)?.isCurrent == true;
+  Future<T?> dialog<T>(WidgetBuilder builder) => hueDialog<T>(
+    context: context,
+    barrierColor: Colors.black.withValues(
+      alpha: theme.extension<HuePalette>()!.dark ? .42 : .28,
+    ),
+    builder: (_) => Theme(
+      data: theme,
+      child: Builder(builder: builder),
+    ),
+  );
+  try {
+    final checked = await model.request('source.inspect', {
+      'owner': model.owner,
+      'path': source,
+      'expectedSourceSha': ?expected,
+    });
+    if (!context.mounted || !current()) return;
+    final format = checked['format'];
+    if (format == 'JPG' || format == 'JPEG') {
+      final accepted = await dialog<bool>((_) => const _OriginalConfirmation());
+      if (accepted != true || !current()) return;
+      final save = OriginalSave(
+        model.state,
+        model.owner,
+        checked['path'] as String,
+        checked['sourceSha'] as String,
+        source == model.photo.path ? model.photo.name : path.basename(source),
+      );
+      try {
+        await dialog<void>((_) => _OriginalProgress(save: save));
+      } finally {
+        save.dispose();
+      }
+    } else {
+      await SharePlus.instance.share(
+        ShareParams(
+          sharePositionOrigin: shareAnchor(context),
+          files: [XFile(checked['path'] as String)],
+          fileNameOverrides: [
+            source == model.photo.path
+                ? model.photo.name
+                : path.basename(source),
+          ],
+        ),
+      );
+    }
+  } catch (failure) {
+    if (context.mounted && current()) report(context, failure);
   }
 }
 
@@ -682,7 +756,12 @@ class _ExportThumbState extends State<_ExportThumb> {
 }
 
 class _AdvancedExport extends StatefulWidget {
-  const _AdvancedExport({required this.model, this.preview});
+  const _AdvancedExport({
+    required this.model,
+    required this.onOriginal,
+    this.preview,
+  });
+  final void Function(String, String?) onOriginal;
   final ExportSettings model;
   final String? preview;
   @override
@@ -800,93 +879,11 @@ class _AdvancedExportState extends State<_AdvancedExport> {
     }
   }
 
-  Future<void> original(String source, String? expected) async {
+  void original(String source, String? expected) {
     if (busy || !model.current) return;
     FocusScope.of(context).unfocus();
-    setState(() {
-      busy = true;
-      error = null;
-    });
-    try {
-      final checked = await model.request('source.inspect', {
-        'owner': model.owner,
-        'path': source,
-        'expectedSourceSha': ?expected,
-      });
-      if (!mounted ||
-          !model.current ||
-          ModalRoute.of(context)?.isCurrent != true) {
-        return;
-      }
-      final format = checked['format'];
-      if (format == 'JPG' || format == 'JPEG') {
-        final accepted = await hueDialog<bool>(
-          context: context,
-          barrierColor: Colors.black.withValues(
-            alpha: HuePalette.of(context).dark ? .42 : .28,
-          ),
-          builder: (dialog) => AlertDialog(
-            scrollable: true,
-            actionsPadding: const EdgeInsets.all(8),
-            buttonPadding: const EdgeInsets.only(left: 4),
-            title: const Text('保存 JPEG 原始文件？'),
-            content: const Text(
-              '不会应用当前滤镜、调节、构图与边框，也不使用上方尺寸和质量设置。完整保留原文件内容及其已有信息（可能包含定位）。',
-              style: TextStyle(height: 1.4),
-            ),
-            actions: [
-              _originalAction(dialog, '取消', () => Navigator.pop(dialog, false)),
-              _originalAction(
-                dialog,
-                '保存原始文件',
-                () => Navigator.pop(dialog, true),
-                primary: true,
-              ),
-            ],
-          ),
-        );
-        if (accepted != true ||
-            !mounted ||
-            !model.current ||
-            ModalRoute.of(context)?.isCurrent != true) {
-          return;
-        }
-        final save = OriginalSave(
-          model.state,
-          model.owner,
-          checked['path'] as String,
-          checked['sourceSha'] as String,
-          source == model.photo.path ? model.photo.name : path.basename(source),
-        );
-        try {
-          await hueDialog<void>(
-            context: context,
-            barrierColor: Colors.black.withValues(
-              alpha: HuePalette.of(context).dark ? .42 : .28,
-            ),
-            builder: (_) => _OriginalProgress(save: save),
-          );
-        } finally {
-          save.dispose();
-        }
-        return;
-      }
-      await SharePlus.instance.share(
-        ShareParams(
-          sharePositionOrigin: shareAnchor(context),
-          files: [XFile(checked['path'] as String)],
-          fileNameOverrides: [
-            source == model.photo.path
-                ? model.photo.name
-                : path.basename(source),
-          ],
-        ),
-      );
-    } catch (failure) {
-      if (mounted && model.current) setState(() => error = '$failure');
-    } finally {
-      if (mounted) setState(() => busy = false);
-    }
+    widget.onOriginal(source, expected);
+    Navigator.pop(context, _ExportAction.original);
   }
 
   Widget input(TextEditingController controller, String label) => TextField(
@@ -1320,6 +1317,112 @@ class _AdvancedExportState extends State<_AdvancedExport> {
         _copy(value, 13, p.ink),
       ],
     ),
+  );
+}
+
+/// Original AppDialog padding without Material's extra title/content spacing.
+class _OriginalConfirmation extends StatelessWidget {
+  const _OriginalConfirmation();
+  @override
+  Widget build(BuildContext context) {
+    final p = HuePalette.of(context);
+    return Dialog(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 18, 24, 0),
+              child: Text(
+                '保存 JPEG 原始文件？',
+                style: TextStyle(
+                  fontSize: 16,
+                  height: 1.36,
+                  fontWeight: FontWeight.w500,
+                  color: p.ink,
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: _OriginalNotice(),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
+              child: OverflowBar(
+                alignment: MainAxisAlignment.end,
+                overflowAlignment: OverflowBarAlignment.end,
+                spacing: 4,
+                overflowSpacing: 4,
+                children: [
+                  _originalAction(
+                    context,
+                    '取消',
+                    () => Navigator.pop(context, false),
+                  ),
+                  _originalAction(
+                    context,
+                    '保存原始文件',
+                    () => Navigator.pop(context, true),
+                    primary: true,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Android's original TextView uses balanced line breaking and 3 dp extra leading.
+/// Find the narrowest measure retaining its line count, including enlarged text.
+class _OriginalNotice extends StatelessWidget {
+  const _OriginalNotice();
+  static const message =
+      '不会应用当前滤镜、调节、构图与边框，也不使用上方尺寸和质量设置。完整保留原文件内容及其已有信息（可能包含定位）。';
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final style = Theme.of(context).textTheme.bodyMedium!.copyWith(
+        fontSize: 14,
+        height: 1.4 + 3 / 14,
+        color: HuePalette.of(context).secondary,
+      );
+      final scaler = MediaQuery.textScalerOf(context),
+          direction = Directionality.of(context);
+      const behavior = TextHeightBehavior(
+        applyHeightToFirstAscent: false,
+        applyHeightToLastDescent: false,
+      );
+      final painter = TextPainter(
+        text: TextSpan(text: message, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+        textHeightBehavior: behavior,
+      )..layout(maxWidth: constraints.maxWidth);
+      final lines = painter.computeLineMetrics().length;
+      var low = 0.0, high = constraints.maxWidth;
+      for (var step = 0; step < 14; step++) {
+        final middle = (low + high) / 2;
+        painter.layout(maxWidth: middle);
+        if (painter.computeLineMetrics().length <= lines) {
+          high = middle;
+        } else {
+          low = middle;
+        }
+      }
+      painter.dispose();
+      return Align(
+        alignment: AlignmentDirectional.centerStart,
+        child: SizedBox(
+          width: high,
+          child: Text(message, style: style, textHeightBehavior: behavior),
+        ),
+      );
+    },
   );
 }
 

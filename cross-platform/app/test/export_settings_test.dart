@@ -156,7 +156,7 @@ void main() {
       await tester.ensureVisible(find.text('原始文件'));
       await tester.ensureVisible(find.text('JPEG').last);
       await tester.tap(find.text('JPEG').last);
-      await tester.pumpAndSettle();
+      await reach(tester, find.text('保存 JPEG 原始文件？'));
       expect(find.text('保存 JPEG 原始文件？'), findsOneWidget);
       expect(find.textContaining('可能包含定位'), findsOneWidget);
       await tester.tap(find.text('取消'));
@@ -166,7 +166,8 @@ void main() {
         isEmpty,
       );
       expect(form.chosen.single.id, 'current');
-      expect(find.text('完整尺寸'), findsOneWidget);
+      expect(find.text('打开导出'), findsOneWidget);
+      expect(find.text('完整尺寸'), findsNothing);
     },
   );
 
@@ -185,7 +186,7 @@ void main() {
       await reach(tester, find.text('JPEG'));
       await tester.ensureVisible(find.text('JPEG').last);
       await tester.tap(find.text('JPEG').last);
-      await tester.pumpAndSettle();
+      await reach(tester, find.text('保存原始文件'));
       await tester.ensureVisible(find.text('保存原始文件'));
       await tester.tap(find.text('保存原始文件'));
       await reach(tester, find.text('重试保存'));
@@ -205,13 +206,14 @@ void main() {
       await tester.tap(find.text('完成'));
       await tester.pumpAndSettle();
       expect(form.chosen.single.id, 'current');
-      expect(find.text('完整尺寸'), findsOneWidget);
+      expect(find.text('打开导出'), findsOneWidget);
+      expect(find.text('完整尺寸'), findsNothing);
       expect(tester.takeException(), isNull);
     },
   );
 
   testWidgets(
-    'late original inspection cannot open a confirmation over a closed export page',
+    'late original inspection cannot open a confirmation after leaving its editor route',
     (tester) async {
       final (core, _) = await open(tester, name: 'own.jpg');
       await tester.tap(find.text('更多设置'));
@@ -219,8 +221,12 @@ void main() {
       await tester.ensureVisible(find.text('JPEG').last);
       core.pendingInspection = Completer<Json>();
       await tester.tap(find.text('JPEG').last);
-      await tester.pump();
-      Navigator.of(tester.element(find.byTooltip('取消导出'))).pop();
+      await reach(tester, find.text('打开导出'));
+      Navigator.of(tester.element(find.text('打开导出'))).push(
+        MaterialPageRoute<void>(
+          builder: (_) => const Scaffold(body: Text('另一个页面')),
+        ),
+      );
       core.pendingInspection!.complete({
         'path': core.imageFile.path,
         'sourceSha': core.source,
@@ -228,7 +234,7 @@ void main() {
       });
       await tester.pumpAndSettle();
       expect(find.text('保存 JPEG 原始文件？'), findsNothing);
-      expect(find.text('打开导出'), findsOneWidget);
+      expect(find.text('另一个页面'), findsOneWidget);
       expect(
         core.calls.where((c) => c.$1 == 'gallery.publishOriginal'),
         isEmpty,
