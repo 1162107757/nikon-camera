@@ -20,8 +20,10 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @property(atomic) BOOL open;
 @property(nonatomic,strong) id<JavaLangRunnable> closed;
 @property(nonatomic,strong) dispatch_semaphore_t ready;
+@property(atomic,strong) dispatch_semaphore_t closing;
 @property(atomic,strong) NSError *sessionError;
 @property(nonatomic) uint32_t transaction;
+- (void)waitForClose;
 @end
 @interface HueviaWiredCameras ()
 @property(nonatomic,strong) ICDeviceBrowser *browser;
@@ -46,6 +48,9 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:@{@"items":rows,@"transport":@"usb"} options:0 error:nil] encoding:NSUTF8StringEncoding];
 }
 - (id<CcHueviaAlbumPhotoCameraClient>)createWithNSString:(NSString *)identity {
+  // ICDevice's delegate is unretained. Retire the old session before a new
+  // client replaces its delegate, including reconnects to the same device.
+  HueviaWiredClient *previous=self.active;[previous close];[previous waitForClose];
   dispatch_semaphore_t permission=dispatch_semaphore_create(0);__block ICAuthorizationStatus authorization=nil;
   mainSync(^{[self.browser requestControlAuthorizationWithCompletion:^(ICAuthorizationStatus status){authorization=status;dispatch_semaphore_signal(permission);}];});
   if(dispatch_semaphore_wait(permission,dispatch_time(DISPATCH_TIME_NOW,45*NSEC_PER_SEC))||![authorization isEqualToString:ICAuthorizationStatusAuthorized])wiredFailure(@"请允许访问外接相机会话后重试有线连接。");
@@ -112,16 +117,26 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   }}return received;
 }
 - (void)abortProtocolWithJavaIoIOException:(JavaIoIOException *)failure {[self close];}
+- (void)waitForClose {
+  dispatch_semaphore_t done=self.closing;if(!done)return;
+  if(dispatch_semaphore_wait(done,dispatch_time(DISPATCH_TIME_NOW,15*NSEC_PER_SEC)))wiredFailure(@"上一次 USB 会话尚未关闭，请检查数据线后重试。");
+  if(self.closing==done)self.closing=nil;
+}
 - (void)close {
   BOOL wasOpen=self.open;self.open=NO;if(!wasOpen)return;ICCameraDevice *device=self.device;
+  dispatch_semaphore_t done=dispatch_semaphore_create(0);self.closing=done;
   // Reads use ICCameraFile's data API, not the macOS-only download API.
-  // Closing the iOS session retires pending reads; wait: observes open=NO.
-  dispatch_async(dispatch_get_main_queue(),^{[device requestCloseSession];});
+  // Keep this client alive until its unretained delegate is cleared on main.
+  // The worker observes open=NO; a reconnect waits for OS close completion.
+  dispatch_async(dispatch_get_main_queue(),^{
+    if(device.delegate==self)device.delegate=nil;
+    [device requestCloseSessionWithOptions:nil completion:^(NSError *error){dispatch_semaphore_signal(done);}];
+  });
   id<JavaLangRunnable> listener=self.closed;self.closed=nil;if(listener)[listener run];
 }
 - (void)deviceDidBecomeReadyWithCompleteContentCatalog:(ICCameraDevice *)device {dispatch_semaphore_signal(self.ready);}
 - (void)device:(ICDevice *)device didOpenSessionWithError:(NSError *)error {if(error){self.sessionError=error;dispatch_semaphore_signal(self.ready);}}
-- (void)device:(ICDevice *)device didCloseSessionWithError:(NSError *)error {self.open=NO;}
+- (void)device:(ICDevice *)device didCloseSessionWithError:(NSError *)error {[self close];}
 - (void)didRemoveDevice:(ICDevice *)device {[self close];}
 - (void)deviceDidBecomeReady:(ICDevice *)device {}
 - (void)device:(ICDevice *)device didReceiveStatusInformation:(NSDictionary *)status {}
