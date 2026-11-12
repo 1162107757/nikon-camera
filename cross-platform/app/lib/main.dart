@@ -16,9 +16,11 @@ import 'theme.dart';
 import 'settings.dart';
 import 'appearance.dart';
 import 'community_activity.dart';
+import 'app_stability.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  AppStability.install();
   LicenseRegistry.addLicense(() async* {
     yield LicenseEntryWithLineBreaks([
       'Roboto reference fonts',

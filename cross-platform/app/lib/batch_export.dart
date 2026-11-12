@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'raw_reference.dart';
 
 class BatchPhoto {
   BatchPhoto(this.row);
@@ -110,11 +111,13 @@ class BatchExport extends ChangeNotifier {
       item.phase = '显影 RAW';
       changed();
       final raw = item.photo!;
+      final reference = RawJpegReference.restore(raw.info, state.core.root);
       String? temporary;
       try {
         final result = await call('media.rawDevelop', {
           'path': raw.path,
           'owner': owner,
+          if (reference != null) 'reference': reference.payload,
           'settings': {
             'whiteBalance': 'CAMERA',
             'colorMode': 'CAMERA_JPEG',

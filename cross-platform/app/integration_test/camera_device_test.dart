@@ -7,6 +7,10 @@ import '../test/session_race_test.dart' as races;
 import '../test/camera_transfer_test.dart' as transfer;
 import '../test/editor_presets_test.dart' as filters;
 import '../test/camera_navigation_test.dart' as navigation;
+import '../test/project_presets_test.dart' as projects;
+import '../test/raw_reference_test.dart' as raw_reference;
+import '../test/raw_reference_ui_test.dart' as raw_reference_ui;
+import '../test/app_stability_test.dart' as stability;
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -17,4 +21,8 @@ void main() {
   transfer.main();
   filters.main();
   navigation.main();
+  projects.main();
+  raw_reference.main();
+  raw_reference_ui.main();
+  stability.main();
 }

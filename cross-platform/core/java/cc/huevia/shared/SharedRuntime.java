@@ -34,6 +34,7 @@ public final class SharedRuntime {
     private final SharedCommunityLinks discussionLinks;
     private final SharedSubmissions submissions;
     private final SharedProfile profile;
+    private SharedProjects projectRuntime;
     private String storageWarning="";
     private PhotoAdjustmentCopy.Receipt copyReceipt;
     private String copyReceiptId="",copyReceiptOwner="";
@@ -76,6 +77,10 @@ public final class SharedRuntime {
     }
     public synchronized String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException {
         Map<String,Object> p=SharedJson.object(json);Object result;
+        if(operation.startsWith("project.")){
+            if(projectRuntime==null)projectRuntime=new SharedProjects(this);
+            return SharedJson.encode(projectRuntime.request(operation,p,cancel));
+        }
         if(operation.startsWith("personal."))return SharedJson.encode(personal.request(operation,p,cancel,progress));
         if(operation.startsWith("submission."))return SharedJson.encode(submissions.request(operation,p,cancel));
         if(operation.startsWith("recipe."))return SharedJson.encode(recipes(operation,p));

@@ -15,6 +15,7 @@
 #import "IOSPrimitiveArray.h"
 #import "HueviaCoreBootstrap.h"
 #import "HueviaWifiSocket.h"
+#import "HueviaStability.h"
 
 @interface HueviaCorePlugin ()
 @property(nonatomic,strong) dispatch_queue_t queue;
@@ -31,6 +32,7 @@
 
 @implementation HueviaCorePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+  [HueviaStability registerWithRegistrar:registrar];
   HueviaCorePlugin *host=[[self alloc] init];
   host.queue=dispatch_queue_create("cc.huevia.shared.worker",DISPATCH_QUEUE_SERIAL);
   host.tasks=[NSMutableDictionary dictionary];

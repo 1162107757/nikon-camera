@@ -5,12 +5,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/help.dart';
 import 'package:huevia/theme.dart';
+import 'package:huevia/app_stability.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   test('Diagnostic reports exclude payloads, credentials, device addresses and unexpected native fields', () async {
     final messenger =
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
+    messenger.setMockMethodCallHandler(
+      AppStability.channel,
+      (_) async => jsonEncode({
+        'platform': 'android',
+        'sdk': 31,
+        'lastJavaCrash': 'java.lang.IllegalStateException: secret-crash-message private-crash-path\n\tat cc.huevia.sharedapp.NativeMedia.render(NativeMedia.java:20)',
+        'fingerprint': 'private-device-id',
+      }),
+    );
     messenger.setMockMethodCallHandler(HueviaCore.channel, (call) async {
       final operation = (call.arguments as Map)['operation'];
       if (operation == 'camera.diagnostics') {
@@ -31,6 +41,9 @@ void main() {
     addTearDown(
       () => messenger.setMockMethodCallHandler(HueviaCore.channel, null),
     );
+    addTearDown(
+      () => messenger.setMockMethodCallHandler(AppStability.channel, null),
+    );
     final core = HueviaCore();
     for (var i = 0; i < 130; i++) {
       await core.call('account.login', {
@@ -46,6 +59,9 @@ void main() {
       'secret-camera-address',
       'private-session',
       'private-asset',
+      'secret-crash-message',
+      'private-crash-path',
+      'private-device-id',
     ]) {
       expect(encoded.contains(secret), false);
     }
@@ -53,6 +69,10 @@ void main() {
     expect(snapshot['camera']['trace'].length, 2);
     expect(snapshot['camera']['observedObjects'], 2);
     expect(snapshot['gallery']['access'], 'limited');
+    expect(
+      snapshot['appStability']['lastJavaCrash']['type'],
+      'java.lang.IllegalStateException',
+    );
   });
   testWidgets(
     'Help opens readable diagnostics and about opens a separate license page',

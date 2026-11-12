@@ -38,6 +38,11 @@ int main(void){@autoreleasepool{@try{
   socket=[[HueviaWifiSocket alloc] initWithHost:@"127.0.0.1" port:port timeout:2000 wifiOnly:NO];input=[socket getInputStream];
   yes(dispatch_semaphore_wait(accepted,dispatch_time(DISPATCH_TIME_NOW,NSEC_PER_SEC))==0);HueviaWifiSocket *closing=socket;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,80000000),dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{[closing close];});
-  BOOL interrupted=NO;@try{[input read];}@catch(id expected){interrupted=YES;}yes(interrupted);yes([socket isClosed]);close(server);
+  dispatch_semaphore_t readFinished=dispatch_semaphore_create(0);__block BOOL interrupted=NO;JavaIoInputStream *closingInput=input;
+  dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{@autoreleasepool{
+    @try{interrupted=[closingInput read]==-1;}@catch(id expected){interrupted=YES;}
+    dispatch_semaphore_signal(readFinished);
+  }});
+  yes(dispatch_semaphore_wait(readFinished,dispatch_time(DISPATCH_TIME_NOW,3*NSEC_PER_SEC))==0);yes(interrupted);yes([socket isClosed]);close(server);
   printf("PASS %d Apple Wi-Fi stream checks; exact bytes, offsets, segmented reads, timeout, refusal and concurrent close\n",checks);return 0;
 }@catch(id error){fprintf(stderr,"Apple Wi-Fi checks failed: %s\n",[[error description] UTF8String]);return 1;}}}

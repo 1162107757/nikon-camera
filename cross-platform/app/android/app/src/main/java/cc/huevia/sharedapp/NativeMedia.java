@@ -104,6 +104,11 @@ final class NativeMedia {
             runtime.guardOwner(owner);
             return SharedJson.encode(SharedRuntime.map("brand",capture.brand,"model",capture.model,"fields",fields));
         }
+        if(operation.equals("media.rawReferenceInfo")){
+            if(!raw(source))throw new IOException("请选择 RAW 原文件。");runtime.guardOwner(SharedRuntime.text(p,"owner",64));
+            Map<String,Object> reference=SharedRawReference.describe(runtime.root(),source,SharedRuntime.text(p,"referencePath",32768),cancel);
+            NativeRawReference.validate(new File((String)reference.get("path")));return SharedJson.encode(reference);
+        }
         if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop"))return rawDevelop(operation,p,source,cancel,progress);
         if(operation.equals("media.cleanupAnalyze")){
             String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
@@ -165,23 +170,28 @@ final class NativeMedia {
         if(!raw(source))throw new IOException("请选择 RAW 原文件。");
         String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
         RawDevelopmentSettings settings=SharedRawSettings.parse(SharedJson.encode(SharedRuntime.object(p.get("settings"))));
-        RawDeveloper.Result result=RawDeveloper.develop(context,source,owner,settings,cancel,progress);
+        SharedRawReference.Reference reference=settings.colorMode==RawDevelopmentSettings.ColorMode.CAMERA_JPEG&&p.get("reference")!=null?SharedRawReference.resolve(runtime.root(),SharedJson.encode(p.get("reference")),cancel):null;
+        RawDeveloper.Result result=RawDeveloper.develop(context,source,owner,reference==null?settings:settings.withColorMode(RawDevelopmentSettings.ColorMode.NEUTRAL),cancel,reference==null?progress:value->progress.accept(value*.65));
+        RawJpegColorMatch.Fit fit=reference==null?null:NativeRawReference.fit(context,source,owner,result.sourceSha,reference,cancel);
         boolean preview=operation.equals("media.rawPreview");File dir=new File(runtime.root(),preview?"previews":"raw-editor");
         if(!dir.isDirectory()&&!dir.mkdirs())throw new IOException("无法创建 RAW 编辑目录。");
         File temporary=File.createTempFile("raw-edit-",".part",dir),target=new File(dir,UUID.randomUUID()+".jpg");Bitmap bitmap=null;
         try{
-            if(preview){File reduced=small(result.workingFile,dir,cancel);try{Files.move(reduced.toPath(),temporary.toPath(),StandardCopyOption.REPLACE_EXISTING);}finally{Files.deleteIfExists(reduced.toPath());}}
+            if(preview&&fit==null){File reduced=small(result.workingFile,dir,cancel);try{Files.move(reduced.toPath(),temporary.toPath(),StandardCopyOption.REPLACE_EXISTING);}finally{Files.deleteIfExists(reduced.toPath());}}
             else{
-                BitmapFactory.Options options=new BitmapFactory.Options();options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);options.inSampleSize=1;options.inScaled=false;
+                BitmapFactory.Options options=new BitmapFactory.Options();options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);options.inSampleSize=1;options.inScaled=false;options.inMutable=fit!=null;
+                if(preview)while(Math.max(result.info.width,result.info.height)/options.inSampleSize>1280)options.inSampleSize*=2;
                 bitmap=BitmapFactory.decodeFile(result.workingFile.getPath(),options);
-                if(bitmap==null||bitmap.getWidth()!=result.info.width||bitmap.getHeight()!=result.info.height)throw new IOException("无法读取完整显影像素，未缩小原图。");
-                try(FileOutputStream out=new FileOutputStream(temporary)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,100,out))throw new IOException("无法生成 RAW 编辑副本。");out.flush();out.getFD().sync();}
-                bitmap.recycle();bitmap=null;RawEditorSource.writeMetadata(source,temporary,result.info);
+                if(bitmap==null||!preview&&(bitmap.getWidth()!=result.info.width||bitmap.getHeight()!=result.info.height))throw new IOException("无法读取完整显影像素，未缩小原图。");
+                if(fit!=null){NativeRawReference.apply(bitmap,fit,cancel);progress.accept(.9);}
+                try(FileOutputStream out=new FileOutputStream(temporary)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,preview?98:100,out))throw new IOException("无法生成 RAW 编辑副本。");out.flush();out.getFD().sync();}
+                bitmap.recycle();bitmap=null;if(!preview)RawEditorSource.writeMetadata(source,temporary,result.info);
             }
             if(cancel.getAsBoolean())throw new InterruptedIOException("RAW 显影已取消。");runtime.guardOwner(owner);runtime.validateSource(source.getPath(),result.sourceSha);
+            if(reference!=null)reference.verify(cancel);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
             BitmapFactory.Options info=bounds(target);
-            return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",info.outWidth,"height",info.outHeight,"sourceSha",result.sourceSha,"rawColorStatus",result.colorStatus,"settings",SharedJson.object(SharedRawSettings.json(settings))));
+            progress.accept(1);return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",info.outWidth,"height",info.outHeight,"sourceSha",result.sourceSha,"rawColorStatus",fit==null?result.colorStatus:NativeRawReference.status(fit),"settings",SharedJson.object(SharedRawSettings.json(settings))));
         }finally{if(bitmap!=null)bitmap.recycle();Files.deleteIfExists(temporary.toPath());}
     }
     private static PhotoExportSpec spec(Map<String,Object> p)throws IOException{String size=SharedRuntime.text(p,"size",16);if(size.equals("share"))return PhotoExportSpec.share();if(size.equals("custom"))return PhotoExportSpec.custom(SharedRuntime.integer(p,"longEdge",2048),SharedRuntime.integer(p,"quality",95));return PhotoExportSpec.full();}

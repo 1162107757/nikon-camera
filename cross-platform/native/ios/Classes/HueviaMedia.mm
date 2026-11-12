@@ -16,6 +16,7 @@
 #import "cc/huevia/ncp/PresetPreviewProfile.h"
 #import "cc/huevia/ncp/PresetPreviewProfiles.h"
 #import "cc/huevia/ncp/RawJpegColorMatch.h"
+#import "cc/huevia/shared/SharedRawReference.h"
 #import "cc/huevia/album/PhotoExportSpec.h"
 #import "cc/huevia/album/PhotoEditStore.h"
 #import "java/io/File.h"
@@ -119,6 +120,10 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
 @implementation HueviaExportSession
 @end
 
+@interface HueviaMedia ()
+- (HueviaRaster *)raw:(NSString *)path owner:(NSString *)owner settings:(CcHueviaNcpRawDevelopmentSettings *)controls reference:(CcHueviaSharedSharedRawReference_Reference *)reference task:(HueviaTask *)task status:(NSString **)status;
+@end
+
 @implementation HueviaMedia {
   CcHueviaSharedSharedRuntime *_runtime;
   NSString *_root;
@@ -196,22 +201,28 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   }@catch(id error){if(before)[NSFileManager.defaultManager removeItemAtPath:before error:nil];if(jpeg)[NSFileManager.defaultManager removeItemAtPath:jpeg error:nil];@throw error;}
 }
 - (HueviaRaster *)raw:(NSString *)path owner:(NSString *)owner settings:(CcHueviaNcpRawDevelopmentSettings *)controls task:(HueviaTask *)task status:(NSString **)status {
+  return [self raw:path owner:owner settings:controls reference:nil task:task status:status];
+}
+- (HueviaRaster *)raw:(NSString *)path owner:(NSString *)owner settings:(CcHueviaNcpRawDevelopmentSettings *)controls reference:(CcHueviaSharedSharedRawReference_Reference *)reference task:(HueviaTask *)task status:(NSString **)status {
   NSData *scope=[owner dataUsingEncoding:NSUTF8StringEncoding];unsigned char digest[CC_SHA256_DIGEST_LENGTH];CC_SHA256(scope.bytes,CC_LONG(scope.length),digest);NSMutableString *scopeHash=[NSMutableString string];for(unsigned char b:digest)[scopeHash appendFormat:@"%02x",b];
   NSString *sourceHash=hashFile(path,task),*directory=[[_root stringByAppendingPathComponent:@"raw-development"] stringByAppendingPathComponent:scopeHash];
+  if(reference)[reference verifySourceWithNSString:sourceHash];
   if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建 RAW 显影目录。");
-  NSString *identity=hashText([NSString stringWithFormat:@"%@-%@-%s-camera-jpeg-white-v2",sourceHash,[controls identity],HueviaRawVersion()]),*cached=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".png"]],*receipt=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".json"]];
+  NSString *identity=hashText([NSString stringWithFormat:@"%@-%@-%s-camera-jpeg-white-v2-%@",sourceHash,[controls identity],HueviaRawVersion(),reference?reference->sha256_:@"embedded"]),*cached=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".png"]],*receipt=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".json"]];
   if([NSFileManager.defaultManager fileExistsAtPath:cached]){@try{
     NSDictionary *attrs=[NSFileManager.defaultManager attributesOfItemAtPath:receipt error:nil];if([attrs[NSFileSize] unsignedLongLongValue]>4096)fail(@"RAW 缓存记录无效。");
     NSData *data=[NSData dataWithContentsOfFile:receipt];NSDictionary *record=data?[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]:nil;
     if(![record isKindOfClass:NSDictionary.class]||![record[@"identity"] isEqual:identity]||![record[@"sha256"] isEqual:hashFile(cached,task)]||![record[@"status"] isKindOfClass:NSString.class])fail(@"RAW 缓存校验失败。");
-    HueviaRaster *r=load(cached,_root,0);if(![sourceHash isEqual:hashFile(path,task)])fail(@"RAW 原图发生变化。");*status=record[@"status"];return r;
+    HueviaRaster *r=load(cached,_root,0);if(![sourceHash isEqual:hashFile(path,task)])fail(@"RAW 原图发生变化。");if(reference)[reference verifyWithJavaUtilFunctionBooleanSupplier:task];*status=record[@"status"];return r;
   }@catch(JavaIoInterruptedIOException *cancelled){@throw cancelled;}@catch(id invalid){[NSFileManager.defaultManager removeItemAtPath:cached error:nil];[NSFileManager.defaultManager removeItemAtPath:receipt error:nil];}}
   HueviaRawInfo info;char error[1024];if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);
   HueviaRaster *raster=[[HueviaRaster alloc] initWithWidth:info.width height:info.height root:_root];HueviaRawSettings settings={[controls->whiteBalance_ ordinal],controls->temperatureKelvin_,controls->tint_,controls->exposureTenths_,controls->highlightMode_,controls->demosaicQuality_};
   if(HueviaRawDevelop(path.fileSystemRepresentation,&settings,raster.pixels,raster.pixelWidth,raster.pixelHeight,rawProgress,(__bridge void *)task,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);
   check(task);*status=[controls->colorMode_ ordinal]==0?@"NO_REFERENCE":@"NEUTRAL";uint8_t *jpeg=NULL;int length=0;
-  if([controls->colorMode_ ordinal]==0&&HueviaRawEmbeddedJpeg(path.fileSystemRepresentation,&jpeg,&length)==0){
-    NSData *data=[NSData dataWithBytesNoCopy:jpeg length:length freeWhenDone:YES];CGImageSourceRef source=CGImageSourceCreateWithData((__bridge CFDataRef)data,NULL);
+  if([controls->colorMode_ ordinal]==0){
+    CGImageSourceRef source=NULL;
+    if(reference)source=CGImageSourceCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:[reference->file_ getPath]],NULL);
+    else if(HueviaRawEmbeddedJpeg(path.fileSystemRepresentation,&jpeg,&length)==0){NSData *data=[NSData dataWithBytesNoCopy:jpeg length:length freeWhenDone:YES];source=CGImageSourceCreateWithData((__bridge CFDataRef)data,NULL);}
     if(source){@try{
       HueviaRaster *base=raster;
       if(settings.whiteBalance!=0||settings.kelvin!=5500||settings.tint!=0||settings.exposureTenths!=0||settings.highlights!=2||settings.quality!=3){
@@ -220,11 +231,13 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
       }
       HueviaRaster *reference=analysis(compose(decode(source,_root,640),CcHueviaNcpPhotoGeometry_get_NONE(),_root,task),_root),*neutral=analysis(base,_root);base=nil;
       CcHueviaNcpRawJpegColorMatch_Fit *fit=[CcHueviaNcpRawJpegColorMatch fitWithIntArray:pixels(neutral) withInt:neutral.pixelWidth withInt:neutral.pixelHeight withIntArray:pixels(reference) withInt:reference.pixelWidth withInt:reference.pixelHeight withJavaUtilFunctionBooleanSupplier:task];
-      *status=fit->reason_;
+      *status=reference?(fit->accepted_?@"EXTERNAL_MATCHED":[@"EXTERNAL_" stringByAppendingString:fit->reason_]):fit->reason_;
       if(fit->accepted_){for(int y=0;y<raster.pixelHeight;y++){if((y&31)==0)check(task);for(int x=0;x<raster.pixelWidth;x++){size_t i=size_t(y)*raster.pixelWidth+x;raster.pixels[i]=uint32_t([fit applyArgbWithInt:int32_t(raster.pixels[i])]);}}}
-    }@catch(JavaIoInterruptedIOException *cancelled){@throw cancelled;}@catch(id unusable){*status=@"UNRELIABLE_FIT";}@finally{CFRelease(source);}}
+    }@catch(JavaIoInterruptedIOException *cancelled){@throw cancelled;}@catch(id unusable){*status=reference?@"EXTERNAL_UNRELIABLE_FIT":@"UNRELIABLE_FIT";}@finally{CFRelease(source);}}
+    else if(reference)fail(@"JPEG 参考无法解码，请重新选择。");
   }
   check(task);if(![sourceHash isEqualToString:hashFile(path,task)])fail(@"RAW 原文件发生变化，未保存结果。");
+  if(reference)[reference verifyWithJavaUtilFunctionBooleanSupplier:task];
   NSString *temporary=[directory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];
   @try{encode(raster,temporary,YES,@{});check(task);NSString *sha=hashFile(temporary,task);if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:cached error:nil])fail(@"无法保存 RAW 显影结果。");NSData *record=[NSJSONSerialization dataWithJSONObject:@{@"identity":identity,@"sha256":sha,@"status":*status} options:0 error:nil];if(![record writeToFile:receipt options:NSDataWritingAtomic error:nil])fail(@"无法保存 RAW 缓存校验记录。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
   return raster;
@@ -316,11 +329,21 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     for(int i=0;i<5;i++)[fields addObject:[capture fieldWithCcHueviaNcpPhotoBorder:CcHueviaNcpPhotoBorder_get_NONE() withInt:i]];
     check(task);[_runtime guardOwnerWithNSString:owner];return @{@"brand":capture->brand_,@"model":capture->model_,@"fields":fields};
   }
+  if([operation isEqualToString:@"media.rawReferenceInfo"]){
+    if(!raw)fail(@"请选择 RAW 原文件。");NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
+    if(![p[@"referencePath"] isKindOfClass:NSString.class]||[p[@"referencePath"] length]>32768)fail(@"请选择 JPEG 参考照片。");
+    NSString *description=[CcHueviaSharedSharedRawReference describeJsonWithJavaIoFile:[_runtime root] withJavaIoFile:[_runtime privateFileWithNSString:path] withNSString:p[@"referencePath"] withJavaUtilFunctionBooleanSupplier:task];
+    NSDictionary *reference=[NSJSONSerialization JSONObjectWithData:[description dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    NSDictionary *info=properties(reference[@"path"]);int width=[info[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[info[(__bridge id)kCGImagePropertyPixelHeight] intValue];
+    if(width<48||height<48||width>65535||height>65535||uint64_t(width)*height>120000000)fail(@"JPEG 参考尺寸无效，请选择同一张照片的完整 JPEG。");
+    return reference;
+  }
   if([operation isEqualToString:@"media.rawPreview"]||[operation isEqualToString:@"media.rawDevelop"]){
     if(!raw||![p[@"settings"] isKindOfClass:NSDictionary.class])fail(@"RAW 显影请求无效。");
     NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];
     CcHueviaNcpRawDevelopmentSettings *controls=[CcHueviaSharedSharedRawSettings parseWithNSString:json(p[@"settings"])];NSString *status=@"",*sourceSha=hashFile(path,task);
-    HueviaRaster *working=[self raw:path owner:owner settings:controls task:task status:&status];BOOL preview=[operation isEqualToString:@"media.rawPreview"];
+    CcHueviaSharedSharedRawReference_Reference *reference=[controls->colorMode_ ordinal]==0&&p[@"reference"]?[CcHueviaSharedSharedRawReference resolveWithJavaIoFile:[_runtime root] withNSString:json(p[@"reference"]) withJavaUtilFunctionBooleanSupplier:task]:nil;
+    HueviaRaster *working=[self raw:path owner:owner settings:controls reference:reference task:task status:&status];BOOL preview=[operation isEqualToString:@"media.rawPreview"];
     if(preview){double scale=std::min(1.0,1280.0/std::max(working.pixelWidth,working.pixelHeight));working=scaled(working,std::max(1,int(std::lround(working.pixelWidth*scale))),std::max(1,int(std::lround(working.pixelHeight*scale))),_root);}
     NSString *directory=[_root stringByAppendingPathComponent:preview?@"previews":@"raw-editor"];if(![NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建 RAW 编辑目录。");
     NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];

@@ -9,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import 'domain.dart';
 import 'theme.dart';
 import 'widgets.dart';
+import 'app_stability.dart';
 
 const hueviaVersion = '0.31.0-dev';
 const hueviaBuild = 210;
@@ -26,6 +27,7 @@ Future<Json> diagnosticSnapshot(AppState state) async {
   final values = await Future.wait([
     read('gallery.access'),
     read('camera.diagnostics'),
+    AppStability.snapshot(),
   ]);
   final gallery = values[0], camera = values[1];
   // Both producers are bounded. Keep a strict token alphabet as a second
@@ -85,6 +87,7 @@ Future<Json> diagnosticSnapshot(AppState state) async {
           : 0,
       'trace': trace,
     },
+    'appStability': values[2],
     'operations': core.recentOperations
         .take(128)
         .map(
@@ -247,7 +250,9 @@ class _DiagnosticsPageState extends State<DiagnosticsPage> {
     body: ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        const Text('报告包含应用和系统版本、资料数量、相册授权、操作耗时及相机协议阶段。不会包含照片、账号凭据或相机地址。'),
+        const Text(
+          '报告包含应用和系统版本、资料数量、相册授权、操作耗时、相机协议阶段，以及本机可取得的异常类型、调用位置和系统退出摘要。不会包含照片、账号凭据、相机地址、异常消息或个人文件路径。',
+        ),
         const SizedBox(height: 16),
         if (busy) const LinearProgressIndicator(),
         if (error != null) Text(error!),

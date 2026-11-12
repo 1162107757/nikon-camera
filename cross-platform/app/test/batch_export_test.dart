@@ -4,6 +4,20 @@ import 'package:huevia/album_batch.dart';
 import 'package:huevia/batch_export.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/theme.dart';
+import 'package:path/path.dart' as p;
+
+class BatchReferenceCore extends HueviaCore {
+  Json? developed;
+  @override
+  Future<Json> call(
+    String operation, [
+    Json payload = const {},
+    String? jobId,
+  ]) async {
+    if (operation == 'media.rawDevelop') developed = payload;
+    throw const AppFailure('Stop after inspecting the native RAW request');
+  }
+}
 
 class BatchCore extends HueviaCore {
   final calls = <String>[];
@@ -156,6 +170,37 @@ void main() {
       ),
       throwsA(isA<AppFailure>()),
     );
+  });
+  test('Batch RAW preparation carries the persisted JPEG reference into the current private root', () async {
+    final core = BatchReferenceCore()..root = '/new';
+    final state = AppState(core)
+      ..photos = [
+        Photo('/new/originals/source.nef', 'SOURCE.NEF', {
+          'raw': true,
+          'rawJpegReference': {
+            'relativePath': 'originals/reference.jpg',
+            'name': 'PAIR.JPG',
+            'sha256': 'a' * 64,
+            'sourceSha': 'b' * 64,
+          },
+        }),
+      ];
+    final batch = BatchExport(state, [
+      {'id': state.photos.first.path},
+    ], phone: false);
+    await expectLater(
+      batch.prepare(batch.items.first),
+      throwsA(isA<AppFailure>()),
+    );
+    expect(
+      core.developed?['reference']['path'],
+      p.normalize('/new/originals/reference.jpg'),
+    );
+    expect(core.developed?['reference']['sha256'], 'a' * 64);
+    expect(core.developed?['reference']['sourceSha'], 'b' * 64);
+    expect(core.developed?['settings']['colorMode'], 'CAMERA_JPEG');
+    batch.dispose();
+    state.dispose();
   });
   for (final viewport in const [
     (Size(375, 812), 1.0),

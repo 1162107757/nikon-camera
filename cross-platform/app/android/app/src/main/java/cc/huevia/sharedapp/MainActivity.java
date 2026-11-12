@@ -27,6 +27,17 @@ public final class MainActivity extends FlutterActivity {
     private volatile EventChannel.EventSink events;
     @Override public void configureFlutterEngine(FlutterEngine engine){
         super.configureFlutterEngine(engine);
+        NativeStability stability=new NativeStability(this);
+        new MethodChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/stability").setMethodCallHandler((call,reply)->{
+            if(call.method.equals("recordFlutter")){
+                try{stability.recordFlutter(call.arguments);reply.success(null);}
+                catch(Exception|LinkageError|OutOfMemoryError unavailable){reply.error("STABILITY_UNAVAILABLE","异常记录暂不可用。",null);}return;
+            }
+            if(!call.method.equals("snapshot")){reply.notImplemented();return;}
+            try{worker.execute(()->{try{String value=stability.snapshot();main.post(()->reply.success(value));}
+                catch(Exception|LinkageError|OutOfMemoryError unavailable){main.post(()->reply.error("STABILITY_UNAVAILABLE","异常记录暂不可用。",null));}});}
+            catch(RejectedExecutionException busy){reply.error("BUSY","请等待当前操作完成后再读取诊断。",null);}
+        });
         importPicker=new NativeImportPicker(this,worker);
         new EventChannel(engine.getDartExecutor().getBinaryMessenger(),"cc.huevia/events").setStreamHandler(new EventChannel.StreamHandler(){
             public void onListen(Object args,EventChannel.EventSink sink){events=sink;}

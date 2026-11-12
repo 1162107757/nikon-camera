@@ -9,6 +9,8 @@ import 'package:path/path.dart' as p;
 
 import 'domain.dart';
 import 'theme.dart';
+import 'raw_reference.dart';
+import 'widgets.dart';
 
 class RawDevelopPage extends StatefulWidget {
   const RawDevelopPage({
@@ -45,16 +47,28 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   double progress = 0;
   int revision = 0;
   bool running = false, pending = false, forwarding = false;
+  bool selectingReference = false;
+  late RawJpegReference? reference = RawJpegReference.restore(
+    widget.photo.info,
+    widget.state.core.root,
+  );
   Timer? debounce;
   StreamSubscription<dynamic>? events;
   Json snapshot() => object(jsonDecode(jsonEncode(settings)));
   @override
   void initState() {
     super.initState();
-    events = HueviaCore.progress.listen((event) {
+    events = widget.state.core.operationProgress.listen((event) {
       final value = object(event);
-      if (mounted && value['jobId'] == activeJob) {
-        setState(() => progress = (value['progress'] as num).toDouble());
+      final received = value['progress'];
+      if (mounted &&
+          activeJob != null &&
+          value['jobId'] == activeJob &&
+          received is num &&
+          received.isFinite &&
+          received >= 0 &&
+          received <= 1) {
+        setState(() => progress = received.toDouble());
       }
     }, onError: (_) {});
     unawaited(widget.automaticallyEdit ? openEditor() : render());
@@ -118,6 +132,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         'path': widget.photo.path,
         'owner': owner,
         'settings': frozen,
+        if (reference != null) 'reference': reference!.payload,
       }, job);
       final path = result['path'] as String;
       if (!mounted || current != revision || forwarding) {
@@ -170,6 +185,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         'path': widget.photo.path,
         'owner': owner,
         'settings': frozen,
+        if (reference != null) 'reference': reference!.payload,
       }, job);
       temporary = result['path'] as String;
       if (!mounted) return;
@@ -257,6 +273,136 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
                 },
         ),
       );
+
+  Future<void> chooseReference() async {
+    if (forwarding || selectingReference) return;
+    setState(() => selectingReference = true);
+    try {
+      final candidates = widget.state.photos
+          .where(
+            (photo) =>
+                photo.path != widget.photo.path &&
+                photo.info['raw'] != true &&
+                [
+                  '.jpg',
+                  '.jpeg',
+                ].contains(p.extension(photo.name).toLowerCase()),
+          )
+          .toList();
+      final selected = await hueBottomSheet<String>(
+        context: context,
+        builder: (sheet) => SizedBox(
+          height: (MediaQuery.sizeOf(sheet).height * .65).clamp(220, 560),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: Text('选择同一张照片的 JPEG 参考'),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.photo_library_outlined),
+                      title: const Text('从手机选择 JPEG'),
+                      onTap: () => Navigator.pop(sheet, 'pick'),
+                    ),
+                    for (final photo in candidates)
+                      ListTile(
+                        title: Text(photo.name),
+                        onTap: () => Navigator.pop(sheet, photo.path),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      if (!mounted || selected == null) return;
+      String path, name;
+      if (selected == 'pick') {
+        final picked = await widget.state.core.pickFile(preset: false);
+        if (!mounted || picked == null) return;
+        path = picked['path'] as String;
+        name = picked['name'] as String? ?? p.basename(path);
+      } else {
+        final photo = candidates.firstWhere((photo) => photo.path == selected);
+        path = photo.path;
+        name = photo.name;
+      }
+      if (!mounted) return;
+      final confirmed = await hueDialog<bool>(
+        context: context,
+        builder: (dialog) => AlertDialog(
+          title: const Text('确认同一次拍摄'),
+          content: Text(
+            'RAW：${widget.photo.name}\nJPEG：$name\n\n仅凭文件名无法确认是否同一张照片，请核对画面和拍摄时刻。匹配或高光校验未通过时，会保留中性色彩。',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialog, false),
+              child: const Text('取消'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialog, true),
+              child: const Text('使用此 JPEG'),
+            ),
+          ],
+        ),
+      );
+      if (!mounted || confirmed != true) return;
+      if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
+        throw const AppFailure('账号已改变，请重新打开照片。');
+      }
+      final checked = await widget.state.core.call('media.rawReferenceInfo', {
+        'path': widget.photo.path,
+        'owner': owner,
+        'referencePath': path,
+      });
+      if (!mounted) return;
+      if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
+        throw const AppFailure('账号已改变，请重新打开照片。');
+      }
+      final next = RawJpegReference.checked(
+        checked,
+        widget.state.core.root,
+        name: name,
+      );
+      await widget.state.updatePhoto(widget.photo, {
+        'rawJpegReference': next.stored(widget.state.core.root),
+      });
+      if (!mounted) return;
+      setState(() {
+        reference = next;
+        settings['colorMode'] = 'CAMERA_JPEG';
+        error = null;
+      });
+      revision++;
+      unawaited(render());
+    } catch (failure) {
+      if (mounted) setState(() => error = '$failure');
+    } finally {
+      if (mounted) setState(() => selectingReference = false);
+    }
+  }
+
+  Future<void> clearReference() async {
+    if (forwarding || selectingReference) return;
+    setState(() => selectingReference = true);
+    try {
+      await widget.state.updatePhoto(widget.photo, {'rawJpegReference': null});
+      if (!mounted) return;
+      setState(() => reference = null);
+      revision++;
+      unawaited(render());
+    } catch (failure) {
+      if (mounted) setState(() => error = '$failure');
+    } finally {
+      if (mounted) setState(() => selectingReference = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.automaticallyEdit && error == null) {
@@ -315,6 +461,39 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
           ('CAMERA_JPEG', '匹配相机 JPEG'),
           ('NEUTRAL', '中性 sRGB'),
         ]),
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('JPEG 色彩参考'),
+          subtitle: Text(
+            reference?.name ?? '优先使用 RAW 内嵌 JPEG，可手动选择同次拍摄的 JPEG。',
+          ),
+          trailing: selectingReference
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : null,
+        ),
+        Wrap(
+          spacing: 8,
+          children: [
+            TextButton(
+              onPressed: forwarding || selectingReference
+                  ? null
+                  : chooseReference,
+              child: Text(reference == null ? '选择 JPEG 参考' : '更换 JPEG 参考'),
+            ),
+            if (reference != null)
+              TextButton(
+                onPressed: forwarding || selectingReference
+                    ? null
+                    : clearReference,
+                child: const Text('恢复内嵌参考'),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
         selection('whiteBalance', '白平衡', [
           ('CAMERA', '相机白平衡'),
           ('AUTO', '自动白平衡'),
@@ -352,7 +531,11 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         selection('quality', '解马赛克', [(3, '高质量 AHD'), (0, '快速线性')]),
         if (colorStatus.isNotEmpty)
           Text(
-            colorStatus == 'NEUTRAL'
+            colorStatus == 'EXTERNAL_MATCHED'
+                ? '已使用所选 JPEG 的色彩近似，RAW 原始细节保持。'
+                : colorStatus.startsWith('EXTERNAL_')
+                ? '所选 JPEG 未通过画面对齐或高光校验，使用中性色彩。请确认来自同次拍摄，或更换参考照片。'
+                : colorStatus == 'NEUTRAL'
                 ? '使用中性色彩'
                 : colorStatus == 'NO_REFERENCE'
                 ? '未找到内嵌 JPEG，使用安全显影色彩。'
@@ -431,7 +614,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
                   ],
                 )
               : FilledButton(
-                  onPressed: openEditor,
+                  onPressed: selectingReference ? null : openEditor,
                   child: const Text('完成显影，继续编辑'),
                 ),
         ),

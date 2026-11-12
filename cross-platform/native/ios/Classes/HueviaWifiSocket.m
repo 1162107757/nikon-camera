@@ -25,6 +25,9 @@ static void socketFailure(nw_error_t error) {
 @property(nonatomic,strong) dispatch_queue_t networkQueue;
 @property(nonatomic) int32_t receiveTimeout;
 @property(atomic) BOOL channelClosed;
+@property(nonatomic,strong) NSMutableArray *waiters;
+- (dispatch_semaphore_t)beginWait;
+- (void)endWait:(dispatch_semaphore_t)waiter;
 - (int32_t)receive:(IOSByteArray *)bytes offset:(int32_t)offset length:(int32_t)length;
 - (void)send:(IOSByteArray *)bytes offset:(int32_t)offset length:(int32_t)length;
 @end
@@ -46,6 +49,7 @@ static void socketFailure(nw_error_t error) {
 - (instancetype)initWithHost:(NSString *)host port:(int32_t)port timeout:(int32_t)timeout wifiOnly:(BOOL)wifiOnly {
   if(!(self=[super init]))return nil;
   _networkQueue=dispatch_queue_create("cc.huevia.camera.socket",DISPATCH_QUEUE_SERIAL);
+  _waiters=[NSMutableArray array];
   nw_parameters_t parameters=nw_parameters_create_secure_tcp(NW_PARAMETERS_DISABLE_PROTOCOL,NW_PARAMETERS_DEFAULT_CONFIGURATION);
   if(wifiOnly){nw_parameters_set_required_interface_type(parameters,nw_interface_type_wifi);nw_parameters_set_prohibit_expensive(parameters,true);}
   nw_protocol_stack_t stack=nw_parameters_copy_default_protocol_stack(parameters);
@@ -56,8 +60,12 @@ static void socketFailure(nw_error_t error) {
   dispatch_semaphore_t ready=dispatch_semaphore_create(0);
   __block nw_error_t failure=nil;
   __block BOOL connected=NO,finished=NO;
+  __weak HueviaWifiSocket *weakSocket=self;
   nw_connection_set_state_changed_handler(_connection,^(nw_connection_state_t state,nw_error_t error){
-    if(finished)return;
+    if(finished){
+      if(state==nw_connection_state_failed||state==nw_connection_state_cancelled)[weakSocket close];
+      return;
+    }
     if(state==nw_connection_state_ready){connected=YES;finished=YES;dispatch_semaphore_signal(ready);}
     else if(state==nw_connection_state_failed||state==nw_connection_state_cancelled){failure=error;finished=YES;dispatch_semaphore_signal(ready);}
     else if(state==nw_connection_state_waiting&&error&&nw_error_get_error_domain(error)==nw_error_domain_posix){
@@ -69,7 +77,6 @@ static void socketFailure(nw_error_t error) {
   nw_connection_set_queue(_connection,_networkQueue);nw_connection_start(_connection);
   long waited=dispatch_semaphore_wait(ready,dispatch_time(DISPATCH_TIME_NOW,(int64_t)MAX(timeout,1)*NSEC_PER_MSEC));
   if(waited||!connected){[self close];if(waited)@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机 Wi-Fi 连接超时，请检查相机 IP、端口和本地网络权限后重试。"] ;socketFailure(failure);}
-  nw_connection_set_state_changed_handler(_connection,nil);
   return self;
 }
 - (void)setSoTimeoutWithInt:(int32_t)timeout { _receiveTimeout=MAX(0,timeout); }
@@ -77,20 +84,37 @@ static void socketFailure(nw_error_t error) {
 - (JavaIoInputStream *)getInputStream { HueviaSocketInput *input=[HueviaSocketInput new];input.socket=self;return input; }
 - (JavaIoOutputStream *)getOutputStream { HueviaSocketOutput *output=[HueviaSocketOutput new];output.socket=self;return output; }
 - (bool)isClosed { return self.channelClosed; }
-- (void)close { @synchronized(self){if(_channelClosed)return;_channelClosed=YES;if(_connection)nw_connection_cancel(_connection);} }
+- (dispatch_semaphore_t)beginWait {
+  dispatch_semaphore_t waiter=dispatch_semaphore_create(0);
+  @synchronized(self){if(_channelClosed)socketFailure(nil);[_waiters addObject:waiter];}
+  return waiter;
+}
+- (void)endWait:(dispatch_semaphore_t)waiter { @synchronized(self){[_waiters removeObjectIdenticalTo:waiter];} }
+- (void)close {
+  @synchronized(self){
+    if(_channelClosed)return;_channelClosed=YES;
+    // Wake our blocking Java streams immediately. Network cancellation is
+    // asynchronous and a late receive/send callback may arrive afterwards.
+    for(dispatch_semaphore_t waiter in _waiters)dispatch_semaphore_signal(waiter);
+    [_waiters removeAllObjects];
+    if(_connection)nw_connection_cancel(_connection);
+  }
+}
 - (void)dealloc { if(_connection)nw_connection_cancel(_connection); }
 - (int32_t)receive:(IOSByteArray *)bytes offset:(int32_t)offset length:(int32_t)length {
   if(!bytes||offset<0||length<0||offset>bytes->size_-length)@throw [[JavaIoIOException alloc] initWithNSString:@"相机接收缓冲区无效。"];
   if(length==0)return 0;
   if(self.channelClosed)socketFailure(nil);
-  dispatch_semaphore_t received=dispatch_semaphore_create(0);
+  dispatch_semaphore_t received=[self beginWait];
   __block NSData *data=nil;__block nw_error_t failure=nil;__block BOOL complete=NO;
   nw_connection_receive(_connection,1,(uint32_t)length,^(dispatch_data_t content,nw_content_context_t context,bool done,nw_error_t error){
     if(content){NSMutableData *copy=[NSMutableData dataWithCapacity:dispatch_data_get_size(content)];dispatch_data_apply(content,^bool(dispatch_data_t region,size_t offset,const void *buffer,size_t size){[copy appendBytes:buffer length:size];return true;});data=copy;}
     failure=error;complete=done;dispatch_semaphore_signal(received);
   });
   dispatch_time_t deadline=_receiveTimeout?dispatch_time(DISPATCH_TIME_NOW,(int64_t)_receiveTimeout*NSEC_PER_MSEC):DISPATCH_TIME_FOREVER;
-  if(dispatch_semaphore_wait(received,deadline)){[self close];@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机数据接收超时。"] ;}
+  long waited=dispatch_semaphore_wait(received,deadline);[self endWait:received];
+  if(waited){[self close];@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机数据接收超时。"] ;}
+  if(self.channelClosed)socketFailure(nil);
   if(data.length){memcpy(bytes->buffer_+offset,data.bytes,data.length);return (int32_t)data.length;}
   if(failure)socketFailure(failure);
   if(complete)return -1;
@@ -103,9 +127,11 @@ static void socketFailure(nw_error_t error) {
   // dispatch_data owns a copy, including when cancellation wins the deadline.
   NSData *copy=[NSData dataWithBytes:bytes->buffer_+offset length:length];
   dispatch_data_t data=dispatch_data_create(copy.bytes,copy.length,_networkQueue,^{(void)copy;});
-  dispatch_semaphore_t sent=dispatch_semaphore_create(0);__block nw_error_t failure=nil;
+  dispatch_semaphore_t sent=[self beginWait];__block nw_error_t failure=nil;
   nw_connection_send(_connection,data,NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT,true,^(nw_error_t error){failure=error;dispatch_semaphore_signal(sent);});
-  if(dispatch_semaphore_wait(sent,dispatch_time(DISPATCH_TIME_NOW,15*NSEC_PER_SEC))){[self close];@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机数据发送超时。"] ;}
+  long waited=dispatch_semaphore_wait(sent,dispatch_time(DISPATCH_TIME_NOW,15*NSEC_PER_SEC));[self endWait:sent];
+  if(waited){[self close];@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机数据发送超时。"] ;}
+  if(self.channelClosed)socketFailure(nil);
   if(failure)socketFailure(failure);
 }
 @end

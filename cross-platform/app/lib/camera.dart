@@ -11,6 +11,7 @@ import 'camera_previews.dart';
 import 'camera_transfer.dart';
 import 'camera_grid.dart';
 import 'photo_grid.dart';
+import 'project_presets.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -679,7 +680,9 @@ class _CameraPageState extends State<CameraPage> {
               ),
             ),
           Expanded(
-            child: overviewTab == 2 && widget.state.photos.isNotEmpty
+            child: overviewTab == 1
+                ? ProjectPresetsPage(state: widget.state, embedded: true)
+                : overviewTab == 2 && widget.state.photos.isNotEmpty
                 ? downloadedPhotos()
                 : connected && overviewTab == 0
                 ? ListView(
