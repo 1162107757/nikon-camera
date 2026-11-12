@@ -30,7 +30,7 @@ int main(void){@autoreleasepool{@try{
   for(int i=0;i<6;i++)yes(readback->buffer_[i+1]==i+1);yes(readback->buffer_[0]==0);yes([input readWithByteArray:readback withInt:0 withInt:0]==0);
   [socket setSoTimeoutWithInt:80];BOOL timedOut=NO;@try{[input read];}@catch(JavaNetSocketTimeoutException *expected){timedOut=YES;}yes(timedOut);yes([socket isClosed]);
   yes(dispatch_semaphore_wait(finished,dispatch_time(DISPATCH_TIME_NOW,3*NSEC_PER_SEC))==0);close(server);
-  BOOL refused=NO;@try{[[HueviaWifiSocket alloc] initWithHost:@"127.0.0.1" port:port timeout:2000 wifiOnly:NO];}@catch(JavaNetConnectException *expected){refused=YES;}yes(refused);
+  BOOL refused=NO;@try{(void)[[HueviaWifiSocket alloc] initWithHost:@"127.0.0.1" port:port timeout:2000 wifiOnly:NO];}@catch(JavaNetConnectException *expected){refused=YES;}yes(refused);
   // A concurrent close interrupts a read with an infinite event-channel timeout.
   server=listener(&port);int heldServer=server;dispatch_semaphore_t accepted=dispatch_semaphore_create(0);
   dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{int peer=accept(heldServer,NULL,NULL);dispatch_semaphore_signal(accepted);char b;while(read(peer,&b,1)>0){}close(peer);});
