@@ -12,10 +12,14 @@ class RecipesPage extends StatefulWidget {
     required this.owner,
     required this.path,
     required this.current,
+    this.state,
+    this.isCurrent,
   });
   final HueviaCore core;
   final String owner, path;
   final Json current;
+  final AppState? state;
+  final bool Function()? isCurrent;
   @override
   State<RecipesPage> createState() => _RecipesPageState();
 }
@@ -24,14 +28,38 @@ class _RecipesPageState extends State<RecipesPage> {
   List<Json> items = [];
   bool busy = false;
   String? error;
+  bool get current =>
+      mounted &&
+      widget.isCurrent?.call() != false &&
+      (widget.state == null ||
+          (widget.state!.session['logoutPending'] != true &&
+              (widget.state!.session['user']?['id'] as String? ?? '') ==
+                  widget.owner));
+
+  void ownerChanged() {
+    if (!current && mounted) {
+      setState(() {
+        items = [];
+        error = '照片或账号已变化，请返回重新打开。';
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    widget.state?.addListener(ownerChanged);
     unawaited(run('recipe.list'));
   }
 
+  @override
+  void dispose() {
+    widget.state?.removeListener(ownerChanged);
+    super.dispose();
+  }
+
   Future<void> run(String operation, [Json extras = const {}]) async {
-    if (busy) return;
+    if (busy || !current) return;
     setState(() {
       busy = true;
       error = null;
@@ -44,7 +72,7 @@ class _RecipesPageState extends State<RecipesPage> {
         if (operation == 'recipe.create' || operation == 'recipe.apply')
           'recipe': widget.current,
       });
-      if (!mounted) return;
+      if (!mounted || !current) return;
       if (operation == 'recipe.apply') {
         setState(() => busy = false);
         Navigator.pop(context, object(result['recipe']));
@@ -53,7 +81,7 @@ class _RecipesPageState extends State<RecipesPage> {
       final listing = operation == 'recipe.list'
           ? result
           : await widget.core.call('recipe.list', {'owner': widget.owner});
-      if (mounted) {
+      if (current) {
         setState(() => items = (listing['items'] as List).map(object).toList());
       }
     } catch (failure) {
@@ -64,6 +92,7 @@ class _RecipesPageState extends State<RecipesPage> {
   }
 
   Future<void> nameRecipe([Json? item]) async {
+    if (busy || !current) return;
     var enteredName = item?['name'] as String? ?? '';
     final name = await hueDialog<String>(
       context: context,
@@ -96,7 +125,7 @@ class _RecipesPageState extends State<RecipesPage> {
         ],
       ),
     );
-    if (name == null || !mounted) return;
+    if (name == null || !current) return;
     await run(item == null ? 'recipe.create' : 'recipe.rename', {
       'name': name,
       if (item != null) 'id': item['id'],
@@ -104,6 +133,7 @@ class _RecipesPageState extends State<RecipesPage> {
   }
 
   Future<void> remove(Json item) async {
+    if (busy || !current) return;
     final confirmed = await hueDialog<bool>(
       context: context,
       builder: (dialog) => AlertDialog(
@@ -121,7 +151,7 @@ class _RecipesPageState extends State<RecipesPage> {
         ],
       ),
     );
-    if (confirmed == true && mounted) {
+    if (confirmed == true && current) {
       await run('recipe.delete', {'id': item['id']});
     }
   }

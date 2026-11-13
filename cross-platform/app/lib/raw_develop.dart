@@ -18,10 +18,12 @@ class RawDevelopPage extends StatefulWidget {
     required this.state,
     required this.photo,
     this.automaticallyEdit = false,
+    this.isCurrent,
   });
   final AppState state;
   final Photo photo;
   final bool automaticallyEdit;
+  final bool Function()? isCurrent;
   @override
   State<RawDevelopPage> createState() => _RawDevelopPageState();
 }
@@ -55,9 +57,31 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   Timer? debounce;
   StreamSubscription<dynamic>? events;
   Json snapshot() => object(jsonDecode(jsonEncode(settings)));
+  bool get sourceCurrent =>
+      mounted &&
+      widget.isCurrent?.call() != false &&
+      widget.state.session['logoutPending'] != true &&
+      (widget.state.session['user']?['id'] as String? ?? '') == owner;
+
+  void ownerChanged() {
+    if (sourceCurrent || !mounted) return;
+    debounce?.cancel();
+    revision++;
+    final old = preview;
+    if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
+    setState(() {
+      preview = null;
+      reference = null;
+      pending = false;
+      error = '照片或账号已变化，请返回重新打开。';
+    });
+    if (old != null) unawaited(discard(old));
+  }
+
   @override
   void initState() {
     super.initState();
+    widget.state.addListener(ownerChanged);
     events = widget.state.core.operationProgress.listen((event) {
       final value = object(event);
       final received = value['progress'];
@@ -76,6 +100,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   @override
   void dispose() {
+    widget.state.removeListener(ownerChanged);
     debounce?.cancel();
     unawaited(events?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
@@ -99,7 +124,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   }
 
   void changed(String key, Object value) {
-    if (forwarding) return;
+    if (forwarding || !sourceCurrent) return;
     setState(() {
       settings[key] = value;
       error = null;
@@ -113,7 +138,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   }
 
   Future<void> render() async {
-    if (forwarding || !mounted) return;
+    if (forwarding || !sourceCurrent) return;
     if (running) {
       pending = true;
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
@@ -135,7 +160,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         if (reference != null) 'reference': reference!.payload,
       }, job);
       final path = result['path'] as String;
-      if (!mounted || current != revision || forwarding) {
+      if (!sourceCurrent || current != revision || forwarding) {
         await discard(path);
         return;
       }
@@ -165,7 +190,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   }
 
   Future<void> openEditor() async {
-    if (forwarding) return;
+    if (forwarding || !sourceCurrent) return;
     debounce?.cancel();
     pending = false;
     revision++;
@@ -181,6 +206,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
     String? temporary;
     try {
       if (previous != null) await widget.state.core.cancel(previous);
+      if (!sourceCurrent) return;
       final result = await widget.state.core.call('media.rawDevelop', {
         'path': widget.photo.path,
         'owner': owner,
@@ -188,21 +214,23 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         if (reference != null) 'reference': reference!.payload,
       }, job);
       temporary = result['path'] as String;
-      if (!mounted) return;
+      if (!sourceCurrent) return;
       final photo = await widget.state.importPhoto(
         XFile(temporary),
         displayName: '${p.basenameWithoutExtension(widget.photo.name)}.jpg',
       );
+      if (!sourceCurrent) return;
       final working = await widget.state.updatePhoto(photo, {
         'rawSource': widget.photo.path,
         'rawSourceSha': result['sourceSha'],
         'development': result['settings'],
         'rawColorStatus': result['rawColorStatus'],
       });
+      if (!sourceCurrent) return;
       await widget.state.updatePhoto(widget.photo, {
         'lastDevelopment': result['settings'],
       });
-      if (mounted) {
+      if (mounted && sourceCurrent) {
         if (widget.automaticallyEdit) {
           context.replace(working.editorLocation);
         } else {

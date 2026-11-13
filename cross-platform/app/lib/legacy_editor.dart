@@ -15,8 +15,13 @@ extension _LegacyWorkspace on _EditorPageState {
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
       if (!mounted || !sameOwner) return;
       final frozen = recipe.clone().data, fingerprint = jsonEncode(recipe.data);
+      final targetRegion = selectedRegionId;
+      final targetName = selectedRegion?['name'] as String?;
       bool current() =>
-          mounted && sameOwner && jsonEncode(recipe.data) == fingerprint;
+          mounted &&
+          sameOwner &&
+          jsonEncode(recipe.data) == fingerprint &&
+          selectedRegionId == targetRegion;
       final result = await hueRootPage<Json>(
         context,
         MaterialPageRoute(
@@ -27,6 +32,8 @@ extension _LegacyWorkspace on _EditorPageState {
             recipe: frozen,
             isCurrent: current,
             patch: patch,
+            regionId: patch ? null : targetRegion,
+            regionName: patch ? null : targetName,
           ),
         ),
       );
@@ -34,6 +41,10 @@ extension _LegacyWorkspace on _EditorPageState {
       if (result['localData'] != (recipe.data['localData'] ?? '')) checkpoint();
       refreshWorkspace(() {
         recipe.data['localData'] = result['localData'];
+        if (result['regionId'] is String &&
+            (result['regionId'] as String).isNotEmpty) {
+          selectedRegionId = result['regionId'] as String;
+        }
         installLocalState(result);
         compare = false;
       });
@@ -372,6 +383,7 @@ extension _LegacyWorkspace on _EditorPageState {
   }
 
   Future<void> editorOptions() async {
+    if (!toolsEnabled) return;
     final value = await showModalBottomSheet<String>(
       context: context,
       useRootNavigator: true,
@@ -399,28 +411,85 @@ extension _LegacyWorkspace on _EditorPageState {
         ),
       ),
     );
-    if (!mounted || value == null) return;
+    if (!mounted || value == null || !toolsEnabled) return;
     if (value == 'reset') {
       await resetPhoto();
     } else if (value == 'raw') {
-      final source = widget.photo.info['rawSource'] as String;
-      final matches = widget.state.photos.where(
-        (photo) => photo.path == source,
-      );
-      final raw = matches.isNotEmpty
-          ? matches.first
-          : Photo(source, p.basename(source), const {'raw': true});
-      await Navigator.push<void>(
-        context,
-        MaterialPageRoute(
-          builder: (_) => RawDevelopPage(state: widget.state, photo: raw),
-        ),
-      );
+      await openLinkedRaw();
     } else {
       await openTool(
         copying: value == 'copy',
         savedVersions: value == 'versions',
       );
+    }
+  }
+
+  Future<void> openLinkedRaw() async {
+    if (!toolsEnabled) return;
+    debounce?.cancel();
+    revision++;
+    refreshWorkspace(() => managingTools = true);
+    try {
+      await settleLocalAdjustments();
+      if (activeJob != null) await widget.state.core.cancel(activeJob!);
+      if (!mounted || !sameOwner) return;
+      await saveDraft();
+      if (!mounted || !sameOwner) return;
+      final source = widget.photo.info['rawSource'];
+      if (source is! String || source.isEmpty) {
+        throw const AppFailure('原始 RAW 来源不可用，请返回相册重新选择。');
+      }
+      final expected = widget.photo.info['rawSourceSha'];
+      final inspected = await widget.state.core.call('source.inspect', {
+        'owner': owner,
+        'path': source,
+        if (expected is String && expected.isNotEmpty)
+          'expectedSourceSha': expected,
+      });
+      if (!mounted || !sameOwner) return;
+      if (!const {
+            'NEF',
+            'NRW',
+            'DNG',
+            'ARW',
+            'CR2',
+            'CR3',
+            'RAF',
+            'RW2',
+            'ORF',
+            'PEF',
+            'SRW',
+          }.contains(inspected['format']) ||
+          (expected is String &&
+              expected.isNotEmpty &&
+              inspected['sourceSha'] != expected)) {
+        throw const AppFailure('原始 RAW 已改变或不可用，请返回相册重新核对。');
+      }
+      final matches = widget.state.photos.where(
+        (photo) => photo.path == source,
+      );
+      final raw = matches.isNotEmpty
+          ? matches.first
+          : Photo(source, p.basename(source), {'raw': true});
+      bool current() =>
+          mounted && sameOwner && widget.photo.info['rawSource'] == source;
+      await hueRootPage<void>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RawDevelopPage(
+            state: widget.state,
+            photo: raw,
+            isCurrent: current,
+          ),
+        ),
+      );
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) {
+        refreshWorkspace(() => managingTools = false);
+        unawaited(render());
+      }
     }
   }
 

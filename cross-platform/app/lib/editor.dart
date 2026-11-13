@@ -387,42 +387,67 @@ class _EditorPageState extends State<EditorPage> {
     bool copying = false,
     bool savedVersions = false,
   }) async {
-    if (exporting || managingTools || analyzingCleanup || !restored) return;
+    if (!toolsEnabled) return;
     debounce?.cancel();
     revision++;
     setState(() => managingTools = true);
     try {
       await settleLocalAdjustments();
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
-      if (!mounted) return;
-      final applied = await Navigator.push<Json>(
+      if (!mounted || !sameOwner) return;
+      await saveDraft();
+      if (!mounted || !sameOwner) return;
+      final frozen = recipe.clone().data;
+      final fingerprint = jsonEncode(frozen);
+      bool current() =>
+          mounted && sameOwner && jsonEncode(recipe.data) == fingerprint;
+      final source = savedVersions
+          ? await widget.state.core.call('draft.load', {
+              'owner': owner,
+              'path': widget.photo.path,
+            })
+          : const <String, dynamic>{};
+      if (!mounted || !current()) return;
+      final applied = await hueRootPage<Json>(
         context,
         MaterialPageRoute(
           builder: (_) => copying
               ? CopyAdjustmentsPage(
                   state: widget.state,
                   source: widget.photo,
-                  recipe: recipe.clone().data,
+                  recipe: frozen,
                   owner: owner,
+                  isCurrent: current,
                 )
               : savedVersions
               ? VersionsPage(
                   core: widget.state.core,
                   owner: owner,
                   path: widget.photo.path,
+                  state: widget.state,
+                  isCurrent: current,
+                  expectedSourceSha: source['sourceSha'] as String?,
                 )
               : RecipesPage(
                   core: widget.state.core,
                   owner: owner,
                   path: widget.photo.path,
-                  current: recipe.clone().data,
+                  current: frozen,
+                  state: widget.state,
+                  isCurrent: current,
                 ),
         ),
       );
-      if (!mounted) return;
+      if (!mounted || !current()) return;
       if (applied != null) {
         if (copying) {
-          showCopyReceipt(context, widget.state.core, owner, applied);
+          showCopyReceipt(
+            context,
+            widget.state.core,
+            owner,
+            applied,
+            isCurrent: () => mounted && sameOwner,
+          );
           return;
         }
         checkpoint();
@@ -431,6 +456,9 @@ class _EditorPageState extends State<EditorPage> {
           recipe = Recipe(data: applied);
         });
         await reloadLocalState();
+        if (!mounted || !sameOwner) return;
+        panelRevision.value++;
+        await saveDraft();
       }
     } catch (failure) {
       if (mounted) report(context, failure);

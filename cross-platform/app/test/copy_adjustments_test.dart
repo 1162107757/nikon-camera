@@ -124,9 +124,6 @@ void main() {
         await tap('基础调节与去灰');
         await tap('HSL 与调色盘');
         await tap('目标.jpg');
-        state.session = {
-          'user': {'id': 'bob'},
-        };
         await tester.tap(find.text('应用到 1 张照片'));
         await tester.pumpAndSettle();
         final payload = core.calls

@@ -14,10 +14,16 @@ class VersionsPage extends StatefulWidget {
     required this.core,
     required this.owner,
     this.path,
+    this.state,
+    this.isCurrent,
+    this.expectedSourceSha,
   });
   final HueviaCore core;
   final String owner;
   final String? path;
+  final AppState? state;
+  final bool Function()? isCurrent;
+  final String? expectedSourceSha;
   @override
   State<VersionsPage> createState() => _VersionsPageState();
 }
@@ -26,19 +32,39 @@ class _VersionsPageState extends State<VersionsPage> {
   List<Json> versions = [];
   bool loading = true, busy = false;
   String? error, job;
+  bool get current =>
+      mounted &&
+      widget.isCurrent?.call() != false &&
+      (widget.state == null ||
+          (widget.state!.session['logoutPending'] != true &&
+              (widget.state!.session['user']?['id'] as String? ?? '') ==
+                  widget.owner));
+
+  void ownerChanged() {
+    if (current || !mounted) return;
+    if (job != null) unawaited(widget.core.cancel(job!));
+    setState(() {
+      versions = [];
+      error = '照片或账号已变化，请返回重新打开。';
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    widget.state?.addListener(ownerChanged);
     unawaited(load());
   }
 
   @override
   void dispose() {
+    widget.state?.removeListener(ownerChanged);
     if (job != null) unawaited(widget.core.cancel(job!));
     super.dispose();
   }
 
   Future<void> load() async {
+    if (!current) return;
     setState(() {
       loading = true;
       error = null;
@@ -48,7 +74,7 @@ class _VersionsPageState extends State<VersionsPage> {
         'owner': widget.owner,
         if (widget.path != null) 'path': widget.path,
       });
-      if (mounted) {
+      if (current) {
         setState(
           () => versions = (result['items'] as List).map(object).toList(),
         );
@@ -61,7 +87,7 @@ class _VersionsPageState extends State<VersionsPage> {
   }
 
   Future<void> act(String action, Json version) async {
-    if (busy) return;
+    if (busy || !current) return;
     if (action == 'delete') {
       final accepted = await showDialog<bool>(
         context: context,
@@ -80,7 +106,7 @@ class _VersionsPageState extends State<VersionsPage> {
           ],
         ),
       );
-      if (accepted != true || !mounted) return;
+      if (accepted != true || !current) return;
     }
     final identity = 'version-${DateTime.now().microsecondsSinceEpoch}';
     setState(() {
@@ -95,21 +121,26 @@ class _VersionsPageState extends State<VersionsPage> {
       };
       if (action == 'delete') {
         await widget.core.call('version.delete', payload, identity);
-        if (mounted) await load();
+        if (current) await load();
       } else if (action == 'restore') {
         final result = await widget.core.call(
           'version.recipe',
           payload,
           identity,
         );
-        if (mounted) Navigator.pop(context, object(result['recipe']));
+        if (!mounted || !current) return;
+        if (widget.expectedSourceSha != null &&
+            result['sourceSha'] != widget.expectedSourceSha) {
+          throw const AppFailure('成品与当前原图不一致，未恢复配方。');
+        }
+        Navigator.pop(context, object(result['recipe']));
       } else {
         final checked = await widget.core.call(
           'version.open',
           payload,
           identity,
         );
-        if (!mounted) return;
+        if (!mounted || !current) return;
         if (action == 'share') {
           await SharePlus.instance.share(
             ShareParams(
@@ -126,6 +157,8 @@ class _VersionsPageState extends State<VersionsPage> {
                 core: widget.core,
                 owner: widget.owner,
                 version: checked,
+                state: widget.state,
+                isCurrent: widget.isCurrent,
               ),
             ),
           );
@@ -247,10 +280,14 @@ class VersionPreviewPage extends StatefulWidget {
     required this.core,
     required this.owner,
     required this.version,
+    this.state,
+    this.isCurrent,
   });
   final HueviaCore core;
   final String owner;
   final Json version;
+  final AppState? state;
+  final bool Function()? isCurrent;
   @override
   State<VersionPreviewPage> createState() => _VersionPreviewPageState();
 }
@@ -258,20 +295,40 @@ class VersionPreviewPage extends StatefulWidget {
 class _VersionPreviewPageState extends State<VersionPreviewPage> {
   String? preview, error;
   late final job = 'saved-preview-${DateTime.now().microsecondsSinceEpoch}';
+  bool get current =>
+      mounted &&
+      widget.isCurrent?.call() != false &&
+      (widget.state == null ||
+          (widget.state!.session['logoutPending'] != true &&
+              (widget.state!.session['user']?['id'] as String? ?? '') ==
+                  widget.owner));
+  void ownerChanged() {
+    if (current || !mounted) return;
+    unawaited(widget.core.cancel(job));
+    final old = preview;
+    setState(() {
+      preview = null;
+      error = '照片或账号已变化，请返回重新打开。';
+    });
+    if (old != null) unawaited(discard(old));
+  }
+
   @override
   void initState() {
     super.initState();
+    widget.state?.addListener(ownerChanged);
     unawaited(load());
   }
 
   Future<void> load() async {
+    if (!current) return;
     try {
       final result = await widget.core.call('media.originalPreview', {
         'path': widget.version['path'],
         'owner': widget.owner,
       }, job);
       final path = result['path'] as String;
-      if (mounted) {
+      if (current) {
         setState(() => preview = path);
       } else {
         await discard(path);
@@ -293,6 +350,7 @@ class _VersionPreviewPageState extends State<VersionPreviewPage> {
 
   @override
   void dispose() {
+    widget.state?.removeListener(ownerChanged);
     unawaited(widget.core.cancel(job));
     if (preview != null) unawaited(discard(preview!));
     super.dispose();

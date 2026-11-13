@@ -1,12 +1,22 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'retouch_more.dart';
+import 'retouch_original_controls.dart';
+import 'retouch_original_body.dart';
+import 'selection_workspace.dart';
+import 'photo_workspace_chrome.dart';
+import 'widgets.dart';
 import 'theme.dart';
+
+part 'retouch_original_workspace.dart';
 
 /// Tentative edits remain owned by this route until Apply returns localData.
 class RetouchWorkspace extends StatefulWidget {
@@ -18,6 +28,8 @@ class RetouchWorkspace extends StatefulWidget {
     required this.recipe,
     required this.isCurrent,
     this.patch = false,
+    this.regionId,
+    this.regionName,
   });
   final AppState state;
   final Photo photo;
@@ -25,6 +37,7 @@ class RetouchWorkspace extends StatefulWidget {
   final Json recipe;
   final bool Function() isCurrent;
   final bool patch;
+  final String? regionId, regionName;
   @override
   State<RetouchWorkspace> createState() => _RetouchWorkspaceState();
 }
@@ -33,6 +46,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   Json? data, frame;
   final undo = <Json>[], redo = <Json>[];
   String? job, error;
+  String? notice;
   bool busy = true, stopped = false, manual = false, healMode = false;
   int selected = 0, tab = 0, bodyTool = 0;
   double radius = .025;
@@ -40,6 +54,42 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   final points = <Offset>[];
   List<Json> people = [];
   int bodyPerson = 0;
+  bool? tonePerFace;
+  List<RetouchToneCard> toneCards = [];
+  Json? tonePreviewStart;
+  bool photoSampling = false;
+  int? sampleSeed;
+  bool choosingGroup = true, showOverlay = true, comparing = false;
+  bool compareWanted = false, bodyExpanded = false;
+  Matrix4? bodyViewportBefore;
+  bool? bodyOverlayBefore;
+  String? faceParameter;
+  String skinParameter = 'tone', bodyParameter = 'amount';
+  int faceMode = 0, selectionBrush = 0;
+  Json? comparisonFrame, bodyStart, bodyComparisonBefore;
+  List<Json>? bodyUndoBefore, bodyRedoBefore;
+  final viewport = TransformationController();
+  String? atmosphere;
+  Json? scalarStart;
+  Json? scalarPending;
+  String? scalarKey;
+  bool scalarRunning = false,
+      scalarEnded = false,
+      scalarCancelled = false,
+      scalarRemember = true;
+  Json? lightStart;
+  Offset? lightPending;
+  bool lightRunning = false, lightEnded = false, lightCancelled = false;
+  int lightTarget = 0;
+  Offset? originalGestureDown;
+  Json? bodyGestureArea, bodyGestureDraft;
+  String? originalGestureLocal;
+  int originalGestureFace = 0, bodyHandle = -1, originalGestureTool = 0;
+  double originalGestureRadius = .022;
+  ui.Image? portraitOverlay;
+  String? portraitOverlayKey, portraitOverlayJob;
+  int portraitOverlayRevision = 0, faceHitRevision = 0;
+  void refreshPortrait(VoidCallback update) => setState(update);
   final temporary = <String>{};
   bool get current =>
       mounted &&
@@ -52,12 +102,34 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   Json get chosen =>
       faces.isEmpty ? {} : faces[selected.clamp(0, faces.length - 1)];
   Json get skin => object(portrait['skin'] ?? {});
+  bool get originalPortraitReady {
+    if (portrait['hasSkinMask'] == true) return true;
+    if (((skin['smoothing'] as num?) ?? 0) != 0) return false;
+    if ([
+      'NATURAL',
+      'EVENNESS',
+      'SHINE',
+    ].any((k) => ((skin[k] as num?) ?? 0) > 0)) {
+      return false;
+    }
+    if (skin['toneId'] != 0 && ((skin['toneAmount'] as num?) ?? 0) != 0) {
+      return false;
+    }
+    final regional = object(portrait['regionSkin'] ?? {});
+    if (widget.regionId?.isNotEmpty == true &&
+        regional.entries.any((e) => e.value != (e.key == 'texture' ? 70 : 0))) {
+      return false;
+    }
+    return true;
+  }
+
   Json get area => (portrait['body'] as List? ?? []).length == 3
       ? object((portrait['body'] as List)[bodyTool])
       : {};
   @override
   void initState() {
     super.initState();
+    if (!widget.patch) radius = .022;
     widget.state.addListener(accountChanged);
     unawaited(load());
   }
@@ -66,6 +138,27 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     if (!current) {
       unawaited(stop());
       if (mounted) setState(() => error = '账号已改变，请返回重新打开照片。');
+      if (mounted) {
+        setState(() {
+          data = frame = null;
+          undo.clear();
+          redo.clear();
+          toneCards = [];
+          tonePreviewStart = null;
+          photoSampling = false;
+          atmosphere = null;
+          lightPending = null;
+          lightStart = null;
+          scalarStart = scalarPending = null;
+          scalarKey = null;
+          comparisonFrame = null;
+          comparing = compareWanted = false;
+          bodyStart = bodyGestureArea = bodyGestureDraft = null;
+          bodyUndoBefore = bodyRedoBefore = null;
+          points.clear();
+        });
+      }
+      clearPortraitOverlay();
     }
   }
 
@@ -77,9 +170,15 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       final result = await widget.state.core.call(op, {
         'path': widget.photo.path,
         'owner': widget.owner,
+        if (widget.regionId?.isNotEmpty == true) 'regionId': widget.regionId,
+        if (tonePerFace != null) 'tonePerFace': tonePerFace,
         ...value,
       }, id);
       if (!current || stopped) throw const AppFailure('编辑计算已停止。');
+      if (op.startsWith('media.retouch') &&
+          (result['regionId'] as String? ?? '') != (widget.regionId ?? '')) {
+        throw const AppFailure('人像编辑范围已变化，请重新打开。');
+      }
       return result;
     } finally {
       if (job == id) job = null;
@@ -96,12 +195,23 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<Json> render(Json next) async {
+    final display =
+        !widget.patch &&
+            tab != 2 &&
+            (!choosingGroup ||
+                (widget.regionId?.isNotEmpty == true &&
+                    next['sourcePositioning'] == true))
+        ? await call('media.retouchChange', {
+            'localData': next['localData'],
+            'action': 'beforeBody',
+          })
+        : next;
     final result = await call(
       widget.patch ? 'media.localPreview' : 'media.reviewPreview',
       {
         'recipe': {
           ...widget.recipe,
-          'localData': next['localData'],
+          'localData': display['localData'],
           'geometry': <String, dynamic>{},
           'border': <String, dynamic>{},
         },
@@ -129,21 +239,36 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       if (current) {
         setState(() {
           data = next;
+          tonePerFace =
+              object(next['portrait'] ?? {})['tonePerFace'] as bool? ??
+              tonePerFace;
           frame = image;
           if (next['people'] is List) {
             people = (next['people'] as List).map(object).toList();
             bodyPerson = next['selectedPerson'] as int? ?? 0;
           }
         });
+        unawaited(loadPortraitAtmosphere(image['path'] as String));
+        unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
       if (mounted) setState(() => error = '$failure');
     } finally {
       if (mounted) setState(() => busy = false);
     }
+    if (!widget.patch &&
+        !choosingGroup &&
+        current &&
+        data != null &&
+        faces.isEmpty) {
+      unawaited(detectFaces());
+    }
   }
 
-  Future<void> perform(String op, Json payload) async {
+  Future<void> perform(String op, Json payload, {bool remember = true}) async {
+    if (remember && tonePreviewStart != null && !busy && current) {
+      await cancelTonePreview();
+    }
     if (busy || !current || data == null) return;
     setState(() {
       busy = true;
@@ -155,13 +280,24 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         'localData': data!['localData'],
         ...payload,
       });
+      if (op == 'media.retouchAnalyze' &&
+          payload['mode'] == 'face' &&
+          (object(next['portrait'])['faces'] as List? ?? []).isEmpty) {
+        if (mounted) setState(() => notice = '未识别到清晰正脸，请手动添加。');
+        return;
+      }
       final image = await render(next);
       if (current) {
         setState(() {
-          undo.add(data!);
-          if (undo.length > 20) undo.removeAt(0);
-          redo.clear();
+          if (remember) {
+            undo.add(data!);
+            if (undo.length > (bodyStart == null ? 32 : 48)) undo.removeAt(0);
+            redo.clear();
+          }
           data = next;
+          tonePerFace =
+              object(next['portrait'] ?? {})['tonePerFace'] as bool? ??
+              tonePerFace;
           frame = image;
           selected = selected.clamp(0, math.max(0, faces.length - 1));
           if (payload['action'] == 'manualFace') {
@@ -173,6 +309,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
             bodyPerson = next['selectedPerson'] as int? ?? 0;
           }
         });
+        unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
       if (mounted && !stopped) setState(() => error = '$failure');
@@ -187,6 +324,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> history(bool forward) async {
+    if (tonePreviewStart != null && !busy && current) await cancelTonePreview();
     final from = forward ? redo : undo, to = forward ? undo : redo;
     if (busy || from.isEmpty || !current || data == null) return;
     setState(() {
@@ -202,8 +340,13 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           to.add(data!);
           from.removeLast();
           data = next;
+          tonePerFace =
+              object(next['portrait'] ?? {})['tonePerFace'] as bool? ??
+              tonePerFace;
           frame = image;
+          selected = selected.clamp(0, math.max(0, faces.length - 1));
         });
+        unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
       if (mounted && !stopped) setState(() => error = '$failure');
@@ -223,34 +366,395 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     }
   }
 
-  void change(String action, Json value) => unawaited(
-    perform('media.retouchChange', {
-      'action': action,
-      'index': selected,
-      'value': value,
-    }),
+  Future<void> change(String action, Json value) => perform(
+    'media.retouchChange',
+    {'action': action, 'index': selected, 'value': value},
   );
+
+  List<RetouchHealEntry> get healingHistory => [
+    for (final (index, value) in (portrait['heals'] as List? ?? []).indexed)
+      RetouchHealEntry(
+        index: index,
+        x: (object(value)['tx'] as num).toDouble(),
+        y: (object(value)['ty'] as num).toDouble(),
+      ),
+  ];
+
+  Future<List<RetouchToneCard>> toneCardRequest(
+    String operation, [
+    Json extra = const {},
+  ]) async {
+    if (!current || stopped) throw const AppFailure('照片或账号已变化，请返回重新打开。');
+    final result = await call(operation, extra);
+    final cards = [
+      for (final value in result['cards'] as List? ?? [])
+        RetouchToneCard(
+          id: object(value)['id'] as String,
+          name: object(value)['name'] as String,
+          rgb: object(value)['rgb'] as int,
+        ),
+    ];
+    if (!current || stopped) throw const AppFailure('照片或账号已变化，请返回重新打开。');
+    setState(() => toneCards = cards);
+    return cards;
+  }
+
+  Future<void> morePortrait(BuildContext anchor) async {
+    if (widget.patch || busy || !current || data == null) return;
+    stopped = false;
+    if (tonePreviewStart != null) await cancelTonePreview();
+    if (!current || busy || data == null) return;
+    final local = data!['localData'], face = faces.isEmpty ? null : selected;
+    bool unchanged() =>
+        current &&
+        !busy &&
+        data?['localData'] == local &&
+        (faces.isEmpty ? null : selected) == face;
+    try {
+      if (tab == 1) {
+        setState(() => busy = true);
+        try {
+          await toneCardRequest('toneCards.list');
+        } finally {
+          if (mounted) setState(() => busy = false);
+        }
+      }
+      if (!mounted || !unchanged() || !anchor.mounted) return;
+      final action = await showRetouchMoreMenu(
+        anchor,
+        state: RetouchMoreState(
+          selectedFace: face,
+          faceEnabled: chosen['enabled'] != false,
+          heals: healingHistory,
+          hasPortrait: true,
+          skinMode: tab == 1 && skinParameter == 'tone',
+          tonePerFace: tonePerFace ?? false,
+          toneCardCount: toneCards.length,
+        ),
+      );
+      if (!mounted || !unchanged() || action == null) return;
+      switch (action) {
+        case RetouchMoreAction.healHistory:
+          final index = await showRetouchHealingHistory(
+            context,
+            heals: healingHistory,
+          );
+          if (!unchanged() || index == null) return;
+          await perform('media.retouchChange', {
+            'action': 'removeHeal',
+            'index': index,
+          });
+        case RetouchMoreAction.manageToneCards:
+          await showRetouchToneCards(
+            context,
+            cards: toneCards,
+            onDelete: (id) => toneCardRequest('toneCards.remove', {'id': id}),
+          );
+        case RetouchMoreAction.toggleToneScope:
+          await perform('media.retouchChange', {
+            'action': 'toneScope',
+            'index': face ?? -1,
+            'value': {'perFace': !(tonePerFace ?? false)},
+          });
+        case RetouchMoreAction.toggleFace:
+          if (face == null) return;
+          await perform('media.retouchChange', {
+            'action': 'face',
+            'index': face,
+            'value': {'enabled': chosen['enabled'] == false},
+          });
+        case RetouchMoreAction.deleteFace:
+          if (face == null) return;
+          await perform('media.retouchChange', {
+            'action': 'removeFace',
+            'index': face,
+          });
+        case RetouchMoreAction.undoLastHeal:
+          if (healingHistory.isEmpty) return;
+          await perform('media.retouchChange', {
+            'action': 'removeHeal',
+            'index': healingHistory.last.index,
+          });
+        case RetouchMoreAction.resetPortrait:
+          final confirmed = await confirmRetouchReset(context);
+          if (!unchanged() || !confirmed) return;
+          await perform('media.retouchChange', {'action': 'clearPortrait'});
+      }
+    } catch (failure) {
+      if (mounted && current) setState(() => error = '$failure');
+    }
+  }
+
+  Json get editedTone => (tonePerFace ?? false) ? chosen : skin;
+  String get toneAction => (tonePerFace ?? false) ? 'face' : 'skin';
+  int? get pickerSeed {
+    if (editedTone['toneId'] != 0 && editedTone['toneRgb'] is int) {
+      return editedTone['toneRgb'] as int;
+    }
+    for (final value in data?['tones'] as List? ?? []) {
+      final entry = object(value);
+      if (entry['id'] == 1 && entry['color'] is int) {
+        return entry['color'] as int;
+      }
+    }
+    return null;
+  }
+
+  bool get canEditTone =>
+      current &&
+      !busy &&
+      (!(tonePerFace ?? false) ||
+          (faces.isNotEmpty && chosen['enabled'] != false));
+
+  Future<void> previewTone(Json value) async {
+    if (!canEditTone || data == null) return;
+    tonePreviewStart ??= data;
+    await perform('media.retouchChange', {
+      'action': toneAction,
+      'index': selected,
+      'value': {
+        'toneAmount': (editedTone['toneAmount'] as num?)?.toDouble() == 0
+            ? .35
+            : editedTone['toneAmount'],
+        ...value,
+      },
+    }, remember: false);
+  }
+
+  void confirmTonePreview() {
+    if (busy || !current || tonePreviewStart == null || data == null) return;
+    setState(() {
+      undo.add(tonePreviewStart!);
+      if (undo.length > (bodyStart == null ? 32 : 48)) undo.removeAt(0);
+      redo.clear();
+      tonePreviewStart = null;
+      photoSampling = false;
+    });
+  }
+
+  Future<void> cancelTonePreview() async {
+    if (busy || !current || tonePreviewStart == null) return;
+    final before = tonePreviewStart!;
+    setState(() {
+      busy = true;
+      stopped = false;
+      photoSampling = false;
+    });
+    try {
+      final image = await render(before);
+      if (current) {
+        setState(() {
+          data = before;
+          frame = image;
+          tonePerFace =
+              object(before['portrait'])['tonePerFace'] as bool? ?? tonePerFace;
+          tonePreviewStart = null;
+        });
+      }
+    } catch (failure) {
+      if (mounted) setState(() => error = '$failure');
+    } finally {
+      if (mounted) setState(() => busy = false);
+    }
+  }
+
+  Future<void> customTone(int rgb) async {
+    if (!canEditTone) return;
+    stopped = false;
+    final local = data?['localData'], target = selected, perFace = tonePerFace;
+    try {
+      await toneCardRequest('toneCards.list');
+      if (!mounted || !current || data?['localData'] != local) return;
+      final result = await showRetouchCustomTone(
+        context,
+        rgb: rgb,
+        cards: toneCards,
+        onSave: (name, color) =>
+            toneCardRequest('toneCards.save', {'name': name, 'rgb': color}),
+      );
+      if (!current ||
+          target != selected ||
+          tonePerFace != perFace ||
+          data?['localData'] != local) {
+        return;
+      }
+      if (result == null) {
+        await cancelTonePreview();
+      } else if (result.action == RetouchTonePickerAction.sample) {
+        setState(() {
+          photoSampling = true;
+          sampleSeed = result.rgb;
+        });
+      } else {
+        await previewTone({'toneRgb': result.rgb});
+      }
+    } catch (failure) {
+      if (mounted && current) setState(() => error = '$failure');
+    }
+  }
+
+  Future<void> sampleTone(Offset at) async {
+    if (!photoSampling || !canEditTone || data == null) return;
+    final local = data!['localData'], target = selected, perFace = tonePerFace;
+    setState(() {
+      busy = true;
+      stopped = false;
+    });
+    ui.Codec? codec;
+    ui.Image? image;
+    String? path;
+    int? rgb;
+    try {
+      // The original picker samples one real pixel from the portrait analysis
+      // bitmap, before any portrait/body effect, using the displayed coordinates.
+      final base = await call('media.retouchChange', {
+        'localData': local,
+        'action': 'clearPortrait',
+      });
+      final analysis = await render(base);
+      path = analysis['path'] as String;
+      codec = await ui.instantiateImageCodec(await File(path).readAsBytes());
+      image = (await codec.getNextFrame()).image;
+      final pixels = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+      if (pixels == null) throw const AppFailure('照片取色失败，请重试。');
+      final x = (at.dx * image.width).floor().clamp(0, image.width - 1);
+      final y = (at.dy * image.height).floor().clamp(0, image.height - 1);
+      final i = (y * image.width + x) * 4;
+      rgb =
+          (pixels.getUint8(i) << 16) |
+          (pixels.getUint8(i + 1) << 8) |
+          pixels.getUint8(i + 2);
+    } catch (failure) {
+      if (mounted && current) setState(() => error = '$failure');
+    } finally {
+      image?.dispose();
+      codec?.dispose();
+      if (path != null && path != frame?['path']) {
+        temporary.remove(path);
+        await remove(path);
+      }
+      if (mounted) {
+        setState(() {
+          busy = false;
+          photoSampling = false;
+        });
+      }
+    }
+    if (rgb != null &&
+        current &&
+        data?['localData'] == local &&
+        selected == target &&
+        tonePerFace == perFace) {
+      await customTone(rgb);
+    }
+  }
+
+  Future<void> deleteToneCard(RetouchToneCard card) async {
+    if (busy || !current) return;
+    if (!await confirmRetouchDeleteToneCard(context, card: card) || !current) {
+      return;
+    }
+    try {
+      await toneCardRequest('toneCards.remove', {'id': card.id});
+    } catch (failure) {
+      if (mounted && current) setState(() => error = '$failure');
+    }
+  }
+
+  Future<void> selectTab(int value) async {
+    if (busy || !current) return;
+    stopped = false;
+    await cancelTonePreview();
+    if (!current) return;
+    setState(() {
+      tab = value;
+      manual = false;
+      photoSampling = false;
+    });
+    if (value == 1) {
+      try {
+        await toneCardRequest('toneCards.list');
+      } catch (failure) {
+        if (mounted && current) setState(() => error = '$failure');
+      }
+    }
+  }
+
+  Future<void> selectFace(int value) async {
+    if (busy || !current) return;
+    await cancelTonePreview();
+    if (current && value >= 0 && value < faces.length) {
+      setState(() {
+        selected = value;
+        photoSampling = false;
+        manual = false;
+        showOverlay = true;
+      });
+      unawaited(refreshPortraitOverlay());
+    }
+  }
+
   Widget tones(Json source, String action) => Column(
     children: [
-      DropdownButtonFormField<int>(
-        key: ValueKey('tone-$action-${data?['sha256']}-$selected'),
-        initialValue: source['toneId'] as int? ?? 0,
-        decoration: const InputDecoration(labelText: '肤色目标'),
-        items: [
-          for (final row in data?['tones'] as List? ?? [])
-            DropdownMenuItem(
-              value: object(row)['id'] as int,
-              child: Text(object(row)['name'] as String),
-            ),
-        ],
-        onChanged: busy
-            ? null
-            : (value) => change(action, {
-                'toneId': value,
-                'toneAmount': (source['toneAmount'] as num?)?.toDouble() == 0
-                    ? .35
-                    : source['toneAmount'],
-              }),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            for (final row in data?['tones'] as List? ?? [])
+              RetouchToneCardButton(
+                name: object(row)['name'] as String,
+                rgb: object(row)['color'] as int,
+                original: object(row)['id'] == 0,
+                selected: source['toneId'] == object(row)['id'],
+                onTap: !canEditTone
+                    ? null
+                    : () =>
+                          unawaited(previewTone({'toneId': object(row)['id']})),
+              ),
+            if ((data?['tones'] as List? ?? []).any(
+              (v) => object(v)['id'] == 1,
+            ))
+              RetouchToneCardButton(
+                name: '自定义',
+                rgb: source['toneId'] == 10
+                    ? source['toneRgb'] as int
+                    : object(
+                            (data!['tones'] as List).firstWhere(
+                              (v) => object(v)['id'] == 1,
+                            ),
+                          )['color']
+                          as int,
+                selected: source['toneId'] == 10,
+                onTap: !canEditTone
+                    ? null
+                    : () => unawaited(
+                        customTone(
+                          source['toneId'] == 10
+                              ? source['toneRgb'] as int
+                              : object(
+                                      (data!['tones'] as List).firstWhere(
+                                        (v) => object(v)['id'] == 1,
+                                      ),
+                                    )['color']
+                                    as int,
+                        ),
+                      ),
+              ),
+            for (final card in toneCards)
+              RetouchToneCardButton(
+                name: card.name,
+                rgb: card.rgb,
+                selected:
+                    source['toneId'] == 10 && source['toneRgb'] == card.rgb,
+                onTap: !canEditTone
+                    ? null
+                    : () => unawaited(previewTone({'toneRgb': card.rgb})),
+                onLongPress: busy || !current
+                    ? null
+                    : () => unawaited(deleteToneCard(card)),
+              ),
+          ],
+        ),
       ),
       _RetouchSlider(
         key: ValueKey('tone-amount-$action-${data?['sha256']}'),
@@ -258,8 +762,10 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         value: ((source['toneAmount'] as num?)?.toDouble() ?? 0) * 100,
         min: 0,
         max: 100,
-        enabled: !busy,
-        onEnd: (value) => change(action, {'toneAmount': value / 100}),
+        enabled: canEditTone,
+        onEnd: (value) => tonePreviewStart == null
+            ? change(action, {'toneAmount': value / 100})
+            : unawaited(previewTone({'toneAmount': value / 100})),
       ),
     ],
   );
@@ -374,10 +880,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           selected: {tab},
           onSelectionChanged: busy
               ? null
-              : (v) => setState(() {
-                  tab = v.single;
-                  manual = false;
-                }),
+              : (v) => unawaited(selectTab(v.single)),
         ),
         const SizedBox(height: 10),
         FilledButton.tonal(
@@ -398,7 +901,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
                 ChoiceChip(
                   label: Text('人物 ${i + 1}'),
                   selected: selected == i,
-                  onSelected: busy ? null : (_) => setState(() => selected = i),
+                  onSelected: busy ? null : (_) => unawaited(selectFace(i)),
                 ),
               FilterChip(
                 label: const Text('手动添加人脸'),
@@ -472,7 +975,6 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
             slider('光源左右', 'LIGHT_X', chosen, min: -100),
             slider('光源上下', 'LIGHT_Y', chosen, min: -100),
             slider('自然精修', 'NATURAL', chosen),
-            tones(chosen, 'face'),
             TextButton(
               onPressed: busy ? null : () => change('removeFace', {}),
               child: const Text('移除所选人脸'),
@@ -505,8 +1007,23 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
             slider('匀肤', 'EVENNESS', skin),
             slider('去油光', 'SHINE', skin),
             slider('纹理保留', 'TEXTURE', skin),
-            tones(skin, 'skin'),
           ],
+          if (tonePerFace == true) ...[
+            const Text('逐人肤色调节（高级）'),
+            if (faces.isEmpty) const Text('请先自动选脸或手动选择人脸。'),
+            Wrap(
+              spacing: 8,
+              children: [
+                for (var i = 0; i < faces.length; i++)
+                  ChoiceChip(
+                    label: Text('人物 ${i + 1}'),
+                    selected: selected == i,
+                    onSelected: busy ? null : (_) => unawaited(selectFace(i)),
+                  ),
+              ],
+            ),
+          ],
+          tones(editedTone, toneAction),
         ],
         if (tab == 2) ...[
           if (people.length > 1)
@@ -574,8 +1091,11 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   Widget stage() => LayoutBuilder(
     builder: (context, bounds) {
-      final width = (frame?['width'] as num?)?.toDouble() ?? 1,
-          height = (frame?['height'] as num?)?.toDouble() ?? 1;
+      final shown = comparing && comparisonFrame != null
+          ? comparisonFrame
+          : frame;
+      final width = (shown?['width'] as num?)?.toDouble() ?? 1,
+          height = (shown?['height'] as num?)?.toDouble() ?? 1;
       final scale = math.min(
             bounds.maxWidth / width,
             bounds.maxHeight / height,
@@ -585,7 +1105,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         (local.dx / size.width).clamp(0, 1),
         (local.dy / size.height).clamp(0, 1),
       );
-      return Center(
+      final canvas = Center(
         child: SizedBox.fromSize(
           size: size,
           child: GestureDetector(
@@ -593,6 +1113,10 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
                 ? null
                 : (event) {
                     final at = point(event.localPosition);
+                    if (photoSampling) {
+                      unawaited(sampleTone(at));
+                      return;
+                    }
                     if (widget.patch) {
                       unawaited(
                         perform('media.retouchPatch', {
@@ -622,7 +1146,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
                                 (f['rx'] as num) &&
                             (at.dy - (f['cy'] as num)).abs() <
                                 (f['ry'] as num)) {
-                          setState(() => selected = i);
+                          unawaited(selectFace(i));
                           break;
                         }
                       }
@@ -656,21 +1180,33 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                if (frame != null)
+                if (shown != null)
                   Image.file(
-                    File(frame!['path'] as String),
+                    File(shown['path'] as String),
                     fit: BoxFit.contain,
                     gaplessPlayback: true,
-                    semanticLabel: '待编辑照片：${widget.photo.name}',
+                    semanticLabel: comparing
+                        ? '处理前照片：${widget.photo.name}'
+                        : '待编辑照片：${widget.photo.name}',
                   ),
                 IgnorePointer(
                   child: CustomPaint(
                     painter: _RetouchOverlay(
-                      faces: widget.patch || tab != 0 ? [] : faces,
+                      faces:
+                          widget.patch ||
+                              tab != 0 ||
+                              !showOverlay ||
+                              comparing ||
+                              choosingGroup
+                          ? []
+                          : faces,
                       selected: selected,
                       points: points.toList(),
                       radius: radius,
-                      body: !widget.patch && tab == 2 ? area : null,
+                      body:
+                          !widget.patch && tab == 2 && showOverlay && !comparing
+                          ? area
+                          : null,
                     ),
                   ),
                 ),
@@ -679,88 +1215,194 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           ),
         ),
       );
+      return widget.patch
+          ? canvas
+          : InteractiveViewer(
+              transformationController: viewport,
+              minScale: 1,
+              maxScale: 8,
+              panEnabled: !manual && !healMode && !photoSampling,
+              child: canvas,
+            );
     },
   );
   @override
-  Widget build(BuildContext context) => Theme(
-    data: hueviaTheme(Brightness.dark, home: false),
-    child: PopScope(
-      canPop: !busy,
-      child: Scaffold(
-        backgroundColor: const Color(0xff191918),
-        appBar: AppBar(
-          title: Text(widget.patch ? '自动修补' : '人像精修'),
-          actions: [
-            TextButton(
-              onPressed: busy || data == null || !current
-                  ? null
-                  : () => Navigator.pop(context, data),
-              child: const Text('应用'),
-            ),
-          ],
-        ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(flex: 5, child: stage()),
-              if (busy) const LinearProgressIndicator(),
-              if (error != null)
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    error!,
-                    style: const TextStyle(color: Colors.orangeAccent),
-                  ),
+  Widget build(BuildContext context) => !widget.patch
+      ? originalPortraitLayout(context)
+      : Theme(
+          data: hueviaTheme(Brightness.dark, home: false),
+          child: PopScope(
+            canPop: !busy,
+            child: Scaffold(
+              backgroundColor: const Color(0xff191918),
+              appBar: AppBar(
+                toolbarHeight: widget.patch ? null : 52,
+                backgroundColor: widget.patch ? null : const Color(0xff0c0b0a),
+                foregroundColor: const Color(0xfff4f5f7),
+                centerTitle: !widget.patch,
+                titleTextStyle: const TextStyle(
+                  fontSize: 16,
+                  color: Color(0xfff4f5f7),
                 ),
-              if (error != null && data == null && !busy)
-                TextButton(
-                  onPressed: () => unawaited(load()),
-                  child: const Text('重新载入'),
-                ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    tooltip: '撤销',
-                    onPressed: busy || undo.isEmpty
-                        ? null
-                        : () => unawaited(history(false)),
-                    icon: const Icon(Icons.undo),
-                  ),
-                  IconButton(
-                    tooltip: '重做',
-                    onPressed: busy || redo.isEmpty
-                        ? null
-                        : () => unawaited(history(true)),
-                    icon: const Icon(Icons.redo),
-                  ),
-                  if (busy)
-                    TextButton(
-                      onPressed: () => unawaited(stop()),
-                      child: const Text('停止计算'),
+                title: Text(widget.patch ? '自动修补' : '人像'),
+                leadingWidth: widget.patch ? null : 100,
+                leading: widget.patch
+                    ? null
+                    : Row(
+                        children: [
+                          IconButton(
+                            tooltip: '返回编辑照片',
+                            onPressed: busy
+                                ? null
+                                : () => Navigator.pop(context),
+                            icon: const Icon(Icons.chevron_left),
+                          ),
+                          Builder(
+                            builder: (anchor) => IconButton(
+                              tooltip: '更多人像操作',
+                              onPressed: busy || data == null || !current
+                                  ? null
+                                  : () => morePortrait(anchor),
+                              icon: const Icon(Icons.more_horiz),
+                            ),
+                          ),
+                        ],
+                      ),
+                actions: [
+                  Padding(
+                    padding: widget.patch
+                        ? EdgeInsets.zero
+                        : const EdgeInsets.fromLTRB(4, 8, 12, 8),
+                    child: TextButton(
+                      style: widget.patch
+                          ? null
+                          : TextButton.styleFrom(
+                              backgroundColor: const Color(0xffffe335),
+                              foregroundColor: const Color(0xff211812),
+                              minimumSize: const Size(64, 36),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                      onPressed:
+                          busy ||
+                              data == null ||
+                              !current ||
+                              tonePreviewStart != null ||
+                              photoSampling
+                          ? null
+                          : () => Navigator.pop(context, data),
+                      child: const Text('应用'),
                     ),
-                  if (!busy)
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('取消'),
-                    ),
+                  ),
                 ],
               ),
-              Expanded(
-                flex: 4,
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-                  child: controls(),
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    Expanded(flex: 5, child: stage()),
+                    if (busy) const LinearProgressIndicator(),
+                    if (error != null)
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          error!,
+                          style: const TextStyle(color: Colors.orangeAccent),
+                        ),
+                      ),
+                    if (error != null && data == null && !busy)
+                      TextButton(
+                        onPressed: () => unawaited(load()),
+                        child: const Text('重新载入'),
+                      ),
+                    if (photoSampling)
+                      TextButton(
+                        onPressed: busy
+                            ? null
+                            : () {
+                                setState(() => photoSampling = false);
+                                if (sampleSeed != null) {
+                                  unawaited(customTone(sampleSeed!));
+                                }
+                              },
+                        child: const Text('点按照片取色 · 取消'),
+                      ),
+                    if (tonePreviewStart != null && !photoSampling)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                              onPressed: busy || pickerSeed == null
+                                  ? null
+                                  : () => unawaited(customTone(pickerSeed!)),
+                              child: const Text('继续选色'),
+                            ),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                              onPressed: busy
+                                  ? null
+                                  : () => unawaited(cancelTonePreview()),
+                              child: const Text('取消'),
+                            ),
+                          ),
+                          Expanded(
+                            child: TextButton(
+                              onPressed: busy ? null : confirmTonePreview,
+                              child: const Text(
+                                '使用此色',
+                                style: TextStyle(color: Color(0xffffe335)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          tooltip: '撤销',
+                          onPressed: busy || undo.isEmpty
+                              ? null
+                              : () => unawaited(history(false)),
+                          icon: const Icon(Icons.undo),
+                        ),
+                        IconButton(
+                          tooltip: '重做',
+                          onPressed: busy || redo.isEmpty
+                              ? null
+                              : () => unawaited(history(true)),
+                          icon: const Icon(Icons.redo),
+                        ),
+                        if (busy)
+                          TextButton(
+                            onPressed: () => unawaited(stop()),
+                            child: const Text('停止计算'),
+                          ),
+                        if (!busy)
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('取消'),
+                          ),
+                      ],
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                        child: controls(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    ),
-  );
+        );
   @override
   void dispose() {
+    clearPortraitOverlay();
+    viewport.dispose();
     widget.state.removeListener(accountChanged);
     unawaited(stop());
     for (final path in temporary) {
@@ -826,58 +1468,134 @@ class _RetouchOverlay extends CustomPainter {
     required this.points,
     required this.radius,
     this.body,
+    this.originalPortrait = false,
+    this.addingFace = false,
+    this.erasing = false,
+    this.bodyTool = 0,
+    this.singleLeg = false,
+    this.heals = const [],
   });
   final List<Json> faces;
-  final int selected;
+  final int selected, bodyTool;
   final List<Offset> points;
   final double radius;
   final Json? body;
+  final bool originalPortrait, addingFace, erasing, singleLeg;
+  final List<Json> heals;
+  void dashed(Canvas canvas, Path path, Paint pen) {
+    for (final metric in path.computeMetrics()) {
+      for (double at = 0; at < metric.length; at += 10) {
+        canvas.drawPath(
+          metric.extractPath(at, math.min(at + 5, metric.length)),
+          pen,
+        );
+      }
+    }
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     final pen = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
       ..color = const Color(0xffffe335);
-    for (var i = 0; i < faces.length; i++) {
-      final f = faces[i];
-      pen.color = i == selected ? const Color(0xffffe335) : Colors.white54;
-      canvas.drawOval(
-        Rect.fromCenter(
-          center: Offset(
-            (f['cx'] as num).toDouble() * size.width,
-            (f['cy'] as num).toDouble() * size.height,
+    // Human selection uses the original native mask.weight overlay, not face ellipses.
+    if (!originalPortrait) {
+      for (var i = 0; i < faces.length; i++) {
+        final f = faces[i];
+        pen.color = i == selected ? const Color(0xffffe335) : Colors.white54;
+        canvas.drawOval(
+          Rect.fromCenter(
+            center: Offset(
+              (f['cx'] as num) * size.width,
+              (f['cy'] as num) * size.height,
+            ),
+            width: (f['rx'] as num) * size.width * 2,
+            height: (f['ry'] as num) * size.height * 2,
           ),
-          width: (f['rx'] as num) * size.width * 2,
-          height: (f['ry'] as num) * size.height * 2,
-        ),
-        pen,
-      );
+          pen,
+        );
+      }
     }
     if (body != null && body!.isNotEmpty) {
-      pen.color = const Color(0xffffe335);
-      canvas.drawRect(
-        Rect.fromLTRB(
-          (body!['left'] as num) * size.width,
-          (body!['top'] as num) * size.height,
-          (body!['right'] as num) * size.width,
-          (body!['bottom'] as num) * size.height,
-        ),
+      final box = Rect.fromLTRB(
+        (body!['left'] as num) * size.width,
+        (body!['top'] as num) * size.height,
+        (body!['right'] as num) * size.width,
+        (body!['bottom'] as num) * size.height,
+      );
+      if (originalPortrait) {
+        pen
+          ..color = const Color(0xaafff1e4)
+          ..strokeWidth = 1;
+        dashed(
+          canvas,
+          Path()
+            ..addRRect(RRect.fromRectAndRadius(box, const Radius.circular(3))),
+          pen,
+        );
+        if (bodyTool == 1 && !singleLeg) {
+          dashed(
+            canvas,
+            Path()
+              ..moveTo(box.center.dx, box.top)
+              ..lineTo(box.center.dx, box.bottom),
+            pen,
+          );
+        }
+        pen
+          ..color = const Color(0xffffe335)
+          ..strokeWidth = 2;
+        for (var i = 0; i < 4; i++) {
+          final x = i.isEven ? box.left : box.right,
+              y = i < 2 ? box.top : box.bottom;
+          canvas.drawLine(
+            Offset(x, y),
+            Offset(x + (i.isEven ? 12 : -12), y),
+            pen,
+          );
+          canvas.drawLine(Offset(x, y), Offset(x, y + (i < 2 ? 12 : -12)), pen);
+        }
+        canvas.drawLine(
+          Offset(box.center.dx - 10, box.top),
+          Offset(box.center.dx + 10, box.top),
+          pen,
+        );
+        canvas.drawLine(
+          Offset(box.center.dx - 10, box.bottom),
+          Offset(box.center.dx + 10, box.bottom),
+          pen,
+        );
+      } else {
+        canvas.drawRect(box, pen);
+      }
+    }
+    pen
+      ..color = const Color(0xffffe335)
+      ..strokeWidth = 1;
+    for (final h in heals) {
+      canvas.drawCircle(
+        Offset((h['tx'] as num) * size.width, (h['ty'] as num) * size.height),
+        ((h['radius'] as num?)?.toDouble() ?? radius) *
+            math.min(size.width, size.height),
         pen,
       );
     }
+    if (addingFace && originalPortrait) return;
     pen
-      ..color = const Color(0x88ffe335)
+      ..color = originalPortrait
+          ? (erasing ? const Color(0xaaff9b8f) : const Color(0x66fff1e4))
+          : const Color(0x88ffe335)
       ..strokeWidth = radius * math.min(size.width, size.height) * 2
-      ..strokeCap = StrokeCap.round;
-    for (var i = 0; i < points.length; i++) {
-      final a = Offset(points[i].dx * size.width, points[i].dy * size.height);
-      final b = i == 0
-          ? a
-          : Offset(
-              points[i - 1].dx * size.width,
-              points[i - 1].dy * size.height,
-            );
-      canvas.drawLine(a, b, pen);
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    if (points.isNotEmpty) {
+      final path = Path()
+        ..moveTo(points.first.dx * size.width, points.first.dy * size.height);
+      for (final at in points.skip(1)) {
+        path.lineTo(at.dx * size.width, at.dy * size.height);
+      }
+      canvas.drawPath(path, pen);
     }
   }
 

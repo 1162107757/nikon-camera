@@ -350,6 +350,7 @@ extension _LocalWorkspace on _EditorPageState {
       });
       await reloadLocalState();
       panelRevision.value++;
+      await saveDraft();
     } catch (failure) {
       if (mounted) report(context, failure);
     } finally {
