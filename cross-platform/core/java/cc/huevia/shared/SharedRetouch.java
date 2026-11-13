@@ -52,6 +52,12 @@ public final class SharedRetouch {
                         double[] points=new double[((List<?>)raw).size()];for(int i=0;i<points.length;i++)points[i]=number(((List<?>)raw).get(i));
                         portrait=portrait.withFace(index,f.addStroke(new PhotoPortrait.Stroke(points,d(v,"radius",.025),.65,flag(v,"erase",false))));break;
                     }
+                    case "regionSkin": {
+                        String id=SharedRuntime.text(p,"regionId",64);if(id.isEmpty())throw new IOException("请先选择涂抹区域。");
+                        int target=regionIndex(local,id);AdjustmentRegion region=local.regions().get(target);PhotoPortrait.Settings s=region.skinSettings;
+                        s=new PhotoPortrait.Settings(n(v,"brightness",s.brightness),n(v,"warmth",s.warmth),n(v,"redness",s.redness),n(v,"smoothing",s.smoothing),n(v,"texture",s.texture),n(v,"light",s.light),n(v,"shadows",s.shadows));
+                        local=local.withRegion(target,region.withSkinSettings(s));break;
+                    }
                     case "manualFace":portrait=portrait.addFace(new PhotoPortrait.Face(d(v,"cx",.5),d(v,"cy",.4),d(v,"rx",.12),d(v,"ry",.18),0,n(v,"skinR",190),n(v,"skinG",145),n(v,"skinB",120),true,PhotoPortrait.Settings.NONE,Collections.emptyList()));break;
                     case "skin": {
                         if(portrait.globalSkinMask==null)throw new IOException("请先分析皮肤范围。");if(skinPixels(portrait.globalSkinMask)<32)throw new IOException("未找到可确认的皮肤范围，请重试或使用局部画笔。");
@@ -136,6 +142,7 @@ public final class SharedRetouch {
         List<Object> heals=new ArrayList<>();for(PhotoPortrait.Heal h:p.heals())heals.add(SharedRuntime.map("sx",h.sx,"sy",h.sy,"tx",h.tx,"ty",h.ty,"radius",h.radius,"feather",h.feather,"enabled",h.enabled));
         List<Object> tones=new ArrayList<>();for(SkinTone.Entry tone:SkinTone.presets())tones.add(SharedRuntime.map("id",tone.id,"name",tone.label,"color",tone.colorRGB));result.put("tones",tones);
         result.put("portrait",SharedRuntime.map("faces",faces,"body",body,"skin",skin,"heals",heals,"tonePerFace",tonePerFace==null?storedPerFace:tonePerFace,"hasSkinMask",p.globalSkinMask!=null,"skinPixels",skinPixels(p.globalSkinMask),"hasBodyMask",p.bodyShape.backgroundMask!=null,"protection",p.bodyShape.backgroundProtection,"singleLeg",p.bodyShape.singleLeg));
+        if(!regionId.isEmpty()){PhotoPortrait.Settings s=local.regions().get(regionIndex(local,regionId)).skinSettings;SharedRuntime.object(result.get("portrait")).put("regionSkin",SharedRuntime.map("brightness",s.brightness,"warmth",s.warmth,"redness",s.redness,"smoothing",s.smoothing,"texture",s.texture,"light",s.light,"shadows",s.shadows));}
         result.put("regionId",regionId);result.put("sourcePositioning",!local.portrait.bodyShape.isNeutral());check(cancel);return SharedJson.encode(result);
     }
     public static PhotoPortrait.Face readFace(Map<String,Object> v)throws IOException {

@@ -164,6 +164,15 @@ public final class RetouchMenuBoundaryTest {
         byte[] clippedRgba=Base64.getDecoder().decode((String)SharedRuntime.object(clipped.get("selectionOverlay")).get("rgba"));
         yes((clippedRgba[3]&255)==0&&(clippedRgba[(51*128+38)*4+3]&255)>0);
         yes(clipped.get("localData").equals(clippedRequest.get("localData"))&&region.id.equals(clipped.get("regionId")));
+        Map<String,Object> regionSkinRequest=new LinkedHashMap<>(clippedRequest);regionSkinRequest.put("action","regionSkin");regionSkinRequest.put("value",SharedRuntime.map("brightness",21,"warmth",-12,"redness",7,"smoothing",35,"texture",83));
+        Map<String,Object> regionSkin=SharedJson.object(SharedRetouch.request("media.retouchChange",SharedJson.encode(regionSkinRequest),()->false));
+        PhotoLocalEdits regionSkinLocal=local(regionSkin);PhotoPortrait.Settings skinSettings=regionSkinLocal.regions().get(0).skinSettings;
+        yes(skinSettings.brightness==21&&skinSettings.warmth==-12&&skinSettings.redness==7&&skinSettings.smoothing==35&&skinSettings.texture==83);
+        yes(regionSkinLocal.portrait.equals(parent.portrait)&&regionSkinLocal.regions().get(1).equals(otherRegion));
+        yes(regionSkinLocal.regions().get(0).portrait.equals(paintedRegion.portrait)&&regionSkinLocal.regions().get(0).strokes.equals(paintedRegion.strokes));
+        yes(((Number)SharedRuntime.object(portrait(regionSkin).get("regionSkin")).get("brightness")).intValue()==21&&local(clipped).regions().get(0).skinSettings.equals(PhotoPortrait.Settings.NONE));
+        rejects(()->change(before,"regionSkin",0,SharedRuntime.map("brightness",21),true));
+        regionSkinRequest.put("value",SharedRuntime.map("smoothing",101));rejects(()->SharedRetouch.request("media.retouchChange",SharedJson.encode(regionSkinRequest),()->false));
         Map<String,Object> faceOverlay=SharedJson.object(SharedPortraitOverlay.render(SharedJson.encode(SharedRuntime.map("localData",before.get("localData"),"index",0)),overlayPixels,64,64,()->false));
         byte[] faceRgba=Base64.getDecoder().decode((String)SharedRuntime.object(faceOverlay.get("selectionOverlay")).get("rgba"));
         int px=72,py=96;double nx=(px+.5)/240,ny=(py+.5)/240;int expectedAlpha=(int)Math.round(PortraitPreviewFilter.mask(first,64,64).weight(overlayPixels[0],nx,ny)*38);
