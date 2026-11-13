@@ -1,0 +1,6 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_more_test.dart
+00:00 +0: Original photo actions retain source ordering, scope hints and conditional groups
+00:00 +1: Quick presets use original absolute coefficients and preserve unrelated editing
+00:00 +2: Header uses full 48 target and original menu is anchored and scrollable at large text
+00:00 +3: An open menu closes when its photo owner becomes invalid
+00:00 +4: All tests passed!

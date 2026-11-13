@@ -1,0 +1,13 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_menu_test.dart
+00:00 +0: All visible editor menu pages use the saved current draft and return to the editor
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-menu-79900501"
+00:02 +1: Restore original persists immediately and an old menu cannot run after account change
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-menu-38967be3"
+00:02 +2: Saved version from another source is rejected without changing the editor recipe
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-menu-c59b5738"
+00:02 +3: Linked RAW with changed bytes is rejected before RAW preview
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-menu-7f1d731e"
+00:03 +4: Copy page stops at an account change before any mutation
+00:03 +5: Portrait tab opens the shared workspace directly and returns without the two intermediate cards
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-menu-b63a1438"
+00:03 +6: All tests passed!

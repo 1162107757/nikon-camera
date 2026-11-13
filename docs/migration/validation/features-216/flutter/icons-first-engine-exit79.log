@@ -1,0 +1,8 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_parameter_icons_test.dart
+00:00 +0: Adjustment and advanced tools render distinct readable symbols
+00:05 +0: Adjustment and advanced tools render distinct readable symbols - did not complete [E]
+00:05 +0: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_parameter_icons_test.dart: Adjustment and advanced tools render distinct readable symbols (did not complete)
+No tests were found.

@@ -1,0 +1,15 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_blemish_review_test.dart
+00:00 +0: targets use true normalized positions and image-short-edge radii
+00:00 +1: badge hits and small-target touch areas return authoritative indices
+00:00 +2: painter snapshots selection and repaints a changed checkbox state
+00:00 +3: actual marker pixels show selection without filling the blemish
+00:00 +4: photo markers and checkboxes agree and confirm only checked indices
+00:00 +5: tapping a numbered photo marker focuses its matching list item
+00:01 +6: list location zooms the same source target and fit restores all markers
+00:01 +7: none disables confirmation and all restores the default selection
+00:01 +8: invalid ownership hides the private photo and cannot confirm
+00:01 +9: normal back then invalidation during exit never pops the parent
+00:01 +10: a missing positioning image cannot authorize repairs
+00:01 +11: two fingers navigate the photo without changing selected repairs
+00:01 +12: compact landscape and large text keep review controls usable
+00:02 +13: All tests passed!

@@ -1,0 +1,8 @@
+{
+  "sourceCommit": "8ced1d6d282a4d8fdaa46a954e43965266f3de8f",
+  "conclusion": "failure",
+  "flutterPassed": 390,
+  "flutterFailed": 12,
+  "iosDeviceAppCompiled": true,
+  "acceptedIpa": false
+}

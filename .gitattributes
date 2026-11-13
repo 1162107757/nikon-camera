@@ -1,0 +1,7 @@
+# Preserve byte hashes of the archived build and test receipts.
+docs/migration/validation/features-216/**/*.log -text -whitespace
+docs/migration/validation/features-216/**/*.json -text -whitespace
+docs/migration/validation/features-216/**/*.txt -text -whitespace
+docs/migration/validation/features-217/**/*.log -text -whitespace
+docs/migration/validation/features-217/**/*.json -text -whitespace
+docs/migration/validation/features-217/**/*.txt -text -whitespace

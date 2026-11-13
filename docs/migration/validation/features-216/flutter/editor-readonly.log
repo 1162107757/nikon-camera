@@ -1,0 +1,8 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_readonly_test.dart
+00:00 +0: Detail double close during pop animation preserves its parent route
+00:01 +1: Detail decoder failure releases its cache and owned UUID before retry creates another full file
+00:02 +2: Full detail uses readonly full renderer, validates pixels and never saves a version or draft
+00:03 +3: Closing held detail cancels immediately and cleans a late native result without installation
+00:03 +4: Invalid full-resolution evidence is rejected and its owned temporary is removed
+00:03 +5: Histogram geometry and warnings remain display-only and a late cancelled statistic cannot install
+00:03 +6: All tests passed!

@@ -1,0 +1,81 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+  "androidReleaseRuntimeChecks": 78,
+  "sharedCoreBoundaryChecks": 1385,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-216-android-arm64.apk",
+      "platform": "android",
+      "abi": "arm64-v8a",
+      "bytes": 52657970,
+      "sha256": "9038bc0ee4a986761556ab7df2f52272fe767e1bba7a3c77091575371cb2a328",
+      "versionName": "0.31.0-dev",
+      "versionCode": 216,
+      "package": "cc.huevia.next",
+      "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-216-android-x64.apk",
+      "platform": "android",
+      "abi": "x86_64",
+      "bytes": 56160474,
+      "sha256": "5c117b50893ae689e754cefe8cc67cd947557edb441e218e2736d9bb5b0df50e",
+      "versionName": "0.31.0-dev",
+      "versionCode": 216,
+      "package": "cc.huevia.next",
+      "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    }
+  ],
+  "ios": {
+    "state": "full-acceptance-failed",
+    "run": 43416796573,
+    "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+    "acceptedIpa": false,
+    "flutter": {
+      "passed": 402,
+      "failed": 0
+    },
+    "photoKitConsentXCTest": {
+      "passed": 1,
+      "failed": 0
+    },
+    "deviceBuildPassed": true,
+    "simulatorBuildPassed": true,
+    "nativePipeline": {
+      "passed": false,
+      "failure": "编辑数组长度无效。",
+      "operation": "media.reviewPreview",
+      "detailRenderReached": false,
+      "cause": "Fixture sent 13 legacy adjustment values; the current schema requires 17."
+    },
+    "evidence": "../../docs/migration/validation/features-216/apple-attempts/43416796573/summary.json",
+    "followUp": {
+      "versionCode": 217,
+      "state": "fixture-fixed-full-acceptance-pending",
+      "fixtureUsesCurrentSchema": true,
+      "inherited216IpaAcceptance": false,
+      "delivered216ApksChanged": false
+    }
+  },
+  "acceptedForDelivery": false,
+  "iosCamera": {
+    "reportedModel": "Nikon Z6II",
+    "transport": "Wi-Fi",
+    "boundedCancellationAndProgressImplemented": true,
+    "actualDeviceConnectionVerified": false
+  },
+  "androidUiGate": {
+    "state": "targeted-and-installed-ui-passed-ios-full-pipeline-failed",
+    "finalFullRun": 43416796573
+  }
+}

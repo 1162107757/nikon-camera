@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "scope": "failed-ios-attempt-preserved",
+  "run": 43416796573,
+  "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+  "artifactId": 14034365614,
+  "artifactArchiveSha256": "268b4669ee8ca77641fc5919c976efb8f859a3ecb7822f33d094d440dcf314d4",
+  "artifactDigestVerifiedAtDownload": true,
+  "remoteArtifactMetadataRechecked": true,
+  "flutter": {
+    "passed": 402,
+    "failed": 0
+  },
+  "photoKitConsentXCTest": {
+    "passed": 1,
+    "failed": 0
+  },
+  "core": {
+    "pass": true,
+    "boundaryChecks": 1391,
+    "sharedBoundaryChecks": 1385,
+    "atmosphereBoundaryChecks": 6
+  },
+  "deviceBuild": {
+    "passed": true,
+    "reportedAppMegabytes": 111.5
+  },
+  "simulatorBuild": {
+    "passed": true
+  },
+  "nativePipeline": {
+    "passed": false,
+    "failure": "编辑数组长度无效。",
+    "location": "integration_test/detail_render_fixture.dart:67",
+    "operation": "media.reviewPreview",
+    "cause": "Fixture sent 13 legacy adjustment values; SharedRecipe requires all 17 current parameters. detailRender was not reached."
+  },
+  "acceptedIpa": false,
+  "artifactsCopiedToDelivery": false,
+  "evidenceFiles": {
+    "artifact.json": {
+      "bytes": 422,
+      "sha256": "f2499411d332c0bbbe92aa45983bf3a573de0fd8f1494367272bc0231a830c9a"
+    },
+    "flutter-tests.log": {
+      "bytes": 82479,
+      "sha256": "d1be2e53268fd04def4f5d8b722903411f8ab2002acc353c4b8b6c56135a8fd3"
+    },
+    "photokit-tests.log": {
+      "bytes": 4888,
+      "sha256": "235316b1de9cfd29567992d557ba556e3214ff1a7856411839154c7b8f9eabb4"
+    },
+    "simulator-result.json": {
+      "bytes": 2456,
+      "sha256": "2c5e7e6c521b03f0b613c4964d08fe7aaddb382f500618ae6a5e7c10a30d18bd"
+    },
+    "simulator-native.log": {
+      "bytes": 157924,
+      "sha256": "617da08518363daa8430bef399cd3edc09307f72f1e4ecff6235a29e501dbac4"
+    },
+    "simulator-pipeline.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "simulator-pipeline-stderr.log": {
+      "bytes": 36930,
+      "sha256": "77790ac5ebc6192a9b3ec5295e9f2543386d30ddb2ba8c3e9a8c72e2ee03d5f8"
+    },
+    "core-parity.json": {
+      "bytes": 885,
+      "sha256": "bb5ca61c07f9ab13106e119d7e1acc72c1f64e0f3d4df5c4f4b6707beae6f545"
+    },
+    "device-build.log": {
+      "bytes": 894,
+      "sha256": "86b88975484af420686d4f187bf3c50cc096b730c9f8f85c7b21eb8fcc781fe5"
+    },
+    "simulator-build.log": {
+      "bytes": 6059426,
+      "sha256": "7cacdbe7d2d148a8e87cad78e8c5ccc8765ac5058595e763e0345faddcba4cb5"
+    }
+  }
+}

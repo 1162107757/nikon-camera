@@ -1,0 +1,40 @@
+{
+  "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+  "installedApkSha256": "5c117b50893ae689e754cefe8cc67cd947557edb441e218e2736d9bb5b0df50e",
+  "device": "emulator-5584",
+  "api": 31,
+  "pageSize": 4096,
+  "finalInstalledMenuVerified": true,
+  "photoMenuVisibleItems": 13,
+  "originalStylePopupObserved": true,
+  "detailsFullSourceDimensions": [
+    640,
+    960
+  ],
+  "details100And200PercentControlsObserved": true,
+  "adjustmentIconsObserved": [
+    "亮度",
+    "高光",
+    "阴影",
+    "白色",
+    "明度降噪",
+    "彩色降噪",
+    "颗粒",
+    "暗角"
+  ],
+  "earlierUiSnapshotSource": "8ced1d6d282a4d8fdaa46a954e43965266f3de8f",
+  "productEquivalentChanges": [
+    "cross-platform/app/test/camera_test.dart",
+    "cross-platform/app/test/editor_readonly_test.dart"
+  ],
+  "earlierUiEvidenceProductionSourceIdentical": true,
+  "automaticBlemishSampleResult": "No suspicious blemishes on the unchanged bundled sample",
+  "candidatePhotoMarkerOnNativeSampleVerified": false,
+  "candidateMarkerAndSelectionContractVerifiedByFlutterTests": true,
+  "originalAssetAndExternalCopySha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+  "externalFixtureBytesUnchanged": true,
+  "originalAppliedOrExported": false,
+  "actualIosCameraConnectionVerified": false,
+  "reportedCameraModel": "Nikon Z6II",
+  "reportedTransport": "Wi-Fi"
+}

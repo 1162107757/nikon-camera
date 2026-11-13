@@ -1,0 +1,10 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_menu_actions_test.dart
+00:00 +0: Opening and closing readonly details does not resave a draft or rerender a fresh main preview
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-actions-bf0c9925"
+00:01 +1: Favourite toggles the real original and reset colour preserves filter portrait regions geometry and border
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-actions-5a8cd23"
+00:02 +2: Portrait quick optimization commits one complete analysis and preserves existing full local data
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-actions-86c23edb"
+00:02 +3: Cancelling held quick analysis rejects late success without saving or changing staged recipe
+FIXTURE_CLEANUP_AFTER_PROCESS "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-actions-c91576ce"
+00:02 +4: All tests passed!

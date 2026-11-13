@@ -1,0 +1,24 @@
+{
+  "sourceCommit": "e8f78a766f839f27ca5e244fcfae404f6898f9b3",
+  "targetedTestLogsPassed": {
+    "icons-raster": 1,
+    "blemish-review": 13,
+    "histogram": 12,
+    "camera-connection": 6,
+    "blemish-coordinate": 1,
+    "blemish-cancel": 1,
+    "editor-pages": 6,
+    "editor-actions": 4,
+    "editor-menu-layout": 4,
+    "editor-readonly": 6,
+    "test-dependency-fixes": 12
+  },
+  "sharedBoundaryChecks": 1385,
+  "newSharedConnectionChecks": 26,
+  "fullWindowsBlemishWorkspacePassed": false,
+  "windowsIncompleteReason": "flutter_tester engine exited; incomplete cases were not counted",
+  "fullMacRequired": true,
+  "actualIosCameraConnectionVerified": false,
+  "appleRun": 43416796573,
+  "published": false
+}

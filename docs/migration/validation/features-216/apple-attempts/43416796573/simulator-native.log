@@ -1,0 +1,1393 @@
+Timestamp               Ty Process[PID:TID]
+2026-11-13 11:52:23.924 Df Runner[49555:21c73] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-11-13 11:52:23.925 Df Runner[49555:21d39] [com.apple.xpc:connection] [0x10604efe0] activating connection: mach=true listener=false peer=false name=com.apple.cfprefsd.daemon
+2026-11-13 11:52:23.930 Df Runner[49555:21d3a] [com.apple.BoardServices:XPCErrors] [C:1] Alloc com.apple.frontboard.systemappservices
+2026-11-13 11:52:23.933 A  Runner[49555:21d39] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-11-13 11:52:23.933 Df Runner[49555:21d3a] [com.apple.xpc:connection] [0x106e5c140] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:23.939 Df Runner[49555:21d38] [com.apple.UIKit:BackgroundTask] Creating new assertion because there is no existing background assertion.
+2026-11-13 11:52:23.952 Df Runner[49555:21d38] [com.apple.UIKit:BackgroundTask] Creating new background assertion
+2026-11-13 11:52:23.952 Df Runner[49555:21d38] [com.apple.UIKit:BackgroundTask] Created new background assertion <BKSProcessAssertion: 0x106050720>
+2026-11-13 11:52:23.952 Df Runner[49555:21d38] [com.apple.runningboard:connection] Initializing connection
+2026-11-13 11:52:23.952 Df Runner[49555:21d38] [com.apple.runningboard:process] Removing all cached process handles
+2026-11-13 11:52:23.952 Df Runner[49555:21d3d] [com.apple.runningboard:connection] Sending handshake request attempt #1 to server
+2026-11-13 11:52:23.952 Df Runner[49555:21d38] [com.apple.runningboard:connection] Creating connection to com.apple.runningboard
+2026-11-13 11:52:23.952 Df Runner[49555:21d38] [com.apple.xpc:connection] [0x106e5c280] activating connection: mach=true listener=false peer=false name=com.apple.runningboard
+2026-11-13 11:52:23.954 A  Runner[49555:21d3b] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:23.955 Df Runner[49555:21d3d] [com.apple.runningboard:connection] Handshake succeeded
+2026-11-13 11:52:23.955 Df Runner[49555:21d3d] [com.apple.runningboard:connection] Identity resolved as app<cc.huevia.next((null))>
+2026-11-13 11:52:23.955 Df Runner[49555:21d38] [com.apple.UIKit:BackgroundTask] Incrementing reference count for background assertion <BKSProcessAssertion: 0x106050720>
+2026-11-13 11:52:23.956 Df Runner[49555:21d38] [com.apple.UIKit:BackgroundTask] Created background task <_UIBackgroundTaskInfo: 0x106cccc40>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 1783 (elapsed = 0).
+2026-11-13 11:52:23.956 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason added: 10; deactivation reasons: 0 -> 1024; animating application lifecycle event: 0
+2026-11-13 11:52:23.956 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UIApplicationSceneKeyboardSettings on FBSSceneSettings
+2026-11-13 11:52:23.957 Df Runner[49555:21c73] [com.apple.BoardServices:Injection] activating monitor for service com.apple.frontboard.open
+2026-11-13 11:52:23.957 Df Runner[49555:21c73] [com.apple.BoardServices:Injection] activating monitor for service com.apple.frontboard.workspace-service
+2026-11-13 11:52:23.959 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneOcclusionSettings> on FBSSceneSettings
+2026-11-13 11:52:23.959 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneInterfaceProtectionSettings> on FBSSceneSettings
+2026-11-13 11:52:23.959 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneLayoutPreferencesHostSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:23.959 Df Runner[49555:21c73] [com.apple.FrontBoard:Common] FBSWorkspace registering source: com.apple.frontboard.systemappservices
+2026-11-13 11:52:23.959 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneSafeAreaSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:23.960 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneLayoutPreferenceClientSettingsExtension on FBSSceneClientSettings
+2026-11-13 11:52:23.960 Df Runner[49555:21c73] [com.apple.FrontBoard:Common] FBSWorkspace connected to endpoint : <BSServiceConnectionEndpoint: 0x106e346e0; target: com.apple.frontboard.systemappservices; service: com.apple.frontboard.workspace-service>
+2026-11-13 11:52:23.960 Df Runner[49555:21c73] [com.apple.FrontBoard:Common] <FBSWorkspaceScenesClient:0x106decbe0 com.apple.frontboard.systemappservices> attempting immediate handshake from activate
+2026-11-13 11:52:23.961 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UIHomeAffordanceHostSceneSettings> on FBSSceneSettings
+2026-11-13 11:52:23.961 Df Runner[49555:21c73] [com.apple.FrontBoard:Common] <FBSWorkspaceScenesClient:0x106decbe0 com.apple.frontboard.systemappservices> sent handshake
+2026-11-13 11:52:23.961 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISystemShellSceneHostingEnvironmentSettings on FBSSceneSettings
+2026-11-13 11:52:23.961 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneRenderingEnvironmentSettings on FBSSceneSettings
+2026-11-13 11:52:23.961 Df Runner[49555:21c73] [com.apple.runningboard:general] Added observer for process assertions expiration warning: <_RBSExpirationWarningClient: 0x106e34fc0>
+2026-11-13 11:52:23.961 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneRenderingEnvironmentClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneTransitioningHostSettings> on FBSSceneSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneFocusSystemSettings> on FBSSceneSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneOrientationSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneOrientationClientSettingsExtension on FBSSceneClientSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneWindowingControlClientSettings on FBSSceneClientSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingContentSizePreferenceClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:23.962 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneHostingTraitCollectionPropagationSettings on FBSSceneSettings
+2026-11-13 11:52:23.963 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationSettings> on FBSSceneSettings
+2026-11-13 11:52:23.964 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:23.965 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingEventDeferringSettings> on FBSSceneSettings
+2026-11-13 11:52:23.966 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneSettings
+2026-11-13 11:52:23.967 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneClientSettings
+2026-11-13 11:52:23.967 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingViewControllerPreferencePropagationClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:23.969 Df Runner[49555:21d38] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneZoomTransitionSettings> on FBSSceneSettings
+2026-11-13 11:52:23.971 Df Runner[49555:21c73] [com.apple.UIKit:UIScreen] Evaluated capturing state as 0 on <UIScreen: 0x106e5c500> for initial
+2026-11-13 11:52:23.972 Df Runner[49555:21c73] [com.apple.UIKit:UIScreen] Evaluated capturing state as 0 on <UIScreen: 0x106e5c500> for CADisplay KVO
+2026-11-13 11:52:23.977 Df Runner[49555:21d3b] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneSettingsCore on FBSSceneSettings
+2026-11-13 11:52:23.977 Df Runner[49555:21c73] [com.apple.Accessibility:AXSupportCommon] Read CategoryName: per-app = 1, category name = (null)
+2026-11-13 11:52:23.977 Df Runner[49555:21c73] [com.apple.Accessibility:AXSupportCommon] Read CategoryName: per-app = 0, category name = (null)
+2026-11-13 11:52:23.977 Df Runner[49555:21d3b] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneClientSettingsCore on FBSSceneClientSettings
+2026-11-13 11:52:23.998 Df Runner[49555:21d3b] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneSettings setting counterpart class: UIApplicationSceneSettings
+2026-11-13 11:52:23.999 Df Runner[49555:21d3b] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneClientSettings setting counterpart class: UIApplicationSceneClientSettings
+2026-11-13 11:52:23.999 Df Runner[49555:21d3b] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneTransitionContextCore on FBSSceneTransitionContext
+2026-11-13 11:52:23.999 Df Runner[49555:21c73] [com.apple.FileURL:default] kExcludedFromBackupXattrName set on path: /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Containers/Data/Application/2036810F-63C4-4BA6-AA50-2C2744B9B572/Library/Caches//flutter_callback_cache.json
+2026-11-13 11:52:24.083 A  Runner[49555:21d3d] (CoreFoundation) Updating Key-Value Observers Of Preferences
+2026-11-13 11:52:24.094 Df Runner[49555:21c73] [com.apple.dt.xctest:Default] Registering for test daemon availability notify post.
+2026-11-13 11:52:24.094 Df Runner[49555:21c73] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-13 11:52:24.094 Df Runner[49555:21c73] [com.apple.dt.xctest:Default] Test daemon availability confirmed via notify_get_state.
+2026-11-13 11:52:24.095 Df Runner[49555:21c73] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-13 11:52:24.095 Df Runner[49555:21d42] [com.apple.xpc:connection] [0x106e5ca00] activating connection: mach=true listener=false peer=false name=com.apple.dt.xctestd.target
+2026-11-13 11:52:24.096 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason added: 11; deactivation reasons: 1024 -> 3072; animating application lifecycle event: 0
+2026-11-13 11:52:24.097 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Received request for endpoint.
+2026-11-13 11:52:24.097 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Attempting to load /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/Developer/Library/PrivateFrameworks/XCTAutomationSupport.framework.
+2026-11-13 11:52:24.161 Df Runner[49555:21c73] (UIKitCore) Warning: Unable to create restoration in progress marker file
+2026-11-13 11:52:24.184 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason removed: 10; deactivation reasons: 3072 -> 2048; animating application lifecycle event: 0
+2026-11-13 11:52:24.185 Df Runner[49555:21c73] [com.apple.UIKit:EventBus] Event Timing Profile for Touch: not found, path="/System/Library/EventTimingProfiles/Sim.Touch.plist"
+2026-11-13 11:52:24.185 Df Runner[49555:21d40] [com.apple.dt.automationmode:Default] XAM shared observer connecting to com.apple.dt.automationmode.reader
+2026-11-13 11:52:24.185 Df Runner[49555:21c73] [com.apple.UIKit:EventBus] Event Timing Profile for Pencil: not found, path="/System/Library/EventTimingProfiles/Sim.Pencil.plist"
+2026-11-13 11:52:24.185 Df Runner[49555:21d40] [com.apple.xpc:connection] [0x106e5cb40] activating connection: mach=true listener=false peer=false name=com.apple.dt.automationmode.reader
+2026-11-13 11:52:24.185 Df Runner[49555:21c73] [com.apple.UIKit:UpdateScheduler] Selected display: name=LCD (PurpleMain), id=1
+2026-11-13 11:52:24.186 Df Runner[49555:21d40] [com.apple.xpc:connection] [0x106e5cb40] invalidated because the current process cancelled the connection by calling xpc_connection_cancel()
+2026-11-13 11:52:24.186 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Sending anonymous endpoint.
+2026-11-13 11:52:24.187 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Setting up target listener.
+2026-11-13 11:52:24.187 Df Runner[49555:21d40] [com.apple.xpc:connection] [0x106e5c8c0] activating connection: mach=false listener=true peer=false name=(anonymous)
+2026-11-13 11:52:24.187 Df Runner[49555:21d40] [com.apple.xpc:connection] [0x106e5c8c0] Connection returned listener port: 0x7703
+2026-11-13 11:52:24.189 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5cf00] activating connection: mach=true listener=false peer=false name=com.apple.lsd.mapdb
+2026-11-13 11:52:24.195 Df Runner[49555:21d43] [com.apple.dt.xctest:Default] Received client to target connection.
+2026-11-13 11:52:24.195 Df Runner[49555:21d43] [com.apple.dt.automationmode:Default] Returning 1 for enabled state
+2026-11-13 11:52:24.195 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x106e1c300] activating connection: mach=false listener=false peer=true name=com.apple.xpc.anonymous.0x106e5c8c0.peer[49067].0x106e1c300
+2026-11-13 11:52:24.196 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Received request to exchange capabilities, remote interface capabilities are: <XCTCapabilities: 0x106ed4d60>: {
+    "query runtime issue reporting" = 1;
+    "query runtime issue reporting/automation type mismatch" = 1;
+}
+2026-11-13 11:52:24.204 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Received request to notify when the main run loop is idle
+2026-11-13 11:52:24.204 Df Runner[49555:21d40] [com.apple.dt.xctest:Default] Idle notifier finished setting up run loop observer
+2026-11-13 11:52:24.207 Df Runner[49555:21d43] [com.apple.dt.xctest:Default] Received request to notify when animations are idle
+2026-11-13 11:52:24.207 Df Runner[49555:21d43] [com.apple.dt.xctest:Default] Sending animations idle reply with error: (null)
+2026-11-13 11:52:24.215 Df Runner[49555:21c73] [com.apple.BoardServices:XPCErrors] [C:2] Alloc com.apple.backboard.hid-services.xpc
+2026-11-13 11:52:24.215 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5d040] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:24.217 Df Runner[49555:21d40] [com.apple.BackBoard:EventDelivery] BKSHIDEventDeliveryManager - connection activation
+2026-11-13 11:52:24.217 Df Runner[49555:21c73] [com.apple.app_launch_measurement:ApplicationLaunch] alm_acquire_pageins_recording_assertion: acquired pageins recording assertion!
+2026-11-13 11:52:24.220 Df Runner[49555:21c73] [com.apple.UIKit:BackgroundTask] Will add backgroundTask with taskName: Persistent SceneSession Map Update, expirationHandler: <__NSGlobalBlock__: 0x1e78c84e8>
+2026-11-13 11:52:24.220 Df Runner[49555:21c73] [com.apple.UIKit:BackgroundTask] Reusing background assertion <BKSProcessAssertion: 0x106050720>
+2026-11-13 11:52:24.220 Df Runner[49555:21c73] [com.apple.UIKit:BackgroundTask] Incrementing reference count for background assertion <BKSProcessAssertion: 0x106050720>
+2026-11-13 11:52:24.220 Df Runner[49555:21c73] [com.apple.UIKit:BackgroundTask] Created background task <_UIBackgroundTaskInfo: 0x106f0ea80>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 1783 (elapsed = 0).
+2026-11-13 11:52:24.220 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason added: 5; deactivation reasons: 2048 -> 2080; animating application lifecycle event: 1
+2026-11-13 11:52:24.221 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Should send trait collection or coordinate space update, interface style 1 -> 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:24.221 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:24.222 Df Runner[49555:21c73] [com.apple.UIKit:HomeAffordanceObservation] Initializing: <_UIHomeAffordanceSceneNotifier: 0x1074fdf80>; with scene: <UIWindowScene: 0x107524600>
+2026-11-13 11:52:24.222 Df Runner[49555:21c73] [com.apple.BacklightServices:scenes] 0x106c8b1b0 setDelegate:<0x106c8b150 _UIBacklightEnvironment> hasDelegate:YES for environment:sceneID:cc.huevia.next-default
+2026-11-13 11:52:24.222 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:24.222 Df Runner[49555:21c73] [com.apple.UIKit:EventDeferring] [0x1074fdff0] Initialized with scene: <UIWindowScene: 0x107524600>; behavior: <_UIEventDeferringBehavior_iOS: 0x107492960>; availableForProcess: 1, systemShellManagesKeyboardFocus: 1
+2026-11-13 11:52:24.224 Df Runner[49555:21d43] [com.apple.BackBoard:EventDelivery] BKSHIDEventObserver - connection activation
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x106c8f960; process scope; status: target> was:none
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to LastOneWins
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Scene target of keyboard event deferring environment did change: 1; scene: UIWindowScene: 0x107524600; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:EventDeferring] [0x1074fdff0] Scene target of event deferring environments did update: scene: 0x107524600; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x107524600; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Stack[KeyWindow] 0x106c8b570: Taking no further action for migration from LastOneWins -> SystemShellManaged as there are no scenes
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to SystemShellManaged
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Key window needs update: 0; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x107524600; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x0; reason: UIWindowScene: 0x107524600: Window scene became target of keyboard environment
+2026-11-13 11:52:24.224 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:24.225 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:24.225 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:24.260 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5db80] activating connection: mach=true listener=false peer=false name=com.apple.metal.simulator
+2026-11-13 11:52:24.261 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5dcc0] activating connection: mach=true listener=false peer=false name=com.apple.metal.simulator
+2026-11-13 11:52:24.262 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5de00] activating connection: mach=true listener=false peer=false name=com.apple.metal.simulator
+2026-11-13 11:52:24.263 E  Runner[49555:21c73] [com.apple.UIKit:UIFocus] FlutterView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+2026-11-13 11:52:24.316 Df Runner[49555:21c73] (Flutter) [IMPORTANT:flutter/shell/platform/darwin/graphics/FlutterDarwinContextMetalImpeller.mm(45)] Using the Impeller rendering backend (Metal).
+2026-11-13 11:52:24.329 E  Runner[49555:21c73] (libCoreFSCache.dylib) fopen failed for data file: errno = 2 (No such file or directory)
+2026-11-13 11:52:24.330 Df Runner[49555:21c73] (libCoreFSCache.dylib) Invalidating cache
+2026-11-13 11:52:24.330 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5df40] activating connection: mach=false listener=false peer=false name=com.apple.MTLCompilerService
+2026-11-13 11:52:24.642 Df Runner[49555:21d89] (Flutter) flutter: The Dart VM service is listening on http://127.0.0.1:57838/3kQ_YpJq3jA=/
+2026-11-13 11:52:24.649 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5e080] activating connection: mach=false listener=false peer=false name=com.apple.MTLCompilerService
+2026-11-13 11:52:24.649 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:24.650 E  Runner[49555:21c73] (libCoreFSCache.dylib) fopen failed for data file: errno = 2 (No such file or directory)
+2026-11-13 11:52:24.650 Df Runner[49555:21c73] (libCoreFSCache.dylib) Invalidating cache
+2026-11-13 11:52:24.651 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:24.686 Df Runner[49555:21d3f] [com.apple.xpc:connection] [0x106e5e1c0] activating connection: mach=true listener=false peer=false name=com.apple.fontservicesd
+2026-11-13 11:52:24.699 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5e300] activating connection: mach=true listener=false peer=false name=com.apple.metrickit.xpc
+2026-11-13 11:52:24.699 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5e300] failed to do a bootstrap look-up: xpc_error=[3: No such process]
+2026-11-13 11:52:24.699 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5e300] invalidated after a failed init
+2026-11-13 11:52:24.723 Df Runner[49555:21d42] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 2
+2026-11-13 11:52:24.723 Df Runner[49555:21d42] [com.apple.UIKit:BackgroundTask] Ending task with identifier 2 and description: <_UIBackgroundTaskInfo: 0x106f0ea80>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 1783 (elapsed = 1), _expireHandler: <__NSGlobalBlock__: 0x1e78c84e8>
+2026-11-13 11:52:24.723 Df Runner[49555:21d42] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x106050720> (used by background task with identifier 2: <_UIBackgroundTaskInfo: 0x106f0ea80>: taskID = 2, taskName = Persistent SceneSession Map Update, creationTime = 1783 (elapsed = 1))
+2026-11-13 11:52:24.958 Df Runner[49555:21d44] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 1
+2026-11-13 11:52:24.958 Df Runner[49555:21d44] [com.apple.UIKit:BackgroundTask] Ending task with identifier 1 and description: <_UIBackgroundTaskInfo: 0x106cccc40>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 1783 (elapsed = 1), _expireHandler: (null)
+2026-11-13 11:52:24.958 Df Runner[49555:21d44] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x106050720> (used by background task with identifier 1: <_UIBackgroundTaskInfo: 0x106cccc40>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 1783 (elapsed = 1))
+2026-11-13 11:52:24.958 Df Runner[49555:21d44] [com.apple.UIKit:BackgroundTask] Will invalidate assertion: <BKSProcessAssertion: 0x106050720> for task identifier: 1
+2026-11-13 11:52:25.068 A  Runner[49555:21d44] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:25.198 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.210 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.234 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.234 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.237 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.240 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.243 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.245 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.250 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.263 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.269 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.269 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.275 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.275 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.280 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.282 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.286 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.286 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.291 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.291 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.297 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.299 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.301 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.303 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.303 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.305 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.306 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.307 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.308 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.310 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.311 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.312 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.313 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.313 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.315 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.315 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.316 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.318 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.320 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.327 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.330 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.333 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.335 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.336 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.336 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.337 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.340 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.343 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.345 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.347 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.347 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.349 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.349 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.351 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.351 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.353 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.353 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.355 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.355 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.356 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.358 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.358 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.359 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.360 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.362 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.363 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.363 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.365 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.365 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.367 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.367 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.369 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.369 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.371 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.373 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.373 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.376 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.378 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.379 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.382 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.384 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.386 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.387 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.390 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.392 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.396 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.397 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.400 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.402 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.404 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.406 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.409 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.412 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.413 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.416 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.417 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.420 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.420 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.423 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.424 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.424 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.426 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.427 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.427 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.429 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.429 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.431 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.432 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.436 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.436 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.439 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.439 A  Runner[49555:21d40] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.441 A  Runner[49555:21d43] (Metal) Metal Compiling Shader
+2026-11-13 11:52:25.931 Df Runner[49555:21c73] [com.apple.UIKit:Orientation] <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B) Scene updated orientation preferences: none -> ( Pu Ll Lr )
+2026-11-13 11:52:25.952 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Key window API is scene-level: YES
+2026-11-13 11:52:25.952 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] UIWindowScene: 0x107524600: Window became key in scene: UIWindow: 0x106e98c00; contextId: 0x8CFE8E59: reason: UIWindowScene: 0x107524600: Window requested to become key in scene: 0x106e98c00
+2026-11-13 11:52:25.952 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Key window needs update: 1; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x107524600; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x106e98c00; reason: UIWindowScene: 0x107524600: Window requested to become key in scene: 0x106e98c00
+2026-11-13 11:52:25.952 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Window did become application key: UIWindow: 0x106e98c00; contextId: 0x8CFE8E59; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:25.952 Df Runner[49555:21c73] [com.apple.UIKit:EventDeferring] [0x1074fdff0] Begin local event deferring requested for token: 0x106f9d380; environments: 1; reason: UIWindowScene: 0x107524600: Begin event deferring in keyboardFocus for window: 0x106e98c00
+2026-11-13 11:52:25.954 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:25.956 Df Runner[49555:21d41] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x106c8f960; token: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default; status: ancestor> was:target
+2026-11-13 11:52:25.988 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:25.989 Df Runner[49555:21c73] [com.apple.UIKit:Application] Ignoring already applied deactivation reason: 5; deactivation reasons: 2080
+2026-11-13 11:52:25.989 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason added: 12; deactivation reasons: 2080 -> 6176; animating application lifecycle event: 1
+2026-11-13 11:52:25.992 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason removed: 11; deactivation reasons: 6176 -> 4128; animating application lifecycle event: 1
+2026-11-13 11:52:25.993 Df Runner[49555:21c73] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneIntelligenceSupportSettings> on FBSSceneSettings
+2026-11-13 11:52:25.998 Df Runner[49555:21d41] [com.apple.UIIntelligenceSupport:xpc] establishing connection to agent
+2026-11-13 11:52:26.000 Df Runner[49555:21d41] [com.apple.xpc:session] [0x11a894c30] Session created.
+2026-11-13 11:52:26.000 Df Runner[49555:21d41] [com.apple.xpc:session] [0x11a894c30] Session created from connection [0x11aa92300]
+2026-11-13 11:52:26.000 Df Runner[49555:21d41] [com.apple.xpc:connection] [0x11aa92300] activating connection: mach=true listener=false peer=false name=com.apple.uiintelligencesupport.agent
+2026-11-13 11:52:26.000 Df Runner[49555:21d41] [com.apple.xpc:session] [0x11a894c30] Session activated
+2026-11-13 11:52:26.000 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:26.003 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x11aa92440] activating connection: mach=true listener=false peer=false name=com.apple.IOSurface.Remote
+2026-11-13 11:52:26.015 Df Runner[49555:21c73] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:1 [290F30D9-E864-4590-B482-DB96FD93FCF6] (reporting strategy default)>
+2026-11-13 11:52:26.015 Df Runner[49555:21c73] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:2 [B7F04022-538F-4BFA-AB1A-41AC919F45FC] (reporting strategy default)>
+2026-11-13 11:52:26.015 Df Runner[49555:21c73] [com.apple.network:activity] Set activity <nw_activity 50:1 [290F30D9-E864-4590-B482-DB96FD93FCF6] (reporting strategy default)> as the global parent
+2026-11-13 11:52:26.016 Df Runner[49555:21c73] [com.apple.UIKit:UpdateScheduler] Target list changed: <CADisplay:LCD PurpleMain>
+2026-11-13 11:52:26.017 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:26.018 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:26.047 A  Runner[49555:21d41] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:26.057 A  Runner[49555:21d41] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:26.163 A  Runner[49555:21d42] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:26.266 Df Runner[49555:21c73] [com.apple.Accessibility:AXCommon] Read Per-App on Init: Smart invert = (null)
+2026-11-13 11:52:26.266 Df Runner[49555:21c73] [com.apple.UIKit:EventDeferring] [0x1074fdff0] Scene target of event deferring environments did update: scene: 0x107524600; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-13 11:52:26.266 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x107524600; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:26.273 Df Runner[49555:21c73] [com.apple.FrontBoard:SceneExtension] Realizing settings extension SBUISecureRenderingSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:26.278 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:26.279 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:26.280 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:26.280 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason removed: 12; deactivation reasons: 4128 -> 32; animating application lifecycle event: 1
+2026-11-13 11:52:26.282 Df Runner[49555:21c73] [com.apple.KeyboardArbiter:Client] Send setDeactivating: N (-DeactivationReason:SuspendedEventsOnly)
+2026-11-13 11:52:26.282 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason removed: 5; deactivation reasons: 32 -> 0; animating application lifecycle event: 0
+2026-11-13 11:52:26.320 Df Runner[49555:21c73] [com.apple.BackBoard:Display] [FBSDisplaySource 1-1] silently connecting raw configuration: <FBSDisplayConfiguration: 0x106e2d400; Main; mode: "402x874@3x 60Hz p3 SDR">
+2026-11-13 11:52:26.701 Df Runner[49555:21c73] (Flutter) flutter: 00:00 +0: (setUpAll)
+2026-11-13 11:52:26.719 Df Runner[49555:21c73] (Flutter) flutter: 00:00 +1: Native codecs and LibRaw retain originals, dimensions and white highlights
+2026-11-13 11:52:27.114 Df Runner[49555:21c73] (Flutter) flutter: Native pipeline: semantics baseline 2
+2026-11-13 11:52:27.115 Df Runner[49555:21c73] (Flutter) flutter: Native pipeline: initializing
+2026-11-13 11:52:27.119 Df Runner[49555:21c73] [com.apple.KeyboardArbiter:Client] startConnection
+2026-11-13 11:52:27.122 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x11aa90000] activating connection: mach=true listener=false peer=false name=com.apple.UIKit.KeyboardManagement.hosted
+2026-11-13 11:52:27.167 Df Runner[49555:21c73] [com.apple.KeyboardArbiter:Client] handleKeyboardChange: set currentKeyboard:N (wasKeyboard:N)
+2026-11-13 11:52:27.190 Df Runner[49555:21c73] [com.apple.UIKit:KeyboardSceneDelegate] forceReloadInputViews
+2026-11-13 11:52:27.195 Df Runner[49555:21c73] [com.apple.UIKit:KeyboardSceneDelegate] Reloading input views for key-window scene responder: <(null): 0x0; > force:Y
+2026-11-13 11:52:27.205 Df Runner[49555:21c73] [com.apple.UIKit:KeyboardArbiterClientLog] isWritingToolsHandlingKeyboardTracking:Y (WT ready:Y, Arbiter ready:Y)
+2026-11-13 11:52:27.232 Df Runner[49555:21c73] [com.apple.dt.xctest:Default] Idle notifier run loop observer fired
+2026-11-13 11:52:27.232 Df Runner[49555:21c73] [com.apple.dt.xctest:Default] Sending main run loop idle reply
+2026-11-13 11:52:27.292 Df Runner[49555:21c73] [com.apple.network:activity] <nw_activity 50:1 [290F30D9-E864-4590-B482-DB96FD93FCF6] (global parent) (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 7820ms
+2026-11-13 11:52:27.300 Df Runner[49555:21c73] [com.apple.network:activity] <nw_activity 50:2 [B7F04022-538F-4BFA-AB1A-41AC919F45FC] (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 7828ms
+2026-11-13 11:52:27.300 Df Runner[49555:21c73] [com.apple.network:activity] Unsetting the global parent activity <nw_activity 50:1 [290F30D9-E864-4590-B482-DB96FD93FCF6] (global parent) (reporting strategy default) complete (reason success)>
+2026-11-13 11:52:27.300 Df Runner[49555:21c73] [com.apple.network:activity] Unset the global parent activity
+2026-11-13 11:52:27.300 Df Runner[49555:21c73] [com.apple.app_launch_measurement:ApplicationLaunch] alm_release_pageins_recording_assertion: releasing pageins recording assertion
+2026-11-13 11:52:27.323 Df Runner[49555:21d43] [com.apple.FileURL:default] kExcludedFromBackupXattrName set on path: /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Containers/Data/Application/2036810F-63C4-4BA6-AA50-2C2744B9B572/Library/Application Support/Huevia
+2026-11-13 11:52:27.489 A  Runner[49555:21d43] (Security) SecItemCopyMatching_ios
+2026-11-13 11:52:27.490 Df Runner[49555:21d43] [com.apple.securityd:secitemratelimit] Not internal release, disabling SIRL
+2026-11-13 11:52:27.494 Df Runner[49555:21d43] [com.apple.securityd:thread-local-client-debug] SecSecurityClientGet new thread!
+2026-11-13 11:52:27.518 Df Runner[49555:21d43] [com.apple.securityd:keychain] System Keychain Always Supported set via feature flag to disabled
+2026-11-13 11:52:27.518 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x11aa92bc0] activating connection: mach=true listener=false peer=false name=com.apple.securityd
+2026-11-13 11:52:27.543 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x106e5f340] activating connection: mach=true listener=false peer=false name=com.apple.distributed_notifications@1v3
+2026-11-13 11:52:27.544 A  Runner[49555:21d43] (TCC) tcc_send_request_authorization() IPC
+2026-11-13 11:52:27.545 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x106e5f480] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-11-13 11:52:27.562 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x106e5f480] invalidated after the last release of the connection object
+2026-11-13 11:52:27.562 A  Runner[49555:21d43] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:27.562 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x106e5fd40] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-11-13 11:52:27.565 Df Runner[49555:21d43] [com.apple.xpc:connection] [0x106e5fd40] invalidated after the last release of the connection object
+2026-11-13 11:52:27.567 Df Runner[49555:21d43] [com.apple.photos.backend:ChangeHandling] _addObserver:authorizationStatus: waiting for authorization (not determined)
+2026-11-13 11:52:27.569 A  Runner[49555:21d43] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:27.569 A  Runner[49555:21d43] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:27.569 A  Runner[49555:21d3f] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:27.569 Df Runner[49555:21d3f] [com.apple.photos.backend:Privacy] TCCAccessRequest read-write
+2026-11-13 11:52:27.571 A  Runner[49555:21d3f] (TCC) tcc_send_request_authorization() IPC
+2026-11-13 11:52:27.571 Df Runner[49555:21d40] [com.apple.xpc:connection] [0x106e5e940] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-11-13 11:52:27.579 Df Runner[49555:21c73] (Flutter) flutter: Native operation: media.templateInfo begin
+2026-11-13 11:52:27.586 Df Runner[49555:21c73] (Flutter) flutter: Native operation: media.templateInfo complete
+2026-11-13 11:52:27.586 Df Runner[49555:21c73] (Flutter) flutter: Native operation: gallery.access begin
+2026-11-13 11:52:27.587 A  Runner[49555:21d44] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:27.588 Df Runner[49555:21c73] (Flutter) flutter: Native operation: gallery.access complete
+2026-11-13 11:52:27.589 A  Runner[49555:21c73] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:27.590 A  Runner[49555:21c73] (TCC) TCCAccessRequest() IPC
+2026-11-13 11:52:29.730 Df Runner[49555:21c73] [com.apple.KeyboardArbiter:Client] RX sceneBecameFocused:(null)
+2026-11-13 11:52:29.949 Df Runner[49555:21d44] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x106c8f960; token: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default; status: none> was:ancestor
+2026-11-13 11:52:29.949 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Scene target of keyboard event deferring environment did change: 0; scene: UIWindowScene: 0x107524600; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:30.436 Df Runner[49555:21c73] [com.apple.runningboard:connection] Creating side-channel connection to com.apple.runningboard
+2026-11-13 11:52:30.436 Df Runner[49555:21c73] [com.apple.xpc:connection] [0x106e5fd40] activating connection: mach=true listener=false peer=false name=com.apple.runningboard
+2026-11-13 11:52:30.437 Df Runner[49555:21c73] [com.apple.runningboard:process] Hit the server for a process handle fbec77b0000c193 that resolved to: [app<cc.huevia.next((null))>:49555]
+2026-11-13 11:52:30.437 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:30.437 Df Runner[49555:21c73] [com.apple.UIKit:UIAlertControllerStackManager] canShowAlerts Updated: <FBSSceneSettingsDiff: 0x106fd5200; UIApplicationSceneSettings> {
+    subclassSettings = <BSSettingsDiff: 0x120137150> {
+        canShowAlerts = NO;
+    };
+}
+2026-11-13 11:52:30.438 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:30.439 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:30.439 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason added: 13; deactivation reasons: 0 -> 8192; animating application lifecycle event: 0
+2026-11-13 11:52:30.440 Df Runner[49555:21c73] [com.apple.UIKit:Application] Ignoring already applied deactivation reason: 13; deactivation reasons: 8192
+2026-11-13 11:52:30.440 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason added: 12; deactivation reasons: 8192 -> 12288; animating application lifecycle event: 0
+2026-11-13 11:52:30.618 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:31.514 Df Runner[49555:21d40] [com.apple.xpc:connection] [0x106e5e940] invalidated after the last release of the connection object
+2026-11-13 11:52:31.514 Df Runner[49555:21d40] [com.apple.photos.backend:Privacy] TCCAccessRequest returned 2
+2026-11-13 11:52:31.600 Df Runner[49555:21d3f] [com.apple.photos.backend:Backend] Connecting to XPCPhotoLibraryStore /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media
+2026-11-13 11:52:31.645 Df Runner[49555:21d3f] [com.apple.xpc:connection] [0x120234b40] activating connection: mach=true listener=false peer=false name=com.apple.photos.service
+2026-11-13 11:52:31.646 Df Runner[49555:21d3f] [com.apple.photos.backend:GatekeeperXPC] clientToServiceSandboxExtensionForURL: /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media hasExtension:YES
+2026-11-13 11:52:31.726 Df Runner[49555:21d3f] [com.apple.photos.backend:GatekeeperXPC] Received XPC store endpoint 0x11a832080
+2026-11-13 11:52:31.727 Df Runner[49555:21d3f] [com.apple.xpc:connection] [0x120234c80] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:31.727 Df Runner[49555:21d3f] [com.apple.photos.backend:GatekeeperXPC] Received XPC store endpoint 0x11a832140
+2026-11-13 11:52:31.728 Df Runner[49555:21d3f] [com.apple.xpc:connection] [0x120234dc0] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:31.728 Df Runner[49555:21d3f] [com.apple.photos.backend:GatekeeperXPC] Received XPC store endpoint 0x11a832200
+2026-11-13 11:52:31.728 Df Runner[49555:21d3f] [com.apple.xpc:connection] [0x120234f00] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:31.751 Df Runner[49555:21d3f] [com.apple.photos.backend:ChangeHandling] Creating PLChangeHandlingContainer for library URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media/
+2026-11-13 11:52:31.752 Df Runner[49555:21d3f] [com.apple.photos.backend:ChangeHandling] PLChangeNode [BD902041]: Created change node with UUID BD902041-1F41-4E77-AAAC-BB1F09F70B3D for libraryURL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media/
+2026-11-13 11:52:31.752 Df Runner[49555:21d3f] [com.apple.photos.backend:PersistentHistory] beginObservingChanges: _observerCount became 1 (resuming), _lastToken = (null)
+2026-11-13 11:52:31.754 Df Runner[49555:21d3f] [com.apple.photos.backend:PersistentHistory] Change distributor advanced _lastToken to: <NSPersistentHistoryToken - {
+    "3F642A05-50EB-4DB3-8C26-3554B5F25849" = 87;
+}>
+2026-11-13 11:52:31.758 Df Runner[49555:21d3f] [com.apple.photos.backend:Backend] PLPhotosAccessAllowedResult result is 0
+2026-11-13 11:52:31.765 Df Runner[49555:21d3f] [com.apple.photos.backend:GatekeeperXPC] openPhotoLibraryDatabase succeeded
+2026-11-13 11:52:31.943 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:31.943 Df Runner[49555:21c73] [com.apple.UIKit:UIAlertControllerStackManager] canShowAlerts Updated: <FBSSceneSettingsDiff: 0x10745fe00; UIApplicationSceneSettings> {
+    subclassSettings = <BSSettingsDiff: 0x1202782a0> {
+        canShowAlerts = YES;
+    };
+}
+2026-11-13 11:52:31.943 Df Runner[49555:21c73] [com.apple.UIKit:UIAlertControllerStackManager] _showHiddenStackedAlertControllers : Showing top alert : (nil)
+2026-11-13 11:52:31.943 Df Runner[49555:21c73] [com.apple.UIKit:UIAlertControllerStackManager] _willShowAlertController: (nil)
+2026-11-13 11:52:31.943 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason removed: 13; deactivation reasons: 12288 -> 4096; animating application lifecycle event: 0
+2026-11-13 11:52:31.944 Df Runner[49555:21c73] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x107524600> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:31.945 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:31.945 Df Runner[49555:21c73] [com.apple.UIKit:Application] Deactivation reason removed: 12; deactivation reasons: 4096 -> 0; animating application lifecycle event: 0
+2026-11-13 11:52:31.945 Df Runner[49555:21c73] [com.apple.KeyboardArbiter:Client] Send setDeactivating: N (-DeactivationReason:SuspendedEventsOnly)
+2026-11-13 11:52:31.973 Df Runner[49555:21c73] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:31.977 Df Runner[49555:21d3f] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x106c8f960; token: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default; status: ancestor> was:none
+2026-11-13 11:52:31.977 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Scene target of keyboard event deferring environment did change: 1; scene: UIWindowScene: 0x107524600; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:31.977 Df Runner[49555:21c73] [com.apple.UIKit:EventDeferring] [0x1074fdff0] Scene target of event deferring environments did update: scene: 0x107524600; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-13 11:52:31.977 Df Runner[49555:21c73] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x107524600; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:38.381 Df Runner[50430:2253f] (libMobileGestalt.dylib) No persisted cache on this platform.
+2026-11-13 11:52:38.383 Df Runner[50430:2256b] [com.apple.xpc:connection] [0x105210940] activating connection: mach=true listener=false peer=false name=com.apple.cfprefsd.daemon
+2026-11-13 11:52:38.388 Df Runner[50430:2256c] [com.apple.BoardServices:XPCErrors] [C:1] Alloc com.apple.frontboard.systemappservices
+2026-11-13 11:52:38.393 Df Runner[50430:2256a] [com.apple.UIKit:BackgroundTask] Creating new assertion because there is no existing background assertion.
+2026-11-13 11:52:38.393 Df Runner[50430:2256a] [com.apple.UIKit:BackgroundTask] Creating new background assertion
+2026-11-13 11:52:38.393 Df Runner[50430:2256a] [com.apple.UIKit:BackgroundTask] Created new background assertion <BKSProcessAssertion: 0x1052129e0>
+2026-11-13 11:52:38.393 Df Runner[50430:2256a] [com.apple.runningboard:connection] Initializing connection
+2026-11-13 11:52:38.393 Df Runner[50430:2256c] [com.apple.xpc:connection] [0x105ddc140] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:38.393 Df Runner[50430:2256a] [com.apple.runningboard:process] Removing all cached process handles
+2026-11-13 11:52:38.394 Df Runner[50430:2256a] [com.apple.runningboard:connection] Creating connection to com.apple.runningboard
+2026-11-13 11:52:38.397 A  Runner[50430:2256b] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-11-13 11:52:38.407 Df Runner[50430:2256a] [com.apple.xpc:connection] [0x105ddc280] activating connection: mach=true listener=false peer=false name=com.apple.runningboard
+2026-11-13 11:52:38.408 Df Runner[50430:2256f] [com.apple.runningboard:connection] Sending handshake request attempt #1 to server
+2026-11-13 11:52:38.409 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason added: 10; deactivation reasons: 0 -> 1024; animating application lifecycle event: 0
+2026-11-13 11:52:38.409 Df Runner[50430:2253f] [com.apple.BoardServices:Injection] activating monitor for service com.apple.frontboard.open
+2026-11-13 11:52:38.409 Df Runner[50430:2253f] [com.apple.BoardServices:Injection] activating monitor for service com.apple.frontboard.workspace-service
+2026-11-13 11:52:38.412 A  Runner[50430:2256c] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:38.412 Df Runner[50430:2256f] [com.apple.runningboard:connection] Handshake succeeded
+2026-11-13 11:52:38.412 Df Runner[50430:2256f] [com.apple.runningboard:connection] Identity resolved as app<cc.huevia.next((null))>
+2026-11-13 11:52:38.413 Df Runner[50430:2253f] [com.apple.FrontBoard:Common] FBSWorkspace registering source: com.apple.frontboard.systemappservices
+2026-11-13 11:52:38.413 Df Runner[50430:2256a] [com.apple.UIKit:BackgroundTask] Incrementing reference count for background assertion <BKSProcessAssertion: 0x1052129e0>
+2026-11-13 11:52:38.413 Df Runner[50430:2256a] [com.apple.UIKit:BackgroundTask] Created background task <_UIBackgroundTaskInfo: 0x105ccd180>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 1797 (elapsed = 0).
+2026-11-13 11:52:38.414 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UIApplicationSceneKeyboardSettings on FBSSceneSettings
+2026-11-13 11:52:38.414 Df Runner[50430:2253f] [com.apple.FrontBoard:Common] FBSWorkspace connected to endpoint : <BSServiceConnectionEndpoint: 0x105d945c0; target: com.apple.frontboard.systemappservices; service: com.apple.frontboard.workspace-service>
+2026-11-13 11:52:38.415 Df Runner[50430:2253f] [com.apple.FrontBoard:Common] <FBSWorkspaceScenesClient:0x105d003c0 com.apple.frontboard.systemappservices> attempting immediate handshake from activate
+2026-11-13 11:52:38.415 Df Runner[50430:2253f] [com.apple.FrontBoard:Common] <FBSWorkspaceScenesClient:0x105d003c0 com.apple.frontboard.systemappservices> sent handshake
+2026-11-13 11:52:38.415 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneOcclusionSettings> on FBSSceneSettings
+2026-11-13 11:52:38.415 Df Runner[50430:2253f] [com.apple.runningboard:general] Added observer for process assertions expiration warning: <_RBSExpirationWarningClient: 0x105d94ce0>
+2026-11-13 11:52:38.416 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneInterfaceProtectionSettings> on FBSSceneSettings
+2026-11-13 11:52:38.417 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneLayoutPreferencesHostSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:38.417 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneSafeAreaSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:38.418 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneLayoutPreferenceClientSettingsExtension on FBSSceneClientSettings
+2026-11-13 11:52:38.418 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UIHomeAffordanceHostSceneSettings> on FBSSceneSettings
+2026-11-13 11:52:38.418 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISystemShellSceneHostingEnvironmentSettings on FBSSceneSettings
+2026-11-13 11:52:38.418 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneRenderingEnvironmentSettings on FBSSceneSettings
+2026-11-13 11:52:38.419 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneRenderingEnvironmentClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:38.419 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneTransitioningHostSettings> on FBSSceneSettings
+2026-11-13 11:52:38.419 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneFocusSystemSettings> on FBSSceneSettings
+2026-11-13 11:52:38.420 Df Runner[50430:2253f] [com.apple.UIKit:UIScreen] Evaluated capturing state as 0 on <UIScreen: 0x105ddc500> for initial
+2026-11-13 11:52:38.420 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneOrientationSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:38.420 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneOrientationClientSettingsExtension on FBSSceneClientSettings
+2026-11-13 11:52:38.420 Df Runner[50430:2253f] [com.apple.UIKit:UIScreen] Evaluated capturing state as 0 on <UIScreen: 0x105ddc500> for CADisplay KVO
+2026-11-13 11:52:38.421 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneWindowingControlClientSettings on FBSSceneClientSettings
+2026-11-13 11:52:38.421 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingContentSizePreferenceClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:38.421 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension _UISceneHostingTraitCollectionPropagationSettings on FBSSceneSettings
+2026-11-13 11:52:38.422 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationSettings> on FBSSceneSettings
+2026-11-13 11:52:38.422 Df Runner[50430:2253f] [com.apple.Accessibility:AXSupportCommon] Read CategoryName: per-app = 1, category name = (null)
+2026-11-13 11:52:38.422 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingSheetPresentationClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:38.423 Df Runner[50430:2253f] [com.apple.Accessibility:AXSupportCommon] Read CategoryName: per-app = 0, category name = (null)
+2026-11-13 11:52:38.423 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingEventDeferringSettings> on FBSSceneSettings
+2026-11-13 11:52:38.424 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneSettings
+2026-11-13 11:52:38.424 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <UIKit__UITypedKeyValueSceneSettings> on FBSSceneClientSettings
+2026-11-13 11:52:38.426 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneHostingViewControllerPreferencePropagationClientSettings> on FBSSceneClientSettings
+2026-11-13 11:52:38.426 Df Runner[50430:2256a] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneZoomTransitionSettings> on FBSSceneSettings
+2026-11-13 11:52:38.427 Df Runner[50430:2256c] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneSettingsCore on FBSSceneSettings
+2026-11-13 11:52:38.428 Df Runner[50430:2256c] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneClientSettingsCore on FBSSceneClientSettings
+2026-11-13 11:52:38.440 Df Runner[50430:2253f] [com.apple.dt.xctest:Default] Registering for test daemon availability notify post.
+2026-11-13 11:52:38.441 Df Runner[50430:2253f] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-13 11:52:38.441 Df Runner[50430:2256c] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneSettings setting counterpart class: UIApplicationSceneSettings
+2026-11-13 11:52:38.441 Df Runner[50430:2253f] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-13 11:52:38.442 Df Runner[50430:2256c] [com.apple.FrontBoard:SceneExtension] UIMutableApplicationSceneClientSettings setting counterpart class: UIApplicationSceneClientSettings
+2026-11-13 11:52:38.442 Df Runner[50430:2253f] [com.apple.dt.xctest:Default] notify_get_state check indicated test daemon not ready.
+2026-11-13 11:52:38.442 Df Runner[50430:2256c] [com.apple.FrontBoard:SceneExtension] Realizing settings extension FBSSceneTransitionContextCore on FBSSceneTransitionContext
+2026-11-13 11:52:38.443 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason added: 11; deactivation reasons: 1024 -> 3072; animating application lifecycle event: 0
+2026-11-13 11:52:38.449 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason removed: 10; deactivation reasons: 3072 -> 2048; animating application lifecycle event: 0
+2026-11-13 11:52:38.450 Df Runner[50430:2253f] [com.apple.UIKit:EventBus] Event Timing Profile for Touch: not found, path="/System/Library/EventTimingProfiles/Sim.Touch.plist"
+2026-11-13 11:52:38.450 Df Runner[50430:2253f] [com.apple.UIKit:EventBus] Event Timing Profile for Pencil: not found, path="/System/Library/EventTimingProfiles/Sim.Pencil.plist"
+2026-11-13 11:52:38.450 Df Runner[50430:2253f] [com.apple.UIKit:UpdateScheduler] Selected display: name=LCD (PurpleMain), id=1
+2026-11-13 11:52:38.455 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x105ddca00] activating connection: mach=true listener=false peer=false name=com.apple.lsd.mapdb
+2026-11-13 11:52:38.476 Df Runner[50430:2253f] [com.apple.BoardServices:XPCErrors] [C:2] Alloc com.apple.backboard.hid-services.xpc
+2026-11-13 11:52:38.477 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x105ddcc80] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:38.478 Df Runner[50430:2253f] [com.apple.app_launch_measurement:ApplicationLaunch] alm_acquire_pageins_recording_assertion: acquired pageins recording assertion!
+2026-11-13 11:52:38.479 Df Runner[50430:2256f] [com.apple.BackBoard:EventDelivery] BKSHIDEventDeliveryManager - connection activation
+2026-11-13 11:52:38.481 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason added: 5; deactivation reasons: 2048 -> 2080; animating application lifecycle event: 1
+2026-11-13 11:52:38.482 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Should send trait collection or coordinate space update, interface style 1 -> 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.483 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.483 Df Runner[50430:2253f] [com.apple.UIKit:HomeAffordanceObservation] Initializing: <_UIHomeAffordanceSceneNotifier: 0x105eb08c0>; with scene: <UIWindowScene: 0x105f9c000>
+2026-11-13 11:52:38.483 Df Runner[50430:2253f] [com.apple.BacklightServices:scenes] 0x105c8a3a0 setDelegate:<0x105c8a3d0 _UIBacklightEnvironment> hasDelegate:YES for environment:sceneID:cc.huevia.next-default
+2026-11-13 11:52:38.483 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.484 Df Runner[50430:2253f] [com.apple.UIKit:EventDeferring] [0x105eb11f0] Initialized with scene: <UIWindowScene: 0x105f9c000>; behavior: <_UIEventDeferringBehavior_iOS: 0x105fa0280>; availableForProcess: 1, systemShellManagesKeyboardFocus: 1
+2026-11-13 11:52:38.486 Df Runner[50430:2256f] [com.apple.BackBoard:EventDelivery] BKSHIDEventObserver - connection activation
+2026-11-13 11:52:38.486 Df Runner[50430:2253f] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x105e74480; process scope; status: target> was:none
+2026-11-13 11:52:38.486 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to LastOneWins
+2026-11-13 11:52:38.486 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Scene target of keyboard event deferring environment did change: 1; scene: UIWindowScene: 0x105f9c000; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:38.486 Df Runner[50430:2253f] [com.apple.UIKit:EventDeferring] [0x105eb11f0] Scene target of event deferring environments did update: scene: 0x105f9c000; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-13 11:52:38.486 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x105f9c000; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:38.487 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Stack[KeyWindow] 0x105c8a880: Taking no further action for migration from LastOneWins -> SystemShellManaged as there are no scenes
+2026-11-13 11:52:38.487 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Setting default evaluation strategy for UIUserInterfaceIdiomPhone to SystemShellManaged
+2026-11-13 11:52:38.487 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Key window needs update: 0; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x105f9c000; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x0; reason: UIWindowScene: 0x105f9c000: Window scene became target of keyboard environment
+2026-11-13 11:52:38.487 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.488 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.490 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.511 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x105ddd7c0] activating connection: mach=true listener=false peer=false name=com.apple.metal.simulator
+2026-11-13 11:52:38.513 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x105ddd900] activating connection: mach=true listener=false peer=false name=com.apple.metal.simulator
+2026-11-13 11:52:38.514 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x105ddda40] activating connection: mach=true listener=false peer=false name=com.apple.metal.simulator
+2026-11-13 11:52:38.516 E  Runner[50430:2253f] [com.apple.UIKit:UIFocus] FlutterView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+2026-11-13 11:52:38.544 Df Runner[50430:2253f] (Flutter) [IMPORTANT:flutter/shell/platform/darwin/graphics/FlutterDarwinContextMetalImpeller.mm(45)] Using the Impeller rendering backend (Metal).
+2026-11-13 11:52:38.585 Df Runner[50430:22574] [com.apple.xpc:connection] [0x107539400] activating connection: mach=true listener=false peer=false name=com.apple.fontservicesd
+2026-11-13 11:52:38.589 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x10753a080] activating connection: mach=true listener=false peer=false name=com.apple.metrickit.xpc
+2026-11-13 11:52:38.589 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x10753a080] failed to do a bootstrap look-up: xpc_error=[3: No such process]
+2026-11-13 11:52:38.589 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x10753a080] invalidated after a failed init
+2026-11-13 11:52:38.707 Df Runner[50430:2259a] (Flutter) flutter: The Dart VM service is listening on http://127.0.0.1:58094/sLkeLw2zV5s=/
+2026-11-13 11:52:38.913 Df Runner[50430:2253f] [com.apple.CoreAnalytics:client] No XPC connection in Simulator
+2026-11-13 11:52:38.932 Df Runner[50430:2253f] [com.apple.UIKit:Orientation] <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B) Scene updated orientation preferences: none -> ( Pu Ll Lr )
+2026-11-13 11:52:38.945 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Key window API is scene-level: YES
+2026-11-13 11:52:38.945 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] UIWindowScene: 0x105f9c000: Window became key in scene: UIWindow: 0x105e1c400; contextId: 0x248CA2CD: reason: UIWindowScene: 0x105f9c000: Window requested to become key in scene: 0x105e1c400
+2026-11-13 11:52:38.945 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Key window needs update: 1; currentKeyWindowScene: 0x0; evaluatedKeyWindowScene: 0x105f9c000; currentApplicationKeyWindow: 0x0; evaluatedApplicationKeyWindow: 0x105e1c400; reason: UIWindowScene: 0x105f9c000: Window requested to become key in scene: 0x105e1c400
+2026-11-13 11:52:38.945 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Window did become application key: UIWindow: 0x105e1c400; contextId: 0x248CA2CD; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:38.945 Df Runner[50430:2253f] [com.apple.UIKit:EventDeferring] [0x105eb11f0] Begin local event deferring requested for token: 0x105c8f660; environments: 1; reason: UIWindowScene: 0x105f9c000: Begin event deferring in keyboardFocus for window: 0x105e1c400
+2026-11-13 11:52:38.948 Df Runner[50430:22574] [com.apple.BackBoard:EventDelivery] policyStatus:<BKSHIDEventDeliveryPolicyObserver: 0x105e74480; token: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default; status: ancestor> was:target
+2026-11-13 11:52:38.948 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.961 Df Runner[50430:2253f] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:38.961 Df Runner[50430:2253f] [com.apple.UIKit:Application] Ignoring already applied deactivation reason: 5; deactivation reasons: 2080
+2026-11-13 11:52:38.961 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason added: 12; deactivation reasons: 2080 -> 6176; animating application lifecycle event: 1
+2026-11-13 11:52:38.964 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason removed: 11; deactivation reasons: 6176 -> 4128; animating application lifecycle event: 1
+2026-11-13 11:52:38.964 Df Runner[50430:2253f] [com.apple.FrontBoard:SceneExtension] Realizing settings extension <_UISceneIntelligenceSupportSettings> on FBSSceneSettings
+2026-11-13 11:52:38.965 Df Runner[50430:2256f] [com.apple.UIIntelligenceSupport:xpc] establishing connection to agent
+2026-11-13 11:52:38.965 Df Runner[50430:2256f] [com.apple.xpc:session] [0x1075050e0] Session created.
+2026-11-13 11:52:38.965 Df Runner[50430:2256f] [com.apple.xpc:session] [0x1075050e0] Session created from connection [0x11c8ade00]
+2026-11-13 11:52:38.965 Df Runner[50430:2256f] [com.apple.xpc:connection] [0x11c8ade00] activating connection: mach=true listener=false peer=false name=com.apple.uiintelligencesupport.agent
+2026-11-13 11:52:38.965 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.965 Df Runner[50430:2256f] [com.apple.xpc:session] [0x1075050e0] Session activated
+2026-11-13 11:52:38.968 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x11c8adf40] activating connection: mach=true listener=false peer=false name=com.apple.IOSurface.Remote
+2026-11-13 11:52:38.973 Df Runner[50430:2253f] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:1 [F4294D54-6445-4EF1-B5EA-F2C3D724D11D] (reporting strategy default)>
+2026-11-13 11:52:38.973 Df Runner[50430:2253f] [com.apple.network:activity] Create activity from XPC object <nw_activity 50:2 [D8E1AB65-3349-4A0B-8192-4B3D2EF80CAE] (reporting strategy default)>
+2026-11-13 11:52:38.973 Df Runner[50430:2253f] [com.apple.network:activity] Set activity <nw_activity 50:1 [F4294D54-6445-4EF1-B5EA-F2C3D724D11D] (reporting strategy default)> as the global parent
+2026-11-13 11:52:38.973 Df Runner[50430:2253f] [com.apple.UIKit:BackgroundTask] Ending background task with UIBackgroundTaskIdentifier: 1
+2026-11-13 11:52:38.974 Df Runner[50430:2253f] [com.apple.UIKit:BackgroundTask] Ending task with identifier 1 and description: <_UIBackgroundTaskInfo: 0x105ccd180>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 1797 (elapsed = 1), _expireHandler: (null)
+2026-11-13 11:52:38.974 Df Runner[50430:2253f] [com.apple.UIKit:BackgroundTask] Decrementing reference count for assertion <BKSProcessAssertion: 0x1052129e0> (used by background task with identifier 1: <_UIBackgroundTaskInfo: 0x105ccd180>: taskID = 1, taskName = Launch Background Task for Coalescing, creationTime = 1797 (elapsed = 1))
+2026-11-13 11:52:38.974 Df Runner[50430:2253f] [com.apple.UIKit:BackgroundTask] Will invalidate assertion: <BKSProcessAssertion: 0x1052129e0> for task identifier: 1
+2026-11-13 11:52:38.975 Df Runner[50430:2253f] [com.apple.UIKit:UpdateScheduler] Target list changed: <CADisplay:LCD PurpleMain>
+2026-11-13 11:52:38.976 Df Runner[50430:2253f] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:38.977 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.978 Df Runner[50430:2253f] [com.apple.UIKit:EventDeferring] [0x105eb11f0] Scene target of event deferring environments did update: scene: 0x105f9c000; current systemShellManagesKeyboardFocus: 1; systemShellManagesKeyboardFocusForScene: 1; eligibleForRecordRemoval: 1;
+2026-11-13 11:52:38.978 Df Runner[50430:2253f] [com.apple.UIKit:KeyWindow] Scene became target of keyboard event deferring environment: UIWindowScene: 0x105f9c000; scene identity: com.apple.frontboard.systemappservices/FBSceneManager:sceneID%3Acc.huevia.next-default
+2026-11-13 11:52:38.979 Df Runner[50430:2253f] [com.apple.Accessibility:AXCommon] Read Per-App on Init: Smart invert = (null)
+2026-11-13 11:52:38.980 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:38.980 Df Runner[50430:2253f] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:38.981 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason removed: 12; deactivation reasons: 4128 -> 32; animating application lifecycle event: 1
+2026-11-13 11:52:38.982 Df Runner[50430:2253f] [com.apple.KeyboardArbiter:Client] Send setDeactivating: N (-DeactivationReason:SuspendedEventsOnly)
+2026-11-13 11:52:38.983 Df Runner[50430:2253f] [com.apple.UIKit:Application] Deactivation reason removed: 5; deactivation reasons: 32 -> 0; animating application lifecycle event: 0
+2026-11-13 11:52:38.983 A  Runner[50430:22573] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:38.991 A  Runner[50430:22573] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:39.086 A  Runner[50430:22573] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:39.147 Df Runner[50430:2253f] (Flutter) flutter: 00:00 +0: (setUpAll)
+2026-11-13 11:52:39.158 Df Runner[50430:2253f] (Flutter) flutter: 00:00 +1: Native codecs and LibRaw retain originals, dimensions and white highlights
+2026-11-13 11:52:39.409 Df Runner[50430:2253f] (Flutter) flutter: Native pipeline: semantics baseline 2
+2026-11-13 11:52:39.409 Df Runner[50430:2253f] (Flutter) flutter: Native pipeline: initializing
+2026-11-13 11:52:39.410 Df Runner[50430:2253f] [com.apple.KeyboardArbiter:Client] startConnection
+2026-11-13 11:52:39.410 Df Runner[50430:2253f] [com.apple.xpc:connection] [0x11c8ac000] activating connection: mach=true listener=false peer=false name=com.apple.UIKit.KeyboardManagement.hosted
+2026-11-13 11:52:39.411 Df Runner[50430:2253f] [com.apple.FrontBoard:SceneExtension] Realizing settings extension SBUISecureRenderingSettingsExtension on FBSSceneSettings
+2026-11-13 11:52:39.411 Df Runner[50430:2253f] [com.apple.UIKit:InterfaceStyle] Not push traits update to screen for new style 1, <UIWindowScene: 0x105f9c000> (D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B)
+2026-11-13 11:52:39.412 Df Runner[50430:2253f] [com.apple.UIKit:AppLifecycle] sceneOfRecord: sceneID: sceneID:cc.huevia.next-default  persistentID: D9CF465C-6D9A-4D90-BA7C-E0ABA401AB9B
+2026-11-13 11:52:39.413 Df Runner[50430:2253f] [com.apple.KeyboardArbiter:Client] handleKeyboardChange: set currentKeyboard:N (wasKeyboard:N)
+2026-11-13 11:52:39.419 Df Runner[50430:2253f] [com.apple.UIKit:KeyboardSceneDelegate] forceReloadInputViews
+2026-11-13 11:52:39.426 Df Runner[50430:2253f] [com.apple.UIKit:KeyboardSceneDelegate] Reloading input views for key-window scene responder: <(null): 0x0; > force:Y
+2026-11-13 11:52:39.427 Df Runner[50430:2253f] [com.apple.UIKit:KeyboardArbiterClientLog] isWritingToolsHandlingKeyboardTracking:Y (WT ready:Y, Arbiter ready:Y)
+2026-11-13 11:52:39.468 Df Runner[50430:22573] [com.apple.FileURL:default] kExcludedFromBackupXattrName set on path: /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Containers/Data/Application/2036810F-63C4-4BA6-AA50-2C2744B9B572/Library/Application Support/Huevia
+2026-11-13 11:52:39.478 A  Runner[50430:22573] (Security) SecItemCopyMatching_ios
+2026-11-13 11:52:39.479 Df Runner[50430:22573] [com.apple.securityd:secitemratelimit] Not internal release, disabling SIRL
+2026-11-13 11:52:39.479 Df Runner[50430:22573] [com.apple.securityd:thread-local-client-debug] SecSecurityClientGet new thread!
+2026-11-13 11:52:39.481 Df Runner[50430:22573] [com.apple.securityd:keychain] System Keychain Always Supported set via feature flag to disabled
+2026-11-13 11:52:39.481 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11c8ad400] activating connection: mach=true listener=false peer=false name=com.apple.securityd
+2026-11-13 11:52:39.484 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11c8afe80] activating connection: mach=true listener=false peer=false name=com.apple.distributed_notifications@1v3
+2026-11-13 11:52:39.484 A  Runner[50430:22573] (TCC) tcc_send_request_authorization() IPC
+2026-11-13 11:52:39.484 Df Runner[50430:22573] [com.apple.xpc:connection] [0x105ddc8c0] activating connection: mach=true listener=false peer=false name=com.apple.tccd
+2026-11-13 11:52:39.487 Df Runner[50430:22573] [com.apple.xpc:connection] [0x105ddc8c0] invalidated after the last release of the connection object
+2026-11-13 11:52:39.492 Df Runner[50430:2253f] [com.apple.network:activity] <nw_activity 50:1 [F4294D54-6445-4EF1-B5EA-F2C3D724D11D] (global parent) (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 2317ms
+2026-11-13 11:52:39.492 Df Runner[50430:2253f] [com.apple.network:activity] <nw_activity 50:2 [D8E1AB65-3349-4A0B-8192-4B3D2EF80CAE] (reporting strategy default) complete (reason success)> complete with reason 2 (success), duration 2317ms
+2026-11-13 11:52:39.492 Df Runner[50430:2253f] [com.apple.network:activity] Unsetting the global parent activity <nw_activity 50:1 [F4294D54-6445-4EF1-B5EA-F2C3D724D11D] (global parent) (reporting strategy default) complete (reason success)>
+2026-11-13 11:52:39.492 Df Runner[50430:2253f] [com.apple.network:activity] Unset the global parent activity
+2026-11-13 11:52:39.492 Df Runner[50430:2253f] [com.apple.app_launch_measurement:ApplicationLaunch] alm_release_pageins_recording_assertion: releasing pageins recording assertion
+2026-11-13 11:52:39.499 Df Runner[50430:22573] [com.apple.photos.backend:Backend] Connecting to XPCPhotoLibraryStore /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media
+2026-11-13 11:52:39.506 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11cb1c500] activating connection: mach=true listener=false peer=false name=com.apple.photos.service
+2026-11-13 11:52:39.506 Df Runner[50430:22573] [com.apple.photos.backend:GatekeeperXPC] clientToServiceSandboxExtensionForURL: /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media hasExtension:YES
+2026-11-13 11:52:39.527 Df Runner[50430:22573] [com.apple.photos.backend:GatekeeperXPC] Received XPC store endpoint 0x11cb0ba80
+2026-11-13 11:52:39.528 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11cb1c640] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:39.528 Df Runner[50430:22573] [com.apple.photos.backend:GatekeeperXPC] Received XPC store endpoint 0x11cb0bb40
+2026-11-13 11:52:39.528 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11cb1c780] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:39.528 Df Runner[50430:22573] [com.apple.photos.backend:GatekeeperXPC] Received XPC store endpoint 0x11cb0bc00
+2026-11-13 11:52:39.529 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11cb1c8c0] activating connection: mach=false listener=false peer=false name=(anonymous)
+2026-11-13 11:52:39.552 Df Runner[50430:22573] [com.apple.photos.backend:ChangeHandling] Creating PLChangeHandlingContainer for library URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media/
+2026-11-13 11:52:39.552 Df Runner[50430:22573] [com.apple.photos.backend:ChangeHandling] PLChangeNode [B449AAE7]: Created change node with UUID B449AAE7-0FBD-4C13-9D4F-650FCFCA6C04 for libraryURL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media/
+2026-11-13 11:52:39.553 Df Runner[50430:22573] [com.apple.photos.backend:PersistentHistory] beginObservingChanges: _observerCount became 1 (resuming), _lastToken = (null)
+2026-11-13 11:52:39.555 Df Runner[50430:22573] [com.apple.photos.backend:PersistentHistory] Change distributor advanced _lastToken to: <NSPersistentHistoryToken - {
+    "3F642A05-50EB-4DB3-8C26-3554B5F25849" = 87;
+}>
+2026-11-13 11:52:39.555 Df Runner[50430:22573] [com.apple.photos.backend:Backend] PLPhotosAccessAllowedResult result is 0
+2026-11-13 11:52:39.560 Df Runner[50430:22573] [com.apple.photos.backend:GatekeeperXPC] openPhotoLibraryDatabase succeeded
+2026-11-13 11:52:39.569 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateInfo begin
+2026-11-13 11:52:39.577 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateInfo complete
+2026-11-13 11:52:39.577 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.access begin
+2026-11-13 11:52:39.578 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.access complete
+2026-11-13 11:52:39.592 Df Runner[50430:2253f] (Flutter) flutter: Native operation: online.page begin
+2026-11-13 11:52:39.605 Df Runner[50430:2256f] [com.apple.network:] networkd_settings_read_from_file_locked initialized networkd settings by reading plist directly
+2026-11-13 11:52:39.606 Df Runner[50430:2256f] [com.apple.network:] networkd_settings_read_from_file_locked initialized networkd settings by reading plist directly
+2026-11-13 11:52:39.608 Df Runner[50430:2256f] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> resuming, timeouts(10.0, 604800.0) qos(0x19) voucher((null)) activity(00000000-0000-0000-0000-000000000000)
+2026-11-13 11:52:39.609 A  Runner[50430:2256f] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-11-13 11:52:39.618 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Initializing AlternativeServices Storage singleton
+2026-11-13 11:52:39.618 Df Runner[50430:22573] [com.apple.FileURL:default] kExcludedFromBackupXattrName set on path: /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Containers/Data/Application/2036810F-63C4-4BA6-AA50-2C2744B9B572/Library/HTTPStorages/cc.huevia.next
+2026-11-13 11:52:39.621 A  Runner[50430:2256a] (RunningBoardServices) didChangeInheritances
+2026-11-13 11:52:39.627 Df Runner[50430:2256a] [com.apple.CFNetwork:Default] Garbage collection for alternative services
+2026-11-13 11:52:39.628 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 0: creating secure tcp or quic connection
+2026-11-13 11:52:39.635 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: enabling TLS
+2026-11-13 11:52:39.635 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: starting, TC(0x0)
+2026-11-13 11:52:39.635 Df Runner[50430:22573] [com.apple.network:connection] [C1 99D51C99-A407-49F2-ABFE-B207669C2792 Hostname#0b564790:443 quic-connection, url: https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/community/feed, definite, attribution: developer, context: com.apple.CFNetwork.NSURLSession.{C64E4A4F-437B-4B05-A4B1-8D7B65CF69D6}{(null)}{Y}{2}{0x0} (private), proc: 505288E4-0401-30BB-A560-138DC0C4296B, delegated upid: 0] start
+2026-11-13 11:52:39.636 Df Runner[50430:22573] [com.apple.network:connection] [C1 Hostname#0b564790:443 initial parent-flow ((null))] event: path:start @0.000s
+2026-11-13 11:52:39.637 Df Runner[50430:22573] [com.apple.network:connection] [C1 Hostname#0b564790:443 waiting parent-flow (satisfied (Path is satisfied), interface: en0)] event: path:satisfied @0.001s, uuid: CB70CAB4-F53A-46C0-954F-3C11A46C658F
+2026-11-13 11:52:39.638 Df Runner[50430:22573] [com.apple.network:connection] [C1 Hostname#0b564790:443 in_progress parent-flow (satisfied (Path is satisfied), interface: en0)] event: flow:start_connect @0.002s
+2026-11-13 11:52:39.638 Df Runner[50430:22573] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C1] reporting state preparing
+2026-11-13 11:52:39.639 Df Runner[50430:22573] [com.apple.network:connection] [C1 Hostname#0b564790:443 in_progress parent-flow (satisfied (Path is satisfied), interface: en0)] event: flow:start_child @0.003s
+2026-11-13 11:52:39.639 Df Runner[50430:22573] [com.apple.network:connection] [C1.1 Hostname#0b564790:443 initial path ((null))] event: path:start @0.003s
+2026-11-13 11:52:39.639 Df Runner[50430:22573] [com.apple.network:connection] [C1.1 Hostname#0b564790:443 waiting path (satisfied (Path is satisfied), interface: en0)] event: path:satisfied @0.003s, uuid: CB70CAB4-F53A-46C0-954F-3C11A46C658F
+2026-11-13 11:52:39.639 Df Runner[50430:22573] [com.apple.network:connection] [C1.1 Hostname#0b564790:443 in_progress transform (satisfied (Path is satisfied), interface: en0)] event: transform:start @0.003s
+2026-11-13 11:52:39.640 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1 Hostname#0b564790:443 initial path ((null))] event: path:start @0.004s
+2026-11-13 11:52:39.640 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1 Hostname#0b564790:443 waiting path (satisfied (Path is satisfied), interface: en0)] event: path:satisfied @0.004s, uuid: BCE5C4D1-25C9-46FA-95D9-3AC01A209476
+2026-11-13 11:52:39.641 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1 Hostname#0b564790:443 in_progress resolver (satisfied (Path is satisfied), interface: en0)] event: resolver:start_dns @0.005s
+2026-11-13 11:52:39.641 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> setting up Connection 1
+2026-11-13 11:52:39.681 Df Runner[50430:2256c] [com.apple.network:connection] nw_endpoint_resolver_update [C1.1.1 Hostname#0b564790:443 in_progress resolver (satisfied (Path is satisfied), interface: en0)] Adding endpoint handler for IPv4#5aeeac1f:443
+2026-11-13 11:52:39.681 Df Runner[50430:2256c] [com.apple.network:connection] nw_endpoint_resolver_update [C1.1.1 Hostname#0b564790:443 in_progress resolver (satisfied (Path is satisfied), interface: en0)] Adding endpoint handler for IPv4#dbc13b40:443
+2026-11-13 11:52:39.681 Df Runner[50430:2256c] [com.apple.network:connection] [C1.1.1 Hostname#0b564790:443 in_progress resolver (satisfied (Path is satisfied), interface: en0)] event: resolver:receive_dns @0.045s
+2026-11-13 11:52:39.681 Df Runner[50430:2256c] [com.apple.network:connection] [C1.1.1.1 IPv4#5aeeac1f:443 initial path ((null))] event: path:start @0.045s
+2026-11-13 11:52:39.681 Df Runner[50430:2256c] [com.apple.network:connection] [C1.1.1.1 IPv4#5aeeac1f:443 waiting path (satisfied (Path is satisfied), interface: en0)] event: path:satisfied @0.045s, uuid: C0F88608-EC93-4151-BEAF-7D2BCACF834D
+2026-11-13 11:52:39.682 Df Runner[50430:2256c] [com.apple.network:connection] [C1.1.1.1 IPv4#5aeeac1f:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] event: flow:start_connect @0.046s
+2026-11-13 11:52:39.783 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1.2 IPv4#dbc13b40:443 initial path ((null))] event: path:start @0.147s
+2026-11-13 11:52:39.783 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1.2 IPv4#dbc13b40:443 waiting path (satisfied (Path is satisfied), interface: en0)] event: path:satisfied @0.147s, uuid: 990C824A-DE4A-4713-B115-62D937360ABF
+2026-11-13 11:52:39.783 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1.2 IPv4#dbc13b40:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] event: flow:start_connect @0.147s
+2026-11-13 11:52:39.851 Df Runner[50430:2256c] [com.apple.network:connection] nw_socket_handle_socket_event [C1.1.1.1:3] Socket received CONNECTED event
+2026-11-13 11:52:39.851 Df Runner[50430:2256c] [com.apple.network:connection] nw_flow_connected [C1.1.1.1 IPv4#5aeeac1f:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] Transport protocol connected (socket)
+2026-11-13 11:52:39.851 Df Runner[50430:2256c] [com.apple.network:connection] [C1.1.1.1 IPv4#5aeeac1f:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] event: flow:finish_transport @0.215s
+2026-11-13 11:52:39.852 Df Runner[50430:2256c] [com.apple.network:boringssl] boringssl_session_apply_protocol_options_for_transport_block_invoke_2(2367) [C1.1.1.1:2][0x11c9d4ce0] TLS configured [server(0) min_version(0x0303) max_version(0x0304) name(redacted) tickets(false) false_start(false) enforce_ev(false) enforce_ats(false) ats_non_pfs_ciphersuite_allowed(false) cc_mode_enforced(false) ech(false) pqtls(true), pake(false) skip_ats_trust(false)]
+2026-11-13 11:52:39.852 Df Runner[50430:2256c] [com.apple.network:boringssl] boringssl_context_info_handler(2806) [C1.1.1.1:2][0x11c9d4ce0] Client handshake started
+2026-11-13 11:52:39.852 Df Runner[50430:2256c] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.1:2][0x11c9d4ce0] Client handshake state: TLS client enter_early_data
+2026-11-13 11:52:39.852 Df Runner[50430:2256c] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.1:2][0x11c9d4ce0] Client handshake state: TLS client read_server_hello
+2026-11-13 11:52:39.935 Df Runner[50430:22573] [com.apple.network:connection] nw_socket_handle_socket_event [C1.1.1.2:3] Socket received CONNECTED event
+2026-11-13 11:52:39.935 Df Runner[50430:22573] [com.apple.network:connection] nw_flow_connected [C1.1.1.2 IPv4#dbc13b40:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] Transport protocol connected (socket)
+2026-11-13 11:52:39.935 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1.2 IPv4#dbc13b40:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] event: flow:finish_transport @0.299s
+2026-11-13 11:52:39.936 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_session_apply_protocol_options_for_transport_block_invoke_2(2367) [C1.1.1.2:2][0x11c9d51e0] TLS configured [server(0) min_version(0x0303) max_version(0x0304) name(redacted) tickets(false) false_start(false) enforce_ev(false) enforce_ats(false) ats_non_pfs_ciphersuite_allowed(false) cc_mode_enforced(false) ech(false) pqtls(true), pake(false) skip_ats_trust(false)]
+2026-11-13 11:52:39.936 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2806) [C1.1.1.2:2][0x11c9d51e0] Client handshake started
+2026-11-13 11:52:39.936 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS client enter_early_data
+2026-11-13 11:52:39.936 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS client read_server_hello
+2026-11-13 11:52:40.087 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_hello_retry_request
+2026-11-13 11:52:40.087 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_server_hello
+2026-11-13 11:52:40.087 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_encrypted_extensions
+2026-11-13 11:52:40.087 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_certificate_request
+2026-11-13 11:52:40.087 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_server_certificate
+2026-11-13 11:52:40.087 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_server_certificate_verify
+2026-11-13 11:52:40.088 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_evaluate_trust_async(2249) [C1.1.1.2:2][0x11c9d51e0] Performing external trust evaluation
+2026-11-13 11:52:40.088 A  Runner[50430:22573] (Security) SecKeyCopyPublicBytes
+2026-11-13 11:52:40.088 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_evaluate_trust_async_external(2234) [C1.1.1.2:2][0x11c9d51e0] Asyncing for external verify block
+2026-11-13 11:52:40.088 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: asked to evaluate TLS Trust
+2026-11-13 11:52:40.089 Df Runner[50430:2256c] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> auth completion disp=1 cred=0x0
+2026-11-13 11:52:40.089 Df Runner[50430:2256c] [com.apple.securityd:trust] (Trust 0x105e36e80) No pending evals, starting
+2026-11-13 11:52:40.089 A  Runner[50430:2256c] (Security) SecTrustEvaluateIfNecessaryFastAsync
+2026-11-13 11:52:40.089 Df Runner[50430:2256c] [com.apple.xpc:connection] [0x11cb1e080] activating connection: mach=true listener=false peer=false name=com.apple.trustd
+2026-11-13 11:52:40.089 Df Runner[50430:2256c] [com.apple.xpc:connection] [0x11cb1e1c0] activating connection: mach=true listener=false peer=false name=com.apple.trustd
+2026-11-13 11:52:40.090 Df Runner[50430:2256c] [com.apple.securityd:trust] (Trust 0x105e36e80) Completed async eval kickoff
+2026-11-13 11:52:40.097 Df Runner[50430:2256c] [com.apple.securityd:trust] (Trust 0x105e36e80) trustd returned 4
+2026-11-13 11:52:40.097 Df Runner[50430:2256c] [com.apple.CFNetwork:Default] System Trust Evaluation yielded status(0)
+2026-11-13 11:52:40.097 Df Runner[50430:2256c] [com.apple.securityd:trust] (Trust 0x105e36b80) No pending evals, starting
+2026-11-13 11:52:40.097 A  Runner[50430:2256c] (Security) SecTrustEvaluateIfNecessaryFastAsync
+2026-11-13 11:52:40.098 Df Runner[50430:2256c] [com.apple.xpc:connection] [0x11cb1e300] activating connection: mach=true listener=false peer=false name=com.apple.trustd
+2026-11-13 11:52:40.098 Df Runner[50430:2256c] [com.apple.securityd:trust] (Trust 0x105e36b80) Completed async eval kickoff
+2026-11-13 11:52:40.098 Df Runner[50430:2256c] [com.apple.xpc:connection] [0x11cb1e1c0] invalidated because the current process cancelled the connection by calling xpc_connection_cancel()
+2026-11-13 11:52:40.100 Df Runner[50430:22573] [com.apple.securityd:trust] (Trust 0x105e36b80) trustd returned 4
+2026-11-13 11:52:40.100 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: TLS Trust result 0
+2026-11-13 11:52:40.100 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_evaluate_trust_async_external_block_invoke_3(2148) [C1.1.1.2:2][0x11c9d51e0] Returning from external verify block with result: true
+2026-11-13 11:52:40.100 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_certificate_verify_callback(2430) [C1.1.1.2:2][0x11c9d51e0] Certificate verification result: OK
+2026-11-13 11:52:40.100 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client read_server_finished
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client send_end_of_early_data
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client send_client_encrypted_extensions
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client send_client_certificate
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client complete_second_flight
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS 1.3 client done
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS client finish_client_handshake
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2823) [C1.1.1.2:2][0x11c9d51e0] Client handshake state: TLS client done
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] boringssl_context_info_handler(2812) [C1.1.1.2:2][0x11c9d51e0] Client handshake done
+2026-11-13 11:52:40.101 A  Runner[50430:22573] (Security) SecKeyCopyPublicBytes
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:boringssl] nw_protocol_boringssl_signal_connected(895) [C1.1.1.2:2][0x11c9d51e0] TLS connected [server(0) version(0x0304) ciphersuite(TLS_AES_256_GCM_SHA384) group(0x001d) signature_alg(0x0804) alpn(http/1.1) resumed(0) offered_ticket(0) in_early_data(0) early_data_accepted(0) false_started(0) ocsp_received(0) sct_received(0) connect_time(165ms) flight_time(151ms) rtt(151ms) write_stalls(0) read_stalls(2) pake(0x0000)]
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] nw_flow_connected [C1.1.1.2 IPv4#dbc13b40:443 in_progress socket-flow (satisfied (Path is satisfied), interface: en0)] Output protocol connected (CFNetworkConnection-2220332748)
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1.2 IPv4#dbc13b40:443 ready socket-flow (satisfied (Path is satisfied), interface: en0)] event: flow:child_finish_connect @0.465s
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] [C1.1.1 Hostname#0b564790:443 ready resolver (satisfied (Path is satisfied), interface: en0)] event: flow:child_finish_connect @0.465s
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] [C1.1 Hostname#0b564790:443 ready transform (satisfied (Path is satisfied), interface: en0)] event: flow:child_finish_connect @0.465s
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] nw_flow_connected [C1 IPv4#dbc13b40:443 in_progress parent-flow (satisfied (Path is satisfied), interface: en0)] Output protocol connected (endpoint_flow)
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] [C1 IPv4#dbc13b40:443 ready parent-flow (satisfied (Path is satisfied), interface: en0)] event: flow:finish_connect @0.465s
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C1] reporting state ready
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.xpc:connection] [0x11cb1e300] invalidated because the current process cancelled the connection by calling xpc_connection_cancel()
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: connected successfully
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: TLS handshake complete
+2026-11-13 11:52:40.101 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Connection 1: ready C(N) E(N)
+2026-11-13 11:52:40.102 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> now using Connection 1
+2026-11-13 11:52:40.106 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> sent request, body N 0
+2026-11-13 11:52:40.383 Df Runner[50430:2256a] [com.apple.xpc:connection] [0x11cb1e300] activating connection: mach=true listener=false peer=false name=com.apple.metrickit.xpc
+2026-11-13 11:52:40.443 Df Runner[50430:2256a] [com.apple.xpc:connection] [0x11cb1e300] failed to do a bootstrap look-up: xpc_error=[3: No such process]
+2026-11-13 11:52:40.443 Df Runner[50430:2256a] [com.apple.xpc:connection] [0x11cb1e300] invalidated after a failed init
+2026-11-13 11:52:40.913 A  Runner[50430:22574] (Security) SecKeyCopyPublicBytes
+2026-11-13 11:52:40.913 A  Runner[50430:22574] (Security) SecKeyCopyPublicBytes
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> received response, status 200 content K
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> response ended
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> done using Connection 1
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.network:connection] [C1] event: client:connection_idle @1.279s
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.network:connection] nw_protocol_socket_notify [C1.1.1.2:3] nw_protocol_notification_type_connection_idle is true
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.network:connection] [C1] event: client:connection_idle @1.279s
+2026-11-13 11:52:40.915 Df Runner[50430:22574] [com.apple.network:connection] nw_protocol_socket_notify [C1.1.1.2:3] nw_protocol_notification_type_connection_idle is true
+2026-11-13 11:52:40.915 Df Runner[50430:22573] [com.apple.CFNetwork:Summary] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> summary for task success {transaction_duration_ms=1298, response_status=200, connection=1, protocol="http/1.1", domain_lookup_duration_ms=40, connect_duration_ms=318, secure_connection_duration_ms=165, private_relay=false, request_start_ms=488, request_duration_ms=0, response_start_ms=1297, response_duration_ms=0, request_bytes=318, request_throughput_kbps=16843, response_bytes=2682, response_throughput_kbps=66220, cache_hit=false}
+2026-11-13 11:52:40.916 Df Runner[50430:22573] [com.apple.CFNetwork:Default] Task <350F5F02-AF1D-4FCE-8F58-9DB2BCE56EDE>.<1> finished successfully
+2026-11-13 11:52:40.916 Df Runner[50430:22574] [com.apple.CFNetwork:Default] Connection 1: cleaning up
+2026-11-13 11:52:40.916 Df Runner[50430:22574] [com.apple.network:connection] [C1 99D51C99-A407-49F2-ABFE-B207669C2792 Hostname#0b564790:443 quic-connection, url: https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/community/feed, definite, attribution: developer] cancel
+2026-11-13 11:52:40.916 Df Runner[50430:22574] [com.apple.network:connection] [C1 99D51C99-A407-49F2-ABFE-B207669C2792 Hostname#0b564790:443 quic-connection, url: https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/community/feed, definite, attribution: developer] cancelled
+	[C1.1.1.2 990C824A-DE4A-4713-B115-62D937360ABF 192.168.64.4:58116<->IPv4#dbc13b40:443]
+	Connected Path: satisfied (Path is satisfied), interface: en0
+	Privacy Stance: Not Eligible
+	Duration: 1.280s, DNS @0.005s took 0.040s, TCP @0.147s took 0.152s, TLS 1.3 took 0.165s
+	bytes in/out: 11479/2334, packets in/out: 2/5, rtt: 0.151s, retransmitted bytes: 340, out-of-order bytes: 0
+	ecn packets sent/acked/marked/lost: 4/4/0/1
+2026-11-13 11:52:40.917 Df Runner[50430:22574] [com.apple.network:connection] nw_connection_report_state_with_handler_on_nw_queue [C1] reporting state cancelled
+2026-11-13 11:52:40.919 Df Runner[50430:2253f] (Flutter) flutter: Native operation: online.page complete
+2026-11-13 11:52:40.924 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.access begin
+2026-11-13 11:52:40.925 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.access complete
+2026-11-13 11:52:40.926 Df Runner[50430:2253f] (Flutter) flutter: PhotoKit test authorization: {alternateBasis: modified, canAsk: false, access: full}
+2026-11-13 11:52:40.926 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.page begin
+2026-11-13 11:52:40.927 Df Runner[50430:22574] [com.apple.photos.backend:Backend] PLPhotosAccessAllowedResult result is 0
+2026-11-13 11:52:40.927 A  Runner[50430:22574] (Accounts) accounts/accounts-with-types-sync
+2026-11-13 11:52:40.929 Df Runner[50430:22574] [com.apple.xpc:connection] [0x11cb1db80] activating connection: mach=true listener=false peer=false name=com.apple.accountsd.accountmanager
+2026-11-13 11:52:40.936 Df Runner[50430:22574] [com.apple.photos.backend:Backend] No primaryAppleAccount
+2026-11-13 11:52:40.953 Df Runner[50430:22574] [com.apple.photos.backend:Backend] PLPhotosAccessAllowedResult result is 0
+2026-11-13 11:52:40.990 Df Runner[50430:22574] [com.apple.photos.cpl:cpl] Running CloudPhotoLibrary-852.0.102 on 23F77 (iPhone OS 26.5)
+2026-11-13 11:52:40.993 Df Runner[50430:22574] [com.apple.photos.cpl:engine.library.cplstatus] CPLStatus 0x11cb999f0 at /Users/runner/Library/Developer/CoreSimulator/Devices/15993949-1F95-463A-87B1-D730E736F791/data/Media/PhotoData/CPL/syncstatus.plist for PHPhotoLibrary does not exist - starting empty
+2026-11-13 11:52:41.009 Df Runner[50430:22574] [com.apple.photos.backend:Backend] Capture Session: Forcing Limited Library mode in the client
+2026-11-13 11:52:41.032 A  Runner[50430:22574] (CoreFoundation) Loading Preferences From User Session CFPrefsD
+2026-11-13 11:52:41.117 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.page complete
+2026-11-13 11:52:41.119 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.thumbnail begin
+2026-11-13 11:52:41.185 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.thumbnail complete
+2026-11-13 11:52:41.200 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.import begin
+2026-11-13 11:52:41.254 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.import complete
+2026-11-13 11:52:41.317 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.info begin
+2026-11-13 11:52:41.323 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.info complete
+2026-11-13 11:52:41.323 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.import begin
+2026-11-13 11:52:41.374 Df Runner[50430:2253f] (Flutter) flutter: Native operation: gallery.import failed: 照片访问范围已变化，请刷新相册。
+2026-11-13 11:52:41.896 Df Runner[50430:2253f] (Flutter) flutter: Native operation: account.current begin
+2026-11-13 11:52:41.898 Df Runner[50430:2253f] (Flutter) flutter: Native operation: account.current complete
+2026-11-13 11:52:41.899 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview begin
+2026-11-13 11:52:41.921 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview complete
+2026-11-13 11:52:41.954 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.info begin
+2026-11-13 11:52:41.957 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.info complete
+2026-11-13 11:52:41.960 Df Runner[50430:2253f] (Flutter) flutter: Native operation: library.import begin
+2026-11-13 11:52:41.967 Df Runner[50430:2253f] (Flutter) flutter: Native operation: library.import complete
+2026-11-13 11:52:41.967 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.create begin
+2026-11-13 11:52:41.981 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.create complete
+2026-11-13 11:52:41.982 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.add begin
+2026-11-13 11:52:41.999 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.add complete
+2026-11-13 11:52:41.999 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.add begin
+2026-11-13 11:52:42.007 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.add complete
+2026-11-13 11:52:42.007 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.setPreset begin
+2026-11-13 11:52:42.035 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.setPreset complete
+2026-11-13 11:52:42.035 Df Runner[50430:2253f] (Flutter) flutter: Native operation: library.remove begin
+2026-11-13 11:52:42.047 Df Runner[50430:2253f] (Flutter) flutter: Native operation: library.remove complete
+2026-11-13 11:52:42.048 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.enqueue begin
+2026-11-13 11:52:42.064 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.enqueue complete
+2026-11-13 11:52:42.064 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list begin
+2026-11-13 11:52:42.067 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list complete
+2026-11-13 11:52:42.067 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.begin begin
+2026-11-13 11:52:42.078 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.begin complete
+2026-11-13 11:52:42.078 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.export begin
+2026-11-13 11:52:42.089 Df Runner[50430:22574] (CoreVideo) Pixel format registry initialized. Constant classes enabled.
+2026-11-13 11:52:42.116 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.export complete
+2026-11-13 11:52:42.116 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.finish begin
+2026-11-13 11:52:42.128 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.finish complete
+2026-11-13 11:52:42.128 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.finish begin
+2026-11-13 11:52:42.135 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.finish complete
+2026-11-13 11:52:42.135 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.result begin
+2026-11-13 11:52:42.143 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.result complete
+2026-11-13 11:52:42.147 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.begin begin
+2026-11-13 11:52:42.156 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.begin complete
+2026-11-13 11:52:42.156 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.enqueue begin
+2026-11-13 11:52:42.172 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.enqueue complete
+2026-11-13 11:52:42.173 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.retry begin
+2026-11-13 11:52:42.179 Df Runner[50430:2253f] (Flutter) flutter: Native operation: project.retry complete
+2026-11-13 11:52:42.179 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list begin
+2026-11-13 11:52:42.190 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list complete
+2026-11-13 11:52:42.198 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateInfo begin
+2026-11-13 11:52:42.199 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateInfo complete
+2026-11-13 11:52:42.201 Df Runner[50430:2253f] (Flutter) flutter: Native operation: account.current begin
+2026-11-13 11:52:42.201 Df Runner[50430:2253f] (Flutter) flutter: Native operation: account.current complete
+2026-11-13 11:52:42.202 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list begin
+2026-11-13 11:52:42.205 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list complete
+2026-11-13 11:52:42.205 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.save begin
+2026-11-13 11:52:42.214 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.save complete
+2026-11-13 11:52:42.214 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list begin
+2026-11-13 11:52:42.216 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list complete
+2026-11-13 11:52:42.216 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list begin
+2026-11-13 11:52:42.219 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list failed: 账号状态已改变，请重新打开照片。
+2026-11-13 11:52:42.220 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.remove begin
+2026-11-13 11:52:42.224 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.remove complete
+2026-11-13 11:52:42.224 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list begin
+2026-11-13 11:52:42.225 Df Runner[50430:2253f] (Flutter) flutter: Native operation: toneCards.list complete
+2026-11-13 11:52:42.225 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateSource begin
+2026-11-13 11:52:42.227 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateSource complete
+2026-11-13 11:52:42.237 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load begin
+2026-11-13 11:52:42.240 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load complete
+2026-11-13 11:52:42.240 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:42.334 Df Runner[50430:22574] (Vision) FBBA: creating VNFaceBBoxAligner from VNFaceDetectorRevision2: VNFaceDetectorRevision2
+2026-11-13 11:52:42.410 Df Runner[50430:2256f] [com.apple.xpc:connection] [0x1076212c0] activating connection: mach=false listener=false peer=false name=com.apple.MTLCompilerService
+2026-11-13 11:52:42.534 Df Runner[50430:2256f] [com.apple.xpc:connection] [0x107621a40] activating connection: mach=false listener=false peer=false name=com.apple.MTLCompilerService
+2026-11-13 11:52:42.535 A  Runner[50430:2256a] (Metal) Metal Compiling Shader
+2026-11-13 11:52:42.859 A  Runner[50430:2256a] (Metal) Metal Compiling Shader
+2026-11-13 11:52:43.042 A  Runner[50430:22573] (Metal) Metal Compiling Shader
+2026-11-13 11:52:43.054 A  Runner[50430:2256c] (Metal) Metal Compiling Shader
+2026-11-13 11:52:43.127 A  Runner[50430:22573] (Metal) Metal Compiling Shader
+2026-11-13 11:52:43.138 A  Runner[50430:22573] (Metal) Metal Compiling Shader
+2026-11-13 11:52:43.214 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "293.2728627762746",
+                "409.369474985387"
+            );
+            currentRightTopMean =             (
+                "303.9418038881248",
+                "401.5919045302354"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+                );
+                nativeImageMean =                 (
+                    "293.2728627762746",
+                    "550.630525014613"
+                );
+                nativeTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+2026-11-13 11:52:43.476 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.6688260289718073",
+        "0.4532866718567163",
+        "0.3964126082935593"
+    );
+    meshInputRange =     (
+        "0.02270483",
+        1
+    );
+    meshInputSha256 = 7cd4d47c67252dd4107dcf1ef4aeea771f54eb45750a1e7d6c36ed03cad19c68;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "-3.24921";
+    source = "vision-eyes";
+}
+2026-11-13 11:52:43.526 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.530257941967875",
+        "0.4385205309586695",
+        "0.3886207521885422"
+    );
+    meshInputRange =     (
+        0,
+        1
+    );
+    meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "15.01686";
+    source = "vision-bbox";
+}
+2026-11-13 11:52:43.762 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-bbox"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "293.2728627762746",
+                "409.369474985387"
+            );
+            currentRightTopMean =             (
+                "303.9418038881248",
+                "401.5919045302354"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+                );
+                nativeImageMean =                 (
+                    "293.2728627762746",
+                    "550.630525014613"
+                );
+                nativeTopMean =                 (
+2026-11-13 11:52:43.775 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:43.777 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:43.951 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:43.958 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:44.018 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:44.018 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:44.163 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "288.8794297695807",
+                "421.1475116286004"
+            );
+            currentRightTopMean =             (
+                "295.3338406463077",
+                "408.7582323475903"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286004"
+                );
+                nativeImageMean =                 (
+                    "288.8794297695807",
+                    "538.8524883713995"
+                );
+                nativeTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286005"
+2026-11-13 11:52:44.256 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.7127014196310029",
+        "0.4890364117646016",
+        "0.4277519603175222"
+    );
+    meshInputRange =     (
+        "0.02227042",
+        1
+    );
+    meshInputSha256 = 0e85ab36c51fc60789cb9d5effa2cae8f64fd24574375eddcb68137030bfed41;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "-13.21861";
+    source = "vision-eyes";
+}
+2026-11-13 11:52:44.320 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.530257941967875",
+        "0.4385205309586695",
+        "0.3886207521885422"
+    );
+    meshInputRange =     (
+        0,
+        1
+    );
+    meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "15.01686";
+    source = "vision-bbox";
+}
+2026-11-13 11:52:45.067 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-bbox"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "288.8794297695807",
+                "421.1475116286004"
+            );
+            currentRightTopMean =             (
+                "295.3338406463077",
+                "408.7582323475903"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286004"
+                );
+                nativeImageMean =                 (
+                    "288.8794297695807",
+                    "538.8524883713995"
+                );
+                nativeTopMean =                 (
+2026-11-13 11:52:45.083 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:45.083 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:45.438 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:45.438 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:45.474 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:45.474 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:46.628 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:46.630 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:46.667 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:46.667 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:46.702 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:46.703 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:46.742 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:46.743 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:46.776 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:46.777 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:46.813 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:46.813 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:46.856 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:46.856 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:47.127 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:47.128 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:47.178 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:47.178 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:47.243 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:47.245 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:47.294 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:47.294 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:47.335 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:47.335 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview begin
+2026-11-13 11:52:48.346 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview complete
+2026-11-13 11:52:48.346 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchHeal begin
+2026-11-13 11:52:48.397 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchHeal complete
+2026-11-13 11:52:48.397 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchPatch begin
+2026-11-13 11:52:48.452 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchPatch complete
+2026-11-13 11:52:48.452 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:48.490 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:48.491 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:48.512 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:48.512 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchDescribe begin
+2026-11-13 11:52:48.551 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchDescribe complete
+2026-11-13 11:52:48.555 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load begin
+2026-11-13 11:52:48.558 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load complete
+2026-11-13 11:52:48.559 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:48.579 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze failed: 编辑计算已停止。
+2026-11-13 11:52:48.582 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateSource begin
+2026-11-13 11:52:48.583 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateSource complete
+2026-11-13 11:52:48.591 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load begin
+2026-11-13 11:52:48.597 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load complete
+2026-11-13 11:52:48.597 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:48.757 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "417.0695113604597",
+                "347.1404987866013"
+            );
+            currentRightTopMean =             (
+                "486.6117306707276",
+                "269.076746573741"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+                );
+                nativeImageMean =                 (
+                    "417.0695113604597",
+                    "472.8595012133987"
+                );
+                nativeTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+2026-11-13 11:52:48.826 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.4811403184142335",
+        "0.4182648176418837",
+        "0.3880798318802334"
+    );
+    meshInputRange =     (
+        0,
+        "0.8846493"
+    );
+    meshInputSha256 = 12304f7dc2f4647ed8942fa2862ab454d16aafaf8d2a3ec796b46ba080164310;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "11.80929";
+    source = "vision-eyes";
+}
+2026-11-13 11:52:49.114 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-eyes"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "417.0695113604597",
+                "347.1404987866013"
+            );
+            currentRightTopMean =             (
+                "486.6117306707276",
+                "269.076746573741"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+                );
+                nativeImageMean =                 (
+                    "417.0695113604597",
+                    "472.8595012133987"
+                );
+                nativeTopMean =                 (
+2026-11-13 11:52:49.124 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:49.124 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:49.318 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:49.324 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:49.387 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:49.388 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:49.537 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "360.8715437157132",
+                "380.695256537129"
+            );
+            currentRightTopMean =             (
+                "497.5132440957697",
+                "352.6911390638167"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+                );
+                nativeImageMean =                 (
+                    "360.8715437157132",
+                    "439.304743462871"
+                );
+                nativeTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+2026-11-13 11:52:49.610 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.4495293118644668",
+        "0.4245965437470431",
+        "0.4129477118649447"
+    );
+    meshInputRange =     (
+        "0.1062137",
+        "0.8849958"
+    );
+    meshInputSha256 = 684eba133a44f1530a6d355c404ccf5244424073aee1accca0846a4ad8ac05b2;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "26.34869";
+    source = "vision-eyes";
+}
+2026-11-13 11:52:50.406 Df Runner[50430:22574] (Runner.debug.dylib) HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-eyes"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "360.8715437157132",
+                "380.695256537129"
+            );
+            currentRightTopMean =             (
+                "497.5132440957697",
+                "352.6911390638167"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+                );
+                nativeImageMean =                 (
+                    "360.8715437157132",
+                    "439.304743462871"
+                );
+                nativeTopMean =                 (
+2026-11-13 11:52:50.413 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:50.413 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:50.982 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:50.983 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:51.024 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:51.025 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:52.090 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:52.094 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.133 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.133 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.171 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.172 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.210 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.210 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.247 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.248 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.293 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.293 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.342 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.342 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:52.745 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:52.746 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.797 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.797 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.844 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.845 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.901 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.901 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:52.957 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:52.958 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview begin
+2026-11-13 11:52:54.375 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview complete
+2026-11-13 11:52:54.376 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchHeal begin
+2026-11-13 11:52:54.467 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchHeal complete
+2026-11-13 11:52:54.467 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchPatch begin
+2026-11-13 11:52:54.528 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchPatch complete
+2026-11-13 11:52:54.529 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:54.574 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:54.574 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange begin
+2026-11-13 11:52:54.597 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchChange complete
+2026-11-13 11:52:54.597 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchDescribe begin
+2026-11-13 11:52:54.627 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchDescribe complete
+2026-11-13 11:52:54.629 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load begin
+2026-11-13 11:52:54.632 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load complete
+2026-11-13 11:52:54.632 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:54.650 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze failed: 编辑计算已停止。
+2026-11-13 11:52:54.652 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateSource begin
+2026-11-13 11:52:54.652 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.templateSource complete
+2026-11-13 11:52:54.661 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze begin
+2026-11-13 11:52:54.791 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.retouchAnalyze complete
+2026-11-13 11:52:54.794 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list begin
+2026-11-13 11:52:54.801 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list complete
+2026-11-13 11:52:54.811 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.823 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.829 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.833 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.836 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.844 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.861 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.876 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.889 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.895 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.898 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.911 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.942 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.949 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.956 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.960 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.964 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:54.981 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:54.994 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.008 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.012 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.016 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.018 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.029 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.043 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.056 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.061 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.065 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.067 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.083 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.091 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.099 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.103 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.107 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.109 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.123 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.130 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.139 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.142 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.147 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.148 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.156 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.163 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.171 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.174 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.181 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.183 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.191 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.199 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.exportPreview begin
+2026-11-13 11:52:55.223 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.exportPreview complete
+2026-11-13 11:52:55.225 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.exportPreviewClose begin
+2026-11-13 11:52:55.232 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.exportPreviewClose complete
+2026-11-13 11:52:55.235 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail begin
+2026-11-13 11:52:55.335 Df Runner[50430:2256c] [com.apple.xpc:connection] [0x1076217c0] activating connection: mach=true listener=false peer=false name=com.apple.mobileassetd.v2
+2026-11-13 11:52:55.335 Df Runner[50430:2256c] [com.apple.MobileAsset:V2] Creating client/daemon connection: 56726843-EC8E-4EF1-9B01-6454820D6EF2
+2026-11-13 11:52:55.342 Df Runner[50430:2256c] [com.apple.MobileAsset:V2] Got the query meta data reply for: com.apple.MobileAsset.RawCamera.Camera, response: 2
+2026-11-13 11:52:55.342 E  Runner[50430:2256c] [com.apple.rawcamera:mobileasset] GetMobileAssetCatalog_block_invoke Failed to query metadata (Err: 2)
+2026-11-13 11:52:55.354 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.rawThumbnail complete
+2026-11-13 11:52:55.369 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list begin
+2026-11-13 11:52:55.382 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list complete
+2026-11-13 11:52:55.393 Df Runner[50430:2253f] (Flutter) flutter: Native operation: account.current begin
+2026-11-13 11:52:55.395 Df Runner[50430:2253f] (Flutter) flutter: Native operation: account.current complete
+2026-11-13 11:52:55.665 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load begin
+2026-11-13 11:52:55.670 Df Runner[50430:2253f] (Flutter) flutter: Native operation: draft.load complete
+2026-11-13 11:52:55.670 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list begin
+2026-11-13 11:52:55.684 Df Runner[50430:2253f] (Flutter) flutter: Native operation: version.list complete
+2026-11-13 11:52:55.717 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview begin
+2026-11-13 11:52:55.728 Df Runner[50430:2253f] (Flutter) flutter: Native operation: media.reviewPreview failed: 编辑数组长度无效。
+2026-11-13 11:52:55.732 Df Runner[50430:2253f] (Flutter) flutter: Native pipeline: semantics remaining 2
+2026-11-13 11:52:55.744 Df Runner[50430:2256c] [com.apple.MobileAsset:V2] Got the download meta data reply for com.apple.MobileAsset.RawCamera.Camera, response: 0 (MADownloadSuccessful)
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: The following AppFailure was thrown running a test:
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: 编辑数组长度无效。
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter:
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: When the exception was thrown, this was the stack:
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: #0      HueviaCore._invoke (package:huevia/domain.dart:65:7)
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.775 Df Runner[50430:2253f] (Flutter) flutter: #1      HueviaCore.call (package:huevia/domain.dart:77:22)
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: #2      PipelineCore.call (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/integration_test/native_pipeline_test.dart:31:22)
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: #3      verifyDetailRendering (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/integration_test/detail_render_fixture.dart:67:21)
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: #4      main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/integration_test/native_pipeline_test.dart:283:7)
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+2026-11-13 11:52:55.776 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter: #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter: #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter: <asynchronous suspension>
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter:
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter: The test description was:
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter:   Native codecs and LibRaw retain originals, dimensions and white highlights
+2026-11-13 11:52:55.777 Df Runner[50430:2253f] (Flutter) flutter: ════════════════════════════════════════════════════════════════════════════════════════════════════
+2026-11-13 11:52:55.780 Df Runner[50430:2253f] (Flutter) flutter: 00:16 +1: Native codecs and LibRaw retain originals, dimensions and white highlights [E]
+2026-11-13 11:52:55.780 Df Runner[50430:2253f] (Flutter) flutter:   Test failed. See exception logs above.
+  The test description was: Native codecs and LibRaw retain originals, dimensions and white highlights
+2026-11-13 11:52:55.780 Df Runner[50430:2253f] (Flutter) flutter:
+2026-11-13 11:52:55.783 Df Runner[50430:2253f] (Flutter) flutter: 00:16 +1 -1: (tearDownAll)
+2026-11-13 11:52:55.786 Df Runner[50430:2253f] (Flutter) flutter: 00:16 +2 -1: Some tests failed.
+2026-11-13 11:52:55.934 Df Runner[50430:2256c] [com.apple.MobileAsset:V2] Got the query meta data reply for: com.apple.MobileAsset.RawCamera.Camera, response: 0
+getpwuid_r did not find a match for uid 501
