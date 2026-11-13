@@ -1,7 +1,7 @@
 const base = new URL('../', import.meta.url), byId = id => document.getElementById(id);
 const legacyOrigin = 'https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com';
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
-const MAX_APK_BYTES = 32 * 1024 * 1024;
+const MAX_APK_BYTES = 100 * 1024 * 1024;
 
 export function releaseDownloadUrl(release, currentBase = base) {
   if (!release || !/^[a-f0-9]{64}$/.test(release.sha256) || !/^[a-f0-9]{64}$/.test(release.signerSha256)

@@ -55,7 +55,7 @@ test('invalid size headers stop and cancel the source instead of buffering it', 
 test('invalid identities and metadata are rejected before any network read', async () => {
   let reads = 0;
   const storage = new CosReleaseStorage({...config,fetchImpl:async()=>{reads++;return stream();}});
-  for (const args of [[path,payload.length,'a'.repeat(64)],[path,0,hash(payload)],[path,33554433,hash(payload)],[path,NaN,hash(payload)],['../'+path,payload.length,hash(payload)],['app-upload/fixture.part',payload.length,hash(payload)]]) {
+  for (const args of [[path,payload.length,'a'.repeat(64)],[path,0,hash(payload)],[path,104857601,hash(payload)],[path,NaN,hash(payload)],['../'+path,payload.length,hash(payload)],['app-upload/fixture.part',payload.length,hash(payload)]]) {
     await assert.rejects(storage.verify(...args),e=>e.code==='COS_RELEASE_UNAVAILABLE');
   }
   assert.equal(reads,0);

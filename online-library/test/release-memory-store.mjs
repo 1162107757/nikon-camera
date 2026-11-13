@@ -15,7 +15,7 @@ export class ReleaseMemoryStore extends MemoryStore {
     if(name==='nikon_release_budget_atomic'||name==='nikon_release_download_budget')return this.releaseBudgetDenied?error('BUDGET'):{allowed:true};
     if(!this.admins.has(p.p_actor)||this.admins.get(p.p_actor).disabled)return error('FORBIDDEN');
     if(name==='nikon_app_upload_budget'){
-      if((p.p_count_request&&this.uploadBudgetRequests>=256)||this.uploadBudgetBytes+p.p_bytes>67108864)return error('BUDGET');
+      if((p.p_count_request&&this.uploadBudgetRequests>=256)||this.uploadBudgetBytes+p.p_bytes>838860800)return error('BUDGET');
       this.uploadBudgetRequests+=p.p_count_request?1:0;this.uploadBudgetBytes+=p.p_bytes;return{allowed:true};
     }
     if(name==='nikon_app_upload_begin'){const id=randomUUID();this.uploads.set(id,{id,actor:p.p_actor,byteLength:p.p_size,notes:p.p_notes,channel:p.p_channel,status:'uploading',chunks:[]});return{uploadId:id,expiresAt:new Date(Date.now()+3600000).toISOString()};}

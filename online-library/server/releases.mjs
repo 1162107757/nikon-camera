@@ -71,6 +71,7 @@ export function selectRelease(row, { channel = 'stable', versionCode = 0, sdk = 
 export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = '/preset-library', trustedProxyHops = 0, trustedProxyAddresses, trustedForwardedProxyAddresses,
   readBundledApk = name => readFile(new URL(`./bundled-apks/${name}`, import.meta.url)) }) {
   const releases = new ReleaseStore(store), prefix = basePath.replace(/\/$/, ''), base = new URL(publicBaseUrl).origin + prefix;
+  let assemblyTail = Promise.resolve(), assemblyWaiters = 0;
   const mobile = createMobileReleaseRoutes({ store, storage, publicBaseUrl, basePath, trustedProxyHops, trustedProxyAddresses, trustedForwardedProxyAddresses });
   const source = createAbuseContext({ store, secret: store.serviceKey || 'app-releases-local-source-budget-v1', trustedProxyHops, trustedProxyAddresses, trustedForwardedProxyAddresses });
   const staticFiles = { 'index.html': 'text/html; charset=utf-8', 'download.js': 'text/javascript; charset=utf-8', 'download.css': 'text/css; charset=utf-8', 'tokens.css': 'text/css; charset=utf-8', 'icon.png': 'image/png', 'qr.js': 'text/javascript; charset=utf-8', 'preview-community.png':'image/png', 'preview-submission.png':'image/png', 'preview-messages.png':'image/png' };
@@ -174,11 +175,11 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     }
     if (path === '/api/releases/uploads' && req.method === 'POST') {
       const body = await readJson(req);
-      if (!Number.isInteger(body.byteLength) || body.byteLength < 1 || body.byteLength > MAX_APK_BYTES) throw new ServiceError(400, 'INVALID_APK_SIZE', '请选择不超过 32 MiB 的 APK。');
+      if (!Number.isInteger(body.byteLength) || body.byteLength < 1 || body.byteLength > MAX_APK_BYTES) throw new ServiceError(400, 'INVALID_APK_SIZE', '请选择不超过 100 MiB 的 APK。');
       const result = await releases.rpc('nikon_app_upload_begin', { p_actor: actor, p_size: body.byteLength, p_channel: channelOf(body.channel), p_notes: notesOf(body.notes) });
       json(res, { ...result, chunkBytes: APK_CHUNK_BYTES, maxApkBytes: MAX_APK_BYTES }, 201); return true;
     }
-    const upload = /^\/api\/releases\/uploads\/([a-f0-9-]+)(?:\/(chunks\/(0|[1-9]|[1-5][0-9]|6[0-3])|complete))?$/.exec(path);
+    const upload = /^\/api\/releases\/uploads\/([a-f0-9-]+)(?:\/(chunks\/(0|[1-9][0-9]?|1[0-9]{2})|complete))?$/.exec(path);
     if (upload && UUID.test(upload[1])) {
       const uploadId = upload[1];
       if (upload[2]?.startsWith('chunks/') && req.method === 'PUT') {
@@ -195,14 +196,28 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
       }
       if (upload[2] === 'complete' && req.method === 'POST') {
         await readJson(req);
+        if (assemblyWaiters >= 4) throw new ServiceError(429, 'UPLOAD_BUSY', '安装包正在校验，请稍后重试。');
+        const previous = assemblyTail; let releaseAssembly;
+        assemblyTail = new Promise(resolve => { releaseAssembly = resolve; }); assemblyWaiters++;
+        await previous;
+        try {
+        if (req.aborted || res.destroyed) throw new ServiceError(499, 'REQUEST_CANCELLED', '上传校验请求已取消。');
         const task = await releases.rpc('nikon_app_upload_claim', { p_actor: actor, p_id: uploadId });
-        const chunks = [];
+        if (!Number.isInteger(task.byteLength) || task.byteLength < 1 || task.byteLength > MAX_APK_BYTES
+            || !Array.isArray(task.chunks) || task.chunks.length !== Math.ceil(task.byteLength / APK_CHUNK_BYTES)) {
+          throw new ServiceError(400, 'UPLOAD_SIZE_MISMATCH', 'APK 大小不一致。');
+        }
+        // Allocate once: retaining every chunk plus Buffer.concat would double peak
+        // package memory at 100 MiB. Only one bounded chunk is held during assembly.
+        const apk = Buffer.allocUnsafe(task.byteLength); let offset = 0;
         for (const chunk of task.chunks) {
           const data = await storage.get(chunk.path, APK_CHUNK_BYTES);
-          if (data.length !== chunk.size || digest(data) !== chunk.sha256) throw new ServiceError(400, 'UPLOAD_CHANGED', '上传分块校验失败，请重新上传。');
-          chunks.push(data);
+          if (chunk.index !== offset / APK_CHUNK_BYTES || data.length !== Math.min(APK_CHUNK_BYTES, task.byteLength - offset)
+              || data.length !== chunk.size || digest(data) !== chunk.sha256) throw new ServiceError(400, 'UPLOAD_CHANGED', '上传分块校验失败，请重新上传。');
+          data.copy(apk, offset); offset += data.length;
         }
-        const apk = Buffer.concat(chunks), metadata = inspectApk(apk), storagePath = `app-releases/${metadata.sha256}.bin`;
+        if (offset !== task.byteLength) throw new ServiceError(400, 'UPLOAD_SIZE_MISMATCH', 'APK 大小不一致。');
+        const metadata = inspectApk(apk), storagePath = `app-releases/${metadata.sha256}.bin`;
         if (metadata.byteLength !== task.byteLength) throw new ServiceError(400, 'UPLOAD_SIZE_MISMATCH', 'APK 大小不一致。');
         await uploadBudget(apk.length);
         // Keep the immutable APK bytes; the storage key/MIME are opaque because
@@ -211,6 +226,7 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
         await storage.put(storagePath, apk, 'application/octet-stream');
         const row = await releases.rpc('nikon_app_release_create', { p_actor: actor, p_upload_id: uploadId, p_metadata: metadata, p_path: storagePath });
         json(res, { release: adminView(row, base) }, 201); return true;
+        } finally { assemblyWaiters--; releaseAssembly(); }
       }
     }
     const match = /^\/api\/releases\/([a-f0-9-]+)(?:\/(publish|withdraw|audit|policy))?$/.exec(path);

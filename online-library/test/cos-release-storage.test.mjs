@@ -8,6 +8,11 @@ const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const config = { region: 'ap-shanghai', bucket: 'example-updates-1250000000', prefix: 'huevia-updates/',
   downloadOrigin: 'https://download.huevia.cc', secretId: 'test-secret-id', secretKey: 'synthetic-key-never-used-on-a-service' };
 const body = Buffer.from('test-only bounded COS object'), path = 'app-releases/' + digest(body) + '.bin';
+test('legacy COS chunk paths support the full 100 MiB upload range without aliases',()=>{
+  const storage=new CosReleaseStorage(config),base='app-upload/87654321-1234-4567-89ab-123456789abc/';
+  for(const index of ['0','63','64','100','199'])assert.ok(storage.key(base+index+'-'+digest(body)+'.part'));
+  for(const index of ['200','999','01','-1'])assert.throws(()=>storage.key(base+index+'-'+digest(body)+'.part'));
+});
 function fake() {
   const objects = new Map(), signer = new CosReleaseStorage(config).context().client;
   return { objects, getObjectUrl: signer.getObjectUrl.bind(signer), putObject(params, callback) {

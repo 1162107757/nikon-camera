@@ -67,21 +67,21 @@ import { pathToFileURL } from 'node:url';
 const input = JSON.parse(readFileSync(0, 'utf8'));
 const apk = await import(pathToFileURL(input.apkModule));
 const ipa = await import(pathToFileURL(input.ipaModule));
-if (apk.MAX_APK_BYTES !== 32 * 1024 * 1024 || apk.MAX_NEXT_APK_BYTES !== 128 * 1024 * 1024 ||
+if (apk.MAX_APK_BYTES !== 100 * 1024 * 1024 || apk.MAX_NEXT_APK_BYTES !== 128 * 1024 * 1024 ||
     JSON.stringify(apk.APK_PACKAGES) !== JSON.stringify(['cc.huevia', 'com.nikonpreset.usbprobe']) ||
     apk.APK_SIGNER_SHA256 !== '04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31' ||
     apk.APK_PACKAGES.some(name => apk.APK_SIGNERS[name] !== apk.APK_SIGNER_SHA256)) throw Error('Legacy release trust boundary changed');
 let defaultLimit = false;
 try { apk.inspectApk(Buffer.alloc(apk.MAX_APK_BYTES + 1)); }
-catch (error) { defaultLimit = /32 MiB/.test(error.message); }
-if (!defaultLimit) throw Error('Default inspectApk must reject above 32 MiB before ZIP parsing');
+catch (error) { defaultLimit = /100 MiB/.test(error.message); }
+if (!defaultLimit) throw Error('Default inspectApk must reject above 100 MiB before ZIP parsing');
 const result = [];
 for (const item of input.artifacts) {
   const bytes = readFileSync(item.path);
   const metadata = item.platform === 'android' ? apk.inspectApk(bytes, {packageName: 'cc.huevia.next'}) : ipa.inspectIpa(bytes);
   result.push({...item, metadata});
 }
-console.log(JSON.stringify({defaultLegacy32MiBGuardVerified: true, artifacts: result}));
+console.log(JSON.stringify({defaultLegacy100MiBGuardVerified: true, artifacts: result}));
 '''
 
 if args.production_capture:
@@ -334,7 +334,7 @@ readiness = {'artifactsComplete': len(artifacts) == 3, 'productionRollbackComple
 artifact_binding = {'schema': 1, 'expectedVersionCode': 213, 'artifacts': artifacts,
     'androidSourceRevisionDeclared': android_source_revision, 'sourceRevisionIsNotARebuildAttestation': True,
     'androidSigningAlignmentEvidence': 'evidence/android-signing-alignment.json' if evidence_bytes else None,
-    'defaultLegacy32MiBGuardVerified': inspected['defaultLegacy32MiBGuardVerified'],
+    'defaultLegacy100MiBGuardVerified': inspected['defaultLegacy100MiBGuardVerified'],
     'qqExternalAcceptance': {'androidRegistration': 'user said possible; actual saved registration remains unverified',
                              'iosUniversalLink': 'user explicitly said not configured'},
     'readiness': readiness}

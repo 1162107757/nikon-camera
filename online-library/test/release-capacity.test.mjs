@@ -22,18 +22,31 @@ function fixture() {
   return {request,store,objects,writes};
 }
 
-test('APK capacity accepts 32 MiB declarations and chunk 63; rejects overflow and noncanonical indices',async()=>{
-  assert.equal(MAX_APK_BYTES,33554432);assert.equal(APK_CHUNK_BYTES,524288);
-  assert.throws(()=>inspectApk(Buffer.alloc(MAX_APK_BYTES+1)),/32 MiB/);
+test('APK capacity accepts 100 MiB declarations and chunk 199; rejects overflow and noncanonical indices',async()=>{
+  assert.equal(MAX_APK_BYTES,104857600);assert.equal(APK_CHUNK_BYTES,524288);
+  assert.throws(()=>inspectApk(Buffer.alloc(MAX_APK_BYTES+1)),/100 MiB/);
   const {request,objects}=fixture();
   const task=await request('/api/releases/uploads','POST',{byteLength:MAX_APK_BYTES,channel:'beta',notes:'Synthetic local boundary fixture'});
   assert.equal(task.status,201);assert.equal(task.value.maxApkBytes,MAX_APK_BYTES);
   const base=`/api/releases/uploads/${task.value.uploadId}/chunks/`;
   const chunk=Buffer.alloc(APK_CHUNK_BYTES,7);
-  for(const index of [8,18,63]) assert.equal((await request(base+index,'PUT',chunk)).status,200);
-  assert.equal(objects.size,3);
-  for(const index of ['64','100','08','-1'])await assert.rejects(()=>request(base+index,'PUT',chunk),error=>error.status===404);
+  for(const index of [8,63,64,100,199]) assert.equal((await request(base+index,'PUT',chunk)).status,200);
+  assert.equal(objects.size,5);
+  for(const index of ['200','999','08','-1'])await assert.rejects(()=>request(base+index,'PUT',chunk),error=>error.status===404);
   for(const byteLength of [0,MAX_APK_BYTES+1,1.5])await assert.rejects(()=>request('/api/releases/uploads','POST',{byteLength,channel:'beta',notes:'Synthetic overflow'}),error=>error.code==='INVALID_APK_SIZE');
+});
+
+test('completion assembly is serialized; cancellation does not claim a queued upload and failures release the queue',async()=>{
+  const store=new ReleaseMemoryStore();store.admins.set('admin',{username:'admin',disabled:false});
+  let release,entered;const gate=new Promise(resolve=>{release=resolve;}),reading=new Promise(resolve=>{entered=resolve;});let gets=0;
+  const routes=createReleaseRoutes({store,publicBaseUrl:'https://capacity.test',storage:{get:async()=>{gets++;if(gets===1){entered();await gate;}return Buffer.alloc(4);}}});
+  async function prepared(){const {uploadId}=await store.rpc('nikon_app_upload_begin',{p_actor:'admin',p_size:4,p_channel:'beta',p_notes:'fixture'});await store.rpc('nikon_app_upload_chunk',{p_actor:'admin',p_id:uploadId,p_index:0,p_size:4,p_sha256:createHash('sha256').update(Buffer.alloc(4)).digest('hex'),p_path:'fixture'});return uploadId;}
+  const ids=await Promise.all([prepared(),prepared(),prepared()]);
+  const complete=(id,req={method:'POST'})=>routes.adminRoute(req,{},{path:`/api/releases/uploads/${id}/complete`,session:{username:'admin'},readJson:async()=>({}),json:()=>{}});
+  const first=assert.rejects(complete(ids[0]),{code:'INVALID_APK'});await reading;
+  const req={method:'POST',aborted:false},second=assert.rejects(complete(ids[1],req),{code:'REQUEST_CANCELLED'}),third=assert.rejects(complete(ids[2]),{code:'INVALID_APK'});
+  await new Promise(resolve=>setTimeout(resolve,10));assert.equal(gets,1);req.aborted=true;release();
+  await Promise.all([first,second,third]);assert.equal(gets,2);assert.equal(store.uploads.get(ids[1]).status,'uploading');
 });
 
 let candidate;

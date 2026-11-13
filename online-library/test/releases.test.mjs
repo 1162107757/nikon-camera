@@ -140,8 +140,8 @@ test('upload conflict and zero-byte requests are bounded before storage; reserva
   assert.equal(store.uploadBudgetBytes,6*524288,'conflicting requests still consume the actual-byte budget');
   await assert.rejects(()=>chunk(original,'rootmain'),error=>error.code==='RELEASE_UPLOAD_EXPIRED','a different valid administrator cannot write another upload task');
   for(const actor of ['missing','disabled'])await assert.rejects(()=>chunk(original,actor),error=>error.code==='RELEASE_FORBIDDEN');
-  store.uploadBudgetBytes=67108864-original.length;
-  await chunk(original);assert.equal(store.uploadBudgetBytes,67108864);
+  store.uploadBudgetBytes=838860800-original.length;
+  await chunk(original);assert.equal(store.uploadBudgetBytes,838860800);
   await assert.rejects(()=>chunk(original),error=>error.code==='RELEASE_BUDGET');assert.equal(writes.length,2,'exhausted budget prevents another put');
   store.uploadBudgetRequests=255;
   await assert.rejects(()=>chunk(Buffer.alloc(0)),error=>error.code==='EMPTY_CHUNK');

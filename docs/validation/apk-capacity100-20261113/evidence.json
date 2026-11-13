@@ -1,0 +1,135 @@
+{
+  "date": "2026-11-13",
+  "maxApkBytes": 104857600,
+  "chunkBytes": 524288,
+  "maxChunkIndex": 199,
+  "declaredUploadAllowancePerDay": 419430400,
+  "actualWriteAllowancePerDay": 838860800,
+  "configuration": {
+    "nikon-preset-library": {
+      "status": "Active",
+      "configurationPreserved": true,
+      "memoryMiB": 256,
+      "timeoutSeconds": 60
+    },
+    "huevia-data-backup": {
+      "status": "Active",
+      "configurationPreserved": true,
+      "memoryMiB": 512,
+      "timeoutSeconds": 900
+    }
+  },
+  "database": {
+    "publishedRecordsAndPoliciesPreserved": true,
+    "usagePreservedInsideLockedMigration": true,
+    "functionGrantsPreserved": true,
+    "priorReleaseCount": 32
+  },
+  "http": {
+    "admin": {
+      "status": 200,
+      "sha256": "596b41fa748ffc1a35f4b4cbd6fdf60f9c4325aaab17be0f613f62a1a293b300",
+      "capacity100MiB": true
+    },
+    "download": {
+      "status": 200,
+      "sha256": "fa5f6df980dc5e36d53a16f05a9947442f964766d69b2fa6287375278a633002",
+      "capacity100MiB": true
+    },
+    "adminUnauthenticatedStatus": 401,
+    "database": {
+      "lastChunk": "true",
+      "maxAccepted": true,
+      "overflowSize": "INVALID",
+      "overflowChunk": "INVALID"
+    }
+  },
+  "candidate": {
+    "exactBytes": 104857600,
+    "sha256": "c510c3e440a0bc68ca2396066e7716aed32130649c1c4e974623e923e247c308",
+    "signatureSchemes": [
+      2,
+      3
+    ],
+    "full200ChunkRoundTrip": true,
+    "draftOnly": true,
+    "unchangedMandatoryDefault": true,
+    "overflowRejected": true,
+    "tamperedContentRejected": true,
+    "cosChunk199Accepted": true,
+    "cosChunk200Rejected": true,
+    "backup100MiBAccepted": true,
+    "actualWriteCharge": 209715200
+  },
+  "deployment": {
+    "nikon-preset-library": {
+      "entries": 51,
+      "changedOnly": [
+        "server/apk.mjs",
+        "server/releases.mjs",
+        "admin/releases.js",
+        "download/download.js",
+        "server/cos-release-storage.mjs"
+      ],
+      "readbackPayloadAndModesMatch": true,
+      "deployedZipSha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a"
+    },
+    "huevia-data-backup": {
+      "entries": 8,
+      "changedOnly": [
+        "backup/core.mjs",
+        "backup/recovery/schema-migrations.sql"
+      ],
+      "readbackPayloadAndModesMatch": true,
+      "deployedZipSha256": "45ffbc6a70086a7848d26418bc575548b25e7331b20e21f82c09c096c83f3504"
+    }
+  },
+  "tests": {
+    "focused.log": [
+      "# tests 34",
+      "# pass 31",
+      "# fail 0",
+      "# skipped 3"
+    ],
+    "full-tests.log": [
+      "# tests 239",
+      "# pass 233",
+      "# fail 0",
+      "# skipped 6"
+    ],
+    "check.log": [
+      "Syntax/source checks passed: 84 JavaScript modules"
+    ]
+  },
+  "sources": [
+    {
+      "path": "online-library/admin/releases.js",
+      "sha256": "596b41fa748ffc1a35f4b4cbd6fdf60f9c4325aaab17be0f613f62a1a293b300"
+    },
+    {
+      "path": "online-library/backup/core.mjs",
+      "sha256": "c5a72a5020a8f1039001f8a1a03fbf1e90190126ba132a669ded2c84f08f095b"
+    },
+    {
+      "path": "online-library/download/download.js",
+      "sha256": "fa5f6df980dc5e36d53a16f05a9947442f964766d69b2fa6287375278a633002"
+    },
+    {
+      "path": "online-library/server/apk.mjs",
+      "sha256": "34c54a933d9c8619a2dd1349e0b1f19e93fa9e3d2f3336583b0d4a391116e2e5"
+    },
+    {
+      "path": "online-library/server/releases.mjs",
+      "sha256": "524fed9f2346b3094930114dbd1d18c087aa1e644715b003b412474c486c840b"
+    },
+    {
+      "path": "online-library/server/cos-release-storage.mjs",
+      "sha256": "5129f98de4ed755f99932a395f1bf222538bc11c6260f70832d084256dc17382"
+    },
+    {
+      "path": "online-library/database/023-app-release-100mib.sql",
+      "sha256": "fd2b381839503caf715db85f1ffdcd3add82a8d415f1af824169a8a487e5497f"
+    }
+  ],
+  "scope": "Existing production legacy Android channel only. Unpublished mobile release code was not included. Exact-size signed APK round-trip was performed locally against frozen production candidate code. Live SQL boundary probes were rolled back; no new release was uploaded or published in production."
+}

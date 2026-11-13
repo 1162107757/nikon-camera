@@ -5,6 +5,12 @@ import {runBackup,pruneOldBackups,inspectSnapshot,safePath,digest} from '../back
 import {credentialsForInvocation,cloudbaseReader,cosStorage,readBounded,invocationAction} from '../backup/runtime.mjs';
 const id='87654321-1234-4567-89ab-123456789abc',now=new Date('2026-11-09T10:00:00Z');
 const payload=Buffer.from('real file bytes'),hash=digest(payload);
+test('legacy release backup accepts 100 MiB metadata and rejects one byte above the cap',()=>{
+  const snapshot=fixture();snapshot.tables['public.nikon_app_releases'][0].byte_length=104857600;
+  assert.equal(inspectSnapshot(Buffer.from(JSON.stringify(snapshot))).sources.find(item=>item.provider==='cos').size,104857600);
+  snapshot.tables['public.nikon_app_releases'][0].byte_length++;
+  assert.throws(()=>inspectSnapshot(Buffer.from(JSON.stringify(snapshot))),/INVALID_RELEASE/);
+});
 function fixture(){return {format:'huevia-data-backup-v1',capturedAt:now.toISOString(),columns:[],functions:[],tables:{
   'storage.buckets':[{id:'nikon-presets',public:false}],
   'storage.objects':[{bucket_id:'nikon-presets',name:'presets/file.np3',metadata:{size:payload.length}}],

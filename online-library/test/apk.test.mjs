@@ -33,6 +33,6 @@ test('v3 stripping, unpinned signer, wrong package, oversized input and truncate
   assert.throws(()=>inspectApk(stripped),/不支持|v3 签名被移除/);
   const extra=Buffer.from(apk),padding=signingBlocks(apk).blocks.get(0x42726577);extra.writeUInt32LE(0x12345678,padding.at);
   assert.throws(()=>inspectApk(extra),/不支持的签名或附加块/,'an injected unknown higher-scheme block cannot alter Android verifier selection');
-  assert.throws(()=>inspectApk(Buffer.alloc(MAX_APK_BYTES+1)),/32 MiB/);
+  assert.throws(()=>inspectApk(Buffer.alloc(MAX_APK_BYTES+1)),/100 MiB/);
   for(const length of [0,8,100,apk.length-1,apk.length-22])assert.throws(()=>inspectApk(apk.subarray(0,length)),error=>error.code==='INVALID_APK');
 });

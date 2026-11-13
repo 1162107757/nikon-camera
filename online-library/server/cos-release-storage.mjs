@@ -6,7 +6,7 @@ import { MAX_APK_BYTES } from './apk.mjs';
 import { MAX_IPA_BYTES } from './ipa.mjs';
 
 const APK = /^app-releases\/([a-f0-9]{64})\.(?:apk|bin)$/;
-const CHUNK = /^app-upload\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\/(?:0|[1-9]|[1-5][0-9]|6[0-3])-([a-f0-9]{64})\.part$/;
+const CHUNK = /^app-upload\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\/(?:0|[1-9][0-9]?|1[0-9]{2})-([a-f0-9]{64})\.part$/;
 const MOBILE = /^mobile-releases\/(ios|android)\/([a-f0-9]{64})\.bin$/;
 const MOBILE_CHUNK = /^mobile-upload\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\/(?:0|[1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5])-([a-f0-9]{64})\.part$/;
 const objectHash = path => (APK.exec(path) || CHUNK.exec(path) || MOBILE_CHUNK.exec(path))?.[1] || MOBILE.exec(path)?.[2];
@@ -68,6 +68,10 @@ export class CosReleaseStorage {
         Headers: { 'x-cos-forbid-overwrite': 'true' } }, (error, result) => error ? reject(error) : resolve(result)));
     } catch (error) {
       if (!['FileAlreadyExists', 'ObjectAlreadyExists', 'ObjectAlreadyExist'].includes(error?.code || error?.Code)) throw unavailable();
+      if (APK.test(path) || MOBILE.test(path)) {
+        if (!await this.verify(path, data.length, expected)) throw unavailable();
+        return;
+      }
       const existing = await this.get(path, maximum);
       if (existing.length !== data.length || hash(existing) !== expected) throw unavailable();
     }

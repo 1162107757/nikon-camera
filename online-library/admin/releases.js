@@ -16,7 +16,7 @@ export function mountReleases(container, { api, onError = () => {} } = {}) {
   const message = node('p', 'release-message'); message.setAttribute('role','status'); shell.append(message);
   const uploadForm = node('form', 'release-upload'); uploadForm.hidden = true;
   const fileField = node('div','field'), fileLabel = node('label','','已签名 APK'), file = node('input'); file.type='file'; file.accept='.apk,application/vnd.android.package-archive'; file.id='release-apk'; fileLabel.htmlFor=file.id; file.required=true;
-  fileField.append(fileLabel,file,node('small','','最大 32 MiB。包名、版本号、最低 Android 版本和签名由服务器读取并校验。'));
+  fileField.append(fileLabel,file,node('small','','最大 100 MiB。包名、版本号、最低 Android 版本和签名由服务器读取并校验。'));
   const channelField = node('div','field'), channelLabel = node('label','','发布渠道'), channel = node('select'); channel.id='release-channel'; channelLabel.htmlFor=channel.id;
   for(const [value,label] of [['stable','正式版'],['beta','测试版']]){ const option=node('option','',label);option.value=value;channel.append(option); }
   channelField.append(channelLabel,channel);
@@ -45,7 +45,7 @@ export function mountReleases(container, { api, onError = () => {} } = {}) {
   }
   uploadForm.addEventListener('submit',async event=>{
     event.preventDefault();if(busy)return; const apk=file.files[0];
-    if(!apk||!apk.name.toLowerCase().endsWith('.apk')||apk.size<1||apk.size>33554432){report(new Error('请选择不超过 32 MiB 的 APK。'));return;}
+    if(!apk||!apk.name.toLowerCase().endsWith('.apk')||apk.size<1||apk.size>104857600){report(new Error('请选择不超过 100 MiB 的 APK。'));return;}
     if(!notes.value.trim()){notes.focus();return;}
     busy=true;submit.disabled=true;uploadButton.disabled=true;cancel.disabled=true;error.hidden=true;
     try{

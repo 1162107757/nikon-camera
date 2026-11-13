@@ -26,7 +26,7 @@ test('actual 212 APK has its own pinned signer; old and new package signers cann
   const next = inspectApk(nextApk, { packageName: 'cc.huevia.next' }), old = inspectApk(oldApk);
   assert.equal(next.packageName, 'cc.huevia.next');assert.equal(next.versionCode, 212);assert.equal(next.signerSha256, NEXT_APK_SIGNER_SHA256);assert.equal(next.byteLength, 51309171);
   assert.equal(old.signerSha256, APK_SIGNER_SHA256);assert.equal(APK_SIGNERS['cc.huevia'], APK_SIGNER_SHA256);assert.equal(APK_SIGNERS['com.nikonpreset.usbprobe'], APK_SIGNER_SHA256);
-  assert.throws(() => inspectApk(nextApk), /32 MiB/);
+  assert.throws(() => inspectApk(nextApk), /100 MiB|包名与现有 Huevia 不兼容/);
   assert.throws(() => inspectApk(nextApk, { packageName: 'cc.huevia.next', signerSha256: APK_SIGNER_SHA256 }), { code: 'INVALID_APK' });
   assert.throws(() => inspectApk(oldApk, { signerSha256: NEXT_APK_SIGNER_SHA256 }), { code: 'INVALID_APK' });
   assert.throws(() => inspectApk(nextApk, { packageName: 'cc.huevia' }), { code: 'INVALID_APK' });

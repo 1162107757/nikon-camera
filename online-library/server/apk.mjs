@@ -2,7 +2,7 @@ import { createHash, verify, X509Certificate, constants } from 'node:crypto';
 import { inflateRawSync } from 'node:zlib';
 import { ServiceError } from './cloudbase.mjs';
 
-export const MAX_APK_BYTES = 32 * 1024 * 1024;
+export const MAX_APK_BYTES = 100 * 1024 * 1024;
 export const MAX_NEXT_APK_BYTES = 128 * 1024 * 1024;
 export const APK_PACKAGE = 'cc.huevia';
 export const LEGACY_APK_PACKAGE = 'com.nikonpreset.usbprobe';
@@ -222,12 +222,12 @@ export function inspectApk(input, { packageName, signerSha256 } = {}) {
   try {
     const apk = Buffer.isBuffer(input) ? input : Buffer.from(input);
     const limit = packageName === NEXT_APK_PACKAGE ? MAX_NEXT_APK_BYTES : MAX_APK_BYTES;
-    if (!apk.length || apk.length > limit) fail(packageName === NEXT_APK_PACKAGE ? '请选择不超过 128 MiB 的新版 APK 安装包。' : '请选择不超过 32 MiB 的 APK 安装包。');
+    if (!apk.length || apk.length > limit) fail(packageName === NEXT_APK_PACKAGE ? '请选择不超过 128 MiB 的新版 APK 安装包。' : '请选择不超过 100 MiB 的 APK 安装包。');
     const parsed = zip(apk), metadata = binaryManifest(parsed.manifest);
     if (!(packageName ? [packageName] : APK_PACKAGES).includes(metadata.packageName)) fail('APK 包名与现有 Huevia 不兼容。');
     const next = metadata.packageName === NEXT_APK_PACKAGE;
     if (next && !parsed.abis.length) fail('新版 APK 未包含受支持的 Android 原生架构。');
-    if (apk.length > (next ? MAX_NEXT_APK_BYTES : MAX_APK_BYTES) || parsed.expandedBytes > (next ? 512 : 128) * 1024 * 1024) fail('APK 超过此包名对应的大小限制。');
+    if (apk.length > (next ? MAX_NEXT_APK_BYTES : MAX_APK_BYTES) || parsed.expandedBytes > 512 * 1024 * 1024) fail('APK 超过此包名对应的大小限制。');
     if (parsed.signature.signerSha256 !== (signerSha256 ?? APK_SIGNERS[metadata.packageName])) fail('APK 签名与现有 Huevia 不兼容，无法覆盖升级。');
     return { ...metadata, ...parsed.signature, ...(next ? { abis: parsed.abis } : {}), byteLength: apk.length, sha256: hash(apk).toString('hex') };
   } catch (error) { if (error instanceof ServiceError) throw error; fail(); }

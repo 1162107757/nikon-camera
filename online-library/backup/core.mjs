@@ -23,13 +23,13 @@ export function inspectSnapshot(bytes){
   for(const object of s.tables['storage.objects']){
     if(object.bucket_id!=='nikon-presets')throw failure('UNEXPECTED_SOURCE_BUCKET');
     const size=Number(object.metadata?.size);
-    if(!Number.isSafeInteger(size)||size<1||size>96*1024*1024)throw failure('INVALID_SOURCE_SIZE');
+    if(!Number.isSafeInteger(size)||size<1||size>100*1024*1024)throw failure('INVALID_SOURCE_SIZE');
     sources.push({provider:'cloudbase',path:safePath(object.name),size});
   }
   for(const release of s.tables['public.nikon_app_releases']){
     const path=safePath(release.storage_path),size=Number(release.byte_length);
     if(!/^[a-f0-9]{64}$/.test(release.sha256)||!new RegExp('^app-releases/'+release.sha256+'\\.(apk|bin)$').test(path)
-      ||!Number.isSafeInteger(size)||size<1||size>32*1024*1024)throw failure('INVALID_RELEASE');
+      ||!Number.isSafeInteger(size)||size<1||size>100*1024*1024)throw failure('INVALID_RELEASE');
     sources.push({provider:'cos',path,size,sha256:release.sha256});
   }
   for(const release of s.tables['public.nikon_mobile_releases']||[]){
