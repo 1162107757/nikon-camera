@@ -29,7 +29,7 @@ jobs:
       - name: Verify core parity and prepare native runtimes
         run: bash cross-platform/tool/mobile_apple.sh prepare
       - name: Preserve verified native runtime outputs
-        if: steps.native-cache.outputs.cache-hit != 'true'
+        if: always() && steps.native-cache.outputs.cache-hit != 'true' && hashFiles('.tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1') != '' && hashFiles('.tooling/cross-platform187/j2objc-3.1/dist/frameworks/JRE.xcframework/Info.plist') != ''
         uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684
         with:
           path: |

@@ -62,7 +62,7 @@ public final class LegacyMigrationBoundaryTest {
         yes(rows(request(module,"legacy.status",SharedRuntime.map()),"items").stream().allMatch(row->"rolledBack".equals(row.get("status"))));
         // A new edit after success blocks rollback before any file is removed.
         Map<String,Object> finalPreview=request(module,"legacy.inspect",SharedRuntime.map("path",incoming.toString()));Map<String,Object> finalCommit=new LinkedHashMap<>(commit);finalCommit.put("transaction",finalPreview.get("transaction"));request(module,"legacy.commit",finalCommit);
-        Files.writeString(target.resolve("photos-index.json")," ",StandardCharsets.UTF_8,StandardOpenOption.APPEND);Map<String,String> edited=snapshot(target);
+        Files.write(target.resolve("photos-index.json")," ".getBytes(StandardCharsets.UTF_8),StandardOpenOption.APPEND);Map<String,String> edited=snapshot(target);
         rejects(()->request(module,"legacy.rollback",SharedRuntime.map("transaction",finalPreview.get("transaction"))));yes(edited.equals(snapshot(target)));yes(Files.exists(imported));
         rejects(()->request(module,"legacy.inspect",SharedRuntime.map("path",bundle.toString())));
         rejects(()->request(module,"legacy.rollback",SharedRuntime.map("transaction",finalPreview.get("transaction"),"owner","other-account")));
@@ -74,7 +74,7 @@ public final class LegacyMigrationBoundaryTest {
         Map<String,Object> iosManifest=LegacyArchive.unpack(iosZip.toFile(),temporary.resolve("ios-unpack").toFile(),()->false);yes(iosManifest.get("origin").equals("ios-original"));yes(rows(iosManifest,"presets").size()==1);yes(rows(iosManifest,"photos").isEmpty());
         rejects(()->LegacyArchive.safeName("first\nsecond\n../escape.jpg"));
         Path blockedRoot=temporary.resolve("blocked-target");SharedLegacyMigration blocked=new SharedLegacyMigration(runtime(blockedRoot));Path blockedInput=blockedRoot.resolve("legacy-incoming/old.zip");Files.createDirectories(blockedInput.getParent());Files.copy(bundle,blockedInput);
-        Map<String,Object> blockedPreview=request(blocked,"legacy.inspect",SharedRuntime.map("path",blockedInput.toString()));Files.writeString(blockedRoot.resolve("photo-live-projects"),"preserved obstruction");
+        Map<String,Object> blockedPreview=request(blocked,"legacy.inspect",SharedRuntime.map("path",blockedInput.toString()));Files.write(blockedRoot.resolve("photo-live-projects"),"preserved obstruction".getBytes(StandardCharsets.UTF_8));
         Map<String,Object> blockedCommit=new LinkedHashMap<>(commit);blockedCommit.put("transaction",blockedPreview.get("transaction"));Map<String,String> blockedBefore=snapshot(blockedRoot);
         rejects(()->request(blocked,"legacy.commit",blockedCommit));Map<String,String> blockedAfter=snapshot(blockedRoot);blockedBefore.keySet().removeIf(key->key.startsWith("legacy-migrations"+File.separator));blockedAfter.keySet().removeIf(key->key.startsWith("legacy-migrations"+File.separator));yes(blockedBefore.equals(blockedAfter));
         return checks;

@@ -5,6 +5,7 @@
 ## QQ 原生授权
 
 - Android 使用现有官方 SDK 3.5.19、原 `QqLoginController` / `QqAuthorizationGate`，新增 Activity adapter；授权同意、验证码、取消、迟到结果、页面关闭与 `account.qq` 服务端会话接线已补齐。
+- QQ JAR 硬性检查 OkHttp 3；新版严格固定 OkHttp 3.14.9 + DataStore 已需的 Okio 3.9.1，维护 overlay 固定 3.14.9 + Okio 1.17.2。两组 182 个实际成员引用和回环 HTTP/磁盘缓存读写均通过；[版本选择、官方依据与冲突说明](qq-android-dependencies.md)单独记录。未用 dontwarn 掩盖必需 HTTP 实现。
 - iOS 使用[官方 SDK 下载页](https://wiki.connect.qq.com/sdk下载/)的 3.6.22.459 xcframework。`prepare_qq_ios.py` 固定官方归档 SHA-256 `38a2fb7f26d8de683b942e16c5c1e46aeb054810d193bab0292686f8e5c74ae1`，逐个 Mach-O 检查真机 49 个对象 platform=2、模拟器 98 个对象 platform=7，架构分别 arm64 与 arm64/x86_64，最低 iOS 15.0。没有把模拟器切片当作真机。
 - SDK 在用户同意后才初始化，原生临时 token 仅用于立即换取 Huevia 会话；清除腾讯缓存，不携带 AppKey。iOS 同时处理 AppDelegate 与当前 Flutter 的 [UIScene 回调](https://docs.flutter.dev/release/breaking-changes/uiscenedelegate)。
 - AppID `1105984855` 已存在。新版 Android 包名 `cc.huevia.next`，实际 212 证书 SHA-256 `76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75`、MD5 `84c2cfda7312206ad9967803c1018021`，仍须在 QQ 互联实际保存并生效。
@@ -25,14 +26,16 @@
 
 - 规范 ZIP 含版本化 `huevia-migration.json` 和内容寻址 payload；每项记录字节和 SHA-256。Android 导出包括可见预设、外部/内部相册与 RAW 原片、可读当前账号草稿、项目分类及默认预设。旧下载队列与系统相册许可不迁移。
 - 原数据读取器可能执行恢复，所以迁出器先制作暂存副本，恢复仅在副本上运行。账号只导出 id/provider/username/nickname；密码、旧会话、QQ token、密钥不导出。账号专属草稿与项目默认需在新版重新登录同一账号后明确关联。
-- Android 的不同包名不能读取原 sandbox。`cross-platform/legacy-android` 提供同包维护 overlay：原 `cc.huevia` 的下一版本号 194，通过系统文档选择器导出 ZIP；不改原 `app/` 源文件。必须匹配原安装证书；不能通过卸载清数据绕过签名。
+- Android 的不同包名不能读取原 sandbox。`cross-platform/legacy-android` 提供同包维护 overlay：原 `cc.huevia` 的下一版本号 194，通过系统文档选择器导出 ZIP；从原 manifest 生成完整构建副本，保留原入口与功能，再增加独立“旧版资料迁出”入口；不改原 `app/` 源文件。必须匹配原安装证书；不能通过卸载清数据绕过签名。
 - 实际原 193 APK 已由 apksigner 验证证书 SHA-256 `04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31`、MD5 `945aa44a13dd8c10155ad0078edf698e`。本机既有 `.tooling/debug.keystore` 的证书摘要相符；维护包仍须由主任务实际签名和验证后交付。
 - 原 iOS `Info.plist` 已启用文件共享，`AppModel.swift` 实际资料为 Documents/Presets 的 NCP/NP3；显示名在旧 UserDefaults。新版允许用户通过 Files 选择导出的 Presets 目录，保持预设字节，旧显示名取不到时退回文件名。原 iOS 源码不存在 Android 完整账户/照片/草稿/项目存储，不声称读取其他 sandbox 或 Keychain。
 - 导入先严格拒绝路径穿越、未知/重复 ZIP 路径、超限与摘要损坏，再用原预设/草稿模型校验并逐张原生解码。提交保留已有预设名和草稿，用独立项目 ID 合并分类；照片索引与默认配置保存 before 副本，新增文件有磁盘 journal，失败/中断可撤回。成功后若受管资料发生编辑或新增，自动撤回在删除前停止。
 
 ## 本地检查证据
 
-- 独立 JVM `LegacyMigrationBoundaryTest` 37 项通过；覆盖原资料不变、脱敏、预检/提交/撤回、冲突保留、取消回滚、编辑后撤回拒绝、路径/摘要损坏与旧 iOS 范围。
+- 独立 JVM `LegacyMigrationBoundaryTest` 40 项通过；覆盖原资料不变、脱敏、预检/提交/撤回、冲突保留、取消回滚、编辑后撤回拒绝、路径/摘要损坏、目录阻塞预检与旧 iOS 范围。
 - 新增 Dart QQ/IPA 元数据 8 项通过；覆盖同意、取消/迟到结果、单次授权、账号变化、验证码过期、签名渠道与下载域约束。原生授权成功仍需真实 QQ 账号/设备。
 - 新 Node 3 项通过，包含实际旧 APK 与 212 APK 正反向签名隔离、实际 SQL/PGlite+HTTP 的上传/草稿/发布/清单/撤回/CSRF/RLS；与原 APK/release/COS 定向回归共 18 项，13 通过、5 因旧 53 本地夹具缺失跳过。
+- 主任务完整服务回归以 `--test-concurrency=1` 执行，225 项中 218 通过、7 跳过、0 失败，另 83 模块源码/语法检查通过；日志 `.tooling/next213/server-serial-test.log`。默认旧 `inspectApk` 超过 32 MiB 提前拒绝，显式 next 才使用 128 MiB 并继续验包名、证书与实际 ABI。
+- RAW thumbnail 原生夹具已接入唯一 `native_pipeline_test.dart`；Android 首轮验证通过八个方向、缓存命中与损坏再生。随后因夹具 `media.exportPreview(snapshot=true)` 缺 `expectedSourceSha` 停止，现已对实际 PNG 流式计算并传入，保持两端源图安全比较；完整重跑由主任务管理，不能以局部结果标记完整通过。Retouch 原生夹具的两张实际人像推理/渲染/patch/取消已由主任务执行通过。
 - 真实 212 APK 已完整验签，`51,309,171` 字节、SHA-256 `1666b4850f1c1d76626c5e3b3fefa2fd3c6ba145730ca4c4dce2c9f0f68f18fe`。真实 212 未签名 IPA 的 Bundle ID、`0.31.0/212`、真机平台与结构检查通过，`29,667,421` 字节、SHA-256 `ffea0784ed576e2fb13a9136193d9cb9e0fab180549c826db0c3d22e4a873175`。这些是 212 输入验证，不冒充本轮新包验证。

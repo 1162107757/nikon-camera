@@ -18,7 +18,15 @@ def verify_raw_jni_mapping(path):
     constructor='void <init>(int,int,int,int,int,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String)'
     if owner!='cc.huevia.album.RawDeveloper$Info' or not any(constructor in line and line.rstrip().endswith(' -> <init>') for line in info.splitlines()):
         raise ValueError('R8 changed the RAW JNI result class or constructor')
-    return {'rawJniCallbacksPreserved':True,'rawJniInfoConstructorPreserved':True,'r8MappingSha256':hashlib.sha256(raw).hexdigest()}
+    owner,callbacks=block('cc.huevia.sharedapp.NativeRawThumbnail$Callbacks')
+    if owner!='cc.huevia.sharedapp.NativeRawThumbnail$Callbacks':raise ValueError('R8 changed RAW thumbnail callback class')
+    for signature,name in [('boolean cancelled()', 'cancelled'),('void onProgress(double)', 'onProgress')]:
+        if not any(signature in line and line.rstrip().endswith(' -> '+name) for line in callbacks.splitlines()):
+            raise ValueError('R8 changed RAW thumbnail callback: '+name)
+    factory,methods=block('org.tensorflow.lite.InterpreterFactoryImpl')
+    if factory!='org.tensorflow.lite.InterpreterFactoryImpl' or not any('void <init>()' in line and line.rstrip().endswith(' -> <init>') for line in methods.splitlines()):
+        raise ValueError('R8 changed the reflected LiteRT interpreter factory')
+    return {'rawJniCallbacksPreserved':True,'rawJniInfoConstructorPreserved':True,'rawThumbnailCallbacksPreserved':True,'liteRtReflectedFactoryPreserved':True,'r8MappingSha256':hashlib.sha256(raw).hexdigest()}
 
 def verify(apk,abi,mode):
     apk=Path(apk);name,machine,elf_class=ABIS[abi]
