@@ -57,3 +57,9 @@ iOS 的 crop、RGB 归一化、presence logit、468 点坐标、语义 softmax�
 - 人像 / 修补工具页的小屏、横屏、大字、TalkBack / VoiceOver、真实人物效果及长期内存表现，Android 电池策略 / 长时间锁屏，以及 iOS 实际后台期限和系统终止后的恢复，继续保留实机验收项。
 
 本记录不改变 [213 统一剩余清单](remaining-work-213.md) 中由主任务掌管的最终平台结论。后续成功结果应追加对应运行、源码快照和证据，不覆盖本记录所列未完成执行或旧失败。
+
+## 后续执行补记：批量控件测试
+
+Apple 运行 `43348397039` 完成 257 项、失败 3 项；失败项正是上述三个批量控件视口，均在点击“开始批量导出”后等待 `pumpAndSettle` 超时。批量任务的真实文件日志需要系统事件循环处理磁盘 I/O，已有 Future 链和控件通知也需要测试 zone 推进微任务，单独在 `runAsync` 中等待任务不能完成两者。
+
+`afed203` 后续测试修正保持三个视口和全部选择、固定动作、完成数量、分享断言，改为真实点击后交替推进真实事件循环与控件帧，设置 15 秒真实计时上限，并在每项结束时卸载页面、释放测试拥有的 `AppState`。同步断言当前完成文案“已保存成品 2/2 张”。Windows 使用 `--no-enable-impeller` 完整运行 `batch_export_test.dart`，同一进程 **9/9 全部通过**，包括此前未完成的三个控件项；单文件 `dart analyze` 为 `No issues found`。证据为 `.tooling/retouch-migration/flutter-batch-widget-complete.log` 和 `dart-analyze-batch-widget.log`。未跳过测试，未改生产缩略队列或 APK；对应 Apple 后续执行仍由主任务确认。

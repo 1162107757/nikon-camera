@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -258,24 +257,19 @@ void main() {
                     )
                     .listenable
                 as BatchExport;
-        final finished = Completer<void>();
-        void batchChanged() {
-          if (batch.locked && !batch.busy && !finished.isCompleted) {
-            finished.complete();
-          }
+        await tester.tap(find.text('开始批量导出'));
+        expect(batch.busy, isTrue);
+        // Journal IO needs the real event loop; its existing Future chain and
+        // UI listeners also need the widget zone's microtasks to be pumped.
+        final elapsed = Stopwatch()..start();
+        while (batch.busy && elapsed.elapsed < const Duration(seconds: 15)) {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 1)),
+          );
+          await tester.pump(const Duration(milliseconds: 16));
         }
-
-        batch.addListener(batchChanged);
-        try {
-          // The task persists real journal files. Start and await it outside
-          // the widget clock so create/write/rename can finish before settling.
-          await tester.runAsync(() async {
-            await tester.tap(find.text('开始批量导出'));
-            await finished.future.timeout(const Duration(seconds: 15));
-          });
-        } finally {
-          batch.removeListener(batchChanged);
-        }
+        expect(batch.busy, isFalse, reason: 'Journal IO did not finish');
+        expect(batch.completed, 2);
         await tester.pumpAndSettle();
         await tester.scrollUntilVisible(
           find.text('已保存成品 2/2 张'),
@@ -285,6 +279,8 @@ void main() {
         expect(find.text('已保存成品 2/2 张'), findsOneWidget);
         expect(find.text('分享已完成的 2 张'), findsOneWidget);
         expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox.shrink());
+        state.dispose();
       },
     );
   }
