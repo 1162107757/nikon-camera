@@ -40,5 +40,13 @@ gradle.beforeProject { target ->
             config.defaultConfig.versionName = '0.30.34-migration-export'
         }
         target.dependencies.add('coreLibraryDesugaring', 'com.android.tools:desugar_jdk_libs:2.1.5')
+        // Preserve the original QQ entry as well as the new export launcher.
+        // The pinned Tencent SDK rejects an OkHttp user agent outside the 3.x line.
+        target.dependencies.add('implementation', 'com.squareup.okhttp3:okhttp:3.14.9') {
+            version { strictly('3.14.9') }
+        }
+        target.dependencies.add('implementation', 'com.squareup.okio:okio:1.17.2') {
+            version { strictly('1.17.2') }
+        }
     }
 }

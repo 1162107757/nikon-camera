@@ -65,6 +65,20 @@ android {
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation(files("../../../../app/libs/litert-1.4.1.jar", "../../../../app/libs/litert-api-1.4.1.jar", "../../../../app/libs/open_sdk_3.5.19_r9483ffc7_lite.jar"))
+    // Tencent 3.5.19 calls internal.Version.userAgent() and rejects non-3.x clients.
+    implementation("com.squareup.okhttp3:okhttp:3.14.9") {
+        version { strictly("3.14.9") }
+    }
+    // DataStore 1.2.1 already requires Okio 3.9.1. Select its compatible Java API
+    // instead of also packaging OkHttp's transitive Okio 1.x with duplicate classes.
+    implementation("com.squareup.okio:okio:3.9.1") {
+        version { strictly("3.9.1") }
+    }
+    constraints {
+        implementation("com.squareup.okio:okio-jvm:3.9.1") {
+            version { strictly("3.9.1") }
+        }
+    }
     compileOnly(files("../../../../app/libs/compile-only/support-fragment-28.0.0.jar"))
 }
 

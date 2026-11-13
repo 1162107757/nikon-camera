@@ -9,9 +9,10 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array><string>mqq</string><string>mqqapi</string><string>mqqOpensdkSSoLogin</string>
 		<string>mqqopensdkapiV2</string><string>mqqopensdkapiV4</string><string>mqqapiwallet</string></array>
-	<!-- Empty until a real associated domain/AASA and a published IPA manifest are configured. -->
+	<!-- QQ stays disabled until a real associated domain/AASA is configured. -->
 	<key>HueviaQqUniversalLink</key><string></string>
-	<key>HueviaIosReleaseManifest</key><string></string>
+	<!-- Fixed production host; a release becomes available only after reviewed server publication. -->
+	<key>HueviaIosReleaseManifest</key><string>https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library/ios/releases/latest?bundleId=cc.huevia.next&amp;channel=beta</string>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

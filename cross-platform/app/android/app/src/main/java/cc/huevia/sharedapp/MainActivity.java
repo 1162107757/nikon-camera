@@ -118,7 +118,7 @@ public final class MainActivity extends FlutterActivity {
                 try{
                     Object value;
                     if(call.method.equals("initialize")){
-                        if(runtime==null){File root=new File(getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(this),new AccountHttpTransport(),AccountInstallation.id(this));media=new NativeMedia(this,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(this);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);}
+                        if(runtime==null){android.content.Context app=getApplicationContext();File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);}
                         if(gallery==null)gallery=new NativeGallery(this,runtime);
                         main.post(this::configureStorageAdapters);
                         value=SharedJson.encode(SharedRuntime.map("root",runtime.root().getPath(),"schema",SharedJson.object(CoreEngine.schema()),"platform","android"));
