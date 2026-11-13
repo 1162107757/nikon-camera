@@ -157,6 +157,7 @@
     "cross-platform/core/java/cc/huevia/shared/SharedRetouch.java",
     "cross-platform/core/java/cc/huevia/shared/SharedPortraitToneCards.java",
     "cross-platform/core/java/cc/huevia/shared/SharedAutoBlemishes.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedPortraitOverlay.java",
     "cross-platform/core/java/cc/huevia/shared/SharedPortraitInference.java",
     "cross-platform/core/java/cc/huevia/album/SharedAlbumOperations.java",
     "cross-platform/core/java/cc/huevia/album/SharedRawPairing.java",

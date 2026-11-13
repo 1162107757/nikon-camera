@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
@@ -37,6 +38,26 @@ Future<void> verifyRetouchPipeline(HueviaCore core) async {
           'native stages: ${analyzed['diagnostics']}',
     );
     expect(faces.every((face) => object(face)['hasLandmarks'] == true), true);
+    expect((object(faces.first)['landmarks'] as List).length, 936);
+    final selection = await core.call('media.retouchAnalyze', {
+      'path': path,
+      'owner': owner,
+      'expectedSourceSha': before,
+      'localData': analyzed['localData'],
+      'mode': 'overlay',
+      'index': 0,
+    });
+    final overlay = object(selection['selectionOverlay']);
+    final overlayWidth = overlay['width'] as int;
+    final overlayHeight = overlay['height'] as int;
+    expect(overlayWidth, inInclusiveRange(1, 240));
+    expect(overlayHeight, inInclusiveRange(1, 320));
+    expect(
+      base64Decode(overlay['rgba'] as String).length,
+      overlayWidth * overlayHeight * 4,
+    );
+    expect(overlay['premultiplied'], true);
+    expect(selection['localData'], analyzed['localData']);
     if (Platform.isIOS) {
       expect(analyzed['analysisEngine'], 'TensorFlowLiteC-2.17.0-CPU');
       expect(analyzed['meshPoints'], 468);
@@ -257,9 +278,9 @@ Future<void> _verifyPersonalToneCards(HueviaCore core, String owner) async {
     expect(entry['rgb'], rgb);
     final reloaded = await core.call('toneCards.list', {'owner': owner});
     expect(
-      (reloaded['cards'] as List).map(object).singleWhere(
-        (value) => value['id'] == created,
-      ),
+      (reloaded['cards'] as List)
+          .map(object)
+          .singleWhere((value) => value['id'] == created),
       entry,
     );
     await expectLater(

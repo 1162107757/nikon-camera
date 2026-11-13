@@ -219,6 +219,10 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         yes(tone.getInt("toneId")==10&&tone.getInt("toneRgb")==0xbba080&&tone.getBoolean("toneBody"),"release custom tone retains RGB, strength and person body scope");
         JSONObject brush=call("media.retouchChange",payload(source,custom.getString("localData")).put("action","faceStroke").put("index",0).put("value",new JSONObject().put("points",new JSONArray().put(tone.getDouble("cx")).put(tone.getDouble("cy"))).put("radius",.01).put("erase",false)));
         yes(brush.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0).getInt("strokeCount")==1,"release face selection stores an original immutable brush stroke");
+        JSONObject selection=call("media.retouchAnalyze",payload(source,brush.getString("localData")).put("mode","overlay").put("index",0));
+        JSONObject overlay=selection.getJSONObject("selectionOverlay");
+        yes(Base64.getDecoder().decode(overlay.getString("rgba")).length==overlay.getInt("width")*overlay.getInt("height")*4&&overlay.getBoolean("premultiplied"),"release original selection overlay retains bounded premultiplied RGBA pixels");
+        yes(selection.getString("localData").equals(brush.getString("localData")),"release overlay never changes tentative edits");
         preview(source,brush.getString("localData"));
         JSONObject candidates=call("media.retouchAnalyze",payload(source,skin.getString("localData")).put("mode","autoBlemish"));
         yes(candidates.getJSONArray("healCandidates").length()<=24&&candidates.getString("localData").equals(skin.getString("localData")),"release automatic blemish candidates remain tentative and bounded");

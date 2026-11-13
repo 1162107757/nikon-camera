@@ -25,6 +25,7 @@ final class NativeRetouch {
                 if(operation.equals("media.retouchPatch")){int[] pixels=new int[image.getWidth()*image.getHeight()];image.getPixels(pixels,0,image.getWidth(),0,0,image.getWidth(),image.getHeight());result=SharedRetouch.patch(json,pixels,image.getWidth(),image.getHeight(),cancel);}
                 else if(operation.equals("media.retouchHeal")){int[] pixels=new int[image.getWidth()*image.getHeight()];image.getPixels(pixels,0,image.getWidth(),0,0,image.getWidth(),image.getHeight());result=SharedPortraitInference.heal(json,pixels,image.getWidth(),image.getHeight(),cancel);}
                 else if(operation.equals("media.retouchAnalyze")&&"autoBlemish".equals(p.get("mode"))){int[] pixels=new int[image.getWidth()*image.getHeight()];image.getPixels(pixels,0,image.getWidth(),0,0,image.getWidth(),image.getHeight());result=SharedAutoBlemishes.analyze(json,pixels,image.getWidth(),image.getHeight(),cancel);}
+                else if(operation.equals("media.retouchAnalyze")&&"overlay".equals(p.get("mode"))){int[] pixels=new int[image.getWidth()*image.getHeight()];image.getPixels(pixels,0,image.getWidth(),0,0,image.getWidth(),image.getHeight());result=SharedPortraitOverlay.render(json,pixels,image.getWidth(),image.getHeight(),cancel);}
                 else if(operation.equals("media.retouchAnalyze")) {
                     String mode=SharedRuntime.text(p,"mode",16);PhotoLocalEdits local=SharedRetouch.local(p);PhotoPortrait portrait=SharedRetouch.portrait(local,p);
                     if(mode.equals("face")) {
