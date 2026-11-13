@@ -65,7 +65,7 @@
 - (void)tencentDidLogin {
   NSString *token=[self.oauth.accessToken copy];
   BOOL valid=[token isKindOfClass:NSString.class]&&token.length>=16&&token.length<=2048;
-  if(valid){NSCharacterSet *invalid=[[NSCharacterSet characterSetWithRange:NSMakeRange(0x21,0x7e-0x21+1)] invertedSet];valid=[token rangeOfCharacterFromSet:invalid].location==NSNotFound;}
+  if(valid){NSCharacterSet *invalid=[[NSCharacterSet characterSetWithRange:NSMakeRange(0x21, 0x7e - 0x21 + 1)] invertedSet];valid=[token rangeOfCharacterFromSet:invalid].location==NSNotFound;}
   [self clearProvider];self.draining=NO;
   if(valid)[self finish:@{@"accessToken":token}];
   else [self finish:[FlutterError errorWithCode:@"QQ_RESULT_INVALID" message:@"QQ 授权结果无效，请重新登录。" details:nil]];
