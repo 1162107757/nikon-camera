@@ -109,6 +109,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     try {
       await showLegacyGlassSheet<void>(
         context,
+        isScrollControlled: !allowExclusive,
         enableDrag: allowExclusive,
         isDismissible: allowExclusive,
         builder: (_) => SizedBox(
