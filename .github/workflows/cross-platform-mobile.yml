@@ -26,6 +26,14 @@ jobs:
             .tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
             cross-platform/.build/raw-apple
           key: huevia-apple-native-v1-${{ runner.arch }}-${{ steps.apple.outputs.xcode }}-${{ hashFiles('cross-platform/tool/core_ios.sh', 'cross-platform/tool/raw_apple.py', 'cross-platform/tool/raw_sources.py', 'cross-platform/toolchain.json') }}
+      - name: Restore pinned official Apple SDK and model downloads
+        id: asset-cache
+        uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684
+        with:
+          path: |
+            cross-platform/.build/qq-ios/sdk.zip
+            .tooling/portrait-models
+          key: huevia-apple-assets-v1-${{ runner.arch }}-${{ hashFiles('cross-platform/tool/prepare_qq_ios.py', 'cross-platform/tool/prepare_portrait_models.py') }}
       - name: Verify core parity and prepare native runtimes
         run: bash cross-platform/tool/mobile_apple.sh prepare
       - name: Preserve verified native runtime outputs
@@ -37,6 +45,14 @@ jobs:
             .tooling/cross-platform187/j2objc-3.1/.huevia-file-varargs-v1
             cross-platform/.build/raw-apple
           key: ${{ steps.native-cache.outputs.cache-primary-key }}
+      - name: Preserve pinned official Apple SDK and model downloads
+        if: always() && steps.asset-cache.outputs.cache-hit != 'true' && hashFiles('cross-platform/.build/qq-ios/sdk.zip') != '' && hashFiles('.tooling/portrait-models/face_skin_multiclass.shuffle4.zlib') != ''
+        uses: actions/cache/save@5a3ec84eff668545956fd18022155c47e93e2684
+        with:
+          path: |
+            cross-platform/.build/qq-ios/sdk.zip
+            .tooling/portrait-models
+          key: ${{ steps.asset-cache.outputs.cache-primary-key }}
       - name: Build and test the unsigned device app
         run: bash cross-platform/tool/mobile_apple.sh build
       - name: Show actionable build errors
