@@ -93,6 +93,12 @@ Android 安装前再次核对字节、SHA-256、包名、版本、当前与发�
 
 ## 实际产物就绪后的本地检查与 draft
 
+上线可执行性只读预检已确认：现有 CloudBase CLI 可读取 SQL 元数据与两个 Active 函数；当前数据库会话不是只读，具备 public schema CREATE 权限。没有执行任何 SQL 写入或函数更新来试权限，SCF 写权限仍须在已批准动作时由实际返回值确认；若委托 CLI 被拒绝，应使用已登录主账号控制台完成同一已批准代码更新，不扩大 CLI 长期权限。
+
+现成工具入口为 `scripts/cloud-tools.mjs` / `scripts/tcb-api.mjs`：022 只选择本次单独 SQL，经既有 `ExecutePGSql` 入口按迁移传输方式原子应用，并通知 PostgREST reload schema；不能直接运行 `setup-cloud.mjs --migrate` 重放全部历史迁移。两函数只使用 `scf.UpdateFunctionCode` 和各自已经审阅的 ZIP，保留原配置，随后核对 Active、代码 SHA 与配置前后一致。现存 `deploy-code-only.mjs` 固定主函数及旧 build 路径，`deploy-data-backup.mjs` 的 deploy/configure 模式涉及创建或配置，不应直接当作本次两函数更新入口。候选两个函数 ZIP 均小于官方 Code ZipFile 50 MB 上限；参见 [UpdateFunctionCode](https://cloud.tencent.com/document/api/583/18581)。IAM 写入由主任务已登录的主账号控制台完成，两策略只有语义 diff 中约定的前缀变更。
+
+App 管理员是独立登录条件：旧 CLI 会话已失效，旧本地凭据不能用于刷新，未尝试旧密码。已准备 [安全交互 CLI](release-admin-login.md)，让用户本人在本机终端不回显输入当前凭据，正常登录并只保存验证后的会话。当前 Web 管理 UI 只有旧 APK 路由，不能承担 next/IPA 上传；新 mobile 发布使用既有 `prepare-mobile-release.mjs`。登录准备已授权，生产部署、draft 上传与公开发布仍未执行或获准。
+
 默认打包命令会绑定当前两个固定路径的 213 APK，并查找 `dist/migration213/huevia-0.31.0-dev-213-ios-unsigned.ipa`。IPA 实际路径不同可用 `--ios-ipa <实际路径>`；缺失时可生成未完备审阅快照，不会偷偷回退至 212。
 
 最终重打包可继续使用已绑定的 `--production-capture` 与 `--release-notes`；单独输入也支持 `--rollback-main`、`--rollback-backup`、`--rollback-iam`、`--database-precheck`。回退材料必须来自部署前只读捕获，不是当前待部署 ZIP 的副本。IAM 快照 schema 为 1，`capturedAt` 记录实际捕获时间，`release`、`backup` 各包含真实 `roleArn`、`policyId`、`version`、`document`（完整策略 JSON，含 statement）；没有凭据、私钥或环境变量。脚本验证格式并绑定文件摘要，生产来源真实性仍由主任务在独立审批前核对。

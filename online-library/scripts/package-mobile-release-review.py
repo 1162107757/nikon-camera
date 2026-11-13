@@ -259,7 +259,8 @@ if args.database_precheck:
     write_output('evidence/production/database-before-022.json', data)
     database_precheck = {'path': 'evidence/production/database-before-022.json', 'sha256': sha(data), 'capturedAt': state['capturedAt']}
 if args.production_capture:
-    for name in ['iam-role-bindings.json', 'iam-policy-probe.json', 'browser-state.json', 'cli-caller-identity.json']:
+    for name in ['iam-role-bindings.json', 'iam-policy-probe.json', 'browser-state.json', 'cli-caller-identity.json',
+                 'admin-session-preflight.json', 'admin-credential-preflight.json', 'deployment-access-preflight.json']:
         path = args.production_capture / name
         if path.is_file():
             data = source_bytes(path)
@@ -306,8 +307,11 @@ copies = {
     'SOURCE-REVIEW.md': ROOT / 'docs/migration/account-delivery-development.md',
     'QQ-DEPENDENCIES.md': ROOT / 'docs/migration/qq-android-dependencies.md',
     'CAM-READONLY.md': ROOT / 'docs/migration/cam-readonly-setup.md',
+    'ADMIN-LOGIN.md': ROOT / 'docs/migration/release-admin-login.md',
     'policies/cam-readonly-optional-proposal.json': ROOT / 'docs/migration/cam-readonly-policy.json',
     'tools/prepare-mobile-release.mjs': LIBRARY / 'scripts/prepare-mobile-release.mjs',
+    'tools/login-release-admin.mjs': LIBRARY / 'scripts/login-release-admin.mjs',
+    'tools/login-release-admin.test.mjs': LIBRARY / 'test/login-release-admin.test.mjs',
     'tools/package-mobile-release-review.py': Path(__file__),
 }
 for name, source in copies.items():
