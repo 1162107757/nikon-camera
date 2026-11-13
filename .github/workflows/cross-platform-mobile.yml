@@ -10,6 +10,7 @@ on:
         options:
           - full
           - native-diagnostic
+          - portrait-pixels
 permissions:
   contents: read
 concurrency:
@@ -17,6 +18,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   apple-app:
+    if: inputs.verification != 'portrait-pixels'
     runs-on: macos-26
     timeout-minutes: 75
     steps:
@@ -86,4 +88,22 @@ jobs:
             cross-platform/.build/core-ios/parity.json
             cross-platform/.build/core-ios/translation.log
             cross-platform/.build/core-ios/avatar*.log
+          retention-days: 7
+  portrait-pixels:
+    if: inputs.verification == 'portrait-pixels'
+    runs-on: macos-26
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Inspect native pixel rows and portrait coordinates
+        run: |
+          mkdir -p cross-platform/.build/mobile-apple
+          python3 cross-platform/tool/apple_gallery_fixture.py "$RUNNER_TEMP/huevia-gradient.png"
+          xcrun swift cross-platform/tool/portrait_pixels_apple.swift "$RUNNER_TEMP/huevia-gradient.png" app/src/main/assets/preset-showcase/portrait-smile.jpg > cross-platform/.build/mobile-apple/portrait-pixels.log 2>&1
+      - name: Preserve pixel diagnosis without an IPA
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: huevia-portrait-pixels-diagnostic
+          path: cross-platform/.build/mobile-apple/portrait-pixels.log
           retention-days: 7
