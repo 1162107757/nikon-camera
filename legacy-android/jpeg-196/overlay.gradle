@@ -1,0 +1,122 @@
+// Load after cross-platform/legacy-android/overlay.gradle. Original sources stay read-only.
+gradle.beforeProject { target ->
+    target.pluginManager.withPlugin('com.android.application') {
+        if (target.path != ':app') return
+        target.androidComponents.finalizeDsl { config ->
+            def workspace = target.rootProject.projectDir.canonicalFile
+            def overlay = new File(workspace, 'legacy-android/jpeg-196').canonicalFile
+            def exporter = new File(workspace, 'cross-platform/legacy-android').canonicalFile
+            def source = new File(workspace, 'app/src/main/java').canonicalFile
+            def buildRoot = new File(workspace, 'app/build').canonicalFile
+            def expected = new File(workspace, 'app/build/generated/legacy-jpeg196/java').absoluteFile
+            def generated = expected.canonicalFile
+            def main = config.sourceSets.getByName('main')
+            def exportManifest = new File(workspace, 'app/build/generated/legacy-export/AndroidManifest.xml').canonicalFile
+            if (config.defaultConfig.applicationId != 'cc.huevia' ||
+                    config.defaultConfig.versionCode != 194 ||
+                    main.manifest.srcFile.canonicalFile != exportManifest) {
+                throw new GradleException('Load the unchanged legacy export 194 overlay before JPEG 196')
+            }
+            if (generated != expected || !generated.toPath().startsWith(buildRoot.toPath()) ||
+                    generated.toPath() == buildRoot.toPath() ||
+                    !buildRoot.toPath().startsWith(workspace.toPath())) {
+                throw new GradleException('Generated JPEG 196 source directory escaped app/build')
+            }
+            def patch = new File(overlay, 'patch_sources.py')
+            if (!source.isDirectory() || !patch.isFile()) {
+                throw new GradleException('Original Java sources or JPEG 196 patch_sources.py is missing')
+            }
+            // Files.walk does not follow symbolic links. Only the checked generated tree is removed.
+            if (generated.exists()) {
+                def previous = java.nio.file.Files.walk(generated.toPath())
+                try {
+                    previous.sorted(java.util.Comparator.reverseOrder()).forEach { entry ->
+                        if (!entry.toAbsolutePath().normalize().startsWith(generated.toPath())) {
+                            throw new GradleException('Generated JPEG 196 cleanup escaped its directory')
+                        }
+                        java.nio.file.Files.delete(entry)
+                    }
+                } finally { previous.close() }
+            }
+            java.nio.file.Files.createDirectories(generated.toPath())
+            def originals = java.nio.file.Files.walk(source.toPath())
+            try {
+                originals.forEach { entry ->
+                    if (java.nio.file.Files.isSymbolicLink(entry)) {
+                        throw new GradleException('Original Java source tree must not contain symbolic links')
+                    }
+                    def destination = generated.toPath().resolve(source.toPath().relativize(entry))
+                    if (java.nio.file.Files.isDirectory(entry)) {
+                        java.nio.file.Files.createDirectories(destination)
+                    } else if (java.nio.file.Files.isRegularFile(entry)) {
+                        java.nio.file.Files.copy(entry, destination, java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+                    } else {
+                        throw new GradleException('Original Java source tree contains a non-regular entry')
+                    }
+                }
+            } finally { originals.close() }
+            def python = target.providers.gradleProperty('legacyJpegPython').orElse('python').get()
+            target.exec {
+                workingDir workspace
+                commandLine python, patch.absolutePath, '--source', generated.absolutePath
+            }
+            // Derive a separate manifest; keep the 194 source and compatibility
+            // dependencies while removing its extra desktop entry from this app.
+            def expectedManifest = new File(workspace, 'app/build/generated/legacy-jpeg196/AndroidManifest.xml').absoluteFile
+            def generatedManifest = expectedManifest.canonicalFile
+            if (generatedManifest != expectedManifest || !generatedManifest.toPath().startsWith(buildRoot.toPath())) {
+                throw new GradleException('Generated JPEG 196 manifest escaped app/build')
+            }
+            def factory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
+            factory.setNamespaceAware(true)
+            factory.setFeature('http://apache.org/xml/features/disallow-doctype-decl', true)
+            def document = factory.newDocumentBuilder().parse(exportManifest)
+            def android = 'http://schemas.android.com/apk/res/android'
+            def activities = document.getElementsByTagName('activity')
+            def exportActivities = []
+            for (int i = 0; i < activities.length; i++) {
+                def activity = activities.item(i)
+                if (activity.getAttributeNS(android, 'name') == 'cc.huevia.legacyexport.LegacyExportActivity') {
+                    exportActivities.add(activity)
+                }
+            }
+            if (exportActivities.size() != 1) {
+                throw new GradleException('Legacy export activity is missing or duplicated')
+            }
+            def exportActivity = exportActivities[0]
+            exportActivity.setAttributeNS(android, 'android:exported', 'false')
+            def removals = []
+            for (int i = 0; i < exportActivity.childNodes.length; i++) {
+                def filter = exportActivity.childNodes.item(i)
+                if (filter.nodeType != org.w3c.dom.Node.ELEMENT_NODE || filter.nodeName != 'intent-filter') continue
+                boolean desktop = false
+                def actions = filter.getElementsByTagName('action')
+                for (int j = 0; j < actions.length; j++) {
+                    desktop |= actions.item(j).getAttributeNS(android, 'name') == 'android.intent.action.MAIN'
+                }
+                def categories = filter.getElementsByTagName('category')
+                for (int j = 0; j < categories.length; j++) {
+                    desktop |= categories.item(j).getAttributeNS(android, 'name') == 'android.intent.category.LAUNCHER'
+                }
+                if (desktop) removals.add(filter)
+            }
+            removals.each { exportActivity.removeChild(it) }
+            generatedManifest.parentFile.mkdirs()
+            def transformer = javax.xml.transform.TransformerFactory.newInstance().newTransformer()
+            transformer.setOutputProperty(javax.xml.transform.OutputKeys.ENCODING, 'UTF-8')
+            transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, 'yes')
+            transformer.transform(new javax.xml.transform.dom.DOMSource(document), new javax.xml.transform.stream.StreamResult(generatedManifest))
+            main.manifest.srcFile(generatedManifest)
+            // The generated tree replaces app/src/main/java, never supplements it.
+            main.java.setSrcDirs([
+                generated,
+                new File(exporter, 'src'),
+                new File(workspace, 'cross-platform/core/java'),
+                new File(overlay, 'src')
+            ])
+            config.defaultConfig.applicationId = 'cc.huevia'
+            config.defaultConfig.versionCode = 196
+            config.defaultConfig.versionName = '0.30.36-beta-jpeg-fix'
+        }
+    }
+}

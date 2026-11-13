@@ -1,0 +1,24 @@
+{
+  "package": "cc.huevia",
+  "versionCode": 196,
+  "versionName": "0.30.36-beta-jpeg-fix",
+  "apk": "dist/legacy-jpeg196/huevia-0.30.36-beta-jpeg-fix-196.apk",
+  "bytes": 35363965,
+  "sha256": "95d84e38b098a0f948394bede12f16f4d209e6f3e30106946361a0c59babc612",
+  "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "sourceCommit": "d696f3c1d956b3c12ba1fe7395f41d49cae942f5",
+  "originalSourceUnchanged": true,
+  "patchSha256": "518794c7cba87947b8aca0e1d725413639041757381daf21d0da0c043523df94",
+  "overlaySha256": "4b4b3378e68ce4f2e1f38bbe8756c6c02bb6534615017cf79f4327e3533b0d25",
+  "manualInstallOnly": true,
+  "launchers": [
+    "cc.huevia.MainActivity"
+  ],
+  "legacyExportExported": false
+}

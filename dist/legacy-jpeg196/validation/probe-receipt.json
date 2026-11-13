@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "apk": ".tooling/legacy-jpeg196/tests/legacy-jpeg196-qa-332d4aad07e7.apk",
+  "bytes": 24979,
+  "sha256": "332d4aad07e7e274b5c4dfc265911ddaa0447be4d01dda6019ab560eb32d89ac",
+  "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "targetPackage": "cc.huevia",
+  "instrumentation": "cc.huevia.legacyjpeg196qa/.LegacyJpeg196Probe",
+  "inputSha256": {
+    "legacy-android/jpeg-196/tests/src/cc/huevia/legacyjpeg196qa/LegacyJpeg196Probe.java": "6019f881c8a49cb0922e0e2bf40528c9e261b0314b40eaa35ef348e755be8f7d",
+    "legacy-android/jpeg-196/tests/AndroidManifest.xml": "d0bb22c03d58577e9ed9a6a4cca14bde0372474410df4477d495ac0703bd5d70",
+    "legacy-android/jpeg-196/tests/build_probe.py": "dcb675fe137a5776fab0102a40b007ba7347867d3c2d78883cfc52643f18c581"
+  },
+  "runPerformed": false,
+  "scope": "Standalone instrumentation only; production loaded from installed target APK"
+}

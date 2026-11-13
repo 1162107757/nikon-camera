@@ -1,0 +1,4 @@
+# Preserve signed-package receipts and sealed evidence bytes.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Raw tool logs retain the whitespace emitted by their producers.
+build-evidence/*.log -whitespace

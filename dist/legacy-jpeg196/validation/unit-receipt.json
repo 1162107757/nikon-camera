@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "passed": true,
+  "checks": 1130,
+  "cases": 11,
+  "compiler": "JDK17 --release11 UTF-8",
+  "heapMiB": 128,
+  "sourceScope": "Generated PhotoFormat and legacy inventory helper; original PTP dependency bytes unchanged",
+  "sourceSha256": {
+    "legacy-android/jpeg-196/src/cc/huevia/album/LegacyJpegInventory.java": "61218509f9ea59745dc60713c6fce53d22283a63f8a558e959bc5101d7ddfce0",
+    "app/build/generated/legacy-jpeg196/java/cc/huevia/album/PhotoFormat.java": "567bb08fbb3a1f6f293d8f7f62736d7b725aded7990de587ce6cd9715f3acedf",
+    "app/src/main/java/cc/huevia/ptp/PtpObjectInfo.java": "8522a709851cbb8ba749ebf1b3ac4be18bb9469b71dce9ff715caf3631bb8595",
+    "app/src/main/java/cc/huevia/ptp/PtpDatasetReader.java": "36b063d3c5a940c60520796a8488442132b10dc473973ffac34f7309438be890",
+    "app/src/main/java/cc/huevia/ptp/PtpProtocolException.java": "c8b9547d46479c8f05c077d92d476b325913eb544c19711d0fb334968803a1c8",
+    "app/src/main/java/cc/huevia/ptp/PtpConstants.java": "e41f154027f4b2a212285a029e453ecb89797ee6d529fa3daa78a0f41a799cc5",
+    "app/src/main/java/cc/huevia/ptp/PtpContainer.java": "ee610de3e590e4a742b114c82093b30a2742c845cc4f67b142a49455c388971a",
+    "app/src/main/java/cc/huevia/ptp/PtpStorageIds.java": "d7724761abeda3aa95f098461e3f53a06e0232dea4c84ec059cc2a730de84e91",
+    "app/src/main/java/cc/huevia/ptp/PtpObjectHandles.java": "49c381396b75c4aecb4136e0681af5641b2f81a65d33d36acf7b717713044072",
+    "app/src/main/java/cc/huevia/ptp/PtpResponseException.java": "5a3fa31bc51f3591b6850fe7c85cb33b4bc6e297694101a98619da16ec4902f4",
+    "legacy-android/jpeg-196/tests/cc/huevia/album/LegacyJpegInventoryTest.java": "54108771f422f9d63318f0a945a19a2b0271f917f2de6dfe95afd43691c17309"
+  },
+  "compileLog": ".tooling/legacy-jpeg196/tests/compile.log",
+  "runLog": ".tooling/legacy-jpeg196/tests/run.log",
+  "runLogSha256": "ea49c05251628d6c449558629c34df4e0ad3b48b1f9a46642ef15beea2295bab",
+  "originalInputsUnchanged": true
+}

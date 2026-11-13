@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "apkSha256": "95d84e38b098a0f948394bede12f16f4d209e6f3e30106946361a0c59babc612",
+  "installedEqualsDelivery": true,
+  "device": {
+    "androidApi": 31,
+    "assertionsPassed": 82,
+    "sameProbe195ExpectedFailure": true,
+    "sameProbe196AllPass": true,
+    "normalUiJpegThumbnails": 2,
+    "controlledPeerOnly": true
+  },
+  "pureJava": {
+    "cases": 11,
+    "assertionsPassed": 1130
+  },
+  "uniqueNormalLauncher": true,
+  "originalSignature": true,
+  "nativeLibrariesUnchanged": 16,
+  "retainedOriginalPresetAndSavedJpeg": true,
+  "originalInputs": {
+    "frozen": 420,
+    "priorApprovedRepairs": 8,
+    "otherUnchanged": 412,
+    "modifiedByThisTask": 0
+  },
+  "actualZ6_2Verification": "pending user",
+  "crossPlatformPort": "deferred until legacy confirmation",
+  "privateUserDiagnosticCopied": false
+}

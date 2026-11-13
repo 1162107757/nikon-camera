@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cc.huevia.legacyjpeg196qa">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
+    <application android:label="Legacy JPEG UI regression QA" android:allowBackup="false" android:debuggable="false" />
+    <instrumentation android:name=".LegacyJpeg196Probe" android:targetPackage="cc.huevia" android:functionalTest="true" />
+</manifest>
