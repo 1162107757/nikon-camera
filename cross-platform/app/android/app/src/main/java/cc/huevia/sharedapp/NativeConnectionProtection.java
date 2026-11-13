@@ -42,7 +42,8 @@ final class NativeConnectionProtection implements MethodChannel.MethodCallHandle
     static long lastServiceStop(){return lastServiceStop;}
     private boolean enabled(){return activity.getSharedPreferences("camera-protection",0).getBoolean("enabled",false);}
     private String status(){PowerManager power=activity.getSystemService(PowerManager.class);return SharedJson.encode(SharedRuntime.map("available",true,"enabled",enabled(),"running",CameraRetentionService.running,"backgroundAllowed",enabled()&&active&&CameraRetentionService.running,"limited",false,"batteryExempt",power.isIgnoringBatteryOptimizations(activity.getPackageName()),"warning",warning,"stopRevision",stopRevision));}
-    private void emit(){EventChannel.EventSink sink=events;if(sink!=null)try{sink.success(status());}catch(RuntimeException detached){events=null;}}
+    boolean maintenanceAllowed(){return enabled()&&active&&CameraRetentionService.running;}
+    private void emit(){activity.updateCameraMaintenance();EventChannel.EventSink sink=events;if(sink!=null)try{sink.success(status());}catch(RuntimeException detached){events=null;}}
     @Override public void onListen(Object arguments,EventChannel.EventSink sink){events=sink;emit();}
     @Override public void onCancel(Object arguments){events=null;}
     @Override public void onMethodCall(MethodCall call,MethodChannel.Result reply){

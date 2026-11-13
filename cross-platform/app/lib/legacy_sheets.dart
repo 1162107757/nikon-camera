@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'theme.dart';
+import 'legacy_glass_sheet.dart';
 
 /// Original floating sheet: fixed actions and a separately scrollable body.
-class HueFloatingSheet extends StatelessWidget {
+class HueFloatingSheet extends StatefulWidget {
   const HueFloatingSheet({
     super.key,
     required this.title,
@@ -21,119 +22,137 @@ class HueFloatingSheet extends StatelessWidget {
   final bool sorting;
 
   @override
+  State<HueFloatingSheet> createState() => _HueFloatingSheetState();
+}
+
+class _HueFloatingSheetState extends State<HueFloatingSheet> {
+  bool closing = false;
+
+  void finish(VoidCallback action) {
+    if (closing) return;
+    closing = true;
+    action();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
     final density = MediaQuery.devicePixelRatioOf(context);
     double snap(double value) => (value * density).round() / density;
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.all(snap(10)),
-        child: Center(
-          heightFactor: 1,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 520,
-              maxHeight:
-                  (MediaQuery.sizeOf(context).height -
-                          MediaQuery.viewPaddingOf(context).vertical -
-                          24)
-                      .clamp(160, double.infinity),
-            ),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                color: p.surface,
-                borderRadius: BorderRadius.circular(28),
-                border: Border.all(
-                  color: p.dark ? Colors.white.withValues(alpha: .16) : p.card,
-                ),
+    return PopScope(
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) closing = true;
+      },
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(snap(10)),
+          child: Center(
+            heightFactor: 1,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 520,
+                maxHeight:
+                    (MediaQuery.sizeOf(context).height -
+                            MediaQuery.viewPaddingOf(context).vertical -
+                            24)
+                        .clamp(160, double.infinity),
               ),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  snap(18),
-                  snap(10),
-                  snap(18),
-                  snap(12),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Center(
-                      child: Container(
-                        width: 30,
-                        height: 3,
-                        decoration: BoxDecoration(
-                          color: p.outline,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: TextStyle(
-                              fontSize: titleSize,
-                              fontWeight: FontWeight.w700,
-                            ),
+              child: LegacyGlassSheet(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    snap(18),
+                    snap(10),
+                    snap(18),
+                    snap(12),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 30,
+                          height: 3,
+                          decoration: BoxDecoration(
+                            color: p.outline,
+                            borderRadius: BorderRadius.circular(2),
                           ),
                         ),
-                        HueIconButton(
-                          kind: HueIconKind.close,
-                          label: closeLabel,
-                          disc: false,
-                          iconSize: 20,
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
-                    Flexible(
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.only(bottom: sorting ? 0 : snap(8)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisSize: MainAxisSize.min,
-                          children: children,
-                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: sorting ? 0 : snap(8)),
-                      child: Row(
+                      const SizedBox(height: 4),
+                      Row(
                         children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              minimumSize: Size(sorting ? 64 : 0, 48),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: sorting ? 6 : 12,
-                              ),
-                              textStyle: const TextStyle(fontSize: 14),
-                            ),
-                            onPressed: onReset,
-                            child: const Text('重置'),
-                          ),
-                          const Spacer(),
-                          FilledButton(
-                            style: FilledButton.styleFrom(
-                              minimumSize: Size(sorting ? 108 : 0, 48),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: sorting ? 20 : 28,
-                                vertical: 8,
-                              ),
-                              textStyle: const TextStyle(
-                                fontSize: 14,
+                          Expanded(
+                            child: Text(
+                              widget.title,
+                              style: TextStyle(
+                                fontSize: widget.titleSize,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            onPressed: onApply,
-                            child: const Text('应用'),
+                          ),
+                          HueIconButton(
+                            kind: HueIconKind.close,
+                            label: widget.closeLabel,
+                            disc: false,
+                            iconSize: 20,
+                            onPressed: () =>
+                                finish(() => Navigator.pop(context)),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      Flexible(
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.only(
+                            bottom: widget.sorting ? 0 : snap(8),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            children: widget.children,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: widget.sorting ? 0 : snap(8),
+                        ),
+                        child: Row(
+                          children: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size(widget.sorting ? 64 : 0, 48),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: widget.sorting ? 6 : 12,
+                                ),
+                                textStyle: const TextStyle(fontSize: 14),
+                              ),
+                              onPressed: () {
+                                if (!closing) widget.onReset();
+                              },
+                              child: const Text('重置'),
+                            ),
+                            const Spacer(),
+                            FilledButton(
+                              style: FilledButton.styleFrom(
+                                minimumSize: Size(widget.sorting ? 108 : 0, 48),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: widget.sorting ? 20 : 28,
+                                  vertical: 8,
+                                ),
+                                textStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              onPressed: () => finish(widget.onApply),
+                              child: const Text('应用'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -11,6 +11,12 @@ import 'photo_grid.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
+/// Lets the shell hide its navigation while the album keeps its existing grid.
+class AlbumSelectionChanged extends Notification {
+  const AlbumSelectionChanged(this.active);
+  final bool active;
+}
+
 class AlbumSelectionPage extends StatefulWidget {
   const AlbumSelectionPage({
     super.key,
@@ -145,7 +151,7 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
           ),
         ],
       ),
-      bottomNavigationBar: _SelectionDock(
+      bottomNavigationBar: AlbumSelectionDock(
         onPressed: selected.isEmpty
             ? null
             : () => hueRootPage<void>(
@@ -165,9 +171,18 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
   }
 }
 
-class _SelectionDock extends StatelessWidget {
-  const _SelectionDock({required this.onPressed});
+class AlbumSelectionDock extends StatelessWidget {
+  const AlbumSelectionDock({
+    super.key,
+    required this.onPressed,
+    this.onExport,
+    this.onDelete,
+    this.inline = false,
+    this.phone = false,
+  });
   final VoidCallback? onPressed;
+  final VoidCallback? onExport, onDelete;
+  final bool inline, phone;
   @override
   Widget build(BuildContext context) {
     final p = HuePalette.of(context);
@@ -201,39 +216,58 @@ class _SelectionDock extends StatelessWidget {
                     horizontal: 12,
                     vertical: 6,
                   ),
-                  child: TextButton(
-                    onPressed: onPressed,
-                    style: TextButton.styleFrom(
-                      foregroundColor: p.ink,
-                      disabledForegroundColor: p.ink.withValues(alpha: .45),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: compact ? 0 : 6,
-                      ),
-                      minimumSize: const Size(0, 48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      textStyle: const TextStyle(
-                        fontSize: 12,
-                        height: 1.17,
-                        letterSpacing: 0,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        HueIcon(
+                  child: Row(
+                    children: [
+                      for (final action in [
+                        (
+                          inline && !phone ? '编辑' : '批量编辑',
                           HueIconKind.edit,
-                          size: 24,
-                          color: onPressed == null
-                              ? p.ink.withValues(alpha: .45)
-                              : p.ink,
+                          onPressed,
                         ),
-                        const SizedBox(height: 6),
-                        const Text('批量编辑'),
-                      ],
-                    ),
+                        if (inline && !phone)
+                          ('导出', HueIconKind.download, onExport),
+                        if (inline && !phone)
+                          ('删除', HueIconKind.delete, onDelete),
+                      ])
+                        Expanded(
+                          child: TextButton(
+                            onPressed: action.$3,
+                            style: TextButton.styleFrom(
+                              foregroundColor: p.ink,
+                              disabledForegroundColor: p.ink.withValues(
+                                alpha: .45,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: compact ? 0 : 6,
+                              ),
+                              minimumSize: const Size(0, 48),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              textStyle: const TextStyle(
+                                fontSize: 12,
+                                height: 1.17,
+                                letterSpacing: 0,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                HueIcon(
+                                  action.$2,
+                                  size: 24,
+                                  color: action.$3 == null
+                                      ? p.ink.withValues(alpha: .45)
+                                      : p.ink,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(action.$1),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
@@ -251,10 +285,12 @@ class BatchExportPage extends StatefulWidget {
     required this.state,
     required this.rows,
     required this.phone,
+    this.saveToGallery = false,
   });
   final AppState state;
   final List<Json> rows;
   final bool phone;
+  final bool saveToGallery;
   @override
   State<BatchExportPage> createState() => _BatchExportPageState();
 }
@@ -271,6 +307,7 @@ class _BatchExportPageState extends State<BatchExportPage> {
   @override
   void initState() {
     super.initState();
+    systemAlbum = widget.saveToGallery;
     if (batch.locked) {
       preset = batch.preset ?? '__keep__';
       size = batch.size;

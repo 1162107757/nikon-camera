@@ -16,3 +16,7 @@ docs/migration/validation/features-219/**/*.exit -text -whitespace
 # These relocated Markdown files are frozen raw receipts with recorded hashes.
 docs/migration/validation/features-219/flutter-raw-return/bindings/**/README.md -text -whitespace
 docs/migration/validation/features-219/camera-session/attempts/4f-core1535/archive-README.md -text -whitespace
+docs/migration/validation/features-220/**/*.log -text -whitespace
+docs/migration/validation/features-220/**/*.json -text -whitespace
+docs/migration/validation/features-220/**/*.txt -text -whitespace
+docs/migration/validation/features-220/**/*.exit -text -whitespace

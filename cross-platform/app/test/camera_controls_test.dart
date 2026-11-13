@@ -7,6 +7,7 @@ import 'package:huevia/domain.dart';
 class ControlsCore extends HueviaCore {
   final calls = <String>[];
   bool pending = false, connected = true, capture = true;
+  int remoteChecks = 0;
   Json remote() => {
     'session': 'album',
     'remoteId': 'remote',
@@ -60,10 +61,12 @@ class ControlsCore extends HueviaCore {
       case 'camera.remote.status':
         return remote();
       case 'camera.remote.capture':
+        remoteChecks = 0;
         pending = true;
         return remote();
       case 'camera.remote.check':
-        pending = false;
+        // Initial post-shutter inventory can precede camera file creation.
+        pending = ++remoteChecks < 2;
         return remote();
       case 'camera.remote.focus':
         return remote();
@@ -162,32 +165,39 @@ void main() {
         MaterialApp(home: CameraRemotePage(state: AppState(core))),
       );
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('ISO 400'), 200);
-      expect(find.text('ISO 400'), findsOneWidget);
-      final shutter = find.widgetWithText(FilledButton, '拍摄一张并保存到相机');
+      await tester.scrollUntilVisible(find.text('400'), 200);
+      expect(find.text('ISO'), findsOneWidget);
+      expect(find.text('400'), findsOneWidget);
+      final shutter = find.byKey(const Key('remote-shutter'));
       await tester.ensureVisible(shutter);
       await tester.tap(shutter);
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('拍摄一张并保存到相机'), 200);
       expect(
         core.calls.where((call) => call == 'camera.remote.capture'),
         hasLength(1),
       );
-      expect(tester.widget<FilledButton>(shutter).onPressed, isNull);
-      final check = find.text('读取拍摄结果');
-      await tester.ensureVisible(check);
-      await tester.tap(check);
+      expect(
+        core.calls.where((call) => call == 'camera.remote.check'),
+        hasLength(1),
+      );
+      expect(tester.widget<IconButton>(shutter).onPressed, isNull);
+      await tester.tap(find.text('拍摄结果待核对'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('查看相机最近照片'));
       await tester.pumpAndSettle();
       expect(
         core.calls.where((call) => call == 'camera.remote.capture'),
         hasLength(1),
       );
-      expect(tester.widget<FilledButton>(shutter).onPressed, isNotNull);
+      expect(
+        core.calls.where((call) => call == 'camera.remote.check'),
+        hasLength(2),
+      );
+      expect(tester.widget<IconButton>(shutter).onPressed, isNotNull);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
     },
   );
-
   testWidgets(
     'remote capabilities disable shutter and disconnected entry recovers',
     (tester) async {
@@ -196,12 +206,13 @@ void main() {
         MaterialApp(home: CameraRemotePage(state: AppState(core))),
       );
       await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(find.text('拍摄一张并保存到相机'), 200);
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('remote-shutter')),
+        200,
+      );
       expect(
         tester
-            .widget<FilledButton>(
-              find.widgetWithText(FilledButton, '拍摄一张并保存到相机'),
-            )
+            .widget<IconButton>(find.byKey(const Key('remote-shutter')))
             .onPressed,
         isNull,
       );
@@ -227,19 +238,15 @@ void main() {
         MaterialApp(home: CameraSlotsPage(state: AppState(core))),
       );
       await tester.pumpAndSettle();
-      expect(find.text('C1 · SOURCE'), findsOneWidget);
-      await tester.tap(find.byType(PopupMenuButton<String>).first);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('删除此槽位'));
+      expect(find.byKey(const ValueKey('camera-slot-201')), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('camera-slot-delete')));
       await tester.pumpAndSettle();
       expect(find.text('删除 C1？'), findsOneWidget);
       expect(core.calls.contains('camera.slots.execute'), isFalse);
       await tester.tap(find.text('取消'));
       await tester.pumpAndSettle();
       expect(core.calls.contains('camera.slots.execute'), isFalse);
-      await tester.tap(find.byType(PopupMenuButton<String>).first);
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('删除此槽位'));
+      await tester.tap(find.byKey(const ValueKey('camera-slot-delete')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('确认删除此槽位'));
       await tester.pumpAndSettle();
@@ -247,7 +254,8 @@ void main() {
         core.calls.where((call) => call == 'camera.slots.execute'),
         hasLength(1),
       );
-      expect(find.text('已精确读回核对，目标及其他槽位符合预期。'), findsOneWidget);
+      expect(find.text('已读回核对'), findsOneWidget);
+      expect(find.text('已删除 C1'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
     },

@@ -25,6 +25,14 @@
 #import "HueviaConnectionProtection.h"
 #import "HueviaCameraPresentation.h"
 #import "cc/huevia/account/AccountException.h"
+#import "java/lang/Runnable.h"
+
+@interface HueviaCameraMaintenanceObserver : NSObject <JavaLangRunnable>
+@property(nonatomic,copy) dispatch_block_t changed;
+@end
+@implementation HueviaCameraMaintenanceObserver
+- (void)run {if(self.changed)self.changed();}
+@end
 
 @interface HueviaCorePlugin ()
 @property(nonatomic,strong) dispatch_queue_t queue;
@@ -45,6 +53,10 @@
 @property(nonatomic,strong) HueviaOriginalFiles *originalFiles;
 @property(nonatomic,strong) HueviaAlbumOperations *albumOperations;
 @property(nonatomic,strong) HueviaConnectionProtection *protection;
+@property(atomic) BOOL maintenanceAllowed;
+@property(nonatomic) BOOL maintenanceDetached;
+@property(nonatomic) BOOL maintenanceObserved;
+@property(nonatomic,strong) HueviaCameraMaintenanceObserver *cameraMaintenanceObserver;
 @property(nonatomic,strong) FlutterMethodChannel *filesChannel;
 @property(nonatomic,weak) UIViewController *presenter;
 - (void)finishNetworkIntroduction:(FlutterError *)failure resume:(BOOL)resume;
@@ -65,6 +77,16 @@
     [owner finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"连接已取消，请保持应用在前台后重试。" details:nil] resume:NO];
     for(NSString *job in owner.tasks.allKeys){if([owner.tasks[job] cancelIfActive])[owner.camera cancelWithNSString:job];}
   }];
+  host.maintenanceAllowed=host.protection.maintenanceAllowed;
+  host.protection.maintenanceChanged=^(BOOL allowed){
+    HueviaCorePlugin *owner=weakHost;
+    if(!owner)return;
+    @synchronized(owner){
+      if(owner.maintenanceDetached)return;
+      owner.maintenanceAllowed=allowed;
+      [owner.camera setMaintenanceAllowedWithBoolean:allowed];
+    }
+  };
   host.filesChannel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/file-publication" binaryMessenger:registrar.messenger];
   [host.filesChannel setMethodCallHandler:^(FlutterMethodCall *call,FlutterResult result){
     HueviaCorePlugin *owner=weakHost;if(!owner.originalFiles){result([FlutterError errorWithCode:@"NOT_READY" message:@"文件保存尚未准备好。" details:nil]);return;}[owner.originalFiles handleMethodCall:call result:result];
@@ -73,6 +95,8 @@
   host.presenter=registrar.viewController;
   FlutterMethodChannel *channel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/core" binaryMessenger:registrar.messenger];
   [registrar addMethodCallDelegate:host channel:channel];
+  // Flutter delivers engine-detach cleanup to the published plugin instance.
+  [registrar publish:host];
   FlutterEventChannel *events=[FlutterEventChannel eventChannelWithName:@"cc.huevia/events" binaryMessenger:registrar.messenger];
   [events setStreamHandler:host];
 }
@@ -87,6 +111,9 @@
   [self handleMethodCall:call result:reply];
 }
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
+  @synchronized(self){
+    if(self.maintenanceDetached){reply([FlutterError errorWithCode:@"CANCELLED" message:@"应用连接已关闭。" details:nil]);return;}
+  }
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
   if([call.method isEqualToString:@"cameraUsbPermission"]){reply(@"{\"granted\":true}");return;}
   if([call.method isEqualToString:@"cameraSettings"]){
@@ -169,7 +196,9 @@
   dispatch_async(self.queue,^{@autoreleasepool{
     NSString *stage=@"application operation";
     @try {
-      if(task.cancelled)@throw [[JavaIoIOException alloc] initWithNSString:@"操作已取消。"];
+      @synchronized(self){
+        if(self.maintenanceDetached||task.cancelled)@throw [[JavaIoIOException alloc] initWithNSString:@"操作已取消。"];
+      }
       NSString *value;
       if([call.method isEqualToString:@"initialize"]){
         if(!self.runtime){
@@ -198,7 +227,32 @@
           [gallery configurePublicationWithRuntime:runtime];
           __weak HueviaCorePlugin *weakHost=self;
           gallery.changed=^{dispatch_async(dispatch_get_main_queue(),^{HueviaCorePlugin *host=weakHost;if(host.events)host.events(@{@"kind":@"galleryChanged"});});};
-          self.runtime=runtime;self.camera=camera;self.media=media;self.gallery=gallery;
+          self.runtime=runtime;self.media=media;self.gallery=gallery;
+          @synchronized(self){
+            if(self.maintenanceDetached||task.cancelled){
+              [camera setMaintenanceAllowedWithBoolean:NO];[camera closeTransport];
+              @throw [[JavaIoIOException alloc] initWithNSString:@"操作已取消。"];
+            }
+            self.camera=camera;[camera setMaintenanceAllowedWithBoolean:self.maintenanceAllowed];
+          }
+          HueviaCameraMaintenanceObserver *observer=[HueviaCameraMaintenanceObserver new];
+          observer.changed=^{dispatch_async(dispatch_get_main_queue(),^{
+            HueviaCorePlugin *owner=weakHost;if(!owner)return;
+            @synchronized(owner){
+              if(owner.maintenanceDetached)return;
+              BOOL active=[owner.camera maintenanceActive];
+              if(owner.maintenanceObserved==active)return;
+              owner.maintenanceObserved=active;
+              if(active||[owner.camera maintenanceConnection])return;
+              if(owner.events)owner.events(@{@"kind":@"cameraConnectionChanged"});
+            }
+          });};
+          @synchronized(self){
+            if(!self.maintenanceDetached){
+              self.cameraMaintenanceObserver=observer;
+              [camera setMaintenanceObserverWithJavaLangRunnable:observer];
+            }
+          }
           self.originalFiles=[[HueviaOriginalFiles alloc] initWithRoot:self.root runtime:runtime];
           self.albumOperations=[[HueviaAlbumOperations alloc] initWithRoot:self.root runtime:runtime];
         }
@@ -243,5 +297,21 @@
       dispatch_async(dispatch_get_main_queue(),^{if(self.tasks[job]==task)[self.tasks removeObjectForKey:job];reply([FlutterError errorWithCode:task.cancelled?@"CANCELLED":@"OPERATION_FAILED" message:message details:details]);});
     }
   }});
+}
+- (void)detachFromEngineForRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+  self.protection.maintenanceChanged=nil;
+  self.events=nil;
+  CcHueviaSharedSharedCamera *camera;
+  @synchronized(self){
+    self.maintenanceDetached=YES;self.maintenanceAllowed=NO;
+    camera=self.camera;[camera setMaintenanceAllowedWithBoolean:NO];
+    [camera setMaintenanceObserverWithJavaLangRunnable:nil];
+    self.cameraMaintenanceObserver=nil;
+    for(NSString *job in self.tasks.allKeys){
+      if([self.tasks[job] cancelIfActive])[camera cancelWithNSString:job];
+    }
+  }
+  [self finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"应用连接已关闭。" details:nil] resume:NO];
+  dispatch_async(self.queue,^{[camera closeTransport];});
 }
 @end

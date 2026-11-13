@@ -9,6 +9,7 @@ import 'theme.dart';
 import 'widgets.dart';
 import 'legacy_presets.dart';
 import 'legacy_sheets.dart';
+import 'legacy_glass_sheet.dart';
 import 'legacy_preset_details.dart';
 import 'submission_editor.dart';
 import 'personal_sync.dart';
@@ -27,6 +28,7 @@ class _LibraryPageState extends State<LibraryPage> {
   String? error;
   bool busy = false, hasMore = false, requestInFlight = false;
   bool importing = false;
+  bool failedNext = false;
   ({bool next, bool refresh})? pendingLoad;
   List<Preset> online = [];
   List<String> categories = [];
@@ -48,13 +50,9 @@ class _LibraryPageState extends State<LibraryPage> {
       ),
       if (choices.contains('未分类')) '未分类',
     ];
-    final accepted = await showModalBottomSheet<bool>(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      barrierColor: Colors.transparent,
+    final accepted = await showLegacyGlassSheet<bool>(
+      context,
+      wrap: false,
       builder: (sheet) => StatefulBuilder(
         builder: (context, refresh) => HueFloatingSheet(
           title: '筛选',
@@ -220,6 +218,7 @@ class _LibraryPageState extends State<LibraryPage> {
 
   Future<void> load({bool next = false, bool refresh = false}) async {
     if (!mounted || tab != 1) return;
+    if (next && (!hasMore || busy || requestInFlight)) return;
     if (requestInFlight) {
       generation++;
       pendingLoad = (next: next, refresh: refresh);
@@ -253,9 +252,20 @@ class _LibraryPageState extends State<LibraryPage> {
           .map((row) => Preset(object(row), online: true))
           .toList();
       setState(() {
-        online = next ? [...online, ...rows] : rows;
-        page = value['page'] as int? ?? 1;
-        hasMore = value['hasMore'] == true;
+        final previousPage = page;
+        final unique = <String, Preset>{
+          if (next)
+            for (final item in online) item.id: item,
+          for (final item in rows) item.id: item,
+        };
+        final progressed = !next || unique.length > online.length;
+        online = unique.values.toList();
+        page = value['page'] as int? ?? (next ? previousPage + 1 : 1);
+        hasMore =
+            !searching &&
+            value['hasMore'] == true &&
+            progressed &&
+            (!next || page > previousPage);
         onlineTotal = (value['total'] as num?)?.toInt() ?? rows.length;
         categories = List<String>.from(value['categories'] as List)
             .where((item) => item.isNotEmpty)
@@ -264,7 +274,12 @@ class _LibraryPageState extends State<LibraryPage> {
         if (value['available'] == false) error = notice;
       });
     } catch (failure) {
-      if (mounted && request == generation) setState(() => error = '$failure');
+      if (mounted && request == generation) {
+        setState(() {
+          failedNext = next;
+          error = '$failure';
+        });
+      }
     } finally {
       requestInFlight = false;
       if (mounted && request == generation) setState(() => busy = false);
@@ -847,8 +862,10 @@ class _LibraryPageState extends State<LibraryPage> {
                   owner: widget.state.session['user']?['id'] as String? ?? '',
                   onOpen: detail,
                   onRemove: presetActions,
-                  onMore: hasMore && tab == 1 && !busy
-                      ? () => load(next: true)
+                  loadingMore: tab == 1 && busy,
+                  pageError: tab == 1 ? error : null,
+                  onMore: tab == 1 && (hasMore || error != null)
+                      ? () => load(next: error == null || failedNext)
                       : null,
                 ),
         ),

@@ -7,6 +7,8 @@ import 'package:path/path.dart' as p;
 import 'domain.dart';
 import 'camera_transfer.dart';
 import 'original_files.dart';
+import 'theme.dart';
+import 'widgets.dart';
 
 /// Persistent intentions belong to shared storage; a transport reply alone
 /// cannot complete a queue item. Native camera.download writes the SHA receipt.
@@ -430,8 +432,13 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
 }
 
 class CameraDownloadsPage extends StatefulWidget {
-  const CameraDownloadsPage({super.key, required this.state});
+  const CameraDownloadsPage({
+    super.key,
+    required this.state,
+    this.embedded = false,
+  });
   final AppState state;
+  final bool embedded;
   @override
   State<CameraDownloadsPage> createState() => _CameraDownloadsPageState();
 }
@@ -455,10 +462,27 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
     }
   }
 
+  Future<void> changeQueue() async {
+    final expectedOwner = queue.currentOwner;
+    try {
+      if (queue.busy) {
+        await queue.stop();
+      } else if (queue.current != null) {
+        await queue.resume(queue.current!['id'] as String);
+      }
+    } catch (failure) {
+      if (mounted && expectedOwner == queue.currentOwner) {
+        report(context, failure);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: const Text('相机下载队列'),
+    backgroundColor: widget.embedded ? Colors.transparent : null,
+    appBar: HueHeader(
+      title: '下载队列',
+      back: true,
       actions: [
         IconButton(
           tooltip: '刷新记录',
@@ -470,9 +494,16 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
     body: AnimatedBuilder(
       animation: queue,
       builder: (context, _) => ListView(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
         children: [
-          const Text('已接收的原件保留在应用内。中断后重新连接并核对原相机，只重试未完成项。'),
+          Text(
+            '接收后保留原文件，中断可继续未完成的照片。',
+            style: TextStyle(
+              fontSize: 13,
+              height: 1.5,
+              color: HuePalette.of(context).secondary,
+            ),
+          ),
           if (queue.issues.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 12),
@@ -542,11 +573,12 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
               ),
             FilledButton(
               onPressed: queue.busy
-                  ? () => unawaited(queue.stop())
-                  : queue.current!['phase'] == 'done'
+                  ? changeQueue
+                  : queue.current!['phase'] == 'done' ||
+                        widget.state.cameraLiveActive ||
+                        widget.state.cameraManualTransferActive
                   ? null
-                  : () =>
-                        unawaited(queue.resume(queue.current!['id'] as String)),
+                  : changeQueue,
               child: Text(queue.busy ? '停止队列' : '继续未完成项'),
             ),
           ],
@@ -562,12 +594,28 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
               trailing: const Icon(Icons.chevron_right),
               enabled: !queue.busy,
               onTap: () async {
-                queue.current = await widget.state.core.call('downloads.get', {
-                  'owner': queue.currentOwner,
-                  'id': item['id'],
-                });
-                queue.error = null;
-                queue.changed();
+                final expectedOwner = queue.currentOwner;
+                final expectedGeneration = queue.generation;
+                try {
+                  final value = await widget.state.core.call('downloads.get', {
+                    'owner': expectedOwner,
+                    'id': item['id'],
+                  });
+                  if (!mounted ||
+                      !context.mounted ||
+                      expectedOwner != queue.currentOwner ||
+                      expectedGeneration != queue.generation ||
+                      queue.busy) {
+                    return;
+                  }
+                  queue.current = value;
+                  queue.error = null;
+                  queue.changed();
+                } catch (failure) {
+                  if (context.mounted && expectedOwner == queue.currentOwner) {
+                    report(context, failure);
+                  }
+                }
               },
             ),
         ],

@@ -17,6 +17,7 @@ import 'settings.dart';
 import 'appearance.dart';
 import 'community_activity.dart';
 import 'app_stability.dart';
+import 'album_batch.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -192,7 +193,7 @@ class _HueviaAppState extends State<HueviaApp> {
   );
 }
 
-class HomeFrame extends StatelessWidget {
+class HomeFrame extends StatefulWidget {
   const HomeFrame({
     super.key,
     required this.location,
@@ -204,77 +205,98 @@ class HomeFrame extends StatelessWidget {
   final StatefulNavigationShell? navigation;
   static const paths = ['/presets', '/camera', '/photos', '/settings'];
   @override
+  State<HomeFrame> createState() => _HomeFrameState();
+}
+
+class _HomeFrameState extends State<HomeFrame> {
+  bool albumSelecting = false;
+  String get location => widget.location;
+  Widget get child => widget.child;
+  StatefulNavigationShell? get navigation => widget.navigation;
+  static const paths = HomeFrame.paths;
+
+  @override
   Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(
-      child: LayoutBuilder(
-        builder: (context, bounds) {
-          final rail = bounds.maxWidth >= 600;
-          final scale = MediaQuery.textScalerOf(context).scale(1);
-          final p = HuePalette.of(context);
-          final density = MediaQuery.devicePixelRatioOf(context);
-          double snap(double value) => (value * density).round() / density;
-          final height = snap(
-            65.0 + ((scale - 1.2).clamp(0, double.infinity) * 24).round(),
-          );
-          final width = snap((bounds.maxWidth - 48).clamp(0.0, 360.0));
-          final innerPixels = ((width - 2 * snap(4)) * density).round();
-          final navigation = Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: rail ? 8 : snap(4),
-              vertical: rail ? 6 : snap(4),
-            ),
-            child: Flex(
-              direction: rail ? Axis.vertical : Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (var i = 0; i < paths.length; i++)
-                  if (rail)
-                    _destination(context, i, true)
-                  else
-                    SizedBox(
-                      width:
-                          ((innerPixels * (i + 1) / 4).floor() -
-                              (innerPixels * i / 4).floor()) /
-                          density,
-                      child: _destination(context, i, false),
-                    ),
-              ],
-            ),
-          );
-          return Stack(
-            children: [
-              Positioned.fill(
-                left: rail ? 80 : 0,
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 720),
-                    child: child,
-                  ),
-                ),
+    body: NotificationListener<AlbumSelectionChanged>(
+      onNotification: (notification) {
+        if (albumSelecting != notification.active) {
+          setState(() => albumSelecting = notification.active);
+        }
+        return true;
+      },
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, bounds) {
+            final rail = bounds.maxWidth >= 600;
+            final scale = MediaQuery.textScalerOf(context).scale(1);
+            final p = HuePalette.of(context);
+            final density = MediaQuery.devicePixelRatioOf(context);
+            double snap(double value) => (value * density).round() / density;
+            final height = snap(
+              65.0 + ((scale - 1.2).clamp(0, double.infinity) * 24).round(),
+            );
+            final width = snap((bounds.maxWidth - 48).clamp(0.0, 360.0));
+            final innerPixels = ((width - 2 * snap(4)) * density).round();
+            final navigation = Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: rail ? 8 : snap(4),
+                vertical: rail ? 6 : snap(4),
               ),
-              if (rail)
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: 80,
-                  child: ColoredBox(color: p.glass, child: navigation),
-                )
-              else
-                Positioned(
-                  left:
-                      ((bounds.maxWidth - width) * density / 2).floor() /
-                      density,
-                  bottom: snap(14),
-                  child: SizedBox(
-                    width: width,
-                    height: height,
-                    child: HueGlass(child: navigation),
+              child: Flex(
+                direction: rail ? Axis.vertical : Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (var i = 0; i < paths.length; i++)
+                    if (rail)
+                      _destination(context, i, true)
+                    else
+                      SizedBox(
+                        width:
+                            ((innerPixels * (i + 1) / 4).floor() -
+                                (innerPixels * i / 4).floor()) /
+                            density,
+                        child: _destination(context, i, false),
+                      ),
+                ],
+              ),
+            );
+            return Stack(
+              children: [
+                Positioned.fill(
+                  left: rail && !(albumSelecting && location == '/photos')
+                      ? 80
+                      : 0,
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 720),
+                      child: child,
+                    ),
                   ),
                 ),
-            ],
-          );
-        },
+                if (rail && !(albumSelecting && location == '/photos'))
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: 80,
+                    child: ColoredBox(color: p.glass, child: navigation),
+                  )
+                else if (!rail && !(albumSelecting && location == '/photos'))
+                  Positioned(
+                    left:
+                        ((bounds.maxWidth - width) * density / 2).floor() /
+                        density,
+                    bottom: snap(14),
+                    child: SizedBox(
+                      width: width,
+                      height: height,
+                      child: HueGlass(child: navigation),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
       ),
     ),
   );

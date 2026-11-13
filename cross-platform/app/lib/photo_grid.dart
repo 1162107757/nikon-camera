@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 import 'domain.dart';
 import 'photo_format.dart';
 import 'theme.dart';
+import 'legacy_presets.dart';
 
 class PhotoMasonry extends StatelessWidget {
   const PhotoMasonry({
@@ -19,6 +20,8 @@ class PhotoMasonry extends StatelessWidget {
     this.selected,
     this.onGroup,
     this.bottomPadding,
+    this.loadingMore = false,
+    this.pageError,
   });
   final List<Json> rows;
   final bool phone;
@@ -28,6 +31,8 @@ class PhotoMasonry extends StatelessWidget {
   final Set<String>? selected;
   final void Function(List<Json>)? onGroup;
   final double? bottomPadding;
+  final bool loadingMore;
+  final String? pageError;
 
   Widget tile(BuildContext context, Json row, double ratio) {
     final p = HuePalette.of(context);
@@ -157,96 +162,108 @@ class PhotoMasonry extends StatelessWidget {
       }
       first = last;
     }
-    return ListView.builder(
-      addSemanticIndexes: false,
-      padding: EdgeInsets.fromLTRB(
-        15,
-        0,
-        15,
-        bottomPadding ?? 112 + hueNavigationInset(context),
-      ),
-      itemCount: sections.length + (onMore == null ? 0 : 1),
-      itemBuilder: (context, block) {
-        if (block == sections.length) {
-          return TextButton(onPressed: onMore, child: const Text('加载更多'));
-        }
-        final section = sections[block];
-        if (section.$1 != null) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 8, top: 6),
-            child: SizedBox(
-              height: 48,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      section.$1!,
-                      style: TextStyle(
-                        fontSize: 13,
-                        height: 1.35,
-                        fontWeight: FontWeight.bold,
-                        color: p.ink,
+    return LegacyScrollPagination(
+      onMore: onMore,
+      loading: loadingMore,
+      error: pageError,
+      child: ListView.builder(
+        addSemanticIndexes: false,
+        padding: EdgeInsets.fromLTRB(
+          15,
+          0,
+          15,
+          bottomPadding ?? 112 + hueNavigationInset(context),
+        ),
+        itemCount: sections.length + (onMore == null && !loadingMore ? 0 : 1),
+        itemBuilder: (context, block) {
+          if (block == sections.length) {
+            return LegacyPageStatus(
+              loading: loadingMore,
+              error: pageError,
+              onRetry: onMore,
+            );
+          }
+          final section = sections[block];
+          if (section.$1 != null) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 8, top: 6),
+              child: SizedBox(
+                height: 48,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        section.$1!,
+                        style: TextStyle(
+                          fontSize: 13,
+                          height: 1.35,
+                          fontWeight: FontWeight.bold,
+                          color: p.ink,
+                        ),
                       ),
                     ),
-                  ),
-                  if (selected != null)
-                    IconButton(
-                      tooltip: '${section.$1}，共 ${section.$3} 张，选择整组',
-                      onPressed: () => onGroup?.call(section.$2),
-                      icon: Icon(
-                        section.$2.every((row) => selected!.contains(row['id']))
-                            ? Icons.check_circle
-                            : Icons.circle_outlined,
-                        size: 21,
+                    if (selected != null)
+                      IconButton(
+                        tooltip: '${section.$1}，共 ${section.$3} 张，选择整组',
+                        onPressed: () => onGroup?.call(section.$2),
+                        icon: Icon(
+                          section.$2.every(
+                                (row) => selected!.contains(row['id']),
+                              )
+                              ? Icons.check_circle
+                              : Icons.circle_outlined,
+                          size: 21,
+                        ),
+                      )
+                    else
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          '${section.$3} 张照片',
+                          style: TextStyle(fontSize: 11, color: p.secondary),
+                        ),
                       ),
-                    )
-                  else
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Text(
-                        '${section.$3} 张照片',
-                        style: TextStyle(fontSize: 11, color: p.secondary),
+                  ],
+                ),
+              ),
+            );
+          }
+          final chunk = section.$2;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var col = 0; col < columns; col++)
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Column(
+                          children: [
+                            for (
+                              var index = col;
+                              index < chunk.length;
+                              index += columns
+                            )
+                              tile(
+                                context,
+                                chunk[index],
+                                (col.isEven
+                                    ? [1.45, .93, 1.14]
+                                    : [1.14, 1.45, .93])[(index ~/ columns) %
+                                    3],
+                              ),
+                          ],
+                        ),
                       ),
                     ),
                 ],
               ),
-            ),
+            ],
           );
-        }
-        final chunk = section.$2;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (var col = 0; col < columns; col++)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Column(
-                        children: [
-                          for (
-                            var index = col;
-                            index < chunk.length;
-                            index += columns
-                          )
-                            tile(
-                              context,
-                              chunk[index],
-                              (col.isEven
-                                  ? [1.45, .93, 1.14]
-                                  : [1.14, 1.45, .93])[(index ~/ columns) % 3],
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ],
-        );
-      },
+        },
+      ),
     );
   }
 }

@@ -5,6 +5,8 @@ import cc.huevia.album.PhotoCameraClient;
 import cc.huevia.ncp.NcpPictureControlConverter;
 import cc.huevia.picturecontrol.*;
 import cc.huevia.ptp.*;
+import cc.huevia.usb.CameraParameterController;
+import cc.huevia.usb.CameraParameterRequest;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
@@ -17,6 +19,7 @@ public final class SharedSlots implements AutoCloseable {
         PtpContainer command(int operation,long transaction,long...parameters)throws IOException;
         PtpContainer send(int operation,long transaction,byte[] bytes,long...parameters)throws IOException;
         void authorizeDeletion(int target)throws IOException;
+        default void authorizeParameters(Map<Integer,byte[]> values)throws IOException{throw new IOException("此通道未提供拍摄参数授权。");}
         boolean isOpen();
         default boolean isSessionManaged(){return false;}
         @Override void close();
@@ -53,6 +56,7 @@ public final class SharedSlots implements AutoCloseable {
         public PtpContainer command(int op,long tx,long...p)throws IOException{if(op==0x90ce)attempted=true;return current().pictureControlCommand(op,tx,p);}
         public PtpContainer send(int op,long tx,byte[] data,long...p)throws IOException{attempted=true;return current().sendPictureControlData(op,tx,data,p);}
         public void authorizeDeletion(int target)throws IOException{current().authorizePictureControlDeletion(target);deletion=true;}
+        public void authorizeParameters(Map<Integer,byte[]> values)throws IOException{current().authorizeCameraParameters(values);}
         public boolean isOpen(){PtpIpClient current=client;return current!=null&&current.isOpen()&&!current.isProtocolUnconfirmed();}
         public void close(){PtpIpClient old;synchronized(this){old=client;client=null;}if(old!=null)old.close();}
         synchronized PhotoCameraClient release(long next)throws IOException {
@@ -99,6 +103,18 @@ public final class SharedSlots implements AutoCloseable {
         }catch(IOException|RuntimeException error){if(!retainHealthy||!(transport instanceof WifiTransport)||!isConnected()||cancel.getAsBoolean())close();throw error;}
     }
     public boolean isConnected(){Transport current=transport;return current!=null&&current.isOpen();}
+    /** Original prepared-session read-only heartbeat: built-in Picture Control1. */
+    void keepAlive(String expected,BooleanSupplier cancel)throws IOException{
+        if(!session.equals(expected)||!isConnected())throw new IOException("槽位会话已变化，未发送保活请求。");
+        check(cancel);long transaction=next++;
+        try{PictureControlData.parse(read(0x90cc,transaction,1,0));}
+        catch(PtpResponseException response){
+            if(response.transactionId()!=transaction)throw new PtpProtocolException("无线保活响应的事务编号不匹配。",response);
+            if(response.responseCode()==0x2002||response.responseCode()==0x2019)return;
+            throw response;
+        }
+        check(cancel);
+    }
     Transport transportSnapshot(){return transport;}
     void detachTransport(Transport expected){if(transport==expected){transport=null;owned=false;}}
     static void requireReadCapabilities(PtpDeviceInfo device)throws IOException{
@@ -123,13 +139,13 @@ public final class SharedSlots implements AutoCloseable {
         if(op.equals("camera.slots.acknowledge")){
             Map<String,Object> record=journal.read();
             if(!Boolean.TRUE.equals(p.get("confirmedOnCamera"))||!Objects.equals(p.get("actionId"),record.get("actionId"))||!device.model().equals(record.get("model")))throw new IOException("请先连接原相机并手动核对槽位结果。");
-            record.put("pending",false);record.put("phase","manuallyChecked");journal.save(record);return state();
+            record.put("pending",false);record.put("parametersPending",false);record.put("parametersManuallyChecked",true);record.put("phase",Boolean.TRUE.equals(record.get("presetVerified"))?"verified":"manuallyChecked");journal.save(record);return state();
         }
         throw new IOException("未知的槽位操作。");
     }
     private Object prepare(Map<String,Object> p,BooleanSupplier cancel)throws IOException {
         if(consumed)throw new IOException("本次连接已尝试过一次操作，请关闭后重新读取槽位。");
-        if(Boolean.TRUE.equals(journal.read().get("pending")))throw new IOException("上次操作结果待核对，请先只读核对；不会重复写入。");
+        if(Boolean.TRUE.equals(journal.read().get("pending"))||Boolean.TRUE.equals(journal.read().get("parametersPending")))throw new IOException("上次操作结果待核对，请先只读核对；不会重复写入。");
         String kind=SharedRuntime.text(p,"kind",16);int target=SharedRuntime.integer(p,"target",0);target(target);
         byte[] old=slots.get(target);if(old==null)throw new IOException("目标槽位不属于当前快照。");
         PictureControlData before=PictureControlData.parse(old);String explanation="";
@@ -150,9 +166,12 @@ public final class SharedSlots implements AutoCloseable {
                 requested=conversion.dataBytes();PictureControlWriteValidation.validateConvertedData(requested);explanation=conversion.toDisplayText();
             }
         }else throw new IOException("请选择写入或删除。");
+        CameraParameterRequest parameters=SharedSlotParameters.parse(p.get("parameters"));
+        if(!kind.equals("write")&&!parameters.isEmpty())throw new IOException("删除槽位时不能调整拍摄参数。");
         check(cancel);confirmed=old.clone();
         preparation=SharedRuntime.map("confirmationId",UUID.randomUUID().toString(),"session",session,"snapshot",snapshot,"kind",kind,"target",target,"targetLabel","C"+(target-200),"beforeName",before.registrationName(),"beforeSha256",SharedCameraMutationStore.sha(old),"overwrite",!before.hasNoBasePictureControl(),"name",requested==null?"":PictureControlData.parse(requested).registrationName(),"desiredSha256",requested==null?"":SharedCameraMutationStore.sha(requested),"explanation",explanation);
         if(p.containsKey("source"))preparation.put("source",p.get("source"));
+        preparation.put("parameters",SharedSlotParameters.values(parameters));preparation.put("parameterSummary",parameters.summary());
         return new LinkedHashMap<>(preparation);
     }
     private Object execute(Map<String,Object> p,BooleanSupplier cancel)throws IOException {
@@ -187,15 +206,41 @@ public final class SharedSlots implements AutoCloseable {
             boolean equal=deleting?PictureControlData.parse(after.get(target)).hasNoBasePictureControl():Arrays.equals(requested,after.get(target));
             for(Map.Entry<Integer,byte[]> item:before.entrySet())if(item.getKey()!=target&&!Arrays.equals(item.getValue(),after.get(item.getKey())))equal=false;
             if(!equal)throw new IOException("相机已响应，但读回或其他槽位与预期不同；请核对，不会自动重试或还原。");
-            record.put("pending",false);record.put("phase","verified");record.put("readbackSha256",SharedCameraMutationStore.sha(after.get(target)));journal.save(record);
+            record.put("pending",false);record.put("phase","verified");record.put("presetVerified",true);record.put("readbackSha256",SharedCameraMutationStore.sha(after.get(target)));journal.save(record);
+            if(!deleting)applyParameters(record,fresh,channel,cancel);
         }catch(PtpResponseException rejected){record.put("phase",Boolean.TRUE.equals(record.get("acknowledged"))?"resultUnknown":"rejected");record.put("pending",Boolean.TRUE.equals(record.get("acknowledged")));record.put("message",rejected.getMessage());journal.save(record);}
         catch(IOException failure){owned=false;channel.close();record.put("message",failure.getMessage());journal.save(record);}
         return state();
+    }
+    private void applyParameters(Map<String,Object> record,PtpDeviceInfo fresh,Transport channel,BooleanSupplier cancel)throws IOException {
+        CameraParameterRequest requested=SharedSlotParameters.parse(record.get("parameters"));
+        CameraParameterController.Result result=CameraParameterController.prepare(requested);
+        if(requested.isEmpty()){record.put("parameterResult",SharedSlotParameters.result(result));journal.save(record);return;}
+        record.put("parametersPending",true);record.put("pending",true);record.put("parameterResult",SharedSlotParameters.result(result));journal.save(record);
+        try{
+            CameraParameterController.apply(result,fresh.supportsOperation(0x1014)&&fresh.supportsOperation(0x1015)&&fresh.supportsOperation(0x1016),new CameraParameterController.Access(){
+                public byte[] get(int operation,int code)throws IOException{check(cancel);return read(operation,next++,code);}
+                public void authorize(Map<Integer,byte[]> values)throws IOException{check(cancel);channel.authorizeParameters(values);}
+                public void set(int code,byte[] value)throws IOException{
+                    check(cancel);record.put("parameterAttemptedCode",code);record.put("parameterResult",SharedSlotParameters.result(result));journal.save(record);
+                    long transaction=next++;PtpValidation.requireOkResponse(channel.send(0x1016,transaction,value,code),transaction);
+                }
+            },snapshot->{record.put("parameterResult",SharedSlotParameters.result(snapshot));journal.save(record);});
+        }catch(IOException failure){
+            record.put("parameterMessage",failure.getMessage());
+            // The old controller marks an interrupted attempted write uncertain. A failed
+            // descriptor read before the first write does not claim a mutation occurred.
+            if(result.uncertain){owned=false;channel.close();}
+        }
+        for(CameraParameterController.Change change:result.changes())if(change.status.equals("结果待核对")||change.status.equals("读回不一致")||change.status.equals("已写入，读回未确认"))result.uncertain=true;
+        record.put("parametersPending",result.uncertain);record.put("pending",result.uncertain);record.put("parameterResult",SharedSlotParameters.result(result));journal.save(record);
     }
     private Object reconcile(BooleanSupplier cancel)throws IOException {
         Map<String,Object> record=journal.read();refresh(cancel);
         if(!Boolean.TRUE.equals(record.get("pending")))return state();
         if(!cameraId.equals(record.get("cameraId")))throw new IOException("请连接原相机后只读核对上次操作。");
+        // Parameter writes are never replayed or implicitly acknowledged by a preset-only check.
+        if(Boolean.TRUE.equals(record.get("presetVerified"))&&Boolean.TRUE.equals(record.get("parametersPending")))return state();
         int target=((Number)record.get("target")).intValue();target(target);byte[] actual=slots.get(target);
         boolean desired=record.get("kind").equals("delete")?PictureControlData.parse(actual).hasNoBasePictureControl():SharedCameraMutationStore.sha(actual).equals(record.get("desiredSha256"));
         boolean unchanged=SharedCameraMutationStore.sha(actual).equals(record.get("beforeSha256"));

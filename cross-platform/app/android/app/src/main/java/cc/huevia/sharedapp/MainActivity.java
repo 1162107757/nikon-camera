@@ -27,6 +27,10 @@ public final class MainActivity extends FlutterActivity {
     private SharedRuntime runtime;
     private NativeMedia media;
     private SharedCamera camera;
+    private cc.huevia.connection.SharedCameraWifiRetention cameraWifiRetention;
+    private volatile boolean maintenanceForeground;
+    private Object maintenanceState=new Object();
+    private final AtomicBoolean maintenanceObserved=new AtomicBoolean();
     private NativeUsbCamera usbCamera;
     private NativeImportPicker importPicker;
     private NativeGallery gallery;
@@ -42,13 +46,17 @@ public final class MainActivity extends FlutterActivity {
         super.configureFlutterEngine(engine);
         MainActivity prior=NativeConnectionProtection.previousHost(engine);
         if(prior!=null&&prior!=this&&!prior.backendClosed.get()){
+          synchronized(prior.maintenanceState){
+            maintenanceState=prior.maintenanceState;
             worker.shutdown();worker=prior.worker;jobs=prior.jobs;backendClosed=prior.backendClosed;
             prior.ownsBackend=false;
-            runtime=prior.runtime;media=prior.media;camera=prior.camera;usbCamera=prior.usbCamera;gallery=prior.gallery;
+            runtime=prior.runtime;media=prior.media;camera=prior.camera;usbCamera=prior.usbCamera;gallery=prior.gallery;cameraWifiRetention=prior.cameraWifiRetention;
             events=prior.events;prior.eventTarget=this;
+          }
         }
         messenger=engine.getDartExecutor().getBinaryMessenger();
         protection=new NativeConnectionProtection(this,engine);
+        prepareCameraMaintenance();
         if(qqAuthorization!=null)qqAuthorization.close();
         if(updates!=null)updates.close();
         if(legacyFiles!=null)legacyFiles.close();
@@ -118,7 +126,7 @@ public final class MainActivity extends FlutterActivity {
                 try{
                     Object value;
                     if(call.method.equals("initialize")){
-                        if(runtime==null){android.content.Context app=getApplicationContext();File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);}
+                        if(runtime==null){android.content.Context app=getApplicationContext();File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);prepareCameraMaintenance();}
                         if(gallery==null)gallery=new NativeGallery(this,runtime);
                         main.post(this::configureStorageAdapters);
                         value=SharedJson.encode(SharedRuntime.map("root",runtime.root().getPath(),"schema",SharedJson.object(CoreEngine.schema()),"platform","android"));
@@ -148,6 +156,29 @@ public final class MainActivity extends FlutterActivity {
             });}catch(RejectedExecutionException busy){cancelled.finish();jobs.remove(identity,cancelled);reply.error("BUSY","任务较多，请等待当前操作完成。",null);}
         });
     }
+    private void prepareCameraMaintenance(){
+        if(camera==null||!ownsBackend||backendClosed.get())return;
+        if(cameraWifiRetention==null)cameraWifiRetention=new cc.huevia.connection.SharedCameraWifiRetention(getApplicationContext());
+        final SharedCamera owner=camera;
+        final cc.huevia.connection.SharedCameraWifiRetention retention=cameraWifiRetention;
+        final java.lang.ref.WeakReference<MainActivity> host=new java.lang.ref.WeakReference<>(this);
+        final AtomicBoolean observed=maintenanceObserved;
+        owner.setMaintenanceObserver(()->{
+            boolean active=owner.maintenanceActive();retention.refresh(active);
+            if(observed.getAndSet(active)!=active&&!active&&!owner.maintenanceConnection()){
+                MainActivity current=host.get();
+                if(current!=null)current.main.post(()->current.emit(SharedRuntime.map("kind","cameraConnectionChanged")));
+            }
+        });
+        updateCameraMaintenance();
+    }
+    void updateCameraMaintenance(){
+      synchronized(maintenanceState){
+        SharedCamera owner=camera;
+        if(owner!=null&&ownsBackend&&!backendClosed.get())
+            owner.setMaintenanceAllowed(maintenanceForeground||(protection!=null&&protection.maintenanceAllowed()));
+      }
+    }
     private void complete(String identity,NativeTaskCancellation task,Runnable deliver){
         // Flutter may issue the next request synchronously from this result.
         // A late finalizer for this task must never remove its replacement.
@@ -157,11 +188,13 @@ public final class MainActivity extends FlutterActivity {
     private void emit(Map<String,Object> value){if(eventTarget!=null){eventTarget.emit(value);return;}EventChannel.EventSink sink=events;if(sink!=null&&!backendClosed.get())try{sink.success(value);}catch(RuntimeException detached){events=null;}}
     private void configureStorageAdapters(){if(runtime==null||messenger==null||isDestroyed())return;if(originalFiles==null){originalFiles=new NativeOriginalFiles(this,runtime);new MethodChannel(messenger,"cc.huevia/file-publication").setMethodCallHandler(originalFiles);}if(albumOperations==null&&gallery!=null)albumOperations=new NativeAlbumOperations(this,runtime,gallery);}
     void stopCameraWork(){for(Map.Entry<String,NativeTaskCancellation> entry:jobs.entrySet()){String id=entry.getKey();if((id.startsWith("camera-")||id.startsWith("download-"))&&entry.getValue().cancelIfActive()){if(camera!=null)camera.cancel(id);}}}
-    void releaseRetainedBackend(){if(!ownsBackend||!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null)camera.closeTransport();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();}
+    void releaseRetainedBackend(){if(!ownsBackend||!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null){camera.setMaintenanceAllowed(false);camera.closeTransport();camera.setMaintenanceObserver(null);}if(cameraWifiRetention!=null)cameraWifiRetention.close();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();}
     void retireRetainedBackend(){releaseRetainedBackend();ownsBackend=false;}
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){if(ownsBackend&&!NativeConnectionProtection.keepEngine()){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();}super.cleanUpFlutterEngine(engine);}
     @Override protected void onActivityResult(int request,int result,android.content.Intent data){if(albumOperations!=null&&albumOperations.onActivityResult(request,result,data))return;if(originalFiles!=null&&originalFiles.onActivityResult(request,result,data))return;if(qqAuthorization!=null&&qqAuthorization.onActivityResult(request,result,data))return;if(legacyFiles!=null&&legacyFiles.onActivityResult(request,result,data))return;super.onActivityResult(request,result,data);if(importPicker!=null&&importPicker.handles(request))importPicker.result(result,data);}
     @Override protected void onPause(){if(qqAuthorization!=null)qqAuthorization.onHostPaused();if(updates!=null)updates.onHostPaused();super.onPause();}
+    @Override protected void onStart(){super.onStart();maintenanceForeground=true;updateCameraMaintenance();}
+    @Override protected void onStop(){maintenanceForeground=false;updateCameraMaintenance();super.onStop();}
     @Override protected void onResume(){super.onResume();if(qqAuthorization!=null)qqAuthorization.onHostResumed();if(updates!=null)updates.onHostResumed();}
     @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49324&&protection!=null)protection.permissionResult();if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}}
     @Override protected void onDestroy(){if(albumOperations!=null)albumOperations.close();if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();}

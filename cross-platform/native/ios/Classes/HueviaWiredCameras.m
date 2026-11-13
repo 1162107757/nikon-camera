@@ -7,6 +7,7 @@
 #import "java/io/IOException.h"
 #import "java/io/OutputStream.h"
 #import "java/lang/Runnable.h"
+#import "java/util/Map.h"
 #import "java/util/function/LongConsumer.h"
 #import "IOSPrimitiveArray.h"
 
@@ -194,6 +195,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (bool)isSessionManaged {return true;}
 - (bool)isOpen {return self.client!=nil&&self.client.open;}
 - (void)authorizeDeletionWithInt:(jint)target {[self.guard authorizeDeletionWithInt:target];}
+- (void)authorizeParametersWithJavaUtilMap:(id<JavaUtilMap>)values {[self.guard authorizeParametersWithJavaUtilMap:values];}
 - (IOSByteArray *)exchange:(jint)operation transaction:(jlong)transaction parameters:(IOSLongArray *)parameters outgoing:(IOSByteArray *)outgoing {
   HueviaWiredClient *client=self.client;if(!client||!client.open)wiredFailure(@"USB 槽位会话已断开。");
   IOSByteArray *encoded=[[CcHueviaPtpPtpContainer commandWithInt:operation withLong:transaction withLongArray:parameters] toBytes];
@@ -212,7 +214,8 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 }
 - (IOSByteArray *)readWithInt:(jint)operation withLong:(jlong)transaction withLongArray:(IOSLongArray *)parameters {
   [self.guard readWithInt:operation withLong:transaction withLongArray:parameters];
-  return [self exchange:operation transaction:transaction parameters:parameters outgoing:nil];
+  IOSByteArray *bytes=[self exchange:operation transaction:transaction parameters:parameters outgoing:nil];
+  [self.guard observeReadbackWithInt:operation withByteArray:bytes withLongArray:parameters];return bytes;
 }
 - (CcHueviaPtpPtpContainer *)commandWithInt:(jint)operation withLong:(jlong)transaction withLongArray:(IOSLongArray *)parameters {
   [self.guard commandWithInt:operation withLong:transaction withLongArray:parameters];
@@ -225,7 +228,8 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (CcHueviaPtpPtpContainer *)sendWithInt:(jint)operation withLong:(jlong)transaction withByteArray:(IOSByteArray *)bytes withLongArray:(IOSLongArray *)parameters {
   [self.guard sendWithInt:operation withLong:transaction withByteArray:bytes withLongArray:parameters];
   [self exchange:operation transaction:transaction parameters:parameters outgoing:bytes];
-  return [CcHueviaPtpPtpContainer responseWithInt:0x2001 withLong:transaction withLongArray:[IOSLongArray arrayWithLength:0]];
+  CcHueviaPtpPtpContainer *response=[CcHueviaPtpPtpContainer responseWithInt:0x2001 withLong:transaction withLongArray:[IOSLongArray arrayWithLength:0]];
+  [self.guard observeWriteResponseWithInt:operation withLong:transaction withCcHueviaPtpPtpContainer:response];return response;
 }
 - (void)close {HueviaWiredClient *client=self.client;self.client=nil;[client close];}
 @end

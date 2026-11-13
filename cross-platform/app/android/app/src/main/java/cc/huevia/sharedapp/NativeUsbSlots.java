@@ -37,11 +37,12 @@ final class NativeUsbSlots implements SharedSlots.Transport {
     }
     @Override public boolean isOpen(){return !closed.get();}
     @Override public void authorizeDeletion(int target)throws IOException{guard.authorizeDeletion(target);}
+    @Override public void authorizeParameters(java.util.Map<Integer,byte[]> values)throws IOException{guard.authorizeParameters(values);}
     @Override public byte[] read(int op,long tx,long...p)throws IOException {
         guard.read(op,tx,p);return exchange(()->{
             begin(op,tx,p);PtpContainer data=next();
             if(data.type()==PtpContainer.RESPONSE){PtpValidation.requireOkResponse(data,tx);throw new IOException("相机成功响应但没有返回数据。");}
-            byte[] bytes=PtpValidation.requireData(data,tx,op);PtpValidation.requireOkResponse(next(),tx);return bytes;
+            byte[] bytes=PtpValidation.requireData(data,tx,op);PtpValidation.requireOkResponse(next(),tx);guard.observeReadback(op,bytes,p);return bytes;
         });
     }
     @Override public PtpContainer command(int op,long tx,long...p)throws IOException {
@@ -51,7 +52,7 @@ final class NativeUsbSlots implements SharedSlots.Transport {
         guard.send(op,tx,bytes,p);return exchange(()->{
             begin(op,tx,p);byte[] data=PtpContainer.data(op,tx,bytes).toBytes();write(data);
             if(data.length%out.getMaxPacketSize()==0&&connection.bulkTransfer(out,new byte[0],0,timeout())<0)throw new IOException("USB 数据结束包未确认。");
-            PtpContainer response=next();PtpValidation.requireOkResponse(response,tx);return response;
+            PtpContainer response=next();PtpValidation.requireOkResponse(response,tx);guard.observeWriteResponse(op,tx,response);return response;
         });
     }
     private void begin(int op,long tx,long[] p)throws IOException {check();deadline=SystemClock.elapsedRealtime()+30000;write(PtpContainer.command(op,tx,p).toBytes());}

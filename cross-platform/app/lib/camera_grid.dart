@@ -19,6 +19,7 @@ class CameraPhotoGrid extends StatelessWidget {
     this.onMore,
     this.selection,
     this.onSelect,
+    this.sliver = false,
   });
   final List<Json> items;
   final CameraPreviews previews;
@@ -27,114 +28,123 @@ class CameraPhotoGrid extends StatelessWidget {
   final Future<List<Json>> Function()? onMore;
   final Set<int>? selection;
   final void Function(Json)? onSelect;
+  final bool sliver;
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, bounds) {
-      final columns = ((bounds.maxWidth + 8) / 112).floor().clamp(3, 8);
-      final edge = (bounds.maxWidth - (columns - 1) * 8) / columns;
-      return GridView.builder(
-        shrinkWrap: true,
-        primary: false,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: columns,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
-          final selected = selection?.contains(item['handle']) == true;
-          return Semantics(
-            button: true,
-            label: '${item['name']}，相机照片',
-            selected: selection == null ? null : selected,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(14),
-              child: Material(
-                child: InkWell(
-                  onTap: selection != null
-                      ? () => onSelect?.call(item)
-                      : () => Navigator.of(context, rootNavigator: true)
-                            .push<void>(
-                              MaterialPageRoute(
-                                builder: (_) => CameraPhotoViewer(
-                                  photo: item,
-                                  previews: previews,
-                                  transfer: transfer,
-                                  onDownload: () => onDownload(item),
-                                  photos: items,
-                                  onDownloadPhoto: onDownload,
-                                  onMore: onMore,
-                                ),
-                              ),
-                            ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CameraThumbnail(
-                        key: ValueKey('${previews.hashCode}/${item['handle']}'),
-                        previews: previews,
-                        photo: item,
-                        size: edge,
+  Widget build(BuildContext context) => sliver
+      ? SliverLayoutBuilder(
+          builder: (context, bounds) => grid(context, bounds.crossAxisExtent),
+        )
+      : LayoutBuilder(
+          builder: (context, bounds) => grid(context, bounds.maxWidth),
+        );
+
+  Widget grid(BuildContext context, double width) {
+    final columns = ((width + 8) / 112).floor().clamp(3, 8);
+    final edge = (width - (columns - 1) * 8) / columns;
+    final layout = SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: columns,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+    );
+    final cells = SliverChildBuilderDelegate((context, index) {
+      final item = items[index];
+      final selected = selection?.contains(item['handle']) == true;
+      return Semantics(
+        button: true,
+        label: '${item['name']}，相机照片',
+        selected: selection == null ? null : selected,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(14),
+          child: Material(
+            child: InkWell(
+              onTap: selection != null
+                  ? () => onSelect?.call(item)
+                  : () => Navigator.of(context, rootNavigator: true).push<void>(
+                      MaterialPageRoute(
+                        builder: (_) => CameraPhotoViewer(
+                          photo: item,
+                          previews: previews,
+                          transfer: transfer,
+                          onDownload: () => onDownload(item),
+                          photos: items,
+                          onDownloadPhoto: onDownload,
+                          onMore: onMore,
+                        ),
                       ),
-                      Positioned(
-                        right: 6,
-                        top: 6,
-                        child: selection == null
-                            ? const SizedBox.shrink()
-                            : Icon(
-                                selected
-                                    ? Icons.check_circle
-                                    : Icons.circle_outlined,
-                                color: selected
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Colors.white,
-                                shadows: const [
-                                  Shadow(color: Colors.black54, blurRadius: 4),
-                                ],
-                              ),
-                      ),
-                      Positioned(
-                        left: 8,
-                        bottom: 8,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: const Color(0xb3232521),
-                            borderRadius: BorderRadius.circular(6),
+                    ),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  CameraThumbnail(
+                    key: ValueKey('${previews.hashCode}/${item['handle']}'),
+                    previews: previews,
+                    photo: item,
+                    size: edge,
+                  ),
+                  Positioned(
+                    right: 6,
+                    top: 6,
+                    child: selection == null
+                        ? const SizedBox.shrink()
+                        : Icon(
+                            selected
+                                ? Icons.check_circle
+                                : Icons.circle_outlined,
+                            color: selected
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.white,
+                            shadows: const [
+                              Shadow(color: Colors.black54, blurRadius: 4),
+                            ],
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 3,
-                            ),
-                            child: Text(
-                              (item['raw'] == true ||
-                                      (item['name'] as String)
-                                          .toLowerCase()
-                                          .endsWith('.nef'))
-                                  ? 'NEF'
-                                  : 'JPEG',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                height: 1.3,
-                                color: Colors.white,
-                              ),
-                            ),
+                  ),
+                  Positioned(
+                    left: 8,
+                    bottom: 8,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(0xb3232521),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 3,
+                        ),
+                        child: Text(
+                          (item['raw'] == true ||
+                                  (item['name'] as String)
+                                      .toLowerCase()
+                                      .endsWith('.nef'))
+                              ? 'NEF'
+                              : 'JPEG',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            height: 1.3,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       );
-    },
-  );
+    }, childCount: items.length);
+    return sliver
+        ? SliverGrid(gridDelegate: layout, delegate: cells)
+        : GridView.custom(
+            shrinkWrap: true,
+            primary: false,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            gridDelegate: layout,
+            childrenDelegate: cells,
+          );
+  }
 }
 
 class CameraPhotoViewer extends StatefulWidget {

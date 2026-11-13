@@ -93,7 +93,7 @@ class CameraConnectionRequest extends ChangeNotifier {
           : value < .7
           ? '检查相机信息与读取能力'
           : value < 1
-          ? '读取存储卡照片目录'
+          ? '确认相机连接状态'
           : '相机连接已建立';
     }
     notifyListeners();

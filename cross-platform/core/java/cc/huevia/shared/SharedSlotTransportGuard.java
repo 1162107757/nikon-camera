@@ -1,17 +1,28 @@
 package cc.huevia.shared;
 
 import cc.huevia.picturecontrol.PictureControlWriteValidation;
+import cc.huevia.picturecontrol.CameraParameterWriteGuard;
+import cc.huevia.ptp.PtpContainer;
+import cc.huevia.ptp.PtpValidation;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
 
 /** One native owner, one PTP session and at most one destructive attempt, shared by both USB hosts. */
 public final class SharedSlotTransportGuard {
     private boolean opened,closed,attempted;
     private int deletion=-1;
     private long last;
+    private final CameraParameterWriteGuard parameters=new CameraParameterWriteGuard();
+    private int writtenTarget=-1;
+    private byte[] written;
+    private long writtenTransaction;
+    private boolean writeAcknowledged,verified;
     public void read(int operation,long transaction,long[] p)throws IOException {
         boolean valid=p!=null&&(operation==0x1001&&p.length==0
                 ||operation==0x90cf&&p.length==1&&p[0]==1
-                ||operation==0x90cc&&p.length==2&&p[0]>=201&&p[0]<=209&&p[1]==0
+                ||operation==0x90cc&&p.length==2&&(p[0]==1||p[0]>=201&&p[0]<=209)&&p[1]==0
+                ||verified&&CameraParameterWriteGuard.propertyRead(operation,p)
                 ||operation==0x1015&&deletion>=201&&p.length==1&&(p[0]==0xd200||p[0]==0xd237));
         if(!valid)throw new IOException("槽位通道拒绝未授权的读取。");
         transaction(transaction,operation==0x1001&&!opened);
@@ -24,8 +35,18 @@ public final class SharedSlotTransportGuard {
         throw new IOException("槽位通道拒绝未授权的命令。");
     }
     public void send(int operation,long transaction,byte[] bytes,long[] p)throws IOException {
+        if(operation==0x1016){if(!verified||deletion!=-1)throw new IOException("只有预设精确读回后才可调整拍摄参数。");parameters.consume(bytes,p);transaction(transaction,false);return;}
         if(operation!=0x90cd||p==null||p.length!=2||p[0]<201||p[0]>209||p[1]!=0||deletion!=-1||attempted)throw new IOException("仅允许一次已确认的 C1–C9 预设写入。");
-        PictureControlWriteValidation.validateConvertedData(bytes);transaction(transaction,false);attempted=true;
+        PictureControlWriteValidation.validateConvertedData(bytes);transaction(transaction,false);attempted=true;writtenTarget=(int)p[0];written=bytes.clone();writtenTransaction=transaction;
+    }
+    public void observeWriteResponse(int operation,long transaction,PtpContainer response)throws IOException {
+        if(operation==0x90cd&&transaction==writtenTransaction&&written!=null){PtpValidation.requireOkResponse(response,transaction);writeAcknowledged=true;}
+    }
+    public void observeReadback(int operation,byte[] bytes,long[] p){
+        if(writeAcknowledged&&operation==0x90cc&&p!=null&&p.length==2&&p[0]==writtenTarget&&p[1]==0&&Arrays.equals(written,bytes))verified=true;
+    }
+    public void authorizeParameters(Map<Integer,byte[]> values)throws IOException {
+        if(!verified||deletion!=-1)throw new IOException("未取得预设精确读回证据，未授权参数。");parameters.authorize(values);
     }
     public void authorizeDeletion(int target)throws IOException {
         if(!opened||closed||attempted||deletion!=-1||target<201||target>209)throw new IOException("此连接不能再次授权删除。");deletion=target;

@@ -28,7 +28,8 @@
   NSDictionary *value=@{@"available":@YES,@"enabled":@(self.enabled),@"running":@(self.lease!=UIBackgroundTaskInvalid),@"backgroundAllowed":@(self.enabled&&self.active&&self.lease!=UIBackgroundTaskInvalid&&!self.expired),@"limited":@YES,@"warning":self.expired?@"iOS 后台时间已到，接收已暂停；返回前台后可继续未完成队列。":@"iOS 只提供有限的后台收尾时间；持续接收请保持应用前台。"};
   return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:value options:0 error:nil] encoding:NSUTF8StringEncoding];
 }
-- (void)emit {if(self.events)self.events([self status]);}
+- (BOOL)maintenanceAllowed {return self.foreground||(self.enabled&&self.active&&self.lease!=UIBackgroundTaskInvalid&&!self.expired);}
+- (void)emit {if(self.maintenanceChanged)self.maintenanceChanged(self.maintenanceAllowed);if(self.events)self.events([self status]);}
 - (void)endLease {UIBackgroundTaskIdentifier lease=self.lease;self.lease=UIBackgroundTaskInvalid;[self.leaseCancellation finish];self.leaseCancellation=nil;if(lease!=UIBackgroundTaskInvalid)[UIApplication.sharedApplication endBackgroundTask:lease];}
 - (void)update {
   if(!self.enabled||!self.active){[self endLease];[self emit];return;}
@@ -52,7 +53,7 @@
     if(args[@"enabled"])[NSUserDefaults.standardUserDefaults setBool:[args[@"enabled"] boolValue] forKey:@"HueviaCameraConnectionProtection"];
     if(args[@"active"]){BOOL active=[args[@"active"] boolValue];if(active&&!self.active&&self.foreground)self.expired=NO;self.active=active;}[self update];
   }else if([call.method isEqualToString:@"foreground"]){
-    self.foreground=[args[@"foreground"] boolValue];if(self.foreground){self.expired=NO;[self update];}
+    self.foreground=[args[@"foreground"] boolValue];if(self.foreground){self.expired=NO;[self update];}else [self emit];
   }else if(![call.method isEqualToString:@"status"]&&! [call.method isEqualToString:@"batterySettings"]){reply(FlutterMethodNotImplemented);return;}
   reply([self status]);
 }

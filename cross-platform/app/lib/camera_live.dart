@@ -54,6 +54,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   double? renderProgress;
   int _generation = 0, _sequence = 0;
   Json snapshot = {};
+  Photo? latestPhoto;
   Timer? _timer;
   StreamSubscription<dynamic>? _events;
   ProjectPresetsModel? _processor;
@@ -205,6 +206,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     error = null;
     _protectionPaused = false;
     received = total = completed = failed = queued = 0;
+    latestPhoto = null;
     active = true;
     _working = true;
     phase = CameraLivePhase.starting;
@@ -451,11 +453,13 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     _changed();
     final info = await _call('media.info', {'path': path}, generation);
     _check(generation);
-    await state.registerPhoto(path, name, info);
+    final imported = await state.registerPhoto(path, name, info);
     _check(generation);
     _update(
       await _call('project.live.commit', {...receipt, ..._lease}, generation),
     );
+    latestPhoto = imported;
+    _changed();
     await _call('camera.live.ack', {
       'session': session,
       'watchId': watchId,
@@ -515,8 +519,12 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   void _accountChanged() {
-    if (!active ||
-        (owner == currentOwner && state.session['logoutPending'] != true)) {
+    if (owner == currentOwner && state.session['logoutPending'] != true) {
+      return;
+    }
+    latestPhoto = null;
+    if (!active) {
+      _changed();
       return;
     }
     unawaited(stop());

@@ -162,7 +162,9 @@
     "cross-platform/core/java/cc/huevia/album/SharedAlbumOperations.java",
     "cross-platform/core/java/cc/huevia/album/SharedRawPairing.java",
     "cross-platform/core/java/cc/huevia/shared/SharedCameraRawPairing.java",
-    "cross-platform/core/java/cc/huevia/shared/SharedDownloads.java"
+    "cross-platform/core/java/cc/huevia/shared/SharedDownloads.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedCameraMaintenance.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedSlotParameters.java"
   ],
   "excluded": [
     {

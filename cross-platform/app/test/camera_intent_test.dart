@@ -413,6 +413,8 @@ void main() {
       expect(find.textContaining('相机预设槽位正在使用连接'), findsOneWidget);
       expect(find.textContaining('已读取 0 张'), findsNothing);
       expect(find.textContaining('Nikon Z6II · 已连接'), findsOneWidget);
+      await tester.tap(find.text('相机工具'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('相机预设槽位'));
       await tester.pumpAndSettle();
       expect(core.photoCalls, isEmpty);
@@ -436,7 +438,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(CameraPage), findsNothing);
       expect(find.byType(CameraSlotsPage), findsOneWidget);
-      expect(find.textContaining('待导入：已选配方'), findsOneWidget);
+      expect(find.text('已选配方'), findsOneWidget);
       expect(
         core.calls.where((c) => c.$1 == 'camera.slots.open'),
         hasLength(1),
@@ -463,12 +465,10 @@ void main() {
       await showImport(tester, state);
       expect(core.calls.where((c) => c.$1 == 'camera.connect'), isEmpty);
       expect(find.byType(CameraSlotsPage), findsOneWidget);
-      await tester.tap(find.byType(PopupMenuButton<String>));
+      await tester.tap(find.byKey(const ValueKey('camera-slot-import')));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('导入到此槽位'));
-      await tester.pumpAndSettle();
-      expect(find.text('NCP 兼容适配参数'), findsOneWidget);
-      await tester.tap(find.text('查看写入预览'));
+      expect(find.text('确认写入此槽位'), findsOneWidget);
+      await tester.tap(find.text('取消'));
       await tester.pumpAndSettle();
       expect(
         core.calls.singleWhere((c) => c.$1 == 'library.export').$2['id'],
