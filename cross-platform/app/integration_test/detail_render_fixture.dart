@@ -47,10 +47,12 @@ Future<void> verifyDetailRendering(HueviaCore core) async {
   });
   final versionsBefore = await core.call('version.list', {'owner': owner});
   final persistentBefore = await _persistent(core.root);
-  final recipe = <String, Object>{
-    'schema': 1,
-    'values': [0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  };
+  final schema = await core.call('core.schema');
+  final parameters = (schema['parameters'] as List).map(object).toList();
+  final exposure = parameters.singleWhere((row) => row['name'] == 'EXPOSURE');
+  final values = List<int>.filled(parameters.length, 0);
+  values[(exposure['index'] as num).toInt()] = 10;
+  final recipe = <String, Object>{'schema': 1, 'values': values};
   final payload = <String, dynamic>{
     'path': source.path,
     'owner': owner,

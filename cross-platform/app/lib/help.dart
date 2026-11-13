@@ -12,7 +12,7 @@ import 'widgets.dart';
 import 'app_stability.dart';
 
 const hueviaVersion = '0.31.0-dev';
-const hueviaBuild = 216;
+const hueviaBuild = 217;
 
 Future<Json> diagnosticSnapshot(AppState state) async {
   final core = state.core;

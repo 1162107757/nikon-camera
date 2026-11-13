@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,80 +59,25 @@ class QqLoginPage extends StatefulWidget {
 
 class _QqLoginPageState extends State<QqLoginPage> {
   final authorization = QqAuthorization();
-  final answer = TextEditingController();
-  Uint8List? image;
-  String proof = '', error = '';
-  bool consent = false, busy = false, loading = false;
+  String error = '';
+  bool consent = false, busy = false;
   int generation = 0;
   String get owner => widget.state.session['user']?['id'] as String? ?? '';
-
-  @override
-  void initState() {
-    super.initState();
-    unawaited(challenge());
-  }
 
   @override
   void dispose() {
     generation++;
     unawaited(authorization.cancel());
-    answer.dispose();
     super.dispose();
   }
 
-  Future<void> challenge() async {
-    final attempt = ++generation;
-    setState(() {
-      loading = true;
-      proof = '';
-      image = null;
-      answer.clear();
-    });
-    try {
-      final result = await widget.state.core.call('account.challenge');
-      final value = result['image'], id = result['id'];
-      if (value is! String ||
-          value.length > 60000 ||
-          !value.startsWith('data:image/png;base64,') ||
-          id is! String ||
-          !RegExp(r'^[a-fA-F0-9-]{36}$').hasMatch(id)) {
-        throw const AppFailure('验证码响应无效，请刷新重试。');
-      }
-      final bytes = base64Decode(value.substring(22));
-      if (bytes.length < 24 ||
-          bytes[0] != 137 ||
-          bytes[1] != 80 ||
-          bytes[2] != 78 ||
-          bytes[3] != 71) {
-        throw const AppFailure('验证码图片无效。');
-      }
-      final data = ByteData.sublistView(bytes);
-      if (data.getUint32(16) < 1 ||
-          data.getUint32(16) > 1024 ||
-          data.getUint32(20) < 1 ||
-          data.getUint32(20) > 512) {
-        throw const AppFailure('验证码图片尺寸无效。');
-      }
-      if (mounted && attempt == generation) {
-        setState(() {
-          proof = id;
-          image = bytes;
-        });
-      }
-    } catch (failure) {
-      if (mounted && attempt == generation) setState(() => error = '$failure');
-    } finally {
-      if (mounted && attempt == generation) setState(() => loading = false);
-    }
-  }
-
   Future<void> login() async {
-    if (busy || loading) return;
-    if (!consent || proof.isEmpty || answer.text.trim().isEmpty) {
-      setState(() => error = '请填写验证码，并阅读同意 QQ 登录说明。');
+    if (busy) return;
+    if (!consent) {
+      setState(() => error = '请阅读并同意 QQ 登录说明。');
       return;
     }
-    final expectedOwner = owner, attempt = generation;
+    final expectedOwner = owner, attempt = ++generation;
     setState(() {
       busy = true;
       error = '';
@@ -145,15 +89,14 @@ class _QqLoginPageState extends State<QqLoginPage> {
       final session = await widget.state.core.call('account.qq', {
         ...credentials,
         'owner': expectedOwner,
-        'challengeId': proof,
-        'challengeAnswer': answer.text.trim(),
       });
       if (!mounted || generation != attempt) return;
+      if (owner != expectedOwner) throw const AppFailure('账号已改变，请重新登录。');
       widget.state.acceptAuthenticatedSession(session);
       unawaited(widget.state.refreshLibrary().catchError((Object _) {}));
       if (mounted) Navigator.pop(context, session);
     } catch (failure) {
-      if (!mounted) return;
+      if (!mounted || generation != attempt) return;
       final details = failure is AppFailure ? failure.details : null;
       final code = details is Map ? details['accountCode'] : null;
       if ([
@@ -161,11 +104,12 @@ class _QqLoginPageState extends State<QqLoginPage> {
         'CHALLENGE_INVALID',
         'CHALLENGE_EXPIRED',
       ].contains(code)) {
-        await challenge();
+        setState(() => error = 'QQ 登录服务尚未更新，请稍后重试或使用账号密码登录。');
+        return;
       }
       if (mounted) setState(() => error = '$failure');
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (mounted && generation == attempt) setState(() => busy = false);
     }
   }
 
@@ -182,18 +126,6 @@ class _QqLoginPageState extends State<QqLoginPage> {
             '授权时将打开 QQ。腾讯提供的账号身份、昵称和头像用于创建或登录 Huevia 账号。授权凭据仅用于服务端核验，不保存为本机登录密码。取消授权后仍可使用游客功能。',
           ),
           const SizedBox(height: 24),
-          if (image != null)
-            Image.memory(image!, height: 80, semanticLabel: '图形验证码'),
-          TextButton(
-            onPressed: busy || loading ? null : challenge,
-            child: Text(loading ? '正在获取验证码…' : '刷新验证码'),
-          ),
-          TextField(
-            controller: answer,
-            enabled: !busy,
-            decoration: const InputDecoration(labelText: '验证码'),
-            autocorrect: false,
-          ),
           CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             value: consent,
@@ -211,7 +143,7 @@ class _QqLoginPageState extends State<QqLoginPage> {
               ),
             ),
           FilledButton(
-            onPressed: busy || loading ? null : login,
+            onPressed: busy ? null : login,
             child: Text(busy ? '正在完成 QQ 登录…' : '同意并打开 QQ'),
           ),
         ],

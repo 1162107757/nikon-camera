@@ -53,7 +53,7 @@ public final class SharedRuntime {
         editorCatalog=new EditorPresetCatalog(root,library);
         search=new OnlinePresetSearch(online);
         installationId=installationId(root,installation);
-        accounts=new AccountRepository(store,transport);
+        accounts=new AccountRepository(store,new SharedQqLoginTransport(transport,installationId));
         community=new CommunityRepository(accounts);
         community.setInstallationId(installationId);
         submissions=new SharedSubmissions(root,SharedSubmissions.network(accounts,community,installationId),this::guardOwner);
@@ -212,7 +212,7 @@ public final class SharedRuntime {
             case "account.challenge":result=accounts.challenge(installationId);break;
             case "account.login":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));break;
             case "account.register":result=authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
-            case "account.qq":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
+            case "account.qq":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096)));break;
             case "account.refresh":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.refresh());break;
             case "account.avatarCommit":result=authenticated(profile.commit(text(p,"owner",64),text(p,"receipt",64),text(p,"sha256",64)));break;
             case "account.avatarReset":result=authenticated(profile.reset(text(p,"owner",64),text(p,"updatedAt",64)));break;

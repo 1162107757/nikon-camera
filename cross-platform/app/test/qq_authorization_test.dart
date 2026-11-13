@@ -7,12 +7,11 @@ import 'package:huevia/qq_authorization.dart';
 import 'package:huevia/theme.dart';
 
 const token = 'synthetic-provider-token-for-test';
-const challengeImage =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==';
 
 class QqTestCore extends HueviaCore {
   final calls = <(String, Json)>[];
-  bool expired = false;
+  bool legacyChallenge = false;
+  Completer<Json>? exchange;
   @override
   Future<Json> call(
     String operation, [
@@ -20,19 +19,14 @@ class QqTestCore extends HueviaCore {
     String? jobId,
   ]) async {
     calls.add((operation, payload));
-    if (operation == 'account.challenge') {
-      return {
-        'id': '00000000-0000-4000-8000-000000000001',
-        'image': challengeImage,
-      };
-    }
     if (operation == 'account.qq') {
-      if (expired) {
+      if (legacyChallenge) {
         throw const AppFailure(
-          '验证码已过期。',
-          details: {'accountCode': 'CHALLENGE_EXPIRED'},
+          '请填写图片验证码后继续。',
+          details: {'accountCode': 'CHALLENGE_REQUIRED'},
         );
       }
+      if (exchange != null) return exchange!.future;
       return {
         'user': {'id': 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'},
         'verified': true,
@@ -90,7 +84,6 @@ void main() {
   );
 
   Future<void> fill(WidgetTester tester) async {
-    await tester.enterText(find.byType(TextField), '1234');
     await tester.tap(find.byType(Checkbox));
     await tester.pump();
     await tester.tap(find.text('同意并打开 QQ'));
@@ -133,6 +126,12 @@ void main() {
       final actualState = AppState(core);
       await page(tester, actualState);
       await tester.pumpAndSettle();
+      expect(find.byType(TextField), findsNothing);
+      expect(find.text('刷新验证码'), findsNothing);
+      expect(
+        core.calls.where((call) => call.$1 == 'account.challenge'),
+        isEmpty,
+      );
       await tester.tap(find.text('同意并打开 QQ'));
       await tester.pumpAndSettle();
       expect(nativeCalls, 0);
@@ -140,7 +139,11 @@ void main() {
       final sent = core.calls.singleWhere((call) => call.$1 == 'account.qq').$2;
       expect(sent['owner'], '');
       expect(sent['accessToken'], token);
-      expect(sent['challengeAnswer'], '1234');
+      expect(sent.keys.toSet(), {'owner', 'accessToken'});
+      expect(
+        core.calls.where((call) => call.$1 == 'account.challenge'),
+        isEmpty,
+      );
       expect(actualState.session['verified'], true);
       expect(nativeCalls, 1);
       actualState.dispose();
@@ -172,13 +175,13 @@ void main() {
   });
 
   testWidgets(
-    'Expired proof refreshes captcha without reusing the provider token',
+    'An older server that still requires QQ captcha is reported without fetching a hidden challenge',
     (tester) async {
       messenger.setMockMethodCallHandler(
         QqAuthorization.channel,
         (_) async => {'accessToken': token},
       );
-      final core = QqTestCore()..expired = true;
+      final core = QqTestCore()..legacyChallenge = true;
       final state = AppState(core);
       await page(tester, state);
       await tester.pumpAndSettle();
@@ -186,9 +189,67 @@ void main() {
       expect(core.calls.where((call) => call.$1 == 'account.qq').length, 1);
       expect(
         core.calls.where((call) => call.$1 == 'account.challenge').length,
-        2,
+        0,
       );
-      expect(find.text('验证码已过期。'), findsOneWidget);
+      expect(find.text('QQ 登录服务尚未更新，请稍后重试或使用账号密码登录。'), findsOneWidget);
+      expect(state.session['user'], isNull);
+      state.dispose();
+    },
+  );
+
+  testWidgets(
+    'Owner change during QQ session exchange prevents a late app session from replacing the new account',
+    (tester) async {
+      messenger.setMockMethodCallHandler(
+        QqAuthorization.channel,
+        (_) async => {'accessToken': token},
+      );
+      final core = QqTestCore()..exchange = Completer<Json>();
+      final state = AppState(core);
+      await page(tester, state);
+      await tester.pumpAndSettle();
+      await fill(tester);
+      state.acceptAuthenticatedSession({
+        'user': {'id': 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'},
+        'verified': true,
+      });
+      core.exchange!.complete({
+        'user': {'id': 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'},
+        'verified': true,
+      });
+      await tester.pumpAndSettle();
+      expect(
+        state.session['user']['id'],
+        'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+      );
+      expect(find.text('账号已改变，请重新登录。'), findsOneWidget);
+      expect(
+        core.calls.where((call) => call.$1 == 'account.challenge'),
+        isEmpty,
+      );
+      await tester.pumpWidget(const SizedBox());
+      state.dispose();
+    },
+  );
+
+  testWidgets(
+    'Leaving the QQ page discards a late native credential without a challenge or exchange',
+    (tester) async {
+      final result = Completer<Object?>();
+      messenger.setMockMethodCallHandler(
+        QqAuthorization.channel,
+        (call) async => call.method == 'authorize' ? result.future : null,
+      );
+      final core = QqTestCore();
+      final state = AppState(core);
+      await page(tester, state);
+      await tester.pumpAndSettle();
+      await fill(tester);
+      await tester.pumpWidget(const SizedBox());
+      result.complete({'accessToken': token});
+      await tester.pumpAndSettle();
+      expect(core.calls, isEmpty);
+      expect(state.session['user'], isNull);
       state.dispose();
     },
   );

@@ -130,16 +130,61 @@ test('valid account-create challenge completes registration and cannot create a 
   assert.equal((await request('/auth/register', { method: 'POST', body: { ...body, username: 'replay_user' } })).status, 400);
   assert.equal(store.userRows.size, 1);
 });
-test('QQ requires a challenge only before first account creation; existing identity keeps its opaque session flow', async t => {
+test('Verified QQ creates and reuses an account without an extra image challenge; source and registration limits remain', async t => {
   const identity = { appId: '123456789', openid: 'ABCDEF0123456789ABCDEF0123456789', nickname: 'Local QQ', avatarUrl: '' };
   const verifier = { configured: true, status: () => ({ configured: true }), verify: async () => identity };
   const { request, store } = await fixture(t, { verifier });
   const body = { accessToken: 'synthetic-qq-token-for-local-tests', installationId: install };
-  assert.equal((await request('/auth/qq', { method: 'POST', body })).status, 428);
-  assert.equal(store.userRows.size, 0);
-  await store.signInQq(identity, sha256(randomToken()), new Date(Date.now() + 60000).toISOString());
+  store.consumeChallenge = async () => { throw new Error('QQ must never consume an image challenge'); };
+  const first = await request('/auth/qq', { method: 'POST', body });
+  assert.equal(first.status, 200);
+  const session = await first.json();
+  assert.equal(store.userRows.size, 1);
+  assert.deepEqual(store.protection.map(row => row.scope), ['qq-login', 'register']);
+  assert.equal((await request('/auth/me', { token: session.accessToken })).status, 200);
   const response = await request('/auth/qq', { method: 'POST', body });
-  assert.equal(response.status, 200); assert.match((await response.json()).accessToken, /^[A-Za-z0-9_-]{43}$/);
+  assert.equal(response.status, 200);
+  const repeated = await response.json();
+  assert.match(repeated.accessToken, /^[A-Za-z0-9_-]{43}$/);
+  assert.equal(repeated.user.id, session.user.id);
+  assert.notEqual(repeated.accessToken, session.accessToken);
+  assert.equal(store.userRows.size, 1);
+  assert.deepEqual(store.protection.map(row => row.scope), ['qq-login', 'register', 'qq-login']);
+});
+
+test('QQ does not consume a password-registration proof even when an older client includes it', async t => {
+  const identity = { appId: '123456789', openid: 'ABCDEF0123456789ABCDEF0123456789', nickname: 'Local QQ', avatarUrl: '' };
+  const verifier = { configured: true, status: () => ({ configured: true }), verify: async () => identity };
+  const { request, store } = await fixture(t, { verifier });
+  const proof = await (await request(`/auth/challenge?installationId=${install}`)).json();
+  store.tickets.get(proof.id).answerHash = createHmac('sha256', secret).update(`challenge:${proof.id}:ABCDE`).digest('hex');
+  const challenge = { installationId: install, challengeId: proof.id, challengeAnswer: 'abcde' };
+  const qq = await request('/auth/qq', { method: 'POST', body: { ...challenge, accessToken: 'synthetic-qq-token-for-local-tests' } });
+  assert.equal(qq.status, 200);
+  assert.equal(store.tickets.has(proof.id), true);
+  const ordinary = await request('/auth/register', { method: 'POST', body: { ...challenge, username: 'still_verified', password: 'synthetic password' } });
+  assert.equal(ordinary.status, 201);
+  assert.equal(store.tickets.has(proof.id), false);
+  assert.equal(store.userRows.size, 2);
+});
+
+test('QQ keeps both source/installation and first-account abuse guards without a CAPTCHA fallback', async t => {
+  const identity = { appId: '123456789', openid: 'ABCDEF0123456789ABCDEF0123456789', nickname: 'Local QQ', avatarUrl: '' };
+  let verified = 0, blocked = 'qq-login';
+  const verifier = { configured: true, status: () => ({ configured: true }), verify: async () => { verified++; return identity; } };
+  const { request, store } = await fixture(t, { verifier });
+  store.abuseAllowed = async scope => scope !== blocked;
+  const body = { accessToken: 'synthetic-qq-token-for-local-tests', installationId: install };
+  const source = await request('/auth/qq', { method: 'POST', body });
+  assert.equal(source.status, 429); assert.equal((await source.json()).error.code, 'ABUSE_THROTTLED');
+  assert.equal(verified, 0); assert.equal(store.userRows.size, 0);
+  blocked = 'register';
+  const registration = await request('/auth/qq', { method: 'POST', body });
+  assert.equal(registration.status, 429); assert.equal((await registration.json()).error.code, 'ABUSE_THROTTLED');
+  assert.equal(verified, 1); assert.equal(store.userRows.size, 0);
+  await store.signInQq(identity, sha256(randomToken()), new Date(Date.now() + 60000).toISOString());
+  assert.equal((await request('/auth/qq', { method: 'POST', body })).status, 200);
+  assert.equal(verified, 2); assert.equal(store.userRows.size, 1);
 });
 test('community anonymous reads, bearer ownership and admin CSRF remain separate', async t => {
   const { request, store, calls, origin, adminToken } = await fixture(t), userToken = randomToken();

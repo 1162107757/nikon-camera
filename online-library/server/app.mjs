@@ -222,7 +222,6 @@ export function createHandler({ store, storage, releaseStorage = storage, enviro
             const identity = await qqVerifier.verify({ accessToken: body.accessToken });
             if (!await store.qqIdentityExists(identity)) {
               await challenge.protect(req, body.installationId, 'register');
-              await challenge.consume(req, body, 'qq_register');
             }
             const accessToken = randomToken(), expiresAt = new Date(Date.now() + 7 * 86400000).toISOString();
             const user = await store.signInQq(identity, sha256(accessToken), expiresAt);
