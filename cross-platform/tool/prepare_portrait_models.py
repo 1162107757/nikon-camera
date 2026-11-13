@@ -213,14 +213,14 @@ def prepare(cache, destination):
     outputs = {'face_landmarks_detector.tflite': detector, 'face_skin_multiclass.shuffle4.zlib': packed}
     for name, data in outputs.items():
         atomic_write(destination / name, data)
-    atomic_write(destination.parent / 'third-party/portrait/LICENSE-MediaPipe.txt', license_bytes)
+    atomic_write(destination.parent / 'third-party/portrait-models/LICENSE-MediaPipe.txt', license_bytes)
     if os.name != 'nt':
         with tarfile.open(fileobj=io.BytesIO(source(cache, 'zlib-ng-2.2.5.tar.gz')), mode='r:gz') as archive:
-            atomic_write(destination.parent / 'third-party/portrait/LICENSE-zlib-ng.txt', archive.extractfile('zlib-ng-2.2.5/LICENSE.md').read())
+            atomic_write(destination.parent / 'third-party/portrait-models/LICENSE-zlib-ng.txt', archive.extractfile('zlib-ng-2.2.5/LICENSE.md').read())
     identity = {'schema': 1, 'sources': [{'name': name, 'url': value[0], 'sha256': value[1], 'bytes': value[2]} for name, value in SOURCES.items()],
                 'outputs': [{'name': name, 'bytes': len(data), 'sha256': digest(data)} for name, data in outputs.items()],
                 'restoredSemanticSha256': digest(restored), 'packing': 'four byte planes, trailing byte preserved; zlib-ng 2.2.5 level 9; exact original packed SHA required'}
-    atomic_write(destination.parent / 'third-party/portrait/BUILD-IDENTITY.json', (json.dumps(identity, indent=2) + '\n').encode('utf-8'))
+    atomic_write(destination.parent / 'third-party/portrait-models/BUILD-IDENTITY.json', (json.dumps(identity, indent=2) + '\n').encode('utf-8'))
     print(json.dumps({'prepared': identity['outputs'], 'restoredSemanticSha256': digest(restored), 'originalAppTreeRead': False}))
 
 
