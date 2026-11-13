@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "fixture": "owned legacy JPEG195 read-only PTP/IP",
+  "scenario": "mixed",
+  "scenarioEpoch": 1,
+  "guidSha256": "0ac37a9c8a3ffdf7cf80b8c58c7674ed315e09da237a7a0b2989f53ffc35ae6a",
+  "jpegHandles": [
+    302,
+    303
+  ],
+  "nefHandleCount": 301,
+  "orderedMixedInventory": "NEF handles1..301, then standard JPEG302, then generic0x3000 JPEG303",
+  "connectionsAccepted": 1,
+  "commandConnections": [
+    1
+  ],
+  "eventConnections": [
+    1
+  ],
+  "eventPongs": 9,
+  "counts": {
+    "operations": {
+      "0x1001": 12,
+      "0x1002": 1,
+      "0x1004": 7,
+      "0x1007": 2
+    },
+    "responses": {
+      "operation=0x1001,code=0x2001": 12,
+      "operation=0x1002,code=0x2001": 1,
+      "operation=0x1004,code=0x2001": 7,
+      "operation=0x1007,code=0x2013": 1,
+      "operation=0x1007,code=0x2001": 1
+    },
+    "handleQueries": {
+      "storage=1,format=0x3801,association=0": 1,
+      "storage=2,format=0x3801,association=0": 1
+    },
+    "handleQueryObjects": {
+      "storage=2,format=0x3801,association=0": 0
+    },
+    "metadata": {},
+    "thumbnails": {},
+    "largeThumbnails": {},
+    "downloadAttempts": {},
+    "downloadCompleted": {},
+    "downloadBytes": {},
+    "downloadSha256": {},
+    "unsupportedOperations": {}
+  },
+  "scenarioRuns": {
+    "1": {
+      "scenario": "mixed",
+      "counts": {
+        "operations": {
+          "0x1001": 12,
+          "0x1002": 1,
+          "0x1004": 7,
+          "0x1007": 2
+        },
+        "responses": {
+          "operation=0x1001,code=0x2001": 12,
+          "operation=0x1002,code=0x2001": 1,
+          "operation=0x1004,code=0x2001": 7,
+          "operation=0x1007,code=0x2013": 1,
+          "operation=0x1007,code=0x2001": 1
+        },
+        "handleQueries": {
+          "storage=1,format=0x3801,association=0": 1,
+          "storage=2,format=0x3801,association=0": 1
+        },
+        "handleQueryObjects": {
+          "storage=2,format=0x3801,association=0": 0
+        },
+        "metadata": {},
+        "thumbnails": {},
+        "largeThumbnails": {},
+        "downloadAttempts": {},
+        "downloadCompleted": {},
+        "downloadBytes": {},
+        "downloadSha256": {},
+        "unsupportedOperations": {}
+      }
+    }
+  },
+  "jpegSources": [
+    {
+      "handle": 302,
+      "name": "QA195_STANDARD.JPG",
+      "format": "0x3801",
+      "bytes": 136393,
+      "sha256": "c34b3d61798b7071ab7d7cfcdbc5ee9e15f7a8b702b4927f2d3ad0121fca78a3"
+    },
+    {
+      "handle": 303,
+      "name": "QA195_GENERIC.JPEG",
+      "format": "0x3000",
+      "bytes": 135715,
+      "sha256": "d6f6476738cc2e847acace054c284e20001d7a3fe608edc64efd2b839f278abe"
+    }
+  ],
+  "directory": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\legacy-jpeg195\\peer\\legacy195-ui1",
+  "scope": "Controlled synthetic peer; does not prove actual Nikon behavior, Android routing, old-app data retention or image quality."
+}

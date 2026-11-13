@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "apkSha256": "5d02ff5ca02a87ce1bf319772f4e6e7063d3d9ac0ff8e4cdc7632d12b455ed89",
+  "versionCode": 195,
+  "androidApi": 31,
+  "pureJava": {
+    "cases": 11,
+    "assertions": 1130,
+    "passed": true
+  },
+  "controlledPeer": {
+    "old194ReproducedEmptyJpeg": true,
+    "final195FoundJpegsAfter301Nefs": true,
+    "independentStandardAndGenericJpegThumbnails": true,
+    "rawPageSeparate": true,
+    "standardJpegSavedBytesEqualSource": true,
+    "genericJpegSavedBytesEqualSourceOnCandidate1": true,
+    "partialUnreadableEmptyWarning": true,
+    "allUnreadablePreservesCameraConnection": true,
+    "healthyRetrySameConnection": true,
+    "noPhysicalCamera": true
+  },
+  "upgrade": {
+    "originalCertificate": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+    "markerRetained": true,
+    "existingPresetRetained": true,
+    "testedInstalledApkEqualsDelivery": true
+  },
+  "originalSources": {
+    "frozenInputs": 420,
+    "approvedPriorRepairs": 8,
+    "otherUnchanged": 412,
+    "modifiedByThisTask": 0
+  },
+  "actualZ6_2Verification": "pending user",
+  "crossPlatformPort": "deferred until user confirms legacy",
+  "privateUserDiagnosticCopied": false
+}

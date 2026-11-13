@@ -1,0 +1,20 @@
+{
+  "package": "cc.huevia",
+  "versionCode": 195,
+  "versionName": "0.30.35-beta-jpeg-fix",
+  "apk": "dist/legacy-jpeg195/huevia-0.30.35-beta-jpeg-fix-195.apk",
+  "bytes": 35359869,
+  "sha256": "5d02ff5ca02a87ce1bf319772f4e6e7063d3d9ac0ff8e4cdc7632d12b455ed89",
+  "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "abis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86",
+    "x86_64"
+  ],
+  "sourceCommit": "085095a070782e5115eefab5f27338aaf2aef21f",
+  "originalSourceUnchanged": true,
+  "patchSha256": "4e5bdef290b073f3d033881d6fbcf7123d748f96549a121d48599b0ac9abba94",
+  "overlaySha256": "08bf7e946b8760341647a91e5ace707f0dca070203814ba89d5e1c2b738e2edb",
+  "manualInstallOnly": true
+}
