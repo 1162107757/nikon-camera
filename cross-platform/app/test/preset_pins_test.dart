@@ -50,15 +50,16 @@ void main() {
       );
       await tester.longPress(find.text('第二款'));
       await tester.pumpAndSettle();
-      expect(find.text('置顶预设'), findsOneWidget);
-      await tester.tap(find.text('置顶预设'));
+      expect(find.byKey(const ValueKey('preset-context-menu')), findsOneWidget);
+      expect(find.text('置顶'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('preset-context-pin-action')));
       await tester.pumpAndSettle();
       expect(core.writes.single, {'id': 'b' * 64, 'owner': '', 'pinned': true});
       expect(actual.presets.first.name, '第二款');
       expect(find.text('置顶'), findsOneWidget);
       await tester.longPress(find.text('第一款'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('置顶预设'));
+      await tester.tap(find.byKey(const ValueKey('preset-context-pin-action')));
       await tester.pumpAndSettle();
       expect(actual.presets.where((preset) => preset.pinned), hasLength(2));
       expect(find.text('置顶'), findsNWidgets(2));
@@ -66,6 +67,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('取消置顶'), findsOneWidget);
       expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
       actual.dispose();
     },
   );

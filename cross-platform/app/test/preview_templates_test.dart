@@ -48,19 +48,41 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      expect(find.text('查看下一张样片'), findsNothing);
+      expect(find.byType(Image), findsOneWidget);
+      expect(find.text('从手机选择模板图'), findsOneWidget);
+      expect(find.text('恢复内置摄影样片'), findsOneWidget);
+      expect(
+        tester.widget<OutlinedButton>(find.byType(OutlinedButton)).onPressed,
+        isNull,
+      );
       await tester.tap(find.text('从手机选择模板图'));
       await tester.pumpAndSettle();
       expect(core.picks, 1);
       expect(core.updates, 0);
       expect(find.text('内置摄影样片 · 10 张'), findsOneWidget);
+      expect(
+        tester.widget<OutlinedButton>(find.byType(OutlinedButton)).onPressed,
+        isNull,
+      );
       await tester.tap(find.text('从手机选择模板图'));
       await tester.pumpAndSettle();
       expect(core.picks, 2);
       expect(core.updates, 1);
       expect(find.text('自选模板'), findsOneWidget);
+      expect(
+        tester.widget<OutlinedButton>(find.byType(OutlinedButton)).onPressed,
+        isNotNull,
+      );
       await tester.tap(find.text('恢复内置摄影样片'));
       await tester.pumpAndSettle();
       expect(find.text('内置摄影样片 · 10 张'), findsOneWidget);
+      expect(
+        tester.widget<OutlinedButton>(find.byType(OutlinedButton)).onPressed,
+        isNull,
+      );
+      expect(find.text('查看下一张样片'), findsNothing);
+      expect(find.byType(Image), findsOneWidget);
       expect(tester.takeException(), isNull);
     },
   );

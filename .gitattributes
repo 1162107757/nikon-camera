@@ -5,3 +5,6 @@ docs/migration/validation/features-216/**/*.txt -text -whitespace
 docs/migration/validation/features-217/**/*.log -text -whitespace
 docs/migration/validation/features-217/**/*.json -text -whitespace
 docs/migration/validation/features-217/**/*.txt -text -whitespace
+docs/migration/validation/features-218/**/*.log -text -whitespace
+docs/migration/validation/features-218/**/*.json -text -whitespace
+docs/migration/validation/features-218/**/*.txt -text -whitespace

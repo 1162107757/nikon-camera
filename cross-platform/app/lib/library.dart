@@ -9,10 +9,10 @@ import 'theme.dart';
 import 'widgets.dart';
 import 'legacy_presets.dart';
 import 'legacy_sheets.dart';
-import 'legacy_dialog.dart';
 import 'legacy_preset_details.dart';
 import 'submission_editor.dart';
 import 'personal_sync.dart';
+import 'preset_context_menu.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key, required this.state});
@@ -412,22 +412,28 @@ class _LibraryPageState extends State<LibraryPage> {
     ),
   );
   Future<void> presetActions(Preset preset) async {
-    final action = await hueChoice<String>(
+    final owner = widget.state.session['user']?['id'] as String? ?? '';
+    final pinned = preset.pinned;
+    bool current() =>
+        mounted &&
+        widget.state.session['logoutPending'] != true &&
+        (widget.state.session['user']?['id'] as String? ?? '') == owner;
+    if (!current()) return;
+    final action = await showPresetContextMenu(
       context: context,
-      title: preset.name,
-      selected: '',
-      choices: [('pin', preset.pinned ? '取消置顶' : '置顶预设'), ('remove', '删除本地预设')],
+      presetName: preset.name,
+      pinned: pinned,
     );
-    if (!mounted || action == null) return;
-    if (action == 'remove') {
+    if (!current() || action == null) return;
+    if (action == PresetContextAction.remove) {
       await remove(preset);
       return;
     }
-    if (action == 'pin') {
+    if (action == PresetContextAction.pin) {
       try {
-        await widget.state.pinPreset(preset, !preset.pinned);
+        await widget.state.pinPreset(preset, !pinned);
       } catch (failure) {
-        if (mounted) report(context, failure);
+        if (mounted && current()) report(context, failure);
       }
     }
   }

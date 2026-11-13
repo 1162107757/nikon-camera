@@ -125,11 +125,6 @@ class _PreviewTemplatesPageState extends State<PreviewTemplatesPage> {
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(error!),
           ),
-        if ((info?['count'] as int? ?? 0) > 1)
-          TextButton(
-            onPressed: busy ? null : next,
-            child: const Text('查看下一张样片'),
-          ),
         const SizedBox(height: 16),
         FilledButton(
           onPressed: busy ? null : change,
