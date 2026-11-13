@@ -223,6 +223,8 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         JSONObject overlay=selection.getJSONObject("selectionOverlay");
         yes(Base64.getDecoder().decode(overlay.getString("rgba")).length==overlay.getInt("width")*overlay.getInt("height")*4&&overlay.getBoolean("premultiplied"),"release original selection overlay retains bounded premultiplied RGBA pixels");
         yes(selection.getString("localData").equals(brush.getString("localData")),"release overlay never changes tentative edits");
+        JSONObject hit=call("media.retouchAnalyze",payload(source,brush.getString("localData")).put("mode","hitFace").put("x",tone.getDouble("cx")).put("y",tone.getDouble("cy")));
+        yes(hit.getInt("hitFace")>=-1&&hit.getInt("hitFace")<found.length()&&hit.getString("localData").equals(brush.getString("localData")),"release tap selection uses original native face containment without changing edits");
         preview(source,brush.getString("localData"));
         JSONObject candidates=call("media.retouchAnalyze",payload(source,skin.getString("localData")).put("mode","autoBlemish"));
         yes(candidates.getJSONArray("healCandidates").length()<=24&&candidates.getString("localData").equals(skin.getString("localData")),"release automatic blemish candidates remain tentative and bounded");

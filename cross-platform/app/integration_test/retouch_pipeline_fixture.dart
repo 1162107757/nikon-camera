@@ -58,6 +58,17 @@ Future<void> verifyRetouchPipeline(HueviaCore core) async {
     );
     expect(overlay['premultiplied'], true);
     expect(selection['localData'], analyzed['localData']);
+    final hit = await core.call('media.retouchAnalyze', {
+      'path': path,
+      'owner': owner,
+      'expectedSourceSha': before,
+      'localData': analyzed['localData'],
+      'mode': 'hitFace',
+      'x': object(faces.first)['cx'],
+      'y': object(faces.first)['cy'],
+    });
+    expect(hit['hitFace'], inInclusiveRange(-1, faces.length - 1));
+    expect(hit['localData'], analyzed['localData']);
     if (Platform.isIOS) {
       expect(analyzed['analysisEngine'], 'TensorFlowLiteC-2.17.0-CPU');
       expect(analyzed['meshPoints'], 468);

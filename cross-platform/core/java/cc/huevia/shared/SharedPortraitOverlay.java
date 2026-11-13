@@ -14,6 +14,12 @@ public final class SharedPortraitOverlay {
         if(pixels==null||width<2||height<2||width>1280||height>1280||pixels.length!=width*height)throw new IOException("人物分析像素无效。");
         Map<String,Object> p=SharedJson.object(json);PhotoLocalEdits local=SharedRetouch.local(p);PhotoPortrait portrait=SharedRetouch.portrait(local,p);
         Map<String,Object> result=SharedJson.object(SharedRetouch.resultFor(local,p,cancel));result.put("selectionOverlay",null);
+        if("hitFace".equals(p.get("mode"))){
+            double x=coordinate(p,"x"),y=coordinate(p,"y"),best=Double.POSITIVE_INFINITY;int found=-1;
+            for(int i=0;i<portrait.faces().size();i++){check(cancel);PhotoPortrait.Face face=portrait.faces().get(i);double dx=(x-face.cx)*width,dy=(y-face.cy)*height,a=Math.toRadians(face.roll),lx=dx*Math.cos(a)+dy*Math.sin(a),ly=-dx*Math.sin(a)+dy*Math.cos(a),distance=Math.hypot(lx/(face.rx*width),ly/(face.ry*height));
+                if(PortraitPreviewFilter.faceContains(face,x,y,width,height)&&distance<best){best=distance;found=i;}}
+            result.put("hitFace",found);check(cancel);return SharedJson.encode(result);
+        }
         AdjustmentRegion.Brush brush=null;String regionId=SharedRuntime.text(p,"regionId",64);
         if(!regionId.isEmpty())for(AdjustmentRegion region:local.regions())if(region.id.equals(regionId)){brush=region.compileBrush(width,height);break;}
         Object flag=p.get("global");if(flag!=null&&!(flag instanceof Boolean))throw new IOException("选区显示范围无效。");boolean global=Boolean.TRUE.equals(flag);
@@ -42,5 +48,6 @@ public final class SharedPortraitOverlay {
         check(cancel);return SharedJson.encode(result);
     }
     private static void put(byte[] rgba,int index,int alpha){int at=index*4;rgba[at]=(byte)alpha;rgba[at+1]=(byte)Math.round(241.0*alpha/255);rgba[at+2]=(byte)Math.round(228.0*alpha/255);rgba[at+3]=(byte)alpha;}
+    private static double coordinate(Map<String,Object> p,String key)throws IOException{Object raw=p.get(key);if(!(raw instanceof Number))throw new IOException("选脸坐标无效。");double value=((Number)raw).doubleValue();if(!Double.isFinite(value)||value<0||value>1)throw new IOException("选脸坐标无效。");return value;}
     private static void check(BooleanSupplier cancel)throws InterruptedIOException{if(cancel.getAsBoolean()||Thread.currentThread().isInterrupted())throw new InterruptedIOException("选区已关闭。");}
 }

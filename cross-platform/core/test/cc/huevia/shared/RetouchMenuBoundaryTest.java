@@ -166,6 +166,12 @@ public final class RetouchMenuBoundaryTest {
         yes(noOverlay.get("selectionOverlay")==null&&local(noOverlay).isEmpty());
         rejects(()->SharedPortraitOverlay.render(SharedJson.encode(overlayRequest),overlayPixels,64,64,()->true));
         rejects(()->SharedPortraitOverlay.render("{\"global\":1}",overlayPixels,64,64,()->false));
+        Map<String,Object> hitRequest=SharedRuntime.map("localData",before.get("localData"),"mode","hitFace","x",.3,"y",.4);
+        Map<String,Object> hit=SharedJson.object(SharedPortraitOverlay.render(SharedJson.encode(hitRequest),overlayPixels,64,64,()->false));
+        yes(((Number)hit.get("hitFace")).intValue()==0&&hit.get("localData").equals(before.get("localData")));
+        hitRequest.put("x",.02);hitRequest.put("y",.02);
+        yes(((Number)SharedJson.object(SharedPortraitOverlay.render(SharedJson.encode(hitRequest),overlayPixels,64,64,()->false)).get("hitFace")).intValue()==-1);
+        hitRequest.put("x",-.1);rejects(()->SharedPortraitOverlay.render(SharedJson.encode(hitRequest),overlayPixels,64,64,()->false));
 
         PhotoPortrait.Heal h1=new PhotoPortrait.Heal(.22,.25,.3,.3,.02,.7,true),h2=new PhotoPortrait.Heal(.65,.65,.7,.7,.03,.6,false);
         PhotoPortrait withHeals=original.addHeal(h1).addHeal(h2);
