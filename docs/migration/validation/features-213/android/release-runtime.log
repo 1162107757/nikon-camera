@@ -1,0 +1,8 @@
+D:\dev\ai-project\nikon-camera\dist\migration213\huevia-0.31.0-dev-213-android-x64.apk: 1 file pushed, 0 skipped. 22.5 MB/s (55554266 bytes in 2.351s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 75.9 MB/s (62584 bytes in 0.001s)
+Performing Push Install
+Success
+PASS 41 R8 release runtime checks; real mesh, semantic skin, renderer, patch, cancellation and RAW JNI callbacks
+

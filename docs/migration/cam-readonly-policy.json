@@ -1,0 +1,26 @@
+{
+  "version": "2.0",
+  "statement": [
+    {
+      "effect": "allow",
+      "action": ["name/cam:GetRole"],
+      "resource": [
+        "qcs::cam::uin/1162107757:roleName/HueviaUpdatePackageRole",
+        "qcs::cam::uin/1162107757:roleName/HueviaDataBackupRole"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": ["name/cam:GetPolicy", "name/cam:GetPolicyVersion", "name/cam:ListPolicyVersions"],
+      "resource": [
+        "qcs::cam::uin/:policy/293055026",
+        "qcs::cam::uin/:policy/293266107"
+      ]
+    },
+    {
+      "effect": "allow",
+      "action": ["name/cam:ListAttachedRolePolicies"],
+      "resource": ["*"]
+    }
+  ]
+}

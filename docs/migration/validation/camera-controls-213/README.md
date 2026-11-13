@@ -1,6 +1,6 @@
-# A3 / A5 开发验证（未冻结安装包）
+# A3 / A5 开发验证与 A2 / A7 验收边界
 
-本记录只覆盖当前工作区新增的遥控和优化校准槽位代码，不替代 212 的安装包、冻结源码、验证记录或实体相机验收。
+本记录覆盖新增遥控和优化校准槽位代码，并补充已整合后台保护与查看器的证据边界。2026-11-13 文档复核基线为 `8d43086119fc88eb97e8157be44d76b6ac917c26`。各安装包、测试日志按各自源码记录核验，不替代 212 冻结证据或实体相机验收。
 
 ## 已接入
 
@@ -24,6 +24,15 @@ Apple API 依据：[PTP command / outData](https://developer.apple.com/documenta
 
 边界测试包括原 NCP 测试字节实际转换为 614 字节并精确回读、原 NCP 字节不变、取消不写、来源/目标中途变化拒绝、旧确认与重复执行拒绝、写入成功但响应丢失后跨会话只读恢复、删除不改其他槽位、活动槽拒绝、操作顺序、取消/关闭和 USB 首次打开失败后的明确重试。
 
+## A2 / A7 集成复核
+
+- Android 主任务的 [119 项原生检查记录](../features-213/android/native-119.json)及[实际日志](../features-213/android/android-native.log)已核对通过；记录的宿主、保护控制器、服务和 instrumentation 四个源码 SHA 与上述复核基线一致。运行环境为 API 31 / x86_64 / 4096 字节页模拟器。生命周期用例实际启动服务，并覆盖同主线程快速停止再启动、同 engine 接管、关闭和重开 Activity、通知停止后旧宿主迟到释放仍不关闭新宿主 backend。119 是媒体与生命周期总检查数，不是 119 项接机检查。
+- 通知停止使用独立 `stopRevision`；Live / Queue 在前台也处理真正停止。Queue / Protection 的 16 项受控 Dart 检查和既有 Live 的 16 项回归由编辑组验证，详见[专项状态](../../status-editing-lifecycle-213.md)。这些检查不代替实体锁屏、厂商电池策略、断网或系统终止。
+- iOS 到期取消链经只读复核：`camera.cancel` 不等待共享请求锁；Wi-Fi 关闭只唤醒阻塞读写并取消网络连接，USB 关闭异步请求系统会话结束，不在到期回调中等待 semaphore。重新连接时的等待在 worker 上。此结论是源码复核，不是实际 iOS 到期或 iPhone 运行证据。Apple 的[到期回调约定](https://developer.apple.com/documentation/uikit/uiapplication/beginbackgroundtask(expirationhandler:))要求主线程同步执行该回调。
+- A7 的 `camera_viewer_test.dart` 6 项控件检查通过，覆盖相邻导航后的当前 DTO、只取缩略图、分页与回调竞态；RAW 解码由原生夹具另外核验。主任务 [41 项 R8 release 记录](../features-213/android/release-runtime.json)来自 `3db73d2575fc93296e0995c5476c237397c2a1a7` 的真实 x64 优化 APK，含新鲜 RAW JNI 缩略图，不代表所有机型文件或实际 PTP 缩略图通过。
+
 ## 仍待验证
 
-Windows 未进行 Apple SDK 编译。统一 Apple CI 必须编译新增 J2ObjC 接口和 ImageCaptureCore 实现，再独立核对 IPA。实体 Nikon / iPhone / Android 的实时画面与坐标、不同拍摄模式、USB 授权拒绝/拔插/占用、实际 NCP 写入/删除/掉线及存储卡回读仍需接机验收。尚未产出或认证本轮 APK / IPA，也不认定整体迁移完成。
+主任务已产出 Android 开发 APK 并取得上述模拟器记录；[签名和 ZIP / ELF 16 KiB 对齐](../features-213/android-signing-alignment.json)通过不等于 16 KiB 设备运行通过。本专项尚未取得 213 Apple SDK / IPA 成功验收记录，须由统一 Apple CI 编译新增 J2ObjC / ImageCaptureCore 实现并独立核对产物，不能沿用 212 的成功记录。
+
+仍缺实体相机、16 KiB Android 设备和 iPhone。实时画面与坐标、不同拍摄模式、USB 授权拒绝/拔插/占用、实际 NCP 写入/删除/掉线及存储卡回读、长时间后台和系统终止后的恢复均须分别验收。机身参数只读、Nikon Wi-Fi 遥控的实际能力范围保持不变，不认定整体迁移或端到端实机已通过。

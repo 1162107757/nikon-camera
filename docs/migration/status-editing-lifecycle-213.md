@@ -63,3 +63,19 @@ iOS 的 crop、RGB 归一化、presence logit、468 点坐标、语义 softmax�
 Apple 运行 `43348397039` 完成 257 项、失败 3 项；失败项正是上述三个批量控件视口，均在点击“开始批量导出”后等待 `pumpAndSettle` 超时。批量任务的真实文件日志需要系统事件循环处理磁盘 I/O，已有 Future 链和控件通知也需要测试 zone 推进微任务，单独在 `runAsync` 中等待任务不能完成两者。
 
 `afed203` 后续测试修正保持三个视口和全部选择、固定动作、完成数量、分享断言，改为真实点击后交替推进真实事件循环与控件帧，设置 15 秒真实计时上限，并在每项结束时卸载页面、释放测试拥有的 `AppState`。同步断言当前完成文案“已保存成品 2/2 张”。Windows 使用 `--no-enable-impeller` 完整运行 `batch_export_test.dart`，同一进程 **9/9 全部通过**，包括此前未完成的三个控件项；单文件 `dart analyze` 为 `No issues found`。证据为 `.tooling/retouch-migration/flutter-batch-widget-complete.log` 和 `dart-analyze-batch-widget.log`。未跳过测试，未改生产缩略队列或 APK；对应 Apple 后续执行仍由主任务确认。
+
+## 后续执行补记：Android 完整执行与 Apple 编译
+
+统一验收已留存下列独立执行证据，三者范围分别记录，不能相加为不重复的功能数量：
+
+- Android API 31、x86_64 模拟器的编解码与生命周期原生检查 **119 项通过**，包含前台保护服务、停止和启动代次及 Activity 复用；这不是完整 Flutter 流程，也不表示已在 ARM64 或 16 KiB 页大小设备运行。见 [执行身份](validation/features-213/android/native-119.json) 与 [原生日志](validation/features-213/android/android-native.log)。
+- 实际 R8 release APK 的 **41 项通过**，记录源码快照 `3db73d2575fc93296e0995c5476c237397c2a1a7`、APK 和 mapping SHA，运行真实面部网格、语义皮肤、渲染像素变化、修补、取消、新 SHA 的 RAW JNI 缩略图及原文件不变检查。通过最终 DEX 的真实回调类型反射进入 Activity 串行 worker；未为测试新增生产 keep 规则。见 [release 身份与范围](validation/features-213/android/release-runtime.json) 及 [执行日志](validation/features-213/android/release-runtime.log)。
+- Android 完整 Flutter / native 综合入口 **1 个场景通过**，包括真实编辑推理与 RAW 夹具；不能据此推导实体相机或完整系统相册授权交互已经验收。见 [完整流程日志](validation/features-213/android/native-pipeline.log)。
+
+Apple 运行 `43352680133`（源码 `8d430861`）完整 Flutter 检查 **260 项通过**，包含三个批量页面控件项。随后实际设备 SDK 编译在 `HueviaRetouch.mm` 的 `IOSIntArray_Set` 处失败，尚不能视作 iOS 构建通过。已按官方 J2ObjC 3.1 源码包的实际 `IOSPrimitiveArray.h` 将本组两个原生文件中 5 处 int、1 处 float 写入改为解引用 `IOS*Array_GetRef`；全原生 Classes 的 primitive 调用名称与该头核对无缺失，后续实际 SDK 编译由主任务继续确认。
+
+只读审查另发现 PhotoKit 未确认删除任务在 Limited 授权下可能把不可见照片误当作已删除。修复保留已有 `deleted` 收据的幂等返回，并对缺失标识在 fetch 和最终 readback 前后的非完整授权失败关闭。原 Retouch / Album 边界独立运行 **40 项通过**，原生文本与配置检查 **734 文件通过**；这是现有核心回归与源码检查，尚不是 iOS Limited 授权运行实测。该边界仍需平台执行确认。
+
+Apple 后续运行 `43355509186`（源码 `1ef9def`）再次完成 260 项 Flutter 检查，并通过上述 primitive array 写入的实际 SDK 编译阶段；整体设备构建随后在 QQ 授权文件的十六进制表达式词法错误处停止。主任务已修正该独立错误并继续下一轮，不能将这次编译进度等同于 TFLite / PhotoKit 综合运行通过。
+
+原生综合运行前只读解析了干净模型准备输出的实际 FlatBuffer 并核对固定 SHA：两个模型输入均为 float32 `[1,256,256,3]`；网格输出 0 为 `[1,1,1,1434]`，输出 1 为单个 presence logit，输出 2 未使用；语义输出 0 为 float32 `[1,256,256,6]`。iOS 读取输出 0 / 1、沿用原版前 468 点，以及共享预处理 / 后处理的数组长度均匹配，未发现确定的维度或 fixture 返回字段错配。审查证据为 `.tooling/retouch-migration/ios-model-tensors-review.json`。现有取消 fixture 验证取消结果，不足以证明所有时序下都在算子内部提前中断；实际平台执行结论仍由主任务收口。

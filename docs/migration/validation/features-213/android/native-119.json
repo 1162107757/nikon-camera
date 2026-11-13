@@ -4,10 +4,10 @@
   "api": 31,
   "abi": "x86_64",
   "pageBytes": 4096,
-  "apkSha256": "800d9ef93d41fb5f8f671ad583dbfea1bad024f7f653b4953509943ebd61dc48",
+  "apkSha256": "1cc20f0ca2c0d9212f064c93d40bb8cdb2c3a55a88aeb296d9acf616318a60c9",
   "scope": "native codecs and lifecycle; not the full Flutter pipeline",
   "inputs": {
-    "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java": "62836a394583febf54c3799f47cf4ae850d09188f5c3f43599456ad9fd2fa30f",
+    "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java": "358b1d78e821c91d99e4803334b34ed60df37526b7d5ce67696fead493010d81",
     "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeConnectionProtection.java": "e01f1b642c8e657aecf512362ca57a292bc991d421e1cd778b66e606861ddcf9",
     "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/CameraRetentionService.java": "72f5eef5193e607362f7dc78b4a282f895f9de5e6e297d24574bb7c149d0a208",
     "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/MediaSmokeInstrumentation.java": "2143b5972708ae2a1e61eb6f584319740ef0386209b56edd2f6afc06a3155cf0"

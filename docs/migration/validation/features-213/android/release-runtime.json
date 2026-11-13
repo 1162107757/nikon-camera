@@ -1,0 +1,18 @@
+{
+  "checks": 41,
+  "passed": true,
+  "sourceCommit": "3db73d2575fc93296e0995c5476c237397c2a1a7",
+  "apkSha256": "9fae5f4883a82c38bf53b478d199452ba8c2a36b567918ecf3e19eef6fb687bc",
+  "mappingSha256": "41a5b86cb24ff6683abed583a1c8c39bcf1fd8846f2f8512aee98f3e463b9f59",
+  "device": "emulator-5584",
+  "api": 31,
+  "scope": [
+    "real face mesh",
+    "real semantic skin",
+    "render pixel changes",
+    "patch",
+    "cancel",
+    "fresh RAW JNI thumbnail",
+    "unchanged sources"
+  ]
+}

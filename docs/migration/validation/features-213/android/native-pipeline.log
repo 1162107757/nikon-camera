@@ -1,0 +1,8 @@
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\debug\app-debug.apk: 1 file pushed, 0 skipped. 29.6 MB/s (121233543 bytes in 3.905s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 127.8 MB/s (62584 bytes in 0.000s)
+Performing Push Install
+Success
+PASS cross-platform Flutter/native pipeline: 1 scenario(s)
+

@@ -1,6 +1,6 @@
 # A12 / A13 跨端账户与交付开发记录
 
-这是开发与本地检查记录，不改写 211 冻结清单或 212 已有验收。不构成真实 QQ 授权、生产更新发布、实体安装迁入或 Apple 新包验收。
+这是开发与验证记录，不改写 211 冻结清单或 212 已有验收。主任务后续的真实 Android 维护升级/迁入/撤回结果按末节补充；真实 QQ 授权、生产更新发布与 Apple 213 新包仍不标为已验收。
 
 ## QQ 原生授权
 
@@ -39,3 +39,10 @@
 - 主任务完整服务回归以 `--test-concurrency=1` 执行，225 项中 218 通过、7 跳过、0 失败，另 83 模块源码/语法检查通过；日志 `.tooling/next213/server-serial-test.log`。默认旧 `inspectApk` 超过 32 MiB 提前拒绝，显式 next 才使用 128 MiB 并继续验包名、证书与实际 ABI。
 - RAW thumbnail 原生夹具已接入唯一 `native_pipeline_test.dart`；Android 首轮验证通过八个方向、缓存命中与损坏再生。随后因夹具 `media.exportPreview(snapshot=true)` 缺 `expectedSourceSha` 停止，现已对实际 PNG 流式计算并传入，保持两端源图安全比较；完整重跑由主任务管理，不能以局部结果标记完整通过。Retouch 原生夹具的两张实际人像推理/渲染/patch/取消已由主任务执行通过。
 - 真实 212 APK 已完整验签，`51,309,171` 字节、SHA-256 `1666b4850f1c1d76626c5e3b3fefa2fd3c6ba145730ca4c4dce2c9f0f68f18fe`。真实 212 未签名 IPA 的 Bundle ID、`0.31.0/212`、真机平台与结构检查通过，`29,667,421` 字节、SHA-256 `ffea0784ed576e2fb13a9136193d9cb9e0fab180549c826db0c3d22e4a873175`。这些是 212 输入验证，不冒充本轮新包验证。
+
+## 213 最终交付与待审边界
+
+- 实际最终 Android 源由主任务指定为 `3db73d2`，两 ABI 的实际 SHA/大小/原生签名与 16 KiB 对齐证据在 `validation/features-213/android-signing-alignment.json`。本地离线审阅脚本对两份真实 `cc.huevia.next`、versionCode 213、`0.31.0-dev`、minSdk 26 APK 再次执行同源完整内容签名检查，分别确认 arm64-v8a/x86_64 和固定 `763989…` 证书；不能拿当前后续 HEAD 冒充它们的构建源证明。
+- 主任务已实际完成旧 Android 186 同签名升级维护包 194、用户显式导出、新版预检/迁入/撤回。维护包保留原功能与第二个迁出入口；其 35,368,260 字节超出旧更新接口 32 MiB，故仅作为独立待审交付工具，不放宽原两包的服务规则。
+- `package-mobile-release-review.py` 将实际 APK 字节和匹配证据直接收入审阅 ZIP，逐文件摘要可核对。故意错置 ABI、篡改证据摘要、用 212 IPA 代替 213 均拒绝。后续已自主只读捕获两个实际 Active 生产回退 ZIP（云端摘要/ZIP CRC/配置前后一致），完成 022 纯 SELECT 前置检查并绑定主任务最终说明。主任务已通过控制台只读取得两份实际 IAM version 1 快照（SHA `dceebce9…`）、角色 ARN 与关联关系；没有新增 CLI 权限或修改策略。`ARTIFACTS.json` / `REVIEW-STATUS.md` / `MANIFEST.json.readiness` 仅保留 213 IPA 缺项，进程完成不等于获准部署。
+- 此快照尚无 213 IPA。云端未部署、未上传 draft、未公开发布，实际 releaseId/downloadUrl 保持空；详见 [A13 具体待审计划](a13-deployment-plan.md)。用户仅表示 Android 腾讯登记“能”，未证实保存生效；iOS Universal Link 明确未配置，真实 QQ 验收仍待外部条件。

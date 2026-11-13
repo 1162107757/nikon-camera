@@ -1,0 +1,26 @@
+{
+  "device": "emulator-5584",
+  "api": 31,
+  "beforeVersionCode": 186,
+  "afterVersionCode": 194,
+  "upgradeWithoutUninstall": true,
+  "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31",
+  "originalLauncherOpened": true,
+  "systemDocumentSaveCompleted": true,
+  "archiveCrcPassed": true,
+  "payloadDigestsVerified": 6,
+  "counts": {
+    "presets": 1,
+    "photos": 4,
+    "drafts": 1,
+    "projects": 0
+  },
+  "archiveSha256": "2c21bfb3a63688417eda2e1bf4b1db18cdb458dfbb5f2e569fcd6d267448dd6b",
+  "archiveCommitted": false,
+  "newReleaseApkPreflight": true,
+  "preflightNativeDecodedPhotos": 4,
+  "commitCompleted": true,
+  "preservedExistingFiles": 5,
+  "rollbackCompleted": true,
+  "sourceOldInstallationKept": true
+}

@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "build": 213,
+  "projectVersion": "0.31.0-dev+213",
+  "androidSourceCommit": "3db73d2575fc93296e0995c5476c237397c2a1a7",
+  "appleStatus": "pending",
+  "appleRun": 43354338842,
+  "appleCandidateCommit": "cfede2ba7dbd5b82177b9326d315193e74f214d9",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-213-android-arm64.apk",
+      "platform": "Android",
+      "abi": "arm64",
+      "package": "cc.huevia.next",
+      "version": "0.31.0-dev",
+      "build": 213,
+      "bytes": 52117298,
+      "sha256": "fc3abd1668e31bc40e58aefdfcbde123e3cc8873012c6cb4fc038ee5f85ff6f3",
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75"
+    },
+    {
+      "file": "huevia-0.31.0-dev-213-android-x64.apk",
+      "platform": "Android",
+      "abi": "x64",
+      "package": "cc.huevia.next",
+      "version": "0.31.0-dev",
+      "build": 213,
+      "bytes": 55554266,
+      "sha256": "9fae5f4883a82c38bf53b478d199452ba8c2a36b567918ecf3e19eef6fb687bc",
+      "certificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75"
+    },
+    {
+      "file": "huevia-0.30.34-legacy-export-194.apk",
+      "platform": "Android legacy export",
+      "abi": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "package": "cc.huevia",
+      "version": "0.30.34-migration-export",
+      "build": 194,
+      "bytes": 35368260,
+      "sha256": "b9f974980f0ca8fa6be3ec8649f7f071dae18ae2ebb95bb80cd2e67a54a574dd",
+      "manualAttachmentOnly": true,
+      "certificateSha256": "04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31"
+    }
+  ],
+  "productionPublished": false,
+  "physicalUsbTransferVerified": false,
+  "physicalIPhoneInstallationVerified": false,
+  "physical16KiBAndroidVerified": false,
+  "qqAndroidRegistrationVerified": false,
+  "qqIosUniversalLinkConfigured": false
+}
