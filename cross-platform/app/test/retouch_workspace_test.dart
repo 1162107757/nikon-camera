@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -60,11 +61,17 @@ class PortraitMenuCore extends HueviaCore {
   final Map<String, Json> snapshots = {};
   final List<(String, Json)> calls = [];
   final List<Json> cards = [];
+  final gates = <String, Completer<void>>{};
+  final cancelledJobs = <String>[];
+  final blockedJobs = <String>[];
   int serial = 0;
   String? failAnalyze;
   String regionId = '';
   @override
-  Future<void> cancel(String jobId) async {}
+  Future<void> cancel(String jobId) async {
+    cancelledJobs.add(jobId);
+  }
+
   @override
   Future<Json> call(
     String operation, [
@@ -72,6 +79,11 @@ class PortraitMenuCore extends HueviaCore {
     String? jobId,
   ]) async {
     calls.add((operation, object(jsonDecode(jsonEncode(payload)))));
+    final gate = gates.remove('$operation/${payload['mode'] ?? ''}');
+    if (gate != null) {
+      if (jobId != null) blockedJobs.add(jobId);
+      await gate.future;
+    }
     if (operation == 'toneCards.list') return {'cards': cards};
     if (operation == 'toneCards.save') {
       cards.add({
@@ -104,6 +116,11 @@ class PortraitMenuCore extends HueviaCore {
       );
       final portrait = next['portrait'] as Json;
       if (mode == 'skin') portrait['hasSkinMask'] = true;
+      if (mode == 'face' && (portrait['faces'] as List).isEmpty) {
+        portrait['faces'] = [
+          {'cx': .8, 'cy': .5, 'rx': .1, 'ry': .15, 'enabled': true},
+        ];
+      }
       if (mode == 'body') {
         portrait['hasBodyMask'] = true;
         portrait['protection'] = payload['protection'];
@@ -173,6 +190,11 @@ class PortraitMenuCore extends HueviaCore {
     }
     throw AppFailure(operation);
   }
+}
+
+class PortraitRouteReceipt {
+  int completed = 0;
+  Json? result;
 }
 
 void main() {
@@ -588,6 +610,253 @@ void main() {
       await tester.tap(find.bySemanticsLabel('显示或隐藏选区'));
       await settle(tester);
       expect(overlays().length, count);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+  );
+  Future<PortraitRouteReceipt> pushWorkspace(
+    WidgetTester tester, {
+    String? regionId,
+    bool parentStage = false,
+  }) async {
+    final receipt = PortraitRouteReceipt();
+    Widget workspace() => RetouchWorkspace(
+      state: state,
+      photo: Photo('${directory.path}/original.jpg', '人像样片', const {}),
+      owner: 'alice',
+      recipe: Recipe().data,
+      isCurrent: () => true,
+      regionId: regionId,
+      regionName: regionId == null ? null : '人物局部',
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: hueviaTheme(Brightness.dark),
+        home: Builder(
+          builder: (context) => Scaffold(
+            body: TextButton(
+              onPressed: () async {
+                if (parentStage) {
+                  await Navigator.of(context).push<void>(
+                    MaterialPageRoute(
+                      builder: (parent) => Scaffold(
+                        body: Column(
+                          children: [
+                            const Text('父人像暂存效果'),
+                            TextButton(
+                              onPressed: () async {
+                                receipt.result = await Navigator.of(parent)
+                                    .push<Json>(
+                                      MaterialPageRoute(
+                                        builder: (_) => workspace(),
+                                      ),
+                                    );
+                                receipt.completed++;
+                              },
+                              child: const Text('打开局部人像'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  receipt.result = await Navigator.of(
+                    context,
+                  ).push<Json>(MaterialPageRoute(builder: (_) => workspace()));
+                  receipt.completed++;
+                }
+              },
+              child: const Text('父编辑器'),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('父编辑器'));
+    await settle(tester);
+    if (parentStage) {
+      await tester.tap(find.text('打开局部人像'));
+      await settle(tester);
+    }
+    return receipt;
+  }
+
+  int previewCount() =>
+      core.calls.where((c) => c.$1 == 'media.reviewPreview').length;
+  Future<void> startHeldFace(WidgetTester tester, Completer<void> gate) async {
+    core.gates['media.retouchAnalyze/face'] = gate;
+    await tester.tap(find.text('自动选脸'));
+    await settle(tester);
+    await tester.tap(find.text('重新识别'));
+    await settle(tester);
+  }
+
+  testWidgets(
+    'Busy face header cancellation closes only the workspace and rejects native late success during pop animation',
+    (tester) async {
+      final receipt = await pushWorkspace(tester);
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      final gate = Completer<void>();
+      await startHeldFace(tester, gate);
+      final previews = previewCount(), blocked = core.blockedJobs.single;
+      final close = find.byTooltip('取消人像精修');
+      expect(
+        tester
+            .widget<IconButton>(
+              find.ancestor(of: close, matching: find.byType(IconButton)).first,
+            )
+            .onPressed,
+        isNotNull,
+      );
+      await tester.tap(close);
+      await tester.pump();
+      expect(core.cancelledJobs, contains(blocked));
+      gate.complete();
+      await tester.pump();
+      expect(previewCount(), previews);
+      await settle(tester);
+      expect(receipt.completed, 1);
+      expect(receipt.result, isNull);
+      expect(find.text('父编辑器'), findsOneWidget);
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+  );
+  testWidgets(
+    'Busy Android system back cancels a held preview before late image installation',
+    (tester) async {
+      final gate = Completer<void>();
+      core.gates['media.reviewPreview/'] = gate;
+      final receipt = await pushWorkspace(tester);
+      expect(find.bySemanticsLabel('待编辑照片：人像样片'), findsNothing);
+      await tester.binding.handlePopRoute();
+      await tester.pump();
+      expect(core.cancelledJobs, contains(core.blockedJobs.single));
+      gate.complete();
+      await tester.pump();
+      expect(find.bySemanticsLabel('待编辑照片：人像样片'), findsNothing);
+      await settle(tester);
+      expect(receipt.completed, 1);
+      expect(receipt.result, isNull);
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+  );
+  testWidgets(
+    'Busy body cancellation restores parent staged effects and old analysis finally cannot unlock a new face task',
+    (tester) async {
+      final receipt = await pushWorkspace(tester);
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      await more(tester, '停用此人脸');
+      final parent = lastPreviewLocal();
+      await tester.tap(find.byTooltip('返回人像工具'));
+      await settle(tester);
+      await tester.tap(find.text('塑形'));
+      await settle(tester);
+      final oldBody = Completer<void>();
+      core.gates['media.retouchAnalyze/body'] = oldBody;
+      await tester.tap(find.text('自动定位'));
+      await settle(tester);
+      final blocked = core.blockedJobs.single;
+      await tester.tap(find.byTooltip('取消塑形并返回人像'));
+      await settle(tester);
+      expect(receipt.completed, 0);
+      expect(lastPreviewLocal(), parent);
+      expect(core.cancelledJobs, contains(blocked));
+      expect(find.text('人像'), findsOneWidget);
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      expect(find.textContaining('已停用'), findsOneWidget);
+      final newFace = Completer<void>();
+      await startHeldFace(tester, newFace);
+      final previews = previewCount();
+      oldBody.complete();
+      await settle(tester);
+      expect(previewCount(), previews);
+      expect(lastPreviewLocal(), parent);
+      expect(
+        tester
+            .widget<TextButton>(find.widgetWithText(TextButton, '应用'))
+            .onPressed,
+        isNull,
+      );
+      expect(
+        core.calls.where(
+          (c) =>
+              c.$1 == 'media.retouchAnalyze' &&
+              c.$2['mode'] == 'body' &&
+              c.$2['locate'] == true,
+        ),
+        isEmpty,
+      );
+      await tester.tap(find.byTooltip('取消人像精修'));
+      await tester.pump();
+      newFace.complete();
+      await settle(tester);
+      expect(receipt.completed, 1);
+      expect(receipt.result, isNull);
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+  );
+  testWidgets(
+    'Busy body system back returns to its staged portrait without popping that route',
+    (tester) async {
+      final receipt = await pushWorkspace(tester);
+      await tester.tap(find.text('塑形'));
+      await settle(tester);
+      final gate = Completer<void>();
+      core.gates['media.retouchAnalyze/body'] = gate;
+      await tester.tap(find.text('背景保护'));
+      await settle(tester);
+      await tester.binding.handlePopRoute();
+      await settle(tester);
+      expect(receipt.completed, 0);
+      expect(find.text('人像'), findsOneWidget);
+      expect(find.text('父编辑器'), findsNothing);
+      final previews = previewCount();
+      gate.complete();
+      await settle(tester);
+      expect(previewCount(), previews);
+      await tester.tap(find.byTooltip('取消人像精修'));
+      await settle(tester);
+      expect(receipt.completed, 1);
+      expect(receipt.result, isNull);
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+  );
+  testWidgets(
+    'Busy regional child cancellation pops only that route and leaves the parent staged portrait',
+    (tester) async {
+      core.regionId = 'region-a';
+      final receipt = await pushWorkspace(
+        tester,
+        regionId: 'region-a',
+        parentStage: true,
+      );
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      final gate = Completer<void>();
+      await startHeldFace(tester, gate);
+      final previews = previewCount();
+      await tester.tap(find.byTooltip('取消人像精修'));
+      await tester.pump();
+      gate.complete();
+      await settle(tester);
+      expect(previewCount(), previews);
+      expect(receipt.completed, 1);
+      expect(receipt.result, isNull);
+      expect(find.text('父人像暂存效果'), findsOneWidget);
+      expect(find.text('父编辑器'), findsNothing);
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },

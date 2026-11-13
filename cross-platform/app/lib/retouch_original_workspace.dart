@@ -408,11 +408,12 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> drainOriginalLight() async {
+    final epoch = operationEpoch;
     if (lightRunning) return;
     lightRunning = true;
     try {
       while (lightPending != null &&
-          current &&
+          operationCurrent(epoch) &&
           !lightCancelled &&
           selected == lightTarget) {
         final value = lightPending!;
@@ -422,14 +423,17 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           'index': lightTarget,
           'value': {'LIGHT_X': value.dx.round(), 'LIGHT_Y': value.dy.round()},
         }, remember: false);
+        if (!operationCurrent(epoch)) break;
         if (error != null) {
           lightCancelled = true;
           lightPending = null;
         }
       }
     } finally {
-      lightRunning = false;
-      if (lightEnded || lightCancelled) await completeOriginalLight();
+      if (operationCurrent(epoch)) {
+        lightRunning = false;
+        if (lightEnded || lightCancelled) await completeOriginalLight();
+      }
     }
   }
 
@@ -441,10 +445,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> completeOriginalLight() async {
+    final epoch = operationEpoch;
     final before = lightStart;
     lightStart = null;
     lightPending = null;
-    if (before == null || !current) return;
+    if (before == null || !operationCurrent(epoch)) return;
     if (lightCancelled) {
       refreshPortrait(() {
         busy = true;
@@ -452,16 +457,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       });
       try {
         final image = await render(before);
-        if (current) {
+        if (operationCurrent(epoch)) {
           refreshPortrait(() {
             data = before;
             frame = image;
           });
         }
       } catch (failure) {
-        if (mounted && current) refreshPortrait(() => error = '$failure');
+        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
       } finally {
-        if (mounted) refreshPortrait(() => busy = false);
+        if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
       }
     } else if (before['localData'] != data?['localData']) {
       refreshPortrait(() {
@@ -493,11 +498,13 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> paintOriginalPortrait() async {
-    if (busy || !current || data == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     await cancelTonePreview();
-    if (!current) return;
+    if (!mounted || !operationCurrent(epoch)) return;
     final staged = data!, fingerprint = data!['localData'];
-    bool valid() => current && data?['localData'] == fingerprint;
+    bool valid() =>
+        operationCurrent(epoch) && data?['localData'] == fingerprint;
     String? owned;
     refreshPortrait(() {
       busy = true;
@@ -533,7 +540,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         'maxEdge': 1280,
       });
       owned = image['path'] as String;
-      if (!valid() || !mounted) return;
+      if (!mounted || !valid() || !operationCurrent(epoch)) return;
       refreshPortrait(() => busy = false);
       final page = SelectionWorkspace(
         state: widget.state,
@@ -550,7 +557,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         context,
         MaterialPageRoute(builder: (_) => page),
       );
-      if (selection == null || !valid() || !mounted) return;
+      if (!mounted || selection == null || !valid() || !operationCurrent(epoch)) {
+        return;
+      }
       if (widget.regionId?.isNotEmpty == true) {
         refreshPortrait(() => busy = true);
         final next = await call('media.retouchDescribe', {
@@ -590,24 +599,26 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
             ),
           ),
         );
-        if (result != null && valid() && mounted) {
+        if (mounted && result != null && valid() && operationCurrent(epoch)) {
           Navigator.pop(context, result);
         }
       }
     } catch (failure) {
-      if (mounted && current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
       if (owned != null) await remove(owned);
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
   }
 
   Future<void> originalAutoBlemishes() async {
-    if (busy || !current || data == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     await cancelTonePreview();
-    if (!current || data == null) return;
+    if (!operationCurrent(epoch) || data == null) return;
     final before = data!, fingerprint = data!['localData'];
-    bool valid() => current && data?['localData'] == fingerprint;
+    bool valid() =>
+        operationCurrent(epoch) && data?['localData'] == fingerprint;
     refreshPortrait(() {
       busy = true;
       stopped = false;
@@ -634,7 +645,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         return;
       }
       refreshPortrait(() => busy = false);
-      if (!mounted) return;
+      if (!mounted || !operationCurrent(epoch)) return;
       final selection = await showRetouchBlemishCandidates(
         context,
         candidates: [
@@ -666,17 +677,18 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         });
       }
     } catch (failure) {
-      if (current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
     unawaited(refreshPortraitOverlay());
   }
 
   Future<void> originalNatural() async {
-    if (busy || !current || data == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     await cancelTonePreview();
-    if (!current || data == null) return;
+    if (!operationCurrent(epoch) || data == null) return;
     final before = data!;
     refreshPortrait(() {
       busy = true;
@@ -707,7 +719,8 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         'value': {'NATURAL': amount > 0 ? amount : 50},
       });
       final image = await render(next);
-      if (current && data?['localData'] == before['localData']) {
+      if (operationCurrent(epoch) &&
+          data?['localData'] == before['localData']) {
         refreshPortrait(() {
           undo.add(before);
           if (undo.length > 32) undo.removeAt(0);
@@ -717,9 +730,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         });
       }
     } catch (failure) {
-      if (current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
     unawaited(refreshPortraitOverlay());
   }
@@ -752,6 +765,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> originalToneBody(bool value) async {
+    final epoch = operationEpoch;
     if (!canEditTone || tonePerFace != true || data == null) return;
     final before = data!, target = selected;
     refreshPortrait(() {
@@ -774,7 +788,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         'value': {'toneBody': value},
       });
       final image = await render(next);
-      if (current &&
+      if (operationCurrent(epoch) &&
           selected == target &&
           data?['localData'] == before['localData']) {
         refreshPortrait(() {
@@ -786,35 +800,37 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         });
       }
     } catch (failure) {
-      if (current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
     unawaited(refreshPortraitOverlay());
   }
 
   Future<void> refreshOriginalModeFrame() async {
-    if (!current || data == null || busy) return;
+    final epoch = operationEpoch;
+    if (!operationCurrent(epoch) || data == null || busy) return;
     refreshPortrait(() {
       busy = true;
       stopped = false;
     });
     try {
       final image = await render(data!);
-      if (current) refreshPortrait(() => frame = image);
+      if (operationCurrent(epoch)) refreshPortrait(() => frame = image);
     } catch (failure) {
-      if (current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
     unawaited(refreshPortraitOverlay());
   }
 
   Future<void> originalGroups() async {
-    if (busy || !current) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch)) return;
     await cancelTonePreview();
     if (bodyStart != null) await finishOriginalBody(false);
-    if (!current) return;
+    if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
       choosingGroup = true;
       photoSampling = manual = healMode = false;
@@ -824,9 +840,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> originalSection(int section, {bool natural = false}) async {
-    if (busy || !current || data == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     await cancelTonePreview();
-    if (!current) return;
+    if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
       choosingGroup = false;
       if (section == 2) bodyTabBefore = tab;
@@ -846,6 +863,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         bodyOverlayBefore = showOverlay;
         showOverlay = true;
         viewport.value = Matrix4.identity();
+        bodyFrameBefore = frame;
         bodyStart = data;
         bodyUndoBefore = List.of(undo);
         bodyRedoBefore = List.of(redo);
@@ -858,11 +876,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       try {
         await toneCardRequest('toneCards.list');
       } catch (failure) {
-        if (mounted && current) refreshPortrait(() => error = '$failure');
+        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
       }
       if (natural) {
         await originalNatural();
-      } else if (current && portrait['hasSkinMask'] != true) {
+      } else if (operationCurrent(epoch) && portrait['hasSkinMask'] != true) {
         await perform('media.retouchAnalyze', {
           'mode': 'skin',
         }, remember: false);
@@ -873,7 +891,8 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> finishOriginalBody(bool apply) async {
-    if (busy || !current || bodyStart == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || bodyStart == null) return;
     final start = bodyStart!;
     final oldUndo = bodyUndoBefore!, oldRedo = bodyRedoBefore!;
     if (!apply) {
@@ -883,19 +902,19 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       });
       try {
         final image = await render(start);
-        if (!current) return;
+        if (!mounted || !operationCurrent(epoch)) return;
         refreshPortrait(() {
           data = start;
           frame = image;
         });
       } catch (failure) {
-        if (mounted) refreshPortrait(() => error = '$failure');
+        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
         return;
       } finally {
-        if (mounted) refreshPortrait(() => busy = false);
+        if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
       }
     }
-    if (!current) return;
+    if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
       undo
         ..clear()
@@ -917,7 +936,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       bodyTabBefore = null;
       bodyViewportBefore = null;
       bodyOverlayBefore = null;
-      bodyStart = null;
+      bodyStart = bodyFrameBefore = null;
       bodyUndoBefore = bodyRedoBefore = null;
       choosingGroup = true;
     });
@@ -925,12 +944,13 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> originalCompare(bool value) async {
+    final epoch = operationEpoch;
     compareWanted = value;
     if (!value) {
-      if (mounted) refreshPortrait(() => comparing = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => comparing = false);
       return;
     }
-    if (busy || !current || data == null) return;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     if (comparisonFrame != null) {
       refreshPortrait(() => comparing = true);
       return;
@@ -945,16 +965,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         'action': bodyStart == null ? 'clearPortrait' : 'beforeBody',
       });
       final image = await render(base);
-      if (current) {
+      if (operationCurrent(epoch)) {
         refreshPortrait(() {
           comparisonFrame = image;
           comparing = compareWanted;
         });
       }
     } catch (failure) {
-      if (mounted && current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
   }
 
@@ -987,21 +1007,27 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> drainOriginalScalar() async {
+    final epoch = operationEpoch;
     if (scalarRunning) return;
     scalarRunning = true;
     try {
-      while (scalarPending != null && current && !scalarCancelled) {
+      while (scalarPending != null &&
+          operationCurrent(epoch) &&
+          !scalarCancelled) {
         final request = scalarPending!;
         scalarPending = null;
         await perform('media.retouchChange', request, remember: false);
+        if (!operationCurrent(epoch)) break;
         if (error != null) {
           scalarCancelled = true;
           scalarPending = null;
         }
       }
     } finally {
-      scalarRunning = false;
-      if (scalarEnded || scalarCancelled) await completeOriginalScalar();
+      if (operationCurrent(epoch)) {
+        scalarRunning = false;
+        if (scalarEnded || scalarCancelled) await completeOriginalScalar();
+      }
     }
   }
 
@@ -1013,10 +1039,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> completeOriginalScalar() async {
+    final epoch = operationEpoch;
     final before = scalarStart;
     scalarStart = scalarPending = null;
     scalarKey = null;
-    if (before == null || !current) return;
+    if (before == null || !operationCurrent(epoch)) return;
     if (scalarCancelled) {
       refreshPortrait(() {
         busy = true;
@@ -1024,16 +1051,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       });
       try {
         final image = await render(before);
-        if (current) {
+        if (operationCurrent(epoch)) {
           refreshPortrait(() {
             data = before;
             frame = image;
           });
         }
       } catch (failure) {
-        if (current) refreshPortrait(() => error = '$failure');
+        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
       } finally {
-        if (mounted) refreshPortrait(() => busy = false);
+        if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
       }
     } else if (scalarRemember && before['localData'] != data?['localData']) {
       refreshPortrait(() {
@@ -1055,6 +1082,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     bool fraction = false,
     bool permitted = true,
   }) {
+    final epoch = operationEpoch;
     final identity = '$action-$key-$selected-$bodyTool';
     final enabled =
         permitted &&
@@ -1081,15 +1109,24 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       value: value,
       min: min,
       max: max,
-      onChangeStart: (_) => beginOriginalScalar(identity),
+      onChangeStart: (_) {
+        if (operationCurrent(epoch)) beginOriginalScalar(identity);
+      },
       onChanged: enabled
-          ? (v) => updateOriginalScalar(identity, request(v))
+          ? (v) {
+              if (operationCurrent(epoch)) {
+                updateOriginalScalar(identity, request(v));
+              }
+            }
           : null,
       onChangeEnd: (v) {
+        if (!operationCurrent(epoch)) return;
         updateOriginalScalar(identity, request(v));
         endOriginalScalar();
       },
-      onChangeCancel: () => endOriginalScalar(cancel: true),
+      onChangeCancel: () {
+        if (operationCurrent(epoch)) endOriginalScalar(cancel: true);
+      },
     );
   }
 
@@ -1510,9 +1547,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> originalBodyAnalysis(bool locate) async {
-    if (busy || !current || data == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     final before = data!, fingerprint = data!['localData'];
-    bool valid() => current && data?['localData'] == fingerprint;
+    bool valid() =>
+        operationCurrent(epoch) && data?['localData'] == fingerprint;
     refreshPortrait(() {
       busy = true;
       stopped = false;
@@ -1536,7 +1575,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         var person = 0;
         if (found.length > 1) {
           refreshPortrait(() => busy = false);
-          if (!mounted) return;
+          if (!mounted || !operationCurrent(epoch)) return;
           final choice = await showRetouchOriginalChoices(
             context,
             title: '选择要塑形的人物',
@@ -1570,9 +1609,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         });
       }
     } catch (failure) {
-      if (current) refreshPortrait(() => error = '$failure');
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (mounted) refreshPortrait(() => busy = false);
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
   }
 
@@ -1608,6 +1647,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   List<Widget> originalBodyControls() {
+    final epoch = operationEpoch;
     final free = !busy && scalarStart == null && lightStart == null && current;
     final strengthKey = 'body-amount-$bodyTool';
     return [
@@ -1641,22 +1681,44 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         onExact: !free
             ? null
             : (v) => unawaited(change('body', {'tool': bodyTool, 'amount': v})),
-        onStart: () => beginOriginalScalar(strengthKey),
+        onStart: () {
+          if (operationCurrent(epoch)) beginOriginalScalar(strengthKey);
+        },
         onChanged: !current || (busy && scalarKey != strengthKey)
             ? null
-            : (v) => updateOriginalScalar(strengthKey, {
-                'action': 'body',
-                'value': {'tool': bodyTool, 'amount': v.round()},
-              }),
-        onEnd: () => endOriginalScalar(),
-        onCancel: () => endOriginalScalar(cancel: true),
-        onAxisStart: (i) => beginOriginalScalar('body-axis-$bodyTool-$i'),
-        onAxis: (i, v) => updateOriginalScalar(
-          'body-axis-$bodyTool-$i',
-          originalBodyAxis(i, v),
-        ),
-        onAxisEnd: (i) => endOriginalScalar(),
-        onAxisCancel: (i) => endOriginalScalar(cancel: true),
+            : (v) {
+                if (operationCurrent(epoch)) {
+                  updateOriginalScalar(strengthKey, {
+                    'action': 'body',
+                    'value': {'tool': bodyTool, 'amount': v.round()},
+                  });
+                }
+              },
+        onEnd: () {
+          if (operationCurrent(epoch)) endOriginalScalar();
+        },
+        onCancel: () {
+          if (operationCurrent(epoch)) endOriginalScalar(cancel: true);
+        },
+        onAxisStart: (i) {
+          if (operationCurrent(epoch)) {
+            beginOriginalScalar('body-axis-$bodyTool-$i');
+          }
+        },
+        onAxis: (i, v) {
+          if (operationCurrent(epoch)) {
+            updateOriginalScalar(
+              'body-axis-$bodyTool-$i',
+              originalBodyAxis(i, v),
+            );
+          }
+        },
+        onAxisEnd: (i) {
+          if (operationCurrent(epoch)) endOriginalScalar();
+        },
+        onAxisCancel: (i) {
+          if (operationCurrent(epoch)) endOriginalScalar(cancel: true);
+        },
       ),
     ];
   }
@@ -1816,9 +1878,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     data: hueviaTheme(Brightness.dark, home: false),
     child: PopScope(
       canPop:
-          !busy && choosingGroup && scalarStart == null && lightStart == null,
+          exitRequested ||
+          (bodyStart == null &&
+              (busy || scalarStart != null || lightStart != null)) ||
+          (!busy && choosingGroup && scalarStart == null && lightStart == null),
       onPopInvokedWithResult: (didPop, result) {
-        if (!didPop && !busy) unawaited(originalGroups());
+        if (didPop) {
+          cancelWorkspace(pop: false);
+        } else {
+          requestExit();
+        }
       },
       child: Stack(
         fit: StackFit.expand,
@@ -1839,19 +1908,22 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
               leading: IconButton(
                 tooltip: bodyStart != null
                     ? '取消塑形并返回人像'
-                    : choosingGroup
+                    : busy ||
+                          scalarStart != null ||
+                          lightStart != null ||
+                          choosingGroup
                     ? '取消人像精修'
                     : '返回人像工具',
-                onPressed: busy || scalarStart != null || lightStart != null
-                    ? null
-                    : () {
-                        if (choosingGroup) {
-                          Navigator.pop(context);
-                        } else {
-                          unawaited(originalGroups());
-                        }
-                      },
-                icon: RetouchOriginalGlyph(choosingGroup ? 'close' : 'back'),
+                onPressed: exitRequested ? null : requestExit,
+                icon: RetouchOriginalGlyph(
+                  bodyStart == null &&
+                          (busy ||
+                              scalarStart != null ||
+                              lightStart != null ||
+                              choosingGroup)
+                      ? 'close'
+                      : 'back',
+                ),
               ),
               title: Text(
                 '${choosingGroup

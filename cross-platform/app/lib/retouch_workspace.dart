@@ -48,6 +48,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   String? job, error;
   String? notice;
   bool busy = true, stopped = false, manual = false, healMode = false;
+  bool exitRequested = false;
+  int operationEpoch = 0;
   int selected = 0, tab = 0, bodyTool = 0;
   double radius = .025;
   double targetX = .5, targetY = .5;
@@ -67,7 +69,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   String? faceParameter;
   String skinParameter = 'tone', bodyParameter = 'amount';
   int faceMode = 0, selectionBrush = 0;
-  Json? comparisonFrame, bodyStart, bodyComparisonBefore;
+  Json? comparisonFrame, bodyStart, bodyComparisonBefore, bodyFrameBefore;
   List<Json>? bodyUndoBefore, bodyRedoBefore;
   final viewport = TransformationController();
   String? atmosphere;
@@ -94,9 +96,99 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   final temporary = <String>{};
   bool get current =>
       mounted &&
+      !exitRequested &&
       widget.isCurrent() &&
       widget.state.session['logoutPending'] != true &&
       (widget.state.session['user']?['id'] as String? ?? '') == widget.owner;
+  bool operationCurrent(int epoch) => current && epoch == operationEpoch;
+  void cancelJob(String? id) {
+    if (id != null) {
+      unawaited(() async {
+        try {
+          await widget.state.core.cancel(id);
+        } catch (_) {}
+      }());
+    }
+  }
+
+  void cancelWorkspace({bool pop = true}) {
+    if (exitRequested) return;
+    final active = job;
+    job = null;
+    exitRequested = true;
+    operationEpoch++;
+    stopped = true;
+    clearPortraitOverlay();
+    cancelJob(active);
+    if (pop && mounted) Navigator.of(context).pop();
+  }
+
+  void cancelBusyBody() {
+    final before = bodyStart;
+    if (before == null) return;
+    final active = job;
+    job = null;
+    operationEpoch++;
+    clearPortraitOverlay();
+    cancelJob(active);
+    setState(() {
+      data = before;
+      frame = bodyFrameBefore;
+      undo
+        ..clear()
+        ..addAll(bodyUndoBefore ?? []);
+      redo
+        ..clear()
+        ..addAll(bodyRedoBefore ?? []);
+      scalarStart = scalarPending = null;
+      scalarKey = null;
+      scalarRunning = false;
+      scalarEnded = false;
+      scalarCancelled = true;
+      lightStart = null;
+      lightPending = null;
+      lightRunning = false;
+      lightCancelled = true;
+      points.clear();
+      bodyGestureArea = bodyGestureDraft = null;
+      originalGestureDown = null;
+      originalGestureLocal = null;
+      comparisonFrame = bodyComparisonBefore;
+      bodyComparisonBefore = null;
+      comparing = compareWanted = false;
+      if (bodyTabBefore != null) tab = bodyTabBefore!;
+      if (bodyOverlayBefore != null) showOverlay = bodyOverlayBefore!;
+      if (bodyViewportBefore != null) viewport.value = bodyViewportBefore!;
+      bodyStart = bodyFrameBefore = null;
+      bodyUndoBefore = bodyRedoBefore = null;
+      bodyTabBefore = null;
+      bodyOverlayBefore = null;
+      bodyViewportBefore = null;
+      busy = false;
+      stopped = false;
+      error = notice = null;
+      choosingGroup = true;
+    });
+    unawaited(refreshPortraitOverlay());
+  }
+
+  void requestExit() {
+    if (exitRequested) return;
+    if (bodyStart != null &&
+        (busy ||
+            scalarStart != null ||
+            lightStart != null ||
+            originalGestureDown != null)) {
+      cancelBusyBody();
+      return;
+    }
+    if (busy || scalarStart != null || lightStart != null || choosingGroup) {
+      cancelWorkspace();
+      return;
+    }
+    unawaited(originalGroups());
+  }
+
   Json get portrait => object(data?['portrait'] ?? {});
   List<Json> get faces =>
       (portrait['faces'] as List? ?? []).map(object).toList();
@@ -167,7 +259,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<Json> call(String op, Json value) async {
-    if (!current || stopped) throw const AppFailure('编辑计算已停止。');
+    final epoch = operationEpoch;
+    if (!operationCurrent(epoch) || stopped) throw const AppFailure('编辑计算已停止。');
     final id = 'retouch-${DateTime.now().microsecondsSinceEpoch}';
     job = id;
     try {
@@ -178,7 +271,9 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         if (tonePerFace != null) 'tonePerFace': tonePerFace,
         ...value,
       }, id);
-      if (!current || stopped) throw const AppFailure('编辑计算已停止。');
+      if (!operationCurrent(epoch) || stopped) {
+        throw const AppFailure('编辑计算已停止。');
+      }
       if (op.startsWith('media.retouch') &&
           (result['regionId'] as String? ?? '') != (widget.regionId ?? '')) {
         throw const AppFailure('人像编辑范围已变化，请重新打开。');
@@ -228,7 +323,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> load() async {
-    if (mounted) {
+    final epoch = operationEpoch;
+    if (operationCurrent(epoch)) {
       setState(() {
         busy = true;
         stopped = false;
@@ -240,7 +336,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         'localData': widget.recipe['localData'] ?? '',
       });
       final image = await render(next);
-      if (current) {
+      if (operationCurrent(epoch)) {
         setState(() {
           data = next;
           tonePerFace =
@@ -256,13 +352,13 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (operationCurrent(epoch)) setState(() => error = '$failure');
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (operationCurrent(epoch)) setState(() => busy = false);
     }
     if (!widget.patch &&
         !choosingGroup &&
-        current &&
+        operationCurrent(epoch) &&
         data != null &&
         faces.isEmpty) {
       unawaited(detectFaces());
@@ -270,10 +366,14 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> perform(String op, Json payload, {bool remember = true}) async {
-    if (remember && tonePreviewStart != null && !busy && current) {
+    final epoch = operationEpoch;
+    if (remember &&
+        tonePreviewStart != null &&
+        !busy &&
+        operationCurrent(epoch)) {
       await cancelTonePreview();
     }
-    if (busy || !current || data == null) return;
+    if (busy || !operationCurrent(epoch) || data == null) return;
     setState(() {
       busy = true;
       stopped = false;
@@ -287,11 +387,11 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       if (op == 'media.retouchAnalyze' &&
           payload['mode'] == 'face' &&
           (object(next['portrait'])['faces'] as List? ?? []).isEmpty) {
-        if (mounted) setState(() => notice = '未识别到清晰正脸，请手动添加。');
+        if (operationCurrent(epoch)) setState(() => notice = '未识别到清晰正脸，请手动添加。');
         return;
       }
       final image = await render(next);
-      if (current) {
+      if (operationCurrent(epoch)) {
         setState(() {
           if (remember) {
             undo.add(data!);
@@ -316,9 +416,11 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
-      if (mounted && !stopped) setState(() => error = '$failure');
+      if (operationCurrent(epoch) && !stopped) {
+        setState(() => error = '$failure');
+      }
     } finally {
-      if (mounted) {
+      if (operationCurrent(epoch)) {
         setState(() {
           busy = false;
           points.clear();
@@ -328,9 +430,14 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> history(bool forward) async {
-    if (tonePreviewStart != null && !busy && current) await cancelTonePreview();
+    final epoch = operationEpoch;
+    if (tonePreviewStart != null && !busy && operationCurrent(epoch)) {
+      await cancelTonePreview();
+    }
     final from = forward ? redo : undo, to = forward ? undo : redo;
-    if (busy || from.isEmpty || !current || data == null) return;
+    if (busy || from.isEmpty || !operationCurrent(epoch) || data == null) {
+      return;
+    }
     setState(() {
       busy = true;
       stopped = false;
@@ -339,7 +446,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     try {
       final next = from.last;
       final image = await render(next);
-      if (current) {
+      if (operationCurrent(epoch)) {
         setState(() {
           to.add(data!);
           from.removeLast();
@@ -353,9 +460,11 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
-      if (mounted && !stopped) setState(() => error = '$failure');
+      if (operationCurrent(epoch) && !stopped) {
+        setState(() => error = '$failure');
+      }
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (operationCurrent(epoch)) setState(() => busy = false);
     }
   }
 
@@ -537,7 +646,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> cancelTonePreview() async {
-    if (busy || !current || tonePreviewStart == null) return;
+    final epoch = operationEpoch;
+    if (busy || !operationCurrent(epoch) || tonePreviewStart == null) return;
     final before = tonePreviewStart!;
     setState(() {
       busy = true;
@@ -546,7 +656,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     });
     try {
       final image = await render(before);
-      if (current) {
+      if (operationCurrent(epoch)) {
         setState(() {
           data = before;
           frame = image;
@@ -556,9 +666,9 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         });
       }
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (operationCurrent(epoch)) setState(() => error = '$failure');
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (operationCurrent(epoch)) setState(() => busy = false);
     }
   }
 
@@ -598,6 +708,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> sampleTone(Offset at) async {
+    final epoch = operationEpoch;
     if (!photoSampling || !canEditTone || data == null) return;
     final local = data!['localData'], target = selected, perFace = tonePerFace;
     setState(() {
@@ -629,7 +740,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           (pixels.getUint8(i + 1) << 8) |
           pixels.getUint8(i + 2);
     } catch (failure) {
-      if (mounted && current) setState(() => error = '$failure');
+      if (operationCurrent(epoch)) setState(() => error = '$failure');
     } finally {
       image?.dispose();
       codec?.dispose();
@@ -637,7 +748,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         temporary.remove(path);
         await remove(path);
       }
-      if (mounted) {
+      if (operationCurrent(epoch)) {
         setState(() {
           busy = false;
           photoSampling = false;
@@ -645,7 +756,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       }
     }
     if (rgb != null &&
-        current &&
+        operationCurrent(epoch) &&
         data?['localData'] == local &&
         selected == target &&
         tonePerFace == perFace) {
