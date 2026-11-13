@@ -11,6 +11,7 @@ on:
           - full
           - native-diagnostic
           - portrait-pixels
+          - portrait-geometry
 permissions:
   contents: read
 concurrency:
@@ -18,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   apple-app:
-    if: inputs.verification != 'portrait-pixels'
+    if: inputs.verification != 'portrait-pixels' && inputs.verification != 'portrait-geometry'
     runs-on: macos-26
     timeout-minutes: 75
     steps:
@@ -106,4 +107,21 @@ jobs:
         with:
           name: huevia-portrait-pixels-diagnostic
           path: cross-platform/.build/mobile-apple/portrait-pixels.log
+          retention-days: 7
+  portrait-geometry:
+    if: inputs.verification == 'portrait-geometry'
+    runs-on: macos-26
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Compare actual host and simulator Vision landmark coordinates
+        run: bash cross-platform/tool/portrait_geometry_apple.sh
+      - name: Preserve geometry diagnosis without an IPA
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: huevia-portrait-geometry-diagnostic
+          path: |
+            .tooling/retouch-migration/portrait-geometry-probe/*.json
+            .tooling/retouch-migration/portrait-geometry-probe/*.log
           retention-days: 7
