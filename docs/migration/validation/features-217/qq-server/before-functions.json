@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-11-13T12:16:29.401Z",
+  "mode": "read-only",
+  "functions": [
+    {
+      "name": "nikon-preset-library",
+      "status": "Active",
+      "modTime": "2026-11-13 19:33:46",
+      "previousModTime": "2026-11-13 19:33:46",
+      "modTimeMatches": true,
+      "configurationMatches": true,
+      "sha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a",
+      "previousSha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a",
+      "codeMatches": true,
+      "bytes": 30588704
+    },
+    {
+      "name": "huevia-data-backup",
+      "status": "Active",
+      "modTime": "2026-11-13 19:36:55",
+      "previousModTime": "2026-11-13 19:36:55",
+      "modTimeMatches": true,
+      "configurationMatches": true,
+      "sha256": "45ffbc6a70086a7848d26418bc575548b25e7331b20e21f82c09c096c83f3504",
+      "previousSha256": "45ffbc6a70086a7848d26418bc575548b25e7331b20e21f82c09c096c83f3504",
+      "codeMatches": true,
+      "bytes": 282715
+    }
+  ],
+  "readyForNarrowQqPatch": true
+}

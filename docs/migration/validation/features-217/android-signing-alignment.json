@@ -1,0 +1,190 @@
+[
+  {
+    "abi": "arm64",
+    "sha256": "fd4e71c85defaab977956b7a747f6ad084d4979e768b1340cf54f24275e3bfad",
+    "bytes": 52657970,
+    "apksignerVerified": true,
+    "zipalign16KiBVerified": true,
+    "allLoadSegments16KiBVerified": true,
+    "libraries": [
+      {
+        "file": "lib/arm64-v8a/libapp.so",
+        "loadAlignments": [
+          65536,
+          65536,
+          65536
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 1015808
+      },
+      {
+        "file": "lib/arm64-v8a/libc++_shared.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 10076160
+      },
+      {
+        "file": "lib/arm64-v8a/libdartjni.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 11337728
+      },
+      {
+        "file": "lib/arm64-v8a/libdatastore_shared_counter.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 11485184
+      },
+      {
+        "file": "lib/arm64-v8a/libflutter.so",
+        "loadAlignments": [
+          65536,
+          65536,
+          65536
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 11501568
+      },
+      {
+        "file": "lib/arm64-v8a/libhuevia_raw.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 23265280
+      },
+      {
+        "file": "lib/arm64-v8a/libraw.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 23330816
+      },
+      {
+        "file": "lib/arm64-v8a/libtensorflowlite_jni.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 24543232
+      }
+    ]
+  },
+  {
+    "abi": "x64",
+    "sha256": "bd387ea95a4388a9c66da7f21ab02aa8513bc4d35eae7e2c4f33fc79fdf2b0e3",
+    "bytes": 56094938,
+    "apksignerVerified": true,
+    "zipalign16KiBVerified": true,
+    "allLoadSegments16KiBVerified": true,
+    "libraries": [
+      {
+        "file": "lib/x86_64/libapp.so",
+        "loadAlignments": [
+          65536,
+          65536,
+          65536
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 1015808
+      },
+      {
+        "file": "lib/x86_64/libc++_shared.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 10403840
+      },
+      {
+        "file": "lib/x86_64/libdartjni.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 11649024
+      },
+      {
+        "file": "lib/x86_64/libdatastore_shared_counter.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 11780096
+      },
+      {
+        "file": "lib/x86_64/libflutter.so",
+        "loadAlignments": [
+          65536,
+          65536,
+          65536
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 11796480
+      },
+      {
+        "file": "lib/x86_64/libhuevia_raw.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 24887296
+      },
+      {
+        "file": "lib/x86_64/libraw.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 24952832
+      },
+      {
+        "file": "lib/x86_64/libtensorflowlite_jni.so",
+        "loadAlignments": [
+          16384,
+          16384,
+          16384
+        ],
+        "uncompressed": true,
+        "zipDataOffset": 26247168
+      }
+    ]
+  }
+]

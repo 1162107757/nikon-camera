@@ -1,0 +1,4 @@
+2026-11-13T12:18:18.7713770Z WIFI_STAGE cancellable-authorization-wait
+2026-11-13T12:18:18.7714990Z WIFI_STAGE cancelled-before-connect
+2026-11-13T12:18:18.7715970Z WIFI_STAGE echo-connect
+2026-11-13T12:18:18.7720200Z PASS 34 Apple Wi-Fi stream checks; exact bytes, offsets, segmented reads, timeout, refusal and concurrent close

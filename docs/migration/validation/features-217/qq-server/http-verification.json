@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-11-13T12:20:54.568Z",
+  "scope": "six bounded unauthenticated probes; no real user token or credentials",
+  "probes": [
+    {
+      "name": "ordinary-registration-still-needs-captcha",
+      "path": "/auth/register",
+      "status": 428,
+      "code": "CHALLENGE_REQUIRED",
+      "issuedSession": false,
+      "passed": true
+    },
+    {
+      "name": "QQ-rejects-malformed-token",
+      "path": "/auth/qq",
+      "status": 400,
+      "code": "qq_invalid_token",
+      "issuedSession": false,
+      "passed": true
+    },
+    {
+      "name": "QQ-rejects-non-user-invalid-provider-token",
+      "path": "/auth/qq",
+      "status": 401,
+      "code": "qq_verification_failed",
+      "issuedSession": false,
+      "passed": true
+    },
+    {
+      "name": "admin-releases-remain-private",
+      "path": "/api/releases",
+      "status": 401,
+      "passed": true
+    },
+    {
+      "name": "admin-100MiB-preserved",
+      "path": "/preset-library/admin/releases.js",
+      "status": 200,
+      "sha256": "596b41fa748ffc1a35f4b4cbd6fdf60f9c4325aaab17be0f613f62a1a293b300",
+      "passed": true
+    },
+    {
+      "name": "download-100MiB-preserved",
+      "path": "/preset-library/download/download.js",
+      "status": 200,
+      "sha256": "fa5f6df980dc5e36d53a16f05a9947442f964766d69b2fa6287375278a633002",
+      "passed": true
+    }
+  ],
+  "createdAccount": false,
+  "authenticatedSessionReceived": false,
+  "passed": true,
+  "positiveRealQqLoginVerified": false
+}

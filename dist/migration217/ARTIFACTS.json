@@ -1,0 +1,98 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+  "androidReleaseRuntimeChecks": 78,
+  "sharedCoreBoundaryChecks": 1417,
+  "atmosphereChecks": 6,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-217-android-arm64.apk",
+      "platform": "android",
+      "abi": "arm64-v8a",
+      "bytes": 52657970,
+      "sha256": "fd4e71c85defaab977956b7a747f6ad084d4979e768b1340cf54f24275e3bfad",
+      "versionName": "0.31.0-dev",
+      "versionCode": 217,
+      "package": "cc.huevia.next",
+      "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-217-android-x64.apk",
+      "platform": "android",
+      "abi": "x86_64",
+      "bytes": 56094938,
+      "sha256": "bd387ea95a4388a9c66da7f21ab02aa8513bc4d35eae7e2c4f33fc79fdf2b0e3",
+      "versionName": "0.31.0-dev",
+      "versionCode": 217,
+      "package": "cc.huevia.next",
+      "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-217-ios-unsigned.ipa",
+      "platform": "ios",
+      "abi": "arm64",
+      "bytes": 64865047,
+      "sha256": "59fdb115d37ceb75fdbf729806fc9ad6b5dc3a8b08007fb2ece110a6513826cb",
+      "versionName": "0.31.0",
+      "versionCode": 217,
+      "package": "cc.huevia.next",
+      "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+      "unsigned": true,
+      "minimumOS": "16.0",
+      "deviceInstallationVerified": false,
+      "fullParityComplete": false,
+      "acceptedForLocalSelfSignedTesting": true
+    }
+  ],
+  "ios": {
+    "state": "final-full-acceptance-passed",
+    "run": 43423048624,
+    "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+    "acceptedIpa": true,
+    "flutterTestsPassed": 404,
+    "sharedCoreBoundaryChecks": 1417,
+    "atmosphereChecks": 6,
+    "goldenBoundaryChecks": 1423,
+    "sharedCoreParityPassed": true,
+    "nativeScenariosPassed": 1,
+    "photoKitXCTestPassed": true,
+    "photoKitXCTestCount": 1,
+    "appleWifiStreamChecks": 34,
+    "independentIpaVerificationPassed": true,
+    "changesFromAndroidSource": [],
+    "independentVerification": "../../docs/migration/validation/features-217/apple/independent-verification.json"
+  },
+  "acceptedForDelivery": true,
+  "iosCamera": {
+    "reportedModel": "Nikon Z6II",
+    "transport": "Wi-Fi",
+    "boundedCancellationAndProgressImplemented": true,
+    "actualDeviceConnectionVerified": false
+  },
+  "qqLogin": {
+    "imageCaptchaRemovedFromClientAndSharedCore": true,
+    "serverPatchPrepared": true,
+    "serverDeployment": "deployed-and-verified",
+    "nativeTencentAuthorizationVerified": false,
+    "iosUniversalLinkConfigured": false,
+    "serverHttpProbesPassed": 6,
+    "serverEvidence": "../../docs/migration/validation/features-217/qq-server/result.json",
+    "serverEvidenceSha256": "3fb1900a511eb61d0c98a14bcef7ec13d750478eafa63dfab159400e73fe29d4"
+  },
+  "androidUiGate": {
+    "state": "installed-qq-page-verified",
+    "emulator": "emulator-5584",
+    "api": 31,
+    "pageSize": 4096,
+    "previousEditorUiEvidence": "../migration216/ARTIFACTS.json"
+  }
+}

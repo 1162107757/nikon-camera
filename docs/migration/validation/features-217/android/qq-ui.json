@@ -1,0 +1,73 @@
+{
+  "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+  "installedApkSha256": "bd387ea95a4388a9c66da7f21ab02aa8513bc4d35eae7e2c4f33fc79fdf2b0e3",
+  "emulator": "emulator-5584",
+  "api": 31,
+  "pageSize": 4096,
+  "imageCaptchaAbsent": true,
+  "qqConsentAndAuthorizationButtonPresent": true,
+  "consentRequiredBeforeAuthorization": true,
+  "validationErrorDoesNotFetchOrDisplayCaptcha": true,
+  "nativeTencentAuthorizationVerified": false,
+  "actualUserLoginPerformed": false,
+  "initialLabels": [
+    [
+      "返回",
+      "[21,84][147,210]"
+    ],
+    [
+      "QQ 快捷登录",
+      "[147,119][1038,175]"
+    ],
+    [
+      "使用 QQ 账号继续",
+      "[63,284][1017,365]"
+    ],
+    [
+      "授权时将打开 QQ。腾讯提供的账号身份、昵称和头像用于创建或登录 Huevia 账号。授权凭据仅用于服务端核验，不保存为本机登录密码。取消授权后仍可使用游客功能。",
+      "[63,407][1017,541]"
+    ],
+    [
+      "我已阅读并同意以上 QQ 登录说明",
+      "[63,604][1017,751]"
+    ],
+    [
+      "同意并打开 QQ",
+      "[63,751][1017,877]"
+    ]
+  ],
+  "afterMissingConsent": [
+    [
+      "返回",
+      "[21,84][147,210]"
+    ],
+    [
+      "QQ 快捷登录",
+      "[147,119][1038,175]"
+    ],
+    [
+      "使用 QQ 账号继续",
+      "[63,284][1017,365]"
+    ],
+    [
+      "授权时将打开 QQ。腾讯提供的账号身份、昵称和头像用于创建或登录 Huevia 账号。授权凭据仅用于服务端核验，不保存为本机登录密码。取消授权后仍可使用游客功能。",
+      "[63,407][1017,541]"
+    ],
+    [
+      "我已阅读并同意以上 QQ 登录说明",
+      "[63,604][1017,751]"
+    ],
+    [
+      "请阅读并同意 QQ 登录说明。",
+      "[63,751][1017,837]"
+    ],
+    [
+      "同意并打开 QQ",
+      "[63,837][1017,963]"
+    ]
+  ],
+  "screenshots": [
+    "ui/qq-login-no-captcha.png",
+    "ui/qq-consent-validation-no-captcha.png"
+  ]
+}

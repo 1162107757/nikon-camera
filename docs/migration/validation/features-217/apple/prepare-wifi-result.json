@@ -1,0 +1,19 @@
+{
+  "run": 43423048624,
+  "jobId": 131877524449,
+  "jobName": "apple-app",
+  "jobConclusion": "success",
+  "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+  "checksPassed": 34,
+  "step": "bash cross-platform/tool/mobile_apple.sh prepare",
+  "source": "Complete GitHub Actions job log, read through the existing authenticated read-only helper after the run completed",
+  "fullJobLogSha256": "efe6c9079aaaece3b791fb09bdcd185ebec7ebcc4a6263cdf0fc1bcf364fe9f4",
+  "originalLineNumbers": [269, 270, 271, 272],
+  "excerpt": "prepare-wifi-excerpt.log",
+  "originalArtifactIncludedWifiLog": false,
+  "realCameraConnectionVerified": false,
+  "notes": [
+    "PASS count is copied from the actual prepare step output, not inferred from source or another run.",
+    "These bounded stream and cancellation checks do not verify a real Nikon Z6II or iPhone connection."
+  ]
+}

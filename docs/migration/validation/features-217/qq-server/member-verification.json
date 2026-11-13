@@ -1,0 +1,12 @@
+{
+  "verifiedAt": "2026-11-13T12:19:29.987622+00:00",
+  "members": 51,
+  "payloadMatchesCandidate": true,
+  "unixModesMatchCandidate": true,
+  "changedMembersFromBefore": [
+    "server/app.mjs"
+  ],
+  "appSha256": "0f29c4ed8382a26ff533632375cd09103a9a6fef7ec1be8900a9c7f2f80b6363",
+  "zipMetadataMayDiffer": true,
+  "allOtherPayloadsMatch100MiBBaseline": true
+}

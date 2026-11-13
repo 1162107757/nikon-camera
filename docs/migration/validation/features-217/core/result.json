@@ -1,0 +1,35 @@
+{
+  "exit": 0,
+  "status": "passed",
+  "javaVersion": "17.0.19",
+  "javaRuntime": "Java HotSpot(TM) 64-Bit Server VM 17.0.19+9-LTS-183",
+  "javaHome": "D:\\dev\\Java\\jdk-17.0.19",
+  "command": [
+    "python",
+    "cross-platform/tool/core_check.py"
+  ],
+  "compiledRelease": 11,
+  "baseCommitAtCheck": "cf8e62a9737d370b1f4e273b92b2331f6da12f36",
+  "includesUncommitted217QqPatch": true,
+  "sharedBoundaryChecks": 1417,
+  "sharedAtmosphereChecks": 6,
+  "goldenBoundaryChecks": 1423,
+  "qqLoginBoundaryChecks": 32,
+  "registrationBoundaryChecks": 20,
+  "profileBoundaryChecks": 43,
+  "goldenSha256": "b5fdcc0ac1b3fb958d98bd9d2c68a4e288c39e36a4b1f4d3b225e5d5436cc923",
+  "sourceManifestSha256": "e632f37c5d843edc5d60d9318bc63bf8e9c5faf5841f3d9f36e22002d0d9631a",
+  "sourceFingerprintsSha256": "493a53b9d024c216c3a9a7b339034bf90304e230132053a0a5cd3c555f1d5aa2",
+  "compiledSourceCount": 251,
+  "distinctSourceCount": 238,
+  "renderFingerprintsMatch216": true,
+  "goldenBoundaryDeltaFrom216": 32,
+  "generatedAtUtc": "2026-11-13T12:06:02.992210+00:00",
+  "productionDeploymentPerformed": false,
+  "accountProviderLoginOnDeviceVerified": false,
+  "notes": [
+    "Only the new QQ image-challenge requirement was removed; OAuth verification and source/installation limits remain.",
+    "Original password registration and profile transport/header boundary checks passed.",
+    "216 archived golden is unchanged and was only read for fingerprint comparison."
+  ]
+}

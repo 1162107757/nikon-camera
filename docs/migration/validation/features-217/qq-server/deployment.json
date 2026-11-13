@@ -1,0 +1,21 @@
+{
+  "scope": "QQ captcha requirement only",
+  "functionName": "nikon-preset-library",
+  "startedAt": "2026-11-13T12:18:18.445Z",
+  "mutationAttempted": true,
+  "configurationChanges": false,
+  "databaseChanges": false,
+  "iamChanges": false,
+  "backupFunctionMutation": false,
+  "beforeModTime": "2026-11-13 19:33:46",
+  "rollbackSha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a",
+  "uploadedSha256": "673c546c4285202912f58588cdf086c160faeea806f6b5ef0e9374ecbece0e96",
+  "phase": "deployed-awaiting-member-and-HTTP-verification",
+  "status": "Active",
+  "afterModTime": "2026-11-13 20:18:43",
+  "configurationPreserved": true,
+  "backupFunctionUnchanged": true,
+  "readbackSha256": "ea39d47db46c111cf1309d86e9ce07f513417806c6c4d56c3df9c7da6971392b",
+  "readbackBytes": 30588639,
+  "finishedAt": "2026-11-13T12:19:01.324Z"
+}

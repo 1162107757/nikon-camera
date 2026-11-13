@@ -1,0 +1,11 @@
+{
+  "run": 43423048624,
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43423048624",
+  "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+  "conclusion": "success",
+  "flutterTestsPassed": 404,
+  "photoKitXCTestPassed": true,
+  "nativeScenariosPassed": 1,
+  "androidSourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+  "changesFromAndroidSource": []
+}

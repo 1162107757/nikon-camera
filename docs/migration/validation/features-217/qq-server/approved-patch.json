@@ -1,0 +1,25 @@
+{
+  "members": 51,
+  "changedMembers": [
+    "server/app.mjs"
+  ],
+  "preservedUnixModes": true,
+  "rollback": {
+    "file": "production-100mib-before-qq.zip",
+    "bytes": 30588704,
+    "sha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a"
+  },
+  "candidate": {
+    "file": "production-100mib-qq217-candidate.zip",
+    "bytes": 30588635,
+    "sha256": "673c546c4285202912f58588cdf086c160faeea806f6b5ef0e9374ecbece0e96"
+  },
+  "appBeforeSha256": "06063b3a06ded0864bf7251f139f6eeb3163dae4b466bda8f4b6ac527512db8a",
+  "appAfterSha256": "0f29c4ed8382a26ff533632375cd09103a9a6fef7ec1be8900a9c7f2f80b6363",
+  "removedStatement": "await challenge.consume(req, body, 'qq_register');",
+  "productionAppEqualsTestedLocalApp": true,
+  "preservesCurrent100MiBLegacyApkPolicy": true,
+  "databaseChanges": false,
+  "configurationChanges": false,
+  "scope": "approved QQ-only patch deployed; server/app.mjs one-line removal"
+}

@@ -1,0 +1,53 @@
+{
+  "status": "deployed-and-verified",
+  "scope": "QQ first-account application image captcha only",
+  "authorization": "User replied 都更新吧 to the explicitly scoped QQ interface and local-test package update; not a store, update-manifest, IAM or SQL release approval.",
+  "functionName": "nikon-preset-library",
+  "functionStatus": "Active",
+  "finishedAtUtc": "2026-11-13T12:19:01.324Z",
+  "changedMembers": [
+    "server/app.mjs"
+  ],
+  "removedStatement": "await challenge.consume(req, body, 'qq_register');",
+  "members": 51,
+  "candidateSha256": "673c546c4285202912f58588cdf086c160faeea806f6b5ef0e9374ecbece0e96",
+  "readbackZipSha256": "ea39d47db46c111cf1309d86e9ce07f513417806c6c4d56c3df9c7da6971392b",
+  "appSha256": "0f29c4ed8382a26ff533632375cd09103a9a6fef7ec1be8900a9c7f2f80b6363",
+  "rollbackSha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a",
+  "payloadMatchesApprovedCandidate": true,
+  "other100MiBPayloadsUnchanged": true,
+  "unixModesPreserved": true,
+  "functionConfigurationPreserved": true,
+  "backupFunctionUnchanged": true,
+  "databaseChanged": false,
+  "iamChanged": false,
+  "updateDistributionDeployed": false,
+  "packagePublished": false,
+  "httpProbesPassed": 6,
+  "realQqTokenUsed": false,
+  "accountCreated": false,
+  "positiveRealQqLoginVerified": false,
+  "localRegression": {
+    "nodeVersion": "20.20.2",
+    "serverTestFiles": 42,
+    "serverTests": 241,
+    "passed": 234,
+    "failed": 0,
+    "skippedSignedApkFixtures": 7,
+    "authTestsPassed": 48
+  },
+  "limitations": [
+    "Native QQ Android registration not verified on device.",
+    "iOS QQ Universal Link remains unconfigured.",
+    "No real-user QQ login was attempted; provider-token rejection and code readback do not establish successful device OAuth."
+  ],
+  "files": {
+    "approved-patch.json": "35419e38f2b24a3ec5fe51f9ba3d7f94b3d4f12ae55512b3aeb03f789d467563",
+    "before-functions.json": "2a96271e91c7fe5b08d33f217e1407ef5ca9c130f39b17f1990a8f674435ecd9",
+    "deployment.json": "7a7b717702f05e86e2cab273551541ec5ea5adcb0ec1230501f0be634d1d82e5",
+    "http-attempts.json": "809223adf37f57f728a80c884951a04d875a0d600c2b0bd178bf8e4d6d865e43",
+    "http-verification.json": "9f985259ae99c877da07af529827d17ced45df3800ac27014d31fef79ba0e940",
+    "member-verification.json": "268b4f548d8c2cd20a73fe41536e240d65d3ec42a04242d8322a39439956fbfc",
+    "rollback.json": "5313fa126839346beb9d500bfff2ddb9484dde61b0ed31bf03c3c5325dcb1949"
+  }
+}

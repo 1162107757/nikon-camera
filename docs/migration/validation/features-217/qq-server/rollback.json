@@ -1,0 +1,11 @@
+{
+  "functionName": "nikon-preset-library",
+  "retainedPrivateFile": ".tooling/qq217/production-100mib-before-qq.zip",
+  "bytes": 30588704,
+  "sha256": "5a91eeaacb1d8ba8967fca3f9148ad40c641e8bfcfb9d5e91a4ff17c4b98853a",
+  "restores": "100 MiB production payload before QQ change; QQ first-account captcha restored",
+  "configurationChangeRequired": false,
+  "backupFunctionChangeRequired": false,
+  "performed": false,
+  "precondition": "Re-read live ModTime and code; if changed since this deployment, reconcile instead of overwriting later work."
+}
