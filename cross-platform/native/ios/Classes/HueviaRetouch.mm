@@ -18,6 +18,22 @@ NSString *json(id value){NSData *data=[NSJSONSerialization dataWithJSONObject:va
 NSDictionary *decoded(NSString *s){NSDictionary *v=[NSJSONSerialization JSONObjectWithData:[s dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(![v isKindOfClass:NSDictionary.class])fail(@"编辑结果无效。");return v;}
 void run(VNRequest *request,CGImageRef image,HueviaTask *task){check(task);NSError *error=nil;VNImageRequestHandler *handler=[[VNImageRequestHandler alloc] initWithCGImage:image options:@{}];if(![handler performRequests:@[request] error:&error])fail(error.localizedDescription?:@"人物识别未完成，请重试。");check(task);}
 NSArray *channelMeans(HueviaRaster *image,int firstRow,int rows){uint64_t sums[4]={0,0,0,0};for(int y=firstRow;y<firstRow+rows;y++)for(int x=0;x<image.pixelWidth;x++){uint32_t p=image.pixels[y*image.pixelWidth+x];for(int c=0;c<4;c++)sums[c]+=(p>>(24-c*8))&255;}double count=double(image.pixelWidth)*rows;return @[@(sums[0]/count),@(sums[1]/count),@(sums[2]/count),@(sums[3]/count)];}
+NSDictionary *eyeMeans(VNFaceLandmarkRegion2D *region,CGRect box,HueviaRaster *image){
+  NSUInteger count=region.pointCount;const CGPoint *normalized=region.normalizedPoints;CGPoint mean=CGPointZero;
+  if(!count||!normalized)return @{@"pointCount":@(count),@"available":@NO};
+  for(NSUInteger i=0;i<count;i++){mean.x+=normalized[i].x;mean.y+=normalized[i].y;}mean.x/=count;mean.y/=count;
+  // Capture the normalized mean before requesting the separately owned image buffer.
+  CGPoint manual=CGPointMake((box.origin.x+mean.x*box.size.width)*image.pixelWidth,(1-box.origin.y-mean.y*box.size.height)*image.pixelHeight);
+  const CGPoint *absolute=[region pointsInImageOfSize:CGSizeMake(image.pixelWidth,image.pixelHeight)];CGPoint native=CGPointZero;
+  if(!absolute)return @{@"pointCount":@(count),@"available":@NO};for(NSUInteger i=0;i<count;i++){native.x+=absolute[i].x;native.y+=absolute[i].y;}native.x/=count;native.y/=count;
+  return @{@"pointCount":@(count),@"normalizedMean":@[@(mean.x),@(mean.y)],@"manualTopMean":@[@(manual.x),@(manual.y)],@"nativeImageMean":@[@(native.x),@(native.y)],@"nativeTopMean":@[@(native.x),@(image.pixelHeight-native.y)]};
+}
+NSMutableDictionary *candidate(HueviaRaster *image,double cx,double cy,double rx,double ry,double roll,NSString *source){
+  if(!std::isfinite(cx)||!std::isfinite(cy)||!std::isfinite(rx)||!std::isfinite(ry)||!std::isfinite(roll)||cx<0||cx>1||cy<0||cy>1||rx<=0||rx>1||ry<=0||ry>1||roll< -180||roll>180)return nil;
+  int x=std::clamp(int(cx*image.pixelWidth),0,image.pixelWidth-1),y=std::clamp(int(cy*image.pixelHeight),0,image.pixelHeight-1);uint32_t color=image.pixels[y*image.pixelWidth+x];
+  return [@{@"cx":@(cx),@"cy":@(cy),@"rx":@(rx),@"ry":@(ry),@"roll":@(roll),@"skinR":@((color>>16)&255),@"skinG":@((color>>8)&255),@"skinB":@(color&255),@"candidateSource":source} mutableCopy];
+}
+NSDictionary *candidateFrame(NSDictionary *face,HueviaRaster *image){double rx=[face[@"rx"] doubleValue]*image.pixelWidth,ry=[face[@"ry"] doubleValue]*image.pixelHeight;return @{@"cx":face[@"cx"],@"cy":face[@"cy"],@"rx":face[@"rx"],@"ry":face[@"ry"],@"roll":face[@"roll"],@"source":face[@"candidateSource"]?:@"vision-eyes",@"cropSidePixels":@(3.5*std::max(rx,ry)),@"cropShiftPixels":@(-.30*rx/.95)};}
 }
 @implementation HueviaRetouch
 + (NSDictionary *)request:(NSString *)operation payload:(NSDictionary *)p image:(HueviaRaster *)image task:(HueviaTask *)task {
@@ -34,21 +50,49 @@ NSArray *channelMeans(HueviaRaster *image,int firstRow,int rows){uint64_t sums[4
     return decoded([CcHueviaSharedSharedRetouch patchWithNSString:input withIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withJavaUtilFunctionBooleanSupplier:task]);
   }
   if(![operation isEqual:@"media.retouchAnalyze"])fail(@"未知的人像操作。");
+  if([p[@"mode"] isEqual:@"autoBlemish"]||([p[@"mode"] isEqual:@"overlay"]||[p[@"mode"] isEqual:@"hitFace"]))return [HueviaPortraitInference analyze:p candidates:@[] image:image task:task];
+  if([p[@"mode"] isEqual:@"faceBody"]){if([p[@"engine"] isEqual:@"system"])fail(@"逐人全身皮肤需要原版语义模型，请切换分析引擎。");return [HueviaPortraitInference analyze:p candidates:@[] image:image task:task];}
   CGImageRef cg=[image newImage];if(!cg)fail(@"无法创建人物分析图片。");
   @try {
     if(![p[@"engine"] isEqual:@"system"]){
-      VNDetectFaceLandmarksRequest *request=[VNDetectFaceLandmarksRequest new];run(request,cg,task);NSMutableArray *proposals=[NSMutableArray array];
+      VNDetectFaceLandmarksRequest *request=[VNDetectFaceLandmarksRequest new];run(request,cg,task);
+      NSMutableArray *proposals=[NSMutableArray array];
       BOOL diagnose=[p[@"diagnostics"] isKindOfClass:NSNumber.class]&&[p[@"diagnostics"] boolValue];
-      NSUInteger lowConfidence=0,missingEyes=0,smallEyes=0,outsideFrame=0;NSMutableArray *confidenceSamples=[NSMutableArray array];
+      NSUInteger lowConfidence=0,missingEyes=0,smallEyes=0,outsideFrame=0;
+      NSMutableArray *confidenceSamples=[NSMutableArray array],*eyeGeometry=[NSMutableArray array];
       for(VNFaceObservation *observation in request.results){
-        if(proposals.count>=12)break;if(diagnose&&confidenceSamples.count<12)[confidenceSamples addObject:@(observation.confidence)];if(observation.confidence<.4){lowConfidence++;continue;}VNFaceLandmarkRegion2D *leftEye=observation.landmarks.leftEye,*rightEye=observation.landmarks.rightEye;if(!leftEye.pointCount||!rightEye.pointCount){missingEyes++;continue;}
-        CGRect box=observation.boundingBox;auto center=[&](VNFaceLandmarkRegion2D *region){CGPoint p=CGPointZero;for(NSUInteger i=0;i<region.pointCount;i++){p.x+=region.normalizedPoints[i].x;p.y+=region.normalizedPoints[i].y;}p.x/=region.pointCount;p.y/=region.pointCount;return CGPointMake((box.origin.x+p.x*box.size.width)*image.pixelWidth,(1-box.origin.y-p.y*box.size.height)*image.pixelHeight);};
-        CGPoint a=center(leftEye),b=center(rightEye);if(a.x>b.x)std::swap(a,b);double distance=std::hypot(b.x-a.x,b.y-a.y);if(distance<5){smallEyes++;continue;}double roll=std::atan2(b.y-a.y,b.x-a.x),cx=((a.x+b.x)*.5-std::sin(roll)*distance*.55)/image.pixelWidth,cy=((a.y+b.y)*.5+std::cos(roll)*distance*.55)/image.pixelHeight;if(cx<0||cx>1||cy<0||cy>1){outsideFrame++;continue;}
-        int x=std::clamp(int(cx*image.pixelWidth),0,image.pixelWidth-1),y=std::clamp(int(cy*image.pixelHeight),0,image.pixelHeight-1);uint32_t c=image.pixels[y*image.pixelWidth+x];
-        [proposals addObject:@{@"cx":@(cx),@"cy":@(cy),@"rx":@(std::min(.5,.95*distance/image.pixelWidth)),@"ry":@(std::min(.5,1.35*distance/image.pixelHeight)),@"roll":@(roll*180/M_PI),@"skinR":@((c>>16)&255),@"skinG":@((c>>8)&255),@"skinB":@(c&255)}];
+        // One slot belongs to one real observation, not to each attempted crop.
+        if(proposals.count>=12)break;
+        if(diagnose&&confidenceSamples.count<12)[confidenceSamples addObject:@(observation.confidence)];
+        if(observation.confidence<.4){lowConfidence++;continue;}
+        CGRect box=observation.boundingBox;
+        double boxRoll=observation.roll?-observation.roll.doubleValue*180/M_PI:0;
+        NSMutableDictionary *bbox=candidate(image,CGRectGetMidX(box),1-CGRectGetMidY(box),box.size.width*.5,box.size.height*.5,boxRoll,@"vision-bbox");
+        VNFaceLandmarkRegion2D *leftEye=observation.landmarks.leftEye,*rightEye=observation.landmarks.rightEye;
+        NSMutableDictionary *primary=nil;
+        if(leftEye.pointCount&&rightEye.pointCount){
+          auto center=[&](VNFaceLandmarkRegion2D *region){CGPoint mean=CGPointZero;const CGPoint *points=region.normalizedPoints;NSUInteger count=region.pointCount;for(NSUInteger i=0;i<count;i++){mean.x+=points[i].x;mean.y+=points[i].y;}mean.x/=count;mean.y/=count;return CGPointMake((box.origin.x+mean.x*box.size.width)*image.pixelWidth,(1-box.origin.y-mean.y*box.size.height)*image.pixelHeight);};
+          CGPoint a=center(leftEye),b=center(rightEye);
+          if(diagnose)[eyeGeometry addObject:@{@"bbox":@[@(box.origin.x),@(box.origin.y),@(box.size.width),@(box.size.height)],@"observationRoll":observation.roll?:NSNull.null,@"leftEye":eyeMeans(leftEye,box,image),@"rightEye":eyeMeans(rightEye,box,image),@"currentLeftTopMean":@[@(a.x),@(a.y)],@"currentRightTopMean":@[@(b.x),@(b.y)]}];
+          if(a.x>b.x)std::swap(a,b);
+          double distance=std::hypot(b.x-a.x,b.y-a.y);
+          if(distance<5)smallEyes++;
+          else {
+            double roll=std::atan2(b.y-a.y,b.x-a.x),cx=((a.x+b.x)*.5-std::sin(roll)*distance*.55)/image.pixelWidth,cy=((a.y+b.y)*.5+std::cos(roll)*distance*.55)/image.pixelHeight;
+            primary=candidate(image,cx,cy,std::min(.5,.95*distance/image.pixelWidth),std::min(.5,1.35*distance/image.pixelHeight),roll*180/M_PI,@"vision-eyes");
+            if(!primary)outsideFrame++;
+          }
+        }else missingEyes++;
+        if(primary){if(bbox)primary[@"bboxFallback"]=bbox;[proposals addObject:primary];}
+        else if(bbox)[proposals addObject:bbox];
       }
       NSMutableDictionary *parameters=[p mutableCopy];
-      if(diagnose){NSMutableArray *frames=[NSMutableArray array];for(NSDictionary *face in proposals){double rx=[face[@"rx"] doubleValue]*image.pixelWidth,ry=[face[@"ry"] doubleValue]*image.pixelHeight;[frames addObject:@{@"cx":face[@"cx"],@"cy":face[@"cy"],@"rx":face[@"rx"],@"ry":face[@"ry"],@"roll":face[@"roll"],@"cropSidePixels":@(3.5*std::max(rx,ry)),@"cropShiftPixels":@(-.30*rx/.95)}];}NSDictionary *details=@{@"imageWidth":@(image.pixelWidth),@"imageHeight":@(image.pixelHeight),@"imageOrientation":@(image.orientation),@"bitmapInfo":@((NSUInteger)CGImageGetBitmapInfo(cg)),@"visionFaceCount":@(request.results.count),@"visionConfidence":confidenceSamples,@"lowConfidence":@(lowConfidence),@"missingEyes":@(missingEyes),@"smallEyes":@(smallEyes),@"outsideFrame":@(outsideFrame),@"proposalCount":@(proposals.count),@"proposalFrames":frames,@"rasterMeanARGB":channelMeans(image,0,image.pixelHeight),@"rasterFirstRowMeanARGB":channelMeans(image,0,1),@"rasterLastRowMeanARGB":channelMeans(image,image.pixelHeight-1,1)};parameters[@"_visionDiagnostics"]=details;NSLog(@"HueviaRetouch stages %@",details);}
+      if(diagnose){
+        NSMutableArray *frames=[NSMutableArray array];
+        for(NSDictionary *face in proposals){NSMutableDictionary *frame=[candidateFrame(face,image) mutableCopy];if(face[@"bboxFallback"])frame[@"fallback"]=candidateFrame(face[@"bboxFallback"],image);[frames addObject:frame];}
+        NSDictionary *details=@{@"imageWidth":@(image.pixelWidth),@"imageHeight":@(image.pixelHeight),@"imageOrientation":@(image.orientation),@"bitmapInfo":@((NSUInteger)CGImageGetBitmapInfo(cg)),@"visionFaceCount":@(request.results.count),@"visionConfidence":confidenceSamples,@"lowConfidence":@(lowConfidence),@"missingEyes":@(missingEyes),@"smallEyes":@(smallEyes),@"outsideFrame":@(outsideFrame),@"proposalCount":@(proposals.count),@"proposalFrames":frames,@"eyeGeometry":eyeGeometry,@"rasterMeanARGB":channelMeans(image,0,image.pixelHeight),@"rasterFirstRowMeanARGB":channelMeans(image,0,1),@"rasterLastRowMeanARGB":channelMeans(image,image.pixelHeight-1,1)};
+        parameters[@"_visionDiagnostics"]=details;NSLog(@"HueviaRetouch stages %@",details);
+      }
       return [HueviaPortraitInference analyze:parameters candidates:proposals image:image task:task];
     }
     NSString *mode=p[@"mode"],*facesJson=nil,*skin=nil,*body=nil,*foreground=nil;

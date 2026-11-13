@@ -12,7 +12,7 @@ import 'widgets.dart';
 import 'app_stability.dart';
 
 const hueviaVersion = '0.31.0-dev';
-const hueviaBuild = 213;
+const hueviaBuild = 214;
 
 Future<Json> diagnosticSnapshot(AppState state) async {
   final core = state.core;
@@ -139,9 +139,18 @@ class HelpPage extends StatelessWidget {
           '无线相机',
           '先让手机连接相机 Wi-Fi，再到「设置 → Wi-Fi 无线连接」连接。同步页可浏览原片、打开遥控拍摄及相机预设槽位。功能按机身实际能力开放；快门和预设写入结果不明时，先核对机身，避免重复执行。',
         ),
-        _HelpCard('后台连接与恢复', '在设置中开启后台接收保护。Android 接收期间显示持续通知，可从通知停止；iOS 提供有限收尾时间，到期暂停，持续接收请保持应用前台。重开应用后到下载队列核对原相机，继续未完成项。'),
-        _HelpCard('人像与修补', '编辑器的人像工具支持选择人脸、皮肤与五官调整；识别不准时可手动调整范围。修补工具支持涂抹选择、撤销、重做，确认后才写入当前编辑配方。原始照片始终保留。'),
-        _HelpCard('更新与旧版资料', '在设置中检查更新，Android 下载核对后打开系统安装；iOS 下载未签名 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。'),
+        _HelpCard(
+          '后台连接与恢复',
+          '在设置中开启后台接收保护。Android 接收期间显示持续通知，可从通知停止；iOS 提供有限收尾时间，到期暂停，持续接收请保持应用前台。重开应用后到下载队列核对原相机，继续未完成项。',
+        ),
+        _HelpCard(
+          '人像与修补',
+          '编辑器的人像工具支持选择人脸、皮肤与五官调整；识别不准时可手动调整范围。修补工具支持涂抹选择、撤销、重做，确认后才写入当前编辑配方。原始照片始终保留。',
+        ),
+        _HelpCard(
+          '更新与旧版资料',
+          '在设置中检查更新，Android 下载核对后打开系统安装；iOS 下载未签名 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。',
+        ),
         const SizedBox(height: 8),
         FilledButton(
           onPressed: () => hueRootPage<void>(

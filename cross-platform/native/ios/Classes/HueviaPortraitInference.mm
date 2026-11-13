@@ -3,6 +3,8 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <zlib.h>
 #import "cc/huevia/shared/SharedPortraitInference.h"
+#import "cc/huevia/shared/SharedAutoBlemishes.h"
+#import "cc/huevia/shared/SharedPortraitOverlay.h"
 #import "cc/huevia/shared/SharedRetouch.h"
 #import "java/io/IOException.h"
 #import "java/io/InterruptedIOException.h"
@@ -46,14 +48,55 @@ struct CPU {
 @implementation HueviaPortraitInference
 + (NSDictionary *)analyze:(NSDictionary *)p candidates:(NSArray<NSDictionary *> *)proposals image:(HueviaRaster *)image task:(HueviaTask *)task {
   check(task);IOSIntArray *pixels=[IOSIntArray arrayWithLength:image.pixelWidth*image.pixelHeight];for(int i=0;i<pixels.length;i++)*IOSIntArray_GetRef(pixels,i)=(jint)image.pixels[i];
-  NSString *mode=p[@"mode"];NSMutableArray *faces=[NSMutableArray array];CPU semantic(YES,task);
-  BOOL diagnose=[p[@"diagnostics"] isKindOfClass:NSNumber.class]&&[p[@"diagnostics"] boolValue];NSMutableDictionary *details=diagnose&&[p[@"_visionDiagnostics"] isKindOfClass:NSDictionary.class]?[p[@"_visionDiagnostics"] mutableCopy]:[NSMutableDictionary dictionary];NSMutableArray *presenceLogits=[NSMutableArray array];
-  @try {if(proposals.count){CPU mesh(NO,task);for(NSDictionary *face in proposals){@autoreleasepool{check(task);NSMutableDictionary *sampled=[face mutableCopy];uint32_t rgb=(uint32_t)[CcHueviaSharedSharedPortraitInference sampleSkinWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:json(face)];sampled[@"skinR"]=@((rgb>>16)&255);sampled[@"skinG"]=@((rgb>>8)&255);sampled[@"skinB"]=@(rgb&255);NSString *encoded=json(sampled);IOSFloatArray *input=[CcHueviaSharedSharedPortraitInference inputWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:encoded withBoolean:NO withJavaUtilFunctionBooleanSupplier:task];mesh.run(input,task,diagnose?details:nil);IOSFloatArray *points=mesh.output(0),*presence=mesh.output(1);if(presence.length!=1)fail(@"面部存在性输出无效。");float logit=IOSFloatArray_Get(presence,0);if(diagnose){id observed=std::isfinite(logit)?(id)@(logit):@"non-finite";[presenceLogits addObject:observed];details[@"meshOutputElements"]=@[@(points.length),@(presence.length)];NSLog(@"HueviaRetouch mesh presence %@, output elements %@",observed,details[@"meshOutputElements"]);}if(logit<0)continue;
-    input=[CcHueviaSharedSharedPortraitInference inputWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:encoded withBoolean:YES withJavaUtilFunctionBooleanSupplier:task];semantic.run(input,task);
-    NSString *refined=[CcHueviaSharedSharedPortraitInference faceWithNSString:encoded withInt:image.pixelWidth withInt:image.pixelHeight withFloatArray:points withFloat:logit withFloatArray:semantic.output(0) withJavaUtilFunctionBooleanSupplier:task];if(refined.length)[faces addObject:object(refined)];}}}}@catch(NSException *failure){(void)failure;check(task);if([mode isEqual:@"face"])@throw;[faces removeAllObjects];}
+  NSString *mode=p[@"mode"];
+  if([mode isEqual:@"autoBlemish"]){NSString *result=[CcHueviaSharedSharedAutoBlemishes analyzeWithNSString:json(p) withIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withJavaUtilFunctionBooleanSupplier:task];check(task);return object(result);}
+  if([mode isEqual:@"overlay"]||[mode isEqual:@"hitFace"]){NSString *result=[CcHueviaSharedSharedPortraitOverlay renderWithNSString:json(p) withIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withJavaUtilFunctionBooleanSupplier:task];check(task);return object(result);}
+  NSMutableArray *faces=[NSMutableArray array];CPU semantic(YES,task);
+  if([mode isEqual:@"faceBody"]){
+    IOSFloatArray *input=[CcHueviaSharedSharedPortraitInference inputWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:@"" withBoolean:YES withJavaUtilFunctionBooleanSupplier:task];semantic.run(input,task);
+    NSString *result=[CcHueviaSharedSharedPortraitInference bodySkinWithNSString:json(p) withInt:image.pixelWidth withInt:image.pixelHeight withFloatArray:semantic.output(0) withJavaUtilFunctionBooleanSupplier:task];
+    NSMutableDictionary *value=[object(result) mutableCopy];value[@"analysisEngine"]=@"TensorFlowLiteC-2.17.0-CPU";value[@"skinMode"]=@"original-six-class-semantic";check(task);return value;
+  }
+  BOOL diagnose=[p[@"diagnostics"] isKindOfClass:NSNumber.class]&&[p[@"diagnostics"] boolValue];NSMutableDictionary *details=diagnose&&[p[@"_visionDiagnostics"] isKindOfClass:NSDictionary.class]?[p[@"_visionDiagnostics"] mutableCopy]:[NSMutableDictionary dictionary];NSMutableArray *presenceLogits=[NSMutableArray array],*attempts=[NSMutableArray array],*acceptedSources=[NSMutableArray array];
+  @try {
+    if(proposals.count){
+      CPU mesh(NO,task);
+      for(NSUInteger observation=0;observation<proposals.count;observation++){
+        NSDictionary *seed=proposals[observation];NSMutableArray *variants=[NSMutableArray arrayWithObject:seed];
+        if([seed[@"bboxFallback"] isKindOfClass:NSDictionary.class])[variants addObject:seed[@"bboxFallback"]];
+        for(NSDictionary *face in variants){@autoreleasepool{
+          check(task);NSMutableDictionary *sampled=[face mutableCopy];[sampled removeObjectForKey:@"bboxFallback"];
+          NSString *source=[face[@"candidateSource"] isKindOfClass:NSString.class]?face[@"candidateSource"]:@"vision-eyes";
+          uint32_t rgb=(uint32_t)[CcHueviaSharedSharedPortraitInference sampleSkinWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:json(sampled)];
+          sampled[@"skinR"]=@((rgb>>16)&255);sampled[@"skinG"]=@((rgb>>8)&255);sampled[@"skinB"]=@(rgb&255);NSString *encoded=json(sampled);
+          IOSFloatArray *input=[CcHueviaSharedSharedPortraitInference inputWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:encoded withBoolean:NO withJavaUtilFunctionBooleanSupplier:task];
+          NSMutableDictionary *attempt=diagnose?[NSMutableDictionary dictionary]:nil;
+          mesh.run(input,task,attempt);IOSFloatArray *points=mesh.output(0),*presence=mesh.output(1);
+          if(presence.length!=1)fail(@"面部存在性输出无效。");float logit=IOSFloatArray_Get(presence,0);
+          if(!std::isfinite(logit))fail(@"面部模型输出无效。");
+          if(diagnose){
+            attempt[@"observation"]=@(observation);attempt[@"source"]=source;attempt[@"presenceLogit"]=@(logit);attempt[@"accepted"]=@NO;
+            attempt[@"outputElements"]=@[@(points.length),@(presence.length)];[presenceLogits addObject:@(logit)];[attempts addObject:attempt];
+            details[@"meshOutputElements"]=attempt[@"outputElements"];
+            for(NSString *key in @[@"meshInputSha256",@"meshInputMeanRGB",@"meshInputRange"])details[key]=attempt[key];
+            NSLog(@"HueviaRetouch mesh attempt %@",attempt);
+          }
+          // Only a rejected real mesh candidate advances to the same
+          // observation's canonical bbox. Model/shape exceptions still propagate.
+          if(logit<0)continue;
+          input=[CcHueviaSharedSharedPortraitInference inputWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:encoded withBoolean:YES withJavaUtilFunctionBooleanSupplier:task];semantic.run(input,task);
+          NSString *refined=[CcHueviaSharedSharedPortraitInference faceWithNSString:encoded withInt:image.pixelWidth withInt:image.pixelHeight withFloatArray:points withFloat:logit withFloatArray:semantic.output(0) withJavaUtilFunctionBooleanSupplier:task];
+          if(refined.length){
+            [faces addObject:object(refined)];[acceptedSources addObject:source];if(attempt)attempt[@"accepted"]=@YES;
+            break; // At most one accepted face for this observation, still 12 observations.
+          }
+        }}
+      }
+    }
+  }@catch(NSException *failure){(void)failure;check(task);if([mode isEqual:@"face"])@throw;[faces removeAllObjects];[acceptedSources removeAllObjects];}
   if(faces.count>1){NSString *all=json(faces);NSMutableArray *isolated=[NSMutableArray array];for(NSDictionary *face in faces)[isolated addObject:object([CcHueviaSharedSharedPortraitInference isolateWithNSString:json(face) withNSString:all withInt:image.pixelWidth withInt:image.pixelHeight withJavaUtilFunctionBooleanSupplier:task])];faces=isolated;}
   NSString *skin=nil,*body=nil,*protection=nil;NSArray *people=nil;
   if([mode isEqual:@"skin"]||[mode isEqual:@"body"]){IOSFloatArray *input=[CcHueviaSharedSharedPortraitInference inputWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:@"" withBoolean:YES withJavaUtilFunctionBooleanSupplier:task];semantic.run(input,task);NSDictionary *person=object([CcHueviaSharedSharedPortraitInference personWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withFloatArray:semantic.output(0) withNSString:json(faces) withJavaUtilFunctionBooleanSupplier:task]);skin=person[@"skin"];if([mode isEqual:@"body"]){people=person[@"people"];NSInteger selected=[p[@"person"] integerValue];if(![people isKindOfClass:NSArray.class]||selected<0||selected>=people.count)fail(@"未识别到完整人物，请手动调整塑形范围。");body=json(people[selected]);protection=person[@"protection"];}}
-  NSString *acceptedFaces=[mode isEqual:@"body"]?nil:(([mode isEqual:@"face"]||faces.count)?json(faces):nil);NSString *result=[CcHueviaSharedSharedRetouch analysisWithNSString:json(p) withNSString:acceptedFaces withNSString:skin withNSString:body withNSString:protection withJavaUtilFunctionBooleanSupplier:task];NSMutableDictionary *value=[object(result) mutableCopy];value[@"analysisEngine"]=@"TensorFlowLiteC-2.17.0-CPU";value[@"skinMode"]=@"original-six-class-semantic";value[@"meshPoints"]=faces.count?@468:@0;if(people){value[@"people"]=people;value[@"selectedPerson"]=p[@"person"]?:@0;}if(diagnose){details[@"meshInvocations"]=@(presenceLogits.count);details[@"meshPresenceLogits"]=presenceLogits;details[@"acceptedFaces"]=@(faces.count);value[@"diagnostics"]=details;NSLog(@"HueviaRetouch result %@",details);}check(task);return value;
+  NSString *acceptedFaces=[mode isEqual:@"body"]?nil:(([mode isEqual:@"face"]||faces.count)?json(faces):nil);NSString *result=[CcHueviaSharedSharedRetouch analysisWithNSString:json(p) withNSString:acceptedFaces withNSString:skin withNSString:body withNSString:protection withJavaUtilFunctionBooleanSupplier:task];NSMutableDictionary *value=[object(result) mutableCopy];value[@"analysisEngine"]=@"TensorFlowLiteC-2.17.0-CPU";value[@"skinMode"]=@"original-six-class-semantic";value[@"meshPoints"]=faces.count?@468:@0;if(people){value[@"people"]=people;value[@"selectedPerson"]=p[@"person"]?:@0;}if(diagnose){details[@"meshInvocations"]=@(presenceLogits.count);details[@"meshPresenceLogits"]=presenceLogits;details[@"acceptedFaces"]=@(faces.count);details[@"meshAttempts"]=attempts;details[@"acceptedFaceSources"]=acceptedSources;value[@"diagnostics"]=details;NSLog(@"HueviaRetouch result %@",details);}check(task);return value;
 }
 @end
