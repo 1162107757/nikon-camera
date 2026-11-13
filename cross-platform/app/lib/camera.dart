@@ -14,6 +14,9 @@ import 'camera_grid.dart';
 import 'camera_live.dart';
 import 'photo_grid.dart';
 import 'project_presets.dart';
+import 'camera_remote.dart';
+import 'camera_slots.dart';
+import 'camera_downloads.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -46,6 +49,83 @@ class _CameraPageState extends State<CameraPage> {
   int overviewTab = 0;
   bool settingsExpanded = false;
   CameraLivePhase? lastLivePhase;
+  bool selecting = false;
+  final Set<int> selection = {};
+  bool get exclusive =>
+      widget.state.cameraLiveActive || widget.state.cameraDownloadsActive;
+
+  Future<void> openCameraTool(Widget page) async {
+    if (busy || transfer.busy || exclusive) return;
+    previews.pause();
+    await hueRootPage<void>(context, MaterialPageRoute(builder: (_) => page));
+    if (!mounted) return;
+    if (!exclusive) previews.resume();
+    await status();
+  }
+
+  Future<List<Json>> morePhotos() async {
+    if (!busy && !exclusive && hasMore) await page(next: true);
+    return List<Json>.of(items);
+  }
+
+  void toggleSelection(Json item) {
+    final handle = item['handle'];
+    if (busy || exclusive || handle is! int) return;
+    setState(() {
+      if (!selection.remove(handle)) {
+        if (selection.length < 100) selection.add(handle);
+      }
+    });
+  }
+
+  Future<void> receiveSelection() async {
+    if (busy || transfer.busy || exclusive || selection.isEmpty) return;
+    final expectedSession = session;
+    final selected = items
+        .where((item) => selection.contains(item['handle']))
+        .map((item) => Map<String, dynamic>.of(item))
+        .toList();
+    try {
+      final target = await chooseDownloadTarget(context, widget.state);
+      if (!mounted || target == null) return;
+      final status = await widget.state.core.call('camera.status');
+      if (!mounted ||
+          expectedSession != session ||
+          status['session'] != expectedSession ||
+          exclusive) {
+        throw const AppFailure('相机会话已改变，请重新选择照片。');
+      }
+      await widget.state.cameraDownloads.create(status, selected, target);
+      if (!mounted) return;
+      setState(() {
+        selecting = false;
+        selection.clear();
+      });
+      unawaited(
+        widget.state.cameraDownloads.resume(
+          widget.state.cameraDownloads.current!['id'] as String,
+        ),
+      );
+      await hueRootPage<void>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => CameraDownloadsPage(state: widget.state),
+        ),
+      );
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    }
+  }
+
+  void downloadsChanged() {
+    if (!mounted) return;
+    if (exclusive) {
+      previews.pause();
+    } else if (widget.configuration || widget.state.cameraVisible.value) {
+      previews.resume();
+    }
+    setState(() {});
+  }
 
   Future<void> openConnection() async {
     await hueRootPage<void>(
@@ -79,6 +159,7 @@ class _CameraPageState extends State<CameraPage> {
     previews = CameraPreviews(widget.state.core);
     transfer = CameraTransfer(widget.state);
     widget.state.cameraLive.addListener(liveChanged);
+    widget.state.cameraDownloads.addListener(downloadsChanged);
     if (!widget.configuration) {
       widget.state.cameraVisible.addListener(visibilityChanged);
     }
@@ -89,6 +170,7 @@ class _CameraPageState extends State<CameraPage> {
   void dispose() {
     epoch++;
     widget.state.cameraLive.removeListener(liveChanged);
+    widget.state.cameraDownloads.removeListener(downloadsChanged);
     if (!widget.configuration) {
       widget.state.cameraVisible.removeListener(visibilityChanged);
     }
@@ -111,7 +193,7 @@ class _CameraPageState extends State<CameraPage> {
       unawaited(status(reload: false));
     }
     lastLivePhase = phase;
-    if (widget.state.cameraLiveActive) {
+    if (exclusive) {
       previews.pause();
     } else if (widget.configuration || widget.state.cameraVisible.value) {
       previews.resume();
@@ -124,7 +206,7 @@ class _CameraPageState extends State<CameraPage> {
       previews.pause();
       return;
     }
-    if (transfer.busy || widget.state.cameraLiveActive) return;
+    if (transfer.busy || exclusive) return;
     previews.resume();
     if (!busy) unawaited(status(reload: false));
   }
@@ -141,7 +223,13 @@ class _CameraPageState extends State<CameraPage> {
         model = result['model'] as String;
       });
       previews.setSession(session);
-      if (connected && (reload || changed || items.isEmpty)) await page();
+      if (changed) {
+        selection.clear();
+        selecting = false;
+      }
+      if (connected && !exclusive && (reload || changed || items.isEmpty)) {
+        await page();
+      }
     } catch (failure) {
       if (mounted && request == epoch) setState(() => error = '$failure');
     }
@@ -150,6 +238,7 @@ class _CameraPageState extends State<CameraPage> {
   Future<void> connectWired(String id) => connect(usbId: id);
 
   Future<void> connect({String? usbId}) async {
+    if (exclusive || transfer.busy || busy) return;
     final request = ++epoch;
     setState(() {
       busy = true;
@@ -169,6 +258,7 @@ class _CameraPageState extends State<CameraPage> {
         connected = result['connected'] == true;
         session = result['session'] as String;
         model = result['model'] as String;
+        busy = false;
       });
       previews.setSession(session);
       await page(refresh: false);
@@ -185,6 +275,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> page({bool next = false, bool refresh = true}) async {
+    if (exclusive || transfer.busy || busy) return;
     final request = ++epoch, expectedSession = session;
     final identity = 'camera-page-${DateTime.now().microsecondsSinceEpoch}';
     if (!next) previews.reset(session);
@@ -197,6 +288,7 @@ class _CameraPageState extends State<CameraPage> {
         items = [];
         offset = 0;
         hasMore = false;
+        selection.clear();
       }
     });
     try {
@@ -230,7 +322,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> download(Json item) async {
-    if (busy || transfer.busy || widget.state.cameraLiveActive) return;
+    if (busy || transfer.busy || exclusive) return;
     final request = ++epoch;
     previews.pause();
     setState(() {
@@ -279,6 +371,9 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> disconnect() async {
+    if (widget.state.cameraDownloadsActive) {
+      await widget.state.cameraDownloads.stop();
+    }
     if (widget.state.cameraLiveActive) await widget.state.cameraLive.stop();
     final request = ++epoch;
     setState(() => busy = true);
@@ -508,12 +603,7 @@ class _CameraPageState extends State<CameraPage> {
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Text(emptyMessage),
                     ),
-                  CameraPhotoGrid(
-                    items: items,
-                    previews: previews,
-                    transfer: transfer,
-                    onDownload: download,
-                  ),
+                  cameraGrid(),
                   if (hasMore)
                     OutlinedButton(
                       onPressed: busy ? null : () => page(next: true),
@@ -567,7 +657,7 @@ class _CameraPageState extends State<CameraPage> {
       ChoiceChip(
         label: const Text('JPEG'),
         selected: !raw,
-        onSelected: busy
+        onSelected: busy || exclusive
             ? null
             : (_) {
                 setState(() => raw = false);
@@ -577,7 +667,7 @@ class _CameraPageState extends State<CameraPage> {
       ChoiceChip(
         label: const Text('RAW / NEF'),
         selected: raw,
-        onSelected: busy
+        onSelected: busy || exclusive
             ? null
             : (_) {
                 setState(() => raw = true);
@@ -586,10 +676,65 @@ class _CameraPageState extends State<CameraPage> {
       ),
       IconButton(
         tooltip: '刷新照片',
-        onPressed: busy ? null : () => page(),
+        onPressed: busy || exclusive ? null : () => page(),
         icon: const Icon(Icons.refresh_rounded),
       ),
+      TextButton(
+        onPressed: busy || transfer.busy || exclusive
+            ? null
+            : () => setState(() {
+                selecting = !selecting;
+                selection.clear();
+              }),
+        child: Text(selecting ? '取消多选' : '多选下载'),
+      ),
+      if (selecting) ...[
+        TextButton(
+          onPressed: busy || exclusive
+              ? null
+              : () => setState(() {
+                  selection.clear();
+                  selection.addAll(
+                    items.take(100).map((row) => row['handle'] as int),
+                  );
+                }),
+          child: const Text('选择已读取照片'),
+        ),
+        FilledButton(
+          onPressed: selection.isEmpty || busy || exclusive
+              ? null
+              : receiveSelection,
+          child: Text('接收 ${selection.length} 张'),
+        ),
+      ],
+      TextButton.icon(
+        onPressed: () => hueRootPage<void>(
+          context,
+          MaterialPageRoute(
+            builder: (_) => CameraDownloadsPage(state: widget.state),
+          ),
+        ),
+        icon: const Icon(Icons.download_outlined),
+        label: Text(widget.state.cameraDownloadsActive ? '查看下载进度' : '下载队列'),
+      ),
+      TextButton.icon(
+        onPressed: busy || transfer.busy || exclusive
+            ? null
+            : () => openCameraTool(CameraSlotsPage(state: widget.state)),
+        icon: const Icon(Icons.tune),
+        label: const Text('相机预设槽位'),
+      ),
     ],
+  );
+
+  Widget cameraGrid() => CameraPhotoGrid(
+    items: items,
+    previews: previews,
+    transfer: transfer,
+    onDownload: download,
+    onMore: morePhotos,
+    selection: selecting ? selection : null,
+    onSelect: toggleSelection,
   );
 
   Widget downloadedPhotos() => Column(
@@ -670,7 +815,13 @@ class _CameraPageState extends State<CameraPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
               child: InkWell(
-                onTap: busy ? null : openConnection,
+                onTap: busy || exclusive
+                    ? null
+                    : () => connected
+                          ? openCameraTool(
+                              CameraRemotePage(state: widget.state),
+                            )
+                          : openConnection(),
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
                   constraints: const BoxConstraints(minHeight: 72),
@@ -766,12 +917,7 @@ class _CameraPageState extends State<CameraPage> {
                           padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Text(emptyMessage),
                         ),
-                      CameraPhotoGrid(
-                        items: items,
-                        previews: previews,
-                        transfer: transfer,
-                        onDownload: download,
-                      ),
+                      cameraGrid(),
                       if (hasMore)
                         OutlinedButton(
                           onPressed: busy ? null : () => page(next: true),

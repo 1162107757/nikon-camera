@@ -149,7 +149,17 @@
     "app/src/main/java/cc/huevia/usb/PresetImportOptions.java",
     "app/src/main/java/cc/huevia/usb/PtpDirectorySurvey.java",
     "app/src/main/java/cc/huevia/usb/StorageAssessment.java",
-    "cross-platform/core/adapters/cc/huevia/library/PreviewImages.java"
+    "cross-platform/core/adapters/cc/huevia/library/PreviewImages.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedCameraMutationStore.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedRemote.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedSlots.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedSlotTransportGuard.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedRetouch.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedPortraitInference.java",
+    "cross-platform/core/java/cc/huevia/album/SharedAlbumOperations.java",
+    "cross-platform/core/java/cc/huevia/album/SharedRawPairing.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedCameraRawPairing.java",
+    "cross-platform/core/java/cc/huevia/shared/SharedDownloads.java"
   ],
   "excluded": [
     {

@@ -1,6 +1,8 @@
 #import "HueviaWiredCameras.h"
 #import "cc/huevia/album/PhotoCameraClient.h"
 #import "cc/huevia/ptp/PtpResponseException.h"
+#import "cc/huevia/ptp/PtpContainer.h"
+#import "cc/huevia/shared/SharedSlotTransportGuard.h"
 #import "java/io/IOException.h"
 #import "java/io/OutputStream.h"
 #import "java/lang/Runnable.h"
@@ -22,12 +24,19 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @property(nonatomic,strong) dispatch_semaphore_t ready;
 @property(atomic,strong) dispatch_semaphore_t closing;
 @property(atomic,strong) NSError *sessionError;
+@property(atomic,strong) NSError *closeError;
 @property(nonatomic) uint32_t transaction;
 - (void)waitForClose;
+- (void)openSession;
+@end
+@interface HueviaWiredSlots : NSObject <CcHueviaSharedSharedSlots_Transport>
+@property(nonatomic,strong) HueviaWiredClient *client;
+@property(nonatomic,strong) CcHueviaSharedSharedSlotTransportGuard *guard;
 @end
 @interface HueviaWiredCameras ()
 @property(nonatomic,strong) ICDeviceBrowser *browser;
 @property(atomic,strong) HueviaWiredClient *active;
+@property(atomic,strong) HueviaWiredSlots *slots;
 @property(nonatomic,strong) dispatch_semaphore_t discovery;
 @end
 
@@ -50,6 +59,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (id<CcHueviaAlbumPhotoCameraClient>)createWithNSString:(NSString *)identity {
   // ICDevice's delegate is unretained. Retire the old session before a new
   // client replaces its delegate, including reconnects to the same device.
+  [self.slots close];self.slots=nil;
   HueviaWiredClient *previous=self.active;[previous close];[previous waitForClose];
   dispatch_semaphore_t permission=dispatch_semaphore_create(0);__block ICAuthorizationStatus authorization=nil;
   mainSync(^{[self.browser requestControlAuthorizationWithCompletion:^(ICAuthorizationStatus status){authorization=status;dispatch_semaphore_signal(permission);}];});
@@ -58,10 +68,15 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   if(!selected)wiredFailure(@"未找到该 USB 相机，请检查相机开机、数据线和转接器后重新检测。");
   HueviaWiredClient *client=[[HueviaWiredClient alloc] init];client.device=selected;self.active=client;return client;
 }
+- (id<CcHueviaSharedSharedSlots_Transport>)openSlotsWithNSString:(NSString *)identity {
+  HueviaWiredClient *client=(HueviaWiredClient *)[self createWithNSString:identity];
+  if(![client.device.capabilities containsObject:ICCameraDeviceCanAcceptPTPCommands])wiredFailure(@"此相机未提供系统 PTP 命令通道，未打开优化校准会话。");
+  HueviaWiredSlots *slots=[[HueviaWiredSlots alloc] init];slots.client=client;slots.guard=[[CcHueviaSharedSharedSlotTransportGuard alloc] init];self.slots=slots;return slots;
+}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didAddDevice:(ICDevice *)device moreComing:(BOOL)moreComing {if(self.discovery&&supported(device))dispatch_semaphore_signal(self.discovery);}
 - (void)deviceBrowser:(ICDeviceBrowser *)browser didRemoveDevice:(ICDevice *)device moreGoing:(BOOL)moreGoing {if(self.active.device==device)[self.active close];}
 - (void)dealloc {
-  [_active close];ICDeviceBrowser *browser=_browser;
+  [_slots close];[_active close];ICDeviceBrowser *browser=_browser;
   mainSync(^{browser.delegate=nil;[browser stop];});
 }
 @end
@@ -75,10 +90,12 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   [self close];wiredFailure(@"USB 相机读取超时，请重新连接。");
 }
 - (IOSByteArray *)connectWithNSString:(NSString *)host withInt:(jint)port withByteArray:(IOSByteArray *)guid withNSString:(NSString *)name {
+  [self openSession];return [self readAlbumDeviceInfo];
+}
+- (void)openSession {
   self.open=YES;self.ready=dispatch_semaphore_create(0);self.sessionError=nil;
   mainSync(^{self.device.delegate=self;[self.device requestOpenSessionWithOptions:nil completion:^(NSError *error){if(error){self.sessionError=error;dispatch_semaphore_signal(self.ready);}}];});
   [self wait:self.ready];if(self.sessionError){[self close];wiredFailure(@"USB 相机会话无法打开，请关闭其他相机应用后重连。");}
-  return [self readAlbumDeviceInfo];
 }
 - (bool)isOpen {return self.open;}
 - (bool)isProtocolUnconfirmed {return false;}
@@ -129,14 +146,14 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   ICCameraDevice *device;dispatch_semaphore_t done;
   @synchronized(self){
     if(!self.open)return;self.open=NO;device=self.device;
-    done=dispatch_semaphore_create(0);self.closing=done;
+    done=dispatch_semaphore_create(0);self.closing=done;self.closeError=nil;
   }
   // Reads use ICCameraFile's data API, not the macOS-only download API.
   // Keep this client alive until its unretained delegate is cleared on main.
   // The worker observes open=NO; a reconnect waits for OS close completion.
   dispatch_async(dispatch_get_main_queue(),^{
     if(device.delegate==self)device.delegate=nil;
-    [device requestCloseSessionWithOptions:nil completion:^(NSError *error){dispatch_semaphore_signal(done);}];
+    [device requestCloseSessionWithOptions:nil completion:^(NSError *error){self.closeError=error;dispatch_semaphore_signal(done);}];
   });
   id<JavaLangRunnable> listener=self.closed;self.closed=nil;if(listener)[listener run];
 }
@@ -157,4 +174,45 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (void)cameraDeviceDidEnableAccessRestriction:(ICDevice *)camera {[self close];}
 - (void)cameraDeviceDidRemoveAccessRestriction:(ICDevice *)camera {}
 - (void)cameraDevice:(ICCameraDevice *)camera didReceivePTPEvent:(NSData *)event {}
+@end
+
+/** ICC owns the PTP session. Logical session operations map to actual, awaited OS operations. */
+@implementation HueviaWiredSlots
+- (bool)isSessionManaged {return true;}
+- (bool)isOpen {return self.client!=nil&&self.client.open;}
+- (void)authorizeDeletionWithInt:(jint)target {[self.guard authorizeDeletionWithInt:target];}
+- (IOSByteArray *)exchange:(jint)operation transaction:(jlong)transaction parameters:(IOSLongArray *)parameters outgoing:(IOSByteArray *)outgoing {
+  HueviaWiredClient *client=self.client;if(!client||!client.open)wiredFailure(@"USB 槽位会话已断开。");
+  IOSByteArray *encoded=[[CcHueviaPtpPtpContainer commandWithInt:operation withLong:transaction withLongArray:parameters] toBytes];
+  NSData *command=[NSData dataWithBytes:encoded->buffer_ length:encoded->size_];
+  NSData *outData=outgoing?[NSData dataWithBytes:outgoing->buffer_ length:outgoing->size_]:nil;
+  dispatch_semaphore_t done=dispatch_semaphore_create(0);__block NSData *bytes=nil,*response=nil;__block NSError *failure=nil;
+  mainSync(^{[client.device requestSendPTPCommand:command outData:outData completion:^(NSData *reply,NSData *data,NSError *error){response=reply;bytes=data;failure=error;dispatch_semaphore_signal(done);}];});
+  [client wait:done];
+  if(failure){[self close];wiredFailure(@"USB 槽位操作响应未确认，连接已关闭；请只读核对，勿重复执行。");}
+  if(response.length<12||response.length>32){[self close];wiredFailure(@"USB 槽位响应长度无效。");}
+  const uint8_t *r=response.bytes;
+  if(little32(r)!=response.length||r[4]!=3||r[5]!=0||little32(r+8)!=(uint32_t)transaction||(response.length-12)%4){[self close];wiredFailure(@"USB 槽位响应事务或容器无效，已停止。");}
+  int code=r[6]|(int)r[7]<<8;if(code!=0x2001)@throw [[CcHueviaPtpPtpResponseException alloc] initWithInt:code withLong:transaction];
+  if(bytes.length>1024*1024){[self close];wiredFailure(@"USB 槽位数据超出范围。");}
+  return javaBytes(bytes?:[NSData data]);
+}
+- (IOSByteArray *)readWithInt:(jint)operation withLong:(jlong)transaction withLongArray:(IOSLongArray *)parameters {
+  [self.guard readWithInt:operation withLong:transaction withLongArray:parameters];
+  return [self exchange:operation transaction:transaction parameters:parameters outgoing:nil];
+}
+- (CcHueviaPtpPtpContainer *)commandWithInt:(jint)operation withLong:(jlong)transaction withLongArray:(IOSLongArray *)parameters {
+  [self.guard commandWithInt:operation withLong:transaction withLongArray:parameters];
+  if(!self.client)wiredFailure(@"USB 槽位会话已取消。");
+  if(operation==0x1002){[self.client openSession];}
+  else if(operation==0x1003){HueviaWiredClient *client=self.client;[client close];[client waitForClose];if(client.closeError)wiredFailure(@"USB 槽位系统会话关闭未确认。");}
+  else [self exchange:operation transaction:transaction parameters:parameters outgoing:nil];
+  return [CcHueviaPtpPtpContainer responseWithInt:0x2001 withLong:transaction withLongArray:[IOSLongArray arrayWithLength:0]];
+}
+- (CcHueviaPtpPtpContainer *)sendWithInt:(jint)operation withLong:(jlong)transaction withByteArray:(IOSByteArray *)bytes withLongArray:(IOSLongArray *)parameters {
+  [self.guard sendWithInt:operation withLong:transaction withByteArray:bytes withLongArray:parameters];
+  [self exchange:operation transaction:transaction parameters:parameters outgoing:bytes];
+  return [CcHueviaPtpPtpContainer responseWithInt:0x2001 withLong:transaction withLongArray:[IOSLongArray arrayWithLength:0]];
+}
+- (void)close {HueviaWiredClient *client=self.client;self.client=nil;[client close];}
 @end

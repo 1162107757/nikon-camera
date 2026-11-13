@@ -200,9 +200,11 @@ extension _LegacyAccount on _AccountPageState {
                           const SizedBox(height: 44),
                           accountAction(
                             'QQ 快捷登录',
-                            () => accountInformation(
-                              'QQ 快捷登录',
-                              '当前安装包暂不支持 QQ 授权，请使用账号密码登录。',
+                            () => Navigator.push<Json>(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => QqLoginPage(state: widget.state),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 12),

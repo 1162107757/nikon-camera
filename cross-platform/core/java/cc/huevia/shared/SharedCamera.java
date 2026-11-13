@@ -12,7 +12,11 @@ import java.util.function.*;
 /** Shared read-only Wi-Fi session. Handles are scoped to the connection that enumerated them. */
 public final class SharedCamera {
     public interface Connectors { PtpIpClient.SocketConnector create(String host,int port,boolean fuji)throws IOException; }
-    public interface WiredConnections { String devices()throws IOException; PhotoCameraClient create(String id)throws IOException; }
+    public interface WiredConnections {
+        String devices()throws IOException;
+        PhotoCameraClient create(String id)throws IOException;
+        default SharedSlots.Transport openSlots(String id)throws IOException{throw new IOException("此设备未提供原始 PTP 优化校准通道。");}
+    }
     private WiredConnections wired;
     private String transport="wifi";
     interface Clients { PhotoCameraClient create(PtpIpClient.SocketConnector connector,boolean fuji); }
@@ -22,9 +26,17 @@ public final class SharedCamera {
     private final SharedCameraPreviews previews;
     private final LongSupplier clock;
     private SharedCameraLiveDiscovery live;
+    private SharedRemote remote;
+    private volatile SharedSlots slots;
+    private SharedCameraRawPairing rawPairing;
+    private String slotsSession="",slotsHost="",slotsDevice="",slotsCameraId="",slotsTransport="";
+    private int slotsPort;
     private volatile PhotoCameraClient client;
     private volatile String activeJob="";
     private String session="";
+    private String downloadCameraId="";
+    private boolean downloadTrusted;
+    private List<Long> resolveHandles;
     private PtpDeviceInfo device;
     private boolean largeThumbnailUnavailable;
     private boolean indexedRaw,indexReady;
@@ -37,7 +49,7 @@ public final class SharedCamera {
     SharedCamera(String root,Connectors connectors,Clients clients,LongSupplier clock)throws IOException{this.root=new File(root).getCanonicalFile();this.connectors=connectors;this.clients=clients;this.clock=clock;previews=new SharedCameraPreviews(this.root);}
     public void cancel(String job){if(job!=null&&job.equals(activeJob))closeTransport();}
     /** Can run from the host lifecycle thread without changing worker-owned indexes. */
-    public void closeTransport(){PhotoCameraClient current=client;if(current!=null)current.close();}
+    public void closeTransport(){PhotoCameraClient current=client;if(current!=null)current.close();SharedSlots currentSlots=slots;if(currentSlots!=null)currentSlots.abort();}
     public synchronized String request(String operation,String json,String job,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         activeJob=job;
         String stage=operation.equals("camera.connect")?"SHARED_CONNECT":operation.equals("camera.page")?"SHARED_PHOTO_PAGE":operation.equals("camera.thumbnail")?"SHARED_THUMBNAIL":operation.equals("camera.download")?"SHARED_DOWNLOAD":"SHARED_CAMERA_REQUEST";
@@ -63,14 +75,61 @@ public final class SharedCamera {
             disconnect();boolean fuji=protocol.equals("fujifilm");transport=usb?"usb":"wifi";
             PhotoCameraClient next=usb?wired.create(usbId):clients.create(connectors.create(host,port,fuji),fuji);client=next;
             try{
-                byte[] guid=guid();device=PtpDeviceInfo.parseRedacted(next.connect(host,port,guid,"Huevia"));
+                byte[] guid=guid(),info=next.connect(host,port,guid,"Huevia");device=PtpDeviceInfo.parseRedacted(info);
                 if(!fuji&&!device.isNikonCamera())throw new IOException("相机未确认尼康协议身份。");
                 for(int op:new int[]{0x1004,0x1007,0x1008,0x1009})if(!device.supportsOperation(op))throw new IOException("相机未提供照片读取能力。");
-                session=UUID.randomUUID().toString();largeThumbnailUnavailable=false;inventory(cancel,false);return status();
+                session=UUID.randomUUID().toString();PtpDeviceInfo identityInfo=device;
+                try{identityInfo=PtpDeviceInfo.parse(info);}catch(PtpProtocolException optionalSerial){}
+                downloadIdentity(next,identityInfo);resolveHandles=null;largeThumbnailUnavailable=false;inventory(cancel,false);return status();
             }catch(IOException|RuntimeException failure){next.close();client=null;session="";throw failure;}
         }
         if(operation.equals("camera.status"))return status();
+        // Remote and Picture Control each own a separate, explicitly granted state machine.
+        if(operation.equals("camera.slots.open")){
+            String requested=SharedRuntime.text(p,"session",64);
+            if(client!=null&&client.isOpen()){
+                require(p);if(live!=null||remote!=null)throw new IOException("请先停止边拍边传或遥控，再读取预设槽位。");
+                if(device==null||!device.isNikonCamera())throw new IOException("当前相机未提供尼康优化校准能力。");
+                slotsTransport=transport;slotsHost=client.connectedHost();slotsPort=client.connectedPort();
+                slotsDevice=slotsTransport.equals("usb")?slotsHost.substring(slotsHost.indexOf(':')+1):"";
+                slotsCameraId=downloadCameraId;
+                PhotoCameraClient old=client;client=null;old.close();handles.clear();observed.clear();indexReady=false;session="";
+            }else if(slotsSession.isEmpty()||!slotsSession.equals(requested))throw new IOException("请先连接相机，再读取槽位。");
+            if(slots==null)slots=new SharedSlots(root);else slots.close();
+            slotsSession=requested; // A failed open may be explicitly retried from this same page.
+            SharedSlots.Transport dedicated=slotsTransport.equals("usb")?wired.openSlots(slotsDevice):SharedSlots.wifi(connectors.create(slotsHost,slotsPort,false),slotsHost,slotsPort,guid());
+            String nextSession=UUID.randomUUID().toString();Object opened=slots.open(dedicated,nextSession,slotsCameraId,cancel);slotsSession=nextSession;return opened;
+        }
+        if(operation.startsWith("camera.slots.")){
+            if(slots==null)throw new IOException("预设槽位尚未读取。");
+            return slots.request(operation,p,cancel);
+        }
+        if(operation.equals("camera.remote.open")){
+            require(p);if(live!=null)throw new IOException("请先停止边拍边传，再打开遥控拍摄。");
+            if(remote!=null){remote.close();remote=null;}
+            SharedRemote next=new SharedRemote(root);
+            try{Object opened=next.open(client,device,session);remote=next;return opened;}
+            catch(IOException|RuntimeException error){next.close();throw error;}
+        }
+        if(operation.startsWith("camera.remote.")){
+            if(remote==null)throw new IOException("遥控会话尚未打开。");
+            Object result=remote.request(operation,p,cancel);if(operation.equals("camera.remote.close"))remote=null;return result;
+        }
+        if(remote!=null)throw new IOException("遥控正在使用此会话，请返回相册后再操作。");
         require(p);PhotoCameraClient current=client;
+        if(operation.equals("camera.resolve"))return resolve(p,cancel);
+        if(operation.equals("camera.raw.pair")){
+            if(live!=null)throw new IOException("请先停止边拍边传，再核对 RAW 原文件。");
+            long handle=number(p,"handle");PtpObjectInfo jpeg=observed.get(handle);if(jpeg==null)throw new IOException("请从当前相机照片选择 JPEG。");
+            SharedCameraRawPairing next=new SharedCameraRawPairing(current,session,downloadTrusted,downloadCameraId);
+            Object result=next.open(handle,jpeg,cancel);rawPairing=next;return result;
+        }
+        if(operation.startsWith("camera.raw.")){
+            if(rawPairing==null)throw new IOException("RAW 配对库存尚未读取。");
+            if(operation.equals("camera.raw.page"))return rawPairing.page(p);
+            if(operation.equals("camera.raw.select")){PtpObjectInfo selected=rawPairing.select(p,cancel);long handle=number(p,"handle");observed.put(handle,selected);return SharedRuntime.map("session",session,"item",SharedCameraRawPairing.row(handle,selected));}
+            throw new IOException("未知的 RAW 配对操作。");
+        }
         if(operation.equals("camera.live.start")){
             if(transport.equals("usb"))throw new IOException("有线连接请从相机照片中接收原文件，边拍边传请使用 Wi-Fi。");
             if(!device.isNikonCamera())throw new IOException("富士 X-T20 的无线模式暂不支持边拍边传，请拍摄后手动接收。");
@@ -123,6 +182,8 @@ public final class SharedCamera {
             if(before.compressedSize()<4||before.compressedSize()>512L*1024*1024)throw new IOException("相机照片大小超出范围。");
             PtpObjectInfo fresh=downloadInfo(current,handle,liveDownload);
             try{same(before,fresh);}catch(IOException changed){if(liveDownload)live.invalidate(handle);throw changed;}
+            if(liveDownload&&p.containsKey("queueId"))throw new IOException("边拍边传与手动接收队列不能混用。");
+            SharedDownloads.validateTransfer(root,p,downloadCameraId,downloadTrusted,session,before);
             File directory=new File(root,"originals");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片目录。");
             File temporary=File.createTempFile("camera-",".part",directory);MessageDigest digest;
             try{digest=MessageDigest.getInstance("SHA-256");}catch(NoSuchAlgorithmException impossible){throw new AssertionError(impossible);}
@@ -142,7 +203,9 @@ public final class SharedCamera {
                 check(cancel);File target=new File(directory,hash+(format==PhotoFormat.NEF?".nef":".jpg"));
                 if(target.exists()){if(!sameBytes(temporary,target))throw new IOException("已有原文件校验失败。");}else Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
                 Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"name",before.filename(),"sha256",hash.toString(),"bytes",target.length(),"raw",format==PhotoFormat.NEF);
+                result.put("downloadCameraId",downloadCameraId);result.put("downloadTrusted",downloadTrusted);result.put("descriptor",SharedCameraMutationStore.sha(before.toBytes()));result.put("storage",before.storageId());result.put("capturedAt",before.captureDate());
                 if(liveDownload){result.put("cameraId",live.cameraId());result.put("watchId",live.watchId());result.put("session",session);result.put("objectKey",p.get("objectKey"));result.put("storage",before.storageId());result.put("handle",handle);}
+                SharedDownloads.recordTransfer(root,p,result);
                 return result;
             }finally{Files.deleteIfExists(temporary.toPath());}
         }
@@ -166,9 +229,9 @@ public final class SharedCamera {
         indexedRaw=raw;indexReady=true;unavailableStorages=unavailable;
         ConnectionTrace.mark("SHARED_INVENTORY_COMPLETE");
     }
-    private Object status(){boolean connected=client!=null&&client.isOpen();return SharedRuntime.map("connected",connected,"session",session,"model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size(),"cameraId",connected&&device!=null?SharedCameraLiveDiscovery.cameraId(client,device,session):"","trustedCamera",connected&&SharedCameraLiveDiscovery.trusted(client),"transport",transport,"supportsLive",connected&&device!=null&&device.isNikonCamera()&&!transport.equals("usb"),"live",live!=null);}
+    private Object status(){boolean connected=client!=null&&client.isOpen();return SharedRuntime.map("connected",connected,"session",session,"model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size(),"cameraId",connected&&device!=null?SharedCameraLiveDiscovery.cameraId(client,device,session):"","trustedCamera",connected&&SharedCameraLiveDiscovery.trusted(client),"downloadCameraId",connected?downloadCameraId:"","downloadTrusted",connected&&downloadTrusted,"transport",transport,"supportsLive",connected&&device!=null&&device.isNikonCamera()&&!transport.equals("usb"),"live",live!=null);}
     private void require(Map<String,Object> p)throws IOException{if(client==null||!client.isOpen()||!session.equals(SharedRuntime.text(p,"session",64)))throw new IOException("相机会话已改变，请重新读取照片。");}
-    public void disconnect(){if(live!=null){live.stop();live=null;}PhotoCameraClient current=client;client=null;if(current!=null)current.close();session="";device=null;handles.clear();observed.clear();indexReady=false;indexedRaw=false;unavailableStorages=0;}
+    public void disconnect(){rawPairing=null;resolveHandles=null;downloadCameraId="";downloadTrusted=false;if(remote!=null){remote.close();remote=null;}if(slots!=null){slots.close();slots=null;}slotsSession="";if(live!=null){live.stop();live=null;}PhotoCameraClient current=client;client=null;if(current!=null)current.close();session="";device=null;handles.clear();observed.clear();indexReady=false;indexedRaw=false;unavailableStorages=0;}
     private static void check(BooleanSupplier cancel)throws IOException{if(cancel.getAsBoolean())throw new InterruptedIOException("相机操作已取消。");}
     private PtpObjectInfo downloadInfo(PhotoCameraClient current,long handle,boolean liveDownload)throws IOException{
         try{return PtpObjectInfo.parse(current.getData(0x1008,65536,handle));}
@@ -176,7 +239,34 @@ public final class SharedCamera {
     }
     private byte[] guid()throws IOException{File file=new File(root,"camera-client-guid.bin");if(file.isFile()){byte[] value=Files.readAllBytes(file.toPath());if(value.length==16)return value;}byte[] value=new byte[16];new SecureRandom().nextBytes(value);Files.write(file.toPath(),value);return value;}
     private static long number(Map<String,Object> p,String key)throws IOException{Object value=p.get(key);if(!(value instanceof Number)||((Number)value).doubleValue()!=((Number)value).longValue()||((Number)value).longValue()<1||((Number)value).longValue()>=0xffffffffL)throw new IOException("相机照片索引无效。");return ((Number)value).longValue();}
-    private static Object row(long handle,PtpObjectInfo info){return SharedRuntime.map("handle",handle,"name",info.filename(),"bytes",info.compressedSize(),"width",info.imagePixWidth(),"height",info.imagePixHeight(),"capturedAt",info.captureDate(),"raw",photoFormat(info)==PhotoFormat.NEF);}
+    private static Object row(long handle,PtpObjectInfo info){return SharedRuntime.map("handle",handle,"name",info.filename(),"bytes",info.compressedSize(),"width",info.imagePixWidth(),"height",info.imagePixHeight(),"capturedAt",info.captureDate(),"storage",info.storageId(),"descriptor",SharedCameraMutationStore.sha(info.toBytes()),"raw",photoFormat(info)==PhotoFormat.NEF);}
+    private void downloadIdentity(PhotoCameraClient current,PtpDeviceInfo info){
+        String identity=current.cameraIdentity(),serial=SharedCameraMutationStore.serial(info.serialNumber());
+        if(SharedCameraLiveDiscovery.trusted(current)){identity="guid:"+identity.toLowerCase(Locale.ROOT);downloadTrusted=true;}
+        else if(!serial.isEmpty()){identity="serial:"+serial;downloadTrusted=true;}
+        else{identity="session:"+session;downloadTrusted=false;}
+        downloadCameraId=SharedCameraMutationStore.sha(("huevia-download-camera-v1\n"+identity+"\n"+info.manufacturer()+"\n"+info.model()).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+    }
+    public String downloadCameraId(){return downloadCameraId;}
+    public boolean downloadTrusted(){return downloadTrusted;}
+    private Object resolve(Map<String,Object> p,BooleanSupplier cancel)throws IOException {
+        if(live!=null)throw new IOException("请先停止边拍边传，再恢复手动接收队列。");
+        String descriptor=SharedRuntime.text(p,"descriptor",64);if(!descriptor.matches("[0-9a-f]{64}"))throw new IOException("下载描述符无效。");
+        int offset=SharedRuntime.integer(p,"offset",0);if(offset<0)throw new IOException("下载核对位置无效。");
+        if(offset==0&&p.containsKey("handle")){
+            long handle=number(p,"handle");PtpObjectInfo info=resolveInfo(handle,cancel);
+            if(info!=null&&descriptor.equals(SharedCameraMutationStore.sha(info.toBytes()))){observed.put(handle,info);return SharedRuntime.map("match",row(handle,info),"nextOffset",0,"hasMore",false);}
+        }
+        if(resolveHandles==null){LinkedHashSet<Long> all=new LinkedHashSet<>();long[] storage=PtpStorageIds.parse(client.getData(0x1004,4096));if(storage.length>64)throw new IOException("相机存储空间数量过多。");
+            for(long id:storage){check(cancel);long[] found;try{found=PtpObjectHandles.parse(client.getData(0x1007,1024*1024,id,0,0));}catch(PtpResponseException missing){if(missing.responseCode()!=0x2013)throw missing;continue;}
+                for(long handle:found){if(handle<1||handle>=0xffffffffL)throw new IOException("相机库存索引无效。");all.add(handle);if(all.size()>20000)throw new IOException("下载恢复最多核对 20000 个对象。");}}
+            resolveHandles=new ArrayList<>(all);
+        }
+        if(offset>resolveHandles.size())throw new IOException("下载恢复库存已变化，请重新核对。");int end=Math.min(resolveHandles.size(),offset+128);
+        for(int cursor=offset;cursor<end;cursor++){long handle=resolveHandles.get(cursor);PtpObjectInfo info=resolveInfo(handle,cancel);if(info!=null&&descriptor.equals(SharedCameraMutationStore.sha(info.toBytes()))){observed.put(handle,info);return SharedRuntime.map("match",row(handle,info),"nextOffset",cursor+1,"hasMore",false);}}
+        return SharedRuntime.map("match",null,"nextOffset",end,"hasMore",end<resolveHandles.size());
+    }
+    private PtpObjectInfo resolveInfo(long handle,BooleanSupplier cancel)throws IOException{check(cancel);try{return PtpObjectInfo.parse(client.getData(0x1008,65536,handle));}catch(PtpResponseException missing){if(missing.responseCode()!=0x2009)throw missing;return null;}}
     static PhotoFormat photoFormat(PtpObjectInfo info){PhotoFormat format=PhotoFormat.of(info);if(format!=PhotoFormat.OTHER||info.objectFormat()==0x3001||info.associationType()!=0)return format;String name=info.filename().toLowerCase(Locale.ROOT);return name.matches("[^/\\\\\\p{Cntrl}]+\\.(jpg|jpeg)")?PhotoFormat.JPEG:PhotoFormat.OTHER;}
     private static final class TransferSizeChanged extends RuntimeException {private static final long serialVersionUID=1L;}
     private static void same(PtpObjectInfo a,PtpObjectInfo b)throws IOException{if(!Arrays.equals(a.toBytes(),b.toBytes()))throw new IOException("相机原文件已发生变化，未接收。");}

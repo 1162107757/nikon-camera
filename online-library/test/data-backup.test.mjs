@@ -36,6 +36,16 @@ test('expected APK SHA is checked, not merely the object length',async()=>{
     source:{get:async item=>item.provider==='cos'?Buffer.alloc(payload.length):payload},id,now}),/SOURCE_HASH_MISMATCH/);
   assert(![...store.files.keys()].some(k=>k.endsWith('/COMPLETE.json')));
 });
+test('new mobile release bytes join complete backups while temporary mobile chunks remain excluded',async()=>{
+  const bytes=Buffer.alloc(2048,42),sha=digest(bytes),s=fixture();
+  s.tables['public.nikon_mobile_releases']=[{platform:'ios',storage_path:`mobile-releases/ios/${sha}.bin`,sha256:sha,byte_length:bytes.length}];
+  s.tables['public.nikon_mobile_upload_chunks']=[{storage_path:'mobile-upload/unfinished.part'}];
+  const complete=await runBackup({snapshotBytes:Buffer.from(JSON.stringify(s)),storage:memory(),source:{get:async item=>item.path.startsWith('mobile-releases/')?bytes:payload},id,now});
+  assert.equal(complete.files.length,3);assert.equal(complete.files.find(item=>item.path.startsWith('mobile-releases/')).sha256,sha);
+  for(const path of [`mobile-upload/${sha}.bin`,`mobile-releases/other/${sha}.bin`,`mobile-releases/ios/${'b'.repeat(64)}.bin`]){
+    s.tables['public.nikon_mobile_releases'][0].storage_path=path;assert.throws(()=>inspectSnapshot(Buffer.from(JSON.stringify(s))),/INVALID_MOBILE_RELEASE/);
+  }
+});
 test('daily directory follows Beijing date across UTC midnight boundary',async()=>{
   const result=await runBackup({snapshotBytes:Buffer.from(JSON.stringify(fixture())),storage:memory(),source:{get:async()=>payload},id,now:new Date('2026-11-09T20:00:00Z')});
   assert(result.run.startsWith('huevia-backups/daily/2026-11-10/'));

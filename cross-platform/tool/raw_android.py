@@ -24,6 +24,10 @@ old='double gain=std::pow(2,exposure/10.0),linear=std::min(8.0,std::max(.25,gain
 if adapted.count(old)!=1:raise SystemExit('RAW exposure adapter requires review')
 adapted=adapted.replace(old,'hueviaRawSafety(raw,exposure,highlights);')
 adapted=adapted.replace('return env->NewStringUTF(LibRaw::version());','return env->NewStringUTF(LIBRAW_VERSION_STR \"-huevia-safe-ev-v3\");')
+preview_start=adapted.index('extern "C" JNIEXPORT jobject JNICALL Java_cc_huevia_album_RawDeveloper_nativeDevelop(')
+preview=adapted[preview_start:]
+preview=preview.replace('Java_cc_huevia_album_RawDeveloper_nativeDevelop','Java_cc_huevia_sharedapp_NativeRawThumbnail_preview',1).replace('params.half_size=0;','params.half_size=1;params.user_flip=0;',1)
+adapted+='\n'+preview+'\nextern "C" JNIEXPORT jbyteArray JNICALL Java_cc_huevia_sharedapp_NativeRawThumbnail_embeddedJpeg(JNIEnv* env,jclass cls,jstring path,jobject callbacks){return Java_cc_huevia_album_RawDeveloper_nativeEmbeddedJpeg(env,cls,path,callbacks);}\n'
 bridge=work/'huevia_raw.cpp'
 if not bridge.exists() or bridge.read_bytes()!=adapted.encode('utf-8'):bridge.write_text(adapted,encoding='utf-8',newline='\n')
 original_libs=ROOT/'app/src/main/jniLibs'/abi;destination=work/'jniLibs'/abi;destination.mkdir(parents=True,exist_ok=True)

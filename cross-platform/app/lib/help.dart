@@ -12,7 +12,7 @@ import 'widgets.dart';
 import 'app_stability.dart';
 
 const hueviaVersion = '0.31.0-dev';
-const hueviaBuild = 211;
+const hueviaBuild = 213;
 
 Future<Json> diagnosticSnapshot(AppState state) async {
   final core = state.core;
@@ -125,7 +125,7 @@ class HelpPage extends StatelessWidget {
         ),
         _HelpCard(
           '批量编辑与导出',
-          '点相册右上方「选择」，可逐张、按日期分组或全选，最多 100 张。保留各自编辑，或统一选择预设；导出保存为 sRGB JPEG。停止后已完成的成品保留，继续只处理未完成项。',
+          '点相册右上方「选择」，可逐张、按日期分组或全选，最多 100 张。可以依次编辑，保留各自编辑或统一选择预设，再保存到应用或系统相册。停止后已完成的成品保留，继续只处理未完成项。删除时可分别选择应用原图、成品版本及已核对的系统副本。',
         ),
         _HelpCard(
           '成品与分享',
@@ -133,12 +133,15 @@ class HelpPage extends StatelessWidget {
         ),
         _HelpCard(
           'USB 有线传输',
-          '在「设置 → USB 数据线连接」检测并选择尼康相机，允许系统访问后浏览相机照片，点选 JPEG 或 NEF 接收原文件。Android 需支持 OTG；iPhone 需 USB-C 数据线或兼容的相机转接器。断线后重新连接并读取目录。当前有线入口用于手动接收照片。',
+          '在「设置 → USB 数据线连接」检测并选择尼康相机，允许系统访问后浏览 JPEG 或 NEF。点开照片可查看相邻照片并明确选择对应 NEF；多选下载可保存到应用、系统相册或文件夹。Android 需支持 OTG；iPhone 需 USB-C 数据线或兼容的相机转接器。断线后从下载队列继续未完成项。',
         ),
         _HelpCard(
           '无线相机',
-          '先让手机连接相机 Wi-Fi，再到「设置 → Wi-Fi 无线连接」连接。同步页可浏览和接收相机原片。传输时保持应用在前台；未读到照片时，可导出诊断报告帮助定位阶段。',
+          '先让手机连接相机 Wi-Fi，再到「设置 → Wi-Fi 无线连接」连接。同步页可浏览原片、打开遥控拍摄及相机预设槽位。功能按机身实际能力开放；快门和预设写入结果不明时，先核对机身，避免重复执行。',
         ),
+        _HelpCard('后台连接与恢复', '在设置中开启后台接收保护。Android 接收期间显示持续通知，可从通知停止；iOS 提供有限收尾时间，到期暂停，持续接收请保持应用前台。重开应用后到下载队列核对原相机，继续未完成项。'),
+        _HelpCard('人像与修补', '编辑器的人像工具支持选择人脸、皮肤与五官调整；识别不准时可手动调整范围。修补工具支持涂抹选择、撤销、重做，确认后才写入当前编辑配方。原始照片始终保留。'),
+        _HelpCard('更新与旧版资料', '在设置中检查更新，Android 下载核对后打开系统安装；iOS 下载未签名 IPA 后自行签名安装。旧 Android 先安装同签名维护版导出资料包，iOS 可从文件中的旧版资料导入。迁入前可检查清单，旧账号需重新登录。'),
         const SizedBox(height: 8),
         FilledButton(
           onPressed: () => hueRootPage<void>(

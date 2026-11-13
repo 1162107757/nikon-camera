@@ -10,6 +10,7 @@ int HueviaRawInspect(const char *path,HueviaRawInfo *info,char *error,int capaci
 int HueviaRawDevelop(const char *path,const HueviaRawSettings *settings,uint32_t *argb,int width,int height,HueviaRawProgress progress,void *context,char *error,int capacity);
 const char *HueviaRawVersion(void);
 int HueviaRawEmbeddedJpeg(const char *path,uint8_t **bytes,int *length);
+int HueviaRawThumbnail(const char *path,int edge,uint32_t **pixels,int *width,int *height,HueviaRawProgress progress,void *context,char *error,int capacity);
 #ifdef __cplusplus
 }
 #endif

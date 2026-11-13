@@ -1,4 +1,5 @@
 #import "HueviaGallery.h"
+#import "HueviaAlbumOperations.h"
 #import "HueviaPublication.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
@@ -36,6 +37,7 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
 }
 
 @interface HueviaGallery () <PHPhotoLibraryChangeObserver>
+@property(nonatomic,strong) HueviaAlbumOperations *albumOperations;
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) PHFetchResult<PHAsset *> *index;
 @property(nonatomic,strong) NSMutableOrderedSet<NSString *> *known;
@@ -47,7 +49,7 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
 @end
 
 @implementation HueviaGallery
-- (void)configurePublicationWithRuntime:(CcHueviaSharedSharedRuntime *)runtime {self.publication=[[HueviaPublication alloc] initWithRoot:self.root runtime:runtime];}
+- (void)configurePublicationWithRuntime:(CcHueviaSharedSharedRuntime *)runtime {self.publication=[[HueviaPublication alloc] initWithRoot:self.root runtime:runtime];self.albumOperations=[[HueviaAlbumOperations alloc] initWithRoot:self.root runtime:runtime];}
 - (void)requestSavePermission:(FlutterResult)reply {
   NSAssert(NSThread.isMainThread,@"Photos permission belongs to the main thread");
   if(self.permissionPending){reply([FlutterError errorWithCode:@"BUSY" message:@"请先完成当前照片权限选择。" details:nil]);return;}
@@ -98,6 +100,7 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
   if([operation isEqualToString:@"gallery.access"])return [self access];
   if([operation isEqualToString:@"gallery.publish"]){if(!self.publication)galleryFail(@"应用尚未准备好。");return [self.publication publish:p task:task];}
   if([operation isEqualToString:@"gallery.publishOriginal"]){if(!self.publication)galleryFail(@"应用尚未准备好。");return [self.publication publishOriginal:p task:task];}
+  if([operation isEqual:@"gallery.delete"]||[operation isEqual:@"gallery.publishedCopies"]){if(!self.albumOperations)galleryFail(@"应用尚未准备好。");return [self.albumOperations request:operation payload:p task:task];}
   if(!canRead()){self.index=nil;[self.known removeAllObjects];galleryFail(@"请允许访问照片，或选择指定照片。");}
   if([operation isEqualToString:@"gallery.page"]){
     id requested=p[@"offset"]?:@0;
@@ -119,7 +122,7 @@ BOOL waitFor(dispatch_semaphore_t done,HueviaTask *task,NSTimeInterval limit){
     return @{@"items":rows,@"nextOffset":@(cursor),@"hasMore":@(cursor<self.index.count),@"access":[self access][@"access"],@"alternateBasis":@"modified"};
   }
   NSString *identifier=p[@"id"];if(![identifier isKindOfClass:NSString.class]||identifier.length>2048)galleryFail(@"照片标识无效。");
-  PHAsset *asset=[self asset:identifier];PHAssetResource *resource=originalResource(asset);if(!resource)galleryFail(@"照片原文件暂不可用。");
+  PHAsset *asset=([operation isEqual:@"gallery.import"]&&[p[@"batchSelection"] boolValue])?[PHAsset fetchAssetsWithLocalIdentifiers:@[identifier] options:nil].firstObject:[self asset:identifier];if(!asset||asset.mediaType!=PHAssetMediaTypeImage)galleryFail(@"照片访问范围已变化，请重新选择。");PHAssetResource *resource=originalResource(asset);if(!resource)galleryFail(@"照片原文件暂不可用。");
   if([operation isEqualToString:@"gallery.thumbnail"])return [self thumbnail:asset resource:resource task:task];
   if([operation isEqualToString:@"gallery.import"])return [self importAsset:asset resource:resource task:task];
   galleryFail(@"未知的系统相册操作。");return nil;

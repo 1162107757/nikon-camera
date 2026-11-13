@@ -9,3 +9,6 @@
 -keepclassmembers class cc.huevia.album.RawDeveloper$Info {
     <init>(int, int, int, int, int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String);
 }
+
+-keep class cc.huevia.sharedapp.NativeRawThumbnail { *; }
+-keep class cc.huevia.sharedapp.NativeRawThumbnail$Callbacks { *; }

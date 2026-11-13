@@ -12,6 +12,7 @@ import 'export_preview.dart';
 import 'export_save.dart';
 import 'export_settings_model.dart';
 import 'original_save.dart';
+import 'original_targets.dart';
 import 'theme.dart';
 import 'widgets.dart';
 
@@ -149,8 +150,26 @@ Future<void> _saveOriginal(
     if (!context.mounted || !current()) return;
     final format = checked['format'];
     if (format == 'JPG' || format == 'JPEG') {
-      final accepted = await dialog<bool>((_) => const _OriginalConfirmation());
-      if (accepted != true || !current()) return;
+      final accepted = await dialog<String>(
+        (_) => const _OriginalConfirmation(),
+      );
+      if (!context.mounted || !current()) return;
+      if (accepted == 'targets') {
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => OriginalTargetsPage(
+              state: model.state,
+              source: checked['path'] as String,
+              sourceSha: checked['sourceSha'] as String,
+              filename: source == model.photo.path
+                  ? model.photo.name
+                  : path.basename(source),
+            ),
+          ),
+        );
+        return;
+      }
+      if (accepted != 'gallery') return;
       final save = OriginalSave(
         model.state,
         model.owner,
@@ -163,6 +182,19 @@ Future<void> _saveOriginal(
       } finally {
         save.dispose();
       }
+    } else if (format == 'NEF') {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) => OriginalTargetsPage(
+            state: model.state,
+            source: checked['path'] as String,
+            sourceSha: checked['sourceSha'] as String,
+            filename: source == model.photo.path
+                ? model.photo.name
+                : path.basename(source),
+          ),
+        ),
+      );
     } else {
       await SharePlus.instance.share(
         ShareParams(
@@ -1359,13 +1391,18 @@ class _OriginalConfirmation extends StatelessWidget {
                   _originalAction(
                     context,
                     '取消',
-                    () => Navigator.pop(context, false),
+                    () => Navigator.pop(context, 'cancel'),
                   ),
                   _originalAction(
                     context,
                     '保存原始文件',
-                    () => Navigator.pop(context, true),
+                    () => Navigator.pop(context, 'gallery'),
                     primary: true,
+                  ),
+                  _originalAction(
+                    context,
+                    '选择其他保存位置',
+                    () => Navigator.pop(context, 'targets'),
                   ),
                 ],
               ),

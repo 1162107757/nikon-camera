@@ -10,6 +10,8 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'camera_live.dart';
+import 'camera_downloads.dart';
+import 'connection_protection.dart';
 
 typedef Json = Map<String, dynamic>;
 Json object(Object? value) => Map<String, dynamic>.from(value! as Map);
@@ -31,6 +33,7 @@ class HueviaCore {
     (event) => event is Map && event['kind'] == 'galleryChanged',
   );
   String root = '';
+  String platform = '';
   Json schema = {};
   final previewRevision = ValueNotifier<int>(0);
   bool customTemplate = false;
@@ -44,6 +47,7 @@ class HueviaCore {
   Future<void> initialize() async {
     final response = await _invoke('initialize', {});
     root = response['root'] as String;
+    platform = response['platform'] as String? ?? '';
     schema = object(response['schema']);
     try {
       await call('media.templateInfo');
@@ -292,9 +296,27 @@ class AppState extends ChangeNotifier {
   CameraLive? _cameraLive;
   CameraLive get cameraLive => _cameraLive ??= CameraLive(this);
   bool get cameraLiveActive => _cameraLive?.active ?? false;
+  CameraDownloads? _cameraDownloads;
+  CameraDownloads get cameraDownloads =>
+      _cameraDownloads ??= CameraDownloads(this);
+  bool get cameraDownloadsActive => _cameraDownloads?.busy ?? false;
+  bool _cameraManualTransfer = false;
+  bool get cameraManualTransferActive => _cameraManualTransfer;
+  bool claimCameraTransfer() {
+    if (_cameraManualTransfer || cameraLiveActive || cameraDownloadsActive) return false;
+    _cameraManualTransfer = true;
+    notifyListeners();
+    return true;
+  }
+  void releaseCameraTransfer() { if (_cameraManualTransfer) { _cameraManualTransfer = false; notifyListeners(); } }
+  CameraConnectionProtection? _connectionProtection;
+  CameraConnectionProtection get connectionProtection =>
+      _connectionProtection ??= CameraConnectionProtection(core);
   @override
   void dispose() {
     _cameraLive?.dispose();
+    _cameraDownloads?.dispose();
+    _connectionProtection?.dispose();
     cameraVisible.dispose();
     super.dispose();
   }
@@ -339,6 +361,13 @@ class AppState extends ChangeNotifier {
     return next;
   }
 
+  Future<void> removePhotos(Set<String> paths) => _serialPhotos(() async {
+    final next = photos.where((photo) => !paths.contains(photo.path)).toList();
+    await _persistPhotos(next);
+    photos = next;
+    notifyListeners();
+  });
+
   Future<void> initialize() async {
     failure = null;
     notifyListeners();
@@ -352,6 +381,14 @@ class AppState extends ChangeNotifier {
       }
       await refreshLibrary();
       session = await core.call('account.current');
+      if (core.platform == 'android' || core.platform == 'ios') {
+        await connectionProtection.initialize();
+        try {
+          await cameraDownloads.restore();
+        } catch (_) {
+          /* Original files remain accessible while a queue is unavailable. */
+        }
+      }
       final index = File(p.join(core.root, 'photos-index.json'));
       if (await index.exists()) {
         final value = jsonDecode(await index.readAsString()) as List;

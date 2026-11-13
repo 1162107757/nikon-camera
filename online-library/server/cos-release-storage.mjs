@@ -3,9 +3,14 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { createHash } from 'node:crypto';
 import { ServiceError } from './cloudbase.mjs';
 import { MAX_APK_BYTES } from './apk.mjs';
+import { MAX_IPA_BYTES } from './ipa.mjs';
 
 const APK = /^app-releases\/([a-f0-9]{64})\.(?:apk|bin)$/;
 const CHUNK = /^app-upload\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\/(?:0|[1-9]|[1-5][0-9]|6[0-3])-([a-f0-9]{64})\.part$/;
+const MOBILE = /^mobile-releases\/(ios|android)\/([a-f0-9]{64})\.bin$/;
+const MOBILE_CHUNK = /^mobile-upload\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\/(?:0|[1-9][0-9]?|1[0-9]{2}|2[0-4][0-9]|25[0-5])-([a-f0-9]{64})\.part$/;
+const objectHash = path => (APK.exec(path) || CHUNK.exec(path) || MOBILE_CHUNK.exec(path))?.[1] || MOBILE.exec(path)?.[2];
+const maximumFor = path => MOBILE.test(path) ? MAX_IPA_BYTES : APK.test(path) ? MAX_APK_BYTES : 512 * 1024;
 const hash = data => createHash('sha256').update(data).digest('hex');
 const unavailable = () => new ServiceError(503, 'COS_RELEASE_UNAVAILABLE', '更新包存储暂时不可用，请稍后重试。');
 const requestCredentials = new AsyncLocalStorage();
@@ -41,7 +46,7 @@ export class CosReleaseStorage {
     this.pendingVerifications = new Map();
   }
   key(path) {
-    if (typeof path !== 'string' || !(APK.test(path) || CHUNK.test(path))) throw unavailable();
+    if (typeof path !== 'string' || !(APK.test(path) || CHUNK.test(path) || MOBILE.test(path) || MOBILE_CHUNK.test(path))) throw unavailable();
     return this.prefix + path;
   }
   context() {
@@ -53,8 +58,8 @@ export class CosReleaseStorage {
   }
   params(path) { return { Bucket: this.bucket, Region: this.region, Key: this.key(path) }; }
   async put(path, data, mimeType = 'application/octet-stream') {
-    const params = this.params(path), expected = (APK.exec(path) || CHUNK.exec(path))[1];
-    const maximum = APK.test(path) ? MAX_APK_BYTES : 512 * 1024;
+    const params = this.params(path), expected = objectHash(path);
+    const maximum = maximumFor(path);
     if (!Buffer.isBuffer(data) || !data.length || data.length > maximum || hash(data) !== expected || mimeType !== 'application/octet-stream') throw unavailable();
     try {
       const { client } = this.context();
@@ -90,7 +95,7 @@ export class CosReleaseStorage {
     } catch { throw unavailable(); }
   }
   async get(path, maximum) {
-    const cap = APK.test(path) ? MAX_APK_BYTES : 512 * 1024;
+    const cap = maximumFor(path);
     if (!Number.isSafeInteger(maximum) || maximum < 1 || maximum > cap) throw unavailable();
     let response;
     try {
@@ -106,8 +111,7 @@ export class CosReleaseStorage {
     finally { try { if (response?.body && !response.body.locked) await response.body.cancel(); } catch {} }
   }
   async verify(path, byteLength, sha256) {
-    const match = typeof path === 'string' && APK.exec(path);
-    if (!match || match[1] !== sha256 || !Number.isSafeInteger(byteLength) || byteLength < 1 || byteLength > MAX_APK_BYTES) throw unavailable();
+    if (typeof path !== 'string' || !(APK.test(path) || MOBILE.test(path)) || objectHash(path) !== sha256 || !Number.isSafeInteger(byteLength) || byteLength < 1 || byteLength > maximumFor(path)) throw unavailable();
     this.key(path);
     // Each caller must still have valid request-scoped credentials. Sharing a
     // read never shares download URLs or skips a later request's integrity check.
@@ -138,11 +142,12 @@ export class CosReleaseStorage {
   }
   async signDownload(path, expiresIn = 60, downloadName) {
     this.key(path);
-    if (!APK.test(path) || !Number.isInteger(expiresIn) || expiresIn < 1 || expiresIn > 60
-        || !/^Huevia-[1-9][0-9]{0,9}-(?:beta|stable)\.apk$/.test(downloadName || '')) throw unavailable();
+    const mobile=MOBILE.exec(path);
+    const validName=mobile ? (mobile[1]==='ios' ? /^Huevia-iOS-[1-9][0-9]{0,8}-(?:beta|stable)\.ipa$/ : /^Huevia-next-[1-9][0-9]{0,8}-(?:beta|stable)\.apk$/).test(downloadName || '') : /^Huevia-[1-9][0-9]{0,9}-(?:beta|stable)\.apk$/.test(downloadName || '');
+    if (!(APK.test(path) || mobile) || !Number.isInteger(expiresIn) || expiresIn < 1 || expiresIn > 60 || !validName) throw unavailable();
     // The validated ASCII filename is a legal header token; avoid provider/proxy quote escaping.
     return this.signedGet(path, expiresIn, { 'response-content-disposition': `attachment; filename=${downloadName}`,
-      'response-content-type': 'application/vnd.android.package-archive' });
+      'response-content-type': mobile?.[1]==='ios' ? 'application/octet-stream' : 'application/vnd.android.package-archive' });
   }
 }
 export function releaseStorageFromEnv(env, legacyStorage) {

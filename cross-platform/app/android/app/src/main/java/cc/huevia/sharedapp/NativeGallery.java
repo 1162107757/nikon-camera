@@ -7,6 +7,7 @@ import cc.huevia.album.PhotoSort;
 import cc.huevia.album.PhotoEditStore;
 import cc.huevia.album.SharedGalleryPublication;
 import cc.huevia.album.SharedGalleryCopies;
+import cc.huevia.album.SharedRawGalleryPublication;
 import cc.huevia.library.SharedJson;
 import cc.huevia.shared.*;
 import java.io.*;
@@ -21,6 +22,9 @@ final class NativeGallery {
     private final SharedRuntime runtime;
     private final LocalPhotoRepository repository;
     private final LinkedHashMap<String,LocalPhotoRepository.PhonePhoto> known=new LinkedHashMap<>();
+    private final Set<String> deletableCopies=new HashSet<>();
+    synchronized void allowDeletionUri(String uri){deletableCopies.add(uri);}
+    synchronized android.net.Uri deletionUri(String id)throws IOException{LocalPhotoRepository.PhonePhoto photo=known.get(id);if(photo!=null&&repository.access()!=LocalPhotoRepository.Access.NONE)return photo.uri;if(deletableCopies.contains(id))return android.net.Uri.parse(id);if(repository.access()!=LocalPhotoRepository.Access.NONE&&id.matches("content://media/(external|external_primary)/images/media/[0-9]+"))return repository.describe(android.net.Uri.parse(id)).uri;throw new IOException("照片访问范围已变化，请刷新相册后重新选择。");}
     private final Object publicationLock=new Object();
     private Thread publicationThread;
     private String publicationJob;
@@ -46,11 +50,13 @@ final class NativeGallery {
                 if(cancel.getAsBoolean())throw new InterruptedIOException("保存照片已取消。");
                 runtime.guardOwner(owner);
                 String filename=SharedRuntime.text(p,"filename",256),sha=(String)saved.get("sha256");File source=new File((String)saved.get("path"));long bytes=((Number)saved.get("bytes")).longValue();
-                String uri=original?SharedGalleryPublication.publishOriginal(context,source,owner,id,filename,sha,bytes,cancel):Boolean.TRUE.equals(extra)?SharedGalleryCopies.publish(context,source,owner,id,SharedRuntime.text(p,"operationId",32),filename,sha,bytes,cancel):SharedGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,false,cancel);
+                String uri=original?("NEF".equals(saved.get("format"))?SharedRawGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,cancel):SharedGalleryPublication.publishOriginal(context,source,owner,id,filename,sha,bytes,cancel)):Boolean.TRUE.equals(extra)?SharedGalleryCopies.publish(context,source,owner,id,SharedRuntime.text(p,"operationId",32),filename,sha,bytes,cancel):SharedGalleryPublication.publish(context,source,owner,id,filename,sha,bytes,false,cancel);
                 if(original){SharedGalleryPublication.verify(context,uri,sha,bytes,cancel);runtime.releaseOriginalPublication(SharedJson.encode(SharedRuntime.map("owner",owner,"operationId",SharedRuntime.text(p,"operationId",32),"sha256",sha,"bytes",bytes)));}
                 runtime.guardOwner(owner);
                 repository.invalidatePhoneIndex();
-                return SharedJson.encode(SharedRuntime.map("id",id,"published",true,"uri",uri,"verified",true));
+                Map<String,Object> receipt=SharedRuntime.map("id",id,"published",true,"uri",uri,"verified",true);
+                if(original){receipt.put("owner",owner);receipt.put("operationId",SharedRuntime.text(p,"operationId",32));receipt.put("sha256",sha);receipt.put("bytes",bytes);receipt.put("targetKind","system");}
+                return SharedJson.encode(receipt);
             } finally {synchronized(publicationLock){publicationJob=null;publicationThread=null;Thread.interrupted();}}
         }
         if(operation.equals("gallery.access"))return access();
@@ -64,7 +70,8 @@ final class NativeGallery {
             while(known.size()>600)known.remove(known.keySet().iterator().next());
             return SharedJson.encode(SharedRuntime.map("items",rows,"nextOffset",page.nextOffset,"hasMore",page.hasMore,"access",repository.access().name().toLowerCase(Locale.ROOT)));
         }
-        LocalPhotoRepository.PhonePhoto photo=known.get(SharedRuntime.text(p,"id",2048));
+        String selectedId=SharedRuntime.text(p,"id",2048);LocalPhotoRepository.PhonePhoto photo=known.get(selectedId);
+        if(photo==null&&operation.equals("gallery.import")&&Boolean.TRUE.equals(p.get("batchSelection"))&&selectedId.matches("content://media/(external|external_primary)/images/media/[0-9]+")&&repository.access()!=LocalPhotoRepository.Access.NONE)photo=repository.describe(android.net.Uri.parse(selectedId));
         if(photo==null||repository.access()==LocalPhotoRepository.Access.NONE)throw new IOException("照片访问范围已变化，请刷新相册。");
         if(operation.equals("gallery.import")){
             InputStream input=context.getContentResolver().openInputStream(photo.uri);

@@ -10,6 +10,8 @@ import 'package:integration_test/integration_test.dart';
 import 'package:huevia/domain.dart';
 
 import 'project_pipeline_fixture.dart';
+import 'retouch_pipeline_fixture.dart';
+import 'raw_thumbnail_fixture.dart';
 
 import 'package:huevia/batch_export.dart';
 
@@ -275,6 +277,8 @@ void main() {
         false,
         reason: 'Run in the isolated test application with built-in templates',
       );
+      await verifyRetouchPipeline(core);
+      await verifyRawThumbnails(core, source.path);
       try {
         final revision = core.previewRevision.value;
         final selected = await core.call('media.templateSet', {

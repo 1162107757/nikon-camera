@@ -36,6 +36,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     this.interval = const Duration(seconds: 3),
   }) {
     state.addListener(_accountChanged);
+    state.connectionProtection.addListener(_protectionChanged);
     WidgetsBinding.instance.addObserver(this);
   }
   final AppState state;
@@ -57,6 +58,8 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
 
   bool get working => _working;
   bool get foreground => _foreground;
+  bool get _canRun =>
+      _foreground || state.connectionProtection.backgroundAllowed;
   bool get transportBusy =>
       active &&
       (phase == CameraLivePhase.starting ||
@@ -89,6 +92,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       state.session['logoutPending'] != true;
   void _check(int generation) {
     if (!_current(generation)) throw const AppFailure('拍摄任务已停止或账号已改变。');
+    if (!_canRun) throw const AppFailure('后台接收已暂停，返回应用后可继续。');
   }
 
   Json get _lease => {
@@ -184,6 +188,10 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     if (!_alive || active || _working || phase == CameraLivePhase.stopping) {
       return;
     }
+    if (state.cameraDownloadsActive) {
+      throw const AppFailure('请先暂停下载队列，再开启边拍边传。');
+    }
+    if (state.cameraManualTransferActive) throw const AppFailure('请先停止手动接收，再开启边拍边传。');
     owner = currentOwner;
     projectId = selected;
     projectName = label;
@@ -197,6 +205,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     _events = state.core.operationProgress.listen(_progress, onError: (_) {});
     _changed();
     try {
+      await state.connectionProtection.setActive('live', true);
       final status = await _call('camera.status', {}, generation);
       _validateStatus(status);
       cameraId = status['cameraId'] as String;
@@ -214,7 +223,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       await _attach(status, persisted, generation, resume: resume);
       _processor = ProjectPresetsModel(state)..selected = projectId;
       _processor!.addListener(_processingChanged);
-      phase = _foreground ? CameraLivePhase.watching : CameraLivePhase.paused;
+      phase = _canRun ? CameraLivePhase.watching : CameraLivePhase.paused;
     } catch (failure) {
       if (_current(generation)) {
         error = '$failure';
@@ -223,6 +232,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       }
       await _events?.cancel();
       _events = null;
+      await state.connectionProtection.setActive('live', false);
       if (watchId.isNotEmpty) {
         try {
           await state.core.call('camera.live.stop', {
@@ -284,7 +294,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     if (automatic &&
         active &&
         _alive &&
-        _foreground &&
+        _canRun &&
         phase != CameraLivePhase.blocked &&
         !_working) {
       _timer = Timer(interval, () => unawaited(pollOnce()));
@@ -295,7 +305,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     if (!active ||
         !_alive ||
         _working ||
-        !_foreground ||
+        !_canRun ||
         phase == CameraLivePhase.blocked) {
       return;
     }
@@ -354,18 +364,19 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
           .toList();
       for (final item in candidates) {
         _check(generation);
-        if (!_foreground) break;
+        if (!_canRun) break;
         await _receive(item, generation);
       }
-      if (_foreground && _current(generation)) await _process(generation);
+      if (_canRun && _current(generation)) await _process(generation);
       if (_current(generation)) {
-        phase = _foreground ? CameraLivePhase.watching : CameraLivePhase.paused;
+        phase = _canRun ? CameraLivePhase.watching : CameraLivePhase.paused;
       }
     } catch (failure) {
       if (_current(generation)) {
         error = '$failure';
-        phase = CameraLivePhase.blocked;
-        if (failure is _LiveOperationFailure &&
+        phase = _canRun ? CameraLivePhase.blocked : CameraLivePhase.paused;
+        if (_canRun &&
+            failure is _LiveOperationFailure &&
             failure.operation.startsWith('camera.')) {
           try {
             final status = await _call('camera.status', {}, generation);
@@ -499,11 +510,21 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _foreground = state == AppLifecycleState.resumed;
-    if (!_foreground) {
+    _protectionChanged();
+  }
+
+  void _protectionChanged() {
+    if (!_alive) return;
+    if (!_canRun) {
       _timer?.cancel();
       _timer = null;
+      final job = _job;
+      if (active && job != null) {
+        unawaited(state.core.cancel(job).catchError((Object _) {}));
+      }
+      if (active) unawaited(_processor?.stop());
       if (active && !_working) phase = CameraLivePhase.paused;
-    } else if (active && !_working) {
+    } else if (active && !_working && phase == CameraLivePhase.paused) {
       phase = CameraLivePhase.watching;
       if (automatic) unawaited(pollOnce());
     }
@@ -554,6 +575,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     _processor?.removeListener(_processingChanged);
     _processor?.dispose();
     _processor = null;
+    await state.connectionProtection.setActive('live', false);
     phase = CameraLivePhase.stopped;
     _changed();
   }
@@ -562,6 +584,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   void dispose() {
     _alive = false;
     state.removeListener(_accountChanged);
+    state.connectionProtection.removeListener(_protectionChanged);
     WidgetsBinding.instance.removeObserver(this);
     unawaited(stop());
     super.dispose();

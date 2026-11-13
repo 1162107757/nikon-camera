@@ -5,6 +5,50 @@ const _editorWhite = Color(0xfff4f5f7);
 const _editorMuted = Color(0xffc8cdca);
 
 extension _LegacyWorkspace on _EditorPageState {
+  Future<void> openRetouch({bool patch = false}) async {
+    if (!toolsEnabled) return;
+    debounce?.cancel();
+    revision++;
+    refreshWorkspace(() => managingTools = true);
+    try {
+      await settleLocalAdjustments();
+      if (activeJob != null) await widget.state.core.cancel(activeJob!);
+      if (!mounted || !sameOwner) return;
+      final frozen = recipe.clone().data, fingerprint = jsonEncode(recipe.data);
+      bool current() =>
+          mounted && sameOwner && jsonEncode(recipe.data) == fingerprint;
+      final result = await hueRootPage<Json>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RetouchWorkspace(
+            state: widget.state,
+            photo: widget.photo,
+            owner: owner,
+            recipe: frozen,
+            isCurrent: current,
+            patch: patch,
+          ),
+        ),
+      );
+      if (result == null || !current()) return;
+      if (result['localData'] != (recipe.data['localData'] ?? '')) checkpoint();
+      refreshWorkspace(() {
+        recipe.data['localData'] = result['localData'];
+        installLocalState(result);
+        compare = false;
+      });
+      panelRevision.value++;
+      unawaited(saveDraft().catchError((_) {}));
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) {
+        refreshWorkspace(() => managingTools = false);
+        unawaited(render());
+      }
+    }
+  }
+
   bool get toolsEnabled =>
       restored &&
       sameOwner &&
@@ -701,11 +745,19 @@ extension _LegacyWorkspace on _EditorPageState {
       -2,
       -7,
       -8,
+      -9,
       ...parameters
           .map((row) => row['index'] as int)
           .where((index) => ![1, 2, 9, 7].contains(index)),
     ];
-    const special = {-5: '曲线', -6: 'HSL', -2: '调色盘', -7: '去灰', -8: '局部'};
+    const special = {
+      -5: '曲线',
+      -6: 'HSL',
+      -2: '调色盘',
+      -7: '去灰',
+      -8: '局部',
+      -9: '修补',
+    };
     return Column(
       children: [
         SizedBox(
@@ -840,6 +892,8 @@ extension _LegacyWorkspace on _EditorPageState {
                                 if (index < 0) {
                                   if (index == -8) {
                                     editSelection();
+                                  } else if (index == -9) {
+                                    unawaited(openRetouch(patch: true));
                                   } else {
                                     advancedTool(-index);
                                   }
@@ -867,6 +921,7 @@ extension _LegacyWorkspace on _EditorPageState {
                                         -2: HueIconKind.palette,
                                         -7: HueIconKind.cleanup,
                                         -8: HueIconKind.brush,
+                                        -9: HueIconKind.cleanup,
                                       }[index]!
                                     : parameterIcon(
                                         parameters[index]['name'] as String,
@@ -1294,12 +1349,31 @@ extension _LegacyWorkspace on _EditorPageState {
                                 horizontal: 20,
                               ),
                               child: tab == 8
-                                  ? const Padding(
-                                      padding: EdgeInsets.only(top: 16),
-                                      child: Text(
-                                        '人像精修',
-                                        style: TextStyle(color: _editorWhite),
-                                      ),
+                                  ? Column(
+                                      children: [
+                                        ListTile(
+                                          title: const Text('人像精修'),
+                                          subtitle: const Text('选脸、皮肤范围与身体塑形'),
+                                          trailing: const Icon(
+                                            Icons.chevron_right,
+                                          ),
+                                          onTap: toolsEnabled
+                                              ? () => unawaited(openRetouch())
+                                              : null,
+                                        ),
+                                        ListTile(
+                                          title: const Text('涂抹自动修补'),
+                                          subtitle: const Text('松手后寻找干净纹理'),
+                                          trailing: const Icon(
+                                            Icons.chevron_right,
+                                          ),
+                                          onTap: toolsEnabled
+                                              ? () => unawaited(
+                                                  openRetouch(patch: true),
+                                                )
+                                              : null,
+                                        ),
+                                      ],
                                     )
                                   : controls(),
                             ),

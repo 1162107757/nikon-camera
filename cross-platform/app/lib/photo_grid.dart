@@ -33,12 +33,7 @@ class PhotoMasonry extends StatelessWidget {
     final image = phone
         ? _GalleryThumbnail(core: core, id: row['id'] as String)
         : row['raw'] == true
-        ? ColoredBox(
-            color: p.container,
-            child: Center(
-              child: HueIcon(HueIconKind.file, size: 36, color: p.secondary),
-            ),
-          )
+        ? _RawThumbnail(core: core, source: row['id'] as String)
         : Image.file(
             File(row['id'] as String),
             fit: BoxFit.cover,
@@ -256,6 +251,51 @@ class PhotoMasonry extends StatelessWidget {
 }
 
 Future<void> _thumbnailQueue = Future.value();
+
+class _RawThumbnail extends StatefulWidget {
+  const _RawThumbnail({required this.core, required this.source});
+  final HueviaCore core;
+  final String source;
+  @override
+  State<_RawThumbnail> createState() => _RawThumbnailState();
+}
+
+class _RawThumbnailState extends State<_RawThumbnail> {
+  late Future<String?> image = load();
+  Future<String?> load() {
+    final result = _thumbnailQueue.then((_) async {
+      if (!mounted) return null;
+      final value = await widget.core.call('media.rawThumbnail', {'path': widget.source});
+      final target = value['path'];
+      if (target is! String || !path.isWithin(path.join(widget.core.root, 'raw-thumbnails'), target)) {
+        throw const AppFailure('RAW 预览路径无效。');
+      }
+      return target;
+    });
+    _thumbnailQueue = result.then<void>((_) {}, onError: (_) {});
+    return result;
+  }
+  @override
+  void didUpdateWidget(_RawThumbnail oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.source != widget.source || oldWidget.core != widget.core) image = load();
+  }
+  @override
+  Widget build(BuildContext context) => FutureBuilder<String?>(
+    future: image,
+    builder: (context, snapshot) => snapshot.data != null
+        ? Image.file(File(snapshot.data!), fit: BoxFit.cover, cacheWidth: 384,
+            errorBuilder: (_, _, _) => fallback(context))
+        : snapshot.connectionState != ConnectionState.done
+        ? const Center(child: SizedBox.square(dimension: 24, child: CircularProgressIndicator(strokeWidth: 2)))
+        : fallback(context),
+  );
+  Widget fallback(BuildContext context) => Tooltip(
+    message: 'RAW 预览暂不可用，点按仍可打开原文件',
+    child: ColoredBox(color: HuePalette.of(context).container,
+      child: Center(child: HueIcon(HueIconKind.file, size: 36, color: HuePalette.of(context).secondary))),
+  );
+}
 
 class _GalleryThumbnail extends StatefulWidget {
   const _GalleryThumbnail({required this.core, required this.id});

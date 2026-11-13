@@ -2,8 +2,11 @@
 #import "HueviaRaster.h"
 #import "HueviaRaw.h"
 #import "HueviaFrames.h"
+#import "HueviaRetouch.h"
 #import <ImageIO/ImageIO.h>
 #import <CommonCrypto/CommonDigest.h>
+#include <cstring>
+#include <cstdlib>
 #import "cc/huevia/shared/SharedRecipe.h"
 #import "cc/huevia/shared/SharedCaptureInfo.h"
 #import "cc/huevia/shared/SharedRawSettings.h"
@@ -319,6 +322,50 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     NSString *target=[[_root stringByAppendingPathComponent:@"previews"] stringByAppendingPathComponent:[NSString stringWithFormat:@"atmosphere-%@.png",NSUUID.UUID.UUIDString]];
     @try{check(task);encode(small,target,YES,@{});return @{@"path":target};}@catch(id error){[NSFileManager.defaultManager removeItemAtPath:target error:nil];@throw error;}
   }
+  if([operation isEqualToString:@"media.rawThumbnail"]){
+    check(task);if(!raw)fail(@"请选择 RAW 原文件。");NSString *sha=[_runtime sourceIdentityWithNSString:path withBoolean:YES];
+    NSString *directory=[_root stringByAppendingPathComponent:@"raw-thumbnails"];
+    NSFileManager *files=NSFileManager.defaultManager;NSDictionary *attributes=[files attributesOfItemAtPath:directory error:nil];
+    if(attributes&&![attributes[NSFileType] isEqual:NSFileTypeDirectory])fail(@"RAW 预览目录不可用。");
+    if(![files createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建 RAW 预览目录。");
+    NSString *key=hashText([NSString stringWithFormat:@"raw-thumb-v2\n%@\n%s",sha,HueviaRawVersion()]);
+    NSString *target=[directory stringByAppendingPathComponent:[key stringByAppendingString:@".jpg"]];attributes=[files attributesOfItemAtPath:target error:nil];
+    if(attributes&&![attributes[NSFileType] isEqual:NSFileTypeRegular])fail(@"RAW 预览路径无效。");
+    BOOL validCache=NO;
+    if([attributes fileSize]>=4&&[attributes fileSize]<4*1024*1024){
+      NSData *bytes=[NSData dataWithContentsOfFile:target options:NSDataReadingMappedIfSafe error:nil];const uint8_t *data=(const uint8_t *)bytes.bytes;
+      if(bytes.length>=4&&data[0]==0xff&&data[1]==0xd8&&data[bytes.length-2]==0xff&&data[bytes.length-1]==0xd9){
+        CGImageSourceRef cached=CGImageSourceCreateWithData((__bridge CFDataRef)bytes,NULL);
+        if(cached){CGImageRef image=CGImageSourceCreateImageAtIndex(cached,0,NULL);validCache=image&&CGImageGetWidth(image)>0&&CGImageGetHeight(image)>0&&std::max(CGImageGetWidth(image),CGImageGetHeight(image))<=512;if(image)CGImageRelease(image);CFRelease(cached);}
+      }
+    }
+    if(validCache){check(task);[_runtime validateSourceWithNSString:path withNSString:sha];[files setAttributes:@{NSFileModificationDate:NSDate.date} ofItemAtPath:target error:nil];return @{@"path":target,@"sourceSha":sha};}
+    HueviaRawInfo info;char error[1024]={};if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);validSize(info.width,info.height,60000000);
+    HueviaRaster *small=nil;uint8_t *jpeg=nullptr;int length=0,outputOrientation=info.exifOrientation;
+    if(HueviaRawEmbeddedJpeg(path.fileSystemRepresentation,&jpeg,&length)==0){
+      NSData *data=[NSData dataWithBytesNoCopy:jpeg length:length freeWhenDone:YES];
+      CGImageSourceRef source=CGImageSourceCreateWithData((__bridge CFDataRef)data,NULL);
+      if(source){@try{NSDictionary *embedded=CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(source,0,NULL));int orientation=[embedded[(__bridge id)kCGImagePropertyOrientation] intValue];small=decode(source,_root,512);if(orientation>=1&&orientation<=8)outputOrientation=1;}@catch(id unavailable){check(task);}@finally{CFRelease(source);}}
+    }
+    BOOL usedEmbedded=small!=nil;
+    if(!small){uint32_t *pixels=nullptr;int width=0,height=0;
+      if(HueviaRawThumbnail(path.fileSystemRepresentation,512,&pixels,&width,&height,rawProgress,(__bridge void *)task,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);
+      @try{small=[[HueviaRaster alloc] initWithWidth:width height:height root:_root];std::memcpy(small.pixels,pixels,size_t(width)*height*4);}@finally{std::free(pixels);}
+    }
+    NSString *temporary=[directory stringByAppendingPathComponent:[NSUUID.UUID.UUIDString stringByAppendingString:@".part"]];
+    @try{
+      check(task);encode(small,temporary,NO,@{(__bridge id)kCGImageDestinationLossyCompressionQuality:@.88,(__bridge id)kCGImagePropertyOrientation:@(outputOrientation)});
+      [_runtime validateSourceWithNSString:path withNSString:sha];check(task);
+      if([files fileExistsAtPath:target]){if(![files removeItemAtPath:target error:nil])fail(@"无法更新 RAW 预览。");}
+      if(![files moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存 RAW 预览。");
+      NSArray<NSURL *> *cached=[files contentsOfDirectoryAtURL:[NSURL fileURLWithPath:directory] includingPropertiesForKeys:@[NSURLContentModificationDateKey,NSURLIsRegularFileKey] options:0 error:nil];
+      NSMutableArray<NSURL *> *managed=[NSMutableArray array];NSRegularExpression *pattern=[NSRegularExpression regularExpressionWithPattern:@"^[a-f0-9]{64}\\.jpg$" options:0 error:nil];
+      for(NSURL *url in cached)if([pattern numberOfMatchesInString:url.lastPathComponent options:0 range:NSMakeRange(0,url.lastPathComponent.length)]&&[[files attributesOfItemAtPath:url.path error:nil][NSFileType] isEqual:NSFileTypeRegular])[managed addObject:url];
+      [managed sortUsingComparator:^NSComparisonResult(NSURL *a,NSURL *b){NSDate *x,*y;[a getResourceValue:&x forKey:NSURLContentModificationDateKey error:nil];[b getResourceValue:&y forKey:NSURLContentModificationDateKey error:nil];return [x?:NSDate.distantPast compare:y?:NSDate.distantPast];}];
+      for(NSUInteger i=0;i+64<managed.count;i++)if(![managed[i].path isEqual:target])[files removeItemAtURL:managed[i] error:nil];
+      return @{@"path":target,@"sourceSha":sha,@"width":@(outputOrientation>=5?small.pixelHeight:small.pixelWidth),@"height":@(outputOrientation>=5?small.pixelWidth:small.pixelHeight),@"embeddedPreview":@(usedEmbedded)};
+    }@finally{[files removeItemAtPath:temporary error:nil];}
+  }
   if([operation isEqualToString:@"media.info"]){
     if(raw){HueviaRawInfo info;char error[1024];if(HueviaRawInspect(path.fileSystemRepresentation,&info,error,sizeof(error)))fail([NSString stringWithUTF8String:error]);return @{@"width":@(info.width),@"height":@(info.height),@"raw":@YES,@"make":[NSString stringWithUTF8String:info.make]?:@"",@"model":[NSString stringWithUTF8String:info.model]?:@""};}
     int width=[metadata[(__bridge id)kCGImagePropertyPixelWidth] intValue],height=[metadata[(__bridge id)kCGImagePropertyPixelHeight] intValue],orientation=[metadata[(__bridge id)kCGImagePropertyOrientation] intValue];if(orientation<1||orientation>8)orientation=1;validSize(width,height);return @{@"width":@(width),@"height":@(height),@"raw":@NO,@"orientation":@(orientation)};
@@ -349,6 +396,12 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     NSString *name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];
     @try{encode(working,temporary,NO,safeMetadata(metadata,working.pixelWidth,working.pixelHeight,preview?.98:1.0));check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sourceSha];if(![NSFileManager.defaultManager moveItemAtPath:temporary toPath:target error:nil])fail(@"无法保存 RAW 编辑副本。");}@finally{[NSFileManager.defaultManager removeItemAtPath:temporary error:nil];}
     NSDictionary *settings=[NSJSONSerialization JSONObjectWithData:[[CcHueviaSharedSharedRawSettings jsonWithCcHueviaNcpRawDevelopmentSettings:controls] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];return @{@"path":target,@"width":@(working.pixelWidth),@"height":@(working.pixelHeight),@"sourceSha":sourceSha,@"settings":settings,@"rawColorStatus":status};
+  }
+  if([operation hasPrefix:@"media.retouch"]){
+    NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class]||owner.length>64)fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];NSString *sourceSha=[_runtime sourceIdentityWithNSString:path withBoolean:YES];
+    BOOL needsImage=[operation isEqual:@"media.retouchAnalyze"]||[operation isEqual:@"media.retouchPatch"]||[operation isEqual:@"media.retouchHeal"]||([operation isEqual:@"media.retouchChange"]&&[p[@"action"] isEqual:@"manualFace"]);if(raw&&needsImage)fail(@"请先显影 RAW，再使用人像和修补工具。");
+    HueviaRaster *image=needsImage?compose(load(path,_root,[operation isEqual:@"media.retouchPatch"]?384:1280),CcHueviaNcpPhotoGeometry_get_NONE(),_root,task):nil;
+    NSDictionary *value=[HueviaRetouch request:operation payload:p image:image task:task];check(task);[_runtime guardOwnerWithNSString:owner];[_runtime validateSourceWithNSString:path withNSString:sourceSha];return value;
   }
   if([operation isEqualToString:@"media.cleanupAnalyze"]){
     NSString *owner=p[@"owner"]?:@"";if(![owner isKindOfClass:NSString.class])fail(@"编辑账号数据无效。");[_runtime guardOwnerWithNSString:owner];

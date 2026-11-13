@@ -3,15 +3,20 @@ import { inflateRawSync } from 'node:zlib';
 import { ServiceError } from './cloudbase.mjs';
 
 export const MAX_APK_BYTES = 32 * 1024 * 1024;
+export const MAX_NEXT_APK_BYTES = 128 * 1024 * 1024;
 export const APK_PACKAGE = 'cc.huevia';
 export const LEGACY_APK_PACKAGE = 'com.nikonpreset.usbprobe';
-export const APK_PACKAGES = Object.freeze([APK_PACKAGE, LEGACY_APK_PACKAGE]);
+export const NEXT_APK_PACKAGE = 'cc.huevia.next';
+export const APK_PACKAGES = Object.freeze([APK_PACKAGE, LEGACY_APK_PACKAGE, NEXT_APK_PACKAGE]);
 export const APK_SIGNER_SHA256 = '04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31';
+export const NEXT_APK_SIGNER_SHA256 = '76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75';
+export const APK_SIGNERS = Object.freeze({ [APK_PACKAGE]: APK_SIGNER_SHA256,
+  [LEGACY_APK_PACKAGE]: APK_SIGNER_SHA256, [NEXT_APK_PACKAGE]: NEXT_APK_SIGNER_SHA256 });
 const ANDROID_NS = 'http://schemas.android.com/apk/res/android';
 const fail = (message = 'APK 结构或签名校验未通过，请上传完整的已签名安装包。') => { throw new ServiceError(400, 'INVALID_APK', message); };
 const hash = (data, algorithm = 'sha256') => createHash(algorithm).update(data).digest();
 function u32(buffer, offset) { if (offset < 0 || offset + 4 > buffer.length) fail(); return buffer.readUInt32LE(offset); }
-function u64(buffer, offset) { if (offset < 0 || offset + 8 > buffer.length) fail(); const value = buffer.readBigUInt64LE(offset); if (value > BigInt(MAX_APK_BYTES)) fail(); return Number(value); }
+function u64(buffer, offset) { if (offset < 0 || offset + 8 > buffer.length) fail(); const value = buffer.readBigUInt64LE(offset); if (value > BigInt(MAX_NEXT_APK_BYTES)) fail(); return Number(value); }
 class Reader {
   constructor(data) { this.data = data; this.offset = 0; }
   uint() { const value = u32(this.data, this.offset); this.offset += 4; return value; }
@@ -37,13 +42,18 @@ function contentDigest(apk, start, central, eocd, algorithm) {
   const header = Buffer.alloc(5); header[0] = 0x5a; header.writeUInt32LE(chunks.length, 1);
   return hash(Buffer.concat([header, ...chunks]), algorithm);
 }
-function signatures(apk, blocks, geometry) {
+function signatures(apk, blocks, geometry, nextPackage = false) {
   if (!blocks.has(0x7109871a)) fail('仅接受包含 APK v2 完整签名的安装包。');
   // Rotation and SDK-targeted v3.1+ need a separately reviewed trust policy. Never silently fall back.
   if (blocks.has(0x1b93ad61)) fail('暂不支持签名轮换或 APK v3.1 签名，请沿用当前签名。');
   // The signing-block container itself is not protected by v2/v3 content digests. A newly injected
   // higher-scheme/source-stamp block must not change Android's verifier selection behind our back.
-  for (const id of blocks.keys()) if (![0x7109871a, 0xf05368c0, 0x42726577].includes(id)) fail('APK 包含暂不支持的签名或附加块。');
+  const allowed = [0x7109871a, 0xf05368c0, 0x42726577];
+  // AGP dependency metadata does not select an Android signing scheme. Only the
+  // separate migration package emits it; never use its opaque contents as trust.
+  if (nextPackage) allowed.push(0x504b4453);
+  if (blocks.has(0x504b4453) && blocks.get(0x504b4453).length > 65536) fail('APK 依赖元数据超过限制。');
+  for (const id of blocks.keys()) if (!allowed.includes(id)) fail('APK 包含暂不支持的签名或附加块。');
   let signerHash = '', strippingRequiresV3 = false;
   const schemes = [];
   for (const [blockId, scheme] of [[0x7109871a, 2], [0xf05368c0, 3]]) {
@@ -126,7 +136,7 @@ function zip(apk) {
     const localNameLength = apk.readUInt16LE(local + 26), localExtra = apk.readUInt16LE(local + 28), dataStart = local + 30 + localNameLength + localExtra;
     if (!apk.subarray(local + 30, local + 30 + localNameLength).equals(nameBytes) || dataStart + compressed > start) fail();
     ranges.push([local, dataStart + compressed]);
-    totalSize += expanded; if (totalSize > 128 * 1024 * 1024) fail('APK 解压后的体积过大。');
+    totalSize += expanded; if (totalSize > 512 * 1024 * 1024) fail('APK 解压后的体积过大。');
     entries.set(name, { method, data: apk.subarray(dataStart, dataStart + compressed), expanded });
     offset += 46 + nameLength + extra + comment;
   }
@@ -136,7 +146,8 @@ function zip(apk) {
   if (!manifest || manifest.expanded > 1024 * 1024) fail('APK 缺少有效的 AndroidManifest.xml。');
   const data = manifest.method === 8 ? inflateRawSync(manifest.data, { maxOutputLength: 1024 * 1024 }) : manifest.data;
   if (data.length !== manifest.expanded) fail();
-  return { manifest: data, signature: signatures(apk, blocks, [start, central, eocd]) };
+  const abis = [...new Set([...entries.keys()].map(name => /^lib\/(armeabi-v7a|arm64-v8a|x86_64)\/[^/]+[.]so$/.exec(name)?.[1]).filter(Boolean))].sort();
+  return { manifest: data, expandedBytes: totalSize, abis, signature: signatures(apk, blocks, [start, central, eocd], binaryManifest(data).packageName === NEXT_APK_PACKAGE) };
 }
 function binaryManifest(data) {
   if (data.length < 8 || data.readUInt16LE(0) !== 3 || data.readUInt16LE(2) !== 8 || u32(data, 4) !== data.length) fail();
@@ -207,13 +218,16 @@ function binaryManifest(data) {
  * Format: https://source.android.com/docs/security/features/apksigning/v2 and /v3.
  * Intentionally accepts one pinned signer, no key rotation, v1-only or split APKs.
  */
-export function inspectApk(input, { packageName, signerSha256 = APK_SIGNER_SHA256 } = {}) {
+export function inspectApk(input, { packageName, signerSha256 } = {}) {
   try {
     const apk = Buffer.isBuffer(input) ? input : Buffer.from(input);
-    if (!apk.length || apk.length > MAX_APK_BYTES) fail('请选择不超过 32 MiB 的 APK 安装包。');
+    if (!apk.length || apk.length > MAX_NEXT_APK_BYTES) fail('APK 超过安装包大小限制。');
     const parsed = zip(apk), metadata = binaryManifest(parsed.manifest);
     if (!(packageName ? [packageName] : APK_PACKAGES).includes(metadata.packageName)) fail('APK 包名与现有 Huevia 不兼容。');
-    if (parsed.signature.signerSha256 !== signerSha256) fail('APK 签名与现有 Huevia 不兼容，无法覆盖升级。');
-    return { ...metadata, ...parsed.signature, byteLength: apk.length, sha256: hash(apk).toString('hex') };
+    const next = metadata.packageName === NEXT_APK_PACKAGE;
+    if (next && !parsed.abis.length) fail('新版 APK 未包含受支持的 Android 原生架构。');
+    if (apk.length > (next ? MAX_NEXT_APK_BYTES : MAX_APK_BYTES) || parsed.expandedBytes > (next ? 512 : 128) * 1024 * 1024) fail('APK 超过此包名对应的大小限制。');
+    if (parsed.signature.signerSha256 !== (signerSha256 ?? APK_SIGNERS[metadata.packageName])) fail('APK 签名与现有 Huevia 不兼容，无法覆盖升级。');
+    return { ...metadata, ...parsed.signature, ...(next ? { abis: parsed.abis } : {}), byteLength: apk.length, sha256: hash(apk).toString('hex') };
   } catch (error) { if (error instanceof ServiceError) throw error; fail(); }
 }

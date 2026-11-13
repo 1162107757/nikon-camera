@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { ServiceError } from './cloudbase.mjs';
 import { inspectApk, MAX_APK_BYTES, APK_PACKAGE, LEGACY_APK_PACKAGE, APK_PACKAGES, APK_SIGNER_SHA256 } from './apk.mjs';
 import { createAbuseContext } from './abuse.mjs';
+import { createMobileReleaseRoutes } from './mobile-releases.mjs';
 
 export const APK_CHUNK_BYTES = 512 * 1024;
 export const APK_INLINE_BYTES = 4 * 1024 * 1024;
@@ -70,6 +71,7 @@ export function selectRelease(row, { channel = 'stable', versionCode = 0, sdk = 
 export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = '/preset-library', trustedProxyHops = 0, trustedProxyAddresses, trustedForwardedProxyAddresses,
   readBundledApk = name => readFile(new URL(`./bundled-apks/${name}`, import.meta.url)) }) {
   const releases = new ReleaseStore(store), prefix = basePath.replace(/\/$/, ''), base = new URL(publicBaseUrl).origin + prefix;
+  const mobile = createMobileReleaseRoutes({ store, storage, publicBaseUrl, basePath, trustedProxyHops, trustedProxyAddresses, trustedForwardedProxyAddresses });
   const source = createAbuseContext({ store, secret: store.serviceKey || 'app-releases-local-source-budget-v1', trustedProxyHops, trustedProxyAddresses, trustedForwardedProxyAddresses });
   const staticFiles = { 'index.html': 'text/html; charset=utf-8', 'download.js': 'text/javascript; charset=utf-8', 'download.css': 'text/css; charset=utf-8', 'tokens.css': 'text/css; charset=utf-8', 'icon.png': 'image/png', 'qr.js': 'text/javascript; charset=utf-8', 'preview-community.png':'image/png', 'preview-submission.png':'image/png', 'preview-messages.png':'image/png' };
   async function budget(req, kind, bytes = 0, sha256) {
@@ -79,6 +81,7 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     else await releases.rpc('nikon_release_budget_atomic', { p_key: key, p_kind: kind, p_bytes: bytes });
   }
   async function publicRoute(req, res, { path, url, json }) {
+    if (await mobile.publicRoute(req, res, { path, url, json })) return true;
     if (path === '/download') { res.writeHead(302, { Location: `${prefix}/download/` }); res.end(); return true; }
     if (path.startsWith('/download/')) {
       if (!['GET', 'HEAD'].includes(req.method)) throw new ServiceError(405, 'METHOD_NOT_ALLOWED', '请使用 GET 打开下载页。');
@@ -158,6 +161,7 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     res.end(data); return true;
   }
   async function adminRoute(req, res, { path, url, session, json, readBody, readJson }) {
+    if (await mobile.adminRoute(req, res, { path, url, session, json, readBody, readJson })) return true;
     if (!path.startsWith('/api/releases')) return false;
     const administrator = session?.username ? await store.findAdmin(session.username) : null;
     if (!administrator || administrator.disabled) throw new ServiceError(403, 'RELEASE_FORBIDDEN', '请使用有效的后台管理员账号管理 App 版本。');

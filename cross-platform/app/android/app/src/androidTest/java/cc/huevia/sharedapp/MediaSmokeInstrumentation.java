@@ -171,6 +171,7 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
                 }finally{pixels.recycle();}
             }
             yes(rawBefore.equals(PhotoEditStore.hashFile(rawInput)),"Small-stack RAW source bytes unchanged");
+            connectionProtectionChecks();
             result.putString("stream","PASS "+checks+" Android media checks; codecs, original renderer, geometry, EXIF, draft, cancellation, unchanged source, LibRaw ABI\n");
             finish(Activity.RESULT_OK,result);
         }catch(Throwable failure){result.putString("stream","FAIL after "+checks+" checks: "+failure+"\n");finish(Activity.RESULT_CANCELED,result);}
@@ -197,6 +198,27 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
         runOnMainSync(()->picker.result(Activity.RESULT_CANCELED,null));waitForIdleSync();
         yes(second.size()==1&&String.valueOf(second.get(0)).contains("cancelled"),"Reopened picker delivers its own result");
     }
+    private void connectionProtectionChecks()throws Exception {
+        if(android.os.Build.VERSION.SDK_INT>=33)getUiAutomation().grantRuntimePermission(getTargetContext().getPackageName(),android.Manifest.permission.POST_NOTIFICATIONS);
+        MainActivity first=(MainActivity)startActivitySync(new android.content.Intent(getTargetContext(),MainActivity.class).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
+        java.lang.reflect.Field runtime=MainActivity.class.getDeclaredField("runtime"),controller=MainActivity.class.getDeclaredField("protection");runtime.setAccessible(true);controller.setAccessible(true);
+        await(()->runtime.get(first)!=null,"Foreground host initialized its native runtime");Object original=runtime.get(first);
+        NativeConnectionProtection protection=(NativeConnectionProtection)controller.get(first);
+        CompletableFuture<Object> result=new CompletableFuture<>();
+        runOnMainSync(()->protection.onMethodCall(new io.flutter.plugin.common.MethodCall("set",SharedRuntime.map("enabled",true,"active",true)),new io.flutter.plugin.common.MethodChannel.Result(){public void success(Object value){result.complete(value);}public void error(String code,String message,Object details){result.completeExceptionally(new IOException(code+": "+message));}public void notImplemented(){result.completeExceptionally(new IOException("Protection channel is missing"));}}));
+        yes(Boolean.TRUE.equals(SharedJson.object((String)result.get(5,TimeUnit.SECONDS)).get("enabled")),"Explicit background preference is recorded");
+        await(()->CameraRetentionService.running,"Actual connected-device foreground service starts");
+        yes(NativeConnectionProtection.keepEngine(),"Foreground service owns the existing Flutter engine");
+        runOnMainSync(first::finish);await(first::isDestroyed,"Finishing the visible activity detaches its host");
+        yes(CameraRetentionService.running&&NativeConnectionProtection.keepEngine(),"Visible activity closure retains the running camera backend");
+        MainActivity next=(MainActivity)startActivitySync(new android.content.Intent(getTargetContext(),MainActivity.class).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
+        yes(runtime.get(next)==original,"Reopened activity adopts the same native runtime and queue worker");
+        runOnMainSync(()->getTargetContext().startService(new android.content.Intent(getTargetContext(),CameraRetentionService.class).setAction(CameraRetentionService.STOP)));
+        await(()->!CameraRetentionService.running,"Notification stop terminates the foreground service");
+        yes(!NativeConnectionProtection.keepEngine()&&!getTargetContext().getSharedPreferences("camera-protection",0).getBoolean("enabled",true),"Notification stop revokes protection without replaying work");
+        runOnMainSync(next::finish);await(next::isDestroyed,"Stopped camera host closes normally");
+    }
+    private void await(Callable<Boolean> condition,String name)throws Exception {long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(12);while(!condition.call()&&System.nanoTime()<deadline)Thread.sleep(50);yes(condition.call(),name);}
     private void avatarPreparationChecks(File workspace)throws Exception{
         android.content.ContentResolver resolver=getTargetContext().getContentResolver();
         Bitmap fixture=Bitmap.createBitmap(1280,960,Bitmap.Config.ARGB_8888);

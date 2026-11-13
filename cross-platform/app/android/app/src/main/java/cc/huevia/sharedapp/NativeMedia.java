@@ -109,7 +109,9 @@ final class NativeMedia {
             Map<String,Object> reference=SharedRawReference.describe(runtime.root(),source,SharedRuntime.text(p,"referencePath",32768),cancel);
             NativeRawReference.validate(new File((String)reference.get("path")));return SharedJson.encode(reference);
         }
+        if(operation.equals("media.rawThumbnail")){if(!raw(source))throw new IOException("请选择 RAW 原文件。");return SharedJson.encode(NativeRawThumbnail.request(runtime,source,cancel));}
         if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop"))return rawDevelop(operation,p,source,cancel,progress);
+        if(operation.startsWith("media.retouch"))return NativeRetouch.request(context,runtime,operation,p,source,cancel,progress);
         if(operation.equals("media.cleanupAnalyze")){
             String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
             String sha=runtime.sourceIdentity(source.getPath(),true);File pixels=source;

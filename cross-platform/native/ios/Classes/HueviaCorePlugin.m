@@ -16,7 +16,13 @@
 #import "HueviaCoreBootstrap.h"
 #import "HueviaWifiSocket.h"
 #import "HueviaStability.h"
+#import "HueviaQqAuthorization.h"
+#import "HueviaDistribution.h"
+#import "HueviaLegacyFiles.h"
 #import "HueviaWiredCameras.h"
+#import "HueviaOriginalFiles.h"
+#import "HueviaAlbumOperations.h"
+#import "HueviaConnectionProtection.h"
 #import "cc/huevia/account/AccountException.h"
 
 @interface HueviaCorePlugin ()
@@ -30,15 +36,31 @@
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) HueviaImportPicker *importPicker;
 @property(nonatomic,strong) HueviaGallery *gallery;
+@property(nonatomic,strong) HueviaOriginalFiles *originalFiles;
+@property(nonatomic,strong) HueviaAlbumOperations *albumOperations;
+@property(nonatomic,strong) HueviaConnectionProtection *protection;
+@property(nonatomic,strong) FlutterMethodChannel *filesChannel;
 @property(nonatomic,weak) UIViewController *presenter;
 @end
 
 @implementation HueviaCorePlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
   [HueviaStability registerWithRegistrar:registrar];
+  [HueviaQqAuthorization registerWithRegistrar:registrar];
+  [HueviaDistribution registerWithRegistrar:registrar];
+  [HueviaLegacyFiles registerWithRegistrar:registrar];
   HueviaCorePlugin *host=[[self alloc] init];
   host.queue=dispatch_queue_create("cc.huevia.shared.worker",DISPATCH_QUEUE_SERIAL);
   host.tasks=[NSMutableDictionary dictionary];
+  __weak HueviaCorePlugin *weakHost=host;
+  host.protection=[[HueviaConnectionProtection alloc] initWithMessenger:registrar.messenger cancel:^{
+    HueviaCorePlugin *owner=weakHost;
+    for(NSString *job in owner.tasks.allKeys){owner.tasks[job].cancelled=YES;[owner.camera cancelWithNSString:job];}
+  }];
+  host.filesChannel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/file-publication" binaryMessenger:registrar.messenger];
+  [host.filesChannel setMethodCallHandler:^(FlutterMethodCall *call,FlutterResult result){
+    HueviaCorePlugin *owner=weakHost;if(!owner.originalFiles){result([FlutterError errorWithCode:@"NOT_READY" message:@"文件保存尚未准备好。" details:nil]);return;}[owner.originalFiles handleMethodCall:call result:result];
+  }];
   host.importPicker=[[HueviaImportPicker alloc] initWithQueue:host.queue];
   host.presenter=registrar.viewController;
   FlutterMethodChannel *channel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/core" binaryMessenger:registrar.messenger];
@@ -134,6 +156,8 @@
           __weak HueviaCorePlugin *weakHost=self;
           gallery.changed=^{dispatch_async(dispatch_get_main_queue(),^{HueviaCorePlugin *host=weakHost;if(host.events)host.events(@{@"kind":@"galleryChanged"});});};
           self.runtime=runtime;self.camera=camera;self.media=media;self.gallery=gallery;
+          self.originalFiles=[[HueviaOriginalFiles alloc] initWithRoot:self.root runtime:runtime];
+          self.albumOperations=[[HueviaAlbumOperations alloc] initWithRoot:self.root runtime:runtime];
         }
         stage=@"bridge schema";
         NSData *schema=[[CcHueviaSharedCoreEngine schema] dataUsingEncoding:NSUTF8StringEncoding];
@@ -145,8 +169,10 @@
         if(![operation isKindOfClass:NSString.class]||![payload isKindOfClass:NSString.class]||payload.length>4*1024*1024)@throw [[JavaIoIOException alloc] initWithNSString:@"操作数据无效。"];
         stage=operation;
         if([operation hasPrefix:@"media."]){NSDictionary *data=[self.media request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
+        else if([operation isEqualToString:@"files.publishOriginal"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.originalFiles publish:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
+        else if([operation isEqualToString:@"gallery.delete"]||[operation isEqualToString:@"gallery.publishedCopies"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.albumOperations request:operation payload:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation hasPrefix:@"gallery."]){NSDictionary *data=[self.gallery request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
-        else if([operation hasPrefix:@"camera."])value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
+        else if([operation hasPrefix:@"camera."]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(p[@"queueId"])[self.runtime guardOwnerWithNSString:p[@"owner"]];value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];}
         else value=[self.runtime requestWithNSString:operation withNSString:payload withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
       }
       dispatch_async(dispatch_get_main_queue(),^{[self.tasks removeObjectForKey:job];reply(value);});

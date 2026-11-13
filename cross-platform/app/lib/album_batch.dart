@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'batch_export.dart';
+import 'editor.dart';
+import 'album_operations.dart';
 import 'domain.dart';
 import 'photo_grid.dart';
 import 'theme.dart';
@@ -25,6 +27,9 @@ class AlbumSelectionPage extends StatefulWidget {
 
 class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
   final Set<String> selected = {};
+  final Set<String> removed = {};
+  List<Json> get rows =>
+      widget.rows.where((row) => !removed.contains(row['id'])).toList();
   void toggle(List<Json> rows) {
     final ids = rows.map((row) => row['id'] as String).toSet();
     if (ids.every(selected.contains)) {
@@ -51,6 +56,32 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
+          IconButton(
+            tooltip: '删除所选照片',
+            icon: const Icon(Icons.delete_outline),
+            onPressed: selected.isEmpty
+                ? null
+                : () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AlbumDeletePage(
+                        state: widget.state,
+                        rows: rows
+                            .where((r) => selected.contains(r['id']))
+                            .toList(),
+                        phone: widget.phone,
+                        onDeleted: (ids) {
+                          if (mounted) {
+                            setState(() {
+                              removed.addAll(ids);
+                              selected.removeAll(ids);
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+          ),
           const SizedBox(width: 8),
           SizedBox(
             width: 64,
@@ -61,10 +92,8 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 textStyle: const TextStyle(fontSize: 14, height: 1.17),
               ),
-              onPressed: () => toggle(widget.rows),
-              child: Text(
-                selected.length == widget.rows.length ? '取消全选' : '全选',
-              ),
+              onPressed: () => toggle(rows),
+              child: Text(selected.length == rows.length ? '取消全选' : '全选'),
             ),
           ),
         ],
@@ -91,7 +120,7 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 24),
                   child: Text(
-                    '共 ${widget.rows.length} 张',
+                    '共 ${rows.length} 张',
                     style: TextStyle(
                       fontSize: 12,
                       height: 1.35,
@@ -104,7 +133,7 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
           ),
           Expanded(
             child: PhotoMasonry(
-              rows: widget.rows,
+              rows: rows,
               phone: widget.phone,
               core: widget.state.core,
               selected: selected,
@@ -125,7 +154,7 @@ class _AlbumSelectionPageState extends State<AlbumSelectionPage> {
                   builder: (_) => BatchExportPage(
                     state: widget.state,
                     phone: widget.phone,
-                    rows: widget.rows
+                    rows: rows
                         .where((row) => selected.contains(row['id']))
                         .toList(),
                   ),
@@ -238,7 +267,18 @@ class _BatchExportPageState extends State<BatchExportPage> {
   );
   String preset = '__keep__', size = 'full';
   double strength = 100;
-  bool sharing = false;
+  bool sharing = false, editing = false, systemAlbum = false;
+  @override
+  void initState() {
+    super.initState();
+    if (batch.locked) {
+      preset = batch.preset ?? '__keep__';
+      size = batch.size;
+      strength = batch.strength.toDouble();
+      systemAlbum = batch.saveToGallery;
+    }
+  }
+
   @override
   void dispose() {
     batch.dispose();
@@ -251,9 +291,31 @@ class _BatchExportPageState extends State<BatchExportPage> {
         presetId: preset == '__keep__' ? null : preset,
         amount: strength.round(),
         exportSize: size,
+        systemAlbum: systemAlbum,
       );
     } catch (failure) {
       if (mounted) report(context, failure);
+    }
+  }
+
+  Future<void> edit(BatchPhoto item) async {
+    if (batch.busy || batch.locked || editing || batch.accountInvalid) return;
+    setState(() => editing = true);
+    try {
+      batch.stopped = false;
+      await batch.prepare(item);
+      if (!mounted || batch.accountInvalid) return;
+      await hueRootPage<void>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => EditorPage(state: widget.state, photo: item.photo!),
+        ),
+      );
+      batch.invalidateRecipe(item);
+    } catch (failure) {
+      if (mounted) report(context, failure);
+    } finally {
+      if (mounted) setState(() => editing = false);
     }
   }
 
@@ -281,7 +343,7 @@ class _BatchExportPageState extends State<BatchExportPage> {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: batch,
     builder: (context, _) => PopScope(
-      canPop: !batch.busy,
+      canPop: !batch.busy && !editing,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop && batch.busy) report(context, '请先停止批量处理，再返回。');
       },
@@ -295,7 +357,7 @@ class _BatchExportPageState extends State<BatchExportPage> {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 8),
-            const Text('原图保留。JPEG 成品保存到「成品版本」，可在完成后分享。'),
+            const Text('点击照片逐张使用完整编辑器，返回后按各自草稿统一导出。任务开始后会冻结全部设置，可停止后继续。'),
             if (widget.rows.any((row) => row['raw'] == true))
               const Padding(
                 padding: EdgeInsets.only(top: 8),
@@ -347,13 +409,31 @@ class _BatchExportPageState extends State<BatchExportPage> {
                   : (value) => setState(() => size = value.single),
             ),
             const SizedBox(height: 20),
-            if (batch.busy) const LinearProgressIndicator(),
+            DropdownButtonFormField<bool>(
+              initialValue: systemAlbum,
+              isExpanded: true,
+              decoration: const InputDecoration(labelText: '保存目标'),
+              items: const [
+                DropdownMenuItem(value: false, child: Text('应用成品')),
+                DropdownMenuItem(value: true, child: Text('同时保存手机相册')),
+              ],
+              onChanged: batch.locked || editing
+                  ? null
+                  : (value) => setState(() => systemAlbum = value!),
+            ),
+            const SizedBox(height: 16),
+            if (batch.busy || editing) const LinearProgressIndicator(),
+            if (batch.recoveryError != null)
+              Text(
+                batch.recoveryError!,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Text(
                 batch.accountInvalid
                     ? '账号已改变，任务停止。请重新选择照片。'
-                    : '已保存 ${batch.completed}/${batch.items.length} 张${batch.failed > 0 ? ' · ${batch.failed} 张未完成' : ''}${batch.stopped ? ' · 已停止' : ''}',
+                    : '已保存成品 ${batch.completed}/${batch.items.length} 张${batch.saveToGallery ? ' · 手机相册 ${batch.published}/${batch.items.length}' : ''}${batch.failed > 0 ? ' · ${batch.failed} 张未完成' : ''}${batch.stopped ? ' · 已停止' : ''}',
               ),
             ),
             for (final item in batch.items)
@@ -365,6 +445,9 @@ class _BatchExportPageState extends State<BatchExportPage> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: Text(item.error ?? item.phase),
+                onTap: batch.locked || editing
+                    ? null
+                    : () => unawaited(edit(item)),
                 trailing: item.output != null
                     ? const Icon(Icons.check_circle_outline)
                     : null,
@@ -379,22 +462,27 @@ class _BatchExportPageState extends State<BatchExportPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (batch.busy)
+                if (batch.busy || editing)
                   OutlinedButton(
                     onPressed: batch.stopped
                         ? null
                         : () => unawaited(batch.cancel()),
                     child: Text(batch.stopped ? '正在停止…' : '停止处理'),
                   )
-                else if (batch.completed < batch.items.length)
+                else if (!batch.done)
                   FilledButton(
-                    onPressed: batch.accountInvalid ? null : run,
+                    onPressed: batch.accountInvalid || editing ? null : run,
                     child: Text(batch.locked ? '继续处理未完成项' : '开始批量导出'),
                   ),
                 if (batch.completed > 0 && !batch.busy)
                   OutlinedButton(
                     onPressed: sharing || batch.accountInvalid ? null : share,
                     child: Text('分享已完成的 ${batch.completed} 张'),
+                  ),
+                if ((batch.done || batch.recoveryError != null) && !batch.busy)
+                  TextButton(
+                    onPressed: () => unawaited(batch.newTask()),
+                    child: const Text('新建一次批量任务'),
                   ),
               ],
             ),

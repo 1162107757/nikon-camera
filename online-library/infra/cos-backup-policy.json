@@ -9,7 +9,8 @@
     {
       "effect": "allow",
       "action": ["name/cos:GetObject"],
-      "resource": ["qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/app-releases/*"]
+      "resource": ["qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/app-releases/*",
+        "qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/mobile-releases/*"]
     },
     {
       "effect": "allow",

@@ -56,7 +56,7 @@ export function cosStorage(client){
   const call=(name,params)=>new Promise((resolve,reject)=>client[name]({Bucket:BUCKET,Region:REGION,...params},(error,result)=>error?reject(unavailable('COS_'+name.toUpperCase()+'_FAILED')):resolve(result)));
   const own=key=>{if(!key.startsWith(PREFIX)||!/^huevia-backups\/daily\/\d{4}-\d{2}-\d{2}\/[a-zA-Z0-9-]+\//.test(key))throw unavailable('OUTSIDE_BACKUP_PREFIX');return key;};
   async function get(Key,maximum,source=false){
-    if(source){if(!/^huevia-updates\/app-releases\/[a-f0-9]{64}\.(?:apk|bin)$/.test(Key))throw unavailable('INVALID_COS_SOURCE');}else own(Key);
+    if(source){if(!/^huevia-updates\/(?:app-releases\/[a-f0-9]{64}\.(?:apk|bin)|mobile-releases\/(?:ios|android)\/[a-f0-9]{64}\.bin)$/.test(Key))throw unavailable('INVALID_COS_SOURCE');}else own(Key);
     const result=await call('getObject',{Key,DataType:'buffer',Range:'bytes=0-'+maximum});const bytes=Buffer.isBuffer(result.Body)?result.Body:Buffer.from(result.Body);
     if(bytes.length>maximum)throw unavailable('COS_OBJECT_TOO_LARGE');return bytes;
   }

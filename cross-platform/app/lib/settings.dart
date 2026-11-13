@@ -13,6 +13,10 @@ import 'community.dart';
 import 'community_state.dart';
 import 'submission_editor.dart';
 import 'community_activity.dart';
+import 'updates.dart';
+import 'legacy_migration.dart';
+import 'connection_protection.dart';
+import 'camera_downloads.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.state});
@@ -319,6 +323,26 @@ class SettingsPage extends StatelessWidget {
               heading('应用'),
               group([
                 row(
+                  HueIconKind.camera,
+                  '后台连接与任务恢复',
+                  () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ConnectionProtectionPage(state: state),
+                    ),
+                  ),
+                ),
+                row(
+                  HueIconKind.download,
+                  '相机下载队列',
+                  () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CameraDownloadsPage(state: state),
+                    ),
+                  ),
+                ),
+                row(
                   HueIconKind.adjust,
                   '外观',
                   () => appearance(context),
@@ -350,8 +374,22 @@ class SettingsPage extends StatelessWidget {
                 row(
                   HueIconKind.download,
                   '检查更新',
-                  () => explain(context, '应用更新', '当前版本：0.31.0-dev。'),
-                  value: '0.31.0-dev',
+                  () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => UpdatesPage(state: state),
+                    ),
+                  ),
+                ),
+                row(
+                  HueIconKind.download,
+                  '旧版资料迁入',
+                  () => hueRootPage<void>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => LegacyMigrationPage(state: state),
+                    ),
+                  ),
                 ),
                 row(
                   HueIconKind.info,

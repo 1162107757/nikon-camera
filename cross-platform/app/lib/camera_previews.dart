@@ -24,7 +24,7 @@ class _PreviewRequest {
 
 /// One camera read at a time, including across visible rows. Scrolling never
 /// cancels an in-flight PTP operation, which would close the Wi-Fi session.
-class CameraPreviews {
+class CameraPreviews extends ChangeNotifier {
   CameraPreviews(this.core);
   final HueviaCore core;
   String _session = '';
@@ -32,6 +32,9 @@ class CameraPreviews {
   bool _running = false, _disposed = false, _paused = false;
   final _pending = <_PreviewRequest>[];
   final _futures = <String, Future<CameraPreview>>{};
+  String get session => _session;
+  int get generation => _generation;
+  bool get disposed => _disposed;
 
   void reset(String session) {
     _session = session;
@@ -41,6 +44,7 @@ class CameraPreviews {
       request.result.complete(const CameraPreview());
     }
     _pending.clear();
+    if (!_disposed) notifyListeners();
   }
 
   void setSession(String session) {
@@ -114,9 +118,12 @@ class CameraPreviews {
     }
   }
 
+  @override
   void dispose() {
-    _disposed = true;
+    if (_disposed) return;
     reset('');
+    _disposed = true;
+    super.dispose();
   }
 }
 

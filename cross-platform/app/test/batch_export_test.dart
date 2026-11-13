@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/album_batch.dart';
@@ -55,6 +57,9 @@ class BatchCore extends HueviaCore {
 void main() {
   (AppState, BatchCore, List<Json>) setup() {
     final core = BatchCore();
+    final directory = Directory.systemTemp.createTempSync('huevia-batch-');
+    core.root = directory.path;
+    addTearDown(() => directory.delete(recursive: true));
     final state = AppState(core)
       ..photos = [
         const Photo('/private/originals/a.jpg', '第一张.jpg', {}),

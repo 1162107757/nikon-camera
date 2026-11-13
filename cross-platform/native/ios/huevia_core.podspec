@@ -10,11 +10,12 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*.{h,m,mm,cpp}', 'Generated/**/*.{h,m}'
   s.exclude_files = 'Generated/**/*Test.{h,m}', 'Generated/**/CoreParity.{h,m}', 'Generated/**/CoreBoundary.{h,m}', 'Generated/**/AtmosphereChecks.{h,m}', 'Generated/**/NcpCompatibilityFixtures.{h,m}'
   s.public_header_files = 'Classes/HueviaCorePlugin.h'
-  s.vendored_frameworks = 'Frameworks/JRE.xcframework', 'Frameworks/LibRaw.xcframework'
+  s.vendored_frameworks = 'Frameworks/JRE.xcframework', 'Frameworks/LibRaw.xcframework', 'Frameworks/TencentOpenAPI.xcframework'
   s.resource_bundles = { 'HueviaNativeAssets' => ['Assets/**/*', 'Notices/*'] }
-  s.frameworks = 'Foundation', 'UIKit', 'ImageIO', 'CoreGraphics', 'CoreText', 'Security', 'Photos', 'PhotosUI', 'UniformTypeIdentifiers', 'Network', 'MetricKit', 'ImageCaptureCore'
-  s.libraries = 'z', 'iconv', 'c++'
+  s.frameworks = 'Foundation', 'UIKit', 'ImageIO', 'CoreGraphics', 'CoreText', 'Security', 'Photos', 'PhotosUI', 'UniformTypeIdentifiers', 'Network', 'MetricKit', 'ImageCaptureCore', 'SystemConfiguration', 'CoreTelephony', 'AuthenticationServices', 'SafariServices', 'Vision'
+  s.libraries = 'z', 'iconv', 'c++', 'sqlite3'
   s.dependency 'Flutter'
+  s.dependency 'TensorFlowLiteC', '2.17.0'
   s.platform = :ios, '16.0'
   s.requires_arc = true
   s.compiler_flags = '-ffp-contract=off'

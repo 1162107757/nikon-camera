@@ -26,6 +26,7 @@ class CameraTransfer extends ChangeNotifier {
   final AppState state;
   CameraTransferPhase phase = CameraTransferPhase.idle;
   Json? photo;
+  Photo? importedPhoto;
   String? error, job;
   int received = 0, total = 0;
   bool busy = false, _alive = true, _stopped = false, _invalid = false;
@@ -71,6 +72,7 @@ class CameraTransfer extends ChangeNotifier {
     }
     _invalid = true;
     photo = null;
+    importedPhoto = null;
     received = total = 0;
     phase = CameraTransferPhase.invalid;
     error = '请返回后重新读取照片。';
@@ -102,9 +104,9 @@ class CameraTransfer extends ChangeNotifier {
 
   Future<void> start(String session, Json item, {required bool raw}) async {
     if (busy || !_alive) return;
-    if (state.cameraLiveActive) {
+    if (state.cameraLiveActive || state.cameraDownloadsActive) {
       phase = CameraTransferPhase.failed;
-      error = '请先停止边拍边传，再手动下载照片。';
+      error = '请先停止边拍边传或暂停下载队列，再手动下载照片。';
       _changed();
       return;
     }
@@ -119,7 +121,14 @@ class CameraTransfer extends ChangeNotifier {
       _changed();
       return;
     }
+    if (!state.claimCameraTransfer()) {
+      phase = CameraTransferPhase.failed;
+      error = '另一项相机传输正在进行，请先结束当前传输。';
+      _changed();
+      return;
+    }
     photo = Map<String, dynamic>.of(item);
+    importedPhoto = null;
     _owner = _currentOwner;
     _stopped = _invalid = false;
     received = 0;
@@ -160,7 +169,20 @@ class CameraTransfer extends ChangeNotifier {
       _changed();
       final info = await state.core.call('media.info', {'path': path});
       _check();
-      await state.registerPhoto(path, name, info);
+      if (result['downloadCameraId'] is String &&
+          RegExp(r'^[0-9a-f]{64}$')
+              .hasMatch(result['downloadCameraId'] as String) &&
+          result['descriptor'] is String &&
+          RegExp(r'^[0-9a-f]{64}$').hasMatch(result['descriptor'] as String) &&
+          result['storage'] is num) {
+        info['cameraSource'] = {
+          'cameraId': result['downloadCameraId'],
+          'descriptor': result['descriptor'],
+          'storage': result['storage'],
+          'trusted': result['downloadTrusted'] == true,
+        };
+      }
+      importedPhoto = await state.registerPhoto(path, name, info);
       _check();
       phase = CameraTransferPhase.done;
     } catch (failure) {
@@ -173,6 +195,7 @@ class CameraTransfer extends ChangeNotifier {
         error = '$failure';
       }
     } finally {
+      state.releaseCameraTransfer();
       await _events?.cancel();
       _events = null;
       job = null;

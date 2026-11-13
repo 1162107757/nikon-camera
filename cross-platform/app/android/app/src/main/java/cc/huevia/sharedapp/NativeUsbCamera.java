@@ -26,12 +26,15 @@ final class NativeUsbCamera implements SharedCamera.WiredConnections {
     private MethodChannel.Result pending;
     private String pendingId="";
     private volatile Client active;
+    private volatile NativeUsbSlots activeSlots;
+    private volatile String activeSlotsId="";
     private final BroadcastReceiver receiver=new BroadcastReceiver(){
         @Override public void onReceive(Context ignored,Intent intent){
             UsbDevice device=intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
             if(device==null)return;
             if(UsbManager.ACTION_USB_DEVICE_DETACHED.equals(intent.getAction())){
                 Client current=active;if(current!=null&&current.id.equals(device.getDeviceName()))current.close();
+                NativeUsbSlots slots=activeSlots;if(slots!=null&&activeSlotsId.equals(device.getDeviceName()))slots.close();
                 if(device.getDeviceName().equals(pendingId))finishPermission(false,"相机已拔出，请重新连接。");
             }else if(action.equals(intent.getAction())&&device.getDeviceName().equals(pendingId)){
                 finishPermission(manager.hasPermission(device),"未获得 USB 访问权限，请在系统提示中允许访问相机。");
@@ -66,8 +69,9 @@ final class NativeUsbCamera implements SharedCamera.WiredConnections {
         }catch(Exception failure){if(pending==reply){pending=null;pendingId="";}reply.error("USB_PERMISSION",failure.getMessage(),null);}
     }
     private void finishPermission(boolean granted,String message){MethodChannel.Result reply=pending;pending=null;pendingId="";if(reply!=null){if(granted)reply.success(SharedJson.encode(SharedRuntime.map("granted",true)));else reply.error("USB_PERMISSION",message,null);}}
-    @Override public PhotoCameraClient create(String id)throws IOException{UsbDevice device=find(id);if(!manager.hasPermission(device))throw new IOException("请先允许 USB 相机访问权限。");Client next=new Client(device);active=next;return next;}
-    void dispose(){finishPermission(false,"USB 权限选择已取消。");Client current=active;if(current!=null)current.close();context.unregisterReceiver(receiver);}
+    @Override public PhotoCameraClient create(String id)throws IOException{UsbDevice device=find(id);if(!manager.hasPermission(device))throw new IOException("请先允许 USB 相机访问权限。");NativeUsbSlots slots=activeSlots;if(slots!=null)slots.close();Client next=new Client(device);active=next;return next;}
+    @Override public SharedSlots.Transport openSlots(String id)throws IOException{UsbDevice device=find(id);if(!manager.hasPermission(device))throw new IOException("请先允许 USB 相机访问权限。");Client current=active;if(current!=null)current.close();NativeUsbSlots previous=activeSlots;if(previous!=null)previous.close();NativeUsbSlots next=new NativeUsbSlots(device,manager);activeSlotsId=id;activeSlots=next;return next;}
+    void dispose(){finishPermission(false,"USB 权限选择已取消。");Client current=active;if(current!=null)current.close();NativeUsbSlots slots=activeSlots;if(slots!=null)slots.close();context.unregisterReceiver(receiver);}
 
     private final class Client implements PhotoCameraClient {
         final UsbDevice device;final String id;volatile MtpDevice mtp;volatile boolean open;Runnable closed;MtpDeviceInfo info;

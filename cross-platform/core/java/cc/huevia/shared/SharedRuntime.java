@@ -29,7 +29,7 @@ public final class SharedRuntime {
     private final OnlinePresetSearch search;
     private final String installationId;
     private final SharedEdits edits;
-    private final SharedPersonal personal;
+    private SharedPersonal personal;
     private final SharedVersions versions;
     private final SharedCommunityLinks discussionLinks;
     private final SharedSubmissions submissions;
@@ -77,6 +77,13 @@ public final class SharedRuntime {
     }
     public synchronized String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException {
         Map<String,Object> p=SharedJson.object(json);Object result;
+        if(operation.startsWith("downloads."))return SharedJson.encode(SharedDownloads.request(this,operation,p,cancel));
+        if(operation.startsWith("album."))return cc.huevia.album.SharedAlbumOperations.request(this,operation,json,cancel);
+        if(operation.startsWith("legacy.")){
+            Map<String,Object> value=new SharedLegacyMigration(this).request(operation,p,cancel,progress);
+            if(operation.equals("legacy.commit")||operation.equals("legacy.rollback")){projectRuntime=null;library.refresh();personal=new SharedPersonal(root,library,accounts,installationId);}
+            return SharedJson.encode(value);
+        }
         if(operation.startsWith("project.")){
             if(projectRuntime==null)projectRuntime=new SharedProjects(this);
             return SharedJson.encode(projectRuntime.request(operation,p,cancel));
@@ -201,7 +208,7 @@ public final class SharedRuntime {
             case "account.challenge":result=accounts.challenge(installationId);break;
             case "account.login":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));break;
             case "account.register":result=authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
-            case "account.qq":result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
+            case "account.qq":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
             case "account.refresh":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.refresh());break;
             case "account.avatarCommit":result=authenticated(profile.commit(text(p,"owner",64),text(p,"receipt",64),text(p,"sha256",64)));break;
             case "account.avatarReset":result=authenticated(profile.reset(text(p,"owner",64),text(p,"updatedAt",64)));break;

@@ -44,6 +44,28 @@ extern "C" int HueviaRawInspect(const char *path,HueviaRawInfo *info,char *error
     std::snprintf(info->make,sizeof(info->make),"%s",raw.imgdata.idata.make);std::snprintf(info->model,sizeof(info->model),"%s",raw.imgdata.idata.model);return 0;
   }catch(const std::exception &failure){message(error,capacity,failure.what());return -1;}catch(...){message(error,capacity,"RAW inspection failed");return -1;}
 }
+extern "C" int HueviaRawThumbnail(const char *path,int edge,uint32_t **pixels,int *outWidth,int *outHeight,HueviaRawProgress progress,void *context,char *error,int capacity){
+  if(!pixels||!outWidth||!outHeight)return -1;*pixels=nullptr;*outWidth=*outHeight=0;
+  try{
+    if(!path||edge<64||edge>1024)throw std::runtime_error("Invalid RAW thumbnail request");
+    auto storage=std::make_unique<HueviaRawProcessor>(LIBRAW_OPTIONS_NO_DATAERR_CALLBACK);auto &raw=*storage;
+    raw.imgdata.rawparams.max_raw_memory_mb=512;Callback cb{progress,context};raw.set_progress_handler(report,&cb);
+    auto &p=raw.imgdata.params;p.half_size=1;p.user_flip=0;p.output_bps=8;p.output_color=1;p.user_qual=0;p.highlight=2;p.use_camera_matrix=3;p.gamm[0]=1/2.4;p.gamm[1]=12.92;
+    hueviaRawSafety(raw,0,2);checked(raw.open_file(path),"RAW open failed");int width,height,colors,bits;dimensions(raw,width,height,colors,bits);sharedWhiteBalance(raw,0,5500,0);
+    checked(raw.unpack(),"RAW thumbnail unpack failed");checked(raw.dcraw_process(),"RAW thumbnail processing failed");
+    int code=0;std::unique_ptr<libraw_processed_image_t,void(*)(libraw_processed_image_t*)> image(raw.dcraw_make_mem_image(&code),LibRaw::dcraw_clear_mem);
+    if(!image||code!=LIBRAW_SUCCESS||image->type!=LIBRAW_IMAGE_BITMAP||image->bits!=8||(image->colors!=1&&image->colors!=3))throw std::runtime_error("RAW thumbnail format unsupported");
+    bounded(image->width,image->height);uint64_t required=uint64_t(image->width)*image->height*image->colors;if(required!=image->data_size)throw std::runtime_error("RAW thumbnail length mismatch");
+    double scale=std::min(1.0,edge/double(std::max(image->width,image->height)));int w=std::max(1,int(std::lround(image->width*scale))),h=std::max(1,int(std::lround(image->height*scale)));
+    std::unique_ptr<uint32_t,void(*)(void*)> output(static_cast<uint32_t *>(std::malloc(size_t(w)*h*4)),std::free);if(!output)throw std::bad_alloc();
+    for(int y=0;y<h;y++){
+      if(progress&&progress(context,.85+.1*y/double(h)))throw std::runtime_error("RAW thumbnail cancelled");
+      int sy=std::min(int(image->height)-1,int((y+.5)*image->height/h));
+      for(int x=0;x<w;x++){int sx=std::min(int(image->width)-1,int((x+.5)*image->width/w));const uint8_t *q=image->data+(size_t(sy)*image->width+sx)*image->colors;uint32_t r=q[0],g=image->colors==1?r:q[1],b=image->colors==1?r:q[2];output.get()[size_t(y)*w+x]=0xff000000U|r<<16|g<<8|b;}
+    }
+    *pixels=output.release();*outWidth=w;*outHeight=h;return 0;
+  }catch(const std::exception &failure){message(error,capacity,failure.what());return -1;}catch(...){message(error,capacity,"RAW thumbnail failed");return -1;}
+}
 extern "C" int HueviaRawDevelop(const char *path,const HueviaRawSettings *settings,uint32_t *argb,int requestedWidth,int requestedHeight,HueviaRawProgress progress,void *context,char *error,int capacity){
   try{
     if(!path||!settings||!argb)throw std::runtime_error("Missing RAW development input");const auto &s=*settings;

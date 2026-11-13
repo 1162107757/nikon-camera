@@ -7,6 +7,7 @@ import 'widgets.dart';
 import 'registration.dart';
 import 'account_profile.dart';
 import 'theme.dart';
+import 'qq_authorization.dart';
 
 part 'legacy_account.dart';
 

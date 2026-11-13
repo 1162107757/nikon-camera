@@ -1,0 +1,19 @@
+// Read-only build overlay: original app sources and frozen artifacts are untouched.
+gradle.beforeProject { target ->
+    target.pluginManager.withPlugin('com.android.application') {
+        if (target.path != ':app') return
+        def workspace = target.rootProject.projectDir
+        def overlay = new File(workspace, 'cross-platform/legacy-android')
+        target.androidComponents.finalizeDsl { config ->
+            def source = config.sourceSets.getByName('main')
+            source.java.srcDir(new File(overlay, 'src'))
+            source.java.srcDir(new File(workspace, 'cross-platform/core/java'))
+            source.manifest.srcFile(new File(overlay, 'AndroidManifest.xml'))
+            config.compileOptions.coreLibraryDesugaringEnabled = true
+            config.defaultConfig.applicationId = 'cc.huevia'
+            config.defaultConfig.versionCode = 194
+            config.defaultConfig.versionName = '0.30.34-migration-export'
+        }
+        target.dependencies.add('coreLibraryDesugaring', 'com.android.tools:desugar_jdk_libs:2.1.5')
+    }
+}

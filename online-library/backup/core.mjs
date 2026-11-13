@@ -32,6 +32,13 @@ export function inspectSnapshot(bytes){
       ||!Number.isSafeInteger(size)||size<1||size>32*1024*1024)throw failure('INVALID_RELEASE');
     sources.push({provider:'cos',path,size,sha256:release.sha256});
   }
+  for(const release of s.tables['public.nikon_mobile_releases']||[]){
+    const path=safePath(release.storage_path),size=Number(release.byte_length);
+    if(!['ios','android'].includes(release.platform)||!/^[a-f0-9]{64}$/.test(release.sha256)
+      ||path!==`mobile-releases/${release.platform}/${release.sha256}.bin`
+      ||!Number.isSafeInteger(size)||size<1024||size>128*1024*1024)throw failure('INVALID_MOBILE_RELEASE');
+    sources.push({provider:'cos',path,size,sha256:release.sha256});
+  }
   // Unfinished upload chunks are temporary transport data, not recoverable releases.
   // Their DB state remains in the dump, but is explicitly excluded from the durable-file contract.
   const seen=new Map();for(const source of sources){const key=source.provider+':'+source.path;const prior=seen.get(key);if(prior&&JSON.stringify(prior)!==JSON.stringify(source))throw failure('CONFLICTING_SOURCE');seen.set(key,source);}
@@ -71,7 +78,7 @@ export async function runBackup({snapshotBytes,storage,source,recoveryFiles=[],n
   });
   const manifest={format:'huevia-backup-manifest-v1',complete:true,run,capturedAt:snapshot.capturedAt,completedAt:new Date().toISOString(),
     database:{key:dbKey,bytes:packed.length,sha256:digest(packed),uncompressedSha256:digest(snapshotBytes),tableCounts},files,recovery,
-    excluded:['COS in-progress app-upload chunks','CloudBase platform auth/storage migrations and multipart internals','Cloud service keys and cloud provider account configuration'],
+    excluded:['COS in-progress app-upload and mobile-upload chunks','CloudBase platform auth/storage migrations and multipart internals','Cloud service keys and cloud provider account configuration'],
     retentionDays:30};
   const manifestBytes=Buffer.from(JSON.stringify(manifest));const key=run+'COMPLETE.json';await storage.put(key,manifestBytes,'application/json');
   if(!(await storage.get(key,manifestBytes.length)).equals(manifestBytes))throw failure('MANIFEST_READBACK_MISMATCH');
