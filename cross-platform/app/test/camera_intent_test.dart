@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/camera.dart';
 import 'package:huevia/camera_slots.dart';
 import 'package:huevia/camera_remote.dart';
+import 'package:huevia/camera_live.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/legacy_preset_details.dart';
 import 'package:huevia/theme.dart';
@@ -14,6 +15,8 @@ class IntentCameraCore extends HueviaCore {
   final cancelled = <String>[];
   bool connected = false;
   String mode = 'photos';
+  String photoSession = 'album-session';
+  int disconnectsApplied = 0;
   Completer<Json>? connection;
   Json? connectionResult;
   Object? connectionError;
@@ -42,7 +45,11 @@ class IntentCameraCore extends HueviaCore {
       case 'camera.status':
         return {
           'connected': connected,
-          'session': connected ? 'album-session' : '',
+          'session': connected
+              ? mode == 'slots'
+                    ? 'slot-session'
+                    : photoSession
+              : '',
           'model': connected ? 'Nikon Z6II' : '',
           'mode': connected ? mode : 'none',
           'inventoryReady': false,
@@ -53,6 +60,7 @@ class IntentCameraCore extends HueviaCore {
             ? await connection!.future
             : connectionResult ?? success;
         connected = result['connected'] == true;
+        if (connected) photoSession = result['session'] as String;
         return result;
       case 'camera.slots.open':
         return {
@@ -75,8 +83,27 @@ class IntentCameraCore extends HueviaCore {
         mode = 'photos';
         return {'closed': true};
       case 'camera.disconnect':
+        final activeSession = mode == 'slots' ? 'slot-session' : photoSession;
+        if (payload['session'] != activeSession) {
+          return {
+            'connected': connected,
+            'session': connected ? activeSession : '',
+            'model': connected ? 'Nikon Z6II' : '',
+            'mode': connected ? mode : 'none',
+            'disconnected': false,
+            'stale': true,
+          };
+        }
+        disconnectsApplied++;
         connected = false;
-        return {'connected': false};
+        return {
+          'connected': false,
+          'session': '',
+          'model': '',
+          'mode': 'none',
+          'disconnected': true,
+          'stale': false,
+        };
       case 'camera.page':
         return {'items': [], 'nextOffset': 0, 'hasMore': false};
       case 'library.export':
@@ -114,6 +141,33 @@ class IntentCameraCore extends HueviaCore {
         ].contains(c.$1),
       )
       .toList();
+}
+
+class HeldStopLive extends CameraLive {
+  HeldStopLive(super.state) : super(automatic: false);
+  final stopped = Completer<void>();
+  @override
+  Future<void> stop() {
+    active = false;
+    return stopped.future;
+  }
+}
+
+class HeldStopState extends AppState {
+  HeldStopState(super.core) {
+    live = HeldStopLive(this)..active = true;
+  }
+  late final HeldStopLive live;
+  @override
+  CameraLive get cameraLive => live;
+  @override
+  bool get cameraLiveActive => live.active;
+  @override
+  void dispose() {
+    if (!live.stopped.isCompleted) live.stopped.complete();
+    live.dispose();
+    super.dispose();
+  }
 }
 
 class LateToolCore extends IntentCameraCore {
@@ -167,6 +221,121 @@ Future<void> tapConnect(WidgetTester tester) async {
 }
 
 void main() {
+  testWidgets(
+    'A delayed old stop cannot disconnect a replacement camera session',
+    (tester) async {
+      final core = IntentCameraCore()..connected = true;
+      final state = HeldStopState(core)..cameraVisible.value = true;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: CameraPage(state: state),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('断开相机'));
+      await tester.pump();
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      core.connectionResult = {
+        ...IntentCameraCore.success,
+        'session': 'replacement-session',
+      };
+      await core.call('camera.connect', {}, 'replacement-job');
+      state.live.stopped.complete();
+      await tester.pumpAndSettle();
+      expect(core.calls.singleWhere((c) => c.$1 == 'camera.disconnect').$2, {
+        'session': 'album-session',
+      });
+      expect(core.disconnectsApplied, 0);
+      expect(core.connected, isTrue);
+      expect(find.text('未连接'), findsNothing);
+      expect(find.textContaining('Nikon Z6II · 已连接'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+      state.dispose();
+    },
+  );
+
+  testWidgets(
+    'Leaving while an explicit disconnect waits for stop sends no later disconnect or setState',
+    (tester) async {
+      final core = IntentCameraCore()..connected = true;
+      final state = HeldStopState(core)..cameraVisible.value = true;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: CameraPage(state: state),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byTooltip('断开相机'));
+      await tester.pump();
+      await tester.pumpWidget(const SizedBox());
+      state.live.stopped.complete();
+      await tester.pumpAndSettle();
+      expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
+      expect(core.connected, isTrue);
+      expect(tester.takeException(), isNull);
+      state.dispose();
+    },
+  );
+
+  testWidgets(
+    'Repeated explicit disconnect activations remain one session-owned operation',
+    (tester) async {
+      final core = IntentCameraCore()..connected = true;
+      final state = HeldStopState(core)..cameraVisible.value = true;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: CameraPage(state: state),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final callback = tester
+          .widget<IconButton>(
+            find.byWidgetPredicate(
+              (widget) => widget is IconButton && widget.tooltip == '断开相机',
+            ),
+          )
+          .onPressed!;
+      callback();
+      callback();
+      state.live.stopped.complete();
+      await tester.pumpAndSettle();
+      expect(
+        core.calls.where((c) => c.$1 == 'camera.disconnect'),
+        hasLength(1),
+      );
+      expect(core.disconnectsApplied, 1);
+      await tester.pumpWidget(const SizedBox());
+      state.dispose();
+    },
+  );
+
+  testWidgets('Explicit disconnect captures the active slots token', (
+    tester,
+  ) async {
+    final core = IntentCameraCore()
+      ..connected = true
+      ..mode = 'slots';
+    final state = AppState(core)..cameraVisible.value = true;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: hueviaTheme(Brightness.light),
+        home: CameraPage(state: state),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('断开相机'));
+    await tester.pumpAndSettle();
+    expect(core.calls.singleWhere((c) => c.$1 == 'camera.disconnect').$2, {
+      'session': 'slot-session',
+    });
+    expect(core.disconnectsApplied, 1);
+    expect(find.text('未连接'), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+    state.dispose();
+  });
   testWidgets(
     'Explicit photo-page disconnect remains available without cancelling a completed connection job',
     (tester) async {

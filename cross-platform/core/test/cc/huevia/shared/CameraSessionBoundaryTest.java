@@ -93,9 +93,9 @@ public final class CameraSessionBoundaryTest {
         // Cancelling a pure query discards its result without closing a camera.
         ProbeClient queryPeer=new ProbeClient();File queryRoot=new File(root,"query");yes(queryRoot.mkdirs());
         SharedCamera queryCamera=new SharedCamera(queryRoot.getPath(),(h,p,f)->null,(c,f)->queryPeer);connect(queryCamera);
-        for(String operation:new String[]{"camera.status","camera.diagnostics"}){
+        for(String operation:new String[]{"camera.status","camera.diagnostics","camera.disconnect"}){
             queryPeer.probe=()->queryCamera.cancel("query");
-            rejects(()->call(queryCamera,operation,SharedRuntime.map(),"query"));yes(queryPeer.open);
+            rejects(()->call(queryCamera,operation,operation.equals("camera.disconnect")?scope("retired-session"):SharedRuntime.map(),"query"));yes(queryPeer.open);
             yes(Boolean.TRUE.equals(status(queryCamera).get("connected")));
         }
         queryCamera.disconnect();
@@ -123,7 +123,33 @@ public final class CameraSessionBoundaryTest {
         Thread localWorker=new Thread(()->{try{call(localCamera,"camera.slots.open",scope(localToken),"unpublished-open");}catch(Throwable e){localError.set(e);}},"unpublished-slot-connector");localWorker.setDaemon(true);localWorker.start();
         yes(unpublished.socketEntered.await(3,TimeUnit.SECONDS));localCamera.closeTransport();unpublished.socketRelease.countDown();localWorker.join(3000);
         yes(!localWorker.isAlive());yes(localError.get() instanceof IOException);yes(unpublished.sockets.size()==2);yes(unpublished.closed()==2);yes(Boolean.FALSE.equals(status(localCamera).get("connected")));localCamera.disconnect();
-        System.out.println("PASS "+checks+" camera session ownership checks; lazy inventory, real PTP/IP handoff, recovery, stale/active cancel and verified-write guards");return checks;
+        scopedDisconnectChecks(root);
+        System.out.println("PASS "+checks+" camera session ownership checks; lazy inventory, real PTP/IP handoff, recovery, scoped disconnect, stale/active cancel and verified-write guards");return checks;
+    }
+    private static void scopedDisconnectChecks(File parent)throws Exception{
+        File root=new File(parent,"scoped-photos");yes(root.mkdirs());Peer first=new Peer(),second=new Peer();AtomicInteger physical=new AtomicInteger();
+        SharedCamera camera=new SharedCamera(root.getPath(),(h,p,f)->physical.getAndIncrement()==0?first::socket:second::socket);
+        String oldSession=(String)connect(camera).get("session"),currentSession=(String)connect(camera).get("session");yes(!oldSession.equals(currentSession));yes(first.closed()==2&&second.closed()==0);
+        Map<String,Object> result=call(camera,"camera.disconnect",scope(oldSession),"old-disconnect");
+        yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.FALSE.equals(result.get("disconnected")));yes(Boolean.TRUE.equals(result.get("connected")));yes(result.get("mode").equals("photos"));yes(result.get("session").equals(currentSession));yes(second.closed()==0);
+        for(Map<String,Object> payload:Arrays.asList(SharedRuntime.map(),scope(""),scope("unknown"))){
+            result=call(camera,"camera.disconnect",payload,"unscoped-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.FALSE.equals(result.get("disconnected")));yes(result.get("session").equals(currentSession));yes(second.closed()==0);
+        }
+        result=call(camera,"camera.disconnect",scope(currentSession),"current-disconnect");yes(Boolean.TRUE.equals(result.get("disconnected")));yes(Boolean.FALSE.equals(result.get("stale")));yes(Boolean.FALSE.equals(result.get("connected")));yes(result.get("mode").equals("none"));yes(second.closed()==2);
+        result=call(camera,"camera.disconnect",scope(currentSession),"replayed-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.FALSE.equals(result.get("connected")));camera.disconnect();
+
+        root=new File(parent,"scoped-slots");yes(root.mkdirs());Peer slotsFirst=new Peer(),slotsSecond=new Peer();AtomicInteger slotConnections=new AtomicInteger();
+        camera=new SharedCamera(root.getPath(),(h,p,f)->slotConnections.getAndIncrement()==0?slotsFirst::socket:slotsSecond::socket);
+        String photoSession=(String)connect(camera).get("session");String slotA=(String)call(camera,"camera.slots.open",scope(photoSession),"slot-a").get("session");
+        result=call(camera,"camera.disconnect",scope(photoSession),"old-photo-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.TRUE.equals(result.get("slotsConnected")));yes(result.get("session").equals(slotA));yes(slotsFirst.closed()==0);
+        result=call(camera,"camera.disconnect",SharedRuntime.map(),"empty-slot-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.TRUE.equals(result.get("slotsConnected")));yes(slotsFirst.closed()==0);
+        call(camera,"camera.slots.close",scope(slotA),"restore-photos");result=call(camera,"camera.disconnect",scope(slotA),"retired-slot-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.TRUE.equals(result.get("photoConnected")));yes(slotsFirst.closed()==0);
+        String slotB=(String)call(camera,"camera.slots.open",scope(photoSession),"slot-b").get("session");yes(!slotA.equals(slotB));
+        result=call(camera,"camera.disconnect",scope(slotA),"old-slot-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(result.get("session").equals(slotB));yes(slotsFirst.closed()==0);
+        result=call(camera,"camera.disconnect",scope(slotB),"current-slot-disconnect");yes(Boolean.TRUE.equals(result.get("disconnected")));yes(Boolean.FALSE.equals(result.get("connected")));yes(Boolean.FALSE.equals(result.get("stale")));yes(slotsFirst.closed()==2);
+        String newPhoto=(String)connect(camera).get("session"),slotC=(String)call(camera,"camera.slots.open",scope(newPhoto),"slot-c").get("session");
+        result=call(camera,"camera.disconnect",scope(slotB),"previous-owner-slot-disconnect");yes(Boolean.TRUE.equals(result.get("stale")));yes(Boolean.TRUE.equals(result.get("slotsConnected")));yes(result.get("session").equals(slotC));yes(slotsSecond.closed()==0);
+        result=call(camera,"camera.disconnect",scope(slotC),"final-current-slot-disconnect");yes(Boolean.TRUE.equals(result.get("disconnected")));yes(result.get("mode").equals("none"));yes(slotsSecond.closed()==2);camera.disconnect();
     }
     private static Map<String,Object> connect(SharedCamera camera)throws IOException{return call(camera,"camera.connect",SharedRuntime.map("host","192.168.1.1","port",15740,"protocol","nikon"),"connect");}
     private static Map<String,Object> status(SharedCamera camera)throws IOException{return call(camera,"camera.status",SharedRuntime.map(),"status");}

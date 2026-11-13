@@ -492,21 +492,37 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> disconnect() async {
-    if (widget.state.cameraDownloadsActive) {
-      await widget.state.cameraDownloads.stop();
-    }
-    if (widget.state.cameraLiveActive) await widget.state.cameraLive.stop();
-    final request = ++epoch;
-    setState(() => busy = true);
+    if (!mounted || busy || childOpen || session.isEmpty) return;
+    final request = ++epoch, expectedSession = session;
+    setState(() {
+      busy = true;
+      error = null;
+    });
     try {
-      await widget.state.core.call('camera.disconnect');
+      if (widget.state.cameraDownloadsActive) {
+        await widget.state.cameraDownloads.stop();
+      }
+      if (!mounted || request != epoch) return;
+      if (widget.state.cameraLiveActive) {
+        await widget.state.cameraLive.stop();
+      }
+      if (!mounted || request != epoch) return;
+      final result = await widget.state.core.call('camera.disconnect', {
+        'session': expectedSession,
+      });
       if (mounted && request == epoch) {
         setState(() {
-          connected = false;
-          session = '';
-          items = [];
+          acceptCameraStatus(result);
+          if (session != expectedSession || !photosReady) {
+            items = [];
+            offset = 0;
+            hasMore = false;
+            selecting = false;
+            selection.clear();
+          }
         });
-        previews.reset('');
+        previews.setSession(session);
+        if (!photosReady) previews.pause();
       }
     } catch (failure) {
       if (mounted && request == epoch) report(context, failure);

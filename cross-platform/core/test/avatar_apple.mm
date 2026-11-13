@@ -92,7 +92,7 @@ int main(void) {@autoreleasepool {
     CGImageRef tiny=fixture(63,64,NO);[encode(tiny,@"public.png",@{}) writeToFile:path atomically:YES];CGImageRelease(tiny);
     BOOL refused=NO;@try{[HueviaAvatar prepareFile:path task:[[HueviaTask alloc] init]];}@catch(JavaIoIOException *failure){refused=YES;}
     check(refused,@"A source below 64 pixels must be rejected");
-    HueviaTask *cancelled=[[HueviaTask alloc] init];cancelled.cancelled=YES;refused=NO;
+    HueviaTask *cancelled=[[HueviaTask alloc] init];[cancelled cancelIfActive];refused=NO;
     @try{[HueviaAvatar prepareFile:path task:cancelled];}@catch(JavaIoInterruptedIOException *failure){refused=YES;}
     check(refused,@"Cancelled avatar work must stop before decoding");
     path=[root stringByAppendingPathComponent:@"transparent.png"];

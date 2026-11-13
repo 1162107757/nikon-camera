@@ -35,7 +35,7 @@ public final class SharedCamera {
     private ActiveRequest activeRequest;
     private static final class ActiveRequest {
         final String job;final boolean transportWork;volatile boolean cancelled;boolean transportFinished;
-        ActiveRequest(String job,String operation){this.job=job==null?"":job;transportWork=!operation.equals("camera.status")&&!operation.equals("camera.diagnostics")&&!operation.equals("camera.usb.devices")&&!operation.equals("camera.slots.status");}
+        ActiveRequest(String job,String operation){this.job=job==null?"":job;transportWork=!operation.equals("camera.status")&&!operation.equals("camera.diagnostics")&&!operation.equals("camera.usb.devices")&&!operation.equals("camera.slots.status")&&!operation.equals("camera.disconnect");}
     }
     // Only memory ownership transitions hold this lock; wire I/O and close run outside.
     private final Object transportOwnership=new Object();
@@ -71,6 +71,10 @@ public final class SharedCamera {
             if(channel!=null)slots.detachTransport(channel);
             if(current!=null||channel!=null)transportsClosing++;
         }
+        closeDetachedTransport(current,channel);
+    }
+    /** The caller has already detached and registered these exact owners. */
+    private void closeDetachedTransport(PhotoCameraClient current,SharedSlots.Transport channel){
         if(current==null&&channel==null)return;
         try{try{if(current!=null)current.close();}finally{if(channel!=null)channel.close();}}
         finally{synchronized(transportOwnership){transportsClosing--;transportOwnership.notifyAll();}}
@@ -94,7 +98,12 @@ public final class SharedCamera {
     private Object execute(String operation,Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         if(operation.equals("camera.usb.devices")){if(wired==null)throw new IOException("本平台未提供 USB 相机接口。");return SharedJson.object(wired.devices());}
         if(operation.equals("camera.diagnostics"))return SharedRuntime.map("connected",client!=null&&client.isOpen(),"totalHandles",handles.size(),"observedObjects",observed.size(),"trace",ConnectionTrace.snapshot());
-        if(operation.equals("camera.disconnect")){disconnect();return SharedRuntime.map("connected",false);}
+        if(operation.equals("camera.disconnect")){
+            // This check and close share the request monitor; stale callers never own a close.
+            String expected=SharedRuntime.text(p,"session",64);Map<String,Object> current=status();
+            if(expected.isEmpty()||!Boolean.TRUE.equals(current.get("connected"))||!expected.equals(current.get("session"))){current.put("disconnected",false);current.put("stale",true);return current;}
+            disconnect();Map<String,Object> closed=status();closed.put("disconnected",true);closed.put("stale",false);return closed;
+        }
         if(operation.equals("camera.connect")){
             String selected=SharedRuntime.text(p,"transport",16);boolean usb=selected.equals("usb");
             if(!selected.isEmpty()&&!selected.equals("wifi")&&!usb)throw new IOException("相机连接方式无效。");
@@ -108,7 +117,7 @@ public final class SharedCamera {
             ConnectAttempt attempt=new ConnectAttempt(cancel,progress);PhotoCameraClient next=null;
             try{
                 attempt.stage(usb?"等待外接相机授权":"检查相机 Wi-Fi 通道",.05);check(attempt);
-                next=usb?wired.create(usbId):clients.create(connectors.create(host,port,fuji),fuji);attempt.owned=next;client=next;check(attempt);
+                next=usb?wired.create(usbId):clients.create(connectors.create(host,port,fuji),fuji);attempt.own(next);check(attempt);
                 attempt.stage(usb?"打开外接相机会话并准备目录":"连接相机通道",usb?.4:.1);
                 final int[] channels={0};
                 next.setConnectionStageListener(stage->{
@@ -124,7 +133,7 @@ public final class SharedCamera {
                 try{identityInfo=PtpDeviceInfo.parse(info);}catch(PtpProtocolException optionalSerial){}
                 downloadIdentity(next,identityInfo);resolveHandles=null;largeThumbnailUnavailable=false;
                 attempt.stage("相机连接已建立",.7);check(attempt);
-                progress.accept(1);return status();
+                attempt.complete();progress.accept(1);return status();
             }catch(IOException|RuntimeException failure){if(next!=null)next.close();client=null;session="";attempt.rethrowIfStopped();throw failure;}
             finally{attempt.close();if(next!=null)next.setConnectionStageListener(null);}
         }
@@ -312,38 +321,62 @@ public final class SharedCamera {
         synchronized(transportOwnership){accepted=!stopped&&revision==transportRevision&&album.isOpen();if(accepted){if(session.isEmpty())session=UUID.randomUUID().toString();handles.clear();observed.clear();resolveHandles=null;indexReady=false;client=album;}}
         if(!accepted)album.close();return accepted;
     }
-    private Object status(){boolean photos=client!=null&&client.isOpen(),slot=slots!=null&&slots.isConnected();return SharedRuntime.map("connected",photos||slot,"mode",photos?"photos":slot?"slots":"none","photoConnected",photos,"slotsConnected",slot,"inventoryReady",photos&&indexReady,"session",photos?session:slot?slotsSession:"","model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size(),"cameraId",photos&&device!=null?SharedCameraLiveDiscovery.cameraId(client,device,session):"","trustedCamera",photos&&SharedCameraLiveDiscovery.trusted(client),"downloadCameraId",photos?downloadCameraId:"","downloadTrusted",photos&&downloadTrusted,"transport",transport,"supportsLive",photos&&device!=null&&device.isNikonCamera()&&!transport.equals("usb"),"live",live!=null);}
+    private Map<String,Object> status(){boolean photos=client!=null&&client.isOpen(),slot=slots!=null&&slots.isConnected();return SharedRuntime.map("connected",photos||slot,"mode",photos?"photos":slot?"slots":"none","photoConnected",photos,"slotsConnected",slot,"inventoryReady",photos&&indexReady,"session",photos?session:slot?slotsSession:"","model",device==null?"":device.model(),"manufacturer",device==null?"":device.manufacturer(),"totalHandles",handles.size(),"cameraId",photos&&device!=null?SharedCameraLiveDiscovery.cameraId(client,device,session):"","trustedCamera",photos&&SharedCameraLiveDiscovery.trusted(client),"downloadCameraId",photos?downloadCameraId:"","downloadTrusted",photos&&downloadTrusted,"transport",transport,"supportsLive",photos&&device!=null&&device.isNikonCamera()&&!transport.equals("usb"),"live",live!=null);}
     private void require(Map<String,Object> p)throws IOException{if(client==null||!client.isOpen()||!session.equals(SharedRuntime.text(p,"session",64)))throw new IOException("相机会话已改变，请重新读取照片。");}
     public void disconnect(){synchronized(transportOwnership){transportRevision++;}rawPairing=null;resolveHandles=null;downloadCameraId="";downloadTrusted=false;if(remote!=null){remote.close();remote=null;}if(slots!=null){slots.close();slots=null;}slotsSession="";if(live!=null){live.stop();live=null;}PhotoCameraClient current=client;client=null;if(current!=null)current.close();session="";device=null;handles.clear();observed.clear();indexReady=false;indexedRaw=false;unavailableStorages=0;}
     /** Per-phase PTP deadlines do not form a total deadline. This watchdog only
      * closes transport; the worker remains the sole owner of protocol/index state. */
     private final class ConnectAttempt implements BooleanSupplier {
         private final BooleanSupplier caller;
-        private final long started=clock.getAsLong();
-        private volatile boolean finished,timedOut,cancelled;
+        private final ActiveRequest request;
+        private final long started;
+        private static final int ACTIVE=0,SUCCESS=1,TIMED_OUT=2,CANCELLED=3,RETIRED=4;
+        private volatile int terminal=ACTIVE;
         private volatile String waiting="相机连接";
         private volatile double value=.05;
         private volatile PhotoCameraClient owned;
         private final Thread watchdog;
         ConnectAttempt(BooleanSupplier caller,DoubleConsumer progress){
-            this.caller=caller;
+            this.caller=caller;synchronized(transportOwnership){request=activeRequest;}started=clock.getAsLong();
             watchdog=new Thread(()->{
-                while(!finished){
-                    if(caller.getAsBoolean())cancelled=true;
-                    if(clock.getAsLong()-started>=75_000_000_000L)timedOut=true;
-                    if(cancelled||timedOut){PhotoCameraClient transport=owned;if(transport!=null)transport.close();}
-                    else try{progress.accept(value);}catch(RuntimeException ignored){}
+                while(terminal==ACTIVE){
+                    boolean cancelled=caller.getAsBoolean();long now=clock.getAsLong();
+                    if(cancelled)stop(CANCELLED);
+                    else if(now-started>=75_000_000_000L)stop(TIMED_OUT);
+                    else if(terminal==ACTIVE)try{progress.accept(value);}catch(RuntimeException ignored){}
+                    if(terminal!=ACTIVE)return;
                     try{Thread.sleep(100);}catch(InterruptedException done){return;}
                 }
             },"camera-connect-deadline");watchdog.setDaemon(true);watchdog.start();
         }
-        void stage(String text,double value){waiting=text;this.value=value;}
-        public boolean getAsBoolean(){return timedOut||cancelled||caller.getAsBoolean();}
-        void rethrowIfStopped()throws IOException{
-            if(timedOut)throw new java.net.SocketTimeoutException(waiting+"超时（本次连接已达 75 秒），已关闭相机通道。请核对 Wi-Fi、本地网络权限及机身确认后重试。");
-            if(cancelled||caller.getAsBoolean())throw new InterruptedIOException("相机连接已取消。");
+        void own(PhotoCameraClient next)throws IOException{
+            synchronized(transportOwnership){if(terminal==ACTIVE&&!request.cancelled){owned=next;client=next;return;}}
+            rethrowIfStopped();throw new InterruptedIOException("相机连接任务已结束。");
         }
-        void close(){finished=true;watchdog.interrupt();}
+        private void stop(int outcome){
+            PhotoCameraClient closing=null;
+            synchronized(transportOwnership){
+                if(terminal!=ACTIVE)return;
+                terminal=outcome;
+                PhotoCameraClient candidate=owned;owned=null;
+                if(candidate!=null&&client==candidate){closing=candidate;client=null;transportRevision++;transportsClosing++;}
+            }
+            closeDetachedTransport(closing,null);
+        }
+        void complete()throws IOException{
+            // Check time outside the ownership lock, then compete for one terminal claim.
+            boolean cancelled=caller.getAsBoolean();long now=clock.getAsLong();
+            if(now-started>=75_000_000_000L)stop(TIMED_OUT);
+            synchronized(transportOwnership){if(terminal==ACTIVE&&!cancelled&&request==activeRequest&&!request.cancelled){terminal=SUCCESS;owned=null;return;}}
+            stop(CANCELLED);rethrowIfStopped();throw new InterruptedIOException("相机连接任务已结束。");
+        }
+        void stage(String text,double value){waiting=text;this.value=value;}
+        public boolean getAsBoolean(){int state=terminal;return state==TIMED_OUT||state==CANCELLED||caller.getAsBoolean();}
+        void rethrowIfStopped()throws IOException{
+            if(terminal==TIMED_OUT)throw new java.net.SocketTimeoutException(waiting+"超时（本次连接已达 75 秒），已关闭相机通道。请核对 Wi-Fi、本地网络权限及机身确认后重试。");
+            if(terminal==CANCELLED||caller.getAsBoolean())throw new InterruptedIOException("相机连接已取消。");
+        }
+        void close(){synchronized(transportOwnership){if(terminal==ACTIVE)terminal=RETIRED;}watchdog.interrupt();}
     }
     private static void check(BooleanSupplier cancel)throws IOException{if(cancel.getAsBoolean())throw new InterruptedIOException("相机操作已取消。");}
     private PtpObjectInfo downloadInfo(PhotoCameraClient current,long handle,boolean liveDownload)throws IOException{

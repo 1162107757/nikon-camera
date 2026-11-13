@@ -30,7 +30,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
     private Object media;
     private Method request;
     private Class<?> cancelType,progressType;
-    private Constructor<?> cancelConstructor,progressConstructor;
+    private Constructor<?> cancelConstructor,progressConstructor,taskFlagConstructor;
     private Method cancelReader;
     private int cancelClassId;
     private ExecutorService worker;
@@ -102,6 +102,13 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         bindCallbacks();
     }
     private void bindCallbacks()throws Exception {
+        String taskClass=arguments.getString("taskClass","");
+        if(!taskClass.isEmpty()){
+            Class<?> type=Class.forName(taskClass,true,activity.getClassLoader());
+            if(!AtomicBoolean.class.isAssignableFrom(type))throw new ReflectiveOperationException("Mapped production cancellation flag is not AtomicBoolean: "+type);
+            taskFlagConstructor=type.getDeclaredConstructor();taskFlagConstructor.setAccessible(true);
+            evidence.put("taskFlagClass",type.getName()).put("taskFlagConstructor",taskFlagConstructor.toGenericString());
+        }else if(!cancelType.isInterface())throw new ReflectiveOperationException("The exact mapped production taskClass is required for the release cancellation capture.");
         for(Method method:cancelType.getDeclaredMethods())if(method.getReturnType()==boolean.class&&method.getParameterTypes().length==0&&!Modifier.isStatic(method.getModifiers())){
             if(cancelReader!=null)throw new NoSuchMethodException("Ambiguous release cancellation readers in "+cancelType.getName());
             cancelReader=method;cancelReader.setAccessible(true);
@@ -111,10 +118,11 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         if(cancelType.isInterface())evidence.put("cancelAdapter","runtime-interface-proxy");
         else {
             JSONArray attempts=new JSONArray();Constructor<?> constructor=cancelType.getDeclaredConstructor(int.class,Object.class);constructor.setAccessible(true);
-            // R8 can merge synthetic AtomicBoolean captures. Only a bounded,
-            // behavior-verified variant may be passed to the release backend.
+            // R8 may specialize the backend for the production flag subtype
+            // even when a synthetic constructor erases its capture to Object.
+            // Verify the actual mapped subtype, never a plain AtomicBoolean.
             for(int classId=0;classId<8;classId++){
-                AtomicBoolean probe=new AtomicBoolean();
+                AtomicBoolean probe=taskFlag(false);
                 try {
                     Object instance=constructor.newInstance(classId,probe);
                     boolean initial=(Boolean)cancelReader.invoke(instance);probe.set(true);boolean signaled=(Boolean)cancelReader.invoke(instance);probe.set(false);boolean reset=(Boolean)cancelReader.invoke(instance);
@@ -124,7 +132,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
                 finally{probe.set(false);}
             }
             if(cancelConstructor==null)throw new ReflectiveOperationException("No bounded synthetic cancellation variant captured AtomicBoolean correctly: "+attempts);
-            evidence.put("cancelAdapter","verified-atomic-boolean-capture").put("cancelClassId",cancelClassId).put("cancelConstructor",cancelConstructor.toGenericString());
+            evidence.put("cancelAdapter","verified-production-task-flag-capture").put("cancelClassId",cancelClassId).put("cancelConstructor",cancelConstructor.toGenericString());
         }
         yes(cancelType.isInterface()||cancelConstructor!=null,"release cancellation callback is supported and false/true/reset verified");
         if(progressType.isInterface())evidence.put("progressAdapter","runtime-interface-proxy");
@@ -145,7 +153,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
     }
     private JSONObject call(String operation,JSONObject payload)throws Exception {
         final String frozen=payload.toString();
-        return await(worker.submit(()->invoke(operation,frozen,new AtomicBoolean(),value->{if(!Double.isFinite(value)||value<0||value>1)throw new AssertionError("Invalid native progress "+value);})));
+        return await(worker.submit(()->invoke(operation,frozen,taskFlag(false),value->{if(!Double.isFinite(value)||value<0||value>1)throw new AssertionError("Invalid native progress "+value);})));
     }
     private JSONObject invoke(String operation,String json,AtomicBoolean cancel,DoubleConsumer progress)throws Exception {
         return invokePrepared(operation,json,cancelCallback(cancel),progressCallback(progress));
@@ -156,6 +164,10 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
             if(!(value instanceof String))throw new AssertionError("Native media returned a non-JSON result for "+operation);
             return new JSONObject((String)value);
         }catch(InvocationTargetException wrapped){throwException(unwrap(wrapped));return null;}
+    }
+    private AtomicBoolean taskFlag(boolean value)throws ReflectiveOperationException {
+        AtomicBoolean flag=taskFlagConstructor==null?new AtomicBoolean():(AtomicBoolean)taskFlagConstructor.newInstance();
+        flag.set(value);return flag;
     }
     private Object cancelCallback(AtomicBoolean flag)throws ReflectiveOperationException {
         if(cancelConstructor!=null)return cancelConstructor.newInstance(cancelClassId,flag);
@@ -248,7 +260,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         evidence.put("portraitSha256",original).put("faceCount",found.length()).put("skinPixels",portrait.getInt("skinPixels")).put("changedPixelSamples",differences);
     }
     private void cancellation(File source,String local)throws Exception {
-        AtomicBoolean cancel=new AtomicBoolean(),running=new AtomicBoolean();AtomicLong signaledAt=new AtomicLong();
+        AtomicBoolean cancel=taskFlag(false),running=new AtomicBoolean();AtomicLong signaledAt=new AtomicLong();
         ScheduledExecutorService timer=Executors.newSingleThreadScheduledExecutor();
         Throwable failure=null;final Object callback=cancelCallback(cancel),progress=progressCallback(value->{});
         yes(!(Boolean)cancelReader.invoke(callback),"actual release cancellation capture initially reads false");
@@ -321,7 +333,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         Set<String> expectedPreviews=new HashSet<>(previews);expectedPreviews.add(result.getPath());
         yes(expectedPreviews.equals(snapshot(new File(root,"previews"))),"rejected full-detail identities leave no temporary frame");
         Set<String> beforeCancel=snapshot(new File(root,"previews"));
-        Throwable failure=null;try{await(worker.submit(()->invoke("media.detailRender",payload.toString(),new AtomicBoolean(true),value->{})));}catch(Throwable value){failure=unwrap(value);}
+        Throwable failure=null;try{await(worker.submit(()->invoke("media.detailRender",payload.toString(),taskFlag(true),value->{})));}catch(Throwable value){failure=unwrap(value);}
         boolean canceled=false;for(Throwable value=failure;value!=null;value=value.getCause())if(value instanceof InterruptedIOException||String.valueOf(value.getMessage()).contains("取消")||String.valueOf(value.getMessage()).contains("停止"))canceled=true;
         yes(canceled,"full detail rejects an already-canceled native request");
         yes(beforeCancel.equals(snapshot(new File(root,"previews"))),"canceled full detail leaves no temporary frame");
