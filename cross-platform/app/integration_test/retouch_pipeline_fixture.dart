@@ -256,7 +256,12 @@ Future<void> _verifyPersonalToneCards(HueviaCore core, String owner) async {
     expect(entry['name'], name);
     expect(entry['rgb'], rgb);
     final reloaded = await core.call('toneCards.list', {'owner': owner});
-    expect((reloaded['cards'] as List).map(object), contains(entry));
+    expect(
+      (reloaded['cards'] as List).map(object).singleWhere(
+        (value) => value['id'] == created,
+      ),
+      entry,
+    );
     await expectLater(
       core.call('toneCards.list', {'owner': 'different-owner-$name'}),
       throwsA(isA<AppFailure>()),
