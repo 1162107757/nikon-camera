@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -246,14 +247,42 @@ void main() {
         await tester.tap(find.text('批量编辑'));
         await tester.pumpAndSettle();
         expect(find.text('开始批量导出'), findsOneWidget);
-        await tester.tap(find.text('开始批量导出'));
+        final batch =
+            tester
+                    .widget<ListenableBuilder>(
+                      find.byWidgetPredicate(
+                        (widget) =>
+                            widget is ListenableBuilder &&
+                            widget.listenable is BatchExport,
+                      ),
+                    )
+                    .listenable
+                as BatchExport;
+        final finished = Completer<void>();
+        void batchChanged() {
+          if (batch.locked && !batch.busy && !finished.isCompleted) {
+            finished.complete();
+          }
+        }
+
+        batch.addListener(batchChanged);
+        try {
+          // The task persists real journal files. Start and await it outside
+          // the widget clock so create/write/rename can finish before settling.
+          await tester.runAsync(() async {
+            await tester.tap(find.text('开始批量导出'));
+            await finished.future.timeout(const Duration(seconds: 15));
+          });
+        } finally {
+          batch.removeListener(batchChanged);
+        }
         await tester.pumpAndSettle();
         await tester.scrollUntilVisible(
-          find.text('已保存 2/2 张'),
+          find.text('已保存成品 2/2 张'),
           180,
           scrollable: find.byType(Scrollable).first,
         );
-        expect(find.text('已保存 2/2 张'), findsOneWidget);
+        expect(find.text('已保存成品 2/2 张'), findsOneWidget);
         expect(find.text('分享已完成的 2 张'), findsOneWidget);
         expect(tester.takeException(), isNull);
       },

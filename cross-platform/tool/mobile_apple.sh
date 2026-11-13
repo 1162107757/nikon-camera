@@ -56,8 +56,16 @@ fi
 if [[ "${1:-all}" == prepare ]]; then exit 0; fi
 cd "$ROOT/cross-platform/app"
 flutter analyze --no-pub > "$WORK/analyze.log" 2>&1
-flutter test --no-pub --concurrency=1 --reporter expanded > "$WORK/flutter-tests.log" 2>&1
-flutter build ios --release --no-codesign --no-pub > "$WORK/device-build.log" 2>&1
+unit_status=0
+flutter test --no-pub --concurrency=1 --reporter expanded > "$WORK/flutter-tests.log" 2>&1 || unit_status=$?
+device_status=0
+flutter build ios --release --no-codesign --no-pub > "$WORK/device-build.log" 2>&1 || device_status=$?
+# Collect independent native compiler failures even when a widget check fails.
+# Neither failure may produce an accepted IPA or skip the test gate.
+if [[ "$unit_status" != 0 || "$device_status" != 0 ]]; then
+  echo "Flutter tests exit: $unit_status; device build exit: $device_status"
+  exit 1
+fi
 python3 "$ROOT/cross-platform/tool/package_ipa.py"
 bash "$ROOT/cross-platform/tool/apple_integration.sh"
 python3 "$ROOT/cross-platform/tool/inventory.py" --verify
