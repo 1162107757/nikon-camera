@@ -26,8 +26,8 @@ NSDictionary *frame(NSArray *left,NSArray *right,size_t w,size_t h){
     double distance=std::hypot(b.x-a.x,b.y-a.y),angle=std::atan2(b.y-a.y,b.x-a.x);
     return @{@"cx":@(((a.x+b.x)*.5-std::sin(angle)*distance*.55)/w),@"cy":@(((a.y+b.y)*.5+std::cos(angle)*distance*.55)/h),@"rx":@(std::min(.5,.95*distance/w)),@"ry":@(std::min(.5,1.35*distance/h)),@"roll":@(angle*180/M_PI),@"eyeDistancePixels":@(distance)};
 }
-NSDictionary *analyze(CGImageRef image,BOOL cpu){
-    VNDetectFaceLandmarksRequest *request=[VNDetectFaceLandmarksRequest new];request.usesCPUOnly=cpu;
+NSDictionary *analyze(CGImageRef image,BOOL cpu,NSUInteger revision=0){
+    VNDetectFaceLandmarksRequest *request=[VNDetectFaceLandmarksRequest new];request.usesCPUOnly=cpu;if(revision)request.revision=revision;
     NSError *error=nil;VNImageRequestHandler *handler=[[VNImageRequestHandler alloc] initWithCGImage:image options:@{}];if(![handler performRequests:@[request] error:&error])fail(error.localizedDescription?:@"Vision request failed");
     NSMutableArray *faces=[NSMutableArray array];size_t w=CGImageGetWidth(image),h=CGImageGetHeight(image);
     for(VNFaceObservation *observation in request.results){
@@ -47,7 +47,9 @@ int main(int argc,char **argv){@autoreleasepool{
         size_t w=CGImageGetWidth(original),h=CGImageGetHeight(original);std::vector<uint32_t> pixels(w*h);CGColorSpaceRef color=CGColorSpaceCreateWithName(kCGColorSpaceSRGB);CGBitmapInfo info=kCGBitmapByteOrder32Little|kCGImageAlphaPremultipliedFirst;
         CGContextRef context=CGBitmapContextCreate(pixels.data(),w,h,8,w*4,color,info);if(!context)fail(@"Bitmap context unavailable");CGContextDrawImage(context,CGRectMake(0,0,w,h),original);CGContextRelease(context);
         CGDataProviderRef provider=CGDataProviderCreateWithData(NULL,pixels.data(),pixels.size()*4,NULL);CGImageRef raster=CGImageCreate(w,h,8,32,w*4,color,info,provider,NULL,true,kCGRenderingIntentDefault);CGDataProviderRelease(provider);CGColorSpaceRelease(color);if(!raster)fail(@"Raster image unavailable");
-        NSDictionary *report=@{@"schema":@1,@"osVersion":NSProcessInfo.processInfo.operatingSystemVersionString,@"imageWidth":@(w),@"imageHeight":@(h),@"cgFloatBytes":@(sizeof(CGFloat)),@"directDefault":analyze(original,NO),@"rasterDefault":analyze(raster,NO),@"rasterCPU":analyze(raster,YES)};
+        NSMutableDictionary *revisions=[NSMutableDictionary dictionary];NSIndexSet *supported=VNDetectFaceLandmarksRequest.supportedRevisions;NSMutableArray *available=[NSMutableArray array];
+        for(NSUInteger revision=1;revision<=3;revision++){if(![supported containsIndex:revision]){revisions[[NSString stringWithFormat:@"%lu",(unsigned long)revision]]=@{@"supported":@NO};continue;}[available addObject:@(revision)];revisions[[NSString stringWithFormat:@"%lu",(unsigned long)revision]]=@{@"supported":@YES,@"directDefault":analyze(original,NO,revision),@"rasterDefault":analyze(raster,NO,revision),@"rasterCPU":analyze(raster,YES,revision)};}
+        NSDictionary *report=@{@"schema":@2,@"osVersion":NSProcessInfo.processInfo.operatingSystemVersionString,@"imageWidth":@(w),@"imageHeight":@(h),@"cgFloatBytes":@(sizeof(CGFloat)),@"supportedLandmarkRevisions":available,@"revisionComparisons":revisions,@"directDefault":analyze(original,NO),@"rasterDefault":analyze(raster,NO),@"rasterCPU":analyze(raster,YES)};
         NSData *data=[NSJSONSerialization dataWithJSONObject:report options:NSJSONWritingPrettyPrinted|NSJSONWritingSortedKeys error:nil];if(!data)fail(@"Non-finite geometry output");puts([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding].UTF8String);CGImageRelease(raster);CGImageRelease(original);return 0;
     }@catch(NSException *error){fprintf(stderr,"Portrait geometry probe failed: %s\n",error.reason.UTF8String);return 1;}
 }}
