@@ -15,7 +15,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: shared-mobile-${{ github.ref }}
+  group: shared-mobile-${{ github.ref }}-${{ inputs.verification }}
   cancel-in-progress: true
 jobs:
   apple-app:
