@@ -95,7 +95,7 @@ public final class SharedRetouch {
         check(cancel);return resultFor(local,p,cancel);
     }
     public static String analysis(String json,String facesJson,String skin,String bodyJson,String foreground,BooleanSupplier cancel)throws IOException {
-        Map<String,Object> p=SharedJson.object(json);PhotoLocalEdits local=local(p);PhotoPortrait portrait=portrait(local,p);check(cancel);
+        Map<String,Object> p=SharedJson.object(json);PhotoLocalEdits local=local(p);PhotoPortrait portrait=portrait(local,p);boolean locate=flag(p,"locate",true);check(cancel);
         if(facesJson!=null&&(!"skin".equals(p.get("mode"))||portrait.faces().isEmpty())) {
             List<PhotoPortrait.Face> faces=new ArrayList<>();Object raw=SharedJson.object("{\"faces\":"+facesJson+"}").get("faces");
             if(!(raw instanceof List)||((List<?>)raw).size()>PhotoPortrait.MAX_FACES)throw new IOException("人脸分析结果无效。");
@@ -104,13 +104,13 @@ public final class SharedRetouch {
             portrait=portrait.withFaces(faces);
         }
         if(skin!=null&&!skin.isEmpty())portrait=portrait.withGlobalSkinMask(mask(skin));
-        if(bodyJson!=null&&!bodyJson.isEmpty()) {
+        if(locate&&bodyJson!=null&&!bodyJson.isEmpty()) {
             Map<String,Object> v=SharedJson.object(bodyJson);PhotoBodyShape b=portrait.bodyShape;
             double left=d(v,"left",.25),right=d(v,"right",.75),top=d(v,"top",.25),bottom=Math.min(.96,d(v,"bottom",.9));
             if(right-left>=.06&&bottom-top>=.08){b=b.withArea(0,new PhotoBodyShape.Area(left,top,right,bottom,b.body.amount));if(!Boolean.FALSE.equals(v.get("legsVisible"))){double legs=Math.min(bottom-.09,d(v,"legTop",top+(bottom-top)*.58));b=b.withArea(1,new PhotoBodyShape.Area(left,legs,right,bottom,b.legs.amount));b=b.withArea(2,new PhotoBodyShape.Area(left,legs,right,bottom,b.length.amount));}}
             portrait=portrait.withBodyShape(b);
         }
-        if(foreground!=null&&!foreground.isEmpty())portrait=portrait.withBodyShape(portrait.bodyShape.withBackgroundProtection(mask(foreground),70));
+        if(foreground!=null&&!foreground.isEmpty()){int amount=n(p,"protection",70);if(amount<0||amount>100)throw new IOException("背景保护强度无效。");portrait=portrait.withBodyShape(portrait.bodyShape.withBackgroundProtection(mask(foreground),amount));}
         check(cancel);return resultFor(withPortrait(local,p,portrait),p,cancel);
     }
     public static String patch(String json,int[] pixels,int width,int height,BooleanSupplier cancel)throws IOException {

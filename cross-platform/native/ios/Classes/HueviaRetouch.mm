@@ -95,7 +95,7 @@ NSDictionary *candidateFrame(NSDictionary *face,HueviaRaster *image){double rx=[
       }
       return [HueviaPortraitInference analyze:parameters candidates:proposals image:image task:task];
     }
-    NSString *mode=p[@"mode"],*facesJson=nil,*skin=nil,*body=nil,*foreground=nil;
+    NSString *mode=p[@"mode"],*facesJson=nil,*skin=nil,*body=nil,*foreground=nil;NSMutableArray *people=nil;NSInteger selectedPerson=-1;
     NSMutableArray *faces=[NSMutableArray array];
     if([mode isEqual:@"face"]||[mode isEqual:@"skin"]){
       VNDetectFaceLandmarksRequest *request=[VNDetectFaceLandmarksRequest new];run(request,cg,task);
@@ -124,14 +124,15 @@ NSDictionary *candidateFrame(NSDictionary *face,HueviaRaster *image){double rx=[
       }
     }else if([mode isEqual:@"body"]){
       VNDetectHumanRectanglesRequest *request=[VNDetectHumanRectanglesRequest new];request.upperBodyOnly=NO;run(request,cg,task);
-      NSInteger selected=[p[@"person"] integerValue];if(selected<0||selected>=request.results.count)fail(@"未识别到完整人物，请手动调整塑形范围。");
-      VNHumanObservation *person=request.results[selected];CGRect r=person.boundingBox;double left=std::max(0.0,r.origin.x),right=std::min(1.0,CGRectGetMaxX(r)),top=std::max(0.0,1-CGRectGetMaxY(r)+r.size.height*.2),bottom=std::min(.96,1-r.origin.y);
-      if(right-left<.06||bottom-top<.14)fail(@"人物过小，请手动调整塑形范围。");body=json(@{@"left":@(left),@"right":@(right),@"top":@(top),@"bottom":@(bottom)});
+      people=[NSMutableArray array];
+      for(VNHumanObservation *person in request.results){CGRect r=person.boundingBox;double left=std::max(0.0,r.origin.x),right=std::min(1.0,CGRectGetMaxX(r)),top=std::max(0.0,1-CGRectGetMaxY(r)+r.size.height*.2),bottom=std::min(.96,1-r.origin.y);
+        if(right-left>=.06&&bottom-top>=.14)[people addObject:@{@"left":@(left),@"right":@(right),@"top":@(top),@"bottom":@(bottom)}];}
+      if(![p[@"locate"] isEqual:@NO]){selectedPerson=[p[@"person"] integerValue];if(selectedPerson<0||selectedPerson>=people.count)fail(@"未识别到完整人物，请手动调整塑形范围。");body=json(people[selectedPerson]);}
       if(@available(iOS 15.0,*)){VNGeneratePersonSegmentationRequest *segment=[VNGeneratePersonSegmentationRequest new];segment.qualityLevel=VNGeneratePersonSegmentationRequestQualityLevelAccurate;segment.outputPixelFormat=kCVPixelFormatType_OneComponent8;run(segment,cg,task);CVPixelBufferRef buffer=segment.results.firstObject.pixelBuffer;if(buffer){NSMutableData *data=[NSMutableData dataWithLength:128*128];uint8_t *out=(uint8_t *)data.mutableBytes;CVPixelBufferLockBaseAddress(buffer,kCVPixelBufferLock_ReadOnly);size_t w=CVPixelBufferGetWidth(buffer),h=CVPixelBufferGetHeight(buffer),stride=CVPixelBufferGetBytesPerRow(buffer);uint8_t *base=(uint8_t *)CVPixelBufferGetBaseAddress(buffer);for(int y=0;y<128;y++)for(int x=0;x<128;x++)out[y*128+x]=base[std::min(h-1,size_t((y+.5)*h/128))*stride+std::min(w-1,size_t((x+.5)*w/128))];CVPixelBufferUnlockBaseAddress(buffer,kCVPixelBufferLock_ReadOnly);foreground=[data base64EncodedStringWithOptions:0];}}
     }else fail(@"请选择人脸、皮肤或身体分析。");
     if(foreground.length){IOSIntArray *pixels=[IOSIntArray arrayWithLength:image.pixelWidth*image.pixelHeight];for(int i=0;i<pixels.length;i++)*IOSIntArray_GetRef(pixels,i)=(jint)image.pixels[i];foreground=[CcHueviaSharedSharedPortraitInference backgroundWithIntArray:pixels withInt:image.pixelWidth withInt:image.pixelHeight withNSString:foreground withJavaUtilFunctionBooleanSupplier:task];}
     result=[CcHueviaSharedSharedRetouch analysisWithNSString:input withNSString:facesJson withNSString:skin withNSString:body withNSString:foreground withJavaUtilFunctionBooleanSupplier:task];
-    NSMutableDictionary *value=[decoded(result) mutableCopy];value[@"analysisEngine"]=@"Vision";value[@"skinMode"]=@"sampled-chroma-with-person-matte";return value;
+    NSMutableDictionary *value=[decoded(result) mutableCopy];value[@"analysisEngine"]=@"Vision";value[@"skinMode"]=@"sampled-chroma-with-person-matte";if(people){value[@"people"]=people;value[@"selectedPerson"]=@(selectedPerson);}return value;
   }@finally{CGImageRelease(cg);}
 }
 @end

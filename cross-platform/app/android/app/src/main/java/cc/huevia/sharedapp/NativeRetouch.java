@@ -42,15 +42,16 @@ final class NativeRetouch {
                     }else if(mode.equals("body")) {
                         PhotoBodyAnalysis.Result found=PhotoBodyAnalysis.analyze(context,image,cancel);
                         people=new ArrayList<>();for(PhotoBodyAnalysis.Person person:found.people)people.add(SharedRuntime.map("left",person.left,"top",person.top,"right",person.right,"bottom",person.bottom,"legsVisible",person.legsVisible));
-                        if(found.people.isEmpty())throw new IOException("未识别到完整人物，请手动调整塑形范围。");
-                        int selected=SharedRuntime.integer(p,"person",0);if(selected<0||selected>=found.people.size())throw new IOException("人物选择无效。");
-                        portrait=portrait.withBodyShape(PhotoBodyAnalysis.locate(portrait.bodyShape,found.people.get(selected)).withBackgroundProtection(found.protection,70));
+                        if(p.containsKey("locate")&&!(p.get("locate") instanceof Boolean))throw new IOException("人物定位开关无效。");
+                        PhotoBodyShape shape=portrait.bodyShape;
+                        if(!Boolean.FALSE.equals(p.get("locate"))){if(found.people.isEmpty())throw new IOException("未识别到完整人物，请手动调整塑形范围。");int selected=SharedRuntime.integer(p,"person",0);if(selected<0||selected>=found.people.size())throw new IOException("人物选择无效。");shape=PhotoBodyAnalysis.locate(shape,found.people.get(selected));}
+                        portrait=portrait.withBodyShape(shape.withBackgroundProtection(found.protection,SharedRuntime.integer(p,"protection",70)));
                     }else throw new IOException("请选择人脸、皮肤或身体分析。");
                     result=SharedRetouch.resultFor(SharedRetouch.withPortrait(local,p,portrait),p,cancel);
                 }else throw new IOException("未知的人像分析请求。");
             }finally{image.recycle();}
         }
-        if(people!=null){Map<String,Object> value=SharedJson.object(result);value.put("people",people);value.put("selectedPerson",SharedRuntime.integer(p,"person",0));result=SharedJson.encode(value);}
+        if(people!=null){Map<String,Object> value=SharedJson.object(result);value.put("people",people);value.put("selectedPerson",Boolean.FALSE.equals(p.get("locate"))?-1:SharedRuntime.integer(p,"person",0));result=SharedJson.encode(value);}
         if(cancel.getAsBoolean())throw new InterruptedIOException("编辑计算已停止。");runtime.guardOwner(owner);runtime.validateSource(source.getPath(),identity);progress.accept(1);return result;
     }
     private static Bitmap decode(File source,int edge,BooleanSupplier cancel)throws IOException {

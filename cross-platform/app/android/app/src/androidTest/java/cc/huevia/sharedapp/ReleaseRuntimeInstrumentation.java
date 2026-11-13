@@ -214,6 +214,11 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         yes(selected.getInt("brightness")==28&&selected.getInt("EYE_DETAIL")==30&&selected.getInt("TEETH")==20,"release DTO retains applied portrait and eye/teeth controls");
         JSONObject bodySkin=call("media.retouchAnalyze",payload(source,changed.getString("localData")).put("mode","faceBody").put("tonePerFace",true));
         yes(bodySkin.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0).getBoolean("hasBodySkinMask"),"release original body-skin model assigns a person-owned matte");
+        JSONObject protectedOnly=call("media.retouchAnalyze",payload(source,bodySkin.getString("localData")).put("mode","body").put("locate",false).put("protection",100));
+        JSONObject protectedPortrait=protectedOnly.getJSONObject("portrait"),priorPortrait=bodySkin.getJSONObject("portrait");
+        yes(protectedOnly.getInt("selectedPerson")==-1&&protectedPortrait.getBoolean("hasBodyMask")&&protectedPortrait.getInt("protection")==100,"release background protection prepares its mask independently of person selection");
+        yes(protectedPortrait.getJSONArray("body").toString().equals(priorPortrait.getJSONArray("body").toString()),"release background-only analysis preserves every existing shape area");
+        yes(protectedPortrait.getJSONArray("faces").toString().equals(priorPortrait.getJSONArray("faces").toString())&&protectedPortrait.getInt("skinPixels")==priorPortrait.getInt("skinPixels"),"release background protection preserves face and global skin state");
         JSONObject custom=call("media.retouchChange",payload(source,bodySkin.getString("localData")).put("action","face").put("index",0).put("value",new JSONObject().put("toneRgb",0xbba080).put("toneAmount",.63).put("toneBody",true)));
         JSONObject tone=custom.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0);
         yes(tone.getInt("toneId")==10&&tone.getInt("toneRgb")==0xbba080&&tone.getBoolean("toneBody"),"release custom tone retains RGB, strength and person body scope");

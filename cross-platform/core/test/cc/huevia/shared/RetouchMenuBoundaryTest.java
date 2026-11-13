@@ -141,6 +141,12 @@ public final class RetouchMenuBoundaryTest {
         yes(local(beforeBody).portrait.bodyShape.equals(PhotoBodyShape.NONE)&&local(beforeBody).portrait.faces().equals(parent.portrait.faces()));
         yes(local(beforeBody).regions().equals(parent.regions())&&shaped.portrait.bodyShape.equals(shape));
         yes(Boolean.TRUE.equals(dto(shaped).get("sourcePositioning"))&&Boolean.FALSE.equals(beforeBody.get("sourcePositioning")));
+        Map<String,Object> protectionRequest=SharedRuntime.map("localData",dto(shaped).get("localData"),"locate",false,"protection",100);
+        Map<String,Object> protectedOnly=SharedJson.object(SharedRetouch.analysis(SharedJson.encode(protectionRequest),null,null,"{\"left\":0.1,\"top\":0.1,\"right\":0.9,\"bottom\":0.95}",Base64.getEncoder().encodeToString(fullSkin),()->false));
+        yes(local(protectedOnly).portrait.bodyShape.body.equals(shape.body)&&local(protectedOnly).portrait.bodyShape.legs.equals(shape.legs)&&local(protectedOnly).portrait.bodyShape.length.equals(shape.length));
+        yes(local(protectedOnly).portrait.bodyShape.backgroundMask!=null&&local(protectedOnly).portrait.bodyShape.backgroundProtection==100&&shaped.portrait.bodyShape.backgroundMask==null);
+        protectionRequest.put("locate","false");rejects(()->SharedRetouch.analysis(SharedJson.encode(protectionRequest),null,null,null,null,()->false));
+        protectionRequest.put("locate",false);protectionRequest.put("protection",101);rejects(()->SharedRetouch.analysis(SharedJson.encode(protectionRequest),null,null,null,Base64.getEncoder().encodeToString(fullSkin),()->false));
         double[] meshPoints=new double[936];for(int i=0;i<meshPoints.length;i++)meshPoints[i]=(i%13-6)*.1;
         Map<String,Object> meshDto=dto(PhotoLocalEdits.NONE.withPortrait(PhotoPortrait.NONE.addFace(first.withLandmarks(new PhotoPortrait.Landmarks(meshPoints)))));
         List<?> reported=(List<?>)faceDto(meshDto,0).get("landmarks");

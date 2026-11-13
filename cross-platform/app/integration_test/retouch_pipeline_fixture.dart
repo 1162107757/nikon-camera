@@ -107,6 +107,30 @@ Future<void> verifyRetouchPipeline(HueviaCore core) async {
     final face = object((object(adjusted['portrait'])['faces'] as List).first);
     expect(face['brightness'], 20);
     expect(face['EYE_DETAIL'], 40);
+    final protectionOnly = await core.call('media.retouchAnalyze', {
+      'path': path,
+      'owner': owner,
+      'expectedSourceSha': before,
+      'localData': adjusted['localData'],
+      'mode': 'body',
+      'locate': false,
+      'protection': 100,
+    });
+    expect(object(protectionOnly['portrait'])['hasBodyMask'], true);
+    expect(object(protectionOnly['portrait'])['protection'], 100);
+    expect(
+      object(protectionOnly['portrait'])['body'],
+      object(adjusted['portrait'])['body'],
+    );
+    expect(protectionOnly['selectedPerson'], -1);
+    expect(
+      object(protectionOnly['portrait'])['faces'],
+      object(adjusted['portrait'])['faces'],
+    );
+    expect(
+      object(protectionOnly['portrait'])['skinPixels'],
+      object(adjusted['portrait'])['skinPixels'],
+    );
     Future<Map<String, dynamic>> menu(
       Map<String, dynamic> prior,
       String action,
