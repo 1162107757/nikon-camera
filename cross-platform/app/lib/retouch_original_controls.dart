@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -799,6 +800,43 @@ class RetouchOriginalDock extends StatelessWidget {
   }
 }
 
+/// The same image frame used by viewport hit tests and non-interactive brush
+/// previews. Matrix translation is pan in stage pixels; identity means fit.
+Rect retouchOriginalPhotoFrame({
+  required Size viewport,
+  required double imageWidth,
+  required double imageHeight,
+  required Matrix4 transform,
+  bool reserveBars = false,
+}) {
+  if (viewport.isEmpty ||
+      !imageWidth.isFinite ||
+      !imageHeight.isFinite ||
+      imageWidth <= 0 ||
+      imageHeight <= 0) {
+    return Rect.zero;
+  }
+  final available = reserveBars
+      ? math.max(1.0, viewport.height - 96)
+      : viewport.height;
+  final fit = math.min(viewport.width / imageWidth, available / imageHeight);
+  final rawZoom = transform.getMaxScaleOnAxis();
+  final zoom = rawZoom.isFinite ? rawZoom.clamp(1.0, 8.0) : 1.0;
+  final width = imageWidth * fit * zoom, height = imageHeight * fit * zoom;
+  final mx = math.max(0.0, (width - viewport.width) / 2);
+  final my = math.max(0.0, (height - available) / 2);
+  final x = transform.storage[12], y = transform.storage[13];
+  final pan = Offset(
+    x.isFinite ? x.clamp(-mx, mx) : 0,
+    y.isFinite ? y.clamp(-my, my) : 0,
+  );
+  return Rect.fromCenter(
+    center: viewport.center(Offset.zero) + pan,
+    width: width,
+    height: height,
+  );
+}
+
 /// Original portrait/body viewport. child lays out in the zoomed image frame;
 /// callbacks use original normalized image coordinates and the zoomed image size.
 /// Portrait fits the whole stage; BodyCanvas alone reserves and clips 48 dp bars.
@@ -810,6 +848,8 @@ class RetouchOriginalPhotoStage extends StatefulWidget {
     required this.child,
     required this.controller,
     this.drawing = false,
+    this.editingEnabled = true,
+    this.editingSignal,
     this.singleFingerPan = false,
     this.navigationEnabled = true,
     this.reserveBars = false,
@@ -823,7 +863,12 @@ class RetouchOriginalPhotoStage extends StatefulWidget {
   final double imageWidth, imageHeight;
   final Widget child;
   final TransformationController controller;
-  final bool drawing, singleFingerPan, reserveBars, navigationEnabled;
+  final bool drawing,
+      singleFingerPan,
+      reserveBars,
+      navigationEnabled,
+      editingEnabled;
+  final ValueListenable<bool>? editingSignal;
   final double tapSlop;
   final bool Function(Offset normalized, Size renderedSize)? onStart;
   final ValueChanged<Offset>? onUpdate, onTap;
@@ -845,9 +890,14 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
       tapPending = false,
       writing = false;
   int? active;
+  late bool editingWasAllowed;
+  bool get editingAllowed =>
+      widget.editingEnabled && (widget.editingSignal?.value ?? true);
   @override
   void initState() {
     super.initState();
+    editingWasAllowed = editingAllowed;
+    widget.editingSignal?.addListener(editingChanged);
     readController();
     widget.controller.addListener(controllerChanged);
   }
@@ -855,6 +905,12 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
   @override
   void didUpdateWidget(RetouchOriginalPhotoStage old) {
     super.didUpdateWidget(old);
+    if (old.editingSignal != widget.editingSignal) {
+      old.editingSignal?.removeListener(editingChanged);
+      widget.editingSignal?.addListener(editingChanged);
+    }
+    final editingDisabled = editingWasAllowed && !editingAllowed;
+    editingWasAllowed = editingAllowed;
     if (old.controller != widget.controller) {
       old.controller.removeListener(controllerChanged);
       widget.controller.addListener(controllerChanged);
@@ -863,10 +919,10 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     if (old.imageWidth != widget.imageWidth ||
         old.imageHeight != widget.imageHeight ||
         old.reserveBars != widget.reserveBars ||
-        old.controller != widget.controller) {
+        old.controller != widget.controller ||
+        editingDisabled) {
       final cancelled = tracking;
       resetGesture();
-      pointers.clear();
       clamp();
       if (cancelled) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -878,8 +934,20 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
 
   @override
   void dispose() {
+    widget.editingSignal?.removeListener(editingChanged);
     widget.controller.removeListener(controllerChanged);
     super.dispose();
+  }
+
+  void editingChanged() {
+    final allowed = editingAllowed;
+    if (editingWasAllowed && !allowed) {
+      cancelEditing();
+      navigating = pointers.isNotEmpty;
+    }
+    // Re-enabling never revives an existing tap/stroke. Only all-up followed by
+    // a new down can establish a new editable gesture.
+    editingWasAllowed = allowed;
   }
 
   void readController() {
@@ -912,10 +980,12 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     return Size(widget.imageWidth * scale, widget.imageHeight * scale);
   }
 
-  Rect get frame => Rect.fromCenter(
-    center: size.center(Offset.zero) + pan,
-    width: fitted(size).width * zoom,
-    height: fitted(size).height * zoom,
+  Rect get frame => retouchOriginalPhotoFrame(
+    viewport: size,
+    imageWidth: widget.imageWidth,
+    imageHeight: widget.imageHeight,
+    transform: matrix(),
+    reserveBars: widget.reserveBars,
   );
   void clamp() {
     if (size.isEmpty) return;
@@ -963,7 +1033,11 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
   }
 
   void resetGesture() {
-    tracking = navigating = tapPending = false;
+    tracking = tapPending = false;
+    // A cancelled/rotated gesture remains navigation-only until every held
+    // pointer has left. Forgetting pointers here could turn a later second
+    // finger into a fresh repair stroke.
+    navigating = pointers.isNotEmpty;
     active = null;
     lastSpan = 0;
   }
@@ -999,11 +1073,13 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     active = event.pointer;
     down = lastPoint = event.localPosition;
     final inside = available(down) && frame.contains(down);
+    final allowEditingAtDown = editingAllowed;
     tracking =
         inside &&
+        allowEditingAtDown &&
         widget.drawing &&
         (widget.onStart?.call(normalized(down), frame.size) ?? false);
-    tapPending = inside && !tracking;
+    tapPending = inside && allowEditingAtDown && !tracking;
   }
 
   void pointerMove(PointerMoveEvent event) {
@@ -1042,7 +1118,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
 
   void pointerUp(PointerUpEvent event) {
     pointers.remove(event.pointer);
-    if (!navigating && event.pointer == active) {
+    if (!navigating && event.pointer == active && editingAllowed) {
       if (tracking) {
         widget.onUpdate?.call(normalized(event.localPosition));
         tracking = false;
@@ -1067,7 +1143,6 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     final previous = size, oldFrame = frame;
     final cancelled = tracking;
     resetGesture();
-    pointers.clear();
     size = next;
     // Original portrait rotation retains the frozen image centre and zoom.
     // BodyCanvas retains its pan, then clamps it against the new fitted bounds.

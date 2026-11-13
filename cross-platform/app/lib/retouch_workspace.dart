@@ -11,6 +11,7 @@ import 'domain.dart';
 import 'retouch_more.dart';
 import 'retouch_original_controls.dart';
 import 'retouch_original_body.dart';
+import 'retouch_brush_preview.dart';
 import 'selection_workspace.dart';
 import 'photo_workspace_chrome.dart';
 import 'widgets.dart';
@@ -52,6 +53,18 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   int operationEpoch = 0;
   int selected = 0, tab = 0, bodyTool = 0;
   double radius = .025;
+  double? brushRadiusStart;
+  int brushSizeGeneration = 0;
+  final brushEditing = ValueNotifier<bool>(true);
+  bool get photoEditingEnabled =>
+      current &&
+      !comparing &&
+      !compareWanted &&
+      brushRadiusStart == null &&
+      (!busy || bodyGestureArea != null);
+  Offset? brushPreviewCenter;
+  bool patchChildOpen = false;
+  Json? patchEntryFrame;
   double targetX = .5, targetY = .5;
   final points = <Offset>[];
   List<Json> people = [];
@@ -116,6 +129,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     final active = job;
     job = null;
     exitRequested = true;
+    brushEditing.value = false;
     operationEpoch++;
     stopped = true;
     clearPortraitOverlay();
@@ -174,6 +188,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void requestExit() {
     if (exitRequested) return;
+    if (brushRadiusStart != null) cancelBrushSizing();
     if (bodyStart != null &&
         (busy ||
             scalarStart != null ||
@@ -295,11 +310,11 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   Future<Json> render(Json next) async {
     final display =
-        !widget.patch &&
-            tab != 2 &&
-            (!choosingGroup ||
-                (widget.regionId?.isNotEmpty == true &&
-                    next['sourcePositioning'] == true))
+        (widget.patch ||
+            (tab != 2 &&
+                (!choosingGroup ||
+                    (widget.regionId?.isNotEmpty == true &&
+                        next['sourcePositioning'] == true))))
         ? await call('media.retouchChange', {
             'localData': next['localData'],
             'action': 'beforeBody',
@@ -343,6 +358,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
               object(next['portrait'] ?? {})['tonePerFace'] as bool? ??
               tonePerFace;
           frame = image;
+          if (widget.patch) patchEntryFrame = image;
           if (next['people'] is List) {
             people = (next['people'] as List).map(object).toList();
             bodyPerson = next['selectedPerson'] as int? ?? 0;
@@ -366,6 +382,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> perform(String op, Json payload, {bool remember = true}) async {
+    if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (remember &&
         tonePreviewStart != null &&
@@ -430,6 +447,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> history(bool forward) async {
+    if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (tonePreviewStart != null && !busy && operationCurrent(epoch)) {
       await cancelTonePreview();
@@ -1204,320 +1222,15 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     );
   }
 
-  Widget stage() => LayoutBuilder(
-    builder: (context, bounds) {
-      final shown = comparing && comparisonFrame != null
-          ? comparisonFrame
-          : frame;
-      final width = (shown?['width'] as num?)?.toDouble() ?? 1,
-          height = (shown?['height'] as num?)?.toDouble() ?? 1;
-      final scale = math.min(
-            bounds.maxWidth / width,
-            bounds.maxHeight / height,
-          ),
-          size = Size(width * scale, height * scale);
-      Offset point(Offset local) => Offset(
-        (local.dx / size.width).clamp(0, 1),
-        (local.dy / size.height).clamp(0, 1),
-      );
-      final canvas = Center(
-        child: SizedBox.fromSize(
-          size: size,
-          child: GestureDetector(
-            onTapUp: busy
-                ? null
-                : (event) {
-                    final at = point(event.localPosition);
-                    if (photoSampling) {
-                      unawaited(sampleTone(at));
-                      return;
-                    }
-                    if (widget.patch) {
-                      unawaited(
-                        perform('media.retouchPatch', {
-                          'points': [at.dx, at.dy],
-                          'radius': radius,
-                        }),
-                      );
-                      return;
-                    }
-                    if (healMode && tab == 0) {
-                      unawaited(
-                        perform('media.retouchHeal', {
-                          'x': at.dx,
-                          'y': at.dy,
-                          'radius': radius,
-                        }),
-                      );
-                      return;
-                    }
-                    if (manual) {
-                      setState(() => manual = false);
-                      change('manualFace', {'cx': at.dx, 'cy': at.dy});
-                    } else {
-                      for (var i = 0; i < faces.length; i++) {
-                        final f = faces[i];
-                        if ((at.dx - (f['cx'] as num)).abs() <
-                                (f['rx'] as num) &&
-                            (at.dy - (f['cy'] as num)).abs() <
-                                (f['ry'] as num)) {
-                          unawaited(selectFace(i));
-                          break;
-                        }
-                      }
-                    }
-                  },
-            onPanStart: !widget.patch || busy
-                ? null
-                : (event) => setState(() {
-                    points.clear();
-                    points.add(point(event.localPosition));
-                  }),
-            onPanUpdate: !widget.patch || busy
-                ? null
-                : (event) {
-                    if (points.length < 512) {
-                      setState(() => points.add(point(event.localPosition)));
-                    }
-                  },
-            onPanEnd: !widget.patch || busy
-                ? null
-                : (_) {
-                    if (points.isNotEmpty) {
-                      unawaited(
-                        perform('media.retouchPatch', {
-                          'points': points.expand((v) => [v.dx, v.dy]).toList(),
-                          'radius': radius,
-                        }),
-                      );
-                    }
-                  },
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                if (shown != null)
-                  Image.file(
-                    File(shown['path'] as String),
-                    fit: BoxFit.contain,
-                    gaplessPlayback: true,
-                    semanticLabel: comparing
-                        ? '处理前照片：${widget.photo.name}'
-                        : '待编辑照片：${widget.photo.name}',
-                  ),
-                IgnorePointer(
-                  child: CustomPaint(
-                    painter: _RetouchOverlay(
-                      faces:
-                          widget.patch ||
-                              tab != 0 ||
-                              !showOverlay ||
-                              comparing ||
-                              choosingGroup
-                          ? []
-                          : faces,
-                      selected: selected,
-                      points: points.toList(),
-                      radius: radius,
-                      body:
-                          !widget.patch && tab == 2 && showOverlay && !comparing
-                          ? area
-                          : null,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-      return widget.patch
-          ? canvas
-          : InteractiveViewer(
-              transformationController: viewport,
-              minScale: 1,
-              maxScale: 8,
-              panEnabled: !manual && !healMode && !photoSampling,
-              child: canvas,
-            );
-    },
-  );
   @override
-  Widget build(BuildContext context) => !widget.patch
-      ? originalPortraitLayout(context)
-      : Theme(
-          data: hueviaTheme(Brightness.dark, home: false),
-          child: PopScope(
-            canPop: !busy,
-            child: Scaffold(
-              backgroundColor: const Color(0xff191918),
-              appBar: AppBar(
-                toolbarHeight: widget.patch ? null : 52,
-                backgroundColor: widget.patch ? null : const Color(0xff0c0b0a),
-                foregroundColor: const Color(0xfff4f5f7),
-                centerTitle: !widget.patch,
-                titleTextStyle: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xfff4f5f7),
-                ),
-                title: Text(widget.patch ? '自动修补' : '人像'),
-                leadingWidth: widget.patch ? null : 100,
-                leading: widget.patch
-                    ? null
-                    : Row(
-                        children: [
-                          IconButton(
-                            tooltip: '返回编辑照片',
-                            onPressed: busy
-                                ? null
-                                : () => Navigator.pop(context),
-                            icon: const Icon(Icons.chevron_left),
-                          ),
-                          Builder(
-                            builder: (anchor) => IconButton(
-                              tooltip: '更多人像操作',
-                              onPressed: busy || data == null || !current
-                                  ? null
-                                  : () => morePortrait(anchor),
-                              icon: const Icon(Icons.more_horiz),
-                            ),
-                          ),
-                        ],
-                      ),
-                actions: [
-                  Padding(
-                    padding: widget.patch
-                        ? EdgeInsets.zero
-                        : const EdgeInsets.fromLTRB(4, 8, 12, 8),
-                    child: TextButton(
-                      style: widget.patch
-                          ? null
-                          : TextButton.styleFrom(
-                              backgroundColor: const Color(0xffffe335),
-                              foregroundColor: const Color(0xff211812),
-                              minimumSize: const Size(64, 36),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                      onPressed:
-                          busy ||
-                              data == null ||
-                              !current ||
-                              tonePreviewStart != null ||
-                              photoSampling
-                          ? null
-                          : () => Navigator.pop(context, data),
-                      child: const Text('应用'),
-                    ),
-                  ),
-                ],
-              ),
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    Expanded(flex: 5, child: stage()),
-                    if (busy) const LinearProgressIndicator(),
-                    if (error != null)
-                      Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Text(
-                          error!,
-                          style: const TextStyle(color: Colors.orangeAccent),
-                        ),
-                      ),
-                    if (error != null && data == null && !busy)
-                      TextButton(
-                        onPressed: () => unawaited(load()),
-                        child: const Text('重新载入'),
-                      ),
-                    if (photoSampling)
-                      TextButton(
-                        onPressed: busy
-                            ? null
-                            : () {
-                                setState(() => photoSampling = false);
-                                if (sampleSeed != null) {
-                                  unawaited(customTone(sampleSeed!));
-                                }
-                              },
-                        child: const Text('点按照片取色 · 取消'),
-                      ),
-                    if (tonePreviewStart != null && !photoSampling)
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextButton(
-                              onPressed: busy || pickerSeed == null
-                                  ? null
-                                  : () => unawaited(customTone(pickerSeed!)),
-                              child: const Text('继续选色'),
-                            ),
-                          ),
-                          Expanded(
-                            child: TextButton(
-                              onPressed: busy
-                                  ? null
-                                  : () => unawaited(cancelTonePreview()),
-                              child: const Text('取消'),
-                            ),
-                          ),
-                          Expanded(
-                            child: TextButton(
-                              onPressed: busy ? null : confirmTonePreview,
-                              child: const Text(
-                                '使用此色',
-                                style: TextStyle(color: Color(0xffffe335)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          tooltip: '撤销',
-                          onPressed: busy || undo.isEmpty
-                              ? null
-                              : () => unawaited(history(false)),
-                          icon: const Icon(Icons.undo),
-                        ),
-                        IconButton(
-                          tooltip: '重做',
-                          onPressed: busy || redo.isEmpty
-                              ? null
-                              : () => unawaited(history(true)),
-                          icon: const Icon(Icons.redo),
-                        ),
-                        if (busy)
-                          TextButton(
-                            onPressed: () => unawaited(stop()),
-                            child: const Text('停止计算'),
-                          ),
-                        if (!busy)
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('取消'),
-                          ),
-                      ],
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-                        child: controls(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
+  Widget build(BuildContext context) => widget.patch
+      ? originalPatchLayout(context)
+      : originalPortraitLayout(context);
   @override
   void dispose() {
     clearPortraitOverlay();
     viewport.dispose();
+    brushEditing.dispose();
     widget.state.removeListener(accountChanged);
     unawaited(stop());
     for (final path in temporary) {

@@ -91,6 +91,436 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     }
   }
 
+  void beginBrushSizing() {
+    if (busy || !current) return;
+    brushEditing.value = false;
+    comparing = compareWanted = false;
+    cancelOriginalPhotoGesture();
+    originalGestureLocal = null;
+    refreshPortrait(() => brushRadiusStart = radius);
+  }
+
+  void updateBrushSizing(double value) {
+    if (!current || brushRadiusStart == null) return;
+    refreshPortrait(() => radius = value / 1000);
+  }
+
+  void endBrushSizing(double value) {
+    if (!current || brushRadiusStart == null) return;
+    refreshPortrait(() {
+      radius = value / 1000;
+      brushRadiusStart = null;
+    });
+    brushEditing.value = !comparing && !compareWanted;
+  }
+
+  void cancelBrushSizing() {
+    if (brushRadiusStart == null) return;
+    refreshPortrait(() {
+      radius = brushRadiusStart!;
+      brushRadiusStart = null;
+      brushSizeGeneration++;
+    });
+    brushEditing.value = !comparing && !compareWanted;
+  }
+
+  Widget originalBrushSlider({bool patch = false}) {
+    final epoch = operationEpoch;
+    return RetouchOriginalSlider(
+      key: ValueKey(
+        '${patch ? 'repair-size' : 'portrait-size'}-$brushSizeGeneration',
+      ),
+      label: patch ? '画笔大小' : '大小',
+      labelWidth: patch ? 80 : 44,
+      value: radius * 1000,
+      min: patch ? 5 : 2,
+      max: patch ? 100 : 120,
+      formatValue: (v) => '${(v / 10).toStringAsFixed(1)}%',
+      onChangeStart: (_) {
+        if (operationCurrent(epoch)) beginBrushSizing();
+      },
+      onChanged: busy || !current
+          ? null
+          : (v) {
+              if (operationCurrent(epoch)) updateBrushSizing(v);
+            },
+      onChangeEnd: (v) {
+        if (operationCurrent(epoch)) endBrushSizing(v);
+      },
+      onChangeCancel: () {
+        if (operationCurrent(epoch)) cancelBrushSizing();
+      },
+    );
+  }
+
+  Widget brushPreview({bool patch = false}) {
+    final shown = comparing && comparisonFrame != null
+        ? comparisonFrame
+        : frame;
+    return RetouchBrushPreview(
+      imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
+      imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
+      controller: viewport,
+      radius: radius,
+      center: brushPreviewCenter,
+      keepVisible: true,
+      visible: brushRadiusStart != null && !busy && !comparing,
+      reserveBars: !patch && tab == 2 && !choosingGroup,
+    );
+  }
+
+  Future<void> openOriginalPatch() async {
+    if (brushRadiusStart != null) cancelBrushSizing();
+    if (widget.patch ||
+        widget.regionId?.isNotEmpty == true ||
+        busy ||
+        !current ||
+        data == null ||
+        patchChildOpen) {
+      return;
+    }
+    await cancelTonePreview();
+    if (!mounted || !current || data == null) return;
+    final epoch = operationEpoch,
+        staged = data!,
+        fingerprint = data!['localData'];
+    bool valid() =>
+        operationCurrent(epoch) && data?['localData'] == fingerprint;
+    patchChildOpen = true;
+    try {
+      final result = await hueRootPage<Json>(
+        context,
+        MaterialPageRoute(
+          builder: (_) => RetouchWorkspace(
+            state: widget.state,
+            photo: widget.photo,
+            owner: widget.owner,
+            recipe: {...widget.recipe, 'localData': fingerprint},
+            isCurrent: valid,
+            patch: true,
+          ),
+        ),
+      );
+      if (result == null || !valid() || result['localData'] == fingerprint) {
+        return;
+      }
+      refreshPortrait(() {
+        busy = true;
+        stopped = false;
+        error = null;
+      });
+      final next = await call('media.retouchDescribe', {
+        'localData': result['localData'],
+      });
+      final image = await render(next);
+      if (valid()) {
+        refreshPortrait(() {
+          undo.add(staged);
+          if (undo.length > 32) undo.removeAt(0);
+          redo.clear();
+          data = next;
+          frame = image;
+        });
+      }
+    } catch (failure) {
+      if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
+    } finally {
+      if (operationCurrent(epoch)) {
+        patchChildOpen = false;
+        refreshPortrait(() => busy = false);
+      }
+    }
+    unawaited(refreshPortraitOverlay());
+  }
+
+  bool beginPatchStroke(Offset at, Size renderedSize) {
+    if (busy ||
+        !current ||
+        data == null ||
+        brushRadiusStart != null ||
+        comparing) {
+      return false;
+    }
+    originalGestureLocal = data!['localData'] as String;
+    originalGestureRadius = radius;
+    refreshPortrait(() {
+      points
+        ..clear()
+        ..add(at);
+      brushPreviewCenter = at;
+    });
+    return true;
+  }
+
+  void updatePatchStroke(Offset at) {
+    if (!current ||
+        data?['localData'] != originalGestureLocal ||
+        brushRadiusStart != null) {
+      return;
+    }
+    if (points.length < 512 &&
+        (points.isEmpty || (at - points.last).distance > .001)) {
+      refreshPortrait(() {
+        points.add(at);
+        brushPreviewCenter = at;
+      });
+    }
+  }
+
+  Future<void> endPatchStroke() async {
+    final stroke = List<Offset>.of(points),
+        size = originalGestureRadius,
+        local = originalGestureLocal;
+    cancelOriginalPhotoGesture();
+    originalGestureLocal = null;
+    if (stroke.isEmpty ||
+        !current ||
+        busy ||
+        data?['localData'] != local ||
+        brushRadiusStart != null) {
+      return;
+    }
+    await perform('media.retouchPatch', {
+      'points': stroke.expand((p) => [p.dx, p.dy]).toList(),
+      'radius': size,
+    });
+  }
+
+  void cancelPatchStroke() {
+    cancelOriginalPhotoGesture();
+    originalGestureLocal = null;
+  }
+
+  Widget originalPatchPhoto() {
+    final shown = comparing ? patchEntryFrame : frame;
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        RetouchOriginalPhotoStage(
+          imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
+          imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
+          controller: viewport,
+          editingEnabled: photoEditingEnabled,
+          editingSignal: brushEditing,
+          drawing: !busy && current && !comparing && brushRadiusStart == null,
+          onStart: beginPatchStroke,
+          onUpdate: updatePatchStroke,
+          onEnd: () => unawaited(endPatchStroke()),
+          onCancel: cancelPatchStroke,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              if (shown != null)
+                Image.file(
+                  File(shown['path'] as String),
+                  fit: BoxFit.fill,
+                  gaplessPlayback: true,
+                  semanticLabel: '修补照片：${widget.photo.name}',
+                ),
+              if (!comparing)
+                IgnorePointer(
+                  child: CustomPaint(
+                    painter: _RetouchOverlay(
+                      faces: const [],
+                      selected: -1,
+                      points: points.toList(),
+                      radius: originalGestureRadius,
+                      originalPortrait: true,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        Positioned.fill(child: brushPreview(patch: true)),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 48,
+          child: Row(
+            children: [
+              RetouchOriginalUtilityButton(
+                icon: 'undo',
+                semanticLabel: '撤销修补',
+                onPressed: busy || undo.isEmpty
+                    ? null
+                    : () {
+                        cancelPatchStroke();
+                        unawaited(history(false));
+                      },
+              ),
+              RetouchOriginalUtilityButton(
+                icon: 'redo',
+                semanticLabel: '重做修补',
+                onPressed: busy || redo.isEmpty
+                    ? null
+                    : () {
+                        cancelPatchStroke();
+                        unawaited(history(true));
+                      },
+              ),
+              const Spacer(),
+              RetouchOriginalUtilityButton(
+                icon: 'fit',
+                semanticLabel: '适应照片',
+                onPressed: busy
+                    ? null
+                    : () {
+                        cancelPatchStroke();
+                        cancelBrushSizing();
+                        viewport.value = Matrix4.identity();
+                      },
+              ),
+              RetouchOriginalUtilityButton(
+                icon: 'compare',
+                semanticLabel: '按住对比进入修补前的照片',
+                selected: comparing,
+                onCompare: (v) {
+                  if (current && (!v || !busy)) {
+                    cancelBrushSizing();
+                    cancelPatchStroke();
+                    compareWanted = v;
+                    brushEditing.value = !v && brushRadiusStart == null;
+                    refreshPortrait(() => comparing = v);
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+        if (error != null || busy)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 48,
+            child: RetouchOriginalStatus(error ?? '正在修补…'),
+          ),
+      ],
+    );
+  }
+
+  Widget originalPatchLayout(BuildContext context) => Theme(
+    data: hueviaTheme(Brightness.dark, home: false),
+    child: PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) cancelWorkspace(pop: false);
+      },
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          PhotoAtmosphere(image: atmosphere),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              toolbarHeight: 52,
+              leadingWidth: 52,
+              backgroundColor: Colors.transparent,
+              foregroundColor: retouchOriginalText,
+              title: Text(
+                '修补${data?['sourcePositioning'] == true ? ' · 塑形前定位' : ''}',
+                style: const TextStyle(fontSize: 16),
+              ),
+              centerTitle: true,
+              leading: IconButton(
+                tooltip: '取消修补',
+                onPressed: exitRequested ? null : cancelWorkspace,
+                icon: const RetouchOriginalGlyph('close'),
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4, 8, 12, 8),
+                  child: SizedBox(
+                    width: 64,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: retouchOriginalAccent,
+                        foregroundColor: const Color(0xff211812),
+                        textStyle: const TextStyle(fontSize: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed:
+                          busy ||
+                              !current ||
+                              data == null ||
+                              brushRadiusStart != null ||
+                              points.isNotEmpty
+                          ? null
+                          : () => Navigator.pop(context, data),
+                      child: const Text('应用'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, bounds) {
+                  final dock = RetouchOriginalDock(
+                    choosingGroup: false,
+                    entries: const [],
+                    controls: [
+                      const SizedBox(
+                        height: 48,
+                        child: Center(
+                          child: Text(
+                            '涂抹需要移除的小范围，松手后自动寻找附近干净纹理。',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: retouchOriginalMuted,
+                            ),
+                          ),
+                        ),
+                      ),
+                      originalBrushSlider(patch: true),
+                      originalAction(
+                        '移除最后一个修补',
+                        busy || (data?['patchCount'] as int? ?? 0) == 0
+                            ? null
+                            : () => unawaited(
+                                perform('media.retouchChange', {
+                                  'action': 'removePatch',
+                                  'index': (data!['patchCount'] as int) - 1,
+                                }),
+                              ),
+                      ),
+                    ],
+                  );
+                  final side =
+                      bounds.maxWidth > bounds.maxHeight &&
+                      bounds.maxWidth >= 480;
+                  return side
+                      ? Row(
+                          children: [
+                            Expanded(child: originalPatchPhoto()),
+                            SizedBox(
+                              width: math.min(320, bounds.maxWidth * .44),
+                              child: dock,
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Expanded(child: originalPatchPhoto()),
+                            SizedBox(
+                              height: math.min(180, bounds.maxHeight / 2),
+                              child: dock,
+                            ),
+                          ],
+                        );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
   Widget originalPhoto() {
     final shown = comparing && comparisonFrame != null
         ? comparisonFrame
@@ -99,10 +529,13 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
       imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
       controller: viewport,
+      editingEnabled: photoEditingEnabled,
+      editingSignal: brushEditing,
       reserveBars: tab == 2 && !choosingGroup,
       singleFingerPan: tab == 2 && !choosingGroup,
       navigationEnabled: !photoSampling,
       drawing:
+          brushRadiusStart == null &&
           !busy &&
           !choosingGroup &&
           (manual ||
@@ -180,10 +613,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   bool beginOriginalPhotoGesture(Offset at, Size renderedSize) {
-    if (busy || !current || data == null || comparing || choosingGroup) {
+    if (busy ||
+        !current ||
+        data == null ||
+        comparing ||
+        choosingGroup ||
+        brushRadiusStart != null) {
       return false;
     }
     originalGestureDown = at;
+    brushPreviewCenter = at;
     originalGestureLocal = data!['localData'] as String;
     originalGestureFace = selected;
     originalGestureTool = bodyTool;
@@ -230,6 +669,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   void updateOriginalPhotoGesture(Offset at) {
     if (!current ||
+        brushRadiusStart != null ||
         (data?['localData'] != originalGestureLocal &&
             scalarKey != 'body-drag-$originalGestureTool')) {
       return;
@@ -270,7 +710,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       });
     } else if (points.length < 512 &&
         (points.isEmpty || (at - points.last).distance > .001)) {
-      refreshPortrait(() => points.add(at));
+      refreshPortrait(() {
+        points.add(at);
+        brushPreviewCenter = at;
+      });
     }
   }
 
@@ -290,6 +733,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   Future<void> endOriginalPhotoGesture() async {
     if (!current ||
+        brushRadiusStart != null ||
         (data?['localData'] != originalGestureLocal &&
             scalarKey != 'body-drag-$originalGestureTool')) {
       cancelOriginalPhotoGesture();
@@ -339,7 +783,14 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   void tapOriginalPhoto(Offset at) {
-    if (busy || !current || data == null || comparing) return;
+    if (busy ||
+        !current ||
+        data == null ||
+        comparing ||
+        compareWanted ||
+        brushRadiusStart != null) {
+      return;
+    }
     if (photoSampling) {
       unawaited(sampleTone(at));
       return;
@@ -355,6 +806,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       return;
     }
     if (healMode && tab == 0) {
+      brushPreviewCenter = at;
       unawaited(
         perform('media.retouchHeal', {
           'x': at.dx,
@@ -479,7 +931,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> loadPortraitAtmosphere(String source) async {
-    if (widget.patch || !current || atmosphere != null) return;
+    if (!current || atmosphere != null) return;
     try {
       final result = await widget.state.core.call('media.atmosphere', {
         'path': source,
@@ -498,6 +950,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> paintOriginalPortrait() async {
+    if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
     await cancelTonePreview();
@@ -557,7 +1010,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         context,
         MaterialPageRoute(builder: (_) => page),
       );
-      if (!mounted || selection == null || !valid() || !operationCurrent(epoch)) {
+      if (!mounted ||
+          selection == null ||
+          !valid() ||
+          !operationCurrent(epoch)) {
         return;
       }
       if (widget.regionId?.isNotEmpty == true) {
@@ -840,6 +1296,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> originalSection(int section, {bool natural = false}) async {
+    if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
     await cancelTonePreview();
@@ -944,8 +1401,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> originalCompare(bool value) async {
+    if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     compareWanted = value;
+    brushEditing.value = !value && brushRadiusStart == null;
     if (!value) {
       if (operationCurrent(epoch)) refreshPortrait(() => comparing = false);
       return;
@@ -982,7 +1441,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     String label,
     VoidCallback? onPressed, {
     bool selected = false,
-  }) => RetouchOriginalTextButton(label, onPressed, selected: selected);
+  }) => RetouchOriginalTextButton(
+    label,
+    onPressed == null
+        ? null
+        : () {
+            cancelBrushSizing();
+            onPressed();
+          },
+    selected: selected,
+  );
 
   Widget originalRail(List<Widget> entries) => SizedBox(
     height: MediaQuery.textScalerOf(context).scale(10) >= 12 ? 84 : 72,
@@ -1228,16 +1696,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         ),
       ),
     if (faceMode == 2 || (faceMode == 1 && selectionBrush > 0))
-      RetouchOriginalSlider(
-        label: '大小',
-        labelWidth: 44,
-        value: radius * 1000,
-        min: 2,
-        max: 120,
-        formatValue: (v) => '${(v / 10).toStringAsFixed(1)}%',
-        onChanged: busy ? null : (_) {},
-        onChangeEnd: (v) => refreshPortrait(() => radius = v / 1000),
-      ),
+      originalBrushSlider(),
     originalRail([
       for (final f in originalFaceFields.where(
         (f) => !['LIGHT_X', 'LIGHT_Y'].contains(f.$2),
@@ -1249,6 +1708,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           onPressed: busy
               ? null
               : () async {
+                  cancelBrushSizing();
+                  cancelOriginalPhotoGesture();
+                  originalGestureLocal = null;
                   refreshPortrait(() {
                     faceMode = 0;
                     faceParameter = f.$2;
@@ -1272,6 +1734,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         onPressed: busy
             ? null
             : () => refreshPortrait(() {
+                cancelBrushSizing();
                 faceMode = 2;
                 healMode = true;
                 manual = false;
@@ -1284,6 +1747,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         onPressed: busy
             ? null
             : () => refreshPortrait(() {
+                cancelBrushSizing();
                 faceMode = 1;
                 healMode = false;
                 manual = false;
@@ -1765,6 +2229,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                 onPressed: busy || scalarStart != null || lightStart != null
                     ? null
                     : () {
+                        cancelBrushSizing();
                         refreshPortrait(() => showOverlay = !showOverlay);
                         unawaited(refreshPortraitOverlay());
                       },
@@ -1774,7 +2239,12 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                 semanticLabel: '适应照片',
                 onPressed: busy || scalarStart != null || lightStart != null
                     ? null
-                    : () => viewport.value = Matrix4.identity(),
+                    : () {
+                        cancelOriginalPhotoGesture();
+                        originalGestureLocal = null;
+                        cancelBrushSizing();
+                        viewport.value = Matrix4.identity();
+                      },
               ),
               RetouchOriginalUtilityButton(
                 icon: 'compare',
@@ -1795,6 +2265,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Widget originalStage() => Stack(
     children: [
       Positioned.fill(child: originalPhoto()),
+      Positioned.fill(child: brushPreview()),
       if (bodyStart != null)
         Align(
           alignment: Alignment.topCenter,
@@ -2016,6 +2487,8 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                         if (widget.regionId?.isNotEmpty != true)
                           (2, '塑形', 'body'),
                         (3, '自然精修', 'natural'),
+                        if (widget.regionId?.isNotEmpty != true)
+                          (4, '修补', 'heal'),
                       ])
                         RetouchOriginalToolButton(
                           label: f.$2,
@@ -2024,10 +2497,12 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                           onPressed: busy || data == null
                               ? null
                               : () => unawaited(
-                                  originalSection(
-                                    f.$1 == 3 ? 1 : f.$1,
-                                    natural: f.$1 == 3,
-                                  ),
+                                  f.$1 == 4
+                                      ? openOriginalPatch()
+                                      : originalSection(
+                                          f.$1 == 3 ? 1 : f.$1,
+                                          natural: f.$1 == 3,
+                                        ),
                                 ),
                         ),
                     ],

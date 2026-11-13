@@ -8,6 +8,7 @@ import 'package:huevia/domain.dart';
 import 'package:huevia/copy_adjustments.dart';
 import 'package:huevia/editor.dart';
 import 'package:huevia/recipes.dart';
+import 'package:huevia/retouch_workspace.dart';
 import 'package:huevia/theme.dart';
 import 'package:huevia/versions.dart';
 
@@ -17,6 +18,7 @@ class MenuCore extends fixtures.DraftCore {
   MenuCore(super.directory);
   Json draft = Recipe().data..['values'] = [0, 32, ...List.filled(15, 0)];
   String rawSha = 'raw-sha', versionSha = 'source-sha';
+  int portraitPreviewSerial = 0;
   @override
   Future<Json> call(
     String operation, [
@@ -24,6 +26,43 @@ class MenuCore extends fixtures.DraftCore {
     String? jobId,
   ]) async {
     switch (operation) {
+      case 'media.retouchDescribe':
+        calls.add((operation, payload));
+        return {
+          'localData': payload['localData'] ?? '',
+          'regionId': '',
+          'patchCount': 0,
+          'tones': [],
+          'portrait': {
+            'tonePerFace': false,
+            'hasSkinMask': false,
+            'faces': [],
+            'skin': {'toneId': 0, 'toneRgb': 0, 'toneAmount': 0},
+            'body': [
+              {
+                'left': .25,
+                'top': .25,
+                'right': .75,
+                'bottom': .9,
+                'amount': 0,
+              },
+              {'left': .3, 'top': .5, 'right': .7, 'bottom': .94, 'amount': 0},
+              {
+                'left': .23,
+                'top': .48,
+                'right': .77,
+                'bottom': .9,
+                'amount': 0,
+              },
+            ],
+          },
+        };
+      case 'media.retouchAnalyze':
+        calls.add((operation, payload));
+        return {'regionId': '', 'selectionOverlay': null};
+      case 'media.reviewPreview':
+        calls.add((operation, payload));
+        return {'path': '$root/previews/preview.png', 'width': 1, 'height': 1};
       case 'draft.load':
         calls.add((operation, payload));
         return {'sourceSha': 'source-sha', 'recipe': draft};
@@ -169,6 +208,7 @@ void main() {
       );
       await tester.pumpAndSettle();
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Restore original persists immediately and an old menu cannot run after account change',
@@ -203,6 +243,7 @@ void main() {
       );
       await tester.pumpAndSettle();
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Saved version from another source is rejected without changing the editor recipe',
@@ -226,6 +267,7 @@ void main() {
       );
       await tester.pumpAndSettle();
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets('Linked RAW with changed bytes is rejected before RAW preview', (
     tester,
@@ -242,7 +284,7 @@ void main() {
       () => Future<void>.delayed(const Duration(milliseconds: 10)),
     );
     await tester.pumpAndSettle();
-  });
+  }, timeout: const Timeout(Duration(seconds: 45)));
   testWidgets('Copy page stops at an account change before any mutation', (
     tester,
   ) async {
@@ -275,5 +317,37 @@ void main() {
       () => Future<void>.delayed(const Duration(milliseconds: 10)),
     );
     await tester.pumpAndSettle();
-  });
+  }, timeout: const Timeout(Duration(seconds: 45)));
+  testWidgets(
+    'Portrait tab opens the shared workspace directly and returns without the two intermediate cards',
+    (tester) async {
+      await openEditor(tester);
+      await tester.tap(find.text('人像'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RetouchWorkspace), findsOneWidget);
+      expect(find.text('人像精修'), findsNothing);
+      expect(find.text('涂抹自动修补'), findsNothing);
+      expect(find.text('修补'), findsOneWidget);
+      await tester.tap(find.byTooltip('取消人像精修'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RetouchWorkspace), findsNothing);
+      expect(find.byType(EditorPage), findsOneWidget);
+      expect(find.text('人像精修'), findsNothing);
+      expect(find.text('涂抹自动修补'), findsNothing);
+      await tester.tap(find.text('人像'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RetouchWorkspace), findsOneWidget);
+      await tester.tap(find.byTooltip('取消人像精修'));
+      await tester.pumpAndSettle();
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+      imageCache.clear();
+      imageCache.clearLiveImages();
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 10)),
+      );
+      await tester.pump();
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
 }

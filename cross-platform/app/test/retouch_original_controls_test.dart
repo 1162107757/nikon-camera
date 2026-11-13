@@ -15,6 +15,375 @@ Widget host(Widget child, {double scale = 1}) => MaterialApp(
 
 void main() {
   testWidgets(
+    'sibling slider-first release cannot revive a disabled photo tap',
+    (tester) async {
+      final probe = _SiblingEditingProbe();
+      await tester.pumpWidget(host(probe.build()));
+      final slider = find.descendant(
+        of: find.byKey(const ValueKey('sibling-size')),
+        matching: find.byType(Slider),
+      );
+      final sizing = await tester.startGesture(
+        tester.getRect(slider).center,
+        pointer: 1,
+      );
+      await sizing.moveBy(const Offset(25, 0));
+      expect(probe.editing.value, isFalse);
+      final photo = await tester.startGesture(
+        tester.getCenter(find.byKey(const ValueKey('sibling-photo'))),
+        pointer: 2,
+      );
+      await sizing.up();
+      expect(probe.editing.value, isTrue);
+      await photo.up();
+      await tester.pump();
+      expect(probe.taps, 0);
+      expect(probe.commits, 0);
+      await tester.tapAt(
+        tester.getCenter(find.byKey(const ValueKey('sibling-photo'))),
+      );
+      await tester.pump();
+      expect(probe.taps, 1);
+      await tester.pumpWidget(const SizedBox());
+      probe.dispose();
+    },
+  );
+
+  testWidgets(
+    'sibling photo-first then slider cannot revive its old tap even within one frame',
+    (tester) async {
+      final probe = _SiblingEditingProbe();
+      await tester.pumpWidget(host(probe.build()));
+      final photo = await tester.startGesture(
+        tester.getCenter(find.byKey(const ValueKey('sibling-photo'))),
+        pointer: 1,
+      );
+      final slider = find.descendant(
+        of: find.byKey(const ValueKey('sibling-size')),
+        matching: find.byType(Slider),
+      );
+      final sizing = await tester.startGesture(
+        tester.getRect(slider).center,
+        pointer: 2,
+      );
+      await sizing.moveBy(const Offset(25, 0));
+      expect(probe.editing.value, isFalse);
+      await sizing.up();
+      expect(probe.editing.value, isTrue);
+      // No pump between disable and enable: a rebuilt bool alone misses this cycle.
+      await photo.up();
+      await tester.pump();
+      expect(probe.taps, 0);
+      expect(probe.commits, 0);
+      await tester.tapAt(
+        tester.getCenter(find.byKey(const ValueKey('sibling-photo'))),
+      );
+      await tester.pump();
+      expect(probe.taps, 1);
+      await tester.pumpWidget(const SizedBox());
+      probe.dispose();
+    },
+  );
+
+  testWidgets(
+    'sibling slider interruption cancels a drawing stroke until all-up',
+    (tester) async {
+      final probe = _SiblingEditingProbe(drawing: true);
+      await tester.pumpWidget(host(probe.build()));
+      final center = tester.getCenter(
+        find.byKey(const ValueKey('sibling-photo')),
+      );
+      final photo = await tester.startGesture(center, pointer: 1);
+      await photo.moveBy(const Offset(20, 0));
+      expect(probe.pending, isNotEmpty);
+      final slider = find.descendant(
+        of: find.byKey(const ValueKey('sibling-size')),
+        matching: find.byType(Slider),
+      );
+      final sizing = await tester.startGesture(
+        tester.getRect(slider).center,
+        pointer: 2,
+      );
+      await sizing.moveBy(const Offset(25, 0));
+      expect(probe.cancels, 1);
+      expect(probe.pending, isEmpty);
+      await sizing.up();
+      await photo.moveBy(const Offset(20, 0));
+      await photo.up();
+      await tester.pump();
+      expect(probe.commits, 0);
+      expect(probe.taps, 0);
+      expect(probe.pending, isEmpty);
+      final fresh = await tester.startGesture(center, pointer: 3);
+      await fresh.moveBy(const Offset(20, 0));
+      await fresh.up();
+      await tester.pump();
+      expect(probe.commits, 1);
+      expect(probe.cancels, 1);
+      await tester.pumpWidget(const SizedBox());
+      probe.dispose();
+    },
+  );
+
+  testWidgets(
+    'disabled editing freezes taps at down yet keeps pinch navigation available',
+    (tester) async {
+      final controller = TransformationController();
+      var allowed = false, taps = 0;
+      late StateSetter update;
+      await tester.pumpWidget(
+        host(
+          StatefulBuilder(
+            builder: (context, setState) {
+              update = setState;
+              return SizedBox(
+                width: 400,
+                height: 300,
+                child: RetouchOriginalPhotoStage(
+                  key: const ValueKey('disabled-photo'),
+                  imageWidth: 800,
+                  imageHeight: 600,
+                  controller: controller,
+                  editingEnabled: allowed,
+                  onTap: (_) => taps++,
+                  child: const ColoredBox(color: Colors.black),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+      final center = tester.getCenter(
+        find.byKey(const ValueKey('disabled-photo')),
+      );
+      var photo = await tester.startGesture(center, pointer: 1);
+      update(() => allowed = true);
+      await tester.pump();
+      await photo.up();
+      expect(taps, 0);
+      photo = await tester.startGesture(center, pointer: 2);
+      update(() => allowed = false);
+      await tester.pump();
+      update(() => allowed = true);
+      await tester.pump();
+      await photo.up();
+      expect(taps, 0);
+      await tester.tapAt(center);
+      expect(taps, 1);
+      update(() => allowed = false);
+      await tester.pump();
+      final left = await tester.startGesture(
+        center - const Offset(30, 0),
+        pointer: 3,
+      );
+      final right = await tester.startGesture(
+        center + const Offset(30, 0),
+        pointer: 4,
+      );
+      await right.moveBy(const Offset(60, 0));
+      await tester.pump();
+      expect(controller.value.getMaxScaleOnAxis(), greaterThan(1));
+      await right.up();
+      await left.up();
+      expect(taps, 1);
+      await tester.pumpWidget(const SizedBox());
+      controller.dispose();
+    },
+  );
+
+  testWidgets(
+    'repair pinch cancels the whole stroke and residual fingers cannot submit or resume it',
+    (tester) async {
+      final controller = TransformationController(),
+          probe = _RepairGestureProbe();
+      await tester.pumpWidget(
+        host(SizedBox(width: 400, height: 400, child: probe.stage(controller))),
+      );
+      final origin = tester.getTopLeft(find.byType(RetouchOriginalPhotoStage));
+      final first = await tester.startGesture(
+        origin + const Offset(150, 200),
+        pointer: 1,
+      );
+      await first.moveTo(origin + const Offset(170, 210));
+      expect(probe.pending, hasLength(2));
+      final second = await tester.startGesture(
+        origin + const Offset(250, 200),
+        pointer: 2,
+      );
+      await tester.pump();
+      expect(probe.cancels, 1);
+      expect(probe.pending, isEmpty);
+      expect(probe.requests, isEmpty);
+      final updatesBeforeNavigation = probe.updates;
+      await first.moveTo(origin + const Offset(130, 200));
+      await second.moveTo(origin + const Offset(280, 230));
+      await first.moveTo(origin + const Offset(160, 220));
+      await second.moveTo(origin + const Offset(310, 250));
+      await tester.pump();
+      expect(controller.value.getMaxScaleOnAxis(), inExclusiveRange(1, 8));
+      expect(
+        controller.value.storage[12].abs() + controller.value.storage[13].abs(),
+        greaterThan(1),
+      );
+      expect(probe.updates, updatesBeforeNavigation);
+      expect(probe.requests, isEmpty);
+      await second.up();
+      await first.moveTo(origin + const Offset(190, 270));
+      final third = await tester.startGesture(
+        origin + const Offset(300, 260),
+        pointer: 3,
+      );
+      await third.moveTo(origin + const Offset(320, 270));
+      await third.up();
+      await first.moveTo(origin + const Offset(210, 260));
+      await tester.pump();
+      expect(probe.starts, 1);
+      expect(probe.cancels, 1);
+      expect(probe.pending, isEmpty);
+      expect(probe.updates, updatesBeforeNavigation);
+      expect(probe.requests, isEmpty);
+      expect(probe.taps, 0);
+      await first.up();
+      final fresh = await tester.startGesture(
+        origin + const Offset(200, 200),
+        pointer: 4,
+      );
+      await fresh.moveTo(origin + const Offset(220, 210));
+      await fresh.up();
+      await tester.pump();
+      expect(probe.starts, 2);
+      expect(probe.requests, hasLength(1));
+      expect(probe.taps, 0);
+      expect(
+        probe.requests.single.every(
+          (point) =>
+              point.dx >= 0 && point.dx <= 1 && point.dy >= 0 && point.dy <= 1,
+        ),
+        isTrue,
+      );
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      controller.dispose();
+    },
+  );
+
+  testWidgets(
+    'repair after zoom and after fit commits the same original-image coordinates',
+    (tester) async {
+      final controller = TransformationController(
+        Matrix4.identity()
+          ..setEntry(0, 0, 2)
+          ..setEntry(1, 1, 2)
+          ..setTranslationRaw(50, -20, 0),
+      );
+      final probe = _RepairGestureProbe();
+      await tester.pumpWidget(
+        host(
+          SizedBox(
+            width: 400,
+            height: 300,
+            child: probe.stage(controller, imageWidth: 800, imageHeight: 600),
+          ),
+        ),
+      );
+      const target = Offset(.3, .6), viewport = Size(400, 300);
+      final origin = tester.getTopLeft(find.byType(RetouchOriginalPhotoStage));
+      var frame = retouchOriginalPhotoFrame(
+        viewport: viewport,
+        imageWidth: 800,
+        imageHeight: 600,
+        transform: controller.value,
+      );
+      expect(frame, const Rect.fromLTWH(-150, -170, 800, 600));
+      var gesture = await tester.startGesture(
+        origin +
+            frame.topLeft +
+            Offset(target.dx * frame.width, target.dy * frame.height),
+      );
+      await gesture.up();
+      await tester.pump();
+      controller.value = Matrix4.identity();
+      await tester.pump();
+      frame = retouchOriginalPhotoFrame(
+        viewport: viewport,
+        imageWidth: 800,
+        imageHeight: 600,
+        transform: controller.value,
+      );
+      expect(frame, const Rect.fromLTWH(0, 0, 400, 300));
+      gesture = await tester.startGesture(
+        origin +
+            frame.topLeft +
+            Offset(target.dx * frame.width, target.dy * frame.height),
+      );
+      await gesture.up();
+      await tester.pump();
+      expect(probe.requests, hasLength(2));
+      expect(probe.renderedSizes, [const Size(800, 600), const Size(400, 300)]);
+      for (final request in probe.requests) {
+        expect(request.last.dx, closeTo(.3, 1e-9));
+        expect(request.last.dy, closeTo(.6, 1e-9));
+        expect((request.last.dx * 800).round(), 240);
+        expect((request.last.dy * 600).round(), 360);
+      }
+      expect(probe.taps, 0);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      controller.dispose();
+    },
+  );
+
+  testWidgets(
+    'repair rotation cancellation retains held pointers until a genuinely new gesture',
+    (tester) async {
+      tester.view.devicePixelRatio = 1;
+      tester.view.physicalSize = const Size(300, 500);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      addTearDown(tester.view.resetPhysicalSize);
+      final controller = TransformationController(),
+          probe = _RepairGestureProbe();
+      Widget page() =>
+          host(probe.stage(controller, imageWidth: 600, imageHeight: 1000));
+      await tester.pumpWidget(page());
+      final first = await tester.startGesture(
+        const Offset(150, 250),
+        pointer: 1,
+      );
+      await first.moveTo(const Offset(155, 255));
+      tester.view.physicalSize = const Size(500, 300);
+      await tester.pumpWidget(page());
+      await tester.pump();
+      expect(probe.cancels, 1);
+      expect(probe.pending, isEmpty);
+      final second = await tester.startGesture(
+        const Offset(270, 170),
+        pointer: 2,
+      );
+      await second.moveTo(const Offset(290, 180));
+      await second.up();
+      await first.moveTo(const Offset(260, 180));
+      await tester.pump();
+      expect(probe.starts, 1);
+      expect(probe.requests, isEmpty);
+      expect(probe.pending, isEmpty);
+      await first.up();
+      final fresh = await tester.startGesture(
+        const Offset(250, 150),
+        pointer: 3,
+      );
+      await fresh.moveTo(const Offset(260, 160));
+      await fresh.up();
+      await tester.pump();
+      expect(probe.starts, 2);
+      expect(probe.requests, hasLength(1));
+      expect(probe.cancels, 1);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      controller.dispose();
+    },
+  );
+
+  testWidgets(
     'body assistive compare tap restores after 650ms while portrait keeps its toggle',
     (tester) async {
       final semantics = tester.ensureSemantics();
@@ -891,4 +1260,105 @@ void main() {
       expect(confirmed, isTrue);
     },
   );
+}
+
+/// Models the workspace boundary: previews change onUpdate, requests only onEnd.
+class _RepairGestureProbe {
+  final pending = <Offset>[];
+  final requests = <List<Offset>>[];
+  final renderedSizes = <Size>[];
+  int starts = 0, updates = 0, cancels = 0, taps = 0;
+  Widget stage(
+    TransformationController controller, {
+    double imageWidth = 800,
+    double imageHeight = 800,
+  }) => RetouchOriginalPhotoStage(
+    imageWidth: imageWidth,
+    imageHeight: imageHeight,
+    controller: controller,
+    drawing: true,
+    onStart: (point, size) {
+      starts++;
+      renderedSizes.add(size);
+      pending
+        ..clear()
+        ..add(point);
+      return true;
+    },
+    onUpdate: (point) {
+      updates++;
+      pending.add(point);
+    },
+    onEnd: () {
+      requests.add(List.of(pending));
+      pending.clear();
+    },
+    onCancel: () {
+      cancels++;
+      pending.clear();
+    },
+    onTap: (_) => taps++,
+    child: const ColoredBox(color: Colors.black),
+  );
+}
+
+class _SiblingEditingProbe {
+  _SiblingEditingProbe({this.drawing = false});
+  final bool drawing;
+  final editing = ValueNotifier<bool>(true);
+  final controller = TransformationController();
+  final pending = <Offset>[];
+  int taps = 0, commits = 0, cancels = 0;
+  Widget build() => Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      SizedBox(
+        width: 400,
+        height: 300,
+        child: RetouchOriginalPhotoStage(
+          key: const ValueKey('sibling-photo'),
+          imageWidth: 800,
+          imageHeight: 600,
+          controller: controller,
+          drawing: drawing,
+          editingSignal: editing,
+          onStart: (point, size) {
+            pending
+              ..clear()
+              ..add(point);
+            return true;
+          },
+          onUpdate: pending.add,
+          onEnd: () {
+            commits++;
+            pending.clear();
+          },
+          onCancel: () {
+            cancels++;
+            pending.clear();
+          },
+          onTap: (_) => taps++,
+          child: const ColoredBox(color: Colors.black),
+        ),
+      ),
+      SizedBox(
+        width: 400,
+        child: RetouchOriginalSlider(
+          key: const ValueKey('sibling-size'),
+          label: '大小',
+          value: 22,
+          min: 5,
+          max: 100,
+          onChanged: (_) {},
+          onChangeStart: (_) => editing.value = false,
+          onChangeEnd: (_) => editing.value = true,
+          onChangeCancel: () => editing.value = true,
+        ),
+      ),
+    ],
+  );
+  void dispose() {
+    editing.dispose();
+    controller.dispose();
+  }
 }

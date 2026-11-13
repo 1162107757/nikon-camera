@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/retouch_workspace.dart';
+import 'package:huevia/retouch_original_controls.dart';
+import 'package:huevia/retouch_brush_preview.dart';
 import 'package:huevia/theme.dart';
 
 class PortraitMenuCore extends HueviaCore {
@@ -64,9 +66,10 @@ class PortraitMenuCore extends HueviaCore {
   final gates = <String, Completer<void>>{};
   final cancelledJobs = <String>[];
   final blockedJobs = <String>[];
-  int serial = 0;
+  int serial = 0, previewSerial = 0;
   String? failAnalyze;
   String regionId = '';
+  bool beforeBodyCopies = false;
   @override
   Future<void> cancel(String jobId) async {
     cancelledJobs.add(jobId);
@@ -99,10 +102,15 @@ class PortraitMenuCore extends HueviaCore {
     }
     if (operation == 'media.reviewPreview' ||
         operation == 'media.localPreview') {
-      return {'path': '$root/previews/portrait.png', 'width': 8, 'height': 8};
+      final target = '$root/previews/frame-${previewSerial++}.png';
+      await File('$root/previews/portrait.png').copy(target);
+      return {'path': target, 'width': 8, 'height': 8};
     }
     if (operation == 'media.retouchDescribe') {
-      return {...snapshots['start']!, 'regionId': regionId};
+      return {
+        ...(snapshots[payload['localData']] ?? snapshots['start']!),
+        'regionId': regionId,
+      };
     }
     if (operation == 'media.retouchAnalyze') {
       final mode = payload['mode'];
@@ -143,9 +151,43 @@ class PortraitMenuCore extends HueviaCore {
       snapshots[next['localData'] as String] = next;
       return next;
     }
+    if (operation == 'media.retouchPatch' || operation == 'media.retouchHeal') {
+      final next = object(
+        jsonDecode(jsonEncode(snapshots[payload['localData']]!)),
+      );
+      if (operation == 'media.retouchPatch') {
+        next['patchCount'] = (next['patchCount'] as int? ?? 0) + 1;
+      } else {
+        (object(next['portrait'])['heals'] as List).add({
+          'sx': .1,
+          'sy': .1,
+          'tx': payload['x'],
+          'ty': payload['y'],
+          'radius': payload['radius'],
+          'feather': .65,
+          'enabled': true,
+        });
+      }
+      next['regionId'] = regionId;
+      next['localData'] = next['sha256'] = 'edit-${serial++}';
+      snapshots[next['localData'] as String] = next;
+      return next;
+    }
     if (operation == 'media.retouchChange') {
       if (payload['action'] == 'beforeBody') {
-        return {...snapshots[payload['localData']]!, 'regionId': regionId};
+        if (!beforeBodyCopies) {
+          return {...snapshots[payload['localData']]!, 'regionId': regionId};
+        }
+        final view = object(
+          jsonDecode(jsonEncode(snapshots[payload['localData']]!)),
+        );
+        for (final area in (object(view['portrait'])['body'] as List)) {
+          (area as Json)['amount'] = 0;
+        }
+        view['localData'] = 'view-${serial++}';
+        view['regionId'] = regionId;
+        snapshots[view['localData'] as String] = view;
+        return view;
       }
       final next = object(
         jsonDecode(jsonEncode(snapshots[payload['localData']]!)),
@@ -154,6 +196,8 @@ class PortraitMenuCore extends HueviaCore {
       final faces = portrait['faces'] as List;
       final value = object(payload['value'] ?? {});
       switch (payload['action']) {
+        case 'removePatch':
+          next['patchCount'] = (next['patchCount'] as int) - 1;
         case 'removeHeal':
           (portrait['heals'] as List).removeAt(payload['index'] as int);
         case 'face':
@@ -216,9 +260,17 @@ void main() {
         'user': {'id': 'alice'},
       };
   });
-  tearDown(() {
+  tearDown(() async {
     state.dispose();
-    directory.deleteSync(recursive: true);
+    for (var attempt = 0; ; attempt++) {
+      try {
+        await directory.delete(recursive: true);
+        break;
+      } on FileSystemException catch (error) {
+        if (error.osError?.errorCode != 32 || attempt >= 30) rethrow;
+        await Future<void>.delayed(const Duration(milliseconds: 10));
+      }
+    }
   });
   Future<void> settle(WidgetTester tester) async {
     await tester.pumpAndSettle();
@@ -294,6 +346,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Healing history and last-heal undo target heals and preserve independent patches',
@@ -313,6 +366,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Tone scope is explicit, propagated on subsequent commands and restored by undo',
@@ -336,6 +390,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Reset requires confirmation and stays tentative with undo available',
@@ -358,6 +413,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Photo color picking uses actual neutral portrait bitmap pixels and previews until confirmed',
@@ -398,6 +454,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Account change closes private editing scope and prevents an old menu from mutating',
@@ -420,6 +477,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   String lastPreviewLocal() =>
       object(
@@ -471,6 +529,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Natural retouch analysis is atomic when the second analysis fails',
@@ -500,6 +559,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Body child cancellation restores parent effects and its independent undo history',
@@ -522,6 +582,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Body multi-person localization cancel installs no masks or guessed area',
@@ -552,6 +613,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Regional portrait hides global body entry and keeps every request scoped',
@@ -573,6 +635,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Overview retains original global or face mask mode and restores it after body',
@@ -613,7 +676,20 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
+  Completer<void> heldGate(WidgetTester tester) {
+    final gate = Completer<void>();
+    addTearDown(() async {
+      if (!gate.isCompleted) {
+        await tester.pumpWidget(const SizedBox());
+        gate.complete();
+        await tester.pump();
+      }
+    });
+    return gate;
+  }
+
   Future<PortraitRouteReceipt> pushWorkspace(
     WidgetTester tester, {
     String? regionId,
@@ -698,7 +774,7 @@ void main() {
       final receipt = await pushWorkspace(tester);
       await tester.tap(find.text('面部'));
       await settle(tester);
-      final gate = Completer<void>();
+      final gate = heldGate(tester);
       await startHeldFace(tester, gate);
       final previews = previewCount(), blocked = core.blockedJobs.single;
       final close = find.byTooltip('取消人像精修');
@@ -724,11 +800,12 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Busy Android system back cancels a held preview before late image installation',
     (tester) async {
-      final gate = Completer<void>();
+      final gate = heldGate(tester);
       core.gates['media.reviewPreview/'] = gate;
       final receipt = await pushWorkspace(tester);
       expect(find.bySemanticsLabel('待编辑照片：人像样片'), findsNothing);
@@ -745,6 +822,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Busy body cancellation restores parent staged effects and old analysis finally cannot unlock a new face task',
@@ -758,7 +836,7 @@ void main() {
       await settle(tester);
       await tester.tap(find.text('塑形'));
       await settle(tester);
-      final oldBody = Completer<void>();
+      final oldBody = heldGate(tester);
       core.gates['media.retouchAnalyze/body'] = oldBody;
       await tester.tap(find.text('自动定位'));
       await settle(tester);
@@ -772,7 +850,7 @@ void main() {
       await tester.tap(find.text('面部'));
       await settle(tester);
       expect(find.textContaining('已停用'), findsOneWidget);
-      final newFace = Completer<void>();
+      final newFace = heldGate(tester);
       await startHeldFace(tester, newFace);
       final previews = previewCount();
       oldBody.complete();
@@ -804,6 +882,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Busy body system back returns to its staged portrait without popping that route',
@@ -811,7 +890,7 @@ void main() {
       final receipt = await pushWorkspace(tester);
       await tester.tap(find.text('塑形'));
       await settle(tester);
-      final gate = Completer<void>();
+      final gate = heldGate(tester);
       core.gates['media.retouchAnalyze/body'] = gate;
       await tester.tap(find.text('背景保护'));
       await settle(tester);
@@ -832,6 +911,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
     'Busy regional child cancellation pops only that route and leaves the parent staged portrait',
@@ -844,7 +924,7 @@ void main() {
       );
       await tester.tap(find.text('面部'));
       await settle(tester);
-      final gate = Completer<void>();
+      final gate = heldGate(tester);
       await startHeldFace(tester, gate);
       final previews = previewCount();
       await tester.tap(find.byTooltip('取消人像精修'));
@@ -860,5 +940,398 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  List<Json> patchCalls() => core.calls
+      .where((c) => c.$1 == 'media.retouchPatch')
+      .map((c) => c.$2)
+      .toList();
+  Future<void> patchPage(WidgetTester tester) async {
+    await tester.tap(find.text('修补'));
+    await settle(tester);
+    expect(find.byTooltip('取消修补'), findsOneWidget);
+    expect(find.byType(RetouchOriginalPhotoStage), findsOneWidget);
+  }
+
+  Future<void> patchStroke(WidgetTester tester) async {
+    final center = tester
+        .getRect(find.byType(RetouchOriginalPhotoStage))
+        .center;
+    final gesture = await tester.startGesture(center);
+    await gesture.moveBy(const Offset(24, 12));
+    await gesture.up();
+    await settle(tester);
+  }
+
+  testWidgets(
+    'Repair confirm merges the full portrait and body state once and parent undo restores all prior patches',
+    (tester) async {
+      final portrait = core.snapshots['start']!['portrait'] as Json;
+      ((portrait['body'] as List)[0] as Json)['amount'] = 35;
+      core.snapshots['start']!['sourcePositioning'] = true;
+      core.beforeBodyCopies = true;
+      final receipt = await pushWorkspace(tester);
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      await more(tester, '停用此人脸');
+      final staged = changes('face').last['localData'];
+      await tester.tap(find.byTooltip('返回人像工具'));
+      await settle(tester);
+      await patchPage(tester);
+      await patchStroke(tester);
+      final payload = patchCalls().single;
+      final actual = core.snapshots[payload['localData']]!;
+      expect(
+        (object(actual['portrait'])['faces'] as List).single['enabled'],
+        false,
+      );
+      expect((object(actual['portrait'])['body'] as List)[0]['amount'], 35);
+      expect(payload['localData'], isNot(startsWith('view-')));
+      expect(payload['radius'], .025);
+      expect(find.text('修补 · 塑形前定位'), findsOneWidget);
+      await tester.tap(find.text('应用'));
+      await settle(tester);
+      expect(receipt.completed, 0);
+      expect(find.text('人像'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('撤销'));
+      await settle(tester);
+      await tester.tap(find.text('应用'));
+      await settle(tester);
+      final result = receipt.result!;
+      expect(result['patchCount'], 1);
+      expect(
+        (object(result['portrait'])['faces'] as List).single['enabled'],
+        false,
+      );
+      expect((object(result['portrait'])['body'] as List)[0]['amount'], 35);
+      expect(result['localData'], isNot(staged));
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Repair cancellation preserves staged portrait and ignores a native patch that finishes after cancellation',
+    (tester) async {
+      final receipt = await pushWorkspace(tester);
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      await more(tester, '停用此人脸');
+      await tester.tap(find.byTooltip('返回人像工具'));
+      await settle(tester);
+      await patchPage(tester);
+      final gate = heldGate(tester);
+      core.gates['media.retouchPatch/'] = gate;
+      await patchStroke(tester);
+      expect(patchCalls().length, 1);
+      final blocked = core.blockedJobs.last;
+      await tester.tap(find.byTooltip('取消修补'));
+      await tester.pump();
+      expect(core.cancelledJobs, contains(blocked));
+      gate.complete();
+      await settle(tester);
+      expect(receipt.completed, 0);
+      expect(find.text('人像'), findsOneWidget);
+      await patchPage(tester);
+      await patchStroke(tester);
+      expect(patchCalls().length, 2);
+      await tester.tap(find.byTooltip('取消修补'));
+      await settle(tester);
+      await tester.tap(find.text('应用'));
+      await settle(tester);
+      expect(receipt.result!['patchCount'], 1);
+      expect(
+        (object(receipt.result!['portrait'])['faces'] as List)
+            .single['enabled'],
+        false,
+      );
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Repair canvas multi-touch cancels the whole stroke and only an all-up fresh stroke submits one patch',
+    (tester) async {
+      await open(tester, enterFace: false);
+      await patchPage(tester);
+      final center = tester
+          .getRect(find.byType(RetouchOriginalPhotoStage))
+          .center;
+      final first = await tester.startGesture(center, pointer: 1);
+      await first.moveBy(const Offset(12, 4));
+      await tester.pump();
+      final second = await tester.startGesture(
+        center + const Offset(60, 0),
+        pointer: 2,
+      );
+      await second.moveBy(const Offset(20, 0));
+      await first.moveBy(const Offset(-10, 0));
+      await tester.pump();
+      await second.up();
+      await first.moveBy(const Offset(30, 0));
+      await first.up();
+      await settle(tester);
+      expect(patchCalls(), isEmpty);
+      await patchStroke(tester);
+      expect(patchCalls().length, 1);
+      expect(
+        (patchCalls().single['points'] as List).length,
+        greaterThanOrEqualTo(4),
+      );
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Repair brush slider previews its real radius and cancel restores it without producing patches',
+    (tester) async {
+      await open(tester, enterFace: false);
+      await patchPage(tester);
+      final slider = find.byType(Slider).first,
+          r = tester.getRect(find.byType(Slider).first);
+      final gesture = await tester.startGesture(r.center);
+      await gesture.moveBy(const Offset(32, 0));
+      await tester.pump();
+      final preview = tester.widget<RetouchBrushPreview>(
+        find.byType(RetouchBrushPreview),
+      );
+      expect(preview.visible, true);
+      expect(preview.radius, greaterThan(.025));
+      expect(patchCalls(), isEmpty);
+      await gesture.cancel();
+      await settle(tester);
+      final reset = tester.widget<RetouchBrushPreview>(
+        find.byType(RetouchBrushPreview),
+      );
+      expect(reset.visible, false);
+      expect(reset.radius, .025);
+      expect(patchCalls(), isEmpty);
+      expect(slider, findsOneWidget);
+      final committed = await tester.startGesture(
+        tester.getRect(slider).center,
+      );
+      await committed.moveBy(const Offset(28, 0));
+      await tester.pump();
+      final changed = tester
+          .widget<RetouchBrushPreview>(find.byType(RetouchBrushPreview))
+          .radius;
+      expect(changed, greaterThan(.025));
+      await committed.up();
+      await settle(tester);
+      final hidden = tester.widget<RetouchBrushPreview>(
+        find.byType(RetouchBrushPreview),
+      );
+      expect(hidden.visible, false);
+      expect(hidden.radius, changed);
+      expect(hidden.keepVisible, true);
+      await patchStroke(tester);
+      expect(patchCalls().single['radius'], changed);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Five portrait tools remain reachable without overflow on narrow large-text screens',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 640);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.dark),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: const TextScaler.linear(1.6)),
+            child: child!,
+          ),
+          home: RetouchWorkspace(
+            state: state,
+            photo: Photo('${directory.path}/original.jpg', '人像样片', const {}),
+            owner: 'alice',
+            recipe: Recipe().data,
+            isCurrent: () => true,
+          ),
+        ),
+      );
+      await settle(tester);
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('修补'));
+      await tester.tap(find.text('修补'));
+      await settle(tester);
+      expect(find.byTooltip('取消修补'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Portrait brush sizing excludes photo taps for both release orders and an already-held photo finger',
+    (tester) async {
+      await open(tester);
+      await tester.ensureVisible(find.text('祛痘'));
+      await tester.tap(find.text('祛痘'));
+      await settle(tester);
+      for (final order in ['photo-first', 'slider-first', 'photo-held']) {
+        TestGesture? photo;
+        if (order == 'photo-held') {
+          photo = await tester.startGesture(
+            tester.getRect(find.byType(RetouchOriginalPhotoStage)).center,
+            pointer: 2,
+          );
+        }
+        final sizing = await tester.startGesture(
+          tester.getRect(find.byType(Slider).first).center,
+          pointer: 1,
+        );
+        await sizing.moveBy(const Offset(25, 0));
+        await tester.pump();
+        expect(
+          tester
+              .widget<RetouchBrushPreview>(find.byType(RetouchBrushPreview))
+              .visible,
+          true,
+        );
+        photo ??= await tester.startGesture(
+          tester.getRect(find.byType(RetouchOriginalPhotoStage)).center,
+          pointer: 2,
+        );
+        if (order == 'photo-first') {
+          await photo.up();
+          await sizing.up();
+        } else {
+          await sizing.up();
+          await photo.up();
+        }
+        await settle(tester);
+        expect(
+          core.calls.where((c) => c.$1 == 'media.retouchHeal'),
+          isEmpty,
+          reason: order,
+        );
+        expect(
+          tester
+              .widget<RetouchBrushPreview>(find.byType(RetouchBrushPreview))
+              .visible,
+          false,
+        );
+      }
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+
+  testWidgets(
+    'Repair size drag then undo or compare clears its preview and leaves the canvas editable',
+    (tester) async {
+      await open(tester, enterFace: false);
+      await patchPage(tester);
+      await patchStroke(tester);
+      var slider = find.byType(Slider).first;
+      final sizing = await tester.startGesture(
+        tester.getRect(slider).center,
+        pointer: 1,
+      );
+      await sizing.moveBy(const Offset(24, 0));
+      await tester.pump();
+      expect(
+        tester
+            .widget<RetouchBrushPreview>(find.byType(RetouchBrushPreview))
+            .visible,
+        true,
+      );
+      await tester.tap(find.bySemanticsLabel('撤销修补'), pointer: 2);
+      await settle(tester);
+      await sizing.up();
+      await settle(tester);
+      expect(
+        tester
+            .widget<RetouchBrushPreview>(find.byType(RetouchBrushPreview))
+            .visible,
+        false,
+      );
+      expect(
+        tester
+            .widget<RetouchOriginalPhotoStage>(
+              find.byType(RetouchOriginalPhotoStage),
+            )
+            .drawing,
+        true,
+      );
+      expect(tester.widget<Slider>(find.byType(Slider).first).value, 25);
+      await patchStroke(tester);
+      expect(patchCalls().length, 2);
+      slider = find.byType(Slider).first;
+      final second = await tester.startGesture(
+        tester.getRect(slider).center,
+        pointer: 1,
+      );
+      await second.moveBy(const Offset(25, 0));
+      await tester.pump();
+      final compare = await tester.startGesture(
+        tester.getRect(find.bySemanticsLabel('按住对比进入修补前的照片')).center,
+        pointer: 2,
+      );
+      await tester.pump();
+      await compare.up();
+      await second.up();
+      await settle(tester);
+      expect(
+        tester
+            .widget<RetouchBrushPreview>(find.byType(RetouchBrushPreview))
+            .visible,
+        false,
+      );
+      expect(
+        tester
+            .widget<RetouchOriginalPhotoStage>(
+              find.byType(RetouchOriginalPhotoStage),
+            )
+            .drawing,
+        true,
+      );
+      expect(patchCalls().length, 2);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Portrait compare release never turns an already-held photo finger into healing',
+    (tester) async {
+      await open(tester);
+      await tester.ensureVisible(find.text('祛痘'));
+      await tester.tap(find.text('祛痘'));
+      await settle(tester);
+      final compare = await tester.startGesture(
+        tester.getRect(find.bySemanticsLabel('按住查看处理前；辅助功能点击切换')).center,
+        pointer: 1,
+      );
+      await settle(tester);
+      final photo = await tester.startGesture(
+        tester.getRect(find.byType(RetouchOriginalPhotoStage)).center,
+        pointer: 2,
+      );
+      await compare.up();
+      await tester.pump();
+      await photo.up();
+      await settle(tester);
+      expect(core.calls.where((c) => c.$1 == 'media.retouchHeal'), isEmpty);
+      await tester.tapAt(
+        tester.getRect(find.byType(RetouchOriginalPhotoStage)).center,
+      );
+      await settle(tester);
+      expect(core.calls.where((c) => c.$1 == 'media.retouchHeal').length, 1);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
   );
 }

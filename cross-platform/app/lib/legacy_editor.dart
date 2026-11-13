@@ -712,6 +712,15 @@ extension _LegacyWorkspace on _EditorPageState {
     ),
   );
 
+  void selectWorkspaceMode(int next) {
+    if (!toolsEnabled) return;
+    if (next == 8) {
+      unawaited(openRetouch());
+      return;
+    }
+    refreshWorkspace(() => tab = next);
+  }
+
   Widget modeStrip(double scale) => SizedBox(
     height: 67 * scale,
     child: Padding(
@@ -733,11 +742,11 @@ extension _LegacyWorkspace on _EditorPageState {
                 selected: tab == entry.$1,
                 label: entry.$2,
                 onTap: toolsEnabled
-                    ? () => refreshWorkspace(() => tab = entry.$1)
+                    ? () => selectWorkspaceMode(entry.$1)
                     : null,
                 child: InkWell(
                   onTap: toolsEnabled
-                      ? () => refreshWorkspace(() => tab = entry.$1)
+                      ? () => selectWorkspaceMode(entry.$1)
                       : null,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 3),
@@ -1417,34 +1426,7 @@ extension _LegacyWorkspace on _EditorPageState {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                               ),
-                              child: tab == 8
-                                  ? Column(
-                                      children: [
-                                        ListTile(
-                                          title: const Text('人像精修'),
-                                          subtitle: const Text('选脸、皮肤范围与身体塑形'),
-                                          trailing: const Icon(
-                                            Icons.chevron_right,
-                                          ),
-                                          onTap: toolsEnabled
-                                              ? () => unawaited(openRetouch())
-                                              : null,
-                                        ),
-                                        ListTile(
-                                          title: const Text('涂抹自动修补'),
-                                          subtitle: const Text('松手后寻找干净纹理'),
-                                          trailing: const Icon(
-                                            Icons.chevron_right,
-                                          ),
-                                          onTap: toolsEnabled
-                                              ? () => unawaited(
-                                                  openRetouch(patch: true),
-                                                )
-                                              : null,
-                                        ),
-                                      ],
-                                    )
-                                  : controls(),
+                              child: controls(),
                             ),
                     );
                     final horizontal = bounds.maxWidth > bounds.maxHeight;
