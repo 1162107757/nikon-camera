@@ -14,7 +14,9 @@ final _pixel = base64Decode(
 
 class ReadonlyCore extends HueviaCore {
   ReadonlyCore(String directory) {
-    root = directory;
+    // The real iOS bridge returns Java File.getCanonicalPath(), including
+    // /private/var rather than macOS's /var temporary-directory alias.
+    root = Directory(directory).resolveSymbolicLinksSync();
   }
   final calls = <(String, Json)>[];
   final cancelled = <String>[];

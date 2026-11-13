@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -13,6 +14,8 @@ class CameraCore extends HueviaCore {
     root = preview.parent.parent.path;
   }
   final File preview;
+  @override
+  Stream<dynamic> get operationProgress => const Stream<dynamic>.empty();
   final calls = <(String, Json)>[];
   bool failPage = false, failThumbnail = false;
   @override
