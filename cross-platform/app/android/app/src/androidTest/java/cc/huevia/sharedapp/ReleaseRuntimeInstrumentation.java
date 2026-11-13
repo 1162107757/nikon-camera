@@ -212,6 +212,16 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         JSONObject changed=call("media.retouchChange",payload(source,skin.getString("localData")).put("action","face").put("index",0).put("value",new JSONObject().put("brightness",28).put("smoothing",35).put("EYE_DETAIL",30).put("TEETH",20).put("NATURAL",20)));
         JSONObject selected=changed.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0);
         yes(selected.getInt("brightness")==28&&selected.getInt("EYE_DETAIL")==30&&selected.getInt("TEETH")==20,"release DTO retains applied portrait and eye/teeth controls");
+        JSONObject bodySkin=call("media.retouchAnalyze",payload(source,changed.getString("localData")).put("mode","faceBody").put("tonePerFace",true));
+        yes(bodySkin.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0).getBoolean("hasBodySkinMask"),"release original body-skin model assigns a person-owned matte");
+        JSONObject custom=call("media.retouchChange",payload(source,bodySkin.getString("localData")).put("action","face").put("index",0).put("value",new JSONObject().put("toneRgb",0xbba080).put("toneAmount",.63).put("toneBody",true)));
+        JSONObject tone=custom.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0);
+        yes(tone.getInt("toneId")==10&&tone.getInt("toneRgb")==0xbba080&&tone.getBoolean("toneBody"),"release custom tone retains RGB, strength and person body scope");
+        JSONObject brush=call("media.retouchChange",payload(source,custom.getString("localData")).put("action","faceStroke").put("index",0).put("value",new JSONObject().put("points",new JSONArray().put(tone.getDouble("cx")).put(tone.getDouble("cy"))).put("radius",.01).put("erase",false)));
+        yes(brush.getJSONObject("portrait").getJSONArray("faces").getJSONObject(0).getInt("strokeCount")==1,"release face selection stores an original immutable brush stroke");
+        preview(source,brush.getString("localData"));
+        JSONObject candidates=call("media.retouchAnalyze",payload(source,skin.getString("localData")).put("mode","autoBlemish"));
+        yes(candidates.getJSONArray("healCandidates").length()<=24&&candidates.getString("localData").equals(skin.getString("localData")),"release automatic blemish candidates remain tentative and bounded");
         JSONObject rendered=preview(source,changed.getString("localData"));
         int differences=pixelDifferences(new File(neutral.getString("path")),new File(rendered.getString("path")));
         yes(differences>0,"release original renderer changed sampled RGB pixels");

@@ -94,6 +94,10 @@ public final class SharedRuntime {
         if(operation.equals("photo.copy")||operation.equals("photo.copyUndo"))return SharedJson.encode(copyAdjustments(operation,p,cancel,progress));
         if(operation.startsWith("version."))return SharedJson.encode(versions(operation,p,cancel));
         if(operation.startsWith("local."))return SharedJson.encode(SharedLocalEdits.request(operation,p,cancel));
+        if(operation.startsWith("toneCards.")){
+            String owner=text(p,"owner",64);guardOwner(owner);
+            return SharedJson.encode(SharedPortraitToneCards.request(root,owner,operation,p,cancel));
+        }
         if(operation.equals("export.describe")) {
             if(cancel.getAsBoolean())throw new InterruptedIOException("导出设置已取消。");
             PhotoEditStore.Draft frozen=reviewView(text(p,"path",32768),text(p,"owner",64),SharedJson.encode(object(p.get("recipe"))));

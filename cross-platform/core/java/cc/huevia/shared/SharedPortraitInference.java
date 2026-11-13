@@ -14,7 +14,7 @@ public final class SharedPortraitInference {
     public static String heal(String json,int[] pixels,int width,int height,BooleanSupplier cancel)throws IOException {
         validate(pixels,width,height);Map<String,Object> p=SharedJson.object(json);double tx=value(p,"x"),ty=value(p,"y"),radius=value(p,"radius");if(tx<0||tx>1||ty<0||ty>1||radius<.002||radius>.12)throw new IOException("祛痘范围无效。");double shortSide=Math.min(width,height),rx=radius*shortSide/width,ry=radius*shortSide/height,best=Double.POSITIVE_INFINITY,sx=tx,sy=ty;
         for(int ring=0;ring<3;ring++)for(int angle=0;angle<16;angle++){check(cancel);double a=2*Math.PI*angle/16,distance=2.6+ring*1.3,x=tx+Math.cos(a)*rx*distance,y=ty+Math.sin(a)*ry*distance;if(x-rx<0||x+rx>1||y-ry<0||y+ry>1)continue;double score=0;for(int j=0;j<16;j++){double b=2*Math.PI*j/16,ox=Math.cos(b)*rx*.9,oy=Math.sin(b)*ry*.9;int source=pixel(pixels,width,height,x+ox,y+oy),target=pixel(pixels,width,height,tx+ox,ty+oy);double dr=((source>>>16)&255)-((target>>>16)&255),dg=((source>>>8)&255)-((target>>>8)&255),db=(source&255)-(target&255);score+=dr*dr*.25+dg*dg*.5+db*db*.25;}score+=distance*distance*2;if(score<best){best=score;sx=x;sy=y;}}
-        if(!Double.isFinite(best))throw new IOException("瑕疵太靠近边缘，请缩小修复范围。");PhotoLocalEdits local=SharedRetouch.local(p);return SharedRetouch.result(local.withPortrait(local.portrait.addHeal(new PhotoPortrait.Heal(sx,sy,tx,ty,radius,.7,true))),cancel);
+        if(!Double.isFinite(best))throw new IOException("瑕疵太靠近边缘，请缩小修复范围。");PhotoLocalEdits local=SharedRetouch.local(p);return SharedRetouch.resultFor(SharedRetouch.withPortrait(local,p,SharedRetouch.portrait(local,p).addHeal(new PhotoPortrait.Heal(sx,sy,tx,ty,radius,.7,true))),p,cancel);
     }
     private static double value(Map<String,Object> p,String key)throws IOException{Object v=p.get(key);if(!(v instanceof Number)||!Double.isFinite(((Number)v).doubleValue()))throw new IOException("祛痘参数无效。");return ((Number)v).doubleValue();}
     private static int pixel(int[] p,int w,int h,double x,double y){return p[Math.max(0,Math.min(h-1,(int)(y*h)))*w+Math.max(0,Math.min(w-1,(int)(x*w)))];}
@@ -49,6 +49,37 @@ public final class SharedPortraitInference {
             byte[] coverage=new byte[S*S];int covered=0;for(int i=0;i<coverage.length;i++)if(keep[i]){coverage[i]=(byte)Math.round(weights[i]*255);if((coverage[i]&255)>16)covered++;}
             if(covered<32)throw new IOException("未能确认面部皮肤，请重新识别。");row.put("skinMask",SharedRuntime.map("left",left,"top",top,"right",right,"bottom",bottom,"data",Base64.getEncoder().encodeToString(coverage)));
         }check(cancel);return SharedJson.encode(row);
+    }
+    /** Original PhotoFaceBodySkin postprocessing, preserving the selected people and adjustments. */
+    public static String bodySkin(String json,int width,int height,float[] output,BooleanSupplier cancel)throws IOException {
+        if(width<2||height<2||width>1280||height>1280)throw new IOException("人物分析图片尺寸无效。");
+        logits(output);Map<String,Object> p=SharedJson.object(json);PhotoLocalEdits local=SharedRetouch.local(p);PhotoPortrait portrait=SharedRetouch.portrait(local,p);List<PhotoPortrait.Face> faces=portrait.faces();
+        if(faces.isEmpty())throw new IOException("请先选择一张人脸。");
+        double scale=Math.min(N/(double)width,N/(double)height),w=width*scale,h=height*scale,left=(N-w)/2,top=(N-h)/2;
+        byte[] categories=new byte[N*N];float[] body=new float[N*N];double[] values=new double[C];
+        for(int y=0;y<N;y++){check(cancel);for(int x=0;x<N;x++){
+            if(x+.5<left||x+.5>=left+w||y+.5<top||y+.5>=top+h)continue;
+            int i=y*N+x,winner=0;double max=Double.NEGATIVE_INFINITY;
+            for(int c=0;c<C;c++){double value=output[i*C+c];values[c]=value;if(value>max){max=value;winner=c;}}
+            categories[i]=(byte)winner;double sum=0;for(int c=0;c<C;c++){values[c]=Math.exp(values[c]-max);sum+=values[c];}
+            double probability=values[2]/sum,other=0;for(int c=0;c<C;c++)if(c!=2)other=Math.max(other,values[c]/sum);
+            if(probability>other){double margin=Math.min(1,(probability-other)/.25);body[i]=(float)(margin*margin*(3-2*margin));}
+        }}
+        double[] seeds=new double[faces.size()*2];for(int i=0;i<faces.size();i++){seeds[2*i]=(left+faces.get(i).cx*w)/N;seeds[2*i+1]=(top+faces.get(i).cy*h)/N;}
+        int[] owners=SkinBodyRegions.owners(categories,N,seeds,cancel);List<PhotoPortrait.Face> result=new ArrayList<>();
+        for(int face=0;face<faces.size();face++){
+            byte[] coverage=new byte[S*S];
+            for(int y=0;y<S;y++){check(cancel);for(int x=0;x<S;x++){
+                double gx=left+(x+.5)/S*w-.5,gy=top+(y+.5)/S*h-.5;int ix=(int)Math.floor(gx),iy=(int)Math.floor(gy);double tx=gx-ix,ty=gy-iy,weight=0;
+                for(int dy=0;dy<2;dy++)for(int dx=0;dx<2;dx++){
+                    int sx=Math.max(0,Math.min(N-1,ix+dx)),sy=Math.max(0,Math.min(N-1,iy+dy)),i=sy*N+sx;
+                    if(owners[i]==face)weight+=body[i]*(dx==0?1-tx:tx)*(dy==0?1-ty:ty);
+                }
+                coverage[y*S+x]=(byte)Math.round(Math.min(1,weight)*255);
+            }}
+            result.add(faces.get(face).withBodySkinMask(new PhotoPortrait.BodySkinMask(coverage)));
+        }
+        check(cancel);return SharedRetouch.resultFor(SharedRetouch.withPortrait(local,p,portrait.withFaces(result)),p,cancel);
     }
     public static String person(int[] pixels,int width,int height,float[] output,String facesJson,BooleanSupplier cancel)throws IOException {
         validate(pixels,width,height);logits(output);double scale=Math.min(N/(double)width,N/(double)height),w=width*scale,h=height*scale,left=(N-w)/2,top=(N-h)/2;float[] skin=new float[N*N],person=new float[N*N];double[] score=new double[C];
