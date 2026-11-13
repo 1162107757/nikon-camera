@@ -1,0 +1,77 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "androidReleaseRuntimeChecks": 54,
+  "androidRuntimeDevice": "emulator-5584 / API31 / 4096-byte pages",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-214-android-arm64.apk",
+      "platform": "android",
+      "abi": "arm64-v8a",
+      "bytes": 52510514,
+      "sha256": "64dc73bdf4eda1ddc92d963b4d17597c62765739a36a173e61e08c5f16faec2b",
+      "versionName": "0.31.0-dev",
+      "versionCode": 214,
+      "package": "cc.huevia.next",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "sourceCommit": "2bc961163542d5189b0470a48df7c8300220722e",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-214-android-x64.apk",
+      "platform": "android",
+      "abi": "x86_64",
+      "bytes": 55881946,
+      "sha256": "2a8a3a245c1416d26d8024b54f3a7d6ace01c55be4409dc6c45f124175f6bf49",
+      "versionName": "0.31.0-dev",
+      "versionCode": 214,
+      "package": "cc.huevia.next",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "sourceCommit": "2bc961163542d5189b0470a48df7c8300220722e",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-214-ios-unsigned.ipa",
+      "platform": "ios",
+      "abi": "arm64",
+      "bytes": 64774297,
+      "sha256": "ec7d38f942bc073e9b43e95ad39fc073a73ca249c11072381fee792820157180",
+      "versionName": "0.31.0",
+      "versionCode": 214,
+      "package": "cc.huevia.next",
+      "sourceCommit": "2bc961163542d5189b0470a48df7c8300220722e",
+      "unsigned": true,
+      "minimumOS": "16.0",
+      "deviceInstallationVerified": false,
+      "acceptedForLocalSelfSignedTesting": true
+    }
+  ],
+  "ios": {
+    "state": "final-full-acceptance-passed",
+    "run": 43388505094,
+    "sourceCommit": "2bc961163542d5189b0470a48df7c8300220722e",
+    "acceptedIpa": true,
+    "flutterTestsPassed": 319,
+    "sharedCoreBoundaryChecks": 1359,
+    "sharedCoreParityPassed": true,
+    "nativeScenariosPassed": 1,
+    "photoKitXCTestPassed": true,
+    "previousFullRunPassed": 43385620203,
+    "previousSourceHeldForCancellationFix": true
+  },
+  "acceptedForDelivery": true,
+  "androidUiGate": {
+    "state": "local-regression-and-full-mac-passed",
+    "sourceCommit": "2bc961163542d5189b0470a48df7c8300220722e",
+    "originalPortraitTestsPassed": 12,
+    "newCancellationTestsPassed": 5,
+    "previousFullMacTestsPassed": 314,
+    "previousFullMacSource": "664b14579bf5a44e839746a6808e9a4aee10ca0e",
+    "finalFullRun": 43388505094,
+    "finalFullMacTestsPassed": 319
+  }
+}

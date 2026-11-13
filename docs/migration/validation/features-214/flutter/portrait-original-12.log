@@ -1,0 +1,14 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart
+00:00 +0: Original portrait menu changes face enabled state and deletes only the selected face
+00:01 +1: Healing history and last-heal undo target heals and preserve independent patches
+00:02 +2: Tone scope is explicit, propagated on subsequent commands and restored by undo
+00:03 +3: Reset requires confirmation and stays tentative with undo available
+00:04 +4: Photo color picking uses actual neutral portrait bitmap pixels and previews until confirmed
+00:06 +5: Account change closes private editing scope and prevents an old menu from mutating
+00:06 +6: Continuous face parameter drag commits one undo; cancel restores the complete candidate
+00:07 +7: Natural retouch analysis is atomic when the second analysis fails
+00:07 +8: Body child cancellation restores parent effects and its independent undo history
+00:08 +9: Body multi-person localization cancel installs no masks or guessed area
+00:09 +10: Regional portrait hides global body entry and keeps every request scoped
+00:09 +11: Overview retains original global or face mask mode and restores it after body
+00:10 +12: All tests passed!

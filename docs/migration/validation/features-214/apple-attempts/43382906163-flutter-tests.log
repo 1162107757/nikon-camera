@@ -1,0 +1,1101 @@
+00:00 +0: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart
+00:00 +0: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart: Original selection page draws and confirms once at (Size(375.0, 812.0), 1.0)
+00:01 +1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart: Original selection page draws and confirms once at (Size(812.0, 375.0), 2.0)
+00:02 +2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart: Pinch cancels a partial stroke and a later tap can still draw a single dot
+00:03 +3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart: Account change purges the image and prevents a late selection result from popping another page
+00:04 +4: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart: System back discards an in-flight confirmation without popping the editor behind it
+00:04 +5: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_workspace_test.dart: The mask worker coalesces updates and never renders two masks concurrently
+00:05 +6: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart
+00:12 +6: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart: Autosave is serial and old responses cannot replace newer typing
+00:13 +7: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart: Uncertain save restores native receipt and locks edits until retry
+00:13 +8: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart: Picker result from an old account is discarded and private fields clear
+00:13 +9: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart: Submission fields preserve comma input without overflow at (Size(375.0, 812.0), 1.0)
+00:14 +10: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart: Submission fields preserve comma input without overflow at (Size(812.0, 375.0), 2.0)
+00:14 +11: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/submission_ui_test.dart: Foreground unread polling stops in background and rejects a stale count
+00:15 +12: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/raw_reference_ui_test.dart
+00:16 +12: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/raw_reference_ui_test.dart: RAW reference requires explicit same-capture confirmation, persists and can restore embedded reference
+00:17 +13: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart
+00:18 +13: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart: Android crash evidence retains type, code locations and OS memory reasons without private messages
+00:18 +14: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart: iOS exception and delivered MetricKit summaries exclude symbols, paths and exception reasons
+00:18 +15: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart: Dart records do not serialize exception messages or absolute file locations
+00:18 +16: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart: Record count, stack count, numeric range and individual frames stay bounded
+00:18 +17: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart: Native journal is best effort and unavailable collectors preserve safe diagnostics
+00:18 +18: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/app_stability_test.dart: Installing capture twice keeps existing Flutter and platform error handlers in charge
+00:18 +19: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/updates_release_test.dart
+00:18 +19: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/updates_release_test.dart: Actual unsigned IPA metadata is bounded and platform-specific
+00:18 +20: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/updates_release_test.dart: Download trust is confined to manifest directory or actual repository assets
+00:18 +21: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/versions_test.dart
+00:19 +21: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/versions_test.dart: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(375.0, 812.0)
+00:20 +22: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/versions_test.dart: Saved version viewing is bounded and readonly; restore and delete stay explicit at Size(812.0, 375.0)
+00:20 +23: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_previews_test.dart
+00:21 +23: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Visible thumbnails share one serialized camera read and one future per object
+00:21 +24: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_previews_test.dart: A changed session retires queued reads and discards an old active reply
+00:21 +25: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Wrong-session and external preview paths are rejected and explicit retry refreshes
+00:21 +26: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_previews_test.dart: Disposing a thumbnail list drains its active read without disconnecting the camera
+00:21 +27: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_previews_test.dart: A failed preview is retained until explicit retry instead of flooding the camera
+00:21 +28: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart
+00:22 +28: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch freezes every recipe before export and retains per-photo adjustments
+00:22 +29: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch retries failures without repeating completed outputs or changing frozen settings
+00:22 +30: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Cancellation keeps completed outputs and resumes only remaining photos
+00:22 +31: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Changing account prevents remaining exports and all later retries
+00:22 +32: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch refuses duplicate sources and an unbounded selection
+00:22 +33: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Batch RAW preparation carries the persisted JPEG reference into the current private root
+00:22 +34: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 1.0)
+00:23 +35: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Album selection groups photos and opens a full-page batch with fixed actions at (Size(375.0, 812.0), 2.0)
+00:24 +36: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_export_test.dart: Album selection groups photos and opens a full-page batch with fixed actions at (Size(812.0, 375.0), 2.0)
+00:24 +37: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/copy_adjustments_test.dart
+00:25 +37: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/copy_adjustments_test.dart: Copy scope and owner stay pinned; newer edits survive undo at Size(375.0, 812.0)
+00:26 +38: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/copy_adjustments_test.dart: Copy scope and owner stay pinned; newer edits survive undo at Size(812.0, 375.0)
+00:26 +39: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/native_import_test.dart
+00:26 +39: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/native_import_test.dart: Native document import keeps the provider filename and the owner from picker opening
+00:26 +40: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/native_import_test.dart: Cancelled or invalid native picks cannot register photos outside the private originals
+00:26 +41: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preview_templates_test.dart
+00:27 +41: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preview_templates_test.dart: Template selection uses streamed native picking, handles cancellation and restores built-ins
+00:27 +42: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart
+00:28 +42: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart: Avatar uploads only after review and ignores a second concurrent confirmation
+00:28 +43: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart: Late avatar selection from another account is discarded without a write
+00:28 +44: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart: Failed avatar upload preserves the reviewed receipt for an explicit retry
+00:28 +45: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart: Profile and avatar preview purge old account details at (Size(375.0, 812.0), 1.0)
+00:29 +46: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart: Profile and avatar preview purge old account details at (Size(812.0, 375.0), 2.0)
+00:29 +47: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_profile_test.dart: Logout confirmation cannot log out an account selected after the dialog opened
+00:29 +48: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart
+00:29 +48: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart: Files retry keeps the chosen target and operation and requires SHA readback
+00:29 +49: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart: folder picker returns only an opaque persisted target ID
+00:29 +50: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart: NEF destination page offers app, exact Photos and persisted Files
+00:30 +51: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart: ambiguous RAW inventory never downloads until explicit selection and confirmation
+00:30 +52: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart: RAW association uses complete camera evidence: proven=true
+00:30 +53: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_files_test.dart: RAW association uses complete camera evidence: proven=false
+00:30 +54: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_navigation_test.dart
+00:31 +54: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_navigation_test.dart: Four home tabs preserve an active camera page and do not cancel its connection
+00:32 +55: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart
+00:32 +55: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart: original save has no rendering and retries one immutable publication action
+00:32 +56: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart: denied permission does not stage or publish an original
+00:32 +57: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart: separate confirmed actions have independent receipt keys
+00:32 +58: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart: owner change cancels a native save and hides a late acknowledgement
+00:32 +59: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart: stopping a save retains its action for retry after an ambiguous result
+00:32 +60: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/original_save_test.dart: a missing system receipt stays retryable
+00:32 +61: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/recipes_test.dart
+00:33 +61: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/recipes_test.dart: Save and apply a recipe at Size(375.0, 812.0) with large text and a pinned owner
+00:34 +62: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/recipes_test.dart: Save and apply a recipe at Size(812.0, 375.0) with large text and a pinned owner
+00:34 +63: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart
+00:34 +63: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart: Real job progress waits for receipt, metadata and durable catalog save
+00:34 +64: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart: Late receive response is ignored after cancel
+00:34 +65: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart: Late receive response is ignored after owner
+00:34 +66: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart: Late receive response is ignored after dispose
+00:34 +67: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart: Invalid metadata and mismatched receipt show failure
+00:34 +68: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_transfer_test.dart: Download card displays real byte count and stop action on small screens
+00:35 +69: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/raw_reference_test.dart
+00:35 +69: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/raw_reference_test.dart: Reference uses root-relative persistence and restores a moved iOS container
+00:35 +70: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/raw_reference_test.dart: Reference rejects escaped paths and malformed content identities
+00:35 +71: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart
+00:35 +71: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0)
+00:37 +72: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Tentative crop handles, ratio, rotate and cancel at Size(812.0, 375.0)
+00:38 +73: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Split divider clamps and preserves a common zoom transform
+00:38 +74: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Encoded preview cancel creates no saved version
+00:39 +75: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Encoded preview commits the frozen result
+00:40 +76: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_workspace_test.dart: Account change cancels stale frame work and disables confirmation
+00:40 +77: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/local_editor_test.dart
+00:41 +77: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/local_editor_test.dart: scope adjustments preserve global settings and undo the original binary snapshot
+00:42 +78: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_menu_test.dart
+00:43 +78: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_menu_test.dart: All visible editor menu pages use the saved current draft and return to the editor
+00:44 +79: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_menu_test.dart: Restore original persists immediately and an old menu cannot run after account change
+00:45 +80: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_menu_test.dart: Saved version from another source is rejected without changing the editor recipe
+00:45 +81: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_menu_test.dart: Linked RAW with changed bytes is rejected before RAW preview
+00:45 +82: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_menu_test.dart: Copy page stops at an account change before any mutation
+00:45 +83: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_workspace_test.dart
+00:46 +83: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_workspace_test.dart: legacy gradient validates and previews without a draft write, then Apply returns only validated tools
+00:47 +84: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_workspace_test.dart: Cancel discards tentative tools and a late account-owned preview cannot enable Apply
+00:48 +85: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_workspace_test.dart: clone source and target, history and landscape large text retain reachable original controls
+00:50 +86: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_workspace_test.dart: two-finger navigation cancels a partial stroke and lifting one finger does not resume painting
+00:50 +87: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart
+00:52 +87: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart: body tools change the current target and keep single-leg exclusive to legs
+00:52 +88: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart: precise strength rejects invalid values, preserves cancel and submits an integer
+00:52 +89: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart: expanded range sliders emit normalized values and one transaction per drag
+00:53 +90: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart: background protection and automatic location use separate controlled actions
+00:53 +91: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart: busy body controls block edits and range reset while work is pending
+00:53 +92: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_body_test.dart: large-text body panel keeps all five tools and range fields reachable
+00:53 +93: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart
+00:53 +93: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart: Registration failures retain credentials and refresh only the challenge answer
+00:55 +94: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart: Registration commits login even if refreshing the preset library fails
+00:55 +95: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart: An expired challenge refreshes the proof and visibly retains the failure
+00:56 +96: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/account_search_test.dart: Online search can display a match beyond the loaded feed page
+00:56 +97: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart
+00:57 +97: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart: Independent source filters survive rebuilding the whole application state
+00:59 +98: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart: Album sort and RAW filter survive rebuilding the application
+01:00 +99: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/ui_preferences_test.dart: A failed preference commit does not block subsequent partial updates
+01:00 +100: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart
+01:02 +100: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart: expired native event wins over an earlier active response
+01:02 +101: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart: out-of-order actor replies cannot restore protection after the last actor stopped
+01:02 +102: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart: notification stop ends idle foreground live and is never replayed on foreground
+01:02 +103: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart: malformed protection events suspend background work and foreground state is forwarded
+01:02 +104: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart: protected background live expires without polling and automatically reconciles on foreground
+01:02 +105: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/connection_protection_test.dart: foreground arrival before canceled download returns still resumes live automatically
+01:02 +106: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart
+01:03 +106: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart: Photo index survives a changed application container path
+01:03 +107: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart: Concurrent imports commit a complete index and retain distinct originals
+01:03 +108: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photo_state_test.dart: Index write failure leaves the visible library intact and permits retry
+01:03 +109: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_preview_test.dart
+01:04 +109: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_preview_test.dart: only newest pending tools render, one worker runs, and every command preserves the frozen binary base
+01:04 +110: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_preview_test.dart: interactive output cannot be applied until the same tools receive a full-quality frame
+01:04 +111: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_preview_test.dart: account invalidation redacts the view and discards a late frame without starting another render
+01:04 +112: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_preview_test.dart: failed validation preserves the old photograph and retries without a draft save
+01:04 +113: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_preview_test.dart: retry regenerates a corrupt file even when validated tools are unchanged
+01:04 +114: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart
+01:04 +114: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Frozen export recipe retains independent advanced edits
+01:04 +115: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: File import retains exact original bytes and rejects a corrupt collision
+01:05 +116: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Offline navigation remains usable at Size(375.0, 812.0), Brightness.light, text 1.0
+01:06 +117: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Offline navigation remains usable at Size(812.0, 375.0), Brightness.dark, text 2.0
+01:06 +118: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shared_app_test.dart: Offline navigation remains usable at Size(375.0, 812.0), Brightness.dark, text 2.0
+01:07 +119: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart
+01:07 +119: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: restored native byte receipt imports once without touching the camera
+01:07 +120: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: system target requests actual byte readback before completing a queue item
+01:08 +121: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: folder target preserves the selected capability and the same readback operation
+01:08 +122: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: a transient download reply cannot replace a missing durable receipt
+01:08 +123: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: owner change during publication retains the original and prevents completion
+01:08 +124: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: background protection expiration pauses a receipt and foreground continuation does not redownload
+01:08 +125: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: corrupt queue issues stay visible while other valid tasks remain resumable
+01:08 +126: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: notification stop ends a foreground queue while a normal background switch does not
+01:08 +127: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: idle owner changes and late restore responses never expose an old queue
+01:08 +128: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_downloads_test.dart: live, queue and cross-page manual transfer reject competing admissions
+01:08 +129: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/local_adjustments_test.dart
+01:08 +129: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/local_adjustments_test.dart: region samples serialize fingerprints and freeze each history position
+01:08 +130: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/local_adjustments_test.dart: account changes discard in-flight results and prevent later commands
+01:08 +131: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/local_adjustments_test.dart: failed binary validation stops the queue without changing the draft
+01:08 +132: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_layout_test.dart
+01:09 +132: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_layout_test.dart: Camera viewer receiving card fits 568x320 landscape at text scale 1.6
+01:10 +133: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_layout_test.dart: Camera viewer receiving card fits 568x320 landscape at text scale 2.0
+01:10 +134: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_presets_test.dart
+01:11 +134: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_presets_test.dart: Fresh editor loads online recipes and uses SHA identity without a personal-library import
+01:11 +135: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_presets_test.dart: Filter thumbnails preserve adjustments, use tentative small renders and never save the draft
+01:11 +136: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_presets_test.dart: Offline catalog failure is retryable and late owner replies are suppressed
+01:11 +137: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_presets_test.dart: Online cards without preview URLs generate the checked recipe showcase
+01:12 +138: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart
+01:13 +138: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Original portrait menu changes face enabled state and deletes only the selected face
+01:15 +139: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Healing history and last-heal undo target heals and preserve independent patches
+01:16 +140: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Tone scope is explicit, propagated on subsequent commands and restored by undo
+01:17 +141: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Reset requires confirmation and stays tentative with undo available
+01:18 +142: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Photo color picking uses actual neutral portrait bitmap pixels and previews until confirmed
+01:20 +143: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Account change closes private editing scope and prevents an old menu from mutating
+01:20 +144: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Continuous face parameter drag commits one undo; cancel restores the complete candidate
+01:22 +145: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Natural retouch analysis is atomic when the second analysis fails
+01:22 +146: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Body child cancellation restores parent effects and its independent undo history
+01:23 +147: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Body multi-person localization cancel installs no masks or guessed area
+01:24 +148: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Regional portrait hides global body entry and keeps every request scoped
+01:25 +149: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Overview retains original global or face mask mode and restores it after body
+01:26 +150: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart
+01:27 +150: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: empty-6400x4000
+01:27 +151: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: empty-inverted-6400x4000
+01:27 +152: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: soft-dot-6400x4000
+01:27 +153: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: polyline-6400x4000
+01:27 +154: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: add-erase-6400x4000
+01:27 +155: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: ordered-shapes-6400x4000
+01:27 +156: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: ordered-inverted-6400x4000
+01:27 +157: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: subtract-only-6400x4000
+01:27 +158: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: thin-edge-6400x4000
+01:27 +159: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: bounded-long-path-6400x4000
+01:27 +160: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: empty-3200x6400
+01:27 +161: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: empty-inverted-3200x6400
+01:27 +162: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: soft-dot-3200x6400
+01:27 +163: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: polyline-3200x6400
+01:27 +164: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: add-erase-3200x6400
+01:27 +165: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: ordered-shapes-3200x6400
+01:27 +166: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: ordered-inverted-3200x6400
+01:27 +167: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: subtract-only-3200x6400
+01:27 +168: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: thin-edge-3200x6400
+01:27 +169: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection coverage agrees with original Java: bounded-long-path-3200x6400
+01:27 +170: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Selection overlay stays bounded and uses premultiplied original cyan
+01:27 +171: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_mask_test.dart: Empty inverted selections do not cover the photo and reject unbounded inputs
+01:27 +172: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preset_pins_test.dart
+01:27 +172: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preset_pins_test.dart: Long-press can pin multiple presets and shows their persisted state
+01:28 +173: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart
+01:29 +173: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: An old camera status cannot replace a newly established session
+01:30 +174: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+01:30 +175: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart
+01:31 +175: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Arming ignores existing inventory; repeated new shots save and process once
+01:31 +176: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Disconnect waits; matching trusted reconnect restores old cursor before new reception
+01:31 +177: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Untrusted reconnect is blocked instead of merging another camera session
+01:31 +178: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Explicit stop discards a late download reply without committing to the stopped project
+01:31 +179: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Owner changes invalidate in-flight work before registration or project commit
+01:31 +180: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Background pauses discovery; foreground reconciliation receives missed notifications
+01:31 +181: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Receipt from an old watch never enters the album and blocks automatic retry
+01:31 +182: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live An existing durable producer requires explicit resume
+01:31 +183: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Stopping during watch creation compensates its late native success
+01:31 +184: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Stopping during durable start compensates its late token and active journal
+01:31 +185: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live A lost cancel response still retires the durable producer
+01:31 +186: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live A connected camera verification error pauses instead of redownloading forever
+01:31 +187: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live No default preset receives originals; later defaults only affect new candidates
+01:31 +188: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Starting without a default preset remains available
+01:32 +189: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Disconnected live capture offers reconnection without discarding its journal
+01:32 +190: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Live reception card fits a narrow screen with large text and exposes stop
+01:32 +191: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart
+01:33 +191: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: original JPEG confirmation can be cancelled without saving or changing settings
+01:34 +192: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: confirmed original JPEG saves directly and retries the same task without rendering
+01:34 +193: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: late original inspection cannot open a confirmation after leaving its editor route
+01:34 +194: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: quick export restores original qualities and versions and reopens the same selections
+01:35 +195: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: preview Done returns to custom settings without committing or resetting inputs
+01:35 +196: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: slow version inspection keeps the quick modal open and a close cannot later open advanced settings
+01:35 +197: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_test.dart: narrow enlarged-text quick export scrolls every version and confirmation into view
+01:35 +198: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/project_presets_test.dart
+01:36 +198: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/project_presets_test.dart: Project retry keeps frozen recipes and never renders an already saved result
+01:36 +199: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/project_presets_test.dart: Late native export is not committed after project stop
+01:36 +200: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/project_presets_test.dart: Late native export is not committed after project account
+01:36 +201: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/project_presets_test.dart: Late native export is not committed after project dispose
+01:36 +202: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/project_presets_test.dart: Embedded project manager scrolls its controls on a small screen with enlarged text
+01:36 +203: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart
+01:37 +203: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 1.0)
+01:38 +204: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Root sheets cover navigation and retain fixed actions at (Size(375.0, 812.0), 2.0)
+01:38 +205: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Root sheets cover navigation and retain fixed actions at (Size(812.0, 375.0), 2.0)
+01:38 +206: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/shell_overlays_test.dart: Online download filtering loads the complete catalog and source filters remain separate
+01:39 +207: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart
+01:39 +207: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Reply recipient uses the explicit target and unavailable marker
+01:39 +208: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Concurrent comment confirmation sends once and cannot reuse another owner receipt
+01:39 +209: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Failed comment retry retains its key; editing creates a new reviewed body
+01:39 +210: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Account change rejects an in-flight comment result and invalid reply IDs never send
+01:39 +211: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Private list switches owner without allowing an old page to replace the new request
+01:39 +212: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Failed next page preserves rows and retries the same page with duplicate IDs merged
+01:39 +213: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Reply previews do not skip page one and a wrong response page never advances the cursor
+01:39 +214: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Read acknowledgements survive paging but cannot replace a newer unread count
+01:39 +215: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Malformed read acknowledgement does not mark unrelated messages read
+01:39 +216: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Read-all accepts the server acknowledgement and refreshes the real unread count
+01:39 +217: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Single read acknowledgement refreshes the badge without assuming a returned count
+01:39 +218: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_state_test.dart: Disposed discussion ignores a pending page and never schedules another request
+01:39 +219: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/wired_camera_test.dart
+01:40 +219: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/wired_camera_test.dart: USB discovery can refresh after attach, obtains permission and connects the selected device
+01:40 +220: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/wired_camera_test.dart: USB permission denial is visible and does not open a camera session
+01:40 +221: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart
+01:41 +221: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart: next photo receives the current immutable row and prefetches thumbnails only
+01:41 +222: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart: old session and same-session reset disable all camera actions
+01:42 +223: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart: pagination deduplicates handles and does not switch while a transfer begins
+01:42 +224: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart: download callback blocks navigation before transfer publishes busy state
+01:42 +225: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart: legacy download closure cannot receive a different navigated photo
+01:42 +226: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_viewer_test.dart: pagination failure retains the current photo and can be retried
+01:42 +227: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_ui_test.dart
+01:42 +227: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_ui_test.dart: Comment modal clears private text after account switch at (Size(375.0, 812.0), 1.0)
+01:43 +228: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_ui_test.dart: Comment modal clears private text after account switch at (Size(812.0, 375.0), 2.0)
+01:43 +229: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_ui_test.dart: Comment send failure preserves the reviewed text and retry key
+01:43 +230: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_ui_test.dart: Root message page retains read failure and never retries it in a build loop
+01:44 +231: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/community_ui_test.dart: Submission next page replaces rows and stops at the actual final page
+01:44 +232: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/border_panel_test.dart
+01:45 +232: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/border_panel_test.dart: Original border strip, fields, settings and camera at (Size(375.0, 812.0), 1.0)
+01:48 +233: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/border_panel_test.dart: Original border strip, fields, settings and camera at (Size(812.0, 375.0), 2.0)
+01:51 +234: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/border_panel_test.dart: Border thumbnails resume after a temporary busy operation
+01:52 +235: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/border_panel_test.dart: Account changes reject pending border thumbnails and field commits
+01:52 +236: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart
+01:53 +236: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart: inspection freezes the current recipe, lists original/saved versions and never writes a draft or export
+01:53 +237: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart: multiple chosen versions retain independent frozen recipes and the original compact quality ceiling
+01:53 +238: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart: a recipe being resolved pins selection and quality until the complete export snapshot is ready
+01:53 +239: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart: account switch redacts all recipes and a late saved-version reply cannot revive the old form
+01:53 +240: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart: a saved recipe from another source is rejected without silently exporting the current image
+01:53 +241: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_settings_model_test.dart: history loading can retry, while a changed source invalidates the existing frozen form
+01:53 +242: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart
+01:54 +242: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart: Native consent and bounded provider token are required
+01:54 +243: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart: Cancel discards a late token and duplicate authorization stays single
+01:54 +244: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart: Provider cancellation never creates an app session
+01:55 +245: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart: Consent precedes SDK launch and success commits verified app session
+01:55 +246: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart: Owner change while QQ is open prevents exchange
+01:55 +247: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/qq_authorization_test.dart: Expired proof refreshes captcha without reusing the provider token
+01:55 +248: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_controls_test.dart
+01:56 +248: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote shutter remains blocked until the pending result is read
+01:57 +249: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote capabilities disable shutter and disconnected entry recovers
+01:57 +250: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_controls_test.dart: slot deletion requires the final target confirmation and cancellation sends nothing
+01:57 +251: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart
+01:58 +251: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart: RAW-only camera has an explicit JPEG hint and can show RAW thumbnails in the overview
+02:00 +252: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart: Connection page remembers RAW selection and shows the same thumbnail
+02:00 +253: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart: Overview exposes read errors and retries the camera inventory
+02:01 +254: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart: Thumbnail errors retry only the preview and keep the source untouched
+02:01 +255: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart: Original three-column square camera grid fits small screens without file details
+02:02 +256: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_test.dart: Downloaded tab displays saved originals after the camera is disconnected
+02:02 +257: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart
+02:03 +257: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Original replace mode clears once for brush and explicit rearming clears again
+02:03 +258: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Add and subtract are inverted with the visible selection as in the original
+02:03 +259: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Pointer cancellation for pinch restores the selection, history and replace state
+02:03 +260: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Shape corners flip around their opposite corner and movement remains in frame
+02:03 +261: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: An empty shape tap preserves the original; new shapes keep stroke ordering
+02:03 +262: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Feather changes only the active shape and one slider gesture records one undo
+02:03 +263: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Original point and history limits remain bounded and overflow preserves prior data
+02:03 +264: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/selection_editor_test.dart: Clearing an existing region remains confirmable while an empty new region does not
+02:03 +265: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart
+02:03 +265: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: automatic blemishes begin selected and apply only confirmed candidates
+02:04 +266: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: original seven menu actions and scope labels return real selections
+02:04 +267: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: empty history, no face and empty saved cards stay disabled
+02:04 +268: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: history returns the selected heal index rather than last patch
+02:04 +269: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: portrait reset requires explicit confirmation and explains undo
+02:04 +270: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: card manager confirms deletion, preserves photograph colour, reloads authoritative list
+02:04 +271: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: delete failure keeps existing cards and allows retry
+02:04 +272: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: saving validates names and duplicate colours before persistent callback
+02:04 +273: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: failed save retains input; pending save blocks dismissal and duplicate requests
+02:05 +274: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: custom HSV changes stay tentative; sample and preview return explicit RGB
+02:05 +275: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_more_test.dart: saving in custom picker persists a card and leaves preview uncommitted
+02:05 +276: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/help_test.dart
+02:06 +276: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/help_test.dart: Diagnostic reports exclude payloads, credentials, device addresses and unexpected native fields
+02:06 +277: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/help_test.dart: Help opens readable diagnostics and about opens a separate license page
+02:06 +278: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart
+02:07 +278: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: failed album publication stops the queue and retries the same frozen version and operation
+02:07 +279: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: a new explicit export gets a different album operation for identical settings
+02:07 +280: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: permission denial never renders or saves and can be retried
+02:07 +281: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: owner change cancels a live publication and suppresses its late acknowledgement
+02:07 +282: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart
+02:08 +282: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: legacy brush uses original 2dp sampling, source-relative radius and one gesture history
+02:08 +283: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: multi-touch cancellation restores selection and clone source without adding history
+02:08 +284: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: radial resizing preserves aspect ratio and repeated move events stay anchored
+02:08 +285: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: linear endpoint protection and parameter selection follow the original editor
+02:08 +286: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: clone requires a sample point and moves each endpoint independently
+02:08 +287: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: original brush and collection limits remain bounded
+02:08 +288: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: undo stays bounded and a new edit clears redo without erasing selection metadata
+02:08 +289: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: invalid viewport or pointer data never starts or corrupts a gesture
+02:08 +290: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart
+02:09 +290: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text
+02:11 +291: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart: Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text
+02:12 +292: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_album_publish_test.dart
+02:12 +292: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/batch_album_publish_test.dart: a restarted batch preserves publication identity and completed receipts
+02:12 +293: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart
+02:13 +293: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body assistive compare tap restores after 650ms while portrait keeps its toggle
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+A SemanticsHandle was active at the end of the test.
+All SemanticsHandle instances must be disposed by calling dispose() on the SemanticsHandle.
+
+When the exception was thrown, this was the stack:
+#0      WidgetTester._verifySemanticsHandlesWereDisposed (package:flutter_test/src/widget_tester.dart:1074:7)
+#1      WidgetTester._endOfTestVerifications (package:flutter_test/src/widget_tester.dart:1063:5)
+#2      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1969:22)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  body assistive compare tap restores after 650ms while portrait keeps its toggle
+════════════════════════════════════════════════════════════════════════════════════════════════════
+02:13 +293 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body assistive compare tap restores after 650ms while portrait keeps its toggle [E]
+  Test failed. See exception logs above.
+  The test description was: body assistive compare tap restores after 650ms while portrait keeps its toggle
+  
+02:13 +293 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body compare restores when dragged out or a second finger arrives
+02:14 +294 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body hardware compare releases on key-up and focus loss
+02:14 +295 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: viewport completes one accepted drawing stroke without also selecting a face
+02:14 +296 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: second viewport finger cancels drawing and becomes bounded navigation
+02:14 +297 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: viewport hit coordinates follow actual zoom and fit restores the centre
+02:14 +298 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body viewport reserves its bars and only body permits one-finger pan
+02:14 +299 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: viewport rotation cancels an unfinished stroke and preserves zoom
+02:14 +300 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: slider pointer cancellation restores tentative state without a normal commit
+02:14 +301 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad clamps a real drag to the source circle and commits once
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following ArgumentError was thrown during paint():
+Invalid argument(s): "colors" must have length 2 if "colorStops" is omitted.
+
+The relevant error-causing widget was:
+  CustomPaint
+  CustomPaint:file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/lib/retouch_original_controls.dart:1260:22
+
+When the exception was thrown, this was the stack:
+#0      Gradient._validateColorStops (dart:ui/painting.dart:5320:9)
+#1      new Gradient.radial (dart:ui/painting.dart:5126:5)
+#2      _OriginalLightPosition.paint (package:huevia/retouch_original_controls.dart:1286:32)
+#3      RenderCustomPaint._paintWithPainter (package:flutter/src/rendering/custom_paint.dart:593:13)
+#4      RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:641:7)
+#5      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#6      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#7      RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#8      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#9      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#10     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#11     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#12     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#13     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#14     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#15     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#16     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#17     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#18     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#19     _RenderLayoutBuilder.paint (package:flutter/src/widgets/layout_builder.dart:470:15)
+#20     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#21     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#22     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#23     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#24     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#25     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#26     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#27     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#28     RenderBoxContainerDefaultsMixin.defaultPaint (package:flutter/src/rendering/box.dart:3390:15)
+#29     RenderCustomMultiChildLayoutBox.paint (package:flutter/src/rendering/custom_layout.dart:422:5)
+#30     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#31     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#32     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#33     _RenderInkFeatures.paint (package:flutter/src/material/material.dart:634:11)
+#34     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#35     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#36     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#37     RenderPhysicalModel.paint.<anonymous closure> (package:flutter/src/rendering/proxy_box.dart:2252:15)
+#38     PaintingContext.pushClipRRect (package:flutter/src/rendering/object.dart:626:14)
+#39     RenderPhysicalModel.paint (package:flutter/src/rendering/proxy_box.dart:2239:21)
+#40     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#41     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#42     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#43     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#44     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#45     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#46     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#47     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#48     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#49     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#50     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#51     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#52     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#53     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#54     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#55     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#56     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#57     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#58     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#59     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#60     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#61     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#62     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#63     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#64     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#65     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#66     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#67     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#68     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#69     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#70     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#71     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#72     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#73     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#74     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#75     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#76     _RenderColoredBox.paint (package:flutter/src/widgets/basic.dart:8472:15)
+#77     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#78     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#79     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#80     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#81     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#82     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#83     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#84     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#85     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#86     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#87     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#88     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#89     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#90     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#91     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#92     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#93     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#94     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#95     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#96     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#97     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#98     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#99     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#100    PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#101    PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#102    PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#103    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#104    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#105    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#106    PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#107    PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#108    PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#109    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#110    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#111    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#112    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#113    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#114    RenderOffstage.paint (package:flutter/src/rendering/proxy_box.dart:3943:11)
+#115    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#116    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#117    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#118    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#119    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#120    _RenderTheaterMixin.paint (package:flutter/src/widgets/overlay.dart:1159:15)
+#121    _RenderTheater.paint (package:flutter/src/widgets/overlay.dart:1543:13)
+#122    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#123    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#124    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#125    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#126    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#127    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#128    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#129    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#130    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#131    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#132    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#133    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#134    RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:644:11)
+#135    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#136    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#137    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#138    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#139    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#140    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#141    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#142    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#143    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#144    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#145    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#146    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#147    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#148    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#149    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#150    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#151    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#152    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#153    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#154    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#155    RenderView.paint (package:flutter/src/rendering/view.dart:320:15)
+#156    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#157    PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#158    PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#159    PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1325:31)
+#160    PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1335:15)
+#161    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2438:31)
+#162    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#163    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#164    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#165    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#168    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#169    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#170    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:598:22)
+#173    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#174    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:595:27)
+#175    main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart:423:20)
+#176    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:29)
+<asynchronous suspension>
+#177    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The following RenderObject was being processed when the exception was fired: RenderCustomPaint#65bad:
+  creator: CustomPaint ← Listener ← Listener ← _GestureSemantics ← RawGestureDetector ← Semantics ←
+    LayoutBuilder ← SizedBox ← RetouchOriginalLightPad ← SizedBox ← KeyedSubtree-[GlobalKey#98192] ←
+    _BodyBuilder ← ⋯
+  parentData: <none> (can use size)
+  constraints: BoxConstraints(w=300.0, h=112.0)
+  size: Size(300.0, 112.0)
+  painter: _OriginalLightPosition#fe9be()
+  preferredSize: Size(300.0, 112.0)
+This RenderObject has no descendants.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following ArgumentError was thrown during paint():
+Invalid argument(s): "colors" must have length 2 if "colorStops" is omitted.
+
+The relevant error-causing widget was:
+  CustomPaint
+  CustomPaint:file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/lib/retouch_original_controls.dart:1260:22
+
+When the exception was thrown, this was the stack:
+#0      Gradient._validateColorStops (dart:ui/painting.dart:5320:9)
+#1      new Gradient.radial (dart:ui/painting.dart:5126:5)
+#2      _OriginalLightPosition.paint (package:huevia/retouch_original_controls.dart:1286:32)
+#3      RenderCustomPaint._paintWithPainter (package:flutter/src/rendering/custom_paint.dart:593:13)
+#4      RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:641:7)
+#5      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#6      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#7      RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#8      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#9      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#10     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#11     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#12     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#13     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#14     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#15     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#16     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#17     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#18     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#19     _RenderLayoutBuilder.paint (package:flutter/src/widgets/layout_builder.dart:470:15)
+#20     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#21     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#22     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#23     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#24     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#25     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#26     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#27     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#28     RenderBoxContainerDefaultsMixin.defaultPaint (package:flutter/src/rendering/box.dart:3390:15)
+#29     RenderCustomMultiChildLayoutBox.paint (package:flutter/src/rendering/custom_layout.dart:422:5)
+#30     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#31     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#32     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#33     _RenderInkFeatures.paint (package:flutter/src/material/material.dart:634:11)
+#34     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#35     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#36     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#37     RenderPhysicalModel.paint.<anonymous closure> (package:flutter/src/rendering/proxy_box.dart:2252:15)
+#38     PaintingContext.pushClipRRect (package:flutter/src/rendering/object.dart:626:14)
+#39     RenderPhysicalModel.paint (package:flutter/src/rendering/proxy_box.dart:2239:21)
+#40     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#41     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#42     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#43     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#44     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#45     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#46     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#47     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#48     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#49     PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1325:31)
+#50     PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1335:15)
+#51     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2438:31)
+#52     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#53     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#54     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#55     AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#58     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#59     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#60     WidgetTester.pump.<anonymous closure> (package:flutter_test/src/widget_tester.dart:652:53)
+#63     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#64     WidgetTester.pump (package:flutter_test/src/widget_tester.dart:652:27)
+#65     main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart:440:20)
+<asynchronous suspension>
+#66     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#67     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The following RenderObject was being processed when the exception was fired: RenderCustomPaint#65bad:
+  creator: CustomPaint ← Listener ← Listener ← _GestureSemantics ← RawGestureDetector ← Semantics ←
+    LayoutBuilder ← SizedBox ← RetouchOriginalLightPad ← SizedBox ← KeyedSubtree-[GlobalKey#98192] ←
+    _BodyBuilder ← ⋯
+  parentData: <none> (can use size)
+  constraints: BoxConstraints(w=300.0, h=112.0)
+  size: Size(300.0, 112.0)
+  painter: _OriginalLightPosition#fe9be()
+  preferredSize: Size(300.0, 112.0)
+This RenderObject has no descendants.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following ArgumentError was thrown during paint():
+Invalid argument(s): "colors" must have length 2 if "colorStops" is omitted.
+
+The relevant error-causing widget was:
+  CustomPaint
+  CustomPaint:file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/lib/retouch_original_controls.dart:1260:22
+
+When the exception was thrown, this was the stack:
+#0      Gradient._validateColorStops (dart:ui/painting.dart:5320:9)
+#1      new Gradient.radial (dart:ui/painting.dart:5126:5)
+#2      _OriginalLightPosition.paint (package:huevia/retouch_original_controls.dart:1286:32)
+#3      RenderCustomPaint._paintWithPainter (package:flutter/src/rendering/custom_paint.dart:593:13)
+#4      RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:641:7)
+#5      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#6      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#7      RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#8      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#9      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#10     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#11     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#12     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#13     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#14     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#15     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#16     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#17     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#18     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#19     _RenderLayoutBuilder.paint (package:flutter/src/widgets/layout_builder.dart:470:15)
+#20     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#21     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#22     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#23     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#24     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#25     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#26     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#27     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#28     RenderBoxContainerDefaultsMixin.defaultPaint (package:flutter/src/rendering/box.dart:3390:15)
+#29     RenderCustomMultiChildLayoutBox.paint (package:flutter/src/rendering/custom_layout.dart:422:5)
+#30     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#31     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#32     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#33     _RenderInkFeatures.paint (package:flutter/src/material/material.dart:634:11)
+#34     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#35     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#36     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#37     RenderPhysicalModel.paint.<anonymous closure> (package:flutter/src/rendering/proxy_box.dart:2252:15)
+#38     PaintingContext.pushClipRRect (package:flutter/src/rendering/object.dart:626:14)
+#39     RenderPhysicalModel.paint (package:flutter/src/rendering/proxy_box.dart:2239:21)
+#40     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#41     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#42     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#43     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#44     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#45     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#46     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#47     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#48     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#49     PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1325:31)
+#50     PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1335:15)
+#51     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2438:31)
+#52     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#53     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#54     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#55     AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#58     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#59     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#60     WidgetTester.pump.<anonymous closure> (package:flutter_test/src/widget_tester.dart:652:53)
+#63     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#64     WidgetTester.pump (package:flutter_test/src/widget_tester.dart:652:27)
+#65     main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart:446:20)
+<asynchronous suspension>
+#66     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#67     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The following RenderObject was being processed when the exception was fired: RenderCustomPaint#65bad:
+  creator: CustomPaint ← Listener ← Listener ← _GestureSemantics ← RawGestureDetector ← Semantics ←
+    LayoutBuilder ← SizedBox ← RetouchOriginalLightPad ← SizedBox ← KeyedSubtree-[GlobalKey#98192] ←
+    _BodyBuilder ← ⋯
+  parentData: <none> (can use size)
+  constraints: BoxConstraints(w=300.0, h=112.0)
+  size: Size(300.0, 112.0)
+  painter: _OriginalLightPosition#c1d40()
+  preferredSize: Size(300.0, 112.0)
+This RenderObject has no descendants.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: 'Multiple exceptions (3) were detected during the running of the current test, and at
+least one was unexpected.'
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart:449:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart line 449
+The test description was:
+  light pad clamps a real drag to the source circle and commits once
+════════════════════════════════════════════════════════════════════════════════════════════════════
+02:14 +301 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad clamps a real drag to the source circle and commits once [E]
+  Test failed. See exception logs above.
+  The test description was: light pad clamps a real drag to the source circle and commits once
+  
+02:14 +301 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad second pointer cancels tentative light without committing it
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following ArgumentError was thrown during paint():
+Invalid argument(s): "colors" must have length 2 if "colorStops" is omitted.
+
+The relevant error-causing widget was:
+  CustomPaint
+  CustomPaint:file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/lib/retouch_original_controls.dart:1260:22
+
+When the exception was thrown, this was the stack:
+#0      Gradient._validateColorStops (dart:ui/painting.dart:5320:9)
+#1      new Gradient.radial (dart:ui/painting.dart:5126:5)
+#2      _OriginalLightPosition.paint (package:huevia/retouch_original_controls.dart:1286:32)
+#3      RenderCustomPaint._paintWithPainter (package:flutter/src/rendering/custom_paint.dart:593:13)
+#4      RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:641:7)
+#5      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#6      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#7      RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#8      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#9      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#10     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#11     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#12     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#13     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#14     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#15     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#16     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#17     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#18     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#19     _RenderLayoutBuilder.paint (package:flutter/src/widgets/layout_builder.dart:470:15)
+#20     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#21     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#22     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#23     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#24     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#25     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#26     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#27     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#28     RenderBoxContainerDefaultsMixin.defaultPaint (package:flutter/src/rendering/box.dart:3390:15)
+#29     RenderCustomMultiChildLayoutBox.paint (package:flutter/src/rendering/custom_layout.dart:422:5)
+#30     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#31     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#32     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#33     _RenderInkFeatures.paint (package:flutter/src/material/material.dart:634:11)
+#34     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#35     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#36     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#37     RenderPhysicalModel.paint.<anonymous closure> (package:flutter/src/rendering/proxy_box.dart:2252:15)
+#38     PaintingContext.pushClipRRect (package:flutter/src/rendering/object.dart:626:14)
+#39     RenderPhysicalModel.paint (package:flutter/src/rendering/proxy_box.dart:2239:21)
+#40     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#41     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#42     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#43     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#44     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#45     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#46     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#47     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#48     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#49     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#50     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#51     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#52     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#53     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#54     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#55     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#56     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#57     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#58     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#59     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#60     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#61     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#62     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#63     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#64     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#65     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#66     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#67     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#68     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#69     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#70     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#71     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#72     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#73     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#74     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#75     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#76     _RenderColoredBox.paint (package:flutter/src/widgets/basic.dart:8472:15)
+#77     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#78     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#79     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#80     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#81     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#82     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#83     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#84     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#85     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#86     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#87     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#88     PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#89     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#90     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#91     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#92     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#93     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#94     RenderFractionalTranslation.paint (package:flutter/src/rendering/proxy_box.dart:3138:13)
+#95     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#96     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#97     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#98     RenderAnimatedOpacityMixin.paint (package:flutter/src/rendering/proxy_box.dart:1079:11)
+#99     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#100    PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#101    PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#102    PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#103    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#104    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#105    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#106    PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#107    PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#108    PaintingContext._compositeChild (package:flutter/src/rendering/object.dart:276:7)
+#109    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:257:7)
+#110    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#111    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#112    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#113    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#114    RenderOffstage.paint (package:flutter/src/rendering/proxy_box.dart:3943:11)
+#115    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#116    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#117    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#118    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#119    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#120    _RenderTheaterMixin.paint (package:flutter/src/widgets/overlay.dart:1159:15)
+#121    _RenderTheater.paint (package:flutter/src/widgets/overlay.dart:1543:13)
+#122    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#123    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#124    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#125    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#126    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#127    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#128    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#129    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#130    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#131    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#132    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#133    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#134    RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:644:11)
+#135    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#136    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#137    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#138    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#139    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#140    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#141    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#142    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#143    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#144    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#145    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#146    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#147    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#148    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#149    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#150    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#151    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#152    RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#153    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#154    PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#155    RenderView.paint (package:flutter/src/rendering/view.dart:320:15)
+#156    RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#157    PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#158    PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#159    PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1325:31)
+#160    PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1335:15)
+#161    AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2438:31)
+#162    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#163    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#164    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#165    AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#168    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#169    AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#170    WidgetTester.pumpWidget.<anonymous closure> (package:flutter_test/src/widget_tester.dart:598:22)
+#173    TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#174    WidgetTester.pumpWidget (package:flutter_test/src/widget_tester.dart:595:27)
+#175    main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart:458:20)
+#176    testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:29)
+<asynchronous suspension>
+#177    TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The following RenderObject was being processed when the exception was fired: RenderCustomPaint#369e5:
+  creator: CustomPaint ← Listener ← Listener ← _GestureSemantics ← RawGestureDetector ← Semantics ←
+    LayoutBuilder ← SizedBox ← RetouchOriginalLightPad ← SizedBox ← KeyedSubtree-[GlobalKey#50614] ←
+    _BodyBuilder ← ⋯
+  parentData: <none> (can use size)
+  constraints: BoxConstraints(w=300.0, h=112.0)
+  size: Size(300.0, 112.0)
+  painter: _OriginalLightPosition#08992()
+  preferredSize: Size(300.0, 112.0)
+This RenderObject has no descendants.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following ArgumentError was thrown during paint():
+Invalid argument(s): "colors" must have length 2 if "colorStops" is omitted.
+
+The relevant error-causing widget was:
+  CustomPaint
+  CustomPaint:file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/lib/retouch_original_controls.dart:1260:22
+
+When the exception was thrown, this was the stack:
+#0      Gradient._validateColorStops (dart:ui/painting.dart:5320:9)
+#1      new Gradient.radial (dart:ui/painting.dart:5126:5)
+#2      _OriginalLightPosition.paint (package:huevia/retouch_original_controls.dart:1286:32)
+#3      RenderCustomPaint._paintWithPainter (package:flutter/src/rendering/custom_paint.dart:593:13)
+#4      RenderCustomPaint.paint (package:flutter/src/rendering/custom_paint.dart:641:7)
+#5      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#6      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#7      RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#8      RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#9      PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#10     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#11     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#12     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#13     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#14     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#15     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#16     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#17     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#18     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#19     _RenderLayoutBuilder.paint (package:flutter/src/widgets/layout_builder.dart:470:15)
+#20     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#21     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#22     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#23     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#24     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#25     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#26     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#27     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#28     RenderBoxContainerDefaultsMixin.defaultPaint (package:flutter/src/rendering/box.dart:3390:15)
+#29     RenderCustomMultiChildLayoutBox.paint (package:flutter/src/rendering/custom_layout.dart:422:5)
+#30     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#31     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#32     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#33     _RenderInkFeatures.paint (package:flutter/src/material/material.dart:634:11)
+#34     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#35     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#36     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#37     RenderPhysicalModel.paint.<anonymous closure> (package:flutter/src/rendering/proxy_box.dart:2252:15)
+#38     PaintingContext.pushClipRRect (package:flutter/src/rendering/object.dart:626:14)
+#39     RenderPhysicalModel.paint (package:flutter/src/rendering/proxy_box.dart:2239:21)
+#40     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#41     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#42     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#43     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#44     PaintingContext.paintChild (package:flutter/src/rendering/object.dart:265:13)
+#45     RenderProxyBoxMixin.paint (package:flutter/src/rendering/proxy_box.dart:143:13)
+#46     RenderObject._paintWithContext (package:flutter/src/rendering/object.dart:3580:7)
+#47     PaintingContext._repaintCompositedChild (package:flutter/src/rendering/object.dart:180:11)
+#48     PaintingContext.repaintCompositedChild (package:flutter/src/rendering/object.dart:125:5)
+#49     PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1325:31)
+#50     PipelineOwner.flushPaint (package:flutter/src/rendering/object.dart:1335:15)
+#51     AutomatedTestWidgetsFlutterBinding.drawFrame (package:flutter_test/src/binding.dart:2438:31)
+#52     RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+#53     SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+#54     SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+#55     AutomatedTestWidgetsFlutterBinding.pump.<anonymous closure> (package:flutter_test/src/binding.dart:2261:9)
+#58     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#59     AutomatedTestWidgetsFlutterBinding.pump (package:flutter_test/src/binding.dart:2250:27)
+#60     WidgetTester.pump.<anonymous closure> (package:flutter_test/src/widget_tester.dart:652:53)
+#63     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#64     WidgetTester.pump (package:flutter_test/src/widget_tester.dart:652:27)
+#65     main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart:484:20)
+<asynchronous suspension>
+#66     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#67     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 5 frames from dart:async and package:stack_trace)
+
+The following RenderObject was being processed when the exception was fired: RenderCustomPaint#369e5:
+  creator: CustomPaint ← Listener ← Listener ← _GestureSemantics ← RawGestureDetector ← Semantics ←
+    LayoutBuilder ← SizedBox ← RetouchOriginalLightPad ← SizedBox ← KeyedSubtree-[GlobalKey#50614] ←
+    _BodyBuilder ← ⋯
+  parentData: <none> (can use size)
+  constraints: BoxConstraints(w=300.0, h=112.0)
+  size: Size(300.0, 112.0)
+  painter: _OriginalLightPosition#08992()
+  preferredSize: Size(300.0, 112.0)
+This RenderObject has no descendants.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following message was thrown:
+Multiple exceptions (2) were detected during the running of the current test, and at least one was
+unexpected.
+════════════════════════════════════════════════════════════════════════════════════════════════════
+02:14 +301 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad second pointer cancels tentative light without committing it [E]
+  Test failed. See exception logs above.
+  The test description was: light pad second pointer cancels tentative light without committing it
+  
+02:14 +301 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: slider drag remains editable and commits its actual signed value once
+02:14 +302 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: disabled slider rejects input and rebuilding shows authoritative state
+02:14 +303 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: face bar exposes actual selection, automatic, add and anchored more actions
+02:14 +304 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: compare hold restores baseline on release and pointer cancellation
+02:14 +305 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: disabled tool never invokes edit and selected tool remains actionable
+02:14 +306 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: mode dock scrolls to live controls rather than clipping actions
+02:14 +307 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: portrait to landscape rotation preserves reachable group actions and a photo stage
+02:14 +308 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: large text group rail remains horizontally scrollable and usable in a short panel
+02:14 +309 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: old choice and confirmation dialogs return cancellation and real selection
+02:15 +310 -3: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photos_test.dart
+02:16 +310 -3: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/photos_test.dart: Photo stars survive reload, combine with search, and keep stable editor links
+02:17 +311 -3: Some tests failed.
+
+Failing tests:
+  /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: body assistive compare tap restores after 650ms while portrait keeps its toggle
+  /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad clamps a real drag to the source circle and commits once
+  /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/retouch_original_controls_test.dart: light pad second pointer cancels tentative light without committing it

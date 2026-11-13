@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "scenarios": 1,
+  "instrumentationCode": -1,
+  "fixtureCommit": "87cc273312b0bf090256e66282e59c368f7b20c0",
+  "build": 214,
+  "device": "emulator-5584",
+  "scope": "Debug backend native pipeline only; portrait UI and final release APK still pending",
+  "sourceSha256": {
+    "cross-platform/app/integration_test/native_pipeline_test.dart": "563d9d93d5c106f9864d75ac2fcfefd4108c55a60912a7939f23255dac13ac12",
+    "cross-platform/app/integration_test/retouch_pipeline_fixture.dart": "4c79506f54c8730a9789b920b7c93ec1ea4c9fb6cce840f5d8b16dde288d1214",
+    "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeRetouch.java": "25f9eb890765acb8b4718ae91a347c499ac2eca8dfd155e61027c2a510ea0613",
+    "cross-platform/core/java/cc/huevia/shared/SharedRetouch.java": "1752572d81d985a1d0073b5af6dfb757f488bb64f9e575c4a9b17288b3fdc4d4",
+    "cross-platform/core/java/cc/huevia/shared/SharedPortraitInference.java": "b892ced656775f2a2b4961f0c20d142703906dc76b1d2aa6f90696f9ed980ac2",
+    "cross-platform/core/java/cc/huevia/shared/SharedAutoBlemishes.java": "514067a1f6de5cc4ea600092f1bbb0fd8860ddd6c7f48687aa3494adca638048",
+    "cross-platform/core/java/cc/huevia/shared/SharedPortraitToneCards.java": "a5eaa1079444ee6f0dd587eec5e126706cd21f10fb0e2db5f3ae421bbfd4adad"
+  },
+  "logSha256": "c558237c0e2d7ea9cb038de95b3190c7ace8bd83206327bf7d097cfcd4a626f0"
+}

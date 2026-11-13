@@ -1,0 +1,30 @@
+{
+  "package": "cc.huevia.next",
+  "build": 214,
+  "device": "emulator-5584",
+  "release": true,
+  "sourcePhoto": "repository portrait-smile.jpg",
+  "sourceSha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+  "sourceUnchanged": true,
+  "checks": [
+    "Opened the actual final Release editor from a phone-gallery copy of the fixed portrait",
+    "Entered original portrait overview and automatic real face selection",
+    "Face menu displayed the five original face-mode entries",
+    "Disabled face showed its disabled state; re-enabling returned the original label",
+    "Skin-colour menu displayed all seven original entries with correct unavailable states",
+    "Neutral global-to-person tone mode changed to face/body scope without requiring a colour edit",
+    "Body child displayed original controls, range/reset tools and separate positioning/protection",
+    "Cancel body returned to portrait overview; cancel portrait retained parent original state",
+    "Editor header menu displayed recipes, copy, versions and reset for a non-RAW source"
+  ],
+  "notes": [
+    "No apply/export/delete action was performed on the source photo",
+    "This visual verification covers the emulator viewport, not every phone or iPhone"
+  ],
+  "screenshots": [
+    "ui/portrait-overview.png",
+    "ui/portrait-more-seven.png",
+    "ui/body.png",
+    "ui/editor-menu.png"
+  ]
+}

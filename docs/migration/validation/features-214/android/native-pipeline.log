@@ -1,0 +1,10 @@
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\debug\app-debug.apk: 1 file pushed, 0 skipped. 21.8 MB/s (112668392 bytes in 4.938s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 65.3 MB/s (68411 bytes in 0.001s)
+Performing Push Install
+Success
+INSTRUMENTATION_RESULT: stream=PASS cross-platform Flutter/native pipeline: 1 scenario(s)
+
+INSTRUMENTATION_RESULT: testResults={"Native codecs and LibRaw retain originals, dimensions and white highlights":"success"}
+INSTRUMENTATION_CODE: -1

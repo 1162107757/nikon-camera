@@ -1,0 +1,7 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart
+00:00 +0: Busy face header cancellation closes only the workspace and rejects native late success during pop animation
+00:01 +1: Busy Android system back cancels a held preview before late image installation
+00:01 +2: Busy body cancellation restores parent staged effects and old analysis finally cannot unlock a new face task
+00:03 +3: Busy body system back returns to its staged portrait without popping that route
+00:03 +4: Busy regional child cancellation pops only that route and leaves the parent staged portrait
+00:04 +5: All tests passed!
