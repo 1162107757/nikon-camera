@@ -1,10 +1,12 @@
 #import "HueviaConnectionProtection.h"
+#import "HueviaTaskCancellation.h"
 
 @interface HueviaConnectionProtection ()
 @property(nonatomic) BOOL active;
 @property(nonatomic) BOOL foreground;
 @property(nonatomic) BOOL expired;
 @property(nonatomic) UIBackgroundTaskIdentifier lease;
+@property(nonatomic,strong) HueviaTaskCancellation *leaseCancellation;
 @property(nonatomic,copy) FlutterEventSink events;
 @property(nonatomic,copy) dispatch_block_t cancel;
 @end
@@ -27,13 +29,15 @@
   return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:value options:0 error:nil] encoding:NSUTF8StringEncoding];
 }
 - (void)emit {if(self.events)self.events([self status]);}
-- (void)endLease {UIBackgroundTaskIdentifier lease=self.lease;self.lease=UIBackgroundTaskInvalid;if(lease!=UIBackgroundTaskInvalid)[UIApplication.sharedApplication endBackgroundTask:lease];}
+- (void)endLease {UIBackgroundTaskIdentifier lease=self.lease;self.lease=UIBackgroundTaskInvalid;[self.leaseCancellation finish];self.leaseCancellation=nil;if(lease!=UIBackgroundTaskInvalid)[UIApplication.sharedApplication endBackgroundTask:lease];}
 - (void)update {
   if(!self.enabled||!self.active){[self endLease];[self emit];return;}
   if(self.lease==UIBackgroundTaskInvalid&&!self.expired&&self.foreground){
     __weak typeof(self) weakSelf=self;
+    HueviaTaskCancellation *cancellation=[HueviaTaskCancellation new];self.leaseCancellation=cancellation;
     self.lease=[UIApplication.sharedApplication beginBackgroundTaskWithName:@"Huevia camera transfer" expirationHandler:^{
       HueviaConnectionProtection *host=weakSelf;if(!host)return;
+      if(host.leaseCancellation!=cancellation||![cancellation cancelIfActive])return;
       host.expired=YES;if(host.cancel)host.cancel();[host endLease];[host emit];
     }];
     if(self.lease==UIBackgroundTaskInvalid)self.expired=YES;

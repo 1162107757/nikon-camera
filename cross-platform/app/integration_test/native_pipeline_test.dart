@@ -13,6 +13,7 @@ import 'project_pipeline_fixture.dart';
 import 'retouch_pipeline_fixture.dart';
 import 'raw_thumbnail_fixture.dart';
 import 'detail_render_fixture.dart';
+import 'camera_foreground_fixture.dart';
 
 import 'package:huevia/batch_export.dart';
 
@@ -272,6 +273,7 @@ void main() {
           .writeAsBytes(png!.buffer.asUint8List());
       final before = (await sha256.bind(source.openRead()).first).toString();
       await verifyNativeProjects(core, source.path);
+      await verifyCameraForegroundPresentation(core);
       final templateBefore = await core.call('media.templateInfo');
       expect(
         templateBefore['custom'],

@@ -316,6 +316,37 @@ void main() {
     );
     expect(queue.busy, false);
   });
+  test(
+    'inactive permission overlay keeps an active queue without cancellation',
+    () async {
+      final (core, state, queue) = await fixture();
+      core.mediaGate = Completer<void>();
+      final running = queue.resume('a' * 32);
+      await until(() => core.calls.any((c) => c.$1 == 'media.info'));
+      queue.didChangeAppLifecycleState(AppLifecycleState.inactive);
+      expect(queue.stopped, isFalse);
+      expect(core.calls.where((c) => c.$1 == 'cancel'), isEmpty);
+      core.mediaGate!.complete();
+      await running;
+      expect(queue.done, 1);
+      expect(state.registered, hasLength(1));
+    },
+  );
+  test(
+    'actual background without protection still stops its current queue job',
+    () async {
+      final (core, state, queue) = await fixture();
+      core.mediaGate = Completer<void>();
+      final running = queue.resume('a' * 32);
+      await until(() => core.calls.any((c) => c.$1 == 'media.info'));
+      queue.didChangeAppLifecycleState(AppLifecycleState.paused);
+      await running;
+      expect(queue.stopped, isTrue);
+      expect(core.calls.where((c) => c.$1 == 'cancel'), hasLength(1));
+      expect(state.registered, isEmpty);
+      expect(await core.file.exists(), isTrue);
+    },
+  );
   test('background protection expiration pauses a receipt and foreground continuation does not redownload', () async {
     final (core, state, queue) = await fixture();
     state.protection.accept({

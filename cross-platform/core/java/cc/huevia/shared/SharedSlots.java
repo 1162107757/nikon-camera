@@ -1,6 +1,7 @@
 package cc.huevia.shared;
 
 import cc.huevia.album.PtpIpClient;
+import cc.huevia.album.PhotoCameraClient;
 import cc.huevia.ncp.NcpPictureControlConverter;
 import cc.huevia.picturecontrol.*;
 import cc.huevia.ptp.*;
@@ -32,32 +33,84 @@ public final class SharedSlots implements AutoCloseable {
     private byte[] requested,confirmed;
     public SharedSlots(File root)throws IOException{this.root=root.getCanonicalFile();journal=new SharedCameraMutationStore(this.root,"slots");}
     public static Transport wifi(PtpIpClient.SocketConnector connector,String host,int port,byte[] guid)throws IOException {
-        PtpIpClient client=new PtpIpClient(connector);
+        PtpIpClient client=PtpIpClient.forPictureControl(connector);
         try{client.connectForPictureControl(host,port,guid,"Huevia Picture Control");}
         catch(IOException|RuntimeException error){client.close();throw error;}
-        return new Transport(){
-            public byte[] read(int op,long tx,long...p)throws IOException{return client.getPictureControlData(op,tx,p);}
-            public PtpContainer command(int op,long tx,long...p)throws IOException{return client.pictureControlCommand(op,tx,p);}
-            public PtpContainer send(int op,long tx,byte[] data,long...p)throws IOException{return client.sendPictureControlData(op,tx,data,p);}
-            public void authorizeDeletion(int target)throws IOException{client.authorizePictureControlDeletion(target);}
-            public boolean isOpen(){return client.isOpen()&&!client.isProtocolUnconfirmed();}
-            public void close(){client.close();}
-        };
+        return new WifiTransport(client,0);
+    }
+    static Transport fromAlbum(PtpIpClient album)throws IOException {
+        PtpIpClient client=album.transferToPictureControl();
+        try{return new WifiTransport(client,client.claimTransferredSession());}
+        catch(IOException|RuntimeException error){client.close();throw error;}
+    }
+    private static final class WifiTransport implements Transport {
+        private volatile PtpIpClient client;
+        final long inheritedTransaction;
+        private boolean attempted,deletion;
+        WifiTransport(PtpIpClient client,long inherited){this.client=client;inheritedTransaction=inherited;}
+        private PtpIpClient current()throws IOException{PtpIpClient current=client;if(current==null)throw new InterruptedIOException("槽位会话已取消。");return current;}
+        public byte[] read(int op,long tx,long...p)throws IOException{return current().getPictureControlData(op,tx,p);}
+        public PtpContainer command(int op,long tx,long...p)throws IOException{if(op==0x90ce)attempted=true;return current().pictureControlCommand(op,tx,p);}
+        public PtpContainer send(int op,long tx,byte[] data,long...p)throws IOException{attempted=true;return current().sendPictureControlData(op,tx,data,p);}
+        public void authorizeDeletion(int target)throws IOException{current().authorizePictureControlDeletion(target);deletion=true;}
+        public boolean isOpen(){PtpIpClient current=client;return current!=null&&current.isOpen()&&!current.isProtocolUnconfirmed();}
+        public void close(){PtpIpClient old;synchronized(this){old=client;client=null;}if(old!=null)old.close();}
+        synchronized PhotoCameraClient release(long next)throws IOException {
+            if(!isOpen())return null;
+            try{
+                if(attempted){
+                    // Never rearm a rejected, lost-ACK or mismatched-readback write.
+                    client=deletion?client.transferAfterVerifiedPictureControlDeletion(next):client.transferAfterVerifiedPictureControlImport(next);
+                    if(client.claimTransferredSession()!=next)throw new IOException("槽位返回会话的事务序列不符。");
+                }
+                PtpIpClient album=client.transferToAlbum(next);client=album;
+                if(album.claimTransferredAlbumSession()!=next)throw new IOException("相册返回会话的事务序列不符。");
+                client=null;return album;
+            }catch(IOException unverified){return null;}
+        }
     }
     public Object open(Transport connection,String sessionId,String identity,BooleanSupplier cancel)throws IOException {
-        close();transport=connection;session=sessionId;cameraId=identity;next=1;consumed=false;
+        return open(connection,sessionId,identity,cancel,false);
+    }
+    Object openRetainingSession(Transport connection,String sessionId,String identity,BooleanSupplier cancel)throws IOException {
+        return open(connection,sessionId,identity,cancel,true);
+    }
+    private Object open(Transport connection,String sessionId,String identity,BooleanSupplier cancel,boolean retainHealthy)throws IOException {
+        close();stage(connection,sessionId,identity);return initialize(cancel,retainHealthy);
+    }
+    void stage(Transport connection,String sessionId,String identity){
+        if(transport!=null)throw new IllegalStateException("槽位通道尚未移交。");
+        transport=connection;session=sessionId;cameraId=identity;next=1;consumed=false;
+    }
+    Object openStagedSession(BooleanSupplier cancel)throws IOException{return initialize(cancel,true);}
+    private Object initialize(BooleanSupplier cancel,boolean retainHealthy)throws IOException {
         try{
-            check(cancel);boolean managed=connection.isSessionManaged();
-            if(managed){command(0x1002,0,1);owned=true;}
-            byte[] info=read(0x1001,managed?next++:0);device=PtpDeviceInfo.parseRedacted(info);PtpDeviceInfo identified=device;
+            check(cancel);Transport connection=transport;if(connection==null)throw new InterruptedIOException("槽位会话已取消。");boolean managed=connection.isSessionManaged();
+            long inherited=connection instanceof WifiTransport?((WifiTransport)connection).inheritedTransaction:0;
+            if(inherited>0){next=inherited;owned=true;}
+            else if(managed){command(0x1002,0,1);owned=true;}
+            byte[] info=read(0x1001,owned?next++:0);device=PtpDeviceInfo.parseRedacted(info);PtpDeviceInfo identified=device;
             try{identified=PtpDeviceInfo.parse(info);}catch(PtpProtocolException optionalSerial){}
             // Persist only a hash, never the serial itself. Unknown identity remains session scoped.
             String serial=SharedCameraMutationStore.serial(identified.serialNumber());
             if(!serial.isEmpty())cameraId=SharedCameraMutationStore.sha(("huevia-slot-camera-v1\n"+identified.manufacturer()+"\n"+identified.model()+"\n"+serial).getBytes(java.nio.charset.StandardCharsets.UTF_8));
-            if(!device.isNikonCamera())throw new IOException("当前设备未确认尼康身份，未发送优化校准命令。");
-            for(int required:new int[]{0x1002,0x1003,0x90cc,0x90cf})if(!device.supportsOperation(required))throw new IOException("相机未声明优化校准读取能力，已停止。");
-            if(!managed){command(0x1002,0,1);owned=true;}refresh(cancel);return state();
-        }catch(IOException|RuntimeException error){close();throw error;}
+            requireReadCapabilities(device);
+            if(!owned){command(0x1002,0,1);owned=true;}refresh(cancel);return state();
+        }catch(IOException|RuntimeException error){if(!retainHealthy||!(transport instanceof WifiTransport)||!isConnected()||cancel.getAsBoolean())close();throw error;}
+    }
+    public boolean isConnected(){Transport current=transport;return current!=null&&current.isOpen();}
+    Transport transportSnapshot(){return transport;}
+    void detachTransport(Transport expected){if(transport==expected){transport=null;owned=false;}}
+    static void requireReadCapabilities(PtpDeviceInfo device)throws IOException{
+        if(device==null||!device.isNikonCamera())throw new IOException("当前设备未确认尼康身份，未发送优化校准命令。");
+        for(int required:new int[]{0x1002,0x1003,0x90cc,0x90cf})if(!device.supportsOperation(required))throw new IOException("相机未声明优化校准读取能力，已停止。");
+    }
+    PhotoCameraClient releaseAlbum(String expectedSession)throws IOException {
+        if(!session.equals(expectedSession))throw new IOException("槽位会话已变化。");
+        Transport current=transport;if(!(current instanceof WifiTransport))return null;
+        PhotoCameraClient album=((WifiTransport)current).release(next);
+        if(album!=null){transport=null;owned=false;preparation=null;requested=null;confirmed=null;}
+        return album;
     }
     public Object request(String op,Map<String,Object> p,BooleanSupplier cancel)throws IOException {
         if(op.equals("camera.slots.close")){if(!session.equals(p.get("session")))throw new IOException("槽位会话已变化。");close();return SharedRuntime.map("closed",true);}
@@ -105,7 +158,7 @@ public final class SharedSlots implements AutoCloseable {
     private Object execute(Map<String,Object> p,BooleanSupplier cancel)throws IOException {
         if(consumed||preparation==null||!Objects.equals(p.get("confirmationId"),preparation.get("confirmationId"))||!Boolean.TRUE.equals(p.get("confirmed")))throw new IOException("确认已失效，请重新读取并确认目标槽位。");
         if(Boolean.TRUE.equals(journal.read().get("pending")))throw new IOException("上次操作仍待核对，本次未写入。");
-        Map<String,Object> plan=preparation;preparation=null;
+        Transport channel=currentTransport();Map<String,Object> plan=preparation;preparation=null;
         int target=((Number)plan.get("target")).intValue();boolean deleting=plan.get("kind").equals("delete");
         PtpDeviceInfo fresh=PtpDeviceInfo.parseRedacted(read(0x1001,next++));
         if(!fresh.isNikonCamera()||!fresh.model().equals(device.model()))throw new IOException("确认后相机身份变化，已停止。");
@@ -114,7 +167,7 @@ public final class SharedSlots implements AutoCloseable {
         if(plan.get("source") instanceof Number)match(requested,before.get(((Number)plan.get("source")).intValue()));
         match(confirmed,before.get(target));
         if(deleting){
-            transport.authorizeDeletion(target);
+            channel.authorizeDeletion(target);
             if(fresh.supportsOperation(0x1015))for(int property:fresh.devicePropertiesSupported())if(property==0xd200||property==0xd237){
                 byte[] value=read(0x1015,next++,property);if(value.length!=1&&value.length!=2&&value.length!=4)throw new IOException("当前预设状态无法核对，未删除。");
                 long active=0;for(int i=0;i<value.length;i++)active|=(value[i]&255L)<<(8*i);
@@ -127,8 +180,8 @@ public final class SharedSlots implements AutoCloseable {
         journal.save(record);consumed=true; // The durable intent and one-shot budget precede mutation.
         try{
             long transaction=next++;
-            if(deleting)PtpValidation.requireOkResponse(transport.command(0x90ce,transaction,target),transaction);
-            else PtpValidation.requireOkResponse(transport.send(0x90cd,transaction,requested.clone(),target,0),transaction);
+            if(deleting)PtpValidation.requireOkResponse(channel.command(0x90ce,transaction,target),transaction);
+            else PtpValidation.requireOkResponse(channel.send(0x90cd,transaction,requested.clone(),target,0),transaction);
             record.put("acknowledged",true);journal.save(record);
             Map<Integer,byte[]> after=readSlots(cancel);slots=after;snapshot=UUID.randomUUID().toString();
             boolean equal=deleting?PictureControlData.parse(after.get(target)).hasNoBasePictureControl():Arrays.equals(requested,after.get(target));
@@ -136,7 +189,7 @@ public final class SharedSlots implements AutoCloseable {
             if(!equal)throw new IOException("相机已响应，但读回或其他槽位与预期不同；请核对，不会自动重试或还原。");
             record.put("pending",false);record.put("phase","verified");record.put("readbackSha256",SharedCameraMutationStore.sha(after.get(target)));journal.save(record);
         }catch(PtpResponseException rejected){record.put("phase",Boolean.TRUE.equals(record.get("acknowledged"))?"resultUnknown":"rejected");record.put("pending",Boolean.TRUE.equals(record.get("acknowledged")));record.put("message",rejected.getMessage());journal.save(record);}
-        catch(IOException failure){owned=false;transport.close();record.put("message",failure.getMessage());journal.save(record);}
+        catch(IOException failure){owned=false;channel.close();record.put("message",failure.getMessage());journal.save(record);}
         return state();
     }
     private Object reconcile(BooleanSupplier cancel)throws IOException {
@@ -155,15 +208,17 @@ public final class SharedSlots implements AutoCloseable {
     private Map<Integer,byte[]> readSlots(BooleanSupplier cancel)throws IOException {Map<Integer,byte[]> result=new LinkedHashMap<>();for(int item=201;item<=209;item++){check(cancel);byte[] bytes=read(0x90cc,next++,item,0);PictureControlData.parse(bytes);result.put(item,bytes.clone());}return result;}
     private Object state()throws IOException {
         List<Object> rows=new ArrayList<>();for(Map.Entry<Integer,byte[]> entry:slots.entrySet()){PictureControlData data=PictureControlData.parse(entry.getValue());rows.add(SharedRuntime.map("target",entry.getKey(),"label","C"+(entry.getKey()-200),"name",data.registrationName(),"empty",data.hasNoBasePictureControl(),"sha256",SharedCameraMutationStore.sha(entry.getValue()),"base",data.basePictureControl()));}
-        return SharedRuntime.map("session",session,"snapshot",snapshot,"model",device==null?"":device.model(),"connected",transport!=null&&transport.isOpen(),"canWrite",device!=null&&device.supportsOperation(0x90cd)&&!consumed,"canDelete",device!=null&&device.supportsOperation(0x90ce)&&!consumed,"consumed",consumed,"items",rows,"action",journal.read());
+        return SharedRuntime.map("session",session,"snapshot",snapshot,"model",device==null?"":device.model(),"connected",isConnected(),"canWrite",device!=null&&device.supportsOperation(0x90cd)&&!consumed,"canDelete",device!=null&&device.supportsOperation(0x90ce)&&!consumed,"consumed",consumed,"items",rows,"action",journal.read());
     }
+    private Transport currentTransport()throws IOException{Transport current=transport;if(current==null)throw new InterruptedIOException("槽位通道已取消。");return current;}
     private byte[] read(int op,long transaction,long...p)throws IOException {
-        try{byte[] bytes=transport.read(op,transaction,p);if(bytes==null||bytes.length>1024*1024)throw new IOException("相机槽位数据超出范围。");return bytes;}
+        Transport current=currentTransport();
+        try{byte[] bytes=current.read(op,transaction,p);if(bytes==null||bytes.length>1024*1024)throw new IOException("相机槽位数据超出范围。");return bytes;}
         catch(PtpResponseException known){throw known;}
-        catch(IOException failure){owned=false;transport.close();throw failure;}
+        catch(IOException failure){owned=false;current.close();throw failure;}
     }
-    private void command(int op,long transaction,long...p)throws IOException{PtpValidation.requireOkResponse(transport.command(op,transaction,p),transaction);}
-    private void require(Map<String,Object> p)throws IOException{if(transport==null||!transport.isOpen()||!session.equals(p.get("session")))throw new IOException("槽位会话已结束，请重新连接读取。");}
+    private void command(int op,long transaction,long...p)throws IOException{PtpValidation.requireOkResponse(currentTransport().command(op,transaction,p),transaction);}
+    private void require(Map<String,Object> p)throws IOException{Transport current=transport;if(current==null||!current.isOpen()||!session.equals(p.get("session")))throw new IOException("槽位会话已结束，请重新连接读取。");}
     private static void target(int target)throws IOException{if(target<201||target>209)throw new IOException("仅允许明确选择 C1–C9 槽位。");}
     private static void match(byte[] expected,byte[] actual)throws IOException{if(expected==null||!Arrays.equals(expected,actual))throw new IOException("目标槽位与确认快照不同，已停止；请重新读取确认。");}
     private static void check(BooleanSupplier cancel)throws IOException{if(cancel.getAsBoolean())throw new InterruptedIOException("槽位操作已取消。");}

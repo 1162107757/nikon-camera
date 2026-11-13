@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class MainActivity extends FlutterActivity {
     private final Handler main=new Handler(Looper.getMainLooper());
     private ThreadPoolExecutor worker=new ThreadPoolExecutor(1,1,30,TimeUnit.SECONDS,new ArrayBlockingQueue<>(8));
-    private ConcurrentHashMap<String,AtomicBoolean> jobs=new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String,NativeTaskCancellation> jobs=new ConcurrentHashMap<>();
     private AtomicBoolean backendClosed=new AtomicBoolean();
     private boolean ownsBackend=true;
     private NativeConnectionProtection protection;
@@ -111,9 +111,9 @@ public final class MainActivity extends FlutterActivity {
             Object rawJob=call.argument("jobId");
             if(rawJob!=null&&!(rawJob instanceof String)){reply.error("INVALID_ARGUMENT","任务标识格式无效。",null);return;}
             String job=(String)rawJob;
-            if(call.method.equals("cancel")){if(job!=null){AtomicBoolean flag=jobs.get(job);if(flag!=null)flag.set(true);if(camera!=null)camera.cancel(job);if(gallery!=null)gallery.cancel(job);}reply.success(null);return;}
+            if(call.method.equals("cancel")){if(job!=null){NativeTaskCancellation flag=jobs.get(job);if(flag!=null&&flag.cancelIfActive()){if(camera!=null)camera.cancel(job);if(gallery!=null)gallery.cancel(job);}}reply.success(null);return;}
             final String identity=job==null?UUID.randomUUID().toString():job;
-            AtomicBoolean cancelled=new AtomicBoolean();if(jobs.putIfAbsent(identity,cancelled)!=null){reply.error("BUSY","该任务正在执行。",null);return;}
+            NativeTaskCancellation cancelled=new NativeTaskCancellation();if(jobs.putIfAbsent(identity,cancelled)!=null){reply.error("BUSY","该任务正在执行。",null);return;}
             try{worker.execute(()->{
                 try{
                     Object value;
@@ -144,18 +144,19 @@ public final class MainActivity extends FlutterActivity {
                 }catch(Exception error){String message=error.getMessage();complete(identity,cancelled,()->reply.error(error instanceof InterruptedIOException?"CANCELLED":"OPERATION_FAILED",message==null?"操作未完成，请重试。":message,error instanceof AccountException?SharedRuntime.map("accountCode",((AccountException)error).code,"status",((AccountException)error).status):null));}
                 catch(OutOfMemoryError exhausted){complete(identity,cancelled,()->reply.error("MEMORY_LIMIT","内存不足，请关闭其他应用后重试。",null));}
                 catch(LinkageError missing){complete(identity,cancelled,()->reply.error("INSTALLATION_ERROR","安装包中的原生组件不可用，请重新安装此版本。",null));}
-                finally{jobs.remove(identity,cancelled);}
-            });}catch(RejectedExecutionException busy){jobs.remove(identity,cancelled);reply.error("BUSY","任务较多，请等待当前操作完成。",null);}
+                finally{cancelled.finish();jobs.remove(identity,cancelled);}
+            });}catch(RejectedExecutionException busy){cancelled.finish();jobs.remove(identity,cancelled);reply.error("BUSY","任务较多，请等待当前操作完成。",null);}
         });
     }
-    private void complete(String identity,AtomicBoolean task,Runnable deliver){
+    private void complete(String identity,NativeTaskCancellation task,Runnable deliver){
         // Flutter may issue the next request synchronously from this result.
         // A late finalizer for this task must never remove its replacement.
+        task.finish();
         main.post(()->{jobs.remove(identity,task);if(!backendClosed.get())deliver.run();});
     }
     private void emit(Map<String,Object> value){if(eventTarget!=null){eventTarget.emit(value);return;}EventChannel.EventSink sink=events;if(sink!=null&&!backendClosed.get())try{sink.success(value);}catch(RuntimeException detached){events=null;}}
     private void configureStorageAdapters(){if(runtime==null||messenger==null||isDestroyed())return;if(originalFiles==null){originalFiles=new NativeOriginalFiles(this,runtime);new MethodChannel(messenger,"cc.huevia/file-publication").setMethodCallHandler(originalFiles);}if(albumOperations==null&&gallery!=null)albumOperations=new NativeAlbumOperations(this,runtime,gallery);}
-    void stopCameraWork(){for(Map.Entry<String,AtomicBoolean> entry:jobs.entrySet()){String id=entry.getKey();if(id.startsWith("camera-")||id.startsWith("download-")){entry.getValue().set(true);if(camera!=null)camera.cancel(id);}}}
+    void stopCameraWork(){for(Map.Entry<String,NativeTaskCancellation> entry:jobs.entrySet()){String id=entry.getKey();if((id.startsWith("camera-")||id.startsWith("download-"))&&entry.getValue().cancelIfActive()){if(camera!=null)camera.cancel(id);}}}
     void releaseRetainedBackend(){if(!ownsBackend||!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null)camera.closeTransport();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();}
     void retireRetainedBackend(){releaseRetainedBackend();ownsBackend=false;}
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){if(ownsBackend&&!NativeConnectionProtection.keepEngine()){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();}super.cleanUpFlutterEngine(engine);}

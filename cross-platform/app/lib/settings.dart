@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -189,12 +191,7 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
     );
-    void connect() => hueRootPage<void>(
-      context,
-      MaterialPageRoute(
-        builder: (_) => CameraPage(state: state, configuration: true),
-      ),
-    );
+    void connect() => unawaited(connectCamera(context, state));
     return Scaffold(
       appBar: const HueHeader(title: '设置'),
       body: ListenableBuilder(

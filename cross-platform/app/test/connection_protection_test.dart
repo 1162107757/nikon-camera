@@ -66,6 +66,54 @@ Future<void> until(bool Function() ready) async {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  test('permission inactive never forwards a background command', () async {
+    final protection = ProtectionProbe(HueviaCore()..platform = 'ios');
+    addTearDown(protection.dispose);
+    protection.didChangeAppLifecycleState(AppLifecycleState.inactive);
+    expect(protection.requests, isEmpty);
+    protection.didChangeAppLifecycleState(AppLifecycleState.resumed);
+    expect(protection.requests.single.$2['foreground'], true);
+    protection.didChangeAppLifecycleState(AppLifecycleState.inactive);
+    expect(protection.requests, hasLength(1));
+    protection.requests.single.$3.complete({'enabled': false});
+    await Future<void>.delayed(Duration.zero);
+    expect(protection.requests, hasLength(1));
+  });
+  test('foreground commands are serialized and a delayed background command is followed by the latest resumed state', () async {
+    final protection = ProtectionProbe(HueviaCore()..platform = 'ios');
+    addTearDown(protection.dispose);
+    protection.didChangeAppLifecycleState(AppLifecycleState.paused);
+    expect(protection.requests.single.$2['foreground'], false);
+    protection.didChangeAppLifecycleState(AppLifecycleState.resumed);
+    expect(
+      protection.requests,
+      hasLength(1),
+      reason:
+          'Native background and foreground writes must never run concurrently',
+    );
+    protection.requests.single.$3.complete({'foreground': false});
+    await until(() => protection.requests.length == 2);
+    expect(protection.requests.last.$2['foreground'], true);
+    protection.requests.last.$3.complete({'foreground': true});
+    await until(() => protection.status['foreground'] == true);
+    protection.didChangeAppLifecycleState(AppLifecycleState.inactive);
+    expect(protection.requests, hasLength(2));
+  });
+  test(
+    'superseded foreground transitions do not replay an obsolete state',
+    () async {
+      final protection = ProtectionProbe(HueviaCore()..platform = 'android');
+      addTearDown(protection.dispose);
+      protection.didChangeAppLifecycleState(AppLifecycleState.paused);
+      protection.didChangeAppLifecycleState(AppLifecycleState.resumed);
+      protection.didChangeAppLifecycleState(AppLifecycleState.hidden);
+      expect(protection.requests, hasLength(1));
+      protection.requests.single.$3.complete({'foreground': false});
+      await Future<void>.delayed(Duration.zero);
+      expect(protection.requests, hasLength(1));
+      expect(protection.status['foreground'], false);
+    },
+  );
   test('expired native event wins over an earlier active response', () async {
     final core = HueviaCore()..platform = 'ios';
     final protection = ProtectionProbe(core);

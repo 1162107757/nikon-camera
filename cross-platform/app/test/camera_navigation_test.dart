@@ -6,6 +6,8 @@ import 'package:huevia/domain.dart';
 import 'package:huevia/main.dart';
 
 class NavigationCameraCore extends HueviaCore {
+  @override
+  Stream<dynamic> get operationProgress => const Stream<dynamic>.empty();
   final page = Completer<Json>();
   final cancelled = <String>[];
   int pages = 0, statuses = 0;

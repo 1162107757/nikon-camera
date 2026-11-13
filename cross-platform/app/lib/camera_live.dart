@@ -526,6 +526,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) return;
     _foreground = state == AppLifecycleState.resumed;
     _protectionChanged();
   }

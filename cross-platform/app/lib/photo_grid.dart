@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
 import 'domain.dart';
+import 'photo_format.dart';
 import 'theme.dart';
 
 class PhotoMasonry extends StatelessWidget {
@@ -98,10 +99,10 @@ class PhotoMasonry extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        path
-                            .extension(row['name'] as String)
-                            .replaceFirst('.', '')
-                            .toUpperCase(),
+                        photoFormatLabel(
+                          filePath: row['id'] as String,
+                          name: row['name'] as String,
+                        ),
                         style: const TextStyle(
                           fontSize: 10,
                           height: 1.3,
@@ -265,9 +266,15 @@ class _RawThumbnailState extends State<_RawThumbnail> {
   Future<String?> load() {
     final result = _thumbnailQueue.then((_) async {
       if (!mounted) return null;
-      final value = await widget.core.call('media.rawThumbnail', {'path': widget.source});
+      final value = await widget.core.call('media.rawThumbnail', {
+        'path': widget.source,
+      });
       final target = value['path'];
-      if (target is! String || !path.isWithin(path.join(widget.core.root, 'raw-thumbnails'), target)) {
+      if (target is! String ||
+          !path.isWithin(
+            path.join(widget.core.root, 'raw-thumbnails'),
+            target,
+          )) {
         throw const AppFailure('RAW 预览路径无效。');
       }
       return target;
@@ -275,25 +282,46 @@ class _RawThumbnailState extends State<_RawThumbnail> {
     _thumbnailQueue = result.then<void>((_) {}, onError: (_) {});
     return result;
   }
+
   @override
   void didUpdateWidget(_RawThumbnail oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.source != widget.source || oldWidget.core != widget.core) image = load();
+    if (oldWidget.source != widget.source || oldWidget.core != widget.core) {
+      image = load();
+    }
   }
+
   @override
   Widget build(BuildContext context) => FutureBuilder<String?>(
     future: image,
     builder: (context, snapshot) => snapshot.data != null
-        ? Image.file(File(snapshot.data!), fit: BoxFit.cover, cacheWidth: 384,
-            errorBuilder: (_, _, _) => fallback(context))
+        ? Image.file(
+            File(snapshot.data!),
+            fit: BoxFit.cover,
+            cacheWidth: 384,
+            errorBuilder: (_, _, _) => fallback(context),
+          )
         : snapshot.connectionState != ConnectionState.done
-        ? const Center(child: SizedBox.square(dimension: 24, child: CircularProgressIndicator(strokeWidth: 2)))
+        ? const Center(
+            child: SizedBox.square(
+              dimension: 24,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          )
         : fallback(context),
   );
   Widget fallback(BuildContext context) => Tooltip(
     message: 'RAW 预览暂不可用，点按仍可打开原文件',
-    child: ColoredBox(color: HuePalette.of(context).container,
-      child: Center(child: HueIcon(HueIconKind.file, size: 36, color: HuePalette.of(context).secondary))),
+    child: ColoredBox(
+      color: HuePalette.of(context).container,
+      child: Center(
+        child: HueIcon(
+          HueIconKind.file,
+          size: 36,
+          color: HuePalette.of(context).secondary,
+        ),
+      ),
+    ),
   );
 }
 

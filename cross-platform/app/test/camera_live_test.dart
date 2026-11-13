@@ -339,6 +339,24 @@ void main() {
       expect(state.registered, isEmpty);
       expect(core.completed, isEmpty);
     });
+    test('An inactive permission overlay preserves the active receive and never cancels its camera job', () async {
+      final live = state.controller;
+      await live.start('project-one', '拍摄');
+      core.visible = [shot(2)];
+      core.downloadGate = Completer<void>();
+      final running = live.pollOnce();
+      while (core.downloads == 0) {
+        await Future<void>.delayed(Duration.zero);
+      }
+      live.didChangeAppLifecycleState(AppLifecycleState.inactive);
+      expect(core.calls, isNot(contains('cancel')));
+      expect(live.active, isTrue);
+      core.downloadGate!.complete();
+      await running;
+      expect(live.completed, 1);
+      expect(state.registered, hasLength(1));
+      expect(core.calls, isNot(contains('camera.live.stop')));
+    });
     test('Background pauses discovery; foreground reconciliation receives missed notifications', () async {
       final live = state.controller;
       await live.start('project-one', '拍摄');

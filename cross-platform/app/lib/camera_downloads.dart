@@ -397,6 +397,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) return;
     foreground = state == AppLifecycleState.resumed;
     protectionChanged();
   }

@@ -3,6 +3,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 WORK="$ROOT/cross-platform/.build/mobile-apple"
 STARTED="$(date +%s)"
+mkdir -p "$WORK"
+python3 "$ROOT/cross-platform/tool/native_task_check.py" --build-dir "$WORK/native-task-jvm" > "$WORK/native-task-tests.log" 2>&1
 DEVICE="$(python3 - "$WORK" <<'PY'
 import json,subprocess,sys,uuid
 from pathlib import Path
@@ -84,6 +86,10 @@ xcrun simctl addmedia "$DEVICE" "$GALLERY_FIXTURE"
 xcrun xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug \
   -sdk iphonesimulator -destination "id=$DEVICE" "ARCHS=$SIM_ARCH" ONLY_ACTIVE_ARCH=YES \
   "BUILD_DIR=$ROOT/cross-platform/app/build/ios" -parallel-testing-enabled NO \
+  -only-testing:RunnerTests/RunnerTests/testCameraPresenterRecoversFromMissingAndDetachedRegistration \
+  -only-testing:RunnerTests/RunnerTests/testCameraPresenterRejectsBackgroundAndHiddenWindows \
+  -only-testing:RunnerTests/RunnerTests/testCameraPresentationCancellationPreventsQueuedPresentation \
+  -only-testing:RunnerTests/RunnerTests/testNativeTaskCancellationRetiresBeforeDelivery \
   -only-testing:RunnerTests/RunnerTests/testPhotoLibraryConsent test-without-building > "$WORK/simulator-tests.log" 2>&1
 CONTAINER="$(xcrun simctl get_app_container "$DEVICE" cc.huevia.next data)"
 RESULT_FILE="$CONTAINER/Library/Application Support/Huevia/native-pipeline-result.json"

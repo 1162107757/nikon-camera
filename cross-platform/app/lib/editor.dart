@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'photo_format.dart';
 import 'curve_control.dart';
 import 'recipes.dart';
 import 'copy_adjustments.dart';

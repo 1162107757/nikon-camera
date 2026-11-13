@@ -6,6 +6,7 @@ import 'domain.dart';
 import 'theme.dart';
 import 'widgets.dart';
 import 'camera.dart';
+import 'camera_slots.dart';
 import 'community.dart';
 
 class LegacyPresetDetails extends StatefulWidget {
@@ -28,7 +29,7 @@ class LegacyPresetDetails extends StatefulWidget {
 }
 
 class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
-  bool original = false, pinning = false;
+  bool original = false, pinning = false, importing = false;
   late bool pinned = widget.preset.pinned;
   Future<void> togglePin() async {
     if (pinning) return;
@@ -40,6 +41,40 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
       if (mounted) report(context, failure);
     } finally {
       if (mounted) setState(() => pinning = false);
+    }
+  }
+
+  Future<void> importToCamera() async {
+    if (importing) return;
+    final owner = widget.state.session['user']?['id'] as String? ?? '';
+    bool current() =>
+        mounted &&
+        widget.state.session['logoutPending'] != true &&
+        (widget.state.session['user']?['id'] as String? ?? '') == owner;
+    if (!current()) return;
+    setState(() => importing = true);
+    try {
+      final status = await widget.state.core.call('camera.status');
+      if (!mounted || !current()) return;
+      if (status['connected'] != true &&
+          !await connectCamera(context, widget.state)) {
+        return;
+      }
+      if (!mounted || !current()) return;
+      await hueRootPage<void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (_) => CameraSlotsPage(
+            state: widget.state,
+            initialPreset: widget.preset,
+            importOwner: owner,
+          ),
+        ),
+      );
+    } catch (failure) {
+      if (mounted && current()) report(context, failure);
+    } finally {
+      if (mounted) setState(() => importing = false);
     }
   }
 
@@ -281,17 +316,15 @@ class _LegacyPresetDetailsState extends State<LegacyPresetDetails> {
                         ),
                         onPressed: preset.online
                             ? widget.onDownload
-                            : () => Navigator.push<void>(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => CameraPage(
-                                    state: widget.state,
-                                    configuration: true,
-                                  ),
-                                ),
-                              ),
+                            : importing
+                            ? null
+                            : importToCamera,
                         child: Text(
-                          preset.online ? '保存到我的预设' : '导入相机',
+                          preset.online
+                              ? '保存到我的预设'
+                              : importing
+                              ? '正在准备导入'
+                              : '导入相机',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

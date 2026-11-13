@@ -28,8 +28,9 @@ final class SharedCameraConnectBoundaryTest {
         while(!phases.contains(.2)&&System.nanoTime()<until)Thread.sleep(10);
         yes(phases.contains(.2));peer.proceed.countDown();worker.join(3000);
         yes(!worker.isAlive()&&failure.get()==null);yes(phases.contains(1.0));
-        yes(peer.operations.equals(Collections.singletonList(0x1004)));
-        camera.cancel("phase");yes(!peer.open);yes(Boolean.FALSE.equals(status(camera).get("connected")));
+        yes(peer.operations.isEmpty());yes(Boolean.FALSE.equals(status(camera).get("inventoryReady")));
+        camera.cancel("phase");yes(peer.open);yes(Boolean.TRUE.equals(status(camera).get("connected")));
+        camera.closeTransport();yes(!peer.open);
         camera.disconnect();
 
         FakeClient timeout=new FakeClient();timeout.blockConnect=true;
@@ -41,14 +42,14 @@ final class SharedCameraConnectBoundaryTest {
         yes(failure.get().getMessage().contains("等待相机确认连接"));
         yes(Boolean.FALSE.equals(status(camera).get("connected")));
 
-        FakeClient inventory=new FakeClient();inventory.blockInventory=true;
+        FakeClient inventory=new FakeClient();inventory.blockConnect=true;
         AtomicBoolean cancelled=new AtomicBoolean();failure.set(null);
         camera=new SharedCamera(root.getPath(),(h,p,f)->null,(c,f)->inventory);
         worker=request(camera,payload,"inventory",cancelled::get,v->{},failure);
         yes(inventory.entered.await(3,TimeUnit.SECONDS));cancelled.set(true);worker.join(3000);
         yes(!worker.isAlive());yes(inventory.closed.get()>0);
         yes(failure.get() instanceof InterruptedIOException);
-        yes(inventory.operations.equals(Collections.singletonList(0x1004)));
+        yes(inventory.operations.isEmpty());
         yes(Boolean.FALSE.equals(status(camera).get("connected")));
 
         FakeClient first=new FakeClient(),second=new FakeClient();AtomicInteger created=new AtomicInteger();
@@ -59,8 +60,8 @@ final class SharedCameraConnectBoundaryTest {
         camera.cancel("");yes(second.open);
         camera.request("camera.page",SharedJson.encode(SharedRuntime.map("session",connected.get("session"),"offset",0,"limit",24)),"page",()->false,v->{});
         camera.cancel("new");yes(second.open);
-        // Page cancellation can also race completion delivery, after activeJob is cleared.
-        camera.cancel("page");yes(!second.open);yes(Boolean.FALSE.equals(status(camera).get("connected")));
+        // A late cancellation only suppresses delivery; it cannot close a completed session.
+        camera.cancel("page");yes(second.open);yes(Boolean.TRUE.equals(status(camera).get("connected")));
         camera.disconnect();
         System.out.println("PASS "+checks+" camera connection checks; phase, whole-attempt deadline, blocked IO cancel and job ownership");
         return checks;

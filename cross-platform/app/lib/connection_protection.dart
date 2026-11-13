@@ -21,6 +21,8 @@ class CameraConnectionProtection extends ChangeNotifier
   StreamSubscription<dynamic>? subscription;
   bool alive = true;
   int _statusEpoch = 0;
+  bool _sendingForeground = false;
+  bool? _desiredForeground, _sentForeground;
   bool get enabled => status['enabled'] == true;
   bool get available => status['available'] == true;
   bool get backgroundAllowed => enabled && status['backgroundAllowed'] == true;
@@ -125,13 +127,23 @@ class CameraConnectionProtection extends ChangeNotifier
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (native && alive) {
-      unawaited(
-        _refresh('foreground', {
-          'foreground': state == AppLifecycleState.resumed,
-        }),
-      );
-    }
+    // Permission sheets and short system overlays can make an otherwise
+    // foreground app inactive. Only actual background states relinquish it.
+    if (!native || !alive || state == AppLifecycleState.inactive) return;
+    _desiredForeground = state == AppLifecycleState.resumed;
+    if (_sendingForeground) return;
+    _sendingForeground = true;
+    unawaited(() async {
+      try {
+        while (alive && _desiredForeground != _sentForeground) {
+          final requested = _desiredForeground!;
+          await _refresh('foreground', {'foreground': requested});
+          _sentForeground = requested;
+        }
+      } finally {
+        _sendingForeground = false;
+      }
+    }());
   }
 
   @override

@@ -95,7 +95,65 @@ class ControlsCore extends HueviaCore {
   }
 }
 
+class LifecycleRemoteCore extends ControlsCore {
+  bool viewing = false;
+  final viewChanges = <bool>[];
+  @override
+  Json remote() => {...super.remote(), 'liveView': true, 'viewing': viewing};
+  @override
+  Future<Json> call(
+    String operation, [
+    Json payload = const {},
+    String? jobId,
+  ]) async {
+    if (operation == 'camera.remote.view') {
+      calls.add(operation);
+      viewing = payload['enabled'] == true;
+      viewChanges.add(viewing);
+      return remote();
+    }
+    if (operation == 'camera.remote.frame') {
+      calls.add(operation);
+      return {'ready': false};
+    }
+    return super.call(operation, payload, jobId);
+  }
+}
+
 void main() {
+  testWidgets(
+    'remote view survives inactive overlays but still pauses for actual background',
+    (tester) async {
+      final core = LifecycleRemoteCore();
+      final state = AppState(core);
+      await tester.pumpWidget(
+        MaterialApp(home: CameraRemotePage(state: state)),
+      );
+      await tester.pumpAndSettle();
+      expect(core.viewChanges, [true]);
+      final beforeInactive = core.calls
+          .where((c) => c == 'camera.remote.frame')
+          .length;
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(core.viewChanges, [true]);
+      final afterInactive = core.calls
+          .where((c) => c == 'camera.remote.frame')
+          .length;
+      expect(afterInactive, greaterThan(beforeInactive));
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+      await tester.pump();
+      expect(core.viewChanges, [true, false]);
+      await tester.pump(const Duration(milliseconds: 400));
+      expect(
+        core.calls.where((c) => c == 'camera.remote.frame'),
+        hasLength(afterInactive),
+      );
+      await tester.pumpWidget(const SizedBox());
+      tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      state.dispose();
+    },
+  );
   testWidgets(
     'remote shutter remains blocked until the pending result is read',
     (tester) async {

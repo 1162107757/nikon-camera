@@ -23,6 +23,7 @@
 #import "HueviaOriginalFiles.h"
 #import "HueviaAlbumOperations.h"
 #import "HueviaConnectionProtection.h"
+#import "HueviaCameraPresentation.h"
 #import "cc/huevia/account/AccountException.h"
 
 @interface HueviaCorePlugin ()
@@ -62,7 +63,7 @@
   host.protection=[[HueviaConnectionProtection alloc] initWithMessenger:registrar.messenger cancel:^{
     HueviaCorePlugin *owner=weakHost;
     [owner finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"连接已取消，请保持应用在前台后重试。" details:nil] resume:NO];
-    for(NSString *job in owner.tasks.allKeys){owner.tasks[job].cancelled=YES;[owner.camera cancelWithNSString:job];}
+    for(NSString *job in owner.tasks.allKeys){if([owner.tasks[job] cancelIfActive])[owner.camera cancelWithNSString:job];}
   }];
   host.filesChannel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/file-publication" binaryMessenger:registrar.messenger];
   [host.filesChannel setMethodCallHandler:^(FlutterMethodCall *call,FlutterResult result){
@@ -96,7 +97,6 @@
   NSDictionary *connectionPayload=[args[@"payload"] isKindOfClass:NSString.class]?[NSJSONSerialization JSONObjectWithData:[args[@"payload"] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil]:nil;
   if([call.method isEqualToString:@"request"]&&[args[@"operation"] isEqualToString:@"camera.connect"]&&![connectionPayload[@"transport"] isEqual:@"usb"]&&![NSUserDefaults.standardUserDefaults boolForKey:@"HueviaCameraNetworkIntroduction"]){
     if(self.networkIntroduction){reply([FlutterError errorWithCode:@"BUSY" message:@"请先完成或取消当前本地网络连接提示。" details:nil]);return;}
-    if(!self.presenter.view.window){reply([FlutterError errorWithCode:@"NOT_VISIBLE" message:@"请回到应用前台后重新连接相机。" details:nil]);return;}
     UIAlertController *intro=[UIAlertController alertControllerWithTitle:@"允许访问相机的本地网络" message:@"请先连接相机 Wi-Fi。接下来的系统授权弹窗请选择“允许”，才能读取和下载相机照片。\n\n如果此前选择了“不允许”，请到 iPhone 设置 → Huevia → 本地网络中开启后重试。" preferredStyle:UIAlertControllerStyleAlert];
     self.networkIntroduction=intro;self.networkIntroductionCall=call;self.networkIntroductionReply=reply;
     self.networkIntroductionJob=[args[@"jobId"] isKindOfClass:NSString.class]?args[@"jobId"]:NSUUID.UUID.UUIDString;
@@ -109,7 +109,25 @@
       [self finishNetworkIntroduction:nil resume:YES];
     }]];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,45*NSEC_PER_SEC),dispatch_get_main_queue(),^{if(self.networkIntroduction==intro)[self finishNetworkIntroduction:[FlutterError errorWithCode:@"TIMEOUT" message:@"等待连接确认已超时，请重新点击连接并完成本地网络授权。" details:nil] resume:NO];});
-    [self.presenter presentViewController:intro animated:YES completion:nil];return;
+    // The implicit engine can register before a FlutterViewController has a
+    // window. Resolve the active scene at the time of presentation instead of
+    // treating that one registration snapshot as the application's lifecycle.
+    [HueviaCameraPresentation scheduleWhileCurrent:^BOOL {
+      return self.networkIntroduction == intro && self.networkIntroductionReply != nil;
+    } resolve:^UIViewController * {
+      return [HueviaCameraPresentation presenterWithRegistered:self.presenter];
+    } present:^(UIViewController *presenter) {
+      [presenter presentViewController:intro animated:YES completion:^{
+        if(self.networkIntroduction != intro && intro.presentingViewController && !intro.beingDismissed)
+          [intro dismissViewControllerAnimated:NO completion:nil];
+      }];
+    } unavailable:^{
+      NSDictionary *visibility=[HueviaCameraPresentation snapshotWithRegistered:self.presenter];
+      BOOL foreground=[visibility[@"foregroundActive"] boolValue];
+      [self finishNetworkIntroduction:[FlutterError errorWithCode:foreground?@"PRESENTATION_UNAVAILABLE":@"NOT_VISIBLE"
+        message:foreground?@"暂时无法显示相机连接说明，请关闭当前弹窗后重试。":@"请回到应用前台后重新连接相机。"
+        details:visibility] resume:NO];
+    }];return;
   }
   if([call.method isEqualToString:@"gallerySavePermission"]){
     if(!self.gallery){reply([FlutterError errorWithCode:@"NOT_READY" message:@"应用尚未准备好。" details:nil]);return;}
@@ -139,11 +157,13 @@
     }
     [self.importPicker pickPreset:[args[@"preset"] boolValue] root:self.root presenter:self.presenter reply:reply];return;
   }
-  if([call.method isEqualToString:@"cancel"]){NSString *job=args[@"jobId"];if([job isKindOfClass:NSString.class]){if([job isEqualToString:self.networkIntroductionJob])[self finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil] resume:NO];self.tasks[job].cancelled=YES;[self.camera cancelWithNSString:job];}reply(nil);return;}
+  if([call.method isEqualToString:@"cancel"]){NSString *job=args[@"jobId"];if([job isKindOfClass:NSString.class]){if([job isEqualToString:self.networkIntroductionJob])[self finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil] resume:NO];HueviaTask *task=self.tasks[job];if([task cancelIfActive])[self.camera cancelWithNSString:job];}reply(nil);return;}
   if(![call.method isEqualToString:@"initialize"]&&![call.method isEqualToString:@"request"]){reply(FlutterMethodNotImplemented);return;}
   NSString *job=[args[@"jobId"] isKindOfClass:NSString.class]?args[@"jobId"]:NSUUID.UUID.UUIDString;
   if(self.tasks.count>=9||self.tasks[job]){reply([FlutterError errorWithCode:@"BUSY" message:@"任务较多，请等待当前操作完成。" details:nil]);return;}
   HueviaTask *task=[[HueviaTask alloc] init];self.tasks[job]=task;
+  NSDictionary *cameraPresentation=[args[@"operation"] isKindOfClass:NSString.class]&&[args[@"operation"] isEqualToString:@"camera.diagnostics"]
+    ?[HueviaCameraPresentation snapshotWithRegistered:self.presenter]:nil;
   __weak HueviaCorePlugin *weakSelf=self;
   task.progress=^(double value){dispatch_async(dispatch_get_main_queue(),^{HueviaCorePlugin *host=weakSelf;if(host.events)host.events(@{@"jobId":job,@"progress":@(value)});});};
   dispatch_async(self.queue,^{@autoreleasepool{
@@ -198,7 +218,15 @@
         else if([operation hasPrefix:@"camera."]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(p[@"queueId"])[self.runtime guardOwnerWithNSString:p[@"owner"]];self.sockets.cancellation=task;self.sockets.progress=task;[self.wired prepareRequestWithCancellation:task];value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];}
         else value=[self.runtime requestWithNSString:operation withNSString:payload withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
       }
-      dispatch_async(dispatch_get_main_queue(),^{[self.tasks removeObjectForKey:job];reply(value);});
+      if(cameraPresentation){
+        id decoded=[NSJSONSerialization JSONObjectWithData:[value dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        if([decoded isKindOfClass:NSDictionary.class]){
+          NSMutableDictionary *data=[decoded mutableCopy];data[@"presentation"]=cameraPresentation;
+          value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];
+        }
+      }
+      [task finish];
+      dispatch_async(dispatch_get_main_queue(),^{if(self.tasks[job]==task)[self.tasks removeObjectForKey:job];reply(value);});
     }@catch(id failure){
       NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"操作未完成，请重试。";
       NSMutableDictionary *details=[@{@"stage":stage,@"nativeType":NSStringFromClass([failure class])} mutableCopy];
@@ -211,7 +239,8 @@
       details[@"reason"]=[reason substringToIndex:MIN(reason.length,2048)];
       if([failure isKindOfClass:NSException.class])details[@"nativeStack"]=[[(NSException *)failure callStackSymbols] subarrayWithRange:NSMakeRange(0,MIN(10,[(NSException *)failure callStackSymbols].count))];
 #endif
-      dispatch_async(dispatch_get_main_queue(),^{[self.tasks removeObjectForKey:job];reply([FlutterError errorWithCode:task.cancelled?@"CANCELLED":@"OPERATION_FAILED" message:message details:details]);});
+      [task finish];
+      dispatch_async(dispatch_get_main_queue(),^{if(self.tasks[job]==task)[self.tasks removeObjectForKey:job];reply([FlutterError errorWithCode:task.cancelled?@"CANCELLED":@"OPERATION_FAILED" message:message details:details]);});
     }
   }});
 }

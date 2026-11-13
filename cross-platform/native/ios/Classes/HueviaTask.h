@@ -3,6 +3,8 @@
 #import "java/util/function/DoubleConsumer.h"
 
 @interface HueviaTask : NSObject <JavaUtilFunctionBooleanSupplier,JavaUtilFunctionDoubleConsumer>
-@property(atomic) BOOL cancelled;
+@property(nonatomic,readonly) BOOL cancelled;
 @property(nonatomic,copy) void (^progress)(double);
+- (BOOL)cancelIfActive;
+- (void)finish;
 @end

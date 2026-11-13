@@ -101,6 +101,7 @@ Future<void> open(
   bool configuration = false,
   double scale = 1,
 }) async {
+  state.cameraVisible.value = !configuration;
   await tester.pumpWidget(
     MaterialApp(
       theme: hueviaTheme(Brightness.light),
@@ -153,11 +154,20 @@ void main() {
     },
   );
   testWidgets(
-    'Connection page remembers RAW selection and shows the same thumbnail',
+    'Connection-only view keeps RAW choice without reading until explicit photo browsing',
     (tester) async {
       final core = await fixture();
       final state = AppState(core)..cameraRaw = true;
       await open(tester, state, configuration: true);
+      expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.thumbnail'),
+        isEmpty,
+      );
+      expect(find.byType(CameraThumbnail), findsNothing);
+      expect(state.cameraRaw, isTrue);
+      await tester.pumpWidget(const SizedBox());
+      await open(tester, state);
       expect(
         tester
             .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'RAW / NEF'))

@@ -490,8 +490,15 @@ extension _LegacyWorkspace on _EditorPageState {
                     const SizedBox(height: 4),
                     Text(
                       sameOwner
-                          ? '${p.extension(widget.photo.info['rawSource'] as String? ?? widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片'
+                          ? photoEditorFormatLabel(
+                              filePath: widget.photo.path,
+                              name: widget.photo.name,
+                              rawSourcePath:
+                                  widget.photo.info['rawSource'] as String?,
+                            )
                           : '请返回相册',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 10,
                         color: Color(0xbeffffff),

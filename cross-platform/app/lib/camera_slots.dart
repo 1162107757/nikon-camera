@@ -5,8 +5,15 @@ import 'package:flutter/material.dart';
 import 'domain.dart';
 
 class CameraSlotsPage extends StatefulWidget {
-  const CameraSlotsPage({super.key, required this.state});
+  const CameraSlotsPage({
+    super.key,
+    required this.state,
+    this.initialPreset,
+    this.importOwner,
+  });
   final AppState state;
+  final Preset? initialPreset;
+  final String? importOwner;
   @override
   State<CameraSlotsPage> createState() => _CameraSlotsPageState();
 }
@@ -14,7 +21,15 @@ class CameraSlotsPage extends StatefulWidget {
 class _CameraSlotsPageState extends State<CameraSlotsPage> {
   Json data = {};
   String? error;
-  bool busy = false, leaving = false;
+  bool busy = false, leaving = false, choosing = false;
+  late final String owner =
+      widget.importOwner ??
+      (widget.state.session['user']?['id'] as String? ?? '');
+  bool get current =>
+      mounted &&
+      !leaving &&
+      widget.state.session['logoutPending'] != true &&
+      (widget.state.session['user']?['id'] as String? ?? '') == owner;
   String session = '';
   HueviaCore get core => widget.state.core;
   List<Json> get slots => (data['items'] as List? ?? []).map(object).toList();
@@ -27,7 +42,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
   }
 
   Future<void> run(Future<void> Function() operation) async {
-    if (busy || leaving) return;
+    if (busy || !current) return;
     if (widget.state.cameraDownloadsActive ||
         widget.state.cameraManualTransferActive) {
       setState(() => error = '请先停止相机接收队列，再操作相机预设槽位。');
@@ -49,13 +64,20 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
   Future<void> open() => run(() async {
     if (session.isEmpty) {
       final status = await core.call('camera.status');
+      if (!current) return;
       if (status['connected'] != true) {
         throw const AppFailure('请先通过 Wi-Fi 或 USB 连接尼康相机。');
       }
       session = status['session'] as String;
     }
-    data = await core.call('camera.slots.open', {'session': session});
-    session = data['session'] as String;
+    final opened = await core.call('camera.slots.open', {'session': session});
+    final openedSession = opened['session'] as String;
+    if (!current) {
+      await core.call('camera.slots.close', {'session': openedSession});
+      return;
+    }
+    data = opened;
+    session = openedSession;
   });
 
   Future<void> refresh({bool reconcile = false}) => run(() async {
@@ -66,8 +88,29 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
   });
 
   Future<void> prepare(Json slot, String kind) async {
+    if (busy || choosing || !current) return;
+    setState(() => choosing = true);
+    try {
+      await prepareAction(slot, kind);
+    } catch (failure) {
+      if (current) setState(() => error = '$failure');
+    } finally {
+      if (mounted) setState(() => choosing = false);
+    }
+  }
+
+  Future<void> prepareAction(Json slot, String kind) async {
     Json payload = {'session': session, 'target': slot['target'], 'kind': kind};
-    if (kind == 'write') {
+    if (kind == 'write' && widget.initialPreset != null) {
+      final file = await core.call('library.export', {
+        'id': widget.initialPreset!.id,
+        'owner': owner,
+      });
+      if (!current) return;
+      final tuning = await tuningChoices();
+      if (!current || tuning == null) return;
+      payload.addAll({'path': file['path'], ...tuning});
+    } else if (kind == 'write') {
       final sources = slots
           .where(
             (item) => item['empty'] != true && item['target'] != slot['target'],
@@ -101,12 +144,12 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
           ),
         ),
       );
-      if (!mounted || source == null) return;
+      if (!current || source == null) return;
       if (source == 0) {
         final selected = await core.pickFile(preset: true);
-        if (!mounted || selected == null) return;
+        if (!current || selected == null) return;
         final tuning = await tuningChoices();
-        if (!mounted || tuning == null) return;
+        if (!current || tuning == null) return;
         payload.addAll({'path': selected['path'], ...tuning});
       } else {
         payload['source'] = source;
@@ -116,7 +159,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
     await run(() async {
       plan = await core.call('camera.slots.prepare', payload);
     });
-    if (!mounted || plan == null) return;
+    if (!mounted || !current || plan == null) return;
     final confirmation = plan!;
     final confirmed = await showDialog<bool>(
       context: context,
@@ -162,7 +205,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
         ],
       ),
     );
-    if (!mounted || confirmed != true) return;
+    if (!current || confirmed != true) return;
     await run(() async {
       data = await core.call('camera.slots.execute', {
         'session': session,
@@ -222,7 +265,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
   }
 
   Future<void> finish() async {
-    if (busy || leaving) return;
+    if (busy || choosing || leaving) return;
     leaving = true;
     try {
       if (data['session'] != null) {
@@ -290,7 +333,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
           leading: IconButton(
             onPressed: busy ? null : finish,
             icon: const Icon(Icons.arrow_back),
-            tooltip: '返回相机',
+            tooltip: '返回',
           ),
         ),
         body: SafeArea(
@@ -303,6 +346,10 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
               ),
               const SizedBox(height: 8),
               const Text('读取照片菜单 C1–C9。选择槽位后可导入、复制或删除；每次操作都单独确认。'),
+              if (widget.initialPreset != null) ...[
+                const SizedBox(height: 8),
+                Text('待导入：${widget.initialPreset!.name}。请选择目标槽位，核对后再写入。'),
+              ],
               const SizedBox(height: 12),
               if (busy) const LinearProgressIndicator(),
               if (error != null)
@@ -348,7 +395,12 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
                     'SHA-256 ${(slot['sha256'] as String).substring(0, 12)}',
                   ),
                   trailing: PopupMenuButton<String>(
-                    enabled: !busy && !pending && data['consumed'] != true,
+                    enabled:
+                        !busy &&
+                        !choosing &&
+                        current &&
+                        !pending &&
+                        data['consumed'] != true,
                     onSelected: (kind) => unawaited(prepare(slot, kind)),
                     itemBuilder: (_) => [
                       PopupMenuItem(
@@ -382,7 +434,7 @@ class _CameraSlotsPageState extends State<CameraSlotsPage> {
                   label: const Text('只读刷新槽位'),
                 ),
               const SizedBox(height: 12),
-              const Text('槽位工具独占相机通道。返回后请在相机连接页重新连接，即可浏览照片。'),
+              const Text('槽位操作期间不读取照片。返回后可在同步 → 相机照片主动浏览；若相机要求重新连接，请按提示操作。'),
             ],
           ),
         ),

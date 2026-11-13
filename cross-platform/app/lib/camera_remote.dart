@@ -33,20 +33,33 @@ class _CameraRemotePageState extends State<CameraRemotePage>
   Future<void> open() async {
     await run(() async {
       final status = await core.call('camera.status');
+      if (!mounted || leaving) return;
       if (status['connected'] != true) {
         throw const AppFailure('请先连接尼康相机，再打开遥控拍摄。');
       }
-      data = await core.call('camera.remote.open', {
+      final opened = await core.call('camera.remote.open', {
         'session': status['session'],
       });
+      if (!mounted || leaving) {
+        await core.call('camera.remote.close', {
+          'session': opened['session'],
+          'remoteId': opened['remoteId'],
+        });
+        return;
+      }
+      data = opened;
       if (data['liveView'] == true) {
-        data = await core.call('camera.remote.view', {
+        final viewed = await core.call('camera.remote.view', {
           ...scope,
           'enabled': true,
         });
+        if (!mounted || leaving) return;
+        data = viewed;
       }
     });
-    timer = Timer.periodic(const Duration(milliseconds: 350), (_) => poll());
+    if (mounted && !leaving) {
+      timer = Timer.periodic(const Duration(milliseconds: 350), (_) => poll());
+    }
   }
 
   Future<void> run(Future<void> Function() operation) async {
@@ -102,6 +115,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive) return;
     foreground = state == AppLifecycleState.resumed;
     if (state != AppLifecycleState.resumed && data['viewing'] == true) {
       if (!busy) pauseForLifecycle();
