@@ -1,0 +1,2 @@
+INSTRUMENTATION_RESULT: receipt={"mode":"inspect","beforeCount":20,"ownMatches":1,"ownName":"Huevia219-format-qa.dng","ownSha256":"97bb05bb28cd4f3308b9a3e8e37a4637a3b55d40db5e7f3dc3844e50d0a90aa3","indexBeforeSha256":"fb8fabbc856dff7a0f96921f23ba582761ba9084489a2ff4249bb426f4a3c2c5","protectedFiles":637,"protectedBeforeSha256":"873694997be0fbd4ce65dc5fa3fcac8f7e1bce1b83a1a2a8e0876343f1b6af70","mutated":false}
+INSTRUMENTATION_CODE: -1

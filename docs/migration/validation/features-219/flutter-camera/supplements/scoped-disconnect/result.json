@@ -1,0 +1,46 @@
+{
+  "scope": "219 delayed explicit disconnect ownership supplement",
+  "finalSourceCommit": null,
+  "state": "Dart frozen; final application source/run binding awaits root",
+  "baseCommitAtCheck": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+  "baseCommitIsFinalApplicationSource": false,
+  "testFile": "cross-platform/app/test/camera_intent_test.dart",
+  "actualTestFilePassed": 15,
+  "exit": 0,
+  "newDistinctCases": 4,
+  "priorCasesIncluded": 11,
+  "priorCameraArchiveChecks": 71,
+  "crossAttemptDistinctCoverage": 75,
+  "crossAttemptCoverageIsOneSameSourceFullRun": false,
+  "cases": [
+    "Old pending live stop -> replacement connect -> original session disconnect is stale and new connection stays active",
+    "Dispose during stop -> no later disconnect call and no setState after disposal",
+    "Repeated same-frame disconnect activation -> one scoped operation",
+    "Explicit slots disconnect uses current slots token"
+  ],
+  "analysis": {
+    "exit": 0,
+    "result": "No issues found",
+    "scope": "camera.dart + camera_intent_test.dart tool transcript"
+  },
+  "attempt": {
+    "state": "failed test fixture, not a clean pass",
+    "actualPassed": 14,
+    "failed": 1,
+    "reason": "find.byTooltip returned RawTooltip, which the fixture incorrectly cast to IconButton; final fixture selects the actual IconButton without removing the repeated-callback assertions"
+  },
+  "inputSha256": {
+    "cross-platform/app/lib/camera.dart": "2ecf4428fe63e97e212c8e8029c5ddda377bd171b34eb096ca7824d803bf5ba1",
+    "cross-platform/app/test/camera_intent_test.dart": "ec2d0f002ce7cb3be05cd77b7f8e1534aae76087f1549ce24021755a9c202b2d"
+  },
+  "nativeAtomicOwnerGuardVerification": "Owned and verified separately by the core agent; do not infer it solely from this mocked Dart test",
+  "deviceOrCameraOperationPerformed": false,
+  "published": false,
+  "generatedAtUtc": "2026-11-13T15:31:04.443598+00:00",
+  "filesSha256": {
+    "attempt-rawtooltip-result.json": "657b8d296af738dd1540ac785c03d46d6136e38f61f1f3412a49ada8b3e035e3",
+    "attempt-rawtooltip.log": "6221c97a63d10e88843008d2c27cc3965ec6063ce36dbf40937bd3ded4591326",
+    "intent15-final-result.json": "e6644b4118cf3f61f37de266200140085544eff2662cf397d905e86ea249ae94",
+    "intent15-final.log": "28fb5cf630905bc1d39c3ad3758fe682a494929dbb407b2cf11364f313aced10"
+  }
+}

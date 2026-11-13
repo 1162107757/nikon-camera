@@ -1,0 +1,35 @@
+[
+  {
+    "id": 131981000393,
+    "name": "apple-app",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "runner_name": "",
+    "labels": [
+      "macos-26"
+    ],
+    "steps": []
+  },
+  {
+    "id": 131981002784,
+    "name": "portrait-pixels",
+    "status": "completed",
+    "conclusion": "skipped",
+    "runner_name": null,
+    "labels": [
+      "macos-26"
+    ],
+    "steps": []
+  },
+  {
+    "id": 131981003392,
+    "name": "portrait-geometry",
+    "status": "completed",
+    "conclusion": "skipped",
+    "runner_name": null,
+    "labels": [
+      "macos-26"
+    ],
+    "steps": []
+  }
+]

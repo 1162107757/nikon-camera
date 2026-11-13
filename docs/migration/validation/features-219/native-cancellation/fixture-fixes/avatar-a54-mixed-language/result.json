@@ -1,0 +1,18 @@
+{
+  "failedSource": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "failedMacRun": 43458258245,
+  "failure": "avatar fixture compile: --std=c++17 not allowed with Objective-C; raw .m was present in .mm link invocation",
+  "fullOriginalJobLogSha256": "689c4ea4999082b48ab5272207d630d30de9f69f37910b33fb8cc765a8dfaf8d",
+  "oldScriptGitBytesSha256": "51f89a8745152b40c05ce221a095e7177cea2812d693fd3cdf292555effcf5c0",
+  "fixedScript": "cross-platform/tool/avatar_apple.sh",
+  "fixedScriptCurrentRawSha256": "e96054a63f758a5c7711a2a97c45d182e9b8b8a07bb1327e7e5a584a2b774706",
+  "fixedScriptOnlyTrackedChangeByTask": true,
+  "bashSyntaxExit": 0,
+  "gitDiffCheckExit": 0,
+  "objcCompileOptionsMatchPreviouslyWorkingTaskUnit": true,
+  "rawObjcInputRemovedFromObjcxxLink": true,
+  "otherExplicitMixedObjcObjcxxToolShellCalls": 0,
+  "appleSdkExecutedOnWindows": false,
+  "newMacFullGateRequired": true,
+  "recordedAtUtc": "2026-11-13T16:27:25.364966+00:00"
+}

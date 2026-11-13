@@ -1,0 +1,123 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "versionCode": 219,
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "state": "android-validated-apple-acceptance-pending",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-219-android-arm64.apk",
+      "platform": "android",
+      "abi": "arm64-v8a",
+      "bytes": 52723506,
+      "sha256": "d81cf0f6f670368ed842a7ade6fe40b5db31e6d3f584379ed0ae6882c9da68ae",
+      "versionName": "0.31.0-dev",
+      "versionCode": 219,
+      "package": "cc.huevia.next",
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "elfLibraryCount": 8,
+      "actual16KiBDeviceVerified": false,
+      "presetPreviewImageCount": 10,
+      "validationPassed": true,
+      "draftReceipt": true,
+      "acceptedForLocalAndroidTesting": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-219-android-x64.apk",
+      "platform": "android",
+      "abi": "x86_64",
+      "bytes": 56226010,
+      "sha256": "dc74d3a4a8f734f6d008a7973195f8186f91ce88f71488e7be6c0dccd72dddba",
+      "versionName": "0.31.0-dev",
+      "versionCode": 219,
+      "package": "cc.huevia.next",
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "elfLibraryCount": 8,
+      "actual16KiBDeviceVerified": false,
+      "presetPreviewImageCount": 10,
+      "validationPassed": true,
+      "draftReceipt": true,
+      "acceptedForLocalAndroidTesting": false
+    }
+  ],
+  "acceptedForDelivery": false,
+  "android": {
+    "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "state": "all-android-gates-passed; overall-client-delivery-awaiting-ios",
+    "acceptedForLocalAndroidTesting": false,
+    "functionalUiEvidenceSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "functionalUiSourceEquivalence": "../../docs/migration/validation/features-219/android/source-equivalent-ui-binding.json",
+    "fullFunctionalUiRepeatedOnNewApk": false,
+    "fixtureCleanup": "completed-exact-owned-fixture-only",
+    "rawDeletionProductCheckPassed": false,
+    "validationPassed": true,
+    "finalR8Checks": 78,
+    "coldLaunchPassed": true,
+    "coldLaunchCounts": {
+      "applicationPhotos": 19,
+      "phonePhotos": 50,
+      "presets": 2
+    }
+  },
+  "ios": {
+    "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "run": 43464094785,
+    "runner": "macos-26-intel",
+    "state": "full-acceptance-running",
+    "acceptedIpa": false,
+    "previousRun": 43463073963,
+    "previousRunFailure": "dependency Git network reset/early EOF exit128 before later validation"
+  },
+  "previousCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "appleRun": 43448048561,
+    "appleConclusion": "failure",
+    "appleCoreParity": "passed",
+    "delivered": false,
+    "evidence": "../../docs/migration/validation/features-219/attempts/4f/result.json"
+  },
+  "qqLogin": {
+    "imageCaptchaRemoved": true,
+    "serverDeployment": "deployed-and-verified",
+    "serverHttpProbesPassed": 6,
+    "nativeTencentAuthorizationVerified": false,
+    "iosUniversalLinkConfigured": false
+  },
+  "iosCamera": {
+    "reportedModel": "Nikon Z6II",
+    "transport": "Wi-Fi",
+    "actualDeviceConnectionVerified": false
+  },
+  "androidReleaseRuntimeChecks": 78,
+  "sharedCoreBoundaryChecks": 1623,
+  "atmosphereChecks": 6,
+  "goldenBoundaryChecks": 1629,
+  "dartCameraLocalChecks": 75,
+  "formatLocalChecks": 6,
+  "nativeCancellationJvmAssertions": 309,
+  "sourceEvidence": "../../docs/migration/validation/features-219/source.json",
+  "heldCandidate": {
+    "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+    "appleRun": 43453345679,
+    "delivered": false,
+    "reason": "Installed QA found all album taps remain locked after RAW develop replaces its route with the JPEG editor and returns; cold restart restores taps. Candidate held before delivery; minimal route-completion fix and regression are pending.",
+    "evidence": "../../docs/migration/validation/features-219/attempts/f3/result.json",
+    "fixBoundToFinalSource": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "fixEvidence": "../../docs/migration/validation/features-219/flutter-raw-return/result.json",
+    "descendantDeliveryStillPending": true
+  },
+  "rawAlbumReturnGoRouterCases": 2,
+  "previousAndroidCandidate": {
+    "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "delivered": false,
+    "appleRun": 43458258245,
+    "androidR8Checks": 78,
+    "androidFunctionalUiPassed": true,
+    "appleFailure": "host avatar validation compile; complete mobile gate not accepted",
+    "evidence": "../../docs/migration/validation/features-219/attempts/a54/result.json"
+  }
+}

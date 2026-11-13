@@ -1,0 +1,1 @@
+PASS 167 camera session ownership checks; lazy inventory, real PTP/IP handoff, recovery, scoped disconnect, stale/active cancel and verified-write guards

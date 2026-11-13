@@ -1,0 +1,24 @@
+{
+  "testedSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "finalSourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "actualFunctionalUiResult": "final-ui-result.json",
+  "actualUiSourceMustRemainOld": true,
+  "onlyChangedPath": "cross-platform/tool/avatar_apple.sh",
+  "changedPathPurpose": "Host-only avatar validation build commands; no application, core or native product source changed.",
+  "productTrees": {
+    "cross-platform/app": {
+      "testedTree": "cc25d74db505439f99d7e729e0167922b0a4d133",
+      "finalTree": "cc25d74db505439f99d7e729e0167922b0a4d133"
+    },
+    "cross-platform/core": {
+      "testedTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c"
+    },
+    "cross-platform/native": {
+      "testedTree": "43ec2b1c57e8e6d5b413413948a168f1b4b4176b",
+      "finalTree": "43ec2b1c57e8e6d5b413413948a168f1b4b4176b"
+    }
+  },
+  "fullManualUiRepeatedOnFinalMetadataOnlyRebuild": false,
+  "finalExactApkRuntimeAndColdLaunchRequired": true
+}

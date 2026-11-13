@@ -1,0 +1,149 @@
+{
+  "branch": "codex/features215",
+  "versionCode": 219,
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "state": "android-validated-apple-acceptance-pending",
+  "recordedAtUtc": "2026-11-13T16:04:53.925926+00:00",
+  "finalSourceBinding": "final-source-binding.json",
+  "previousFrozenCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "delivered": false,
+    "evidence": "attempts/4f/result.json"
+  },
+  "coreRun": {
+    "result": "core/result.json",
+    "sharedBoundaryChecks": 1623,
+    "atmosphereChecks": 6,
+    "goldenBoundaryChecks": 1629,
+    "cameraSessionBoundaryChecks": 167,
+    "cameraConnectionBoundaryChecks": 65,
+    "countsAreIncludedInSharedTotal": true,
+    "goldenSha256": "358c02ec990fe2d903f827f8b15ed963550eb231d0d01360f61c00f2196bfdd5",
+    "currentInputsRehashed": 239,
+    "rawExecutionContextPreserved": true
+  },
+  "dartCamera": {
+    "result": "flutter-camera/final-result.json",
+    "uniqueActualPassedChecks": 75,
+    "testFiles": 9,
+    "incrementalVerification": true
+  },
+  "format": {
+    "result": "flutter-format/result.json",
+    "uniqueActualPassedChecks": 6
+  },
+  "nativeCancellation": {
+    "result": "native-cancellation/result.json",
+    "jvmAssertions": 309,
+    "includedConcurrentRaces": 100,
+    "iosUIKitAndPhotoKitPlanned": 5,
+    "iosExecution": "pending"
+  },
+  "android": {
+    "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+    "state": "all-android-gates-passed; overall-client-delivery-awaiting-ios",
+    "acceptedForLocalAndroidTesting": false,
+    "functionalUiEvidenceSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "functionalUiSourceEquivalence": "android/source91-android-ui-equivalence.json",
+    "fullFunctionalUiRepeatedOnNewApk": false,
+    "fixtureCleanup": "completed-exact-owned-fixture-only",
+    "rawDeletionProductCheckPassed": false,
+    "validationPassed": true,
+    "finalR8Checks": 78,
+    "coldLaunchPassed": true,
+    "coldLaunchCounts": {
+      "presets": 2,
+      "phonePhotos": 50,
+      "applicationPhotos": 19
+    }
+  },
+  "apple": {
+    "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+    "run": 43471565460,
+    "runner": "macos-26-intel",
+    "state": "full-acceptance-running",
+    "acceptedIpa": false,
+    "previousRun": 43464094785,
+    "previousRunActualFlutterPassed": 447,
+    "previousRunActualFlutterFailed": 2,
+    "previousRunDeviceCompileFailed": true,
+    "newIosConsumerCompileAndRuntimeRequired": true,
+    "parallelDiagnosticRun": {
+      "run": 43479234183,
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "verification": "native-diagnostic",
+      "hostArchitecture": "arm64",
+      "statusAtRecord": "in_progress",
+      "recordedAtUtc": "2026-11-13T18:07:56.271690+00:00",
+      "purpose": "Parallel native diagnostics only; main full run remains authoritative",
+      "replacesMainFullRun": false,
+      "countsTowardMainFullAcceptance": false,
+      "hasDeliverableIpa": false,
+      "acceptanceClaimed": false
+    }
+  },
+  "delivered218ArtifactsModified": false,
+  "heldCandidate": {
+    "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+    "appleRun": 43453345679,
+    "delivered": false,
+    "reason": "Installed QA found all album taps remain locked after RAW develop replaces its route with the JPEG editor and returns; cold restart restores taps. Candidate held before delivery; minimal route-completion fix and regression are pending.",
+    "evidence": "attempts/f3/result.json",
+    "fixBoundToFinalSource": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "fixEvidence": "flutter-raw-return/result.json",
+    "descendantDeliveryStillPending": true
+  },
+  "rawAlbumReturn": {
+    "result": "flutter-raw-return/result.json",
+    "actualGoRouterCasesPassed": 2,
+    "execution": "two isolated actual exit0 runs; not a rerun of camera75",
+    "format4RerunPassed": true,
+    "resultSha256": "4e129bf666243e9b343678afad1a91c201cc10d7c004f55edba75464d53caaa5"
+  },
+  "previousAndroidCandidate": {
+    "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "delivered": false,
+    "appleRun": 43458258245,
+    "androidR8Checks": 78,
+    "androidFunctionalUiPassed": true,
+    "appleFailure": "host avatar validation compile; complete mobile gate not accepted",
+    "evidence": "attempts/a54/result.json"
+  },
+  "documentationChecks": {
+    "result": "documentation-checks/result.json",
+    "documentationScanSourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+    "sourceAndInventoryCommandsActualCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "sourceCheckRawExit": 0,
+    "sourceCheckFilesAtExecution": 1032,
+    "detailRenderBoundaryChecks": 21,
+    "inventoryRawExit": 0,
+    "commandsExecutedOnce": true,
+    "sourceAndInventoryNotRerunFor91": true,
+    "newIosApiGuardReceipt": "native-cancellation/api-consumer-migration/result.json"
+  },
+  "previousPlatformCandidate": {
+    "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "delivered": false,
+    "androidAllGatesPassed": true,
+    "appleFullRun": 43464094785,
+    "appleFlutterPassed": 447,
+    "appleFlutterFailed": 2,
+    "appleDeviceCompileFailed": true,
+    "evidence": "attempts/89/result.json"
+  },
+  "legacyFixtureContract": {
+    "result": "flutter-camera/supplements/legacy-fixture-contract/result.json",
+    "actualCompleteFileChecks": 8,
+    "cameraChecks": 7,
+    "unchangedPersonalSyncCase": 1,
+    "separateFromOriginal75": true,
+    "resultSha256": "c43768381e280ea85d887ee4ce3d0d7a23a18e1f0b011cb280a22eca36c1a62e"
+  },
+  "iosCancelApiSourceGuard": {
+    "result": "native-cancellation/api-consumer-migration/result.json",
+    "actualStaticAppleSourcesChecked": 57,
+    "runtimeAcceptance": false
+  }
+}

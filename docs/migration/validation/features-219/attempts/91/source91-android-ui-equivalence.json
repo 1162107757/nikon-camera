@@ -1,0 +1,101 @@
+{
+  "finalSourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "scope": "android-git-tracked-release-source-inputs-only",
+  "actualFunctionalUiSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "actualFunctionalUiResult": "final-ui-result.json",
+  "lastExactAndroidSourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "comparisons": [
+    {
+      "testedSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "unchangedAndroidReleaseSourceTrees": {
+        "cross-platform/app/lib": {
+          "testedTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "identical": true
+        },
+        "cross-platform/app/android": {
+          "testedTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "identical": true
+        },
+        "cross-platform/core": {
+          "testedTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "identical": true
+        },
+        "app": {
+          "testedTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "finalTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "identical": true
+        }
+      },
+      "pubspecGitBlobSha256": "3d98306d41543fd7a3f147cef31b060cded4304a937f8d256219f91a72ee5057",
+      "allChangedPaths": [
+        "cross-platform/app/test/camera_connection_test.dart",
+        "cross-platform/app/test/session_race_test.dart",
+        "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+        "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+        "cross-platform/tool/avatar_apple.sh",
+        "cross-platform/tool/native_task_source_check.py",
+        "cross-platform/tool/source_check.py"
+      ]
+    },
+    {
+      "testedSourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "unchangedAndroidReleaseSourceTrees": {
+        "cross-platform/app/lib": {
+          "testedTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "identical": true
+        },
+        "cross-platform/app/android": {
+          "testedTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "identical": true
+        },
+        "cross-platform/core": {
+          "testedTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "identical": true
+        },
+        "app": {
+          "testedTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "finalTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "identical": true
+        }
+      },
+      "pubspecGitBlobSha256": "3d98306d41543fd7a3f147cef31b060cded4304a937f8d256219f91a72ee5057",
+      "allChangedPaths": [
+        "cross-platform/app/test/camera_connection_test.dart",
+        "cross-platform/app/test/session_race_test.dart",
+        "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+        "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+        "cross-platform/tool/native_task_source_check.py",
+        "cross-platform/tool/source_check.py"
+      ]
+    }
+  ],
+  "changedSince89": [
+    "cross-platform/app/test/camera_connection_test.dart",
+    "cross-platform/app/test/session_race_test.dart",
+    "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+    "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+    "cross-platform/tool/native_task_source_check.py",
+    "cross-platform/tool/source_check.py"
+  ],
+  "androidReleaseSourceInputsIdentical": true,
+  "fullAppTreeEqualityClaimed": false,
+  "fullNativeTreeEqualityClaimed": false,
+  "iosNativeProductTreeChanged": true,
+  "iosNativeTrees": {
+    "previous": "11f05413934814df72719f94fa8687a85d94bce4",
+    "final": "85417994e9bda645cd04805e466999ff1e621cef"
+  },
+  "changedIosConsumersRequireNewMacCompileAndRuntimeGate": true,
+  "fullFunctionalUiReexecutedOnFinalApkClaimed": false,
+  "finalExactApkSigningRuntimeAndColdLaunchStillRequired": true,
+  "generatedPackageBytesIdenticalClaimed": false,
+  "generatedAssetsRequireActualPackageTenImageCheck": true,
+  "old89ProofRetainedUnchanged": "source-equivalent-ui-binding.json",
+  "old89ProofSha256": "1c82c329a2c4cb32bd6a5147bc4f55b4934d14967efc8a5346f6b2bade4514cd"
+}

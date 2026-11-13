@@ -1,0 +1,5 @@
+Analyzing photo_format.dart, photo_grid.dart, editor.dart, legacy_editor.dart, photo_format_test.dart...
+
+   info - lib\photo_grid.dart:290:7 - Statements in an if should be enclosed in a block. Try wrapping the statement in a block. - curly_braces_in_flow_control_structures
+
+1 issue found.

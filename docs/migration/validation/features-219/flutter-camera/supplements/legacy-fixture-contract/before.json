@@ -1,0 +1,24 @@
+{
+  "baseHeadAtReview": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "recordedAtUtc": "2026-11-13T17:09:12.590039+00:00",
+  "productNineRawSha256": {
+    "cross-platform/app/lib/camera.dart": "2ecf4428fe63e97e212c8e8029c5ddda377bd171b34eb096ca7824d803bf5ba1",
+    "cross-platform/app/lib/camera_connection.dart": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+    "cross-platform/app/lib/camera_slots.dart": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+    "cross-platform/app/lib/camera_remote.dart": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+    "cross-platform/app/lib/camera_live.dart": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+    "cross-platform/app/lib/camera_downloads.dart": "4b3f0c62ee48ac928f9283af1febb684bea82297f49b02e309f23a1cf556aa13",
+    "cross-platform/app/lib/connection_protection.dart": "4b53debe0a6f07397b38a2b10a6823d5c317da9e63f48a66541ee2a81003db7c",
+    "cross-platform/app/lib/legacy_preset_details.dart": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+    "cross-platform/app/lib/settings.dart": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959"
+  },
+  "oldFixtureRawSha256": {
+    "cross-platform/app/test/camera_connection_test.dart": "4e73629ee77d55fa948860d6a7932ff7ded8d69ebb6c0c1c575acfb8afe87b22",
+    "cross-platform/app/test/session_race_test.dart": "3a1671c3a88119e3fb2cf9d134f48a023cb45aa28524df47b1eb3c11f189b2f2"
+  },
+  "macRun": 43464094785,
+  "macFullFlutterLogSha256": "821de03d812915b017734fb75d5f6f7daf1f7a840177aec7cbcec55647bcc99e",
+  "macPassed": 447,
+  "macFailed": 2,
+  "fullLogRetainedByRoot": true
+}

@@ -1,0 +1,98 @@
+package cc.huevia.qa;
+
+import android.app.Instrumentation;
+import android.os.Bundle;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.security.MessageDigest;
+import java.util.*;
+
+/** One-off emulator QA cleanup; never shipped in the product APK. */
+public final class OwnDngCleanup extends Instrumentation {
+    private static final String NAME="Huevia219-format-qa.dng";
+    private static final String SHA="97bb05bb28cd4f3308b9a3e8e37a4637a3b55d40db5e7f3dc3844e50d0a90aa3";
+    private Bundle args;
+    private static final class Guard extends IOException { Guard(String code){super(code);} }
+    private static void need(boolean ok,String code)throws Guard{if(!ok)throw new Guard(code);}
+    @Override public void onCreate(Bundle value){super.onCreate(value);args=value==null?new Bundle():value;start();}
+    @Override public void onStart(){Bundle result=new Bundle();try{result.putString("receipt",run().toString());finish(-1,result);}catch(Throwable error){result.putString("guard",error instanceof Guard?error.getMessage():error.getClass().getSimpleName());finish(1,result);}}
+    private static String hash(byte[] bytes)throws Exception {byte[] digest=MessageDigest.getInstance("SHA-256").digest(bytes);StringBuilder out=new StringBuilder();for(byte b:digest)out.append(String.format(Locale.ROOT,"%02x",b&255));return out.toString();}
+    private static String hash(File file)throws Exception {MessageDigest md=MessageDigest.getInstance("SHA-256");try(InputStream in=new FileInputStream(file)){byte[] b=new byte[65536];for(int n;(n=in.read(b))!=-1;)md.update(b,0,n);}StringBuilder out=new StringBuilder();for(byte b:md.digest())out.append(String.format(Locale.ROOT,"%02x",b&255));return out.toString();}
+    private static void write(File file,byte[] bytes)throws Exception {try(FileOutputStream out=new FileOutputStream(file)){out.write(bytes);out.getFD().sync();}}
+    private static List<int[]> spans(byte[] bytes)throws Exception {
+        List<int[]> result=new ArrayList<>();int at=0;
+        while(at<bytes.length&&Character.isWhitespace((char)bytes[at]))at++;
+        need(at<bytes.length&&bytes[at++]=='[',"index-not-array");
+        while(at<bytes.length){
+            while(at<bytes.length&&(Character.isWhitespace((char)bytes[at])||bytes[at]==','))at++;
+            if(at<bytes.length&&bytes[at]==']')break;
+            need(at<bytes.length&&bytes[at]=='{',"index-row-not-object");int start=at,depth=0;boolean string=false,escape=false;
+            for(;at<bytes.length;at++){
+                int c=bytes[at]&255;
+                if(string){if(escape)escape=false;else if(c=='\\')escape=true;else if(c=='"')string=false;continue;}
+                if(c=='"'){string=true;continue;}
+                if(c=='{'||c=='[')depth++;
+                else if(c=='}'||c==']'){depth--;if(depth==0){result.add(new int[]{start,++at});break;}}
+            }
+            need(depth==0&&!string,"index-row-unclosed");
+        }
+        return result;
+    }
+    private static byte[] row(byte[] bytes,int[] span){return Arrays.copyOfRange(bytes,span[0],span[1]);}
+    private static File owned(File root,String relative)throws Exception {File value=new File(root,relative).getCanonicalFile();need(value.getPath().startsWith(root.getPath()+File.separator),"path-escaped-root");return value;}
+    private static void collect(File root,File item,File index,File target,File backup,TreeMap<String,String> snapshot)throws Exception {
+        File canonical=item.getCanonicalFile();need(canonical.equals(item.getAbsoluteFile()),"unexpected-symlink");
+        if(canonical.equals(index)||canonical.equals(target)||canonical.equals(backup))return;
+        if(item.isDirectory()){File[] children=item.listFiles();need(children!=null,"snapshot-list-failed");for(File child:children)collect(root,child,index,target,backup,snapshot);}
+        else if(item.isFile())snapshot.put(root.toPath().relativize(canonical.toPath()).toString(),hash(item));
+    }
+    private static String aggregate(Map<String,String> snapshot)throws Exception {ByteArrayOutputStream out=new ByteArrayOutputStream();for(Map.Entry<String,String> entry:snapshot.entrySet())out.write((entry.getKey()+"\0"+entry.getValue()+"\n").getBytes(StandardCharsets.UTF_8));return hash(out.toByteArray());}
+    private JSONObject run()throws Exception {
+        File root=new File(getTargetContext().getFilesDir(),"huevia-shared").getCanonicalFile();
+        File index=owned(root,"photos-index.json");need(index.isFile()&&index.length()<4*1024*1024,"index-missing-or-large");
+        byte[] before=Files.readAllBytes(index.toPath());String beforeSha=hash(before);
+        JSONArray records=new JSONArray(new String(before,StandardCharsets.UTF_8));List<int[]> oldSpans=spans(before);need(records.length()==20&&oldSpans.size()==20,"expected-20-current-records");
+        int selected=-1;File original=null;
+        for(int i=0;i<records.length();i++){
+            JSONObject record=records.getJSONObject(i);
+            if(!NAME.equals(record.optString("name")))continue;
+            need(selected<0,"duplicate-own-name");need(record.optBoolean("relative",false),"own-path-not-relative");
+            File path=owned(root,record.getString("path"));File originals=owned(root,"originals");
+            need(path.getPath().startsWith(originals.getPath()+File.separator)&&path.getName().toLowerCase(Locale.ROOT).endsWith(".dng"),"own-path-not-original-dng");
+            need(path.isFile()&&path.length()==98890&&hash(path).equals(SHA),"own-file-sha-mismatch");selected=i;original=path;
+        }
+        need(selected>=0&&original!=null,"own-name-not-found");
+        for(int i=0;i<records.length();i++)if(i!=selected){JSONObject other=records.getJSONObject(i);String path=other.optString("path");need(!path.equals(records.getJSONObject(selected).getString("path")),"own-file-shared-by-other-record");}
+        File backup=owned(root,".qa-cleanup219-"+UUID.randomUUID());
+        TreeMap<String,String> protectedBefore=new TreeMap<>();collect(root,root,index,original,backup,protectedBefore);
+        JSONObject receipt=new JSONObject().put("mode",args.getString("mode","inspect")).put("beforeCount",20).put("ownMatches",1).put("ownName",NAME).put("ownSha256",SHA).put("indexBeforeSha256",beforeSha).put("protectedFiles",protectedBefore.size()).put("protectedBeforeSha256",aggregate(protectedBefore));
+        if(!"apply".equals(args.getString("mode","inspect")))return receipt.put("mutated",false);
+        need(beforeSha.equals(args.getString("expectedIndexSha","")),"index-sha-not-confirmed");
+        need(aggregate(protectedBefore).equals(args.getString("expectedProtectedSha","")),"protected-sha-not-confirmed");
+        int start,end;
+        if(selected<oldSpans.size()-1){start=oldSpans.get(selected)[0];end=oldSpans.get(selected+1)[0];}
+        else{start=oldSpans.get(selected-1)[1];end=oldSpans.get(selected)[1];}
+        ByteArrayOutputStream rewritten=new ByteArrayOutputStream();rewritten.write(before,0,start);rewritten.write(before,end,before.length-end);byte[] after=rewritten.toByteArray();
+        JSONArray next=new JSONArray(new String(after,StandardCharsets.UTF_8));List<int[]> newSpans=spans(after);need(next.length()==19&&newSpans.size()==19,"expected-19-after-records");
+        ByteArrayOutputStream protectedRows=new ByteArrayOutputStream();
+        for(int i=0,j=0;i<oldSpans.size();i++)if(i!=selected){byte[] old=row(before,oldSpans.get(i));need(Arrays.equals(old,row(after,newSpans.get(j++))),"other-record-byte-change");protectedRows.write(old);}
+        need(backup.mkdir(),"backup-dir-create");File savedIndex=new File(backup,"index-before.json");write(savedIndex,before);need(hash(savedIndex).equals(beforeSha),"index-backup-sha");
+        File part=owned(root,".qa-cleanup219-"+UUID.randomUUID()+".part");File savedOriginal=new File(backup,"own-original.dng");boolean installed=false,moved=false;
+        try{
+            need(hash(index).equals(beforeSha)&&hash(original).equals(SHA),"precommit-sha-changed");write(part,after);
+            Files.move(part.toPath(),index.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);installed=true;
+            Files.move(original.toPath(),savedOriginal.toPath(),StandardCopyOption.ATOMIC_MOVE);moved=true;
+            need(hash(index).equals(hash(after))&&hash(savedOriginal).equals(SHA)&&!original.exists(),"postcommit-sha-mismatch");
+            TreeMap<String,String> protectedAfter=new TreeMap<>();collect(root,root,index,original,backup,protectedAfter);need(protectedBefore.equals(protectedAfter),"protected-file-byte-change");
+            receipt.put("mutated",true).put("afterCount",19).put("otherRecordBytesPreserved",19).put("otherRecordsAggregateSha256",hash(protectedRows.toByteArray())).put("indexAfterSha256",hash(after)).put("protectedAfterSha256",aggregate(protectedAfter)).put("allOtherRootFilesUnchanged",true).put("ownOriginalMovedToPrivateBackup",true).put("backupDirectory",backup.getName());
+            write(new File(backup,"receipt.json"),receipt.toString().getBytes(StandardCharsets.UTF_8));return receipt;
+        }catch(Exception failure){
+            if(moved&&savedOriginal.isFile()&&!original.exists()&&hash(savedOriginal).equals(SHA))Files.move(savedOriginal.toPath(),original.toPath(),StandardCopyOption.ATOMIC_MOVE);
+            if(installed&&hash(index).equals(hash(after))){File restore=new File(backup,"restore.part");write(restore,before);Files.move(restore.toPath(),index.toPath(),StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);}
+            throw failure;
+        }finally{if(part.exists())need(part.delete(),"own-part-cleanup-failed");}
+    }
+}

@@ -1,0 +1,88 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart
+00:00 +0: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +3: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +4: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +6: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +7: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +8: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:00 +9: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:01 +10: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Already connected preset import skips connection and keeps the selected source
+00:01 +11: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A failure result cannot continue preset import to slots
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TypeWidgetFinder:<Found 0 widgets with type "CupertinoNavigationBarBackButton": []>
+   Which: means none were found but one was expected
+One back button expected on screen
+
+When the exception was thrown, this was the stack:
+#0      fail (package:matcher/src/expect/expect.dart:187:31)
+#1      _expect (package:matcher/src/expect/expect.dart:182:3)
+#2      expect (package:matcher/src/expect/expect.dart:65:3)
+#3      expectSync (package:flutter_test/src/widget_tester.dart:486:18)
+#4      WidgetTester.pageBack.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1177:7)
+#7      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#8      WidgetTester.pageBack (package:flutter_test/src/widget_tester.dart:1171:27)
+#9      main.<anonymous closure> (file:///D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart:228:20)
+<asynchronous suspension>
+#10     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#11     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The test description was:
+  A failure result cannot continue preset import to slots
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:01 +11 -1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A failure result cannot continue preset import to slots [E]
+  Test failed. See exception logs above.
+  The test description was: A failure result cannot continue preset import to slots
+  
+00:01 +11 -1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A not-connected result cannot continue preset import to slots
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TypeWidgetFinder:<Found 0 widgets with type "CupertinoNavigationBarBackButton": []>
+   Which: means none were found but one was expected
+One back button expected on screen
+
+When the exception was thrown, this was the stack:
+#0      fail (package:matcher/src/expect/expect.dart:187:31)
+#1      _expect (package:matcher/src/expect/expect.dart:182:3)
+#2      expect (package:matcher/src/expect/expect.dart:65:3)
+#3      expectSync (package:flutter_test/src/widget_tester.dart:486:18)
+#4      WidgetTester.pageBack.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1177:7)
+#7      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#8      WidgetTester.pageBack (package:flutter_test/src/widget_tester.dart:1171:27)
+#9      main.<anonymous closure> (file:///D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart:228:20)
+<asynchronous suspension>
+#10     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#11     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 3 frames from dart:async and package:stack_trace)
+
+The test description was:
+  A not-connected result cannot continue preset import to slots
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:02 +11 -2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A not-connected result cannot continue preset import to slots [E]
+  Test failed. See exception logs above.
+  The test description was: A not-connected result cannot continue preset import to slots
+  
+00:02 +11 -2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Cancel and leaving discard a late connection result and cancel only its pending job once
+00:10 +11 -2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Cancel and leaving discard a late connection result and cancel only its pending job once - did not complete [E]
+00:10 +11 -2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: An owner change during connection cannot import the old preset for a new account - did not complete [E]
+00:10 +11 -2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Hidden sync never reads photos; explicitly entering camera photos does - did not complete [E]
+00:10 +11 -2: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A failure result cannot continue preset import to slots
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A not-connected result cannot continue preset import to slots
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: An owner change during connection cannot import the old preset for a new account (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Cancel and leaving discard a late connection result and cancel only its pending job once (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Hidden sync never reads photos; explicitly entering camera photos does (did not complete)

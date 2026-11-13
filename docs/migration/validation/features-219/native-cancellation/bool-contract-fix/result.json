@@ -1,0 +1,78 @@
+{
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "appleFullRun": 43482938724,
+  "boundAtUtc": "2026-11-13T18:30:54.862461+00:00",
+  "change": "Comparison-derived native flags use explicit boolean objects; existing UIKit case verifies public serialized types",
+  "boolFields": [
+    "snapshotOnMainThread",
+    "applicationForeground",
+    "foregroundActive",
+    "registeredPresenterAttached",
+    "presenterAvailable"
+  ],
+  "countFields": [
+    "activeSceneCount",
+    "eligibleWindowCount"
+  ],
+  "changedExpressionFields": [
+    "registeredPresenterAttached",
+    "presenterAvailable"
+  ],
+  "productionTruthValuesOrScenePolicyChanged": false,
+  "uiKitTotalCases": 5,
+  "newPublicTypeAssertionsExecuted": true,
+  "sourceInputs": [
+    {
+      "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+      "originalRecordedRawSha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f",
+      "currentRawSha256": "92ef97dc037166eb9f7dcfcdc2e7612be3c22919d703117a265256efaeb1c07d",
+      "matchesOriginalExecutionContext": false,
+      "matchesFinalGitAfterLfNormalization": true
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+      "originalRecordedRawSha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac",
+      "currentRawSha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13",
+      "matchesOriginalExecutionContext": false,
+      "matchesFinalGitAfterLfNormalization": true
+    }
+  ],
+  "oldDiagnosticEvidence": "../diagnostics/43479234183/result.json",
+  "oldDiagnosticHead": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "oldDiagnosticUiKitPassed": 5,
+  "oldDiagnosticUiKitSeconds": 13.195,
+  "oldDiagnosticForegroundFailed": "Expected boolean true; received number1",
+  "bindingOnlyNoTestsRerun": true,
+  "actual309JavaInputsUnchanged": true,
+  "acceptedForIpaDelivery": true,
+  "currentFullExecution": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "run": 43482938724,
+    "evidence": "../executions/43482938724/result.json",
+    "uiKitCasesPassed": 5,
+    "newJsonTypeAssertionsExecuted": true,
+    "nativePipelinePassed": true,
+    "foregroundEvidence": "machine-test",
+    "snapshot": null,
+    "uiKitFailures": 0,
+    "uiKitSeconds": 14.001,
+    "freshNativeJvmChecksPassed": 309,
+    "freshNativeJvmTransitionRaces": 100,
+    "nativePipelineSchema": 1,
+    "nativeWholeCaseCount": 1,
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSnapshotFixturePassed": true,
+    "rootIndependentVerifierExit": 0,
+    "acceptedForLocalTesting": true,
+    "published": false,
+    "publicCiResult": "../../apple/ci-result.json",
+    "publicIndependentVerification": "../../apple/independent-verification.json",
+    "actualJVMLog": "../executions/43482938724/native-task-tests.log",
+    "ipaBytes": 64890557,
+    "ipaSha256": "368f299c53ac8b0a8f9e4bcdaec02ac17a1ca14229f8630416b0af95e338580f"
+  },
+  "acceptedForLocalTesting": true,
+  "published": false,
+  "deliveryScope": "local testing only; unsigned/self-sign as documented by root"
+}

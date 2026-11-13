@@ -1,0 +1,146 @@
+{
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "sourceBinding": "source-fingerprints.json",
+  "recordedAtUtc": "2026-11-13T16:04:55.360665+00:00",
+  "testHost": "Windows",
+  "sdk": "Flutter 3.47.9 / Dart 3.13.7",
+  "freshLocalTestsExecuted": true,
+  "actualRawReturnCasesPassed": 2,
+  "rawReturnRuns": [
+    {
+      "case": "Native picker RAW replacement returns to an album that can open photos repeatedly",
+      "log": "fixed-picker.log",
+      "exitFile": "fixed-picker.exit",
+      "exit": 0,
+      "passed": 1
+    },
+    {
+      "case": "Phone import RAW replacement returns to an album that can open photos repeatedly",
+      "log": "fixed-phone.log",
+      "exitFile": "fixed-phone.exit",
+      "exit": 0,
+      "passed": 1
+    }
+  ],
+  "twoCasesPassedInSeparateProcesses": true,
+  "wholeRawTestFileSingleProcessPassClaimed": false,
+  "unchangedFormatRegression": {
+    "log": "original-format4.log",
+    "exitFile": "original-format4.exit",
+    "exit": 0,
+    "passed": 4,
+    "testFileUnmodified": true
+  },
+  "targetAnalyze": {
+    "log": "analyze.log",
+    "exit": 0,
+    "result": "No issues found!"
+  },
+  "routeImplementationUnderTest": [
+    "real GoRouter push/replace/pop",
+    "real PhotosPage",
+    "real RawDevelopPage automaticallyEdit=true",
+    "real EditorPage header back",
+    "real AppState photo journal"
+  ],
+  "nativeBoundary": "Fake native picker/gallery/media conversion; these tests do not claim actual native RAW decoding or hardware verification. The working JPEG fixture is an actual repository image.",
+  "assertions": [
+    "A second picker tap while native selection is pending starts no duplicate picker.",
+    "A second phone RAW tap while gallery import is pending starts no duplicate import.",
+    "RAW auto-development replaces the route with a JPEG editor and preserves rawSource.",
+    "After editor header return, the album can open a JPEG repeatedly and no extra RAW development occurs."
+  ],
+  "baseline": {
+    "log": "attempts/before-fix.log",
+    "exit": 1,
+    "lockAssertionObserved": true,
+    "assertion": "Album photo tap must work after RAW context.replace and header back (repeat 0)",
+    "cleanRedRun": false,
+    "otherFixtureFailures": [
+      "initial picker menu animation was not yet awaited",
+      "Editor static progress stream initially lacked a test MethodChannel handler"
+    ]
+  },
+  "hostIncompleteAttempts": [
+    {
+      "log": "attempts/before-fix-route.log",
+      "exit": 1,
+      "reason": "Connection closed before test suite loaded; no product assertion result."
+    },
+    {
+      "log": "attempts/before-fix-clean-verbose.log",
+      "exit": 79,
+      "reason": "flutter_tester Windows access violation -1073741819; tests did not complete."
+    }
+  ],
+  "fixtureCleanup": {
+    "mode": "Test-owned temporary directories only; teardown attempts cleanup and logs deferred files if Windows image decoder still holds a handle.",
+    "deferredPathsFromPassedRuns": [
+      "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-raw-return-65fbaac1",
+      "C:\\Users\\11621\\AppData\\Local\\Temp\\huevia-raw-return-705046c3"
+    ],
+    "manualRetryDeletionPerformedByArchive": false,
+    "includedInProductPackage": false
+  },
+  "actualAndroidQaRetestPerformedByThisTask": false,
+  "finalAppleFullGateRun": "43464094785",
+  "finalAppleFullGateStatusAtArchive": "Latest full gate pending root verification at metadata binding; no acceptance claimed.",
+  "core1629ModifiedOrRerun": false,
+  "filesSha256": {
+    "analyze.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "analyze.log": "85ac403085939e9877326f0e59bd15f885f460264311ec84b5678fee941f00e4",
+    "attempts/before-fix-clean-verbose.exit": "60dae80579a054bc5a7703da02947ee145e19400d113054f3af8e654b1b1713f",
+    "attempts/before-fix-clean-verbose.log": "ae704569f688c21620d0ccf4bfa58c686b52061c9b7fad6c9ad8356e86a1eb1a",
+    "attempts/before-fix-route.exit": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+    "attempts/before-fix-route.log": "ebd5cbddb6931664ada39d3e499ef74baccd35a58176987b184049e800de48bf",
+    "attempts/before-fix.exit": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+    "attempts/before-fix.log": "5213ad4c36aef6f80e3b3ea57e6542f32fffbe899e92e4d92cfa13582b6099a8",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/analyze.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/analyze.log": "85ac403085939e9877326f0e59bd15f885f460264311ec84b5678fee941f00e4",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/attempts/before-fix-clean-verbose.exit": "60dae80579a054bc5a7703da02947ee145e19400d113054f3af8e654b1b1713f",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/attempts/before-fix-clean-verbose.log": "ae704569f688c21620d0ccf4bfa58c686b52061c9b7fad6c9ad8356e86a1eb1a",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/attempts/before-fix-route.exit": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/attempts/before-fix-route.log": "ebd5cbddb6931664ada39d3e499ef74baccd35a58176987b184049e800de48bf",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/attempts/before-fix.exit": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/attempts/before-fix.log": "5213ad4c36aef6f80e3b3ea57e6542f32fffbe899e92e4d92cfa13582b6099a8",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/fixed-phone.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/fixed-phone.log": "fae296ccfb9de8df8497ae14fcb0d05f09d72761ca57112e81d5bede4e71c448",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/fixed-picker.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/fixed-picker.log": "c5bbe4032df06952e1363f02e43bc3c9aa68c9972fc57db742eb1e36a19cc080",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/original-format4.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/original-format4.log": "9544d946d4694728fc7dbd47bec492dddddfd493cccd609788d06bb705471138",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/README.md": "d32fd3c79581e8e2b471c7b42ead8a7182c01a07180215cf3953e35bdb6bea18",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/result.json": "6adbe4c7fd3f38b89f731d65dddbbcad8c61ada4d5987382c108d868a89b5f48",
+    "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/source-fingerprints.json": "6858382256f692ad302677f6fa23e0442ffd19ef9ae3d74a04947475aad566a9",
+    "fixed-phone.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "fixed-phone.log": "fae296ccfb9de8df8497ae14fcb0d05f09d72761ca57112e81d5bede4e71c448",
+    "fixed-picker.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "fixed-picker.log": "c5bbe4032df06952e1363f02e43bc3c9aa68c9972fc57db742eb1e36a19cc080",
+    "original-format4.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "original-format4.log": "9544d946d4694728fc7dbd47bec492dddddfd493cccd609788d06bb705471138",
+    "README.md": "484334310b6da277b4b551dd43325c95e615fb3f599cd5bcd66087e5a4590f40",
+    "source-fingerprints.json": "552e0e4cc8bea25f928100b304920a74400bf97924a5f1eb7ced1885a28492d5"
+  },
+  "sourceBindingHistory": [
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "snapshot": "bindings/a54af6c6e7bb1e78737c70715645084e709901c5/result.json",
+      "latestAppleRunAtThatBinding": "43458258245"
+    }
+  ],
+  "metadataBindingUpdatedAtUtc": "2026-11-13T16:43:55.309682+00:00",
+  "bindingOnlyNoTestsOrBuildsRerun": true,
+  "platformAttemptHistory": [
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "run": "43458258245",
+      "status": "Historical previous-source attempt; exact original binding and logs preserved in snapshot and root Apple attempts archive."
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "run": "43463073963",
+      "status": "Dependency Git network reset / early EOF, exit 128; not product assertion failure.",
+      "outcomeSource": "root-reported stage outcome"
+    }
+  ]
+}

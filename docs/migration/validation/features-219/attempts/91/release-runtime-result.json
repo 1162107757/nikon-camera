@@ -1,0 +1,9 @@
+{
+  "exit": 0,
+  "accepted": true,
+  "mediaField": "q",
+  "mediaMethod": "d",
+  "workerField": "g",
+  "mappingSha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+  "taskClass": "ir"
+}

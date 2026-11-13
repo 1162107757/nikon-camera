@@ -1,0 +1,11 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart
+00:00 +0: permission inactive never forwards a background command
+00:00 +1: foreground commands are serialized and a delayed background command is followed by the latest resumed state
+00:00 +2: superseded foreground transitions do not replay an obsolete state
+00:00 +3: expired native event wins over an earlier active response
+00:00 +4: out-of-order actor replies cannot restore protection after the last actor stopped
+00:00 +5: notification stop ends idle foreground live and is never replayed on foreground
+00:00 +6: malformed protection events suspend background work and foreground state is forwarded
+00:00 +7: protected background live expires without polling and automatically reconciles on foreground
+00:00 +8: foreground arrival before canceled download returns still resumes live automatically
+00:00 +9: All tests passed!

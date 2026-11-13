@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "targets": [
+    "integration_test/camera_foreground_fixture.dart",
+    "integration_test/native_pipeline_test.dart"
+  ]
+}

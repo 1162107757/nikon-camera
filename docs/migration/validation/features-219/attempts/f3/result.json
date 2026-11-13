@@ -1,0 +1,116 @@
+{
+  "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+  "scope": "local-testing-only",
+  "published": false,
+  "state": "held-before-delivery",
+  "acceptedForDelivery": false,
+  "recordedAtUtc": "2026-11-13T15:46:10.491522+00:00",
+  "reason": "Installed QA found all album taps remain locked after RAW develop replaces its route with the JPEG editor and returns; cold restart restores taps. Candidate held before delivery; minimal route-completion fix and regression are pending.",
+  "android": {
+    "twoAbiBuildSigningStaticAlignmentAndTenPhotos": "passed",
+    "x64R8Checks": 78,
+    "x64R8GateAccepted": true,
+    "installedUiQa": "failed-raw-return-tap-lock",
+    "acceptedForLocalAndroidTesting": false,
+    "packages": [
+      {
+        "abi": "arm64",
+        "bytes": 52723506,
+        "sha256": "e634a805f3dd6f2e89e09c449131fd430b30302812340a4ec9995f8e5c175cbe",
+        "copiedToAttempt": false,
+        "acceptedForDelivery": false
+      },
+      {
+        "abi": "x64",
+        "bytes": 56226010,
+        "sha256": "cf76bfea7db4ffc97490387603b60992fee813c368188c9cd815075ac1482126",
+        "copiedToAttempt": false,
+        "acceptedForDelivery": false
+      }
+    ]
+  },
+  "apple": {
+    "run": 43453345679,
+    "stateAtHold": "queued-or-pending",
+    "acceptedIpa": false,
+    "anyLaterResultAppliesOnlyToThisHeldCandidate": true,
+    "status": "completed",
+    "conclusion": "failure",
+    "jobConclusion": "cancelled",
+    "runnerName": "",
+    "stepsExecuted": 0,
+    "hostedRunnerAcquired": false,
+    "productCompilationOrTestsExecuted": false,
+    "failureClassification": "hosted-runner-capacity; no product test execution",
+    "annotation": "The job was not acquired by Runner of type hosted even after multiple attempts",
+    "arm64CapacityNotices": 3,
+    "annotationVerification": "Public raw annotations and job summary independently parsed; no runner or executed steps",
+    "rawAnnotations": "apple-capacity-annotations.json",
+    "rawJobSummary": "apple-job-summary.json"
+  },
+  "actualEarlierEvidenceUnchanged": {
+    "dartUniqueIncrementalChecks": 75,
+    "sharedPlusAtmosphereChecks": 1629,
+    "nativeJvmAssertions": 309,
+    "formatChecks": 6
+  },
+  "snapshots": [
+    {
+      "file": "source-before-hold.json",
+      "sha256": "b42eb6b3ed8b140050f8f1870e9e5d351fd805bb6057ede4beb0d8849eeba5b9",
+      "bytes": 2050
+    },
+    {
+      "file": "source-binding-before-hold.json",
+      "sha256": "0e9544323aed2403b12304bbd097643d9971cc1dbd683be7e58625fe37ee5059",
+      "bytes": 141508
+    },
+    {
+      "file": "artifacts-before-hold.json",
+      "sha256": "09199400a7868e15c5b34d17af5337043490b58e866c4aa9215e308f47d7ca69",
+      "bytes": 1685
+    },
+    {
+      "file": "dart-camera-before-hold.json",
+      "sha256": "e35c6c3357a92524639fe227f080c88590dfda23b1256514b15d0e6728d885b9",
+      "bytes": 5174
+    },
+    {
+      "file": "android-signing-alignment.json",
+      "sha256": "11231ae3812a36b807b95db28109b34ffe7512150c0713e7b705ed28e248c7ad",
+      "bytes": 4357
+    },
+    {
+      "file": "preset-preview-assets.json",
+      "sha256": "4ea9886bd629421ee79fb11ba6fea98fc4a2dfa8f9962c6285a71fbf99acae37",
+      "bytes": 4559
+    },
+    {
+      "file": "release-runtime.log",
+      "sha256": "1aba180355f2a83082e6199ec6705a878b297aab0cf40cfe70a8adefa4b165e3",
+      "bytes": 1706
+    },
+    {
+      "file": "release-runtime-result.json",
+      "sha256": "05294f577ee10887caecd10f7a6c27a6336efd253eb7d2a0b2d1a451b4b5e386",
+      "bytes": 216
+    },
+    {
+      "file": "release-runtime-mapping.json",
+      "sha256": "ceabb2884e87d322d9d1eb4b1efaea92491bde8337b5ea4f0e39e0c34d0d2edb",
+      "bytes": 181
+    },
+    {
+      "file": "apple-capacity-annotations.json",
+      "sha256": "09c07ebeda212f0ff3e30e1ad9d4ce250ddcc75e84a94e17f4905264cf02c438",
+      "bytes": 1750
+    },
+    {
+      "file": "apple-job-summary.json",
+      "sha256": "e90f7df61617347f52ae731f27cf899d242c2b5e3024e85523a49cf17fcc0c02",
+      "bytes": 637
+    }
+  ],
+  "binaryCopied": false,
+  "nextFinalSourceAndRun": null
+}

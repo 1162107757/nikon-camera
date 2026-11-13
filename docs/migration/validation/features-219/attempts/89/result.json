@@ -1,0 +1,147 @@
+{
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "scope": "local-testing-only",
+  "published": false,
+  "delivered": false,
+  "acceptedForDelivery": false,
+  "android": {
+    "validationPassed": true,
+    "r8Checks": 78,
+    "exactColdLaunch": {
+      "applicationPhotos": 19,
+      "phonePhotos": 50,
+      "presets": 2,
+      "screenshots": 3
+    },
+    "packages": [
+      {
+        "file": "huevia-0.31.0-dev-219-android-arm64.apk",
+        "platform": "android",
+        "abi": "arm64-v8a",
+        "bytes": 52723506,
+        "sha256": "d81cf0f6f670368ed842a7ade6fe40b5db31e6d3f584379ed0ae6882c9da68ae",
+        "versionName": "0.31.0-dev",
+        "versionCode": 219,
+        "package": "cc.huevia.next",
+        "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+        "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+        "static16KiBAlignmentVerified": true,
+        "elfLibraryCount": 8,
+        "actual16KiBDeviceVerified": false,
+        "presetPreviewImageCount": 10,
+        "validationPassed": true,
+        "draftReceipt": true,
+        "acceptedForLocalAndroidTesting": false
+      },
+      {
+        "file": "huevia-0.31.0-dev-219-android-x64.apk",
+        "platform": "android",
+        "abi": "x86_64",
+        "bytes": 56226010,
+        "sha256": "dc74d3a4a8f734f6d008a7973195f8186f91ce88f71488e7be6c0dccd72dddba",
+        "versionName": "0.31.0-dev",
+        "versionCode": 219,
+        "package": "cc.huevia.next",
+        "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+        "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+        "static16KiBAlignmentVerified": true,
+        "elfLibraryCount": 8,
+        "actual16KiBDeviceVerified": false,
+        "presetPreviewImageCount": 10,
+        "validationPassed": true,
+        "draftReceipt": true,
+        "acceptedForLocalAndroidTesting": false
+      }
+    ],
+    "functionalUiActualSource": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "fullFunctionalUiRepeatedOn89": false
+  },
+  "apple": {
+    "run": 43464094785,
+    "acceptedIpa": false,
+    "flutterPassed": 447,
+    "flutterFailed": 2,
+    "coreParityChecksPassed": 1629,
+    "prepareNativeCoreAvatarWifiPassed": true,
+    "deviceCompilationFailed": true,
+    "deviceCompilationFailure": "HueviaOriginalFiles.mm:44 assignment to readonly cancellation property",
+    "failureEvidence": "../../native-cancellation/api-consumer-migration/README.md",
+    "fixtureRepairEvidence": "../../flutter-camera/supplements/legacy-fixture-contract/README.md",
+    "iosFiveTestsAccepted": false
+  },
+  "replacementSourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "replacementMacFullRun": 43471565460,
+  "snapshots": [
+    {
+      "file": "source-before91.json",
+      "sha256": "af734af547f5f6515aef01609690b1eec1af81acf4c7a8b4d93665aa463d8c43",
+      "bytes": 4347
+    },
+    {
+      "file": "source-binding-before91.json",
+      "sha256": "19bc7849b539a6584263ad908a7ac9dd8de3bb4ecaa99552b5bd27c9aeec1c5c",
+      "bytes": 144268
+    },
+    {
+      "file": "artifacts-before91.json",
+      "sha256": "fab63bc40c00270c2f58d9c6c8b8427cc3f873c7ecf57c5e2310f42de89362ac",
+      "bytes": 5067
+    },
+    {
+      "file": "camera75-binding-before91.json",
+      "sha256": "08375a02bfb0c43d3d24349d8d2af3e95a8d3cc23b02a2b5fbc4d832efa01949",
+      "bytes": 5532
+    },
+    {
+      "file": "android-final-receipts.json",
+      "sha256": "96a0fa2f3dfb20455f90e354246a0174da2a96657fb4b79dbde746aa523c6cc8",
+      "bytes": 5354
+    },
+    {
+      "file": "final-exact-apk-cold-launch.json",
+      "sha256": "8b62b1e6a8b58a821d36c1484be3fadfac30289034bc415a9c2240703b9ddd6f",
+      "bytes": 1023
+    },
+    {
+      "file": "cold-launch-events.json",
+      "sha256": "2174312180f953909a4385e33e8ef21811ca0dfc7b095a5e1e7d97bb97d4f94c",
+      "bytes": 5107
+    },
+    {
+      "file": "source-equivalent-ui-binding.json",
+      "sha256": "1c82c329a2c4cb32bd6a5147bc4f55b4934d14967efc8a5346f6b2bade4514cd",
+      "bytes": 1064
+    },
+    {
+      "file": "original-attempt.json",
+      "sha256": "12d179c1d3a05712210687351b321e60b5d96119c1d65a70f838901a6e9f01b6",
+      "bytes": 2153
+    },
+    {
+      "file": "build-source.json",
+      "sha256": "fe35a5b7fbfdc9a5e66c9d5dabaf28bad312b4c1034472cf54add3be3859c691",
+      "bytes": 159
+    },
+    {
+      "file": "android-signing-alignment.json",
+      "sha256": "7d68e66e5fbf6a25074b7a800fdf089f9666f3828616cc1442a492f57d7eaac5",
+      "bytes": 4357
+    },
+    {
+      "file": "release-runtime.log",
+      "sha256": "8de0875ca521cb528f33f73f8788e914e06ac6f782597b4bf605eb8464b1db1c",
+      "bytes": 1706
+    },
+    {
+      "file": "release-runtime-result.json",
+      "sha256": "05294f577ee10887caecd10f7a6c27a6336efd253eb7d2a0b2d1a451b4b5e386",
+      "bytes": 216
+    },
+    {
+      "file": "release-runtime-mapping.json",
+      "sha256": "ceabb2884e87d322d9d1eb4b1efaea92491bde8337b5ea4f0e39e0c34d0d2edb",
+      "bytes": 181
+    }
+  ],
+  "binaryCopiedToPublicArchive": false
+}

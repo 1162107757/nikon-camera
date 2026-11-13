@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "run": 43463073963,
+  "scope": "local-testing-only",
+  "published": false,
+  "delivered": false,
+  "acceptedIpa": false,
+  "failureClassification": "dependency Git transport; Connection reset / early EOF, exit128",
+  "laterProductValidationExecuted": false,
+  "sameSourceReplacementRun": 43464094785,
+  "fullJobLogSha256": "bce4313b97710cc2fec68a116b9444fb6a9d01bb08ec4fbd05269850281d5894",
+  "fullJobLogBytes": 32488,
+  "excerpt": "network-error-excerpt.log",
+  "excerptSha256": "a273ec18aad5a19c80a937314830f63754024b78e2392d2eeef8bf3789ef1fba",
+  "excerptLines": 5,
+  "rawFullLogRetainedPrivatelyByRoot": true,
+  "sourceChangedForRetry": false
+}

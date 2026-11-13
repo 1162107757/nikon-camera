@@ -1,0 +1,106 @@
+{
+  "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "uniqueActualPassedChecks": 75,
+  "testFiles": 9,
+  "allSelectedFilesHaveActualExitZero": true,
+  "executionMode": "incremental single-file verification; not one same-source full75 run",
+  "latestIntentFilePassed": 15,
+  "newDistinctDisconnectCases": 4,
+  "originalCameraChecks": 71,
+  "priorIntentCasesReplaced": 11,
+  "tests": [
+    {
+      "file": "cross-platform/app/test/camera_intent_test.dart",
+      "passed": 15,
+      "exit": 0,
+      "log": "supplements/scoped-disconnect/intent15-final.log",
+      "logSha256": "28fb5cf630905bc1d39c3ad3758fe682a494929dbb407b2cf11364f313aced10"
+    },
+    {
+      "file": "cross-platform/app/test/camera_controls_test.dart",
+      "passed": 4,
+      "exit": 0,
+      "log": "logs/camera219-single-camera_controls_test.log",
+      "logSha256": "6ebdc145d57b70b33214c11fad8823c4121e518d2840a659b5e9d76259c085d8"
+    },
+    {
+      "file": "cross-platform/app/test/camera_live_test.dart",
+      "passed": 17,
+      "exit": 0,
+      "log": "logs/camera219-single-camera_live_test.log",
+      "logSha256": "e0aef5425bf35c7a3d76694d0e87d275869cc6d32d44a7b108003a1f7247bf5c"
+    },
+    {
+      "file": "cross-platform/app/test/camera_downloads_test.dart",
+      "passed": 12,
+      "exit": 0,
+      "log": "logs/camera219-single-camera_downloads_test.log",
+      "logSha256": "fcf00dd9a7d1cf12df809cd6d5eb689b9bef8cabb999b531ede373dd3d5d8af0"
+    },
+    {
+      "file": "cross-platform/app/test/connection_protection_test.dart",
+      "passed": 9,
+      "exit": 0,
+      "log": "logs/camera219-single-connection_protection_test.log",
+      "logSha256": "f4f998b0ad0e0fdc15436d23ef62df7fb0ce211396e66e44e1cda6337ca3d2f4"
+    },
+    {
+      "file": "cross-platform/app/test/camera_test.dart",
+      "passed": 6,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_test.log",
+      "logSha256": "dd67b0d5326a9b16440332df4d4c704049adddd122a13912bf207ddcd9af791d"
+    },
+    {
+      "file": "cross-platform/app/test/camera_navigation_test.dart",
+      "passed": 1,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_navigation_test.log",
+      "logSha256": "c6eb4a57e84c4e8dd6dcc222dc94e1576b6259fe92f6891ff6d40976c8fd39c9"
+    },
+    {
+      "file": "cross-platform/app/test/camera_previews_test.dart",
+      "passed": 5,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_previews_test.log",
+      "logSha256": "b83dc820cb496070aa2d310b877e54521146a6d8404a8bfedbf28a61b3314399"
+    },
+    {
+      "file": "cross-platform/app/test/camera_transfer_test.dart",
+      "passed": 6,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_transfer_test.log",
+      "logSha256": "45172964392552601303e2ae413f8d3eebcc4d40dec303c4cdcf81279345cda0"
+    }
+  ],
+  "oldReceipt": "result.json",
+  "supplement": "supplements/scoped-disconnect/result.json",
+  "finalSourceBinding": "../final-source-binding.json",
+  "finalInputSha256": {
+    "cross-platform/app/lib/camera.dart": "2ecf4428fe63e97e212c8e8029c5ddda377bd171b34eb096ca7824d803bf5ba1",
+    "cross-platform/app/lib/camera_connection.dart": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+    "cross-platform/app/lib/camera_downloads.dart": "4b3f0c62ee48ac928f9283af1febb684bea82297f49b02e309f23a1cf556aa13",
+    "cross-platform/app/lib/camera_live.dart": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+    "cross-platform/app/lib/camera_remote.dart": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+    "cross-platform/app/lib/camera_slots.dart": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+    "cross-platform/app/lib/connection_protection.dart": "4b53debe0a6f07397b38a2b10a6823d5c317da9e63f48a66541ee2a81003db7c",
+    "cross-platform/app/lib/legacy_preset_details.dart": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+    "cross-platform/app/lib/settings.dart": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+    "cross-platform/app/test/camera_intent_test.dart": "ec2d0f002ce7cb3be05cd77b7f8e1534aae76087f1549ce24021755a9c202b2d",
+    "cross-platform/app/test/camera_controls_test.dart": "85af06bd5fcf1218535f3945f89ade930625575f553159889288bf269d63c6da",
+    "cross-platform/app/test/camera_downloads_test.dart": "1f9285758e55dbcb0ae374de537e82cfe5d2dac9ceb281a1569ffa4669943358",
+    "cross-platform/app/test/camera_live_test.dart": "a4c6a5637c520d1ea7b940839667ee721ae9271e02a9fabcbacd30639cf55a63",
+    "cross-platform/app/test/camera_navigation_test.dart": "60eb830d8de7191a1af436a5f0bae822e1eea957955cce7c3957a106ea646ea2",
+    "cross-platform/app/test/camera_test.dart": "a83e0951113d5a4f98f10368bafe9a009bfe7efa0dd356a99a293b20c341b532",
+    "cross-platform/app/test/connection_protection_test.dart": "6eb0655f93b3ae68c652ff57bfaf4c8bff6626c6abb0b76321449623de4e6741"
+  },
+  "finalNormalizedContentsMatchFrozenSource": true,
+  "completeMacFullRun": 43458258245,
+  "completeMacResult": "pending; final source full run in progress",
+  "actualDeviceConnectionVerified": false,
+  "published": false,
+  "sourceBindingState": "unchanged raw inputs content-bound to final frozen source; no rerun",
+  "finalSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "heldCandidateEvidence": "../attempts/f3/result.json",
+  "previousBindingSourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76"
+}

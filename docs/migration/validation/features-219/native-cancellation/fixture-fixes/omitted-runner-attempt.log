@@ -1,0 +1,18 @@
+D:\dev\ai-project\nikon-camera\dist\migration219\huevia-0.31.0-dev-219-android-x64.apk: 1 file pushed, 0 skipped. 164.5 MB/s (56226010 bytes in 0.326s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 78.4 MB/s (73425 bytes in 0.001s)
+Performing Push Install
+Success
+onError: commandError=true message=INSTRUMENTATION_FAILED: cc.huevia.next.test/cc.huevia.sharedapp.ReleaseRuntimeInstrumentation
+android.util.AndroidException: INSTRUMENTATION_FAILED: cc.huevia.next.test/cc.huevia.sharedapp.ReleaseRuntimeInstrumentation
+INSTRUMENTATION_STATUS: Error=Unable to find instrumentation info for: ComponentInfo{cc.huevia.next.test/cc.huevia.sharedapp.ReleaseRuntimeInstrumentation}
+INSTRUMENTATION_STATUS: id=ActivityManagerService
+INSTRUMENTATION_STATUS_CODE: -1
+	at com.android.commands.am.Instrument.run(Instrument.java:524)
+	at com.android.commands.am.Am.runInstrument(Am.java:199)
+	at com.android.commands.am.Am.onRun(Am.java:80)
+	at com.android.internal.os.BaseCommand.run(BaseCommand.java:62)
+	at com.android.commands.am.Am.main(Am.java:50)
+	at com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)
+	at com.android.internal.os.RuntimeInit.main(RuntimeInit.java:355)

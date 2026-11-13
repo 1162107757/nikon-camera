@@ -1,0 +1,8 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_test.dart
+00:00 +0: RAW-only camera has an explicit JPEG hint and can show RAW thumbnails in the overview
+00:01 +1: Connection-only view keeps RAW choice without reading until explicit photo browsing
+00:02 +2: Overview exposes read errors and retries the camera inventory
+00:02 +3: Thumbnail errors retry only the preview and keep the source untouched
+00:03 +4: Original three-column square camera grid fits small screens without file details
+00:03 +5: Downloaded tab displays saved originals after the camera is disconnected
+00:03 +6: All tests passed!

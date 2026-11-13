@@ -1,0 +1,11 @@
+Exception in thread "main" java.io.IOException: 请先连接相机，再读取槽位。
+	at cc.huevia.shared.SharedCamera.openSlots(SharedCamera.java:252)
+	at cc.huevia.shared.SharedCamera.execute(SharedCamera.java:103)
+	at cc.huevia.shared.SharedCamera.request(SharedCamera.java:60)
+	at cc.huevia.shared.CameraControlsBoundaryTest.call(CameraControlsBoundaryTest.java:102)
+	at cc.huevia.shared.CameraControlsBoundaryTest.dispatcherChecks(CameraControlsBoundaryTest.java:100)
+	at cc.huevia.shared.CameraControlsBoundaryTest.run(CameraControlsBoundaryTest.java:20)
+	at cc.huevia.shared.CoreBoundary.run(CoreBoundary.java:113)
+	at cc.huevia.shared.CoreParity.run(CoreParity.java:16)
+	at cc.huevia.shared.CoreParity.main(CoreParity.java:38)
+

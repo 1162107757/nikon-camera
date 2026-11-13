@@ -1,0 +1,94 @@
+312: 03:47 +268: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Healthy slots mode is connected without loading photos or reporting zero photos
+313: 03:47 +269: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+314: 03:47 +270: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Already connected preset import skips connection and keeps the selected source
+315: 03:48 +271: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A failure result cannot continue preset import to slots
+316: 03:48 +272: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A not-connected result cannot continue preset import to slots
+317: 03:48 +273: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Cancel and leaving discard a late connection result and cancel only its pending job once
+318: 03:48 +274: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: An owner change during connection cannot import the old preset for a new account
+319: 03:49 +275: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Hidden sync never reads photos; explicitly entering camera photos does
+320: 03:49 +276: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preset_pins_test.dart
+321: 03:50 +276: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/preset_pins_test.dart: Long-press can pin multiple presets and shows their persisted state
+322: 03:52 +277: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart
+323: 03:53 +277: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: An old camera status cannot replace a newly established session
+324: ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+325: The following TestFailure was thrown running a test:
+326: Expected: exactly one matching candidate
+327:   Actual: _TextWidgetFinder:<Found 0 widgets with text "已连接 · 原文件按字节接收": []>
+328:    Which: means none were found but one was expected
+329: 
+330: When the exception was thrown, this was the stack:
+331: #4      main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart:58:7)
+332: <asynchronous suspension>
+333: #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+334: <asynchronous suspension>
+335: #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+336: <asynchronous suspension>
+337: <asynchronous suspension>
+338: (elided one frame from package:stack_trace)
+339: 
+340: This was caught by the test expectation on the following line:
+341:   file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart line 58
+342: The test description was:
+343:   An old camera status cannot replace a newly established session
+344: ════════════════════════════════════════════════════════════════════════════════════════════════════
+345: 03:55 +277 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: An old camera status cannot replace a newly established session [E]
+346:   Test failed. See exception logs above.
+347:   The test description was: An old camera status cannot replace a newly established session
+348:   
+349: 03:55 +277 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/session_race_test.dart: Personal sync respects the explicit existing-preset choice and pins every request to the owner
+350: 03:55 +278 -1: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_more_test.dart
+351: 03:57 +278 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_more_test.dart: Original photo actions retain source ordering, scope hints and conditional groups
+352: 03:57 +279 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_more_test.dart: Quick presets use original absolute coefficients and preserve unrelated editing
+353: 03:57 +280 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_more_test.dart: Header uses full 48 target and original menu is anchored and scrollable at large text
+354: 03:58 +281 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_more_test.dart: An open menu closes when its photo owner becomes invalid
+355: 03:58 +282 -1: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart
+356: 04:00 +282 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Arming ignores existing inventory; repeated new shots save and process once
+357: 04:00 +283 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_live_test.dart: Foreground camera live Disconnect waits; matching trusted reconnect restores old cursor before new reception
+492: 05:26 +399 -1: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart
+493: 05:27 +399 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: failed album publication stops the queue and retries the same frozen version and operation
+494: 05:27 +400 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: a new explicit export gets a different album operation for identical settings
+495: 05:27 +401 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: permission denial never renders or saves and can be retried
+496: 05:27 +402 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/export_save_test.dart: owner change cancels a live publication and suppresses its late acknowledgement
+497: 05:27 +403 -1: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart
+498: 05:30 +403 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: Camera connection reports actual permission, confirmation, session and inventory phases for only its job
+499: 05:31 +404 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: Camera cancellation completes immediately even if native cancellation acknowledgement is blocked and rejects late results
+500: 05:31 +405 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: Camera overall deadline cancels the exact native job and identifies the stalled phase
+501: 05:31 +406 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: USB discovery is bounded and disposal cancels an in-flight permission wait without late notifications
+502: 05:31 +407 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: Camera UI exposes phase and cancel while connecting and never displays a late cancelled session
+503: 05:32 +408 -1: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: Successful handshake changes the UI from connecting to bounded first-page reading with its own cancel
+504: ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+505: The following TestFailure was thrown running a test:
+506: Expected: exactly one matching candidate
+507:   Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing 读取相机照片目录与首屏: []>
+508:    Which: means none were found but one was expected
+509: 
+510: When the exception was thrown, this was the stack:
+511: #4      main.<anonymous closure> (file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart:231:7)
+512: <asynchronous suspension>
+513: #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+514: <asynchronous suspension>
+515: #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+516: <asynchronous suspension>
+517: <asynchronous suspension>
+518: (elided one frame from package:stack_trace)
+519: 
+520: This was caught by the test expectation on the following line:
+521:   file:///Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart line 231
+522: The test description was:
+523:   Successful handshake changes the UI from connecting to bounded first-page reading with its own
+524:   cancel
+525: ════════════════════════════════════════════════════════════════════════════════════════════════════
+526: 05:32 +408 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/camera_connection_test.dart: Successful handshake changes the UI from connecting to bounded first-page reading with its own cancel [E]
+527:   Test failed. See exception logs above.
+528:   The test description was: Successful handshake changes the UI from connecting to bounded first-page reading with its own cancel
+529:   
+530: 05:32 +408 -2: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart
+531: 05:33 +408 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: legacy brush uses original 2dp sampling, source-relative radius and one gesture history
+532: 05:33 +409 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: multi-touch cancellation restores selection and clone source without adding history
+533: 05:33 +410 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: radial resizing preserves aspect ratio and repeated move events stay anchored
+534: 05:33 +411 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: linear endpoint protection and parameter selection follow the original editor
+535: 05:33 +412 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: clone requires a sample point and moves each endpoint independently
+536: 05:33 +413 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: original brush and collection limits remain bounded
+537: 05:34 +414 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: undo stays bounded and a new edit clears redo without erasing selection metadata
+538: 05:34 +415 -2: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/legacy_local_editor_test.dart: invalid viewport or pointer data never starts or corrupts a gesture
+539: 05:34 +416 -2: loading /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/test/editor_test.dart

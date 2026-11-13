@@ -1,0 +1,51 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "versionCode": 219,
+  "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+  "state": "final-source-frozen-platform-acceptance-pending",
+  "artifacts": [],
+  "acceptedForDelivery": false,
+  "android": {
+    "state": "final-ui-acceptance-pending",
+    "acceptedForLocalAndroidTesting": false,
+    "twoAbiBuildAndStaticChecksPassed": true,
+    "finalX64R8Checks": 78,
+    "finalX64R8GateAccepted": true,
+    "uiAcceptance": "pending"
+  },
+  "ios": {
+    "state": "full-acceptance-running",
+    "run": 43453345679,
+    "acceptedIpa": false,
+    "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76"
+  },
+  "previousCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "appleRun": 43448048561,
+    "appleConclusion": "failure",
+    "appleCoreParity": "passed",
+    "delivered": false,
+    "evidence": "../../docs/migration/validation/features-219/attempts/4f/result.json"
+  },
+  "qqLogin": {
+    "imageCaptchaRemoved": true,
+    "serverDeployment": "deployed-and-verified",
+    "serverHttpProbesPassed": 6,
+    "nativeTencentAuthorizationVerified": false,
+    "iosUniversalLinkConfigured": false
+  },
+  "iosCamera": {
+    "reportedModel": "Nikon Z6II",
+    "transport": "Wi-Fi",
+    "actualDeviceConnectionVerified": false
+  },
+  "androidReleaseRuntimeChecks": 78,
+  "sharedCoreBoundaryChecks": 1623,
+  "atmosphereChecks": 6,
+  "goldenBoundaryChecks": 1629,
+  "dartCameraLocalChecks": 75,
+  "formatLocalChecks": 6,
+  "nativeCancellationJvmAssertions": 309,
+  "sourceEvidence": "../../docs/migration/validation/features-219/source.json"
+}

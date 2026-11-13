@@ -1,0 +1,9 @@
+{
+  "exit": 0,
+  "command": [
+    "C:\\Users\\11621\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\tool\\native_task_check.py",
+    "--build-dir",
+    "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-camera\\native-task-jvm"
+  ]
+}

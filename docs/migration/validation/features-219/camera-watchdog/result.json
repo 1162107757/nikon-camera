@@ -1,0 +1,120 @@
+{
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "sourceCommitNote": "Metadata-only e554 binding: all 239 raw Java inputs unchanged from original 1629 execution, with LF-equivalent final Git content. Execution base323a, original logs and prior a54/89/91 snapshots are preserved; no tests/builds rerun. iOS UIKit Boolean boxing and type fixtures changed; whole native-tree equivalence is not claimed.",
+  "baseCommitAtCheck": "323a92a09049620f15d2a52f38ee63fdf7038af3",
+  "includesUncommitted219WatchdogPatch": true,
+  "sourceFilesSha256": {
+    "cross-platform/core/java/cc/huevia/shared/SharedCamera.java": "d369a99e8cedcbd4121508cdb7206b39f7cb6902bad0010c6707ac49fe997eda",
+    "cross-platform/core/test/cc/huevia/shared/SharedCameraConnectBoundaryTest.java": "b862e0fe44980a0db9874eac11b1044754a0607add5990b6bde7b3c8947384c1"
+  },
+  "targetChecks": 65,
+  "targetExit": 0,
+  "fullCoreChecks": 1629,
+  "sharedBoundaryChecks": 1623,
+  "atmosphereChecks": 6,
+  "connectionChecks": 65,
+  "sessionChecks": 167,
+  "fullCoreResult": "../core/result.json",
+  "previousCandidateEvidence": "../camera-session/attempts/4f-core1535/result.json",
+  "rawDiagnosticsCopied": false,
+  "nativeOrDartSourceChanged": false,
+  "ptpFramesPortsGuidChanged": false,
+  "actualCameraHardwareValidationPerformed": false,
+  "logsSha256": {
+    "attempts/compile-duplicate-main.log": "c35e101eeb56ced52481a3f1ff4366199b43e3c83a63315c30dc26acf5428337",
+    "attempts/previous1572-core/compile.log": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6",
+    "attempts/previous1572-core/core-check.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "attempts/previous1572-core/core-check.log": "2bbd60980c8a039fa3796a5f5dbc0ac8a58a434b6aa25ea0d43c6036065a4ebb",
+    "attempts/previous1572-core/golden.json": "1ded5867901a5ea5dc622b58ebfc1613d472a315829bd00e093d101771cbc7a8",
+    "attempts/previous1572-core/run.log": "fc982c6696c46ed4308de20e800ccc823bc0f19b993df5547c594057b943a413",
+    "attempts/previous1572-core/source-fingerprints.json": "c4d7522433dc2d757ff1a158a771290c7f5c4e1dc263c15d6ff60dfe83385efc",
+    "attempts/previous1572-core/sources.json": "652110d16a87e476d4820deb43530d7f6278cba4a3c3062976ac38b10a78da79",
+    "attempts/target-before-completion-budget56.log": "3bfd0eaf0cba071dbbaa92ea96f4f73facba1530efc84aeb94bdd4b73c924d6e",
+    "attempts/target-timeout-fixture-claim-before-unblock.exit": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+    "attempts/target-timeout-fixture-claim-before-unblock.log": "7c66998d5f9d77ffaae6469f3466d6406cf28607baa86948ed4e0d93280bd59b",
+    "compile.log": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6",
+    "execution-base.json": "5c9710b608d795a42be97ee49c2aa8959648cb317195b1388c8813eb0fd801c4",
+    "inventory.log": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7",
+    "README.md": "5908586d6ce588c6bfd84131fbbfce65e413c5c6aa856759b6e42d6edbb7594b",
+    "source-binding-pending.json": "e7f0fd2e52220a7f521e93c450800871379d3fd1be04e1d9c7c09d53ca8ea332",
+    "source-check.log": "c5c9e82e168c26ff0d5920f65f4ac83fd5e56161a26f06125e113260f65d5934",
+    "target.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "target.log": "1fd163b00539d4335e33dd12c3e827dae08c420ffddec9ef0471e872e5a7ecc0"
+  },
+  "recordedAtUtc": "2026-11-13T15:19:14.825952+00:00",
+  "sourceBindingPending": "source-binding-pending.json",
+  "originalStandaloneSourceFilesSha256": {
+    "cross-platform/core/java/cc/huevia/shared/SharedCamera.java": "484198e0ae156f9b46739dd6fada7a682d6afd8196ff074447baf79c84591cf7",
+    "cross-platform/core/test/cc/huevia/shared/SharedCameraConnectBoundaryTest.java": "b862e0fe44980a0db9874eac11b1044754a0607add5990b6bde7b3c8947384c1"
+  },
+  "standaloneTargetIsHistorical": true,
+  "finalSnapshotBinding": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "proof": "../core/final-source-binding.json",
+    "inputs": 2,
+    "lfNormalizedMatches": true,
+    "verifiedAtUtc": "2026-11-13T18:30:50.402423+00:00",
+    "testOrBuildRerun": false
+  },
+  "sourceBindingHistory": [
+    {
+      "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 2,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T15:34:48.458794+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 2,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T16:05:42.275100+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 2,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T16:43:20.106529+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 2,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T17:22:32.511874+00:00",
+      "testOrBuildRerun": false
+    }
+  ],
+  "updatedAtUtc": "2026-11-13T18:30:50.402423+00:00",
+  "latestAppleFullRun": "43482938724",
+  "latestAppleStatusAtBinding": "ARM full gate pending root verification; no acceptance claimed by metadata task.",
+  "historicalPlatformBindingMetadataSha256": "4375a03b5e2f0b5785b1450814cee64a9d9ea5fb31125bdb6cf2ae487713312d",
+  "sourceEquivalenceScope": {
+    "cross-platform/core": {
+      "previousTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "identical": true
+    },
+    "cross-platform/app/lib": {
+      "previousTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+      "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+      "identical": true
+    },
+    "cross-platform/app/android": {
+      "previousTree": "b32d380635c828abf602261302d7582a7180d4a5",
+      "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+      "identical": true
+    }
+  },
+  "wholeIosNativeTreeIdenticalToPreviousClaimed": false,
+  "nativeOrDartSourceChangedScope": "Historical original Java watchdog task only; later e554 includes iOS UIKit Boolean boxing and fixture changes.",
+  "historicalPlatformBindingMetadataDigests": [
+    "b1d5250fa207d8d8ed2edfd8c0e2066bf31dd331fcfb62963445395877c12b96",
+    "26632148a54bb362f9d7380a80a2a76b32925424c4dfc576247c9383579aa8ae"
+  ]
+}

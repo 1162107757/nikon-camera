@@ -1,0 +1,7 @@
+{
+  "restore-test": 0,
+  "cold-stop": 0,
+  "cold-start": 0,
+  "priorRuntimeInstrumentationRestored": true,
+  "privateCleanupInstrumentationRemoved": true
+}

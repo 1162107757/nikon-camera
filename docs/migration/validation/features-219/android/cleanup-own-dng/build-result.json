@@ -1,0 +1,7 @@
+{
+  "exit": 0,
+  "sameCertificateAsTarget": true,
+  "targetApkSha256": "92222e268ab0c9233736e35e279ef748a76c909844562d8a5100d9b8d1f65f0b",
+  "privateProbeSha256": "24ad0ec33629191b76c0f5525fc5acac63e226ffcfb083ccaeba388a1f14a922",
+  "preservedTestApkSha256": "8a606f784cc1af26f9d4ab9a99f89774a80dab8128bf1778207810e7850ec98d"
+}

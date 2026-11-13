@@ -1,0 +1,11 @@
+{
+  "command": [
+    "dart",
+    "analyze",
+    "test/camera_connection_test.dart",
+    "test/session_race_test.dart"
+  ],
+  "startedAtUtc": "2026-11-13T17:16:17.685753+00:00",
+  "exit": 0,
+  "logSha256": "df0fa461633950bacb5d41b8970380572bef4b2516e995a080dcc409e19d19f2"
+}

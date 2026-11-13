@@ -1,0 +1,109 @@
+{
+  "exit": 0,
+  "status": "passed",
+  "javaVersion": "17.0.19",
+  "javaHome": "D:\\dev\\Java\\jdk-17.0.19",
+  "command": [
+    "python",
+    "cross-platform/tool/core_check.py"
+  ],
+  "compiledRelease": 11,
+  "baseCommitAtCheck": "323a92a09049620f15d2a52f38ee63fdf7038af3",
+  "runStartedAtUtc": "2026-11-13T15:30:21.840069+00:00",
+  "includesUncommitted219WatchdogPatch": true,
+  "includesUncommitted219ScopedDisconnectPatch": true,
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "sourceCommitNote": "Metadata-only e554 binding: all 239 raw Java inputs unchanged from original 1629 execution, with LF-equivalent final Git content. Execution base323a, original logs and prior a54/89/91 snapshots are preserved; no tests/builds rerun. iOS UIKit Boolean boxing and type fixtures changed; whole native-tree equivalence is not claimed.",
+  "freshLocalJvmExecutionPerformed": true,
+  "goldenReused": false,
+  "sharedBoundaryChecks": 1623,
+  "sharedAtmosphereChecks": 6,
+  "goldenBoundaryChecks": 1629,
+  "cameraSessionBoundaryChecks": 167,
+  "cameraConnectionBoundaryChecks": 65,
+  "compiledSourceCount": 252,
+  "distinctSourceCount": 239,
+  "rawInputsMatchedBeforeAndAfterRun": 239,
+  "goldenSha256": "358c02ec990fe2d903f827f8b15ed963550eb231d0d01360f61c00f2196bfdd5",
+  "sourceManifestSha256": "652110d16a87e476d4820deb43530d7f6278cba4a3c3062976ac38b10a78da79",
+  "sourceFingerprintsSha256": "2ca47f38b8552e9962ad22864bae2188201afdebf3ae801e6ee9b75bdb3f638e",
+  "portableManifestSha256": "4b68888db4972b7104f331082e6dd2fbfa02317322ac117e299230a59492db0f",
+  "renderFingerprintsMatchPrevious1572": true,
+  "previousCoreEvidence": "../camera-watchdog/attempts/previous1572-core/result.json",
+  "actualZ6IIConnectionVerified": false,
+  "productionDeploymentPerformed": false,
+  "generatedAtUtc": "2026-11-13T15:31:18.389184+00:00",
+  "finalSnapshotBinding": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "proof": "final-source-binding.json",
+    "currentRawInputMatchesRun": 239,
+    "gitRawByteMatches": 187,
+    "gitLineEndingOnlyDifferences": 52,
+    "gitLfNormalizedMatches": 239,
+    "verifiedAtUtc": "2026-11-13T18:30:50.402423+00:00",
+    "testOrBuildRerun": false
+  },
+  "sourceBindingHistory": [
+    {
+      "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+      "proof": "final-source-binding.json",
+      "currentRawInputMatchesRun": 239,
+      "gitRawByteMatches": 187,
+      "gitLineEndingOnlyDifferences": 52,
+      "gitLfNormalizedMatches": 239,
+      "verifiedAtUtc": "2026-11-13T15:34:48.458794+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "proof": "final-source-binding.json",
+      "currentRawInputMatchesRun": 239,
+      "gitRawByteMatches": 187,
+      "gitLineEndingOnlyDifferences": 52,
+      "gitLfNormalizedMatches": 239,
+      "verifiedAtUtc": "2026-11-13T16:05:42.275100+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "proof": "final-source-binding.json",
+      "currentRawInputMatchesRun": 239,
+      "gitRawByteMatches": 187,
+      "gitLineEndingOnlyDifferences": 52,
+      "gitLfNormalizedMatches": 239,
+      "verifiedAtUtc": "2026-11-13T16:43:20.106529+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "proof": "final-source-binding.json",
+      "currentRawInputMatchesRun": 239,
+      "gitRawByteMatches": 187,
+      "gitLineEndingOnlyDifferences": 52,
+      "gitLfNormalizedMatches": 239,
+      "verifiedAtUtc": "2026-11-13T17:22:32.511874+00:00",
+      "testOrBuildRerun": false
+    }
+  ],
+  "updatedAtUtc": "2026-11-13T18:30:50.402423+00:00",
+  "latestAppleFullRun": "43482938724",
+  "latestAppleStatusAtBinding": "ARM full gate pending root verification; no acceptance claimed by metadata task.",
+  "sourceEquivalenceScope": {
+    "cross-platform/core": {
+      "previousTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "identical": true
+    },
+    "cross-platform/app/lib": {
+      "previousTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+      "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+      "identical": true
+    },
+    "cross-platform/app/android": {
+      "previousTree": "b32d380635c828abf602261302d7582a7180d4a5",
+      "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+      "identical": true
+    }
+  },
+  "wholeIosNativeTreeIdenticalToPreviousClaimed": false
+}

@@ -1,0 +1,6 @@
+D:\dev\ai-project\nikon-camera\cross-platform\core\test\cc\huevia\shared\SharedCameraConnectBoundaryTest.java:138: error: method main(String[]) is already defined in class SharedCameraConnectBoundaryTest
+    public static void main(String[] args)throws Exception{run(Files.createTempDirectory("huevia-camera-connect-"));}
+                       ^
+Note: D:\dev\ai-project\nikon-camera\app\src\main\java\cc\huevia\community\CommentReplyTarget.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 error

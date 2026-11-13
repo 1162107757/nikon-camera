@@ -1,0 +1,131 @@
+{
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "sourceCommitNote": "Metadata-only e554 binding: all 239 raw Java inputs unchanged from original 1629 execution, with LF-equivalent final Git content. Execution base323a, original logs and prior a54/89/91 snapshots are preserved; no tests/builds rerun. iOS UIKit Boolean boxing and type fixtures changed; whole native-tree equivalence is not claimed.",
+  "sourceFilesSha256": {
+    "cross-platform/core/java/cc/huevia/shared/SharedCamera.java": "d369a99e8cedcbd4121508cdb7206b39f7cb6902bad0010c6707ac49fe997eda",
+    "cross-platform/core/java/cc/huevia/shared/SharedSlots.java": "e1d84fdc71bca0f58b83cd4fdec9bd04291208001ff58a241e08a0ac5cd610c7",
+    "cross-platform/core/test/cc/huevia/shared/SharedCameraConnectBoundaryTest.java": "b862e0fe44980a0db9874eac11b1044754a0607add5990b6bde7b3c8947384c1",
+    "cross-platform/core/test/cc/huevia/shared/CameraSessionBoundaryTest.java": "f1e7ec235b3ed49041b313cec3c4e6b517ce5f17dbeae26899b05c0f18fd6f1b",
+    "cross-platform/core/test/cc/huevia/shared/CoreBoundary.java": "6162ec82e79adac0017955138085b7dde5e749cc0d2854e54f29d1d0472d9c91"
+  },
+  "fullCoreResult": "../core/result.json",
+  "fullCoreExit": 0,
+  "sharedBoundaryChecks": 1623,
+  "atmosphereChecks": 6,
+  "goldenChecks": 1629,
+  "sessionChecks": 167,
+  "connectionChecks": 65,
+  "actualZ6IIConnectionVerified": false,
+  "actual219NativeRuntimeVerifiedByThisTask": false,
+  "ptpFramesPortsGuidModified": false,
+  "nativeConstructorOrTransportInterfaceChanged": false,
+  "originalAndroidSourceModified": false,
+  "delivered218Modified": false,
+  "logsSha256": {
+    "attempts/4f-core1535/android-signing-alignment.json": "ac46d59ccf9ce56ed36ce8869c7b1f4b582a5e31c9dc46989066264e53444281",
+    "attempts/4f-core1535/archive-final-source-binding.json": "d43bdc245c81422a0c72242e49f6d78a34b8bc9893d4cc5afd742fc1b8232047",
+    "attempts/4f-core1535/archive-README.md": "c4368e49a540d26c50dd320860576fd4b8662c8d9eba2b0b5128333a8720a12e",
+    "attempts/4f-core1535/archive-source.json": "1a8a01232262a5270ff204215987b93fb14abb3249ab4bdab936355198a9ec15",
+    "attempts/4f-core1535/compile.log": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6",
+    "attempts/4f-core1535/core-check.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "attempts/4f-core1535/core-check.log": "21d1ba9538c615200275a5bca89c346055a7877b51578aaa186e9a3ba381c5dc",
+    "attempts/4f-core1535/golden.json": "ec2f8ebb16b872dce7b918e38248ee955ac33c5384a5fe4cd8a761d50afde19a",
+    "attempts/4f-core1535/preset-preview-assets.json": "7736bd848a281d9fc47de40fb6f88eef6221d69d27205ad76674117ab73f852c",
+    "attempts/4f-core1535/run.log": "06fe003a875dda703553e621286b0f41cbb31c32d4944d54dba0b39d5e5250a3",
+    "attempts/4f-core1535/source-fingerprints.json": "62dc095c168334fc28dff5f35f2f1e2b2c23f12bd04e6bd21b841302ef8be0c4",
+    "attempts/4f-core1535/sources.json": "652110d16a87e476d4820deb43530d7f6278cba4a3c3062976ac38b10a78da79",
+    "attempts/core-check-before-cancel-barrier1505.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "attempts/core-check-before-cancel-barrier1505.log": "da16c94a97a7c6407ee9d18145bfe72c781497f6f090cd24595a6dc199032865",
+    "attempts/core-check-usb-retry-before-fix.exit": "f1b2f662800122bed0ff255693df89c4487fbdcf453d3524a42d4ec20c3d9c04",
+    "attempts/core-check-usb-retry-before-fix.log": "edd82053f17bd1010cc5ad84b2e2ce962ad1f6707200db62a6f3508e392a4e99",
+    "attempts/target-before-cancel-barrier80.log": "b0d3702839ca27d37cd91c91c7cd1817c975ba86af6d4376b6c6954d101a985a",
+    "inventory.log": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7",
+    "README.md": "5e11ec39bc19505be7e8cb9f3279b5d08c3a70d4b9724543109e19cd20be8667",
+    "source-check.log": "aa9a2e3753d61ffc9ab6eb5c9ae3d6f2e900e6ca33623f5bc4cb83ab95c48e93",
+    "target.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "target.log": "ecd6572cf894d652fb33c5d21d9e197ba38aaa9314f3b5d7f798952360e19809"
+  },
+  "generatedAtUtc": "2026-11-13T14:53:09.852990+00:00",
+  "previousSourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "previousSnapshotBinding": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "verifiedAtUtc": "2026-11-13T15:04:03.734819+00:00",
+    "proof": "../final-source-binding.json",
+    "currentRawFingerprintsMatched": 5,
+    "gitRawByteMatches": 5,
+    "gitLineEndingOnlyDifferences": 0,
+    "lfNormalizedMatches": 5,
+    "testOrBuildRerun": false
+  },
+  "updatedAtUtc": "2026-11-13T18:30:50.402423+00:00",
+  "originalStandaloneSourceFilesSha256": {
+    "cross-platform/core/java/cc/huevia/shared/SharedCamera.java": "484198e0ae156f9b46739dd6fada7a682d6afd8196ff074447baf79c84591cf7",
+    "cross-platform/core/java/cc/huevia/shared/SharedSlots.java": "e1d84fdc71bca0f58b83cd4fdec9bd04291208001ff58a241e08a0ac5cd610c7",
+    "cross-platform/core/test/cc/huevia/shared/SharedCameraConnectBoundaryTest.java": "b862e0fe44980a0db9874eac11b1044754a0607add5990b6bde7b3c8947384c1",
+    "cross-platform/core/test/cc/huevia/shared/CameraSessionBoundaryTest.java": "1aef91cd9a4615557ca09efa02be6a747605aa75f5acd46898d7d0661376c6a2",
+    "cross-platform/core/test/cc/huevia/shared/CoreBoundary.java": "6162ec82e79adac0017955138085b7dde5e749cc0d2854e54f29d1d0472d9c91"
+  },
+  "standaloneTargetIsHistorical": true,
+  "finalSnapshotBinding": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "proof": "../core/final-source-binding.json",
+    "inputs": 5,
+    "lfNormalizedMatches": true,
+    "verifiedAtUtc": "2026-11-13T18:30:50.402423+00:00",
+    "testOrBuildRerun": false
+  },
+  "sourceBindingHistory": [
+    {
+      "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 5,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T15:34:48.458794+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 5,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T16:05:42.275100+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 5,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T16:43:20.106529+00:00",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "proof": "../core/final-source-binding.json",
+      "inputs": 5,
+      "lfNormalizedMatches": true,
+      "verifiedAtUtc": "2026-11-13T17:22:32.511874+00:00",
+      "testOrBuildRerun": false
+    }
+  ],
+  "latestAppleFullRun": "43482938724",
+  "latestAppleStatusAtBinding": "ARM full gate pending root verification; no acceptance claimed by metadata task.",
+  "sourceEquivalenceScope": {
+    "cross-platform/core": {
+      "previousTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+      "identical": true
+    },
+    "cross-platform/app/lib": {
+      "previousTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+      "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+      "identical": true
+    },
+    "cross-platform/app/android": {
+      "previousTree": "b32d380635c828abf602261302d7582a7180d4a5",
+      "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+      "identical": true
+    }
+  },
+  "wholeIosNativeTreeIdenticalToPreviousClaimed": false
+}

@@ -1,0 +1,91 @@
+{
+  "recordedAt": "2026-11-13T15:29:33.663839+00:00",
+  "scope": "Verification fixtures only; product cancellation/API was not weakened",
+  "heldProductSource": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "r8ActualPassedChecks": 78,
+  "r8Exit": 0,
+  "instrumentationCode": -1,
+  "acceptedForFinal219Delivery": false,
+  "reasonNotFinal": "Held 4f product APK used only to verify fixed R8 adapter. Final watchdog/disconnect source APK and mapping must be rebuilt and rerun.",
+  "productApk": {
+    "bytes": 56226010,
+    "sha256": "e2c8cb3ffd2580856e87d0d978e9b6784821f0ecd387cf9b63fed0803231cb11"
+  },
+  "mappingSha256": "b397b3de297420f41f740d7a05c9a69e0b55ce97cffdd34851b3744dd511de4d",
+  "testApk": {
+    "bytes": 73425,
+    "sha256": "8a606f784cc1af26f9d4ab9a99f89774a80dab8128bf1778207810e7850ec98d"
+  },
+  "avatarApple": {
+    "fixtureUsesRealCancelIfActive": true,
+    "linkIncludesHueviaTaskCancellation": true,
+    "bashSyntaxExit": 0,
+    "localAppleSdkExecution": false,
+    "newMacRunRequired": true
+  },
+  "sources": [
+    {
+      "path": "cross-platform/core/test/avatar_apple.mm",
+      "sha256": "936f9b0cc077a978e096c8e199c8f4e36e575f8e17712cd1e4b39c7af17ec29f"
+    },
+    {
+      "path": "cross-platform/tool/avatar_apple.sh",
+      "sha256": "51f89a8745152b40c05ce221a095e7177cea2812d693fd3cdf292555effcf5c0"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/ReleaseRuntimeInstrumentation.java",
+      "sha256": "2e14e050f9091bb3602f146cb40a1501d71d936efd1c9f7a1fd2d6ba5b70a665"
+    },
+    {
+      "path": ".tooling/next219/run_release_runtime.py",
+      "sha256": "eb377b5c0a3132b948934bb8c4a92f72ca70afec7f36c1b7db1ba654add3dd4e"
+    },
+    {
+      "path": ".tooling/setup219.py",
+      "sha256": "99d22f3546374f5160a4ac7afd04d6687d036bae4f13b3375868b9870dab2d6e"
+    },
+    {
+      "path": ".tooling/next219/release-test-runner.gradle",
+      "sha256": "52e185f6c3e530dd61b69639f7617daa4f5a03d5748c7e84aa7ce963becf0ec2"
+    }
+  ],
+  "logs": [
+    {
+      "path": "release-runtime.log",
+      "sha256": "1d868a8d62e2e5e5570c8072f08f091d73c39d523d6d2c583e250647d2b07676"
+    },
+    {
+      "path": "release-runtime-result.json",
+      "sha256": "d8c70671efc2f0b21a1d57ffe9549fc21a8d7cae8c0ed0b81ed2c8747770dc43"
+    },
+    {
+      "path": "release-runtime-mapping.json",
+      "sha256": "9aac3b2c243367a1ad6c38b4e1eb0fed9e8ceda2faf80e2dbec56b7c88a7c26d"
+    },
+    {
+      "path": "test-apk-build.log",
+      "sha256": "67de6625e7fbe2815cfa3f9f3eaffba45f169b9ac8b3227bd065db95156c1607"
+    },
+    {
+      "path": "test-apk-build.json",
+      "sha256": "a026134da8cf339b255bf297567657a693f3a92526a39e4e13b37d8e0920a2ba"
+    },
+    {
+      "path": "old-r8-cast-failure.log",
+      "sha256": "6327497f4add9dafe6ec68eaced0cfa9d562dd3ddf8dace65dd63cb9556a6fa1"
+    },
+    {
+      "path": "omitted-runner-attempt.log",
+      "sha256": "c81c2276db41f11a30161ffa1ac2e086371288e2c5a8221f4b859a4313225438"
+    }
+  ],
+  "postRunForegroundVerifier": {
+    "receipt": "foreground-verifier-checks.json",
+    "checks": 10,
+    "exit": 0,
+    "productOrUIKitExecution": false,
+    "generatorSha256": "4d139e601f30fc02fdc06f206c554b5af5bdc422becf698add1d61dee42a7633",
+    "verifierSha256": "a6209f0ef1eb2a3c1d51217ce11463530c8649162d8ec625fdadb3f52d447fd2",
+    "note": "These private verifier changes followed the recorded R8 run. Its original source fingerprints and raw log bytes above are retained."
+  }
+}

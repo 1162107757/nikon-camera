@@ -1,0 +1,110 @@
+{
+  "branch": "codex/features215",
+  "versionCode": 219,
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "state": "android-validated-apple-acceptance-pending",
+  "recordedAtUtc": "2026-11-13T16:04:53.925926+00:00",
+  "finalSourceBinding": "final-source-binding.json",
+  "previousFrozenCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "delivered": false,
+    "evidence": "attempts/4f/result.json"
+  },
+  "coreRun": {
+    "result": "core/result.json",
+    "sharedBoundaryChecks": 1623,
+    "atmosphereChecks": 6,
+    "goldenBoundaryChecks": 1629,
+    "cameraSessionBoundaryChecks": 167,
+    "cameraConnectionBoundaryChecks": 65,
+    "countsAreIncludedInSharedTotal": true,
+    "goldenSha256": "358c02ec990fe2d903f827f8b15ed963550eb231d0d01360f61c00f2196bfdd5",
+    "currentInputsRehashed": 239,
+    "rawExecutionContextPreserved": true
+  },
+  "dartCamera": {
+    "result": "flutter-camera/final-result.json",
+    "uniqueActualPassedChecks": 75,
+    "testFiles": 9,
+    "incrementalVerification": true
+  },
+  "format": {
+    "result": "flutter-format/result.json",
+    "uniqueActualPassedChecks": 6
+  },
+  "nativeCancellation": {
+    "result": "native-cancellation/result.json",
+    "jvmAssertions": 309,
+    "includedConcurrentRaces": 100,
+    "iosUIKitAndPhotoKitPlanned": 5,
+    "iosExecution": "pending"
+  },
+  "android": {
+    "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "state": "all-android-gates-passed; overall-client-delivery-awaiting-ios",
+    "acceptedForLocalAndroidTesting": false,
+    "functionalUiEvidenceSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "functionalUiSourceEquivalence": "android/source-equivalent-ui-binding.json",
+    "fullFunctionalUiRepeatedOnNewApk": false,
+    "previousUiResult": "android/final-ui-result.json",
+    "fixtureCleanup": "completed-exact-owned-fixture-only",
+    "rawDeletionProductCheckPassed": false,
+    "validationPassed": true,
+    "finalR8Checks": 78,
+    "coldLaunchPassed": true,
+    "coldLaunchCounts": {
+      "applicationPhotos": 19,
+      "phonePhotos": 50,
+      "presets": 2
+    }
+  },
+  "apple": {
+    "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "run": 43464094785,
+    "runner": "macos-26-intel",
+    "state": "full-acceptance-running",
+    "hostAndSimulatorArchitecture": "x86_64",
+    "deviceArchitecture": "arm64",
+    "acceptedIpa": false,
+    "previousRun": 43463073963,
+    "previousRunFailure": "dependency Git network reset/early EOF exit128 before later validation"
+  },
+  "delivered218ArtifactsModified": false,
+  "heldCandidate": {
+    "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+    "appleRun": 43453345679,
+    "delivered": false,
+    "reason": "Installed QA found all album taps remain locked after RAW develop replaces its route with the JPEG editor and returns; cold restart restores taps. Candidate held before delivery; minimal route-completion fix and regression are pending.",
+    "evidence": "attempts/f3/result.json",
+    "fixBoundToFinalSource": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "fixEvidence": "flutter-raw-return/result.json",
+    "descendantDeliveryStillPending": true
+  },
+  "rawAlbumReturn": {
+    "result": "flutter-raw-return/result.json",
+    "actualGoRouterCasesPassed": 2,
+    "execution": "two isolated actual exit0 runs; not a rerun of camera75",
+    "format4RerunPassed": true,
+    "resultSha256": "9d0316a7d57db4764f351717b07f40aaa0f96d9490173e163d3cf42d6e2b448e"
+  },
+  "previousAndroidCandidate": {
+    "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "delivered": false,
+    "appleRun": 43458258245,
+    "androidR8Checks": 78,
+    "androidFunctionalUiPassed": true,
+    "appleFailure": "host avatar validation compile; complete mobile gate not accepted",
+    "evidence": "attempts/a54/result.json"
+  },
+  "documentationChecks": {
+    "result": "documentation-checks/result.json",
+    "sourceCommitAtExecution": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "sourceCheckRawExit": 0,
+    "sourceCheckFilesAtExecution": 1032,
+    "detailRenderBoundaryChecks": 21,
+    "inventoryRawExit": 0,
+    "commandsExecutedOnce": true
+  }
+}

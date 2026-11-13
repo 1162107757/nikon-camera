@@ -1,0 +1,79 @@
+{
+  "sourceFilesSha256": {
+    "cross-platform/app/lib/photo_format.dart": "453af43c21df12fa2f1331d4f14dee4ab4c23d45515ed3f94ad76b685990f839",
+    "cross-platform/app/lib/photo_grid.dart": "3c35ecc7317728e2f3d3083c355cf6ab8f526a234bbae50959360334126bc725",
+    "cross-platform/app/lib/editor.dart": "dece43833228b3edd5523c37a129f63b041e75d451b7c7ab531bb1273f5826b9",
+    "cross-platform/app/lib/legacy_editor.dart": "57d3b3c00a8517fb3f275179ce7687d41056e307d30a6c5078a2f308f0f21086",
+    "cross-platform/app/test/photo_format_test.dart": "a45aae3cd7c0d79f4665895fb7fc1600d73a05381bca184e24f58743e5cb701d"
+  },
+  "focusedFormatTests": {
+    "passed": 4,
+    "exit": 0,
+    "log": "format-regressions-final.log"
+  },
+  "existingAlbumRegression": {
+    "passed": 1,
+    "exit": 0,
+    "log": "photos-existing.log"
+  },
+  "existingEditorMenuRegression": {
+    "passed": 1,
+    "exit": 0,
+    "log": "editor-menu-existing.log"
+  },
+  "targetedAnalyze": {
+    "exit": 0,
+    "result": "No issues found",
+    "log": "analyze-final.log"
+  },
+  "initialAnalyze": {
+    "exit": 0,
+    "infoCount": 1,
+    "log": "analyze.log",
+    "state": "curly-brace info resolved in final source",
+    "acceptedAsCleanAnalyze": false,
+    "note": "Process returned 0 but reported one info; retained as a non-clean initial analysis, not a failed Flutter assertion."
+  },
+  "diffCheckExit": 0,
+  "nativeDecodeOrRenderingChanged": false,
+  "delivered218ArtifactsTouched": false,
+  "ownedCompletedTestFixtureCleanup": {
+    "directoryName": "huevia-menu-ba1ff648",
+    "state": "automatic-approval-rejected-deletion; left in system temp",
+    "reason": "blocked by policy"
+  },
+  "archivedAtUtc": "2026-11-13T13:55:10.458602+00:00",
+  "uniqueActualPassedChecks": 6,
+  "nativeExecutionClaimed": false,
+  "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "sourceCommitNote": "Final 219 commit binding verified after the recorded run. Original working-tree SHA values remain the run authority; this does not claim Git was already at this commit during execution.",
+  "logsSha256": {
+    "format-regressions-final.log": "9544d946d4694728fc7dbd47bec492dddddfd493cccd609788d06bb705471138",
+    "format-regressions-final.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "photos-existing.log": "52a5e558a53f42f52a8fa8dcb2b6ec8fda46c9d2d08e98dc61f9e535b3e25d6b",
+    "photos-existing.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "editor-menu-existing.log": "a458fc8add097e6166b4100e8db7327b7221234f33ed5c6f24d42fbcbacb0fd6",
+    "editor-menu-existing.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "analyze-final.log": "df2130f47ad30114424e4cad6984b6a899f5bd63767284822b1f3e90edbb043d",
+    "analyze-final.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "analyze.log": "ec2f7504d6cf9a0cf66c7204c1e620f7bc2a2c6e1bae76109d0b81aeca19d3e2",
+    "analyze.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "cleanup-review.json": "189ab8d03225fceffed0a17628f9e3b711c7ad075e0885ffdecfb1126bf2fb5e"
+  },
+  "referencedTestHarnessSha256": {
+    "cross-platform/app/test/editor_menu_test.dart": "0332863ed9a54bcea131d36969a3b13d3ee33846e126669c3fac36ab3bf7769c",
+    "cross-platform/app/test/editor_test.dart": "6439dad836844938649d2c58b854f2bb3c0e2f1a64305aba403b5b9766624eda",
+    "cross-platform/app/test/photos_test.dart": "393bf0e2525fbda9cac5792e5c0724fa01aed08b4258cb268d2de19108d3e1f3"
+  },
+  "finalSnapshotBinding": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "verifiedAtUtc": "2026-11-13T15:04:03.734819+00:00",
+    "proof": "../final-source-binding.json",
+    "currentRawFingerprintsMatched": 5,
+    "gitRawByteMatches": 2,
+    "gitLineEndingOnlyDifferences": 3,
+    "lfNormalizedMatches": 5,
+    "testOrBuildRerun": false
+  },
+  "cleanupReview": "cleanup-review.json"
+}

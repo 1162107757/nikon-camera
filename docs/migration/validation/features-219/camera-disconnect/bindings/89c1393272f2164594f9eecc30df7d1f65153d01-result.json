@@ -1,0 +1,59 @@
+{
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "baseCommitAtCheck": "323a92a09049620f15d2a52f38ee63fdf7038af3",
+  "includesUncommitted219WatchdogPatchAtExecution": true,
+  "includesUncommitted219ScopedDisconnectPatchAtExecution": true,
+  "sourceFilesSha256": {
+    "cross-platform/core/java/cc/huevia/shared/SharedCamera.java": "d369a99e8cedcbd4121508cdb7206b39f7cb6902bad0010c6707ac49fe997eda",
+    "cross-platform/core/test/cc/huevia/shared/CameraSessionBoundaryTest.java": "f1e7ec235b3ed49041b313cec3c4e6b517ce5f17dbeae26899b05c0f18fd6f1b"
+  },
+  "targetChecks": 167,
+  "newScopedDisconnectAssertions": 57,
+  "targetExit": 0,
+  "fullCoreChecks": 1629,
+  "sharedBoundaryChecks": 1623,
+  "atmosphereChecks": 6,
+  "sessionChecks": 167,
+  "connectionChecks": 65,
+  "fullCoreResult": "../core/result.json",
+  "finalSnapshotBinding": {
+    "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+    "proof": "../core/final-source-binding.json",
+    "testOrBuildRerun": false,
+    "verifiedAtUtc": "2026-11-13T16:43:20.106529+00:00"
+  },
+  "contract": {
+    "payload": "session",
+    "matched": "current active photos or slots token closes; disconnected:true stale:false",
+    "stale": "empty/unknown/old token returns current status; disconnected:false stale:true",
+    "unscopedGlobalDisconnectRetained": false,
+    "nativeLifecycleDirectShutdownChanged": false
+  },
+  "nativeOrDartSourceChangedByCoreTask": false,
+  "actualCameraHardwareValidationPerformed": false,
+  "recordedAtUtc": "2026-11-13T15:34:48.458794+00:00",
+  "logsSha256": {
+    "compile.log": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6",
+    "execution-base.json": "454fc7b24c4285b96665923b9f8d9561330685f5442554b6f9f9a27a3c1bfdc8",
+    "README.md": "9e6b6f002986f400567cff42aaa4689979f662c4145e44464ead3cccfe933eaf",
+    "target.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "target.log": "c68d2ac682e65541a6a7c6a1fa7b52c39a91e35f65dc289d918cacec63265416"
+  },
+  "sourceBindingHistory": [
+    {
+      "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+      "proof": "../core/final-source-binding.json",
+      "testOrBuildRerun": false
+    },
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "proof": "../core/final-source-binding.json",
+      "testOrBuildRerun": false,
+      "verifiedAtUtc": "2026-11-13T16:05:42.275100+00:00"
+    }
+  ],
+  "updatedAtUtc": "2026-11-13T16:43:20.106529+00:00",
+  "sourceCommitNote": "Metadata-only binding to 89c; raw Java inputs unchanged from original full-core execution, final Git content LF-equivalent. Original execution base, run history, earlier standalone source hashes and a54 binding snapshots are preserved. No tests or builds rerun.",
+  "latestAppleFullRun": "43464094785",
+  "latestAppleStatusAtBinding": "Pending root full-gate verification; no acceptance claimed by this metadata task."
+}

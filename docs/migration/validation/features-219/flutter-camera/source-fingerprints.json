@@ -1,0 +1,130 @@
+{
+  "cross-platform/app/lib/camera.dart": {
+    "originalReceiptRawSha256": "a72a8ddf1ace8ad7393dffbe3aa6d5006517e1396a96ae247862353056f04e9e",
+    "currentRawSha256": "a72a8ddf1ace8ad7393dffbe3aa6d5006517e1396a96ae247862353056f04e9e",
+    "frozenGitSha256": "c1f90a453e75970661841e2dafcf903ae0ab9c4bd38bfbf70801da825a25cc8c",
+    "normalizedLfSha256": "c1f90a453e75970661841e2dafcf903ae0ab9c4bd38bfbf70801da825a25cc8c",
+    "rawBytesMatchFrozenGit": false,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/camera_connection.dart": {
+    "originalReceiptRawSha256": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+    "currentRawSha256": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+    "frozenGitSha256": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+    "normalizedLfSha256": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/camera_downloads.dart": {
+    "originalReceiptRawSha256": "4b3f0c62ee48ac928f9283af1febb684bea82297f49b02e309f23a1cf556aa13",
+    "currentRawSha256": "4b3f0c62ee48ac928f9283af1febb684bea82297f49b02e309f23a1cf556aa13",
+    "frozenGitSha256": "e11599ce7dc06ac035d4e448cd9e2ef27745662df391a71d98c9340933eb7077",
+    "normalizedLfSha256": "e11599ce7dc06ac035d4e448cd9e2ef27745662df391a71d98c9340933eb7077",
+    "rawBytesMatchFrozenGit": false,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/camera_live.dart": {
+    "originalReceiptRawSha256": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+    "currentRawSha256": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+    "frozenGitSha256": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+    "normalizedLfSha256": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/camera_remote.dart": {
+    "originalReceiptRawSha256": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+    "currentRawSha256": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+    "frozenGitSha256": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+    "normalizedLfSha256": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/camera_slots.dart": {
+    "originalReceiptRawSha256": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+    "currentRawSha256": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+    "frozenGitSha256": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+    "normalizedLfSha256": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/connection_protection.dart": {
+    "originalReceiptRawSha256": "4b53debe0a6f07397b38a2b10a6823d5c317da9e63f48a66541ee2a81003db7c",
+    "currentRawSha256": "4b53debe0a6f07397b38a2b10a6823d5c317da9e63f48a66541ee2a81003db7c",
+    "frozenGitSha256": "7205931867f7af8f59df00469fa4c4589d863b3be1ab147ea673eee3864a9acf",
+    "normalizedLfSha256": "7205931867f7af8f59df00469fa4c4589d863b3be1ab147ea673eee3864a9acf",
+    "rawBytesMatchFrozenGit": false,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/legacy_preset_details.dart": {
+    "originalReceiptRawSha256": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+    "currentRawSha256": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+    "frozenGitSha256": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+    "normalizedLfSha256": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/lib/settings.dart": {
+    "originalReceiptRawSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+    "currentRawSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+    "frozenGitSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+    "normalizedLfSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/camera_intent_test.dart": {
+    "originalReceiptRawSha256": "53e37ccc348038315bbbb4c6d7c13f304f9cc4394d0796ce9f0ef923df5d2aad",
+    "currentRawSha256": "53e37ccc348038315bbbb4c6d7c13f304f9cc4394d0796ce9f0ef923df5d2aad",
+    "frozenGitSha256": "53e37ccc348038315bbbb4c6d7c13f304f9cc4394d0796ce9f0ef923df5d2aad",
+    "normalizedLfSha256": "53e37ccc348038315bbbb4c6d7c13f304f9cc4394d0796ce9f0ef923df5d2aad",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/camera_controls_test.dart": {
+    "originalReceiptRawSha256": "85af06bd5fcf1218535f3945f89ade930625575f553159889288bf269d63c6da",
+    "currentRawSha256": "85af06bd5fcf1218535f3945f89ade930625575f553159889288bf269d63c6da",
+    "frozenGitSha256": "85af06bd5fcf1218535f3945f89ade930625575f553159889288bf269d63c6da",
+    "normalizedLfSha256": "85af06bd5fcf1218535f3945f89ade930625575f553159889288bf269d63c6da",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/camera_downloads_test.dart": {
+    "originalReceiptRawSha256": "1f9285758e55dbcb0ae374de537e82cfe5d2dac9ceb281a1569ffa4669943358",
+    "currentRawSha256": "1f9285758e55dbcb0ae374de537e82cfe5d2dac9ceb281a1569ffa4669943358",
+    "frozenGitSha256": "1f9285758e55dbcb0ae374de537e82cfe5d2dac9ceb281a1569ffa4669943358",
+    "normalizedLfSha256": "1f9285758e55dbcb0ae374de537e82cfe5d2dac9ceb281a1569ffa4669943358",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/camera_live_test.dart": {
+    "originalReceiptRawSha256": "a4c6a5637c520d1ea7b940839667ee721ae9271e02a9fabcbacd30639cf55a63",
+    "currentRawSha256": "a4c6a5637c520d1ea7b940839667ee721ae9271e02a9fabcbacd30639cf55a63",
+    "frozenGitSha256": "a4c6a5637c520d1ea7b940839667ee721ae9271e02a9fabcbacd30639cf55a63",
+    "normalizedLfSha256": "a4c6a5637c520d1ea7b940839667ee721ae9271e02a9fabcbacd30639cf55a63",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/camera_navigation_test.dart": {
+    "originalReceiptRawSha256": "60eb830d8de7191a1af436a5f0bae822e1eea957955cce7c3957a106ea646ea2",
+    "currentRawSha256": "60eb830d8de7191a1af436a5f0bae822e1eea957955cce7c3957a106ea646ea2",
+    "frozenGitSha256": "60eb830d8de7191a1af436a5f0bae822e1eea957955cce7c3957a106ea646ea2",
+    "normalizedLfSha256": "60eb830d8de7191a1af436a5f0bae822e1eea957955cce7c3957a106ea646ea2",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/camera_test.dart": {
+    "originalReceiptRawSha256": "a83e0951113d5a4f98f10368bafe9a009bfe7efa0dd356a99a293b20c341b532",
+    "currentRawSha256": "a83e0951113d5a4f98f10368bafe9a009bfe7efa0dd356a99a293b20c341b532",
+    "frozenGitSha256": "0c9091548a108924dd19310fd1c7ddbb3b5091be2ddce4a7fd09b68394100963",
+    "normalizedLfSha256": "0c9091548a108924dd19310fd1c7ddbb3b5091be2ddce4a7fd09b68394100963",
+    "rawBytesMatchFrozenGit": false,
+    "normalizedLfMatchesFrozenGit": true
+  },
+  "cross-platform/app/test/connection_protection_test.dart": {
+    "originalReceiptRawSha256": "6eb0655f93b3ae68c652ff57bfaf4c8bff6626c6abb0b76321449623de4e6741",
+    "currentRawSha256": "6eb0655f93b3ae68c652ff57bfaf4c8bff6626c6abb0b76321449623de4e6741",
+    "frozenGitSha256": "6eb0655f93b3ae68c652ff57bfaf4c8bff6626c6abb0b76321449623de4e6741",
+    "normalizedLfSha256": "6eb0655f93b3ae68c652ff57bfaf4c8bff6626c6abb0b76321449623de4e6741",
+    "rawBytesMatchFrozenGit": true,
+    "normalizedLfMatchesFrozenGit": true
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "status": "passed",
+  "versionCode": 219,
+  "apkSha256": "dc74d3a4a8f734f6d008a7973195f8186f91ce88f71488e7be6c0dccd72dddba",
+  "coldLaunchPassed": true,
+  "originalApplicationPhotos": 19,
+  "originalPhonePhotos": 50,
+  "originalPresets": 2,
+  "appSourceTreeEquivalentToFunctionalUiSource": true,
+  "functionalUiSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "fullManualUiReexecutionClaimed": false,
+  "functionalUiProof": "source-equivalent-ui-binding.json",
+  "screenshots": [
+    {
+      "file": "ui/source89-cold-presets.png",
+      "sha256": "2c64b50dab055981b06afa4dcd77508be40d504f7e99603f9ca833e6de5886b4"
+    },
+    {
+      "file": "ui/source89-cold-phone50.png",
+      "sha256": "320ccd8d3900512f9a7080ef4d052ab34006915bfc9c375885a75712103a1210"
+    },
+    {
+      "file": "ui/source89-cold-application19.png",
+      "sha256": "0585659ab7120ce9d13bc5a46f5ab06ceabf3ac17423bd545e94b280074e4b30"
+    }
+  ]
+}

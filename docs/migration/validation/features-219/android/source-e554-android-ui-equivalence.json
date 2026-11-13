@@ -1,0 +1,134 @@
+{
+  "finalSourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "scope": "android-git-tracked-release-source-inputs-only",
+  "actualFunctionalUiSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "actualFunctionalUiResult": "final-ui-result.json",
+  "comparisons": [
+    {
+      "testedSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "unchangedAndroidReleaseSourceTrees": {
+        "cross-platform/app/lib": {
+          "testedTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "identical": true
+        },
+        "cross-platform/app/android": {
+          "testedTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "identical": true
+        },
+        "cross-platform/core": {
+          "testedTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "identical": true
+        },
+        "app": {
+          "testedTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "finalTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "identical": true
+        }
+      },
+      "allChangedPaths": [
+        "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+        "cross-platform/app/test/camera_connection_test.dart",
+        "cross-platform/app/test/session_race_test.dart",
+        "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+        "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+        "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+        "cross-platform/tool/avatar_apple.sh",
+        "cross-platform/tool/native_task_source_check.py",
+        "cross-platform/tool/source_check.py"
+      ]
+    },
+    {
+      "testedSourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "unchangedAndroidReleaseSourceTrees": {
+        "cross-platform/app/lib": {
+          "testedTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "identical": true
+        },
+        "cross-platform/app/android": {
+          "testedTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "identical": true
+        },
+        "cross-platform/core": {
+          "testedTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "identical": true
+        },
+        "app": {
+          "testedTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "finalTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "identical": true
+        }
+      },
+      "allChangedPaths": [
+        "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+        "cross-platform/app/test/camera_connection_test.dart",
+        "cross-platform/app/test/session_race_test.dart",
+        "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+        "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+        "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+        "cross-platform/tool/native_task_source_check.py",
+        "cross-platform/tool/source_check.py"
+      ]
+    },
+    {
+      "testedSourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "unchangedAndroidReleaseSourceTrees": {
+        "cross-platform/app/lib": {
+          "testedTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "finalTree": "5dcc1f98292f23ba2c6324709ecfabdb873def15",
+          "identical": true
+        },
+        "cross-platform/app/android": {
+          "testedTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "finalTree": "b32d380635c828abf602261302d7582a7180d4a5",
+          "identical": true
+        },
+        "cross-platform/core": {
+          "testedTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "finalTree": "45aeeacd0a6ca65a9f1463182ee71b21ac36309c",
+          "identical": true
+        },
+        "app": {
+          "testedTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "finalTree": "2ddaa8fe4bd32c48e8247d2d88c50de549b5a091",
+          "identical": true
+        }
+      },
+      "allChangedPaths": [
+        "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+        "cross-platform/native/ios/Classes/HueviaCameraPresentation.m"
+      ]
+    }
+  ],
+  "androidReleaseSourceInputsIdentical": true,
+  "changedSince91": [
+    "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+    "cross-platform/native/ios/Classes/HueviaCameraPresentation.m"
+  ],
+  "fullAppTreeEqualityClaimed": false,
+  "fullNativeTreeEqualityClaimed": false,
+  "iosNativeProductTreeChangedSince91": true,
+  "iosTestTreeChangedSince91": true,
+  "strictDartForegroundFixtureUnchangedSince91": true,
+  "newIosFiveCasesAndAdditionalBooleanAndCountTypeAssertionsNeedNewExecution": true,
+  "old91FiveCasePassIsNotNewAssertionPass": true,
+  "fullFunctionalUiReexecutedOnFinalApkClaimed": false,
+  "finalExactApkSigningRuntimeAndColdLaunchStillRequired": true,
+  "generatedPackageBytesIdenticalClaimed": false,
+  "generatedAssetsRequireActualPackageTenImageCheck": true,
+  "priorProofsUnmodified": [
+    {
+      "file": "source91-android-ui-equivalence.json",
+      "sha256": "a9dda153e30844493e144dfa74f7647af8d6a5e43d56469bc9e994b4ee0c7ac7"
+    },
+    {
+      "file": "source-equivalent-ui-binding.json",
+      "sha256": "1c82c329a2c4cb32bd6a5147bc4f55b4934d14967efc8a5346f6b2bade4514cd"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "actualExecutionBaseHead": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "fixturesWereUncommittedAtActualRuns": true,
+  "inputCount": 11,
+  "boundAtUtc": "2026-11-13T17:25:54.463940+00:00",
+  "bindingOnlyNoTestsRerun": true,
+  "inputs": [
+    {
+      "path": "cross-platform/app/lib/camera.dart",
+      "postRunRawSha256": "2ecf4428fe63e97e212c8e8029c5ddda377bd171b34eb096ca7824d803bf5ba1",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "d04aa3a748fa5674db5637a79c5c667f64a7e18e2602463af0cb3765273e64fb",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/camera_connection.dart",
+      "postRunRawSha256": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "2862e8d55d74ce2b2fce6383982b101137e5d1abe7f31c7ea85c68f0282ec6df",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/camera_slots.dart",
+      "postRunRawSha256": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "acc51a22dd93f9b080288d956524ba0abfb08f66d7470e32c95fba853c03804b",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/camera_remote.dart",
+      "postRunRawSha256": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "c3eacfa40b60ed50024dfc99b1e49484ff4860dd24e5e4de8bf5e13cd53bee83",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/camera_live.dart",
+      "postRunRawSha256": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "14b40049778b0133b1d562d17890801b4e31a5ebb16d8e21e8a22abce1562ee1",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/camera_downloads.dart",
+      "postRunRawSha256": "4b3f0c62ee48ac928f9283af1febb684bea82297f49b02e309f23a1cf556aa13",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "e11599ce7dc06ac035d4e448cd9e2ef27745662df391a71d98c9340933eb7077",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/connection_protection.dart",
+      "postRunRawSha256": "4b53debe0a6f07397b38a2b10a6823d5c317da9e63f48a66541ee2a81003db7c",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "7205931867f7af8f59df00469fa4c4589d863b3be1ab147ea673eee3864a9acf",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/legacy_preset_details.dart",
+      "postRunRawSha256": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "aacac3b90e290a8868b023ce2237465cc123f78b6c10482a7dffd71f1d5bd91b",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/lib/settings.dart",
+      "postRunRawSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "91795b908096d542c2204e4755c7da68ecbbf96d0bcc8efbd6672d5f4f82e959",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/test/camera_connection_test.dart",
+      "postRunRawSha256": "dc758f1d9258fc276b956a95b3bc23c97e718c01835dad7c9db25afcb9cb2238",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "dc758f1d9258fc276b956a95b3bc23c97e718c01835dad7c9db25afcb9cb2238",
+      "gitLfNormalizedMatches": true
+    },
+    {
+      "path": "cross-platform/app/test/session_race_test.dart",
+      "postRunRawSha256": "69e07d6399c677485e6422896779a2c961d1e180f96a533cdb101102734a08f4",
+      "currentRawMatchesPostRun": true,
+      "frozenGitBlobSha256": "69e07d6399c677485e6422896779a2c961d1e180f96a533cdb101102734a08f4",
+      "gitLfNormalizedMatches": true
+    }
+  ],
+  "originalUnboundResult": "execution-result-before91-binding.json",
+  "originalUnboundResultSha256": "d6475458b427f2e4f592dd3b50a2a803cddfa132149f0ede92ed8c85d85be5a8",
+  "completeMacFullRunPending": 43471565460
+}

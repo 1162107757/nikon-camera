@@ -1,0 +1,87 @@
+{
+  "branch": "codex/features215",
+  "versionCode": 219,
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "state": "android-validated-apple-acceptance-pending",
+  "recordedAtUtc": "2026-11-13T16:04:53.925926+00:00",
+  "finalSourceBinding": "final-source-binding.json",
+  "previousFrozenCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "delivered": false,
+    "evidence": "attempts/4f/result.json"
+  },
+  "coreRun": {
+    "result": "core/result.json",
+    "sharedBoundaryChecks": 1623,
+    "atmosphereChecks": 6,
+    "goldenBoundaryChecks": 1629,
+    "cameraSessionBoundaryChecks": 167,
+    "cameraConnectionBoundaryChecks": 65,
+    "countsAreIncludedInSharedTotal": true,
+    "goldenSha256": "358c02ec990fe2d903f827f8b15ed963550eb231d0d01360f61c00f2196bfdd5",
+    "currentInputsRehashed": 239,
+    "rawExecutionContextPreserved": true
+  },
+  "dartCamera": {
+    "result": "flutter-camera/final-result.json",
+    "uniqueActualPassedChecks": 75,
+    "testFiles": 9,
+    "incrementalVerification": true
+  },
+  "format": {
+    "result": "flutter-format/result.json",
+    "uniqueActualPassedChecks": 6
+  },
+  "nativeCancellation": {
+    "result": "native-cancellation/result.json",
+    "jvmAssertions": 309,
+    "includedConcurrentRaces": 100,
+    "iosUIKitAndPhotoKitPlanned": 5,
+    "iosExecution": "pending"
+  },
+  "android": {
+    "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "state": "all-android-gates-passed; overall-client-delivery-awaiting-ios",
+    "validationPassed": true,
+    "acceptedForLocalAndroidTesting": false,
+    "finalReleaseRuntimeChecks": 78,
+    "installedUiQaPassed": true,
+    "screenshotCount": 18,
+    "result": "android/final-receipts.json",
+    "fixtureCleanup": "completed-exact-owned-fixture-only",
+    "actualZ6IIConnectionVerified": false,
+    "realNefFileUsedInInstalledQa": false,
+    "eventCount": 18,
+    "rawDeletionProductCheckPassed": false
+  },
+  "apple": {
+    "run": 43458258245,
+    "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "runner": "macos-26-intel",
+    "state": "full-run-in-progress",
+    "hostAndSimulatorArchitecture": "x86_64",
+    "deviceArchitecture": "arm64",
+    "acceptedIpa": false,
+    "heldCandidateRun": 43453345679
+  },
+  "delivered218ArtifactsModified": false,
+  "heldCandidate": {
+    "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+    "appleRun": 43453345679,
+    "delivered": false,
+    "reason": "Installed QA found all album taps remain locked after RAW develop replaces its route with the JPEG editor and returns; cold restart restores taps. Candidate held before delivery; minimal route-completion fix and regression are pending.",
+    "evidence": "attempts/f3/result.json",
+    "fixBoundToFinalSource": "a54af6c6e7bb1e78737c70715645084e709901c5",
+    "fixEvidence": "flutter-raw-return/result.json",
+    "descendantDeliveryStillPending": true
+  },
+  "rawAlbumReturn": {
+    "result": "flutter-raw-return/result.json",
+    "actualGoRouterCasesPassed": 2,
+    "execution": "two isolated actual exit0 runs; not a rerun of camera75",
+    "format4RerunPassed": true,
+    "resultSha256": "6adbe4c7fd3f38b89f731d65dddbbcad8c61ada4d5987382c108d868a89b5f48"
+  }
+}

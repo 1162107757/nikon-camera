@@ -1,0 +1,96 @@
+{
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "run": 43482938724,
+  "fullResultReportedByRoot": "success",
+  "artifactActualHead": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "nativeJvm": {
+    "actualChecksPassed": 309,
+    "actualTransitionRaces": 100,
+    "freshExecutionInThisCiRun": true,
+    "old4fExecutionPreserved": true
+  },
+  "uiKit": {
+    "executed": 5,
+    "failures": 0,
+    "passedCases": [
+      "testCameraPresentationCancellationPreventsQueuedPresentation",
+      "testCameraPresenterRecoversFromMissingAndDetachedRegistration",
+      "testCameraPresenterRejectsBackgroundAndHiddenWindows",
+      "testNativeTaskCancellationRetiresBeforeDelivery",
+      "testPhotoLibraryConsent"
+    ],
+    "seconds": 14.001,
+    "includesE554PublicJsonTypeAssertions": true
+  },
+  "nativePipeline": {
+    "success": true,
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "caseCount": 1,
+    "sameFreshRunIdAsReady": true
+  },
+  "foreground": {
+    "passed": true,
+    "snapshot": null,
+    "evidence": "machine-test",
+    "sourceProof": [
+      {
+        "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+        "gitBlobSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543"
+      },
+      {
+        "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+        "gitBlobSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e"
+      }
+    ]
+  },
+  "observedSnapshotCounts": null,
+  "foregroundEvidenceChannel": "machine-test",
+  "collectorRegressionChecks": 17,
+  "sourceOrExpectationChangesForCollector": false,
+  "finalIpaAcceptanceOwner": "root independent verify_apple; no acceptance claimed by this evidence leaf",
+  "recordedAtUtc": "2026-11-13T18:58:33.841965+00:00",
+  "evidence": [
+    {
+      "file": "artifact.json",
+      "sha256": "d46c07724509d6fed45add58f6950bd36c4329a431cab6d3bfd36f72977aabe2"
+    },
+    {
+      "file": "collector-regressions.json",
+      "sha256": "54364aa2c5a35385f2982a47da1fca7d55bfba7cfa19a5b03126a960d9f0b196"
+    },
+    {
+      "file": "foreground-evidence-collector.py.txt",
+      "sha256": "631e11fe6a7ac22d4a99a9a3e94bb321237f47f5a2a3dd9a6fe3fa396e29e121"
+    },
+    {
+      "file": "native-task-tests.log",
+      "sha256": "30264464cea78e939a40148bcb3357262ebbb315dfe3ec1c8dd2daa27db53ab8"
+    },
+    {
+      "file": "simulator-initial-access.json",
+      "sha256": "8a060249ff22f05dd2e50a9fbec4cf27e8739cbadb8c0a4a57348839521990e6"
+    },
+    {
+      "file": "simulator-result.json",
+      "sha256": "7dae7f04104fa24a5ee5b1e3c6000a3bfbd5ed9a3daa4a7d26f5f9a3350dc839"
+    },
+    {
+      "file": "simulator-selection.json",
+      "sha256": "fd8e63008affe0fb5e72bf28d560afac5d397d0407b2ff66ab99ee9625624d86"
+    },
+    {
+      "file": "simulator-tests.log",
+      "sha256": "75b4b03a06cf2bf7fff7d3625c401a554c9467fe5b9e05bda22e7b9510fcc21a"
+    }
+  ],
+  "rootIndependentVerifierExit": 0,
+  "acceptedForLocalTesting": true,
+  "published": false,
+  "publicEvidence": {
+    "ciResult": "../../../apple/ci-result.json",
+    "independentVerification": "../../../apple/independent-verification.json",
+    "simulatorMachineResult": "../../../apple/simulator-result.json",
+    "simulatorUIKitLog": "../../../apple/simulator-tests.log",
+    "nativeTaskJVMLog": "native-task-tests.log"
+  }
+}

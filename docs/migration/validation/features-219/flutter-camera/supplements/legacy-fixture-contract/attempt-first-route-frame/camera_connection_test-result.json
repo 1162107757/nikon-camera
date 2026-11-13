@@ -1,0 +1,21 @@
+{
+  "command": [
+    "flutter",
+    "test",
+    "--no-pub",
+    "--no-enable-impeller",
+    "--concurrency=1",
+    "--reporter=expanded",
+    "--timeout=90s",
+    "test/camera_connection_test.dart"
+  ],
+  "file": "test/camera_connection_test.dart",
+  "startedAtUtc": "2026-11-13T17:10:42.340484+00:00",
+  "endedAtUtc": "2026-11-13T17:10:48.298524+00:00",
+  "exit": 1,
+  "allTestsPassedMessage": false,
+  "log": "camera_connection_test.log",
+  "logSha256": "64bdfc98627c3b13dfcd373f1ac0aea714936c5837799e44056684bb3739652f",
+  "sourceCommitAtExecution": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "fixtureChangesUncommittedAtRun": true
+}

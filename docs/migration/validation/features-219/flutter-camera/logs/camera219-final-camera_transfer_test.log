@@ -1,0 +1,8 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_transfer_test.dart
+00:00 +0: Real job progress waits for receipt, metadata and durable catalog save
+00:00 +1: Late receive response is ignored after cancel
+00:00 +2: Late receive response is ignored after owner
+00:00 +3: Late receive response is ignored after dispose
+00:00 +4: Invalid metadata and mismatched receipt show failure
+00:00 +5: Download card displays real byte count and stop action on small screens
+00:00 +6: All tests passed!

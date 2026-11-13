@@ -1,0 +1,8 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_connection_test.dart
+00:00 +0: Camera handshake reports permission, confirmation, session and capabilities only for its own job
+00:00 +1: Camera cancellation completes immediately even if native cancellation acknowledgement is blocked and rejects late results
+00:00 +2: Camera overall deadline cancels the exact native job and identifies the stalled phase
+00:00 +3: USB discovery is bounded and disposal cancels an in-flight permission wait without late notifications
+00:00 +4: Camera UI exposes phase and cancel while connecting and never displays a late cancelled session
+00:01 +5: Connect-only returns success without reading photos; explicit Sync reads and cancels only its page job
+00:01 +6: All tests passed!

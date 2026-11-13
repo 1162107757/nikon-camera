@@ -1,0 +1,110 @@
+{
+  "run": 43471565460,
+  "verification": "full",
+  "actualGithubHeadSha": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "actualGithubConclusion": "failure",
+  "wasCancelled": false,
+  "deliveryHoldMarkerPresent": true,
+  "artifactId": 14066325583,
+  "artifactZipDigest": "sha256:7257607a19ba439daeafd10950d28884569f9fd2adaf5c92218b1006709d975b",
+  "flutterPassed": 449,
+  "flutterAllTestsPassedMarker": true,
+  "flutterFailures": 0,
+  "deviceBuildEvidence": "device-build.log: Built build/ios/iphoneos/Runner.app111.6MB; ipa-verification source91",
+  "candidateIpa": {
+    "bytes": 64890419,
+    "sha256": "efa30a2ec5ccb3c79095f4dbaf8f9b5daea88462a2466225026721fa0194ae59",
+    "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+    "fullParityComplete": false,
+    "copiedToPublicEvidence": false,
+    "acceptedForDelivery": false
+  },
+  "hostSimulatorArchitecture": "x86_64",
+  "uiKit": {
+    "passedCases": [
+      "testCameraPresentationCancellationPreventsQueuedPresentation",
+      "testCameraPresenterRecoversFromMissingAndDetachedRegistration",
+      "testCameraPresenterRejectsBackgroundAndHiddenWindows",
+      "testNativeTaskCancellationRetiresBeforeDelivery",
+      "testPhotoLibraryConsent"
+    ],
+    "executed": 5,
+    "failures": 0,
+    "seconds": 56.134,
+    "sourceIsPreBooleanFix": true
+  },
+  "foregroundSnapshot": {
+    "passed": false,
+    "expected": "JSON boolean true",
+    "actual": "JSON number1",
+    "location": "camera_foreground_fixture.dart:18",
+    "markerPrinted": false
+  },
+  "nativePipeline": {
+    "success": false,
+    "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+    "downstreamRetouchAndRawChecksCompleted": false
+  },
+  "currentFixSources": [
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+      "sha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13",
+      "sameAsFrozenE554": true
+    },
+    {
+      "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+      "sha256": "92ef97dc037166eb9f7dcfcdc2e7612be3c22919d703117a265256efaeb1c07d",
+      "sameAsFrozenE554": true
+    }
+  ],
+  "recordedAtUtc": "2026-11-13T18:36:06.717115+00:00",
+  "evidence": [
+    {
+      "file": "artifact.json",
+      "bytes": 422,
+      "sha256": "ef7e67d6973e242ac363f9fbdcb45034cd7f31d4b7c739ecac9523c365a075bf"
+    },
+    {
+      "file": "device-build.log",
+      "bytes": 894,
+      "sha256": "7fa4e13c9a63a65ca7ae70b81930b0fe6ca7a25ff744669237e35511805116fd"
+    },
+    {
+      "file": "flutter-tests.log",
+      "bytes": 91700,
+      "sha256": "491ea636d712e900bacc050ace0604d3666a57a78deabe5e220216840276a4b2"
+    },
+    {
+      "file": "ipa-verification.json",
+      "bytes": 447,
+      "sha256": "7b67a23f8a95ff512734cc2378c9365efd922aa6ee32c551eea8c7e26f542096"
+    },
+    {
+      "file": "native-runtime.json",
+      "bytes": 889,
+      "sha256": "3be47d4550f66d985fc823c7f39727d42e6d6245cdb3611015a988303c37f8a2"
+    },
+    {
+      "file": "simulator-pipeline-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "simulator-result.json",
+      "bytes": 2400,
+      "sha256": "812a7132340c570740e18e80910d03c02a02daa83cb6f8f35141e10fa4096462"
+    },
+    {
+      "file": "simulator-tests.log",
+      "bytes": 7677,
+      "sha256": "efd7f400b8ee19e8ebb85b5b58e816bf97d8683784785ba02b4592c420d21deb"
+    }
+  ],
+  "sourceModifiedByThisTask": false,
+  "sdkBuildDeviceOrTestRunByThisTask": false
+}

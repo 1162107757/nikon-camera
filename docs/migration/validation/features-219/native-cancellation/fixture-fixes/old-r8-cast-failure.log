@@ -1,0 +1,25 @@
+D:\dev\ai-project\nikon-camera\dist\migration219\huevia-0.31.0-dev-219-android-x64.apk: 1 file pushed, 0 skipped. 122.3 MB/s (56226010 bytes in 0.439s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 41.7 MB/s (73055 bytes in 0.002s)
+Performing Push Install
+Success
+INSTRUMENTATION_RESULT: checks=10
+INSTRUMENTATION_RESULT: evidence={"requestCandidates":["public final java.lang.String cc.huevia.sharedapp.a.d(java.lang.String,java.lang.String,yo,xo)"],"cancelType":"yo","progressType":"xo","cancelAdapter":"verified-atomic-boolean-capture","cancelClassId":1,"cancelConstructor":"public yo(int,java.lang.Object)","progressAdapter":"activity-progress-capture","progressConstructor":"public xo(cc.huevia.sharedapp.MainActivity,double[],long[],java.lang.String)","mediaField":"q","mediaMethod":"d","workerField":"g","mediaRuntimeClass":"cc.huevia.sharedapp.a"}
+INSTRUMENTATION_RESULT: stream=FAIL after 10 R8 release runtime checks: java.lang.ClassCastException: java.util.concurrent.atomic.AtomicBoolean cannot be cast to ir
+java.lang.ClassCastException: java.util.concurrent.atomic.AtomicBoolean cannot be cast to ir
+	at zb0.S(r8-map-id-a40431be0a65ce43339699046f526d174155bf97ff8670bd77fff0cf42e67cdd:1295)
+	at cc.huevia.sharedapp.a.d(r8-map-id-a40431be0a65ce43339699046f526d174155bf97ff8670bd77fff0cf42e67cdd:102)
+	at java.lang.reflect.Method.invoke(Native Method)
+	at cc.huevia.sharedapp.ReleaseRuntimeInstrumentation.invokePrepared(ReleaseRuntimeInstrumentation.java:155)
+	at cc.huevia.sharedapp.ReleaseRuntimeInstrumentation.invoke(ReleaseRuntimeInstrumentation.java:151)
+	at cc.huevia.sharedapp.ReleaseRuntimeInstrumentation.lambda$call$3(ReleaseRuntimeInstrumentation.java:148)
+	at cc.huevia.sharedapp.ReleaseRuntimeInstrumentation.$r8$lambda$mLdFWB5rcU_p3prgY5sdYJBRzpE(Unknown Source:0)
+	at cc.huevia.sharedapp.ReleaseRuntimeInstrumentation$$ExternalSyntheticLambda0.call(D8$$SyntheticClass:0)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+	at java.lang.Thread.run(Thread.java:920)
+
+
+INSTRUMENTATION_CODE: 0

@@ -1,0 +1,63 @@
+{
+  "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "delivered": false,
+  "androidChecksPassed": true,
+  "androidRuntimeChecks": 78,
+  "appleFullRun": 43471565460,
+  "armDiagnostic": 43479234183,
+  "uiKitActualPassedOnOldSource": 5,
+  "nativePipelinePassed": false,
+  "knownFailure": "Public presentation booleans boxed C comparisons as JSON int1; strict Dart true check rejected. Next source fixes two booleans and retains strict test.",
+  "files": [
+    {
+      "file": "huevia-0.31.0-dev-219-android-arm64.apk",
+      "sha256": "1ff732c6659834c4d49f6d0f539120fefc2d55de0c17d3e934582609af4229da",
+      "bytes": 52723506
+    },
+    {
+      "file": "huevia-0.31.0-dev-219-android-x64.apk",
+      "sha256": "90f4d16bc5b334f5bef92d24ff8efd05bb14f98e9db0313b9cb27cb236f73c3a",
+      "bytes": 56226010
+    },
+    {
+      "file": "android-release-result.json",
+      "sha256": "bfdedf06596faa2042b0fedd9653ec1023d2e96ed56dc40b607985bc8438c1d5",
+      "bytes": 11
+    },
+    {
+      "file": "release-runtime.log",
+      "sha256": "dde4297ae4802f83ad7ee74b3f3d9fba2dd2e449c6dbedf355afe45aa56225ee",
+      "bytes": 1706
+    },
+    {
+      "file": "release-runtime-result.json",
+      "sha256": "05294f577ee10887caecd10f7a6c27a6336efd253eb7d2a0b2d1a451b4b5e386",
+      "bytes": 216
+    },
+    {
+      "file": "release-runtime-mapping.json",
+      "sha256": "ceabb2884e87d322d9d1eb4b1efaea92491bde8337b5ea4f0e39e0c34d0d2edb",
+      "bytes": 181
+    },
+    {
+      "file": "arm64-mapping.txt",
+      "sha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+      "bytes": 11795962
+    },
+    {
+      "file": "x64-mapping.txt",
+      "sha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+      "bytes": 11795962
+    },
+    {
+      "file": "android-signing-alignment.json",
+      "sha256": "381c9f2765cbfbd73bd33a376d4d17629b36a9c898c44275862667636328b39c",
+      "bytes": 4357
+    },
+    {
+      "file": "build-source.json",
+      "sha256": "4dd9836f7c1409eca5651efb0525dd443f637c40b356892e0ef461d4ad764313",
+      "bytes": 159
+    }
+  ]
+}

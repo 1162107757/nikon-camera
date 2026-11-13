@@ -1,0 +1,21 @@
+{
+  "exit": 0,
+  "scope": "Source API compatibility only; no SDK/JVM/UIKit execution",
+  "cases": [
+    {
+      "case": "current public API consumers and independently typed writable mock",
+      "expected": "accepted",
+      "actual": "accepted"
+    },
+    {
+      "case": "actual old89 compile-incompatible HueviaOriginalFiles.mm",
+      "expected": "rejected",
+      "actual": "rejected"
+    },
+    {
+      "case": "actual old89 compile-incompatible HueviaImportPicker.m",
+      "expected": "rejected",
+      "actual": "rejected"
+    }
+  ]
+}

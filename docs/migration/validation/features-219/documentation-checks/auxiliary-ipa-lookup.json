@@ -1,0 +1,14 @@
+{
+  "script": ".tooling/agent-account/accept219-final-docs.py:84",
+  "failedAssumption": "Ten logical image basenames were filtered only under /flutter_assets/",
+  "exception": "AssertionError",
+  "matchedZipEntries": 0,
+  "hashMismatchFound": false,
+  "rootResolution": "Root independently confirmed10 logical names with2 native bundle copies each,20 fileSHA equal independent verification; formal verifier/product correct",
+  "actualLocations": [
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/preset-showcase/"
+  ],
+  "formalVerificationPassed": true,
+  "extraZipChecksStopped": true
+}

@@ -1,0 +1,5 @@
+Exception in thread "main" java.lang.AssertionError: Connect budget 54
+	at cc.huevia.shared.SharedCameraConnectBoundaryTest.yes(SharedCameraConnectBoundaryTest.java:17)
+	at cc.huevia.shared.SharedCameraConnectBoundaryTest.timeoutCloseBlocksSameFacadeReuse(SharedCameraConnectBoundaryTest.java:86)
+	at cc.huevia.shared.SharedCameraConnectBoundaryTest.run(SharedCameraConnectBoundaryTest.java:68)
+	at cc.huevia.shared.SharedCameraConnectBoundaryTest.main(SharedCameraConnectBoundaryTest.java:145)

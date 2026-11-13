@@ -1,0 +1,69 @@
+{
+  "scope": "Private verifier parser only; not UIKit or product acceptance",
+  "checks": 10,
+  "exit": 0,
+  "cases": [
+    {
+      "case": "active nil registrar",
+      "expectedAccepted": true,
+      "actualAccepted": true,
+      "passed": true
+    },
+    {
+      "case": "active attached registrar",
+      "expectedAccepted": true,
+      "actualAccepted": true,
+      "passed": true
+    },
+    {
+      "case": "missing marker",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "inactive scene",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "zero windows",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "count typed bool",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "flag typed number",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "duplicate field",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "unknown field",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "late invalid snapshot",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    }
+  ],
+  "generatorSha256": "4d139e601f30fc02fdc06f206c554b5af5bdc422becf698add1d61dee42a7633",
+  "verifierSha256": "a6209f0ef1eb2a3c1d51217ce11463530c8649162d8ec625fdadb3f52d447fd2"
+}

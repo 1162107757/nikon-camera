@@ -1,0 +1,6 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart
+00:00 +0: remote view survives inactive overlays but still pauses for actual background
+00:00 +1: remote shutter remains blocked until the pending result is read
+00:01 +2: remote capabilities disable shutter and disconnected entry recovers
+00:01 +3: slot deletion requires the final target confirmation and cancellation sends nothing
+00:01 +4: All tests passed!

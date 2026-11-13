@@ -1,0 +1,27 @@
+[
+  {
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-account\\camera219-single-camera_controls_test.log",
+    "file": "camera_controls_test.dart",
+    "exit": 0
+  },
+  {
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-account\\camera219-single-camera_live_test.log",
+    "file": "camera_live_test.dart",
+    "exit": 0
+  },
+  {
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-account\\camera219-single-camera_downloads_test.log",
+    "file": "camera_downloads_test.dart",
+    "exit": 0
+  },
+  {
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-account\\camera219-single-connection_protection_test.log",
+    "file": "connection_protection_test.dart",
+    "exit": 0
+  },
+  {
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-account\\camera219-single-camera_test.log",
+    "file": "camera_test.dart",
+    "exit": 1
+  }
+]

@@ -1,0 +1,5 @@
+2026-11-13T16:32:12.4569480Z error: RPC failed; curl 56 Recv failure: Connection reset by peer
+2026-11-13T16:32:12.4771200Z fetch-pack: unexpected disconnect while reading sideband packet
+2026-11-13T16:32:12.5392610Z fatal: early EOF
+2026-11-13T16:32:12.6096590Z fatal: fetch-pack: invalid index-pack output
+2026-11-13T16:32:12.6658240Z ##[error]Process completed with exit code 128.

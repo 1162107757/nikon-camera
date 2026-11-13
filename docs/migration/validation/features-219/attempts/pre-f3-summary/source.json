@@ -1,0 +1,32 @@
+{
+  "branch": "codex/cross-platform-migration",
+  "versionCode": 219,
+  "scope": "local-testing-only",
+  "recordedAtUtc": "2026-11-13T15:21:51.544462+00:00",
+  "coreRun": {
+    "baseCommitAtCheck": "323a92a09049620f15d2a52f38ee63fdf7038af3",
+    "recordedWorkingTreeFingerprintsAreAuthoritative": true,
+    "currentInputsRehashed": 239,
+    "goldenBoundaryChecks": 1572,
+    "goldenSha256": "1ded5867901a5ea5dc622b58ebfc1613d472a315829bd00e093d101771cbc7a8",
+    "result": "core/result.json",
+    "includedUncommitted219WatchdogPatch": true
+  },
+  "android": {
+    "twoAbiBuildSigningAndStaticAlignment": "previous 4f candidate only; final watchdog source rebuild pending",
+    "finalR8RuntimeAndUiAcceptance": "pending"
+  },
+  "apple": {
+    "run": 43448048561,
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "state": "failed-superseded-candidate-held; not final-source acceptance",
+    "acceptedIpa": false,
+    "sharedCoreParity": "passed",
+    "failureStage": "avatar fixture compilation"
+  },
+  "delivered218ArtifactsModified": false,
+  "previousFrozenCandidate": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "sourceCommit": null,
+  "state": "watchdog-fix-tested-awaiting-final-root-freeze",
+  "previousInputBindingProof": "camera-session/attempts/4f-core1535/archive-final-source-binding.json"
+}

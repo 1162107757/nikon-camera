@@ -1,0 +1,28 @@
+{
+  "branch": "codex/cross-platform-migration",
+  "versionCode": 219,
+  "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "scope": "local-testing-only",
+  "recordedAtUtc": "2026-11-13T15:04:03.734819+00:00",
+  "inputBindingProof": "final-source-binding.json",
+  "coreRun": {
+    "baseCommitAtCheck": "ae85652ab10e0aba4fa06c070d7363671aaeac51",
+    "includedUncommitted219SessionPatch": true,
+    "recordedWorkingTreeFingerprintsAreAuthoritative": true,
+    "currentInputsRehashed": 239,
+    "goldenBoundaryChecks": 1535,
+    "goldenSha256": "ec2f8ebb16b872dce7b918e38248ee955ac33c5384a5fe4cd8a761d50afde19a",
+    "result": "core/result.json"
+  },
+  "android": {
+    "twoAbiBuildSigningAndStaticAlignment": "passed",
+    "finalR8RuntimeAndUiAcceptance": "pending"
+  },
+  "apple": {
+    "run": 43448048561,
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "state": "running-at-archive-time",
+    "acceptedIpa": false
+  },
+  "delivered218ArtifactsModified": false
+}

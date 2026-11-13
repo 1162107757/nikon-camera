@@ -1,0 +1,61 @@
+{
+  "branch": "codex/features215",
+  "versionCode": 219,
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+  "state": "final-source-frozen-platform-acceptance-pending",
+  "recordedAtUtc": "2026-11-13T15:37:14.249817+00:00",
+  "finalSourceBinding": "final-source-binding.json",
+  "previousFrozenCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "delivered": false,
+    "evidence": "attempts/4f/result.json"
+  },
+  "coreRun": {
+    "result": "core/result.json",
+    "sharedBoundaryChecks": 1623,
+    "atmosphereChecks": 6,
+    "goldenBoundaryChecks": 1629,
+    "cameraSessionBoundaryChecks": 167,
+    "cameraConnectionBoundaryChecks": 65,
+    "countsAreIncludedInSharedTotal": true,
+    "goldenSha256": "358c02ec990fe2d903f827f8b15ed963550eb231d0d01360f61c00f2196bfdd5",
+    "currentInputsRehashed": 239,
+    "rawExecutionContextPreserved": true
+  },
+  "dartCamera": {
+    "result": "flutter-camera/final-result.json",
+    "uniqueActualPassedChecks": 75,
+    "testFiles": 9,
+    "incrementalVerification": true
+  },
+  "format": {
+    "result": "flutter-format/result.json",
+    "uniqueActualPassedChecks": 6
+  },
+  "nativeCancellation": {
+    "result": "native-cancellation/result.json",
+    "jvmAssertions": 309,
+    "includedConcurrentRaces": 100,
+    "iosUIKitAndPhotoKitPlanned": 5,
+    "iosExecution": "pending"
+  },
+  "android": {
+    "state": "final-ui-acceptance-pending",
+    "acceptedForLocalAndroidTesting": false,
+    "twoAbiBuildSigningStaticAndTenImageChecks": "passed",
+    "actualPackageHashesVerified": true,
+    "finalX64R8Checks": 78,
+    "finalX64R8GateAccepted": true,
+    "runtimeResult": "android/release-runtime-result.json",
+    "uiAcceptance": "pending"
+  },
+  "apple": {
+    "run": 43453345679,
+    "sourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+    "state": "full-run-pending",
+    "acceptedIpa": false
+  },
+  "delivered218ArtifactsModified": false
+}

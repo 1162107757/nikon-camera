@@ -1,0 +1,29 @@
+{
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "status": "passed",
+  "versionCode": 219,
+  "apkSha256": "a3d5100cbff3b5a939e44a39137fc130bc875a653fa3413a5904d45153649713",
+  "coldLaunchPassed": true,
+  "originalApplicationPhotos": 19,
+  "originalPhonePhotos": 50,
+  "originalPresets": 2,
+  "androidReleaseInputsEquivalentToFunctionalUiSource": true,
+  "iosNativeSourceChanged": true,
+  "functionalUiSourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "fullManualUiReexecutionClaimed": false,
+  "functionalUiProof": "source-e554-android-ui-equivalence.json",
+  "screenshots": [
+    {
+      "file": "ui/source-e554-cold-presets.png",
+      "sha256": "c8095df53a8d53cf0218c8352c4350a75773dd20e23db2892c0d12695ca35b2d"
+    },
+    {
+      "file": "ui/source-e554-cold-phone50.png",
+      "sha256": "4bb5ec71d430e48c3e697d2cb8b0c6e61a33ef14794130506639de52043a3bcc"
+    },
+    {
+      "file": "ui/source-e554-cold-application19.png",
+      "sha256": "766ceed297c5590777f5a210f560792866f635f21b5626384d908d1f5cbfaa2b"
+    }
+  ]
+}

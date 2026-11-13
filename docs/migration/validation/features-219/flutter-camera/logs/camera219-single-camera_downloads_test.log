@@ -1,0 +1,14 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_downloads_test.dart
+00:00 +0: restored native byte receipt imports once without touching the camera
+00:00 +1: system target requests actual byte readback before completing a queue item
+00:00 +2: folder target preserves the selected capability and the same readback operation
+00:00 +3: a transient download reply cannot replace a missing durable receipt
+00:00 +4: owner change during publication retains the original and prevents completion
+00:00 +5: inactive permission overlay keeps an active queue without cancellation
+00:00 +6: actual background without protection still stops its current queue job
+00:00 +7: background protection expiration pauses a receipt and foreground continuation does not redownload
+00:00 +8: corrupt queue issues stay visible while other valid tasks remain resumable
+00:00 +9: notification stop ends a foreground queue while a normal background switch does not
+00:00 +10: idle owner changes and late restore responses never expose an old queue
+00:00 +11: live, queue and cross-page manual transfer reject competing admissions
+00:00 +12: All tests passed!

@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+  "files": [
+    {
+      "file": "arm64-apksigner.bat-final.log",
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "file": "x64-apksigner.bat-final.log",
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "file": "arm64-zipalign.exe-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "x64-zipalign.exe-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

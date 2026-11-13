@@ -1,0 +1,117 @@
+{
+  "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "status": "passed",
+  "productChecksPassed": true,
+  "apkSha256": "92222e268ab0c9233736e35e279ef748a76c909844562d8a5100d9b8d1f65f0b",
+  "versionCode": 219,
+  "device": "emulator-5584 API31, x86_64, 4KiB page",
+  "pickerRawDevelopEditorReturnReopenTwiceInSameProcess": true,
+  "phoneRawDevelopEditorReturnReopenInSameProcess": true,
+  "workingJpgAndDngSourceSeparated": true,
+  "applicationAlbumHasDistinctJpgAndRawCards": true,
+  "presetImportShowsConnectOnly": true,
+  "cancelConnectReturnsToSameSelectedPreset": true,
+  "syncCameraPhotosRemainsExplicitEntry": true,
+  "actualZ6IICameraConnectionVerified": false,
+  "realNefFileUsedInInstalledQa": false,
+  "nefLabelCoveredByIndependentWidgetTests": true,
+  "fixtureCleanup": "completed: exact owned application DNG row/copy removed with native private guards and rollback backup; exact Download copy removed by SHA guard; original photos/presets preserved",
+  "screenshots": [
+    {
+      "event": "final-picker-before-raw",
+      "file": "ui/final-picker-before-raw.png",
+      "sha256": "5ba69d976bb484e83e1d8f9e328502c2203d11ee958b2f064fb492a2ac456ebd"
+    },
+    {
+      "event": "final-picker-developed-jpg-editor",
+      "file": "ui/final-picker-developed-jpg-editor.png",
+      "sha256": "c38f150280800ad41712ab9b638423fea8730574e50e7ec117067bffbdf5c95b"
+    },
+    {
+      "event": "final-picker-return-application-album",
+      "file": "ui/final-picker-return-application-album.png",
+      "sha256": "b5c66ef5b84957b6ea7bc8867b608031022d3040c280b059dae6d445321b6f8b"
+    },
+    {
+      "event": "final-picker-reopened-jpg-first",
+      "file": "ui/final-picker-reopened-jpg-first.png",
+      "sha256": "0ad8fab908853b4cc2c162b011b34b6842b6dde607bfbbbbbd277fb1d22045e6"
+    },
+    {
+      "event": "final-picker-reopened-jpg-second",
+      "file": "ui/final-picker-reopened-jpg-second.png",
+      "sha256": "0ad8fab908853b4cc2c162b011b34b6842b6dde607bfbbbbbd277fb1d22045e6"
+    },
+    {
+      "event": "final-phone-album-own-dng",
+      "file": "ui/final-phone-album-own-dng.png",
+      "sha256": "e1ccdc6cd6b35596ae420bbbf97de85852aa1b654dea0fb90ad8894b69490192"
+    },
+    {
+      "event": "final-phone-developed-jpg-editor",
+      "file": "ui/final-phone-developed-jpg-editor.png",
+      "sha256": "f339ef5fb03333b98dac1a12f1a162335b8cc34ec5a721f80611488a4b750294"
+    },
+    {
+      "event": "final-phone-return-reopened-jpg",
+      "file": "ui/final-phone-return-reopened-jpg.png",
+      "sha256": "f339ef5fb03333b98dac1a12f1a162335b8cc34ec5a721f80611488a4b750294"
+    },
+    {
+      "event": "final-original-preset-details",
+      "file": "ui/final-original-preset-details.png",
+      "sha256": "e6be85e65209c1a882321d8d77db6400f600b07b66b2d70248db0dc21e07a9be"
+    },
+    {
+      "event": "final-preset-import-connect-only",
+      "file": "ui/final-preset-import-connect-only.png",
+      "sha256": "f2bdae7533fa1e4eef109e9521731a8ac11a4437991022f342a4f815296afaf9"
+    },
+    {
+      "event": "final-cancel-connect-back-to-same-preset",
+      "file": "ui/final-cancel-connect-back-to-same-preset.png",
+      "sha256": "e6be85e65209c1a882321d8d77db6400f600b07b66b2d70248db0dc21e07a9be"
+    },
+    {
+      "event": "final-sync-camera-navigation",
+      "file": "ui/final-sync-camera-navigation.png",
+      "sha256": "2ff6179c69c487edb66812e98b2fee9222465562590bbedec038a3e82c83ebed"
+    },
+    {
+      "event": "final-own-two-fixtures-selected",
+      "file": "ui/final-own-two-fixtures-selected.png",
+      "sha256": "c411e937977cdc0f834a174cb7db1eb9074a0ce06a46a35e47e46553180b4486"
+    },
+    {
+      "event": "final-own-two-fixtures-deleted",
+      "file": "ui/final-own-two-fixtures-deleted.png",
+      "sha256": "f53fe036708cf48e61096e5539be8e90123dc80e297e4b9f754284aec9fb1b6a"
+    },
+    {
+      "event": "final-own-dng-cleanup-fresh-scope",
+      "file": "ui/final-own-dng-cleanup-fresh-scope.png",
+      "sha256": "57136a0fa496163d650c73c6fa24fa532638e0333d41e18fd09364b5c3401940"
+    },
+    {
+      "event": "final-restored-original-19-app-photos",
+      "file": "ui/final-restored-original-19-app-photos.png",
+      "sha256": "3a96b905db6cbb85fb22fdf2f7768116ac97700da7f3fd4ded28028041c72dd8"
+    },
+    {
+      "event": "final-restored-original-phone-album",
+      "file": "ui/final-restored-original-phone-album.png",
+      "sha256": "2e958c6bb959fbe56c3d4c50c8b49e2bf5f6efffcf802ceea475c3069cc59469"
+    },
+    {
+      "event": "final-restored-original-two-presets",
+      "file": "ui/final-restored-original-two-presets.png",
+      "sha256": "00494a126bfe6592dc440816db7d0dd84f341dcee765380cdb9df642993b659d"
+    }
+  ],
+  "clientPublished": false,
+  "applicationPhotoCountAfterCleanup": 19,
+  "phonePhotoCountAfterCleanup": 50,
+  "presetCountAfterCleanup": 2,
+  "rawDeletionProductCheckPassed": false,
+  "rawDeletionExistingLimitation": "Native application original-file validation rejected DNG; private test-data cleanup does not count as product RAW deletion success."
+}

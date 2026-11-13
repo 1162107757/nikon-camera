@@ -1,0 +1,13 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart
+00:00 +0: Explicit photo-page disconnect remains available without cancelling a completed connection job
+00:00 +1: Leaving before slots opens releases only its late-owned lease and starts no preview
+00:00 +2: Leaving before remote opens releases only its late-owned lease and starts no preview
+00:00 +3: Healthy slots mode is connected without loading photos or reporting zero photos
+00:01 +4: Preset import connects then returns directly to the selected preset slots without browsing
+00:01 +5: Already connected preset import skips connection and keeps the selected source
+00:01 +6: A failure result cannot continue preset import to slots
+00:01 +7: A not-connected result cannot continue preset import to slots
+00:02 +8: Cancel and leaving discard a late connection result and cancel only its pending job once
+00:02 +9: An owner change during connection cannot import the old preset for a new account
+00:02 +10: Hidden sync never reads photos; explicitly entering camera photos does
+00:02 +11: All tests passed!

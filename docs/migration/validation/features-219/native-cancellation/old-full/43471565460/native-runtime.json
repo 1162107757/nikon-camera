@@ -1,0 +1,36 @@
+{
+  "hostSimulatorArchitecture": "x86_64",
+  "jreLibraries": [
+    {
+      "BinaryPath": "libjre_emul.a",
+      "HeadersPath": "Headers",
+      "LibraryIdentifier": "ios-arm64",
+      "LibraryPath": "libjre_emul.a",
+      "SupportedArchitectures": [
+        "arm64"
+      ],
+      "SupportedPlatform": "ios"
+    },
+    {
+      "BinaryPath": "libjre_emul.a",
+      "HeadersPath": "Headers",
+      "LibraryIdentifier": "ios-x86_64-simulator",
+      "LibraryPath": "libjre_emul.a",
+      "SupportedArchitectures": [
+        "x86_64"
+      ],
+      "SupportedPlatform": "ios",
+      "SupportedPlatformVariant": "simulator"
+    },
+    {
+      "BinaryPath": "libjre_emul.a",
+      "HeadersPath": "Headers",
+      "LibraryIdentifier": "macos-x86_64",
+      "LibraryPath": "libjre_emul.a",
+      "SupportedArchitectures": [
+        "x86_64"
+      ],
+      "SupportedPlatform": "macos"
+    }
+  ]
+}

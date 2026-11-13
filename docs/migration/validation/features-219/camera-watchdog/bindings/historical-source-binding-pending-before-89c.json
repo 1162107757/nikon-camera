@@ -1,0 +1,34 @@
+{
+  "status": "final source bound; new full platform gates pending",
+  "coreResult": "../core/result.json",
+  "coreChecks": 1629,
+  "coreRunBaseCommit": "323a92a09049620f15d2a52f38ee63fdf7038af3",
+  "newFinalSourceCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+  "previousCandidate": {
+    "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+    "appleRun": 43448048561,
+    "status": "failed; superseded candidate held",
+    "sharedCoreParity": "passed",
+    "failureStage": "avatar fixture compilation",
+    "failureSummarySource": "Root-reported CI stage summary; no raw user diagnostic report copied",
+    "acceptedAsFinalWatchdogSourceVerification": false
+  },
+  "nextStep": "Root completes Android R8/UI and the new-source Apple full gates.",
+  "sourceModifiedByThisReview": false,
+  "testsOrBuildsRerunByThisReview": false,
+  "recordedAtUtc": "2026-11-13T15:21:51.544462+00:00",
+  "readOnlyOwnershipReview": {
+    "newBlockerFound": false,
+    "sourceSha256": "484198e0ae156f9b46739dd6fada7a682d6afd8196ff074447baf79c84591cf7",
+    "checked": [
+      "connect catch closes synchronously before request monitor is released",
+      "timer/lifecycle close tails retain the closing barrier until physical close returns",
+      "stop detaches only its exact current owned object and clears the candidate",
+      "success retirement remains terminal even if final progress callback throws; original failure closes and clears the worker owner",
+      "factory results that arrive after cancellation are never published and close before the next request can start"
+    ],
+    "testsOrSourceChangesPerformed": false
+  },
+  "newAppleRun": 43453345679,
+  "bindingProof": "../core/final-source-binding.json"
+}

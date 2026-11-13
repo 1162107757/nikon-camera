@@ -1,0 +1,747 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-13T14:28:58.048837+00:00",
+  "platform": "Windows host; production Android Java helper",
+  "nativeTaskAssertions": 309,
+  "concurrentFinishCancelRaces": 100,
+  "checks": [
+    {
+      "name": "camera219-native-task-tests",
+      "exit": 0,
+      "command": [
+        "C:\\Users\\11621\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\tool\\native_task_check.py",
+        "--build-dir",
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-camera\\native-task-jvm"
+      ]
+    },
+    {
+      "name": "camera219-native-source-check",
+      "exit": 0,
+      "command": [
+        "C:\\Users\\11621\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\tool\\source_check.py"
+      ]
+    },
+    {
+      "name": "camera219-shell-syntax",
+      "exit": 0,
+      "command": [
+        "D:/dev/Git/bin/bash.exe",
+        "-n",
+        "cross-platform/tool/apple_integration.sh"
+      ]
+    },
+    {
+      "name": "camera219-analyze",
+      "exit": 0,
+      "targets": [
+        "integration_test/camera_foreground_fixture.dart",
+        "integration_test/native_pipeline_test.dart"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+      "bytes": 614,
+      "sha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+      "bytes": 17947,
+      "sha256": "3f5ccf2c991c8ada7e6a20eccdc49d706daa17746caab3cec2441511d185721b"
+    },
+    {
+      "path": "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java",
+      "bytes": 4613,
+      "sha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef"
+    },
+    {
+      "path": "cross-platform/tool/native_task_check.py",
+      "bytes": 1473,
+      "sha256": "9e4d4159885eb45a03a7b86bd28a63f872ae948b2ada7823a915fde412467cbd"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.h",
+      "bytes": 248,
+      "sha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.m",
+      "bytes": 383,
+      "sha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTask.h",
+      "bytes": 369,
+      "sha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaTask.m",
+      "bytes": 1048,
+      "sha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+      "bytes": 21413,
+      "sha256": "bc321eeb25abc0450d3989a00ec9fce0647912f646c1a1329eb516271827c33b"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.m",
+      "bytes": 4946,
+      "sha256": "90e73d63639a1fec075e1ec769c97e6753cd1ed0913b4653a9e3b31ecefc6c8c"
+    },
+    {
+      "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+      "bytes": 9190,
+      "sha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f"
+    },
+    {
+      "path": "cross-platform/tool/apple_integration.sh",
+      "bytes": 7197,
+      "sha256": "76ccd9a0b08076a01b649713962f32cc10e453835b97da320d70f567472bccc7"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.h",
+      "bytes": 1108,
+      "sha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+      "bytes": 4658,
+      "sha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac"
+    },
+    {
+      "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+      "bytes": 1138,
+      "sha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543"
+    },
+    {
+      "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+      "bytes": 52758,
+      "sha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e"
+    }
+  ],
+  "iosExecution": {
+    "status": "e554 full43482938724 accepted for local testing after root independent verify exit0: fresh309/100race,5UIKit with JSON type assertions,whole native pipeline success; snapshotnull/machine-test.",
+    "testCaseCount": 5,
+    "cases": [
+      "testCameraPresenterRecoversFromMissingAndDetachedRegistration",
+      "testCameraPresenterRejectsBackgroundAndHiddenWindows",
+      "testCameraPresentationCancellationPreventsQueuedPresentation",
+      "testNativeTaskCancellationRetiresBeforeDelivery",
+      "testPhotoLibraryConsent"
+    ],
+    "nativePipelineAssertion": "verifyCameraForegroundPresentation",
+    "finalSource": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "finalAppleFullRun": 43482938724,
+    "latestDiagnostic": {
+      "run": 43479234183,
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "architecture": "arm64",
+      "uiKitPassed": 5,
+      "uiKitFailures": 0,
+      "foregroundSnapshotPassed": false,
+      "nativePipelinePassed": false,
+      "acceptedIpa": false
+    }
+  },
+  "hardware": "No physical iPhone/Z6II Wi-Fi or USB validation in this receipt.",
+  "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "appleFullRun": 43448048561,
+  "sourceFingerprintsMatchFrozenSource": true,
+  "sourceCommitNote": "Existing Windows check logs retained without rerun; all 16 recorded source byte hashes match the frozen 219 product source. No UIKit/Mac success asserted.",
+  "readOnlyReview": {
+    "coreAndNativeCancellationFence": "Consistent: exact active core actor, transportFinished, native finish before GUI delivery, current lease token, detach/close barrier and revision-protected slot transfer.",
+    "dartCameraReceipt": "../flutter-camera/result.json",
+    "dartUniqueChecks": 71,
+    "dartSelectedFiles": 9,
+    "additionalTestsRunByReviewer": false,
+    "reportedFinding": {
+      "file": "cross-platform/core/java/cc/huevia/shared/SharedCamera.java",
+      "line": 334,
+      "issue": "ConnectAttempt watchdog can resume after finish and close owned transport because it does not recheck finished/actor after clock supplier returns. Independently confirmed by core owner; reported to root, no source change performed by this review."
+    }
+  },
+  "finalSourceBinding": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "appleFullRun": 43482938724,
+    "boundAtUtc": "2026-11-13T18:30:54.862461+00:00",
+    "originalContextSources": 16,
+    "unchangedOriginalContextSourceCount": 14,
+    "changedOriginalContextSourceCount": 2,
+    "bindings": [
+      {
+        "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+        "originalRecordedRawSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+        "currentRawSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+        "originalRecordedRawSha256": "3f5ccf2c991c8ada7e6a20eccdc49d706daa17746caab3cec2441511d185721b",
+        "currentRawSha256": "3f5ccf2c991c8ada7e6a20eccdc49d706daa17746caab3cec2441511d185721b",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java",
+        "originalRecordedRawSha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef",
+        "currentRawSha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/tool/native_task_check.py",
+        "originalRecordedRawSha256": "9e4d4159885eb45a03a7b86bd28a63f872ae948b2ada7823a915fde412467cbd",
+        "currentRawSha256": "9e4d4159885eb45a03a7b86bd28a63f872ae948b2ada7823a915fde412467cbd",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.h",
+        "originalRecordedRawSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd",
+        "currentRawSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.m",
+        "originalRecordedRawSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c",
+        "currentRawSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaTask.h",
+        "originalRecordedRawSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01",
+        "currentRawSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaTask.m",
+        "originalRecordedRawSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb",
+        "currentRawSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+        "originalRecordedRawSha256": "bc321eeb25abc0450d3989a00ec9fce0647912f646c1a1329eb516271827c33b",
+        "currentRawSha256": "bc321eeb25abc0450d3989a00ec9fce0647912f646c1a1329eb516271827c33b",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.m",
+        "originalRecordedRawSha256": "90e73d63639a1fec075e1ec769c97e6753cd1ed0913b4653a9e3b31ecefc6c8c",
+        "currentRawSha256": "90e73d63639a1fec075e1ec769c97e6753cd1ed0913b4653a9e3b31ecefc6c8c",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+        "originalRecordedRawSha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f",
+        "currentRawSha256": "92ef97dc037166eb9f7dcfcdc2e7612be3c22919d703117a265256efaeb1c07d",
+        "matchesOriginalExecutionContext": false,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/tool/apple_integration.sh",
+        "originalRecordedRawSha256": "76ccd9a0b08076a01b649713962f32cc10e453835b97da320d70f567472bccc7",
+        "currentRawSha256": "76ccd9a0b08076a01b649713962f32cc10e453835b97da320d70f567472bccc7",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.h",
+        "originalRecordedRawSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e",
+        "currentRawSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+        "originalRecordedRawSha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac",
+        "currentRawSha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13",
+        "matchesOriginalExecutionContext": false,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+        "originalRecordedRawSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543",
+        "currentRawSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+        "originalRecordedRawSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e",
+        "currentRawSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e",
+        "matchesOriginalExecutionContext": true,
+        "matchesFinalGitAfterLfNormalization": true
+      }
+    ],
+    "actualJvmProducerFiles": [
+      "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+      "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java"
+    ],
+    "actual309JvmProducerBytesUnchanged": true,
+    "originalExecutionPreserved": true,
+    "bindingOnlyNoTestsRerun": true,
+    "newBooleanTypeAssertionsExecuted": true,
+    "iosFiveTestsStatus": "actual5passed0failure14.001s including5BOOL+2count original/JSONroundtrip publicCFTypes",
+    "appleFullRunStatus": "completed/success; root independent verifier exit0; acceptedlocal/publishedfalse",
+    "separateConsumerAndSourceGuardBinding": "api-consumer-migration/result.json",
+    "booleanContractFixBinding": "bool-contract-fix/result.json"
+  },
+  "finalSourceBindingHistory": [
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "appleFullRun": 43458258245,
+      "boundAtUtc": "2026-11-13T16:22:50.149390+00:00",
+      "recordedContextSources": 16,
+      "allRecordedContextRawBytesUnchanged": true,
+      "allRecordedContextMatchesFinalGitAfterLfNormalization": true,
+      "actualJvmProducerFiles": [
+        "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+        "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java"
+      ],
+      "actual309JvmProducerBytesUnchanged": true,
+      "originalExecutionPreserved": true,
+      "noJavaOrFlutterRerunForBinding": true,
+      "doesNotClaimCoreWatchdogOrDartRerun": true,
+      "iosFiveTestsStatus": "not executed: a54 avatar fixture compile failed; replacement full gate required",
+      "bindings": [
+        {
+          "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+          "recordedRawSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+          "recordedRawSha256": "3f5ccf2c991c8ada7e6a20eccdc49d706daa17746caab3cec2441511d185721b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java",
+          "recordedRawSha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/native_task_check.py",
+          "recordedRawSha256": "9e4d4159885eb45a03a7b86bd28a63f872ae948b2ada7823a915fde412467cbd",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.h",
+          "recordedRawSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.m",
+          "recordedRawSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTask.h",
+          "recordedRawSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTask.m",
+          "recordedRawSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+          "recordedRawSha256": "bc321eeb25abc0450d3989a00ec9fce0647912f646c1a1329eb516271827c33b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.m",
+          "recordedRawSha256": "90e73d63639a1fec075e1ec769c97e6753cd1ed0913b4653a9e3b31ecefc6c8c",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+          "recordedRawSha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/apple_integration.sh",
+          "recordedRawSha256": "76ccd9a0b08076a01b649713962f32cc10e453835b97da320d70f567472bccc7",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.h",
+          "recordedRawSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+          "recordedRawSha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+          "recordedRawSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+          "recordedRawSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        }
+      ],
+      "appleFullRunStatus": "failure before UIKit/Foundation execution",
+      "failedAvatarFixtureEvidence": "fixture-fixes/avatar-a54-mixed-language/result.json"
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "appleFullRun": 43464094785,
+      "boundAtUtc": "2026-11-13T16:42:08.394990+00:00",
+      "recordedContextSources": 16,
+      "allRecordedContextRawBytesUnchanged": true,
+      "allRecordedContextMatchesFinalGitAfterLfNormalization": true,
+      "actualJvmProducerFiles": [
+        "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+        "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java"
+      ],
+      "actual309JvmProducerBytesUnchanged": true,
+      "originalExecutionPreserved": true,
+      "noJavaOrFlutterRerunForBinding": true,
+      "doesNotClaimCoreWatchdogOrDartRerun": true,
+      "iosFiveTestsStatus": "not executed/accepted in this failed run",
+      "bindings": [
+        {
+          "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+          "recordedRawSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+          "recordedRawSha256": "3f5ccf2c991c8ada7e6a20eccdc49d706daa17746caab3cec2441511d185721b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java",
+          "recordedRawSha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/native_task_check.py",
+          "recordedRawSha256": "9e4d4159885eb45a03a7b86bd28a63f872ae948b2ada7823a915fde412467cbd",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.h",
+          "recordedRawSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.m",
+          "recordedRawSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTask.h",
+          "recordedRawSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTask.m",
+          "recordedRawSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+          "recordedRawSha256": "bc321eeb25abc0450d3989a00ec9fce0647912f646c1a1329eb516271827c33b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.m",
+          "recordedRawSha256": "90e73d63639a1fec075e1ec769c97e6753cd1ed0913b4653a9e3b31ecefc6c8c",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+          "recordedRawSha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/apple_integration.sh",
+          "recordedRawSha256": "76ccd9a0b08076a01b649713962f32cc10e453835b97da320d70f567472bccc7",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.h",
+          "recordedRawSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+          "recordedRawSha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+          "recordedRawSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+          "recordedRawSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        }
+      ],
+      "appleFullRunStatus": "failed: production readonly cancellation API caller compile; replacement source pending",
+      "newTestsExecutedForBinding": false
+    },
+    {
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "appleFullRun": 43471565460,
+      "boundAtUtc": "2026-11-13T17:21:46.131434+00:00",
+      "recordedContextSources": 16,
+      "allRecordedContextRawBytesUnchanged": true,
+      "allRecordedContextMatchesFinalGitAfterLfNormalization": true,
+      "actualJvmProducerFiles": [
+        "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+        "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java"
+      ],
+      "actual309JvmProducerBytesUnchanged": true,
+      "originalExecutionPreserved": true,
+      "noJavaOrFlutterRerunForBinding": true,
+      "doesNotClaimCoreWatchdogOrDartRerun": true,
+      "iosFiveTestsStatus": "Five original91 cases passed in ARM diagnostic43479234183; full gate still separate; new post-fix JSON assertions pending",
+      "bindings": [
+        {
+          "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+          "recordedRawSha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/MainActivity.java",
+          "recordedRawSha256": "3f5ccf2c991c8ada7e6a20eccdc49d706daa17746caab3cec2441511d185721b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java",
+          "recordedRawSha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/native_task_check.py",
+          "recordedRawSha256": "9e4d4159885eb45a03a7b86bd28a63f872ae948b2ada7823a915fde412467cbd",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.h",
+          "recordedRawSha256": "962db2579eb555c21c5e6b15b6eaa8549ccfda33600af44494a2b7b5ec08f9dd",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTaskCancellation.m",
+          "recordedRawSha256": "652dcf64cf90bb5c5d3a08ee48550b1ec3ab13b8af8e90bb19a09bdb32dee09c",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTask.h",
+          "recordedRawSha256": "04e23d6ae113acf8b5f97fb7d06b2e7415137f644f05245bc74f07ee12b8fb01",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaTask.m",
+          "recordedRawSha256": "f5c3d005f72a6a53bd299bf092fc350b5425a3a5c1b9a0d1d015a6f9bd986bdb",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCorePlugin.m",
+          "recordedRawSha256": "bc321eeb25abc0450d3989a00ec9fce0647912f646c1a1329eb516271827c33b",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaConnectionProtection.m",
+          "recordedRawSha256": "90e73d63639a1fec075e1ec769c97e6753cd1ed0913b4653a9e3b31ecefc6c8c",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+          "recordedRawSha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/apple_integration.sh",
+          "recordedRawSha256": "76ccd9a0b08076a01b649713962f32cc10e453835b97da320d70f567472bccc7",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.h",
+          "recordedRawSha256": "35b900f6eb225b283f48d742568d35ddb678375ef5b103294608fd1d71b06a2e",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+          "recordedRawSha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+          "recordedRawSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+          "recordedRawSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e",
+          "currentRawMatchesRecorded": true,
+          "matchesFinalGitAfterLfNormalization": true
+        }
+      ],
+      "appleFullRunStatus": "in progress; no acceptance asserted",
+      "newTestsExecutedForBinding": false,
+      "separateConsumerAndSourceGuardBinding": "api-consumer-migration/result.json"
+    }
+  ],
+  "iosAttemptHistory": [
+    {
+      "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+      "run": 43458258245,
+      "status": "failed",
+      "stage": "avatar fixture Objective-C/Objective-C++ mixed compile",
+      "uiKitTestsExecuted": false,
+      "evidence": "fixture-fixes/avatar-a54-mixed-language/result.json"
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "run": 43463073963,
+      "status": "failed",
+      "stage": "Git reset/early EOF dependency checkout exit 128 before subsequent gates",
+      "uiKitTestsExecuted": false,
+      "evidenceOwner": "account_delivery aggregate Apple attempt archive"
+    },
+    {
+      "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+      "run": 43464094785,
+      "status": "failed",
+      "stage": "iPhone production compile: assignment to readonly HueviaTask.cancelled; source consumers fixed separately",
+      "uiKitTestsExecuted": false,
+      "evidence": "api-consumer-migration/result.json"
+    },
+    {
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "run": 43471565460,
+      "status": "failure",
+      "stage": "Foreground DTO assertion expectedtrue/actual1 after449Flutter and5UIKitpassed",
+      "uiKitTestsExecuted": true,
+      "actualGithubConclusion": "failure",
+      "wasCancelled": false,
+      "deliveryHeld": true,
+      "uiKitPassed": 5,
+      "uiKitSeconds": 56.134,
+      "evidence": "old-full/43471565460/result.json"
+    }
+  ],
+  "pendingApiConsumerMigration": "api-consumer-migration/result.json",
+  "pendingBooleanDtoMigration": {
+    "diagnosticEvidence": "diagnostics/43479234183/result.json",
+    "changedContextFiles": [
+      {
+        "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+        "originalRecordedSha256": "7a6bce56b20022fbc84149d570b9e645e694ae600d9cdcece92b0664f83df64f",
+        "pendingCurrentSha256": "92ef97dc037166eb9f7dcfcdc2e7612be3c22919d703117a265256efaeb1c07d"
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+        "originalRecordedSha256": "bc964724d58ae808d3c9f25259e8ec97283c9eb792193ce76efbf6bf2aaeadac",
+        "pendingCurrentSha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13"
+      }
+    ],
+    "unchangedContextFileCount": 14,
+    "actual309JavaInputsUnchanged": true,
+    "newRootSourcePending": false,
+    "postFixUiKitExecution": "actualpassed5/e554full43482938724 including newtype assertions",
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "appleFullRun": 43482938724
+  },
+  "oldIntelFullEvidence": "old-full/43471565460/result.json",
+  "currentFullExecution": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "run": 43482938724,
+    "evidence": "executions/43482938724/result.json",
+    "freshNativeJvmChecksPassed": 309,
+    "uiKitCasesPassed": 5,
+    "newBooleanTypeAssertionsExecuted": true,
+    "nativePipelinePassed": true,
+    "foregroundAssertionsPassed": true,
+    "foregroundSnapshot": null,
+    "foregroundEvidence": "machine-test",
+    "sourcePinnedMandatoryIosPath": true,
+    "uiKitFailures": 0,
+    "uiKitSeconds": 14.001,
+    "newJsonTypeAssertionsExecuted": true,
+    "freshNativeJvmTransitionRaces": 100,
+    "nativePipelineSchema": 1,
+    "nativeWholeCaseCount": 1,
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSnapshotFixturePassed": true,
+    "rootIndependentVerifierExit": 0,
+    "acceptedForLocalTesting": true,
+    "published": false,
+    "publicCiResult": "../apple/ci-result.json",
+    "publicIndependentVerification": "../apple/independent-verification.json",
+    "actualJVMLog": "executions/43482938724/native-task-tests.log",
+    "ipaBytes": 64890557,
+    "ipaSha256": "368f299c53ac8b0a8f9e4bcdaec02ac17a1ca14229f8630416b0af95e338580f"
+  }
+}

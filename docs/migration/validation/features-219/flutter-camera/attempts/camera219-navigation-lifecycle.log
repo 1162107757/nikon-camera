@@ -1,0 +1,55 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart
+00:00 +0: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Leaving before slots opens releases only its late-owned lease and starts no preview
+00:00 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Leaving before remote opens releases only its late-owned lease and starts no preview
+00:00 +2: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Healthy slots mode is connected without loading photos or reporting zero photos
+00:01 +3: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Preset import connects then returns directly to the selected preset slots without browsing
+00:01 +4: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Already connected preset import skips connection and keeps the selected source
+00:01 +5: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A failure result cannot continue preset import to slots
+00:01 +6: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: A not-connected result cannot continue preset import to slots
+00:01 +7: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Cancel and leaving discard a late connection result and cancel only its pending job once
+00:02 +8: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: An owner change during connection cannot import the old preset for a new account
+00:02 +9: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_intent_test.dart: Hidden sync never reads photos; explicitly entering camera photos does
+00:02 +10: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart
+00:03 +10: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: permission inactive never forwards a background command
+00:03 +11: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: foreground commands are serialized and a delayed background command is followed by the latest resumed state
+00:03 +12: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: superseded foreground transitions do not replay an obsolete state
+00:03 +13: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: expired native event wins over an earlier active response
+00:03 +14: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: out-of-order actor replies cannot restore protection after the last actor stopped
+00:03 +15: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: notification stop ends idle foreground live and is never replayed on foreground
+00:03 +16: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: malformed protection events suspend background work and foreground state is forwarded
+00:03 +17: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: protected background live expires without polling and automatically reconciles on foreground
+00:03 +18: D:/dev/ai-project/nikon-camera/cross-platform/app/test/connection_protection_test.dart: foreground arrival before canceled download returns still resumes live automatically
+00:03 +19: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart
+00:03 +19: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote view survives inactive overlays but still pauses for actual background
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: an object with length of <1>
+  Actual: WhereIterable<String>:['camera.remote.frame', 'camera.remote.frame']
+   Which: has length of <2>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart:137:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart line 137
+The test description was:
+  remote view survives inactive overlays but still pauses for actual background
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:04 +19 -1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote view survives inactive overlays but still pauses for actual background [E]
+  Test failed. See exception logs above.
+  The test description was: remote view survives inactive overlays but still pauses for actual background
+  
+00:04 +19 -1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote shutter remains blocked until the pending result is read
+00:04 +20 -1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote capabilities disable shutter and disconnected entry recovers
+00:05 +21 -1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart: slot deletion requires the final target confirmation and cancellation sends nothing
+00:05 +22 -1: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_controls_test.dart: remote view survives inactive overlays but still pauses for actual background

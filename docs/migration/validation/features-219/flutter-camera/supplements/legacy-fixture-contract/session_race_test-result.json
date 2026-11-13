@@ -1,0 +1,21 @@
+{
+  "command": [
+    "flutter",
+    "test",
+    "--no-pub",
+    "--no-enable-impeller",
+    "--concurrency=1",
+    "--reporter=expanded",
+    "--timeout=90s",
+    "test/session_race_test.dart"
+  ],
+  "file": "test/session_race_test.dart",
+  "startedAtUtc": "2026-11-13T17:12:00.609274+00:00",
+  "endedAtUtc": "2026-11-13T17:12:05.973652+00:00",
+  "exit": 0,
+  "allTestsPassedMessage": true,
+  "log": "session_race_test.log",
+  "logSha256": "b37a4d49eac8fc4ce2d5e6620c43ded2fe125f32a5e460ed5f87e3ccee6f102b",
+  "sourceCommitAtExecution": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "fixtureChangesUncommittedAtRun": true
+}

@@ -1,0 +1,130 @@
+{
+  "run": 43479234183,
+  "verification": "native-diagnostic",
+  "actualGithubHeadSha": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "githubConclusion": "failure",
+  "artifactId": 14066345230,
+  "artifactZipDigest": "sha256:9ff93eff1e7c0d21616ad1385abbc7c49428e8b6c991d9396a694a35abd17a90",
+  "hostSimulatorArchitecture": "arm64",
+  "simulatorSdkBuild": "passed",
+  "uiKit": {
+    "passedCases": [
+      "testCameraPresentationCancellationPreventsQueuedPresentation",
+      "testCameraPresenterRecoversFromMissingAndDetachedRegistration",
+      "testCameraPresenterRejectsBackgroundAndHiddenWindows",
+      "testNativeTaskCancellationRetiresBeforeDelivery",
+      "testPhotoLibraryConsent"
+    ],
+    "executed": 5,
+    "failures": 0,
+    "testCaseSeconds": 13.195,
+    "sourceIsPreBooleanFix": true
+  },
+  "nativeForeground": {
+    "passed": false,
+    "failureStage": "camera_foreground_fixture.dart:18",
+    "expected": "JSON boolean true",
+    "actual": "JSON number 1",
+    "markerPrinted": false,
+    "realActiveSceneAndWindowCountsPassed": true
+  },
+  "nativePipeline": {
+    "success": false,
+    "sourceMatchesGithubHead": true,
+    "failedBeforeDownstreamRetouchAndRawChecks": true,
+    "actualFixtureSourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c"
+  },
+  "acceptedForIpaDelivery": false,
+  "ipaCountInDiagnosticArtifact": 0,
+  "minimumFix": "HueviaCameraPresentation comparison-derived flags must emit @YES/@NO, keep strict Dart bool assertions",
+  "postFixSources": [
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+      "sha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13"
+    },
+    {
+      "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+      "sha256": "92ef97dc037166eb9f7dcfcdc2e7612be3c22919d703117a265256efaeb1c07d"
+    }
+  ],
+  "postFixSdkExecution": "pending new root freeze/full gate",
+  "recordedAtUtc": "2026-11-13T18:25:27.215601+00:00",
+  "evidence": [
+    {
+      "file": "artifact.json",
+      "bytes": 420,
+      "sha256": "356f656afd9b34255ef884fd8afc9e1ee762d6cb5fac66529ef3d940d536842e"
+    },
+    {
+      "file": "native-runtime.json",
+      "bytes": 884,
+      "sha256": "3c4d87c2454860918f07b6230c482b53015aec7163852f082deae799e7e51d8d"
+    },
+    {
+      "file": "simulator-pipeline-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "simulator-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "simulator-result.json",
+      "bytes": 2400,
+      "sha256": "4e6d9ffd8d34068aad9ae9ea4754562f9cb933ed3b709d396256944eef14c3a0"
+    },
+    {
+      "file": "simulator-selection.json",
+      "bytes": 228,
+      "sha256": "a50dec07e1d7e9b9df596c9ce4815cf61d5cf5eb53e11c8ca7fc3ac5a059d23c"
+    },
+    {
+      "file": "simulator-tests.log",
+      "bytes": 8160,
+      "sha256": "ee8186c8f47acd21c477f7b24520877ac73bdc98c9bd6016d77dd47498676604"
+    }
+  ],
+  "followupFixBinding": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "fullRun": 43482938724,
+    "status": "e554 full acceptedlocal after independent verifierexit0",
+    "oldDiagnosticHeadAndFivePassesPreserved": true,
+    "postFixSources": [
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaCameraPresentation.m",
+        "sha256": "43a2235c4843e1f83daa07b2bf8a0c3f5446f22ac03b409dbf55ede1b68f4a13"
+      },
+      {
+        "path": "cross-platform/app/ios/RunnerTests/RunnerTests.m",
+        "sha256": "92ef97dc037166eb9f7dcfcdc2e7612be3c22919d703117a265256efaeb1c07d"
+      }
+    ],
+    "newJsonTypeAssertionsExecuted": true,
+    "currentFullExecution": {
+      "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+      "run": 43482938724,
+      "uiKitCasesPassed": 5,
+      "uiKitFailures": 0,
+      "uiKitSeconds": 14.001,
+      "newJsonTypeAssertionsExecuted": true,
+      "freshNativeJvmChecksPassed": 309,
+      "freshNativeJvmTransitionRaces": 100,
+      "nativePipelinePassed": true,
+      "nativePipelineSchema": 1,
+      "nativeWholeCaseCount": 1,
+      "nativeForegroundSnapshot": null,
+      "nativeForegroundSnapshotEvidence": "machine-test",
+      "nativeForegroundSnapshotFixturePassed": true,
+      "rootIndependentVerifierExit": 0,
+      "acceptedForLocalTesting": true,
+      "published": false,
+      "publicCiResult": "../../../apple/ci-result.json",
+      "publicIndependentVerification": "../../../apple/independent-verification.json",
+      "actualJVMLog": "../../executions/43482938724/native-task-tests.log",
+      "ipaBytes": 64890557,
+      "ipaSha256": "368f299c53ac8b0a8f9e4bcdaec02ac17a1ca14229f8630416b0af95e338580f"
+    }
+  }
+}

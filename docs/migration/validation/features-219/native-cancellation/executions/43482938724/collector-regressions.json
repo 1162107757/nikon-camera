@@ -1,0 +1,111 @@
+{
+  "exit": 0,
+  "checks": 17,
+  "cases": [
+    {
+      "case": "real e554 absent marker with pinned mandatory iOS success",
+      "expectedAccepted": true,
+      "actualAccepted": true,
+      "passed": true
+    },
+    {
+      "case": "wrong artifact source",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "wrong machine source",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "failed machine result",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "skipped named case despite success flag",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "missing named case",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "missing mandatory await changes source blob",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "skipped fixture changes source blob",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "non-iOS runtime",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "missing iOS SDK proof",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "stale nonce",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "wrong fixture bytes",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "valid synthetic marker takes precedence over machine fallback",
+      "expectedAccepted": true,
+      "actualAccepted": true,
+      "passed": true
+    },
+    {
+      "case": "invalid marker cannot be rescued by successful machine result",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "numeric marker bool cannot fall back",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "actual failed91 run43479234183 negative control",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    },
+    {
+      "case": "actual failed91 run43471565460 negative control",
+      "expectedAccepted": false,
+      "actualAccepted": false,
+      "passed": true
+    }
+  ],
+  "scope": "Private evidence collector only; no app test rerun",
+  "helperSha256": "631e11fe6a7ac22d4a99a9a3e94bb321237f47f5a2a3dd9a6fe3fa396e29e121",
+  "actualEvidence": "e554 full43482938724"
+}

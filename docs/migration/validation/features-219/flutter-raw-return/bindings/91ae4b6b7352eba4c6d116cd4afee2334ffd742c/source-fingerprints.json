@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+  "bindingPerformedAtUtc": "2026-11-13T17:23:00.987029+00:00",
+  "bindingOnlyNoTestRerun": true,
+  "sourceAtExecution": "The test command did not record git HEAD. Tested file contents are bound below to the final commit after execution; no execution-at-commit claim is made.",
+  "precedingCommit": "f3b6eeca671cd0336dd75f5862129d59364b1e76",
+  "precedingCommitRecordedByTestCommand": false,
+  "originalFormatTestUnmodified": true,
+  "sourceFiles": [
+    {
+      "path": "cross-platform/app/lib/legacy_photos.dart",
+      "runWorkingTreeRawSha256": "2bce2960e736cae1cb54c9d7e8b72db008bbcb3b9cc3020fb30002da0e01cb52",
+      "frozenGitBlobSha256": "a256f092426caf29174ae3fd69e03910d3f2b38ad44828ce8432dbee0345f1a4",
+      "rawBytesMatch": false,
+      "lfNormalizedMatch": true
+    },
+    {
+      "path": "cross-platform/app/test/raw_album_return_test.dart",
+      "runWorkingTreeRawSha256": "f44ad44560d9fe1a3946446b7b3f5da6112cc3acec1064b68df9c3f184707686",
+      "frozenGitBlobSha256": "f44ad44560d9fe1a3946446b7b3f5da6112cc3acec1064b68df9c3f184707686",
+      "rawBytesMatch": true,
+      "lfNormalizedMatch": true
+    },
+    {
+      "path": "cross-platform/app/test/photo_format_test.dart",
+      "runWorkingTreeRawSha256": "a45aae3cd7c0d79f4665895fb7fc1600d73a05381bca184e24f58743e5cb701d",
+      "frozenGitBlobSha256": "a45aae3cd7c0d79f4665895fb7fc1600d73a05381bca184e24f58743e5cb701d",
+      "rawBytesMatch": true,
+      "lfNormalizedMatch": true
+    }
+  ],
+  "previousSourceBinding": "bindings/89c1393272f2164594f9eecc30df7d1f65153d01/source-fingerprints.json",
+  "changeFromPreviousSource": "The three bound RAW-navigation/format files and app-lib Git tree remain unchanged. Two unrelated camera test fixtures and two iOS consumers changed; whole app/native tree equivalence is not claimed.",
+  "wholeIosNativeTreeIdenticalToPreviousClaimed": false
+}

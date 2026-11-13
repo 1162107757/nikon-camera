@@ -1,0 +1,63 @@
+{
+  "sourceCommit": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "delivered": false,
+  "androidChecksPassed": true,
+  "androidRuntimeChecks": 78,
+  "appleFullRun": 43464094785,
+  "appleCoreParityPassed": true,
+  "flutterPassed": 447,
+  "flutterFailed": 2,
+  "appleBlocker": "Two outdated camera test expectations and readonly HueviaTask setter in original-file consumer; all consumer setters migrated and both test files passed locally in next source.",
+  "files": [
+    {
+      "file": "huevia-0.31.0-dev-219-android-arm64.apk",
+      "sha256": "d81cf0f6f670368ed842a7ade6fe40b5db31e6d3f584379ed0ae6882c9da68ae",
+      "bytes": 52723506
+    },
+    {
+      "file": "huevia-0.31.0-dev-219-android-x64.apk",
+      "sha256": "dc74d3a4a8f734f6d008a7973195f8186f91ce88f71488e7be6c0dccd72dddba",
+      "bytes": 56226010
+    },
+    {
+      "file": "android-release-result.json",
+      "sha256": "bfdedf06596faa2042b0fedd9653ec1023d2e96ed56dc40b607985bc8438c1d5",
+      "bytes": 11
+    },
+    {
+      "file": "release-runtime.log",
+      "sha256": "8de0875ca521cb528f33f73f8788e914e06ac6f782597b4bf605eb8464b1db1c",
+      "bytes": 1706
+    },
+    {
+      "file": "release-runtime-result.json",
+      "sha256": "05294f577ee10887caecd10f7a6c27a6336efd253eb7d2a0b2d1a451b4b5e386",
+      "bytes": 216
+    },
+    {
+      "file": "release-runtime-mapping.json",
+      "sha256": "ceabb2884e87d322d9d1eb4b1efaea92491bde8337b5ea4f0e39e0c34d0d2edb",
+      "bytes": 181
+    },
+    {
+      "file": "arm64-mapping.txt",
+      "sha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+      "bytes": 11795962
+    },
+    {
+      "file": "x64-mapping.txt",
+      "sha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+      "bytes": 11795962
+    },
+    {
+      "file": "android-signing-alignment.json",
+      "sha256": "7d68e66e5fbf6a25074b7a800fdf089f9666f3828616cc1442a492f57d7eaac5",
+      "bytes": 4357
+    },
+    {
+      "file": "build-source.json",
+      "sha256": "fe35a5b7fbfdc9a5e66c9d5dabaf28bad312b4c1034472cf54add3be3859c691",
+      "bytes": 159
+    }
+  ]
+}

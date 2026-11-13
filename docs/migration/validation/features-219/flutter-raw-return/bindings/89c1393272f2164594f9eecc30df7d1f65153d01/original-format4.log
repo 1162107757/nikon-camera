@@ -1,0 +1,6 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/photo_format_test.dart
+00:00 +0: the working path decides current format independently of the display name
+00:00 +1: a derived JPEG identifies its NEF as a separate source
+00:00 +2: opaque platform identifiers fall back to names without inventing a MIME type
+00:00 +3: same-base JPEG and NEF retain distinct cards and opening the JPEG edits the JPEG
+00:01 +4: All tests passed!

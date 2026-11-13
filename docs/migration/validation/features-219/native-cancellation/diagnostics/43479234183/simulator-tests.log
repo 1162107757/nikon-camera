@@ -1,0 +1,92 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -destination id=B52C95CC-1DA6-4314-952C-47D9C4CFE85E ARCHS=arm64 ONLY_ACTIVE_ARCH=YES BUILD_DIR=/Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios -parallel-testing-enabled NO "-only-testing:RunnerTests/RunnerTests/testCameraPresenterRecoversFromMissingAndDetachedRegistration" "-only-testing:RunnerTests/RunnerTests/testCameraPresenterRejectsBackgroundAndHiddenWindows" "-only-testing:RunnerTests/RunnerTests/testCameraPresentationCancellationPreventsQueuedPresentation" "-only-testing:RunnerTests/RunnerTests/testNativeTaskCancellationRetiresBeforeDelivery" "-only-testing:RunnerTests/RunnerTests/testPhotoLibraryConsent" test-without-building
+
+Build settings from command line:
+    ARCHS = arm64
+    BUILD_DIR = /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator26.5
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  FlutterGeneratedPluginSwiftPackage: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:B52C95CC-1DA6-4314-952C-47D9C4CFE85E, OS:26.5, name:Huevia-QA-fb320cdb-c89e-4ace-ade8-5cf51c21d85c }
+{ platform:iOS Simulator, arch:x86_64, id:B52C95CC-1DA6-4314-952C-47D9C4CFE85E, OS:26.5, name:Huevia-QA-fb320cdb-c89e-4ace-ade8-5cf51c21d85c }
+2026-11-13 18:19:33.551880+0000 RunnerTests-Runner[26184:81063] [Default] Running tests...
+2026-11-13 18:19:33.637984+0000 RunnerTests-Runner[26184:81159] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-11-13 18:19:33.680121+0000 RunnerTests-Runner[26184:81160] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+objc[26184]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10aebc310) and /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10ae20398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-13 18:19:39.426.
+Test Suite 'RunnerTests.xctest' started at 2026-11-13 18:19:39.435.
+Test Suite 'RunnerTests' started at 2026-11-13 18:19:39.436.
+Test Case '-[RunnerTests testCameraPresentationCancellationPreventsQueuedPresentation]' started.
+    t =     0.00s Start Test at 2026-11-13 18:19:39.437
+    t =     0.90s Set Up
+    t =     0.90s Tear Down
+Test Case '-[RunnerTests testCameraPresentationCancellationPreventsQueuedPresentation]' passed (1.192 seconds).
+Test Case '-[RunnerTests testCameraPresenterRecoversFromMissingAndDetachedRegistration]' started.
+    t =     0.00s Start Test at 2026-11-13 18:19:40.629
+    t =     0.03s Set Up
+2026-11-13 18:19:40.672518+0000 RunnerTests-Runner[26184:81063] [Window] Manually adding the rootViewController's view to the view hierarchy is no longer supported. Please allow UIWindow to add the rootViewController's view to the view hierarchy itself.
+2026-11-13 18:19:40.684910+0000 RunnerTests-Runner[26184:81063] [Window] Manually adding the rootViewController's view to the view hierarchy is no longer supported. Please allow UIWindow to add the rootViewController's view to the view hierarchy itself.
+    t =     0.06s Tear Down
+2026-11-13 18:19:40.696647+0000 RunnerTests-Runner[26184:81063] Unbalanced calls to begin/end appearance transitions for <UIViewController: 0x10724d400>.
+2026-11-13 18:19:40.697078+0000 RunnerTests-Runner[26184:81063] Unbalanced calls to begin/end appearance transitions for <UIViewController: 0x10724e000>.
+Test Case '-[RunnerTests testCameraPresenterRecoversFromMissingAndDetachedRegistration]' passed (0.092 seconds).
+Test Case '-[RunnerTests testCameraPresenterRejectsBackgroundAndHiddenWindows]' started.
+    t =     0.00s Start Test at 2026-11-13 18:19:40.722
+    t =     0.03s Set Up
+2026-11-13 18:19:40.749578+0000 RunnerTests-Runner[26184:81063] [Window] Manually adding the rootViewController's view to the view hierarchy is no longer supported. Please allow UIWindow to add the rootViewController's view to the view hierarchy itself.
+    t =     0.03s Tear Down
+2026-11-13 18:19:40.763202+0000 RunnerTests-Runner[26184:81063] Unbalanced calls to begin/end appearance transitions for <UIViewController: 0x10724e000>.
+Test Case '-[RunnerTests testCameraPresenterRejectsBackgroundAndHiddenWindows]' passed (0.093 seconds).
+Test Case '-[RunnerTests testNativeTaskCancellationRetiresBeforeDelivery]' started.
+    t =     0.00s Start Test at 2026-11-13 18:19:40.815
+    t =     0.02s Set Up
+    t =     0.03s Tear Down
+Test Case '-[RunnerTests testNativeTaskCancellationRetiresBeforeDelivery]' passed (0.088 seconds).
+Test Case '-[RunnerTests testPhotoLibraryConsent]' started.
+    t =     0.00s Start Test at 2026-11-13 18:19:40.905
+    t =     0.03s Set Up
+    t =     0.04s Open cc.huevia.next
+    t =     0.04s     Launch cc.huevia.next
+2026-11-13 18:19:41.717 xcodebuild[25584:79517] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-13 18:19:41.717 xcodebuild[25584:79517] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.02s         Setting up automation session
+    t =     5.43s         Wait for cc.huevia.next to idle
+    t =     8.38s Waiting 60.0s for Button (First Match) to exist
+    t =     9.43s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =     9.43s         Checking existence of `Button (First Match)`
+    t =     9.60s         Capturing element debug description
+    t =    10.45s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    10.45s         Checking existence of `Button (First Match)`
+    t =    10.57s Tap Button (First Match)
+    t =    10.57s     Wait for com.apple.springboard to idle
+    t =    10.57s     Find the Button (First Match)
+    t =    10.63s     Check for interrupting elements affecting "Allow Full Access" Button
+    t =    10.81s     Synthesize event
+    t =    11.23s     Wait for com.apple.springboard to idle
+    t =    11.49s Wait for cc.huevia.next to become Running Foreground
+    t =    11.49s Tear Down
+Test Case '-[RunnerTests testPhotoLibraryConsent]' passed (11.730 seconds).
+Test Suite 'RunnerTests' passed at 2026-11-13 18:19:52.634.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 13.195 (13.199) seconds
+Test Suite 'RunnerTests.xctest' passed at 2026-11-13 18:19:52.635.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 13.195 (13.200) seconds
+Test Suite 'Selected tests' passed at 2026-11-13 18:19:52.635.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 13.195 (13.210) seconds
+2026-11-13 18:19:53.169 xcodebuild[25584:79517] [MT] IDETestOperationsObserverDebug: 24.488 elapsed -- Testing started completed.
+2026-11-13 18:19:53.169 xcodebuild[25584:79517] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-13 18:19:53.169 xcodebuild[25584:79517] [MT] IDETestOperationsObserverDebug: 24.488 sec, +24.488 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/Library/Developer/Xcode/DerivedData/Runner-bcwfnebhqpzxbcequummdswvslbl/Logs/Test/Test-Runner-2026.11.13_18-19-24-+0000.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

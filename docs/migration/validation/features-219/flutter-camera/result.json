@@ -1,0 +1,155 @@
+{
+  "scope": "219 Dart camera flow and cancellation verification only",
+  "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "appleFullRun": 43448048561,
+  "platformAcceptanceAtArchive": "Android final R8/UI and complete Apple gates pending; no accepted binaries asserted here",
+  "uniqueActualPassedChecks": 71,
+  "testFiles": 9,
+  "allFinalSelectedTestFilesExitZero": true,
+  "tests": [
+    {
+      "file": "cross-platform/app/test/camera_intent_test.dart",
+      "passed": 11,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_intent_test.log",
+      "logSha256": "c8cdf851663afda0ea9db5a1b30581ef65f6670ed98563f672a872b9fa4b3043"
+    },
+    {
+      "file": "cross-platform/app/test/camera_controls_test.dart",
+      "passed": 4,
+      "exit": 0,
+      "log": "logs/camera219-single-camera_controls_test.log",
+      "logSha256": "6ebdc145d57b70b33214c11fad8823c4121e518d2840a659b5e9d76259c085d8"
+    },
+    {
+      "file": "cross-platform/app/test/camera_live_test.dart",
+      "passed": 17,
+      "exit": 0,
+      "log": "logs/camera219-single-camera_live_test.log",
+      "logSha256": "e0aef5425bf35c7a3d76694d0e87d275869cc6d32d44a7b108003a1f7247bf5c"
+    },
+    {
+      "file": "cross-platform/app/test/camera_downloads_test.dart",
+      "passed": 12,
+      "exit": 0,
+      "log": "logs/camera219-single-camera_downloads_test.log",
+      "logSha256": "fcf00dd9a7d1cf12df809cd6d5eb689b9bef8cabb999b531ede373dd3d5d8af0"
+    },
+    {
+      "file": "cross-platform/app/test/connection_protection_test.dart",
+      "passed": 9,
+      "exit": 0,
+      "log": "logs/camera219-single-connection_protection_test.log",
+      "logSha256": "f4f998b0ad0e0fdc15436d23ef62df7fb0ce211396e66e44e1cda6337ca3d2f4"
+    },
+    {
+      "file": "cross-platform/app/test/camera_test.dart",
+      "passed": 6,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_test.log",
+      "logSha256": "dd67b0d5326a9b16440332df4d4c704049adddd122a13912bf207ddcd9af791d"
+    },
+    {
+      "file": "cross-platform/app/test/camera_navigation_test.dart",
+      "passed": 1,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_navigation_test.log",
+      "logSha256": "c6eb4a57e84c4e8dd6dcc222dc94e1576b6259fe92f6891ff6d40976c8fd39c9"
+    },
+    {
+      "file": "cross-platform/app/test/camera_previews_test.dart",
+      "passed": 5,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_previews_test.log",
+      "logSha256": "b83dc820cb496070aa2d310b877e54521146a6d8404a8bfedbf28a61b3314399"
+    },
+    {
+      "file": "cross-platform/app/test/camera_transfer_test.dart",
+      "passed": 6,
+      "exit": 0,
+      "log": "logs/camera219-final-camera_transfer_test.log",
+      "logSha256": "45172964392552601303e2ae413f8d3eebcc4d40dec303c4cdcf81279345cda0"
+    }
+  ],
+  "sourceBinding": {
+    "inputs": 16,
+    "currentRawBytesMatchOriginalReceipt": true,
+    "exactFrozenGitByteMatches": 12,
+    "normalizedLfMatchesFrozenGit": 16,
+    "lineEndingOnlyDifferences": [
+      "cross-platform/app/lib/camera.dart",
+      "cross-platform/app/lib/camera_downloads.dart",
+      "cross-platform/app/lib/connection_protection.dart",
+      "cross-platform/app/test/camera_test.dart"
+    ],
+    "note": "Original raw fingerprints are retained. Four CRLF working-tree files differ only by Git LF normalization; all 16 normalized inputs match the frozen commit."
+  },
+  "historicalAttempts": [
+    {
+      "log": "attempts/camera219-intent-protection.log",
+      "state": "failed-and-incomplete",
+      "countedAsPassingSuite": false,
+      "reason": "Two fixtures used tester.pageBack which does not recognize the original HueHeader. Later pending cases were not completed. Corrected final intent run passed.",
+      "exitReceipts": [
+        "attempts/camera219-intent-protection-result.json"
+      ]
+    },
+    {
+      "log": "attempts/camera219-navigation-lifecycle.log",
+      "state": "failed",
+      "countedAsPassingSuite": false,
+      "reason": "Remote inactive fixture expected exactly one frame despite elapsed test ticks producing two. Corrected to assert frame growth while inactive and no growth after actual background.",
+      "exitReceipts": [
+        "attempts/camera219-navigation-lifecycle-result.json"
+      ]
+    },
+    {
+      "log": "attempts/camera219-dart-regression.log",
+      "state": "out-of-memory-incomplete",
+      "countedAsPassingSuite": false,
+      "reason": "After intent10 passed, Dart allocation.cc:30 reported Out of memory while loading the next file. The hung run was stopped; no exit receipt file was produced and uncompleted tests are not passes.",
+      "exitReceipts": []
+    },
+    {
+      "log": "attempts/camera219-single-camera_test.log",
+      "state": "failed",
+      "countedAsPassingSuite": false,
+      "reason": "A fixture reused a connection-only State instead of disposing it then entering the actual photo page. Final camera6 run correctly separates the two pages and passed.",
+      "exitReceipts": [
+        "attempts/camera219-single-file-results.json"
+      ]
+    }
+  ],
+  "analysis": {
+    "allAppExit": 0,
+    "result": "No issues found",
+    "log": "all-app-analyze.log"
+  },
+  "sharedCoreAndNativeJavaCountsAreSeparate": true,
+  "actualCameraOrDeviceValidationPerformed": false,
+  "sourceOrBinariesModifiedByArchive": false,
+  "published": false,
+  "generatedAtUtc": "2026-11-13T15:03:00.636583+00:00",
+  "filesSha256": {
+    "all-app-analyze-result.json": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+    "all-app-analyze.log": "60c7c170fd8357d5de277734fd862d2e1c54321edea7d4fc19ac2f23a401c1eb",
+    "attempts/camera219-dart-regression.log": "12274a88ae98f64d61706938456b6b2de9b1882f99bf652e211ed3007b38fba0",
+    "attempts/camera219-intent-protection-result.json": "56d88b6e57abc3809dd2a87cc3bfe8cb6dbe76124a0af07e41208c6e47dc7bcc",
+    "attempts/camera219-intent-protection.log": "ec099e8e07b19cfb8040913272c456a275b184cbd305371d59c3b2216dc5f336",
+    "attempts/camera219-navigation-lifecycle-result.json": "67b96267a90760e9abf98afdabe8e186829c4ceb9af3ace77610854488b3aebd",
+    "attempts/camera219-navigation-lifecycle.log": "8e3b4b535f2068487d07a10810ab656fcc01d5fa2a794946b471da277a9e2c8b",
+    "attempts/camera219-single-camera_test.log": "1d4749aac330ca5fdbbecefd7b232692da98da240d083b29d135d842e7cd2d56",
+    "attempts/camera219-single-file-results.json": "731895e00e87e9506e9e2ca7ed9326a5ac1d9e6b7a48dffe19cd687508c13f17",
+    "logs/camera219-final-camera_intent_test.log": "c8cdf851663afda0ea9db5a1b30581ef65f6670ed98563f672a872b9fa4b3043",
+    "logs/camera219-final-camera_navigation_test.log": "c6eb4a57e84c4e8dd6dcc222dc94e1576b6259fe92f6891ff6d40976c8fd39c9",
+    "logs/camera219-final-camera_previews_test.log": "b83dc820cb496070aa2d310b877e54521146a6d8404a8bfedbf28a61b3314399",
+    "logs/camera219-final-camera_test.log": "dd67b0d5326a9b16440332df4d4c704049adddd122a13912bf207ddcd9af791d",
+    "logs/camera219-final-camera_transfer_test.log": "45172964392552601303e2ae413f8d3eebcc4d40dec303c4cdcf81279345cda0",
+    "logs/camera219-single-camera_controls_test.log": "6ebdc145d57b70b33214c11fad8823c4121e518d2840a659b5e9d76259c085d8",
+    "logs/camera219-single-camera_downloads_test.log": "fcf00dd9a7d1cf12df809cd6d5eb689b9bef8cabb999b531ede373dd3d5d8af0",
+    "logs/camera219-single-camera_live_test.log": "e0aef5425bf35c7a3d76694d0e87d275869cc6d32d44a7b108003a1f7247bf5c",
+    "logs/camera219-single-connection_protection_test.log": "f4f998b0ad0e0fdc15436d23ef62df7fb0ce211396e66e44e1cda6337ca3d2f4",
+    "original-local-results.json": "e7e193a61f8b009cf0218f96716c8072fac521f371bee336dce00a21e2d8b472",
+    "source-fingerprints.json": "d1b9df8050aa0c2845da4cc0cb018e58b8a1bf8422e1ade668623a2454e299e4"
+  }
+}

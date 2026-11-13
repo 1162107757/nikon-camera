@@ -1,0 +1,61 @@
+{
+  "sourceCommit": "a54af6c6e7bb1e78737c70715645084e709901c5",
+  "delivered": false,
+  "androidFunctionalUiPassed": true,
+  "androidR8Checks": 78,
+  "appleCoreParityChecks": 1629,
+  "appleRun": 43458258245,
+  "appleBlocker": "Avatar validation script passed Objective-C .m into combined Objective-C++ linker command; now compiles helper separately. Product inputs unchanged.",
+  "files": [
+    {
+      "file": "huevia-0.31.0-dev-219-android-arm64.apk",
+      "sha256": "370de688483c6b1ddce317bc4fa79184c9b2a2c0c2baf4f06668950d8c1650b5",
+      "bytes": 52723506
+    },
+    {
+      "file": "huevia-0.31.0-dev-219-android-x64.apk",
+      "sha256": "92222e268ab0c9233736e35e279ef748a76c909844562d8a5100d9b8d1f65f0b",
+      "bytes": 56226010
+    },
+    {
+      "file": "android-release-result.json",
+      "sha256": "bfdedf06596faa2042b0fedd9653ec1023d2e96ed56dc40b607985bc8438c1d5",
+      "bytes": 11
+    },
+    {
+      "file": "release-runtime.log",
+      "sha256": "3ccc0c5e6d08758974e7a52ce1b5cf520b315fe26de8b8658081eaafa5ebd38b",
+      "bytes": 1706
+    },
+    {
+      "file": "release-runtime-result.json",
+      "sha256": "05294f577ee10887caecd10f7a6c27a6336efd253eb7d2a0b2d1a451b4b5e386",
+      "bytes": 216
+    },
+    {
+      "file": "release-runtime-mapping.json",
+      "sha256": "ceabb2884e87d322d9d1eb4b1efaea92491bde8337b5ea4f0e39e0c34d0d2edb",
+      "bytes": 181
+    },
+    {
+      "file": "arm64-mapping.txt",
+      "sha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+      "bytes": 11795962
+    },
+    {
+      "file": "x64-mapping.txt",
+      "sha256": "4a18af030de170f8d3267e3792805fcde91e9e41e0b789e0e80179ec5add45ca",
+      "bytes": 11795962
+    },
+    {
+      "file": "android-signing-alignment.json",
+      "sha256": "04ee3a29d9c12d09f1b09d862fd2c1f11d4a2a40581649cd99f933dcfe5ad07d",
+      "bytes": 4357
+    },
+    {
+      "file": "build-source.json",
+      "sha256": "f36423ecc1e6a78e37bdbed623931b499f254a2a16b7d8296727fa44d2e10691",
+      "bytes": 159
+    }
+  ]
+}

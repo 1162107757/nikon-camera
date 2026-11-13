@@ -1,0 +1,16 @@
+{
+  "status": "deferred-by-automatic-approval-review",
+  "fixtureDirectory": "system-temp/huevia-menu-ba1ff648",
+  "createdBy": "editor_menu_test.dart",
+  "verifiedContents": "7 identical 70-byte one-pixel test PNG files in the previews child directory",
+  "originalRecursiveCleanupRejected": true,
+  "saferIndividualLiteralPathCleanupRejected": true,
+  "saferProposal": "Verify the exact directory, child names, no reparse points, exact PNG bytes and SHA-256; remove individual known fixture files, then only empty directories without recursion.",
+  "commandWasExecuted": false,
+  "statedReason": "blocked by policy",
+  "moreDetailedReasonProvided": false,
+  "furtherRetryAttempted": false,
+  "fixtureRetained": true,
+  "productDataAffected": false,
+  "applicationFixOrBuildBlocked": false
+}

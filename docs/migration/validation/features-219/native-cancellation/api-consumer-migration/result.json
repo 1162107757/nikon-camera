@@ -1,0 +1,166 @@
+{
+  "recordedAtUtc": "2026-11-13T17:10:51.766355+00:00",
+  "failedSource": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "failedMacRun": 43464094785,
+  "scope": "Migrate all remaining native HueviaTask callers to the existing readonly cancellation API; do not weaken stream/receipt/generation checks",
+  "sourceCheckExit": 0,
+  "appleSourcesChecked": 57,
+  "remainingHueviaTaskReadonlyWrites": 0,
+  "independentWritableWifiFixtureRetained": true,
+  "actualHistoricalApiReplayOutcomes": 3,
+  "actual309InputProof": [
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeTaskCancellation.java",
+      "sha256": "1d5ef9d57cae1ef4fdae72198dcd8badb536eb9b6018caa8f20a8a8a1269690b",
+      "sameAsActual309Run": true
+    },
+    {
+      "path": "cross-platform/native/tests/NativeTaskCancellationBoundaryTest.java",
+      "sha256": "26fadd58d2c16782b7e94ffe8671fdb388f7ee2902af5b1c3100fa2e2123cbef",
+      "sameAsActual309Run": true
+    }
+  ],
+  "coreTreeAndOriginalJavaUnchangedFrom89": true,
+  "jvmOrUIKitTestsRerun": false,
+  "original309AndFiveUIKitAssertionsChanged": false,
+  "newAppleCompileRequired": true,
+  "changedFiles": [
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+      "sha256": "fb32baa0e48c79fa45a040c97fdd1ec5574d76e05ce0b8503246ae7867d1091a"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+      "sha256": "60a0a9642a171266752ee6c3a167b4bec47e158f809494e7497c6ca0fe7e63ea"
+    },
+    {
+      "path": "cross-platform/tool/native_task_source_check.py",
+      "sha256": "1465353580d3e8b0d1d3df55c308d0d436743b65506510255c943fc19b9a16f6"
+    },
+    {
+      "path": "cross-platform/tool/source_check.py",
+      "sha256": "8d7a07f3d396fcc4cb245dd28eeb12522d63d330ff242aa82a04a87523ede3a4"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "failure-excerpt.log",
+      "sha256": "2b6f1695f2a1a579f944fd9ab826fe7bee451f1c6a098cd40ebca555d7baa03a"
+    },
+    {
+      "file": "historical-replay.json",
+      "sha256": "a700590ab5d51089c062fe36e67e7829326d135943881eca17a2a720651e0ae9"
+    },
+    {
+      "file": "source-check.log",
+      "sha256": "0eb761a07270fd568ed49e1214c035dea3ec6647ddd4612a3c26c99385dcce01"
+    }
+  ],
+  "finalSourceBinding": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "appleFullRun": 43482938724,
+    "boundAtUtc": "2026-11-13T18:30:54.862461+00:00",
+    "sourceCheckActualBaseline": "HEAD89c plus the uncommitted native consumer and source-guard patch recorded in changedFiles",
+    "boundInputCount": 4,
+    "inputs": [
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+        "sha256": "fb32baa0e48c79fa45a040c97fdd1ec5574d76e05ce0b8503246ae7867d1091a",
+        "currentRawMatchesActualSourceCheckInput": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+        "sha256": "60a0a9642a171266752ee6c3a167b4bec47e158f809494e7497c6ca0fe7e63ea",
+        "currentRawMatchesActualSourceCheckInput": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/tool/native_task_source_check.py",
+        "sha256": "1465353580d3e8b0d1d3df55c308d0d436743b65506510255c943fc19b9a16f6",
+        "currentRawMatchesActualSourceCheckInput": true,
+        "matchesFinalGitAfterLfNormalization": true
+      },
+      {
+        "path": "cross-platform/tool/source_check.py",
+        "sha256": "8d7a07f3d396fcc4cb245dd28eeb12522d63d330ff242aa82a04a87523ede3a4",
+        "currentRawMatchesActualSourceCheckInput": true,
+        "matchesFinalGitAfterLfNormalization": true
+      }
+    ],
+    "bindingOnlyNoChecksRerun": true,
+    "runtimeAcceptanceForNewIosConsumers": false,
+    "iosFiveTestsStatus": "actual5passed in e554 full43482938724",
+    "original309InputProofIsSeparate": true,
+    "completeIosSourceCompiledAndPipelinePassed": true,
+    "perConsumerBranchRuntimeCoverageClaimed": false
+  },
+  "finalSourceBindingHistory": [
+    {
+      "sourceCommit": "91ae4b6b7352eba4c6d116cd4afee2334ffd742c",
+      "appleFullRun": 43471565460,
+      "boundAtUtc": "2026-11-13T17:21:46.131434+00:00",
+      "sourceCheckActualBaseline": "HEAD89c plus the uncommitted native consumer and source-guard patch recorded in changedFiles",
+      "boundInputCount": 4,
+      "inputs": [
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaOriginalFiles.mm",
+          "sha256": "fb32baa0e48c79fa45a040c97fdd1ec5574d76e05ce0b8503246ae7867d1091a",
+          "currentRawMatchesActualSourceCheckInput": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/native/ios/Classes/HueviaImportPicker.m",
+          "sha256": "60a0a9642a171266752ee6c3a167b4bec47e158f809494e7497c6ca0fe7e63ea",
+          "currentRawMatchesActualSourceCheckInput": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/native_task_source_check.py",
+          "sha256": "1465353580d3e8b0d1d3df55c308d0d436743b65506510255c943fc19b9a16f6",
+          "currentRawMatchesActualSourceCheckInput": true,
+          "matchesFinalGitAfterLfNormalization": true
+        },
+        {
+          "path": "cross-platform/tool/source_check.py",
+          "sha256": "8d7a07f3d396fcc4cb245dd28eeb12522d63d330ff242aa82a04a87523ede3a4",
+          "currentRawMatchesActualSourceCheckInput": true,
+          "matchesFinalGitAfterLfNormalization": true
+        }
+      ],
+      "bindingOnlyNoChecksRerun": true,
+      "runtimeAcceptanceForNewIosConsumers": false,
+      "iosFiveTestsStatus": "pending Mac full; no success asserted",
+      "original309InputProofIsSeparate": true
+    }
+  ],
+  "currentFullExecution": {
+    "sourceCommit": "e55414ad38ab04291313ddc1244a7ec778da659f",
+    "run": 43482938724,
+    "evidence": "../executions/43482938724/result.json",
+    "uiKitCasesPassed": 5,
+    "newJsonTypeAssertionsExecuted": true,
+    "nativePipelinePassed": true,
+    "foregroundEvidence": "machine-test",
+    "snapshot": null,
+    "uiKitFailures": 0,
+    "uiKitSeconds": 14.001,
+    "freshNativeJvmChecksPassed": 309,
+    "freshNativeJvmTransitionRaces": 100,
+    "nativePipelineSchema": 1,
+    "nativeWholeCaseCount": 1,
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSnapshotFixturePassed": true,
+    "rootIndependentVerifierExit": 0,
+    "acceptedForLocalTesting": true,
+    "published": false,
+    "publicCiResult": "../../apple/ci-result.json",
+    "publicIndependentVerification": "../../apple/independent-verification.json",
+    "actualJVMLog": "../executions/43482938724/native-task-tests.log",
+    "ipaBytes": 64890557,
+    "ipaSha256": "368f299c53ac8b0a8f9e4bcdaec02ac17a1ca14229f8630416b0af95e338580f"
+  },
+  "acceptedForLocalTesting": true,
+  "published": false
+}

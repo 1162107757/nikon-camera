@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "4f9f1dc6d32d41f7b0179dac7436addc35ff6699",
+  "clientPublished": false,
+  "delivered": false,
+  "appleRun": 43448048561,
+  "appleConclusion": "failure",
+  "appleCoreParity": "passed",
+  "appleBlocker": "Avatar cancellation fixture still assigned the now read-only cancellation property; update fixture to public cancellation API.",
+  "androidRuntimeAttempt": "Failed after 10 checks: old reflective harness captured AtomicBoolean instead of the new production cancellation owner. No accepted runtime pass.",
+  "holdReason": "A deterministic delayed connection watchdog could close an already successful connection. Corrected and revalidated in next source snapshot.",
+  "privateAttemptReceiptSha256": "b03d3733d4173bf1eb2fdfbeb6b7c678df9e1bc3178e659a1319cb1c82623f81",
+  "oldCandidateHarnessReverification": {
+    "checksPassed": 78,
+    "acceptedForDelivery": false,
+    "note": "Corrected actual production flag capture; rerun needed against final source APK and mapping."
+  }
+}

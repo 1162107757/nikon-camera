@@ -1,0 +1,120 @@
+{
+  "sourceCommit": null,
+  "finalFrozenSourceBinding": "pending root six-file freeze; do not infer execution at a later commit",
+  "executionBaseHead": "89c1393272f2164594f9eecc30df7d1f65153d01",
+  "fixtureChangesWereUncommittedDuringExecution": true,
+  "recordedAtUtc": "2026-11-13T17:18:03.553312+00:00",
+  "status": "passed",
+  "actualCompleteFileRuns": [
+    {
+      "file": "camera_connection_test.dart",
+      "checks": 6,
+      "exit": 0,
+      "result": "camera_connection_test-result.json"
+    },
+    {
+      "file": "session_race_test.dart",
+      "checks": 2,
+      "exit": 0,
+      "result": "session_race_test-result.json"
+    }
+  ],
+  "totalActualChecks": 8,
+  "cameraChecks": 7,
+  "unchangedPersonalSyncCase": 1,
+  "separateFromOriginal75": true,
+  "targetAnalyzeExit": 0,
+  "targetAnalyzeNoIssues": true,
+  "diffCheckExit": 0,
+  "frozenProductNineRawUnchanged": true,
+  "postRunSourceFingerprints": "final-inputs.json",
+  "rawSourceHashesCapturedAfterFinalRuns": true,
+  "noFixtureEditAfterItsFinalPassingRun": true,
+  "priorMacRun": 43464094785,
+  "priorMacActualFlutterPassed": 447,
+  "priorMacActualFlutterFailed": 2,
+  "priorMacFullLogSha256": "821de03d812915b017734fb75d5f6f7daf1f7a840177aec7cbcec55647bcc99e",
+  "firstAdjustedAttempt": {
+    "checksPassedBeforeFailure": 5,
+    "failed": 1,
+    "cause": "Explicit photo route/status needed a further frame and real Sync visibility; incomplete expectations fixed in fixture",
+    "result": "attempt-first-route-frame/camera_connection_test-result.json"
+  },
+  "secondAdjustedAttempt": {
+    "checksPassedBeforeIncomplete": 5,
+    "lastCaseCompleted": false,
+    "hostFailureClaimed": false,
+    "causeNotProven": "did-not-complete; original log retained without attributing a host crash",
+    "result": "attempt-pending-native-and-route/camera_connection_test-result.json"
+  },
+  "finalFixtureClosure": "Cancelled native page Completer explicitly completes with cancellation; bounded pumping while IO would be pending; state disposed before event-stream close. Extra third route removed. No product changes to accommodate old auto-read behavior.",
+  "realNativeDeviceOrCameraVerified": false,
+  "coreOrNativeTestsRerun": false,
+  "proofs": [
+    {
+      "file": "before.json",
+      "sha256": "07a6cd7610f2795b18341d958acb2af4a3e6b5521deeb5280bd136d575f393fd",
+      "bytes": 1714
+    },
+    {
+      "file": "final-inputs.json",
+      "sha256": "d6a10514d36c73a276523134e86119a58d48b1b5343519078c6a5bf570fd11ae",
+      "bytes": 1649
+    },
+    {
+      "file": "camera_connection_test.log",
+      "sha256": "1604d57d8c37238f5c501b6ed79f81eecff06376ebf718600120922d1f2cd3b3",
+      "bytes": 795
+    },
+    {
+      "file": "camera_connection_test-result.json",
+      "sha256": "800e103d8c0e21b6f1fcfbd64171c0efd59e9f634306f1ca71326d1c84bfb392",
+      "bytes": 660
+    },
+    {
+      "file": "session_race_test.log",
+      "sha256": "b37a4d49eac8fc4ce2d5e6620c43ded2fe125f32a5e460ed5f87e3ccee6f102b",
+      "bytes": 340
+    },
+    {
+      "file": "session_race_test-result.json",
+      "sha256": "d1de6339f5ea6acd1abf90cfe326a4417a8b78db720be7e0a77b1133423b2ff2",
+      "bytes": 645
+    },
+    {
+      "file": "target-analyze-final.log",
+      "sha256": "df0fa461633950bacb5d41b8970380572bef4b2516e995a080dcc409e19d19f2",
+      "bytes": 82
+    },
+    {
+      "file": "target-analyze-final-result.json",
+      "sha256": "f3005fd888d43f2f5c78d9d52673d7dc2bded8d0c68d5d7ad2ccc9063cc9d835",
+      "bytes": 285
+    },
+    {
+      "file": "mac-43464094785-failure-excerpt.log",
+      "sha256": "7bc7c3c3b419bb4a8e1e45a5834361f629fa14a2c98b1a1d9cce10a00c486b4f",
+      "bytes": 12097
+    },
+    {
+      "file": "attempt-first-route-frame/camera_connection_test.log",
+      "sha256": "64bdfc98627c3b13dfcd373f1ac0aea714936c5837799e44056684bb3739652f",
+      "bytes": 2913
+    },
+    {
+      "file": "attempt-first-route-frame/camera_connection_test-result.json",
+      "sha256": "287d2c748e91ede4c7da07936ad1f0d4f69ca1238f52bce179732bfe962ae315",
+      "bytes": 661
+    },
+    {
+      "file": "attempt-pending-native-and-route/camera_connection_test.log",
+      "sha256": "db28d2b30ba9db4f6e420c111932e6c7dd826d3919d8e7a837d40c672d58b224",
+      "bytes": 1156
+    },
+    {
+      "file": "attempt-pending-native-and-route/camera_connection_test-result.json",
+      "sha256": "731422c85d5f2b93181de88464448dcbc5376390c912df04e9db1c3b349618d2",
+      "bytes": 661
+    }
+  ]
+}

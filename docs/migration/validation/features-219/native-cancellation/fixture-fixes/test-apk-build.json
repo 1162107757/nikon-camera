@@ -1,0 +1,16 @@
+{
+  "exit": 0,
+  "seconds": 27.406759023666382,
+  "command": [
+    "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app\\android\\gradlew.bat",
+    ":app:assembleDebugAndroidTest",
+    "--no-daemon",
+    "--max-workers=2",
+    "--offline",
+    "-Ptarget-platform=android-x64",
+    "--init-script",
+    "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\maven-proxy.init.gradle",
+    "--init-script",
+    "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next219\\release-test-runner.gradle"
+  ]
+}
