@@ -32,6 +32,11 @@
 @property(nonatomic,strong) CcHueviaSharedSharedRuntime *runtime;
 @property(nonatomic,strong) CcHueviaSharedSharedCamera *camera;
 @property(nonatomic,strong) HueviaWiredCameras *wired;
+@property(nonatomic,strong) HueviaSockets *sockets;
+@property(nonatomic,strong) UIAlertController *networkIntroduction;
+@property(nonatomic,copy) NSString *networkIntroductionJob;
+@property(nonatomic,copy) FlutterResult networkIntroductionReply;
+@property(nonatomic,strong) FlutterMethodCall *networkIntroductionCall;
 @property(nonatomic,strong) HueviaMedia *media;
 @property(nonatomic,copy) NSString *root;
 @property(nonatomic,strong) HueviaImportPicker *importPicker;
@@ -41,6 +46,7 @@
 @property(nonatomic,strong) HueviaConnectionProtection *protection;
 @property(nonatomic,strong) FlutterMethodChannel *filesChannel;
 @property(nonatomic,weak) UIViewController *presenter;
+- (void)finishNetworkIntroduction:(FlutterError *)failure resume:(BOOL)resume;
 @end
 
 @implementation HueviaCorePlugin
@@ -55,6 +61,7 @@
   __weak HueviaCorePlugin *weakHost=host;
   host.protection=[[HueviaConnectionProtection alloc] initWithMessenger:registrar.messenger cancel:^{
     HueviaCorePlugin *owner=weakHost;
+    [owner finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"连接已取消，请保持应用在前台后重试。" details:nil] resume:NO];
     for(NSString *job in owner.tasks.allKeys){owner.tasks[job].cancelled=YES;[owner.camera cancelWithNSString:job];}
   }];
   host.filesChannel=[FlutterMethodChannel methodChannelWithName:@"cc.huevia/file-publication" binaryMessenger:registrar.messenger];
@@ -70,6 +77,14 @@
 }
 - (FlutterError *)onListenWithArguments:(id)arguments eventSink:(FlutterEventSink)events {self.events=events;return nil;}
 - (FlutterError *)onCancelWithArguments:(id)arguments {self.events=nil;return nil;}
+- (void)finishNetworkIntroduction:(FlutterError *)failure resume:(BOOL)resume {
+  FlutterResult reply=self.networkIntroductionReply;if(!reply)return;
+  FlutterMethodCall *call=self.networkIntroductionCall;UIAlertController *alert=self.networkIntroduction;
+  self.networkIntroductionReply=nil;self.networkIntroductionCall=nil;self.networkIntroductionJob=nil;self.networkIntroduction=nil;
+  if(!resume){if(alert.presentingViewController&&!alert.beingDismissed)[alert dismissViewControllerAnimated:YES completion:nil];reply(failure);return;}
+  [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"HueviaCameraNetworkIntroduction"];
+  [self handleMethodCall:call result:reply];
+}
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)reply {
   NSDictionary *args=[call.arguments isKindOfClass:NSDictionary.class]?call.arguments:@{};
   if([call.method isEqualToString:@"cameraUsbPermission"]){reply(@"{\"granted\":true}");return;}
@@ -80,13 +95,20 @@
   }
   NSDictionary *connectionPayload=[args[@"payload"] isKindOfClass:NSString.class]?[NSJSONSerialization JSONObjectWithData:[args[@"payload"] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil]:nil;
   if([call.method isEqualToString:@"request"]&&[args[@"operation"] isEqualToString:@"camera.connect"]&&![connectionPayload[@"transport"] isEqual:@"usb"]&&![NSUserDefaults.standardUserDefaults boolForKey:@"HueviaCameraNetworkIntroduction"]){
+    if(self.networkIntroduction){reply([FlutterError errorWithCode:@"BUSY" message:@"请先完成或取消当前本地网络连接提示。" details:nil]);return;}
+    if(!self.presenter.view.window){reply([FlutterError errorWithCode:@"NOT_VISIBLE" message:@"请回到应用前台后重新连接相机。" details:nil]);return;}
     UIAlertController *intro=[UIAlertController alertControllerWithTitle:@"允许访问相机的本地网络" message:@"请先连接相机 Wi-Fi。接下来的系统授权弹窗请选择“允许”，才能读取和下载相机照片。\n\n如果此前选择了“不允许”，请到 iPhone 设置 → Huevia → 本地网络中开启后重试。" preferredStyle:UIAlertControllerStyleAlert];
-    [intro addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){reply([FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil]);}]];
+    self.networkIntroduction=intro;self.networkIntroductionCall=call;self.networkIntroductionReply=reply;
+    self.networkIntroductionJob=[args[@"jobId"] isKindOfClass:NSString.class]?args[@"jobId"]:NSUUID.UUID.UUIDString;
+    if(self.events)self.events(@{@"jobId":self.networkIntroductionJob,@"progress":@(0.02)});
+    __weak UIAlertController *expectedIntro=intro;
+    [intro addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){if(!expectedIntro||self.networkIntroduction!=expectedIntro)return;[self finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil] resume:NO];}]];
     [intro addAction:[UIAlertAction actionWithTitle:@"继续连接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+      if(!expectedIntro||self.networkIntroduction!=expectedIntro)return;
       // This records only that the explanation was shown, never permission state.
-      [NSUserDefaults.standardUserDefaults setBool:YES forKey:@"HueviaCameraNetworkIntroduction"];
-      [self handleMethodCall:call result:reply];
+      [self finishNetworkIntroduction:nil resume:YES];
     }]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,45*NSEC_PER_SEC),dispatch_get_main_queue(),^{if(self.networkIntroduction==intro)[self finishNetworkIntroduction:[FlutterError errorWithCode:@"TIMEOUT" message:@"等待连接确认已超时，请重新点击连接并完成本地网络授权。" details:nil] resume:NO];});
     [self.presenter presentViewController:intro animated:YES completion:nil];return;
   }
   if([call.method isEqualToString:@"gallerySavePermission"]){
@@ -117,7 +139,7 @@
     }
     [self.importPicker pickPreset:[args[@"preset"] boolValue] root:self.root presenter:self.presenter reply:reply];return;
   }
-  if([call.method isEqualToString:@"cancel"]){NSString *job=args[@"jobId"];if([job isKindOfClass:NSString.class]){self.tasks[job].cancelled=YES;[self.camera cancelWithNSString:job];}reply(nil);return;}
+  if([call.method isEqualToString:@"cancel"]){NSString *job=args[@"jobId"];if([job isKindOfClass:NSString.class]){if([job isEqualToString:self.networkIntroductionJob])[self finishNetworkIntroduction:[FlutterError errorWithCode:@"CANCELLED" message:@"已取消连接。" details:nil] resume:NO];self.tasks[job].cancelled=YES;[self.camera cancelWithNSString:job];}reply(nil);return;}
   if(![call.method isEqualToString:@"initialize"]&&![call.method isEqualToString:@"request"]){reply(FlutterMethodNotImplemented);return;}
   NSString *job=[args[@"jobId"] isKindOfClass:NSString.class]?args[@"jobId"]:NSUUID.UUID.UUIDString;
   if(self.tasks.count>=9||self.tasks[job]){reply([FlutterError errorWithCode:@"BUSY" message:@"任务较多，请等待当前操作完成。" details:nil]);return;}
@@ -148,7 +170,8 @@
           self.root=[[runtime root] getPath];
           stage=@"camera runtime";
           self.wired=[[HueviaWiredCameras alloc] init];
-          CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:[[HueviaSockets alloc] init] withCcHueviaSharedSharedCamera_WiredConnections:self.wired];
+          self.sockets=[[HueviaSockets alloc] init];
+          CcHueviaSharedSharedCamera *camera=[[CcHueviaSharedSharedCamera alloc] initWithNSString:self.root withCcHueviaSharedSharedCamera_Connectors:self.sockets withCcHueviaSharedSharedCamera_WiredConnections:self.wired];
           stage=@"media runtime";
           HueviaMedia *media=[[HueviaMedia alloc] initWithRuntime:runtime root:self.root];
           HueviaGallery *gallery=[[HueviaGallery alloc] initWithRoot:self.root];
@@ -172,7 +195,7 @@
         else if([operation isEqualToString:@"files.publishOriginal"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.originalFiles publish:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation isEqualToString:@"gallery.delete"]||[operation isEqualToString:@"gallery.publishedCopies"]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];NSDictionary *data=[self.albumOperations request:operation payload:p task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
         else if([operation hasPrefix:@"gallery."]){NSDictionary *data=[self.gallery request:operation payload:payload task:task];value=[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:data options:0 error:nil] encoding:NSUTF8StringEncoding];}
-        else if([operation hasPrefix:@"camera."]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(p[@"queueId"])[self.runtime guardOwnerWithNSString:p[@"owner"]];value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];}
+        else if([operation hasPrefix:@"camera."]){NSDictionary *p=[NSJSONSerialization JSONObjectWithData:[payload dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];if(p[@"queueId"])[self.runtime guardOwnerWithNSString:p[@"owner"]];self.sockets.cancellation=task;self.sockets.progress=task;[self.wired prepareRequestWithCancellation:task];value=[self.camera requestWithNSString:operation withNSString:payload withNSString:job withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];}
         else value=[self.runtime requestWithNSString:operation withNSString:payload withJavaUtilFunctionBooleanSupplier:task withJavaUtilFunctionDoubleConsumer:task];
       }
       dispatch_async(dispatch_get_main_queue(),^{[self.tasks removeObjectForKey:job];reply(value);});

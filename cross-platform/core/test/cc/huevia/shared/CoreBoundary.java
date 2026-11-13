@@ -106,6 +106,7 @@ public final class CoreBoundary {
             checks+=PresetPinsBoundaryTest.run(temporary);
             checks+=WiredCameraBoundaryTest.run(temporary);
             checks+=CameraBoundaryTest.run(temporary);
+            checks+=SharedCameraConnectBoundaryTest.run(temporary);
             checks+=CameraTransferBoundaryTest.run(temporary);
             checks+=CameraControlsBoundaryTest.run(temporary);
             checks+=CameraRawBoundaryTest.run(temporary);

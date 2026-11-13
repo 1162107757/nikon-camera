@@ -1,4 +1,5 @@
 #import "HueviaWiredCameras.h"
+#import "HueviaCameraWait.h"
 #import "cc/huevia/album/PhotoCameraClient.h"
 #import "cc/huevia/ptp/PtpResponseException.h"
 #import "cc/huevia/ptp/PtpContainer.h"
@@ -26,6 +27,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @property(atomic,strong) NSError *sessionError;
 @property(atomic,strong) NSError *closeError;
 @property(nonatomic) uint32_t transaction;
+@property(atomic,strong) id<JavaUtilFunctionBooleanSupplier> cancellation;
 - (void)waitForClose;
 - (void)openSession;
 @end
@@ -38,35 +40,44 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @property(atomic,strong) HueviaWiredClient *active;
 @property(atomic,strong) HueviaWiredSlots *slots;
 @property(nonatomic,strong) dispatch_semaphore_t discovery;
+@property(atomic,strong) id<JavaUtilFunctionBooleanSupplier> cancellation;
 @end
 
 @implementation HueviaWiredCameras
+- (void)prepareRequestWithCancellation:(id<JavaUtilFunctionBooleanSupplier>)cancel {self.cancellation=cancel;self.active.cancellation=cancel;}
 - (NSString *)devices {
+  id<JavaUtilFunctionBooleanSupplier> cancel=self.cancellation;
   __block ICAuthorizationStatus authorization=ICAuthorizationStatusNotDetermined;
   dispatch_semaphore_t permission=dispatch_semaphore_create(0);
   mainSync(^{
+    if(cancel&&[cancel getAsBoolean]){dispatch_semaphore_signal(permission);return;}
     if(!self.browser){self.browser=[[ICDeviceBrowser alloc] init];self.browser.delegate=self;self.browser.browsedDeviceTypeMask=ICDeviceTypeMaskCamera|ICDeviceLocationTypeMaskLocal;}
     [self.browser requestContentsAuthorizationWithCompletion:^(ICAuthorizationStatus status){authorization=status;dispatch_semaphore_signal(permission);}];
   });
-  if(dispatch_semaphore_wait(permission,dispatch_time(DISPATCH_TIME_NOW,45*NSEC_PER_SEC)))wiredFailure(@"USB 相机授权超时，请重试。");
+  if(!HueviaAwaitCameraResponse(permission,45,cancel))wiredFailure(@"等待外接相机授权超时。请查看系统授权弹窗，或在 iPhone 设置中允许访问相机后重试。");
   if(![authorization isEqualToString:ICAuthorizationStatusAuthorized])wiredFailure(@"请在 iPhone 设置中允许 Huevia 访问外接相机，然后重试。");
   __block BOOL starting=NO;mainSync(^{if(!self.browser.browsing){starting=YES;self.discovery=dispatch_semaphore_create(0);[self.browser start];}});
-  if(starting)dispatch_semaphore_wait(self.discovery,dispatch_time(DISPATCH_TIME_NOW,2*NSEC_PER_SEC));
+  if(starting)HueviaAwaitCameraResponse(self.discovery,2,cancel);
   // Discovery is asynchronous; a subsequent refresh can add a newly attached camera.
   NSMutableArray *rows=[NSMutableArray array];mainSync(^{for(ICDevice *device in self.browser.devices)if(supported(device))[rows addObject:@{@"id":deviceID(device),@"name":device.name?:@"Nikon USB 相机",@"permission":@YES}];});
   return [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:@{@"items":rows,@"transport":@"usb"} options:0 error:nil] encoding:NSUTF8StringEncoding];
 }
 - (id<CcHueviaAlbumPhotoCameraClient>)createWithNSString:(NSString *)identity {
+  id<JavaUtilFunctionBooleanSupplier> cancel=self.cancellation;
   // ICDevice's delegate is unretained. Retire the old session before a new
   // client replaces its delegate, including reconnects to the same device.
   [self.slots close];self.slots=nil;
   HueviaWiredClient *previous=self.active;[previous close];[previous waitForClose];
+  if(cancel&&[cancel getAsBoolean])wiredFailure(@"USB 相机连接已取消。");
+  if(!self.browser)wiredFailure(@"请先检测 USB 相机，再选择设备连接。");
   dispatch_semaphore_t permission=dispatch_semaphore_create(0);__block ICAuthorizationStatus authorization=nil;
-  mainSync(^{[self.browser requestControlAuthorizationWithCompletion:^(ICAuthorizationStatus status){authorization=status;dispatch_semaphore_signal(permission);}];});
-  if(dispatch_semaphore_wait(permission,dispatch_time(DISPATCH_TIME_NOW,45*NSEC_PER_SEC))||![authorization isEqualToString:ICAuthorizationStatusAuthorized])wiredFailure(@"请允许访问外接相机会话后重试有线连接。");
+  mainSync(^{if(cancel&&[cancel getAsBoolean]){dispatch_semaphore_signal(permission);return;}[self.browser requestControlAuthorizationWithCompletion:^(ICAuthorizationStatus status){authorization=status;dispatch_semaphore_signal(permission);}];});
+  if(!HueviaAwaitCameraResponse(permission,45,cancel))wiredFailure(@"等待外接相机会话授权超时，请允许系统授权后重试。");
+  if(![authorization isEqualToString:ICAuthorizationStatusAuthorized])wiredFailure(@"外接相机会话访问未获允许。请在 iPhone 设置中允许相机访问后重试。");
   __block ICCameraDevice *selected=nil;mainSync(^{for(ICDevice *device in self.browser.devices)if(supported(device)&&[deviceID(device) isEqualToString:identity]){selected=(ICCameraDevice *)device;break;}});
   if(!selected)wiredFailure(@"未找到该 USB 相机，请检查相机开机、数据线和转接器后重新检测。");
-  HueviaWiredClient *client=[[HueviaWiredClient alloc] init];client.device=selected;self.active=client;return client;
+  if(![selected.capabilities containsObject:ICCameraDeviceCanAcceptPTPCommands])wiredFailure(@"该相机未提供系统 PTP 读取通道，无法建立有线照片会话。请检查相机 USB 模式，或改用相机 Wi-Fi。");
+  HueviaWiredClient *client=[[HueviaWiredClient alloc] init];client.device=selected;client.cancellation=cancel;self.active=client;return client;
 }
 - (id<CcHueviaSharedSharedSlots_Transport>)openSlotsWithNSString:(NSString *)identity {
   HueviaWiredClient *client=(HueviaWiredClient *)[self createWithNSString:identity];
@@ -84,6 +95,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 @implementation HueviaWiredClient
 - (void)wait:(dispatch_semaphore_t)semaphore {
   for(int i=0;i<120;i++){
+    if(self.cancellation&&[self.cancellation getAsBoolean]){[self close];wiredFailure(@"USB 相机操作已取消。");}
     if(dispatch_semaphore_wait(semaphore,dispatch_time(DISPATCH_TIME_NOW,NSEC_PER_SEC/4))==0)return;
     if(!self.open)wiredFailure(@"USB 相机已断开，请重新连接。");
   }
@@ -93,8 +105,9 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   [self openSession];return [self readAlbumDeviceInfo];
 }
 - (void)openSession {
+  if(self.cancellation&&[self.cancellation getAsBoolean])wiredFailure(@"USB 相机连接已取消。");
   self.open=YES;self.ready=dispatch_semaphore_create(0);self.sessionError=nil;
-  mainSync(^{self.device.delegate=self;[self.device requestOpenSessionWithOptions:nil completion:^(NSError *error){if(error){self.sessionError=error;dispatch_semaphore_signal(self.ready);}}];});
+  mainSync(^{if(!self.open||(self.cancellation&&[self.cancellation getAsBoolean])){dispatch_semaphore_signal(self.ready);return;}self.device.delegate=self;[self.device requestOpenSessionWithOptions:nil completion:^(NSError *error){if(error){self.sessionError=error;dispatch_semaphore_signal(self.ready);}}];});
   [self wait:self.ready];if(self.sessionError){[self close];wiredFailure(@"USB 相机会话无法打开，请关闭其他相机应用后重连。");}
 }
 - (bool)isOpen {return self.open;}
@@ -116,7 +129,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   uint8_t header[4]={1,0,operation,operation>>8};[command appendBytes:header length:4];append32(command,transaction);
   for(jint i=0;i<parameters->size_;i++)append32(command,(uint32_t)IOSLongArray_Get(parameters,i));
   dispatch_semaphore_t done=dispatch_semaphore_create(0);__block NSData *bytes=nil,*response=nil;__block NSError *failure=nil;
-  mainSync(^{[self.device requestSendPTPCommand:command outData:nil completion:^(NSData *reply,NSData *data,NSError *error){response=reply;bytes=data;failure=error;dispatch_semaphore_signal(done);}];});
+  mainSync(^{if(!self.open||(self.cancellation&&[self.cancellation getAsBoolean])){dispatch_semaphore_signal(done);return;}[self.device requestSendPTPCommand:command outData:nil completion:^(NSData *reply,NSData *data,NSError *error){response=reply;bytes=data;failure=error;dispatch_semaphore_signal(done);}];});
   [self wait:done];if(failure)wiredFailure(@"USB 相机读取失败，请检查数据线后重连。");
   if(response.length<12)wiredFailure(@"USB 相机返回的响应不完整。");const uint8_t *r=response.bytes;int code=r[6]|(int)r[7]<<8;
   if(code!=0x2001)@throw [[CcHueviaPtpPtpResponseException alloc] initWithInt:code withLong:transaction];
@@ -131,7 +144,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   jlong received=0;while(received<expected){@autoreleasepool{
     if(!self.open)wiredFailure(@"USB 相机已断开，原文件未保存。");
     jlong count=MIN(256*1024,expected-received);dispatch_semaphore_t done=dispatch_semaphore_create(0);__block NSData *data=nil;__block NSError *failure=nil;
-    mainSync(^{[file requestReadDataAtOffset:received length:count completion:^(NSData *bytes,NSError *error){data=bytes;failure=error;dispatch_semaphore_signal(done);}];});
+    mainSync(^{if(!self.open||(self.cancellation&&[self.cancellation getAsBoolean])){dispatch_semaphore_signal(done);return;}[file requestReadDataAtOffset:received length:count completion:^(NSData *bytes,NSError *error){data=bytes;failure=error;dispatch_semaphore_signal(done);}];});
     [self wait:done];if(failure||data.length<1||data.length>(NSUInteger)count)wiredFailure(@"USB 原文件接收中断，未保存不完整照片。");
     IOSByteArray *part=javaBytes(data);[destination writeWithByteArray:part withInt:0 withInt:(jint)data.length];received+=data.length;[progress onProgressWithLong:received withLong:expected];
   }}return received;
@@ -139,7 +152,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (void)abortProtocolWithJavaIoIOException:(JavaIoIOException *)failure {[self close];}
 - (void)waitForClose {
   dispatch_semaphore_t done=self.closing;if(!done)return;
-  if(dispatch_semaphore_wait(done,dispatch_time(DISPATCH_TIME_NOW,15*NSEC_PER_SEC)))wiredFailure(@"上一次 USB 会话尚未关闭，请检查数据线后重试。");
+  if(!HueviaAwaitCameraResponse(done,15,self.cancellation))wiredFailure(@"上一次 USB 会话尚未关闭，请检查数据线后重试。");
   if(self.closing==done)self.closing=nil;
 }
 - (void)close {
@@ -161,7 +174,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
 - (void)device:(ICDevice *)device didOpenSessionWithError:(NSError *)error {if(error){self.sessionError=error;dispatch_semaphore_signal(self.ready);}}
 - (void)device:(ICDevice *)device didCloseSessionWithError:(NSError *)error {[self close];}
 - (void)didRemoveDevice:(ICDevice *)device {[self close];}
-- (void)deviceDidBecomeReady:(ICDevice *)device {}
+- (void)deviceDidBecomeReady:(ICDevice *)device {if(self.ready)dispatch_semaphore_signal(self.ready);}
 - (void)device:(ICDevice *)device didReceiveStatusInformation:(NSDictionary *)status {}
 - (void)device:(ICDevice *)device didEjectWithError:(NSError *)error {if(error)[self close];}
 - (void)device:(ICDevice *)device didEncounterError:(NSError *)error {[self close];}
@@ -187,7 +200,7 @@ static BOOL supported(ICDevice *device){return [device isKindOfClass:ICCameraDev
   NSData *command=[NSData dataWithBytes:encoded->buffer_ length:encoded->size_];
   NSData *outData=outgoing?[NSData dataWithBytes:outgoing->buffer_ length:outgoing->size_]:nil;
   dispatch_semaphore_t done=dispatch_semaphore_create(0);__block NSData *bytes=nil,*response=nil;__block NSError *failure=nil;
-  mainSync(^{[client.device requestSendPTPCommand:command outData:outData completion:^(NSData *reply,NSData *data,NSError *error){response=reply;bytes=data;failure=error;dispatch_semaphore_signal(done);}];});
+  mainSync(^{if(!client.open||(client.cancellation&&[client.cancellation getAsBoolean])){dispatch_semaphore_signal(done);return;}[client.device requestSendPTPCommand:command outData:outData completion:^(NSData *reply,NSData *data,NSError *error){response=reply;bytes=data;failure=error;dispatch_semaphore_signal(done);}];});
   [client wait:done];
   if(failure){[self close];wiredFailure(@"USB 槽位操作响应未确认，连接已关闭；请只读核对，勿重复执行。");}
   if(response.length<12||response.length>32){[self close];wiredFailure(@"USB 槽位响应长度无效。");}

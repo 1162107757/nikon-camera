@@ -382,48 +382,6 @@ extension _LegacyWorkspace on _EditorPageState {
     }
   }
 
-  Future<void> editorOptions() async {
-    if (!toolsEnabled) return;
-    final value = await showModalBottomSheet<String>(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      backgroundColor: const Color(0xff292724),
-      builder: (sheet) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            for (final entry in [
-              ('recipes', '我的配方'),
-              ('copy', '复制当前调节'),
-              ('versions', '成品版本'),
-              if (widget.photo.info['rawSource'] is String) ('raw', 'RAW 显影'),
-              ('reset', '恢复原图'),
-            ])
-              ListTile(
-                title: Text(
-                  entry.$2,
-                  style: const TextStyle(color: _editorWhite),
-                ),
-                onTap: () => Navigator.pop(sheet, entry.$1),
-              ),
-          ],
-        ),
-      ),
-    );
-    if (!mounted || value == null || !toolsEnabled) return;
-    if (value == 'reset') {
-      await resetPhoto();
-    } else if (value == 'raw') {
-      await openLinkedRaw();
-    } else {
-      await openTool(
-        copying: value == 'copy',
-        savedVersions: value == 'versions',
-      );
-    }
-  }
-
   Future<void> openLinkedRaw() async {
     if (!toolsEnabled) return;
     debounce?.cancel();
@@ -500,42 +458,48 @@ extension _LegacyWorkspace on _EditorPageState {
       padding: const EdgeInsets.only(left: 14, right: 19),
       child: Row(
         children: [
-          editorButton(HueIconKind.close, '返回相册', leaveEditor),
-          editorButton(
-            HueIconKind.more,
-            '更多照片操作和重置',
-            toolsEnabled ? editorOptions : null,
+          EditorHeaderButton(
+            icon: HueIconKind.close,
+            label: '返回相册',
+            onPressed: leaveEditor,
+          ),
+          Builder(
+            builder: (anchor) => EditorHeaderButton(
+              icon: HueIconKind.more,
+              label: '更多照片操作和重置',
+              onPressed: toolsEnabled ? () => editorOptions(anchor) : null,
+            ),
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: GestureDetector(
-              onTap: toolsEnabled ? editorOptions : null,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    sameOwner ? widget.photo.name : '账号已改变',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: _editorWhite,
-                      height: 1.3,
+            child: Builder(
+              builder: (anchor) => GestureDetector(
+                onTap: toolsEnabled ? () => editorOptions(anchor) : null,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    EditorMiddleTitle(
+                      sameOwner ? widget.photo.name : '账号已改变',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: _editorWhite,
+                        height: 1.3,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    sameOwner
-                        ? '${p.extension(widget.photo.info['rawSource'] as String? ?? widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片'
-                        : '请返回相册',
-                    style: const TextStyle(
-                      fontSize: 10,
-                      color: _editorMuted,
-                      height: 1.3,
+                    const SizedBox(height: 4),
+                    Text(
+                      sameOwner
+                          ? '${p.extension(widget.photo.info['rawSource'] as String? ?? widget.photo.name).replaceFirst('.', '').toUpperCase()} · 编辑照片'
+                          : '请返回相册',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Color(0xbeffffff),
+                        height: 1.3,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -575,6 +539,21 @@ extension _LegacyWorkspace on _EditorPageState {
           effect: preview!,
           original: comparison,
           enabled: compare,
+          warning:
+              histogram.visible &&
+                  histogram.warningCurrent &&
+                  !histogram.updating &&
+                  displayedRevision == revision
+              ? histogram.warning
+              : null,
+          warningRect: histogramContentRect,
+          warningCorner:
+              (object(recipe.data['border'] ?? {})['template'] as int? ?? 0) < 3
+              ? .025 *
+                    (object(recipe.data['border'] ?? {})['corner'] as num? ??
+                        100) /
+                    100
+              : 0,
           selection: regionLayer,
           selectionSize:
               displayedOverlay == null ||
@@ -993,14 +972,7 @@ extension _LegacyWorkspace on _EditorPageState {
                             children: [
                               HueIcon(
                                 index < 0
-                                    ? {
-                                        -5: HueIconKind.curve,
-                                        -6: HueIconKind.saturation,
-                                        -2: HueIconKind.palette,
-                                        -7: HueIconKind.cleanup,
-                                        -8: HueIconKind.brush,
-                                        -9: HueIconKind.cleanup,
-                                      }[index]!
+                                    ? editorAdvancedToolIcon(index)
                                     : parameterIcon(
                                         parameters[index]['name'] as String,
                                       ),
@@ -1048,13 +1020,7 @@ extension _LegacyWorkspace on _EditorPageState {
     );
   }
 
-  HueIconKind parameterIcon(String name) => switch (name) {
-    'EXPOSURE' || 'BRIGHTNESS' => HueIconKind.exposure,
-    'CONTRAST' || 'WHITES' || 'BLACKS' => HueIconKind.contrast,
-    'SATURATION' => HueIconKind.saturation,
-    'TEMPERATURE' => HueIconKind.temperature,
-    _ => HueIconKind.adjust,
-  };
+  HueIconKind parameterIcon(String name) => editorParameterIcon(name);
 
   Future<void> advancedTool(int page) async {
     await showModalBottomSheet<void>(
@@ -1413,8 +1379,16 @@ extension _LegacyWorkspace on _EditorPageState {
                 child: LayoutBuilder(
                   builder: (context, bounds) {
                     Widget dock() => SizedBox(
-                      height: compact ? 160 : 184 * scale,
-                      child: tab == 1
+                      height: tab == 9
+                          ? (compact ? 160.0 : 184 * scale)
+                                .clamp(120 + 22 * scale, double.infinity)
+                                .toDouble()
+                          : compact
+                          ? 160
+                          : 184 * scale,
+                      child: tab == 9
+                          ? quickDock()
+                          : tab == 1
                           ? adjustmentDock(scale, compact)
                           : tab == 0
                           ? filterDock()
@@ -1443,6 +1417,8 @@ extension _LegacyWorkspace on _EditorPageState {
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: [
+                                            if (histogram.visible)
+                                              histogramPanel(),
                                             historyBar(),
                                             modeStrip(scale),
                                             dock(),
@@ -1455,6 +1431,7 @@ extension _LegacyWorkspace on _EditorPageState {
                               : Column(
                                   children: [
                                     Expanded(child: photoViewport()),
+                                    if (histogram.visible) histogramPanel(),
                                     historyBar(),
                                     modeStrip(scale),
                                     dock(),

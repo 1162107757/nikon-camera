@@ -12,6 +12,7 @@ import 'package:huevia/domain.dart';
 import 'project_pipeline_fixture.dart';
 import 'retouch_pipeline_fixture.dart';
 import 'raw_thumbnail_fixture.dart';
+import 'detail_render_fixture.dart';
 
 import 'package:huevia/batch_export.dart';
 
@@ -279,6 +280,7 @@ void main() {
       );
       await verifyRetouchPipeline(core);
       await verifyRawThumbnails(core, source.path);
+      await verifyDetailRendering(core);
       try {
         final revision = core.previewRevision.value;
         final selected = await core.call('media.templateSet', {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'domain.dart';
+import 'camera_connection.dart';
 
 class WiredCameraPicker extends StatefulWidget {
   const WiredCameraPicker({
@@ -20,6 +21,25 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
   List<Json>? devices;
   bool busy = false;
   String? error;
+  late final CameraConnectionRequest request;
+  @override
+  void initState() {
+    super.initState();
+    request = CameraConnectionRequest(widget.core)
+      ..addListener(progressChanged);
+  }
+
+  void progressChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    request.removeListener(progressChanged);
+    request.dispose();
+    super.dispose();
+  }
+
   Future<void> detect() async {
     if (busy || !widget.enabled) return;
     setState(() {
@@ -27,7 +47,12 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
       error = null;
     });
     try {
-      final result = await widget.core.call('camera.usb.devices');
+      final result = await request.run(
+        'camera.usb.devices',
+        {},
+        'camera-usb-discovery-${DateTime.now().microsecondsSinceEpoch}',
+        timeout: const Duration(seconds: 50),
+      );
       final rows = (result['items'] as List).map((row) => object(row)).toList();
       if (mounted) setState(() => devices = rows);
     } catch (failure) {
@@ -71,6 +96,20 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
         icon: const Icon(Icons.usb_rounded),
         label: Text(busy ? '正在处理 USB 连接' : '检测 USB 相机'),
       ),
+      if (request.busy)
+        Row(
+          children: [
+            Expanded(
+              child: Semantics(
+                liveRegion: true,
+                child: Text(
+                  '${request.phase} · 已等待 ${request.elapsedSeconds} 秒',
+                ),
+              ),
+            ),
+            TextButton(onPressed: request.cancel, child: const Text('取消检测')),
+          ],
+        ),
       if (devices != null && devices!.isEmpty)
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 8),

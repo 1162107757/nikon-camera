@@ -14,3 +14,5 @@ for name in sorted(names):
     if path.suffix=='.plist':plistlib.loads(path.read_bytes())
     if path.suffix=='.xml':ET.fromstring(text)
 print('Valid UTF-8 text and platform configuration: '+str(checked)+' files')
+from detail_render_check import check as check_detail_render
+check_detail_render()

@@ -15,6 +15,9 @@ class SplitCompare extends StatefulWidget {
     this.onRetry,
     this.selection,
     this.selectionSize,
+    this.warning,
+    this.warningRect = const Rect.fromLTWH(0, 0, 1, 1),
+    this.warningCorner = 0,
   });
   final String effect;
   final String? original;
@@ -22,6 +25,9 @@ class SplitCompare extends StatefulWidget {
   final VoidCallback? onRetry;
   final ui.Image? selection;
   final Size? selectionSize;
+  final ui.Image? warning;
+  final Rect warningRect;
+  final double warningCorner;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
@@ -62,6 +68,48 @@ class _SplitCompareState extends State<SplitCompare> {
             fit: StackFit.expand,
             children: [
               image(path),
+              if (!widget.enabled &&
+                  widget.warning != null &&
+                  widget.selectionSize != null)
+                IgnorePointer(
+                  child: ExcludeSemantics(
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: SizedBox(
+                        width: widget.selectionSize!.width,
+                        height: widget.selectionSize!.height,
+                        child: Stack(
+                          children: [
+                            Positioned.fromRect(
+                              rect: Rect.fromLTWH(
+                                widget.warningRect.left *
+                                    widget.selectionSize!.width,
+                                widget.warningRect.top *
+                                    widget.selectionSize!.height,
+                                widget.warningRect.width *
+                                    widget.selectionSize!.width,
+                                widget.warningRect.height *
+                                    widget.selectionSize!.height,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                  widget.warningCorner *
+                                      widget.warningRect.width *
+                                      widget.selectionSize!.width,
+                                ),
+                                child: RawImage(
+                                  image: widget.warning,
+                                  fit: BoxFit.fill,
+                                  filterQuality: FilterQuality.none,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               if (!widget.enabled &&
                   widget.selection != null &&
                   widget.selectionSize != null)

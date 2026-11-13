@@ -17,6 +17,7 @@ import 'project_presets.dart';
 import 'camera_remote.dart';
 import 'camera_slots.dart';
 import 'camera_downloads.dart';
+import 'camera_connection.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -41,6 +42,7 @@ class _CameraPageState extends State<CameraPage> {
   set raw(bool value) => widget.state.cameraRaw = value;
   late final CameraPreviews previews;
   late final CameraTransfer transfer;
+  late final CameraConnectionRequest connectionRequest;
   final listScroll = ScrollController();
   int offset = 0, epoch = 0;
   String? error;
@@ -158,6 +160,8 @@ class _CameraPageState extends State<CameraPage> {
     super.initState();
     previews = CameraPreviews(widget.state.core);
     transfer = CameraTransfer(widget.state);
+    connectionRequest = CameraConnectionRequest(widget.state.core)
+      ..addListener(connectionProgressChanged);
     widget.state.cameraLive.addListener(liveChanged);
     widget.state.cameraDownloads.addListener(downloadsChanged);
     if (!widget.configuration) {
@@ -169,6 +173,8 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void dispose() {
     epoch++;
+    connectionRequest.removeListener(connectionProgressChanged);
+    connectionRequest.dispose();
     widget.state.cameraLive.removeListener(liveChanged);
     widget.state.cameraDownloads.removeListener(downloadsChanged);
     if (!widget.configuration) {
@@ -181,6 +187,23 @@ class _CameraPageState extends State<CameraPage> {
     port.dispose();
     if (busy && job.isNotEmpty) unawaited(widget.state.core.cancel(job));
     super.dispose();
+  }
+
+  void connectionProgressChanged() {
+    if (mounted) setState(() {});
+  }
+
+  void cancelCameraRequest() {
+    if (!connectionRequest.busy) return;
+    epoch++;
+    connectionRequest.cancel();
+    setState(() {
+      busy = connected = false;
+      session = job = '';
+      items = [];
+      error = '已取消连接与照片读取。';
+    });
+    previews.reset('');
   }
 
   void liveChanged() {
@@ -211,7 +234,7 @@ class _CameraPageState extends State<CameraPage> {
     if (!busy) unawaited(status(reload: false));
   }
 
-  Future<void> status({bool reload = true}) async {
+  Future<void> status({bool reload = true, bool inspectOnly = false}) async {
     final request = ++epoch;
     try {
       final result = await widget.state.core.call('camera.status');
@@ -227,7 +250,10 @@ class _CameraPageState extends State<CameraPage> {
         selection.clear();
         selecting = false;
       }
-      if (connected && !exclusive && (reload || changed || items.isEmpty)) {
+      if (!inspectOnly &&
+          connected &&
+          !exclusive &&
+          (reload || changed || items.isEmpty)) {
         await page();
       }
     } catch (failure) {
@@ -246,13 +272,18 @@ class _CameraPageState extends State<CameraPage> {
       job = 'camera-connect-${DateTime.now().microsecondsSinceEpoch}';
     });
     try {
-      final result = await widget.state.core.call('camera.connect', {
-        'host': host.text.trim(),
-        'port': int.tryParse(port.text) ?? 0,
-        'protocol': usbId == null ? protocol : 'nikon',
-        if (usbId != null) 'transport': 'usb',
-        'deviceId': ?usbId,
-      }, job);
+      final result = await connectionRequest.run(
+        'camera.connect',
+        {
+          'host': host.text.trim(),
+          'port': int.tryParse(port.text) ?? 0,
+          'protocol': usbId == null ? protocol : 'nikon',
+          if (usbId != null) 'transport': 'usb',
+          'deviceId': ?usbId,
+        },
+        job,
+        timeout: const Duration(seconds: 125),
+      );
       if (!mounted || request != epoch) return;
       setState(() {
         connected = result['connected'] == true;
@@ -278,6 +309,7 @@ class _CameraPageState extends State<CameraPage> {
     if (exclusive || transfer.busy || busy) return;
     final request = ++epoch, expectedSession = session;
     final identity = 'camera-page-${DateTime.now().microsecondsSinceEpoch}';
+    var failed = false;
     if (!next) previews.reset(session);
     setState(() {
       busy = true;
@@ -292,13 +324,18 @@ class _CameraPageState extends State<CameraPage> {
       }
     });
     try {
-      final result = await widget.state.core.call('camera.page', {
-        'session': session,
-        'offset': next ? offset : 0,
-        'limit': 24,
-        'raw': raw,
-        'refresh': !next && refresh,
-      }, identity);
+      final result = await connectionRequest.run(
+        'camera.page',
+        {
+          'session': session,
+          'offset': next ? offset : 0,
+          'limit': 24,
+          'raw': raw,
+          'refresh': !next && refresh,
+        },
+        identity,
+        timeout: const Duration(seconds: 75),
+      );
       if (!mounted || request != epoch || session != expectedSession) return;
       final rows = (result['items'] as List).map(object).toList();
       setState(() {
@@ -310,6 +347,7 @@ class _CameraPageState extends State<CameraPage> {
             : null;
       });
     } catch (failure) {
+      failed = true;
       if (mounted && request == epoch) setState(() => error = '$failure');
     } finally {
       if (mounted && request == epoch) {
@@ -318,6 +356,9 @@ class _CameraPageState extends State<CameraPage> {
           job = '';
         });
       }
+    }
+    if (failed && mounted && request == epoch) {
+      unawaited(status(reload: false, inspectOnly: true));
     }
   }
 
@@ -403,6 +444,28 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) =>
       widget.configuration ? connectionView(context) : overview(context);
 
+  Widget connectionStatus() => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+    child: Row(
+      children: [
+        Expanded(
+          child: Semantics(
+            liveRegion: true,
+            child: Text(
+              '${connectionRequest.phase} · 已等待 ${connectionRequest.elapsedSeconds} 秒',
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: cancelCameraRequest,
+          child: Text(
+            connectionRequest.operation == 'camera.connect' ? '取消连接' : '取消读取',
+          ),
+        ),
+      ],
+    ),
+  );
+
   Widget connectionView(BuildContext context) => Scaffold(
     appBar: HueHeader(
       title: '连接相机',
@@ -422,6 +485,7 @@ class _CameraPageState extends State<CameraPage> {
         children: [
           if (busy && !transfer.busy)
             const LinearProgressIndicator(minHeight: 2),
+          if (connectionRequest.busy) connectionStatus(),
           Expanded(
             child: ListView(
               controller: listScroll,
@@ -811,6 +875,7 @@ class _CameraPageState extends State<CameraPage> {
           ),
           if (busy && !transfer.busy)
             const LinearProgressIndicator(minHeight: 2),
+          if (connectionRequest.busy) connectionStatus(),
           if (overviewTab == 0)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),

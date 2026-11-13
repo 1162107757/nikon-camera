@@ -27,9 +27,17 @@ import 'retouch_workspace.dart';
 import 'theme.dart';
 import 'workspace_tools.dart';
 import 'editor_presets.dart';
+import 'editor_parameter_icons.dart';
+import 'editor_more.dart';
+import 'editor_details.dart';
+import 'editor_quick.dart';
+import 'editor_histogram.dart';
+import 'editor_histogram_controller.dart';
+import 'album_operations.dart';
 
 part 'legacy_editor.dart';
 part 'local_editor.dart';
+part 'editor_menu_actions.dart';
 
 class EditorPage extends StatefulWidget {
   const EditorPage({super.key, required this.state, required this.photo});
@@ -41,6 +49,14 @@ class EditorPage extends StatefulWidget {
 
 class _EditorPageState extends State<EditorPage> {
   Recipe recipe = Recipe();
+  Recipe? parkedDraft, quickBase;
+  Json? quickCleanup, quickPortrait;
+  String sourceSha = '', quickAppliedFingerprint = '', quickSourceSha = '';
+  bool savingFavourite = false, photoDeleted = false;
+  int quickStyle = -1, quickAmount = 55, quickGeneration = 0;
+  String? quickJob;
+  Timer? quickDebounce;
+  late final EditorHistogramController histogram;
   final List<Recipe> undo = [], redo = [];
   Timer? debounce;
   StreamSubscription<dynamic>? progressEvents;
@@ -121,6 +137,12 @@ class _EditorPageState extends State<EditorPage> {
     super.initState();
     filters = EditorPresets(widget.state, widget.photo)
       ..addListener(filtersChanged);
+    histogram = EditorHistogramController(
+      core: widget.state.core,
+      owner: owner,
+      path: widget.photo.path,
+      isCurrent: () => mounted && sameOwner && !leaving,
+    )..addListener(histogramChanged);
     unawaited(filters.load());
     widget.state.addListener(editorOwnerChanged);
     progressEvents = HueviaCore.progress.listen((event) {
@@ -138,6 +160,7 @@ class _EditorPageState extends State<EditorPage> {
         'path': widget.photo.path,
         'owner': owner,
       });
+      sourceSha = saved['sourceSha'] as String? ?? '';
       if (saved['recipe'] != null) {
         recipe = Recipe(data: object(saved['recipe']));
       } else if (await legacyDraft.exists()) {
@@ -164,9 +187,16 @@ class _EditorPageState extends State<EditorPage> {
     widget.state.removeListener(editorOwnerChanged);
     filters.removeListener(filtersChanged);
     filters.dispose();
+    quickGeneration++;
+    quickDebounce?.cancel();
+    if (quickJob != null) unawaited(widget.state.core.cancel(quickJob!));
+    histogram.removeListener(histogramChanged);
+    histogram.dispose();
     clearRegionLayer();
     debounce?.cancel();
-    if (restored && !exporting) unawaited(saveDraft().catchError((_) {}));
+    if (restored && !exporting && !photoDeleted) {
+      unawaited(saveDraft().catchError((_) {}));
+    }
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     if (preview != null) unawaited(discardPreview(preview));
@@ -181,11 +211,14 @@ class _EditorPageState extends State<EditorPage> {
     if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
       throw const AppFailure('账号已改变，请重新打开照片。');
     }
-    await widget.state.core.call('draft.save', {
+    final saved = await widget.state.core.call('draft.save', {
       'path': widget.photo.path,
       'owner': owner,
       'recipe': recipe.clone().data,
     });
+    if (sameOwner && saved['sourceSha'] is String) {
+      sourceSha = saved['sourceSha'] as String;
+    }
   }
 
   void checkpoint() {
@@ -219,10 +252,11 @@ class _EditorPageState extends State<EditorPage> {
     });
   }
 
-  Future<void> render() async {
+  Future<void> render({bool readOnly = false}) async {
     if (managingTools || !sameOwner) return;
     clearRegionLayer();
     final current = revision;
+    histogram.markUpdating();
     try {
       await settleLocalAdjustments();
     } catch (failure) {
@@ -242,11 +276,17 @@ class _EditorPageState extends State<EditorPage> {
       progress = 0;
     });
     try {
-      final result = await widget.state.core.call('media.preview', {
-        'path': widget.photo.path,
-        'recipe': frozen.data,
-        'owner': owner,
-      }, job);
+      final result = await widget.state.core.call(
+        readOnly ? 'media.reviewPreview' : 'media.preview',
+        {
+          'path': widget.photo.path,
+          'recipe': frozen.data,
+          'owner': owner,
+          if (readOnly) 'snapshot': true,
+          if (readOnly) 'expectedSourceSha': sourceSha,
+        },
+        job,
+      );
       if (!mounted || current != revision || activeJob != job) {
         await discardPreview(result['path']);
         return;
@@ -259,11 +299,17 @@ class _EditorPageState extends State<EditorPage> {
         }
         late final Json before;
         try {
-          before = await widget.state.core.call('media.preview', {
-            'path': widget.photo.path,
-            'recipe': neutral,
-            'owner': owner,
-          }, job);
+          before = await widget.state.core.call(
+            readOnly ? 'media.reviewPreview' : 'media.preview',
+            {
+              'path': widget.photo.path,
+              'recipe': neutral,
+              'owner': owner,
+              if (readOnly) 'snapshot': true,
+              if (readOnly) 'expectedSourceSha': sourceSha,
+            },
+            job,
+          );
         } catch (_) {
           await discardPreview(result['path']);
           rethrow;
@@ -298,6 +344,7 @@ class _EditorPageState extends State<EditorPage> {
         error = null;
       });
       unawaited(refreshRegionLayer());
+      unawaited(histogram.update(frozen.data, sourceSha));
       panelRevision.value++;
       if (oldComparison != null &&
           oldComparison != preview &&
@@ -441,6 +488,7 @@ class _EditorPageState extends State<EditorPage> {
       if (!mounted || !current()) return;
       if (applied != null) {
         if (copying) {
+          rememberCopy(applied);
           showCopyReceipt(
             context,
             widget.state.core,
@@ -450,6 +498,7 @@ class _EditorPageState extends State<EditorPage> {
           );
           return;
         }
+        if (savedVersions) parkedDraft = Recipe(data: frozen);
         checkpoint();
         setState(() {
           compare = false;

@@ -457,6 +457,15 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void acceptPhotoStars(String owner, Iterable<String> keys) {
+    if (session['logoutPending'] == true ||
+        (session['user']?['id'] as String? ?? '') != owner) {
+      return;
+    }
+    starredPhotos = keys.toSet();
+    notifyListeners();
+  }
+
   Photo restorePhoto(Json saved) {
     final row = object(saved), info = object(row['info']);
     String path(String value) {

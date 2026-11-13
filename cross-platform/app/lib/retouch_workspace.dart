@@ -12,6 +12,7 @@ import 'retouch_more.dart';
 import 'retouch_original_controls.dart';
 import 'retouch_original_body.dart';
 import 'retouch_brush_preview.dart';
+import 'retouch_blemish_review.dart';
 import 'selection_workspace.dart';
 import 'photo_workspace_chrome.dart';
 import 'widgets.dart';
@@ -105,6 +106,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   ui.Image? portraitOverlay;
   String? portraitOverlayKey, portraitOverlayJob;
   int portraitOverlayRevision = 0, faceHitRevision = 0;
+  ValueNotifier<bool>? blemishReview;
+  void invalidateBlemishReview() => blemishReview?.value = false;
   void refreshPortrait(VoidCallback update) => setState(update);
   final temporary = <String>{};
   bool get current =>
@@ -126,6 +129,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void cancelWorkspace({bool pop = true}) {
     if (exitRequested) return;
+    invalidateBlemishReview();
     final active = job;
     job = null;
     exitRequested = true;
@@ -247,6 +251,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void accountChanged() {
     if (!current) {
+      invalidateBlemishReview();
       unawaited(stop());
       if (mounted) setState(() => error = '账号已改变，请返回重新打开照片。');
       if (mounted) {
@@ -1228,6 +1233,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       : originalPortraitLayout(context);
   @override
   void dispose() {
+    invalidateBlemishReview();
     clearPortraitOverlay();
     viewport.dispose();
     brushEditing.dispose();

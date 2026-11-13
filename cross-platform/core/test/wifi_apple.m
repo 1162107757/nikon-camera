@@ -1,18 +1,53 @@
 #import <Foundation/Foundation.h>
 #import "HueviaWifiSocket.h"
+#import "HueviaCameraWait.h"
 #import "java/io/InputStream.h"
 #import "java/io/OutputStream.h"
+#import "java/io/IOException.h"
 #import "java/net/SocketTimeoutException.h"
 #import "java/net/ConnectException.h"
 #import "IOSPrimitiveArray.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+
+@interface HueviaWifiAlreadyCancelled : NSObject <JavaUtilFunctionBooleanSupplier>
+@end
+@implementation HueviaWifiAlreadyCancelled
+- (bool)getAsBoolean {return true;}
+@end
+@interface HueviaCameraCancellationFlag : NSObject <JavaUtilFunctionBooleanSupplier>
+@property(atomic) BOOL cancelled;
+@end
+@implementation HueviaCameraCancellationFlag
+- (bool)getAsBoolean {return self.cancelled;}
+@end
 
 static int checks;
 static void yes(BOOL value){checks++;if(!value)@throw [NSException exceptionWithName:@"WifiBoundary" reason:[NSString stringWithFormat:@"check %d",checks] userInfo:nil];}
 static int listener(uint16_t *port){int fd=socket(AF_INET,SOCK_STREAM,0);struct sockaddr_in address={0};address.sin_len=sizeof(address);address.sin_family=AF_INET;address.sin_addr.s_addr=htonl(INADDR_LOOPBACK);yes(bind(fd,(struct sockaddr *)&address,sizeof(address))==0);socklen_t size=sizeof(address);yes(getsockname(fd,(struct sockaddr *)&address,&size)==0);*port=ntohs(address.sin_port);yes(listen(fd,4)==0);return fd;}
 int main(void){@autoreleasepool{@try{
+  fprintf(stderr,"WIFI_STAGE cancellable-authorization-wait\n");
+  dispatch_semaphore_t permission=dispatch_semaphore_create(0),permissionDone=dispatch_semaphore_create(0);
+  HueviaCameraCancellationFlag *permissionCancel=[HueviaCameraCancellationFlag new];__block BOOL permissionStopped=NO;
+  dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{@autoreleasepool{
+    @try{(void)HueviaAwaitCameraResponse(permission,45,permissionCancel);}@catch(JavaIoIOException *expected){permissionStopped=YES;}
+    dispatch_semaphore_signal(permissionDone);
+  }});
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW,80000000),dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{permissionCancel.cancelled=YES;});
+  yes(dispatch_semaphore_wait(permissionDone,dispatch_time(DISPATCH_TIME_NOW,2*NSEC_PER_SEC))==0);yes(permissionStopped);
+  // A late OS authorization callback can signal only its retired wait token.
+  dispatch_semaphore_signal(permission);
+  dispatch_semaphore_t nextPermission=dispatch_semaphore_create(0);
+  yes(!HueviaAwaitCameraResponse(nextPermission,.03,nil));
+  dispatch_semaphore_signal(nextPermission);yes(HueviaAwaitCameraResponse(nextPermission,.1,nil));
+  fprintf(stderr,"WIFI_STAGE cancelled-before-connect\n");
+  uint16_t cancelledPort;int cancelledServer=listener(&cancelledPort);BOOL cancelledBeforeConnect=NO;
+  @try{(void)[[HueviaWifiSocket alloc] initWithHost:@"127.0.0.1" port:cancelledPort timeout:3000 wifiOnly:NO cancellation:[HueviaWifiAlreadyCancelled new] progress:nil];}
+  @catch(JavaIoIOException *expected){cancelledBeforeConnect=YES;}yes(cancelledBeforeConnect);
+  yes(fcntl(cancelledServer,F_SETFL,O_NONBLOCK)==0);int unwanted=accept(cancelledServer,NULL,NULL);yes(unwanted<0&&(errno==EAGAIN||errno==EWOULDBLOCK));if(unwanted>=0)close(unwanted);close(cancelledServer);
   fprintf(stderr,"WIFI_STAGE echo-connect\n");
   uint16_t port;int server=listener(&port);dispatch_semaphore_t finished=dispatch_semaphore_create(0);
   dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED,0),^{

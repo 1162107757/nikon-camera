@@ -55,6 +55,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
             bind(mediaField,mediaMethod,workerField);
             evidence.put("mediaField",mediaField).put("mediaMethod",mediaMethod).put("workerField",workerField).put("mediaRuntimeClass",media.getClass().getName());
             portraitChecks();
+            detailChecks();
             rawChecks();
         }catch(Throwable value){failure=unwrap(value);}
         finally {
@@ -63,7 +64,7 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         }
         result.putInt("checks",checks);result.putString("evidence",evidence.toString());
         if(failure==null){
-            String summary="PASS "+checks+" R8 release runtime checks; real mesh, semantic skin, renderer, patch, cancellation and RAW JNI callbacks\n";
+            String summary="PASS "+checks+" R8 release runtime checks; real mesh, semantic skin, renderer, read-only full details, patch, cancellation and RAW JNI callbacks\n";
             Log.i(TAG,summary);result.putString("stream",summary);finish(Activity.RESULT_OK,result);
         }else{
             String summary="FAIL after "+checks+" R8 release runtime checks: "+failure+"\n"+Log.getStackTraceString(failure)+"\n";
@@ -267,6 +268,66 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         yes(canceled,"release in-flight portrait computation rejected the canceled result");
         cancel.set(false);yes(!(Boolean)cancelReader.invoke(callback),"actual release cancellation capture resets to false");
     }
+    private Map<String,String> editState()throws Exception {
+        Map<String,String> result=new TreeMap<>();
+        for(String name:new String[]{"photo-edit-drafts","photo-versions","raw-development"})collectState(new File(root,name),result,0,root);
+        File rawDevelopment=new File(root.getParentFile(),"raw-development").getCanonicalFile();
+        collectState(rawDevelopment,result,0,rawDevelopment);
+        return result;
+    }
+    private void collectState(File supplied,Map<String,String> result,int depth,File allowedRoot)throws Exception {
+        if(depth>16)throw new IOException("Unexpectedly deep edit state");
+        File file=supplied.getCanonicalFile();
+        if(!file.equals(supplied)||!file.toPath().startsWith(allowedRoot.toPath())||Files.isSymbolicLink(file.toPath()))throw new IOException("Unconfined edit state path");
+        if(!file.exists())return;
+        if(file.isFile()){result.put(file.getPath(),hash(file));return;}
+        File[] children=file.listFiles();if(children==null)throw new IOException("Cannot inspect edit state");
+        for(File child:children)collectState(child,result,depth+1,allowedRoot);
+    }
+    private void detailChecks()throws Exception {
+        File source=createSource("jpg");
+        Bitmap bitmap=Bitmap.createBitmap(1600,1200,Bitmap.Config.ARGB_8888);
+        try {
+            int[] row=new int[1600];
+            for(int y=0;y<1200;y++){
+                for(int x=0;x<1600;x++)row[x]=0xff000000|((24+x%120)<<16)|((32+y%110)<<8)|(40+(x+y)%100);
+                bitmap.setPixels(row,0,1600,0,y,1600,1);
+            }
+            try(FileOutputStream out=new FileOutputStream(source)){yes(bitmap.compress(Bitmap.CompressFormat.JPEG,95,out),"owned full-detail fixture encoded");out.getFD().sync();}
+        }finally{bitmap.recycle();}
+        String original=hash(source);
+        JSONObject bounded=preview(source,"");
+        yes(Math.max(bounded.getInt("width"),bounded.getInt("height"))<=640,"ordinary preview remains bounded before full-detail request");
+        Map<String,String> state=editState();Set<String> previews=snapshot(new File(root,"previews"));
+        JSONArray values=new JSONArray();for(int i=0;i<17;i++)values.put(i==1?10:0);
+        JSONObject recipe=new JSONObject().put("schema",1).put("values",values);
+        JSONObject payload=new JSONObject().put("owner",owner).put("path",source.getPath()).put("recipe",recipe).put("expectedSourceSha",original);
+        JSONObject detail=call("media.detailRender",payload);File result=remember(detail,"previews");
+        yes(detail.getBoolean("temporary")&&detail.getBoolean("fullResolution"),"full detail explicitly identifies a read-only temporary frame");
+        yes(original.equals(detail.getString("sourceSha")),"full detail identifies the exact source SHA");
+        yes(detail.getInt("width")==1600&&detail.getInt("height")==1200,"full detail preserves source-sized pixels beyond the preview cap");
+        BitmapFactory.Options size=new BitmapFactory.Options();size.inJustDecodeBounds=true;BitmapFactory.decodeFile(result.getPath(),size);
+        yes(size.outWidth==1600&&size.outHeight==1200,"encoded full-detail bitmap independently retains full dimensions");
+        yes(!previews.contains(result.getPath()),"full detail owns a fresh temporary frame rather than a bounded cache entry");
+        yes(pixelDifferences(source,result)>0,"full detail applies the requested exposure rather than copying the source");
+        yes(state.equals(editState()),"full detail creates no draft, version or RAW development side effect");
+        yes(original.equals(hash(source)),"full detail leaves source bytes unchanged");
+        JSONObject mismatch=new JSONObject(payload.toString()).put("expectedSourceSha",String.join("",Collections.nCopies(64,"0")));
+        Throwable wrongSha=null;try{call("media.detailRender",mismatch);}catch(Throwable failure){wrongSha=unwrap(failure);}
+        yes(wrongSha instanceof IOException,"full detail rejects a changed-source SHA");
+        JSONObject missing=new JSONObject(payload.toString());missing.remove("expectedSourceSha");
+        Throwable noSha=null;try{call("media.detailRender",missing);}catch(Throwable failure){noSha=unwrap(failure);}
+        yes(noSha instanceof IOException,"full detail requires an expected source SHA");
+        Set<String> expectedPreviews=new HashSet<>(previews);expectedPreviews.add(result.getPath());
+        yes(expectedPreviews.equals(snapshot(new File(root,"previews"))),"rejected full-detail identities leave no temporary frame");
+        Set<String> beforeCancel=snapshot(new File(root,"previews"));
+        Throwable failure=null;try{await(worker.submit(()->invoke("media.detailRender",payload.toString(),new AtomicBoolean(true),value->{})));}catch(Throwable value){failure=unwrap(value);}
+        boolean canceled=false;for(Throwable value=failure;value!=null;value=value.getCause())if(value instanceof InterruptedIOException||String.valueOf(value.getMessage()).contains("取消")||String.valueOf(value.getMessage()).contains("停止"))canceled=true;
+        yes(canceled,"full detail rejects an already-canceled native request");
+        yes(beforeCancel.equals(snapshot(new File(root,"previews"))),"canceled full detail leaves no temporary frame");
+        yes(state.equals(editState())&&original.equals(hash(source)),"rejected full-detail requests preserve source and persistent edit state");
+        evidence.put("detailSourceSha256",original).put("detailWidth",size.outWidth).put("detailHeight",size.outHeight).put("detailPersistentStateUnchanged",true);
+    }
     private void rawChecks()throws Exception {
         File source=createSource("dng");
         // TIFF readers follow referenced IFD/strip offsets. This unreferenced
@@ -274,6 +335,10 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         byte[] marker=("\nHuevia-R8-owned-fixture:"+UUID.randomUUID()+"\n").getBytes(StandardCharsets.UTF_8);
         copy(getContext().getAssets().open("raw-stack.dng"),source,marker);String original=hash(source);long bytes=source.length();
         JSONObject info=call("media.info",new JSONObject().put("path",source.getPath()));yes(info.getBoolean("raw"),"uniquely marked owned DNG remains a real RAW");
+        Map<String,String> beforeDetail=editState();Set<String> detailPreviews=snapshot(new File(root,"previews"));
+        Throwable rawDetail=null;try{call("media.detailRender",new JSONObject().put("path",source.getPath()).put("owner",owner).put("expectedSourceSha",original).put("recipe",new JSONObject().put("schema",1)));}catch(Throwable failure){rawDetail=unwrap(failure);}
+        yes(rawDetail instanceof IOException&&String.valueOf(rawDetail.getMessage()).contains("显影"),"undeveloped RAW full detail requires explicit development");
+        yes(beforeDetail.equals(editState())&&detailPreviews.equals(snapshot(new File(root,"previews"))),"rejected RAW detail creates no development, draft, version or preview");
         JSONObject thumbnail=call("media.rawThumbnail",new JSONObject().put("path",source.getPath()).put("owner",owner));
         File output=remember(thumbnail,"raw-thumbnails");
         yes(thumbnail.has("width")&&thumbnail.has("height"),"release RAW executed the fresh native/JNI branch rather than an old display cache");

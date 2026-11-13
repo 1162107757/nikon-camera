@@ -45,6 +45,30 @@ enum HueIconKind {
   frame,
   check,
   edit,
+  brightness,
+  highlights,
+  shadows,
+  whites,
+  blacks,
+  tint,
+  vibrance,
+  clarity,
+  sharpening,
+  lumaDenoise,
+  colorDenoise,
+  grain,
+  vignette,
+  hsl,
+  patch,
+  starFilled,
+  histogram,
+  stack,
+  detail,
+  grid,
+  recipe,
+  receipts,
+  delete,
+  moreVertical,
 }
 
 class HueIcon extends StatelessWidget {
@@ -121,6 +145,7 @@ class _Painter extends CustomPainter {
         circle(9, 10, 6);
         circle(15, 10, 6);
         circle(12, 16, 6);
+      case HueIconKind.brightness:
       case HueIconKind.exposure:
         circle(12, 12, 5);
         for (var i = 0; i < 8; i++) {
@@ -132,20 +157,122 @@ class _Painter extends CustomPainter {
             12 + math.sin(a) * 10,
           ]);
         }
-        line([10, 12, 14, 12]);
-        line([12, 10, 12, 14]);
+        if (kind == HueIconKind.exposure) {
+          line([10, 12, 14, 12]);
+          line([12, 10, 12, 14]);
+        }
       case HueIconKind.contrast:
+      case HueIconKind.blacks:
         circle(12, 12, 9);
         canvas.save();
-        canvas.clipRect(const Rect.fromLTRB(12, 3, 21, 21));
+        canvas.clipRect(
+          kind == HueIconKind.blacks
+              ? const Rect.fromLTRB(3, 3, 12, 21)
+              : const Rect.fromLTRB(12, 3, 21, 21),
+        );
         ink.style = PaintingStyle.fill;
         circle(12, 12, 8);
         ink.style = PaintingStyle.stroke;
         canvas.restore();
+      case HueIconKind.whites:
+        circle(11, 13, 7);
+        circle(11, 13, 3);
+        line([18, 2, 18, 6]);
+        line([16, 4, 20, 4]);
+      case HueIconKind.highlights:
+      case HueIconKind.shadows:
+        circle(12, 12, 8);
+        for (final y in [8.0, 12.0, 16.0]) {
+          line([
+            kind == HueIconKind.highlights ? 12 : 6,
+            y,
+            kind == HueIconKind.highlights ? 18 : 12,
+            y,
+          ]);
+        }
+        line([12, 4, 12, 20]);
       case HueIconKind.temperature:
         round(9, 3, 15, 17, 3);
         circle(12, 18, 4);
         line([12, 7, 12, 18]);
+      case HueIconKind.tint:
+        canvas.drawPath(
+          Path()
+            ..moveTo(12, 2)
+            ..cubicTo(10, 7, 4, 11, 5, 16)
+            ..cubicTo(6, 24, 19, 24, 19, 16)
+            ..cubicTo(19, 11, 14, 6, 12, 2),
+          ink,
+        );
+      case HueIconKind.vibrance:
+        line([12, 3, 21, 20, 3, 20, 12, 3]);
+        circle(12, 14, 3);
+      case HueIconKind.clarity:
+        canvas.drawRect(const Rect.fromLTRB(4, 4, 20, 20), ink);
+        line([8, 8, 16, 8, 16, 16, 8, 16, 8, 8]);
+      case HueIconKind.sharpening:
+        line([12, 3, 21, 21, 3, 21, 12, 3]);
+        line([12, 9, 12, 16]);
+      case HueIconKind.lumaDenoise:
+        for (final point in const [
+          Offset(4, 5),
+          Offset(8, 8),
+          Offset(4, 12),
+          Offset(8, 16),
+          Offset(4, 20),
+        ]) {
+          circle(point.dx, point.dy, .55);
+        }
+        canvas.drawPath(
+          Path()
+            ..moveTo(12, 19)
+            ..cubicTo(21, 18, 12, 6, 21, 5),
+          ink,
+        );
+      case HueIconKind.colorDenoise:
+        circle(6, 6, 3);
+        circle(16, 6, 3);
+        circle(6, 16, 3);
+        line([12, 17, 15, 20, 21, 13]);
+      case HueIconKind.grain:
+        for (var y = 0; y < 4; y++) {
+          for (var x = 0; x < 4; x++) {
+            canvas.drawCircle(
+              Offset(4.5 + x * 5, 4.5 + y * 5),
+              (x + y).isEven ? 1.05 : .55,
+              Paint()..color = color,
+            );
+          }
+        }
+      case HueIconKind.vignette:
+        round(3, 4, 21, 20, 3);
+        canvas.drawOval(const Rect.fromLTRB(8, 7, 16, 17), ink);
+        line([3, 9, 8, 4]);
+        line([16, 4, 21, 9]);
+        line([3, 15, 8, 20]);
+        line([16, 20, 21, 15]);
+      case HueIconKind.hsl:
+        circle(12, 12, 9);
+        circle(12, 12, 2.5);
+        for (var i = 0; i < 3; i++) {
+          final angle = (-90 + i * 120) * math.pi / 180;
+          line([
+            12 + math.cos(angle) * 3,
+            12 + math.sin(angle) * 3,
+            12 + math.cos(angle) * 9,
+            12 + math.sin(angle) * 9,
+          ]);
+        }
+      case HueIconKind.patch:
+        canvas.save();
+        canvas.translate(12, 12);
+        canvas.rotate(-math.pi / 4);
+        canvas.translate(-12, -12);
+        round(6, 2, 18, 22, 4);
+        canvas.drawRect(const Rect.fromLTRB(8, 8, 16, 16), ink);
+        circle(10, 5, .5);
+        circle(14, 19, .5);
+        canvas.restore();
       case HueIconKind.brush:
         line([10, 15, 7, 12, 17, 3, 21, 7, 12, 17, 10, 15]);
         canvas.drawPath(
@@ -248,6 +375,10 @@ class _Painter extends CustomPainter {
         for (final x in [5.0, 12.0, 19.0]) {
           circle(x, 12, 1);
         }
+      case HueIconKind.moreVertical:
+        for (final y in [5.0, 12.0, 19.0]) {
+          circle(12, y, 1);
+        }
       case HueIconKind.chevron:
         line([9, 5, 16, 12, 9, 19]);
       case HueIconKind.down:
@@ -292,6 +423,7 @@ class _Painter extends CustomPainter {
         line([6, 6, 18, 18]);
         line([18, 6, 6, 18]);
       case HueIconKind.star:
+      case HueIconKind.starFilled:
         final path = Path();
         for (var i = 0; i < 10; i++) {
           final a = (-90 + i * 36) * math.pi / 180, r = i.isEven ? 10.0 : 4.5;
@@ -302,7 +434,45 @@ class _Painter extends CustomPainter {
           }
         }
         path.close();
+        if (kind == HueIconKind.starFilled) ink.style = PaintingStyle.fill;
         canvas.drawPath(path, ink);
+      case HueIconKind.histogram:
+        line([3, 4, 3, 21, 22, 21]);
+        line([7, 17, 7, 12]);
+        line([11, 17, 11, 6]);
+        line([15, 17, 15, 3]);
+        line([19, 17, 19, 10]);
+      case HueIconKind.stack:
+        round(3, 3, 16, 16, 1.5);
+        round(8, 8, 21, 21, 1.5);
+      case HueIconKind.detail:
+        circle(10, 10, 6);
+        line([15, 15, 21, 21]);
+        line([7, 10, 13, 10]);
+        line([10, 7, 10, 13]);
+      case HueIconKind.grid:
+        round(3, 3, 10, 10, 1);
+        round(14, 3, 21, 10, 1);
+        round(3, 14, 10, 21, 1);
+        round(14, 14, 21, 21, 1);
+      case HueIconKind.recipe:
+        round(5, 3, 19, 21, 2);
+        line([8, 9, 16, 9]);
+        circle(11, 9, 1.5);
+        line([8, 15, 16, 15]);
+        circle(14, 15, 1.5);
+      case HueIconKind.receipts:
+        round(3, 3, 21, 21, 3);
+        for (final y in [8.0, 12.0, 16.0]) {
+          circle(7, y, .1);
+          line([11, y, y == 16 ? 15 : 17, y]);
+        }
+      case HueIconKind.delete:
+        line([4, 6, 20, 6]);
+        line([9, 6, 9, 3, 15, 3, 15, 6]);
+        line([6, 6, 7, 21, 17, 21, 18, 6]);
+        line([10, 10, 10, 17]);
+        line([14, 10, 14, 17]);
       case HueIconKind.undo:
       case HueIconKind.redo:
         if (kind == HueIconKind.redo) {

@@ -123,22 +123,28 @@ final class NativeMedia {
             runtime.guardOwner(owner);runtime.validateSource(source.getPath(),sha);
             return SharedCleanup.result(analysis);
         }
-        boolean originalView=operation.equals("media.originalPreview"),localView=operation.equals("media.localPreview"),reviewView=operation.equals("media.reviewPreview");
-        if(!originalView&&!localView&&!reviewView&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
+        boolean originalView=operation.equals("media.originalPreview"),localView=operation.equals("media.localPreview"),reviewView=operation.equals("media.reviewPreview"),detail=operation.equals("media.detailRender");
+        if(!originalView&&!localView&&!reviewView&&!detail&&!operation.equals("media.preview")&&!operation.equals("media.export"))throw new IOException("未知的照片操作。");
         boolean preview=originalView||localView||reviewView||operation.equals("media.preview");
         int previewEdge=SharedRuntime.integer(p,"maxEdge",1280);
         if(preview&&(previewEdge<128||previewEdge>1280))throw new IOException("预览边长必须在 128 到 1280 之间。");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
+        if(detail){
+            runtime.guardOwner(owner);if(cancel.getAsBoolean())throw new InterruptedIOException("细节查看已取消。");
+            String expected=SharedRuntime.text(p,"expectedSourceSha",64);if(!expected.matches("[a-f0-9]{64}"))throw new IOException("细节查看需要已校验的原图身份。");
+            runtime.validateSource(original,expected);
+            if(raw(source))throw new IOException("请先显影 RAW，再查看完整尺寸效果。");
+        }
         if(p.containsKey("snapshot")&&!(p.get("snapshot") instanceof Boolean))throw new IOException("导出快照标识无效。");
         boolean snapshot=Boolean.TRUE.equals(p.get("snapshot"));
-        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):reviewView||snapshot?runtime.reviewView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
-        if(snapshot&&!frozen.sourceSha.equals(SharedRuntime.text(p,"expectedSourceSha",64)))throw new IOException("原图与打开导出设置时不同，请重新打开照片。");
+        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):reviewView||snapshot||detail?runtime.reviewView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        if((snapshot||detail)&&!frozen.sourceSha.equals(SharedRuntime.text(p,"expectedSourceSha",64)))throw new IOException("原图与打开导出设置时不同，请重新打开照片。");
         if(!preview)runtime.validateSource(original,frozen.sourceSha);
         if(raw(source))source=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
-        File directory=new File(runtime.root(),preview?"previews":"exports");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片输出目录。");
-        File temporary=File.createTempFile("render-",".part",directory),target=new File(directory,UUID.randomUUID()+".jpg");File reduced=null;
+        File directory=new File(runtime.root(),preview||detail?"previews":"exports");if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法创建照片输出目录。");
+        File temporary=File.createTempFile("render-",".part",directory),target=new File(directory,UUID.randomUUID()+".jpg");File reduced=null;boolean detailComplete=false,detailMoved=false;
         try{
-            PhotoExportSpec spec=preview?PhotoExportSpec.share():spec(p);
+            PhotoExportSpec spec=detail?PhotoExportSpec.full():preview?PhotoExportSpec.share():spec(p);
             PresetPreviewProfile profile=frozen.profile();
             BitmapFactory.Options sourceBounds=bounds(source);
             int sourceOrientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(sourceOrientation<1||sourceOrientation>8)sourceOrientation=1;
@@ -156,7 +162,16 @@ final class NativeMedia {
             runtime.guardOwner(owner);
             if(!preview)runtime.validateSource(original,frozen.sourceSha);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
+            detailMoved=true;
             Map<String,Object> result=SharedRuntime.map("path",target.getPath(),"width",width,"height",height,"geometryWidth",plan.width,"geometryHeight",plan.height,"bytes",target.length(),"preview",preview,"model",preview?profile.modelVersion():SharedExportModel.of(profile,resolved),"exportSpec",preview?"":resolved.identity());
+            if(detail){
+                // The same full-size renderer, without the export transaction
+                // or persistent draft mutation below.
+                progress.accept(1);runtime.guardOwner(owner);runtime.validateSource(original,frozen.sourceSha);
+                if(cancel.getAsBoolean())throw new InterruptedIOException("细节查看已取消。");
+                result.put("sourceSha",frozen.sourceSha);result.put("temporary",true);result.put("fullResolution",true);
+                String encoded=SharedJson.encode(result);detailComplete=true;return encoded;
+            }
             if(preview){result.put("sourceWidth",uncomposed.width);result.put("sourceHeight",uncomposed.height);}
             if(!preview){
                 try{
@@ -166,7 +181,7 @@ final class NativeMedia {
             }
             return SharedJson.encode(result);
         }catch(PhotoPresetRenderer.Cancelled stopped){throw new InterruptedIOException("照片处理已取消。");}
-        finally{Files.deleteIfExists(temporary.toPath());if(reduced!=null)Files.deleteIfExists(reduced.toPath());}
+        finally{Files.deleteIfExists(temporary.toPath());if(detail&&detailMoved&&!detailComplete)Files.deleteIfExists(target.toPath());if(reduced!=null)Files.deleteIfExists(reduced.toPath());}
     }
     private String rawDevelop(String operation,Map<String,Object> p,File source,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         if(!raw(source))throw new IOException("请选择 RAW 原文件。");

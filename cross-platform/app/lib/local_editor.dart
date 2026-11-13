@@ -318,6 +318,7 @@ extension _LocalWorkspace on _EditorPageState {
   }
 
   Future<void> leaveEditor() async {
+    if (quickJob != null) cancelQuick();
     if (leaving || exporting || managingTools || analyzingCleanup) return;
     leaving = true;
     try {
@@ -367,6 +368,10 @@ extension _LocalWorkspace on _EditorPageState {
       filtersChanged();
       return;
     }
+    cancelQuick();
+    histogram.invalidate();
+    parkedDraft = quickBase = null;
+    quickCleanup = quickPortrait = null;
     debounce?.cancel();
     clearRegionLayer();
     revision++;

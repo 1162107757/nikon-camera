@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/copy_adjustments.dart';
 import 'package:huevia/editor.dart';
+import 'package:huevia/editor_details.dart';
 import 'package:huevia/recipes.dart';
 import 'package:huevia/retouch_workspace.dart';
 import 'package:huevia/theme.dart';
@@ -26,6 +27,18 @@ class MenuCore extends fixtures.DraftCore {
     String? jobId,
   ]) async {
     switch (operation) {
+      case 'media.preview':
+      case 'media.originalPreview':
+      case 'media.reviewPreview':
+      case 'media.rawPreview':
+        calls.add((operation, payload));
+        final path = '$root/previews/menu-${++portraitPreviewSerial}.png';
+        File(path).writeAsBytesSync(
+          base64Decode(
+            'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
+          ),
+        );
+        return {'path': path, 'width': 1, 'height': 1};
       case 'media.retouchDescribe':
         calls.add((operation, payload));
         return {
@@ -60,9 +73,6 @@ class MenuCore extends fixtures.DraftCore {
       case 'media.retouchAnalyze':
         calls.add((operation, payload));
         return {'regionId': '', 'selectionOverlay': null};
-      case 'media.reviewPreview':
-        calls.add((operation, payload));
-        return {'path': '$root/previews/preview.png', 'width': 1, 'height': 1};
       case 'draft.load':
         calls.add((operation, payload));
         return {'sourceSha': 'source-sha', 'recipe': draft};
@@ -96,10 +106,12 @@ class MenuCore extends fixtures.DraftCore {
         return {'sourceSha': versionSha, 'recipe': Recipe().data};
       case 'source.inspect':
         calls.add((operation, payload));
-        return {'format': 'NEF', 'sourceSha': rawSha};
-      case 'media.rawPreview':
-        calls.add((operation, payload));
-        return {'path': '$root/previews/raw.png'};
+        return {
+          'format': 'NEF',
+          'sourceSha': payload['path'].toString().endsWith('.nef')
+              ? rawSha
+              : 'source-sha',
+        };
     }
     return super.call(operation, payload, jobId);
   }
@@ -146,7 +158,15 @@ void main() {
         await directory.delete(recursive: true);
         break;
       } on FileSystemException catch (error) {
-        if (error.osError?.errorCode != 32 || attempt >= 30) rethrow;
+        if (Platform.isWindows && error.osError?.errorCode == 32) {
+          // Windows codecs can keep a mapped fixture until the tester exits.
+          // The outer runner removes this exact owned directory after exit.
+          debugPrint(
+            'FIXTURE_CLEANUP_AFTER_PROCESS ${jsonEncode(directory.path)}',
+          );
+          break;
+        }
+        if (error.osError?.errorCode != 32 || attempt >= 150) rethrow;
         await Future<void>.delayed(const Duration(milliseconds: 10));
       }
     }
@@ -164,12 +184,12 @@ void main() {
   Future<void> menu(WidgetTester tester, String action) async {
     await tester.tap(find.bySemanticsLabel('更多照片操作和重置'));
     await tester.pumpAndSettle();
-    await tester.tap(
-      find.descendant(
-        of: find.byType(BottomSheet),
-        matching: find.text(action),
-      ),
+    final target = find.descendant(
+      of: find.byKey(const ValueKey('photo-actions-menu')),
+      matching: find.text(action),
     );
+    await tester.ensureVisible(target);
+    await tester.tap(target);
     await tester.pumpAndSettle();
   }
 
@@ -177,7 +197,7 @@ void main() {
     'All visible editor menu pages use the saved current draft and return to the editor',
     (tester) async {
       await openEditor(tester);
-      await menu(tester, '我的配方');
+      await menu(tester, '照片配方');
       expect(find.byType(RecipesPage), findsOneWidget);
       expect(find.text('个人秋色'), findsOneWidget);
       expect(
@@ -186,17 +206,22 @@ void main() {
       );
       await tester.pageBack();
       await tester.pumpAndSettle();
-      await menu(tester, '复制当前调节');
+      await menu(tester, '复制调色');
       expect(find.text('目标照片'), findsOneWidget);
       await tester.pageBack();
       await tester.pumpAndSettle();
-      await menu(tester, '成品版本');
+      await menu(tester, '照片版本');
       expect(find.byType(VersionsPage), findsOneWidget);
       await tester.pageBack();
       await tester.pumpAndSettle();
-      await menu(tester, 'RAW 显影');
+      await menu(tester, '查看细节');
+      expect(find.byType(EditorDetailsPage), findsOneWidget);
+      await tester.tap(find.text('细节预览'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('RAW 显影'));
+      await tester.pumpAndSettle();
       expect(
-        core.calls.singleWhere((c) => c.$1 == 'source.inspect').$2,
+        core.calls.lastWhere((c) => c.$1 == 'source.inspect').$2,
         containsPair('expectedSourceSha', 'raw-sha'),
       );
       expect(core.calls.where((c) => c.$1 == 'media.rawPreview'), isNotEmpty);
@@ -214,7 +239,7 @@ void main() {
     'Restore original persists immediately and an old menu cannot run after account change',
     (tester) async {
       await openEditor(tester);
-      await menu(tester, '恢复原图');
+      await menu(tester, '还原原图');
       expect(core.draft['values'], everyElement(0));
       await tester.tap(find.bySemanticsLabel('更多照片操作和重置'));
       await tester.pumpAndSettle();
@@ -223,12 +248,8 @@ void main() {
       };
       state.notifyListeners();
       final before = core.calls.length;
-      await tester.tap(
-        find.descendant(
-          of: find.byType(BottomSheet),
-          matching: find.text('我的配方'),
-        ),
-      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('photo-actions-menu')), findsNothing);
       await tester.pumpAndSettle();
       expect(
         core.calls.skip(before).where((c) => c.$1.startsWith('recipe.')),
@@ -251,7 +272,7 @@ void main() {
       core.versionSha = 'different-source';
       await openEditor(tester);
       final before = jsonEncode(core.draft);
-      await menu(tester, '成品版本');
+      await menu(tester, '照片版本');
       await tester.tap(find.byTooltip('版本操作'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('恢复此配方'));
@@ -274,7 +295,11 @@ void main() {
   ) async {
     core.rawSha = 'different-raw';
     await openEditor(tester);
-    await menu(tester, 'RAW 显影');
+    await menu(tester, '查看细节');
+    await tester.tap(find.text('细节预览'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('RAW 显影'));
+    await tester.pumpAndSettle();
     expect(find.textContaining('原始 RAW 已改变'), findsOneWidget);
     expect(core.calls.where((c) => c.$1 == 'media.rawPreview'), isEmpty);
     await tester.pumpWidget(const SizedBox());

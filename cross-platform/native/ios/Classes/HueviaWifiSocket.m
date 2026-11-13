@@ -37,17 +37,27 @@ static void socketFailure(nw_error_t error) {
 @interface HueviaSocketOutput : JavaIoOutputStream
 @property(nonatomic,weak) HueviaWifiSocket *socket;
 @end
+@interface HueviaSocketConnectionState : NSObject
+@property(atomic) BOOL connected,finished,permissionWaiting;
+@property(atomic,strong) nw_error_t failure;
+@end
+@implementation HueviaSocketConnectionState
+@end
 
 @implementation HueviaSockets
 - (id<CcHueviaAlbumPtpIpClient_SocketConnector>)createWithNSString:(NSString *)host withInt:(int32_t)port withBoolean:(bool)fuji { return self; }
 - (JavaNetSocket *)connectWithNSString:(NSString *)host withInt:(int32_t)port withInt:(int32_t)timeout {
-  return [[HueviaWifiSocket alloc] initWithHost:host port:port timeout:timeout wifiOnly:YES];
+  return [[HueviaWifiSocket alloc] initWithHost:host port:port timeout:timeout wifiOnly:YES cancellation:self.cancellation progress:self.progress];
 }
 @end
 
 @implementation HueviaWifiSocket
 - (instancetype)initWithHost:(NSString *)host port:(int32_t)port timeout:(int32_t)timeout wifiOnly:(BOOL)wifiOnly {
+  return [self initWithHost:host port:port timeout:timeout wifiOnly:wifiOnly cancellation:nil progress:nil];
+}
+- (instancetype)initWithHost:(NSString *)host port:(int32_t)port timeout:(int32_t)timeout wifiOnly:(BOOL)wifiOnly cancellation:(id<JavaUtilFunctionBooleanSupplier>)cancel progress:(id<JavaUtilFunctionDoubleConsumer>)progress {
   if(!(self=[super init]))return nil;
+  if(cancel&&[cancel getAsBoolean])@throw [[JavaIoIOException alloc] initWithNSString:@"相机 Wi-Fi 连接已取消。"];
   _networkQueue=dispatch_queue_create("cc.huevia.camera.socket",DISPATCH_QUEUE_SERIAL);
   _waiters=[NSMutableArray array];
   nw_parameters_t parameters=nw_parameters_create_secure_tcp(NW_PARAMETERS_DISABLE_PROTOCOL,NW_PARAMETERS_DEFAULT_CONFIGURATION);
@@ -58,25 +68,42 @@ static void socketFailure(nw_error_t error) {
   nw_endpoint_t endpoint=nw_endpoint_create_host(host.UTF8String,[[NSString stringWithFormat:@"%d",port] UTF8String]);
   _connection=nw_connection_create(endpoint,parameters);
   dispatch_semaphore_t ready=dispatch_semaphore_create(0);
-  __block nw_error_t failure=nil;
-  __block BOOL connected=NO,finished=NO;
+  HueviaSocketConnectionState *stateValue=[HueviaSocketConnectionState new];
   __weak HueviaWifiSocket *weakSocket=self;
   nw_connection_set_state_changed_handler(_connection,^(nw_connection_state_t state,nw_error_t error){
-    if(finished){
+    if(stateValue.finished){
       if(state==nw_connection_state_failed||state==nw_connection_state_cancelled)[weakSocket close];
       return;
     }
-    if(state==nw_connection_state_ready){connected=YES;finished=YES;dispatch_semaphore_signal(ready);}
-    else if(state==nw_connection_state_failed||state==nw_connection_state_cancelled){failure=error;finished=YES;dispatch_semaphore_signal(ready);}
-    else if(state==nw_connection_state_waiting&&error&&nw_error_get_error_domain(error)==nw_error_domain_posix){
-      int code=nw_error_get_error_code(error);
-      if(code==ECONNREFUSED||code==EACCES||code==EPERM){failure=error;finished=YES;dispatch_semaphore_signal(ready);}
+    if(state==nw_connection_state_ready){stateValue.connected=YES;stateValue.permissionWaiting=NO;stateValue.finished=YES;dispatch_semaphore_signal(ready);}
+    else if(state==nw_connection_state_failed||state==nw_connection_state_cancelled){stateValue.failure=error;stateValue.finished=YES;dispatch_semaphore_signal(ready);}
+    else if(state==nw_connection_state_waiting){
+      HueviaWifiSocket *owner=weakSocket;
+      nw_path_t path=owner?nw_connection_copy_current_path(owner.connection):nil;
+      BOOL denied=path&&nw_path_get_unsatisfied_reason(path)==nw_path_unsatisfied_reason_local_network_denied;
+      int code=error&&nw_error_get_error_domain(error)==nw_error_domain_posix?nw_error_get_error_code(error):0;
+      if(denied||code==EACCES||code==EPERM){stateValue.permissionWaiting=YES;stateValue.failure=error;}
+      else if(code==ECONNREFUSED){stateValue.failure=error;stateValue.finished=YES;dispatch_semaphore_signal(ready);}
     }
     // A waiting path can become usable after the local-network permission prompt.
   });
   nw_connection_set_queue(_connection,_networkQueue);nw_connection_start(_connection);
-  long waited=dispatch_semaphore_wait(ready,dispatch_time(DISPATCH_TIME_NOW,(int64_t)MAX(timeout,1)*NSEC_PER_MSEC));
-  if(waited||!connected){[self close];if(waited)@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机 Wi-Fi 连接超时，请检查相机 IP、端口和本地网络权限后重试。"] ;socketFailure(failure);}
+  double started=NSProcessInfo.processInfo.systemUptime;
+  BOOL waited=NO;
+  while(!stateValue.finished){
+    if(cancel&&[cancel getAsBoolean]){stateValue.finished=YES;[self close];@throw [[JavaIoIOException alloc] initWithNSString:@"相机 Wi-Fi 连接已取消。"] ;}
+    // TN3179: the system may deny the first operation before the person has
+    // answered its privacy alert. Keep that specific path retryable, bounded,
+    // and cancellable; unrelated unreachable hosts retain the TCP deadline.
+    double limit=stateValue.permissionWaiting?MAX(timeout/1000.0,20):MAX(timeout/1000.0,.001);
+    if(NSProcessInfo.processInfo.systemUptime-started>=limit){waited=YES;stateValue.finished=YES;break;}
+    if(stateValue.permissionWaiting&&progress)[progress acceptWithDouble:.08];
+    dispatch_semaphore_wait(ready,dispatch_time(DISPATCH_TIME_NOW,NSEC_PER_SEC/10));
+  }
+  if(cancel&&[cancel getAsBoolean]){[self close];@throw [[JavaIoIOException alloc] initWithNSString:@"相机 Wi-Fi 连接已取消。"] ;}
+  if(waited||!stateValue.connected){[self close];
+    if(stateValue.permissionWaiting)@throw [[JavaIoIOException alloc] initWithNSString:@"本地网络访问未获允许。请在 iPhone 设置 → Huevia → 本地网络中开启，再连接相机 Wi-Fi 重试。首次授权弹窗请选择允许。"] ;
+    if(waited)@throw [[JavaNetSocketTimeoutException alloc] initWithNSString:@"相机 Wi-Fi 连接超时，请检查相机 IP、端口并确认手机已连接相机 Wi-Fi。"] ;socketFailure(stateValue.failure);}
   return self;
 }
 - (void)setSoTimeoutWithInt:(int32_t)timeout { _receiveTimeout=MAX(0,timeout); }

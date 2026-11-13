@@ -1069,18 +1069,28 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   Future<void> originalAutoBlemishes() async {
     final epoch = operationEpoch;
-    if (busy || !operationCurrent(epoch) || data == null) return;
-    await cancelTonePreview();
-    if (!operationCurrent(epoch) || data == null) return;
-    final before = data!, fingerprint = data!['localData'];
-    bool valid() =>
-        operationCurrent(epoch) && data?['localData'] == fingerprint;
-    refreshPortrait(() {
-      busy = true;
-      stopped = false;
-      error = null;
-    });
+    if (busy ||
+        blemishReview != null ||
+        !operationCurrent(epoch) ||
+        data == null) {
+      return;
+    }
+    final review = ValueNotifier<bool>(true);
+    blemishReview = review;
     try {
+      await cancelTonePreview();
+      if (!operationCurrent(epoch) || data == null || !review.value) return;
+      final before = data!, fingerprint = data!['localData'];
+      bool valid() =>
+          operationCurrent(epoch) &&
+          !stopped &&
+          review.value &&
+          data?['localData'] == fingerprint;
+      refreshPortrait(() {
+        busy = true;
+        stopped = false;
+        error = null;
+      });
       var staged = before;
       if (object(staged['portrait'])['hasSkinMask'] != true) {
         staged = await call('media.retouchAnalyze', {
@@ -1100,20 +1110,55 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         refreshPortrait(() => notice = '未发现需要修复的小瑕疵。');
         return;
       }
+      // Heal targets are source coordinates. A separate, read-only frame must
+      // omit body deformation, crop and rotation without replacing staged data.
+      final sourcePositioned = await call('media.retouchChange', {
+        'localData': staged['localData'],
+        'action': 'beforeBody',
+      });
+      final preview = await call('media.reviewPreview', {
+        'recipe': {
+          ...widget.recipe,
+          'localData': sourcePositioned['localData'],
+          'geometry': <String, dynamic>{},
+          'border': <String, dynamic>{},
+        },
+        'maxEdge': 1280,
+      });
+      final previewPath = preview['path'];
+      if (previewPath is String) temporary.add(previewPath);
+      if (!valid()) return;
+      if (previewPath is! String ||
+          (preview['width'] as num? ?? 0) <= 0 ||
+          (preview['height'] as num? ?? 0) <= 0) {
+        throw const AppFailure('照片预览尚未就绪，请重试。');
+      }
       refreshPortrait(() => busy = false);
       if (!mounted || !operationCurrent(epoch)) return;
-      final selection = await showRetouchBlemishCandidates(
+      final selection = await showRetouchBlemishReview(
         context,
+        imagePath: previewPath,
+        imageWidth: (preview['width'] as num).toInt(),
+        imageHeight: (preview['height'] as num).toInt(),
+        isCurrent: review,
         candidates: [
           for (final (i, row) in candidates.indexed)
-            RetouchHealEntry(
+            RetouchBlemishCandidate(
               index: i,
               x: (row['tx'] as num).toDouble(),
               y: (row['ty'] as num).toDouble(),
+              radius: (row['radius'] as num).toDouble(),
             ),
         ],
       );
       if (!valid() || selection == null || selection.isEmpty) return;
+      // The review owns only indices. Install the complete native heals, once,
+      // against its staged mask without ever installing the analysis alone.
+      final chosen = selection.toSet();
+      if (chosen.length != selection.length ||
+          chosen.any((i) => i < 0 || i >= candidates.length)) {
+        throw const AppFailure('候选位置已变化，请重新分析。');
+      }
       refreshPortrait(() => busy = true);
       final next = await call('media.retouchChange', {
         'localData': staged['localData'],
@@ -1135,6 +1180,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     } catch (failure) {
       if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
+      if (identical(blemishReview, review)) blemishReview = null;
+      review.value = false;
+      review.dispose();
       if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
     unawaited(refreshPortraitOverlay());
