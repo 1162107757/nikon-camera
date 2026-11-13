@@ -70,6 +70,7 @@ func vision(_ image: CGImage) throws -> [String: Any] {
     let faces = request.results ?? []
     var rawAngles = [Double](), sortedAngles = [Double](), observationRoll = [Double]()
     var missingEyes = 0, swaps = 0
+    var frames = [[String: Double]]()
     for face in faces {
         if let roll = face.roll { observationRoll.append(roll.doubleValue * 180 / .pi) }
         guard let left = face.landmarks?.leftEye, let right = face.landmarks?.rightEye,
@@ -85,11 +86,25 @@ func vision(_ image: CGImage) throws -> [String: Any] {
         var a = center(left), b = center(right)
         rawAngles.append(atan2(Double(b.y - a.y), Double(b.x - a.x)) * 180 / .pi)
         if a.x > b.x { swap(&a, &b); swaps += 1 }
-        sortedAngles.append(atan2(Double(b.y - a.y), Double(b.x - a.x)) * 180 / .pi)
+        let roll = atan2(Double(b.y - a.y), Double(b.x - a.x))
+        sortedAngles.append(roll * 180 / .pi)
+        let distance = hypot(Double(b.x - a.x), Double(b.y - a.y))
+        frames.append(["cx": ((Double(a.x) + Double(b.x)) / 2 - sin(roll) * distance * 0.55) / Double(image.width),
+            "cy": ((Double(a.y) + Double(b.y)) / 2 + cos(roll) * distance * 0.55) / Double(image.height),
+            "rx": min(0.5, 0.95 * distance / Double(image.width)),
+            "ry": min(0.5, 1.35 * distance / Double(image.height)), "roll": roll * 180 / .pi])
     }
     return ["faceCount": faces.count, "missingEyes": missingEyes, "eyeSwapCount": swaps,
         "rawEyeAngleDegrees": range(rawAngles), "currentEyeAngleDegrees": range(sortedAngles),
-        "observationRollDegrees": range(observationRoll)]
+        "observationRollDegrees": range(observationRoll), "proposalFrames": frames]
+}
+
+func means(_ words: [UInt32], width: Int, firstRow: Int, rows: Int) -> [Double] {
+    var sums = [UInt64](repeating: 0, count: 4)
+    for index in (firstRow * width)..<((firstRow + rows) * width) {
+        for channel in 0..<4 { sums[channel] += UInt64((words[index] >> (24 - channel * 8)) & 255) }
+    }
+    return sums.map { Double($0) / Double(width * rows) }
 }
 
 do {
@@ -113,6 +128,9 @@ do {
             "row0IsPNGBottom": synthetic.words[0] == 0xff00bf5f],
         "bitmapCTM": synthetic.ctm, "bitmapInfo": reconstructed.image.bitmapInfo.rawValue,
         "photoWidth": photo.width, "photoHeight": photo.height,
+        "photoRasterMeanARGB": means(reconstructed.words, width: photo.width, firstRow: 0, rows: photo.height),
+        "photoRasterFirstRowMeanARGB": means(reconstructed.words, width: photo.width, firstRow: 0, rows: 1),
+        "photoRasterLastRowMeanARGB": means(reconstructed.words, width: photo.width, firstRow: photo.height - 1, rows: 1),
         "directImageVision": try vision(photo), "rawProviderVision": try vision(reconstructed.image)]
     let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys, .prettyPrinted])
     print(String(decoding: data, as: UTF8.self))

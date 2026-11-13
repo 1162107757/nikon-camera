@@ -328,7 +328,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     NSFileManager *files=NSFileManager.defaultManager;NSDictionary *attributes=[files attributesOfItemAtPath:directory error:nil];
     if(attributes&&![attributes[NSFileType] isEqual:NSFileTypeDirectory])fail(@"RAW 预览目录不可用。");
     if(![files createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil])fail(@"无法创建 RAW 预览目录。");
-    NSString *key=hashText([NSString stringWithFormat:@"raw-thumb-v2\n%@\n%s",sha,HueviaRawVersion()]);
+    NSString *key=hashText([NSString stringWithFormat:@"raw-thumb-v3-embedded-exif\n%@\n%s",sha,HueviaRawVersion()]);
     NSString *target=[directory stringByAppendingPathComponent:[key stringByAppendingString:@".jpg"]];attributes=[files attributesOfItemAtPath:target error:nil];
     if(attributes&&![attributes[NSFileType] isEqual:NSFileTypeRegular])fail(@"RAW 预览路径无效。");
     BOOL validCache=NO;
@@ -345,7 +345,12 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
     if(HueviaRawEmbeddedJpeg(path.fileSystemRepresentation,&jpeg,&length)==0){
       NSData *data=[NSData dataWithBytesNoCopy:jpeg length:length freeWhenDone:YES];
       CGImageSourceRef source=CGImageSourceCreateWithData((__bridge CFDataRef)data,NULL);
-      if(source){@try{NSDictionary *embedded=CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(source,0,NULL));int orientation=[embedded[(__bridge id)kCGImagePropertyOrientation] intValue];small=decode(source,_root,512);if(orientation>=1&&orientation<=8)outputOrientation=1;}@catch(id unavailable){check(task);}@finally{CFRelease(source);}}
+      if(source){@try{NSDictionary *embedded=CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(source,0,NULL));int orientation=[embedded[(__bridge id)kCGImagePropertyOrientation] intValue];small=decode(source,_root,512);
+        // decode leaves pixels untransformed. Preserve a valid embedded EXIF
+        // orientation instead of the enclosing RAW tag; the image consumer
+        // applies it once. Without embedded EXIF, retain the RAW fallback.
+        if(orientation>=1&&orientation<=8)outputOrientation=orientation;
+      }@catch(id unavailable){check(task);}@finally{CFRelease(source);}}
     }
     BOOL usedEmbedded=small!=nil;
     if(!small){uint32_t *pixels=nullptr;int width=0,height=0;
