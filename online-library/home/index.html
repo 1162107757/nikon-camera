@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#fafaf8">
-  <meta name="description" content="Huevia 是随身的摄影工作台。浏览相机预设、调整照片色彩、整理相册，让拍摄后的每一步更顺手。下载 Android 版本，开始探索你的色彩。">
+  <meta name="description" content="Huevia 是随身的摄影工作台。浏览相机预设、调整照片色彩、整理相册。下载 Android APK 或 iOS IPA，开始探索你的色彩。">
   <meta property="og:title" content="Huevia · 让照片，有自己的色彩">
   <meta property="og:description" content="相机预设、照片调色与相册管理，一个随身的摄影工作台。">
   <meta property="og:type" content="website">
@@ -12,9 +12,10 @@
   <meta property="og:image" content="https://huevia.cc/assets/alpine-lake.jpg">
   <link rel="canonical" href="https://huevia.cc/">
   <link rel="icon" type="image/png" href="/assets/icon.png">
-  <link rel="stylesheet" href="/home.css?v=20261108-ios-hero">
+  <link rel="stylesheet" href="/home.css?v=20261113-root-mobile">
   <link rel="preload" as="font" type="font/ttf" href="/assets/outfit.ttf" crossorigin>
-  <script type="module" src="/home.js"></script>
+  <script src="/preset-library/download/qr.js" defer></script>
+  <script type="module" src="/home.js?v=20261113-root-mobile"></script>
   <title>Huevia · 让照片，有自己的色彩</title>
 </head>
 <body>
@@ -29,8 +30,8 @@
         <h1 id="hero-title">让照片，<br>有自己的<span class="colour-word">色彩<svg viewBox="0 0 240 16" aria-hidden="true"><path d="M4 11C70 2 153 1 235 8"/></svg></span>。</h1>
         <p class="lead">浏览预设，调整色彩，整理每一次拍摄。<br class="desktop-break">把喜欢的照片，留成喜欢的样子。</p>
         <div class="hero-downloads">
-          <a class="button primary" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg>下载 Android 版</a>
-          <button type="button" class="ios-download-button hero-ios-download" disabled aria-describedby="ios-preparation-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17h2"/></svg><span>iOS 版</span><span class="ios-preparation-status">正在准备中</span></button>
+          <a class="button primary" href="#download" data-download-platform="android"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg>下载 Android 版</a>
+          <a class="ios-download-button hero-ios-download" href="#download" data-download-platform="ios"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17h2"/></svg><span>下载 iOS 版</span></a>
         </div>
         <p class="hero-note">Huevia · 随身摄影工作台</p>
         <div class="scene-strip" aria-label="人像、风景与日常摄影样片"><img src="/assets/portrait-smile.jpg" alt="自然光下的微笑人像" width="64" height="80"><img src="/assets/coastal-water.jpg" alt="海浪与沙滩" width="64" height="80"><img src="/assets/pink-tulips.jpg" alt="粉色郁金香" width="64" height="80"><span>从人像到日常，<br>找到适合这一张的色彩。</span></div>
@@ -65,21 +66,18 @@
     </section>
     <section class="download-section" id="download" aria-labelledby="download-title">
       <div class="wrap download-layout">
-        <div class="download-intro"><img src="/assets/icon.png" width="72" height="72" alt="Huevia 应用图标"><h2 id="download-title">下一张，<br>从你的色彩开始。</h2><p>下载 Huevia，把摄影工作台带在身边。</p><div id="qr" class="download-qr" aria-label="在手机打开官网的二维码"><img src="/assets/site-qr.svg" width="112" height="112" alt="扫描二维码在手机打开 huevia.cc"><span>用手机扫一扫<br>打开官网下载</span></div></div>
+        <div class="download-intro"><img src="/assets/icon.png" width="72" height="72" alt="Huevia 应用图标"><h2 id="download-title">下一张，<br>从你的色彩开始。</h2><p>下载 Huevia，把摄影工作台带在身边。</p><div id="qr" class="download-qr" aria-label="在手机打开官网的二维码"><div id="qr-code"><img src="/assets/site-qr.svg" width="112" height="112" alt="扫描二维码在手机打开 huevia.cc"></div><span>用手机扫一扫<br>打开官网下载</span></div></div>
         <div class="download-panel">
-          <div class="channels" role="group" aria-label="下载渠道"><button type="button" data-channel="stable" aria-pressed="true">正式版</button><button type="button" data-channel="beta" aria-pressed="false">测试版</button></div>
+          <div class="platforms" role="group" aria-label="下载平台"><button type="button" data-platform="android" aria-pressed="true">Android</button><button type="button" data-platform="ios" aria-pressed="false">iOS</button></div>
+          <div class="download-options"><div class="channels" role="group" aria-label="下载渠道"><button type="button" data-channel="stable" aria-pressed="true">正式版</button><button type="button" data-channel="beta" aria-pressed="false">测试版</button></div><div id="android-editions" class="editions" role="group" aria-label="Android 版本"><button type="button" data-edition="legacy" aria-pressed="true">原版</button><button type="button" data-edition="next" aria-pressed="false">新版</button></div></div>
           <div id="release-status" role="status" aria-live="polite">正在读取可下载版本…</div>
-          <div id="release-info" hidden><div class="version-heading"><h3 id="version-name"></h3><span id="channel-label"></span></div><p id="version-meta"></p><a class="button primary download-file" id="download-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span>下载 Android 安装包</span></a><p class="download-hint">下载后打开 APK，按手机提示安装。</p><details class="release-details"><summary>更新说明与文件校验</summary><p id="release-notes"></p><dl><dt>SHA-256</dt><dd id="release-sha"></dd></dl></details></div>
+          <div id="release-info" hidden><div class="version-heading"><h3 id="version-name"></h3><span id="channel-label"></span></div><p id="version-meta"></p><a class="button primary download-file" id="download-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span id="download-label">下载 Android 安装包</span></a><p id="download-hint" class="download-hint">下载后打开 APK，按手机提示安装。</p><details class="release-details"><summary>更新说明与文件校验</summary><p id="release-notes"></p><dl><dt>SHA-256</dt><dd id="release-sha"></dd></dl></details></div>
           <button type="button" id="retry" class="text-button" hidden>重新读取版本</button>
-          <div class="ios-download">
-            <button type="button" class="ios-download-button" disabled aria-describedby="ios-preparation-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17h2"/></svg><span>iOS 版下载</span><span class="ios-preparation-status">正在准备中</span></button>
-            <p id="ios-preparation-note">我们正在准备 iOS 版本，开放下载后会在这里更新。</p>
-          </div>
-          <a class="download-fallback" href="/preset-library/download/?channel=beta">打开完整下载页 <span aria-hidden="true">↗</span></a>
+          <p id="ios-file-note" class="download-hint" hidden>未签名 IPA · 下载后需自行签名安装</p>
         </div>
       </div>
     </section>
-    <section class="faq wrap" aria-labelledby="faq-title"><h2 id="faq-title">开始之前</h2><div class="faq-items"><details><summary>支持哪些手机？</summary><p>目前提供 Android 安装包，所需 Android 版本显示在下载信息中。iOS 版本正在准备中，开放下载后会在本页更新。</p></details><details><summary>需要连接相机才能使用吗？</summary><p>浏览预设、查看本机照片和照片编辑可以独立使用。相机连接与预设导入请参照 App 内的机型及兼容性提示。</p></details><details><summary>正式版和测试版有什么区别？</summary><p>测试版用于体验仍在调整的功能。下载区以已上架的实际版本为准；若尚无正式版，会提示并展示可用的测试版。</p></details></div></section>
+    <section class="faq wrap" aria-labelledby="faq-title"><h2 id="faq-title">开始之前</h2><div class="faq-items"><details><summary>支持哪些手机？</summary><p>提供 Android APK 与 iOS IPA，最低系统要求显示在下载信息中。iOS IPA 下载后需自行签名安装；尚未上架的版本会在下载区明确提示。</p></details><details><summary>需要连接相机才能使用吗？</summary><p>浏览预设、查看本机照片和照片编辑可以独立使用。相机连接与预设导入请参照 App 内的机型及兼容性提示。</p></details><details><summary>正式版和测试版有什么区别？</summary><p>测试版用于体验仍在调整的功能。下载区以已上架的实际版本为准；若尚无正式版，会提示并展示可用的测试版。</p></details></div></section>
   </main>
   <footer class="wrap site-footer"><a class="brand" href="/">huevia<span class="brand-dot">.</span></a><span>色彩，随身而行。</span><div><a href="/credits.html">摄影与字体来源</a><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">蜀ICP备2026041231号-4</a></div></footer>
 </body>

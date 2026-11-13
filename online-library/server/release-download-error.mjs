@@ -14,7 +14,7 @@ export function renderReleaseDownloadError(req, res, { status, code, retryAfterS
     message = `当前网络（IP）的下载次数或流量已达上限，约 ${Math.ceil(retryAfterSeconds / 60)} 分钟后可重试。`;
   }
   const platform = /\/ios\/releases\//.test(path) ? '&platform=ios' : /\/next\/releases\//.test(path) ? '&platform=android&edition=next' : '';
-  const returnUrl = `${prefix}/download/?channel=beta${platform}`;
+  const returnUrl = `https://huevia.cc/?channel=beta${platform}`;
   const page = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><title>${title} · Huevia</title><link rel="stylesheet" href="${escape(prefix)}/download/tokens.css"><link rel="stylesheet" href="${escape(prefix)}/download/download.css"></head><body><main><section class="intro"><h1>${title}</h1><p class="intro-copy">${escape(message)}</p><p class="channel-note">请返回下载页重试，当前未下载安装包。</p><p class="version-line"><a class="download-button" href="${escape(returnUrl)}">返回下载页</a></p></section></main></body></html>`;
   res.writeHead(status, { 'Content-Type': 'text/html; charset=utf-8', 'Content-Length': Buffer.byteLength(page), 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
   res.end(page); return true;

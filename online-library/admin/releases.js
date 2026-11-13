@@ -43,7 +43,7 @@ export function mountReleases(container, { api, onError = () => {} } = {}) {
     for(const tab of platformTabs.children)tab.setAttribute('aria-pressed',String(tab.dataset.releasePlatform===activePlatform));
     fileLabel.textContent=config.extension==='ipa'?'未签名 IPA':'已签名 APK';
     file.accept=config.extension==='ipa'?'.ipa':'.apk,application/vnd.android.package-archive';fileHint.textContent=config.description;
-    const url=new URL('../download/',import.meta.url);url.searchParams.set('platform',activePlatform==='ios'?'ios':'android');
+    const url=new URL('https://huevia.cc/');url.searchParams.set('platform',activePlatform==='ios'?'ios':'android');
     if(activePlatform!=='ios')url.searchParams.set('edition',activePlatform);downloadLink.href=url.href;
   }
   async function refresh(){

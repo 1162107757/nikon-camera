@@ -2,6 +2,8 @@
 
 已上线后台版本管理与下载页功能；本轮没有上传或上架任何客户端测试包。
 
+入口修正：正式下载入口沿用 [https://huevia.cc/?channel=beta](https://huevia.cc/?channel=beta)，双平台选择已补齐在原首页的下载区。原子路径仍留兼容，后台、二维码与分享使用根首页。后续部署与验证见[根入口修正](../home-mobile-root-20261113/README.md)；本文件的首次服务上线快照保留。
+
 ## 使用方式
 
 - 后台 App 版本分为 **Android 新版 / iOS / Android 原版**，三个列表与上传通道独立。
@@ -13,7 +15,7 @@
 - 当前 iOS 和 Android 新版各自尚无已发布版本，页面显示未发布状态。管理员上传并确认上架后，才会出现真实文件下载按钮。
 
 后台：[App 版本](https://admin.huevia.cc/preset-library/admin/#releases)。
-下载页：[iOS](https://huevia.cc/preset-library/download/?platform=ios)、[Android 新版](https://huevia.cc/preset-library/download/?platform=android&edition=next)。
+下载页：[iOS](https://huevia.cc/?platform=ios)、[Android 新版](https://huevia.cc/?platform=android&edition=next)。
 
 ## 上线范围
 

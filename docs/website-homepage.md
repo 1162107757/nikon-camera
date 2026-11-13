@@ -1,5 +1,7 @@
 # Huevia 官网与后台入口 · 2026-11-07
 
+2026-11-13：双平台下载已补齐到原官网根首页 [https://huevia.cc/?channel=beta](https://huevia.cc/?channel=beta)，沿用原摄影官网布局。首屏 iOS 入口切换首页内的下载区，后台链接、二维码和错误页返回入口统一到根首页；iOS 提供未签名 IPA 文件下载。详见[根入口修正回执](validation/home-mobile-root-20261113/README.md)。没有上架新的客户端安装包，以下历史版本号与首次迁移回执按当时记录保留。
+
 后续更新（2026-11-08）：当前公开测试版已为 156。官网首屏、下载区和完整下载页新增 [iOS 正在准备中](validation/ios-download-20261108/README.md)入口，并完成[下载 JSON 错误修复](validation/download-json-20261108/README.md)。下文的 115 身份、目录与验收数量保留为首次迁移当时的记录。
 
 已按用户要求上线：

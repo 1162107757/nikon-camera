@@ -170,7 +170,7 @@ export function createReleaseRoutes({ store, storage, publicBaseUrl, basePath = 
     const uploadBudget = (bytes = 0, countRequest = false) => releases.rpc('nikon_app_upload_budget', { p_actor: actor, p_bytes: bytes, p_count_request: countRequest });
     if (!['GET', 'HEAD', 'OPTIONS'].includes(req.method)) await uploadBudget(0, true);
     if (path === '/api/releases' && req.method === 'GET') {
-      json(res, { items: (await releases.rows()).map(row => adminView(row, base)), downloadPageUrl: `${base}/download/`, storageProvider: storage.provider || 'cloudbase',
+      json(res, { items: (await releases.rows()).map(row => adminView(row, base)), downloadPageUrl: 'https://huevia.cc/', storageProvider: storage.provider || 'cloudbase',
         limits: { maxApkBytes: MAX_APK_BYTES, chunkBytes: APK_CHUNK_BYTES }, packageName: APK_PACKAGE, signerSha256: APK_SIGNER_SHA256 }); return true;
     }
     if (path === '/api/releases/uploads' && req.method === 'POST') {

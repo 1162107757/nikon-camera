@@ -33,7 +33,7 @@ let activeEdition = parameters.get('edition') === 'next' ? 'next' : 'legacy';
 let serial = 0;
 const android = sdk => ({24:'7.0',25:'7.1',26:'8.0',27:'8.1',28:'9',29:'10',30:'11',31:'12',32:'12L',33:'13',34:'14',35:'15',36:'16',37:'17'}[sdk] || `API ${sdk}`);
 function pageUrl() {
-  const url = new URL('./', import.meta.url);
+  const url = new URL('https://huevia.cc/');
   if (activeChannel === 'beta') url.searchParams.set('channel', 'beta');
   url.searchParams.set('platform', activePlatform);
   if (activePlatform === 'android' && activeEdition === 'next') url.searchParams.set('edition', 'next');
@@ -67,7 +67,8 @@ function syncSelection() {
   byId('ios-file-note').hidden = !ios;
   byId('install-title').textContent = ios ? '关于 IPA 文件' : '安装前的小提示';
   byId('install-copy').textContent = ios ? '此处仅提供未签名 IPA 文件下载。请自行签名后安装，下载文件不会自动安装应用。' : '下载完成后，打开 APK 并按 Android 提示安装。系统可能需要你允许浏览器安装应用。新版与原版分别安装，各自保留本机数据。';
-  history.replaceState(null, '', pageUrl());
+  const currentUrl=new URL(location.href);currentUrl.search=new URL(pageUrl()).search;
+  history.replaceState(null, '', currentUrl);
 }
 function render(data, fallback = false) {
   const release = data.release;

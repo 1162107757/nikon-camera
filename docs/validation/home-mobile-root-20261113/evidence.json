@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "dateShanghai": "2026-11-13",
+  "canonicalDownloadPage": "https://huevia.cc/?channel=beta",
+  "status": "deployed-and-verified",
+  "publishedClientPackages": false,
+  "homeDeployment": {
+    "source": "Tencent Cloud console TAT command result; exit code 0 at 22:47:42 Asia/Shanghai",
+    "oldRelease": "/var/www/huevia-home/releases/20261108-download-13140639",
+    "newRelease": "/var/www/huevia-home/releases/20261113-mobile-488717ad3a33",
+    "untouchedFilesVerified": 13,
+    "caddyConfigurationUnchanged": true,
+    "caddyActive": true
+  },
+  "manifest": {
+    "origin": "https://huevia.cc/",
+    "files": [
+      {
+        "name": "index.html",
+        "beforeSha256": "13140639c686dc2bc15145a160aefcff85f66e0e4a9a6081561dcada24f0bf5f",
+        "afterSha256": "08388555e610e764fb7af4eb8369c7498adc8846551336cc499515574fd7d303",
+        "bytes": 9788
+      },
+      {
+        "name": "home.js",
+        "beforeSha256": "2d50da26a63b3addb694b98f4ab651b6d89f829c2840fed34d96324474c3fe93",
+        "afterSha256": "0f90758d671fdff8c88762b2bcdda9fcb196c39996416cdb1a712ce17ea702c4",
+        "bytes": 8914
+      },
+      {
+        "name": "home.css",
+        "beforeSha256": "b0135d541a6ff7580a59abe9a6cabdc1221b2d881503838441c6d9867aae0f27",
+        "afterSha256": "a8c4cfdf5fdc13ba2bb26a6e58653e1614e92205c328d9f39a234b226d0a8b47",
+        "bytes": 15156
+      }
+    ]
+  },
+  "scope": {
+    "changedFiles": [
+      "admin/releases.js",
+      "download/download.js",
+      "server/releases.mjs",
+      "server/release-download-error.mjs"
+    ],
+    "members": 53,
+    "baselineSha256": "20abb2e442e60e05314b20cb4a51fbafb7ab8fb151bcca17c9a9ed6492fab389"
+  },
+  "service": {
+    "at": "2026-11-13T14:48:59.210Z",
+    "function": "nikon-preset-library",
+    "candidateSha256": "1cf6d95c144053fbeabc8dc5565bd226db5283eba608ad08c90144a2a63fff2b",
+    "deployedSha256": "394b791c0877cb4f50bfb48b9ed96df3b1f822bd37f54f7d053f82a30d8c5a39",
+    "allRuntimeConfigurationPreserved": true,
+    "clientPackagesPublished": false
+  },
+  "archives": {
+    "members": 53,
+    "allPayloadsAndModesMatch": true
+  },
+  "tests": {
+    "focusedPassed": 23,
+    "allSerial": {
+      "total": 253,
+      "passed": 246,
+      "skipped": 7,
+      "failed": 0
+    },
+    "finalHomePassed": 9,
+    "parallelRunNotAccepted": true
+  },
+  "local": {
+    "passed": true,
+    "originalHomepageLayoutPreserved": true,
+    "rootPathPreserved": true,
+    "heroIosSwitchesExistingPanel": true,
+    "ipaBytesVerified": true,
+    "qrCarriesSelection": true,
+    "mobileNoHorizontalOverflow": true,
+    "unpublishedAndRetryVerified": true,
+    "newAndroidSeparate": true,
+    "consoleErrors": []
+  },
+  "http": {
+    "at": "2026-11-13T14:51:50.475Z",
+    "canonicalDownloadPage": "https://huevia.cc/?channel=beta",
+    "checks": [
+      {
+        "path": "/?channel=beta",
+        "status": 200,
+        "sha256": "08388555e610e764fb7af4eb8369c7498adc8846551336cc499515574fd7d303",
+        "matchesLocal": true
+      },
+      {
+        "path": "/home.js?v=20261113-root-mobile",
+        "status": 200,
+        "sha256": "0f90758d671fdff8c88762b2bcdda9fcb196c39996416cdb1a712ce17ea702c4",
+        "matchesLocal": true
+      },
+      {
+        "path": "/home.css?v=20261113-root-mobile",
+        "status": 200,
+        "sha256": "a8c4cfdf5fdc13ba2bb26a6e58653e1614e92205c328d9f39a234b226d0a8b47",
+        "matchesLocal": true
+      },
+      {
+        "path": "/preset-library/health",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/ios/releases/latest?channel=beta",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/releases/latest?channel=beta&packageName=cc.huevia",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/download/download.js",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/releases/latest?channel=beta&packageName=cc.huevia.next",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/admin/releases.js",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/api/releases",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/ios/releases/12345678-1234-4234-8234-123456789abc/file",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "path": "/preset-library/download/qr.js",
+        "status": 200,
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "publishedClientPackages": false
+  },
+  "browser": {
+    "url": "https://huevia.cc/?channel=beta&platform=ios#download",
+    "canonicalRootVerified": true,
+    "heroIosSwitchVerified": true,
+    "iosUnpublishedStateVerified": true,
+    "at": "2026-11-13T14:54:16.275Z"
+  }
+}

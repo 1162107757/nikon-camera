@@ -16,7 +16,7 @@ test('browser download errors render HTML without changing API errors or success
   store.releaseBudgetDenied=true;
   let response=await fetch(url,{headers:{Accept:'text/html,application/xhtml+xml'}});
   assert.equal(response.status,429);assert.match(response.headers.get('content-type'),/^text\/html/);assert.equal(response.headers.get('content-disposition'),null);
-  let body=await response.text();assert.match(body,/返回下载页/);assert.match(body,/当前未下载安装包/);assert.match(body,/href="\/preset-library\/download\/\?channel=beta"/);
+  let body=await response.text();assert.match(body,/返回下载页/);assert.match(body,/当前未下载安装包/);assert.match(body,/href="https:\/\/huevia[.]cc\/\?channel=beta"/);
   response=await fetch(url,{headers:{Accept:'application/json'}});assert.equal(response.status,429);assert.match(response.headers.get('content-type'),/application\/json/);assert.equal((await response.json()).error.code,'RELEASE_BUDGET');
   response=await fetch(url,{headers:{Accept:'*/*'}});assert.match(response.headers.get('content-type'),/application\/json/);
   row.status='withdrawn';response=await fetch(url,{headers:{Accept:'text/html'}});assert.equal(response.status,404);assert.match(response.headers.get('content-type'),/text\/html/);
