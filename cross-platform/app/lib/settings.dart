@@ -278,12 +278,13 @@ class SettingsPage extends StatelessWidget {
                 row(
                   HueIconKind.wifi,
                   '后台连接保护',
-                  () => explain(
+                  () => hueRootPage<void>(
                     context,
-                    '后台连接保护',
-                    '传输时请保持应用在前台运行，并保持相机 Wi-Fi 连接。',
+                    MaterialPageRoute(
+                      builder: (_) => ConnectionProtectionPage(state: state),
+                    ),
                   ),
-                  value: '省电受限',
+                  note: '接收任务与中断恢复',
                 ),
               ]),
               heading('账号与社区'),
@@ -322,16 +323,6 @@ class SettingsPage extends StatelessWidget {
               ]),
               heading('应用'),
               group([
-                row(
-                  HueIconKind.camera,
-                  '后台连接与任务恢复',
-                  () => hueRootPage<void>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ConnectionProtectionPage(state: state),
-                    ),
-                  ),
-                ),
                 row(
                   HueIconKind.download,
                   '相机下载队列',
