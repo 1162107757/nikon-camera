@@ -31,3 +31,11 @@ test('download error page escapes text and does not render for metadata, POST or
   assert.equal(renderReleaseDownloadError({...req,method:'POST'},res,{status:429,message:'no'}),false);
   assert.equal(renderReleaseDownloadError({...req,headers:{accept:'application/json,text/html;q=0'}},res,{status:429,message:'no'}),false);
 });
+
+test('IPA and next Android error links return to the same platform',()=>{
+  for(const [prefix,query] of [['ios','platform=ios'],['next','platform=android&amp;edition=next']]) {
+    let page='';const res={writeHead(){},end(value){page=value;}};
+    assert.equal(renderReleaseDownloadError({method:'GET',url:`/preset-library/${prefix}/releases/12345678-1234-4234-8234-123456789abc/file`,headers:{accept:'text/html'}},res,{status:404,message:'此版本已撤回'}),true);
+    assert.ok(page.includes(query));assert.doesNotMatch(page,/itms-services/);
+  }
+});

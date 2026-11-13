@@ -45,6 +45,10 @@ class SqlStore extends ReleaseMemoryStore {
     return super.rpc(name, body);
   }
   async rest(path) {
+    if(path.startsWith('nikon_mobile_release_audit?')) {
+      const id=new URL(path,'https://test.invalid').searchParams.get('release_id').slice(3);
+      return (await this.db.query('SELECT actor,action,details,created_at FROM nikon_mobile_release_audit WHERE release_id=$1 ORDER BY created_at DESC',[id])).rows;
+    }
     if (!path.startsWith('nikon_mobile_releases?')) return super.rest(path);
     const parameters = new URL(path, 'https://test.invalid').searchParams, where = [], values = [];
     for (const key of ['id', 'platform', 'package_name', 'channel']) if (parameters.has(key)) { values.push(parameters.get(key).slice(3));where.push(`${key}=$${values.length}`); }
@@ -83,6 +87,10 @@ test('real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-
   const action = (verb, confirmation, revision = release.revision) => request(`/api/ios/releases/${release.id}/${verb}`, { method: 'POST', body: { expectedRevision: revision, confirmation } });
   assert.equal((await action('publish', 'yes')).status, 400);
   response = await action('publish', `PUBLISH 213 ${release.sha256}`);assert.equal(response.status, 200);release = (await response.json()).release;
+  assert.ok(Number.isFinite(Date.parse(release.createdAt)));assert.ok(Number.isFinite(Date.parse(release.publishedAt)));
+  const auditResponse=await request(`/api/ios/releases/${release.id}/audit`);assert.equal(auditResponse.status,200);
+  assert.deepEqual((await auditResponse.json()).items.map(item=>item.action),['publish','upload_verified']);
+  assert.equal((await request(`/api/next/releases/${release.id}/audit`)).status,404);
   latest = await (await request('/ios/releases/latest?bundleId=cc.huevia.next&channel=beta&versionCode=212')).json();assert.equal(latest.updateAvailable, true);assert.equal(new URL(latest.release.downloadUrl).origin, origin);
   response = await request(`/ios/releases/${release.id}/file`);assert.equal(response.status, 307);assert.match(response.headers.get('location'), /^https:\/\/download[.]huevia[.]cc\/huevia-updates\/mobile-releases\/ios\//);
   const etag = response.headers.get('etag');assert.equal((await request(`/ios/releases/${release.id}/file`, { headers: { 'If-None-Match': etag } })).status, 304);
@@ -109,7 +117,11 @@ test('real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-
   assert.equal((await (await request('/releases/latest?packageName=cc.huevia')).json()).schemaVersion, 1);
   if (nextApk) {
     const metadata = inspectApk(nextApk, { packageName: 'cc.huevia.next' }), key = `mobile-releases/android/${metadata.sha256}.bin`;
-    await db.query("INSERT INTO nikon_mobile_releases(platform,package_name,version_code,sha256,byte_length,metadata,storage_path,channel,notes,status) VALUES('android','cc.huevia.next',$1,$2,$3,$4,$5,'beta','actual APK fixture','published')", [metadata.versionCode, metadata.sha256, metadata.byteLength, metadata, key]);
+    response=await request('/api/next/releases/uploads',{method:'POST',body:{byteLength:nextApk.length,channel:'beta',notes:'actual APK fixture'}});assert.equal(response.status,201);const nextUpload=await response.json();
+    for(let offset=0,index=0;offset<nextApk.length;offset+=nextUpload.chunkBytes,index++)assert.equal((await request(`/api/next/releases/uploads/${nextUpload.uploadId}/chunks/${index}`,{method:'PUT',raw:true,body:nextApk.subarray(offset,offset+nextUpload.chunkBytes)})).status,200);
+    response=await request(`/api/next/releases/uploads/${nextUpload.uploadId}/complete`,{method:'POST',body:{}});assert.equal(response.status,201);const nextRelease=(await response.json()).release;
+    assert.equal(nextRelease.packageName,'cc.huevia.next');assert.equal(nextRelease.signerSha256,NEXT_APK_SIGNER_SHA256);
+    response=await request(`/api/next/releases/${nextRelease.id}/publish`,{method:'POST',body:{expectedRevision:nextRelease.revision,confirmation:`PUBLISH ${metadata.versionCode} ${metadata.sha256}`}});assert.equal(response.status,200);
     const matching = await (await request('/releases/latest?packageName=cc.huevia.next&channel=beta&versionCode=211&sdk=35&abi=arm64-v8a')).json();
     assert.equal(matching.updateAvailable, true);assert.deepEqual(matching.release.abis, ['arm64-v8a']);assert.match(matching.release.downloadUrl, /\/next\/releases\//);
     const incompatible = await (await request('/releases/latest?packageName=cc.huevia.next&channel=beta&versionCode=211&sdk=35&abi=x86_64')).json();

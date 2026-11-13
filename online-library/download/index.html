@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="下载 Huevia Android 安装包，查看版本信息与更新说明。iOS 版本正在准备中。">
+  <meta name="description" content="下载 Huevia Android APK 或 iOS IPA 文件，查看版本信息与更新说明。">
   <title>下载 Huevia</title>
   <link rel="icon" type="image/png" href="./icon.png">
   <link rel="stylesheet" href="./tokens.css">
@@ -20,23 +20,24 @@
       <img class="app-icon" src="./icon.png" width="100" height="100" alt="Huevia 应用图标">
       <h1 id="title">把喜欢的色彩，<br>留在照片里。</h1>
       <p class="intro-copy">在 Huevia 管理相机预设，<br class="mobile-break">为照片选择合适的色彩。</p>
-      <nav class="channels" aria-label="版本渠道"><button type="button" data-channel="stable" aria-pressed="true">正式版</button><button type="button" data-channel="beta" aria-pressed="false">测试版</button></nav>
+      <nav class="platforms" aria-label="下载平台"><button type="button" data-platform="android" aria-pressed="true">Android</button><button type="button" data-platform="ios" aria-pressed="false">iOS</button></nav>
+      <div class="download-options">
+        <nav id="android-editions" class="editions" aria-label="Android 版本"><button type="button" data-edition="legacy" aria-pressed="true">原版</button><button type="button" data-edition="next" aria-pressed="false">新版</button></nav>
+        <nav class="channels" aria-label="版本渠道"><button type="button" data-channel="stable" aria-pressed="true">正式版</button><button type="button" data-channel="beta" aria-pressed="false">测试版</button></nav>
+      </div>
       <p id="channel-note" class="channel-note" aria-live="polite"></p>
       <div id="loading" class="loading" role="status">正在读取最新版本…</div>
       <div id="empty" class="empty" hidden><h2 id="empty-title">暂未发布正式版</h2><p id="empty-copy">安装包上架后，会显示在这里。</p><button id="retry" type="button" class="text-button">重新检查</button></div>
       <div id="release" hidden>
         <p class="version-line"><strong id="version"></strong><span id="channel-label"></span></p>
-        <a id="download-button" class="download-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span>下载 Android 安装包</span></a>
+        <a id="download-button" class="download-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg><span id="download-label">下载 Android 安装包</span></a>
         <p id="metadata" class="metadata"></p>
         <p class="free-note">无需登录，即可下载。</p>
       </div>
-      <div class="ios-download">
-        <button type="button" class="ios-download-button" disabled aria-describedby="ios-preparation-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17h2"/></svg><span>iOS 版下载</span><span class="ios-preparation-status">正在准备中</span></button>
-        <p id="ios-preparation-note">我们正在准备 iOS 版本，开放下载后会在这里更新。</p>
-      </div>
+      <p id="ios-file-note" class="file-note" hidden>未签名 IPA · 下载后需自行签名安装</p>
     </section>
     <section id="details" class="details" hidden aria-label="版本详情">
-      <div class="release-notes"><h2>这次更新</h2><p id="notes"></p><details class="integrity"><summary>安装包校验信息</summary><dl><dt>SHA-256</dt><dd id="sha256"></dd><dt>包名</dt><dd id="package"></dd><dt>签名 SHA-256</dt><dd id="signer"></dd></dl></details></div>
+      <div class="release-notes"><h2>这次更新</h2><p id="notes"></p><details class="integrity"><summary>安装包校验信息</summary><dl><dt>SHA-256</dt><dd id="sha256"></dd><dt id="package-label">包名</dt><dd id="package"></dd><dt id="signer-label">签名 SHA-256</dt><dd id="signer"></dd></dl></details></div>
       <aside class="phone-download" aria-label="在手机上打开"><div id="qr" class="qr" role="img" aria-label="下载页二维码"></div><h2>在手机上打开</h2><p>扫描二维码，访问这个下载页。</p><button id="copy-link" class="text-button" type="button">复制下载页链接</button><p id="copy-status" class="copy-status" role="status"></p></aside>
     </section>
     <section class="app-previews" aria-labelledby="preview-title">
@@ -48,7 +49,7 @@
         <figure><img src="./preview-messages.png" alt="消息列表集中查看回复及投稿审核结果" width="912" height="2048" loading="lazy"><figcaption>回复与审核，及时查看</figcaption></figure>
       </div>
     </section>
-    <section class="install-note" aria-labelledby="install-title"><h2 id="install-title">安装前的小提示</h2><p>下载完成后，打开 APK 并按 Android 提示安装。系统可能需要你允许浏览器安装应用。已有 Huevia 时，请直接覆盖安装以保留本机数据。</p><p>测试版用于体验仍在调整的功能；如果手机上已安装更高版本，请等待后续更新。</p></section>
+    <section class="install-note" aria-labelledby="install-title"><h2 id="install-title">安装前的小提示</h2><p id="install-copy">下载完成后，打开 APK 并按 Android 提示安装。</p><p>测试版用于体验仍在调整的功能；如果手机上已安装更高版本，请等待后续更新。</p></section>
   </main>
   <footer><span>Huevia</span><span>色彩，随身而行。</span><a class="filing-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">备案号蜀ICP备2026041231号-4</a></footer>
 </body>

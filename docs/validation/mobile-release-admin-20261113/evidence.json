@@ -1,0 +1,350 @@
+{
+  "schema": 1,
+  "dateShanghai": "2026-11-13",
+  "status": "deployed-and-verified",
+  "publishedClientArtifacts": false,
+  "tests": {
+    "all": {
+      "total": 246,
+      "passed": 239,
+      "skipped": 7,
+      "failed": 0
+    },
+    "productionCandidate": {
+      "total": 31,
+      "passed": 29,
+      "skipped": 2,
+      "failed": 0
+    },
+    "javascriptModulesChecked": 84,
+    "skipReason": "Historical APK file fixtures unavailable; new mobile end-to-end paths ran."
+  },
+  "preparation": {
+    "productionCodeBase": "fresh live code readback, preserving QQ login and 100MiB original Android",
+    "artifactsPublished": false,
+    "functions": [
+      {
+        "name": "nikon-preset-library",
+        "baselineSha256": "ea39d47db46c111cf1309d86e9ce07f513417806c6c4d56c3df9c7da6971392b",
+        "candidateSha256": "d06d687090c95687dee9202620d146061d318ca66b90a05c4801d74d297a0bfd",
+        "membersBefore": 51,
+        "membersAfter": 53,
+        "changes": [
+          "server/apk.mjs",
+          "server/releases.mjs",
+          "admin/releases.css",
+          "admin/releases.js",
+          "download/download.css",
+          "download/download.js",
+          "download/index.html",
+          "server/cos-release-storage.mjs",
+          "server/release-download-error.mjs",
+          "server/mobile-releases.mjs",
+          "server/ipa.mjs"
+        ],
+        "unrelatedPayloadsAndModesPreserved": true
+      },
+      {
+        "name": "huevia-data-backup",
+        "baselineSha256": "45ffbc6a70086a7848d26418bc575548b25e7331b20e21f82c09c096c83f3504",
+        "candidateSha256": "0db0acefda68c8b3e2e7fc391e22af5ded2645a1a71fea8690c61933022c1d7d",
+        "membersBefore": 8,
+        "membersAfter": 8,
+        "changes": [
+          "backup/core.mjs",
+          "backup/runtime.mjs",
+          "backup/recovery/schema-migrations.sql"
+        ],
+        "unrelatedPayloadsAndModesPreserved": true
+      }
+    ],
+    "releasePolicy": {
+      "policyId": "293055026",
+      "baselineVersion": "1",
+      "additionalResources": [
+        "qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/mobile-releases/*",
+        "qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/mobile-upload/*"
+      ],
+      "actionsAndOtherStatementsPreserved": true
+    },
+    "backupPolicy": {
+      "policyId": "293266107",
+      "baselineVersion": "1",
+      "additionalResources": [
+        "qcs::cos:ap-shanghai:uid/1252602548:huevia-updates-1252602548/huevia-updates/mobile-releases/*"
+      ],
+      "actionsAndOtherStatementsPreserved": true
+    }
+  },
+  "deployment": {
+    "startedAt": "2026-11-13T14:10:17.602Z",
+    "publishedClientArtifacts": false,
+    "functions": [
+      {
+        "name": "huevia-data-backup",
+        "status": "Active",
+        "memory": 512,
+        "timeout": 900,
+        "credentialsRoleRoutesAndTriggersPreserved": true,
+        "candidateSha256": "0db0acefda68c8b3e2e7fc391e22af5ded2645a1a71fea8690c61933022c1d7d",
+        "readbackSha256": "0db0acefda68c8b3e2e7fc391e22af5ded2645a1a71fea8690c61933022c1d7d"
+      },
+      {
+        "name": "nikon-preset-library",
+        "status": "Active",
+        "memory": 512,
+        "timeout": 60,
+        "credentialsRoleRoutesAndTriggersPreserved": true,
+        "candidateSha256": "d06d687090c95687dee9202620d146061d318ca66b90a05c4801d74d297a0bfd",
+        "readbackSha256": "20abb2e442e60e05314b20cb4a51fbafb7ab8fb151bcca17c9a9ed6492fab389"
+      }
+    ],
+    "legacyBefore": [
+      {
+        "rows": "33",
+        "digest": "8dfd64fb144876fc10c217657a4e690f"
+      }
+    ],
+    "legacyAfter": [
+      {
+        "rows": "33",
+        "digest": "8dfd64fb144876fc10c217657a4e690f"
+      }
+    ],
+    "mobileDatabase": [
+      {
+        "releases": "0",
+        "service_can_manage": true,
+        "anon_can_manage": false,
+        "anon_can_read_table": false
+      }
+    ],
+    "completedAt": "2026-11-13T14:11:34.951Z"
+  },
+  "archives": [
+    {
+      "function": "nikon-preset-library",
+      "members": 53,
+      "allPayloadsAndUnixModesMatch": true
+    },
+    {
+      "function": "huevia-data-backup",
+      "members": 8,
+      "allPayloadsAndUnixModesMatch": true
+    }
+  ],
+  "iam": {
+    "source": "User-approved Tencent Cloud CAM console updates; full candidate text compared in editor before saving",
+    "userConfirmed": true,
+    "release": {
+      "policyId": "293055026",
+      "role": "HueviaUpdatePackageRole",
+      "previousVersion": "1",
+      "currentVersion": "2",
+      "observedModifiedAtShanghai": "2026-11-13 22:08:11"
+    },
+    "backup": {
+      "policyId": "293266107",
+      "role": "HueviaDataBackupRole",
+      "previousVersion": "1",
+      "currentVersion": "2",
+      "observedModifiedAtShanghai": "2026-11-13 22:05:14"
+    },
+    "previousVersionsRetained": true,
+    "onlyApprovedMobileDirectoriesAdded": true,
+    "bucketRemainsPrivate": true
+  },
+  "browser": {
+    "passed": true,
+    "localOnly": true,
+    "syntheticIpaSha256": "1a558fb815cf0f461944ff4bd69595b488745ea2d8b9e7a284c597724950bf51",
+    "directIpaDownloadVerified": true,
+    "realNextApkUploadedLocally": true,
+    "noAutomaticPublication": true,
+    "withdrawalHidesDownload": true,
+    "platformsIsolated": true,
+    "responsiveNoHorizontalOverflow": true,
+    "consoleErrors": [],
+    "requests": 166
+  },
+  "http": {
+    "verifiedAt": "2026-11-13T14:13:20.861Z",
+    "checks": [
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/download/download.js",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/health",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/download/?platform=ios&channel=beta",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/admin/releases.js",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/releases/latest?channel=beta&packageName=cc.huevia.next",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/ios/releases/latest?channel=beta&bundleId=cc.huevia.next",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/api/ios/releases",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/api/next/releases",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/releases/latest?channel=beta&packageName=cc.huevia",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/next/releases/12345678-1234-4234-8234-123456789abc/file",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "origin": "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com",
+        "path": "/ios/releases/12345678-1234-4234-8234-123456789abc/file",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/health",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/download/?platform=ios&channel=beta",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/download/download.js",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/ios/releases/latest?channel=beta&bundleId=cc.huevia.next",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/releases/latest?channel=beta&packageName=cc.huevia.next",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/admin/releases.js",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/api/ios/releases",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/api/next/releases",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/releases/latest?channel=beta&packageName=cc.huevia",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/ios/releases/12345678-1234-4234-8234-123456789abc/file",
+        "status": 404,
+        "passed": true
+      },
+      {
+        "origin": "https://huevia.cc",
+        "path": "/next/releases/12345678-1234-4234-8234-123456789abc/file",
+        "status": 404,
+        "passed": true
+      }
+    ],
+    "publishedClientArtifacts": false
+  },
+  "files": [
+    {
+      "path": "online-library/admin/releases.js",
+      "sha256": "3a9a203bd9d2a16b0dc4a46fe40c724efa75277727057067b639c45eff2cd84d"
+    },
+    {
+      "path": "online-library/admin/releases.css",
+      "sha256": "dac31fe24df952cd1f08051c5f8a5345aabe4a04a69a9985ddbadc36c0ef309c"
+    },
+    {
+      "path": "online-library/download/index.html",
+      "sha256": "07cc111cb3b8453c0982a4df1c460f11ec994c641e5755455fab8dc53f87e374"
+    },
+    {
+      "path": "online-library/download/download.js",
+      "sha256": "1a16eb8d4188c427c223b298c26707de550d79c4030d2d64aeb8027d8b9227c4"
+    },
+    {
+      "path": "online-library/download/download.css",
+      "sha256": "11dcfd21e8c2f7c4c52a3a94e4fbb8664e6428f789328f5427e15ca17beb90b8"
+    },
+    {
+      "path": "online-library/server/mobile-releases.mjs",
+      "sha256": "803ed6326fcacde680728e082ae9d66087331b5b24362feb7e4ef18cac9a18cf"
+    },
+    {
+      "path": "online-library/server/release-download-error.mjs",
+      "sha256": "0f0101f35452669d2e78c9360d9f7e53e3cf6c3ee956a4bde11d921af1d746b4"
+    },
+    {
+      "path": "online-library/test/download-page.test.mjs",
+      "sha256": "d53af60b4c3f563a7a7e91785216b11aae086eb9821730fa6828655482dcee23"
+    },
+    {
+      "path": "online-library/test/mobile-releases.test.mjs",
+      "sha256": "5f86592d4372eb934ef0ddb95ba9b90f601324ff3f5c0e63d22ddb73cecb2d95"
+    },
+    {
+      "path": "online-library/test/release-download-error.test.mjs",
+      "sha256": "e0a52fcd9bc118643b5e990a057cf3609973c4dffe8799eeec7912b9047b20d1"
+    }
+  ]
+}

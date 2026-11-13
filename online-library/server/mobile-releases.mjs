@@ -11,7 +11,8 @@ const statuses = { FORBIDDEN: 403, NOT_FOUND: 404, INVALID: 400, CONFLICT: 409, 
 const channelOf = value => { if (!['stable', 'beta'].includes(value)) throw new ServiceError(400, 'INVALID_CHANNEL', '更新通道无效。'); return value; };
 const notesOf = value => { if (typeof value !== 'string' || !value.trim() || value.length > 6000 || /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value)) throw new ServiceError(400, 'INVALID_NOTES', '请填写 1–6000 字更新说明。'); return value.trim(); };
 function view(row, base) {
-  const metadata = row.metadata;
+  const metadata = { ...row.metadata, platform: row.platform, createdAt: row.created_at,
+    publishedAt: row.published_at, withdrawnAt: row.withdrawn_at };
   if (row.platform === 'ios') return { ...metadata, schema: 1, platform: 'ios', distribution: 'unsigned-ipa', notes: row.notes,
     id: row.id, channel: row.channel, revision: row.revision, downloadUrl: `${base}/ios/releases/${row.id}/file` };
   return { ...metadata, notes: row.notes, id: row.id, channel: row.channel, revision: row.revision, mandatory: false,
@@ -79,6 +80,13 @@ export function createMobileReleaseRoutes({ store, storage, publicBaseUrl, baseP
     if (path === prefix && req.method === 'GET') {
       const items = await store.rest(`nikon_mobile_releases?platform=eq.${platform}&select=*&order=version_code.desc&limit=200`);
       json(res, { items: items.map(row => ({ ...view(row, base), status: row.status })), maxBytes: MAX_IPA_BYTES, chunkBytes: MOBILE_CHUNK_BYTES });return true;
+    }
+    const audit = /^\/([a-f0-9-]+)\/audit$/.exec(path.slice(prefix.length));
+    if (audit && UUID.test(audit[1]) && req.method === 'GET') {
+      const selected = await row(audit[1]);
+      if (!selected || selected.platform !== platform) throw new ServiceError(404, 'MOBILE_RELEASE_NOT_FOUND', '版本不存在。');
+      const items = await store.rest(`nikon_mobile_release_audit?release_id=eq.${audit[1]}&select=actor,action,details,created_at&order=created_at.desc&limit=100`);
+      json(res, { items });return true;
     }
     if (path === prefix + '/uploads' && req.method === 'POST') {
       const body = await readJson(req);if (!Number.isInteger(body.byteLength) || body.byteLength < 1024 || body.byteLength > MAX_IPA_BYTES) throw new ServiceError(400, 'INVALID_MOBILE_SIZE', '请选择不超过 128 MiB 的完整安装包。');
