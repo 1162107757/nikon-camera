@@ -1,0 +1,16 @@
+{
+  "node": "v20.20.2",
+  "terminal": "dumb",
+  "arguments": [
+    "--experimental-vm-modules",
+    "--test",
+    "--test-concurrency=1"
+  ],
+  "tests": 235,
+  "passed": 228,
+  "skipped": 7,
+  "failed": 0,
+  "exit": 0,
+  "logSha256": "e2e27b5427eaa8445e81654b85f12fe8ce5882f87b483187d2ecd00317e0ff01",
+  "sourceCommit": "3754f22458e5aca054d82f6a28cbc5d7e5cacd75"
+}

@@ -79,3 +79,25 @@ Apple 运行 `43352680133`（源码 `8d430861`）完整 Flutter 检查 **260 项
 Apple 后续运行 `43355509186`（源码 `1ef9def`）再次完成 260 项 Flutter 检查，并通过上述 primitive array 写入的实际 SDK 编译阶段；整体设备构建随后在 QQ 授权文件的十六进制表达式词法错误处停止。主任务已修正该独立错误并继续下一轮，不能将这次编译进度等同于 TFLite / PhotoKit 综合运行通过。
 
 原生综合运行前只读解析了干净模型准备输出的实际 FlatBuffer 并核对固定 SHA：两个模型输入均为 float32 `[1,256,256,3]`；网格输出 0 为 `[1,1,1,1434]`，输出 1 为单个 presence logit，输出 2 未使用；语义输出 0 为 float32 `[1,256,256,6]`。iOS 读取输出 0 / 1、沿用原版前 468 点，以及共享预处理 / 后处理的数组长度均匹配，未发现确定的维度或 fixture 返回字段错配。审查证据为 `.tooling/retouch-migration/ios-model-tensors-review.json`。现有取消 fixture 验证取消结果，不足以证明所有时序下都在算子内部提前中断；实际平台执行结论仍由主任务收口。
+
+CPU `Invoke` 的取消采用协作检查和运行库尽力中断，不能宣称 CPU 在任意时刻立即终止。界面取消和后台保护到期会标记任务，并在后续边界拒绝接受已取消任务的结果；提前或并发的 C API 取消调用不替代这些结果检查。
+
+Apple 运行 `43359970364`（源码 `6c976ba`）实际设备 release 与模拟器编译均通过，PhotoKit 授权 XCTest 1 项通过。首次综合运行在真实人像样片 0 返回空 faces 时失败，尚未通过 TFLite 人像流程。已核对候选 IPA 内模型 SHA 与固定值一致；已增加显式诊断参数下不含照片像素的阶段计数、模型输出长度和 presence 数值，保留全部样片、阈值及 fixture 断言，等待实际运行数据定位，不能把诊断改动当作修复完成。
+
+后续诊断运行 `43363664824`（源码 `75dad83`）确认 Vision 1 张、有效候选 1 张、mesh 实际调用 1 次，输出长度 `[1434,1]`；原 presence logit 为 `-3.2492103576660156`，因此按原阈值拒绝该候选。实际 raster 为 640×960、方向 1、bitmapInfo `0x2002`，没有低置信度、缺眼、小眼距或越界过滤。问题已收窄到实际像素与裁剪输入比较，尚未修复。再次核对该候选 IPA 的三张固定样片，根和子目录内 SHA 均与原资源一致；未更换样片或降低阈值。
+
+独立 Mac 探针 `43368295601`（源码 `085095a`）复刻实际 ImageIO / CoreGraphics 路径，已知非照片渐变 PNG 的 backing row 0 与物理 top row 一致，通道样本为预期 `ff11251b`；真实样片直接 CGImage 与 raw-provider 重建 CGImage 的 Vision 结果和眼向量角度一致。这排除了仅从 Quartz 的 y-up 用户坐标推断存在通用 backing 行倒置的假设。
+
+另在保留数据的 Android API 31 模拟器上，以已核验 SHA `1cc20f0ca2c0d9212f064c93d40bb8cdb2c3a55a88aeb296d9acf616318a60c9` 的既有 119 检查 debug APK 运行专用输入诊断。对同一真实 Android 检测候选，原 `PhotoFaceLandmarks.Crop.matrix` / Canvas 输入的 presence 为 `9.908683776855469`，共享采样为 `9.977856636047363`，均通过原阈值；两输入 RMS 差为 `0.002644125768630073`。JVM 与 Android 对该共享输入的 SHA 逐字节一致：`17ec5043442695d295452563ebe6a39ebec984b0fd5536b5102d4c2237f3f52b`。证据为 `.tooling/retouch-migration/portrait-input-android-default.json`、`portrait-input-jvm-default.json` 与 `portrait-input-apk-identities.json`。这仅是原算法与共享预处理的独立诊断，不能替代 iOS 真实候选的回放或最新产品 APK 验收；未动原阈值，仍待 iOS ROI / 输入聚合完成定位。
+
+Apple 实际 ROI 诊断 `43369949271` 确认眼点候选裁剪边长仅 `62.383763` 像素、roll 为 `-36.091742°`。独立原生几何运行 `43374905137` 及 revision 矩阵 `43375860877` 在同一原图上复现：Mac Vision revision 3 的眼距为 `95.325843` 像素、roll 为 `-2.845184°`，iOS 26.5 模拟器只有 `13.202913` 像素、`-36.091742°`；缓存 getter、官方 pointsInImage 转换、CPU 与 revision 1/2/3 均未得到稳定正确的 iOS 眼点。两平台真实人脸 bbox 一致，因此问题定位到该 iOS 运行环境的 Vision 眼点候选，不能通过更改 presence 阈值解决。
+
+将该真实 bbox 的中心、半宽高和原 observation roll 构成规范候选，在 Android 真实模型回放中原 Canvas presence 为 `15.0001564026`，共享采样为 `15.0310058594`；两条路径均通过原后处理，得到实际 468 点、936 个有限且非退化的坐标。证据为 `.tooling/retouch-migration/portrait-input-android-bbox-mesh.json`。产品 iOS 已保留眼点首候选，仅在真实 mesh presence 为负时重试同一个 observation 的 bbox；没有改原阈值、扩大眼距、替换样片或生成假点。每个 observation 最多接受一张脸，最多 12 个 observation；模型形状错误、非有限输出与取消仍失败。新的 iOS 综合运行尚待主任务执行，以上 Android 回放和原生几何探针不能等同于 iOS 人像流程通过。
+
+本轮 iOS 同时接入真实逐人全身皮肤、自动祛痘候选、原 mask 选区 overlay 与 hitFace 的共享实现。overlay / hitFace / 自动祛痘走专用早期分派，逐人全身皮肤运行整图原语义模型；均保留完整 regionId 与 localData。新源码的文本配置检查为 760 文件通过，实际 SDK 编译及综合行为仍由主任务后续 Apple 流水线确认。
+
+身体分析新增 `locate:false` 两阶段契约：首次仍运行真实语义 / 人物与背景保护分析，返回 `people` 和 `selectedPerson:-1`，允许空人物列表，保留既有三类塑形 Area；明确选人后的 `locate:true` 或省略该字段才安装定位。两种定位参数下均只修改 bodyShape，不写全局皮肤 mask 或人脸。`protection` 原样传入共享核心，省略兼容 70，页面可指定 100。iOS 原模型和明确标记的系统引擎分支均接该契约；追加后的文本配置检查为 761 文件通过。上述新分支的 iOS 实际执行结果仍待主任务平台验证。
+
+实际 Apple 原生诊断 `43378774156`（源码 `eb8fb64`）已通过 iOS 人像新路径：样片 0 的眼点候选 presence `-3.24921` 被原阈值拒绝，同 observation 的真实 bbox 重试为 `15.01686`、`acceptedFaces:1`；后续还观测到 bbox `17.79374` 与正常眼点首候选 `11.80929` 被接受，证明重试没有替换所有首候选。该次完整 retouch fixture 已执行完人像、逐人身体皮肤、选区、自动候选与菜单断言，随后在 RAW 缩略图 fixture 的嵌入 JPEG EXIF 方向断言失败。证据为 `.tooling/next214/apple-43378774156-artifacts/mobile-apple/simulator-native.log` 和 `simulator-result.json`。这次运行不包含其后新增的身体两阶段保护与 regionSkin 断言，也没有通过整条流水线，不能作为 accepted IPA。
+
+RAW 失败已定位到 iOS `decode` 明确使用 `kCGImageSourceCreateThumbnailWithTransform:false` 保留未旋转像素，但嵌入 JPEG 存在有效 EXIF 时却将输出标签硬写为 1，丢弃了 EXIF 6。已改为保留实际嵌入方向，缺少有效嵌入标签时继续使用 RAW 方向，并将仅 iOS 缩略图缓存版本提升至 `raw-thumb-v3-embedded-exif` 以避开旧错误缓存。保留全部原 fixture 断言；源码检查 762 文件通过，实际方向断言修复仍待下一轮 Apple 执行。[Apple 的缩略图变换说明](https://developer.apple.com/documentation/imageio/kcgimagesourcecreatethumbnailwithtransform)与当前未旋转解码策略一致。

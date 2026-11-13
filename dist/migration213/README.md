@@ -2,7 +2,9 @@
 
 验收目标为新版 Android / iOS，应用标识 `cc.huevia.next`，项目版本 `0.31.0-dev+213`。本次继续补齐 11 类迁移工作；多预设置顶、RAW 曝光与高光修复、注册后登录状态更新及有线照片传输保留在新版中。
 
-Android 手机使用 [ARM64 APK](huevia-0.31.0-dev-213-android-arm64.apk)；[x64 APK](huevia-0.31.0-dev-213-android-x64.apk)供相应测试设备使用。iOS 设备包正在 Apple 构建与验证，尚未作为本轮已验收附件交付。每份实际文件的摘要、大小和来源见 [ARTIFACTS.json](ARTIFACTS.json)。
+按用户“暂不发布，我先测试”的要求，本轮仅交付本地测试文件。云端部署、草稿上传及公开发布均暂缓；新版更新分发接口尚未启用。
+
+Android 手机使用 [ARM64 APK](huevia-0.31.0-dev-213-android-arm64.apk)；[x64 APK](huevia-0.31.0-dev-213-android-x64.apk)供相应测试设备使用。iOS 已完成设备和模拟器编译，正在修复实际人像检测检查失败，尚未作为本轮已验收附件交付。每份实际文件的摘要、大小和来源见 [ARTIFACTS.json](ARTIFACTS.json)。
 
 新版新增后台连接保护、遥控与槽位入口、多选接收和保存目标、相邻浏览及 RAW 缩略缓存、人像与自动修补、NEF 原件与配对、批量编辑和删除范围、原生 QQ 接入、更新和旧资料迁入。具体完成证据和仍需实体设备的验收见 [213 总表](../../docs/migration/remaining-work-213.md)。
 

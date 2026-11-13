@@ -3,9 +3,9 @@
   "build": 213,
   "projectVersion": "0.31.0-dev+213",
   "androidSourceCommit": "3db73d2575fc93296e0995c5476c237397c2a1a7",
-  "appleStatus": "pending",
-  "appleRun": 43354338842,
-  "appleCandidateCommit": "cfede2ba7dbd5b82177b9326d315193e74f214d9",
+  "appleStatus": "native portrait diagnosis pending; no accepted IPA",
+  "appleRun": 43363664824,
+  "appleCandidateCommit": "75dad836c7dddf2ec7ac964ea7baaa2d78534204",
   "artifacts": [
     {
       "file": "huevia-0.31.0-dev-213-android-arm64.apk",
@@ -52,5 +52,6 @@
   "physicalIPhoneInstallationVerified": false,
   "physical16KiBAndroidVerified": false,
   "qqAndroidRegistrationVerified": false,
-  "qqIosUniversalLinkConfigured": false
+  "qqIosUniversalLinkConfigured": false,
+  "deliveryScope": "local testing only; user explicitly deferred deployment and public publication"
 }
