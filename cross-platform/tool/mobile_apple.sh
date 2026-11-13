@@ -31,6 +31,7 @@ bash "$ROOT/cross-platform/tool/avatar_apple.sh"
 bash "$ROOT/cross-platform/tool/wifi_apple.sh"
 python3 "$ROOT/cross-platform/tool/prepare_apple_plugin.py"
 python3 "$ROOT/cross-platform/tool/prepare_qq_ios.py" > "$WORK/qq-sdk.log" 2>&1
+python3 "$ROOT/cross-platform/tool/prepare_portrait_models.py" > "$WORK/portrait-models.log" 2>&1
 python3 "$ROOT/cross-platform/tool/raw_apple.py" > "$WORK/raw-build.log" 2>&1
 python3 - "$ROOT" <<'PY'
 import sys,shutil
@@ -38,9 +39,6 @@ from pathlib import Path
 root=Path(sys.argv[1]);shutil.copytree(root/'app/src/main/assets/photo-borders',root/'cross-platform/native/ios/Assets/photo-borders',dirs_exist_ok=True)
 shutil.copytree(root/'cross-platform/app/assets/fonts',root/'cross-platform/native/ios/Assets/reference-fonts',dirs_exist_ok=True)
 shutil.copytree(root/'app/src/main/assets/preset-showcase',root/'cross-platform/native/ios/Assets/preset-showcase',dirs_exist_ok=True)
-portrait=root/'cross-platform/native/ios/Assets/portrait';portrait.mkdir(parents=True,exist_ok=True)
-for name in ('face_landmarks_detector.tflite','face_skin_multiclass.shuffle4.zlib'):
-    shutil.copy2(root/'app/src/main/assets/portrait'/name,portrait/name)
 PY
 # The hosted runner is disposable; this setting does not change a user machine.
 flutter config --no-enable-swift-package-manager
