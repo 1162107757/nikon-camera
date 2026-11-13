@@ -79,8 +79,8 @@ static NSArray<UIWindow *> *cameraForegroundWindows(NSUInteger *sceneCount) {
   return @{@"snapshotOnMainThread":@YES, @"applicationForeground":@(applicationForeground),
            @"foregroundActive":@(foreground), @"activeSceneCount":@(count),
            @"eligibleWindowCount":@(windows.count),
-           @"registeredPresenterAttached":@(registered.viewIfLoaded.window != nil && [windows containsObject:registered.viewIfLoaded.window]),
-           @"presenterAvailable":@(presenter != nil)};
+           @"registeredPresenterAttached":(registered.viewIfLoaded.window != nil && [windows containsObject:registered.viewIfLoaded.window] ? @YES : @NO),
+           @"presenterAvailable":(presenter != nil ? @YES : @NO)};
 }
 
 + (void)scheduleWhileCurrent:(BOOL (^)(void))isCurrent

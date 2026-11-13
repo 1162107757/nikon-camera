@@ -1,5 +1,6 @@
 @import XCTest;
 @import UIKit;
+@import CoreFoundation;
 
 // Compile the production resolver in the UI-test runner too. The application
 // has its own process; this local name also avoids any inherited pod collision.
@@ -47,6 +48,29 @@
       // request's foreground scene/window set.
       XCTAssertEqual(other.viewIfLoaded.window, otherWindow);
       XCTAssertEqual([HueviaCameraPresentationUnderTest presenterInForegroundWindows:@[window] registered:other applicationForeground:YES], front);
+      // The UI-test runner need not have an active scene. Every public flag
+      // must still be a JSON boolean, rather than a boxed C comparison int.
+      NSDictionary *snapshot=[HueviaCameraPresentationUnderTest snapshotWithRegistered:detached];
+      NSArray<NSString *> *boolKeys=@[@"snapshotOnMainThread",@"applicationForeground",@"foregroundActive",@"registeredPresenterAttached",@"presenterAvailable"];
+      NSError *jsonError=nil;
+      NSData *encoded=[NSJSONSerialization dataWithJSONObject:snapshot options:0 error:&jsonError];
+      XCTAssertNil(jsonError);XCTAssertNotNil(encoded);
+      NSDictionary *decoded=encoded?[NSJSONSerialization JSONObjectWithData:encoded options:0 error:&jsonError]:nil;
+      XCTAssertNil(jsonError);XCTAssertNotNil(decoded);
+      for(NSString *key in boolKeys){
+        id value=snapshot[key],roundTrip=decoded[key];
+        XCTAssertNotNil(value);XCTAssertNotNil(roundTrip);
+        if(value)XCTAssertEqual(CFGetTypeID((__bridge CFTypeRef)value),CFBooleanGetTypeID(),@"%@ must have the public boolean type",key);
+        if(roundTrip)XCTAssertEqual(CFGetTypeID((__bridge CFTypeRef)roundTrip),CFBooleanGetTypeID(),@"%@ must remain boolean after JSON serialization",key);
+        XCTAssertEqualObjects(value,roundTrip);
+      }
+      for(NSString *key in @[@"activeSceneCount",@"eligibleWindowCount"]){
+        id value=snapshot[key],roundTrip=decoded[key];
+        XCTAssertNotNil(value);XCTAssertNotNil(roundTrip);
+        if(value)XCTAssertEqual(CFGetTypeID((__bridge CFTypeRef)value),CFNumberGetTypeID(),@"%@ is a count, not a boolean",key);
+        if(roundTrip)XCTAssertEqual(CFGetTypeID((__bridge CFTypeRef)roundTrip),CFNumberGetTypeID());
+        XCTAssertGreaterThanOrEqual([value longLongValue],0LL);XCTAssertEqualObjects(value,roundTrip);
+      }
     } @finally { window.hidden = YES; otherWindow.hidden = YES; }
   }];
 }
