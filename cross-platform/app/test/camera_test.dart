@@ -253,7 +253,7 @@ void main() {
       final state = AppState(core)..cameraRaw = true;
       await open(tester, state, scale: 1.6);
       expect(find.text('DSC_6522.NEF'), findsNothing);
-      final grid = tester.widget<GridView>(find.byType(GridView));
+      final grid = tester.widget<SliverGrid>(find.byType(SliverGrid));
       expect(
         (grid.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount)
             .crossAxisCount,
