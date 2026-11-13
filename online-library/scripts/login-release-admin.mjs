@@ -1,6 +1,5 @@
 // Interactive login for the existing administrator; never accepts or stores a password argument.
-import { createInterface } from 'node:readline';
-import { Writable } from 'node:stream';
+import { emitKeypressEvents } from 'node:readline';
 import { randomUUID } from 'node:crypto';
 import { mkdir, lstat, realpath, open, rename, unlink } from 'node:fs/promises';
 import { basename, dirname, resolve } from 'node:path';
@@ -18,27 +17,43 @@ const cancelled = () => new LoginError('LOGIN_CANCELLED');
 const checkCancelled = signal => { if (signal?.aborted) throw cancelled(); };
 
 export function promptHidden(label, { input = process.stdin, output = process.stdout, signal } = {}) {
-  if (!input.isTTY || !output.isTTY) throw new LoginError('INTERACTIVE_TERMINAL_REQUIRED');
+  if (!input.isTTY || !output.isTTY || typeof input.setRawMode !== 'function') throw new LoginError('INTERACTIVE_TERMINAL_REQUIRED');
   checkCancelled(signal);
   return new Promise((resolveAnswer, reject) => {
-    // readline handles normal editing and Ctrl+C; this sink suppresses all input echo.
-    const silent = new Writable({ write(_data, _encoding, done) { done(); } });
-    silent.isTTY = true; silent.columns = output.columns || 80;
-    const reader = createInterface({ input, output: silent, terminal: true, historySize: 0 });
-    let settled = false;
+    // Node 20's readline Interface treats DEL as text under TERM=dumb. Decode
+    // public keypress events and edit locally, without a TERM-dependent editor
+    // or any character echo/history. Preserve the caller's terminal mode.
+    const wasRaw = input.isRaw === true, wasFlowing = input.readableFlowing === true;
+    let settled = false, answer = '';
     const onCancel = () => finish(cancelled());
+    const onError = () => finish(new LoginError('TERMINAL_INPUT_FAILED'));
+    const onKey = (text, key = {}) => {
+      if (key.name === 'return' || key.name === 'enter' || text === '\r' || text === '\n') return finish(null, answer);
+      if ((key.ctrl && ['c', 'd'].includes(key.name)) || text === '\x03' || text === '\x04') return onCancel();
+      if (key.name === 'backspace' || text === '\x7f' || text === '\b') {
+        answer = Array.from(answer).slice(0, -1).join(''); return;
+      }
+      if (key.ctrl && key.name === 'u') { answer = ''; return; }
+      if (typeof text !== 'string' || key.ctrl || key.meta || /[\x00-\x1f\x7f]/.test(text)) return;
+      answer += text;
+      if (answer.length > 256) finish(new LoginError('CREDENTIAL_FIELDS_REJECTED'));
+    };
     const finish = (error, value) => {
       if (settled) return;
       settled = true;
       signal?.removeEventListener('abort', onCancel);
-      reader.removeAllListeners('SIGINT'); reader.removeAllListeners('close');
-      reader.close(); silent.end(); output.write('\n');
+      input.removeListener('keypress', onKey); input.removeListener('end', onCancel); input.removeListener('error', onError);
+      try { input.setRawMode(wasRaw); } catch { error ||= new LoginError('TERMINAL_RESTORE_FAILED'); }
+      if (!wasFlowing) input.pause();
+      answer = ''; output.write('\n');
       if (error) reject(error); else resolveAnswer(value);
     };
-    reader.once('SIGINT', onCancel); reader.once('close', onCancel);
-    signal?.addEventListener('abort', onCancel, { once: true });
-    output.write(label);
-    reader.question('', answer => finish(null, answer));
+    try {
+      emitKeypressEvents(input);
+      input.on('keypress', onKey); input.once('end', onCancel); input.once('error', onError);
+      signal?.addEventListener('abort', onCancel, { once: true });
+      input.setRawMode(true); output.write(label); input.resume();
+    } catch { finish(new LoginError('TERMINAL_INPUT_FAILED')); }
   });
 }
 

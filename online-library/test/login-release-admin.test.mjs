@@ -122,6 +122,21 @@ test('terminal editing works without echoing username or password', async () => 
   assert.equal(await answer, 'sensitive-tex!');
   assert.ok(!fixture.display().includes('sensitive')); assert.equal(fixture.input.isRaw, false);
 });
+test('TERM=dumb and normal terminals both edit DEL/BS without echo or terminal-state leaks', async () => {
+  const previousTerm = process.env.TERM;
+  try {
+    for (const term of ['dumb', 'xterm-256color']) {
+      process.env.TERM = term;
+      for (const backspace of ['\x7f', '\b']) {
+        const fixture = terminal(); const answer = promptHidden('Password: ', fixture);
+        setImmediate(() => fixture.input.write('sensitive-text' + backspace + '!\r'));
+        assert.equal(await answer, 'sensitive-tex!');
+        assert.ok(!fixture.display().includes('sensitive')); assert.equal(fixture.input.isRaw, false);
+        assert.equal(fixture.input.listenerCount('keypress'), 0); assert.equal(fixture.input.readableFlowing, false);
+      }
+    }
+  } finally { if (previousTerm === undefined) delete process.env.TERM; else process.env.TERM = previousTerm; }
+});
 test('terminal Ctrl+C cancels and restores terminal mode without echoing secrets', async () => {
   const fixture = terminal(); const answer = promptHidden('Password: ', fixture);
   setImmediate(() => fixture.input.write('sensitive-text\x03'));
