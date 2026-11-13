@@ -43,7 +43,12 @@ void verify(PHAsset *asset,NSDictionary *row,HueviaTask *task){
   NSString *path=[directory stringByAppendingPathComponent:[identity stringByAppendingString:@".json"]];if(![[path stringByResolvingSymlinksInPath] isEqual:path])fail(@"删除任务路径无效。");
   NSMutableDictionary *plan=nil;NSData *saved=[NSData dataWithContentsOfFile:path];if(saved){if(saved.length>32768)fail(@"删除任务记录过大。");plan=[[NSJSONSerialization JSONObjectWithData:saved options:0 error:nil] mutableCopy];if(![plan[@"owner"] isEqual:owner]||![plan[@"ids"] isEqual:ids])fail(@"删除任务与当前范围不符。");if([plan[@"deleted"] boolValue])return plan;}
   if(!readAccess())fail(@"请允许读写系统照片后重试删除。");
+  PHAuthorizationStatus accessBeforeFetch=[PHPhotoLibrary authorizationStatusForAccessLevel:PHAccessLevelReadWrite];
   PHFetchResult<PHAsset *> *assets=[PHAsset fetchAssetsWithLocalIdentifiers:ids options:nil];
+  PHAuthorizationStatus accessAfterFetch=[PHPhotoLibrary authorizationStatusForAccessLevel:PHAccessLevelReadWrite];
+  // A missing identifier under Limited access can still exist outside the
+  // visible selection. Only a completed receipt above proves prior deletion.
+  if(assets.count!=ids.count&&(accessBeforeFetch!=PHAuthorizationStatusAuthorized||accessAfterFetch!=PHAuthorizationStatusAuthorized))fail(@"部分照片不在当前授权范围内，无法确认删除结果。请调整照片授权后重试此任务。");
   if(!plan&&assets.count!=ids.count)fail(@"照片访问范围已变化，请刷新后重新选择。");
   if(!plan){plan=[@{@"owner":owner,@"ids":ids,@"deleted":@NO} mutableCopy];write(path,plan);}
   if(assets.count){
@@ -55,7 +60,10 @@ void verify(PHAsset *asset,NSDictionary *row,HueviaTask *task){
     if(!success)fail(failure.localizedDescription?:@"系统删除已取消。");
   }
   if(!readAccess())fail(@"照片权限已变化，删除结果尚待核对。");
+  PHAuthorizationStatus accessBeforeReadback=[PHPhotoLibrary authorizationStatusForAccessLevel:PHAccessLevelReadWrite];
   if([PHAsset fetchAssetsWithLocalIdentifiers:ids options:nil].count)fail(@"系统仍保留部分照片，请重试。");
+  PHAuthorizationStatus accessAfterReadback=[PHPhotoLibrary authorizationStatusForAccessLevel:PHAccessLevelReadWrite];
+  if(assets.count!=ids.count&&(accessBeforeReadback!=PHAuthorizationStatusAuthorized||accessAfterReadback!=PHAuthorizationStatusAuthorized))fail(@"照片授权范围已变化，无法确认全部照片已删除。请调整授权后重试此任务。");
   plan[@"deleted"]=@YES;write(path,plan);return plan;
 }
 @end
