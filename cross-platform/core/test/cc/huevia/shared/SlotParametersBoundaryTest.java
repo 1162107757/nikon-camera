@@ -76,7 +76,7 @@ public final class SlotParametersBoundaryTest {
             guard.send(op,tx,bytes,p);
             if(op==0x90cd){presetWrites++;items.put((int)p[0],bytes.clone());}
             else if(op==0x1016){
-                parameterWrites++;Map<String,Object> saved=SharedJson.object(Files.readString(root.resolve("camera-actions/slots.json"),StandardCharsets.UTF_8));
+                parameterWrites++;Map<String,Object> saved=SharedJson.object(new String(Files.readAllBytes(root.resolve("camera-actions/slots.json")),StandardCharsets.UTF_8));
                 Map<String,Object> first=map(((List<?>)map(saved.get("parameterResult")).get("changes")).get(0));
                 evidenceBeforeParameterWrite=Boolean.TRUE.equals(saved.get("presetVerified"))&&Boolean.TRUE.equals(saved.get("parametersPending"))&&((Number)first.get("before")).intValue()==2&&((Number)first.get("desired")).intValue()==4;
                 if(mode.equals("rejected"))throw new PtpResponseException(0x2005,tx);
