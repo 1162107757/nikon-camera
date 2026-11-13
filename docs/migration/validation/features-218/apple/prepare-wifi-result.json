@@ -1,0 +1,23 @@
+{
+  "run": 43431433303,
+  "jobId": 131905633452,
+  "jobName": "apple-app",
+  "jobConclusion": "success",
+  "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+  "step": "bash cross-platform/tool/mobile_apple.sh prepare",
+  "checksPassed": 34,
+  "fullJobLogSha256": "5a57dd72e3418de92678010ded71508d3ee4c5192f9533c2750e17d5c5eed3f9",
+  "originalLineNumbers": [
+    273,
+    274,
+    275,
+    276
+  ],
+  "excerpt": "prepare-wifi-excerpt.log",
+  "realCameraConnectionVerified": false,
+  "knownCachedPresenterPreflightIssueFixed": false,
+  "notes": [
+    "PASS count is copied from this actual run, not inferred from another source or run.",
+    "Passing stream/wait fixtures do not verify UIKit presenter selection; the known camera preflight issue remains in build 218."
+  ]
+}

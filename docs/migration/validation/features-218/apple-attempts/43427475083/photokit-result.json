@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+  "passed": true,
+  "testsPassed": 1,
+  "failures": 0,
+  "testCases": [
+    "-[RunnerTests testPhotoLibraryConsent]"
+  ],
+  "source": "simulator-tests.log"
+}

@@ -1,0 +1,11 @@
+{
+  "branch": "codex/cross-platform-migration",
+  "versionCode": 218,
+  "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+  "scope": "local-testing-only",
+  "supersededCandidate": {
+    "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+    "delivered": false
+  },
+  "finalAppleRun": 43431433303
+}

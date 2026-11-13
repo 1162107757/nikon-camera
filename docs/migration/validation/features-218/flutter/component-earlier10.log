@@ -1,0 +1,12 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_menu_test.dart
+00:00 +0: long press offers two actions and pin returns immediately once
+00:00 +1: a pinned preset offers unpin and returns the same toggle action
+00:00 +2: delete returns an intent for the existing caller confirmation
+00:00 +3: outside cancels without dispatching an action
+00:00 +4: close cancels without dispatching an action
+00:00 +5: back cancels without dispatching an action
+00:01 +6: phone menu is compact with comfortably sized action targets
+00:01 +7: long names and large type fit a narrow Brightness.dark phone
+00:01 +8: long names and large type fit a narrow Brightness.light phone
+00:01 +9: short landscape can scroll to deletion and still dismiss
+00:01 +10: All tests passed!

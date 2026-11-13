@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+  "acceptedForDelivery": false,
+  "artifactsWereDelivered": false,
+  "reason": "Restore template button partly occluded by system navigation; SafeArea correction required",
+  "candidateArtifacts": [
+    {
+      "file": "huevia-0.31.0-dev-218-android-arm64.apk",
+      "bytes": 52723506,
+      "sha256": "6b5388d6a96dc50eb6a7b8aedd70aba9bbb2c89a7a5fd720526cbf440bdf822a"
+    },
+    {
+      "file": "huevia-0.31.0-dev-218-android-x64.apk",
+      "bytes": 56160474,
+      "sha256": "bc95383f40a4d8d0272c1b355cd7061d133b17119b204712cbcea61fed7f5d33"
+    }
+  ],
+  "uiEvidence": "../ui-events-attempt-27bf.json",
+  "iosFullRun": 43427475083,
+  "iosDeliveryHeld": true
+}

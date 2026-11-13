@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+  "sourceFilesSha256": {
+    "cross-platform/app/lib/preset_context_menu.dart": "dbfde2228bf18d24266c3930f16084e074c8890769cd0711cc836c0537099e60",
+    "cross-platform/app/test/preset_context_menu_test.dart": "5f5666a9ddcd685a803877a9cf42587ca529ccbd921e6529eb444824508db1d2",
+    "cross-platform/app/lib/preview_templates.dart": "feb654f6d02f563e19f2bd48f37bc8747e1b803160ea8668b263f7d3f1837ec7",
+    "cross-platform/app/test/preview_templates_test.dart": "aadbc9dd274e416e661934065fe34367c5a55379fc26cfe77434a9a9b911f10d",
+    "cross-platform/app/lib/library.dart": "530f5c2594e6c29dc6dde864b9afb2c720149fcbc51b1f246db6c5664ee981f1",
+    "cross-platform/app/test/preset_context_integration_test.dart": "8f53db3573359d762408e9cb45d011e9e31ef465db2ef22aed092747bd073de0",
+    "cross-platform/app/test/preset_pins_test.dart": "5c46d9f1590453cb4ae2cb786d86e2d3a0694e2d630e717718674aede4219374"
+  },
+  "finalComponent": {
+    "passed": 13,
+    "exitCode": 0,
+    "log": "component-final-guard13.log",
+    "sourceSha256": "dbfde2228bf18d24266c3930f16084e074c8890769cd0711cc836c0537099e60",
+    "testSha256": "5f5666a9ddcd685a803877a9cf42587ca529ccbd921e6529eb444824508db1d2"
+  },
+  "finalPreviewTemplate": {
+    "passed": 1,
+    "exitCode": 0,
+    "log": "preview-template1.log",
+    "sameFilesAsFinalSnapshot": true
+  },
+  "earlierComponent": {
+    "passed": 10,
+    "exitCode": 0,
+    "log": "component-earlier10.log",
+    "finalGuardSourceCovered": false
+  },
+  "earlierLibraryIntegration": {
+    "passed": 3,
+    "exitCode": 0,
+    "log": "integration-earlier3-verbose.log",
+    "componentSha256Prefix": "cbc2",
+    "finalComponentCovered": false
+  },
+  "earlierPinsRegression": {
+    "passed": 1,
+    "exitCode": 0,
+    "log": "pins-earlier1-verbose.log",
+    "runBeforeFinalGuardComponent": true,
+    "finalComponentCovered": false
+  },
+  "windowsFirstCombinedAttempt": {
+    "exitCode": 1,
+    "completedSuite": false,
+    "acceptedAsPass": false,
+    "log": "windows-first-incomplete.log",
+    "note": "Host interruption left tests marked did not complete. Retained as failed/incomplete, not added to successful counts."
+  },
+  "allAppAnalyze": {
+    "exitCode": 0,
+    "result": "No issues found",
+    "log": null,
+    "originalLogSha256": "a8908cca5ab85b348ba0f2b204b039378b44ff390bc0c44dce44a9c9b00c1af2",
+    "archivedSeparately": false,
+    "note": "The shared all-app-analyze.log archive was replaced by the required final a86 analysis. This earlier hash is historical metadata only; the old preview-template1.log is retained and independently verifiable."
+  },
+  "freshFinalFullSuite": {
+    "run": 43427475083,
+    "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+    "status": "running-at-archive-time",
+    "passed": null
+  },
+  "flutterInvokedByThisArchivalTask": false,
+  "logsSha256": {
+    "component-final-guard13.log": "0961abc556a8b7bcef3120aabb2098eee5610eb286de936c6094b97ae4922712",
+    "component-final-analyze.log": "58144af3110bfca80f120779d63ea510548d8a99d1b8dedb0228ac751d6ca551",
+    "component-earlier10.log": "b27ed5755ec08577b3c85a2c862f00e70d18ec1a9b926ded84d359855eebadd7",
+    "component-earlier-analyze.log": "58144af3110bfca80f120779d63ea510548d8a99d1b8dedb0228ac751d6ca551",
+    "integration-earlier3-verbose.log": "cd1554661abd504a5f11919d853b9358d7f308595c5a8c1b093964e9ba778e39",
+    "integration-earlier3-result.json": "d03e0064a43e2b268633b13cdc043c6e76381fb23726ad9b555a5006caad7db4",
+    "pins-earlier1-verbose.log": "38aa058b5babf5e03de208da4a4b0885e32bbf1fc8ce70c4cf009d88b0fe2c92",
+    "pins-earlier1-result.json": "6048ac7b1a793fc0890a28620179a88e38480780179f362c8382b9881c9d8548",
+    "windows-first-incomplete.log": "51275d55d2590b326a7641534499ecd6c8039f28073cfda58cd53954e938e396",
+    "windows-first-incomplete-result.json": "b040c519571f5a46d4cd45f547a76f2d8d13b79843a30cea4c0faf82f2a46ca4",
+    "preview-template1.log": "bee5de1d42e664596864f50167fa01e7475ed8834d250e015b87059e8dd9021d",
+    "integration-analyze.log": "d6a42a83dfbb941016a975a7581777f6e5aec785ae1e8d2944048e545f7ebd8f",
+    "all-app-analyze-result.json": "267aefd78a72c9453478263faba0b4430d9c3bd7f3b3f027154ac04225645a88",
+    "component-final-test-exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "component-final-analyze-exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "component-earlier-test-exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "component-earlier-analyze-exit.txt": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+  }
+}

@@ -1,0 +1,13 @@
+[1/1] iOS SDK
+  ├─ [1/3] ios                                                   2,916ms
+  ├─ [2/3] ios-profile                                           1,684ms
+  └─ [3/3] ios-release                                              3.4s
+Warning: Building for device with codesigning disabled. You will have to manually codesign before deploying to device.
+Building cc.huevia.next for device (ios-release)...
+The following plugins do not support Swift Package Manager for ios:
+  - huevia_core
+This will become an error in a future version of Flutter. Please contact the plugin maintainers to request Swift Package Manager adoption.
+Running pod install...                                             19.8s
+Running Xcode build...                                          
+Xcode build done.                                           112.3s
+✓ Built build/ios/iphoneos/Runner.app (111.5MB)

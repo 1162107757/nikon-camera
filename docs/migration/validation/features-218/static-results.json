@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+  "freshReadOnlyStaticChecks": {
+    "source-check": {
+      "command": [
+        "python",
+        "cross-platform/tool/source_check.py"
+      ],
+      "exit": 0,
+      "log": "source-check.log",
+      "sha256": "d0da0a99d2c830d9eec42eceef9bc86d69f2e2087f09ab0e3d1f1caa1ece78e8"
+    },
+    "inventory": {
+      "command": [
+        "python",
+        "cross-platform/tool/inventory.py",
+        "--verify"
+      ],
+      "exit": 0,
+      "log": "inventory.log",
+      "sha256": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7"
+    }
+  },
+  "productSourceDiffFromFreeze": [],
+  "freshJvmRunPerformed": false,
+  "flutterRunPerformed": false,
+  "verifiedAtUtc": "2026-11-13T13:14:37.102882+00:00"
+}

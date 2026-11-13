@@ -1,0 +1,39 @@
+{
+  "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+  "installedApkSha256": "f61f23e4dc96be57e886b2d4c3aa2ed6ffea3a8c84a557dcc2ff202ab0fd75d6",
+  "emulator": "emulator-5584",
+  "api": 31,
+  "pageSize": 4096,
+  "physicalSize": [
+    1080,
+    2340
+  ],
+  "systemNavigationTop": 2214,
+  "events": "ui-events.json",
+  "menuThemesVerified": [
+    "light",
+    "dark"
+  ],
+  "nativeCjkPresetTitle": "活力电影_芒果小明",
+  "extremeLongNameAndLargeTextCoverage": "Flutter component tests; not a physical-device claim",
+  "directPinWithoutConfirmation": true,
+  "multiplePinsPersistAfterColdProcessRestart": true,
+  "unpinOneKeepsOther": true,
+  "existingDeletionConfirmationPreserved": true,
+  "cancelDeletionKeepsPreset": true,
+  "standaloneTemplateSampleBrowsingRemoved": true,
+  "templateSettingsOnlyChooseAndRestore": true,
+  "bothTemplateButtonsFullyAboveSystemNavigation": true,
+  "nativeCustomTemplateSelectionAndRestoreVerified": true,
+  "builtinPresetImageCount": 10,
+  "allBundledImagesMatch217ByteForByte": true,
+  "presetCardPhotosVisuallyVerified": true,
+  "originalVisiblePresetTitleCategoryAndPinStateRestored": true,
+  "originalPresetCount": 2,
+  "onlyOwnQaPresetsRemoved": true,
+  "appearanceRestoredToFollowSystem": true,
+  "ownDownloadFixturesRemoved": true,
+  "originalPortraitDownloadSha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+  "actualIosCameraConnectionVerified": false,
+  "nativeTencentAuthorizationVerified": false
+}

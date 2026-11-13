@@ -1,0 +1,12 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart
+00:00 +0: D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: Preset compact menu pins and unpins immediately while retaining other pinned presets
+00:01 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: Preset compact menu pins and unpins immediately while retaining other pinned presets
+00:01 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: Preset compact menu pins and unpins immediately while retaining other pinned presets - did not complete [E]
+00:01 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: Preset compact deletion keeps the existing confirmation and cancel preserves the preset - did not complete [E]
+00:01 +1: D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: A preset menu opened for an old owner cannot mutate the new account - did not complete [E]
+00:01 +1: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: A preset menu opened for an old owner cannot mutate the new account (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: Preset compact deletion keeps the existing confirmation and cancel preserves the preset (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/preset_context_integration_test.dart: Preset compact menu pins and unpins immediately while retaining other pinned presets (did not complete)

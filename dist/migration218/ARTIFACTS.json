@@ -1,0 +1,128 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+  "versionCode": 218,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-218-android-arm64.apk",
+      "platform": "android",
+      "abi": "arm64-v8a",
+      "bytes": 52723506,
+      "sha256": "6d42627b6f754decd7d98f4e56a72ab8a57b715e7c81050618a374d16ebd2287",
+      "versionName": "0.31.0-dev",
+      "versionCode": 218,
+      "package": "cc.huevia.next",
+      "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-218-android-x64.apk",
+      "platform": "android",
+      "abi": "x86_64",
+      "bytes": 56160474,
+      "sha256": "f61f23e4dc96be57e886b2d4c3aa2ed6ffea3a8c84a557dcc2ff202ab0fd75d6",
+      "versionName": "0.31.0-dev",
+      "versionCode": 218,
+      "package": "cc.huevia.next",
+      "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "static16KiBAlignmentVerified": true,
+      "actual16KiBDeviceVerified": false,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-218-ios-unsigned.ipa",
+      "platform": "ios",
+      "abi": "arm64",
+      "bytes": 64868359,
+      "sha256": "e53ca64f5f7fbbf8f5b035875558a9b9f30a6cf28eebbf5c01f88a1eb44b6b7f",
+      "versionName": "0.31.0",
+      "versionCode": 218,
+      "package": "cc.huevia.next",
+      "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+      "unsigned": true,
+      "minimumOS": "16.0",
+      "deviceInstallationVerified": false,
+      "fullParityComplete": false,
+      "acceptedForLocalSelfSignedTesting": true
+    }
+  ],
+  "acceptedForDelivery": true,
+  "androidReleaseRuntimeChecks": 78,
+  "sharedCoreBoundaryChecks": 1417,
+  "atmosphereChecks": 6,
+  "coreInputReuseVerified": true,
+  "androidUiEvidence": "../../docs/migration/validation/features-218/android/release-ui.json",
+  "presetPreviewAssets": "../../docs/migration/validation/features-218/preset-preview-assets.json",
+  "ios": {
+    "state": "final-full-acceptance-passed",
+    "run": 43431433303,
+    "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+    "acceptedIpa": true,
+    "flutterTestsPassed": 421,
+    "sharedCoreBoundaryChecks": 1417,
+    "atmosphereChecks": 6,
+    "goldenBoundaryChecks": 1423,
+    "sharedCoreParityPassed": true,
+    "nativeScenariosPassed": 1,
+    "photoKitXCTestPassed": true,
+    "photoKitXCTestCount": 1,
+    "appleWifiStreamChecks": 34,
+    "independentIpaVerificationPassed": true,
+    "presetPreviewImageCount": 10,
+    "presetPreviewAssetsMatchRepositoryAnd217": true,
+    "changesFromAndroidSource": [],
+    "independentVerification": "../../docs/migration/validation/features-218/apple/independent-verification.json"
+  },
+  "qqLogin": {
+    "imageCaptchaRemoved": true,
+    "serverDeployment": "deployed-and-verified",
+    "serverHttpProbesPassed": 6,
+    "serverEvidence": "../../docs/migration/validation/features-217/qq-server/result.json",
+    "nativeTencentAuthorizationVerified": false,
+    "iosUniversalLinkConfigured": false
+  },
+  "iosCamera": {
+    "reportedModel": "Nikon Z6II",
+    "transport": "Wi-Fi",
+    "boundedCancellationAndProgressImplemented": true,
+    "actualDeviceConnectionVerified": false,
+    "knownCachedPresenterPreflightIssueInherited": true,
+    "recommendedRetestBuild": 219,
+    "retest218Recommended": false
+  },
+  "withdrawnCandidate": {
+    "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+    "delivered": false,
+    "evidence": "../../docs/migration/validation/features-218/android/attempt-27bf/result.json"
+  },
+  "knownIssues": [
+    {
+      "id": "android-jpeg-editor-format-label",
+      "platform": "android",
+      "status": "known-in-218; being addressed for 219",
+      "fixedIn218": false,
+      "description": "Album JPEG may be labeled NEF in the editor because the label uses rawSource instead of the current file. This is not a claim that the JPEG bytes were converted to RAW.",
+      "targetBuild": 219
+    },
+    {
+      "id": "ios-camera-cached-presenter-preflight",
+      "platform": "ios",
+      "status": "reported-in-217; unchanged camera plugin inherited by 218; being addressed for 219",
+      "fixedIn218": false,
+      "reportedInBuild": 217,
+      "inheritedByBuild218": true,
+      "reportedForegroundRejectionMilliseconds": [
+        2,
+        6
+      ],
+      "description": "A cached registrar view controller can reject foreground cameraConnect before connection starts. Scene/key-window presenter resolution is work for 219, not part of this 218 source.",
+      "targetBuild": 219,
+      "retest218Recommended": false
+    }
+  ]
+}

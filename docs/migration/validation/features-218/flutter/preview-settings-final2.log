@@ -1,0 +1,4 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/preview_templates_test.dart
+00:00 +0: the full restore button stays above system navigation with large text in a short viewport
+00:00 +1: Template selection uses streamed native picking, handles cancellation and restores built-ins
+00:00 +2: All tests passed!

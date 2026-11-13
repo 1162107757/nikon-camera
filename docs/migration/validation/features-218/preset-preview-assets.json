@@ -1,0 +1,119 @@
+{
+  "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+  "imageCount": 10,
+  "allTenPreservedByteForByte": true,
+  "comparedTo217": true,
+  "repositoryImages": {
+    "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+    "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+    "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+    "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+    "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+    "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+    "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+    "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+    "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+    "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+  },
+  "android": [
+    {
+      "version": 217,
+      "abi": "arm64",
+      "apkSha256": "fd4e71c85defaab977956b7a747f6ad084d4979e768b1340cf54f24275e3bfad",
+      "images": {
+        "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+        "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+        "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+        "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+        "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+        "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+        "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+        "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+        "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+        "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+      }
+    },
+    {
+      "version": 218,
+      "abi": "arm64",
+      "apkSha256": "6d42627b6f754decd7d98f4e56a72ab8a57b715e7c81050618a374d16ebd2287",
+      "images": {
+        "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+        "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+        "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+        "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+        "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+        "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+        "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+        "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+        "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+        "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+      }
+    },
+    {
+      "version": 218,
+      "abi": "x64",
+      "apkSha256": "f61f23e4dc96be57e886b2d4c3aa2ed6ffea3a8c84a557dcc2ff202ab0fd75d6",
+      "images": {
+        "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+        "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+        "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+        "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+        "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+        "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+        "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+        "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+        "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+        "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+      }
+    }
+  ],
+  "ios": [
+    {
+      "version": 217,
+      "abi": "arm64",
+      "sourceCommit": "7e2b782d4cea9845fd632b409ab82905328a4a4c",
+      "ipaSha256": "59fdb115d37ceb75fdbf729806fc9ad6b5dc3a8b08007fb2ece110a6513826cb",
+      "bytes": 64865047,
+      "imageCount": 10,
+      "matchingImageEntries": 20,
+      "allTenPreservedByteForByte": true,
+      "images": {
+        "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+        "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+        "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+        "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+        "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+        "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+        "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+        "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+        "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+        "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+      }
+    },
+    {
+      "version": 218,
+      "abi": "arm64",
+      "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+      "ipaSha256": "e53ca64f5f7fbbf8f5b035875558a9b9f30a6cf28eebbf5c01f88a1eb44b6b7f",
+      "bytes": 64868359,
+      "imageCount": 10,
+      "matchingImageEntries": 20,
+      "allTenPreservedByteForByte": true,
+      "images": {
+        "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+        "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+        "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+        "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+        "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+        "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+        "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+        "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+        "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+        "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+      }
+    }
+  ],
+  "iosIndependentVerification": "apple/independent-verification.json",
+  "iosComparedToRepositoryAnd217": true
+}

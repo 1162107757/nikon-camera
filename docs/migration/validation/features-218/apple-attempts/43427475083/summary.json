@@ -1,0 +1,70 @@
+{
+  "run": 43427475083,
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43427475083",
+  "sourceCommit": "27bfc5b2c4ab9769181b664e2277033a26202506",
+  "workflowConclusion": "success",
+  "verificationMode": "full",
+  "fullCiGatePassed": true,
+  "disposition": "withdrawn-isolated-before-delivery",
+  "acceptedForDelivery": false,
+  "acceptedIpa": false,
+  "published": false,
+  "deliveryHeldBeforeCompletion": true,
+  "watcherExit": 0,
+  "watcherDiagnosticOnly": true,
+  "acceptedIpaCopiedToDelivery": false,
+  "ipaIncludedInThisArchive": false,
+  "isolationReasons": [
+    {
+      "reason": "Native UI QA found the restore-template control overlapped the Android system navigation bar.",
+      "evidence": "delivery-hold.txt"
+    },
+    {
+      "reason": "User explicitly removed independent sample browsing while retaining ten built-in images for preset-card previews.",
+      "evidence": "Root task steering; final source differs from this attempt."
+    }
+  ],
+  "actualChecks": {
+    "flutterTestsPassed": 420,
+    "coreGoldenBoundaryChecks": 1423,
+    "coreParityPassed": true,
+    "nativeScenariosPassed": 1,
+    "photoKitXCTestPassed": 1,
+    "photoKitFailures": 0
+  },
+  "artifact": {
+    "id": 14038752248,
+    "name": "huevia-cross-platform-ios-development",
+    "sizeInBytes": 65179526,
+    "apiDigest": "sha256:b8b6597da18903c061d9a1838ed1c1ec799bf2e26b471cf49844ae7f40f18207",
+    "digestVerification": "Existing watcher verified the API digest before extracting this artifact; raw archive not retained for a second hash calculation."
+  },
+  "candidateIpaMetadataOnly": {
+    "bytes": 64871187,
+    "sha256": "eb63bcdef2913be3eff9f1e0a76a734f1bb869cd156f64560786b4c6d66da85f",
+    "build": "218",
+    "deviceInstallationVerified": false,
+    "deliveryAccepted": false
+  },
+  "subsequentSource": {
+    "sourceCommit": "a86b4f6d4facd3cb2be9876f9e47961fdaf19433",
+    "run": 43431433303,
+    "inheritsThisAttemptAcceptance": false,
+    "statusAtArchive": "Full run started; no final conclusion asserted by this archive."
+  },
+  "watcherFullLogSha256": "4ed8689cee2145140dae1bb8e87a53bb369a96fb21831aada22e56a7ed76d975",
+  "files": {
+    "analyze.log": "dd948a0b7e27f62ae119df9efc2b434ee1de937788d8ab2d6e576a0704f37df1",
+    "artifact-api.json": "16c23c5dfce79a75d68a0e8c27ab9e1aa7834a59ba8d1323912fb662c23564e6",
+    "candidate-ipa-build-metadata.json": "0c9504f47b34cd9f5d8fb818f94001c84d8d3af4b5b608ee060cfb1acefecff6",
+    "core-parity.json": "8806c5692ee3300ce4a6c017ddf7e29046fd4164ffa84e0940f8d237215254f1",
+    "delivery-hold.txt": "f1699d632641b2385e353a295b159daf46989b252ee0a95d7ca4a3d714fa2250",
+    "device-build.log": "7c05c4858c0715968c8758e63fd17c6ca0d09676722367a628544eb436e1c8a9",
+    "flutter-tests.log": "49b186b9d697bdfb82e6a8ad3c26466e4ce546d09c46601174b6569244a01765",
+    "photokit-result.json": "0b5aca4e81e09166a66093a862b8633c738e5ebe53f5874395629b7cc826dfe1",
+    "simulator-initial-access.json": "c3b4c0ec6d64b2b695165ef88cb0e4225b3a35d3defac621cd34f8722a4c0b6c",
+    "simulator-result.json": "6d7ed0879c95ddbc3c29507af226e7bcc7c9e61a1ad0b7491c39119946c702e7",
+    "simulator-tests.log": "8e81c9c66c11dffb35d73d22ed00bf7fceecb72972526c506f0e882e35247848",
+    "watcher-excerpt.log": "03c0211d0aad424d7d563f4cd8483a270650bcd7557f37c1d04601a89035eecc"
+  }
+}

@@ -1,0 +1,11 @@
+D:\dev\ai-project\nikon-camera\dist\migration218\huevia-0.31.0-dev-218-android-x64.apk: 1 file pushed, 0 skipped. 23.0 MB/s (56160474 bytes in 2.324s)
+Performing Push Install
+Success
+D:\dev\ai-project\nikon-camera\cross-platform\app\build\app\outputs\apk\androidTest\debug\app-debug-androidTest.apk: 1 file pushed, 0 skipped. 30.3 MB/s (73055 bytes in 0.002s)
+Performing Push Install
+Success
+INSTRUMENTATION_RESULT: checks=78
+INSTRUMENTATION_RESULT: evidence={"requestCandidates":["public final java.lang.String cc.huevia.sharedapp.a.d(java.lang.String,java.lang.String,zo,yo)"],"cancelType":"zo","progressType":"yo","cancelAdapter":"verified-atomic-boolean-capture","cancelClassId":0,"cancelConstructor":"public zo(int,java.lang.Object)","progressAdapter":"activity-progress-capture","progressConstructor":"public yo(cc.huevia.sharedapp.MainActivity,double[],long[],java.lang.String)","mediaField":"q","mediaMethod":"d","workerField":"g","mediaRuntimeClass":"cc.huevia.sharedapp.a","portraitSha256":"a92ca5bfb3de012aa63afbfa6413453bf27cbc54c273f3f9b81af676f9934231","faceCount":1,"skinPixels":1643,"changedPixelSamples":243,"detailSourceSha256":"7c9e1facc1e1c2113c059d3a57690c947c17bf32ff44e4c7ca52c02c4bb65cd0","detailWidth":1600,"detailHeight":1200,"detailPersistentStateUnchanged":true,"rawSha256":"6044cec5a86bc1a7a937087467020b1c271388c7381b7f8feb715e6e1b723871","rawBytes":98904,"rawWidth":128,"rawHeight":96,"rawEmbedded":false}
+INSTRUMENTATION_RESULT: stream=PASS 78 R8 release runtime checks; real mesh, semantic skin, renderer, read-only full details, patch, cancellation and RAW JNI callbacks
+
+INSTRUMENTATION_CODE: -1
