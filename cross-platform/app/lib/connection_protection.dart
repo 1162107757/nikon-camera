@@ -20,10 +20,12 @@ class CameraConnectionProtection extends ChangeNotifier
   final Set<String> actors = {};
   StreamSubscription<dynamic>? subscription;
   bool alive = true;
+  int _statusEpoch = 0;
   bool get enabled => status['enabled'] == true;
   bool get available => status['available'] == true;
   bool get backgroundAllowed => enabled && status['backgroundAllowed'] == true;
   bool get limited => status['limited'] == true;
+  int get stopRevision => (status['stopRevision'] as num?)?.toInt() ?? 0;
   String? get warning => status['warning'] as String?;
   bool get native => core.platform == 'android' || core.platform == 'ios';
   Future<Json> invoke(String method, [Json payload = const {}]) async {
@@ -33,10 +35,51 @@ class CameraConnectionProtection extends ChangeNotifier
 
   void accept(dynamic value) {
     if (!alive) return;
-    if (value is String) value = jsonDecode(value);
-    if (value is Map) {
+    final previousStop = stopRevision;
+    ++_statusEpoch;
+    try {
+      if (value is String) value = jsonDecode(value);
+      if (value is! Map ||
+          value['warning'] != null && value['warning'] is! String) {
+        throw const FormatException('Invalid protection status');
+      }
       status = object(value);
-      notifyListeners();
+      final revision = status['stopRevision'];
+      status['stopRevision'] =
+          revision is num && revision.isFinite && revision >= previousStop
+          ? revision.toInt()
+          : previousStop;
+    } catch (_) {
+      status = {
+        ...status,
+        'backgroundAllowed': false,
+        'warning': '连接保护状态无效，后台任务已暂停。',
+      };
+    }
+    notifyListeners();
+  }
+
+  Future<void> _refresh(
+    String method,
+    Json payload, {
+    bool propagate = false,
+    bool reset = false,
+  }) async {
+    final epoch = ++_statusEpoch;
+    try {
+      final value = await invoke(method, payload);
+      if (alive && epoch == _statusEpoch) accept(value);
+    } catch (failure) {
+      if (alive && epoch == _statusEpoch) {
+        accept({
+          if (!reset) ...status,
+          if (reset) 'enabled': false,
+          if (reset) 'available': false,
+          'backgroundAllowed': false,
+          'warning': '连接保护状态暂未确认：$failure',
+        });
+      }
+      if (propagate) rethrow;
     }
   }
 
@@ -46,32 +89,23 @@ class CameraConnectionProtection extends ChangeNotifier
       accept,
       onError: (Object failure) {
         if (alive) {
-          status = {
+          accept({
             ...status,
             'backgroundAllowed': false,
             'warning': '$failure',
-          };
-          notifyListeners();
+          });
         }
       },
     );
-    try {
-      accept(await invoke('status'));
-    } catch (failure) {
-      accept({
-        'enabled': false,
-        'available': false,
-        'backgroundAllowed': false,
-        'warning': '后台连接组件暂不可用：$failure',
-      });
-    }
+    await _refresh('status', {}, reset: true);
   }
 
   Future<void> setEnabled(bool enabled) async {
     if (!native || !alive) return;
-    accept(
-      await invoke('set', {'enabled': enabled, 'active': actors.isNotEmpty}),
-    );
+    await _refresh('set', {
+      'enabled': enabled,
+      'active': actors.isNotEmpty,
+    }, propagate: true);
   }
 
   Future<void> setActive(String actor, bool active) async {
@@ -82,15 +116,7 @@ class CameraConnectionProtection extends ChangeNotifier
       actors.remove(actor);
     }
     if (!native) return;
-    try {
-      accept(await invoke('set', {'active': actors.isNotEmpty}));
-    } catch (failure) {
-      accept({
-        ...status,
-        'backgroundAllowed': false,
-        'warning': '连接保护未启动：$failure',
-      });
-    }
+    await _refresh('set', {'active': actors.isNotEmpty});
   }
 
   Future<void> openBatterySettings() async {
@@ -101,15 +127,17 @@ class CameraConnectionProtection extends ChangeNotifier
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (native && alive) {
       unawaited(
-        invoke('foreground', {
+        _refresh('foreground', {
           'foreground': state == AppLifecycleState.resumed,
-        }).then(accept).catchError((Object _) {}),
+        }),
       );
     }
   }
 
   @override
   void dispose() {
+    ++_statusEpoch;
+    actors.clear();
     if (native) {
       unawaited(
         invoke('set', {

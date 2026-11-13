@@ -18,6 +18,7 @@ public final class MainActivity extends FlutterActivity {
     private ThreadPoolExecutor worker=new ThreadPoolExecutor(1,1,30,TimeUnit.SECONDS,new ArrayBlockingQueue<>(8));
     private ConcurrentHashMap<String,AtomicBoolean> jobs=new ConcurrentHashMap<>();
     private AtomicBoolean backendClosed=new AtomicBoolean();
+    private boolean ownsBackend=true;
     private NativeConnectionProtection protection;
     private NativeOriginalFiles originalFiles;
     private NativeAlbumOperations albumOperations;
@@ -36,12 +37,13 @@ public final class MainActivity extends FlutterActivity {
     private MethodChannel.Result gallerySavePermission;
     private volatile EventChannel.EventSink events;
     @Override public FlutterEngine provideFlutterEngine(android.content.Context context){return NativeConnectionProtection.cachedEngine();}
-    @Override public boolean shouldDestroyEngineWithHost(){return !NativeConnectionProtection.keepEngine();}
+    @Override public boolean shouldDestroyEngineWithHost(){return ownsBackend&&!NativeConnectionProtection.keepEngine();}
     @Override public void configureFlutterEngine(FlutterEngine engine){
         super.configureFlutterEngine(engine);
-        MainActivity prior=NativeConnectionProtection.previousHost();
+        MainActivity prior=NativeConnectionProtection.previousHost(engine);
         if(prior!=null&&prior!=this&&!prior.backendClosed.get()){
             worker.shutdown();worker=prior.worker;jobs=prior.jobs;backendClosed=prior.backendClosed;
+            prior.ownsBackend=false;
             runtime=prior.runtime;media=prior.media;camera=prior.camera;usbCamera=prior.usbCamera;gallery=prior.gallery;
             events=prior.events;prior.eventTarget=this;
         }
@@ -154,11 +156,12 @@ public final class MainActivity extends FlutterActivity {
     private void emit(Map<String,Object> value){if(eventTarget!=null){eventTarget.emit(value);return;}EventChannel.EventSink sink=events;if(sink!=null&&!backendClosed.get())try{sink.success(value);}catch(RuntimeException detached){events=null;}}
     private void configureStorageAdapters(){if(runtime==null||messenger==null||isDestroyed())return;if(originalFiles==null){originalFiles=new NativeOriginalFiles(this,runtime);new MethodChannel(messenger,"cc.huevia/file-publication").setMethodCallHandler(originalFiles);}if(albumOperations==null&&gallery!=null)albumOperations=new NativeAlbumOperations(this,runtime,gallery);}
     void stopCameraWork(){for(Map.Entry<String,AtomicBoolean> entry:jobs.entrySet()){String id=entry.getKey();if(id.startsWith("camera-")||id.startsWith("download-")){entry.getValue().set(true);if(camera!=null)camera.cancel(id);}}}
-    void releaseRetainedBackend(){if(!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null)camera.closeTransport();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();}
-    @Override public void cleanUpFlutterEngine(FlutterEngine engine){if(!NativeConnectionProtection.keepEngine()){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();}super.cleanUpFlutterEngine(engine);}
+    void releaseRetainedBackend(){if(!ownsBackend||!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null)camera.closeTransport();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();}
+    void retireRetainedBackend(){releaseRetainedBackend();ownsBackend=false;}
+    @Override public void cleanUpFlutterEngine(FlutterEngine engine){if(ownsBackend&&!NativeConnectionProtection.keepEngine()){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();}super.cleanUpFlutterEngine(engine);}
     @Override protected void onActivityResult(int request,int result,android.content.Intent data){if(albumOperations!=null&&albumOperations.onActivityResult(request,result,data))return;if(originalFiles!=null&&originalFiles.onActivityResult(request,result,data))return;if(qqAuthorization!=null&&qqAuthorization.onActivityResult(request,result,data))return;if(legacyFiles!=null&&legacyFiles.onActivityResult(request,result,data))return;super.onActivityResult(request,result,data);if(importPicker!=null&&importPicker.handles(request))importPicker.result(result,data);}
     @Override protected void onPause(){if(qqAuthorization!=null)qqAuthorization.onHostPaused();if(updates!=null)updates.onHostPaused();super.onPause();}
     @Override protected void onResume(){super.onResume();if(qqAuthorization!=null)qqAuthorization.onHostResumed();if(updates!=null)updates.onHostResumed();}
     @Override public void onRequestPermissionsResult(int request,String[] permissions,int[] grants){super.onRequestPermissionsResult(request,permissions,grants);if(request==49324&&protection!=null)protection.permissionResult();if(request==49318&&galleryPermission!=null){MethodChannel.Result reply=galleryPermission;galleryPermission=null;try{reply.success(gallery.access());}catch(IOException error){reply.error("PERMISSION_ERROR",error.getMessage(),null);}}if(request==49319&&gallerySavePermission!=null){MethodChannel.Result reply=gallerySavePermission;gallerySavePermission=null;reply.success(SharedJson.encode(SharedRuntime.map("granted",checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)==android.content.pm.PackageManager.PERMISSION_GRANTED)));}}
-    @Override protected void onDestroy(){if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();}
+    @Override protected void onDestroy(){if(albumOperations!=null)albumOperations.close();if(qqAuthorization!=null)qqAuthorization.close();if(updates!=null)updates.close();if(legacyFiles!=null)legacyFiles.close();if(originalFiles!=null)originalFiles.dispose();if(galleryPermission!=null){galleryPermission.error("CANCELLED","照片权限选择已取消。",null);galleryPermission=null;}if(gallerySavePermission!=null){gallerySavePermission.error("CANCELLED","保存权限选择已取消。",null);gallerySavePermission=null;}if(importPicker!=null)importPicker.cancel();if(protection!=null)protection.detached();if(!NativeConnectionProtection.keepEngine())releaseRetainedBackend();super.onDestroy();}
 }

@@ -131,12 +131,15 @@ Future<void> verifyRawThumbnails(HueviaCore core, String pngSource) async {
       expect(await dimensions(repaired['path'] as String), size);
       expect((await sha256.bind(source.openRead()).first).toString(), sha);
     }
+    final frozenSourceSha =
+        (await sha256.bind(File(pngSource).openRead()).first).toString();
     final jpegResult = await core.call('media.exportPreview', {
       'path': pngSource,
       'owner': '',
       'recipe': {'schema': 1},
       'size': 'full',
       'snapshot': true,
+      'expectedSourceSha': frozenSourceSha,
     });
     late final Uint8List jpeg;
     try {

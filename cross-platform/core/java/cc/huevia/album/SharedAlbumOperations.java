@@ -15,11 +15,14 @@ public final class SharedAlbumOperations {
         Map<String,Object> p=SharedJson.object(json);String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);check(cancel);
         String id=SharedRuntime.text(p,"operationId",32);if(!id.matches("[0-9a-f]{32}"))throw new IOException("删除任务标识无效。");
         File root=runtime.root().getCanonicalFile(),directory=new File(root,"album-deletions");checked(root,directory);if(!directory.isDirectory()&&!directory.mkdirs())throw new IOException("无法记录删除任务。");
+        File selected=new File(SharedRuntime.text(p,"path",4096)),canonical=selected.getCanonicalFile();
+        checked(root,canonical);
+        if(Files.isSymbolicLink(selected.toPath())||!new File(root,"originals").getCanonicalFile().equals(canonical.getParentFile()))throw new IOException("只能删除选中的应用相册原图。");
         File record=new File(directory,id+".json");checked(root,record);
         Map<String,Object> frozen;
         if(record.exists()){
             if(record.length()>512*1024)throw new IOException("删除任务记录过大。");frozen=SharedJson.object(new String(Files.readAllBytes(record.toPath()),StandardCharsets.UTF_8));
-            if(!owner.equals(frozen.get("owner"))||!operation.equals(frozen.get("operation"))||!SharedRuntime.text(p,"path",4096).equals(frozen.get("path")))throw new IOException("删除任务与当前选择不符。");
+            if(!owner.equals(frozen.get("owner"))||!operation.equals(frozen.get("operation"))||!canonical.getPath().equals(frozen.get("path")))throw new IOException("删除任务与当前选择不符。");
             if(Boolean.TRUE.equals(frozen.get("deleted"))){if(operation.equals("album.deleteOriginal")&&new File((String)frozen.get("path")).exists())throw new IOException("原图删除后该路径出现了文件，请重新选择范围，未删除此文件。");return SharedJson.encode(frozen);}
         }else{
             File source=runtime.privateFile(SharedRuntime.text(p,"path",4096));File originals=new File(root,"originals").getCanonicalFile();

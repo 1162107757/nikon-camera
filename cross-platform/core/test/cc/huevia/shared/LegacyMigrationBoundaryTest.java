@@ -72,6 +72,11 @@ public final class LegacyMigrationBoundaryTest {
         rejects(()->LegacyArchive.unpack(tampered.toFile(),temporary.resolve("tampered-unpack").toFile(),()->false));
         Path ios=temporary.resolve("ios-presets");Files.createDirectories(ios);Files.write(ios.resolve("apple.ncp"),preset);Path iosZip=temporary.resolve("ios.zip");LegacyArchive.exportIosPresets(ios.toFile(),iosZip.toFile(),()->false);
         Map<String,Object> iosManifest=LegacyArchive.unpack(iosZip.toFile(),temporary.resolve("ios-unpack").toFile(),()->false);yes(iosManifest.get("origin").equals("ios-original"));yes(rows(iosManifest,"presets").size()==1);yes(rows(iosManifest,"photos").isEmpty());
+        rejects(()->LegacyArchive.safeName("first\nsecond\n../escape.jpg"));
+        Path blockedRoot=temporary.resolve("blocked-target");SharedLegacyMigration blocked=new SharedLegacyMigration(runtime(blockedRoot));Path blockedInput=blockedRoot.resolve("legacy-incoming/old.zip");Files.createDirectories(blockedInput.getParent());Files.copy(bundle,blockedInput);
+        Map<String,Object> blockedPreview=request(blocked,"legacy.inspect",SharedRuntime.map("path",blockedInput.toString()));Files.writeString(blockedRoot.resolve("photo-live-projects"),"preserved obstruction");
+        Map<String,Object> blockedCommit=new LinkedHashMap<>(commit);blockedCommit.put("transaction",blockedPreview.get("transaction"));Map<String,String> blockedBefore=snapshot(blockedRoot);
+        rejects(()->request(blocked,"legacy.commit",blockedCommit));Map<String,String> blockedAfter=snapshot(blockedRoot);blockedBefore.keySet().removeIf(key->key.startsWith("legacy-migrations"+File.separator));blockedAfter.keySet().removeIf(key->key.startsWith("legacy-migrations"+File.separator));yes(blockedBefore.equals(blockedAfter));
         return checks;
     }
     public static void main(String[] args)throws Exception{Path temp=Files.createTempDirectory("legacy-migration-boundary-");try{System.out.println("PASS LegacyMigrationBoundaryTest "+run(temp));}finally{try(java.util.stream.Stream<Path> stream=Files.walk(temp)){stream.sorted(Comparator.reverseOrder()).forEach(path->{try{Files.deleteIfExists(path);}catch(IOException ignored){}});}}}

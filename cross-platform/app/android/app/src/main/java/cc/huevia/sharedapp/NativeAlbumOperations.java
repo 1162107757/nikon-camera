@@ -21,9 +21,11 @@ final class NativeAlbumOperations {
     private static final int CONSENT=6473;
     private final Activity activity;private final SharedRuntime runtime;private final NativeGallery gallery;
     private volatile Pending pending;
+    private volatile boolean closed;
     private static final class Pending {final CountDownLatch ready=new CountDownLatch(1);volatile int result=Activity.RESULT_CANCELED;volatile Exception error;}
     NativeAlbumOperations(Activity activity,SharedRuntime runtime,NativeGallery gallery){this.activity=activity;this.runtime=runtime;this.gallery=gallery;}
     boolean onActivityResult(int request,int result,Intent data){if(request!=CONSENT)return false;Pending value=pending;if(value!=null){value.result=result;value.ready.countDown();}return true;}
+    void close(){closed=true;Pending value=pending;if(value!=null){value.error=new IOException("页面已关闭，请重新核对系统删除结果。");value.ready.countDown();}}
     synchronized String request(String operation,String json,BooleanSupplier cancel)throws IOException {
         Map<String,Object> p=SharedJson.object(json);String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
         if(operation.equals("gallery.publishedCopies"))return copies(owner,p,cancel);
@@ -47,8 +49,9 @@ final class NativeAlbumOperations {
         plan.put("deleted",true);write(record,plan);return SharedJson.encode(plan);
     }
     private void consent(PendingIntent intent,BooleanSupplier cancel)throws IOException {
+        if(closed)throw new IOException("系统删除确认页面已关闭。");
         Pending value=new Pending();pending=value;
-        activity.runOnUiThread(()->{try{if(activity.isFinishing())throw new IOException("页面已关闭。");activity.startIntentSenderForResult(intent.getIntentSender(),CONSENT,null,0,0,0);}catch(Exception e){value.error=e;value.ready.countDown();}});
+        activity.runOnUiThread(()->{try{if(closed||activity.isFinishing()||activity.isDestroyed())throw new IOException("页面已关闭。");activity.startIntentSenderForResult(intent.getIntentSender(),CONSENT,null,0,0,0);}catch(Exception e){value.error=e;value.ready.countDown();}});
         try {while(!value.ready.await(100,TimeUnit.MILLISECONDS))check(cancel);if(value.error!=null)throw new IOException("无法打开系统删除确认。",value.error);if(value.result!=Activity.RESULT_OK)throw new IOException("系统删除已取消，应用内照片保持原样。");}
         catch(InterruptedException interrupted){Thread.currentThread().interrupt();throw new InterruptedIOException("系统删除等待已停止。");}
         finally{if(pending==value)pending=null;}

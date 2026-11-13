@@ -12,6 +12,7 @@ import 'original_files.dart';
 /// cannot complete a queue item. Native camera.download writes the SHA receipt.
 class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   CameraDownloads(this.state) {
+    _stopRevision = state.connectionProtection.stopRevision;
     state.addListener(accountChanged);
     state.connectionProtection.addListener(protectionChanged);
     WidgetsBinding.instance.addObserver(this);
@@ -25,6 +26,7 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   int index = 0, received = 0, total = 0;
   bool busy = false, stopped = false, alive = true, bindingNeeded = false;
   int generation = 0;
+  int _stopRevision = 0;
   String owner = '';
   Future<void>? running;
   StreamSubscription<dynamic>? events;
@@ -65,7 +67,11 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> restore() async {
     final expected = currentOwner;
     final result = await state.core.call('downloads.list', {'owner': expected});
-    if (!alive || expected != currentOwner || state.session['logoutPending'] == true) return;
+    if (!alive ||
+        expected != currentOwner ||
+        state.session['logoutPending'] == true) {
+      return;
+    }
     queues = (result['items'] as List).map(object).toList();
     issues = (result['issues'] as List? ?? []).map(object).toList();
     if (!busy) owner = expected;
@@ -73,7 +79,9 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   Future<void> create(Json status, List<Json> selection, Json target) async {
-    if (busy || state.cameraLiveActive || state.cameraManualTransferActive) throw const AppFailure('请先停止当前相机传输。');
+    if (busy || state.cameraLiveActive || state.cameraManualTransferActive) {
+      throw const AppFailure('请先停止当前相机传输。');
+    }
     if (status['connected'] != true || selection.isEmpty) {
       throw const AppFailure('请先连接相机并选择照片。');
     }
@@ -86,14 +94,24 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
       'items': selection,
       'target': target,
     });
-    if (!alive || expected != currentOwner || state.session['logoutPending'] == true) throw const AppFailure('账号已改变，下载队列未显示。');
+    if (!alive ||
+        expected != currentOwner ||
+        state.session['logoutPending'] == true) {
+      throw const AppFailure('账号已改变，下载队列未显示。');
+    }
     current = value;
     await restore();
   }
 
   Future<void> resume(String id) {
-    if (busy || !alive || state.cameraLiveActive || state.cameraManualTransferActive) return Future.value();
+    if (busy ||
+        !alive ||
+        state.cameraLiveActive ||
+        state.cameraManualTransferActive) {
+      return Future.value();
+    }
     owner = currentOwner;
+    _stopRevision = state.connectionProtection.stopRevision;
     stopped = false;
     bindingNeeded = false;
     error = null;
@@ -384,6 +402,16 @@ class CameraDownloads extends ChangeNotifier with WidgetsBindingObserver {
   }
 
   void protectionChanged() {
+    if (!alive) return;
+    final revision = state.connectionProtection.stopRevision;
+    if (revision > _stopRevision) {
+      _stopRevision = revision;
+      if (busy) {
+        error = '已从系统通知停止下载队列。';
+        unawaited(stop());
+      }
+      return;
+    }
     if (!foreground && busy && !state.connectionProtection.backgroundAllowed) {
       unawaited(stop());
     }
@@ -444,7 +472,14 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
         padding: const EdgeInsets.all(20),
         children: [
           const Text('已接收的原件保留在应用内。中断后重新连接并核对原相机，只重试未完成项。'),
-          if (queue.issues.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 12), child: Text('有 ${queue.issues.length} 项下载记录无法读取，其他有效任务仍可继续。${queue.issues.first['error'] ?? ''}', style: TextStyle(color: Theme.of(context).colorScheme.error))),
+          if (queue.issues.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(
+                '有 ${queue.issues.length} 项下载记录无法读取，其他有效任务仍可继续。${queue.issues.first['error'] ?? ''}',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+            ),
           if (queue.current != null) ...[
             const SizedBox(height: 16),
             Text('已完成 ${queue.done} / ${queue.items.length}'),

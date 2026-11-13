@@ -209,6 +209,10 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
         yes(Boolean.TRUE.equals(SharedJson.object((String)result.get(5,TimeUnit.SECONDS)).get("enabled")),"Explicit background preference is recorded");
         await(()->CameraRetentionService.running,"Actual connected-device foreground service starts");
         yes(NativeConnectionProtection.keepEngine(),"Foreground service owns the existing Flutter engine");
+        runOnMainSync(()->{for(boolean active:new boolean[]{false,true})protection.onMethodCall(new io.flutter.plugin.common.MethodCall("set",SharedRuntime.map("active",active)),new io.flutter.plugin.common.MethodChannel.Result(){public void success(Object value){}public void error(String code,String message,Object details){throw new AssertionError(message);}public void notImplemented(){throw new AssertionError("Missing protection channel");}});});
+        await(()->CameraRetentionService.running&&CameraRetentionService.currentGeneration()==NativeConnectionProtection.serviceRevision(),"Rapid stop then start reaches the latest service generation");
+        Thread.sleep(300);yes(CameraRetentionService.running&&NativeConnectionProtection.keepEngine(),"Old service destruction cannot revoke a newer activation");
+        yes(NativeConnectionProtection.previousHost(null)==null,"A different engine cannot adopt a retained camera backend");
         runOnMainSync(first::finish);await(first::isDestroyed,"Finishing the visible activity detaches its host");
         yes(CameraRetentionService.running&&NativeConnectionProtection.keepEngine(),"Visible activity closure retains the running camera backend");
         MainActivity next=(MainActivity)startActivitySync(new android.content.Intent(getTargetContext(),MainActivity.class).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -216,6 +220,10 @@ public final class MediaSmokeInstrumentation extends Instrumentation {
         runOnMainSync(()->getTargetContext().startService(new android.content.Intent(getTargetContext(),CameraRetentionService.class).setAction(CameraRetentionService.STOP)));
         await(()->!CameraRetentionService.running,"Notification stop terminates the foreground service");
         yes(!NativeConnectionProtection.keepEngine()&&!getTargetContext().getSharedPreferences("camera-protection",0).getBoolean("enabled",true),"Notification stop revokes protection without replaying work");
+        runOnMainSync(first::releaseRetainedBackend);
+        java.lang.reflect.Field worker=MainActivity.class.getDeclaredField("worker"),closed=MainActivity.class.getDeclaredField("backendClosed");worker.setAccessible(true);closed.setAccessible(true);
+        yes(!((ExecutorService)worker.get(next)).isShutdown()&&!((java.util.concurrent.atomic.AtomicBoolean)closed.get(next)).get(),"Late old-host release cannot shut down the new owner's backend after protection stops");
+        yes(!first.shouldDestroyEngineWithHost(),"Transferred host cannot destroy the adopted Flutter engine");
         runOnMainSync(next::finish);await(next::isDestroyed,"Stopped camera host closes normally");
     }
     private void await(Callable<Boolean> condition,String name)throws Exception {long deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(12);while(!condition.call()&&System.nanoTime()<deadline)Thread.sleep(50);yes(condition.call(),name);}

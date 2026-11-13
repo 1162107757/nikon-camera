@@ -14,6 +14,8 @@ Files 使用独立 `cc.huevia/file-publication` 通道选择目标；界面只�
 
 ## A6 共用证据
 
+接收后仅在应用 JPEG 的 `cameraSource.cameraId` 和完整 JPEG 描述符都与所选相机库存证据一致、且匹配唯一时，通过既有 `AppState.updatePhoto` 持久保存 `rawSource` / `rawSourceSha` 和显式选择证据。关联使用确认时冻结的来源快照，刷新列表不更换已接收 RAW 的证据。缺少来源的旧 JPEG 不按文件名自动绑定；NEF 仍作为独立原图保留。
+
 相机行增加 `storage` 和完整 PTP ObjectInfo 的 SHA-256 `descriptor`；独立 `downloadCameraId` / `downloadTrusted` 使用可信 GUID 或真实有效的标准 DeviceInfo 序列号及厂商/型号，未知身份绑定当前会话，A1 原信任规则保持。
 
 `camera.resolve` 优先核对原 handle，再按每次最多 128 个对象分段检索独立全卡库存。它只读元数据，跳过已经删除的对象，找到后才加入当前 `observed` 下载许可。相机下载前后已经接入共享队列的验证和持久原文件收据，边拍边传与手动队列标识不可混用。
@@ -25,10 +27,13 @@ Files 使用独立 `cc.huevia/file-publication` 通道选择目标；界面只�
 | `CameraRawBoundaryTest` | 28 项：完整库存、重名、未知身份、缺卡、取消、描述符变化、明确选择、真实 TIFF/EP CFA 结构的测试 NEF、暂存/读回原字节和稳定收据 |
 | 既有 `OriginalPublicationBoundaryTest` | 28 项 JPEG 回归，原画面/草稿/原文件不变，旧保存任务和清理约束保留 |
 | `CameraResolveBoundaryTest` | 21 项：标准序列号稳定、A1 信任不变、128 对象分页、handle 迁移及找到后的原字节下载 |
-| 相机、RAW 与 Files Flutter 专项 | 13 项：含原 6 项 OriginalSave、新 4 项 Files/配对和 3 项遥控/槽位检查；目标/操作标识固定、文件 SHA 收据拒绝、取消不下载、没有 Photos 权限时仍可选择 Files |
+| 相机、RAW 与 Files Flutter 专项 | 15 项：含原 6 项 OriginalSave、新 6 项 Files/配对/来源关联和 3 项遥控/槽位检查；目标/操作标识固定、文件 SHA 收据拒绝、取消不下载、没有 Photos 权限时仍可选择 Files；有证据才绑定 JPEG，同名旧图不猜测 |
+| `SharedDownloadsBoundaryTest` | 53 项：账号/相机/会话/描述符校验、明确确认绑定、原生先持久收据、重启复用、已完成不倒退、目标/SHA/长度/操作标识绑定、损坏日志隔离 |
 | Android 实际 SDK 36 + Flutter jar 编译 | NativeOriginalFiles、NativeGallery、SharedRawGalleryPublication、既有 JPEG 发布适配及相机 USB 类通过；没有运行共享 Gradle / ADB |
 
 日志位于 `.tooling/agent-camera/`：`raw-compile.log`、`CameraRawBoundaryTest.log`、`CameraResolveBoundaryTest.log`、`raw-android-sdk-compile.log`、`flutter-raw-files.log`、`raw-dart-analyze.log`。
+
+队列强化的编译/检查补充在 `downloads-compile.log` / `SharedDownloadsBoundaryTest.log`。原生 Gallery / Files 返回 `owner`、稳定 `operationId`、源 SHA、字节长度和目标证据，队列完成要求原文件收据与目标收据一致且 `verified=true`。显式队列系统发布使用 `verifyReadback=true`，Apple 必须从真实系统资源读回；旧手动 JPEG 的仅添加授权路径保持兼容。损坏队列记录保留在原处，并由 `downloads.list.issues` 单独报告，不阻断其余有效记录。
 
 ## 明确保留的验收
 

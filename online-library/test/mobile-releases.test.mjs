@@ -23,10 +23,11 @@ try { nextApk = await readFile(new URL('../../dist/migration212/huevia-0.31.0-de
 try { oldApk = await readFile(new URL('../../dist/nikon-usb-0.9.14-beta-debug.apk', import.meta.url)); } catch {}
 if (!oldApk) try { oldApk = await readFile(new URL('../../dist/huevia-0.25.0-beta-debug.apk', import.meta.url)); } catch {}
 test('actual 212 APK has its own pinned signer; old and new package signers cannot cross', { skip: !nextApk || !oldApk }, () => {
-  const next = inspectApk(nextApk), old = inspectApk(oldApk);
+  const next = inspectApk(nextApk, { packageName: 'cc.huevia.next' }), old = inspectApk(oldApk);
   assert.equal(next.packageName, 'cc.huevia.next');assert.equal(next.versionCode, 212);assert.equal(next.signerSha256, NEXT_APK_SIGNER_SHA256);assert.equal(next.byteLength, 51309171);
   assert.equal(old.signerSha256, APK_SIGNER_SHA256);assert.equal(APK_SIGNERS['cc.huevia'], APK_SIGNER_SHA256);assert.equal(APK_SIGNERS['com.nikonpreset.usbprobe'], APK_SIGNER_SHA256);
-  assert.throws(() => inspectApk(nextApk, { signerSha256: APK_SIGNER_SHA256 }), { code: 'INVALID_APK' });
+  assert.throws(() => inspectApk(nextApk), /32 MiB/);
+  assert.throws(() => inspectApk(nextApk, { packageName: 'cc.huevia.next', signerSha256: APK_SIGNER_SHA256 }), { code: 'INVALID_APK' });
   assert.throws(() => inspectApk(oldApk, { signerSha256: NEXT_APK_SIGNER_SHA256 }), { code: 'INVALID_APK' });
   assert.throws(() => inspectApk(nextApk, { packageName: 'cc.huevia' }), { code: 'INVALID_APK' });
   assert.throws(() => inspectApk(oldApk, { packageName: 'cc.huevia.next' }), { code: 'INVALID_APK' });
@@ -107,7 +108,7 @@ test('real SQL + HTTP performs admin/CSRF, resumable chunks, draft review, same-
   // Legacy version routes do not query the new table or change their existing public contract.
   assert.equal((await (await request('/releases/latest?packageName=cc.huevia')).json()).schemaVersion, 1);
   if (nextApk) {
-    const metadata = inspectApk(nextApk), key = `mobile-releases/android/${metadata.sha256}.bin`;
+    const metadata = inspectApk(nextApk, { packageName: 'cc.huevia.next' }), key = `mobile-releases/android/${metadata.sha256}.bin`;
     await db.query("INSERT INTO nikon_mobile_releases(platform,package_name,version_code,sha256,byte_length,metadata,storage_path,channel,notes,status) VALUES('android','cc.huevia.next',$1,$2,$3,$4,$5,'beta','actual APK fixture','published')", [metadata.versionCode, metadata.sha256, metadata.byteLength, metadata, key]);
     const matching = await (await request('/releases/latest?packageName=cc.huevia.next&channel=beta&versionCode=211&sdk=35&abi=arm64-v8a')).json();
     assert.equal(matching.updateAvailable, true);assert.deepEqual(matching.release.abis, ['arm64-v8a']);assert.match(matching.release.downloadUrl, /\/next\/releases\//);

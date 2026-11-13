@@ -7,7 +7,7 @@ export const MAX_NEXT_APK_BYTES = 128 * 1024 * 1024;
 export const APK_PACKAGE = 'cc.huevia';
 export const LEGACY_APK_PACKAGE = 'com.nikonpreset.usbprobe';
 export const NEXT_APK_PACKAGE = 'cc.huevia.next';
-export const APK_PACKAGES = Object.freeze([APK_PACKAGE, LEGACY_APK_PACKAGE, NEXT_APK_PACKAGE]);
+export const APK_PACKAGES = Object.freeze([APK_PACKAGE, LEGACY_APK_PACKAGE]);
 export const APK_SIGNER_SHA256 = '04db0f9d3d76c9831a0778cfabc1a0aaab984e05398da16eb644950ccfa0ae31';
 export const NEXT_APK_SIGNER_SHA256 = '76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75';
 export const APK_SIGNERS = Object.freeze({ [APK_PACKAGE]: APK_SIGNER_SHA256,
@@ -221,7 +221,8 @@ function binaryManifest(data) {
 export function inspectApk(input, { packageName, signerSha256 } = {}) {
   try {
     const apk = Buffer.isBuffer(input) ? input : Buffer.from(input);
-    if (!apk.length || apk.length > MAX_NEXT_APK_BYTES) fail('APK 超过安装包大小限制。');
+    const limit = packageName === NEXT_APK_PACKAGE ? MAX_NEXT_APK_BYTES : MAX_APK_BYTES;
+    if (!apk.length || apk.length > limit) fail(packageName === NEXT_APK_PACKAGE ? '请选择不超过 128 MiB 的新版 APK 安装包。' : '请选择不超过 32 MiB 的 APK 安装包。');
     const parsed = zip(apk), metadata = binaryManifest(parsed.manifest);
     if (!(packageName ? [packageName] : APK_PACKAGES).includes(metadata.packageName)) fail('APK 包名与现有 Huevia 不兼容。');
     const next = metadata.packageName === NEXT_APK_PACKAGE;

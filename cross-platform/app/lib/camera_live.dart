@@ -35,6 +35,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     this.automatic = true,
     this.interval = const Duration(seconds: 3),
   }) {
+    _stopRevision = state.connectionProtection.stopRevision;
     state.addListener(_accountChanged);
     state.connectionProtection.addListener(_protectionChanged);
     WidgetsBinding.instance.addObserver(this);
@@ -44,6 +45,8 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
   final Duration interval;
   CameraLivePhase phase = CameraLivePhase.idle;
   bool active = false, _alive = true, _foreground = true, _working = false;
+  bool _protectionPaused = false;
+  int _stopRevision = 0;
   String owner = '', projectId = '', projectName = '', cameraId = '';
   String session = '', watchId = '', token = '', name = '';
   String? error, _job;
@@ -191,12 +194,16 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     if (state.cameraDownloadsActive) {
       throw const AppFailure('请先暂停下载队列，再开启边拍边传。');
     }
-    if (state.cameraManualTransferActive) throw const AppFailure('请先停止手动接收，再开启边拍边传。');
+    if (state.cameraManualTransferActive) {
+      throw const AppFailure('请先停止手动接收，再开启边拍边传。');
+    }
     owner = currentOwner;
+    _stopRevision = state.connectionProtection.stopRevision;
     projectId = selected;
     projectName = label;
     cameraId = session = watchId = token = name = '';
     error = null;
+    _protectionPaused = false;
     received = total = completed = failed = queued = 0;
     active = true;
     _working = true;
@@ -387,9 +394,19 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
         }
       }
     } finally {
+      final recover = _protectionPaused && _current(generation) && _canRun;
+      if (recover) {
+        _protectionPaused = false;
+        error = null;
+        phase = CameraLivePhase.watching;
+      }
       _working = false;
       _changed();
-      _schedule();
+      if (recover && automatic) {
+        unawaited(pollOnce());
+      } else {
+        _schedule();
+      }
     }
   }
 
@@ -515,7 +532,17 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
 
   void _protectionChanged() {
     if (!_alive) return;
+    final revision = state.connectionProtection.stopRevision;
+    if (revision > _stopRevision) {
+      _stopRevision = revision;
+      if (active) {
+        error = '已从系统通知停止边拍边传。';
+        unawaited(stop());
+      }
+      return;
+    }
     if (!_canRun) {
+      if (active) _protectionPaused = true;
       _timer?.cancel();
       _timer = null;
       final job = _job;
@@ -525,6 +552,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
       if (active) unawaited(_processor?.stop());
       if (active && !_working) phase = CameraLivePhase.paused;
     } else if (active && !_working && phase == CameraLivePhase.paused) {
+      _protectionPaused = false;
       phase = CameraLivePhase.watching;
       if (automatic) unawaited(pollOnce());
     }
@@ -535,6 +563,7 @@ class CameraLive extends ChangeNotifier with WidgetsBindingObserver {
     if (!active && phase != CameraLivePhase.starting) return;
     final lease = Map<String, dynamic>.of(_lease), job = _job;
     active = false;
+    _protectionPaused = false;
     ++_generation;
     _timer?.cancel();
     _timer = null;

@@ -189,15 +189,18 @@ class _LegacyMigrationPageState extends State<LegacyMigrationPage> {
     });
     job = 'legacy-commit-${DateTime.now().microsecondsSinceEpoch}';
     try {
-      final receipt = await widget.state.core.call('legacy.commit', {
-        'owner': owner,
-        'transaction': preview['transaction'],
-        'includeAccountData': includeAccount,
-        'photos': checkedPhotos,
-      }, job);
-      preview = {};
-      checkedPhotos = [];
-      await widget.state.initialize();
+      final receipt = await widget.state.withPhotoTransaction(() async {
+        final receipt = await widget.state.core.call('legacy.commit', {
+          'owner': owner,
+          'transaction': preview['transaction'],
+          'includeAccountData': includeAccount,
+          'photos': checkedPhotos,
+        }, job);
+        preview = {};
+        checkedPhotos = [];
+        await widget.state.initialize();
+        return receipt;
+      });
       await loadRecords();
       if (mounted) {
         setState(
@@ -244,11 +247,13 @@ class _LegacyMigrationPageState extends State<LegacyMigrationPage> {
       message = '正在核对并撤回迁入…';
     });
     try {
-      await widget.state.core.call('legacy.rollback', {
-        'owner': owner,
-        'transaction': record['transaction'],
+      await widget.state.withPhotoTransaction(() async {
+        await widget.state.core.call('legacy.rollback', {
+          'owner': owner,
+          'transaction': record['transaction'],
+        });
+        await widget.state.initialize();
       });
-      await widget.state.initialize();
       await loadRecords();
       if (mounted) setState(() => message = '已撤回这次迁入。');
     } catch (failure) {

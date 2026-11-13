@@ -361,6 +361,8 @@ class AppState extends ChangeNotifier {
     return next;
   }
 
+  Future<T> withPhotoTransaction<T>(Future<T> Function() operation) => _serialPhotos(operation);
+
   Future<void> removePhotos(Set<String> paths) => _serialPhotos(() async {
     final next = photos.where((photo) => !paths.contains(photo.path)).toList();
     await _persistPhotos(next);

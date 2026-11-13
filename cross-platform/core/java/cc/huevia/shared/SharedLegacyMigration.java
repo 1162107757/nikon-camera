@@ -128,7 +128,7 @@ public final class SharedLegacyMigration {
         File receipt=owned(prepared,"legacy-receipts/"+plan.get("exportId")+".json");write(receipt,SharedRuntime.map("transaction",id,"account",plan.get("account"),"origin",plan.get("origin"),"importedAt",System.currentTimeMillis()));
         List<Object> mutations=new ArrayList<>();collect(prepared,prepared,mutations);
         List<Object> changes=new ArrayList<>();int preserved=0;
-            for(Object raw:mutations){Map<String,Object> row=SharedRuntime.object(raw);String relative=(String)row.get("relative");File live=owned(root,relative);boolean replace=relative.equals("photos-index.json")||relative.equals("personal-presets.json")||relative.startsWith("shared-project-presets/");
+            for(Object raw:mutations){Map<String,Object> row=SharedRuntime.object(raw);String relative=(String)row.get("relative");File live=owned(root,relative);for(File parent=live.getParentFile();parent!=null&&!parent.equals(root);parent=parent.getParentFile())if(parent.exists()&&!parent.isDirectory())throw new IOException("迁入目标目录被其他文件占用，尚未修改已有资料。");if(live.exists()&&!live.isFile())throw new IOException("迁入目标文件被其他目录占用，尚未修改已有资料。");boolean replace=relative.equals("photos-index.json")||relative.equals("personal-presets.json")||relative.startsWith("shared-project-presets/");
             if(live.exists()&&!replace){preserved++;continue;}
             if(live.exists()&&hashFile(live).equals(row.get("after")))continue;
             row.put("existed",live.exists());if(live.exists()){File backup=owned(transaction,"backup/"+relative);mkdir(backup.getParentFile());Files.copy(live.toPath(),backup.toPath());row.put("before",hashFile(live));}changes.add(row);

@@ -5,10 +5,35 @@ gradle.beforeProject { target ->
         def workspace = target.rootProject.projectDir
         def overlay = new File(workspace, 'cross-platform/legacy-android')
         target.androidComponents.finalizeDsl { config ->
+            def original = new File(workspace, 'app/src/main/AndroidManifest.xml')
+            def generated = target.layout.buildDirectory.file('generated/legacy-export/AndroidManifest.xml').get().asFile
+            def factory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
+            factory.setNamespaceAware(true)
+            factory.setFeature('http://apache.org/xml/features/disallow-doctype-decl', true)
+            def document = factory.newDocumentBuilder().parse(original)
+            def applications = document.getElementsByTagName('application')
+            if (applications.length != 1) throw new GradleException('Original application manifest is invalid')
+            def activity = document.createElement('activity')
+            def android = 'http://schemas.android.com/apk/res/android'
+            activity.setAttributeNS(android, 'android:name', 'cc.huevia.legacyexport.LegacyExportActivity')
+            activity.setAttributeNS(android, 'android:label', '旧版资料迁出')
+            activity.setAttributeNS(android, 'android:exported', 'true')
+            def filter = document.createElement('intent-filter')
+            def action = document.createElement('action')
+            action.setAttributeNS(android, 'android:name', 'android.intent.action.MAIN')
+            def category = document.createElement('category')
+            category.setAttributeNS(android, 'android:name', 'android.intent.category.LAUNCHER')
+            filter.appendChild(action); filter.appendChild(category); activity.appendChild(filter)
+            applications.item(0).appendChild(activity)
+            generated.parentFile.mkdirs()
+            def transformer = javax.xml.transform.TransformerFactory.newInstance().newTransformer()
+            transformer.setOutputProperty(javax.xml.transform.OutputKeys.ENCODING, 'UTF-8')
+            transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, 'yes')
+            transformer.transform(new javax.xml.transform.dom.DOMSource(document), new javax.xml.transform.stream.StreamResult(generated))
             def source = config.sourceSets.getByName('main')
             source.java.srcDir(new File(overlay, 'src'))
             source.java.srcDir(new File(workspace, 'cross-platform/core/java'))
-            source.manifest.srcFile(new File(overlay, 'AndroidManifest.xml'))
+            source.manifest.srcFile(generated)
             config.compileOptions.coreLibraryDesugaringEnabled = true
             config.defaultConfig.applicationId = 'cc.huevia'
             config.defaultConfig.versionCode = 194
