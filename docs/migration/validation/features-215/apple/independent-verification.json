@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "verified": true,
+  "sourceCommit": "950926c408f81d27db7fa46fb6335579d0459c4c",
+  "sha256": "9b78ae80f18508e3ea5f5e694662a51993bf34af026a76c8d3d717e3d2203d48",
+  "bytes": 64765153,
+  "bundleIdentifier": "cc.huevia.next",
+  "version": "0.31.0",
+  "build": "215",
+  "minimumOS": "16.0",
+  "binaries": [
+    {
+      "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+      "sha256": "2c7b528614d00310cfba471fdc96c5fcc2e2b5c038f3be69ce8a8aa13bf9dc59",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+      "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+      "sha256": "4fe640045cdc47673692ee58cb43c8cd2154b4b669119f3d00babd611e66ec8e",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Runner",
+      "sha256": "2c3e1a8f315cff0609e0b057aa6b6105a3556caa19c61ce6b9f55637d1700955",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            16,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "referenceFonts": [
+    {
+      "file": "Roboto-Regular.ttf",
+      "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+      ]
+    },
+    {
+      "file": "Roboto-Medium.ttf",
+      "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+      ]
+    },
+    {
+      "file": "Roboto-Bold.ttf",
+      "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+      ]
+    }
+  ],
+  "deviceInstallationVerified": false,
+  "fullParityComplete": false,
+  "portraitAssets": {
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/portrait/face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/portrait/face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+  },
+  "unsignedApplicationExecutable": true,
+  "embeddedProvisioningProfile": false,
+  "imageCaptureCoreLinked": true,
+  "wiredNativeClassesLinked": true,
+  "webKitLinked": true,
+  "cameraUsageDescriptionPresent": true,
+  "qqUniversalLinkConfigured": false
+}

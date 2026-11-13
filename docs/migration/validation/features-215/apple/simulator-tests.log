@@ -1,0 +1,76 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -destination id=97F10562-1F62-40B5-B693-157295099A4A ARCHS=arm64 ONLY_ACTIVE_ARCH=YES BUILD_DIR=/Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios -parallel-testing-enabled NO "-only-testing:RunnerTests/RunnerTests/testPhotoLibraryConsent" test-without-building
+
+Build settings from command line:
+    ARCHS = arm64
+    BUILD_DIR = /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/build/ios
+    ONLY_ACTIVE_ARCH = YES
+    SDKROOT = iphonesimulator26.5
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  FlutterGeneratedPluginSwiftPackage: /Users/runner/work/nikon-camera/nikon-camera/cross-platform/app/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:97F10562-1F62-40B5-B693-157295099A4A, OS:26.5, name:Huevia-QA-10f22b29-3b0b-4dd2-bdf8-223f7c0a6ab6 }
+{ platform:iOS Simulator, arch:x86_64, id:97F10562-1F62-40B5-B693-157295099A4A, OS:26.5, name:Huevia-QA-10f22b29-3b0b-4dd2-bdf8-223f7c0a6ab6 }
+2026-11-13 09:20:24.554171+0000 RunnerTests-Runner[75226:492013] [Default] Running tests...
+objc[75226]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10abf8310) and /Library/Developer/CoreSimulator/Volumes/iOS_23F77/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.5.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10aca4398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-13 09:20:31.473.
+Test Suite 'RunnerTests.xctest' started at 2026-11-13 09:20:31.474.
+Test Suite 'RunnerTests' started at 2026-11-13 09:20:31.474.
+Test Case '-[RunnerTests testPhotoLibraryConsent]' started.
+    t =     0.00s Start Test at 2026-11-13 09:20:31.476
+    t =     1.55s Set Up
+    t =     1.56s Open cc.huevia.next
+    t =     1.56s     Launch cc.huevia.next
+2026-11-13 09:20:34.290 xcodebuild[74292:489707] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-13 09:20:34.291 xcodebuild[74292:489707] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     7.65s         Setting up automation session
+    t =    11.25s         Wait for cc.huevia.next to idle
+    t =    16.39s Waiting 60.0s for Button (First Match) to exist
+    t =    17.44s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    17.45s         Checking existence of `Button (First Match)`
+    t =    17.89s         Capturing element debug description
+    t =    18.41s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    18.41s         Checking existence of `Button (First Match)`
+    t =    18.53s         Capturing element debug description
+    t =    19.50s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    19.55s         Checking existence of `Button (First Match)`
+    t =    19.70s         Capturing element debug description
+    t =    20.48s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    20.49s         Checking existence of `Button (First Match)`
+    t =    20.66s         Capturing element debug description
+    t =    21.40s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    21.40s         Checking existence of `Button (First Match)`
+    t =    21.55s         Capturing element debug description
+    t =    22.40s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    22.40s         Checking existence of `Button (First Match)`
+    t =    22.89s Tap Button (First Match)
+    t =    22.89s     Wait for com.apple.springboard to idle
+    t =    23.23s     Find the Button (First Match)
+    t =    23.55s     Check for interrupting elements affecting "Allow Full Access" Button
+    t =    23.77s     Synthesize event
+    t =    24.23s     Wait for com.apple.springboard to idle
+    t =    24.60s Wait for cc.huevia.next to become Running Foreground
+    t =    24.60s Tear Down
+Test Case '-[RunnerTests testPhotoLibraryConsent]' passed (24.987 seconds).
+Test Suite 'RunnerTests' passed at 2026-11-13 09:20:56.465.
+	 Executed 1 test, with 0 failures (0 unexpected) in 24.987 (24.991) seconds
+Test Suite 'RunnerTests.xctest' passed at 2026-11-13 09:20:56.466.
+	 Executed 1 test, with 0 failures (0 unexpected) in 24.987 (24.992) seconds
+Test Suite 'Selected tests' passed at 2026-11-13 09:20:56.466.
+	 Executed 1 test, with 0 failures (0 unexpected) in 24.987 (24.993) seconds
+2026-11-13 09:20:58.366 xcodebuild[74292:489707] [MT] IDETestOperationsObserverDebug: 38.608 elapsed -- Testing started completed.
+2026-11-13 09:20:58.367 xcodebuild[74292:489707] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-13 09:20:58.367 xcodebuild[74292:489707] [MT] IDETestOperationsObserverDebug: 38.608 sec, +38.608 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/Library/Developer/Xcode/DerivedData/Runner-bcwfnebhqpzxbcequummdswvslbl/Logs/Test/Test-Runner-2026.11.13_09-20-12-+0000.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

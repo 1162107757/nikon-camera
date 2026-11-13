@@ -1,0 +1,19 @@
+{
+  "pass": true,
+  "platform": "macOS Objective-C runtime; iOS static runtime built separately",
+  "golden": {
+    "schema": 1,
+    "engine": "huevia-shared-core-v1",
+    "rawColorModel": "same-raw-jpeg-crop-ridge-cubic-lut17-white-v2",
+    "tests": "original-ncp-local-edits-raw-color-highlight",
+    "boundaryChecks": 1365,
+    "fingerprints": {
+      "identity": "ed6fda2bd7fefa210bf3ad601b5210d6167c8160e3fd7a40a39779f4c60de3a9",
+      "plus-one-ev": "750741e865ce3558e4a9d0e8c7df589a362af8f0139a4f78707fa2e21edd5b37",
+      "colour": "999a0fea6e7c89ac606c13bfcdfd9f35a8a8ae2da909409e3d5f7dd4cdedeea5",
+      "spatial-detail": "244e182c643b84620743dddbf352e6481a8e59b8a350401327b07946f79b2ebb",
+      "curves": "8b610894b219bd66a9f4b73ab35097de219879e2f1c5a3586395c357417da9ba",
+      "local-radial": "3e535f58fd801171a08d38e9da045ff108040a9ad3eaf2c5f9d1aa1dd69456d8"
+    }
+  }
+}

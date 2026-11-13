@@ -1,0 +1,14 @@
+[
+  {
+    "case": "repair-215-three-guards",
+    "exitCode": 0,
+    "elapsedSeconds": 7.93,
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-camera\\repair-215-three-guards.log"
+  },
+  {
+    "case": "repair-215-workspace25-verbose",
+    "exitCode": 1,
+    "elapsedSeconds": 14.68,
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-camera\\repair-215-workspace25-verbose.log"
+  }
+]

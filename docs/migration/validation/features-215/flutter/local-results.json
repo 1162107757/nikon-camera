@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "950926c408f81d27db7fa46fb6335579d0459c4c",
+  "completedTargetedLogs": {
+    "initial-pointer-3.log": 3,
+    "sibling-pointer-4.log": 4,
+    "brush-preview-15.log": 15,
+    "direct-entry-1.log": 1,
+    "workspace-guard-3.log": 3
+  },
+  "fullWindowsWorkspaceAccepted": false,
+  "fullWindowsWorkspaceReason": "Windows flutter_tester access violation; unfinished cases are not counted as passing",
+  "finalFullAcceptance": "Mac exact-source full workflow 43395276337 is required",
+  "sourceChecks": {
+    "source-check.log": 0,
+    "inventory.log": 0
+  }
+}

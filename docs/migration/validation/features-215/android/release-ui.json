@@ -1,0 +1,37 @@
+{
+  "sourceCommit": "950926c408f81d27db7fa46fb6335579d0459c4c",
+  "installedApkSha256": "df3ed3f1c1342ede9a0cd8fced9916fcb471fd0e1b218f1d30d179ff9f2876d1",
+  "device": "emulator-5584",
+  "api": 31,
+  "pageSize": 4096,
+  "fixture": "Huevia214-portrait-qa-20261113.jpg",
+  "originalAssetAndExternalCopySha256": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+  "directPortraitEntryObserved": true,
+  "intermediateCardsAbsent": true,
+  "visibleToolOrder": [
+    "皮肤",
+    "面部",
+    "塑形",
+    "自然精修",
+    "修补"
+  ],
+  "sliderDuringPercent": 4.7,
+  "sliderAfterPercent": 9.3,
+  "ringObservedWhileDragging": true,
+  "ringHiddenOnRelease": true,
+  "photoRoiUnchangedAfterSizeOnlyGesture": true,
+  "ringDifferenceBoxInRoi": [
+    460,
+    717,
+    568,
+    824
+  ],
+  "singleStrokeEnabledUndoAndRemove": true,
+  "undoRedoObserved": true,
+  "childCancelReturnedToPortrait": true,
+  "parentCancelReturnedToOriginalEditor": true,
+  "externalFixtureBytesUnchanged": true,
+  "originalAppliedOrExported": false,
+  "actualDeviceMultitouchTest": false,
+  "pointerContractCoveredByFlutterTests": true
+}

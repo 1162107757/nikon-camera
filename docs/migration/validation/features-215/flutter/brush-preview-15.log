@@ -1,0 +1,17 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_brush_preview_test.dart
+00:00 +0: radius follows the image short edge, not the square viewport
+00:00 +1: no recent point uses the center of the visible photo intersection
+00:00 +2: a recent image point stays anchored when panning moves it offscreen
+00:00 +3: sizing an offscreen brush keeps the requested image point
+00:00 +4: sizing near an edge shows the whole ring when the true radius fits
+00:00 +5: an oversized sizing guide retains its radius and shows a real arc
+00:00 +6: invalid points use the visible center and invalid geometry is hidden
+00:00 +7: controlled size changes repaint every intermediate radius
+00:00 +8: controller pan and zoom reproject the same normalized point
+00:00 +9: body preview respects the real reserved photo viewport
+00:00 +10: paint clips to photo and viewport and leaves the center unfilled
+00:00 +11: the guide passes canvas pointers and slider drags through
+00:00 +12: hidden preview has no painting or animation lifecycle
+00:00 +13: an oversized radius still paints a visible true circle arc
+00:00 +14: radius drag shows a panned-away brush and hides it on release
+00:01 +15: All tests passed!

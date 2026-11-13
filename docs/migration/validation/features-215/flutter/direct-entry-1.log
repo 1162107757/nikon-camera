@@ -1,0 +1,3 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/editor_menu_test.dart
+00:00 +0: Portrait tab opens the shared workspace directly and returns without the two intermediate cards
+00:01 +1: All tests passed!

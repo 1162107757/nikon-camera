@@ -1,0 +1,35 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart
+00:00 +0: Original portrait menu changes face enabled state and deletes only the selected face
+00:02 +1: Healing history and last-heal undo target heals and preserve independent patches
+00:03 +2: Tone scope is explicit, propagated on subsequent commands and restored by undo
+00:04 +2: Tone scope is explicit, propagated on subsequent commands and restored by undo - did not complete [E]
+00:04 +2: Reset requires confirmation and stays tentative with undo available - did not complete [E]
+00:04 +2: Photo color picking uses actual neutral portrait bitmap pixels and previews until confirmed - did not complete [E]
+00:04 +2: Account change closes private editing scope and prevents an old menu from mutating - did not complete [E]
+00:04 +2: Continuous face parameter drag commits one undo; cancel restores the complete candidate - did not complete [E]
+00:04 +2: Natural retouch analysis is atomic when the second analysis fails - did not complete [E]
+00:04 +2: Body child cancellation restores parent effects and its independent undo history - did not complete [E]
+00:04 +2: Body multi-person localization cancel installs no masks or guessed area - did not complete [E]
+00:04 +2: Regional portrait hides global body entry and keeps every request scoped - did not complete [E]
+00:04 +2: Overview retains original global or face mask mode and restores it after body - did not complete [E]
+00:04 +2: Busy face header cancellation closes only the workspace and rejects native late success during pop animation - did not complete [E]
+00:04 +2: Busy Android system back cancels a held preview before late image installation - did not complete [E]
+00:04 +2: Busy body cancellation restores parent staged effects and old analysis finally cannot unlock a new face task - did not complete [E]
+00:04 +2: Busy body system back returns to its staged portrait without popping that route - did not complete [E]
+00:04 +2: Busy regional child cancellation pops only that route and leaves the parent staged portrait - did not complete [E]
+00:04 +2: Repair confirm merges the full portrait and body state once and parent undo restores all prior patches - did not complete [E]
+00:04 +2: Repair cancellation preserves staged portrait and ignores a native patch that finishes after cancellation - did not complete [E]
+00:04 +2: Repair canvas multi-touch cancels the whole stroke and only an all-up fresh stroke submits one patch - did not complete [E]
+00:04 +2: Repair brush slider previews its real radius and cancel restores it without producing patches - did not complete [E]
+00:04 +2: Five portrait tools remain reachable without overflow on narrow large-text screens - did not complete [E]
+00:04 +2: Portrait brush sizing excludes photo taps for both release orders and an already-held photo finger - did not complete [E]
+00:04 +2: Repair size drag then undo or compare clears its preview and leaves the canvas editable - did not complete [E]
+00:04 +2: Portrait compare release never turns an already-held photo finger into healing - did not complete [E]
+00:04 +2: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Account change closes private editing scope and prevents an old menu from mutating (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Body child cancellation restores parent effects and its independent undo history (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Body multi-person localization cancel installs no masks or guessed area (did not complete)
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/retouch_workspace_test.dart: Busy Android system back cancels a held preview before late image installation (did not complete)
+  ... and 19 more

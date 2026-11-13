@@ -1,0 +1,14 @@
+[
+  {
+    "case": "repair-215-workspace25-final",
+    "exitCode": 1,
+    "elapsedSeconds": 7.63,
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-camera\\repair-215-workspace25-final.log"
+  },
+  {
+    "case": "repair-215-entry-final",
+    "exitCode": 0,
+    "elapsedSeconds": 10.84,
+    "log": "D:\\dev\\ai-project\\nikon-camera\\.tooling\\agent-camera\\repair-215-entry-final.log"
+  }
+]
