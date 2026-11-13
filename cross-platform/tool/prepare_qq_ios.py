@@ -6,13 +6,36 @@ import json
 import pathlib
 import plistlib
 import shutil
+import ssl
 import struct
+import time
+import urllib.error
 import urllib.request
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 URL = 'https://tangram-1251316161.file.myqcloud.com/files/20261030/8c572807d00ffda26d522fadceac7eca.zip'
 SHA256 = '38a2fb7f26d8de683b942e16c5c1e46aeb054810d193bab0292686f8e5c74ae1'
+
+
+def download():
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(URL, timeout=45) as response:
+                data = response.read(32 * 1024 * 1024 + 1)
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
+            if isinstance(getattr(error, 'reason', None), ssl.SSLCertVerificationError):
+                raise
+            if isinstance(error, urllib.error.HTTPError) and error.code not in (408, 429) and error.code < 500:
+                raise
+            if attempt == 3:
+                raise
+            print(f'Official QQ SDK download retry {attempt + 1}/3: {type(error).__name__}', flush=True)
+            time.sleep(2 * (attempt + 1))
+            continue
+        if len(data) > 32 * 1024 * 1024 or hashlib.sha256(data).hexdigest() != SHA256:
+            raise ValueError('Official QQ SDK checksum mismatch')
+        return data
 
 
 def objects(data):
@@ -86,11 +109,10 @@ def prepare():
     cache.mkdir(parents=True, exist_ok=True)
     archive = cache / 'sdk.zip'
     if not archive.exists() or hashlib.sha256(archive.read_bytes()).hexdigest() != SHA256:
-        with urllib.request.urlopen(URL, timeout=45) as response:
-            data = response.read(32 * 1024 * 1024 + 1)
-        if len(data) > 32 * 1024 * 1024 or hashlib.sha256(data).hexdigest() != SHA256:
-            raise ValueError('Official QQ SDK checksum mismatch')
-        archive.write_bytes(data)
+        data = download()
+        pending = cache / 'sdk.zip.pending'
+        pending.write_bytes(data)
+        pending.replace(archive)
     with zipfile.ZipFile(archive) as outer:
         inner = outer.read('TencentOpenAPI.xcframework(Lite).zip')
     staged = cache / 'prepared' / 'TencentOpenAPI.xcframework'
