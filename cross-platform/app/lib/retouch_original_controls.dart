@@ -1283,11 +1283,12 @@ class _OriginalLightPosition extends CustomPainter {
       center,
       radius,
       Paint()
-        ..shader = ui.Gradient.radial(light, radius * 1.8, const [
-          Color(0xffb6a28e),
-          Color(0xff51483f),
-          Color(0xff24211e),
-        ]),
+        ..shader = ui.Gradient.radial(
+          light,
+          radius * 1.8,
+          const [Color(0xffb6a28e), Color(0xff51483f), Color(0xff24211e)],
+          const [0, .5, 1],
+        ),
     );
     final line = Paint()
       ..style = PaintingStyle.stroke

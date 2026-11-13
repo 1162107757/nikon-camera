@@ -18,56 +18,61 @@ void main() {
     'body assistive compare tap restores after 650ms while portrait keeps its toggle',
     (tester) async {
       final semantics = tester.ensureSemantics();
-      addTearDown(semantics.dispose);
-      var comparing = false;
-      final states = <bool>[];
-      Widget page(bool body) => host(
-        StatefulBuilder(
-          builder: (context, setState) => RetouchOriginalUtilityButton(
-            icon: 'compare',
-            semanticLabel: '对比',
-            selected: comparing,
-            bodyCompareTransient: body,
-            onCompare: (value) {
-              states.add(value);
-              setState(() => comparing = value);
-            },
+      try {
+        var comparing = false;
+        final states = <bool>[];
+        Widget page(bool body) => host(
+          StatefulBuilder(
+            builder: (context, setState) => RetouchOriginalUtilityButton(
+              icon: 'compare',
+              semanticLabel: '对比',
+              selected: comparing,
+              bodyCompareTransient: body,
+              onCompare: (value) {
+                states.add(value);
+                setState(() => comparing = value);
+              },
+            ),
           ),
-        ),
-      );
-      await tester.pumpWidget(page(true));
-      var node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
-      node.owner!.performAction(node.id, SemanticsAction.tap);
-      await tester.pump();
-      expect(states, [true]);
-      await tester.pump(const Duration(milliseconds: 649));
-      expect(comparing, isTrue);
-      await tester.pump(const Duration(milliseconds: 1));
-      expect(states, [true, false]);
-      states.clear();
-      await tester.pumpWidget(page(false));
-      node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
-      node.owner!.performAction(node.id, SemanticsAction.tap);
-      await tester.pump(const Duration(milliseconds: 700));
-      expect(states, [true]);
-      expect(comparing, isTrue);
-      node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
-      node.owner!.performAction(node.id, SemanticsAction.tap);
-      await tester.pump();
-      expect(states, [true, false]);
-      states.clear();
-      await tester.pumpWidget(page(true));
-      node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
-      node.owner!.performAction(node.id, SemanticsAction.tap);
-      await tester.pump(const Duration(milliseconds: 100));
-      await tester.pumpWidget(page(false));
-      node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
-      node.owner!.performAction(node.id, SemanticsAction.tap);
-      await tester.pump(const Duration(milliseconds: 700));
-      expect(states, [
-        true,
-        false,
-      ]); // The old body timer cannot turn off the parent again.
+        );
+        await tester.pumpWidget(page(true));
+        var node = tester.getSemantics(
+          find.byType(RetouchOriginalUtilityButton),
+        );
+        node.owner!.performAction(node.id, SemanticsAction.tap);
+        await tester.pump();
+        expect(states, [true]);
+        await tester.pump(const Duration(milliseconds: 649));
+        expect(comparing, isTrue);
+        await tester.pump(const Duration(milliseconds: 1));
+        expect(states, [true, false]);
+        states.clear();
+        await tester.pumpWidget(page(false));
+        node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
+        node.owner!.performAction(node.id, SemanticsAction.tap);
+        await tester.pump(const Duration(milliseconds: 700));
+        expect(states, [true]);
+        expect(comparing, isTrue);
+        node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
+        node.owner!.performAction(node.id, SemanticsAction.tap);
+        await tester.pump();
+        expect(states, [true, false]);
+        states.clear();
+        await tester.pumpWidget(page(true));
+        node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
+        node.owner!.performAction(node.id, SemanticsAction.tap);
+        await tester.pump(const Duration(milliseconds: 100));
+        await tester.pumpWidget(page(false));
+        node = tester.getSemantics(find.byType(RetouchOriginalUtilityButton));
+        node.owner!.performAction(node.id, SemanticsAction.tap);
+        await tester.pump(const Duration(milliseconds: 700));
+        expect(states, [
+          true,
+          false,
+        ]); // The old body timer cannot turn off the parent again.
+      } finally {
+        semantics.dispose();
+      }
     },
   );
 
