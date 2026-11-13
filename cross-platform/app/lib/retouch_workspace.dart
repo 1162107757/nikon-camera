@@ -63,6 +63,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   bool compareWanted = false, bodyExpanded = false;
   Matrix4? bodyViewportBefore;
   bool? bodyOverlayBefore;
+  int? bodyTabBefore;
   String? faceParameter;
   String skinParameter = 'tone', bodyParameter = 'amount';
   int faceMode = 0, selectionBrush = 0;
@@ -129,7 +130,10 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   @override
   void initState() {
     super.initState();
-    if (!widget.patch) radius = .022;
+    if (!widget.patch) {
+      radius = .022;
+      tab = 1; // Original PhotoPortraitDialog starts in mode 3 (skin tone).
+    }
     widget.state.addListener(accountChanged);
     unawaited(load());
   }

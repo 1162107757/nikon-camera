@@ -20,7 +20,6 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (!current ||
         widget.patch ||
         !showOverlay ||
-        choosingGroup ||
         tab == 2 ||
         photoSampling ||
         comparing ||
@@ -830,6 +829,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (!current) return;
     refreshPortrait(() {
       choosingGroup = false;
+      if (section == 2) bodyTabBefore = tab;
       tab = section;
       photoSampling = manual = healMode = false;
       notice = null;
@@ -913,12 +913,15 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       comparisonFrame = bodyComparisonBefore;
       bodyComparisonBefore = null;
       comparing = compareWanted = false;
+      if (bodyTabBefore != null) tab = bodyTabBefore!;
+      bodyTabBefore = null;
       bodyViewportBefore = null;
       bodyOverlayBefore = null;
       bodyStart = null;
       bodyUndoBefore = bodyRedoBefore = null;
       choosingGroup = true;
     });
+    unawaited(refreshPortraitOverlay());
   }
 
   Future<void> originalCompare(bool value) async {

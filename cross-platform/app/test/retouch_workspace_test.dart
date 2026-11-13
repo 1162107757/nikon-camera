@@ -552,4 +552,44 @@ void main() {
       await settle(tester);
     },
   );
+  testWidgets(
+    'Overview retains original global or face mask mode and restores it after body',
+    (tester) async {
+      List<Json> overlays() => core.calls
+          .where(
+            (c) => c.$1 == 'media.retouchAnalyze' && c.$2['mode'] == 'overlay',
+          )
+          .map((c) => c.$2)
+          .toList();
+      await open(tester, enterFace: false);
+      expect(overlays().last['global'], true);
+      await tester.tap(find.text('面部'));
+      await settle(tester);
+      expect(overlays().last['global'], false);
+      await tester.tap(find.byTooltip('返回人像工具'));
+      await settle(tester);
+      expect(overlays().last['global'], false);
+      var count = overlays().length;
+      await tester.tap(find.text('塑形'));
+      await settle(tester);
+      expect(overlays().length, count);
+      await tester.tap(find.byTooltip('取消塑形并返回人像'));
+      await settle(tester);
+      expect(overlays().length, greaterThan(count));
+      expect(overlays().last['global'], false);
+      count = overlays().length;
+      await tester.tap(find.text('塑形'));
+      await settle(tester);
+      await tester.tap(find.text('应用'));
+      await settle(tester);
+      expect(overlays().length, greaterThan(count));
+      expect(overlays().last['global'], false);
+      count = overlays().length;
+      await tester.tap(find.bySemanticsLabel('显示或隐藏选区'));
+      await settle(tester);
+      expect(overlays().length, count);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+  );
 }
