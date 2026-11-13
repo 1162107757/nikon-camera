@@ -25,7 +25,7 @@ import json,sys
 value=json.load(open(sys.argv[1]));assert value['frameworkRevision']==sys.argv[2]
 assert value['frameworkVersion']=='3.47.9'
 PY
-if [[ "${1:-all}" != build ]]; then
+if [[ "${1:-all}" != build && "${1:-all}" != native-diagnostic ]]; then
 bash "$ROOT/cross-platform/tool/core_ios.sh"
 bash "$ROOT/cross-platform/tool/avatar_apple.sh"
 bash "$ROOT/cross-platform/tool/wifi_apple.sh"
@@ -55,6 +55,11 @@ PY
 fi
 if [[ "${1:-all}" == prepare ]]; then exit 0; fi
 cd "$ROOT/cross-platform/app"
+if [[ "${1:-all}" == native-diagnostic ]]; then
+  # A focused runtime investigation cannot produce an accepted device package.
+  bash "$ROOT/cross-platform/tool/apple_integration.sh"
+  exit 0
+fi
 flutter analyze --no-pub > "$WORK/analyze.log" 2>&1
 unit_status=0
 flutter test --no-pub --concurrency=1 --reporter expanded > "$WORK/flutter-tests.log" 2>&1 || unit_status=$?

@@ -25,12 +25,15 @@ Future<void> verifyRetouchPipeline(HueviaCore core) async {
       'owner': owner,
       'localData': '',
       'mode': 'face',
+      'diagnostics': Platform.isIOS,
     });
     final faces = object(analyzed['portrait'])['faces'] as List;
     expect(
       faces,
       isNotEmpty,
-      reason: 'Built-in portrait $scene must run the installed face model',
+      reason:
+          'Built-in portrait $scene must run the installed face model; '
+          'native stages: ${analyzed['diagnostics']}',
     );
     expect(faces.every((face) => object(face)['hasLandmarks'] == true), true);
     if (Platform.isIOS) {
@@ -42,6 +45,7 @@ Future<void> verifyRetouchPipeline(HueviaCore core) async {
       'owner': owner,
       'localData': analyzed['localData'],
       'mode': 'skin',
+      'diagnostics': Platform.isIOS,
     });
     expect(object(skin['portrait'])['hasSkinMask'], true);
     final adjusted = await core.call('media.retouchChange', {

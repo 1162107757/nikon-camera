@@ -37,14 +37,18 @@ void run(VNRequest *request,CGImageRef image,HueviaTask *task){check(task);NSErr
   @try {
     if(![p[@"engine"] isEqual:@"system"]){
       VNDetectFaceLandmarksRequest *request=[VNDetectFaceLandmarksRequest new];run(request,cg,task);NSMutableArray *proposals=[NSMutableArray array];
+      BOOL diagnose=[p[@"diagnostics"] isKindOfClass:NSNumber.class]&&[p[@"diagnostics"] boolValue];
+      NSUInteger lowConfidence=0,missingEyes=0,smallEyes=0,outsideFrame=0;NSMutableArray *confidenceSamples=[NSMutableArray array];
       for(VNFaceObservation *observation in request.results){
-        if(proposals.count>=12)break;if(observation.confidence<.4)continue;VNFaceLandmarkRegion2D *leftEye=observation.landmarks.leftEye,*rightEye=observation.landmarks.rightEye;if(!leftEye.pointCount||!rightEye.pointCount)continue;
+        if(proposals.count>=12)break;if(diagnose&&confidenceSamples.count<12)[confidenceSamples addObject:@(observation.confidence)];if(observation.confidence<.4){lowConfidence++;continue;}VNFaceLandmarkRegion2D *leftEye=observation.landmarks.leftEye,*rightEye=observation.landmarks.rightEye;if(!leftEye.pointCount||!rightEye.pointCount){missingEyes++;continue;}
         CGRect box=observation.boundingBox;auto center=[&](VNFaceLandmarkRegion2D *region){CGPoint p=CGPointZero;for(NSUInteger i=0;i<region.pointCount;i++){p.x+=region.normalizedPoints[i].x;p.y+=region.normalizedPoints[i].y;}p.x/=region.pointCount;p.y/=region.pointCount;return CGPointMake((box.origin.x+p.x*box.size.width)*image.pixelWidth,(1-box.origin.y-p.y*box.size.height)*image.pixelHeight);};
-        CGPoint a=center(leftEye),b=center(rightEye);if(a.x>b.x)std::swap(a,b);double distance=std::hypot(b.x-a.x,b.y-a.y);if(distance<5)continue;double roll=std::atan2(b.y-a.y,b.x-a.x),cx=((a.x+b.x)*.5-std::sin(roll)*distance*.55)/image.pixelWidth,cy=((a.y+b.y)*.5+std::cos(roll)*distance*.55)/image.pixelHeight;if(cx<0||cx>1||cy<0||cy>1)continue;
+        CGPoint a=center(leftEye),b=center(rightEye);if(a.x>b.x)std::swap(a,b);double distance=std::hypot(b.x-a.x,b.y-a.y);if(distance<5){smallEyes++;continue;}double roll=std::atan2(b.y-a.y,b.x-a.x),cx=((a.x+b.x)*.5-std::sin(roll)*distance*.55)/image.pixelWidth,cy=((a.y+b.y)*.5+std::cos(roll)*distance*.55)/image.pixelHeight;if(cx<0||cx>1||cy<0||cy>1){outsideFrame++;continue;}
         int x=std::clamp(int(cx*image.pixelWidth),0,image.pixelWidth-1),y=std::clamp(int(cy*image.pixelHeight),0,image.pixelHeight-1);uint32_t c=image.pixels[y*image.pixelWidth+x];
         [proposals addObject:@{@"cx":@(cx),@"cy":@(cy),@"rx":@(std::min(.5,.95*distance/image.pixelWidth)),@"ry":@(std::min(.5,1.35*distance/image.pixelHeight)),@"roll":@(roll*180/M_PI),@"skinR":@((c>>16)&255),@"skinG":@((c>>8)&255),@"skinB":@(c&255)}];
       }
-      return [HueviaPortraitInference analyze:p candidates:proposals image:image task:task];
+      NSMutableDictionary *parameters=[p mutableCopy];
+      if(diagnose){NSDictionary *details=@{@"imageWidth":@(image.pixelWidth),@"imageHeight":@(image.pixelHeight),@"imageOrientation":@(image.orientation),@"bitmapInfo":@((NSUInteger)CGImageGetBitmapInfo(cg)),@"visionFaceCount":@(request.results.count),@"visionConfidence":confidenceSamples,@"lowConfidence":@(lowConfidence),@"missingEyes":@(missingEyes),@"smallEyes":@(smallEyes),@"outsideFrame":@(outsideFrame),@"proposalCount":@(proposals.count)};parameters[@"_visionDiagnostics"]=details;NSLog(@"HueviaRetouch stages %@",details);}
+      return [HueviaPortraitInference analyze:parameters candidates:proposals image:image task:task];
     }
     NSString *mode=p[@"mode"],*facesJson=nil,*skin=nil,*body=nil,*foreground=nil;
     NSMutableArray *faces=[NSMutableArray array];

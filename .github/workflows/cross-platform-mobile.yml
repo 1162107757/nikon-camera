@@ -1,6 +1,15 @@
 name: Cross-platform mobile development build
 on:
   workflow_dispatch:
+    inputs:
+      verification:
+        description: Full acceptance or simulator-only diagnosis (no deliverable IPA)
+        required: true
+        default: full
+        type: choice
+        options:
+          - full
+          - native-diagnostic
 permissions:
   contents: read
 concurrency:
@@ -54,7 +63,11 @@ jobs:
             .tooling/portrait-models
           key: ${{ steps.asset-cache.outputs.cache-primary-key }}
       - name: Build and test the unsigned device app
+        if: inputs.verification != 'native-diagnostic'
         run: bash cross-platform/tool/mobile_apple.sh build
+      - name: Diagnose the native simulator pipeline without accepting an IPA
+        if: inputs.verification == 'native-diagnostic'
+        run: bash cross-platform/tool/mobile_apple.sh native-diagnostic
       - name: Show actionable build errors
         if: failure()
         run: |
