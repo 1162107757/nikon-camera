@@ -12,3 +12,11 @@
 
 -keep class cc.huevia.sharedapp.NativeRawThumbnail { *; }
 -keep class cc.huevia.sharedapp.NativeRawThumbnail$Callbacks { *; }
+
+# The original project stages classes.jar from the pinned LiteRT 1.4.1 AARs.
+# Preserve the AAR's consumer rules too: plain JARs do not carry proguard.txt.
+-keep class org.tensorflow.lite.annotations.UsedByReflection
+-keep @org.tensorflow.lite.annotations.UsedByReflection class *
+-keepclassmembers class * {
+    @org.tensorflow.lite.annotations.UsedByReflection *;
+}
