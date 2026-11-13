@@ -18,9 +18,12 @@ trap failure_logs EXIT
   -c "$ROOT/cross-platform/native/ios/Classes/HueviaTask.m" \
   -o "$WORK/avatar-task.o" > "$WORK/avatar-build.log" 2>&1
 "$J2OBJCC" -O2 -fobjc-arc -I"$ROOT/cross-platform/native/ios/Classes" \
+  -c "$ROOT/cross-platform/native/ios/Classes/HueviaTaskCancellation.m" \
+  -o "$WORK/avatar-task-cancellation.o" >> "$WORK/avatar-build.log" 2>&1
+"$J2OBJCC" -O2 -fobjc-arc -I"$ROOT/cross-platform/native/ios/Classes" \
   "$ROOT/cross-platform/core/test/avatar_apple.mm" \
   "$ROOT/cross-platform/native/ios/Classes/HueviaAvatar.mm" \
-  "$ROOT/cross-platform/native/ios/Classes/HueviaTaskCancellation.m" \
+  "$WORK/avatar-task-cancellation.o" \
   "$WORK/avatar-task.o" \
   -framework ImageIO -framework CoreGraphics -ljre_emul -lc++ \
   -o "$WORK/avatar-checks" >> "$WORK/avatar-build.log" 2>&1
