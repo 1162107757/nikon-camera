@@ -12,6 +12,14 @@ on:
           - native-diagnostic
           - portrait-pixels
           - portrait-geometry
+      apple_runner:
+        description: Apple build host (Intel fallback when arm64 capacity is unavailable)
+        required: true
+        default: macos-26
+        type: choice
+        options:
+          - macos-26
+          - macos-26-intel
 permissions:
   contents: read
 concurrency:
@@ -20,7 +28,7 @@ concurrency:
 jobs:
   apple-app:
     if: inputs.verification != 'portrait-pixels' && inputs.verification != 'portrait-geometry'
-    runs-on: macos-26
+    runs-on: ${{ inputs.apple_runner || 'macos-26' }}
     timeout-minutes: 75
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -92,7 +100,7 @@ jobs:
           retention-days: 7
   portrait-pixels:
     if: inputs.verification == 'portrait-pixels'
-    runs-on: macos-26
+    runs-on: ${{ inputs.apple_runner || 'macos-26' }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -110,7 +118,7 @@ jobs:
           retention-days: 7
   portrait-geometry:
     if: inputs.verification == 'portrait-geometry'
-    runs-on: macos-26
+    runs-on: ${{ inputs.apple_runner || 'macos-26' }}
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262

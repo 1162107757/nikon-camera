@@ -159,14 +159,23 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
 
   Future<void> pick() async {
     if (importing) return;
+    Photo? photo;
     setState(() => importing = true);
     try {
-      final photo = await state.pickPhoto();
-      if (mounted && photo != null) await context.push(photo.editorLocation);
+      photo = await state.pickPhoto();
     } catch (failure) {
       if (mounted) report(context, failure);
     } finally {
       if (mounted) setState(() => importing = false);
+    }
+    if (mounted && photo != null) unawaited(openImportedPhoto(photo));
+  }
+
+  Future<void> openImportedPhoto(Photo photo) async {
+    try {
+      if (mounted) await context.push<void>(photo.editorLocation);
+    } catch (failure) {
+      if (mounted) report(context, failure);
     }
   }
 
@@ -177,6 +186,7 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
       await context.push(photo.editorLocation);
       return;
     }
+    Photo? photo;
     setState(() => importing = true);
     try {
       final imported = await state.core.call('gallery.import', {
@@ -185,17 +195,17 @@ class _PhotosPageState extends State<PhotosPage> with WidgetsBindingObserver {
       final info = await state.core.call('media.info', {
         'path': imported['path'],
       });
-      final photo = await state.registerPhoto(
+      photo = await state.registerPhoto(
         imported['path'] as String,
         imported['name'] as String,
         info,
       );
-      if (mounted) await context.push(photo.editorLocation);
     } catch (failure) {
       if (mounted) report(context, failure);
     } finally {
       if (mounted) setState(() => importing = false);
     }
+    if (mounted && photo != null) unawaited(openImportedPhoto(photo));
   }
 
   Future<void> search() async {
