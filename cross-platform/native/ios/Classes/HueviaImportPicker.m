@@ -33,6 +33,7 @@
 - (void)finish:(id)value generation:(NSUInteger)generation {
   NSAssert(NSThread.isMainThread,@"Picker replies belong to the UI thread");
   if(generation!=_generation)return;
+  [_task finish];_task=nil;
   FlutterResult reply=_pending;_pending=nil;
   _activePicker=nil;
   _photoPicker=nil;_avatarLoad=nil;
@@ -72,17 +73,17 @@
   _activePicker=picker;
   [presenter presentViewController:picker animated:YES completion:nil];
 }
-- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {if(controller!=_activePicker)return;_task.cancelled=YES;[self finish:@"{\"cancelled\":true}" generation:_generation];}
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {if(controller!=_activePicker)return;[_task cancelIfActive];[self finish:@"{\"cancelled\":true}" generation:_generation];}
 - (void)picker:(PHPickerViewController *)picker didFinishPicking:(NSArray<PHPickerResult *> *)results {
   if(picker!=_photoPicker)return;_photoPicker=nil;[picker dismissViewControllerAnimated:YES completion:nil];
   NSUInteger generation=_generation;HueviaTask *task=_task;
-  if(!results.count){task.cancelled=YES;[self finish:@"{\"cancelled\":true}" generation:generation];return;}
+  if(!results.count){[task cancelIfActive];[self finish:@"{\"cancelled\":true}" generation:generation];return;}
   NSString *root=_root,*owner=_owner,*updatedAt=_avatarUpdatedAt;CcHueviaSharedSharedRuntime *runtime=_avatarRuntime;
   NSItemProvider *provider=results.firstObject.itemProvider;
   if(![provider hasItemConformingToTypeIdentifier:UTTypeImage.identifier]){[self finish:[FlutterError errorWithCode:@"AVATAR_FAILED" message:@"请选择照片作为头像。" details:nil] generation:generation];return;}
   __weak HueviaImportPicker *weakSelf=self;__block NSProgress *loading=nil;
   _background=[UIApplication.sharedApplication beginBackgroundTaskWithName:@"Huevia avatar import" expirationHandler:^{
-    task.cancelled=YES;[loading cancel];dispatch_async(dispatch_get_main_queue(),^{[weakSelf finish:[FlutterError errorWithCode:@"CANCELLED" message:@"头像选择已取消，请回到应用后重试。" details:nil] generation:generation];});
+    if(![task cancelIfActive])return;[loading cancel];dispatch_async(dispatch_get_main_queue(),^{[weakSelf finish:[FlutterError errorWithCode:@"CANCELLED" message:@"头像选择已取消，请回到应用后重试。" details:nil] generation:generation];});
   }];
   loading=[provider loadFileRepresentationForTypeIdentifier:UTTypeImage.identifier completionHandler:^(NSURL *url,NSError *error){@autoreleasepool{
     HueviaImportPicker *strongSelf=weakSelf;if(!strongSelf||task.cancelled)return;
@@ -108,7 +109,7 @@
           if(!task.cancelled)receipt=[runtime prepareAvatarWithNSString:owner withNSString:updatedAt withByteArray:[IOSByteArray arrayWithBytes:jpeg.bytes count:(jint)jpeg.length]];
         }
       }
-    }@catch(id problem){failure=problem;}@finally{if(path.length)[NSFileManager.defaultManager removeItemAtPath:path error:nil];}
+    }@catch(id problem){failure=problem;}@finally{if(path.length)[NSFileManager.defaultManager removeItemAtPath:path error:nil];[task finish];}
     dispatch_async(dispatch_get_main_queue(),^{
       if(failure||!receipt||task.cancelled){NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"无法读取所选照片，请重试。";
         [self finish:[FlutterError errorWithCode:task.cancelled?@"CANCELLED":@"AVATAR_FAILED" message:message details:nil] generation:generation];
@@ -120,7 +121,7 @@
   if(controller!=_activePicker)return;
   NSUInteger generation=_generation;NSURL *url=urls.firstObject;if(!url){[self finish:@"{\"cancelled\":true}" generation:generation];return;}
   HueviaTask *task=_task;NSString *root=_root,*kind=_submissionKind,*owner=_owner;BOOL preset=_preset;
-  _background=[UIApplication.sharedApplication beginBackgroundTaskWithName:@"Huevia file import" expirationHandler:^{task.cancelled=YES;}];
+  _background=[UIApplication.sharedApplication beginBackgroundTaskWithName:@"Huevia file import" expirationHandler:^{[task cancelIfActive];}];
   dispatch_async(_queue,^{@autoreleasepool{
     __block NSString *receipt=nil;__block id failure=nil;
     BOOL scoped=[url startAccessingSecurityScopedResource];
@@ -135,7 +136,7 @@
       }];
       if(error&&!failure)failure=error;
     }@catch(id problem){failure=problem;}
-    @finally{if(scoped)[url stopAccessingSecurityScopedResource];}
+    @finally{if(scoped)[url stopAccessingSecurityScopedResource];[task finish];}
     dispatch_async(dispatch_get_main_queue(),^{
       if(failure||!receipt||task.cancelled){NSString *message=[failure respondsToSelector:@selector(getMessage)]?[failure getMessage]:@"无法读取所选文件，请重试。";[self finish:[FlutterError errorWithCode:task.cancelled?@"CANCELLED":@"IMPORT_FAILED" message:message details:nil] generation:generation];}
       else [self finish:receipt generation:generation];

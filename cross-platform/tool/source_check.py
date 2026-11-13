@@ -16,3 +16,5 @@ for name in sorted(names):
 print('Valid UTF-8 text and platform configuration: '+str(checked)+' files')
 from detail_render_check import check as check_detail_render
 check_detail_render()
+from native_task_source_check import check as check_native_task_sources
+check_native_task_sources(ROOT,names)

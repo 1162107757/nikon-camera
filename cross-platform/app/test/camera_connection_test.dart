@@ -19,6 +19,13 @@ class _ConnectionCore extends HueviaCore {
   final requests = <_CameraRequest>[];
   final cancelled = <String>[];
   Completer<void>? cancelGate;
+  Json cameraStatus = {
+    'connected': false,
+    'session': '',
+    'model': '',
+    'mode': 'none',
+    'inventoryReady': false,
+  };
   @override
   Stream<dynamic> get operationProgress => events.stream;
   @override
@@ -34,7 +41,7 @@ class _ConnectionCore extends HueviaCore {
     String? jobId,
   ]) {
     if (operation == 'camera.status') {
-      return Future.value({'connected': false, 'session': '', 'model': ''});
+      return Future.value(Map<String, dynamic>.of(cameraStatus));
     }
     final request = _CameraRequest(operation, payload, jobId ?? '');
     requests.add(request);
@@ -44,7 +51,7 @@ class _ConnectionCore extends HueviaCore {
 
 void main() {
   testWidgets(
-    'Camera connection reports actual permission, confirmation, session and inventory phases for only its job',
+    'Camera handshake reports permission, confirmation, session and capabilities only for its own job',
     (tester) async {
       final core = _ConnectionCore();
       final request = CameraConnectionRequest(core);
@@ -64,8 +71,8 @@ void main() {
       expect(request.phase, contains('机身确认'));
       core.events.add({'jobId': 'mine', 'progress': .4});
       expect(request.phase, contains('事件通道'));
-      core.events.add({'jobId': 'mine', 'progress': .7});
-      expect(request.phase, contains('存储卡照片目录'));
+      core.events.add({'jobId': 'mine', 'progress': .6});
+      expect(request.phase, contains('相机信息与读取能力'));
       expect(request.busy, true);
       await tester.pump(const Duration(seconds: 3));
       expect(request.elapsedSeconds, 3);
@@ -175,27 +182,62 @@ void main() {
     },
   );
 
-  Future<void> open(WidgetTester tester, _ConnectionCore core) async {
-    final state = AppState(core);
-    addTearDown(state.dispose);
+  Future<({AppState state, Future<bool> result})> open(
+    WidgetTester tester,
+    _ConnectionCore core,
+  ) async {
+    final state = AppState(core)..cameraVisible.value = true;
+    addTearDown(() async {
+      state.dispose();
+      await core.events.close();
+    });
+    late Future<bool> result;
     await tester.pumpWidget(
       MaterialApp(
         theme: hueviaTheme(Brightness.light),
-        home: CameraPage(state: state, configuration: true),
+        home: Builder(
+          builder: (context) => Scaffold(
+            body: Column(
+              children: [
+                TextButton(
+                  key: const Key('caller-connect'),
+                  onPressed: () => result = connectCamera(context, state),
+                  child: const Text('预设调用方连接'),
+                ),
+                TextButton(
+                  key: const Key('explicit-camera-photos'),
+                  onPressed: () {
+                    // The explicit Sync caller, as in the real tab host, owns
+                    // visibility before the photo page inspects its session.
+                    state.cameraVisible.value = true;
+                    Navigator.of(context).push<void>(
+                      MaterialPageRoute(
+                        builder: (_) => CameraPage(state: state),
+                      ),
+                    );
+                  },
+                  child: const Text('同步 → 相机照片'),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
+    await tester.tap(find.byKey(const Key('caller-connect')));
     await tester.pumpAndSettle();
     final button = find.widgetWithText(FilledButton, '连接相机');
     await tester.ensureVisible(button);
     await tester.tap(button);
     await tester.pump();
+    return (state: state, result: result);
   }
 
   testWidgets(
     'Camera UI exposes phase and cancel while connecting and never displays a late cancelled session',
     (tester) async {
       final core = _ConnectionCore();
-      await open(tester, core);
+      final opened = await open(tester, core);
       final connection = core.requests.single;
       core.events.add({'jobId': connection.job, 'progress': .2});
       await tester.pump();
@@ -211,35 +253,71 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('迟到相机'), findsNothing);
       expect(core.requests.where((r) => r.operation == 'camera.page'), isEmpty);
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
+      expect(await opened.result, false);
+      expect(core.cancelled, [connection.job]);
       await tester.pumpWidget(const SizedBox());
-      await core.events.close();
     },
   );
 
   testWidgets(
-    'Successful handshake changes the UI from connecting to bounded first-page reading with its own cancel',
+    'Connect-only returns success without reading photos; explicit Sync reads and cancels only its page job',
     (tester) async {
       final core = _ConnectionCore();
-      await open(tester, core);
-      core.requests.single.result.complete({
+      final opened = await open(tester, core);
+      final connection = core.requests.single;
+      core.cameraStatus = {
         'connected': true,
         'session': 'camera',
         'model': 'Nikon fixture',
-      });
+        'mode': 'photos',
+        'photoConnected': true,
+        'slotsConnected': false,
+        'inventoryReady': false,
+      };
+      connection.result.complete(Map<String, dynamic>.of(core.cameraStatus));
+      await tester.pumpAndSettle();
+      expect(await opened.result, true);
+      expect(find.byKey(const Key('caller-connect')), findsOneWidget);
+      // A successful connection is handed back to the caller, with no implicit
+      // inventory/page/preview request and no disposal cancel of the handshake.
+      expect(core.requests, [connection]);
+      expect(core.cancelled, isEmpty);
+      await tester.tap(find.byKey(const Key('explicit-camera-photos')));
       await tester.pump();
-      await tester.pump(const Duration(milliseconds: 50));
+      await tester.pump(const Duration(milliseconds: 350));
+      expect(core.requests.last.operation, 'camera.page');
       expect(find.textContaining('读取相机照片目录与首屏'), findsOneWidget);
       expect(find.text('取消读取'), findsOneWidget);
       final page = core.requests.last;
       expect(page.operation, 'camera.page');
+      expect(page.payload['session'], 'camera');
+      await tester.ensureVisible(find.text('取消读取'));
       await tester.tap(find.text('取消读取'));
-      await tester.pumpAndSettle();
-      expect(core.cancelled, contains(page.job));
-      page.result.complete({'items': [], 'nextOffset': 0, 'hasMore': false});
-      await tester.pumpAndSettle();
-      expect(find.text('已连接 · 原文件按字节接收'), findsNothing);
+      // Retire the same native page future immediately. Do not ask
+      // pumpAndSettle to wait while a mocked native IO or spinner stays pending.
+      page.result.completeError(const AppFailure('已取消照片读取。'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 350));
+      expect(core.cancelled, [page.job]);
+      expect(core.cancelled, isNot(contains(connection.job)));
+      expect(find.textContaining('已读取 0 张'), findsNothing);
+      final nativeStatus = await core.call('camera.status');
+      expect(nativeStatus['connected'], true);
+      expect(nativeStatus['session'], 'camera');
+      expect(nativeStatus['mode'], 'photos');
+      expect(core.requests.where((r) => r.operation == 'camera.connect'), [
+        connection,
+      ]);
+      expect(
+        core.requests.where((r) => r.operation == 'camera.disconnect'),
+        isEmpty,
+      );
+      expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
-      await core.events.close();
+      await tester.pump();
+      expect(core.cancelled, [page.job]);
     },
   );
 }

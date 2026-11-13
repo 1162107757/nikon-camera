@@ -11,8 +11,13 @@ import 'package:huevia/theme.dart';
 class RaceCore extends HueviaCore {
   final initialCamera = Completer<Json>();
   final List<(String, Json)> calls = [];
+  final cancelled = <String>[];
+  int cameraStatusRequests = 0;
+  Json cameraStatus = {'connected': false, 'session': '', 'model': ''};
   @override
-  Future<void> cancel(String id) async {}
+  Stream<dynamic> get operationProgress => const Stream<dynamic>.empty();
+  @override
+  Future<void> cancel(String id) async => cancelled.add(id);
   @override
   Future<Json> call(
     String operation, [
@@ -22,9 +27,21 @@ class RaceCore extends HueviaCore {
     calls.add((operation, payload));
     switch (operation) {
       case 'camera.status':
-        return initialCamera.future;
+        // Only the first status is held; later explicit photo routes inspect the
+        // current native session rather than replaying that stale response.
+        if (cameraStatusRequests++ == 0) return initialCamera.future;
+        return Map<String, dynamic>.of(cameraStatus);
       case 'camera.connect':
-        return {'connected': true, 'session': 'new-session', 'model': '已核对相机'};
+        cameraStatus = {
+          'connected': true,
+          'session': 'new-session',
+          'model': '已核对相机',
+          'mode': 'photos',
+          'photoConnected': true,
+          'slotsConnected': false,
+          'inventoryReady': false,
+        };
+        return Map<String, dynamic>.of(cameraStatus);
       case 'camera.page':
         return {'items': [], 'nextOffset': 0, 'hasMore': false};
       case 'personal.status':
@@ -42,32 +59,61 @@ class RaceCore extends HueviaCore {
 
 void main() {
   testWidgets(
-    'An old camera status cannot replace a newly established session',
+    'Late old status cannot replace a connect-only session; only explicit Sync pages with the new session',
     (tester) async {
       final core = RaceCore();
+      final actualState = AppState(core)..cameraVisible.value = true;
+      addTearDown(actualState.dispose);
       await tester.pumpWidget(
         MaterialApp(
           theme: hueviaTheme(Brightness.light),
-          home: CameraPage(state: AppState(core), configuration: true),
+          home: CameraPage(state: actualState, configuration: true),
         ),
       );
       final connect = find.widgetWithText(FilledButton, '连接相机');
       await tester.ensureVisible(connect);
       await tester.tap(connect);
       await tester.pumpAndSettle();
-      expect(find.text('已连接 · 原文件按字节接收'), findsOneWidget);
+      expect(find.text('已核对相机'), findsOneWidget);
+      expect(find.textContaining('浏览照片请进入同步 → 相机照片'), findsOneWidget);
+      expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
       core.initialCamera.complete({
         'connected': false,
         'session': '',
         'model': '',
       });
       await tester.pumpAndSettle();
-      expect(find.text('已连接 · 原文件按字节接收'), findsOneWidget);
+      expect(find.text('已核对相机'), findsOneWidget);
+      expect(find.textContaining('浏览照片请进入同步 → 相机照片'), findsOneWidget);
+      expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
+      // A later, explicitly opened photo route gets a fresh State/status read.
+      // The configuration page must not read photos or cancel its completed job.
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump();
+      expect(core.cancelled, isEmpty);
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: hueviaTheme(Brightness.light),
+          home: CameraPage(state: actualState),
+        ),
+      );
+      await tester.pumpAndSettle();
       expect(
         core.calls.lastWhere((call) => call.$1 == 'camera.page').$2['session'],
         'new-session',
       );
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.connect'),
+        hasLength(1),
+      );
+      expect(
+        core.calls.where((call) => call.$1 == 'camera.page'),
+        hasLength(1),
+      );
+      expect(find.text('已核对相机 · 已连接'), findsOneWidget);
       expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      expect(core.cancelled, isEmpty);
     },
   );
   testWidgets(
