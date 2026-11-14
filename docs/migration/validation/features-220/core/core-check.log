@@ -1,0 +1,29 @@
+PASS: 2168 NCP phone-template approximation checks
+PASS 43230 local-edit checks; EXIF1-8, masks, clone snapshot, serialization, cancellation, 24MP bounded stream.
+PASS JPEG color matching 15575 checks; full-raster RGB RMSE 0.025863 -> 0.001274; heldout 0.025817 -> 0.001018
+PASS RAW highlight color 243 checks; unsafe-midtones-only fit UNSAFE_HIGHLIGHTS
+PASS 31 personal sync checks; consent, owner visibility, revisions, both conflict choices and deletion persistence
+PASS 20 registration bridge checks; exact proof/installation, immediate session, persistence, no token exposure and explicit challenge failure
+PASS 32 QQ login bridge checks; no captcha, native installation, verified session, owner, registration proof and profile-header delegation
+PASS 15 preset pin checks; multiple pins, stable ordering, persistence, account isolation and unpin
+PASS 14 wired camera checks; native selection, no Wi-Fi, validated original download, session isolation and disconnect
+PASS 30 shared camera checks; RAW-only browse, JPEG previews, fallback, refresh, session isolation and bounded cache
+PASS 65 camera connection checks; phase, whole-attempt deadline, blocked IO cancel and job ownership
+PASS 167 camera session ownership checks; lazy inventory, real PTP/IP handoff, recovery, scoped disconnect, stale/active cancel and verified-write guards
+PASS 60 camera transfer checks; separate JPEG indexes, generic JPEG metadata, fallback, unavailable cards, exact bytes, real progress and cancelled partial cleanup
+PASS 76 camera controls checks; explicit scope, exact target snapshots, one-shot write/delete/shutter, durable uncertainty and readback recovery
+PASS 46 camera maintenance boundary checks
+PASS 95 slot parameter boundary checks
+PASS 28 RAW pairing/publication checks; complete inventories, ambiguity, identity, explicit selection, unchanged NEF bytes and stable snapshot receipts
+PASS 21 camera descriptor recovery checks; real serial identity, unchanged A1 trust, 128-object paging, relocated handle and exact download authorization
+PASS 53 durable download queue checks; owner/camera/session/descriptor guards, native-first receipts, restart, terminal idempotence, frozen target evidence and corrupt-log isolation
+PASS 80 camera live discovery checks; handle baselines, event-only hints, stable descriptors, missed events, independent browsing, reconnect, storage recovery and scoped downloads
+PASS 21 RAW JPEG reference checks; explicit content/source binding, private paths, cancelled hashing, mutation detection and unchanged originals
+PASS 36 project checks; original catalogs, immutable defaults, library removal, source safety, journal recovery, stale leases and saved-version reuse
+PASS 108 live ingest checks; durable cursors, explicit resume/stop, source receipts, frozen defaults, duplicate-source suppression and intent recovery
+PASS 35 durable submission checks; lost save/submit replies, account ownership, staged attachment limits
+PASS 43 profile checks; reviewed bytes, account revisions, response loss, generation and bounded cleanup
+PASS 123 tentative local-tool command checks; original binary, stale snapshots, strict bounds, cancellation and independent portrait/region/patch retention
+PASS 1764 shared boundary checks; offline account, private paths, immutable preset drafts, owner isolation and export snapshots
+PASS 6 shared atmosphere checks; colour, alpha, ownership and bounded allocation
+Shared JVM golden: D:\dev\ai-project\nikon-camera\cross-platform\.build\core-jvm\golden.json

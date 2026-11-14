@@ -1,0 +1,148 @@
+{
+  "scope": "local-testing-only",
+  "published": false,
+  "versionName": "0.31.0-dev",
+  "versionCode": 220,
+  "package": "cc.huevia.next",
+  "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "state": "accepted-for-local-testing",
+  "acceptedForLocalTesting": true,
+  "acceptedForDelivery": true,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-220-android-arm64.apk",
+      "platform": "android",
+      "abi": "arm64-v8a",
+      "bytes": 52854578,
+      "sha256": "a6354ee004b66f72ebea4d7dfe74a718a3a5a5d43a69c0f7b0005117b1622b4c",
+      "versionName": "0.31.0-dev",
+      "versionCode": 220,
+      "package": "cc.huevia.next",
+      "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signatureVerified": true,
+      "static16KiBAlignmentVerified": true,
+      "elfLibraryCount": 8,
+      "presetPreviewImageCount": 10,
+      "actual16KiBDeviceVerified": false,
+      "physicalCameraTested": false,
+      "validationPassed": true,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-android-x64.apk",
+      "platform": "android",
+      "abi": "x86_64",
+      "bytes": 56291546,
+      "sha256": "96c0a18c8cfdde44282949465bb7d0d66010deae2f78d577d830e1fc09fce060",
+      "versionName": "0.31.0-dev",
+      "versionCode": 220,
+      "package": "cc.huevia.next",
+      "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+      "signingCertificateSha256": "76398947a8b493df81ebf2e90ad7b62e3eefee5fcf6cf865feaaa9bef8127b75",
+      "signatureVerified": true,
+      "static16KiBAlignmentVerified": true,
+      "elfLibraryCount": 8,
+      "presetPreviewImageCount": 10,
+      "actual16KiBDeviceVerified": false,
+      "physicalCameraTested": false,
+      "validationPassed": true,
+      "acceptedForLocalAndroidTesting": true
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-ios-unsigned.ipa",
+      "platform": "ios",
+      "abi": "arm64",
+      "devicePlatform": "iPhoneOS",
+      "bytes": 64971215,
+      "sha256": "0cc8b86b7d2a0b664e31f747db50882e3fc8078677cb3797475a79b8753113aa",
+      "versionName": "0.31.0",
+      "versionCode": 220,
+      "package": "cc.huevia.next",
+      "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+      "unsigned": true,
+      "minimumOS": "16.0",
+      "deviceInstallationVerified": false,
+      "fullParityComplete": false,
+      "independentlyVerified": true,
+      "ciFullRunSuccess": true,
+      "presetPreviewImageCount": 10,
+      "acceptedForLocalSelfSignedTesting": true
+    }
+  ],
+  "android": {
+    "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+    "state": "accepted-for-local-android-testing",
+    "acceptedForLocalAndroidTesting": true,
+    "validationPassed": true,
+    "buildExit": 0,
+    "finalR8Checks": 78,
+    "runtimeAndroidApi": 31,
+    "runtimePageSizeBytes": 4096,
+    "coldLaunchPassed": true,
+    "coldLaunchCounts": {
+      "presets": 2,
+      "phonePhotos": 50,
+      "applicationPhotos": 19
+    },
+    "compactQueueObserved": true,
+    "physicalCameraTested": false,
+    "actual16KiBDeviceVerified": false,
+    "receipt": "../../docs/migration/validation/features-220/android/result.json",
+    "uiReceipt": "../../docs/migration/validation/features-220/android/ui-result.json"
+  },
+  "ios": {
+    "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+    "run": 43529742646,
+    "actualFullRunConclusion": "success",
+    "state": "accepted-for-local-self-signed-testing",
+    "acceptedIpa": true,
+    "acceptedForLocalSelfSignedTesting": true,
+    "flutterTestsPassed": 488,
+    "uiKitTestsPassed": 5,
+    "photoKitXCTestPassed": true,
+    "nativeScenariosPassed": 1,
+    "coreParityChecks": 1770,
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSnapshotFixturePassed": true,
+    "deviceInstallationVerified": false,
+    "fullParityComplete": false,
+    "receipt": "../../docs/migration/validation/features-220/apple/ci-result.json",
+    "independentVerification": "../../docs/migration/validation/features-220/apple/independent-verification.json"
+  },
+  "knownIssues": {
+    "followupVersion": 221,
+    "fixedIn220": false,
+    "items": [
+      "遥控快门/就绪状态闪烁，正在221处理中；未记为220已修复。",
+      "返回操作可能退到桌面或退出应用，正在221处理中；未记为220已修复。"
+    ]
+  },
+  "limitations": {
+    "nikonZ6IIWifiVerified": false,
+    "iphoneInstallationAndCameraConnectionVerified": false,
+    "qqNativeAuthorizationVerified": false,
+    "qqIosUniversalLinkConfigured": false,
+    "rawOriginalDeletionFilenameLimitationRemains": true
+  },
+  "validationIndex": "../../docs/migration/validation/features-220/README.md",
+  "testingGuide": "../../docs/migration/local-testing-220.md",
+  "previousAttempts": [
+    {
+      "sourceCommit": "d554354ec313aee1db9dfa010522b847cca4114a",
+      "receipt": "../../docs/migration/validation/features-220/attempts/d554/result.json",
+      "acceptedForDelivery": false
+    },
+    {
+      "sourceCommit": "8c19330eec591e78ee2610b5e6e11ac3ea409484",
+      "receipt": "../../docs/migration/validation/features-220/attempts/8c19330/result.json",
+      "acceptedForDelivery": false
+    },
+    {
+      "sourceCommit": "db6b17279569609257280d1228b2f9322baf95e6",
+      "receipt": "../../docs/migration/validation/features-220/attempts/db6b172/result.json",
+      "acceptedForDelivery": false
+    }
+  ]
+}

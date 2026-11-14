@@ -1,0 +1,10 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/camera_sync_tools_test.dart
+00:00 +0: A late queue-history result never installs another account record into the floating window
+00:00 +1: Background maintenance events do not resume previews and foreground rechecks the connection
+00:01 +2: Idle connection loss updates the visible Sync page without retrying or reconnecting
+00:02 +3: Camera photos load next page on scroll once and deduplicate handles
+00:02 +4: Failed next page preserves loaded photos and waits for explicit retry
+00:03 +5: Sync tool sheets close without replacing the grid or disconnecting the camera
+00:04 +6: Camera tools appear only on Sync and stay local when tabs switch
+00:05 +7: Dock remains usable on small phones with large text and reduced motion
+00:05 +8: All tests passed!

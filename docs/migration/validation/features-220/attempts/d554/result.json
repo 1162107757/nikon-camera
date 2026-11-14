@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "d554354ec313aee1db9dfa010522b847cca4114a",
+  "acceptedForDelivery": false,
+  "published": false,
+  "appleRun": 43518457169,
+  "appleConclusion": "failure",
+  "failedStage": "prepare: J2ObjC translation of a Java test fixture",
+  "cause": "SlotParametersBoundaryTest.java:79 Files.readString(Path, Charset) unavailable in translation class library",
+  "jvmChecksPassed": 1770,
+  "deviceBuildEntered": false,
+  "nativePipelineEntered": false,
+  "androidBuildExit": 0,
+  "heldAndroidArtifacts": [
+    {
+      "file": "huevia-0.31.0-dev-220-android-arm64.apk",
+      "bytes": 52854578,
+      "sha256": "4edde43d70cf8571e980381fe63d91f1cf15ab1c0eed9c9b52ec29202f77b5bf"
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-android-x64.apk",
+      "bytes": 56291546,
+      "sha256": "75ef67b280363a250c43ae04f5f9a78ba056b321b464078db8f8fa2552f9bf2d"
+    }
+  ],
+  "fix": "Use new String(Files.readAllBytes(path), UTF_8); retain all assertions",
+  "appleJobLogSha256": "878150c0fc60bec41a8a4659be57ce5f5fd78ff299b784918aa7ce8c0357e2cc"
+}

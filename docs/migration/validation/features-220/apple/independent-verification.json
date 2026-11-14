@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "verified": true,
+  "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "sha256": "0cc8b86b7d2a0b664e31f747db50882e3fc8078677cb3797475a79b8753113aa",
+  "bytes": 64971215,
+  "bundleIdentifier": "cc.huevia.next",
+  "version": "0.31.0",
+  "build": "220",
+  "minimumOS": "16.0",
+  "binaries": [
+    {
+      "file": "Payload/Huevia.app/Frameworks/App.framework/App",
+      "sha256": "3136e93bda56c0f1b4759b42e623cf87cc08eaf3bd8799aff65dfad0ece7a21a",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/Flutter.framework/Flutter",
+      "sha256": "09c5e234ef53710440cb05b3f17d389f037a9d98905431cf9722717a8ea425a9",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Frameworks/objective_c.framework/objective_c",
+      "sha256": "75c8c5cc4394ab20a431609ba2c972774a5e3c410b17c2cd42d9ed34a447def1",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            15,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Payload/Huevia.app/Runner",
+      "sha256": "c227ed6909f2d9e3b96995a80256cde00946ae40475dbb37c79a4aa497a36881",
+      "slices": [
+        {
+          "architecture": "arm64",
+          "platform": "iPhoneOS",
+          "minimumOS": [
+            16,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "referenceFonts": [
+    {
+      "file": "Roboto-Regular.ttf",
+      "sha256": "da6951759ab236f54de0793cba115a4b7b2407fc8bf3e180db7e7248a5331e8a",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Regular.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Regular.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Regular.ttf"
+      ]
+    },
+    {
+      "file": "Roboto-Medium.ttf",
+      "sha256": "827bd3470e83a85e6520b204e01ee0faedeeff20e3c6553d506ded55efd60f59",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Medium.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Medium.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Medium.ttf"
+      ]
+    },
+    {
+      "file": "Roboto-Bold.ttf",
+      "sha256": "13f6c534c6f84d8364c611b34fbed5b6968383fa39bf5859359e22a4c22c3bc4",
+      "flutterAsset": "Payload/Huevia.app/Frameworks/App.framework/flutter_assets/assets/fonts/Roboto-Bold.ttf",
+      "nativeAssets": [
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/Roboto-Bold.ttf",
+        "Payload/Huevia.app/HueviaNativeAssets.bundle/reference-fonts/Roboto-Bold.ttf"
+      ]
+    }
+  ],
+  "deviceInstallationVerified": false,
+  "fullParityComplete": false,
+  "portraitAssets": {
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/portrait/face_landmarks_detector.tflite": "c7d54204ce0448474c7f3fa9af494787c0965cbdd6f20fc72867e43046bd43d5",
+    "Payload/Huevia.app/HueviaNativeAssets.bundle/portrait/face_skin_multiclass.shuffle4.zlib": "9920fafc503c9090b3840c6fb433efc7eeb117bb00176b04034bd589c0e19bb0"
+  },
+  "presetPreviewAssets": {
+    "imageCount": 10,
+    "allTenPreservedByteForByte": true,
+    "imageSha256": {
+      "alpine-lake.jpg": "a680f72eca42e3b3481ac64509d85e816e1f06290381ab755819c6e9d22113e3",
+      "breakfast.jpg": "b42c9d2617242b3f3d1ee2af96719dfd032eac6b72162cb3dc35a7e260694648",
+      "city-skyline.jpg": "a7724ec1452aa172bb879f9e11436381306206e279a08fac2974f6c932497486",
+      "coastal-water.jpg": "4114d6f8085b6cc1e0cd0d89b3ea12bb2db306ef35373654f222d68d4b4f4d28",
+      "neon-street.jpg": "b5a24f781e6cdb2932aa0508f741933bb9e3721b75eeb4f4ef8467bd82e3ebe2",
+      "pink-tulips.jpg": "73c34ee92c3b55d2b1b6fd8ffee6df1939bc592884b2316f51523898bef54580",
+      "portrait-man.jpg": "7d7a190adc3a4e443b1bdba3537b819fbad524585c2501ec656b64ed68822182",
+      "portrait-smile.jpg": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+      "rainy-tokyo.jpg": "bf722e60694c45439242dec425f1366fdb4d57ab644c66415923e3299933fabe",
+      "sunlit-forest.jpg": "1b3b8a78055fe4925de02d73f6898c96bfa83b61ceb1183fbc0cee2410f8c473"
+    }
+  },
+  "unsignedApplicationExecutable": true,
+  "embeddedProvisioningProfile": false,
+  "imageCaptureCoreLinked": true,
+  "wiredNativeClassesLinked": true,
+  "webKitLinked": true,
+  "cameraUsageDescriptionPresent": true,
+  "qqUniversalLinkConfigured": false
+}

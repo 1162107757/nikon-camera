@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "buildExit": 0,
+  "acceptedForLocalAndroidTesting": true,
+  "packages": [
+    {
+      "file": "huevia-0.31.0-dev-220-android-arm64.apk",
+      "abi": "arm64",
+      "bytes": 52854578,
+      "sha256": "a6354ee004b66f72ebea4d7dfe74a718a3a5a5d43a69c0f7b0005117b1622b4c",
+      "apksignerVerified": true,
+      "zipalign16KiBVerified": true,
+      "elfLoadSegments16KiBVerified": true,
+      "mappingSha256": "eba404489a951300c35137d142aa036c4a190a525bbee8ca1d2851ad2fa622ed"
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-android-x64.apk",
+      "abi": "x64",
+      "bytes": 56291546,
+      "sha256": "96c0a18c8cfdde44282949465bb7d0d66010deae2f78d577d830e1fc09fce060",
+      "apksignerVerified": true,
+      "zipalign16KiBVerified": true,
+      "elfLoadSegments16KiBVerified": true,
+      "mappingSha256": "eba404489a951300c35137d142aa036c4a190a525bbee8ca1d2851ad2fa622ed"
+    }
+  ],
+  "runtime": {
+    "abi": "x64",
+    "androidApi": 31,
+    "pageSizeBytes": 4096,
+    "checksPassed": 78,
+    "receipt": "release-runtime-result.json",
+    "mappingReceipt": "release-runtime-mapping.json"
+  },
+  "physical16KiBDeviceTested": false,
+  "physicalCameraTested": false,
+  "buildProvenance": "Both ABI builds ran sequentially through build_releases.py with frozen HEAD and a clean app source tree; the two exact APK digests are independently checked below."
+}

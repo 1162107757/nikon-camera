@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "db6b17279569609257280d1228b2f9322baf95e6",
+  "acceptedForDelivery": false,
+  "published": false,
+  "androidBuildExit": 0,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-220-android-arm64.apk",
+      "bytes": 52854578,
+      "sha256": "a162618782a7505923a226ab475c550a7db80367878290e5f4a995e841dea8f3"
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-android-x64.apk",
+      "bytes": 56291546,
+      "sha256": "245932da06c76c9a8b27ba4252620e4be0ce191d8b5b26766697a916bd169535"
+    }
+  ],
+  "appleRunCreated": false,
+  "reason": "Superseded to migrate an old grid test finder after 8c full identified its mismatch. Production UI includes compact download queue."
+}

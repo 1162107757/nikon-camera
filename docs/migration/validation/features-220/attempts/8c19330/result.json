@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "8c19330eec591e78ee2610b5e6e11ac3ea409484",
+  "acceptedForDelivery": false,
+  "published": false,
+  "reason": "Actual Android UI review: make the empty download queue a compact half-height floating sheet. Other camera tools retain their full workspace.",
+  "androidBuildExit": 0,
+  "androidReleaseRuntimeChecks": 78,
+  "androidSigningAndStaticAlignmentPassed": true,
+  "allTenPreviewImagesPreserved": true,
+  "appleRun": 43525906424,
+  "appleConclusionAtSupersession": "in_progress",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-220-android-arm64.apk",
+      "bytes": 52854578,
+      "sha256": "cf7dc16ed467365e1e57408470c723fe45809a1d93909937003eef37f769d3c4"
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-android-x64.apk",
+      "bytes": 56291546,
+      "sha256": "f30b29c3695b281369b3e19f53f43fc20a4b42eb7a4b03a7c43616f8b78f653e"
+    }
+  ],
+  "appleFinalConclusion": "failure",
+  "flutterTestsPassed": 487,
+  "flutterTestsFailed": 1,
+  "failedFixture": "camera_test.dart:256 old GridView finder; actual camera grid is now a lazy SliverGrid",
+  "deviceBuildExit": 0,
+  "nativePipelineEntered": false,
+  "fix": "Use SliverGrid finder; retain three columns, square cells and no file-details assertions"
+}

@@ -1,0 +1,158 @@
+{
+  "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "installedApkSha256": "96c0a18c8cfdde44282949465bb7d0d66010deae2f78d577d830e1fc09fce060",
+  "androidApi": 31,
+  "pageSizeBytes": 4096,
+  "coldStart": true,
+  "phonePhotos": 50,
+  "applicationPhotos": 19,
+  "localPresets": 2,
+  "selectionFirstPhotoBoundsUnchanged": {
+    "phone": true,
+    "application": true
+  },
+  "selectionBottomNavigationHidden": true,
+  "phoneSelectionActions": [
+    "批量编辑"
+  ],
+  "applicationSelectionActions": [
+    "编辑",
+    "导出",
+    "删除"
+  ],
+  "compactQueueObserved": true,
+  "queueScrimBounds": "[0,0][1080,1059]",
+  "syncFloatingToolsObserved": [
+    "下载队列",
+    "遥控拍照",
+    "相机预设槽位"
+  ],
+  "floatingToolsAbsentOnSettings": true,
+  "presetAndAlbumGlassSheetsVisuallyInspected": true,
+  "finalScreen": "我的预设",
+  "originalPhoneAlbumPreferenceRestored": true,
+  "noImportDeleteOrCameraWriteDuringQA": true,
+  "physicalCameraTested": false,
+  "capturesPrivateForUserData": [
+    {
+      "privateCapture": ".tooling/next220/ui/final780-album-before-select.png",
+      "bytes": 967576,
+      "sha256": "a83a59dcfe98aadc892e238fe0a11bf4088aa7c04fe5fa68afa28d4e5e0f4870"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-album-before-select.xml",
+      "bytes": 11340,
+      "sha256": "dc41d6e984107dfe07fe218bcd3eba41a921a81cc5053ef7b9b853bc71570199"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-album-glass.png",
+      "bytes": 826165,
+      "sha256": "b2cc2922bc653cb78fc23a4a757fd8c5366b735d06d23e93406a241828e97ede"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-album-glass.xml",
+      "bytes": 7394,
+      "sha256": "2f5e471113fdc4062747cb23d99fef1c5b122245d00b364335682c685f95e5a7"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-album-selection.png",
+      "bytes": 936562,
+      "sha256": "342d05028bd955e6580c53119ed73acabf7001fef082643d08d8eef6fb991517"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-album-selection.xml",
+      "bytes": 10084,
+      "sha256": "1ffd60edebbf9213d90d216f791f9cc508e590d118a641c14a676fd3521805b5"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-application-before-select.png",
+      "bytes": 837398,
+      "sha256": "48a7f2ba0c0874a3e7ee63cc1e32800d75ca217e2dd2f68a668067df073f1cfb"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-application-before-select.xml",
+      "bytes": 11178,
+      "sha256": "4b8249c7a4c03301c3c271ffd86333bf3ef0a92da35ca6cda6e8942415ff1a84"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-application-selection.png",
+      "bytes": 797027,
+      "sha256": "7aa552642a732a9875f378a72ab3bc096403f0be14d9643bd34cb62c6bd0db9f"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-application-selection.xml",
+      "bytes": 10592,
+      "sha256": "bd6af9d44ce3e5a17b743971ae3eb7a2d2942831819124453778ffddafd9c0cb"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-cold-start.png",
+      "bytes": 563864,
+      "sha256": "1cbed893a3877e05c8be9bb54a4c7283e34647b00627ad71dc2d0b54725d3bd0"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-cold-start.xml",
+      "bytes": 11497,
+      "sha256": "3a6143e852eacb8a903e71940c44e07b1677aa3c293c3e4c25dd4aa8fcc6a124"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-compact-queue.png",
+      "bytes": 164350,
+      "sha256": "55c7336354cf27798121fe6ca46fc77b5645f679bfae9d900bb4ff073ce29f36"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-compact-queue.xml",
+      "bytes": 6039,
+      "sha256": "e7758e1c3d53afca03731e130b6ab26eae77cf75b3ed084aa50cedef6c19bb31"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-presets-glass.png",
+      "bytes": 600022,
+      "sha256": "e3b5751d46a24fe73ef8ed9bc93fbc4e3912475af677cc0169e16a39cbc931fe"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-presets-glass.xml",
+      "bytes": 8019,
+      "sha256": "bb4054a6cd5eee300e5c79fd80d68122dc5a93987b5dd8f85ff140d88ae21e5d"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-restored-home.png",
+      "bytes": 563642,
+      "sha256": "f4a3741d9a144c91d5d229618c1f048b6d7f335d880aa7aa3f811710273bb921"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-restored-home.xml",
+      "bytes": 11497,
+      "sha256": "3a6143e852eacb8a903e71940c44e07b1677aa3c293c3e4c25dd4aa8fcc6a124"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-settings-no-tools.png",
+      "bytes": 187149,
+      "sha256": "973215412245380fb1f61af25e93d2b7722ad370621f632880ce244edd8d8cb3"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-settings-no-tools.xml",
+      "bytes": 10656,
+      "sha256": "223b23d4a8cf5fae34028f7bff8abe94a1bb180f70eb92e496f7624e27f8e459"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-sync-collapsed.png",
+      "bytes": 129388,
+      "sha256": "167f99bb2110a52d12721d5d42d7482c2a2fd15db8d4f1193d89bf9719704978"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-sync-collapsed.xml",
+      "bytes": 8594,
+      "sha256": "2e81219b4c0ef8477a960c6ac759f379131549dad789e2269176a6bec89d492f"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-sync-expanded.png",
+      "bytes": 150706,
+      "sha256": "7604cf4654c5a54ceb2fe7010c10fb4ed047b264711d9d6bb787dfc6f8cfedc0"
+    },
+    {
+      "privateCapture": ".tooling/next220/ui/final780-sync-expanded.xml",
+      "bytes": 9899,
+      "sha256": "63ccbd4f3802c50f091efd4eda46be14ef321f73dd465011bb5b8e5c8041c4b0"
+    }
+  ]
+}

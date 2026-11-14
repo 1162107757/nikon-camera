@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "versionCode": 220,
+  "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "scope": "local-testing-only",
+  "published": false,
+  "acceptedForDelivery": true,
+  "state": "accepted-for-local-testing",
+  "core": {
+    "receipt": "core/result.json",
+    "exit": 0,
+    "distinctInputCount": 243,
+    "sharedBoundaryChecks": 1764,
+    "atmosphereChecks": 6,
+    "totalChecks": 1770,
+    "executionBasePreserved": true,
+    "sourceBindingScope": "243 actually compiled Java inputs only",
+    "rawGitMatches": 191,
+    "lfOnlyDifferenceCount": 52
+  },
+  "localSyncTools": {
+    "actualPassingCases": 8,
+    "exit": 0,
+    "receipt": "local/result.json"
+  },
+  "localLegacyIntent": {
+    "actualPassingCasesBeforeHostExit": 8,
+    "fullSuiteExpectedCases": 15,
+    "fullSuitePassed": false,
+    "hostExitCode": -1073741819,
+    "freshMacFullRequired": false,
+    "finalWholeSuiteGate": {
+      "run": 43529742646,
+      "receipt": "apple/ci-result.json",
+      "flutterTestsPassed": 488,
+      "conclusion": "success",
+      "historicalWindowsFailurePreserved": true
+    },
+    "freshMacFullRequirementSatisfied": true
+  },
+  "android": {
+    "state": "accepted-for-local-android-testing",
+    "acceptedForLocalAndroidTesting": true,
+    "receipt": "android/result.json",
+    "uiReceipt": "android/ui-result.json",
+    "r8ChecksPassed": 78,
+    "runtimePageSizeBytes": 4096,
+    "physicalCameraTested": false
+  },
+  "apple": {
+    "fullRun": 43529742646,
+    "sourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+    "state": "success",
+    "acceptedForLocalSelfSignedTesting": true,
+    "fullRunAccepted": true,
+    "flutterTestsPassed": 488,
+    "uiKitTestsPassed": 5,
+    "nativeScenariosPassed": 1,
+    "coreParityChecks": 1770,
+    "independentlyVerified": true,
+    "receipt": "apple/ci-result.json",
+    "independentVerification": "apple/independent-verification.json",
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSnapshotFixturePassed": true
+  },
+  "physicalDeviceValidation": {
+    "nikonZ6IIWifi": false,
+    "iphoneInstallationAndCameraConnection": false,
+    "qqNativeAuthorization": false,
+    "actual16KiBAndroidDevice": false
+  },
+  "privateVisualCapture": {
+    "fakeCamera": true,
+    "pngCount": 2,
+    "structureOnly": true,
+    "buttonFontLimitation": true,
+    "fullVisualAcceptance": false,
+    "physicalWriteEvidence": false
+  },
+  "finalSourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "previousAttempts": [
+    {
+      "sourceCommit": "d554354ec313aee1db9dfa010522b847cca4114a",
+      "receipt": "attempts/d554/result.json",
+      "acceptedForDelivery": false
+    },
+    {
+      "sourceCommit": "8c19330eec591e78ee2610b5e6e11ac3ea409484",
+      "receipt": "attempts/8c19330/result.json",
+      "acceptedForDelivery": false
+    },
+    {
+      "sourceCommit": "db6b17279569609257280d1228b2f9322baf95e6",
+      "receipt": "attempts/db6b172/result.json",
+      "acceptedForDelivery": false
+    }
+  ],
+  "gridFinderCompatibility": {
+    "file": "cross-platform/app/test/camera_test.dart",
+    "change": "GridView finder to SliverGrid; assertions unchanged",
+    "actualPassingCases": 1,
+    "exit": 0
+  },
+  "acceptedForLocalTesting": true,
+  "staticValidation": {
+    "receipt": "local/result.json",
+    "analyzeExit": 0,
+    "sourceCheckExit": 0,
+    "sourceCheckCounts": [
+      1212,
+      21,
+      57
+    ],
+    "inventoryVerifyExit": 0,
+    "inventoryCounts": [
+      420,
+      8,
+      412
+    ]
+  },
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-220-android-arm64.apk",
+      "bytes": 52854578,
+      "sha256": "a6354ee004b66f72ebea4d7dfe74a718a3a5a5d43a69c0f7b0005117b1622b4c"
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-android-x64.apk",
+      "bytes": 56291546,
+      "sha256": "96c0a18c8cfdde44282949465bb7d0d66010deae2f78d577d830e1fc09fce060"
+    },
+    {
+      "file": "huevia-0.31.0-dev-220-ios-unsigned.ipa",
+      "bytes": 64971215,
+      "sha256": "0cc8b86b7d2a0b664e31f747db50882e3fc8078677cb3797475a79b8753113aa"
+    }
+  ],
+  "knownIssues": {
+    "followupVersion": 221,
+    "fixedIn220": false,
+    "items": [
+      "遥控快门/就绪状态闪烁，正在221处理中；未记为220已修复。",
+      "返回操作可能退到桌面或退出应用，正在221处理中；未记为220已修复。"
+    ]
+  },
+  "rawFullParityComplete": false,
+  "localTestingAcceptanceDoesNotClaimPhysicalDeviceOrAllFeatureParity": true
+}
