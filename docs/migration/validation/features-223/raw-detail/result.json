@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+  "sourceBinding": "current canonical RAW test/host byte hashes match their recorded passing run; historical older test source digest is not retroactively invented",
+  "sourceManifestSha256": "3c4a877f11b615a5ad33b73c6b1df302326f5a1d2a96abe5daed9457606ae86f",
+  "copyManifestSha256": "7ec852f1847edc3df1862d1d9d1b49de27bc56cbe9fa490e6220516ee3ececf5",
+  "commandsSha256": "adbf8ef2a335b4b0c8e1c4efa2e7939c8638ae3cdb02a3c8d36dfb063bd312b7",
+  "historicalSixUnique": {
+    "aggregateExit": 1,
+    "aggregatePassed": 5,
+    "aggregateDidNotComplete": 1,
+    "ownerSingleExit": 0,
+    "ownerSinglePassed": 1,
+    "uniqueCasesWithPassingEvidence": 6,
+    "wholeSixCaseAggregateExitZeroClaimed": false,
+    "supersededSharedApiLoadFailureExecutedCases": 0,
+    "supersededSharedApiLoadFailureCountedAsPass": false
+  },
+  "canonicalCurrentRun": {
+    "formatExit": 0,
+    "analyzeExit": 0,
+    "completeFileTestExit": 0,
+    "passed": 3,
+    "testSha256": "7430bd91de4215b1d5766716e7b55f77e1963824aafc78985750f7e0501ec6ad",
+    "rawHostSha256": "3ae3b8a37e1b3a29feb3117d42d678678c974b5e8785814bdf424e79976992cc",
+    "recordedPassingHashesMatchCurrentFrozenSource": true,
+    "strictRoiWidthLessThan": 0.06,
+    "ownerAndFileDeletionAssertionsPreserved": true
+  },
+  "nativePixelsMockedInWidgetTests": true,
+  "wholeProcessRssMeasured": false,
+  "newApplePassClaimed": false,
+  "finalRootReceipts": {
+    "androidReleaseRuntime": {
+      "requiredChecks": 123,
+      "status": "pending-root-receipt",
+      "passClaimed": false
+    },
+    "apple": {
+      "status": "pending-root-receipt",
+      "passClaimed": false
+    }
+  },
+  "published": false,
+  "archivedAtUtc": "2026-11-14T08:58:44.857420+00:00"
+}

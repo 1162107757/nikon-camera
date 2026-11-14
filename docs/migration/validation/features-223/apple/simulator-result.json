@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "runId": "cfb2104b-465a-4aa7-b929-aecd21aeaa23",
+  "success": true,
+  "results": {
+    "Native codecs and LibRaw retain originals, dimensions and white highlights": "success"
+  },
+  "sourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+  "fixtureSha256": "8db9ebc456ba96af1561540c0e5a46aa958a9fbc2212ef4914fca66d42c19dfb"
+}

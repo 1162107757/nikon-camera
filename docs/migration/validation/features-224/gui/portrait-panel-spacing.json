@@ -1,0 +1,44 @@
+{
+  "before": {
+    "sourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+    "skinToolRect": [
+      173,
+      1555,
+      320,
+      1734
+    ],
+    "contentBottom": 2214,
+    "blankBelowToolPixels": 480
+  },
+  "preDensityAfter": {
+    "sourceCommit": "0c70d788667b8bb0e49188ed5505517c255de5bc",
+    "skinToolRect": [
+      173,
+      2036,
+      320,
+      2214
+    ],
+    "contentBottom": 2214,
+    "blankBelowToolPixels": 0
+  },
+  "newDensityCandidateGuiPending": false,
+  "display": [
+    1080,
+    2340
+  ],
+  "physicalDevice": false,
+  "artifacts": [
+    "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next223\\ui\\reported-portrait-before-spacing-fix.xml",
+    "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next224\\ui\\portrait224-return-overview-final.xml"
+  ],
+  "optimizedAfter": {
+    "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+    "skinToolRect": [
+      173,
+      2036,
+      320,
+      2214
+    ],
+    "blankBelowToolPixels": 0
+  }
+}

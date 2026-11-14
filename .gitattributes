@@ -32,3 +32,14 @@ docs/migration/validation/features-223/**/*.log -text -whitespace
 docs/migration/validation/features-223/**/*.json -text -whitespace
 docs/migration/validation/features-223/**/*.txt -text -whitespace
 docs/migration/validation/features-223/**/*.exit -text -whitespace
+
+docs/migration/validation/features-224/**/*.log -text -whitespace
+docs/migration/validation/features-224/**/*.json -text -whitespace
+docs/migration/validation/features-224/**/*.txt -text -whitespace
+docs/migration/validation/features-224/**/*.exit -text -whitespace
+
+docs/migration/validation/features-225/**/*.log -text -whitespace
+docs/migration/validation/features-225/**/*.json -text -whitespace
+docs/migration/validation/features-225/**/*.txt -text -whitespace
+docs/migration/validation/features-225/**/*.exit -text -whitespace
+docs/migration/validation/features-225/**/*.bin -text -whitespace

@@ -1,0 +1,131 @@
+{
+  "copyMethod": "binary shutil.copyfile + direct byte equality + SHA-256",
+  "files": [
+    {
+      "original": ".tooling/next223/raw-hd/format-final2.log",
+      "archived": "historical/format-final2.log",
+      "bytes": 91,
+      "sha256": "0cdd1cc49ca37b2e35ce2c98fb027171f2747c7727c09b516173452cb2c26fd5",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/format-final2.exit",
+      "archived": "historical/format-final2.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/analyze-final2.log",
+      "archived": "historical/analyze-final2.log",
+      "bytes": 96,
+      "sha256": "b33a71c9085f205e66448a431db509363233f9eb507a4bebb58d718f4f0d957b",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/analyze-final2.exit",
+      "archived": "historical/analyze-final2.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/tests-final2.log",
+      "archived": "historical/tests-final2.log",
+      "bytes": 1639,
+      "sha256": "6b1ab7c455c3cd7471d630e08a9a85c997223f455bec3673a4a7c67f57143d85",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/tests-final2.exit",
+      "archived": "historical/tests-final2.exit",
+      "bytes": 1,
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/owner-single.log",
+      "archived": "historical/owner-single.log",
+      "bytes": 218,
+      "sha256": "e026d182d746b49a587705a801f587c8f60b428b154fa9c3d9a098c319138d83",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/owner-single.exit",
+      "archived": "historical/owner-single.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/tests.log",
+      "archived": "historical/tests.log",
+      "bytes": 8700,
+      "sha256": "f2f20fb44fa0c6cd1ea1c2f6d4268fbb96bdc2618b85e6ba1f90f976e80f63bc",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/tests.exit",
+      "archived": "historical/tests.exit",
+      "bytes": 1,
+      "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-hd/result.json",
+      "archived": "historical/result.json",
+      "bytes": 715,
+      "sha256": "6f9170df63852379d22be968db48ede0fa64d750edefbe4d71ca7f4cbfef0f20",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/format.log",
+      "archived": "canonical/format.log",
+      "bytes": 90,
+      "sha256": "fece55c8d5c06aaec24350a1fd9f55b9c3da3d0c338de30c56d337ccfd498636",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/format.exit",
+      "archived": "canonical/format.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/analyze.log",
+      "archived": "canonical/analyze.log",
+      "bytes": 96,
+      "sha256": "0c292bc377209eb9dda737f3bc7afa5be877745716b262ee1bc5d51a9c4f1d87",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/analyze.exit",
+      "archived": "canonical/analyze.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/tests.log",
+      "archived": "canonical/tests.log",
+      "bytes": 443,
+      "sha256": "72df0ebc18cab0e86e9e967a403d375624d03105c537181f279b103f88f38213",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/tests.exit",
+      "archived": "canonical/tests.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/raw-apple-fix/result.json",
+      "archived": "canonical/result.json",
+      "bytes": 512,
+      "sha256": "be46ec256b8ef7964ba3aacb2049b3ec5e689eac7dd7d284c9e13fafc42f09e0",
+      "byteIdentical": true
+    }
+  ]
+}

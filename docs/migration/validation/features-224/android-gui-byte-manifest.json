@@ -1,0 +1,266 @@
+{
+  "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "containsExplicitPreDensityComparison": true,
+  "files": [
+    {
+      "path": "docs/migration/validation/features-224/android/android-release-result.json",
+      "bytes": 113,
+      "sha256": "55c827c303deb905a9ddc842f1133e96d69a5e2e3b6157e9dce41624824b733e"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/android-acceptance-pipeline.json",
+      "bytes": 110,
+      "sha256": "6b92f10014c911d1e1f33b9f3ce0a36eadf5758635a83a8e3e9145d5843f51a9"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/release-runtime-result.json",
+      "bytes": 511,
+      "sha256": "580d487aed7e2c8321f4713fac2fb1f28ba455cf1b299d88de7019d338237985"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/release-runtime-mapping.json",
+      "bytes": 181,
+      "sha256": "ca2b779a5080687284f02b23d8d12cd788b236f777689a9ce3507993ef7915d9"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/release-runtime.log",
+      "bytes": 2174,
+      "sha256": "d5ff6aa3b3ce0a3b2368ea73e4a7c91f73553894cb5b0908d7fe6ad3a8f98b27"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/back-navigation-result.json",
+      "bytes": 4366,
+      "sha256": "f51918751d0006d9b124245236312a555c6d0e396d59d491753b3823bba0550c"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/android-arm64-release.log",
+      "bytes": 298,
+      "sha256": "401e717dc060f96cde30540bb0726221c3e8c9cb65a4359adef2339e0f52d103"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/android-x64-release.log",
+      "bytes": 295,
+      "sha256": "2e39017f723531e9ab31268b83a626b5a9e8d41dc67d420427d6f8df11bf5cc9"
+    },
+    {
+      "path": "docs/migration/validation/features-224/shared/density-controller16-final.log",
+      "bytes": 44613,
+      "sha256": "f07a569c1d070bd77462ac6fb4bf3ef4705e283b6617a5dcc25cbfb3da17167f"
+    },
+    {
+      "path": "docs/migration/validation/features-224/shared/density-checks-final.json",
+      "bytes": 90,
+      "sha256": "b6e8324f134085462aaf5289f12bb465032a1c9094fa9d1b8950ec662275a6f4"
+    },
+    {
+      "path": "docs/migration/validation/features-224/shared/density-analyze2.log",
+      "bytes": 783,
+      "sha256": "c9171bf79a50747b99c5c0901a2ef61e68e47d5c9141f290547231a6dc5da3ad"
+    },
+    {
+      "path": "docs/migration/validation/features-224/shared/density-source.log",
+      "bytes": 227,
+      "sha256": "ee29cc804bfeef2473a2c4a2d88a9eca6239c7f36ba75c644441601b34dd2f90"
+    },
+    {
+      "path": "docs/migration/validation/features-224/shared/density-preservation.log",
+      "bytes": 122,
+      "sha256": "a98f251b8e49c33a76ade8c083d2b34e59563f7e71ceac1cabd6c19dd69d30d7"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/medium-zoom-density-comparison.json",
+      "bytes": 1291,
+      "sha256": "f245fdf14fdcfb1aa3164726aab2115a8cfe38d0535d2e4331d758990b63b89b"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/optimized-two-times-native.json",
+      "bytes": 223,
+      "sha256": "eb77c506c489aef4428861fa7405fb859cdc96f14d8a5183a6903f56849bd12a"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/pre-density-two-times-native.json",
+      "bytes": 222,
+      "sha256": "6a4150e16e78ae45227ea91c9b06878c6ec5e9835afe13da3e97f9003de93ec2"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/installed-final-apk.json",
+      "bytes": 332,
+      "sha256": "2a513eee3d12af8895ab266d2461bd57ebf0e13da2db3de081dc6449aa39ee8b"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/optimized-auto-skin.json",
+      "bytes": 731,
+      "sha256": "11e43767e60710138766e11118ea9e848d9d2a18c88d3ee3b99b4fee20be060a"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/optimized-pan-image-comparison.json",
+      "bytes": 879,
+      "sha256": "9f8a257b51cf3310a19e2c4702622bdec3cb80f09e7216ae45666f54e998b73b"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/tool-switch-screen-pixel-comparison.json",
+      "bytes": 653,
+      "sha256": "82b59c9a00806c597e9c9bcfc8114da54b654df0861055a544f4b4e6ffb10171"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/portrait-panel-spacing.json",
+      "bytes": 1017,
+      "sha256": "1c33834a229a99e61abc2b63bea185fa2569eba4f9f76dfca0db0749462596bf"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/chart224-pre-density-two-times.png",
+      "bytes": 879591,
+      "sha256": "03e34ac83eae17a51664c230e0eb835c9cc6e0be48cdc9a54a1bca200f380f00"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/chart224-pre-density-two-times.xml",
+      "bytes": 14338,
+      "sha256": "1fe3b46142c0df446b7f9cd26c142214ca4e4dce189c34b56dd2716cab8dbf0b"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-two-times-settled.png",
+      "bytes": 926361,
+      "sha256": "fa7b14d52859e717398f9e2c489d4dcb986ebd191f273051140bff0b91cc70ee"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-two-times-settled.xml",
+      "bytes": 14338,
+      "sha256": "1fe3b46142c0df446b7f9cd26c142214ca4e4dce189c34b56dd2716cab8dbf0b"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-chart-portrait.png",
+      "bytes": 740083,
+      "sha256": "540f9f30f460d26bc3d59e538d0449a9de4c30df79b6cd05fa282ea07dbbd025"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-chart-portrait.xml",
+      "bytes": 9654,
+      "sha256": "42e2886561d4c57ef032692b9e8b4315f2adbde2e60532cd7681be35fa978a7f"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-chart-repair.png",
+      "bytes": 758402,
+      "sha256": "cf36dec3c15fed169c727c6055f3aa597875fe279cfcc727a697d154212bd6b3"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-chart-repair.xml",
+      "bytes": 10054,
+      "sha256": "47aff0d3a5850d14f96e4fc811c8e5d2fb585124fc7926a01c5fb068ec4eb0a7"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-portrait-overview.png",
+      "bytes": 1761471,
+      "sha256": "ca3a239fe127aed521c5eb79142e5387165a7b8e95decb7a2623ff4abec30a8c"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-portrait-overview.xml",
+      "bytes": 9650,
+      "sha256": "1c503c99f8ebe65b37f0a4364097d96c6fe216b118cf1e92e9493d05087784bc"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-overview-before-pan.png",
+      "bytes": 1251546,
+      "sha256": "01e03887c03458838d92119ab21e02007aca0401fae62e582c3b7afecdacadd5"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-overview-before-pan.xml",
+      "bytes": 9650,
+      "sha256": "f8c1be4ee7f3410c6f01a5111beb35b33596ac3b9f0e45d97e910cbfa10e1d77"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-overview-after-pan.png",
+      "bytes": 1358759,
+      "sha256": "a87f2bb7e64fd0437b71642de7ce405bfd89e6ddaec731ac1d81de742059388d"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-overview-after-pan.xml",
+      "bytes": 9650,
+      "sha256": "f8c1be4ee7f3410c6f01a5111beb35b33596ac3b9f0e45d97e910cbfa10e1d77"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-skin-before-pan.png",
+      "bytes": 1060844,
+      "sha256": "4672a8b2d635849122373236189666535a29e8034a3e076443f5faff9468cd1e"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-skin-before-pan.xml",
+      "bytes": 15564,
+      "sha256": "8edbd1dbdb211dd4a7d8c7cb11ea5b750a3f49b4e0f5ae18217a97e4feb159e8"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-skin-after-pan.png",
+      "bytes": 982064,
+      "sha256": "162baa09de11ba2585df2e8d52d88aa343a2b87b6f0a65e601c94e5f77188e0f"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-skin-after-pan.xml",
+      "bytes": 15564,
+      "sha256": "8edbd1dbdb211dd4a7d8c7cb11ea5b750a3f49b4e0f5ae18217a97e4feb159e8"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-face-before-pan.png",
+      "bytes": 1305463,
+      "sha256": "06d40c65b15ec3a885fbf724e68c6ea4f76164819d96a205ce3dfbfea16c903d"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-face-before-pan.xml",
+      "bytes": 11959,
+      "sha256": "bd0cec54a503893f2de49dc3ff8edc38900b8309d2ecc57908f46b83a3248a5e"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-face-after-pan.png",
+      "bytes": 1128709,
+      "sha256": "2feb839de4802cf4ea465278cf2ca200be2ad4ef7f515ae48f0b110b2cc430f7"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/density224-face-after-pan.xml",
+      "bytes": 11959,
+      "sha256": "bd0cec54a503893f2de49dc3ff8edc38900b8309d2ecc57908f46b83a3248a5e"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/native-tiles/5e331959-4e9b-4f06-a19a-9c99889ced9e.jpg",
+      "bytes": 152661,
+      "sha256": "7fcda2c823aa458c3f31789dd9ff72e039a882e8a95fdced91215b042a9ee70b"
+    },
+    {
+      "path": "docs/migration/validation/features-224/gui/native-tiles/f79a6e3c-0973-4749-b38e-8162fd7ae175.jpg",
+      "bytes": 511196,
+      "sha256": "7fcec9883f5a680050d69404909342409e442cc5a2d5a29554838b3a23e16854"
+    },
+    {
+      "path": "docs/migration/validation/features-224/attempts/0c-pre-density/independent-verification.json",
+      "bytes": 5281,
+      "sha256": "847bc11ac96ac39715c81c889ae93e3de326fd297d9167f86934ad1e26ef1907"
+    },
+    {
+      "path": "docs/migration/validation/features-224/attempts/0c-pre-density/ipa-verification.json",
+      "bytes": 447,
+      "sha256": "46066f01e97c96d4cc76309d68b91c3babb820c94bf481799860bab8b82143c1"
+    },
+    {
+      "path": "docs/migration/validation/features-224/attempts/0c-pre-density/ci-result.json",
+      "bytes": 1077,
+      "sha256": "823b1662fe3b68d72765472f29440013562d7536317499bb27a7389ff87a1cfc"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/arm64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/arm64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/x64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775"
+    },
+    {
+      "path": "docs/migration/validation/features-224/android/x64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

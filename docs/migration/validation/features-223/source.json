@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "versionCode": 223,
+  "sourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+  "finalSourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+  "sourceFrozen": true,
+  "scope": "local-testing-only",
+  "state": "superseded-unaccepted-candidate-full-run-failed",
+  "acceptedForLocalTesting": false,
+  "acceptedForDelivery": false,
+  "published": false,
+  "scopeChanges": [
+    "hide-repeating-ordinary-preview-progress-when-a-photo-is-visible",
+    "persistent-skin-tone-rail-and-strength-direct-staging-with-final-portrait-apply-cancel-undo",
+    "on-demand-source-detail-roi-across-editor-color-retouch-repair-raw-crop-selection",
+    "visible-sync-camera-page-auto-read-and-retire-stale-disconnect-errors",
+    "offline-preset-home-safe-message-retain-cache-retry-and-local-entry",
+    "inline-tool-panels-share-source-focus-and-magnification-with-fixed-photo-bounds",
+    "inline-natural-retouch-synchronous-back-repair-region-and-blemish-review-transactions",
+    "legacy-local-hd-current-accepted-profile-and-raw-inline-redevelopment-viewport-handoff"
+  ],
+  "behaviorContract": {
+    "preview": {
+      "repeatedOrdinaryProgressHiddenOnlyWhenPhotoExists": true,
+      "initialLoadProgressRetained": true,
+      "exportAndAnalysisProgressRetained": true
+    },
+    "skinTone": {
+      "swatchRailAndSelectedStrengthRemainVisible": true,
+      "continuousSwatchChanges": true,
+      "photoSamplingAndManualColorStageDirectly": true,
+      "intermediateUseContinueCancelLayerRemoved": true,
+      "finalPortraitApplyCancelAndUndoRetained": true
+    },
+    "contractIsNotAnExecutionPassClaim": true,
+    "highDefinition": {
+      "hosts": [
+        "Editor",
+        "color",
+        "Retouch",
+        "repair",
+        "RAW",
+        "Crop",
+        "Selection",
+        "LegacyLocal"
+      ],
+      "zoomOrHighDprUndersampling": true,
+      "readonlySourceDetail": true,
+      "viewportTileOnly": true,
+      "stablePhotoCoordinates": true,
+      "lateOwnerSourceRevisionGuard": true
+    },
+    "sync": {
+      "connectOnlyReturnsToCallerWithoutPhotoRead": true,
+      "visibleSyncAutoReads": true,
+      "staleErrorRetired": true
+    },
+    "offlinePresets": {
+      "failureDistinctFromEmpty": true,
+      "noRawUrlInUi": true,
+      "retainLoadedOrNativeCachedRows": true,
+      "retryAndMyPresets": true,
+      "noCacheDeletion": true,
+      "ownerLateResultGuard": true
+    },
+    "inlineTools": {
+      "sameRouteAndParentHeader": true,
+      "replaceControlsOnly": true,
+      "sharedCanonicalSourceFocusAndDensity": true,
+      "fixedPhotoViewportBounds": true,
+      "cropApplyConstrainsExcludedFocusWithoutImplicitFit": true,
+      "croppedFitAndNearSquareLayoutCovered": true,
+      "naturalIntentAndBackRetireHeldWorkSynchronously": true,
+      "portraitRepairRegionAndBlemishReviewShareViewportAndState": true,
+      "cancelDoesNotExitParentEditorOrInstallLateResults": true,
+      "legacyDetailUsesAcceptedLocalViewProfile": true,
+      "rawRedevelopmentInlineCancelFalseForwardTrue": true,
+      "rawConfirmedWorkingPhotoReceivesSameSourceViewport": true,
+      "contractIsNotAnExecutionPassClaim": true
+    }
+  },
+  "baseline": {
+    "versionCode": 222,
+    "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+    "receipt": "../features-222/source.json",
+    "acceptedArtifactCount": 3,
+    "flutterTestsPassed": 541,
+    "uiKitTestsPassed": 5,
+    "nativeScenariosPassed": 1,
+    "coreParityChecks": 1770,
+    "resultsInheritedAs223": false
+  },
+  "android": {
+    "state": "building-current-frozen-source-pending-package-runtime-ui-validation",
+    "acceptedForLocalAndroidTesting": false,
+    "packageVerificationAccepted": false,
+    "releaseRuntimeAccepted": false,
+    "relatedUiValidationAccepted": false,
+    "expectedReleaseRuntimeChecks": 123,
+    "actualReleaseRuntimeChecks": null,
+    "sourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d"
+  },
+  "apple": {
+    "state": "full-run-failed-flutter-validation",
+    "fullRun": 43588426197,
+    "sourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+    "fullRunAccepted": false,
+    "independentIpaAccepted": false,
+    "acceptedForLocalSelfSignedTesting": false,
+    "fullRunUrl": "https://github.com/1162107757/nikon-camera/actions/runs/43588426197",
+    "fullRunConclusion": "failure",
+    "observedFlutterTestsPassed": 604,
+    "observedFlutterTestsFailed": 2,
+    "failedCases": "editor_workspace_test crop portrait and landscape pumpAndSettle timeout at line181",
+    "observedDeviceBuildSucceeded": true,
+    "laterUIKitAndNativePipelineExecuted": false,
+    "failureReceipt": ".tooling/next223/apple-monitor-43588426197/outcome.json",
+    "failureReceiptSha256": "c43b95e761a5de66f6b656f72b2a330b31591f746f219595574f2e7df1d9f67b",
+    "observedMacOsCoreParityChecksPassed": 1770,
+    "observedCoreParityReceipt": ".tooling/next223/apple-monitor-43588426197/parity.json",
+    "observedCoreParityReceiptSha256": "e6117f73e97290754de7b77ce3ce605441453ce7c0f1c13ceb6da4be4adce2c5"
+  },
+  "core": {
+    "receipt": "core/result.json",
+    "golden": "core/golden.json",
+    "inputCount": 260,
+    "distinctInputCount": 245,
+    "sharedBoundaryChecks": 1764,
+    "sharedAtmosphereChecks": 6,
+    "boundaryChecks": 1770,
+    "exit": 0,
+    "referenceOnly": false,
+    "freshLocal223JvmRun": true,
+    "freshLocal223JvmRunClaimed": true,
+    "goldenSameAsBaseline": true,
+    "finalSourceBindingPending": false,
+    "fresh223AppleParityAccepted": false,
+    "phase": "existing-fresh-jvm-execution-bound-to-final-inline-source",
+    "boundSourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+    "appliesToCurrentInlineSource": true,
+    "targetSourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+    "javaInputsUnchangedSincePreInline": true,
+    "newJvmExecutionClaimedForInlineSource": false,
+    "testRerunForBinding": false,
+    "freshRunAlreadyExecuted": true,
+    "gitLfMatches": 245,
+    "rawGitMatches": 193,
+    "lineEndingOnlyDifferenceCount": 52,
+    "reference": "core/reference.json",
+    "receiptSha256": "a875a5a6166898a56c882b3e0d12b2aa167dea6cbbdeca7ba159a169b0ca58ec",
+    "referenceSha256": "9aaa44ae96b94563fc916f9b762bcb019f7f3e1e4cd84337e4fe2d2dd291e028"
+  },
+  "physicalDeviceValidation": {
+    "nikonZ6IIWifi": false,
+    "iphoneInstallationAndCameraConnection": false,
+    "qqNativeAuthorization": false,
+    "actual16KiBAndroidDevice": false,
+    "iphoneOfflinePresets": false,
+    "qqIosUniversalLinkConfigured": false
+  },
+  "artifacts": [],
+  "localTargetedEvidence": [
+    {
+      "scope": "shared-detail-controller-and-crop-selection",
+      "actualUniquePassed": 19,
+      "receipt": ".tooling/agent-account/detail223/result.json",
+      "execution": "controller13 whole file exit0; hosts4 split actual passes; oldcrop2 actual passes",
+      "phase": "pre-inline-history"
+    },
+    {
+      "scope": "raw-hd",
+      "actualUniquePassed": 6,
+      "receipt": ".tooling/next223/raw-hd/result.json",
+      "execution": "combined5 pass then host79 incomplete; remaining owner1 targeted exit0; whole-suite exit0 not claimed",
+      "phase": "pre-inline-history"
+    },
+    {
+      "scope": "retouch-hd-and-repair",
+      "actualUniquePassed": 5,
+      "receipt": ".tooling/retouch223-hd/result.json",
+      "phase": "pre-inline-history"
+    },
+    {
+      "scope": "skin",
+      "actualUniquePassed": 4,
+      "receipt": ".tooling/retouch223/result.json",
+      "phase": "pre-inline-history"
+    },
+    {
+      "scope": "editor-hd",
+      "actualUniquePassed": 3,
+      "receipt": ".tooling/editor223-hd/result.json",
+      "execution": "separate actual targets; not whole-file exit0 claim",
+      "phase": "pre-inline-history"
+    },
+    {
+      "scope": "camera-sync",
+      "actualUniquePassed": 11,
+      "receipt": ".tooling/camera223-sync/result.json",
+      "phase": "pre-inline-history"
+    },
+    {
+      "scope": "offline-home-and-existing-pagination",
+      "actualUniquePassed": 7,
+      "receipt": ".tooling/agent-account/presets-offline223/result.json",
+      "wholeCommandExit": 0,
+      "phase": "pre-inline-history"
+    }
+  ],
+  "staticChecks": {
+    "wholeAppAnalyzeExit": 0,
+    "sourceCheck": {
+      "textFiles": 1329,
+      "readonlyChecks": 41,
+      "appleChecks": 57,
+      "exit": 0
+    },
+    "inventory": {
+      "originalInputs": 420,
+      "existingFixes": 8,
+      "preservedInputs": 412,
+      "exit": 0
+    },
+    "phase": "pre-inline-history"
+  },
+  "nativeTargeted": {
+    "jvmChecks": 39,
+    "sourceChecks": 43,
+    "javacExit": 0,
+    "devicePixelExecutionAccepted": false,
+    "phase": "pre-inline-history",
+    "receipt": "native-detail/result.json",
+    "appliesToCurrentInlineSource": false
+  },
+  "baseSourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+  "preInlineValidation": {
+    "scope": "original-five-changes-only-before-inline-tool-and-viewport-work",
+    "sourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+    "sourceFrozen": true,
+    "acceptedForCurrentInlineSource": false,
+    "apple": {
+      "run": 43577955414,
+      "conclusion": "success",
+      "flutterTestsPassed": 582,
+      "uiKitTestsPassed": 5,
+      "nativeScenariosPassed": 1,
+      "ciReceipt": "apple/ci-result.json",
+      "ciReceiptSha256": "4e791549f46fbc580d163d9bcff41b993c0298dc1bbc6456be8b88a00d56c77b",
+      "independentIpaReceipt": "apple/independent-verification.json",
+      "independentIpaReceiptSha256": "a34b8d080c4d25029d085be5f093e10c545119d83cd94fb3a9d03ce1b707762d",
+      "deviceInstallationVerified": false
+    },
+    "android": {
+      "releaseRuntimeChecksPassed": 123,
+      "releaseRuntimeExit": 0,
+      "runtimeReceipt": ".tooling/next223/release-runtime-result.json",
+      "runtimeReceiptSha256": "70bb52110009d6ca2ee30232e3bebcc8f0011381ae68b5e8d822480a62b7a94a",
+      "buildReceipt": ".tooling/next223/android-release-result.json",
+      "buildReceiptSha256": "9b9d51cd5c62e3c04c6fcf10c32fd242ec1f5f251d26c10c7218ebddd6add464",
+      "abis": [
+        "android-arm64",
+        "android-x64"
+      ],
+      "notListedAsCurrentArtifacts": true
+    }
+  },
+  "currentInlineEvidence": {
+    "finalSourceBindingPending": false,
+    "fullSameSourcePackageValidationPending": true,
+    "root": {
+      "receipt": ".tooling/next223/viewport/root-result.json",
+      "receiptSha256": "55f087a215e5ed0e685229aab323638af6ee55913b7e99526a3bd33de8f2103b",
+      "sourceHashesInReceipt": true,
+      "wholeAppAnalyzeExit": 0,
+      "analyzeLog": ".tooling/next223/viewport/analyze-all.log",
+      "analyzeLogSha256": "162db086ff280c38f8979ff643f2f1231d85431e23faad87779765a3bb50b58e",
+      "viewportModelChecksPassed": 6,
+      "viewportModelExit": 0,
+      "viewportModelLog": ".tooling/next223/viewport/model6.log",
+      "viewportModelLogSha256": "4a2f0329ee34e35875c7a2b67ad8ea1774da01d4b2637031c9ab4696c51554bd",
+      "editorSwitchWholeFile": {
+        "expected": 4,
+        "completed": 0,
+        "exit": 79,
+        "passed": false,
+        "log": ".tooling/next223/viewport/editor-switch4.log",
+        "logSha256": "03f6c362655a83eeaf3e60f626d079a277cfbaf29a34c9a7c12b1eee17c2e947"
+      },
+      "editorSwitchSeparateTargets": {
+        "passedUnique": 4,
+        "wholeFilePassClaimed": false,
+        "receipt": ".tooling/next223/viewport/switch-single-result.json",
+        "receiptSha256": "dfe7bef2d11fda1bea49d205306c3c8d588c568d4c3fb572b1af908eba541f96",
+        "logs": [
+          {
+            "path": ".tooling/next223/viewport/switch-single-0.log",
+            "sha256": "a19820327ab80bf9eb1321f32ef751f78d72a953bae58b6e5d862f3e5b7363cc"
+          },
+          {
+            "path": ".tooling/next223/viewport/switch-single-1.log",
+            "sha256": "31777952938cf625caf7d39c6b22322f5dcbf682bec3fd59545c3d284d437c39"
+          },
+          {
+            "path": ".tooling/next223/viewport/switch-single-2.log",
+            "sha256": "0e20cdecbbf451e6f2c69afbae7ba66046265d0d8c0de2884608e091d3668011"
+          },
+          {
+            "path": ".tooling/next223/viewport/switch-single-3.log",
+            "sha256": "c026f3bc5143273a0e80859abce559c70618931e818036b96ddfe800472e94c4"
+          }
+        ]
+      },
+      "oldEditorCompatibility": {
+        "receipt": ".tooling/next223/viewport/old-editor-result.json",
+        "receiptSha256": "b76464e5c1d998b3fb16b61bebe48a3afd0eb0ea3b3adae4fc15f521d1fda2f1",
+        "colorWorkspaceWholeFilePassed": 8,
+        "editorHdWholeFilePassed": 3,
+        "editorWorkspaceWholeFilePassed": false,
+        "editorWorkspaceCompleted": 0,
+        "editorWorkspaceExpected": 6,
+        "editorWorkspaceExit": 79,
+        "nativeTesterExit": -1073741819,
+        "logs": [
+          {
+            "path": ".tooling/next223/viewport/old-editor_color_workspace_test.log",
+            "sha256": "4b53ff67d55128d6bd089be223948db1c3a8460fdbd70d16422820ac569ef0f3"
+          },
+          {
+            "path": ".tooling/next223/viewport/old-editor_editing_detail_test.log",
+            "sha256": "dbb40db965d3c1d725332bd8f2ac610e425dd34c2b5788c406a696616bda2f54"
+          },
+          {
+            "path": ".tooling/next223/viewport/old-editor_workspace_test.log",
+            "sha256": "ef4c2e67b3f28c41b67a2ebff0069b6b2c74b4d3ee7668d13769ae7ad610b785"
+          }
+        ]
+      }
+    },
+    "hosts": {
+      "receipt": ".tooling/tool-viewport-hosts/result.json",
+      "receiptSha256": "37de1c4d0bdccf328caf87850978fbaf1ff272a67429385aad4b8fff94d65d30",
+      "sourceManifest": ".tooling/tool-viewport-hosts/source-manifest.json",
+      "sourceManifestSha256": "78b9a6b6a1c9ea96d14fd3e4c2ec6ff1281418399f4eea9a3a9b638cfc993320",
+      "newUniqueActualPassesAcrossAttempts": 9,
+      "finalWholeFilePassClaimed": false,
+      "finalWholeFileExit": 79,
+      "existingUniqueActualPassesAcrossAttempts": 19,
+      "existingExpectedUnique": 25,
+      "existingEditorWorkspacePending": 6,
+      "sharedViewportChangedAfterHostAttempts": true,
+      "allAttemptLogHashesInReceipt": true,
+      "legacyFixture": "encoded original/full1600x1200; encoded ordinary800x600; decoded tile16x12; host profile/plane checks, not native-effect or RSS verification"
+    },
+    "retouch": {
+      "receipt": ".tooling/retouch-inline223/result.json",
+      "receiptSha256AtDocumentationUpdate": "396e8a6cff7098a11d6778d4044a1a2955d82206481744b14fede74814affed6",
+      "sourceSnapshot": ".tooling/retouch-inline223/source-snapshot-pending.json",
+      "sourceSnapshotSha256AtDocumentationUpdate": "bf444b683237cea751071affec09a6d3f9681d79dbf4df312981490bb9791554",
+      "newCasesEarlierWholeFilePassed": 5,
+      "earlierWholeFileExit": 0,
+      "earlierLog": ".tooling/retouch-inline223/embedded5-final.log",
+      "earlierLogSha256": "5c4c2c00ca97401bc8ab8e91bd56f2b6db2d6d1d26e2fbe7cf228a5b9e969761",
+      "qualifier": "Those five passed before subsequent shared viewport/orientation fixes and standalone Material wrapper; latest revalidation and old-target evidence still root-coordinated.",
+      "latestCompatibility": {
+        "receipt": ".tooling/next223/retouch-compat/result.json",
+        "receiptSha256": "3b439ae9c0ff1c65d905102f3611c32ae0561759d75d3117ccc45c3cba838c82",
+        "sourceAfter": ".tooling/next223/retouch-compat/source-after.json",
+        "sourceAfterSha256": "77d1dc51d0ef121bd1f3c5bc5d0b9b37e4d4c9ad4ddc102f563ecbaa603313d6",
+        "embeddedWholeFilePassed": 5,
+        "embeddedExit": 0,
+        "skinWholeGroupPassed": 3,
+        "skinExit": 0,
+        "patchConfirmSinglePassed": 1,
+        "standaloneCheckboxSinglePassed": 1,
+        "correctedCandidateProfileSinglePassed": 1,
+        "standaloneReviewModelPassed": 3,
+        "standaloneReviewWidgetPending": 9,
+        "patchCancelAndMultitouchPending": 2,
+        "busyBackPending": 2,
+        "remainingCandidateWorkspaceAfterFixtureChangePending": 5,
+        "noWholeCompatibilitySuitePassClaim": true,
+        "allCommandsAttemptsLogHashesInReceipt": true
+      }
+    },
+    "claimLimits": [
+      "Failed assertions/fixture registrations and did-not-complete/AccessViolation/Connection closed attempts remain recorded; none counts as a pass.",
+      "No aggregate of overlapping or split targets is called one green whole-suite command.",
+      "Working-file hashes and per-attempt receipts do not establish a final Git commit or accepted installation package.",
+      "The 04a Apple582/UIKit5/native1 and Android123 runtime receipts apply only to the pre-inline batch."
+    ],
+    "frozenSourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+    "latestAppleFullRun": 43588426197,
+    "latestAppleFullRunUrl": "https://github.com/1162107757/nikon-camera/actions/runs/43588426197",
+    "javaInputBinding": {
+      "sourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+      "gitLfMatches": 245,
+      "rawGitMatches": 193,
+      "lineEndingOnlyDifferences": 52,
+      "testRerunForBinding": false,
+      "freshRunAlreadyExecuted": true,
+      "receipt": "core/result.json",
+      "receiptSha256": "a875a5a6166898a56c882b3e0d12b2aa167dea6cbbdeca7ba159a169b0ca58ec",
+      "appleParityStillPendingRun": 43588426197
+    },
+    "historicalAttemptQualificationsRetained": true
+  },
+  "supersededByVersionCode": 224,
+  "successorReceipt": "../features-224/source.json"
+}

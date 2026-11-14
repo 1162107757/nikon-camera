@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "preDensitySourceCommit": "0c70d788667b8bb0e49188ed5505517c255de5bc",
+  "sourceImageSize": [
+    6000,
+    4000
+  ],
+  "sourceImageSha256": "abaeb2ba0d8940e226d8c9e3ed88dbb0bb64f1ccf0b71f17eec94cc0f29bb5de",
+  "sourceUnchangedVerified": true,
+  "physicalViewport": [
+    1080,
+    1219
+  ],
+  "zoom": 2,
+  "before": {
+    "name": "5e331959-4e9b-4f06-a19a-9c99889ced9e.jpg",
+    "size": [
+      926,
+      1000
+    ],
+    "bytes": 152661,
+    "sha256": "7fcda2c823aa458c3f31789dd9ff72e039a882e8a95fdced91215b042a9ee70b"
+  },
+  "after": {
+    "name": "f79a6e3c-0973-4749-b38e-8162fd7ae175.jpg",
+    "size": [
+      1850,
+      2000
+    ],
+    "bytes": 511196,
+    "sha256": "7fcec9883f5a680050d69404909342409e442cc5a2d5a29554838b3a23e16854"
+  },
+  "decodedPixelRatio": 3.9956803455723544,
+  "tileMaximumEdge": 2048,
+  "tileMaximumPixels": 4194304,
+  "physicalDevice": false,
+  "androidApi": 31,
+  "installedApkSha256": "19014a327336a3067f50498bb06fa9a6f20e715ac200a266d72912ae9334707c",
+  "qualityClaim": "More real source sampling; not a four-times perceptual-quality claim",
+  "screenshots": [
+    "chart224-pre-density-two-times.png",
+    "density224-two-times-settled.png"
+  ]
+}

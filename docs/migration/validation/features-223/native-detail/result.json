@@ -1,0 +1,41 @@
+{
+  "sourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+  "sourceBinding": "archive-time hashes of root-frozen source; standalone commands ran before final commit and were not rerun for archive",
+  "sourceManifestSha256": "79db49302b79115d459faa1909cf8d21cd697fca46bc07e233e9c4b4c74f645c",
+  "copyManifestSha256": "d39c72cf8220836924256c121b766cddfe2025c9bc1b2b83cc2a15b9691aa86f",
+  "commandsSha256": "83d61a0d728ff6d04273deaff71d3b36bba8783e1b2b50ea9df1722129f3feaa",
+  "localEvidence": {
+    "jvmCompileExit": 0,
+    "jvmBoundaryExit": 0,
+    "jvmChecks": 39,
+    "androidNativeAndInstrumentationCompileExit": 0,
+    "sourceBoundaryExit": 0,
+    "sourceChecks": 43
+  },
+  "historicalFailuresExcluded": {
+    "originalSource": "68579a5",
+    "realR8FailedAfterChecks": 68,
+    "fixedR8PassClaimed": false,
+    "isolatedAppProcessProbeUsefulResult": false
+  },
+  "memoryClaim": {
+    "boundedPlanMaxEdge": 2048,
+    "boundedPlanMaxOutputPixels": 4194304,
+    "actualDecoderBytesDeviceAssertions": "pending root final R8 receipt",
+    "wholeProcessRssMeasured": false
+  },
+  "finalRootReceipts": {
+    "androidReleaseRuntime": {
+      "requiredChecks": 123,
+      "status": "pending-root-receipt",
+      "passClaimed": false
+    },
+    "apple": {
+      "status": "pending-root-receipt",
+      "passClaimed": false
+    },
+    "freshFullCoreBindingClaimedHere": false
+  },
+  "published": false,
+  "archivedAtUtc": "2026-11-14T08:58:44.857420+00:00"
+}

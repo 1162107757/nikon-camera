@@ -1,0 +1,15 @@
+{
+  "scope": "RAW Apple failure fixture only",
+  "formatExit": 0,
+  "analyzeExit": 0,
+  "testExit": 0,
+  "passed": 3,
+  "testSha256": "7430bd91de4215b1d5766716e7b55f77e1963824aafc78985750f7e0501ec6ad",
+  "rawHostSha256": "3ae3b8a37e1b3a29feb3117d42d678678c974b5e8785814bdf424e79976992cc",
+  "hostChangedThisTask": false,
+  "strictRoiWidthLessThan": 0.06,
+  "ownerAndFileCleanupAssertionsPreserved": true,
+  "nativeSixRemainedFrozen": true,
+  "SDKReleased": true,
+  "freshAppleRunClaimed": false
+}

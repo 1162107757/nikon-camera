@@ -1,0 +1,47 @@
+{
+  "sourceDirectory": "../../features-223/core",
+  "targetVersionCode": 224,
+  "sourceFiles": {
+    "compile.log": {
+      "bytes": 189,
+      "sha256": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6"
+    },
+    "core-check.log": {
+      "bytes": 3544,
+      "sha256": "36c642c03a858efa2cabc46a55e1f5aa234f3f75c2a35d10f9b01eb5141b720a"
+    },
+    "golden.json": {
+      "bytes": 760,
+      "sha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5"
+    },
+    "reference.json": {
+      "bytes": 940,
+      "sha256": "9aaa44ae96b94563fc916f9b762bcb019f7f3e1e4cd84337e4fe2d2dd291e028"
+    },
+    "result.json": {
+      "bytes": 8242,
+      "sha256": "a875a5a6166898a56c882b3e0d12b2aa167dea6cbbdeca7ba159a169b0ca58ec"
+    },
+    "run.log": {
+      "bytes": 4151,
+      "sha256": "c589ac84fa19ab05ab9cca3a7512b165f54dfb4c27eb938ac22db9b039fd0e24"
+    },
+    "source-fingerprints.json": {
+      "bytes": 59260,
+      "sha256": "f8ba0d6abac98faa3422f1cdd3f16b4ddaaf994458fae4c82cf00608a3c32394"
+    },
+    "sources.json": {
+      "bytes": 17481,
+      "sha256": "45f94c70efee9926b1bc2bd43273d80cb58f7daf3135328a295c00ca9521dcfb"
+    }
+  },
+  "byteExactOriginalReceipts": [
+    "result.pre224.json",
+    "reference.pre224.json"
+  ],
+  "adaptedPendingWrappers": [
+    "result.json",
+    "reference.json"
+  ],
+  "newJvmExecutionClaimed": false
+}

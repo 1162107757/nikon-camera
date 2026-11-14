@@ -1,0 +1,74 @@
+{
+  "reconstructedFromExecutedToolInvocations": true,
+  "reexecutedDuringArchive": false,
+  "historicalBuildOutputClasspathsNotFrozenHere": true,
+  "commands": [
+    {
+      "name": "standalone JVM compile",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera",
+      "argv": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\javac.exe",
+        "-J-Dfile.encoding=UTF-8",
+        "-J-Duser.language=en",
+        "--release",
+        "11",
+        "-encoding",
+        "UTF-8",
+        "-cp",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\.build\\core-jvm\\classes",
+        "-d",
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next223\\detail-failure-diagnosis\\fixed-classes",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\core\\java\\cc\\huevia\\shared\\SharedDetailTiles.java",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\core\\test\\cc\\huevia\\shared\\DetailTilesBoundaryTest.java"
+      ],
+      "exit": 0,
+      "archiveLog": "logs/jvm-compile.log"
+    },
+    {
+      "name": "standalone JVM boundaries",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera",
+      "argv": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\java.exe",
+        "-Dfile.encoding=UTF-8",
+        "-cp",
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next223\\detail-failure-diagnosis\\fixed-classes;D:\\dev\\ai-project\\nikon-camera\\cross-platform\\.build\\core-jvm\\classes",
+        "cc.huevia.shared.DetailTilesBoundaryTest"
+      ],
+      "exit": 0,
+      "checks": 39,
+      "archiveLog": "logs/jvm-boundaries.log"
+    },
+    {
+      "name": "Android native and instrumentation javac only",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera",
+      "argv": [
+        "D:\\dev\\Java\\jdk-17.0.19\\bin\\javac.exe",
+        "-J-Dfile.encoding=UTF-8",
+        "-J-Duser.language=en",
+        "--release",
+        "17",
+        "-encoding",
+        "UTF-8",
+        "-cp",
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next223\\detail-failure-diagnosis\\fixed-classes;D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app\\build\\app\\intermediates\\javac\\release\\compileReleaseJavaWithJavac\\classes;D:\\dev\\Android\\Sdk\\platforms\\android-36\\android.jar",
+        "-d",
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\next223\\detail-failure-diagnosis\\fixed-android-classes",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app\\android\\app\\src\\main\\java\\cc\\huevia\\sharedapp\\NativeMedia.java",
+        "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app\\android\\app\\src\\androidTest\\java\\cc\\huevia\\sharedapp\\ReleaseRuntimeInstrumentation.java"
+      ],
+      "exit": 0,
+      "archiveLog": "logs/android-compile.log"
+    },
+    {
+      "name": "read-only source boundaries",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera",
+      "argv": [
+        "python",
+        "cross-platform/tool/detail_render_check.py"
+      ],
+      "exit": 0,
+      "checks": 43,
+      "archiveLog": "logs/source-boundaries.log"
+    }
+  ]
+}

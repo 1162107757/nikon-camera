@@ -1,0 +1,5 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart
+00:00 +0: RAW real viewport requests ROI detail, preserves the ordinary frame and reuses the full file while panning
+00:01 +1: RAW changing settings cancels held HD immediately and resumes only after its final frozen preview
+00:02 +2: RAW owner leave and return rejects held HD and disposes its late private file
+00:03 +3: All tests passed!

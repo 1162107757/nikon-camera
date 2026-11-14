@@ -1,0 +1,33 @@
+{
+  "referenceSourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+  "referenceReceipt": "../../features-223/core/result.json",
+  "referenceGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+  "freshLocal223JvmRunClaimed": true,
+  "freshReceipt": "result.json",
+  "freshGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+  "final223SourceBindingPending": false,
+  "final223SourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+  "compiledJavaInputCount": 245,
+  "previousCompiledInputCount": 243,
+  "existing243InputsUnchanged": true,
+  "newCompiledInputs": [
+    "cross-platform/core/java/cc/huevia/shared/SharedDetailTiles.java",
+    "cross-platform/core/test/cc/huevia/shared/DetailTilesBoundaryTest.java"
+  ],
+  "sharedBoundaryChecks": 1764,
+  "sharedAtmosphereChecks": 6,
+  "totalSharedChecks": 1770,
+  "copiedAsReferenceOnly": false,
+  "targetVersionCode": 224,
+  "originalReferenceReceipt": "reference.pre224.json",
+  "final224SourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "final224SourceBindingPending": false,
+  "freshLocal224JvmRunClaimed": false,
+  "testRerunForBinding": false,
+  "freshRunAlreadyExecuted": true,
+  "copiedFor224AsReference": true,
+  "sourceBindingReceipt": "source-binding.json",
+  "sourceBindingReceiptSha256": "48f86173b2907f078fee0b0f376a1815102da2b83883c2187706afede8ef8368",
+  "previous224SourceCommit": "0c70d788667b8bb0e49188ed5505517c255de5bc",
+  "previous224BindingReceipt": "reference.pre-density.json"
+}

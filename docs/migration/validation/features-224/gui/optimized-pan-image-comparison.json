@@ -1,0 +1,47 @@
+[
+  {
+    "case": "overview",
+    "requestedDelta": [
+      220,
+      200
+    ],
+    "unshiftedMeanAbsoluteDifference": 66.9945720164609,
+    "translatedMeanAbsoluteDifference": 0.0009974279835390945,
+    "comparisonRegion": [
+      80,
+      400,
+      800,
+      1300
+    ]
+  },
+  {
+    "case": "skin",
+    "requestedDelta": [
+      200,
+      180
+    ],
+    "unshiftedMeanAbsoluteDifference": 91.5669828042328,
+    "translatedMeanAbsoluteDifference": 0.07235383597883598,
+    "comparisonRegion": [
+      80,
+      400,
+      800,
+      1100
+    ]
+  },
+  {
+    "case": "face",
+    "requestedDelta": [
+      200,
+      180
+    ],
+    "unshiftedMeanAbsoluteDifference": 108.600069664903,
+    "translatedMeanAbsoluteDifference": 0.00031966490299823635,
+    "comparisonRegion": [
+      80,
+      400,
+      800,
+      1450
+    ]
+  }
+]

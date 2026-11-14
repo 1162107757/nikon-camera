@@ -1,0 +1,35 @@
+{
+  "failureSource": "68579a5 real R8 fail after check 68, first tile",
+  "diagnosis": "Tile adapter did not normalize EXIF UNDEFINED/invalid orientation before strict ROI Plan; other render paths already normalize",
+  "fix": "Both adapters use common normalizedOrientation; Plan rejects raw 0 unchanged",
+  "jvmChecks": 39,
+  "sourceBoundaryChecks": 43,
+  "r8ExpectedChecks": 123,
+  "r8AllOldAssertionsPreserved": true,
+  "commands": {
+    "fix-core-compile": 0,
+    "fix-core-test": 0,
+    "fix-android-compile": 0,
+    "fix-source-check": 0
+  },
+  "realFixedR8": "pending root rebuild/rerun",
+  "iosFixedPixels": "pending root Apple rebuild",
+  "isolatedDeviceProbe": "failed before useful result (first empty DEX then app_process killed); not claimed as proof; original logs retained",
+  "freshCoreBindingClaimed": false,
+  "failedApkSha256": "d966e3821b40097950cabc8bac383c1babfb2a608fbb87bab5a65f345665ad37",
+  "fixedFiles": [
+    "cross-platform/core/java/cc/huevia/shared/SharedDetailTiles.java",
+    "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeMedia.java",
+    "cross-platform/native/ios/Classes/HueviaMedia.mm",
+    "cross-platform/core/test/cc/huevia/shared/DetailTilesBoundaryTest.java",
+    "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/ReleaseRuntimeInstrumentation.java",
+    "cross-platform/tool/detail_render_check.py"
+  ],
+  "diffCheckExit": 0,
+  "isolatedProbeOwnFilesCleaned": [
+    {
+      "ownProbePath": "/data/local/tmp/huevia223-exif-plan-probe.dex",
+      "exit": 0
+    }
+  ]
+}

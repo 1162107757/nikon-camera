@@ -1,0 +1,99 @@
+00:00 +0: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart
+00:00 +0 -1: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart [E]
+  Failed to load "D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart":
+  Compilation failed for testPath=D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart: lib/editing_detail_preview.dart:371:26: Error: Too few positional arguments: 4 required, 3 given.
+            if (_tileCovers(latest, viewport, edge)) continue;
+                           ^
+  lib/editing_detail_preview.dart:372:28: Error: Too many positional arguments: 5 allowed, but 6 found.
+  Try removing the extra positional arguments.
+            await _renderTile(document, latest, generation, viewport, edge, _installationEpoch);
+                             ^
+  lib/editing_detail_preview.dart:554:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+   - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+        if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                       ^^^^^^^^^^^^^^^^^
+  lib/editing_detail_preview.dart:561:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+   - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+        if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                       ^^^^^^^^^^^^^^^^^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:00 +0 -2: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_realtime_preview_test.dart [E]
+  Failed to load "D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_realtime_preview_test.dart":
+  Compilation failed for testPath=D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_realtime_preview_test.dart: lib/editing_detail_preview.dart:371:26: Error: Too few positional arguments: 4 required, 3 given.
+            if (_tileCovers(latest, viewport, edge)) continue;
+                           ^
+  lib/editing_detail_preview.dart:372:28: Error: Too many positional arguments: 5 allowed, but 6 found.
+  Try removing the extra positional arguments.
+            await _renderTile(document, latest, generation, viewport, edge, _installationEpoch);
+                             ^
+  lib/editing_detail_preview.dart:554:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+   - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+        if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                       ^^^^^^^^^^^^^^^^^
+  lib/editing_detail_preview.dart:561:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+   - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+        if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                       ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -2: Some tests failed.
+
+Failing tests:
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_editing_detail_test.dart
+  D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_realtime_preview_test.dart: loading D:/dev/ai-project/nikon-camera/cross-platform/app/test/raw_realtime_preview_test.dart
+lib/editing_detail_preview.dart:371:26: Error: Too few positional arguments: 4 required, 3 given.
+          if (_tileCovers(latest, viewport, edge)) continue;
+                         ^
+lib/editing_detail_preview.dart:372:28: Error: Too many positional arguments: 5 allowed, but 6 found.
+Try removing the extra positional arguments.
+          await _renderTile(document, latest, generation, viewport, edge, _installationEpoch);
+                           ^
+lib/editing_detail_preview.dart:554:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+ - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+      if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                     ^^^^^^^^^^^^^^^^^
+lib/editing_detail_preview.dart:561:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+ - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+      if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                     ^^^^^^^^^^^^^^^^^
+lib/editing_detail_preview.dart:371:26: Error: Too few positional arguments: 4 required, 3 given.
+          if (_tileCovers(latest, viewport, edge)) continue;
+                         ^
+lib/editing_detail_preview.dart:372:28: Error: Too many positional arguments: 5 allowed, but 6 found.
+Try removing the extra positional arguments.
+          await _renderTile(document, latest, generation, viewport, edge, _installationEpoch);
+                           ^
+lib/editing_detail_preview.dart:554:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+ - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+      if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                     ^^^^^^^^^^^^^^^^^
+lib/editing_detail_preview.dart:561:54: Error: The getter 'installationEpoch' isn't defined for the type 'EditingDetailPreviewController'.
+ - 'EditingDetailPreviewController' is from 'package:huevia/editing_detail_preview.dart' ('lib/editing_detail_preview.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'installationEpoch'.
+      if (!_canInstall(config, generation, viewport, installationEpoch)) return;
+                                                     ^^^^^^^^^^^^^^^^^

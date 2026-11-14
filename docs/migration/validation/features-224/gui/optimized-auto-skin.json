@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "noManualRecognizeClicked": true,
+  "autoMaskUsableToneOption": [
+    {
+      "index": "1",
+      "text": "",
+      "resource-id": "",
+      "class": "android.widget.Button",
+      "package": "cc.huevia.next",
+      "content-desc": "自然米色肤色",
+      "checkable": "false",
+      "checked": "false",
+      "clickable": "true",
+      "enabled": "true",
+      "focusable": "true",
+      "focused": "false",
+      "scrollable": "false",
+      "long-clickable": "false",
+      "password": "false",
+      "selected": "false",
+      "bounds": "[252,1778][473,1999]"
+    }
+  ],
+  "selectedColor": "自然米色肤色",
+  "intensity": 35
+}

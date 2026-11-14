@@ -1,0 +1,32 @@
+[
+  {
+    "screenshot": "density224-chart-portrait.png",
+    "comparisonRegion": [
+      40,
+      400,
+      900,
+      1200
+    ],
+    "meanAbsoluteDifferenceAtSameScreenPosition": 0.12584932170542637
+  },
+  {
+    "screenshot": "density224-chart-repair.png",
+    "comparisonRegion": [
+      40,
+      400,
+      900,
+      1200
+    ],
+    "meanAbsoluteDifferenceAtSameScreenPosition": 0.023984980620155038
+  },
+  {
+    "screenshot": "density224-chart-repair-back.png",
+    "comparisonRegion": [
+      40,
+      400,
+      900,
+      1200
+    ],
+    "meanAbsoluteDifferenceAtSameScreenPosition": 0.12584932170542637
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "run": 43588426197,
+  "sourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+  "conclusion": "failure",
+  "failedJob": 132427797545,
+  "failureStage": "Build and test the unsigned device app / Flutter tests",
+  "flutterCompletedPassed": 604,
+  "flutterFailed": 2,
+  "failedTests": [
+    {
+      "file": "test/editor_workspace_test.dart",
+      "line": 181,
+      "name": "Tentative crop handles, ratio, rotate and cancel at Size(375.0, 812.0)",
+      "assertion": "pumpAndSettle timed out"
+    },
+    {
+      "file": "test/editor_workspace_test.dart",
+      "line": 181,
+      "name": "Tentative crop handles, ratio, rotate and cancel at Size(812.0, 375.0)",
+      "assertion": "pumpAndSettle timed out"
+    }
+  ],
+  "laterUIKitAndNativePipelineNotAccepted": true,
+  "ipaDownloaded": false,
+  "files": {
+    "analyze.log": {
+      "bytes": 97,
+      "sha256": "b393f729ff2157dd283a170df5ef8aa964324e5e83115024d875c64f6bf6f3d7"
+    },
+    "device-build.log": {
+      "bytes": 894,
+      "sha256": "50786d4fa830c56f137301f16dabd32d2b57692786f6bd512daa833845484000"
+    },
+    "failed-evidence.zip": {
+      "bytes": 31675,
+      "sha256": "a3a91b2ff57ee1ff6aec79d614fda5c750dae9e2dbb3c7157b850c1e954a58a9"
+    },
+    "failure-extract.log": {
+      "bytes": 1842,
+      "sha256": "3705e9c6a3daa158ca8249cbdc611d102055b94272f33d7efa3e031030837953"
+    },
+    "flutter-failure-extract.log": {
+      "bytes": 7802,
+      "sha256": "4d9e35001b412d073a61d0aad7426e789f41ae5f186746c422fdb0d3bd70e697"
+    },
+    "flutter-tests.original.log": {
+      "bytes": 144842,
+      "sha256": "3befc88164c29d54a50539bc45a4c8f0a2ecc2eb3c4cf947a405554c750ea577"
+    },
+    "job-132427797545-original.log": {
+      "bytes": 42587,
+      "sha256": "5591d9cee5d42eeca0d0f521553b67a2a94ed038d6a127127e07f645f415a346"
+    }
+  }
+}

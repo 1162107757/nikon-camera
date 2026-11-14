@@ -1,0 +1,29 @@
+{
+  "scope": [
+    "lib/raw_develop.dart",
+    "test/raw_editing_detail_test.dart"
+  ],
+  "formatExit": 0,
+  "analyzeExit": 0,
+  "maxScale": 32,
+  "combinedRun": {
+    "exit": 1,
+    "passed": 5,
+    "didNotComplete": [
+      "RAW owner leave and return rejects held HD and disposes its late private file"
+    ],
+    "assertionFailureReported": false
+  },
+  "targetedOwnerRerun": {
+    "exit": 0,
+    "passed": 1
+  },
+  "uniquePassedCases": 6,
+  "wholeSuiteExitZeroClaimed": false,
+  "initialCompileAttempt": {
+    "executed": 0,
+    "failure": "Concurrent shared installationEpoch API edit; retained tests.log"
+  },
+  "nativePixelClaimed": false,
+  "sdkReleasedTo": "account_delivery"
+}

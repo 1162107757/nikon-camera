@@ -1,0 +1,46 @@
+{
+  "build": 224,
+  "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "acceptedForLocalTesting": true,
+  "androidAcceptedForLocalTesting": true,
+  "iosAcceptedForLocalTesting": true,
+  "published": false,
+  "status": "Frozen 224 local-test baseline; latest user-reported continuity and public-internet/account issues are being fixed in 225",
+  "artifacts": [
+    {
+      "platform": "android",
+      "abi": "arm64",
+      "path": "dist/migration224/huevia-0.31.0-dev-224-android-arm64.apk",
+      "bytes": 53198642,
+      "sha256": "248cd5b988244b8d43fa96ff5af5984c8f84fbed9fc4bf23e8569f77dd942f23",
+      "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "platform": "android",
+      "abi": "x64",
+      "path": "dist/migration224/huevia-0.31.0-dev-224-android-x64.apk",
+      "bytes": 56701146,
+      "sha256": "19014a327336a3067f50498bb06fa9a6f20e715ac200a266d72912ae9334707c",
+      "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "platform": "ios",
+      "path": "dist/migration224/huevia-0.31.0-dev-224-ios-unsigned.ipa",
+      "bytes": 65120925,
+      "sha256": "1e3aadf4fb195905ec689f1435ce8c57ccc3677c9806451fb353c800cccf0d8d",
+      "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+      "unsigned": true,
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "knownFollowupIssuesFor225": [
+    "Sharpness drops before replacement after editing/tool changes",
+    "Public internet while camera Wi-Fi is connected",
+    "Registration session/form continuity and simpler password guidance"
+  ]
+}

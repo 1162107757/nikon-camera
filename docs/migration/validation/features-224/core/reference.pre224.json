@@ -1,0 +1,21 @@
+{
+  "referenceSourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "referenceReceipt": "../../features-222/core/reference.json",
+  "referenceGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+  "freshLocal223JvmRunClaimed": true,
+  "freshReceipt": "result.json",
+  "freshGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+  "final223SourceBindingPending": false,
+  "final223SourceCommit": "8dbdd33337cecfef5da969920913e5c3c4c66f3d",
+  "compiledJavaInputCount": 245,
+  "previousCompiledInputCount": 243,
+  "existing243InputsUnchanged": true,
+  "newCompiledInputs": [
+    "cross-platform/core/java/cc/huevia/shared/SharedDetailTiles.java",
+    "cross-platform/core/test/cc/huevia/shared/DetailTilesBoundaryTest.java"
+  ],
+  "sharedBoundaryChecks": 1764,
+  "sharedAtmosphereChecks": 6,
+  "totalSharedChecks": 1770,
+  "copiedAsReferenceOnly": false
+}

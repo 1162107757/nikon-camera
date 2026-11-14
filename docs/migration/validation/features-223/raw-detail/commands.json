@@ -1,0 +1,120 @@
+{
+  "reconstructedFromExecutedToolInvocations": true,
+  "reexecutedDuringArchive": false,
+  "historicalSourceDigestsNotInvented": true,
+  "commands": [
+    {
+      "name": "historical two-file format",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\dart.bat",
+        "format",
+        "lib/raw_develop.dart",
+        "test/raw_editing_detail_test.dart"
+      ],
+      "exit": 0,
+      "archiveLog": "historical/format-final2.log"
+    },
+    {
+      "name": "historical two-file analyze",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+        "analyze",
+        "--no-pub",
+        "lib/raw_develop.dart",
+        "test/raw_editing_detail_test.dart"
+      ],
+      "exit": 0,
+      "archiveLog": "historical/analyze-final2.log"
+    },
+    {
+      "name": "superseded shared-API load failure",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+        "test",
+        "--no-pub",
+        "--reporter",
+        "expanded",
+        "test/raw_editing_detail_test.dart",
+        "test/raw_realtime_preview_test.dart"
+      ],
+      "exit": 1,
+      "executedCases": 0,
+      "archiveLog": "historical/tests.log"
+    },
+    {
+      "name": "historical six-case aggregate",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+        "test",
+        "--no-pub",
+        "--reporter",
+        "expanded",
+        "test/raw_editing_detail_test.dart",
+        "test/raw_realtime_preview_test.dart"
+      ],
+      "exit": 1,
+      "passed": 5,
+      "didNotComplete": 1,
+      "archiveLog": "historical/tests-final2.log"
+    },
+    {
+      "name": "historical owner single rerun",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+        "test",
+        "--no-pub",
+        "--reporter",
+        "expanded",
+        "test/raw_editing_detail_test.dart",
+        "--plain-name",
+        "RAW owner leave and return rejects held HD and disposes its late private file"
+      ],
+      "exit": 0,
+      "passed": 1,
+      "archiveLog": "historical/owner-single.log"
+    },
+    {
+      "name": "canonical RAW test format",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\dart.bat",
+        "format",
+        "test/raw_editing_detail_test.dart"
+      ],
+      "exit": 0,
+      "archiveLog": "canonical/format.log"
+    },
+    {
+      "name": "canonical RAW test analyze",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+        "analyze",
+        "--no-pub",
+        "test/raw_editing_detail_test.dart"
+      ],
+      "exit": 0,
+      "archiveLog": "canonical/analyze.log"
+    },
+    {
+      "name": "canonical complete RAW detail test file",
+      "cwd": "D:\\dev\\ai-project\\nikon-camera\\cross-platform\\app",
+      "argv": [
+        "D:\\dev\\ai-project\\nikon-camera\\.tooling\\cross-platform187\\flutter-sdk\\bin\\flutter.bat",
+        "test",
+        "--no-pub",
+        "--reporter",
+        "expanded",
+        "test/raw_editing_detail_test.dart"
+      ],
+      "exit": 0,
+      "passed": 3,
+      "archiveLog": "canonical/tests.log"
+    }
+  ]
+}

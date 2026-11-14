@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+  "commitProvidedByRoot": true,
+  "hashComputedFromCurrentWorkspaceBytes": true,
+  "archivedAtUtc": "2026-11-14T08:58:44.857420+00:00",
+  "files": [
+    {
+      "path": "cross-platform/app/lib/raw_develop.dart",
+      "bytes": 26985,
+      "sha256": "3ae3b8a37e1b3a29feb3117d42d678678c974b5e8785814bdf424e79976992cc"
+    },
+    {
+      "path": "cross-platform/app/test/raw_editing_detail_test.dart",
+      "bytes": 12339,
+      "sha256": "7430bd91de4215b1d5766716e7b55f77e1963824aafc78985750f7e0501ec6ad"
+    },
+    {
+      "path": "cross-platform/app/test/raw_realtime_preview_test.dart",
+      "bytes": 6659,
+      "sha256": "e09b1945f89559dd82e12defd8b8eea56d5d22b70eea098c28753490d35b3205"
+    },
+    {
+      "path": "cross-platform/app/lib/editing_detail_preview.dart",
+      "bytes": 27052,
+      "sha256": "3e2180dc9878a07f6dc065e5d1ffc3d08f374c0f91c6452579a751a2052dea3e"
+    },
+    {
+      "path": "cross-platform/app/lib/latest_preview_queue.dart",
+      "bytes": 2522,
+      "sha256": "4d58501dca0d25597e53f6181bd7ecb954fbed33bb5ea527ced5e14fb95cad98"
+    },
+    {
+      "path": "cross-platform/app/lib/raw_reference.dart",
+      "bytes": 1797,
+      "sha256": "16043b90505933ecf754dc70773c07b3f0043ece7547c5b0c328662d6a7e2dba"
+    }
+  ]
+}

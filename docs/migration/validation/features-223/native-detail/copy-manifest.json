@@ -1,0 +1,40 @@
+{
+  "copyMethod": "binary shutil.copyfile + direct byte equality + SHA-256",
+  "files": [
+    {
+      "original": ".tooling/next223/detail-failure-diagnosis/fix-core-compile.log",
+      "archived": "logs/jvm-compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/detail-failure-diagnosis/fix-core-test.log",
+      "archived": "logs/jvm-boundaries.log",
+      "bytes": 92,
+      "sha256": "9f59ccf345efd9b7145664b97b3351249f96bcb67da6bf78cec8bcbdadbc5082",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/detail-failure-diagnosis/fix-android-compile.log",
+      "archived": "logs/android-compile.log",
+      "bytes": 210,
+      "sha256": "22f67226e72cee071471388110ab3987c53dc6d549943912e61162b42d329a33",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/detail-failure-diagnosis/fix-source-check.log",
+      "archived": "logs/source-boundaries.log",
+      "bytes": 59,
+      "sha256": "5948a8b83b2d7f363ad73130235386521d49a6ea15bfdd599c14ef10030f7046",
+      "byteIdentical": true
+    },
+    {
+      "original": ".tooling/next223/detail-failure-diagnosis/result.json",
+      "archived": "result.original.json",
+      "bytes": 1594,
+      "sha256": "f5d7fccdec5ee1a3ba28fd7a970a486fd13c2218d7d3fac8c8f32f080eb8b5da",
+      "byteIdentical": true
+    }
+  ]
+}

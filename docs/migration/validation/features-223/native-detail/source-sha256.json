@@ -1,0 +1,48 @@
+{
+  "sourceCommit": "04a4d18ea0109b095ba1f854ea7b9a778480bf03",
+  "commitProvidedByRoot": true,
+  "hashComputedFromCurrentWorkspaceBytes": true,
+  "archivedAtUtc": "2026-11-14T08:58:44.857420+00:00",
+  "files": [
+    {
+      "path": "cross-platform/core/java/cc/huevia/shared/SharedDetailTiles.java",
+      "bytes": 7102,
+      "sha256": "121ecb0fc9b33fedfd98455538f6cb4069aeec86797ec5f6ea03aa3c93909fce"
+    },
+    {
+      "path": "cross-platform/core/test/cc/huevia/shared/DetailTilesBoundaryTest.java",
+      "bytes": 6463,
+      "sha256": "986cc289cd7c0a6ddb6371d24e24bb785f2fa9891b0b934b0cc020028a4eb979"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/main/java/cc/huevia/sharedapp/NativeMedia.java",
+      "bytes": 33454,
+      "sha256": "415ad886980720ee53d236c612ce7db24d5df400347978a33f53981f95d35d71"
+    },
+    {
+      "path": "cross-platform/native/ios/Classes/HueviaMedia.mm",
+      "bytes": 68744,
+      "sha256": "4a91a834dfb56686b5b09bf2a337e8bfb32b8bc76c3c3c30163a85ef2dd60fc8"
+    },
+    {
+      "path": "cross-platform/native/ios/huevia_core.podspec",
+      "bytes": 1791,
+      "sha256": "2587bc2a4f8e69633294227e525d222bfc71f09985ca30556fe8397e1d8a63cd"
+    },
+    {
+      "path": "cross-platform/app/android/app/src/androidTest/java/cc/huevia/sharedapp/ReleaseRuntimeInstrumentation.java",
+      "bytes": 50707,
+      "sha256": "de7613458eec51696eafc1306c9be21b650b99bba6078b84474ca41721bbb510"
+    },
+    {
+      "path": "cross-platform/app/integration_test/detail_render_fixture.dart",
+      "bytes": 15311,
+      "sha256": "5d203eafc66c20c49cc3dc7d8d1e197432182caa9227d24be2b2ad89fb7474a2"
+    },
+    {
+      "path": "cross-platform/tool/detail_render_check.py",
+      "bytes": 6085,
+      "sha256": "cd0c08334f3b8e48ff4ebc3f5b6b993e90097977814799c5840e5ca268a5e3ec"
+    }
+  ]
+}
