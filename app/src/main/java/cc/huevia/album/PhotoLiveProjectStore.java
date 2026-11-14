@@ -81,7 +81,8 @@ public final class PhotoLiveProjectStore {
         String filename = checkedFilename(photo.filename());
         long bytes = source.length(), modified = source.lastModified();
         if (bytes < 4 || bytes > MAX_PHOTO_BYTES) throw new IOException("项目原图大小无效。");
-        PhotoPreviewCache.validateJpeg(source, bytes);
+        if (PhotoFormat.isNefName(source.getName())) PhotoFormat.validateNef(source, bytes);
+        else PhotoPreviewCache.validateJpeg(source, bytes);
         String sha = hashFile(source);
         if (bytes != source.length() || modified != source.lastModified()) throw new IOException("项目原图发生变化，未修改项目记录。");
         for (Entry entry : project.entries) {
