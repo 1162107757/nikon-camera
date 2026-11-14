@@ -42,6 +42,8 @@ class RealtimeCore extends HueviaCore {
   );
   late final File source;
   bool gate = false;
+  Completer<Json>? atmosphereGate;
+  int atmosphereRequests = 0;
   int serial = 0, active = 0, maximumActive = 0;
   final calls = <PreviewCall>[];
   final cancelled = <String>[];
@@ -82,9 +84,13 @@ class RealtimeCore extends HueviaCore {
         active--;
       }
     }
+    if (operation == 'media.atmosphere') {
+      atmosphereRequests++;
+      final held = atmosphereGate;
+      return held == null ? image() : await held.future;
+    }
     if (operation == 'media.reviewPreview' ||
-        operation == 'media.originalPreview' ||
-        operation == 'media.atmosphere') {
+        operation == 'media.originalPreview') {
       return image();
     }
     throw AppFailure(operation);
@@ -99,15 +105,21 @@ class RealtimeState extends AppState {
     };
     notifyListeners();
   }
+
+  void restoreOwner() {
+    session = {};
+    notifyListeners();
+  }
 }
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   Future<({RealtimeCore core, RealtimeState state, dynamic editor})> open(
-    WidgetTester tester,
-  ) async {
-    final core = RealtimeCore();
+    WidgetTester tester, {
+    RealtimeCore? suppliedCore,
+  }) async {
+    final core = suppliedCore ?? RealtimeCore();
     final current = RealtimeState(core);
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
@@ -252,4 +264,74 @@ void main() {
     expect(core.cancelled, contains(pending.job));
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'Atmosphere responses retire across owner changes and cannot clear a newer loading request',
+    (tester) async {
+      final first = Completer<Json>();
+      final core = RealtimeCore()..atmosphereGate = first;
+      final fixture = await open(tester, suppliedCore: core);
+      final dynamic editor = fixture.editor;
+      core.gate = false;
+      expect(core.atmosphereRequests, 1);
+      expect(editor.atmosphereLoading, isTrue);
+      fixture.state.changeOwner();
+      expect(editor.atmosphereLoading, isFalse);
+      final retiredFirst = core.image();
+      first.complete(retiredFirst);
+      for (var i = 0; i < 4; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+        );
+        await tester.pump();
+      }
+      expect(editor.atmosphere, isNull);
+
+      fixture.state.restoreOwner();
+      final second = Completer<Json>();
+      core.atmosphereGate = second;
+      editor.change(() => editor.recipe.setValue(1, 10), snapshot: false);
+      for (var i = 0; i < 4; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+        );
+        await tester.pump();
+      }
+      expect(core.atmosphereRequests, 2);
+      expect(editor.atmosphereLoading, isTrue);
+      fixture.state.changeOwner();
+      fixture.state.restoreOwner();
+      final latest = Completer<Json>();
+      core.atmosphereGate = latest;
+      editor.change(() => editor.recipe.setValue(1, 20), snapshot: false);
+      for (var i = 0; i < 4; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+        );
+        await tester.pump();
+      }
+      expect(core.atmosphereRequests, 3);
+      second.complete(core.image());
+      for (var i = 0; i < 4; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+        );
+        await tester.pump();
+      }
+      expect(editor.atmosphere, isNull);
+      expect(editor.atmosphereLoading, isTrue);
+      final accepted = core.image();
+      latest.complete(accepted);
+      for (var i = 0; i < 4; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+        );
+        await tester.pump();
+      }
+      expect(editor.atmosphere, accepted['path']);
+      expect(editor.atmosphereLoading, isFalse);
+      expect(tester.takeException(), isNull);
+      await close(tester, fixture.state);
+    },
+  );
 }

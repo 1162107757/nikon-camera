@@ -376,6 +376,7 @@ extension _LocalWorkspace on _EditorPageState {
     quickCleanup = quickPortrait = null;
     debounce?.cancel();
     clearRegionLayer();
+    atmosphereGeneration++;
     revision++;
     localQueue?.close();
     localQueue = null;
@@ -383,6 +384,7 @@ extension _LocalWorkspace on _EditorPageState {
     final discarded = [preview, comparison, atmosphere];
     refreshWorkspace(() {
       preview = comparison = atmosphere = activeJob = null;
+      atmosphereLoading = false;
       displayedOverlay = null;
       rendering = false;
       managingTools = analyzingCleanup = exporting = colorToolActive = false;

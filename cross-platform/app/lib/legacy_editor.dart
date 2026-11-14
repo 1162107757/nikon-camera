@@ -262,6 +262,15 @@ extension _LegacyWorkspace on _EditorPageState {
   }
 
   Future<void> loadAtmosphere(String image) async {
+    if (!mounted || !sameOwner || leaving) return;
+    final generation = ++atmosphereGeneration;
+    final source = widget.photo.path;
+    bool current() =>
+        mounted &&
+        sameOwner &&
+        !leaving &&
+        generation == atmosphereGeneration &&
+        source == widget.photo.path;
     atmosphereLoading = true;
     String? original;
     try {
@@ -270,12 +279,13 @@ extension _LegacyWorkspace on _EditorPageState {
         'owner': owner,
       });
       original = neutral['path'] as String;
+      if (!current()) return;
       final result = await widget.state.core.call('media.atmosphere', {
         'path': original,
         'owner': owner,
       });
-      if (!mounted) {
-        await discardPreview(result['path']);
+      if (!current()) {
+        unawaited(discardPreview(result['path']));
       } else {
         refreshWorkspace(() => atmosphere = result['path'] as String);
       }
@@ -283,9 +293,9 @@ extension _LegacyWorkspace on _EditorPageState {
       // The bounded atmosphere is decorative; the photograph remains usable.
     } finally {
       if (original != null && original != preview) {
-        await discardPreview(original);
+        unawaited(discardPreview(original));
       }
-      atmosphereLoading = false;
+      if (generation == atmosphereGeneration) atmosphereLoading = false;
     }
   }
 
@@ -293,7 +303,7 @@ extension _LegacyWorkspace on _EditorPageState {
     fit: StackFit.expand,
     children: [
       const ColoredBox(color: Color(0xff242b27)),
-      if (atmosphere != null)
+      if (mounted && sameOwner && atmosphere != null)
         Image.file(
           File(atmosphere!),
           fit: BoxFit.cover,

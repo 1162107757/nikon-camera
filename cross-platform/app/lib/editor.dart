@@ -103,6 +103,7 @@ class _EditorPageState extends State<EditorPage> {
   String? preview, comparison, error, activeJob, atmosphere;
   int parameterIndex = 1;
   bool atmosphereLoading = false;
+  int atmosphereGeneration = 0;
   final panelRevision = ValueNotifier<int>(0);
   void refreshWorkspace(VoidCallback update) => setState(update);
   bool exporting = false, rendering = false, compare = false, restored = false;
@@ -225,6 +226,8 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   void dispose() {
+    atmosphereGeneration++;
+    atmosphereLoading = false;
     previewQueue.close();
     widget.state.removeListener(editorOwnerChanged);
     filters.removeListener(filtersChanged);
