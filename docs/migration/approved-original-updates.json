@@ -61,6 +61,28 @@
           "gitBlob": "d737ccb45971e20180ac01ae29de469012540499"
         }
       ]
+    },
+    {
+      "commit": "c0eabf3e705657035e54352c8c33381058138f4e",
+      "reason": "User-requested QQ, registration, update and online-preset repair while retaining the camera Wi-Fi session. Shared HTTPS transports accept a scoped per-request Internet connection and preserve real service status, TLS, session validation and the frozen original baseline; no process-wide network or camera changes.",
+      "files": [
+        {
+          "path": "app/src/main/java/cc/huevia/account/AccountHttpTransport.java",
+          "gitBlob": "0870520f47f5168a149419d6b7cd9840d0acb92f"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/account/AccountRepository.java",
+          "gitBlob": "3c8d0e7ade8140fb5af17ba5ead5517040204c8e"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/community/CommunityHttpTransport.java",
+          "gitBlob": "e97bd7804050a1aaabb057a37551669131e84fd5"
+        },
+        {
+          "path": "app/src/main/java/cc/huevia/library/SecureHttpClient.java",
+          "gitBlob": "c4b81552ca89d02b323f74b90e379a3fca5e0ae5"
+        }
+      ]
     }
   ]
 }
