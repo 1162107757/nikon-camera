@@ -53,6 +53,8 @@ public final class SharedDetailTiles {
         StringBuilder value=new StringBuilder(64);for(byte b:digest.digest())value.append(String.format(Locale.ROOT,"%02x",b&255));return value.toString();
     }
     public static void check(BooleanSupplier cancel)throws InterruptedIOException{if(cancel.getAsBoolean())throw new InterruptedIOException("细节读取已取消。");}
+    /** EXIF UNDEFINED (0) and invalid tags mean upright, as in the ordinary renderers. */
+    public static int normalizedOrientation(int value){return value>=1&&value<=8?value:1;}
     /** Pixel rectangles are in the upright output plane, with exclusive right/bottom. */
     public static final class Plan {
         public final int sourceWidth,sourceHeight,left,top,right,bottom,width,height,sampleSize,rawLeft,rawTop,rawRight,rawBottom,rawWidth,rawHeight,orientation;

@@ -28,8 +28,12 @@ final _full = base64Decode(
 /// Native engine pixels and device memory are verified by the platform gate.
 class _DetailCore extends RealtimeCore {
   _DetailCore() {
+    // Production SharedRuntime exposes a canonical private root. On Apple,
+    // systemTemp may spell that same directory through the /var alias.
+    root = Directory(root).resolveSymbolicLinksSync();
     source.writeAsBytesSync(_full);
   }
+  String get sourcePath => source.resolveSymbolicLinksSync();
   String get sourceSha => sha256.convert(_full).toString();
   final requests = <(String, Json, String?)>[];
   final tokens = <String, String>{};
@@ -178,6 +182,24 @@ Future<void> _frames(WidgetTester tester, {int count = 24}) async {
   }
 }
 
+Future<void> _until(
+  WidgetTester tester,
+  bool Function() ready, {
+  required String reason,
+  String Function()? diagnostics,
+}) async {
+  // FileImage and the HD codec finish on real IO, independently of fake time.
+  // A fixed number of pumps is not an installation/completion barrier on CI.
+  for (var tick = 0; tick < 200; tick++) {
+    await tester.pump(const Duration(milliseconds: 30));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 15)),
+    );
+    if (ready()) return;
+  }
+  fail('$reason${diagnostics == null ? '' : ' ${diagnostics()}'}');
+}
+
 void _cleanup(WidgetTester tester, _DetailCore core, {RealtimeState? state}) {
   addTearDown(() async {
     core.releaseHeld();
@@ -211,7 +233,7 @@ Future<({dynamic editor, RealtimeState state})> _open(
       theme: hueviaTheme(Brightness.dark),
       home: EditorPage(
         state: state,
-        photo: Photo(core.source.path, '高清编辑测试', const {}),
+        photo: Photo(core.sourcePath, '高清编辑测试', const {}),
       ),
     ),
   );
@@ -265,7 +287,7 @@ void main() {
         (i) => EditingDetailPreviewController(
           core: core,
           owner: '',
-          sourcePath: core.source.path,
+          sourcePath: core.sourcePath,
           isCurrent: () => true,
           maxTileEdge: 2048,
         ),
@@ -311,7 +333,12 @@ void main() {
       final transform = _transform(tester, photograph);
       final matrix = _zoomAtCenter(const Size(320, 480), 32);
       transform.value = matrix.clone();
-      await _frames(tester);
+      await _until(
+        tester,
+        () => controllers.every((controller) => controller.tile != null),
+        reason: 'Both comparison planes must install decoded tiles before inspection.',
+        diagnostics: () => 'errors=${controllers.map((c) => c.error).toList()}',
+      );
       expect(
         tester
             .widget<InteractiveViewer>(find.byType(InteractiveViewer))
@@ -365,6 +392,15 @@ void main() {
       expect(core.cancelled, contains(blocked));
       expect(core.fullWaiter!.isCompleted, isTrue);
       await _frames(tester);
+      await _until(
+        tester,
+        () =>
+            details.tile?.frameIdentity == editor.preview &&
+            !details.loading &&
+            core.calls.last.edge == 1280,
+        reason: 'The settled native frame must install its own final HD tile.',
+        diagnostics: () => 'error=${details.error}; loading=${details.loading}',
+      );
       expect(editor.preview, isNot(oldFrame));
       expect(core.calls.last.exposure, 45);
       expect(core.calls.last.edge, 1280);
@@ -420,6 +456,14 @@ void main() {
       final details = tester
           .widget<SplitCompare>(currentPhoto)
           .detailController!;
+      await _until(
+        tester,
+        () =>
+            details.tile?.frameIdentity ==
+            tester.widget<SplitCompare>(currentPhoto).effect,
+        reason: 'The accepted colour-workspace frame must have a decoded current tile.',
+        diagnostics: () => 'error=${details.error}; loading=${details.loading}',
+      );
       final shownRegion = details.tile!.region;
       expect(shownRegion.width, lessThan(.5));
       final hidden = find
@@ -432,11 +476,20 @@ void main() {
       editor.setState(() {});
       editor.panelRevision.value++;
       await _frames(tester);
+      await _until(
+        tester,
+        () => details.tile != null && !details.loading,
+        reason: 'Any background-route viewport work must finish before verifying ownership.',
+      );
       expect(details.tile!.region, shownRegion);
       expect(transform.value, _zoomAtCenter(viewSize, 4));
       core.holdNextTile = true;
       await tester.tap(find.text('加点'));
-      await _frames(tester);
+      await _until(
+        tester,
+        () => core.tileWaiter != null,
+        reason: 'The changed tool recipe must reach the held tile job.',
+      );
       expect(core.tileWaiter, isNotNull);
       fixture.state.changeOwner();
       expect(details.tile, isNull);

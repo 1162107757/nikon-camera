@@ -258,7 +258,7 @@ int rawProgress(void *context,double value){HueviaTask *task=(__bridge HueviaTas
   if(![region isKindOfClass:NSDictionary.class])fail(@"细节可见区域无效。");
   for(NSString *key in @[@"left",@"top",@"right",@"bottom"])if(![region[key] isKindOfClass:NSNumber.class])fail(@"细节可见区域无效。");
   if(p[@"maxEdge"]&&![p[@"maxEdge"] isKindOfClass:NSNumber.class])fail(@"细节读取尺寸无效。");
-  NSDictionary *info=properties(entry->path_);int rawWidth=[info[(__bridge id)kCGImagePropertyPixelWidth] intValue],rawHeight=[info[(__bridge id)kCGImagePropertyPixelHeight] intValue],orientation=[info[(__bridge id)kCGImagePropertyOrientation] intValue];if(!orientation)orientation=1;
+  NSDictionary *info=properties(entry->path_);int rawWidth=[info[(__bridge id)kCGImagePropertyPixelWidth] intValue],rawHeight=[info[(__bridge id)kCGImagePropertyPixelHeight] intValue],orientation=[CcHueviaSharedSharedDetailTiles normalizedOrientationWithInt:[info[(__bridge id)kCGImagePropertyOrientation] intValue]];
   CcHueviaSharedSharedDetailTiles_Plan *plan=[[CcHueviaSharedSharedDetailTiles_Plan alloc] initWithInt:rawWidth withInt:rawHeight withInt:orientation withDouble:[region[@"left"] doubleValue] withDouble:[region[@"top"] doubleValue] withDouble:[region[@"right"] doubleValue] withDouble:[region[@"bottom"] doubleValue] withInt:p[@"maxEdge"]?[p[@"maxEdge"] intValue]:1536];
   if(plan->sourceWidth_!=entry->width_||plan->sourceHeight_!=entry->height_)fail(@"完整细节图尺寸已变化。");
   NSString *directory=[_root stringByAppendingPathComponent:@"previews"],*name=NSUUID.UUID.UUIDString,*temporary=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".part"]],*target=[directory stringByAppendingPathComponent:[name stringByAppendingString:@".jpg"]];

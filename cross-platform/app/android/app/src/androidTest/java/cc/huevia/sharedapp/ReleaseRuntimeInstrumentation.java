@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -307,6 +308,10 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
             }
             try(FileOutputStream out=new FileOutputStream(source)){yes(bitmap.compress(Bitmap.CompressFormat.JPEG,95,out),"owned full-detail fixture encoded");out.getFD().sync();}
         }finally{bitmap.recycle();}
+        // EXIF UNDEFINED is produced by valid un-oriented JPEGs and must use
+        // the same upright fallback as the ordinary preview/full renderer.
+        ExifInterface undefined=new ExifInterface(source.getPath());undefined.setAttribute(ExifInterface.TAG_ORIENTATION,"0");undefined.saveAttributes();
+        evidence.put("detailInputExifOrientation",new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1));
         String original=hash(source);
         JSONObject bounded=preview(source,"");
         yes(Math.max(bounded.getInt("width"),bounded.getInt("height"))<=640,"ordinary preview remains bounded before full-detail request");

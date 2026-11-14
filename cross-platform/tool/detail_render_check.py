@@ -90,6 +90,8 @@ def check():
         else:
             assert all(name in raw[0] for name in ['[rawRecipe profile]', 'rawRecipe->geometry_', 'rawRecipe->border_', 'renderPixelsWith', 'CcHueviaAlbumPhotoExportSpec full'])
         checks += 3
+        assert 'normalizedOrientation' in body
+        checks += 1
     fixture = (ROOT / 'cross-platform/app/integration_test/native_pipeline_test.dart').read_text(encoding='utf-8-sig')
     assert "import 'detail_render_fixture.dart';" in fixture and 'await verifyDetailRendering(core);' in fixture
     checks += 1

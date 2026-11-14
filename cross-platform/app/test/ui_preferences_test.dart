@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
+import 'package:huevia/legacy_theme.dart';
 import 'package:huevia/main.dart';
 
 class PreferenceCore extends HueviaCore {
@@ -111,7 +112,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('在线 NCP'), findsNothing);
       expect(find.text('没有符合条件的预设'), findsOneWidget);
-      await tester.tap(find.text('我的预设'));
+      await tester.tap(
+        find.descendant(
+          of: find.byType(CapsuleSwitch),
+          matching: find.text('我的预设'),
+        ),
+      );
       await tester.pumpAndSettle();
       expect(find.text('本地 NP3'), findsOneWidget);
       expect(find.text('本地 NCP'), findsNothing);

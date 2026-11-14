@@ -255,7 +255,7 @@ final class NativeMedia {
         String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
         SharedDetailTiles.Entry entry=detailTiles.checked(SharedRuntime.text(p,"detailToken",64),owner,SharedRuntime.text(p,"path",4096),SharedRuntime.text(p,"expectedSourceSha",64),cancel);
         File source=runtime.privateFile(entry.path);Map<String,Object> region=SharedRuntime.object(p.get("region"));
-        BitmapFactory.Options info=bounds(source,100_000_000);int orientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
+        BitmapFactory.Options info=bounds(source,100_000_000);int orientation=SharedDetailTiles.normalizedOrientation(new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1));
         SharedDetailTiles.Plan plan=new SharedDetailTiles.Plan(info.outWidth,info.outHeight,orientation,coordinate(region,"left"),coordinate(region,"top"),coordinate(region,"right"),coordinate(region,"bottom"),SharedRuntime.integer(p,"maxEdge",1536));
         if(plan.sourceWidth!=entry.width||plan.sourceHeight!=entry.height)throw new IOException("完整细节图尺寸已变化。");
         File directory=new File(runtime.root(),"previews"),temporary=File.createTempFile("detail-tile-",".part",directory),target=new File(directory,UUID.randomUUID()+".jpg");

@@ -56,7 +56,7 @@ Uint8List _solidPng(int width, int height) {
 
 class _DetailCore extends HueviaCore {
   _DetailCore(this.directory) {
-    root = directory.path;
+    root = directory.resolveSymbolicLinksSync();
     Directory('$root/previews').createSync();
     Directory('$root/originals').createSync();
     File(source).writeAsStringSync('untouched-original');
@@ -231,6 +231,18 @@ Future<void> _drain(WidgetTester tester, [int count = 16]) async {
   }
 }
 
+Future<void> _until(
+  WidgetTester tester,
+  bool Function() ready,
+  String reason,
+) async {
+  final deadline = Stopwatch()..start();
+  while (!ready() && deadline.elapsed < const Duration(seconds: 10)) {
+    await _drain(tester, 1);
+  }
+  expect(ready(), true, reason: reason);
+}
+
 _DetailFixture _fixture(WidgetTester tester) {
   final directory = Directory.systemTemp.createTempSync('huevia-detail-test-');
   final fixture = _DetailFixture(_DetailCore(directory));
@@ -239,6 +251,11 @@ _DetailFixture _fixture(WidgetTester tester) {
     fixture.core.finishGates();
     await tester.pumpWidget(const SizedBox());
     await _drain(tester);
+    await _until(
+      tester,
+      () => fixture.controller.ownedFileCount == 0,
+      'Disposed detail controller must retire every private file',
+    );
     expect(File(fixture.core.source).readAsStringSync(), 'untouched-original');
     expect(
       fixture.core.calls.any(
@@ -441,6 +458,11 @@ void main() {
       expect(f.core.count('media.detailRender'), 1);
       expect(f.controller.tile!.revision, 2);
       expect(f.controller.tile!.frameIdentity, 'frame-2');
+      await _until(
+        tester,
+        () => !File(first.path).existsSync(),
+        'Replaced tile must be deleted after its image lease is released',
+      );
       expect(File(first.path).existsSync(), false);
       expect(f.controller.ownedFileCount, lessThanOrEqualTo(2));
     },
@@ -482,6 +504,11 @@ void main() {
       await _drain(tester);
       expect(f.controller.tile, isNull);
       expect(f.core.count('media.detailTile'), 0);
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'Invalidated owner must retire its late full file',
+      );
       expect(f.controller.ownedFileCount, 0);
       expect(Directory('${f.core.root}/previews').listSync(), isEmpty);
     },
@@ -570,6 +597,11 @@ void main() {
       await _drain(tester);
       expect(f.controller.tile, isNull);
       expect(f.controller.error, isNotNull);
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 1,
+        'Rejected tile must be removed while the reusable full file remains',
+      );
       expect(f.controller.ownedFileCount, 1);
       f.core.wrongTileToken = false;
       f.core.wrongDecodedDimensions = true;

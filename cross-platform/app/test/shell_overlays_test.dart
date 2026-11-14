@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
+import 'package:huevia/legacy_theme.dart';
 import 'package:huevia/main.dart';
 
 class OverlayCore extends HueviaCore {
@@ -97,7 +98,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(core.calls.last.$1, 'online.search');
       expect(find.text('在线样片'), findsNothing);
-      await tester.tap(find.text('我的预设'));
+      await tester.tap(
+        find.descendant(
+          of: find.byType(CapsuleSwitch),
+          matching: find.text('我的预设'),
+        ),
+      );
       await tester.pumpAndSettle();
       expect(find.byTooltip('筛选预设'), findsOneWidget);
       await tester.tap(find.text('在线预设'));

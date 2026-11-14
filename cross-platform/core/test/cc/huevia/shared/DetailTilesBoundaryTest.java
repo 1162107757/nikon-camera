@@ -1,10 +1,12 @@
 package cc.huevia.shared;
 
 import cc.huevia.album.PhotoEditStore;
+import cc.huevia.library.SharedJson;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Comparator;
 import java.util.Collections;
+import java.util.Map;
 
 /** Real-file capability and upright ROI contracts, independently runnable. */
 public final class DetailTilesBoundaryTest {
@@ -58,6 +60,12 @@ public final class DetailTilesBoundaryTest {
             rejects(()->new SharedDetailTiles.Plan(8000,6000,1,0,0,1.01,1,2048));
             rejects(()->new SharedDetailTiles.Plan(8000,6000,1,.5,0,.5,1,2048));
             rejects(()->new SharedDetailTiles.Plan(8000,6000,1,0,0,1,1,4096));
+            Map<String,Object> dto=SharedJson.object("{\"region\":{\"left\":0.25,\"top\":0.25,\"right\":0.5,\"bottom\":0.5},\"maxEdge\":512}");
+            Map<String,Object> region=SharedRuntime.object(dto.get("region"));
+            SharedDetailTiles.Plan undefinedExif=new SharedDetailTiles.Plan(1600,1200,SharedDetailTiles.normalizedOrientation(0),((Number)region.get("left")).doubleValue(),((Number)region.get("top")).doubleValue(),((Number)region.get("right")).doubleValue(),((Number)region.get("bottom")).doubleValue(),SharedRuntime.integer(dto,"maxEdge",1536));
+            yes(undefinedExif.left==400&&undefinedExif.top==300&&undefinedExif.width==400&&undefinedExif.height==300&&undefinedExif.sourceWidth==1600&&undefinedExif.sourceHeight==1200);
+            boolean normalized=SharedDetailTiles.normalizedOrientation(0)==1&&SharedDetailTiles.normalizedOrientation(-1)==1&&SharedDetailTiles.normalizedOrientation(9)==1;for(int o=1;o<=8;o++)normalized&=SharedDetailTiles.normalizedOrientation(o)==o;yes(normalized);
+            rejects(()->new SharedDetailTiles.Plan(1600,1200,0,.25,.25,.5,.5,512));
             System.out.println("PASS "+checks+" detail tile boundaries; real SHA/owner/path/cancel/eviction and 8 EXIF ROI budgets");
         }finally{try(java.util.stream.Stream<Path> paths=Files.walk(temporary)){for(Path p:(Iterable<Path>)paths.sorted(Comparator.reverseOrder())::iterator)Files.deleteIfExists(p);}}
     }

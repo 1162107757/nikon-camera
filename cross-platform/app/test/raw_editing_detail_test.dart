@@ -23,6 +23,12 @@ class _DetailCall {
 /// Native pixels are mocked; the actual RAW widget, transform, queue and shared
 /// HD controller run. Device integration separately verifies native ROI pixels.
 class _DetailRawCore extends RealtimeRawCore {
+  _DetailRawCore() {
+    // SharedRuntime returns a canonical root. macOS temp paths may otherwise
+    // use /var while resolveSymbolicLinks returns /private/var, which correctly
+    // fails the controller's strict file-ownership guard.
+    root = Directory(root).resolveSymbolicLinksSync();
+  }
   final details = <_DetailCall>[];
   bool holdFull = false;
   int detailSerial = 0;
@@ -101,6 +107,38 @@ Future<void> _io(WidgetTester tester, [int turns = 8]) async {
   }
 }
 
+Future<void> _until(
+  WidgetTester tester,
+  bool Function() ready,
+  String reason,
+) async {
+  final elapsed = Stopwatch()..start();
+  while (!ready() && elapsed.elapsed < const Duration(seconds: 8)) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 15)),
+    );
+    await tester.pump(const Duration(milliseconds: 25));
+  }
+  expect(ready(), isTrue, reason: reason);
+}
+
+bool _installedRequest(
+  EditingDetailPreviewController controller,
+  _DetailCall request,
+) {
+  if (request.operation != 'media.detailTile' || controller.tile == null) {
+    return false;
+  }
+  final region = object(request.payload['region']);
+  return controller.tile!.region ==
+      Rect.fromLTRB(
+        (region['left'] as num).toDouble(),
+        (region['top'] as num).toDouble(),
+        (region['right'] as num).toDouble(),
+        (region['bottom'] as num).toDouble(),
+      );
+}
+
 Future<({_DetailRawCore core, RealtimeRawState state})> _open(
   WidgetTester tester, {
   bool withReference = false,
@@ -174,6 +212,16 @@ void main() {
       );
       final ordinary = tester.widget<Image>(ordinaryFinder).image;
       await _zoom(tester, 2, x: -180);
+      final controller = tester
+          .widget<EditingDetailTileLayer>(find.byType(EditingDetailTileLayer))
+          .controller;
+      await _until(
+        tester,
+        () =>
+            core.details.isNotEmpty &&
+            _installedRequest(controller, core.details.last),
+        'The 2x RAW viewport must install its native tile before panning',
+      );
       expect(
         core.details.where((call) => call.operation == 'media.rawDetail'),
         hasLength(1),
@@ -193,7 +241,15 @@ void main() {
             .getMaxScaleOnAxis(),
         2,
       );
+      final beforePan = core.details.length;
       await _zoom(tester, 2, x: -350);
+      await _until(
+        tester,
+        () =>
+            core.details.length > beforePan &&
+            _installedRequest(controller, core.details.last),
+        'Panning must request and install a new ROI from the same full RAW frame',
+      );
       expect(
         core.details.where((call) => call.operation == 'media.rawDetail'),
         hasLength(1),
@@ -208,7 +264,15 @@ void main() {
             .maxScale,
         32,
       );
+      final beforeClose = core.details.length;
       await _zoom(tester, 32, x: -6400, y: -5000);
+      await _until(
+        tester,
+        () =>
+            core.details.length > beforeClose &&
+            _installedRequest(controller, core.details.last),
+        'The actual 32x transform must request and install its own ROI, not reuse the earlier 2x request',
+      );
       final closeRegion = object(core.details.last.payload['region']);
       expect(
         (closeRegion['right'] as num) - (closeRegion['left'] as num),
@@ -292,12 +356,21 @@ void main() {
       core.holdFull = true;
       await _zoom(tester, 2);
       final held = core.details.single;
+      final controller = tester
+          .widget<EditingDetailTileLayer>(find.byType(EditingDetailTileLayer))
+          .controller;
       f.state.owner('bob');
       f.state.owner('alice');
       expect(core.cancelled, contains(held.job));
       final late = core.full();
       held.result.complete(late);
-      await _io(tester, 14);
+      await _until(
+        tester,
+        () =>
+            !File(late['path'] as String).existsSync() &&
+            controller.ownedFileCount == 0,
+        'The retired owner request must finish and delete its late private file',
+      );
       expect(core.details, hasLength(1));
       expect(find.byType(EditingDetailTileLayer), findsNothing);
       expect(File(late['path'] as String).existsSync(), isFalse);
