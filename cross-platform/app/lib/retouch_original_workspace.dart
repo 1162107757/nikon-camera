@@ -166,6 +166,8 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       keepVisible: true,
       visible: brushRadiusStart != null && !busy && !comparing,
       reserveBars: !patch && tab == 2 && !choosingGroup,
+      // Both standalone and inline workspaces pass sharedViewport to the stage.
+      clampToBounds: false,
     );
   }
 

@@ -208,6 +208,7 @@ class EditingViewportState {
   bool _hasSample = false;
   Offset _anchor = Offset.zero;
   double _sampleWidth = 0;
+  Object? _bindingOwner;
   int revision = 0;
 
   void reset() {
@@ -334,6 +335,11 @@ class EditingViewportBinding {
         imageRect != _imageRect ||
         actualPlane != _plane;
     _active = active;
+    if (active) {
+      shared._bindingOwner = this;
+    } else if (identical(shared._bindingOwner, this)) {
+      shared._bindingOwner = null;
+    }
     _viewport = viewport;
     _imageRect = imageRect;
     _plane = actualPlane;
@@ -365,7 +371,7 @@ class EditingViewportBinding {
   }
 
   void _capture() {
-    if (!_active || _applying) return;
+    if (!_active || _applying || !identical(shared._bindingOwner, this)) return;
     shared.capture(
       transform,
       viewport: _viewport,
@@ -375,5 +381,10 @@ class EditingViewportBinding {
     _seenRevision = shared.revision;
   }
 
-  void dispose() => transform.removeListener(_capture);
+  bool get ownsViewport => _active && identical(shared._bindingOwner, this);
+
+  void dispose() {
+    if (identical(shared._bindingOwner, this)) shared._bindingOwner = null;
+    transform.removeListener(_capture);
+  }
 }

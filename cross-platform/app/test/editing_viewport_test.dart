@@ -153,6 +153,46 @@ void main() {
     transform.dispose();
   });
 
+  test('A replacement canvas owns sampling before the previous canvas is disposed', () {
+    final shared = EditingViewportState();
+    final oldTransform = TransformationController();
+    final nextTransform = TransformationController();
+    final oldHost = EditingViewportBinding(
+      shared: shared,
+      transform: oldTransform,
+    );
+    final nextHost = EditingViewportBinding(
+      shared: shared,
+      transform: nextTransform,
+    );
+    oldHost.layout(
+      viewport: const Size(400, 588),
+      imageRect: const Rect.fromLTWH(0, 94, 400, 400),
+    );
+    oldTransform.value = Matrix4.identity()
+      ..setEntry(0, 0, 3)
+      ..setEntry(1, 1, 3)
+      ..setEntry(0, 3, -544)
+      ..setEntry(1, 3, -480);
+    final focus = shared.focus, revision = shared.revision;
+    nextHost.layout(
+      viewport: const Size(400, 404),
+      imageRect: const Rect.fromLTWH(0, 2, 400, 400),
+    );
+    // During a tool switch both widget states briefly listen to the controller.
+    // A notification interpreted with the retired dimensions must be ignored.
+    oldTransform.value = Matrix4.copy(nextTransform.value);
+    pointClose(shared.focus, focus);
+    expect(shared.revision, revision);
+    nextTransform.value = Matrix4.copy(nextTransform.value)
+      ..translateByDouble(10, 15, 0, 1);
+    expect(shared.focus, isNot(focus));
+    oldHost.dispose();
+    nextHost.dispose();
+    oldTransform.dispose();
+    nextTransform.dispose();
+  });
+
   test('Hidden hosts cannot overwrite the active tool viewport; explicit fit resets it', () {
     final shared = EditingViewportState();
     final a = TransformationController(), b = TransformationController();

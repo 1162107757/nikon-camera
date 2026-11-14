@@ -820,6 +820,7 @@ Rect retouchOriginalPhotoFrame({
   required double imageHeight,
   required Matrix4 transform,
   bool reserveBars = false,
+  bool clampToBounds = true,
 }) {
   if (viewport.isEmpty ||
       !imageWidth.isFinite ||
@@ -839,8 +840,8 @@ Rect retouchOriginalPhotoFrame({
   final my = math.max(0.0, (height - available) / 2);
   final x = transform.storage[12], y = transform.storage[13];
   final pan = Offset(
-    x.isFinite ? x.clamp(-mx, mx) : 0,
-    y.isFinite ? y.clamp(-my, my) : 0,
+    x.isFinite ? (clampToBounds ? x.clamp(-mx, mx) : x) : 0,
+    y.isFinite ? (clampToBounds ? y.clamp(-my, my) : y) : 0,
   );
   return Rect.fromCenter(
     center: viewport.center(Offset.zero) + pan,
@@ -878,6 +879,7 @@ RetouchPhotoViewport retouchOriginalPhotoViewport({
   required double imageHeight,
   required Matrix4 transform,
   bool reserveBars = false,
+  bool clampToBounds = true,
 }) {
   final frame = retouchOriginalPhotoFrame(
     viewport: viewport,
@@ -885,6 +887,7 @@ RetouchPhotoViewport retouchOriginalPhotoViewport({
     imageHeight: imageHeight,
     transform: transform,
     reserveBars: reserveBars,
+    clampToBounds: clampToBounds,
   );
   final available = Rect.fromLTRB(
     0,
@@ -960,8 +963,10 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
   TransformationController? sharedScene;
   EditingViewportBinding? sharedBinding;
   bool linkingViewport = false, viewportLaidOut = false, linkingLayout = false;
+  int sharedLayoutGeneration = 0;
 
   void attachSharedViewport() {
+    sharedLayoutGeneration++;
     sharedBinding?.dispose();
     sharedScene?.removeListener(pullSharedViewport);
     sharedScene?.dispose();
@@ -1008,23 +1013,37 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
       if (linkingLayout) {
         final cancelled = tracking;
         resetGesture();
-        writing = true;
-        try {
-          widget.controller.value = Matrix4.diagonal3Values(z, z, 1)
-            ..setTranslationRaw(
-              scene.storage[12] - (1 - z) * center.dx,
-              scene.storage[13] - (1 - z) * center.dy,
-              0,
-            );
-          readController();
-        } finally {
-          writing = false;
-        }
-        if (cancelled) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted) widget.onCancel?.call();
-          });
-        }
+        zoom = z;
+        pan = Offset(
+          scene.storage[12] - (1 - z) * center.dx,
+          scene.storage[13] - (1 - z) * center.dy,
+        );
+        final generation = ++sharedLayoutGeneration;
+        final controller = widget.controller;
+        final binding = sharedBinding;
+        // The image uses the rebased coordinates in this layout. Notify sibling
+        // brush/overlay listeners after build, without resampling a layout change.
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted ||
+              generation != sharedLayoutGeneration ||
+              !identical(controller, widget.controller) ||
+              !identical(binding, sharedBinding) ||
+              binding?.ownsViewport != true ||
+              !widget.viewportActive ||
+              !TickerMode.valuesOf(context).enabled ||
+              ModalRoute.isCurrentOf(context) == false) {
+            return;
+          }
+          writing = true;
+          linkingViewport = true;
+          try {
+            controller.value = matrix();
+          } finally {
+            linkingViewport = false;
+            writing = false;
+          }
+          if (cancelled) widget.onCancel?.call();
+        });
         return;
       }
       widget.controller.value = Matrix4.diagonal3Values(z, z, 1)
@@ -1076,6 +1095,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
       imageHeight: widget.imageHeight,
       transform: matrix(),
       reserveBars: widget.reserveBars,
+      clampToBounds: sharedBinding == null,
     );
     if (value == reportedViewport && pendingViewport == null) return;
     pendingViewport = value;
@@ -1137,7 +1157,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
       old.controller.removeListener(pushSharedViewport);
       widget.controller.addListener(controllerChanged);
       widget.controller.addListener(pushSharedViewport);
-      readController();
+      readController(clampToBounds: sharedBinding == null);
     }
     if (old.viewportState != widget.viewportState) attachSharedViewport();
     if (old.imageWidth != widget.imageWidth ||
@@ -1147,7 +1167,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
         editingDisabled) {
       final cancelled = tracking;
       resetGesture();
-      clamp();
+      if (sharedBinding == null) clamp();
       if (cancelled) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) widget.onCancel?.call();
@@ -1178,13 +1198,13 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     editingWasAllowed = allowed;
   }
 
-  void readController() {
+  void readController({bool clampToBounds = true}) {
     final matrix = widget.controller.value;
     final scale = matrix.getMaxScaleOnAxis();
     zoom = scale.isFinite ? scale.clamp(1.0, 32.0) : 1;
     final x = matrix.storage[12], y = matrix.storage[13];
     pan = Offset(x.isFinite ? x : 0, y.isFinite ? y : 0);
-    clamp();
+    if (clampToBounds) clamp();
   }
 
   void controllerChanged() {
@@ -1214,6 +1234,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     imageHeight: widget.imageHeight,
     transform: matrix(),
     reserveBars: widget.reserveBars,
+    clampToBounds: sharedBinding == null,
   );
   void clamp() {
     if (size.isEmpty) return;
@@ -1372,6 +1393,16 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     final cancelled = tracking;
     resetGesture();
     size = next;
+    if (sharedBinding != null) {
+      // The shared source plane owns layout changes. Its rebase below installs
+      // the existing screen anchor without sampling a temporary legacy fit.
+      if (cancelled) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) widget.onCancel?.call();
+        });
+      }
+      return;
+    }
     // Original portrait rotation retains the frozen image centre and zoom.
     // BodyCanvas retains its pan, then clamps it against the new fitted bounds.
     if (!widget.reserveBars && !previous.isEmpty && !oldFrame.isEmpty) {

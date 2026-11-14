@@ -8,6 +8,7 @@ import 'package:huevia/domain.dart';
 import 'package:huevia/editor.dart';
 import 'package:huevia/editing_viewport.dart';
 import 'package:huevia/retouch_workspace.dart';
+import 'package:huevia/retouch_original_controls.dart';
 import 'package:huevia/split_compare.dart';
 import 'package:huevia/theme.dart';
 
@@ -299,6 +300,11 @@ void main() {
       expect(portraitPhoto.topLeft, photo.topLeft);
       expect(portraitPhoto.width, photo.width);
       expect(portraitPhoto.height, greaterThan(photo.height));
+      expect(
+        tester.getSize(find.byType(RetouchOriginalDock)).height,
+        lessThan(100),
+        reason: 'The overview must fit its tool row and return unused panel space to the photograph',
+      );
       _sameFocus(h.viewport, focus);
       final describes = core.portrait.calls
           .where((call) => call.$1 == 'media.retouchDescribe')

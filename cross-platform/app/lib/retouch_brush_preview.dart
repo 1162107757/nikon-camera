@@ -20,6 +20,7 @@ class RetouchBrushPreview extends StatelessWidget {
     this.center,
     this.visible = true,
     this.reserveBars = false,
+    this.clampToBounds = true,
     this.keepVisible = false,
     this.color = const Color(0xfff4f5f7),
     this.outlineColor = const Color(0xcc000000),
@@ -29,6 +30,10 @@ class RetouchBrushPreview extends StatelessWidget {
   final TransformationController controller;
   final Offset? center;
   final bool visible, reserveBars;
+
+  /// Shared photo navigation already resolves the exact source anchor.
+  /// Standalone previews retain the original bounded-pan default.
+  final bool clampToBounds;
 
   /// For size-slider feedback only: keep the display guide inside the visible
   /// photo where it fits. This never changes [center] or an actual stroke point.
@@ -62,6 +67,7 @@ class RetouchBrushPreview extends StatelessWidget {
                   imageHeight: imageHeight,
                   transform: controller.value,
                   reserveBars: reserveBars,
+                  clampToBounds: clampToBounds,
                 );
                 final geometry = RetouchBrushPreviewGeometry.resolve(
                   photoFrame: frame,
