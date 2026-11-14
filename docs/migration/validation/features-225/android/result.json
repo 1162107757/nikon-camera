@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "sourceFrozen": true,
+  "versionCode": 225,
+  "scope": "Android local testing only",
+  "androidAcceptedForLocalTesting": true,
+  "crossPlatformAcceptedForDelivery": false,
+  "published": false,
+  "archiveCreatedAtUtc": "2026-11-14T16:31:56.866917+00:00",
+  "archiveRunsNoBuildTestOrSdk": true,
+  "twoAbiReleaseBuildExitCode": 0,
+  "pipelineExitCodes": {
+    "verify_android": 0,
+    "verify_photos": 0,
+    "run_release_runtime": 0,
+    "check_back_navigation": 0
+  },
+  "exactX64ReleaseRuntimeChecks": 123,
+  "releaseApkSha256": "5650c3606875ab0022afaf295dee5bdf198ce0b764f6e39c72ae032458b43af0",
+  "instrumentationApkSha256": "e126ca89a4fe6bc0ce409fe9fa7eebc6936a99e927f44d34e6e0d3e9be3f4458",
+  "rootBackCasesPassed": 4,
+  "nestedBackCasesPassed": 2,
+  "sameActivityAndProcessPreserved": true,
+  "androidApi": 31,
+  "physicalCameraExercised": false,
+  "artifactRows": [
+    {
+      "file": "huevia-0.31.0-dev-225-android-arm64.apk",
+      "bytes": 53264178,
+      "sha256": "e1c85fd5123124f183fe76764999f1dcd1ebc90944dee4af95331d7856b0b040",
+      "abi": "arm64",
+      "platform": "Android",
+      "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-225-android-x64.apk",
+      "bytes": 56701146,
+      "sha256": "5650c3606875ab0022afaf295dee5bdf198ce0b764f6e39c72ae032458b43af0",
+      "abi": "x64",
+      "platform": "Android",
+      "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "guiReceipt": "../gui/result.json",
+  "guiReceiptSha256": "6394819a1279a9e6601758f38c172f42087dd4555913d7119786351a61f88bc6",
+  "guiGroups": 7,
+  "guiFrames": 168,
+  "guiArchive": {
+    "file": "raw-frame-captures.tar.xz",
+    "bytes": 13154448,
+    "sha256": "db4a7ea42ab038ebbae7d0c3b2b962604ddbeda1fbc1a24ba584da701349bb63",
+    "allExtractedBytesVerified": true
+  },
+  "guiArchiveIndependentlyHashed": true,
+  "guiArchiveExtractionReexecutedHere": false,
+  "guiExecutionSourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "guiReusedByProductAndPayloadEquivalence": true,
+  "guiReexecutedOnCurrentApk": false,
+  "guiEquivalenceProof": "source-input-equivalence.json",
+  "guiLimits": "Sampled chart continuity on API31 emulator; no claim of physical camera+cellular or every display frame.",
+  "byteManifest": "byte-manifest.json"
+}

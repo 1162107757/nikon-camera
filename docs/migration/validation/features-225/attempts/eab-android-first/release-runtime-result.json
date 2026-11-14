@@ -1,0 +1,14 @@
+{
+  "exit": 0,
+  "accepted": true,
+  "checksPassed": 123,
+  "minimumChecks": 123,
+  "mediaField": "s",
+  "mediaMethod": "g",
+  "workerField": "g",
+  "mappingSha256": "c501d24651f416ff676b110c43cf995c4f14157b04229b3b0dbe89c49b74a670",
+  "taskClass": "or",
+  "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "apkSha256": "5cd8b79f96c779844b80808106d3ad38fc50d1d9ef4d5b8f0b7514cc031c74b4",
+  "instrumentationApkSha256": "e126ca89a4fe6bc0ce409fe9fa7eebc6936a99e927f44d34e6e0d3e9be3f4458"
+}

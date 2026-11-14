@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-225-android-arm64.apk",
+      "bytes": 53264178,
+      "sha256": "ae64cfe435b4d60a5dd0c70f3e42a9f9c1e4e3b961894eaa569add029272b776",
+      "abi": "arm64",
+      "platform": "Android",
+      "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-225-android-x64.apk",
+      "bytes": 56701146,
+      "sha256": "5cd8b79f96c779844b80808106d3ad38fc50d1d9ef4d5b8f0b7514cc031c74b4",
+      "abi": "x64",
+      "platform": "Android",
+      "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "published": false
+}

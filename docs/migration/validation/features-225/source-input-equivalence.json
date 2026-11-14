@@ -1,0 +1,98 @@
+{
+  "previousSourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "currentSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "onlyChangedPaths": [
+    "cross-platform/app/test/editor_test.dart"
+  ],
+  "productInputsIdentical": true,
+  "treesAndFiles": [
+    {
+      "path": "cross-platform/app/lib",
+      "gitObject": "b90508b3c642fa2f7a157fc8cf29fefbc69bbc25",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/app/android",
+      "gitObject": "2166db435979c7d4d5b7bd892ad4276801bf3198",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/app/ios",
+      "gitObject": "8da4c8fba5e2bb127113bcbbb8b30fdf94de1f85",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/app/assets",
+      "gitObject": "15b63ef6f7a57cfa8b8f96422374fdf7f29cd264",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/app/pubspec.yaml",
+      "gitObject": "75c3d4b75740809c3b958f20a3efc516663a6a94",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/app/pubspec.lock",
+      "gitObject": "3a3126a41e403d8c5cd2022ecea91225b41586d3",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/core",
+      "gitObject": "343f96692cc239160c5c8622d240c9084e4b0c06",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/native",
+      "gitObject": "4c967cbba1605c6b0bdeba715b9020041b330e7d",
+      "identical": true
+    },
+    {
+      "path": "cross-platform/tool",
+      "gitObject": "3512c3380884b9eff7549f5d1fa6247d1852680f",
+      "identical": true
+    },
+    {
+      "path": "app/src/main/java",
+      "gitObject": "4648fcda66a114b982e8281435e1e822bf6c9a6d",
+      "identical": true
+    }
+  ],
+  "apkByteIdentityPending": false,
+  "uiExecutionSourceRemains": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "noTestsRerunForThisProof": true,
+  "verifiedProductRoots": 10,
+  "apkByteIdentity": [
+    {
+      "file": "huevia-0.31.0-dev-225-android-arm64.apk",
+      "previousSha256": "ae64cfe435b4d60a5dd0c70f3e42a9f9c1e4e3b961894eaa569add029272b776",
+      "currentSha256": "e1c85fd5123124f183fe76764999f1dcd1ebc90944dee4af95331d7856b0b040",
+      "bytes": 53264178,
+      "byteIdentical": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-225-android-x64.apk",
+      "previousSha256": "5cd8b79f96c779844b80808106d3ad38fc50d1d9ef4d5b8f0b7514cc031c74b4",
+      "currentSha256": "5650c3606875ab0022afaf295dee5bdf198ce0b764f6e39c72ae032458b43af0",
+      "bytes": 56701146,
+      "byteIdentical": false
+    }
+  ],
+  "allApkBytesIdentical": false,
+  "uncompressedApkPayloadComparison": [
+    {
+      "abi": "arm64",
+      "entryCount": 428,
+      "changedPayloadEntries": [],
+      "timestampChanges": 0,
+      "allEntryPayloadBytesIdentical": true
+    },
+    {
+      "abi": "x64",
+      "entryCount": 428,
+      "changedPayloadEntries": [],
+      "timestampChanges": 0,
+      "allEntryPayloadBytesIdentical": true
+    }
+  ],
+  "guiEvidenceQualification": "GUI executed exact eab APK bytes. Current f11 APKs have different container/signing hashes; product Git inputs and each uncompressed APK payload are compared separately. New f11 R8/Back checks are actual executions."
+}

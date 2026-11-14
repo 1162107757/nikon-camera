@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "versionCode": 225,
+  "versionName": "0.31.0-dev",
+  "scope": "local-testing-only",
+  "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "finalSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "sourceFrozen": true,
+  "baseSourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "state": "accepted-for-local-testing-not-for-delivery-or-publication",
+  "acceptedForLocalTesting": true,
+  "acceptedForDelivery": false,
+  "androidAcceptedForLocalTesting": true,
+  "iosAcceptedForLocalTesting": true,
+  "published": false,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-225-android-arm64.apk",
+      "bytes": 53264178,
+      "sha256": "e1c85fd5123124f183fe76764999f1dcd1ebc90944dee4af95331d7856b0b040",
+      "abi": "arm64",
+      "platform": "Android",
+      "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-225-android-x64.apk",
+      "bytes": 56701146,
+      "sha256": "5650c3606875ab0022afaf295dee5bdf198ce0b764f6e39c72ae032458b43af0",
+      "abi": "x64",
+      "platform": "Android",
+      "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+      "acceptedForLocalTesting": true,
+      "published": false
+    },
+    {
+      "file": "huevia-0.31.0-dev-225-ios-unsigned.ipa",
+      "bytes": 65153750,
+      "sha256": "a9d73150f386f42a623cdb7357be5d4153a9c064f9740f1150021b5a25d57be6",
+      "abi": "arm64",
+      "platform": "iOS",
+      "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+      "unsigned": true,
+      "selfSignRequired": true,
+      "acceptedForLocalTesting": true,
+      "published": false
+    }
+  ],
+  "packageStage": ".tooling/next225/package-candidates",
+  "scopeChanges": [
+    "controlled-sharp-frame-replacement-and-same-profile-image-document-handoff",
+    "unchanged-tool-entry-apply-cancel-preserve-accepted-frame-and-online-preview-cache",
+    "public-internet-route-selection-and-independent-account-public-queues-on-android-and-ios",
+    "registration-session-revision-retains-input-and-password-eight-to-128-copy"
+  ],
+  "behaviorContract": {
+    "contractIsNotAnExecutionPassClaim": true,
+    "sharpContinuity": {
+      "keepOldAcceptedBaseAndSharpUntilNewTileReady": true,
+      "sameFrameBaseAndTileCommit": true,
+      "ordinaryInteractivePreviewSemanticsPreserved": true,
+      "sameProfileHandoffRequiresOwnerPathRecipeShaOutputMatch": true,
+      "partialTilesDoNotClaimWholeViewportCoverage": true,
+      "fullDocumentLoansReleaseAfterActiveNativeReads": true,
+      "noOpToolApplyCancelDoesNotRenderOrWriteDraft": true,
+      "inlineRepairCancelReturnsToSamePortrait": true,
+      "lateOwnerOrCanceledResultsCannotInstall": true
+    },
+    "publicInternet": {
+      "explicitWhitelist": true,
+      "accountConcurrency": 2,
+      "publicReadConcurrency": 3,
+      "cameraQueueRemainsSerial": true,
+      "cameraProtocolsChanged": false,
+      "processWideNetworkBindingChanged": false,
+      "tlsValidationWeakened": false,
+      "physicalCameraClaimedByHostFixture": false
+    },
+    "registration": {
+      "sessionRevisionInvalidatesStaleLoginResponses": true,
+      "inputsRetainedAcrossPageChanges": true,
+      "passwordMinimumLength": 8,
+      "passwordMaximumLength": 128,
+      "allDigitsAllowed": true,
+      "allLettersAllowed": true,
+      "serverValidationRetained": true
+    }
+  },
+  "localEvidence": {
+    "integratedAnalyze": {
+      "exit": 0,
+      "receipt": {
+        "path": ".tooling/next225/integrated-checks.json",
+        "sha256": "5ca73777a9335362a98156d6580b0aa20e54ec44019fb40908164edae66237b6"
+      }
+    },
+    "detailController": {
+      "passed": 35,
+      "exit": 0,
+      "wholeFile": true,
+      "receipt": {
+        "path": ".tooling/next225/controller35-fixed.log",
+        "sha256": "0d9ac6ae235a80dd5b201afb8091fc93a2be867f7e075a81db8d1bda4f9273b5"
+      },
+      "failedFirstAttemptPreserved": ".tooling/next225/controller35.log"
+    },
+    "registration": {
+      "passed": 12,
+      "exit": 0,
+      "receipt": {
+        "path": ".tooling/next225/registration-ui.log",
+        "sha256": "238f44e407dd3cc8911171e9622839c41aa3f3943d7a320c3dcd2af4bb7d32a5"
+      }
+    },
+    "colorCompatibility": {
+      "passed": 8,
+      "independentInvocations": true,
+      "wholeFilePassedClaimed": false,
+      "receipt": {
+        "path": ".tooling/next225/isolated-case-results.json",
+        "sha256": "55ba60b1e31c32a7cf7c327407447e6e932a28e7b7f1319d578ecd95f685dbde"
+      }
+    },
+    "toolSwitching": {
+      "existingIndependentPassed": 7,
+      "noOpAdditionalIndependentPassesConfirmedByRoot": 2,
+      "noOpFinalRawReceiptPending": false,
+      "noOpFinalIndependentLogs": [
+        {
+          "path": ".tooling/next225/noop-debug-apply-final.log",
+          "sha256": "809848e8a0a907e0a11464fee252f65c9b7adea2aada1d0dba58400ac840587d",
+          "bytes": 43540,
+          "passed": 1,
+          "exitCode": 0
+        },
+        {
+          "path": ".tooling/next225/noop-debug-cancel-final.log",
+          "sha256": "54b7318ba5d2c4ac79470aa245b67e5f351912b211bd167580695028c2036c8c",
+          "bytes": 43538,
+          "passed": 1,
+          "exitCode": 0
+        }
+      ],
+      "wholeFilePassedClaimed": false,
+      "originalFailuresRetained": true,
+      "originalReceipt": {
+        "path": ".tooling/next225/isolated-case-results.json",
+        "sha256": "55ba60b1e31c32a7cf7c327407447e6e932a28e7b7f1319d578ecd95f685dbde"
+      }
+    },
+    "sharpUi": {
+      "expectedTests": 6,
+      "observedCasePassed": [
+        "held-mutation-ordinary-full-tile-and-eight-postcommit-frames",
+        "owner-leave-return-late-tile-retirement",
+        "nested-repair-cancel-restores-sharp-before-held-full-finishes",
+        "inherited-crop-rotation-repair-roi",
+        "same-profile-repair-apply-keeps-accepted-sharp",
+        "source-positioned-repair-apply-keeps-sharp-until-portrait-plane-ready"
+      ],
+      "passedCasesInExitZeroCommands": 4,
+      "passedCasesInMixedFailedAttempt": 2,
+      "mainAndOwnerAreIndependentExitZeroClaims": false,
+      "cancel": {
+        "state": "independent-pass-held-full-cancel-baseline-restored-and-late-profile-files-cleaned",
+        "passed": 1,
+        "exitCode": 0,
+        "receipt": {
+          "path": ".tooling/next225/sharp-cancel-baseline-test.log",
+          "sha256": "81f41b300c73bcb9aa5bc16712d20b25d5b3f6ae99e33d1f2641b4fe4e3b15a3",
+          "bytes": 43632
+        },
+        "targetedAnalyze": {
+          "path": ".tooling/next225/sharp-cancel-baseline-analyze.log",
+          "sha256": "e1ab754b91db4cffbb844a15c4c3273c9fc17ad789ceb765bceb809f0a7098ae",
+          "exitCode": 0,
+          "wholeAppAnalyzeClaimed": false
+        },
+        "originalFailedAttemptsRetained": true
+      },
+      "inheritedGeometry": {
+        "state": "independent-target-retest-passed-after-original-windows-did-not-complete",
+        "passed": 1,
+        "exitCode": 0,
+        "receipt": {
+          "path": ".tooling/next225/sharp-geometry-isolated-final.log",
+          "sha256": "4fa86bf4508f5eec2b82cbf7de089212aa728b1f75d1ed741ad1b0edaaa46547",
+          "bytes": 39084
+        }
+      },
+      "wholeFilePassedClaimed": false,
+      "firstAttempt": {
+        "path": ".tooling/next225/sharp-ui4.log",
+        "sha256": "c33efd1d32844ce13340b55aafc409a587ddd8c3bb9151ff204a0d4043031a5b"
+      },
+      "correctedAttempt": {
+        "path": ".tooling/next225/sharp-ui-corrected.log",
+        "sha256": "920473472e4ccaa3943bab9d405ea0fc15906cda0db2620f272ff80e56d25c48"
+      }
+    },
+    "publicInternetHost": {
+      "passed": 23,
+      "exit": 0,
+      "loopbackCameraHeartbeatStayedActive": true,
+      "physicalCameraExercised": false,
+      "receipt": {
+        "path": ".tooling/next225/public-internet-host-vpn-quoted.log",
+        "sha256": "c82f6ab0671a500fc94bc7ba224920984fc85bf52e08f44230000de48753eada"
+      }
+    },
+    "finalFrozenAnalyze": {
+      "path": "shared/checks/final-frozen-analyze.log",
+      "sha256": "ae7594a81f59a61e7310a1e28e2600b586a48639199be530936da9e41ba84a5d",
+      "bytes": 98,
+      "exitCode": 0,
+      "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+      "wholeApp": true,
+      "afterFinalApplyAndSourcePlaneChanges": true,
+      "archiveReranAnalysis": false
+    },
+    "orphanFixtureCorrection": {
+      "receipt": "shared/fixture-correction/orphan-fixture-regression.log",
+      "passed": 2,
+      "exitCode": 0,
+      "originalEabFullRunStillFailed": true,
+      "businessAssertionsRetained": true,
+      "archiveExecutedNoSdk": true
+    }
+  },
+  "sharedLocalArchive": {
+    "receipt": "shared/result.json",
+    "caseMatrix": "shared/case-matrix.json",
+    "byteManifest": "shared/byte-manifest.json",
+    "byteManifestSha256": "d0852393cc4cf004d26bfbdf0317287a6ec562659578886f7d12e1f967829eb7",
+    "copiedOriginalFiles": 65,
+    "originalBytes": 1549740,
+    "byteExact": true,
+    "observedUniqueFlutterCasePasses": 72,
+    "casesInExitZeroCommands": 70,
+    "casesInMixedFailedAttempt": 2,
+    "wholeFlutterRunClaimed": false,
+    "executionSourceFrozen": false,
+    "historicalIndividualFlutterInputBindingClaimed": false,
+    "awaitingFrozenSourceFullFlutterValidation": false,
+    "newFrozenSourceFullFlutterReceipt": "apple/ci-result.json",
+    "archiveExecutedSdkOrTests": false,
+    "currentFrozenProductSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f"
+  },
+  "core": {
+    "receipt": "core/result.json",
+    "copyManifest": "core/copy-manifest.json",
+    "inputFingerprints": "core/input-fingerprints.json",
+    "actualFreshExecution": true,
+    "compileExit": 0,
+    "executionExit": 0,
+    "inputCount": 261,
+    "distinctInputCount": 246,
+    "sharedBoundaryChecks": 1782,
+    "sharedAtmosphereChecks": 6,
+    "totalSharedChecks": 1788,
+    "copiedFrom224": false,
+    "executionSourceFrozen": false,
+    "finalSourceBindingPending": false,
+    "boundSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "sourceBinding": "core/source-binding.json",
+    "all261InputsMatch246DistinctGitInputs": true,
+    "testRerunForBinding": false
+  },
+  "android": {
+    "state": "accepted-for-local-android-testing",
+    "acceptedForLocalAndroidTesting": true,
+    "expectedReleaseRuntimeChecksAtLeast": 123,
+    "actualReleaseRuntimeChecks": 123,
+    "twoAbiReleaseBuildExitCode": 0,
+    "androidStaticVerificationExitCode": 0,
+    "photoAssetVerificationExitCode": 0,
+    "exactX64ReleaseRuntimeExitCode": 0,
+    "exactX64ReleaseRuntimeSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "matchingFilesCopiedToDistForLocalTesting": true,
+    "privateArm64Build": {
+      "bytes": 53264178,
+      "sha256": "e1c85fd5123124f183fe76764999f1dcd1ebc90944dee4af95331d7856b0b040"
+    },
+    "privateX64Build": {
+      "bytes": 56701146,
+      "sha256": "5650c3606875ab0022afaf295dee5bdf198ce0b764f6e39c72ae032458b43af0"
+    },
+    "backNavigationAccepted": true,
+    "relatedGuiAccepted": true,
+    "rootBackCasesPassed": 4,
+    "nestedBackCasesPassed": 2,
+    "backPidAndActivityPreserved": true,
+    "exactInstalledReleaseShaMatchesRuntimeReceipt": true,
+    "relatedGuiGroups": 7,
+    "relatedGuiFrames": 168,
+    "testedOnAndroidEmulator": true,
+    "originalSourceImageFilesUnchanged": 2,
+    "minimumPatchLinebandGradientRatio": 0.99506,
+    "guiRawArchiveReceiptPending": false,
+    "installedUiSmoke": {
+      "notAddedToHistorical70WidgetCases": true,
+      "registration": {
+        "passwordHintObserved": "8–128 位，可只用数字或字母",
+        "captchaImageLoadedObservedByRoot": true,
+        "credentialsEntered": false,
+        "registrationSubmitted": false,
+        "files": [
+          {
+            "path": "gui/registration-installed.json",
+            "bytes": 264,
+            "sha256": "f280825a53d03d67718299cf256bda67a3314da4bfc10bf9e1c3bd6edd0bc412"
+          },
+          {
+            "path": "gui/registration-installed.xml",
+            "bytes": 7985,
+            "sha256": "e3cfada4ab7c1cc510016f34a969305b7260b326fc86132eb38bfc8a3470a662"
+          },
+          {
+            "path": "gui/registration-installed.png",
+            "bytes": 145418,
+            "sha256": "975f23ab487b2e47a9a19eb8552533afe53124b477821633e3819d7c64542269"
+          }
+        ]
+      },
+      "onlinePresets": {
+        "observedFeedCount": 391,
+        "visibleTemplateSimulatedImages": true,
+        "network": "ordinary emulator Internet, not camera Wi-Fi+cellular",
+        "remoteCoverImagePathIndependentlyExercised": false,
+        "files": [
+          {
+            "path": "gui/online-presets-installed.json",
+            "bytes": 327,
+            "sha256": "0e115b8d641ebb57870dad7f2abf5948872eb5dbdbc73530e6bf6c05847b83c0"
+          },
+          {
+            "path": "gui/online-presets-installed.xml",
+            "bytes": 13900,
+            "sha256": "46570fa0d93c64708059be22a85927f127d34f8d2b2dca8f6763e072ad46db5f"
+          },
+          {
+            "path": "gui/online-presets-installed.png",
+            "bytes": 1414971,
+            "sha256": "f89fef67fd90f708bb568d109b3aeeb07e3da1824a783a86852a8d8f38f7424d"
+          }
+        ]
+      },
+      "executionSourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+      "reusedByProductAndPayloadProof": true,
+      "notReexecutedForF11": true
+    },
+    "archiveReceipt": "android/result.json",
+    "byteManifest": "android/byte-manifest.json",
+    "byteManifestSha256": "3cb1069839cf5a2e69a2dc505203a964276c166e80d4f30f1c21e3be57567b91",
+    "guiReceipt": "gui/result.json",
+    "guiRawArchive": {
+      "path": "gui/raw-frame-captures.tar.xz",
+      "bytes": 13154448,
+      "sha256": "db4a7ea42ab038ebbae7d0c3b2b962604ddbeda1fbc1a24ba584da701349bb63",
+      "allExtractedBytesVerifiedByRoot": true,
+      "samplingApproxFramesPerSecond": 2,
+      "everyDisplayFrameClaimed": false
+    },
+    "acceptedArtifactSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "revalidationSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "revalidationPending": false,
+    "currentSourcePlatformRevalidationAccepted": true,
+    "guiValidationSourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+    "guiReuseForF11Established": true,
+    "guiReexecutedForF11": false,
+    "guiReuseProof": "source-input-equivalence.json"
+  },
+  "apple": {
+    "state": "full-run-and-independent-unsigned-ipa-accepted-for-local-testing",
+    "fullRun": 43615396238,
+    "fullRunUrl": "https://github.com/1162107757/nikon-camera/actions/runs/43615396238",
+    "lastReportedRunStatus": "completed",
+    "fullRunAccepted": true,
+    "independentIpaAccepted": true,
+    "acceptedForLocalSelfSignedTesting": true,
+    "fullSourceGate": {
+      "requiresFrozenSameAndroidAndAppleSource": true,
+      "requiresFullPreparationAndDeviceBuildSteps": true,
+      "runnerLabel": "macos-26",
+      "syntheticVerifierChecksPassed": 11,
+      "actualAppleRunExecutedByVerifierSelftest": false,
+      "accepted": true
+    },
+    "publicInternetGate": {
+      "schemaRequired": 2,
+      "requiredSourceCompileAndExecutionExitCodes": true,
+      "requiredGitInputCount": 6,
+      "runtimeExecuted": true,
+      "accepted": true,
+      "physicalCameraExercised": false,
+      "compileExitCode": 0,
+      "executionExitCode": 0,
+      "actualRuntimePlatform": "macOS Foundation production I/O queues",
+      "sixInputGitPinsMatched": true,
+      "receipt": "apple/public-internet/result.json",
+      "independentVerification": "apple/public-internet/independent-verification.json"
+    },
+    "existingUIKitFiveAndRealNativePipelineStillRequired": true,
+    "previousFailedFullAttempt": {
+      "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+      "run": 43611891603,
+      "conclusion": "failure",
+      "flutterTestsPassed": 659,
+      "flutterTestsFailed": 2,
+      "deviceBuildExitCode": 0,
+      "receipt": "attempts/eab-full-43611891603/result.json",
+      "accepted": false
+    },
+    "conclusion": "success",
+    "flutterTestsPassed": 661,
+    "uiKitTestsPassed": 5,
+    "nativeSimulatorScenariosPassed": 1,
+    "sharedParityChecks": 1788,
+    "nativeForegroundFixturePassed": true,
+    "unsignedIpaSha256": "a9d73150f386f42a623cdb7357be5d4153a9c064f9740f1150021b5a25d57be6",
+    "unsignedIpaBytes": 65153750,
+    "minimumIosVersion": "16.0",
+    "receipts": {
+      "fullCi": "apple/ci-result.json",
+      "ipaIndependent": "apple/independent-verification.json",
+      "fullSource": "apple/full-source-verification.json",
+      "nativeSimulator": "apple/simulator-result.json",
+      "sharedParity": "apple/core-parity.json",
+      "uiKitLog": "apple/simulator-tests.log"
+    },
+    "qqNativeLogin": {
+      "configured": false,
+      "blockedByMissingUniversalLink": true,
+      "requiresUserHttpsUniversalLinkAndAasa": true,
+      "nativeError": "QQ_CONFIGURATION_REQUIRED",
+      "fallback": "account/password"
+    }
+  },
+  "physicalDeviceValidation": {
+    "current225PackageInstalled": false,
+    "iphoneInstallationAndCameraConnection": false,
+    "nikonZ6IIWifi": false,
+    "usb": false,
+    "qqNativeAuthorization": false,
+    "qqIosUniversalLinkConfigured": false,
+    "actual16KiBAndroidDevice": false
+  },
+  "claimLimits": [
+    "224 accepted three-package baseline and its follow-up descriptions remain unchanged.",
+    "Historical targeted Flutter logs retain their original execution source; final acceptance uses f11 full661 and independent IPA verification.",
+    "Windows AccessViolation, failed and did-not-complete attempts are not counted as passes.",
+    "The new1788 JVM checks were actually executed for225; no224 result is relabeled.",
+    "Apple public-internet verifier self-tests are synthetic and do not claim Mac runtime execution.",
+    "Each platform package enters dist only after its matching-source local acceptance; overall acceptance waits for both platforms. No publication is authorized."
+  ],
+  "productInputEqualityToEab": {
+    "reportedByRootGitInputComparison": true,
+    "oldSourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+    "newSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "onlyChangedFile": "cross-platform/app/test/editor_test.dart",
+    "proof": "source-input-equivalence.json",
+    "productRootCount": 10,
+    "apkContainersByteIdentical": false,
+    "everyUncompressedApkPayloadEntryIdentical": true,
+    "entriesPerAbi": 428
+  },
+  "knownLimitations": [
+    "iOS QQ requires a user-provided HTTPS Universal Link and AASA; currently unconfigured and native authorization returns QQ_CONFIGURATION_REQUIRED. Use account/password.",
+    "Unsigned iOS IPA requires self-signing; physical iPhone installation and signing were not exercised.",
+    "Physical camera Wi-Fi combined with cellular Internet routing and physical USB transfer were not exercised by these host/simulator fixtures.",
+    "Native QQ authorization and an actual16KiB Android device remain unverified.",
+    "GUI execution remains on eab; current f11 reuse is justified by identical product Git inputs and all uncompressed APK payloads, not a claimed GUI rerun.",
+    "GUI continuity uses approximately2fps simulator samples; it is not an every-display-frame measurement."
+  ],
+  "previousAcceptedBaseline": {
+    "versionCode": 224,
+    "sourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+    "acceptedArtifactCount": 3,
+    "appleFullRun": 43597212999,
+    "flutterTestsPassed": 619,
+    "uiKitTestsPassed": 5,
+    "nativeScenariosPassed": 1,
+    "coreParityChecks": 1770,
+    "resultsInheritedAs225": false,
+    "receipt": "../features-224/source.json"
+  },
+  "currentAcceptedLocalCandidate": {
+    "versionCode": 225,
+    "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "artifactCount": 3,
+    "appleFullRun": 43615396238,
+    "flutterTestsPassed": 661,
+    "uiKitTestsPassed": 5,
+    "nativeSimulatorScenariosPassed": 1,
+    "acceptedForDelivery": false,
+    "published": false
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "syntheticVerifierOnly": true,
+  "actualAppleBuildExecuted": false,
+  "passed": true,
+  "checks": 11,
+  "cases": [
+    "valid synthetic full-run provenance accepted",
+    "unfrozen source rejected",
+    "other source rejected",
+    "wrong workflow rejected",
+    "wrong event rejected",
+    "wrong runner rejected",
+    "skipped prepare rejected",
+    "diagnostic-only job rejected",
+    "different job source rejected",
+    "different artifact source rejected",
+    "publishing state rejected"
+  ]
+}

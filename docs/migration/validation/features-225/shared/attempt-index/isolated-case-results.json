@@ -1,0 +1,104 @@
+[
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Accepted HD crosses portrait entry and unchanged Cancel without a base render",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-1.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Accepted HD crosses portrait entry and unchanged Apply without a base render",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-2.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Unchanged color tools retain accepted pixels and revisions on 取消",
+    "exit": 1,
+    "log": "editor_tool_switching-isolated-3.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Unchanged color tools retain accepted pixels and revisions on 应用",
+    "exit": 1,
+    "log": "editor_tool_switching-isolated-4.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Color entry refreshes a frame whose preset and geometry differ at the same revision",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-5.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Filter adjustment and border tabs keep the same zoomed photo and route",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-6.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "A near-square window does not change the photograph into a side column when a tool opens",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-7.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Curve HSL palette and cleanup replace only controls and retain the zoomed photo viewport",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-8.log"
+  },
+  {
+    "file": "editor_tool_switching_test.dart",
+    "name": "Zoomed exposure enters portrait and patch inline without another prepare or blank photograph",
+    "exit": 0,
+    "log": "editor_tool_switching-isolated-9.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "Curve entry retains a large photograph and uses compact controls in both orientations",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-1.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "曲线 drag sends ongoing read-only frames and a final full-size frame without saving tentative edits",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-2.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "HSL drag sends ongoing read-only frames and a final full-size frame without saving tentative edits",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-3.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "Cancel rolls back tentative curve edits and restores an empty global undo history",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-4.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "System Back rolls back HSL while retaining an existing base-editor undo step",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-5.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "Apply groups several curve changes into one undo step and saves only after acceptance",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-6.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "Palette entry preserves dual-axis engine parameters and cancels without committing",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-7.log"
+  },
+  {
+    "file": "editor_color_workspace_test.dart",
+    "name": "Cleanup entry analyses once automatically and reset returns to the original neutral cleanup",
+    "exit": 0,
+    "log": "editor_color_workspace-isolated-8.log"
+  }
+]

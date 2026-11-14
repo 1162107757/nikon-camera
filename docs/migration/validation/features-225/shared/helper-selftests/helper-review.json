@@ -1,0 +1,50 @@
+{
+  "versionCode": 225,
+  "productCodeChangedByThisReview": false,
+  "sdkBuildOrPlatformRunExecuted": false,
+  "published": false,
+  "sourceFrozenAtReview": false,
+  "actualAppleFixtureExecutionClaimed": false,
+  "collectionReview": {
+    "coreIosUsesSetEuoPipefail": true,
+    "mandatoryPublicInternetFixtureRunsDuringPrepare": true,
+    "fixtureFailurePropagates": true,
+    "receiptAndFourLogsMirroredToMobileApplePublicInternet": true,
+    "laterBuildDoesNotRemoveThatDirectory": true,
+    "workflowRecursivelyUploadsMobileAppleDirectory": true,
+    "coreIosPublicInternetDirectoryNotAlsoUploaded": true,
+    "exactlyOnePublicInternetReceiptExpected": true
+  },
+  "sourceGuardReview": {
+    "oldLateSourceCheckMovedBeforeAcceptanceReceipts": true,
+    "frozenSameAndroidAndAppleSourceRequired": true,
+    "fullMacos26PreparationAndDeviceBuildStepsRequired": true,
+    "artifactAndCachedAttemptMustMatch": true,
+    "rawRunAndJobApiReceiptsPreservedWhenVerified": true,
+    "syntheticChecksPassed": 11,
+    "receipt": "full-source-verifier-selftest.json"
+  },
+  "publicInternetGuardReview": {
+    "schemaVersion": 2,
+    "explicitSourceAndCompileAndExecutionExitCodesRequired": true,
+    "gitInputCount": 6,
+    "syntheticChecksPassed": 9,
+    "receipt": "public-verifier-selftest/selftest-result.json"
+  },
+  "preservationReview": {
+    "clonedHelperHexPinListsCompared": 10,
+    "allOriginalPinListsIdentical": true,
+    "foregroundHelperIdenticalApartFromVersionPaths": true,
+    "existingFiveUIKitAndRealNativeGatesRetained": true,
+    "dist225BinaryCount": 0,
+    "accepted225Artifacts": [],
+    "overall225Accepted": false
+  },
+  "documentationUpdates": {
+    "noOpFinalTwoLogsEachOneIndependentPassAndExitZero": true,
+    "noWholeSwitchingFilePassClaimed": true,
+    "sharpCancelIndependentPassAndTargetedAnalyzeRecorded": true,
+    "windowsFailuresAndIncompleteGeometryRetained": true,
+    "baseline224NotRelabeledAs225": true
+  }
+}

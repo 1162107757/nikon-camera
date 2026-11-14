@@ -1,0 +1,10 @@
+{
+  "observedAtUtc": "2026-11-14T16:14:41.891291+00:00",
+  "runId": 43611891603,
+  "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "conclusion": "failure",
+  "runSucceeded": false,
+  "packageAccepted": false,
+  "published": false,
+  "independentPlatformVerificationRequired": true
+}

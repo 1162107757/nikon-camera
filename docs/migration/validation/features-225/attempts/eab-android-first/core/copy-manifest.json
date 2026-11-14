@@ -1,0 +1,55 @@
+{
+  "fromActual225Execution": true,
+  "newExecutionPerformedByThisArchivalStep": false,
+  "copiedFrom224": false,
+  "files": [
+    {
+      "original": ".tooling/next225/core-jvm/compile.log",
+      "copiedAs": "compile.log",
+      "bytes": 189,
+      "sha256": "66fdd152b95ee1b5d225b634dc489278cdb0aa4c080aaa2fdce6894276f6a1d6"
+    },
+    {
+      "original": ".tooling/next225/core-jvm/run.log",
+      "copiedAs": "run.log",
+      "bytes": 4274,
+      "sha256": "873e5abdedc0594d54ebf7b92c065fd599001a929743d16ab07bb8522073de78"
+    },
+    {
+      "original": ".tooling/next225/core-jvm/golden.json",
+      "copiedAs": "golden.json",
+      "bytes": 760,
+      "sha256": "75ce5f205cde927baf3bfabeed22c4f3ee71d892ebb7d21d6150a7eb121857ca"
+    },
+    {
+      "original": ".tooling/next225/core-jvm/sources.json",
+      "copiedAs": "sources.json",
+      "bytes": 17561,
+      "sha256": "b644740c3a06a72a5cc7a02bf01b096da41b8c7b5b0523f51c2a0e17fe36d65a"
+    },
+    {
+      "original": ".tooling/next225/core-jvm/input-fingerprints.json",
+      "copiedAs": "input-fingerprints.json",
+      "bytes": 72555,
+      "sha256": "5de10a0ad49906d866e7dc49e48bcea0609a35185ffce8f7b0e4d795838bdd85"
+    },
+    {
+      "original": ".tooling/next225/core-jvm/javac.args",
+      "copiedAs": "javac.args",
+      "bytes": 24977,
+      "sha256": "176f28b9425028b83dd35bdd6cb71e1a155c656388920bee7615662b056a3bff"
+    },
+    {
+      "original": ".tooling/next225/core-fresh.log",
+      "copiedAs": "invocation.log",
+      "bytes": 3662,
+      "sha256": "253aa8399b68b614a56817c299e8dd059cb31a6c592d66d0d05db6b6e9b84fe9"
+    },
+    {
+      "original": ".tooling/next225/core_check_isolated.py",
+      "copiedAs": "invocation.py",
+      "bytes": 2447,
+      "sha256": "b063a880b7cfa5d3847503a82dd6e26398efcf4a75ae1ae0525a0bbba2713fce"
+    }
+  ]
+}

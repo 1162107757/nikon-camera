@@ -1,0 +1,490 @@
+{
+  "schemaVersion": 1,
+  "sourceFrozen": false,
+  "archiveOperationOnly": true,
+  "copiedOriginals": [
+    {
+      "source": ".tooling/next225/final-static-checks.json",
+      "archive": "attempt-index/final-static-checks.json",
+      "bytes": 116,
+      "sha256": "2541a476092393ed5690764fd62d11244dc5688c32e294062be115e5d0cda57a",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/initial-flutter-checks.json",
+      "archive": "attempt-index/initial-flutter-checks.json",
+      "bytes": 71,
+      "sha256": "b0dd61b70aeeede339e0f932de3626449ceecfa1465a91ef7b8805fe5283ea64",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/integrated-checks.json",
+      "archive": "attempt-index/integrated-checks.json",
+      "bytes": 179,
+      "sha256": "5ca73777a9335362a98156d6580b0aa20e54ec44019fb40908164edae66237b6",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/isolated-case-results.json",
+      "archive": "attempt-index/isolated-case-results.json",
+      "bytes": 3859,
+      "sha256": "55ba60b1e31c32a7cf7c327407447e6e932a28e7b7f1319d578ecd95f685dbde",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-pending-results.json",
+      "archive": "attempt-index/sharp-pending-results.json",
+      "bytes": 103,
+      "sha256": "564da26176d0a3416fb7bb55be4af15b0ba7924081eb539e2fada758a067ad88",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/source.json",
+      "archive": "attempt-index/source-at-archive.json",
+      "bytes": 356,
+      "sha256": "f80828ccc1f34351a220128dc4eee4fb2579f292499ce6b1efff03fa5c470aed",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/color-existing.log",
+      "archive": "attempts/color-existing.log",
+      "bytes": 42481,
+      "sha256": "e6799c2b78bf0a8c56c109eae214c8f5adc6fc282aaae7631ac254a0a8b863d5",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/controller35.log",
+      "archive": "attempts/controller35.log",
+      "bytes": 50187,
+      "sha256": "526a8018940da89fefc2a8dfe6693eefa2a487b6cdbba7727e9df903a0d3b032",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-3.log",
+      "archive": "attempts/editor_tool_switching-isolated-3.log",
+      "bytes": 43103,
+      "sha256": "d43582db8f4dbb4c46c1cee032e6006d1f4fa26122b7ce28a7792054c1a64de6",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-4.log",
+      "archive": "attempts/editor_tool_switching-isolated-4.log",
+      "bytes": 43093,
+      "sha256": "cfaa63c91ce6f88fb44f93daf02215a572ad6d21bac19a47eb65f8a5609bafb0",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/final-format.log",
+      "archive": "attempts/final-format.log",
+      "bytes": 170,
+      "sha256": "94f7d85c6fe9fa380064766620a3098a163bca946ab12d59f08ae37f73236255",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/noop-debug-apply-1.log",
+      "archive": "attempts/noop-debug-apply-1.log",
+      "bytes": 91914,
+      "sha256": "c23b4446df9a653c47bf3bee4842370f80fc04b02b38628753041c0057c7cdd7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/noop-debug-apply-2.log",
+      "archive": "attempts/noop-debug-apply-2.log",
+      "bytes": 48058,
+      "sha256": "a5e76346428b8bc8c0951e325e2b58e941c5aa2f7421f90996a6a71d2f25c52c",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-apply-source-plane.log",
+      "archive": "attempts/sharp-apply-source-plane.log",
+      "bytes": 46195,
+      "sha256": "7a19ca163fd9e518636e1689f877f55f98f2ba7196ba2245277d49b615e56253",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-cancel-isolated-final.log",
+      "archive": "attempts/sharp-cancel-isolated-final.log",
+      "bytes": 47133,
+      "sha256": "bb9fd13ad9109b8b7cc7014811ae6936091114d07ead1e28b84d06d18e406059",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-ui-corrected.log",
+      "archive": "attempts/sharp-ui-corrected.log",
+      "bytes": 46256,
+      "sha256": "920473472e4ccaa3943bab9d405ea0fc15906cda0db2620f272ff80e56d25c48",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/tool-switch-all.log",
+      "archive": "attempts/tool-switch-all.log",
+      "bytes": 42507,
+      "sha256": "7b2ecc0bb076e3d4bf1ebbb04334101d0cd47de01a83e372e20958f343cf1b6a",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/final-analyze.log",
+      "archive": "checks/final-analyze.log",
+      "bytes": 96,
+      "sha256": "19f92f1517c8879e42feb066be570a6ed65a62abafee5f2e8c16de2430aaf27f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/final-changed-format.log",
+      "archive": "checks/final-changed-format.log",
+      "bytes": 49,
+      "sha256": "971c161ea9b0eaf998acf357ec0013863ce1eb065ca70c9e804a1866d1c5bfaa",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/final-frozen-analyze.log",
+      "archive": "checks/final-frozen-analyze.log",
+      "bytes": 98,
+      "sha256": "ae7594a81f59a61e7310a1e28e2600b586a48639199be530936da9e41ba84a5d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/native-task-final.log",
+      "archive": "checks/native-task-final.log",
+      "bytes": 111,
+      "sha256": "c90d5a083db64415f19a508ec7d6a8cd43f1207f0f22423c9dad16908ffbfd2d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/password-policy-final.log",
+      "archive": "checks/password-policy-final.log",
+      "bytes": 346,
+      "sha256": "808ef2a1c4abf98885b629801feee1d44c07eac368c5c14d6237e05d85012b23",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/preservation-final.log",
+      "archive": "checks/preservation-final.log",
+      "bytes": 123,
+      "sha256": "02382c3abafa26395abbd3bbcad3bf2ce4774cab66d02814294d7202e8ead30c",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/public-internet-host-vpn-quoted.log",
+      "archive": "checks/public-internet-host-vpn-quoted.log",
+      "bytes": 519,
+      "sha256": "c82f6ab0671a500fc94bc7ba224920984fc85bf52e08f44230000de48753eada",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/public-source-final.log",
+      "archive": "checks/public-source-final.log",
+      "bytes": 144,
+      "sha256": "e421183888f5aca91c00c05e11a277ba3b10af052981d4b54e17595c767a94a6",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-apply-analyze.log",
+      "archive": "checks/sharp-apply-analyze.log",
+      "bytes": 101,
+      "sha256": "e1ab754b91db4cffbb844a15c4c3273c9fc17ad789ceb765bceb809f0a7098ae",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-apply-format.log",
+      "archive": "checks/sharp-apply-format.log",
+      "bytes": 97,
+      "sha256": "1bf6f809a73fbb54fee3bfe318b67e12b0de4e89053b3c5817335f0b26e8dc19",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-cancel-baseline-analyze.log",
+      "archive": "checks/sharp-cancel-baseline-analyze.log",
+      "bytes": 101,
+      "sha256": "e1ab754b91db4cffbb844a15c4c3273c9fc17ad789ceb765bceb809f0a7098ae",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-cancel-baseline-format.log",
+      "archive": "checks/sharp-cancel-baseline-format.log",
+      "bytes": 47,
+      "sha256": "7bb8050e41a39a859547048f7bd721bbcc6d4f7b14270a6854deddb3516f15cf",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/orphan-fixture-format.exit",
+      "archive": "fixture-correction/orphan-fixture-format.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/orphan-fixture-format.log",
+      "archive": "fixture-correction/orphan-fixture-format.log",
+      "bytes": 78,
+      "sha256": "154222b3289c94a40374fbe29ac9d1baa5a4bdbc21722e0224d4c2a81fe82866",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/orphan-fixture-regression.exit",
+      "archive": "fixture-correction/orphan-fixture-regression.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/orphan-fixture-regression.log",
+      "archive": "fixture-correction/orphan-fixture-regression.log",
+      "bytes": 43120,
+      "sha256": "a1d59b73b8a708f444380a5beca62f98f19eeb33d3e52a5a3ef8ea82de5d949f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/apple_full_source_evidence225.py",
+      "archive": "helper-selftests/apple_full_source_evidence225.py",
+      "bytes": 2410,
+      "sha256": "d0eda6a3562e476f24dcfb6874c7a0116f64246e9e83e54f3fe3958961ced382",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/full-source-verifier-selftest.json",
+      "archive": "helper-selftests/full-source-verifier-selftest.json",
+      "bytes": 524,
+      "sha256": "b469ac9597d762f172dd179499eee04bf4e9b8727eabda291fe878c2f3380340",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/helper-review.json",
+      "archive": "helper-selftests/helper-review.json",
+      "bytes": 1944,
+      "sha256": "bb50c821a32fc51698e1fa6d06422e7cde543e1d39057c6d49b8175f34b0ef0f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/public-verifier-selftest/selftest-result.json",
+      "archive": "helper-selftests/public-internet-selftest-result.json",
+      "bytes": 117,
+      "sha256": "4855a582cd27f3a528c83d59644c26e1f801130c33a812e97c28fd9315a5bcb3",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/public-verifier-selftest-final.log",
+      "archive": "helper-selftests/public-verifier-selftest-final.log",
+      "bytes": 76,
+      "sha256": "490f7e7fb152637adc743c3f7c5d2cabe401442e086be48b16ad8294cd602e25",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/public_internet_evidence225.py",
+      "archive": "helper-selftests/public_internet_evidence225.py",
+      "bytes": 3398,
+      "sha256": "eaed2622b0a8ffd032767f19ac230576556a4814fbc76a57365140c31ace8ebc",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/test_apple_full_source_evidence225.py",
+      "archive": "helper-selftests/test_apple_full_source_evidence225.py",
+      "bytes": 2786,
+      "sha256": "774605853736b463b806fc427a80ed5db6886539079bf506fbd5da761c6324e1",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/test_public_internet_evidence225.py",
+      "archive": "helper-selftests/test_public_internet_evidence225.py",
+      "bytes": 2824,
+      "sha256": "88efd808b32f0f2730f01baa166b49354dd16ea4586d3cf5a604e7e5d72ba205",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/controller35-fixed.log",
+      "archive": "logs/controller35-fixed.log",
+      "bytes": 48668,
+      "sha256": "0d9ac6ae235a80dd5b201afb8091fc93a2be867f7e075a81db8d1bda4f9273b5",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-1.log",
+      "archive": "logs/editor_color_workspace-isolated-1.log",
+      "bytes": 39110,
+      "sha256": "b673db483b826d9cd4e5263c1d2160ff9075554204b9942f9803f6e007cc58cd",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-2.log",
+      "archive": "logs/editor_color_workspace-isolated-2.log",
+      "bytes": 39139,
+      "sha256": "d5eaa086ba2a52430c77bc1ff1bceb75596bf2a4e469900b091b1b60f22dea0f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-3.log",
+      "archive": "logs/editor_color_workspace-isolated-3.log",
+      "bytes": 39134,
+      "sha256": "fb1b853770d2c4a515f98b60fbc5d2cdc133926dddc66ee2bcd6f0556c231ec7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-4.log",
+      "archive": "logs/editor_color_workspace-isolated-4.log",
+      "bytes": 40841,
+      "sha256": "d8a12a1f7ce9f4466f59c695c253cd8985ace1438a24e0fd3b2470db7216acac",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-5.log",
+      "archive": "logs/editor_color_workspace-isolated-5.log",
+      "bytes": 39092,
+      "sha256": "0796cc0b2b1277a15b55ffae21d20d323f9addad1b300422ba4c932697dc6503",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-6.log",
+      "archive": "logs/editor_color_workspace-isolated-6.log",
+      "bytes": 42595,
+      "sha256": "3ed0136859eabe86c3b22bcb62bbdf59c586050a05da82f35d68dca219e7d659",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-7.log",
+      "archive": "logs/editor_color_workspace-isolated-7.log",
+      "bytes": 39105,
+      "sha256": "5c124a0cd1b225c3d8dfbfb2c11b3be01a180dd6878b99adcefa7a25bde74b2e",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_color_workspace-isolated-8.log",
+      "archive": "logs/editor_color_workspace-isolated-8.log",
+      "bytes": 39122,
+      "sha256": "0fee516c71c40e76ca1595ca576e35b66576c9b18863456f4e42b29cbdb710dd",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-1.log",
+      "archive": "logs/editor_tool_switching-isolated-1.log",
+      "bytes": 43237,
+      "sha256": "039f9cc9c86463be5cf1b6bf34335a633c51f6d5a08bbfed8db27ee608dd4035",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-2.log",
+      "archive": "logs/editor_tool_switching-isolated-2.log",
+      "bytes": 39090,
+      "sha256": "400a51fa3e02a3fb63e51f013809a26e3855ac8348ec8efa1cebc84a424e2f41",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-5.log",
+      "archive": "logs/editor_tool_switching-isolated-5.log",
+      "bytes": 39104,
+      "sha256": "e20117bb3a1d77b6f41ebf54442173580f2f3e0aceb9a7abcdd52b84c7d1c5ee",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-6.log",
+      "archive": "logs/editor_tool_switching-isolated-6.log",
+      "bytes": 39077,
+      "sha256": "b7587dc9634512408dd42ed3281f67f48314ef6c67dfd55d85371d3702f990cd",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-7.log",
+      "archive": "logs/editor_tool_switching-isolated-7.log",
+      "bytes": 39100,
+      "sha256": "31d9e8039e0690cc64fb411f7c267b5cf3fd32ad2f98670cdf6173af689dce63",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-8.log",
+      "archive": "logs/editor_tool_switching-isolated-8.log",
+      "bytes": 39113,
+      "sha256": "957ccd6f90731adcad2c2e5ce019b937bc4445938b8ddf942fb8dfd4c4c57197",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/editor_tool_switching-isolated-9.log",
+      "archive": "logs/editor_tool_switching-isolated-9.log",
+      "bytes": 39122,
+      "sha256": "dbc93b28edeb71c0fe69f935c7e2671307e56203907aa594ba7a71912b0c13cd",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/noop-debug-apply-final.log",
+      "archive": "logs/noop-debug-apply-final.log",
+      "bytes": 43540,
+      "sha256": "809848e8a0a907e0a11464fee252f65c9b7adea2aada1d0dba58400ac840587d",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/noop-debug-cancel-final.log",
+      "archive": "logs/noop-debug-cancel-final.log",
+      "bytes": 43538,
+      "sha256": "54b7318ba5d2c4ac79470aa245b67e5f351912b211bd167580695028c2036c8c",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/registration-ui.log",
+      "archive": "logs/registration-ui.log",
+      "bytes": 39875,
+      "sha256": "238f44e407dd3cc8911171e9622839c41aa3f3943d7a320c3dcd2af4bb7d32a5",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-apply-same-profile.log",
+      "archive": "logs/sharp-apply-same-profile.log",
+      "bytes": 43582,
+      "sha256": "f85888e7d660ccd46f57d8cd9769305060b89d4bf8b39385edf401d29db206bc",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-apply-source-plane-retry1.log",
+      "archive": "logs/sharp-apply-source-plane-retry1.log",
+      "bytes": 43612,
+      "sha256": "ae96dfbb3c8ed435af3088b05853a890d9a155c213f4c3bc35b75213127fe28e",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-cancel-baseline-test.log",
+      "archive": "logs/sharp-cancel-baseline-test.log",
+      "bytes": 43632,
+      "sha256": "81f41b300c73bcb9aa5bc16712d20b25d5b3f6ae99e33d1f2641b4fe4e3b15a3",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-geometry-isolated-final.log",
+      "archive": "logs/sharp-geometry-isolated-final.log",
+      "bytes": 39084,
+      "sha256": "4fa86bf4508f5eec2b82cbf7de089212aa728b1f75d1ed741ad1b0edaaa46547",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/sharp-ui4.log",
+      "archive": "logs/sharp-ui4.log",
+      "bytes": 43336,
+      "sha256": "c33efd1d32844ce13340b55aafc409a587ddd8c3bb9151ff204a0d4043031a5b",
+      "byteExact": true
+    }
+  ],
+  "generatedIndexes": [
+    {
+      "archive": "case-matrix.json",
+      "bytes": 47694,
+      "sha256": "a7fd490a8f237f6bd743512973af5b7261cf29af7b25d8ec666949271f4233bb",
+      "generatedArchiveIndex": true
+    },
+    {
+      "archive": "result.json",
+      "bytes": 2245,
+      "sha256": "72d8c198c33bfa25677f16b6b1e63fac47728ea746ef0afdf6b6182d88527f92",
+      "generatedArchiveIndex": true
+    },
+    {
+      "archive": "README.md",
+      "bytes": 3155,
+      "sha256": "79ca678b5104622aea56a61b20e7e65b8eeec3a8c61db120e235bce5d64ab67e",
+      "generatedArchiveIndex": true
+    }
+  ],
+  "manifestDoesNotHashItself": true,
+  "previousManifestSha256": "85d5ec79528d768c5e9c9412b99f01538668a0f5e79e389d8348b89e107f1e50",
+  "currentFrozenProductSourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "currentProductSourceFrozen": true,
+  "executionSourceFrozen": false,
+  "historicalFlutterInputBindingClaimed": false,
+  "manifestBeforeFinalSourceMetadataSha256": "423aa19e457fc452fda1e04d64609c900598ea0d7bb4262a62f42b827603b04d",
+  "historicalExecutionSourcesNotRelabeled": true
+}

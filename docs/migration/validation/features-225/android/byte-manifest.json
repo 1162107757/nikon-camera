@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "copiedOriginals": [
+    {
+      "source": ".tooling/next225/android-release-result.json",
+      "archive": "android-release-result.json",
+      "bytes": 113,
+      "sha256": "7008bae658c7b249b615fd61db0b0544638b727613a56a15ef9716171a258794",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/android-arm64-release.log",
+      "archive": "android-arm64-release.log",
+      "bytes": 298,
+      "sha256": "df62951ff8ac902899e998c07fdac3dc6ffbb0bd200fdf841d5329c63d847498",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/android-x64-release.log",
+      "archive": "android-x64-release.log",
+      "bytes": 295,
+      "sha256": "7023309fbe8eb795b62be78c2c2cd6b8dffa52c8ce114cc5b789dde8b20f2e37",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/arm64-gradle.log",
+      "archive": "arm64-gradle.log",
+      "bytes": 28155,
+      "sha256": "56e9dfbca39236b7182998e23b1218e832840786c145d6eea0c75402c6821e2f",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/x64-gradle.log",
+      "archive": "x64-gradle.log",
+      "bytes": 28147,
+      "sha256": "eef5168a76b06b611e7b867a2843123786f9f78a5b269481afc8a5f1c632a4d7",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/arm64-apksigner.bat-final.log",
+      "archive": "arm64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/x64-apksigner.bat-final.log",
+      "archive": "x64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/arm64-zipalign.exe-final.log",
+      "archive": "arm64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/x64-zipalign.exe-final.log",
+      "archive": "x64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/android-acceptance-pipeline.json",
+      "archive": "android-acceptance-pipeline.json",
+      "bytes": 110,
+      "sha256": "6b92f10014c911d1e1f33b9f3ce0a36eadf5758635a83a8e3e9145d5843f51a9",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/verify_android-pipeline.log",
+      "archive": "verify_android-pipeline.log",
+      "bytes": 104,
+      "sha256": "762b8301092cea378c60c07c3fb0dc7671b31f8750b732821870c65efe01dcc3",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/verify_photos-pipeline.log",
+      "archive": "verify_photos-pipeline.log",
+      "bytes": 77,
+      "sha256": "1ddabf01661d657e8585b30c13746c17421fea513ea0d0e04c56f74162883f98",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/run_release_runtime-pipeline.log",
+      "archive": "run_release_runtime-pipeline.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/check_back_navigation-pipeline.log",
+      "archive": "check_back_navigation-pipeline.log",
+      "bytes": 6492,
+      "sha256": "a5c9cff692a3c596d74889fe9af236a69d0f655742717d6e06259d754a2c1f05",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/release-runtime.log",
+      "archive": "release-runtime.log",
+      "bytes": 2175,
+      "sha256": "83850a16c5d45abb8cc2e63b0adf25c099b510381564a20cc54ff0b1f9b828d0",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/release-runtime-result.json",
+      "archive": "release-runtime-result.json",
+      "bytes": 511,
+      "sha256": "aa8de470df798229af47e6322a187192d6fb27121143b283b459a6a206ac62d0",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/release-runtime-mapping.json",
+      "archive": "release-runtime-mapping.json",
+      "bytes": 181,
+      "sha256": "b586aef303c4ac77b96779c7d2ad9245ba2a1a782b6e1d743a5249aa594d7f06",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/back-navigation-result.json",
+      "archive": "back-navigation-result.json",
+      "bytes": 4366,
+      "sha256": "27cbc60862535d81efb74de8ba330593a29897c29c8c6ca962eae46adf8af374",
+      "byteExact": true
+    },
+    {
+      "source": ".tooling/next225/android-local-promotion.json",
+      "archive": "android-local-promotion.json",
+      "bytes": 848,
+      "sha256": "e77421d9623043e4585a50087cd906ee2dcde54cd49a410b5ea7359c0a00aa53",
+      "byteExact": true
+    },
+    {
+      "source": "docs/migration/validation/features-225/android-signing-alignment.json",
+      "archive": "android-signing-alignment.json",
+      "bytes": 4357,
+      "sha256": "2a8ba5b85632fab6b9abf7654289f48ae562f1d5f04773b84cbe698d9edbdebc",
+      "byteExact": true
+    },
+    {
+      "source": "docs/migration/validation/features-225/preset-preview-assets.json",
+      "archive": "preset-preview-assets.json",
+      "bytes": 4559,
+      "sha256": "1e9adab8be799ad80132e4e1adb01dc839e78ad0ff4ae8fe3830cafcb80974be",
+      "byteExact": true
+    },
+    {
+      "source": "docs/migration/validation/features-225/source-input-equivalence.json",
+      "archive": "source-input-equivalence.json",
+      "bytes": 3262,
+      "sha256": "5b14ef68d8ff61425fb8585ec420d5e1ea2610a1fc105d5515d7c7dfcf440100",
+      "byteExact": true
+    }
+  ],
+  "compressedOriginals": [
+    {
+      "archive": "release-r8-mapping.txt.xz",
+      "bytes": 742304,
+      "sha256": "e26932a3bbd3ee22c6f0fb74e94605c3cd1bd6550afb04d9bc67142ab3cced5f",
+      "encoding": "xz",
+      "originalBytes": 12017596,
+      "originalSha256": "c501d24651f416ff676b110c43cf995c4f14157b04229b3b0dbe89c49b74a670",
+      "sourceAliases": [
+        ".tooling/next225/x64-mapping.txt",
+        ".tooling/next225/arm64-mapping.txt"
+      ],
+      "bothOriginalMapsByteIdentical": true,
+      "roundTripByteExact": true
+    }
+  ],
+  "generatedIndexes": [
+    {
+      "archive": "result.json",
+      "bytes": 2594,
+      "sha256": "00b7b0989dff7db1e2aa0f0792c49d1ceabbfe64a97be594f418d90bce825619",
+      "generatedArchiveIndex": true
+    },
+    {
+      "archive": "README.md",
+      "bytes": 1449,
+      "sha256": "53c24133dbd76fa1968e72ab581352c91153f57a29daa67e4ded5ffc2ef27a64",
+      "generatedArchiveIndex": true
+    }
+  ],
+  "manifestDoesNotHashItself": true,
+  "sdkOrTestsExecutedByArchive": false
+}

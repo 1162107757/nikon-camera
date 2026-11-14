@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+  "artifact": {
+    "file": "huevia-0.31.0-dev-225-ios-unsigned.ipa",
+    "bytes": 65153750,
+    "sha256": "a9d73150f386f42a623cdb7357be5d4153a9c064f9740f1150021b5a25d57be6",
+    "abi": "arm64",
+    "platform": "iOS",
+    "sourceCommit": "f11c4bff4d566f147094579d9b2d74bb5a4d8e6f",
+    "unsigned": true,
+    "selfSignRequired": true,
+    "acceptedForLocalTesting": true,
+    "published": false
+  },
+  "verificationExit": 0,
+  "fullRun": 43615396238,
+  "published": false
+}

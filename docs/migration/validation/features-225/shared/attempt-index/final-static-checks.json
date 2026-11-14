@@ -1,0 +1,10 @@
+[
+  {
+    "check": "final-analyze",
+    "exit": 0
+  },
+  {
+    "check": "final-format",
+    "exit": 1
+  }
+]

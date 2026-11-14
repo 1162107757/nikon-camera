@@ -1,0 +1,11 @@
+{
+  "build": 225,
+  "versionName": "0.31.0-dev",
+  "sourceCommit": null,
+  "sourceFrozen": false,
+  "published": false,
+  "status": "pending-final-source-freeze-and-platform-validation",
+  "packageStage": ".tooling/next225/package-candidates",
+  "baselineSourceCommit": "08f414c5b8baeb019acc6c634216cdbbdb44bf9e",
+  "baselineVersionCode": 224
+}

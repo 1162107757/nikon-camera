@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+  "sourceFrozen": true,
+  "versionCode": 225,
+  "run": 43611891603,
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43611891603",
+  "conclusion": "failure",
+  "archivedAtUtc": "2026-11-14T16:23:33.974603+00:00",
+  "fullRunAccepted": false,
+  "iosPackageAccepted": false,
+  "published": false,
+  "flutterTestsPassed": 659,
+  "flutterTestsFailed": 2,
+  "flutterCommandExitCode": 1,
+  "deviceBuildExitCode": 0,
+  "compiledUnsignedRunnerApp": true,
+  "ipaCreated": false,
+  "uiKitFiveExecuted": false,
+  "realNativePipelineExecuted": false,
+  "mandatoryFoundationPublicInternetFixture": {
+    "observedSuccess": true,
+    "schemaVersion": 2,
+    "sourceCommit": "eab42304d0c1c2360ef50cf1b7e9261c714d24ce",
+    "compileExitCode": 0,
+    "executionExitCode": 0,
+    "receipt": "original/mobile-apple/public-internet/result.json",
+    "sixInputGitBindingPerformedByThisArchive": false,
+    "doesNotOverrideFailedFullRun": true
+  },
+  "jvmParityMatched1788Golden": true,
+  "artifact": {
+    "id": 14120699893,
+    "bytes": 35610,
+    "digest": "sha256:3af9d1ecf9558d99d910176f37f1673514d76bceb721f0b807e1ebd212fed7cb",
+    "zipDigestIndependentlyVerified": true
+  },
+  "failedTests": [
+    {
+      "file": "cross-platform/app/test/editor_test.dart",
+      "size": [
+        375,
+        812
+      ],
+      "name": "Restored orphaned preset and advanced editor work at Size(375.0, 812.0) with large text"
+    },
+    {
+      "file": "cross-platform/app/test/editor_test.dart",
+      "size": [
+        812,
+        375
+      ],
+      "name": "Restored orphaned preset and advanced editor work at Size(812.0, 375.0) with large text"
+    }
+  ],
+  "failure": {
+    "exception": "StateError: Bad state: No element",
+    "entry": "tapLabel(\"重置通道\")",
+    "testSourceLines": [
+      159,
+      174
+    ],
+    "flutterLogLines": [
+      [
+        866,
+        889
+      ],
+      [
+        892,
+        915
+      ]
+    ],
+    "fixtureContractMismatchEstablished": true,
+    "cause": "DraftCore returns path only, while displayedPhotoSize and colorFrameMatchesRecipe require positive output width and height. The accepted-frame gate remains false even after re-render, so CurveControl never opens.",
+    "productionLabelStillPresentAt": "cross-platform/app/lib/curve_control.dart:392",
+    "outputSizeGateAt": "cross-platform/app/lib/editor_detail_preview.dart:32",
+    "colorEntryGateAt": "cross-platform/app/lib/editor_color_workspace.dart:155",
+    "minimumFixtureRepair": "Return the real1x1 preview width/height and provide the real1x1 source.png; retain all actual UI entry and geometry/undo assertions.",
+    "waitingLongerAloneCannotRepairMissingDimensions": true
+  },
+  "frozenFixtureSource": {
+    "path": "original/frozen-editor_test.dart",
+    "githubGitBlobSha": "daef6da9e9bd1b91f45dba368465e2688155c7eb",
+    "sha256": "bc20eef09db8a6ccd84578bbe0d5a0466e756542f3887882ea4c41834ded1273",
+    "gitBlobHashIndependentlyVerified": true,
+    "currentWorkingFixtureNotSubstituted": true
+  },
+  "diagnosticConsoleEncoding": {
+    "windowsGbkPrintingErrorObserved": true,
+    "independentFromActualCiFlutterFailure": true,
+    "rawArtifactUnaffected": true
+  },
+  "archiverRanNoSdkGitBuildOrTest": true,
+  "androidLocalAcceptanceNotRetractedByThisArchive": true,
+  "byteManifest": "byte-manifest.json"
+}

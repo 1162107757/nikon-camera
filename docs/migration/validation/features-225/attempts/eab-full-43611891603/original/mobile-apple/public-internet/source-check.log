@@ -1,0 +1,1 @@
+PASS iOS public I/O architecture: explicit whitelist, isolated bounded queues, serial camera dispatch and readonly task cancellation preserved

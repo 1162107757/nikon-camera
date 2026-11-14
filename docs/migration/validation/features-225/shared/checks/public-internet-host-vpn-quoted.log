@@ -1,0 +1,7 @@
+Nov 14, 2026 11:04:30 PM cc.huevia.account.AccountHttpTransport execute
+WARNING: stage=response_headers status=503 type=AccountException
+Nov 14, 2026 11:04:30 PM cc.huevia.sharedapp.PublicInternetConnections vpnUnavailable
+WARNING: stage=vpn_unavailable
+Nov 14, 2026 11:04:30 PM cc.huevia.sharedapp.PublicInternetConnections unavailable
+WARNING: stage=network_unavailable activeWifi=true
+Public Internet host regression passed: 23 checks; loopback camera heartbeat stayed active (physical camera not exercised).
