@@ -1,0 +1,79 @@
+{
+  "sourceCommit": null,
+  "baseCommitAtCheck": "903df011c87f0e8f1bd451c99e7dd6a2aa4a0ee7",
+  "recordedAtUtc": "2026-11-14T00:38:22.519768+00:00",
+  "includesUncommitted221RemoteFix": true,
+  "sourceAndTestsFrozen": true,
+  "actualUniquePassedChecks": 7,
+  "runs": [
+    {
+      "log": "poll-widget-final.log",
+      "exitFile": "poll-widget-final.exit",
+      "exit": 0,
+      "passed": 6
+    },
+    {
+      "log": "intent-late-open-final.log",
+      "exitFile": "intent-late-open-final.exit",
+      "exit": 0,
+      "passed": 1
+    }
+  ],
+  "priorPollWidgetAndIntentRunsPreservedButNotAdded": true,
+  "wholeWindowsSuiteRunOrClaimed": false,
+  "targetAnalyze": {
+    "exit": 0,
+    "log": "analyze-final.log",
+    "result": "No issues found!"
+  },
+  "diffCheckExit": 0,
+  "rawInputHashesMatchBeforeAfter": true,
+  "inputFingerprints": {
+    "cross-platform/app/lib/camera_remote.dart": "37d96d9c10e002c41841540da9b7adb55fe6bad71f15a20f639239a91e2f6649",
+    "cross-platform/app/test/camera_remote_poll_test.dart": "348be8a0cb019c85a181d2a7de124650af334d95ba586f151d87a205cf3250e1",
+    "cross-platform/app/test/camera_remote_test.dart": "cb3eee8afe6145e2ce5285aeca45c5ec25bdc55d6a9664e1dc884265aa3d3499",
+    "cross-platform/app/test/camera_intent_test.dart": "0687954d0c89e944d23988bb7ae4564fba1e77023241f556feea43d6400fadee"
+  },
+  "ownedChangedFiles": [
+    "cross-platform/app/lib/camera_remote.dart",
+    "cross-platform/app/test/camera_remote_poll_test.dart"
+  ],
+  "originalManualTransferExclusionPreserved": true,
+  "verified": [
+    "350ms frame Future and 2.8s status Future keep shutter enabled and ready text free of a busy spinner",
+    "clicking during a held poll waits, then sends one shutter; maximum concurrent camera calls is one",
+    "queued capture rechecks pending/capability and sends no shutter after the state becomes unsafe",
+    "real poll failure stays visible and aborts a queued capture",
+    "finish/owner retirement during a held status prevents subsequent frame/check/capture and closes only the captured scope",
+    "the inherited leaving-before-open test still performs exact late lease close and no parent-session cancellation"
+  ],
+  "notModifiedByThisTask": [
+    "camera_remote_preview.dart",
+    "camera_live.dart",
+    "camera_live_card.dart",
+    "all native/core code",
+    "220 delivered artifacts and receipts"
+  ],
+  "sourceFingerprintsAtFinalFreeze": {
+    "cross-platform/app/lib/camera_remote.dart": "37d96d9c10e002c41841540da9b7adb55fe6bad71f15a20f639239a91e2f6649",
+    "cross-platform/app/test/camera_remote_poll_test.dart": "348be8a0cb019c85a181d2a7de124650af334d95ba586f151d87a205cf3250e1"
+  },
+  "logsSha256": {
+    "analyze-final.exit": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "analyze-final.log": "ae21e199dc722e8dafd5071f41cb0cb88eb8958d793f1c4333f191f6ec949187",
+    "analyze.exit": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+    "analyze.log": "ae21e199dc722e8dafd5071f41cb0cb88eb8958d793f1c4333f191f6ec949187",
+    "fix.log": "f61a3a14924260eaac4575fb1c3d3646160200aaa51af507b6559d6403553864",
+    "format.log": "db76b4af1a69a358f3800218b5ff073717d8190354e1dbeb9efec2474389088b",
+    "inputs-before.json": "0aeb2e6276313eea7f218191423d221340a66e68005de5ca3e59ddc22be99893",
+    "inputs-final-before.json": "b426882915d2b7bcbdce5b93b58d6c3d973db2ebccdae6ca85a1f97f740ddd92",
+    "intent-late-open-final.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "intent-late-open-final.log": "95f233dd3fcb47a1d1e24b2c2df675f4a2ce4b2dd94da9622f99da9da4b43152",
+    "intent-late-open.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "intent-late-open.log": "95f233dd3fcb47a1d1e24b2c2df675f4a2ce4b2dd94da9622f99da9da4b43152",
+    "poll-widget-final.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "poll-widget-final.log": "18332f0231b68ba7f6ad10085729f02b8c197cbe4f88e77996094773df96b0b5",
+    "poll-widget.exit": "13bf7b3039c63bf5a50491fa3cfd8eb4e699d1ba1436315aef9cbe5711530354",
+    "poll-widget.log": "a5624cbb65321e148521e1c1d9a57b5d31d2580706b39f6ea41f470ccb546917"
+  }
+}

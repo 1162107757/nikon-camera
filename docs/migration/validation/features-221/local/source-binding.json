@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "actualRemoteCases": 7,
+  "rawReceipt": "remote-result.json",
+  "originalExecutionProvenancePreserved": true,
+  "inputs": [
+    {
+      "path": "cross-platform/app/lib/camera_remote.dart",
+      "rawSha256": "37d96d9c10e002c41841540da9b7adb55fe6bad71f15a20f639239a91e2f6649",
+      "gitBlobSha256": "e28b73c54ffa9d8efda37065f4d5910f2cb2c7f9a47820e13351c5543faba940",
+      "rawIdenticalToGit": false
+    },
+    {
+      "path": "cross-platform/app/test/camera_remote_poll_test.dart",
+      "rawSha256": "348be8a0cb019c85a181d2a7de124650af334d95ba586f151d87a205cf3250e1",
+      "gitBlobSha256": "ab337feba4662877102fe0df30e66f3dc05a134bbbd3403e374c8e53d9c3ec04",
+      "rawIdenticalToGit": false
+    },
+    {
+      "path": "cross-platform/app/test/camera_remote_test.dart",
+      "rawSha256": "cb3eee8afe6145e2ce5285aeca45c5ec25bdc55d6a9664e1dc884265aa3d3499",
+      "gitBlobSha256": "5cb81ee93614a102891b55ec5e487155186e52cd4bd9d9e5cc54a16c835d5849",
+      "rawIdenticalToGit": false
+    },
+    {
+      "path": "cross-platform/app/test/camera_intent_test.dart",
+      "rawSha256": "0687954d0c89e944d23988bb7ae4564fba1e77023241f556feea43d6400fadee",
+      "gitBlobSha256": "0687954d0c89e944d23988bb7ae4564fba1e77023241f556feea43d6400fadee",
+      "rawIdenticalToGit": true
+    }
+  ],
+  "wholeAppAnalyzeExit": 0
+}

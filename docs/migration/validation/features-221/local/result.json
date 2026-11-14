@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "wholeAppAnalyzeExit": 0,
+  "remoteCases": {
+    "actualPassed": 7,
+    "newCases": 6,
+    "inheritedLateOpenCase": 1,
+    "receipt": "remote-result.json",
+    "sourceBinding": "source-binding.json",
+    "executionProvenancePreserved": true
+  },
+  "sourceCheck": {
+    "exit": 0,
+    "utf8ConfigFiles": 1239,
+    "readOnlyDetailChecks": 21,
+    "appleTaskApiSources": 57,
+    "receipt": "source-check.log"
+  },
+  "originalInventoryVerify": {
+    "exit": 0,
+    "preserved": 420,
+    "approvedOriginalRepairs": 8,
+    "unchangedOriginal": 412,
+    "receipt": "inventory-verify.log"
+  },
+  "wholeAppFlutterAcceptance": "../apple/ci-result.json",
+  "androidRootAndNestedBackAcceptance": "../android/back-navigation-result.json"
+}

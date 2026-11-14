@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "versionCode": 221,
+  "sourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "sourceFrozen": true,
+  "scope": "local-testing-only",
+  "state": "accepted-for-local-testing",
+  "acceptedForLocalTesting": true,
+  "acceptedForDelivery": true,
+  "published": false,
+  "changes": [
+    "Remote silent polling without shutter/ready flicker",
+    "Serialize capture safely against polling and late results",
+    "Android root Back moves the task to background while retaining Activity and page; inner route Back remains handled by Flutter"
+  ],
+  "baselineRootBackObservation": {
+    "versionCode": 220,
+    "androidApi": 31,
+    "activityDestroyed": true,
+    "processRemainedAlive": true,
+    "is221FixValidation": false
+  },
+  "core": {
+    "reference": "core/reference.json",
+    "golden": "core/golden.json",
+    "referenceSourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+    "referenceGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+    "referenceBoundaryChecks": 1770,
+    "freshRunClaimed": false,
+    "final221SourceBindingPending": false,
+    "final221SourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+    "compiledJavaInputCount": 243,
+    "compiledInputsUnchangedFrom220": true,
+    "fresh221RunClaimed": false,
+    "appleParity": {
+      "receipt": "apple/core-parity.json",
+      "pass": true,
+      "boundaryChecks": 1770,
+      "freshAppleRuntimeExecution": true
+    }
+  },
+  "android": {
+    "state": "accepted-for-local-android-testing",
+    "acceptedForLocalAndroidTesting": true,
+    "rootBackInstallValidationPending": false,
+    "receipt": "android/result.json",
+    "backReceipt": "android/back-navigation-result.json",
+    "rootCasesPassed": 4,
+    "nestedCasesPassed": 2,
+    "backValidationExit": 0,
+    "sameActivityAndProcessRetained": true,
+    "originalRootPageRetained": true,
+    "r8ChecksPassed": 78,
+    "runtimeAndroidApi": 31,
+    "runtimePageSizeBytes": 4096
+  },
+  "apple": {
+    "state": "success",
+    "sourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+    "fullRun": 43535636225,
+    "fullRunAccepted": true,
+    "acceptedForLocalSelfSignedTesting": true,
+    "flutterTestsPassed": 494,
+    "uiKitTestsPassed": 5,
+    "nativeScenariosPassed": 1,
+    "coreParityChecks": 1770,
+    "independentlyVerified": true,
+    "receipt": "apple/ci-result.json",
+    "independentVerification": "apple/independent-verification.json",
+    "nativeForegroundSnapshot": null,
+    "nativeForegroundSnapshotEvidence": "machine-test",
+    "nativeForegroundSnapshotFixturePassed": true
+  },
+  "designBaseline": 220,
+  "unreviewedDesignIncluded": false,
+  "physicalDeviceValidation": {
+    "nikonZ6IIWifi": false,
+    "iphoneInstallationAndCameraConnection": false,
+    "qqNativeAuthorization": false,
+    "actual16KiBAndroidDevice": false
+  },
+  "localRemoteRegression": {
+    "newCasesPassed": 6,
+    "inheritedLateOpenCasesPassed": 1,
+    "actualUniquePassedChecks": 7,
+    "exit": 0,
+    "baseCommitAtExecution": "903df011c87f0e8f1bd451c99e7dd6a2aa4a0ee7",
+    "includesUncommitted221RemoteFix": true,
+    "wholeWindowsSuiteClaimed": false,
+    "rawReceipt": "local/remote-result.json",
+    "sourceBinding": "local/source-binding.json",
+    "finalGitInputCount": 4
+  },
+  "localFullAppAnalyzeExit": 0,
+  "staticValidation": {
+    "analyzeExit": 0,
+    "analyzeLog": "local/analyze.log",
+    "sourceCheckExit": 0,
+    "sourceCheckCounts": [
+      1239,
+      21,
+      57
+    ],
+    "sourceCheckLog": "local/source-check.log",
+    "inventoryVerifyExit": 0,
+    "inventoryCounts": [
+      420,
+      8,
+      412
+    ],
+    "inventoryLog": "local/inventory-verify.log",
+    "receipt": "local/result.json"
+  },
+  "designStatus": "independent-chat-review-not-integrated-into221",
+  "rawFullParityComplete": false,
+  "localTestingAcceptanceDoesNotClaimPhysicalDeviceOrAllFeatureParity": true,
+  "artifacts": [
+    {
+      "file": "huevia-0.31.0-dev-221-android-arm64.apk",
+      "bytes": 52854578,
+      "sha256": "f5347fe00125629779a1c3446d75b55690453156116dd4a668d832d63299ddda"
+    },
+    {
+      "file": "huevia-0.31.0-dev-221-android-x64.apk",
+      "bytes": 56291546,
+      "sha256": "61235dfd69bdf891f6bae098672ab5d710f1526d763e3ac98108f712f051fa4b"
+    },
+    {
+      "file": "huevia-0.31.0-dev-221-ios-unsigned.ipa",
+      "bytes": 64974803,
+      "sha256": "945b49d3b0f1203d7b74ad787c1bf73f01fa3c296d8b1532cc03555604a5c897"
+    }
+  ]
+}

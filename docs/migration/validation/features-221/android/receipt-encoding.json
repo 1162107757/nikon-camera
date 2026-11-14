@@ -1,0 +1,7 @@
+{
+  "file": "arm64-gradle.log",
+  "sha256": "1632da08f6b4f5550f041f90338e4a08da6b6c3b92152d60466a684a3873bbef",
+  "originalBytesPreserved": true,
+  "strictUtf8": false,
+  "note": "Original Windows subprocess output contains non-UTF-8 compiler diagnostics. Preserve the original bytes; replacement decoding is for display only."
+}

@@ -1,0 +1,119 @@
+{
+  "sourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "buildExit": 0,
+  "acceptedForLocalAndroidTesting": true,
+  "packages": [
+    {
+      "file": "huevia-0.31.0-dev-221-android-arm64.apk",
+      "abi": "arm64",
+      "bytes": 52854578,
+      "sha256": "f5347fe00125629779a1c3446d75b55690453156116dd4a668d832d63299ddda",
+      "apksignerVerified": true,
+      "zipalign16KiBVerified": true,
+      "elfLoadSegments16KiBVerified": true,
+      "mappingSha256": "c9a0dc5f9a23972d6ca56dceca85ba82dfad5f6ae5fe54a6e3ffa54b3485d2e6"
+    },
+    {
+      "file": "huevia-0.31.0-dev-221-android-x64.apk",
+      "abi": "x64",
+      "bytes": 56291546,
+      "sha256": "61235dfd69bdf891f6bae098672ab5d710f1526d763e3ac98108f712f051fa4b",
+      "apksignerVerified": true,
+      "zipalign16KiBVerified": true,
+      "elfLoadSegments16KiBVerified": true,
+      "mappingSha256": "c9a0dc5f9a23972d6ca56dceca85ba82dfad5f6ae5fe54a6e3ffa54b3485d2e6"
+    }
+  ],
+  "runtime": {
+    "abi": "x64",
+    "androidApi": 31,
+    "pageSizeBytes": 4096,
+    "checksPassed": 78,
+    "receipt": "release-runtime-result.json",
+    "mappingReceipt": "release-runtime-mapping.json"
+  },
+  "backNavigation": {
+    "rootCasesPassed": 4,
+    "nestedCasesPassed": 2,
+    "receipt": "back-navigation-result.json",
+    "sameActivityAndProcessRetained": true,
+    "originalRootPageRetained": true,
+    "baseline220ActivityWasDestroyed": true,
+    "baselineReceipt": "back220-baseline.json"
+  },
+  "physical16KiBDeviceTested": false,
+  "physicalCameraTested": false,
+  "buildProvenance": "Both ABI builds used build_releases.py with a frozen HEAD and a clean app source tree; package bytes are independently checked.",
+  "privateUiCaptureFingerprints": [
+    {
+      "privateCapture": ".tooling/next221/ui/back221-connection-returned-sync.png",
+      "bytes": 128847,
+      "sha256": "86a4e50848455e4aeb1e29b50d642c8c050382958176ee58d16f9d8882cc1f61"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-connection-returned-sync.xml",
+      "bytes": 8594,
+      "sha256": "2e81219b4c0ef8477a960c6ac759f379131549dad789e2269176a6bec89d492f"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-queue-returned-sync.png",
+      "bytes": 128847,
+      "sha256": "86a4e50848455e4aeb1e29b50d642c8c050382958176ee58d16f9d8882cc1f61"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-queue-returned-sync.xml",
+      "bytes": 8594,
+      "sha256": "2e81219b4c0ef8477a960c6ac759f379131549dad789e2269176a6bec89d492f"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-restored-home.png",
+      "bytes": 562977,
+      "sha256": "85558ec85ab0757b2f1ebff7450b478cb9b80d4881a96b50a7a149eff76d24a4"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-restored-home.xml",
+      "bytes": 11497,
+      "sha256": "3a6143e852eacb8a903e71940c44e07b1677aa3c293c3e4c25dd4aa8fcc6a124"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-album.png",
+      "bytes": 966607,
+      "sha256": "f4dc4680ffc13e57ef027777aa85d41836683b9dfaf395c9845e4aff8bcd5f5d"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-album.xml",
+      "bytes": 11340,
+      "sha256": "5e96097a9649dfa3ca1bfff68ce7f1fc7ba9d41f208b43a5c192eeebb8a4954f"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-presets.png",
+      "bytes": 562977,
+      "sha256": "85558ec85ab0757b2f1ebff7450b478cb9b80d4881a96b50a7a149eff76d24a4"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-presets.xml",
+      "bytes": 11497,
+      "sha256": "3a6143e852eacb8a903e71940c44e07b1677aa3c293c3e4c25dd4aa8fcc6a124"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-settings.png",
+      "bytes": 187770,
+      "sha256": "1921d301b60b0010046810ec4b2c2705c421636d119764505141de7ca985f9e9"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-settings.xml",
+      "bytes": 10656,
+      "sha256": "223b23d4a8cf5fae34028f7bff8abe94a1bb180f70eb92e496f7624e27f8e459"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-sync.png",
+      "bytes": 130753,
+      "sha256": "59e250794d521a58434840d8a6ddee6973f33cb8112d269601f56c88633310ef"
+    },
+    {
+      "privateCapture": ".tooling/next221/ui/back221-resumed-sync.xml",
+      "bytes": 8594,
+      "sha256": "2e81219b4c0ef8477a960c6ac759f379131549dad789e2269176a6bec89d492f"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "referenceSourceCommit": "780376ec1017357fd152adbdd1b5bc71c39a6bf6",
+  "referenceReceipt": "../../features-220/core/result.json",
+  "referenceGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+  "copiedAsReferenceOnly": true,
+  "freshRunClaimed": false,
+  "final221SourceBindingPending": false,
+  "final221SourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "compiledJavaInputCount": 243,
+  "compiledInputsUnchangedFrom220": true,
+  "compiledInputChanges": [],
+  "fresh221RunClaimed": false,
+  "note": "The 220 JVM golden remains an unchanged reference; the new Apple full run independently re-executes parity."
+}

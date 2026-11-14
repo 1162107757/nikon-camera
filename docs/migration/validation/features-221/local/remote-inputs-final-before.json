@@ -1,0 +1,11 @@
+{
+  "baseCommitAtCheck": "903df011c87f0e8f1bd451c99e7dd6a2aa4a0ee7",
+  "atUtc": "2026-11-14T00:35:38.505515+00:00",
+  "includesUncommitted221RemoteFix": true,
+  "filesSha256": {
+    "cross-platform/app/lib/camera_remote.dart": "37d96d9c10e002c41841540da9b7adb55fe6bad71f15a20f639239a91e2f6649",
+    "cross-platform/app/test/camera_remote_poll_test.dart": "348be8a0cb019c85a181d2a7de124650af334d95ba586f151d87a205cf3250e1",
+    "cross-platform/app/test/camera_remote_test.dart": "cb3eee8afe6145e2ce5285aeca45c5ec25bdc55d6a9664e1dc884265aa3d3499",
+    "cross-platform/app/test/camera_intent_test.dart": "0687954d0c89e944d23988bb7ae4564fba1e77023241f556feea43d6400fadee"
+  }
+}

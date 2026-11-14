@@ -1,0 +1,47 @@
+{
+  "before": {
+    "pid": "2699",
+    "activities": [
+      "mResumedActivity: ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "* Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "intent={flg=0x10000000 cmp=cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mActivityComponent=cc.huevia.next/cc.huevia.sharedapp.MainActivity",
+      "Activities=[ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}]",
+      "mRootProcess=ProcessRecord{183005e 2699:cc.huevia.next/u0a105}",
+      "* Hist #0: ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "app=ProcessRecord{183005e 2699:cc.huevia.next/u0a105}",
+      "Intent { flg=0x10000000 cmp=cc.huevia.next/cc.huevia.sharedapp.MainActivity }",
+      "rootOfTask=true task=Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "mActivityComponent=cc.huevia.next/cc.huevia.sharedapp.MainActivity",
+      "taskDescription: label=\"Huevia\" icon=null iconResource=cc.huevia.next/0 iconFilename=null primaryColor=ff2196f3",
+      "windows=[Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}]",
+      "Resumed: ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "ResumedActivity: ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "topDisplayFocusedRootTask=Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "deepestLastOrientationSource=ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "mCurrentFocus=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mFocusedApp=ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "mPreferredTopFocusableRootTask=Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "mLastFocusedRootTask=Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "* Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "* ActivityRecord{893a512 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t288}",
+      "mFocusedWindow=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mTopFullscreenOpaqueWindowState=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mTopFullscreenOpaqueOrDimmingWindowState=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "ITYPE_IME -> Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "ITYPE_NAVIGATION_BAR -> Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "ITYPE_STATUS_BAR -> Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mControlTarget=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mControlTarget=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "mControlTarget=Window{aaa4458 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity}",
+      "(fullscreen) Task{ace7255 #288 type=standard I=cc.huevia.next/cc.huevia.sharedapp.MainActivity U=0 visible=true mode=fullscreen translucent=false sz=1}",
+      "VisibleActivityProcess:[ ProcessRecord{183005e 2699:cc.huevia.next/u0a105}]"
+    ]
+  },
+  "after": {
+    "pid": "2699",
+    "activities": [
+      "mResumedActivity: ActivityRecord{574f850 u0 com.android.launcher3/.uioverrides.QuickstepLauncher t283}"
+    ]
+  }
+}

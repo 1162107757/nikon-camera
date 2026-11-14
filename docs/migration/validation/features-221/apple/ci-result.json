@@ -1,0 +1,27 @@
+{
+  "run": 43535636225,
+  "url": "https://github.com/1162107757/nikon-camera/actions/runs/43535636225",
+  "sourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "conclusion": "success",
+  "flutterTestsPassed": 494,
+  "photoKitXCTestPassed": true,
+  "nativeScenariosPassed": 1,
+  "uiKitTestsPassed": 5,
+  "cameraPresentationUIKitTestsPassed": 3,
+  "nativeTaskCancellationUIKitTestsPassed": 1,
+  "nativeForegroundSnapshotFixturePassed": true,
+  "nativeForegroundSnapshot": null,
+  "nativeForegroundSnapshotEvidence": "machine-test",
+  "nativeForegroundSourceProof": [
+    {
+      "path": "cross-platform/app/integration_test/camera_foreground_fixture.dart",
+      "gitBlobSha256": "66df9c8ce4e10be6d0eeed0c737eb0a656a6ee30e9d671179d6c29e3e0c2e543"
+    },
+    {
+      "path": "cross-platform/app/integration_test/native_pipeline_test.dart",
+      "gitBlobSha256": "96200fa8c41674756a61eba9ad2eecce179a1c30097118e7717d01591f98075e"
+    }
+  ],
+  "androidSourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "changesFromAndroidSource": []
+}
