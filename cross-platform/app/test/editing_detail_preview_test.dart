@@ -274,6 +274,181 @@ _DetailFixture _fixture(WidgetTester tester) {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets(
+    'Medium zoom fills physical pixels with native source detail and reuses the accepted request',
+    (tester) async {
+      final f = _fixture(tester);
+      f.core
+        ..fullWidth = 6000
+        ..fullHeight = 4000
+        ..emulateNativeTilePixels = true;
+      const region = Rect.fromLTWH(.25, .25, .5, .5);
+      const pixels = Size(1080, 720);
+      f.configure(size: const Size(1200, 800));
+      f.viewport(region: region, pixels: pixels);
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'The bounded native-sized tile must finish decoding',
+      );
+      final tile = f.controller.tile!;
+      expect(
+        tile.width * region.width / tile.region.width,
+        greaterThanOrEqualTo(pixels.width),
+      );
+      expect(
+        tile.height * region.height / tile.region.height,
+        greaterThanOrEqualTo(pixels.height),
+      );
+      expect(tile.image.width, tile.width);
+      expect(tile.image.height, tile.height);
+      expect(tile.width, lessThanOrEqualTo(2048));
+      expect(tile.width * tile.height, lessThanOrEqualTo(4 * 1024 * 1024));
+      final request = f.core.calls
+          .singleWhere((call) => call.$1 == 'media.detailTile')
+          .$2;
+      expect(request['maxEdge'], 2048);
+      expect(request['region']['left'], closeTo(.19, 1e-9));
+      expect(request['expectedSourceSha'], _sha);
+      expect(request['owner'], '');
+      expect(request['path'], f.core.documents.keys.single);
+      expect(
+        request['detailToken'],
+        f.core.documents.values.single['detailToken'],
+      );
+      expect(tile.sourceSha, _sha);
+      expect(tile.sourceSize, const Size(6000, 4000));
+
+      // Parent rebuilds may configure the same frame again. A satisfied native
+      // request is cached rather than repeatedly trying to exceed its ceiling.
+      f.configure(size: const Size(1200, 800));
+      f.viewport(region: region, pixels: pixels);
+      await _drain(tester);
+      expect(f.core.count('media.detailRender'), 1);
+      expect(f.core.count('media.detailTile'), 1);
+      expect(f.controller.tile!.path, tile.path);
+    },
+  );
+
+  testWidgets(
+    'Overscan shrinks through six percent and zero at native power-of-two boundaries',
+    (tester) async {
+      final f = _fixture(tester);
+      f.core
+        ..fullWidth = 8192
+        ..fullHeight = 6144
+        ..emulateNativeTilePixels = true;
+      f.configure(size: const Size(1280, 960));
+      const firstRegion = Rect.fromLTWH(.28, .28, .44, .44);
+      f.viewport(
+        region: firstRegion,
+        zoom: 1 / .44,
+        pixels: const Size(1700, 1275),
+      );
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'First ROI must decode',
+      );
+      final firstRequest = f.core.calls
+          .singleWhere((call) => call.$1 == 'media.detailTile')
+          .$2;
+      expect(firstRequest['region']['left'], closeTo(.2536, 1e-9));
+      expect(firstRequest['region']['right'], closeTo(.7464, 1e-9));
+      final first = f.controller.tile!;
+      expect(
+        first.width * firstRegion.width / first.region.width,
+        greaterThanOrEqualTo(1700),
+      );
+      expect(
+        first.height * firstRegion.height / first.region.height,
+        greaterThanOrEqualTo(1275),
+      );
+
+      const nextRegion = Rect.fromLTWH(.25, .25, .5, .5);
+      f.viewport(region: nextRegion, zoom: 2, pixels: const Size(900, 675));
+      await _until(
+        tester,
+        () =>
+            f.controller.tile != null && f.controller.tile!.path != first.path,
+        'The wider ROI must replace the previous overscan tile',
+      );
+      final overscan = f.controller.tile!;
+      expect(overscan.region.left, lessThan(.2));
+      expect(
+        overscan.width * nextRegion.width / overscan.region.width,
+        greaterThanOrEqualTo(900),
+      );
+
+      // A higher physical display size needs denser pixels even though the
+      // normalized viewport and the native maximum edge have not changed.
+      f.viewport(region: nextRegion, zoom: 2, pixels: const Size(1800, 1350));
+      await _until(
+        tester,
+        () =>
+            f.controller.tile != null &&
+            f.controller.tile!.path != overscan.path,
+        'The same ROI must acquire sufficient physical-pixel density',
+      );
+      final nextRequest = f.core.calls
+          .where((call) => call.$1 == 'media.detailTile')
+          .last
+          .$2;
+      expect(nextRequest['region'], {
+        'left': .25,
+        'top': .25,
+        'right': .75,
+        'bottom': .75,
+      });
+      final next = f.controller.tile!;
+      expect(next.width, 2048);
+      expect(next.height, 1536);
+      expect(
+        next.width * nextRegion.width / next.region.width,
+        greaterThanOrEqualTo(1800),
+      );
+      expect(
+        next.height * nextRegion.height / next.region.height,
+        greaterThanOrEqualTo(1350),
+      );
+      expect(f.core.count('media.detailRender'), 1);
+      expect(f.core.count('media.detailTile'), 3);
+      expect(f.core.maximumActive, 1);
+    },
+  );
+
+  testWidgets(
+    'Zoom seven retains original source pixels when the source cannot fill the screen',
+    (tester) async {
+      final f = _fixture(tester);
+      f.core
+        ..fullWidth = 6000
+        ..fullHeight = 4000
+        ..emulateNativeTilePixels = true;
+      f.configure(size: const Size(1200, 800));
+      final region = Rect.fromLTWH(.5 - .5 / 7, .5 - .5 / 7, 1 / 7, 1 / 7);
+      f.viewport(region: region, zoom: 7, pixels: const Size(1080, 720));
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Source-pixel ROI must decode',
+      );
+      final tile = f.controller.tile!;
+      expect(tile.width / tile.region.width, closeTo(6000, 1e-6));
+      expect(tile.height / tile.region.height, closeTo(4000, 1e-6));
+      expect(tile.width * region.width / tile.region.width, lessThan(1080));
+      expect(tile.height * region.height / tile.region.height, lessThan(720));
+      expect(tile.image.width, tile.width);
+      expect(tile.image.height, tile.height);
+      expect(tile.width, lessThanOrEqualTo(2048));
+      expect(tile.width * tile.height, lessThanOrEqualTo(4 * 1024 * 1024));
+      f.configure(size: const Size(1200, 800));
+      await _drain(tester);
+      expect(f.core.count('media.detailRender'), 1);
+      expect(f.core.count('media.detailTile'), 1);
+    },
+  );
+
+  testWidgets(
     'Zooming inside a fit tile acquires denser pixels even when the viewport and maxEdge are unchanged',
     (tester) async {
       final f = _fixture(tester);

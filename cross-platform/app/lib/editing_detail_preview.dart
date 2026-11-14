@@ -92,6 +92,19 @@ class _DetailDocument {
   final int width, height;
 }
 
+class _DetailTileRequest {
+  const _DetailTileRequest(
+    this.region,
+    this.maxEdge,
+    this.densityX,
+    this.densityY,
+    this.visibleDensity,
+  );
+  final Rect region;
+  final int maxEdge;
+  final double densityX, densityY, visibleDensity;
+}
+
 /// A predecoded, bounded tile. The controller owns [image]; callers must not
 /// dispose it. RawImage clones it for the lifetime of its RenderImage.
 class EditingDetailTile {
@@ -148,7 +161,7 @@ class EditingDetailPreviewController extends ChangeNotifier {
   _DetailViewport? _viewport;
   _DetailDocument? _document;
   EditingDetailTile? _tile;
-  Rect? _tileViewportRegion;
+  Rect? _tileViewportRegion, _tileRequestedRegion;
   Timer? _timer;
   String? _job, _error, _inspectedSha;
   bool _disposed = false, _enabled = true, _pumping = false, _ready = false;
@@ -379,14 +392,14 @@ class EditingDetailPreviewController extends ChangeNotifier {
             continue;
           }
           final viewport = _viewport!;
-          final edge = _tileEdge(viewport);
-          if (_tileCovers(latest, viewport, edge)) continue;
+          final request = _requestedRegion(viewport, document);
+          if (_tileCovers(latest, viewport, request)) continue;
           await _renderTile(
             document,
             latest,
             generation,
             viewport,
-            edge,
+            request,
             _installationEpoch,
           );
         } catch (failure) {
@@ -487,11 +500,6 @@ class EditingDetailPreviewController extends ChangeNotifier {
     return document;
   }
 
-  int _tileEdge(_DetailViewport viewport) =>
-      (math.max(viewport.pixels.width, viewport.pixels.height) * 1.25)
-          .ceil()
-          .clamp(256, maxTileEdge);
-
   static const _rawExtensions = {
     '.nef',
     '.nrw',
@@ -506,19 +514,61 @@ class EditingDetailPreviewController extends ChangeNotifier {
     '.srw',
   };
 
-  Rect _requestedRegion(_DetailViewport viewport) => _unitRect(
-    Rect.fromLTRB(
-      viewport.region.left - viewport.region.width * .12,
-      viewport.region.top - viewport.region.height * .12,
-      viewport.region.right + viewport.region.width * .12,
-      viewport.region.bottom + viewport.region.height * .12,
-    ),
-  );
+  _DetailTileRequest _requestedRegion(
+    _DetailViewport viewport,
+    _DetailDocument document,
+  ) {
+    _DetailTileRequest? best;
+    for (final padding in const [.12, .06, 0.0]) {
+      final region = _unitRect(
+        Rect.fromLTRB(
+          viewport.region.left - viewport.region.width * padding,
+          viewport.region.top - viewport.region.height * padding,
+          viewport.region.right + viewport.region.width * padding,
+          viewport.region.bottom + viewport.region.height * padding,
+        ),
+      );
+      // Match SharedDetailTiles.Plan's pixel rounding and power-of-two decode.
+      // Spending only a fit-sized edge can halve the available source detail;
+      // use the bounded tile budget and reduce overscan at a sample boundary.
+      final left = (region.left * document.width).floor(),
+          top = (region.top * document.height).floor(),
+          right = (region.right * document.width).ceil(),
+          bottom = (region.bottom * document.height).ceil();
+      final width = right - left, height = bottom - top;
+      var sample = 1;
+      while ((math.max(width, height) + sample - 1) ~/ sample > maxTileEdge) {
+        sample *= 2;
+      }
+      final densityX =
+              ((width + sample - 1) ~/ sample) * document.width / width,
+          densityY =
+              ((height + sample - 1) ~/ sample) * document.height / height;
+      final visibleDensity = math.min(
+        densityX * viewport.region.width / viewport.pixels.width,
+        densityY * viewport.region.height / viewport.pixels.height,
+      );
+      final request = _DetailTileRequest(
+        region,
+        maxTileEdge,
+        densityX,
+        densityY,
+        visibleDensity,
+      );
+      // Prefer pan overscan only while it can still fill the physical screen.
+      // If even source pixels are insufficient, retain the densest real pixels.
+      if (visibleDensity >= 1 - 1e-9) return request;
+      if (best == null || visibleDensity > best.visibleDensity + 1e-9) {
+        best = request;
+      }
+    }
+    return best!;
+  }
 
   bool _tileCovers(
     _DetailConfiguration config,
     _DetailViewport viewport,
-    int edge,
+    _DetailTileRequest request,
   ) {
     final current = _tile;
     final document = _document;
@@ -535,26 +585,16 @@ class EditingDetailPreviewController extends ChangeNotifier {
     // Identical requests have already reached the native decoder's bounded
     // result. Do not loop trying to exceed a source/decoder ceiling.
     if (_tileViewportRegion == viewport.region &&
-        current.requestedMaxEdge >= edge) {
+        _tileRequestedRegion == request.region &&
+        current.requestedMaxEdge >= request.maxEdge) {
       return true;
-    }
-    final requested = _requestedRegion(viewport);
-    final pixelsWide =
-        (requested.right * document.width).ceil() -
-        (requested.left * document.width).floor();
-    final pixelsHigh =
-        (requested.bottom * document.height).ceil() -
-        (requested.top * document.height).floor();
-    var sample = 1;
-    while (math.max(pixelsWide, pixelsHigh) / sample > edge) {
-      sample *= 2;
     }
     // Containment alone is insufficient: zooming into a fit tile must acquire
     // denser source pixels. At sample=1 an already-full-pixel tile is reusable.
     final densityX = current.width / current.region.width;
     final densityY = current.height / current.region.height;
-    return densityX + 2 / current.region.width >= document.width / sample &&
-        densityY + 2 / current.region.height >= document.height / sample;
+    return densityX + 2 / current.region.width >= request.densityX &&
+        densityY + 2 / current.region.height >= request.densityY;
   }
 
   Future<void> _renderTile(
@@ -562,10 +602,10 @@ class EditingDetailPreviewController extends ChangeNotifier {
     _DetailConfiguration config,
     int generation,
     _DetailViewport viewport,
-    int edge,
+    _DetailTileRequest request,
     int installationEpoch,
   ) async {
-    final requested = _requestedRegion(viewport);
+    final requested = request.region;
     _lease(document.path);
     late final Json result;
     try {
@@ -574,7 +614,7 @@ class EditingDetailPreviewController extends ChangeNotifier {
         'path': document.path,
         'detailToken': document.token,
         'expectedSourceSha': document.sha,
-        'maxEdge': edge,
+        'maxEdge': request.maxEdge,
         'region': {
           'left': requested.left,
           'top': requested.top,
@@ -599,8 +639,8 @@ class EditingDetailPreviewController extends ChangeNotifier {
           result['detailToken'] != document.token ||
           width == null ||
           height == null ||
-          width > edge ||
-          height > edge ||
+          width > request.maxEdge ||
+          height > request.maxEdge ||
           width * height > _maximumTilePixels ||
           sourceWidth != document.width ||
           sourceHeight != document.height ||
@@ -630,10 +670,11 @@ class EditingDetailPreviewController extends ChangeNotifier {
         revision: config.revision,
         frameIdentity: config.frameIdentity,
         sourceSha: document.sha,
-        requestedMaxEdge: edge,
+        requestedMaxEdge: request.maxEdge,
       );
       installed = true;
       _tileViewportRegion = viewport.region;
+      _tileRequestedRegion = request.region;
       _error = null;
       _changed();
       // RawImage/RenderImage own their clone until the replacement is painted.
@@ -797,6 +838,7 @@ class EditingDetailPreviewController extends ChangeNotifier {
     final old = _tile;
     _tile = null;
     _tileViewportRegion = null;
+    _tileRequestedRegion = null;
     if (old != null) {
       _changed();
       old.image.dispose();
