@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "phase": "ready",
+  "runId": "60b271b9-4f2a-4321-9a50-b640ea12bd66",
+  "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "initialAccess": {
+    "alternateBasis": "modified",
+    "canAsk": true,
+    "access": "none"
+  },
+  "access": {
+    "alternateBasis": "modified",
+    "canAsk": false,
+    "access": "full"
+  }
+}

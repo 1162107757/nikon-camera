@@ -1,0 +1,12 @@
+{
+  "referenceSourceCommit": "d22ec09eb7b10eb1e2e8812ff9b04e30c87dbd2d",
+  "referenceReceipt": "../../features-221/core/reference.json",
+  "copiedAsReferenceOnly": true,
+  "freshLocal222JvmRunClaimed": false,
+  "final222SourceBindingPending": false,
+  "referenceGoldenSha256": "c6a7018baa35480f3c6b8a369e51752efb9858717ff61d692c45dd4ca88ce4d5",
+  "final222SourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "compiledJavaInputCount": 243,
+  "compiledInputsUnchangedFrom220": true,
+  "compiledInputChanges": []
+}

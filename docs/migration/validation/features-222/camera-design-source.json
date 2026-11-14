@@ -1,0 +1,98 @@
+{
+  "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "approvedCameraSnapshotSha256": "1ec81fe5d39fd8ecbabd30bceab7cf3dc0b42e86b32e9167dc1823c8f565bd90",
+  "approvedProductAndToolSourcesMatched": 12,
+  "unchangedTestSources": 4,
+  "adaptedTestSources": [
+    "cross-platform/app/test/camera_test.dart"
+  ],
+  "adaptation": "The old small-screen fixture now asserts the approved two-column .92 tile geometry and no automatic download; product source is unchanged from the approved design snapshot.",
+  "files": [
+    {
+      "file": "cross-platform/app/lib/camera.dart",
+      "lfSha256": "8820557a55c2b2989e50c798eeb892950549d1efc42b928bdfcce078cc345d86",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_connection_view.dart",
+      "lfSha256": "22df32ac6b6ac7124959e235ae43c2a06c2be587a34540c11572da69953fd34f",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_connection.dart",
+      "lfSha256": "55146f63c3f23839f40e4002c23800300a033bb41287c1d1f505d37e82a142a3",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_photo_sort.dart",
+      "lfSha256": "d44b67c04eaa5050e1d41208d56ba032eabd9be4e5b8db7176365eb841cc21ef",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_photo_toolbar.dart",
+      "lfSha256": "25be028255295a563e09aa43942dd8c81c5a2aeb3c45d09f1961f5025f48c3d5",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/wired_camera.dart",
+      "lfSha256": "605af0ba959fd4975a8574741e0ac1cfbbf3224dfa5a757e6facbe3494e3237b",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/sync_tools_dock.dart",
+      "lfSha256": "96ef1302f7f496d1562ec0a0a94a931baf0f40062291b59dc2d42155d96526f6",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_downloads.dart",
+      "lfSha256": "c8d3a7aef15e2647eeea7f3a2a1cc4e0436b4ba257369c9bff2182bce64f8572",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_grid.dart",
+      "lfSha256": "1bd4ff58cde9c57b0dc26797ec7495a2cd11f9f8a888823921e4050556f2f78d",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_remote.dart",
+      "lfSha256": "7db5d88790c57163ee38bcdfe2200cf465aba840a186a015541b52214233978b",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/lib/camera_remote_preview.dart",
+      "lfSha256": "2ace6352eabe2cd7f5996a4d5288c0ebe3b1bd1e17c1ec7f4b791949499c8613",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/tool/check_camera_photo_sort.dart",
+      "lfSha256": "650874a0679ddd15cf9a59b05f2c4cd13562c8ae5a090fa951e4777f3ff651bb",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/test/camera_connection_test.dart",
+      "lfSha256": "07a528c7a3ccbc6cc23db92d124b3354c4810674293b31f2ecf013b12ad1c100",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/test/camera_intent_test.dart",
+      "lfSha256": "3dd8e41414a8c9f3b91bbdf278c33cca7adbea43b626b62fbc0f5af310dfbccb",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/test/camera_sync_tools_test.dart",
+      "lfSha256": "9e17c876b24ce40e4dee03e822e4b4e153024ac8d480b13086626471cceb368d",
+      "matchesApprovedSnapshot": true
+    },
+    {
+      "file": "cross-platform/app/test/camera_test.dart",
+      "lfSha256": "bd6165931003e9a034151baeb744a54ee9c300553c0f56787957617570cdeb07",
+      "matchesApprovedSnapshot": false
+    },
+    {
+      "file": "cross-platform/app/test/camera_design_ui_test.dart",
+      "lfSha256": "7a3dbfdacd1c7e618ed1ff063eec44fb46d27eacecf462640ad3c7974c662504",
+      "matchesApprovedSnapshot": true
+    }
+  ],
+  "physicalCameraTested": false
+}

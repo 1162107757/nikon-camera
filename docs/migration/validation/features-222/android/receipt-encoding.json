@@ -1,0 +1,110 @@
+{
+  "note": "Raw build receipts are preserved byte-for-byte; mixed Windows Gradle encoding is not rewritten. Credential scans operate on bytes.",
+  "files": [
+    {
+      "file": "source.json",
+      "bytes": 108,
+      "sha256": "08921f7ac1e266b97ff6dd4b9edb2eeae23de1f178850be145e72ec286600f3f",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "android-release-result.json",
+      "bytes": 11,
+      "sha256": "bfdedf06596faa2042b0fedd9653ec1023d2e96ed56dc40b607985bc8438c1d5",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "android-arm64-release.log",
+      "bytes": 298,
+      "sha256": "f741f706e3abbd20d086e8b0c59eca206b2d83b21648dc8ba1c62e7f704dba67",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "android-x64-release.log",
+      "bytes": 295,
+      "sha256": "72be9f38548046d9313ddb70c7006c236d5d656d6b8f9f1192a4c6cc3d94e185",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "arm64-gradle.log",
+      "bytes": 28158,
+      "sha256": "66dd986b7b98adc2d3d6fe28699ec21b482b5bae61373de40813881cd3a34e40",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "x64-gradle.log",
+      "bytes": 28146,
+      "sha256": "d47f2f6efefe2b0258b82a61579ed2feab2fa97ea2dc06e62f08beaf8296ae95",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "arm64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "x64-apksigner.bat-final.log",
+      "bytes": 972,
+      "sha256": "3daa9b9090a04705a0207044a28b0d183f62a45cd248b4fde6e74297ad777775",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "arm64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "x64-zipalign.exe-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "release-runtime.log",
+      "bytes": 1707,
+      "sha256": "ccfc635aa1e4d2e576c56506eb8ebc098f4993d5047a1958d1a50227bbcdb40e",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "release-runtime-result.json",
+      "bytes": 216,
+      "sha256": "8b6a5dc5287b878b0d980bdbefa792e14edb4a983f448d69d4c76f16e6a796f3",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "release-runtime-mapping.json",
+      "bytes": 181,
+      "sha256": "92bbe36d21a3eefbd334d22b49fe68986f94afd05dec1618f025ddf37448e42d",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "back-navigation-result.json",
+      "bytes": 4354,
+      "sha256": "437600eef611347d07166374c0c808086d005615babce625dd3bd9dcf4d1e307",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    },
+    {
+      "file": "back-navigation.exit",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "validUtf8": true,
+      "rawBytesPreserved": true
+    }
+  ]
+}

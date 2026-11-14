@@ -1,0 +1,1236 @@
+2026-11-14 05:41:54.088 Runner[67942:180389] FBBA: creating VNFaceBBoxAligner from VNFaceDetectorRevision2: VNFaceDetectorRevision2
+2026-11-14 05:41:55.119 Runner[67942:180389] HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "293.2728627762746",
+                "409.369474985387"
+            );
+            currentRightTopMean =             (
+                "303.9418038881248",
+                "401.5919045302354"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+                );
+                nativeImageMean =                 (
+                    "293.2728627762746",
+                    "550.630525014613"
+                );
+                nativeTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+                );
+                normalizedMean =                 (
+                    "0.5315853158632914",
+                    "0.5666250884532928"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "303.9418038881248",
+                    "401.5919045302354"
+                );
+                nativeImageMean =                 (
+                    "303.9418038881248",
+                    "558.4080954697646"
+                );
+                nativeTopMean =                 (
+                    "303.9418038881248",
+                    "401.5919045302354"
+                );
+                normalizedMean =                 (
+                    "0.5729365547498068",
+                    "0.596769799788793"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 960;
+    imageOrientation = 1;
+    imageWidth = 640;
+    lowConfidence = 0;
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-3.960873842596839";
+            cropSidePixels = "62.38376302090023";
+            cx = "0.473257807941458";
+            cy = "0.4284881326763842";
+            fallback =             {
+                cropShiftPixels = "-40.73806963468853";
+                cropSidePixels = "451.5136384963989";
+                cx = "0.4455056339502335";
+                cy = "0.4443325698375702";
+                roll = "-0";
+                rx = "0.2015685737133026";
+                ry = "0.1343790590763092";
+                source = "vision-bbox";
+            };
+            roll = "-36.09174172046183";
+            rx = "0.01959807370034895";
+            ry = "0.01856659613717269";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "217.884375",
+        "210.425",
+        "197.9125"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "123.7234375",
+        "140.2078125",
+        "131.3421875"
+    );
+    rasterMeanARGB =     (
+        255,
+        "152.7920930989583",
+        "148.5372412109375",
+        "137.1009114583333"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+INFO: Initialized TensorFlow Lite runtime.
+2026-11-14 05:41:55.357 Runner[67942:180389] HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.6688260289718073",
+        "0.4532866718567163",
+        "0.3964126082935593"
+    );
+    meshInputRange =     (
+        "0.02270483",
+        1
+    );
+    meshInputSha256 = 7cd4d47c67252dd4107dcf1ef4aeea771f54eb45750a1e7d6c36ed03cad19c68;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "-3.24921";
+    source = "vision-eyes";
+}
+2026-11-14 05:41:55.402 Runner[67942:180389] HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.530257941967875",
+        "0.4385205309586695",
+        "0.3886207521885422"
+    );
+    meshInputRange =     (
+        0,
+        1
+    );
+    meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "15.01686";
+    source = "vision-bbox";
+}
+2026-11-14 05:41:55.668 Runner[67942:180389] HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-bbox"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "293.2728627762746",
+                "409.369474985387"
+            );
+            currentRightTopMean =             (
+                "303.9418038881248",
+                "401.5919045302354"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+                );
+                nativeImageMean =                 (
+                    "293.2728627762746",
+                    "550.630525014613"
+                );
+                nativeTopMean =                 (
+                    "293.2728627762746",
+                    "409.369474985387"
+                );
+                normalizedMean =                 (
+                    "0.5315853158632914",
+                    "0.5666250884532928"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "303.9418038881248",
+                    "401.5919045302354"
+                );
+                nativeImageMean =                 (
+                    "303.9418038881248",
+                    "558.4080954697646"
+                );
+                nativeTopMean =                 (
+                    "303.9418038881248",
+                    "401.5919045302354"
+                );
+                normalizedMean =                 (
+                    "0.5729365547498068",
+                    "0.596769799788793"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 960;
+    imageOrientation = 1;
+    imageWidth = 640;
+    lowConfidence = 0;
+    meshAttempts =     (
+                {
+            accepted = 0;
+            meshInputMeanRGB =             (
+                "0.6688260289718073",
+                "0.4532866718567163",
+                "0.3964126082935593"
+            );
+            meshInputRange =             (
+                "0.02270483",
+                1
+            );
+            meshInputSha256 = 7cd4d47c67252dd4107dcf1ef4aeea771f54eb45750a1e7d6c36ed03cad19c68;
+            observation = 0;
+            outputElements =             (
+                1434,
+                1
+            );
+            presenceLogit = "-3.24921";
+            source = "vision-eyes";
+        },
+                {
+            accepted = 1;
+            meshInputMeanRGB =             (
+                "0.530257941967875",
+                "0.4385205309586695",
+                "0.3886207521885422"
+            );
+            meshInputRange =             (
+                0,
+                1
+            );
+            meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+            observation = 0;
+            outputElements =             (
+                1434,
+                1
+            );
+            presenceLogit = "15.01686";
+            source = "vision-bbox";
+        }
+    );
+    meshInputMeanRGB =     (
+        "0.530257941967875",
+        "0.4385205309586695",
+        "0.3886207521885422"
+    );
+    meshInputRange =     (
+        0,
+        1
+    );
+    meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+    meshInvocations = 2;
+    meshOutputElements =     (
+        1434,
+        1
+    );
+    meshPresenceLogits =     (
+        "-3.24921",
+        "15.01686"
+    );
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-3.960873842596839";
+            cropSidePixels = "62.38376302090023";
+            cx = "0.473257807941458";
+            cy = "0.4284881326763842";
+            fallback =             {
+                cropShiftPixels = "-40.73806963468853";
+                cropSidePixels = "451.5136384963989";
+                cx = "0.4455056339502335";
+                cy = "0.4443325698375702";
+                roll = "-0";
+                rx = "0.2015685737133026";
+                ry = "0.1343790590763092";
+                source = "vision-bbox";
+            };
+            roll = "-36.09174172046183";
+            rx = "0.01959807370034895";
+            ry = "0.01856659613717269";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "217.884375",
+        "210.425",
+        "197.9125"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "123.7234375",
+        "140.2078125",
+        "131.3421875"
+    );
+    rasterMeanARGB =     (
+        255,
+        "152.7920930989583",
+        "148.5372412109375",
+        "137.1009114583333"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+2026-11-14 05:41:56.158 Runner[67942:180389] HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "288.8794297695807",
+                "421.1475116286004"
+            );
+            currentRightTopMean =             (
+                "295.3338406463077",
+                "408.7582323475903"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286004"
+                );
+                nativeImageMean =                 (
+                    "288.8794297695807",
+                    "538.8524883713995"
+                );
+                nativeTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286005"
+                );
+                normalizedMean =                 (
+                    "0.5145570188760757",
+                    "0.5209751625855764"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "295.3338406463077",
+                    "408.7582323475903"
+                );
+                nativeImageMean =                 (
+                    "295.3338406463077",
+                    "551.2417676524097"
+                );
+                nativeTopMean =                 (
+                    "295.3338406463077",
+                    "408.7582323475903"
+                );
+                normalizedMean =                 (
+                    "0.5395733614762624",
+                    "0.5689941744009653"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 960;
+    imageOrientation = 1;
+    imageWidth = 640;
+    lowConfidence = 0;
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-4.190922270594268";
+            cropSidePixels = "66.00702576185974";
+            cx = "0.4670636543945309";
+            cy = "0.4359404145523909";
+            fallback =             {
+                cropShiftPixels = "-40.73806963468853";
+                cropSidePixels = "451.5136384963989";
+                cx = "0.4455056339502335";
+                cy = "0.4443325698375702";
+                roll = "-0";
+                rx = "0.2015685737133026";
+                ry = "0.1343790590763092";
+                source = "vision-bbox";
+            };
+            roll = "-62.48195439636469";
+            rx = "0.02073633415137789";
+            ry = "0.01964494814341063";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "217.884375",
+        "210.425",
+        "197.9125"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "123.7234375",
+        "140.2078125",
+        "131.3421875"
+    );
+    rasterMeanARGB =     (
+        255,
+        "152.7920930989583",
+        "148.5372412109375",
+        "137.1009114583333"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+2026-11-14 05:41:56.219 Runner[67942:180389] HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.7127014196310029",
+        "0.4890364117646016",
+        "0.4277519603175222"
+    );
+    meshInputRange =     (
+        "0.02227042",
+        1
+    );
+    meshInputSha256 = 0e85ab36c51fc60789cb9d5effa2cae8f64fd24574375eddcb68137030bfed41;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "-13.21861";
+    source = "vision-eyes";
+}
+2026-11-14 05:41:56.292 Runner[67942:180389] HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.530257941967875",
+        "0.4385205309586695",
+        "0.3886207521885422"
+    );
+    meshInputRange =     (
+        0,
+        1
+    );
+    meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "15.01686";
+    source = "vision-bbox";
+}
+2026-11-14 05:41:57.038 Runner[67942:180389] HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-bbox"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2439370602369308",
+                "0.4212883710861206",
+                "0.4031371474266052",
+                "0.2687581181526184"
+            );
+            currentLeftTopMean =             (
+                "288.8794297695807",
+                "421.1475116286004"
+            );
+            currentRightTopMean =             (
+                "295.3338406463077",
+                "408.7582323475903"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286004"
+                );
+                nativeImageMean =                 (
+                    "288.8794297695807",
+                    "538.8524883713995"
+                );
+                nativeTopMean =                 (
+                    "288.8794297695807",
+                    "421.1475116286005"
+                );
+                normalizedMean =                 (
+                    "0.5145570188760757",
+                    "0.5209751625855764"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "295.3338406463077",
+                    "408.7582323475903"
+                );
+                nativeImageMean =                 (
+                    "295.3338406463077",
+                    "551.2417676524097"
+                );
+                nativeTopMean =                 (
+                    "295.3338406463077",
+                    "408.7582323475903"
+                );
+                normalizedMean =                 (
+                    "0.5395733614762624",
+                    "0.5689941744009653"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 960;
+    imageOrientation = 1;
+    imageWidth = 640;
+    lowConfidence = 0;
+    meshAttempts =     (
+                {
+            accepted = 0;
+            meshInputMeanRGB =             (
+                "0.7127014196310029",
+                "0.4890364117646016",
+                "0.4277519603175222"
+            );
+            meshInputRange =             (
+                "0.02227042",
+                1
+            );
+            meshInputSha256 = 0e85ab36c51fc60789cb9d5effa2cae8f64fd24574375eddcb68137030bfed41;
+            observation = 0;
+            outputElements =             (
+                1434,
+                1
+            );
+            presenceLogit = "-13.21861";
+            source = "vision-eyes";
+        },
+                {
+            accepted = 1;
+            meshInputMeanRGB =             (
+                "0.530257941967875",
+                "0.4385205309586695",
+                "0.3886207521885422"
+            );
+            meshInputRange =             (
+                0,
+                1
+            );
+            meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+            observation = 0;
+            outputElements =             (
+                1434,
+                1
+            );
+            presenceLogit = "15.01686";
+            source = "vision-bbox";
+        }
+    );
+    meshInputMeanRGB =     (
+        "0.530257941967875",
+        "0.4385205309586695",
+        "0.3886207521885422"
+    );
+    meshInputRange =     (
+        0,
+        1
+    );
+    meshInputSha256 = 3c3382a83daee097a6ec596ae0c75a4e0826900a5a49fee0422338effebd5140;
+    meshInvocations = 2;
+    meshOutputElements =     (
+        1434,
+        1
+    );
+    meshPresenceLogits =     (
+        "-13.21861",
+        "15.01686"
+    );
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-4.190922270594268";
+            cropSidePixels = "66.00702576185974";
+            cx = "0.4670636543945309";
+            cy = "0.4359404145523909";
+            fallback =             {
+                cropShiftPixels = "-40.73806963468853";
+                cropSidePixels = "451.5136384963989";
+                cx = "0.4455056339502335";
+                cy = "0.4443325698375702";
+                roll = "-0";
+                rx = "0.2015685737133026";
+                ry = "0.1343790590763092";
+                source = "vision-bbox";
+            };
+            roll = "-62.48195439636469";
+            rx = "0.02073633415137789";
+            ry = "0.01964494814341063";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "217.884375",
+        "210.425",
+        "197.9125"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "123.7234375",
+        "140.2078125",
+        "131.3421875"
+    );
+    rasterMeanARGB =     (
+        255,
+        "152.7920930989583",
+        "148.5372412109375",
+        "137.1009114583333"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+2026-11-14 05:42:00.516 Runner[67942:180389] HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "417.0695113604597",
+                "347.1404987866013"
+            );
+            currentRightTopMean =             (
+                "486.6117306707276",
+                "269.076746573741"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+                );
+                nativeImageMean =                 (
+                    "417.0695113604597",
+                    "472.8595012133987"
+                );
+                nativeTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+                );
+                normalizedMean =                 (
+                    "0.4151941935221354",
+                    "0.668250838915507"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "486.6117306707276",
+                    "269.076746573741"
+                );
+                nativeImageMean =                 (
+                    "486.6117306707275",
+                    "550.9232534262591"
+                );
+                nativeTopMean =                 (
+                    "486.6117306707275",
+                    "269.0767465737409"
+                );
+                normalizedMean =                 (
+                    "0.5573896070321401",
+                    "0.8278705279032389"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 820;
+    imageOrientation = 1;
+    imageWidth = 960;
+    lowConfidence = 0;
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-31.36409206167687";
+            cropSidePixels = "493.9844499714108";
+            cx = "0.5153913382631946";
+            cy = "0.4223863942692908";
+            fallback =             {
+                cropShiftPixels = "-77.22014477378444";
+                cropSidePixels = "855.8566129207611";
+                cx = "0.4776507467031479";
+                cy = "0.5236895233392715";
+                roll = "-0";
+                rx = "0.2547192275524139";
+                ry = "0.2982078790664673";
+                source = "vision-bbox";
+            };
+            roll = "-48.30411103079597";
+            rx = "0.1034579425645591";
+            ry = "0.1721200174116414";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "71.17291666666667",
+        "77.46666666666667",
+        "81.45625"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "67.75104166666667",
+        "57.22604166666667",
+        "56.02708333333333"
+    );
+    rasterMeanARGB =     (
+        255,
+        "99.29252540650407",
+        "98.90616361788618",
+        "99.79233358739837"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+2026-11-14 05:42:00.588 Runner[67942:180389] HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.4811403184142335",
+        "0.4182648176418837",
+        "0.3880798318802334"
+    );
+    meshInputRange =     (
+        0,
+        "0.8846493"
+    );
+    meshInputSha256 = 12304f7dc2f4647ed8942fa2862ab454d16aafaf8d2a3ec796b46ba080164310;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "11.80929";
+    source = "vision-eyes";
+}
+2026-11-14 05:42:00.926 Runner[67942:180389] HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-eyes"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "417.0695113604597",
+                "347.1404987866013"
+            );
+            currentRightTopMean =             (
+                "486.6117306707276",
+                "269.076746573741"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+                );
+                nativeImageMean =                 (
+                    "417.0695113604597",
+                    "472.8595012133987"
+                );
+                nativeTopMean =                 (
+                    "417.0695113604597",
+                    "347.1404987866013"
+                );
+                normalizedMean =                 (
+                    "0.4151941935221354",
+                    "0.668250838915507"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "486.6117306707276",
+                    "269.076746573741"
+                );
+                nativeImageMean =                 (
+                    "486.6117306707275",
+                    "550.9232534262591"
+                );
+                nativeTopMean =                 (
+                    "486.6117306707275",
+                    "269.0767465737409"
+                );
+                normalizedMean =                 (
+                    "0.5573896070321401",
+                    "0.8278705279032389"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 820;
+    imageOrientation = 1;
+    imageWidth = 960;
+    lowConfidence = 0;
+    meshAttempts =     (
+                {
+            accepted = 1;
+            meshInputMeanRGB =             (
+                "0.4811403184142335",
+                "0.4182648176418837",
+                "0.3880798318802334"
+            );
+            meshInputRange =             (
+                0,
+                "0.8846493"
+            );
+            meshInputSha256 = 12304f7dc2f4647ed8942fa2862ab454d16aafaf8d2a3ec796b46ba080164310;
+            observation = 0;
+            outputElements =             (
+                1434,
+                1
+            );
+            presenceLogit = "11.80929";
+            source = "vision-eyes";
+        }
+    );
+    meshInputMeanRGB =     (
+        "0.4811403184142335",
+        "0.4182648176418837",
+        "0.3880798318802334"
+    );
+    meshInputRange =     (
+        0,
+        "0.8846493"
+    );
+    meshInputSha256 = 12304f7dc2f4647ed8942fa2862ab454d16aafaf8d2a3ec796b46ba080164310;
+    meshInvocations = 1;
+    meshOutputElements =     (
+        1434,
+        1
+    );
+    meshPresenceLogits =     (
+        "11.80929"
+    );
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-31.36409206167687";
+            cropSidePixels = "493.9844499714108";
+            cx = "0.5153913382631946";
+            cy = "0.4223863942692908";
+            fallback =             {
+                cropShiftPixels = "-77.22014477378444";
+                cropSidePixels = "855.8566129207611";
+                cx = "0.4776507467031479";
+                cy = "0.5236895233392715";
+                roll = "-0";
+                rx = "0.2547192275524139";
+                ry = "0.2982078790664673";
+                source = "vision-bbox";
+            };
+            roll = "-48.30411103079597";
+            rx = "0.1034579425645591";
+            ry = "0.1721200174116414";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "71.17291666666667",
+        "77.46666666666667",
+        "81.45625"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "67.75104166666667",
+        "57.22604166666667",
+        "56.02708333333333"
+    );
+    rasterMeanARGB =     (
+        255,
+        "99.29252540650407",
+        "98.90616361788618",
+        "99.79233358739837"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+2026-11-14 05:42:01.297 Runner[67942:180389] HueviaRetouch stages {
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "360.8715437157132",
+                "380.695256537129"
+            );
+            currentRightTopMean =             (
+                "497.5132440957697",
+                "352.6911390638167"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+                );
+                nativeImageMean =                 (
+                    "360.8715437157132",
+                    "439.304743462871"
+                );
+                nativeTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+                );
+                normalizedMean =                 (
+                    "0.3002842391530673",
+                    "0.5996402502059937"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "497.5132440957697",
+                    "352.6911390638167"
+                );
+                nativeImageMean =                 (
+                    "497.5132440957696",
+                    "467.3088609361832"
+                );
+                nativeTopMean =                 (
+                    "497.5132440957696",
+                    "352.6911390638168"
+                );
+                normalizedMean =                 (
+                    "0.5796803136666616",
+                    "0.6569012502829233"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 820;
+    imageOrientation = 1;
+    imageWidth = 960;
+    lowConfidence = 0;
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-41.84455327804442";
+            cropSidePixels = "659.0517141291998";
+            cx = "0.4631194359542326";
+            cy = "0.5388367475725657";
+            fallback =             {
+                cropShiftPixels = "-77.22014477378444";
+                cropSidePixels = "855.8566129207611";
+                cx = "0.4776507467031479";
+                cy = "0.5236895233392715";
+                roll = "-0";
+                rx = "0.2547192275524139";
+                ry = "0.2982078790664673";
+                source = "vision-bbox";
+            };
+            roll = "-11.58213589389923";
+            rx = "0.1380289083824382";
+            ry = "0.2296347435990243";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "71.17291666666667",
+        "77.46666666666667",
+        "81.45625"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "67.75104166666667",
+        "57.22604166666667",
+        "56.02708333333333"
+    );
+    rasterMeanARGB =     (
+        255,
+        "99.29252540650407",
+        "98.90616361788618",
+        "99.79233358739837"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}
+2026-11-14 05:42:01.357 Runner[67942:180389] HueviaRetouch mesh attempt {
+    accepted = 0;
+    meshInputMeanRGB =     (
+        "0.4495293118644668",
+        "0.4245965437470431",
+        "0.4129477118649447"
+    );
+    meshInputRange =     (
+        "0.1062137",
+        "0.8849958"
+    );
+    meshInputSha256 = 684eba133a44f1530a6d355c404ccf5244424073aee1accca0846a4ad8ac05b2;
+    observation = 0;
+    outputElements =     (
+        1434,
+        1
+    );
+    presenceLogit = "26.34869";
+    source = "vision-eyes";
+}
+2026-11-14 05:42:02.249 Runner[67942:180389] HueviaRetouch result {
+    acceptedFaceSources =     (
+        "vision-eyes"
+    );
+    acceptedFaces = 1;
+    bitmapInfo = 8194;
+    eyeGeometry =     (
+                {
+            bbox =             (
+                "0.2229315191507339",
+                "0.1781025975942612",
+                "0.5094384551048279",
+                "0.5964157581329346"
+            );
+            currentLeftTopMean =             (
+                "360.8715437157132",
+                "380.695256537129"
+            );
+            currentRightTopMean =             (
+                "497.5132440957697",
+                "352.6911390638167"
+            );
+            leftEye =             {
+                manualTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+                );
+                nativeImageMean =                 (
+                    "360.8715437157132",
+                    "439.304743462871"
+                );
+                nativeTopMean =                 (
+                    "360.8715437157132",
+                    "380.695256537129"
+                );
+                normalizedMean =                 (
+                    "0.3002842391530673",
+                    "0.5996402502059937"
+                );
+                pointCount = 6;
+            };
+            observationRoll = 0;
+            rightEye =             {
+                manualTopMean =                 (
+                    "497.5132440957697",
+                    "352.6911390638167"
+                );
+                nativeImageMean =                 (
+                    "497.5132440957696",
+                    "467.3088609361832"
+                );
+                nativeTopMean =                 (
+                    "497.5132440957696",
+                    "352.6911390638168"
+                );
+                normalizedMean =                 (
+                    "0.5796803136666616",
+                    "0.6569012502829233"
+                );
+                pointCount = 6;
+            };
+        }
+    );
+    imageHeight = 820;
+    imageOrientation = 1;
+    imageWidth = 960;
+    lowConfidence = 0;
+    meshAttempts =     (
+                {
+            accepted = 1;
+            meshInputMeanRGB =             (
+                "0.4495293118644668",
+                "0.4245965437470431",
+                "0.4129477118649447"
+            );
+            meshInputRange =             (
+                "0.1062137",
+                "0.8849958"
+            );
+            meshInputSha256 = 684eba133a44f1530a6d355c404ccf5244424073aee1accca0846a4ad8ac05b2;
+            observation = 0;
+            outputElements =             (
+                1434,
+                1
+            );
+            presenceLogit = "26.34869";
+            source = "vision-eyes";
+        }
+    );
+    meshInputMeanRGB =     (
+        "0.4495293118644668",
+        "0.4245965437470431",
+        "0.4129477118649447"
+    );
+    meshInputRange =     (
+        "0.1062137",
+        "0.8849958"
+    );
+    meshInputSha256 = 684eba133a44f1530a6d355c404ccf5244424073aee1accca0846a4ad8ac05b2;
+    meshInvocations = 1;
+    meshOutputElements =     (
+        1434,
+        1
+    );
+    meshPresenceLogits =     (
+        "26.34869"
+    );
+    missingEyes = 0;
+    outsideFrame = 0;
+    proposalCount = 1;
+    proposalFrames =     (
+                {
+            cropShiftPixels = "-41.84455327804442";
+            cropSidePixels = "659.0517141291998";
+            cx = "0.4631194359542326";
+            cy = "0.5388367475725657";
+            fallback =             {
+                cropShiftPixels = "-77.22014477378444";
+                cropSidePixels = "855.8566129207611";
+                cx = "0.4776507467031479";
+                cy = "0.5236895233392715";
+                roll = "-0";
+                rx = "0.2547192275524139";
+                ry = "0.2982078790664673";
+                source = "vision-bbox";
+            };
+            roll = "-11.58213589389923";
+            rx = "0.1380289083824382";
+            ry = "0.2296347435990243";
+            source = "vision-eyes";
+        }
+    );
+    rasterFirstRowMeanARGB =     (
+        255,
+        "71.17291666666667",
+        "77.46666666666667",
+        "81.45625"
+    );
+    rasterLastRowMeanARGB =     (
+        255,
+        "67.75104166666667",
+        "57.22604166666667",
+        "56.02708333333333"
+    );
+    rasterMeanARGB =     (
+        255,
+        "99.29252540650407",
+        "98.90616361788618",
+        "99.79233358739837"
+    );
+    smallEyes = 0;
+    visionConfidence =     (
+        1
+    );
+    visionFaceCount = 1;
+}

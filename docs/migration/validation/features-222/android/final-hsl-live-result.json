@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "platform": "Android x64 API31 release222 emulator",
+  "case": "final-hsl-live",
+  "gesture": {
+    "start": [
+      551,
+      1752
+    ],
+    "end": [
+      850,
+      1752
+    ],
+    "durationMs": 7000
+  },
+  "photoCropPixels": [
+    150,
+    230,
+    930,
+    1470
+  ],
+  "frames": [
+    {
+      "elapsedSeconds": 3.446,
+      "pointerCommandRunningBeforeScreenshot": true,
+      "pointerCommandRunningAfterScreenshot": true,
+      "changedPixels": 452131,
+      "totalPixels": 967200,
+      "meanChannelDifference": [
+        3.5708219602977667,
+        3.143440860215054,
+        3.264727047146402
+      ]
+    },
+    {
+      "elapsedSeconds": 6.813,
+      "pointerCommandRunningBeforeScreenshot": true,
+      "pointerCommandRunningAfterScreenshot": true,
+      "changedPixels": 508837,
+      "totalPixels": 967200,
+      "meanChannelDifference": [
+        3.5522808105872623,
+        4.047706782464847,
+        3.275280190239868
+      ]
+    }
+  ],
+  "livePreviewChangedBeforePointerUp": true
+}

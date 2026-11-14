@@ -1,0 +1,46 @@
+{
+  "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "buildExit": 0,
+  "acceptedForLocalAndroidTesting": true,
+  "packages": [
+    {
+      "file": "huevia-0.31.0-dev-222-android-arm64.apk",
+      "abi": "arm64",
+      "bytes": 52985650,
+      "sha256": "e2c7a0582c0a4963d1169e83c27a0eef5138df04210abc0cfde5f79bcfbdd442",
+      "apksignerVerified": true,
+      "zipalign16KiBVerified": true,
+      "elfLoadSegments16KiBVerified": true,
+      "mappingSha256": "c9a0dc5f9a23972d6ca56dceca85ba82dfad5f6ae5fe54a6e3ffa54b3485d2e6"
+    },
+    {
+      "file": "huevia-0.31.0-dev-222-android-x64.apk",
+      "abi": "x64",
+      "bytes": 56488154,
+      "sha256": "8b6ebca45a22bab29e753ffdb7c828c3e902cf674e9dff9cf906a7a05c8a8220",
+      "apksignerVerified": true,
+      "zipalign16KiBVerified": true,
+      "elfLoadSegments16KiBVerified": true,
+      "mappingSha256": "c9a0dc5f9a23972d6ca56dceca85ba82dfad5f6ae5fe54a6e3ffa54b3485d2e6"
+    }
+  ],
+  "runtime": {
+    "abi": "x64",
+    "androidApi": 31,
+    "pageSizeBytes": 4096,
+    "checksPassed": 78,
+    "receipt": "release-runtime-result.json",
+    "mappingReceipt": "release-runtime-mapping.json"
+  },
+  "backNavigation": {
+    "rootCasesPassed": 4,
+    "nestedCasesPassed": 2,
+    "receipt": "back-navigation-result.json",
+    "sameActivityAndProcessRetained": true,
+    "originalRootPageRetained": true
+  },
+  "physical16KiBDeviceTested": false,
+  "physicalCameraTested": false,
+  "buildProvenance": "Both ABI builds used a frozen HEAD and clean app source tree; package bytes, signatures, and alignment were independently verified.",
+  "uiReceipt": "ui-result.json"
+}

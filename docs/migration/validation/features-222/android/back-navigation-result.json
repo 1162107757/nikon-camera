@@ -1,0 +1,102 @@
+{
+  "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "apkSha256": "8b6ebca45a22bab29e753ffdb7c828c3e902cf674e9dff9cf906a7a05c8a8220",
+  "androidApi": 31,
+  "physicalCameraTested": false,
+  "rootCases": [
+    {
+      "rootTab": "同步",
+      "before": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "background": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{574f850 u0 com.android.launcher3/.uioverrides.QuickstepLauncher t283}",
+        "foreground": false
+      },
+      "after": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "sameActivityAndProcess": true
+    },
+    {
+      "rootTab": "设置",
+      "before": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "background": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{574f850 u0 com.android.launcher3/.uioverrides.QuickstepLauncher t283}",
+        "foreground": false
+      },
+      "after": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "sameActivityAndProcess": true
+    },
+    {
+      "rootTab": "相册",
+      "before": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "background": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{574f850 u0 com.android.launcher3/.uioverrides.QuickstepLauncher t283}",
+        "foreground": false
+      },
+      "after": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "sameActivityAndProcess": true
+    },
+    {
+      "rootTab": "预设",
+      "before": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "background": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{574f850 u0 com.android.launcher3/.uioverrides.QuickstepLauncher t283}",
+        "foreground": false
+      },
+      "after": {
+        "pid": "5884",
+        "activityRecord": "7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297",
+        "resumed": "mResumedActivity: ActivityRecord{7393d17 u0 cc.huevia.next/cc.huevia.sharedapp.MainActivity t297}",
+        "foreground": true
+      },
+      "sameActivityAndProcess": true
+    }
+  ],
+  "connectionPageBackReturnsToSync": true,
+  "queueBackReturnsToSync": true,
+  "rootBackMovesTaskToBackground": true,
+  "sameActivityAndProcessRetained": true,
+  "finalScreen": "我的预设",
+  "exit": 0
+}

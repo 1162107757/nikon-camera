@@ -1,0 +1,127 @@
+{
+  "sourceCommit": "9559591734f8cc07a8b9dcc1cf5ca596020904b5",
+  "androidX64Sha256": "8b6ebca45a22bab29e753ffdb7c828c3e902cf674e9dff9cf906a7a05c8a8220",
+  "originalPhoto": "/storage/emulated/0/Download/Huevia214-portrait-qa-20261113.jpg",
+  "originalSha256Before": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+  "originalSha256After": "b0757386f8ef131671e50da1014be2445311a191d0c2a7d20a4898ccf034be58",
+  "originalBytesUnchanged": true,
+  "accepted": true,
+  "device": "Android API31 x64 4KiB emulator",
+  "physicalCameraTested": false,
+  "liveDragReceipts": [
+    "final-exposure-live-result.json",
+    "final-curve-live-result.json",
+    "final-hsl-live-result.json",
+    "final-palette-live-result.json",
+    "final-cleanup-live-result.json"
+  ],
+  "filterRow": {
+    "touchTargetCenters": [
+      {
+        "label": "我的滤镜，已选择\n我的",
+        "bounds": [
+          53,
+          1731,
+          189,
+          1857
+        ],
+        "centerY": 1794.0
+      },
+      {
+        "label": "在线滤镜\n在线",
+        "bounds": [
+          189,
+          1731,
+          326,
+          1857
+        ],
+        "centerY": 1794.0
+      },
+      {
+        "label": "全部",
+        "bounds": [
+          347,
+          1731,
+          473,
+          1857
+        ],
+        "centerY": 1794.0
+      },
+      {
+        "label": "人像",
+        "bounds": [
+          488,
+          1731,
+          614,
+          1857
+        ],
+        "centerY": 1794.0
+      },
+      {
+        "label": "查看全部滤镜",
+        "bounds": [
+          901,
+          1731,
+          1028,
+          1857
+        ],
+        "centerY": 1794.0
+      }
+    ],
+    "centerSpreadPixels": 0,
+    "visibleGlyphCenterAlignment": "covered by final Flutter geometry tests; see Apple full receipt",
+    "visuallyReviewed": true
+  },
+  "screenshots": [
+    {
+      "file": "../screenshots/final-filter-category.png",
+      "bytes": 2022185,
+      "sha256": "9339f51b071efdfe3def90ffa3c90adda663621e65f4c53eb55909cdfe255260"
+    },
+    {
+      "file": "../screenshots/final-filter-grid.png",
+      "bytes": 584274,
+      "sha256": "662b3a9d5aa15d5c6760e484ef839d1982fc431d08e2c65f57c77dc9137bcc05"
+    },
+    {
+      "file": "../screenshots/final-curve-workspace.png",
+      "bytes": 1832498,
+      "sha256": "4b12b26f8b5fd5962742f7ddb7cc235b5438ef3a4002248aa2358430db742f31"
+    },
+    {
+      "file": "../screenshots/final-hsl-workspace.png",
+      "bytes": 1860122,
+      "sha256": "6f4ef8987e06672251430a155f4fe7ffd6d3c54737da67339037c211eb9755b5"
+    },
+    {
+      "file": "../screenshots/final-palette-workspace.png",
+      "bytes": 1619064,
+      "sha256": "17976e6434c1f313b47b8bff68a25560a528c30a62ba710fca10d102e5570a6f"
+    },
+    {
+      "file": "../screenshots/final-cleanup-workspace.png",
+      "bytes": 1890162,
+      "sha256": "75acbce2100e3ecc7bc71c83d542a352ed249abfae2e05a505493afcba9ff2f1"
+    },
+    {
+      "file": "../screenshots/final-cleanup-advanced.png",
+      "bytes": 1817883,
+      "sha256": "a5f949af3c7f800e33f4d0899c950034fb85ca11063e36ce57d63aaf2eb16ec4"
+    },
+    {
+      "file": "../screenshots/final-connection.png",
+      "bytes": 158448,
+      "sha256": "cd39cce53fbedc1391f632e438aa45a6c3e288c8f89c3c7723143a501d0df550"
+    },
+    {
+      "file": "../screenshots/final-sync-tools.png",
+      "bytes": 167550,
+      "sha256": "f5a9aed3a6a9f0104cb967f3d4c988af421aee867677f5bedd92e988050f394b"
+    },
+    {
+      "file": "../screenshots/final-floating-queue.png",
+      "bytes": 147059,
+      "sha256": "35518c44e11fb0eb9ee2c401eebf319af2331351982284ddfa0117a74268760c"
+    }
+  ]
+}

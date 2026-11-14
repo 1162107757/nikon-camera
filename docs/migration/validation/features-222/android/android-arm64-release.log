@@ -1,0 +1,3 @@
+Android build exit 0; log: D:\dev\ai-project\nikon-camera\.tooling\cross-platform187\android-proxy-build.log
+Verified exact RAW JNI callbacks and result constructor after R8
+Verified arm64-v8a release APK: 52985650 bytes; SHA-256 e2c7a0582c0a4963d1169e83c27a0eef5138df04210abc0cfde5f79bcfbdd442
