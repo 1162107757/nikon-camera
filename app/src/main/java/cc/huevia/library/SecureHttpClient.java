@@ -1,5 +1,7 @@
 package cc.huevia.library;
 
+import cc.huevia.account.AccountHttpTransport;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 final class SecureHttpClient {
     interface Connections { HttpsURLConnection open(URL url) throws IOException; }
     private final Connections connections;
-    SecureHttpClient() { this(url -> (HttpsURLConnection) url.openConnection()); }
+    SecureHttpClient() { this.connections = null; }
     SecureHttpClient(Connections connections) { this.connections = connections; }
 
     static URI httpsUri(String text) throws IOException {
@@ -35,7 +37,10 @@ final class SecureHttpClient {
         long deadline = System.nanoTime() + 45_000_000_000L;
         for (int redirects = 0; redirects <= 3; redirects++) {
             checkDeadline(deadline);
-            HttpsURLConnection connection = connections.open(uri.toURL());
+            AccountHttpTransport.OpenedConnection opened = connections == null
+                    ? AccountHttpTransport.openPublicConnection(uri.toURL())
+                    : new AccountHttpTransport.OpenedConnection(connections.open(uri.toURL()), () -> {});
+            HttpsURLConnection connection = opened.connection;
             try {
                 connection.setInstanceFollowRedirects(false);
                 connection.setConnectTimeout(8000); connection.setReadTimeout(10000);
@@ -80,7 +85,7 @@ final class SecureHttpClient {
                     if (declared >= 0 && bytes.size() != declared) throw new IOException("下载长度与服务器声明不符。");
                     return bytes.toByteArray();
                 }
-            } finally { connection.disconnect(); }
+            } finally { opened.close(); }
         }
         throw new IOException("下载重定向次数过多。");
     }

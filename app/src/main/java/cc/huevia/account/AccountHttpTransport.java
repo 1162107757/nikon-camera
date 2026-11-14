@@ -16,6 +16,31 @@ import javax.net.ssl.HttpsURLConnection;
 /** Fixed HTTPS origin. Redirects, cookies and arbitrary destinations are never followed. */
 public final class AccountHttpTransport implements AccountRepository.Transport {
     public static final String BASE_URL = "https://nikon-d8girdjsr252fd90e-1252602548.ap-shanghai.app.tcloudbase.com/preset-library";
+    /** The platform may choose a network for this connection without changing process routing. */
+    public interface ConnectionOpener { OpenedConnection open(URL url) throws IOException; }
+    public static final class OpenedConnection implements AutoCloseable {
+        public final HttpsURLConnection connection;
+        private final Runnable release;
+        private final AtomicBoolean closed = new AtomicBoolean();
+        public OpenedConnection(HttpsURLConnection connection, Runnable release) {
+            this.connection = java.util.Objects.requireNonNull(connection);
+            this.release = java.util.Objects.requireNonNull(release);
+        }
+        @Override public void close() {
+            if (!closed.compareAndSet(false, true)) return;
+            try { connection.disconnect(); } finally { release.run(); }
+        }
+    }
+    private static volatile ConnectionOpener publicConnections = url ->
+            new OpenedConnection((HttpsURLConnection) url.openConnection(), () -> {});
+    /** Platform adapter hook shared by product HTTPS clients, never by camera sockets. */
+    public static void setPublicConnectionOpener(ConnectionOpener opener) {
+        publicConnections = java.util.Objects.requireNonNull(opener);
+    }
+    public static OpenedConnection openPublicConnection(URL url) throws IOException { return publicConnections.open(url); }
+    private final ConnectionOpener opener;
+    public AccountHttpTransport() { this(AccountHttpTransport::openPublicConnection); }
+    public AccountHttpTransport(ConnectionOpener opener) { this.opener = java.util.Objects.requireNonNull(opener); }
     private static final ScheduledExecutorService DEADLINES = Executors.newSingleThreadScheduledExecutor(task -> {
         Thread thread = new Thread(task, "account-network-deadline"); thread.setDaemon(true); return thread;
     });
@@ -33,7 +58,10 @@ public final class AccountHttpTransport implements AccountRepository.Transport {
 
     private AccountRepository.Response execute(String method, String path, String token, byte[] body,
                                                 String installationId, String expectedUpdatedAt, boolean jpeg) throws IOException {
-        final HttpsURLConnection connection = (HttpsURLConnection) new URL(BASE_URL + path).openConnection();
+        final OpenedConnection opened = opener.open(new URL(BASE_URL + path));
+        final HttpsURLConnection connection = opened.connection;
+        String stage = "configure";
+        try {
         connection.setInstanceFollowRedirects(false);
         connection.setConnectTimeout(8000); connection.setReadTimeout(10000);
         connection.setRequestMethod(method); connection.setUseCaches(false);
@@ -48,12 +76,14 @@ public final class AccountHttpTransport implements AccountRepository.Transport {
         ScheduledFuture<?> timeout = DEADLINES.schedule(() -> { timedOut.set(true); connection.disconnect(); }, 30, TimeUnit.SECONDS);
         int status = 0;
         try {
+            stage = "request";
             if (body != null) {
                 connection.setDoOutput(true); connection.setFixedLengthStreamingMode(body.length);
                 connection.setRequestProperty("Content-Type", jpeg ? "image/jpeg" : "application/json; charset=utf-8");
                 try (OutputStream output = connection.getOutputStream()) { output.write(body); }
             }
             status = connection.getResponseCode();
+            stage = "response_headers";
             if (status >= 300 && status < 400) throw new AccountException("HTTP_REDIRECT_REJECTED", status, "账号服务地址异常，请稍后重试。");
             String encoding = connection.getContentEncoding();
             if (encoding != null && !encoding.isEmpty() && !"identity".equalsIgnoreCase(encoding)) throw invalid();
@@ -62,6 +92,7 @@ public final class AccountHttpTransport implements AccountRepository.Transport {
             String mime = connection.getContentType();
             if (status != 204 && (mime == null || !mime.toLowerCase(java.util.Locale.ROOT).matches("application/json(?:\\s*;.*)?"))) throw invalid();
             InputStream stream = status >= 400 ? connection.getErrorStream() : connection.getInputStream();
+            stage = "response_body";
             byte[] result;
             if (stream == null) result = new byte[0];
             else try (InputStream input = stream) { result = readBounded(input, timedOut); }
@@ -69,10 +100,14 @@ public final class AccountHttpTransport implements AccountRepository.Transport {
             if (declared >= 0 && declared != result.length) throw invalid();
             return new AccountRepository.Response(status, result);
         } catch (IOException error) {
-            // An authorization denial is authoritative even if its body is broken or too large.
-            if (status == 401 || status == 403) return new AccountRepository.Response(status, null);
+            // Only controlled stage/status/type are logged; credentials and response data stay private.
+            java.util.logging.Logger.getLogger("HueviaAccount").warning("stage=" + stage + " status=" + status + " type=" + error.getClass().getSimpleName());
+            // HTTP denials and service failures remain authoritative even if a gateway returns HTML.
+            if (status == 401 || status == 403 || status == 429 || status >= 500)
+                return new AccountRepository.Response(status, null);
             throw error;
-        } finally { timeout.cancel(false); connection.disconnect(); }
+        } finally { timeout.cancel(false); }
+        } finally { opened.close(); }
     }
 
     static void validateRequest(String method, String path, String token, byte[] body) throws AccountException {

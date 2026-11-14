@@ -31,7 +31,9 @@ public final class CommunityHttpTransport implements AccountRepository.Transport
                 || !java.util.Arrays.asList("GET", "POST", "PUT", "DELETE").contains(method)
                 || (token != null && !token.matches("[A-Za-z0-9_-]{43}")) || (body != null && body.length > 4 * 1024 * 1024))
             throw new IOException("请求内容无效。");
-        HttpsURLConnection connection = (HttpsURLConnection) new URL(AccountHttpTransport.BASE_URL + path).openConnection();
+        AccountHttpTransport.OpenedConnection opened = AccountHttpTransport.openPublicConnection(new URL(AccountHttpTransport.BASE_URL + path));
+        HttpsURLConnection connection = opened.connection;
+        try {
         connection.setRequestMethod(method); connection.setInstanceFollowRedirects(false); connection.setConnectTimeout(8000);
         connection.setReadTimeout(10000); connection.setUseCaches(false);
         connection.setRequestProperty("Accept", "application/json"); connection.setRequestProperty("Accept-Encoding", "identity");
@@ -64,6 +66,7 @@ public final class CommunityHttpTransport implements AccountRepository.Transport
             }
             if (length >= 0 && length != output.size()) throw new IOException("服务响应不完整。");
             return new AccountRepository.Response(status, output.toByteArray());
-        } finally { deadline.cancel(false); connection.disconnect(); }
+        } finally { deadline.cancel(false); }
+        } finally { opened.close(); }
     }
 }

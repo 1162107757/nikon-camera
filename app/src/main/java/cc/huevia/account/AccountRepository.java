@@ -45,30 +45,30 @@ public final class AccountRepository {
         private final Map<String, Object> json;
         private User(Map<String, Object> value) throws IOException {
             id = text(value, "id", 36, false);
-            if (!id.matches("(?i)[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")) throw invalid();
+            if (!id.matches("(?i)[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")) throw invalid("user.id");
             username = text(value, "username", 32, true);
-            if (!username.isEmpty() && !username.matches("[a-z][a-z0-9_]{2,31}")) throw invalid();
+            if (!username.isEmpty() && !username.matches("[a-z][a-z0-9_]{2,31}")) throw invalid("user.username");
             nickname = text(value, "nickname", 160, true);
             avatarUrl = text(value, "avatarUrl", 2048, true);
             if (!avatarUrl.isEmpty()) {
                 try {
                     java.net.URI uri = new java.net.URI(avatarUrl);
                     if (!"https".equals(uri.getScheme()) || uri.getHost() == null || uri.getRawUserInfo() != null
-                            || uri.getRawFragment() != null) throw invalid();
-                } catch (java.net.URISyntaxException e) { throw invalid(); }
+                            || uri.getRawFragment() != null) throw invalid("user.avatarUrl");
+                } catch (java.net.URISyntaxException e) { throw invalid("user.avatarUrl"); }
             }
             provider = text(value, "provider", 16, false);
-            if (!"password".equals(provider) && !"qq".equals(provider)) throw invalid();
+            if (!"password".equals(provider) && !"qq".equals(provider)) throw invalid("user.provider");
             String source = text(value, "avatarSource", 16, true);
             avatarSource = source.isEmpty() ? ("qq".equals(provider) && !avatarUrl.isEmpty() ? "qq" : "default") : source;
-            if (!"qq".equals(avatarSource) && !"custom".equals(avatarSource) && !"default".equals(avatarSource)) throw invalid();
+            if (!"qq".equals(avatarSource) && !"custom".equals(avatarSource) && !"default".equals(avatarSource)) throw invalid("user.avatarSource");
             status = text(value, "status", 16, false);
             if (!"active".equals(status)) throw new AccountException("USER_DISABLED", 403, "账号已停用，请联系管理员。");
             createdAt = timestamp(value, "createdAt");
             lastLoginAt = timestamp(value, "lastLoginAt");
             updatedAt = timestamp(value, "updatedAt");
             loginCount = AccountJson.integer(value, "loginCount");
-            if (loginCount < 0 || loginCount > 9007199254740991L) throw invalid();
+            if (loginCount < 0 || loginCount > 9007199254740991L) throw invalid("user.loginCount");
             json = new LinkedHashMap<>();
             json.put("id", id); json.put("username", username); json.put("nickname", nickname);
             json.put("avatarUrl", avatarUrl); json.put("avatarSource", avatarSource); json.put("provider", provider); json.put("status", status);
@@ -132,6 +132,8 @@ public final class AccountRepository {
     public synchronized Session cachedSession() {
         return session != null && (logoutPending || session.expiresAtMillis > clock.nowMillis()) ? session : null;
     }
+    /** Opaque ownership revision for rejecting a public-cache result after an account transition. */
+    public synchronized long sessionGeneration() { return generation; }
 
     /** A failed local clear is a retryable cleanup state, never a usable authenticated session. */
     public synchronized boolean isLogoutPending() { return logoutPending; }
@@ -374,10 +376,12 @@ public final class AccountRepository {
         catch (IOException ignored) { /* No credential logging, including failed cleanup. */ }
     }
     private static Session parseSession(Map<String, Object> json, boolean verified) throws IOException {
-        if (!"Bearer".equals(text(json, "tokenType", 16, false))) throw invalid();
+        if (!"Bearer".equals(text(json, "tokenType", 16, false))) throw invalid("session.tokenType");
         String token = text(json, "accessToken", 43, false);
-        if (!token.matches("[A-Za-z0-9_-]{43}")) throw invalid();
-        return new Session(new User(AccountJson.object(json.get("user"))), token, timestamp(json, "expiresAt"), verified);
+        if (!token.matches("[A-Za-z0-9_-]{43}")) throw invalid("session.accessToken");
+        try { return new Session(new User(AccountJson.object(json.get("user"))), token, timestamp(json, "expiresAt"), verified); }
+        catch (AccountException failure) { throw failure; }
+        catch (IOException failure) { throw invalid("session.user"); }
     }
     private static Map<String, Object> success(Response response) throws IOException {
         Map<String, Object> json;
@@ -387,7 +391,7 @@ public final class AccountRepository {
             if (response.status == 403) throw new AccountException("USER_DISABLED", 403, "账号暂不可用，请联系管理员。");
             if (response.status == 429) throw new AccountException("USER_AUTH_THROTTLED", 429, "尝试次数较多，请稍后再试。");
             if (response.status >= 500) throw new AccountException("SERVICE_UNAVAILABLE", response.status, "账号服务暂不可用，请稍后重试。");
-            throw invalid();
+            throw invalid("response_json");
         }
         if (response.status >= 200 && response.status <= 299) return json;
         String code = "";
@@ -432,10 +436,10 @@ public final class AccountRepository {
     private static String text(Map<String, Object> map, String key, int max, boolean empty) throws IOException {
         Object value = map.get(key);
         if (empty && value == null) return "";
-        if (!(value instanceof String)) throw invalid();
+        if (!(value instanceof String)) throw invalid("field." + key);
         String string = (String) value;
-        if (string.length() > max || (!empty && string.isEmpty())) throw invalid();
-        for (int i = 0; i < string.length(); i++) if (string.charAt(i) < 32 || string.charAt(i) == 127) throw invalid();
+        if (string.length() > max || (!empty && string.isEmpty())) throw invalid("field." + key);
+        for (int i = 0; i < string.length(); i++) if (string.charAt(i) < 32 || string.charAt(i) == 127) throw invalid("field." + key);
         return string;
     }
     private static String timestamp(Map<String, Object> map, String key) throws IOException {
@@ -443,7 +447,7 @@ public final class AccountRepository {
     }
     private static long parseTimestamp(String value) throws AccountException {
         try { return Instant.parse(value).toEpochMilli(); }
-        catch (DateTimeParseException | ArithmeticException e) { throw invalid(); }
+        catch (DateTimeParseException | ArithmeticException e) { throw invalid("timestamp"); }
     }
     static Map<String, Object> decode(byte[] bytes) throws IOException {
         if (bytes == null || bytes.length == 0 || bytes.length > MAX_RESPONSE_BYTES) throw invalid();
@@ -454,6 +458,10 @@ public final class AccountRepository {
         } catch (CharacterCodingException | RuntimeException e) { throw invalid(); }
     }
     private static AccountException invalid() { return new AccountException("INVALID_RESPONSE", 0, "账号服务返回异常，请稍后重试。"); }
+    private static AccountException invalid(String stage) {
+        java.util.logging.Logger.getLogger("HueviaAccount").warning("stage=" + stage + " code=INVALID_RESPONSE");
+        return invalid();
+    }
     private static AccountException network() { return new AccountException("NETWORK_UNAVAILABLE", 0, "暂时无法连接账号服务，请检查网络后重试。"); }
     private static AccountException changed() { return new AccountException("SESSION_CHANGED", 0, "登录状态已变化，请重试。"); }
     private static AccountException expired() { return new AccountException("SESSION_EXPIRED", 401, "登录已过期，请重新登录。"); }
