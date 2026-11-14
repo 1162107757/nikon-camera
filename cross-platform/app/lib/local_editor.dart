@@ -320,6 +320,10 @@ extension _LocalWorkspace on _EditorPageState {
   }
 
   Future<void> leaveEditor() async {
+    if (embeddedTool != null) {
+      embeddedBack?.call();
+      return;
+    }
     if (quickJob != null) cancelQuick();
     if (leaving || exporting || managingTools || analyzingCleanup) return;
     leaving = true;
@@ -371,6 +375,8 @@ extension _LocalWorkspace on _EditorPageState {
       return;
     }
     cancelQuick();
+    retireEmbeddedTool?.call();
+    editingViewport.reset();
     pauseEditorDetails(retire: true);
     histogram.invalidate();
     parkedDraft = quickBase = null;
@@ -534,24 +540,31 @@ extension _LocalWorkspace on _EditorPageState {
         context,
       );
       if (!mounted || !current()) return;
-      final page = SelectionWorkspace(
-        state: widget.state,
-        photo: widget.photo,
-        owner: owner,
-        region: region,
-        localState: base,
-        frame: frame,
-        recipe: frozen,
-        expectedSourceSha: sourceSha,
-        atmosphere: ownedAtmosphere,
-        isCurrent: current,
-      );
-      // The pushed page now owns its bounded temporary images.
-      ownedFrame = ownedAtmosphere = null;
-      final result = await hueRootPage<SelectionResult>(
-        context,
-        MaterialPageRoute(builder: (_) => page),
-      );
+      final result = await openEmbeddedWorkspace<SelectionResult>((
+        finish,
+        backReady,
+      ) {
+        final page = SelectionWorkspace(
+          state: widget.state,
+          photo: widget.photo,
+          owner: owner,
+          region: region,
+          localState: base,
+          frame: frame,
+          recipe: frozen,
+          expectedSourceSha: sourceSha,
+          atmosphere: ownedAtmosphere,
+          isCurrent: current,
+          embedded: true,
+          onFinished: finish,
+          onBackReady: backReady,
+          viewportState: editingViewport,
+          embeddedLayoutBuilder: embeddedWorkspaceLayout,
+        );
+        // This inline tool now owns its bounded temporary images.
+        ownedFrame = ownedAtmosphere = null;
+        return page;
+      });
       if (result == null || !current()) return;
       final next = result.localState;
       if (next['localData'] != (recipe.data['localData'] ?? '')) checkpoint();
@@ -617,21 +630,25 @@ extension _LocalWorkspace on _EditorPageState {
         context,
       );
       if (!mounted || !current()) return;
-      final page = LegacyLocalWorkspace(
-        state: widget.state,
-        photo: widget.photo,
-        owner: owner,
-        recipe: frozen,
-        localState: base,
-        frame: frame,
-        atmosphere: ownedAtmosphere,
-        isCurrent: current,
-      );
-      ownedFrame = ownedAtmosphere = null;
-      final result = await hueRootPage<Json>(
-        context,
-        MaterialPageRoute(builder: (_) => page),
-      );
+      final result = await openEmbeddedWorkspace<Json>((finish, backReady) {
+        final page = LegacyLocalWorkspace(
+          state: widget.state,
+          photo: widget.photo,
+          owner: owner,
+          recipe: frozen,
+          localState: base,
+          frame: frame,
+          atmosphere: ownedAtmosphere,
+          isCurrent: current,
+          embedded: true,
+          onFinished: finish,
+          onBackReady: backReady,
+          viewportState: editingViewport,
+          embeddedLayoutBuilder: embeddedWorkspaceLayout,
+        );
+        ownedFrame = ownedAtmosphere = null;
+        return page;
+      });
       if (result == null || !current()) return;
       if (result['localData'] != (recipe.data['localData'] ?? '')) checkpoint();
       refreshWorkspace(() {

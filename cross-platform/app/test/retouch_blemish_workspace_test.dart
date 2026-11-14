@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/retouch_blemish_review.dart';
+import 'package:huevia/retouch_detail_preview.dart';
 import 'package:huevia/retouch_workspace.dart';
 import 'package:huevia/theme.dart';
 
@@ -37,6 +39,9 @@ class _BlemishCore extends PortraitMenuCore {
   ];
   Completer<void>? analyzeGate, applyPreviewGate;
   bool added = false;
+  final acceptedPreviewOrigins = <String, Json>{};
+  String get sourceSha =>
+      sha256.convert(File('$root/original.jpg').readAsBytesSync()).toString();
 
   @override
   Future<Json> call(
@@ -80,7 +85,16 @@ class _BlemishCore extends PortraitMenuCore {
       if (jobId != null) blockedJobs.add(jobId);
       await gate.future;
     }
-    return super.call(operation, payload, jobId);
+    final result = await super.call(operation, payload, jobId);
+    if (operation == 'media.reviewPreview' ||
+        operation == 'media.localPreview') {
+      acceptedPreviewOrigins[result['path'] as String] = {
+        'operation': operation,
+        'payload': object(jsonDecode(jsonEncode(payload))),
+      };
+      return {...result, 'sourceSha': sourceSha};
+    }
+    return result;
   }
 }
 
@@ -99,6 +113,8 @@ void main() {
         'iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAEklEQVR4nGMQWm3yHx9mGBkKAKq5fAFPbl0bAAAAAElFTkSuQmCC',
       ),
     );
+    File('${directory.path}/previews/portrait.png')
+        .copySync('${directory.path}/original.jpg');
     core = _BlemishCore(directory.path);
     state = AppState(core)
       ..session = {
@@ -243,15 +259,58 @@ void main() {
       ((object(core.snapshots['start']!['portrait'])['body'] as List)[0]
               as Json)['amount'] =
           35;
+      // SharedRetouch describes every non-neutral body with this flag.
+      core.snapshots['start']!['sourcePositioning'] = true;
       core.beforeBodyCopies = true;
       await open(tester);
+      final accepted = object(
+        jsonDecode(
+          jsonEncode(
+            tester
+                .widget<RetouchDetailPreview>(find.byType(RetouchDetailPreview))
+                .frame,
+          ),
+        ),
+      );
+      final acceptedPath = accepted['path'] as String;
+      final origin = core.acceptedPreviewOrigins[acceptedPath];
+      expect(
+        origin,
+        isNotNull,
+        reason: 'The displayed frame must correspond to a real accepted readonly request.',
+      );
+      expect(origin!['operation'], 'media.reviewPreview');
+      final previewCall = object(origin['payload']);
+      expect(previewCall['owner'], 'alice');
+      expect(previewCall['path'], '${directory.path}/original.jpg');
+      expect(accepted['sourceSha'], core.sourceSha);
+      expect(accepted['_retouchBeforeBody'], true);
       final callsBefore = core.calls.length;
       await analyze(tester);
-      final previewCall = core.calls
-          .skip(callsBefore)
-          .lastWhere((c) => c.$1 == 'media.reviewPreview')
-          .$2;
-      final recipe = object(previewCall['recipe']);
+      final review = tester.widget<RetouchBlemishReview>(
+        find.byType(RetouchBlemishReview),
+      );
+      expect(review.imagePath, acceptedPath);
+      final candidateFrame = tester
+          .widget<RetouchDetailPreview>(
+            find.descendant(
+              of: find.byType(RetouchBlemishReview),
+              matching: find.byType(RetouchDetailPreview),
+            ),
+          )
+          .frame;
+      expect(candidateFrame['path'], acceptedPath);
+      expect(candidateFrame['sourceSha'], core.sourceSha);
+      expect(candidateFrame['_detailRecipe'], accepted['_detailRecipe']);
+      expect(
+        core.calls
+            .skip(callsBefore)
+            .where((c) => c.$1 == 'media.reviewPreview'),
+        isEmpty,
+        reason: 'Candidate review reuses the accepted before-body frame.',
+      );
+      final recipe = object(candidateFrame['_detailRecipe']);
+      expect(recipe, object(previewCall['recipe']));
       expect(recipe['geometry'], isEmpty);
       expect(recipe['border'], isEmpty);
       expect(recipe['localData'], startsWith('view-'));

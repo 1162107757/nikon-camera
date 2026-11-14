@@ -14,12 +14,13 @@ import 'retouch_original_body.dart';
 import 'retouch_brush_preview.dart';
 import 'retouch_blemish_review.dart';
 import 'retouch_detail_preview.dart';
+import 'editing_viewport.dart';
 import 'selection_workspace.dart';
 import 'photo_workspace_chrome.dart';
-import 'widgets.dart';
 import 'theme.dart';
 
 part 'retouch_original_workspace.dart';
+part 'retouch_embedded_workspace.dart';
 
 /// Tentative edits remain owned by this route until Apply returns localData.
 class RetouchWorkspace extends StatefulWidget {
@@ -33,6 +34,12 @@ class RetouchWorkspace extends StatefulWidget {
     this.patch = false,
     this.regionId,
     this.regionName,
+    this.embedded = false,
+    this.viewportState,
+    this.initialFrame,
+    this.onFinished,
+    this.onBackReady,
+    this.embeddedLayoutBuilder,
   });
   final AppState state;
   final Photo photo;
@@ -41,6 +48,12 @@ class RetouchWorkspace extends StatefulWidget {
   final bool Function() isCurrent;
   final bool patch;
   final String? regionId, regionName;
+  final bool embedded;
+  final EditingViewportState? viewportState;
+  final Json? initialFrame;
+  final ValueChanged<Json?>? onFinished;
+  final ValueChanged<VoidCallback?>? onBackReady;
+  final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
   @override
   State<RetouchWorkspace> createState() => _RetouchWorkspaceState();
 }
@@ -67,6 +80,28 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   Offset? brushPreviewCenter;
   bool patchChildOpen = false;
   Json? patchEntryFrame;
+  Json? patchStart, patchFrameBefore, cachedBeforeBodyFrame;
+  List<Json>? patchUndoBefore, patchRedoBefore;
+  double? patchRadiusBefore;
+  String? patchIntentBefore;
+  bool? patchChoosingBefore;
+  String? overrideRegionId, overrideRegionName;
+  String? get editingRegionId => overrideRegionId ?? widget.regionId;
+  String? get editingRegionName => overrideRegionName ?? widget.regionName;
+  Json? regionStart, regionFrameBefore;
+  List<Json>? regionUndoBefore, regionRedoBefore;
+  String? regionIntentBefore;
+  bool? regionChoosingBefore;
+  int? regionTabBefore, regionSelectedBefore;
+  Widget? inlineSelection;
+  VoidCallback? inlineSelectionBack;
+  Completer<SelectionResult?>? inlineSelectionResult;
+  String? inlineSelectionOwnedPath;
+  Widget? inlineBlemishes;
+  VoidCallback? inlineBlemishBack;
+  Completer<List<int>?>? inlineBlemishResult;
+  String toolIntent = 'overview';
+  bool get patchMode => widget.patch || patchChildOpen;
   double targetX = .5, targetY = .5;
   final points = <Offset>[];
   List<Json> people = [];
@@ -87,7 +122,9 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   Json? comparisonFrame, bodyStart, bodyComparisonBefore, bodyFrameBefore;
   List<Json>? bodyUndoBefore, bodyRedoBefore;
   final viewport = TransformationController();
+  late final sharedViewport = widget.viewportState ?? EditingViewportState();
   final detailViewport = ValueNotifier<RetouchPhotoViewport?>(null);
+  final detailPreviewKey = GlobalKey();
   final detailInvalidation = ValueNotifier<int>(0);
   int detailFrameRevision = 0;
   String? atmosphere;
@@ -138,6 +175,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     if (exitRequested) return;
     detailInvalidation.value++;
     invalidateBlemishReview();
+    finishInlineBlemishes(null);
+    finishInlineSelection(null);
     final active = job;
     job = null;
     exitRequested = true;
@@ -146,7 +185,67 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     stopped = true;
     clearPortraitOverlay();
     cancelJob(active);
-    if (pop && mounted) Navigator.of(context).pop();
+    if (pop && mounted) {
+      if (widget.embedded || widget.onFinished != null) {
+        widget.onFinished?.call(null);
+      } else {
+        Navigator.of(context).pop();
+      }
+    }
+  }
+
+  void applyWorkspace() {
+    if (!current || busy || data == null) return;
+    if (patchChildOpen) {
+      unawaited(finishInlinePatch(true));
+      return;
+    }
+    if (regionStart != null) {
+      unawaited(finishInlineRegion(true));
+      return;
+    }
+    final result = data;
+    detailInvalidation.value++;
+    exitRequested = true;
+    operationEpoch++;
+    clearPortraitOverlay();
+    if (widget.embedded || widget.onFinished != null) {
+      widget.onFinished?.call(result);
+    } else {
+      Navigator.of(context).pop(result);
+    }
+  }
+
+  void retireToolWork() {
+    final active = job;
+    job = null;
+    operationEpoch++;
+    detailInvalidation.value++;
+    invalidateBlemishReview();
+    clearPortraitOverlay();
+    cancelJob(active);
+    final before =
+        tonePreviewStart ?? (scalarRemember ? scalarStart : null) ?? lightStart;
+    if (before != null &&
+        data != null &&
+        before['localData'] != data!['localData']) {
+      undo.add(before);
+      if (undo.length > 32) undo.removeAt(0);
+      redo.clear();
+    }
+    tonePreviewStart = null;
+    scalarPending = lightPending = null;
+    scalarStart = scalarFrameStart = null;
+    lightStart = lightFrameStart = null;
+    scalarCancelled = lightCancelled = true;
+    scalarRunning = lightRunning = false;
+    scalarKey = null;
+    points.clear();
+    originalGestureDown = null;
+    originalGestureLocal = null;
+    bodyGestureArea = bodyGestureDraft = null;
+    busy = false;
+    stopped = false;
   }
 
   void cancelBusyBody() {
@@ -184,7 +283,6 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       comparing = compareWanted = false;
       if (bodyTabBefore != null) tab = bodyTabBefore!;
       if (bodyOverlayBefore != null) showOverlay = bodyOverlayBefore!;
-      if (bodyViewportBefore != null) viewport.value = bodyViewportBefore!;
       bodyStart = bodyFrameBefore = null;
       bodyUndoBefore = bodyRedoBefore = null;
       bodyTabBefore = null;
@@ -194,13 +292,44 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       stopped = false;
       error = notice = null;
       choosingGroup = true;
+      toolIntent = 'overview';
     });
     unawaited(refreshPortraitOverlay());
   }
 
   void requestExit() {
     if (exitRequested) return;
+    if (inlineBlemishResult != null) {
+      final back = inlineBlemishBack;
+      if (back != null) {
+        back();
+      } else {
+        finishInlineBlemishes(null);
+      }
+      return;
+    }
+    if (inlineSelectionResult != null) {
+      final back = inlineSelectionBack;
+      if (back != null) {
+        back();
+      } else {
+        finishInlineSelection(null);
+      }
+      return;
+    }
     if (brushRadiusStart != null) cancelBrushSizing();
+    if (patchChildOpen) {
+      unawaited(finishInlinePatch(false));
+      return;
+    }
+    if (widget.patch) {
+      cancelWorkspace();
+      return;
+    }
+    if (regionStart != null && toolIntent == 'overview') {
+      unawaited(finishInlineRegion(false));
+      return;
+    }
     if (bodyStart != null &&
         (busy ||
             scalarStart != null ||
@@ -209,7 +338,22 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       cancelBusyBody();
       return;
     }
-    if (busy || scalarStart != null || lightStart != null || choosingGroup) {
+    if (toolIntent != 'overview' && bodyStart == null) {
+      if (busy || scalarStart != null || lightStart != null) {
+        setState(() {
+          retireToolWork();
+          choosingGroup = true;
+          toolIntent = 'overview';
+          photoSampling = manual = healMode = false;
+          error = notice = null;
+        });
+        unawaited(refreshPortraitOverlay());
+      } else {
+        unawaited(originalGroups());
+      }
+      return;
+    }
+    if (choosingGroup) {
       cancelWorkspace();
       return;
     }
@@ -236,7 +380,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       return false;
     }
     final regional = object(portrait['regionSkin'] ?? {});
-    if (widget.regionId?.isNotEmpty == true &&
+    if (editingRegionId?.isNotEmpty == true &&
         regional.entries.any((e) => e.value != (e.key == 'texture' ? 70 : 0))) {
       return false;
     }
@@ -249,6 +393,9 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   @override
   void initState() {
     super.initState();
+    frame = widget.initialFrame;
+    if (widget.patch) toolIntent = 'patch';
+    widget.onBackReady?.call(requestExit);
     if (!widget.patch) {
       radius = .022;
       tab = 1; // Original PhotoPortraitDialog starts in mode 3 (skin tone).
@@ -259,6 +406,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void accountChanged() {
     if (!current) {
+      finishInlineBlemishes(null);
+      finishInlineSelection(null);
       detailInvalidation.value++;
       operationEpoch++;
       invalidateBlemishReview();
@@ -271,6 +420,10 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           redo.clear();
           toneCards = [];
           tonePreviewStart = null;
+          cachedBeforeBodyFrame = null;
+          patchStart = patchFrameBefore = patchEntryFrame = null;
+          patchUndoBefore = patchRedoBefore = null;
+          patchChildOpen = false;
           photoSampling = false;
           atmosphere = null;
           lightPending = null;
@@ -304,7 +457,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       final result = await widget.state.core.call(op, {
         'path': widget.photo.path,
         'owner': widget.owner,
-        if (widget.regionId?.isNotEmpty == true) 'regionId': widget.regionId,
+        if (editingRegionId?.isNotEmpty == true) 'regionId': editingRegionId,
         if (tonePerFace != null) 'tonePerFace': tonePerFace,
         ...value,
       }, id);
@@ -314,7 +467,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         throw const AppFailure('编辑计算已停止。');
       }
       if (op.startsWith('media.retouch') &&
-          (result['regionId'] as String? ?? '') != (widget.regionId ?? '')) {
+          (result['regionId'] as String? ?? '') != (editingRegionId ?? '')) {
         throw const AppFailure('人像编辑范围已变化，请重新打开。');
       }
       return result;
@@ -324,6 +477,10 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   Future<void> remove(String path) async {
+    if (widget.initialFrame?['_borrowedEditorFrame'] == true &&
+        path == widget.initialFrame?['path']) {
+      return;
+    }
     if (!p.isWithin(p.join(widget.state.core.root, 'previews'), path)) return;
     try {
       await FileImage(File(path)).evict();
@@ -333,14 +490,20 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     }
   }
 
-  Future<Json> render(Json next, {bool interactive = false}) async {
+  Future<Json> render(
+    Json next, {
+    bool interactive = false,
+    bool sourcePositioned = false,
+  }) async {
     final epoch = operationEpoch;
-    final display =
-        (widget.patch ||
-            (tab != 2 &&
-                (!choosingGroup ||
-                    (widget.regionId?.isNotEmpty == true &&
-                        next['sourcePositioning'] == true))))
+    final beforeBody =
+        (sourcePositioned ||
+        patchMode ||
+        (tab != 2 &&
+            (!choosingGroup ||
+                (editingRegionId?.isNotEmpty == true &&
+                    next['sourcePositioning'] == true))));
+    final display = beforeBody
         ? await call('media.retouchChange', {
             'localData': next['localData'],
             'action': 'beforeBody',
@@ -355,7 +518,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       },
     ).data;
     final result = await call(
-      widget.patch ? 'media.localPreview' : 'media.reviewPreview',
+      patchMode ? 'media.localPreview' : 'media.reviewPreview',
       {'recipe': displayRecipe, 'maxEdge': interactive ? 640 : 1280},
     );
     final path = result['path'] as String;
@@ -381,6 +544,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       ...result,
       '_detailRecipe': displayRecipe,
       '_detailRevision': ++detailFrameRevision,
+      '_retouchSourceLocalData': next['localData'],
+      '_retouchBeforeBody': beforeBody || next['sourcePositioning'] != true,
     };
   }
 
@@ -1337,11 +1502,24 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.patch
-      ? originalPatchLayout(context)
-      : originalPortraitLayout(context);
+  Widget build(BuildContext context) {
+    if (inlineBlemishes != null) return inlineBlemishes!;
+    if (inlineSelection != null) return inlineSelection!;
+    if (frame?['_retouchBeforeBody'] == true &&
+        frame?['_retouchSourceLocalData'] == data?['localData']) {
+      cachedBeforeBodyFrame = frame;
+    }
+    if (widget.embedded) return embeddedPortraitLayout(context);
+    return patchMode
+        ? originalPatchLayout(context)
+        : originalPortraitLayout(context);
+  }
+
   @override
   void dispose() {
+    finishInlineBlemishes(null, rebuild: false);
+    finishInlineSelection(null, rebuild: false);
+    widget.onBackReady?.call(null);
     invalidateBlemishReview();
     clearPortraitOverlay();
     viewport.dispose();

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 import 'domain.dart';
 import 'editor.dart';
+import 'editing_viewport.dart';
 import 'raw_develop.dart';
 import 'library.dart';
 import 'photos.dart';
@@ -105,11 +106,17 @@ class _HueviaAppState extends State<HueviaApp> {
                   state: widget.state,
                   photo: photo,
                   automaticallyEdit: true,
+                  viewportState: route.extra is EditingViewportState
+                      ? route.extra as EditingViewportState
+                      : null,
                 )
               : EditorPage(
                   key: ValueKey('edit-${photo.id}'),
                   state: widget.state,
                   photo: photo,
+                  viewportState: route.extra is EditingViewportState
+                      ? route.extra as EditingViewportState
+                      : null,
                 );
         },
       ),

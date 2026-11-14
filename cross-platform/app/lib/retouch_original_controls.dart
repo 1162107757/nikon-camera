@@ -5,6 +5,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
+
+import 'editing_viewport.dart';
+
 import 'package:flutter/services.dart';
 
 import 'workspace_tools.dart';
@@ -919,6 +922,9 @@ class RetouchOriginalPhotoStage extends StatefulWidget {
     this.onEnd,
     this.onCancel,
     this.onViewportChanged,
+    this.viewportState,
+    this.viewportPlane,
+    this.viewportActive = true,
   });
   final double imageWidth, imageHeight;
   final Widget child;
@@ -934,11 +940,119 @@ class RetouchOriginalPhotoStage extends StatefulWidget {
   final ValueChanged<Offset>? onUpdate, onTap;
   final VoidCallback? onEnd, onCancel;
   final ValueChanged<RetouchPhotoViewport>? onViewportChanged;
+  final EditingViewportState? viewportState;
+  final EditingViewportPlane? viewportPlane;
+  final bool viewportActive;
   @override
   State<RetouchOriginalPhotoStage> createState() => _OriginalPhotoStageState();
 }
 
 class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
+  TransformationController? sharedScene;
+  EditingViewportBinding? sharedBinding;
+  bool linkingViewport = false, viewportLaidOut = false, linkingLayout = false;
+
+  void attachSharedViewport() {
+    sharedBinding?.dispose();
+    sharedScene?.removeListener(pullSharedViewport);
+    sharedScene?.dispose();
+    sharedBinding = null;
+    sharedScene = null;
+    viewportLaidOut = false;
+    final shared = widget.viewportState;
+    if (shared == null) return;
+    final scene = sharedScene = TransformationController();
+    sharedBinding = EditingViewportBinding(shared: shared, transform: scene);
+    scene.addListener(pullSharedViewport);
+  }
+
+  void pushSharedViewport() {
+    if (linkingViewport ||
+        !viewportLaidOut ||
+        sharedScene == null ||
+        size.isEmpty) {
+      return;
+    }
+    final local = matrix();
+    final z = local.getMaxScaleOnAxis();
+    final center = size.center(Offset.zero);
+    linkingViewport = true;
+    try {
+      sharedScene!.value = Matrix4.diagonal3Values(z, z, 1)
+        ..setTranslationRaw(
+          local.storage[12] + (1 - z) * center.dx,
+          local.storage[13] + (1 - z) * center.dy,
+          0,
+        );
+    } finally {
+      linkingViewport = false;
+    }
+  }
+
+  void pullSharedViewport() {
+    if (linkingViewport || sharedScene == null || size.isEmpty) return;
+    final scene = sharedScene!.value;
+    final z = scene.getMaxScaleOnAxis();
+    final center = size.center(Offset.zero);
+    linkingViewport = true;
+    try {
+      if (linkingLayout) {
+        final cancelled = tracking;
+        resetGesture();
+        writing = true;
+        try {
+          widget.controller.value = Matrix4.diagonal3Values(z, z, 1)
+            ..setTranslationRaw(
+              scene.storage[12] - (1 - z) * center.dx,
+              scene.storage[13] - (1 - z) * center.dy,
+              0,
+            );
+          readController();
+        } finally {
+          writing = false;
+        }
+        if (cancelled) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) widget.onCancel?.call();
+          });
+        }
+        return;
+      }
+      widget.controller.value = Matrix4.diagonal3Values(z, z, 1)
+        ..setTranslationRaw(
+          scene.storage[12] - (1 - z) * center.dx,
+          scene.storage[13] - (1 - z) * center.dy,
+          0,
+        );
+    } finally {
+      linkingViewport = false;
+    }
+  }
+
+  void layoutSharedViewport() {
+    linkingLayout = true;
+    try {
+      sharedBinding?.layout(
+        viewport: size,
+        imageRect: retouchOriginalPhotoFrame(
+          viewport: size,
+          imageWidth: widget.imageWidth,
+          imageHeight: widget.imageHeight,
+          transform: Matrix4.identity(),
+          reserveBars: widget.reserveBars,
+        ),
+        plane: widget.viewportPlane,
+        active:
+            widget.viewportActive &&
+            TickerMode.valuesOf(context).enabled &&
+            ModalRoute.isCurrentOf(context) != false,
+      );
+    } finally {
+      linkingLayout = false;
+    }
+    viewportLaidOut = true;
+  }
+
   RetouchPhotoViewport? reportedViewport, pendingViewport;
   bool viewportReportScheduled = false;
   void reportViewport() {
@@ -996,6 +1110,8 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     widget.editingSignal?.addListener(editingChanged);
     readController();
     widget.controller.addListener(controllerChanged);
+    widget.controller.addListener(pushSharedViewport);
+    attachSharedViewport();
   }
 
   @override
@@ -1009,9 +1125,12 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     editingWasAllowed = editingAllowed;
     if (old.controller != widget.controller) {
       old.controller.removeListener(controllerChanged);
+      old.controller.removeListener(pushSharedViewport);
       widget.controller.addListener(controllerChanged);
+      widget.controller.addListener(pushSharedViewport);
       readController();
     }
+    if (old.viewportState != widget.viewportState) attachSharedViewport();
     if (old.imageWidth != widget.imageWidth ||
         old.imageHeight != widget.imageHeight ||
         old.reserveBars != widget.reserveBars ||
@@ -1032,6 +1151,10 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
   void dispose() {
     widget.editingSignal?.removeListener(editingChanged);
     widget.controller.removeListener(controllerChanged);
+    widget.controller.removeListener(pushSharedViewport);
+    sharedBinding?.dispose();
+    sharedScene?.removeListener(pullSharedViewport);
+    sharedScene?.dispose();
     super.dispose();
   }
 
@@ -1268,6 +1391,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, bounds) {
       resolveSize(bounds.biggest);
+      layoutSharedViewport();
       final target = frame;
       reportViewport();
       Widget image = Stack(

@@ -418,7 +418,7 @@ void main() {
   );
 
   testWidgets(
-    'Colour workspace owns its HD viewport while hidden main route and late owner results cannot replace it',
+    'Inline colour workspace owns its HD viewport while retired base view and late owner results cannot replace it',
     (tester) async {
       final core = _DetailCore();
       final fixture = await _open(tester, core);
@@ -443,6 +443,7 @@ void main() {
       );
       await tester.tap(find.text('调节'));
       await tester.pump();
+      final dynamic retiredMainState = tester.state(find.byType(SplitCompare));
       await tool(tester, '曲线');
       final currentPhoto = find.byType(SplitCompare);
       final transform = _transform(tester, currentPhoto);
@@ -466,29 +467,33 @@ void main() {
       );
       final shownRegion = details.tile!.region;
       expect(shownRegion.width, lessThan(.5));
-      final hidden = find
-          .byType(SplitCompare, skipOffstage: false)
-          .evaluate()
-          .where((element) => !ModalRoute.isCurrentOf(element)!)
-          .single;
-      final dynamic hiddenState = (hidden as StatefulElement).state;
-      hiddenState.reportViewport();
+      expect(find.byType(SplitCompare, skipOffstage: false), findsOneWidget);
+      expect(retiredMainState.mounted, isFalse);
+      retiredMainState.reportViewport();
       editor.setState(() {});
       editor.panelRevision.value++;
       await _frames(tester);
       await _until(
         tester,
         () => details.tile != null && !details.loading,
-        reason: 'Any background-route viewport work must finish before verifying ownership.',
+        reason:
+            'Any retired viewport work must finish before verifying ownership.',
       );
       expect(details.tile!.region, shownRegion);
       expect(transform.value, _zoomAtCenter(viewSize, 4));
       core.holdNextTile = true;
-      await tester.tap(find.text('加点'));
+      final previousRecipe = jsonEncode(editor.recipe.data);
+      await tester.drag(
+        find.byKey(const Key('legacy-curve-graph')),
+        const Offset(20, -24),
+      );
+      expect(jsonEncode(editor.recipe.data), isNot(previousRecipe));
       await _until(
         tester,
         () => core.tileWaiter != null,
         reason: 'The changed tool recipe must reach the held tile job.',
+        diagnostics: () =>
+            'error=${details.error}; enabled=${details.enabled}; loading=${details.loading}; fulls=${core.fullRequests.length}; tiles=${core.tileRequests.length}',
       );
       expect(core.tileWaiter, isNotNull);
       fixture.state.changeOwner();

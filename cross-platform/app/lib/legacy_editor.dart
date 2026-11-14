@@ -23,19 +23,22 @@ extension _LegacyWorkspace on _EditorPageState {
           sameOwner &&
           jsonEncode(recipe.data) == fingerprint &&
           selectedRegionId == targetRegion;
-      final result = await hueRootPage<Json>(
-        context,
-        MaterialPageRoute(
-          builder: (_) => RetouchWorkspace(
-            state: widget.state,
-            photo: widget.photo,
-            owner: owner,
-            recipe: frozen,
-            isCurrent: current,
-            patch: patch,
-            regionId: patch ? null : targetRegion,
-            regionName: patch ? null : targetName,
-          ),
+      final result = await openEmbeddedWorkspace<Json>(
+        (finish, backReady) => RetouchWorkspace(
+          state: widget.state,
+          photo: widget.photo,
+          owner: owner,
+          recipe: frozen,
+          isCurrent: current,
+          patch: patch,
+          regionId: patch ? null : targetRegion,
+          regionName: patch ? null : targetName,
+          embedded: true,
+          onFinished: finish,
+          onBackReady: backReady,
+          viewportState: editingViewport,
+          embeddedLayoutBuilder: embeddedWorkspaceLayout,
+          initialFrame: embeddedInitialFrame,
         ),
       );
       if (result == null || !current()) return;
@@ -396,9 +399,11 @@ extension _LegacyWorkspace on _EditorPageState {
 
   Future<void> openLinkedRaw() async {
     if (!toolsEnabled) return;
+    pauseEditorDetails();
     debounce?.cancel();
     revision++;
     refreshWorkspace(() => managingTools = true);
+    bool forwarded = false;
     try {
       await settleLocalAdjustments();
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
@@ -443,22 +448,27 @@ extension _LegacyWorkspace on _EditorPageState {
           : Photo(source, p.basename(source), {'raw': true});
       bool current() =>
           mounted && sameOwner && widget.photo.info['rawSource'] == source;
-      await hueRootPage<void>(
-        context,
-        MaterialPageRoute(
-          builder: (_) => RawDevelopPage(
-            state: widget.state,
-            photo: raw,
-            isCurrent: current,
-          ),
-        ),
-      );
+      forwarded =
+          await openEmbeddedWorkspace<bool>(
+            (finish, backReady) => RawDevelopPage(
+              state: widget.state,
+              photo: raw,
+              isCurrent: current,
+              viewportState: editingViewport,
+              embedded: true,
+              onFinished: finish,
+              onBackReady: backReady,
+              embeddedLayoutBuilder: embeddedWorkspaceLayout,
+              initialFrame: embeddedInitialFrame,
+            ),
+          ) ==
+          true;
     } catch (failure) {
       if (mounted) report(context, failure);
     } finally {
       if (mounted) {
         refreshWorkspace(() => managingTools = false);
-        unawaited(render());
+        if (!forwarded) unawaited(render());
       }
     }
   }
@@ -471,22 +481,26 @@ extension _LegacyWorkspace on _EditorPageState {
       child: Row(
         children: [
           EditorHeaderButton(
-            icon: HueIconKind.close,
-            label: '返回相册',
+            icon: embeddedTool == null ? HueIconKind.close : HueIconKind.back,
+            label: embeddedTool == null ? '返回相册' : '返回上一级工具',
             onPressed: leaveEditor,
           ),
           Builder(
             builder: (anchor) => EditorHeaderButton(
               icon: HueIconKind.more,
               label: '更多照片操作和重置',
-              onPressed: toolsEnabled ? () => editorOptions(anchor) : null,
+              onPressed: toolsEnabled && embeddedTool == null
+                  ? () => editorOptions(anchor)
+                  : null,
             ),
           ),
           const SizedBox(width: 8),
           Expanded(
             child: Builder(
               builder: (anchor) => GestureDetector(
-                onTap: toolsEnabled ? () => editorOptions(anchor) : null,
+                onTap: toolsEnabled && embeddedTool == null
+                    ? () => editorOptions(anchor)
+                    : null,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -540,7 +554,10 @@ extension _LegacyWorkspace on _EditorPageState {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                onPressed: toolsEnabled && preview != null ? export : null,
+                onPressed:
+                    toolsEnabled && embeddedTool == null && preview != null
+                    ? export
+                    : null,
                 child: const Text('导出'),
               ),
             ),
@@ -561,133 +578,165 @@ extension _LegacyWorkspace on _EditorPageState {
       heldComparison: heldComparison,
       heldComparisonRecipe: heldComparisonRecipe,
     );
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        if (preview != null)
-          SplitCompare(
-            effect: heldComparison ?? preview!,
-            original: comparison,
-            enabled: heldComparison == null && compare,
-            effectSize: displayedPhotoSize,
-            detailController: details.effect,
-            originalDetailController: details.original,
-            warning:
-                histogram.visible &&
-                    histogram.warningCurrent &&
-                    !histogram.updating &&
-                    displayedRevision == revision
-                ? histogram.warning
-                : null,
-            warningRect: histogramContentRect,
-            warningCorner:
-                (object(recipe.data['border'] ?? {})['template'] as int? ?? 0) <
-                    3
-                ? .025 *
-                      (object(recipe.data['border'] ?? {})['corner'] as num? ??
-                          100) /
-                      100
-                : 0,
-            selection: regionLayer,
-            selectionSize:
-                displayedOverlay == null ||
-                    displayedOverlay!['outputWidth'] is! num ||
-                    displayedOverlay!['outputHeight'] is! num
-                ? null
-                : Size(
-                    (displayedOverlay!['outputWidth'] as num).toDouble(),
-                    (displayedOverlay!['outputHeight'] as num).toDouble(),
+    return LayoutBuilder(
+      key: embeddedTool == null ? const Key('editor-photo-viewport') : null,
+      builder: (context, bounds) {
+        if (embeddedTool == null &&
+            (ModalRoute.of(context)?.isCurrent ?? true)) {
+          editorPhotoViewportSize = Size(bounds.maxWidth, bounds.maxHeight);
+        }
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            if (preview != null)
+              SplitCompare(
+                effect: heldComparison ?? preview!,
+                original: comparison,
+                enabled: heldComparison == null && compare,
+                effectSize: displayedPhotoSize,
+                detailController: details.effect,
+                originalDetailController: details.original,
+                viewportState: editingViewport,
+                viewportPlane: EditingViewportPlane.fromRecipe(
+                  object(displayedOverlay?['recipe'] ?? recipe.data),
+                  sourceSize: Size(
+                    (displayedOverlay?['sourceWidth'] as num? ??
+                            widget.photo.info['width'] as num? ??
+                            1)
+                        .toDouble(),
+                    (displayedOverlay?['sourceHeight'] as num? ??
+                            widget.photo.info['height'] as num? ??
+                            1)
+                        .toDouble(),
                   ),
-            onRetry: render,
-          )
-        else if (sameOwner)
-          const Center(child: CircularProgressIndicator(color: _editorYellow)),
-        if (canShowRegionLayer)
-          Positioned(
-            right: 72,
-            bottom: 12,
-            child: WorkspaceTool(
-              icon: 'eye',
-              selected: regionLayerVisible,
-              tooltip: regionLayerVisible ? '隐藏选区，保留调整' : '显示选区',
-              onPressed: () {
-                refreshWorkspace(
-                  () => regionLayerVisible = !regionLayerVisible,
-                );
-                unawaited(refreshRegionLayer());
-              },
-            ),
-          ),
-        if (showCompareButton)
-          Positioned(
-            top: 9,
-            right: 9,
-            child: SizedBox(
-              width: 48,
-              height: 48,
-              child: Material(
-                color: const Color(0x9c101412),
-                shape: const CircleBorder(),
-                child: IconButton(
-                  tooltip: compare ? '显示效果' : '对比原图',
-                  onPressed: toolsEnabled && widget.photo.info['raw'] != true
-                      ? () {
-                          refreshWorkspace(() => compare = !compare);
-                          revision++;
-                          debounce?.cancel();
-                          unawaited(render());
-                        }
-                      : null,
-                  icon: const HueIcon(
-                    HueIconKind.splitCompare,
-                    size: 21,
-                    color: _editorWhite,
+                  contentRect: histogramContentRect,
+                ),
+                warning:
+                    histogram.visible &&
+                        histogram.warningCurrent &&
+                        !histogram.updating &&
+                        displayedRevision == revision
+                    ? histogram.warning
+                    : null,
+                warningRect: histogramContentRect,
+                warningCorner:
+                    (object(recipe.data['border'] ?? {})['template'] as int? ??
+                            0) <
+                        3
+                    ? .025 *
+                          (object(recipe.data['border'] ?? {})['corner']
+                                  as num? ??
+                              100) /
+                          100
+                    : 0,
+                selection: regionLayer,
+                selectionSize:
+                    displayedOverlay == null ||
+                        displayedOverlay!['outputWidth'] is! num ||
+                        displayedOverlay!['outputHeight'] is! num
+                    ? null
+                    : Size(
+                        (displayedOverlay!['outputWidth'] as num).toDouble(),
+                        (displayedOverlay!['outputHeight'] as num).toDouble(),
+                      ),
+                onRetry: render,
+              )
+            else if (sameOwner)
+              const Center(
+                child: CircularProgressIndicator(color: _editorYellow),
+              ),
+            if (canShowRegionLayer)
+              Positioned(
+                right: 72,
+                bottom: 12,
+                child: WorkspaceTool(
+                  icon: 'eye',
+                  selected: regionLayerVisible,
+                  tooltip: regionLayerVisible ? '隐藏选区，保留调整' : '显示选区',
+                  onPressed: () {
+                    refreshWorkspace(
+                      () => regionLayerVisible = !regionLayerVisible,
+                    );
+                    unawaited(refreshRegionLayer());
+                  },
+                ),
+              ),
+            if (showCompareButton)
+              Positioned(
+                top: 9,
+                right: 9,
+                child: SizedBox(
+                  width: 48,
+                  height: 48,
+                  child: Material(
+                    color: const Color(0x9c101412),
+                    shape: const CircleBorder(),
+                    child: IconButton(
+                      tooltip: compare ? '显示效果' : '对比原图',
+                      onPressed:
+                          toolsEnabled && widget.photo.info['raw'] != true
+                          ? () {
+                              refreshWorkspace(() => compare = !compare);
+                              revision++;
+                              debounce?.cancel();
+                              unawaited(render());
+                            }
+                          : null,
+                      icon: const HueIcon(
+                        HueIconKind.splitCompare,
+                        size: 21,
+                        color: _editorWhite,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        // Continuous previews already update the visible photograph. A progress
-        // strip per frame flashes; reserve it for initial loading and explicit work.
-        if ((rendering && preview == null) || exporting || analyzingCleanup)
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: LinearProgressIndicator(
-              value: progress > 0 ? progress : null,
-              minHeight: 2,
-              color: _editorYellow,
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-        if (error != null)
-          Positioned(
-            bottom: 6,
-            left: 20,
-            right: 20,
-            child: Material(
-              color: const Color(0xd9262925),
-              borderRadius: BorderRadius.circular(12),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      error!,
-                      style: const TextStyle(color: _editorWhite, fontSize: 12),
-                    ),
-                    TextButton(
-                      onPressed: toolsEnabled ? render : null,
-                      child: const Text('重试预览'),
-                    ),
-                  ],
+            // Continuous previews already update the visible photograph. A progress
+            // strip per frame flashes; reserve it for initial loading and explicit work.
+            if ((rendering && preview == null) || exporting || analyzingCleanup)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: LinearProgressIndicator(
+                  value: progress > 0 ? progress : null,
+                  minHeight: 2,
+                  color: _editorYellow,
+                  backgroundColor: Colors.transparent,
                 ),
               ),
-            ),
-          ),
-      ],
+            if (error != null)
+              Positioned(
+                bottom: 6,
+                left: 20,
+                right: 20,
+                child: Material(
+                  color: const Color(0xd9262925),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          error!,
+                          style: const TextStyle(
+                            color: _editorWhite,
+                            fontSize: 12,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: toolsEnabled ? render : null,
+                          child: const Text('重试预览'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 
@@ -1185,6 +1234,16 @@ extension _LegacyWorkspace on _EditorPageState {
               SafeArea(
                 child: LayoutBuilder(
                   builder: (context, bounds) {
+                    final horizontal = bounds.maxWidth > bounds.maxHeight;
+                    editorHorizontalLayout = horizontal;
+                    if (embeddedTool != null) {
+                      return Column(
+                        children: [
+                          editorHeader(),
+                          Expanded(child: embeddedTool!),
+                        ],
+                      );
+                    }
                     Widget dock() => SizedBox(
                       height: tab == 9
                           ? (compact ? 160.0 : 184 * scale)
@@ -1210,7 +1269,6 @@ extension _LegacyWorkspace on _EditorPageState {
                               child: controls(),
                             ),
                     );
-                    final horizontal = bounds.maxWidth > bounds.maxHeight;
                     return Column(
                       children: [
                         editorHeader(),

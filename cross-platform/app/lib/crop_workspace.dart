@@ -9,6 +9,7 @@ import 'package:path/path.dart' as p;
 
 import 'domain.dart';
 import 'editing_detail_preview.dart';
+import 'editing_viewport.dart';
 import 'hue_icons.dart';
 import 'photo_workspace_chrome.dart';
 import 'workspace_tools.dart';
@@ -27,6 +28,12 @@ class CropWorkspace extends StatefulWidget {
     this.initialRatio = -1,
     this.isCurrent,
     this.invalidation,
+    this.viewportState,
+    this.embedded = false,
+    this.onFinished,
+    this.onBackReady,
+    this.initialFrame,
+    this.embeddedLayoutBuilder,
   });
   final HueviaCore core;
   final Photo photo;
@@ -35,6 +42,12 @@ class CropWorkspace extends StatefulWidget {
   final double initialRatio;
   final bool Function()? isCurrent;
   final Listenable? invalidation;
+  final EditingViewportState? viewportState;
+  final bool embedded;
+  final ValueChanged<Json?>? onFinished;
+  final ValueChanged<VoidCallback?>? onBackReady;
+  final Json? initialFrame;
+  final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
   @override
   State<CropWorkspace> createState() => _CropWorkspaceState();
 }
@@ -49,11 +62,35 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   );
   String? image, atmosphere, error, job;
   Size pixels = const Size(1, 1);
+  Size sourcePixels = const Size(1, 1);
   bool busy = true;
   bool fitPending = true;
   int generation = 0;
   int atmosphereGeneration = 0;
   bool stale = false, closing = false;
+  final canvasKey = GlobalKey<_CropCanvasState>();
+  Json? displayedRecipe;
+  String? borrowedFrame;
+  EditingViewportPlane get displayedPlane {
+    final initial = widget.initialFrame;
+    final content = image == borrowedFrame && initial != null
+        ? initial['_viewportContentRect']
+        : null;
+    final rect = content is Map
+        ? Rect.fromLTRB(
+            (content['left'] as num).toDouble(),
+            (content['top'] as num).toDouble(),
+            (content['right'] as num).toDouble(),
+            (content['bottom'] as num).toDouble(),
+          )
+        : const Rect.fromLTWH(0, 0, 1, 1);
+    return EditingViewportPlane.fromRecipe(
+      displayedRecipe ?? widget.recipe,
+      sourceSize: sourcePixels,
+      contentRect: rect,
+    );
+  }
+
   late final detail = EditingDetailPreviewController(
     core: widget.core,
     owner: widget.owner,
@@ -81,8 +118,48 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   @override
   void initState() {
     super.initState();
+    final initial = widget.initialFrame;
+    if (initial != null && initial['path'] is String) {
+      final width = initial['width'], height = initial['height'];
+      if (width is num &&
+          height is num &&
+          width > 0 &&
+          height > 0 &&
+          width.isFinite &&
+          height.isFinite) {
+        image = borrowedFrame = initial['path'] as String;
+        pixels = Size(width.toDouble(), height.toDouble());
+        sourcePixels = Size(
+          (initial['sourceWidth'] as num? ??
+                  widget.photo.info['width'] as num? ??
+                  width)
+              .toDouble(),
+          (initial['sourceHeight'] as num? ??
+                  widget.photo.info['height'] as num? ??
+                  height)
+              .toDouble(),
+        );
+        displayedRecipe = initial['recipe'] is Map
+            ? object(initial['recipe'])
+            : widget.recipe;
+      }
+    }
     widget.invalidation?.addListener(ownerChanged);
+    publishBack();
     unawaited(render());
+  }
+
+  void publishBack() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) widget.onBackReady?.call(() => finish());
+  });
+
+  @override
+  void didUpdateWidget(CropWorkspace oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.onBackReady != widget.onBackReady) {
+      oldWidget.onBackReady?.call(null);
+      publishBack();
+    }
   }
 
   void ownerChanged() {
@@ -107,11 +184,16 @@ class _CropWorkspaceState extends State<CropWorkspace> {
     if (!mounted || closing || (result != null && !current)) return;
     closing = true;
     detail.invalidate();
-    Navigator.pop(context, result);
+    if (widget.embedded) {
+      widget.onFinished?.call(result);
+    } else {
+      Navigator.pop(context, result);
+    }
   }
 
   Future<void> discard(String? value) async {
     if (value == null ||
+        value == borrowedFrame ||
         !p.isWithin(p.join(widget.core.root, 'previews'), value)) {
       return;
     }
@@ -127,6 +209,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
 
   @override
   void dispose() {
+    widget.onBackReady?.call(null);
     widget.invalidation?.removeListener(ownerChanged);
     detail.dispose();
     generation++;
@@ -166,16 +249,34 @@ class _CropWorkspaceState extends State<CropWorkspace> {
         'owner': widget.owner,
         'recipe': profile,
       }, identity);
-      if (!current || serial != generation) {
+      if (!mounted || !current || serial != generation) {
         await discard(result['path'] as String);
+        return;
+      }
+      Object? decodeFailure;
+      await precacheImage(
+        FileImage(File(result['path'] as String)),
+        context,
+        onError: (failure, stack) => decodeFailure = failure,
+      );
+      if (!current || serial != generation || decodeFailure != null) {
+        await discard(result['path'] as String);
+        if (decodeFailure != null && current && serial == generation) {
+          throw const AppFailure('无法读取裁剪预览，请重试。');
+        }
         return;
       }
       final old = image;
       setState(() {
         image = result['path'] as String;
+        displayedRecipe = profile;
         pixels = Size(
           ((result['geometryWidth'] ?? result['width']) as num).toDouble(),
           ((result['geometryHeight'] ?? result['height']) as num).toDouble(),
+        );
+        sourcePixels = Size(
+          (result['sourceWidth'] as num? ?? pixels.width).toDouble(),
+          (result['sourceHeight'] as num? ?? pixels.height).toDouble(),
         );
         if (fitPending) {
           fitRatio();
@@ -502,119 +603,215 @@ class _CropWorkspaceState extends State<CropWorkspace> {
       ],
     ),
   );
-  @override
-  Widget build(BuildContext context) => PhotoWorkspaceSystemBars(
-    color: const Color(0xff211f1b),
-    child: Theme(
-      data: ThemeData.dark().copyWith(
-        textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
-        colorScheme: const ColorScheme.dark(primary: _yellow),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: _white,
-            minimumSize: const Size(48, 48),
-            textStyle: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
+  Widget embeddedBody(BuildContext context) => LayoutBuilder(
+    builder: (context, box) {
+      final photo = Stack(
+        fit: StackFit.expand,
+        children: [
+          if (image == null)
+            const Center(child: CircularProgressIndicator())
+          else
+            CropCanvas(
+              key: canvasKey,
+              image: image!,
+              pixels: pixels,
+              crop: crop,
+              enabled: !busy && current && image != borrowedFrame,
+              detail: detail,
+              viewportState: widget.viewportState,
+              plane: displayedPlane,
+              embedded: true,
+              showCropOverlay: image != borrowedFrame,
+              aspect: ratio < 0
+                  ? null
+                  : ratio == 0
+                  ? pixels.aspectRatio
+                  : ratio,
+              onChanged: (value) => setState(() => crop = value),
+              onRetry: () => unawaited(render()),
             ),
-          ),
-        ),
-        sliderTheme: const SliderThemeData(
-          trackHeight: 2,
-          trackShape: RectangularSliderTrackShape(),
-          thumbShape: RoundSliderThumbShape(
-            enabledThumbRadius: 7,
-            elevation: 0,
-            pressedElevation: 0,
-          ),
-          overlayShape: RoundSliderOverlayShape(overlayRadius: 16),
-          thumbColor: Colors.white,
-          inactiveTrackColor: Color(0x66ffffff),
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: const Color(0xff0a0908),
-        body: Stack(
-          fit: StackFit.expand,
+        ],
+      );
+      final panel = SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            PhotoAtmosphere(image: atmosphere),
-            SafeArea(
-              child: LayoutBuilder(
-                builder: (context, box) {
-                  final canvas = Stack(
-                    children: [
-                      Positioned.fill(
-                        child: image == null
-                            ? const Center(child: CircularProgressIndicator())
-                            : CropCanvas(
-                                image: image!,
-                                pixels: pixels,
-                                crop: crop,
-                                enabled: !busy,
-                                detail: detail,
-                                aspect: ratio < 0
-                                    ? null
-                                    : ratio == 0
-                                    ? pixels.aspectRatio
-                                    : ratio,
-                                onChanged: (value) =>
-                                    setState(() => crop = value),
-                                onRetry: () => unawaited(render()),
-                              ),
-                      ),
-                      if (busy)
-                        const Align(
-                          alignment: Alignment.bottomCenter,
-                          child: LinearProgressIndicator(minHeight: 2),
-                        ),
-                      Positioned(top: 0, left: 0, right: 0, child: header()),
-                    ],
-                  );
-                  return box.maxWidth > box.maxHeight
-                      ? Row(
-                          children: [
-                            Expanded(child: canvas),
-                            SizedBox(
-                              width: math.min(300, box.maxWidth * .45),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  10,
-                                  0,
-                                  10,
-                                  8,
-                                ),
-                                child: controls(),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            Expanded(child: canvas),
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxHeight: box.maxHeight * .48,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  10,
-                                  0,
-                                  10,
-                                  8,
-                                ),
-                                child: controls(),
-                              ),
-                            ),
-                          ],
-                        );
-                },
-              ),
+            header(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: busy
+                      ? null
+                      : () => canvasKey.currentState?.fitPhoto(),
+                  child: const Text('适应照片'),
+                ),
+                TextButton(
+                  onPressed: busy
+                      ? null
+                      : () => canvasKey.currentState?.actualPixels(),
+                  child: const Text('1:1像素'),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: controls(),
             ),
           ],
         ),
-      ),
-    ),
+      );
+      return widget.embeddedLayoutBuilder?.call(context, photo, panel) ??
+          Column(
+            children: [
+              Expanded(child: photo),
+              SizedBox(
+                height: math.min(300, box.maxHeight * .46),
+                child: panel,
+              ),
+            ],
+          );
+    },
   );
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.embedded) {
+      return Theme(
+        data: Theme.of(context).copyWith(
+          textTheme: Theme.of(context).textTheme
+              .apply(fontFamily: 'Roboto', bodyColor: _white),
+          colorScheme: const ColorScheme.dark(primary: _yellow),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              foregroundColor: _white,
+              minimumSize: const Size(48, 48),
+            ),
+          ),
+        ),
+        child: Builder(builder: embeddedBody),
+      );
+    }
+    return PhotoWorkspaceSystemBars(
+      color: const Color(0xff211f1b),
+      child: Theme(
+        data: ThemeData.dark().copyWith(
+          textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Roboto'),
+          colorScheme: const ColorScheme.dark(primary: _yellow),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              foregroundColor: _white,
+              minimumSize: const Size(48, 48),
+              textStyle: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          sliderTheme: const SliderThemeData(
+            trackHeight: 2,
+            trackShape: RectangularSliderTrackShape(),
+            thumbShape: RoundSliderThumbShape(
+              enabledThumbRadius: 7,
+              elevation: 0,
+              pressedElevation: 0,
+            ),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 16),
+            thumbColor: Colors.white,
+            inactiveTrackColor: Color(0x66ffffff),
+          ),
+        ),
+        child: Scaffold(
+          backgroundColor: const Color(0xff0a0908),
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              PhotoAtmosphere(image: atmosphere),
+              SafeArea(
+                child: LayoutBuilder(
+                  builder: (context, box) {
+                    final canvas = Stack(
+                      children: [
+                        Positioned.fill(
+                          child: image == null
+                              ? const Center(child: CircularProgressIndicator())
+                              : CropCanvas(
+                                  key: canvasKey,
+                                  image: image!,
+                                  pixels: pixels,
+                                  crop: crop,
+                                  enabled:
+                                      !busy &&
+                                      current &&
+                                      image != borrowedFrame,
+                                  detail: detail,
+                                  viewportState: widget.viewportState,
+                                  plane: displayedPlane,
+                                  showCropOverlay: image != borrowedFrame,
+                                  aspect: ratio < 0
+                                      ? null
+                                      : ratio == 0
+                                      ? pixels.aspectRatio
+                                      : ratio,
+                                  onChanged: (value) =>
+                                      setState(() => crop = value),
+                                  onRetry: () => unawaited(render()),
+                                ),
+                        ),
+                        if (busy)
+                          const Align(
+                            alignment: Alignment.bottomCenter,
+                            child: LinearProgressIndicator(minHeight: 2),
+                          ),
+                        Positioned(top: 0, left: 0, right: 0, child: header()),
+                      ],
+                    );
+                    return box.maxWidth > box.maxHeight
+                        ? Row(
+                            children: [
+                              Expanded(child: canvas),
+                              SizedBox(
+                                width: math.min(300, box.maxWidth * .45),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    10,
+                                    0,
+                                    10,
+                                    8,
+                                  ),
+                                  child: controls(),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              Expanded(child: canvas),
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxHeight: box.maxHeight * .48,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    10,
+                                    0,
+                                    10,
+                                    8,
+                                  ),
+                                  child: controls(),
+                                ),
+                              ),
+                            ],
+                          );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class CropCanvas extends StatefulWidget {
@@ -628,6 +825,10 @@ class CropCanvas extends StatefulWidget {
     this.enabled = true,
     this.onRetry,
     this.detail,
+    this.viewportState,
+    this.plane,
+    this.embedded = false,
+    this.showCropOverlay = true,
   });
   final String image;
   final Size pixels;
@@ -637,11 +838,17 @@ class CropCanvas extends StatefulWidget {
   final bool enabled;
   final VoidCallback? onRetry;
   final EditingDetailPreviewController? detail;
+  final EditingViewportState? viewportState;
+  final EditingViewportPlane? plane;
+  final bool embedded;
+  final bool showCropOverlay;
   @override
   State<CropCanvas> createState() => _CropCanvasState();
 }
 
 class _CropCanvasState extends State<CropCanvas> {
+  final navigation = TransformationController();
+  EditingViewportBinding? viewportBinding;
   Rect frame = Rect.zero, start = Rect.zero;
   Rect fitFrame = Rect.zero, photoClip = Rect.zero, gestureCrop = Rect.zero;
   Offset down = Offset.zero;
@@ -652,6 +859,45 @@ class _CropCanvasState extends State<CropCanvas> {
   bool multiTouch = false, navigationStarted = false;
   int viewportGeneration = 0;
   static const left = 1, top = 2, right = 4, bottom = 8;
+  @override
+  void initState() {
+    super.initState();
+    bindViewport();
+  }
+
+  void bindViewport() {
+    viewportBinding?.dispose();
+    viewportBinding = widget.viewportState == null
+        ? null
+        : EditingViewportBinding(
+            shared: widget.viewportState!,
+            transform: navigation,
+          );
+  }
+
+  @override
+  void didUpdateWidget(CropCanvas oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.viewportState != widget.viewportState) bindViewport();
+  }
+
+  @override
+  void dispose() {
+    viewportBinding?.dispose();
+    navigation.dispose();
+    super.dispose();
+  }
+
+  void writeNavigation() {
+    if (fitFrame.isEmpty || photoClip.isEmpty) return;
+    final center = fitFrame.center - photoClip.topLeft;
+    navigation.value = Matrix4.identity()
+      ..setEntry(0, 0, zoom)
+      ..setEntry(1, 1, zoom)
+      ..setEntry(0, 3, center.dx * (1 - zoom) + pan.dx)
+      ..setEntry(1, 3, center.dy * (1 - zoom) + pan.dy);
+  }
+
   Rect get actual => Rect.fromLTRB(
     frame.left + widget.crop.left * frame.width,
     frame.top + widget.crop.top * frame.height,
@@ -782,6 +1028,7 @@ class _CropCanvasState extends State<CropCanvas> {
             center -
             (startFocal - center - startPan) * ratio,
       );
+      writeNavigation();
     });
   }
 
@@ -794,6 +1041,7 @@ class _CropCanvasState extends State<CropCanvas> {
   void fitPhoto() => setState(() {
     zoom = 1;
     pan = Offset.zero;
+    writeNavigation();
   });
 
   void actualPixels() {
@@ -802,6 +1050,7 @@ class _CropCanvasState extends State<CropCanvas> {
     setState(() {
       zoom = (widget.pixels.width / (fitFrame.width * dpr)).clamp(1.0, 32.0);
       pan = Offset.zero;
+      writeNavigation();
     });
   }
 
@@ -814,20 +1063,36 @@ class _CropCanvasState extends State<CropCanvas> {
       final size = applyBoxFit(
         BoxFit.contain,
         widget.pixels,
-        Size(math.max(1, box.maxWidth - 24), math.max(1, box.maxHeight - 90)),
+        widget.embedded
+            ? box.biggest
+            : Size(
+                math.max(1, box.maxWidth - 24),
+                math.max(1, box.maxHeight - 90),
+              ),
       ).destination;
-      photoClip = Rect.fromLTWH(
-        0,
-        78,
-        box.maxWidth,
-        math.max(1, box.maxHeight - 90),
-      );
+      photoClip = widget.embedded
+          ? Offset.zero & box.biggest
+          : Rect.fromLTWH(0, 78, box.maxWidth, math.max(1, box.maxHeight - 90));
       fitFrame = Alignment.center.inscribe(size, photoClip);
-      frame = Rect.fromCenter(
-        center: fitFrame.center + clampPan(pan),
-        width: fitFrame.width * zoom,
-        height: fitFrame.height * zoom,
-      );
+      final localFit = fitFrame.shift(-photoClip.topLeft);
+      if (viewportBinding != null) {
+        viewportBinding!.layout(
+          viewport: photoClip.size,
+          imageRect: localFit,
+          plane: widget.plane,
+        );
+        zoom = navigation.value.getMaxScaleOnAxis();
+        pan =
+            MatrixUtils.transformPoint(navigation.value, localFit.center) -
+            localFit.center;
+      } else {
+        pan = clampPan(pan);
+        writeNavigation();
+      }
+      frame = MatrixUtils.transformRect(
+        navigation.value,
+        localFit,
+      ).shift(photoClip.topLeft);
       final detail = widget.detail,
           visible = frame.intersect(photoClip),
           report = ++viewportGeneration;
@@ -924,32 +1189,34 @@ class _CropCanvasState extends State<CropCanvas> {
                             ],
                           ),
                         ),
-                        Positioned.fill(
-                          child: CustomPaint(
-                            painter: _CropOverlay(frame, actual),
+                        if (widget.showCropOverlay)
+                          Positioned.fill(
+                            child: CustomPaint(
+                              painter: _CropOverlay(frame, actual),
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
                 ),
-                Positioned(
-                  right: 8,
-                  top: 48,
-                  child: Row(
-                    children: [
-                      WorkspaceTool(
-                        icon: 'fit',
-                        tooltip: '适应照片',
-                        onPressed: widget.enabled ? fitPhoto : null,
-                      ),
-                      TextButton(
-                        onPressed: widget.enabled ? actualPixels : null,
-                        child: const Text('1:1像素'),
-                      ),
-                    ],
+                if (!widget.embedded)
+                  Positioned(
+                    right: 8,
+                    top: 48,
+                    child: Row(
+                      children: [
+                        WorkspaceTool(
+                          icon: 'fit',
+                          tooltip: '适应照片',
+                          onPressed: widget.enabled ? fitPhoto : null,
+                        ),
+                        TextButton(
+                          onPressed: widget.enabled ? actualPixels : null,
+                          child: const Text('1:1像素'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

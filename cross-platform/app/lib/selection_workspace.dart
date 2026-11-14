@@ -10,6 +10,7 @@ import 'package:path/path.dart' as p;
 
 import 'domain.dart';
 import 'editing_detail_preview.dart';
+import 'editing_viewport.dart';
 import 'photo_workspace_chrome.dart';
 import 'selection_editor.dart';
 import 'selection_mask.dart';
@@ -38,6 +39,11 @@ class SelectionWorkspace extends StatelessWidget {
     this.maskBuilder,
     this.recipe,
     this.expectedSourceSha = '',
+    this.viewportState,
+    this.embedded = false,
+    this.onFinished,
+    this.onBackReady,
+    this.embeddedLayoutBuilder,
   });
   final AppState state;
   final Photo photo;
@@ -48,6 +54,11 @@ class SelectionWorkspace extends StatelessWidget {
   final Future<Json> Function(Json input)? maskBuilder;
   final Json? recipe;
   final String expectedSourceSha;
+  final EditingViewportState? viewportState;
+  final bool embedded;
+  final ValueChanged<SelectionResult?>? onFinished;
+  final ValueChanged<VoidCallback?>? onBackReady;
+  final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
   @override
   Widget build(BuildContext context) => Theme(
     data: hueviaTheme(Brightness.dark, home: false),
@@ -103,6 +114,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
   @override
   void initState() {
     super.initState();
+    publishBack();
     if (!_owned(framePath)) {
       imageFailed = true;
       error = '选区预览文件无效，请重新打开。';
@@ -142,6 +154,19 @@ class _SelectionBodyState extends State<_SelectionBody> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) changed();
     });
+  }
+
+  void publishBack() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) config.onBackReady?.call(close);
+  });
+
+  @override
+  void didUpdateWidget(_SelectionBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.config.onBackReady != config.onBackReady) {
+      oldWidget.config.onBackReady?.call(null);
+      publishBack();
+    }
   }
 
   bool _owned(String path) =>
@@ -195,6 +220,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
 
   @override
   void dispose() {
+    config.onBackReady?.call(null);
     detail?.dispose();
     config.state.removeListener(accountChanged);
     editor.removeListener(changed);
@@ -290,7 +316,11 @@ class _SelectionBodyState extends State<_SelectionBody> {
     setState(() => closing = true);
     detail?.invalidate();
     if (commitJob != null) unawaited(core.cancel(commitJob!));
-    Navigator.pop(context);
+    if (config.embedded) {
+      config.onFinished?.call(null);
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   Future<void> complete() async {
@@ -322,7 +352,11 @@ class _SelectionBodyState extends State<_SelectionBody> {
       if (!mounted || !current) return;
       closing = true;
       detail?.invalidate();
-      Navigator.pop(context, SelectionResult(result, id));
+      if (config.embedded) {
+        config.onFinished?.call(SelectionResult(result, id));
+      } else {
+        Navigator.pop(context, SelectionResult(result, id));
+      }
     } catch (failure) {
       if (current) setState(() => error = '$failure');
     } finally {
@@ -647,8 +681,90 @@ class _SelectionBodyState extends State<_SelectionBody> {
       ),
     ),
   );
+  String get stageHint =>
+      error ??
+      editor.error ??
+      (base['hasBodyShape'] == true
+          ? '按原图定位选区 · 调整后保留照片构图'
+          : editor.tool == 0
+          ? '单指涂抹 · 双指缩放和移动'
+          : '拖动创建 · 拖动选区移动 · 拉角点调整大小');
+
+  Widget photoStage({bool inline = false}) {
+    if (stale || imageFailed) {
+      return Center(
+        child: Text(
+          stale ? '账号或照片已改变，请返回后重新打开。' : error ?? '预览读取失败，请返回后重试。',
+          style: const TextStyle(color: workspaceWhite),
+        ),
+      );
+    }
+    return _SelectionStage(
+      key: stage,
+      editor: editor,
+      framePath: framePath,
+      sourceSize: sourceSize,
+      mask: mask,
+      enabled: ready && !editor.adjusting,
+      detail: detail,
+      viewportState: config.viewportState,
+      plane: EditingViewportPlane.fromRecipe(
+        {
+          ...?config.recipe,
+          'geometry': <String, dynamic>{},
+          'border': <String, dynamic>{},
+        },
+        sourceSize: Size(
+          (config.frame['sourceWidth'] as num? ?? sourceSize.width).toDouble(),
+          (config.frame['sourceHeight'] as num? ?? sourceSize.height)
+              .toDouble(),
+        ),
+      ),
+      showHint: !inline,
+      onImageFailed: () => WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && !imageFailed) setState(() => imageFailed = true);
+      }),
+      hint: stageHint,
+      retry: error != null && !committing ? retryMask : null,
+    );
+  }
+
+  Widget embeddedBody(BuildContext context) => LayoutBuilder(
+    builder: (context, box) {
+      final photo = photoStage(inline: true);
+      final scale = MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 3.2);
+      final panel = SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            header(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              child: Text(
+                stageHint,
+                style: const TextStyle(color: workspaceWhite, fontSize: 12),
+              ),
+            ),
+            controls(scale),
+          ],
+        ),
+      );
+      return config.embeddedLayoutBuilder?.call(context, photo, panel) ??
+          Column(
+            children: [
+              Expanded(child: photo),
+              SizedBox(
+                height: math.min(320, box.maxHeight * .46),
+                child: panel,
+              ),
+            ],
+          );
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
+    if (config.embedded) return embeddedBody(context);
     final page = PhotoWorkspaceSystemBars(
       color: const Color(0xff201f1d),
       child: Scaffold(
@@ -686,33 +802,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
                             .clamp(1.0, 3.2);
                         final side =
                             box.maxWidth > box.maxHeight && box.maxWidth >= 480;
-                        final photo = _SelectionStage(
-                          key: stage,
-                          editor: editor,
-                          framePath: framePath,
-                          sourceSize: sourceSize,
-                          mask: mask,
-                          enabled: ready && !editor.adjusting,
-                          detail: detail,
-                          onImageFailed: () {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              if (mounted && !imageFailed) {
-                                setState(() => imageFailed = true);
-                              }
-                            });
-                          },
-                          hint:
-                              error ??
-                              editor.error ??
-                              (base['hasBodyShape'] == true
-                                  ? '按原图定位选区 · 调整后保留照片构图'
-                                  : editor.tool == 0
-                                  ? '单指涂抹 · 双指缩放和移动'
-                                  : '拖动创建 · 拖动选区移动 · 拉角点调整大小'),
-                          retry: error != null && !committing
-                              ? retryMask
-                              : null,
-                        );
+                        final photo = photoStage();
                         if (side) {
                           return Row(
                             children: [
@@ -772,6 +862,9 @@ class _SelectionStage extends StatefulWidget {
     required this.onImageFailed,
     this.retry,
     this.detail,
+    this.viewportState,
+    this.plane,
+    this.showHint = true,
   });
   final SelectionEditor editor;
   final String framePath, hint;
@@ -781,11 +874,16 @@ class _SelectionStage extends StatefulWidget {
   final VoidCallback onImageFailed;
   final VoidCallback? retry;
   final EditingDetailPreviewController? detail;
+  final EditingViewportState? viewportState;
+  final EditingViewportPlane? plane;
+  final bool showHint;
   @override
   State<_SelectionStage> createState() => _SelectionStageState();
 }
 
 class _SelectionStageState extends State<_SelectionStage> {
+  final navigation = TransformationController();
+  EditingViewportBinding? viewportBinding;
   final pointers = <int>{};
   double zoom = 1, startZoom = 1, startScale = 1;
   Offset pan = Offset.zero,
@@ -796,6 +894,45 @@ class _SelectionStageState extends State<_SelectionStage> {
   bool multiple = false, navigationStarted = false;
   int viewportGeneration = 0;
   SelectionEditor get editor => widget.editor;
+  @override
+  void initState() {
+    super.initState();
+    bindViewport();
+  }
+
+  void bindViewport() {
+    viewportBinding?.dispose();
+    viewportBinding = widget.viewportState == null
+        ? null
+        : EditingViewportBinding(
+            shared: widget.viewportState!,
+            transform: navigation,
+          );
+  }
+
+  @override
+  void didUpdateWidget(_SelectionStage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.viewportState != widget.viewportState) bindViewport();
+  }
+
+  @override
+  void dispose() {
+    viewportBinding?.dispose();
+    navigation.dispose();
+    super.dispose();
+  }
+
+  void writeNavigation() {
+    if (viewport.isEmpty) return;
+    final center = viewport.center(Offset.zero);
+    navigation.value = Matrix4.identity()
+      ..setEntry(0, 0, zoom)
+      ..setEntry(1, 1, zoom)
+      ..setEntry(0, 3, center.dx * (1 - zoom) + pan.dx)
+      ..setEntry(1, 3, center.dy * (1 - zoom) + pan.dy);
+  }
+
   Size get fitted {
     final scale = math.min(
       viewport.width / widget.sourceSize.width,
@@ -815,7 +952,9 @@ class _SelectionStageState extends State<_SelectionStage> {
   }
 
   Rect get frame => Rect.fromCenter(
-    center: viewport.center(Offset.zero) + clampPan(pan),
+    center:
+        viewport.center(Offset.zero) +
+        (viewportBinding == null ? clampPan(pan) : pan),
     width: fitted.width,
     height: fitted.height,
   );
@@ -832,6 +971,7 @@ class _SelectionStageState extends State<_SelectionStage> {
     setState(() {
       zoom = 1;
       pan = Offset.zero;
+      writeNavigation();
     });
   }
 
@@ -933,6 +1073,7 @@ class _SelectionStageState extends State<_SelectionStage> {
       setState(() {
         zoom = next;
         pan = clampPan(focus - (original - startPan) * ratio);
+        writeNavigation();
       });
     }
   }
@@ -950,6 +1091,31 @@ class _SelectionStageState extends State<_SelectionStage> {
         });
       }
       viewport = box.biggest;
+      final fitScale = math.min(
+        viewport.width / widget.sourceSize.width,
+        viewport.height / widget.sourceSize.height,
+      );
+      final imageRect = Alignment.center.inscribe(
+        Size(
+          widget.sourceSize.width * fitScale,
+          widget.sourceSize.height * fitScale,
+        ),
+        Offset.zero & viewport,
+      );
+      if (viewportBinding != null) {
+        viewportBinding!.layout(
+          viewport: viewport,
+          imageRect: imageRect,
+          plane: widget.plane,
+        );
+        zoom = navigation.value.getMaxScaleOnAxis();
+        pan =
+            MatrixUtils.transformPoint(navigation.value, imageRect.center) -
+            imageRect.center;
+      } else {
+        pan = clampPan(pan);
+        writeNavigation();
+      }
       final rect = frame;
       final detail = widget.detail, report = ++viewportGeneration;
       final clip = Offset.zero & viewport, visible = rect.intersect(clip);
@@ -1028,34 +1194,36 @@ class _SelectionStageState extends State<_SelectionStage> {
               ),
             ),
           ),
-          Positioned(
-            left: 8,
-            right: 8,
-            bottom: 8,
-            child: Center(
-              child: IgnorePointer(
-                ignoring: widget.retry == null,
-                child: GestureDetector(
-                  onTap: widget.retry,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: const Color(0xb3191e17),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
+          if (widget.showHint)
+            Positioned(
+              left: 8,
+              right: 8,
+              bottom: 8,
+              child: Center(
+                child: IgnorePointer(
+                  ignoring: widget.retry == null,
+                  child: GestureDetector(
+                    onTap: widget.retry,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: const Color(0xb3191e17),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(
-                        widget.hint,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: workspaceWhite,
-                          fontSize: 12,
-                          height: 1.2,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        child: Text(
+                          widget.hint,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: workspaceWhite,
+                            fontSize: 12,
+                            height: 1.2,
+                          ),
                         ),
                       ),
                     ),
@@ -1063,7 +1231,6 @@ class _SelectionStageState extends State<_SelectionStage> {
                 ),
               ),
             ),
-          ),
         ],
       );
     },

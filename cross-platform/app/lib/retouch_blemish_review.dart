@@ -4,8 +4,13 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'editing_viewport.dart';
+
 import 'retouch_original_controls.dart'
-    show RetouchOriginalPhotoStage, retouchOriginalPhotoFrame;
+    show
+        RetouchOriginalPhotoStage,
+        RetouchPhotoViewport,
+        retouchOriginalPhotoFrame;
 
 const _accent = Color(0xffffe335);
 const _background = Color(0xff17221e);
@@ -300,12 +305,28 @@ class RetouchBlemishReview extends StatefulWidget {
     required this.imageHeight,
     required this.candidates,
     required this.isCurrent,
+    this.embedded = false,
+    this.onFinished,
+    this.onBackReady,
+    this.viewportState,
+    this.viewportPlane,
+    this.embeddedLayoutBuilder,
+    this.detailOverlay,
+    this.onViewportChanged,
   }) : assert(photo != null || imagePath != null);
   final Widget? photo;
   final String? imagePath;
   final int imageWidth, imageHeight;
   final List<RetouchBlemishCandidate> candidates;
   final ValueListenable<bool> isCurrent;
+  final bool embedded;
+  final ValueChanged<List<int>?>? onFinished;
+  final ValueChanged<VoidCallback?>? onBackReady;
+  final EditingViewportState? viewportState;
+  final EditingViewportPlane? viewportPlane;
+  final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
+  final Widget? detailOverlay;
+  final ValueChanged<RetouchPhotoViewport>? onViewportChanged;
 
   @override
   State<RetouchBlemishReview> createState() => _BlemishReviewState();
@@ -335,6 +356,7 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
     selected = {for (final c in candidates) c.index};
     focusedIndex = candidates.isEmpty ? null : candidates.first.index;
     widget.isCurrent.addListener(validityChanged);
+    widget.onBackReady?.call(cancel);
     validityChanged();
   }
 
@@ -350,6 +372,7 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
 
   @override
   void dispose() {
+    widget.onBackReady?.call(null);
     widget.isCurrent.removeListener(validityChanged);
     controller.dispose();
     listController.dispose();
@@ -361,6 +384,10 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted || closing || widget.isCurrent.value) return;
       closing = true;
+      if (widget.embedded) {
+        widget.onFinished?.call(null);
+        return;
+      }
       final route = ModalRoute.of(context);
       final navigator = Navigator.of(context);
       if (route != null && route.isActive && !route.isCurrent) {
@@ -376,7 +403,11 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
   void cancel() {
     if (closing) return;
     closing = true;
-    Navigator.of(context).pop();
+    if (widget.embedded) {
+      widget.onFinished?.call(null);
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 
   void confirm() {
@@ -384,10 +415,15 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
       return;
     }
     closing = true;
-    Navigator.of(context).pop([
+    final value = [
       for (final candidate in candidates)
         if (selected.contains(candidate.index)) candidate.index,
-    ]);
+    ];
+    if (widget.embedded) {
+      widget.onFinished?.call(value);
+    } else {
+      Navigator.of(context).pop(value);
+    }
   }
 
   void focus(RetouchBlemishCandidate candidate, {bool zoom = true}) {
@@ -449,6 +485,10 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
                 imageWidth: widget.imageWidth.toDouble(),
                 imageHeight: widget.imageHeight.toDouble(),
                 controller: controller,
+                viewportState: widget.viewportState,
+                viewportPlane: widget.viewportPlane,
+                viewportActive: widget.isCurrent.value && !closing,
+                onViewportChanged: widget.onViewportChanged,
                 editingEnabled: widget.isCurrent.value && !closing,
                 editingSignal: widget.isCurrent,
                 singleFingerPan: true,
@@ -476,6 +516,7 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
                   fit: StackFit.expand,
                   children: [
                     photoImage(),
+                    if (widget.detailOverlay != null) widget.detailOverlay!,
                     RetouchBlemishMarkers(
                       candidates: candidates,
                       selected: selected,
@@ -636,6 +677,53 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
     ],
   );
 
+  Widget embeddedBody(BuildContext context) => LayoutBuilder(
+    builder: (context, bounds) {
+      final photograph = photo();
+      final panel = Column(
+        children: [
+          SizedBox(
+            height: 48,
+            child: Row(
+              children: [
+                IconButton(
+                  key: const ValueKey('blemish-close'),
+                  tooltip: '取消候选修复',
+                  onPressed: cancel,
+                  icon: const Icon(Icons.arrow_back),
+                ),
+                const Expanded(
+                  child: Text(
+                    '修复疑似小瑕疵',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              '塑形前定位 · 点编号查看位置，勾选后修复',
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
+          Expanded(child: compactPanel()),
+        ],
+      );
+      final builder = widget.embeddedLayoutBuilder;
+      if (builder != null) return builder(context, photograph, panel);
+      return Column(
+        children: [
+          Expanded(child: photograph),
+          SizedBox(height: math.min(320, bounds.maxHeight * .5), child: panel),
+        ],
+      );
+    },
+  );
+
   @override
   Widget build(BuildContext context) => Theme(
     data: Theme.of(context).copyWith(
@@ -645,154 +733,158 @@ class _BlemishReviewState extends State<RetouchBlemishReview> {
         surface: _background,
       ),
     ),
-    child: PopScope<List<int>>(
-      onPopInvokedWithResult: (didPop, _) {
-        if (didPop) closing = true;
-      },
-      child: Scaffold(
-        backgroundColor: _background,
-        appBar: AppBar(
-          backgroundColor: _background,
-          foregroundColor: Colors.white,
-          leading: IconButton(
-            key: const ValueKey('blemish-close'),
-            tooltip: '取消候选修复',
-            onPressed: cancel,
-            icon: const Icon(Icons.close),
-          ),
-          title: const Text(
-            '修复疑似小瑕疵',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        body: SafeArea(
-          top: false,
-          child: LayoutBuilder(
-            builder: (context, constraints) =>
-                constraints.maxWidth > constraints.maxHeight &&
-                    constraints.maxHeight < 450
-                ? Row(
-                    children: [
-                      Expanded(
-                        child: Column(
+    child: widget.embedded
+        ? embeddedBody(context)
+        : PopScope<List<int>>(
+            onPopInvokedWithResult: (didPop, _) {
+              if (didPop) closing = true;
+            },
+            child: Scaffold(
+              backgroundColor: _background,
+              appBar: AppBar(
+                backgroundColor: _background,
+                foregroundColor: Colors.white,
+                leading: IconButton(
+                  key: const ValueKey('blemish-close'),
+                  tooltip: '取消候选修复',
+                  onPressed: cancel,
+                  icon: const Icon(Icons.close),
+                ),
+                title: const Text(
+                  '修复疑似小瑕疵',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              body: SafeArea(
+                top: false,
+                child: LayoutBuilder(
+                  builder: (context, constraints) =>
+                      constraints.maxWidth > constraints.maxHeight &&
+                          constraints.maxHeight < 450
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Text(
+                                      '塑形前定位 · 点编号查看位置，勾选后修复',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  Expanded(child: photo()),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: math.min(
+                                360,
+                                math.max(220, constraints.maxWidth * .45),
+                              ),
+                              child: compactPanel(),
+                            ),
+                          ],
+                        )
+                      : Column(
                           children: [
                             const Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: EdgeInsets.fromLTRB(16, 4, 16, 8),
                               child: Text(
                                 '塑形前定位 · 点编号查看位置，勾选后修复',
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Expanded(child: photo()),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: math.min(
-                          360,
-                          math.max(220, constraints.maxWidth * .45),
-                        ),
-                        child: compactPanel(),
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(16, 4, 16, 8),
-                        child: Text(
-                          '塑形前定位 · 点编号查看位置，勾选后修复',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Expanded(child: photo()),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '已选 ${selected.length} / ${candidates.length} 处',
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
                               ),
-                            ),
-                            TextButton(
-                              key: const ValueKey('blemish-select-all'),
-                              onPressed: () {
-                                if (widget.isCurrent.value && !closing) {
-                                  setState(
-                                    () => selected = {
-                                      for (final c in candidates) c.index,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '已选 ${selected.length} / ${candidates.length} 处',
+                                    ),
+                                  ),
+                                  TextButton(
+                                    key: const ValueKey('blemish-select-all'),
+                                    onPressed: () {
+                                      if (widget.isCurrent.value && !closing) {
+                                        setState(
+                                          () => selected = {
+                                            for (final c in candidates) c.index,
+                                          },
+                                        );
+                                      }
                                     },
-                                  );
-                                }
-                              },
-                              child: const Text('全选'),
+                                    child: const Text('全选'),
+                                  ),
+                                  TextButton(
+                                    key: const ValueKey('blemish-select-none'),
+                                    onPressed: () {
+                                      if (widget.isCurrent.value && !closing) {
+                                        setState(() => selected = {});
+                                      }
+                                    },
+                                    child: const Text('全不选'),
+                                  ),
+                                  IconButton(
+                                    key: const ValueKey('blemish-fit'),
+                                    tooltip: '查看全部候选',
+                                    onPressed: () =>
+                                        controller.value = Matrix4.identity(),
+                                    icon: const Icon(Icons.fit_screen),
+                                  ),
+                                ],
+                              ),
                             ),
-                            TextButton(
-                              key: const ValueKey('blemish-select-none'),
-                              onPressed: () {
-                                if (widget.isCurrent.value && !closing) {
-                                  setState(() => selected = {});
-                                }
-                              },
-                              child: const Text('全不选'),
+                            SizedBox(
+                              height: math.min(
+                                196,
+                                math.max(72, constraints.maxHeight * .26),
+                              ),
+                              child: choices(),
                             ),
-                            IconButton(
-                              key: const ValueKey('blemish-fit'),
-                              tooltip: '查看全部候选',
-                              onPressed: () =>
-                                  controller.value = Matrix4.identity(),
-                              icon: const Icon(Icons.fit_screen),
+                            Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextButton(
+                                      key: const ValueKey('blemish-cancel'),
+                                      onPressed: cancel,
+                                      child: const Text('取消'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: FilledButton(
+                                      key: const ValueKey('blemish-confirm'),
+                                      onPressed:
+                                          selected.isEmpty ||
+                                              !photoReady ||
+                                              !widget.isCurrent.value ||
+                                              closing
+                                          ? null
+                                          : confirm,
+                                      style: FilledButton.styleFrom(
+                                        backgroundColor: _accent,
+                                        foregroundColor: _background,
+                                        minimumSize: const Size(0, 48),
+                                      ),
+                                      child: const Text('修复所选'),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: math.min(
-                          196,
-                          math.max(72, constraints.maxHeight * .26),
-                        ),
-                        child: choices(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextButton(
-                                key: const ValueKey('blemish-cancel'),
-                                onPressed: cancel,
-                                child: const Text('取消'),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: FilledButton(
-                                key: const ValueKey('blemish-confirm'),
-                                onPressed:
-                                    selected.isEmpty ||
-                                        !photoReady ||
-                                        !widget.isCurrent.value ||
-                                        closing
-                                    ? null
-                                    : confirm,
-                                style: FilledButton.styleFrom(
-                                  backgroundColor: _accent,
-                                  foregroundColor: _background,
-                                  minimumSize: const Size(0, 48),
-                                ),
-                                child: const Text('修复所选'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    ),
   );
 }

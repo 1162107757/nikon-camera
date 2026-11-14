@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'editing_detail_preview.dart';
+import 'editing_viewport.dart';
 
 /// Both surfaces have identical geometry. The divider clips a shared zoomed
 /// scene, so switching or dragging never changes the photo's framing.
@@ -23,6 +24,8 @@ class SplitCompare extends StatefulWidget {
     this.effectSize,
     this.detailController,
     this.originalDetailController,
+    this.viewportState,
+    this.viewportPlane,
   });
   final String effect;
   final String? original;
@@ -36,12 +39,16 @@ class SplitCompare extends StatefulWidget {
   final Size? effectSize;
   final EditingDetailPreviewController? detailController,
       originalDetailController;
+  final EditingViewportState? viewportState;
+  final EditingViewportPlane? viewportPlane;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
 
 class _SplitCompareState extends State<SplitCompare> {
   final transform = TransformationController();
+  late EditingViewportBinding viewportBinding;
+  final ownViewport = EditingViewportState();
   double divider = .5;
   Size viewport = Size.zero;
   Rect imageRect = Rect.zero;
@@ -50,6 +57,10 @@ class _SplitCompareState extends State<SplitCompare> {
   @override
   void initState() {
     super.initState();
+    viewportBinding = EditingViewportBinding(
+      shared: widget.viewportState ?? ownViewport,
+      transform: transform,
+    );
     transform.addListener(reportViewport);
   }
 
@@ -105,7 +116,20 @@ class _SplitCompareState extends State<SplitCompare> {
   }
 
   @override
+  void didUpdateWidget(covariant SplitCompare oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.viewportState != widget.viewportState) {
+      viewportBinding.dispose();
+      viewportBinding = EditingViewportBinding(
+        shared: widget.viewportState ?? ownViewport,
+        transform: transform,
+      );
+    }
+  }
+
+  @override
   void dispose() {
+    viewportBinding.dispose();
     transform.removeListener(reportViewport);
     transform.dispose();
     super.dispose();
@@ -146,6 +170,14 @@ class _SplitCompareState extends State<SplitCompare> {
               applyBoxFit(BoxFit.contain, pixels, viewport).destination,
               Offset.zero & viewport,
             );
+      viewportBinding.layout(
+        viewport: viewport,
+        imageRect: imageRect,
+        plane: widget.viewportPlane,
+        active:
+            TickerMode.valuesOf(context).enabled &&
+            (ModalRoute.of(context)?.isCurrent ?? true),
+      );
       reportAfterLayout();
       void adjust(double value) =>
           setState(() => divider = value.clamp(0.0, 1.0));

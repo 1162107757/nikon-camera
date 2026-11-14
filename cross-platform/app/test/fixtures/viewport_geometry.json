@@ -1,0 +1,47 @@
+{
+  "source": "PhotoGeometry.plan(4000,3000,1)",
+  "sourceSha256": "b8bc0ed1a283549d3e71d99a6a6d16f63be6f87422e10ab4e032e166699d09d4",
+  "geometry": {
+    "turns": 1,
+    "angle": 127,
+    "left": 100000,
+    "top": 200000,
+    "right": 900000,
+    "bottom": 950000,
+    "horizontalPerspective": 15,
+    "verticalPerspective": -12,
+    "mirrored": true
+  },
+  "points": [
+    {
+      "source": [
+        0.17,
+        0.31
+      ],
+      "image": [
+        0.04627866654688827,
+        -0.09857755862413205
+      ]
+    },
+    {
+      "source": [
+        0.5,
+        0.5
+      ],
+      "image": [
+        0.5000000000000003,
+        0.4000000000000001
+      ]
+    },
+    {
+      "source": [
+        0.81,
+        0.62
+      ],
+      "image": [
+        0.8594290075316531,
+        0.921115624946558
+      ]
+    }
+  ]
+}

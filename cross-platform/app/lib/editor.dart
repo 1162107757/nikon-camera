@@ -11,6 +11,7 @@ import 'domain.dart';
 import 'photo_format.dart';
 import 'curve_control.dart';
 import 'legacy_color_controls.dart';
+import 'editing_viewport.dart';
 import 'recipes.dart';
 import 'copy_adjustments.dart';
 import 'versions.dart';
@@ -45,11 +46,18 @@ part 'editor_color_workspace.dart';
 part 'editor_detail_preview.dart';
 part 'local_editor.dart';
 part 'editor_menu_actions.dart';
+part 'editor_tool_host.dart';
 
 class EditorPage extends StatefulWidget {
-  const EditorPage({super.key, required this.state, required this.photo});
+  const EditorPage({
+    super.key,
+    required this.state,
+    required this.photo,
+    this.viewportState,
+  });
   final AppState state;
   final Photo photo;
+  final EditingViewportState? viewportState;
   @override
   State<EditorPage> createState() => _EditorPageState();
 }
@@ -77,6 +85,13 @@ class _EditorPreviewFrame {
 }
 
 class _EditorPageState extends State<EditorPage> {
+  late final editingViewport = widget.viewportState ?? EditingViewportState();
+  Widget? embeddedTool;
+  VoidCallback? embeddedBack, retireEmbeddedTool;
+  Size editorPhotoViewportSize = Size.zero;
+  Size embeddedPhotoViewportSize = Size.zero;
+  int embeddedToolEpoch = 0;
+  bool editorHorizontalLayout = false;
   Recipe recipe = Recipe();
   Recipe? parkedDraft, quickBase;
   Json? quickCleanup, quickPortrait;
@@ -230,6 +245,7 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   void dispose() {
+    retireEmbeddedTool?.call();
     effectDetails?.dispose();
     comparisonDetails?.dispose();
     atmosphereGeneration++;
@@ -549,18 +565,21 @@ class _EditorPageState extends State<EditorPage> {
       await settleLocalAdjustments();
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
       if (!mounted) return;
-      final result = await hueRootPage<Json>(
-        context,
-        MaterialPageRoute(
-          builder: (_) => CropWorkspace(
-            core: widget.state.core,
-            photo: widget.photo,
-            owner: owner,
-            recipe: recipe.clone().data,
-            isCurrent: () => mounted && sameOwner && !leaving,
-            invalidation: widget.state,
-            initialRatio: initialRatio,
-          ),
+      final result = await openEmbeddedWorkspace<Json>(
+        (finish, backReady) => CropWorkspace(
+          core: widget.state.core,
+          photo: widget.photo,
+          owner: owner,
+          recipe: recipe.clone().data,
+          isCurrent: () => mounted && sameOwner && !leaving,
+          invalidation: widget.state,
+          initialRatio: initialRatio,
+          embedded: true,
+          onFinished: finish,
+          onBackReady: backReady,
+          viewportState: editingViewport,
+          embeddedLayoutBuilder: embeddedWorkspaceLayout,
+          initialFrame: embeddedInitialFrame,
         ),
       );
       if (result != null && mounted) {
@@ -570,6 +589,16 @@ class _EditorPageState extends State<EditorPage> {
         checkpoint();
         setState(() {
           recipe.data['geometry'] = result;
+          editingViewport.constrainToPlane(
+            EditingViewportPlane.fromRecipe(
+              recipe.data,
+              sourceSize: Size(
+                (widget.photo.info['width'] as num? ?? 1).toDouble(),
+                (widget.photo.info['height'] as num? ?? 1).toDouble(),
+              ),
+              contentRect: histogramContentRect,
+            ),
+          );
           compare = false;
         });
         unawaited(saveDraft().catchError((_) {}));

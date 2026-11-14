@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'editing_detail_preview.dart';
+import 'editing_viewport.dart';
 import 'legacy_local_editor.dart';
 import 'legacy_local_preview.dart';
 import 'photo_workspace_chrome.dart';
@@ -26,6 +29,11 @@ class LegacyLocalWorkspace extends StatelessWidget {
     required this.frame,
     this.atmosphere,
     required this.isCurrent,
+    this.viewportState,
+    this.embedded = false,
+    this.onFinished,
+    this.onBackReady,
+    this.embeddedLayoutBuilder,
   });
   final AppState state;
   final Photo photo;
@@ -33,6 +41,11 @@ class LegacyLocalWorkspace extends StatelessWidget {
   final Json recipe, localState, frame;
   final String? atmosphere;
   final bool Function() isCurrent;
+  final EditingViewportState? viewportState;
+  final bool embedded;
+  final ValueChanged<Json?>? onFinished;
+  final ValueChanged<VoidCallback?>? onBackReady;
+  final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
 
   @override
   Widget build(BuildContext context) => Theme(
@@ -66,6 +79,16 @@ class _LegacyBodyState extends State<_LegacyBody> {
   final discarded = <String>{};
   bool stale = false, closing = false, overlay = true;
   String? failedImage;
+  String? decodedFrame;
+  String detailIdentity = '', acceptedTools = '';
+  int detailRevision = 0;
+  late final detail = EditingDetailPreviewController(
+    core: config.state.core,
+    owner: config.owner,
+    sourcePath: config.photo.path,
+    isCurrent: () => current,
+    maxTileEdge: 2048,
+  );
   String get sessionOwner => config.state.session['logoutPending'] == true
       ? ''
       : config.state.session['user']?['id'] as String? ?? '';
@@ -83,6 +106,61 @@ class _LegacyBodyState extends State<_LegacyBody> {
     editor.addListener(changed);
     preview.addListener(repaint);
     config.state.addListener(accountChanged);
+    publishBack();
+  }
+
+  void publishBack() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) config.onBackReady?.call(() => finish());
+  });
+
+  @override
+  void didUpdateWidget(_LegacyBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.config.onBackReady != config.onBackReady) {
+      oldWidget.config.onBackReady?.call(null);
+      publishBack();
+    }
+  }
+
+  void finish([Json? result]) {
+    if (!mounted || closing || (result != null && !current)) return;
+    closing = true;
+    detail.invalidate();
+    if (config.embedded) {
+      config.onFinished?.call(result);
+    } else {
+      Navigator.of(context).pop(result);
+    }
+  }
+
+  void configureDetails() {
+    final frame = preview.frame;
+    if (!editable ||
+        !preview.ready ||
+        editor.tracking ||
+        editor.adjusting ||
+        frame == null ||
+        decodedFrame != frame['path']) {
+      detail.setEnabled(false);
+      return;
+    }
+    final localData = preview.result['localData'];
+    final identity = '${frame['path']}|$localData';
+    if (identity != detailIdentity) {
+      detailIdentity = identity;
+      detail.configure(
+        recipe: {...config.recipe, 'localData': localData},
+        revision: ++detailRevision,
+        frameIdentity: frame['path'] as String,
+        outputSize: Size(
+          (frame['width'] as num).toDouble(),
+          (frame['height'] as num).toDouble(),
+        ),
+        viewMode: 'local',
+      );
+    }
+    acceptedTools = jsonEncode(editor.tools);
+    detail.setEnabled(true);
   }
 
   bool owned(String path) =>
@@ -102,21 +180,31 @@ class _LegacyBodyState extends State<_LegacyBody> {
 
   void changed() {
     if (!current) return;
+    if (editor.tracking ||
+        editor.adjusting ||
+        acceptedTools != jsonEncode(editor.tools)) {
+      detail.setEnabled(false);
+    }
     preview.offer(
       editor.tools,
       interactive: editor.tracking || editor.adjusting,
     );
+    configureDetails();
     setState(() {});
   }
 
   void repaint() {
-    if (mounted) setState(() {});
+    if (mounted) {
+      configureDetails();
+      setState(() {});
+    }
   }
 
   void accountChanged() {
     if (sessionOwner == config.owner && config.isCurrent()) return;
     if (!mounted || stale) return;
     editor.removeListener(changed);
+    detail.invalidate();
     editor.cancel();
     stale = true;
     editor.tools = {'masks': [], 'clones': []};
@@ -129,6 +217,8 @@ class _LegacyBodyState extends State<_LegacyBody> {
 
   @override
   void dispose() {
+    config.onBackReady?.call(null);
+    detail.dispose();
     config.state.removeListener(accountChanged);
     editor.removeListener(changed);
     preview.removeListener(repaint);
@@ -238,14 +328,7 @@ class _LegacyBodyState extends State<_LegacyBody> {
     height: 52,
     child: Row(
       children: [
-        WorkspaceTool(
-          icon: 'close',
-          tooltip: '取消',
-          onPressed: () {
-            closing = true;
-            Navigator.of(context).pop();
-          },
-        ),
+        WorkspaceTool(icon: 'close', tooltip: '取消', onPressed: finish),
         Expanded(
           child: Text(
             config.localState['hasBodyShape'] == true ? '局部 · 塑形前定位' : '局部调整',
@@ -283,8 +366,7 @@ class _LegacyBodyState extends State<_LegacyBody> {
                       preview.ready
                   ? () {
                       final result = preview.result;
-                      closing = true;
-                      Navigator.of(context).pop(result);
+                      finish(result);
                     }
                   : null,
               child: const Text('应用', style: TextStyle(fontSize: 13)),
@@ -462,6 +544,21 @@ class _LegacyBodyState extends State<_LegacyBody> {
                   source: size,
                   enabled: editable && valid,
                   overlay: overlay,
+                  viewportState: config.viewportState,
+                  plane: EditingViewportPlane.fromRecipe(
+                    {
+                      ...config.recipe,
+                      'geometry': <String, dynamic>{},
+                      'border': <String, dynamic>{},
+                    },
+                    sourceSize: Size(
+                      (config.frame['sourceWidth'] as num? ?? size.width)
+                          .toDouble(),
+                      (config.frame['sourceHeight'] as num? ?? size.height)
+                          .toDouble(),
+                    ),
+                  ),
+                  detail: detail,
                   path: valid ? path : null,
                   onImageError: () {
                     if (!current ||
@@ -474,13 +571,17 @@ class _LegacyBodyState extends State<_LegacyBody> {
                   onImageReady: () {
                     if (current &&
                         preview.frame?['path'] == path &&
-                        failedImage != null) {
-                      setState(() => failedImage = null);
+                        (failedImage != null || decodedFrame != path)) {
+                      setState(() {
+                        failedImage = null;
+                        decodedFrame = path;
+                      });
+                      configureDetails();
                     }
                   },
                 ),
         ),
-        if (!stale)
+        if (!stale && !config.embedded)
           Positioned(
             top: 8,
             left: 8,
@@ -525,7 +626,7 @@ class _LegacyBodyState extends State<_LegacyBody> {
               ),
             ),
           ),
-        if (!stale)
+        if (!stale && !config.embedded)
           Positioned(
             left: 8,
             right: 208,
@@ -544,7 +645,7 @@ class _LegacyBodyState extends State<_LegacyBody> {
               ),
             ),
           ),
-        if (!stale)
+        if (!stale && !config.embedded)
           Positioned(
             right: 8,
             bottom: 8,
@@ -608,78 +709,181 @@ class _LegacyBodyState extends State<_LegacyBody> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) => PhotoWorkspaceSystemBars(
-    color: const Color(0xff201f1d),
-    child: Scaffold(
-      backgroundColor: const Color(0xff201f1d),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: PhotoAtmosphere(image: stale ? null : config.atmosphere),
-          ),
-          SafeArea(
-            child: Column(
+  Widget embeddedBody(BuildContext context) => LayoutBuilder(
+    builder: (context, box) {
+      final scale = math.max(
+        1.0,
+        MediaQuery.textScalerOf(context).scale(13) / 13,
+      );
+      final panel = SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            header(),
+            Row(
               children: [
-                header(),
                 Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, box) {
-                      final scale = math.max(
-                        1.0,
-                        MediaQuery.textScalerOf(context).scale(13) / 13,
-                      );
-                      final tools = controls(scale);
-                      if (box.maxWidth > box.maxHeight) {
-                        final width = math.min(
-                          math.min(300.0, box.maxWidth * .46),
-                          math.max(240.0, box.maxWidth * .4),
-                        );
-                        return Row(
-                          children: [
-                            Expanded(child: imageStage()),
-                            SizedBox(
-                              width: width,
-                              child: SingleChildScrollView(child: tools),
-                            ),
-                          ],
-                        );
-                      }
-                      final essential = 168 + 28 * (scale - 1),
-                          padding = (box.maxHeight * .4 - essential).clamp(
-                            0.0,
-                            16.0,
-                          ),
-                          height = math.min(
-                            essential + padding,
-                            box.maxHeight / 2,
-                          );
-                      return Column(
-                        children: [
-                          Expanded(child: imageStage()),
-                          SizedBox(
-                            height: height,
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: padding / 2,
-                                ),
-                                child: tools,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                  child: TextButton(
+                    key: chooserAnchor,
+                    onPressed: editable ? choose : null,
+                    child: Text(
+                      selectionName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
+                ),
+                WorkspaceTool(
+                  icon: 'add',
+                  tooltip: editor.tool == 3 ? '新建修复' : '新建蒙版',
+                  onPressed: editable && editor.canAdd
+                      ? editor.newSelection
+                      : null,
+                ),
+                WorkspaceTool(
+                  key: moreAnchor,
+                  icon: 'more',
+                  tooltip: '更多',
+                  onPressed: editable ? more : null,
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    ),
+            controls(scale),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                WorkspaceTool(
+                  icon: 'undo',
+                  tooltip: '撤销',
+                  onPressed: editable && editor.undo.isNotEmpty
+                      ? () => editor.history(false)
+                      : null,
+                ),
+                WorkspaceTool(
+                  icon: 'redo',
+                  tooltip: '重做',
+                  onPressed: editable && editor.redo.isNotEmpty
+                      ? () => editor.history(true)
+                      : null,
+                ),
+                WorkspaceTool(
+                  icon: 'fit',
+                  tooltip: '适合屏幕',
+                  onPressed: editable ? () => stage.currentState?.fit() : null,
+                ),
+                WorkspaceTool(
+                  icon: 'eye',
+                  tooltip: '显示蒙版',
+                  selected: overlay,
+                  onPressed: editable
+                      ? () => setState(() => overlay = !overlay)
+                      : null,
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                editor.tool == 3 && !editor.sourceSet
+                    ? '点击选择取样位置'
+                    : preview.busy
+                    ? '预览中…'
+                    : '双指缩放与移动',
+                style: const TextStyle(color: workspaceMuted, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+      );
+      final photo = imageStage();
+      return config.embeddedLayoutBuilder?.call(context, photo, panel) ??
+          Column(
+            children: [
+              Expanded(child: photo),
+              SizedBox(
+                height: math.min(320, box.maxHeight * .46),
+                child: panel,
+              ),
+            ],
+          );
+    },
   );
+
+  @override
+  Widget build(BuildContext context) {
+    if (config.embedded) return embeddedBody(context);
+    return PhotoWorkspaceSystemBars(
+      color: const Color(0xff201f1d),
+      child: Scaffold(
+        backgroundColor: const Color(0xff201f1d),
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: PhotoAtmosphere(image: stale ? null : config.atmosphere),
+            ),
+            SafeArea(
+              child: Column(
+                children: [
+                  header(),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, box) {
+                        final scale = math.max(
+                          1.0,
+                          MediaQuery.textScalerOf(context).scale(13) / 13,
+                        );
+                        final tools = controls(scale);
+                        if (box.maxWidth > box.maxHeight) {
+                          final width = math.min(
+                            math.min(300.0, box.maxWidth * .46),
+                            math.max(240.0, box.maxWidth * .4),
+                          );
+                          return Row(
+                            children: [
+                              Expanded(child: imageStage()),
+                              SizedBox(
+                                width: width,
+                                child: SingleChildScrollView(child: tools),
+                              ),
+                            ],
+                          );
+                        }
+                        final essential = 168 + 28 * (scale - 1),
+                            padding = (box.maxHeight * .4 - essential).clamp(
+                              0.0,
+                              16.0,
+                            ),
+                            height = math.min(
+                              essential + padding,
+                              box.maxHeight / 2,
+                            );
+                        return Column(
+                          children: [
+                            Expanded(child: imageStage()),
+                            SizedBox(
+                              height: height,
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: padding / 2,
+                                  ),
+                                  child: tools,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _LegacyStage extends StatefulWidget {
@@ -692,22 +896,70 @@ class _LegacyStage extends StatefulWidget {
     this.path,
     required this.onImageError,
     required this.onImageReady,
+    this.viewportState,
+    this.plane,
+    this.detail,
   });
   final LegacyLocalEditor editor;
   final Size source;
   final bool enabled, overlay;
   final String? path;
   final VoidCallback onImageError, onImageReady;
+  final EditingViewportState? viewportState;
+  final EditingViewportPlane? plane;
+  final EditingDetailPreviewController? detail;
   @override
   State<_LegacyStage> createState() => _LegacyStageState();
 }
 
 class _LegacyStageState extends State<_LegacyStage> {
+  final navigation = TransformationController();
+  EditingViewportBinding? viewportBinding;
+  int viewportGeneration = 0;
   final pointers = <int>{};
   Size viewport = Size.zero;
   double zoom = 1, startZoom = 1, startScale = 1;
   Offset pan = Offset.zero, startPan = Offset.zero, startFocal = Offset.zero;
   bool multiple = false, navigationStarted = false;
+  @override
+  void initState() {
+    super.initState();
+    bindViewport();
+  }
+
+  void bindViewport() {
+    viewportBinding?.dispose();
+    viewportBinding = widget.viewportState == null
+        ? null
+        : EditingViewportBinding(
+            shared: widget.viewportState!,
+            transform: navigation,
+          );
+  }
+
+  @override
+  void didUpdateWidget(_LegacyStage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.viewportState != widget.viewportState) bindViewport();
+  }
+
+  @override
+  void dispose() {
+    viewportBinding?.dispose();
+    navigation.dispose();
+    super.dispose();
+  }
+
+  void writeNavigation() {
+    if (viewport.isEmpty) return;
+    final center = viewport.center(Offset.zero);
+    navigation.value = Matrix4.identity()
+      ..setEntry(0, 0, zoom)
+      ..setEntry(1, 1, zoom)
+      ..setEntry(0, 3, center.dx * (1 - zoom) + pan.dx)
+      ..setEntry(1, 3, center.dy * (1 - zoom) + pan.dy);
+  }
+
   Rect get frame {
     final ratio =
         math.min(
@@ -737,6 +989,7 @@ class _LegacyStageState extends State<_LegacyStage> {
     setState(() {
       zoom = 1;
       pan = Offset.zero;
+      writeNavigation();
     });
   }
 
@@ -744,7 +997,45 @@ class _LegacyStageState extends State<_LegacyStage> {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
       viewport = box.biggest;
-      pan = boundedPan(pan);
+      final fit = applyBoxFit(
+        BoxFit.contain,
+        widget.source,
+        viewport,
+      ).destination;
+      final imageRect = Alignment.center.inscribe(fit, Offset.zero & viewport);
+      if (viewportBinding != null) {
+        viewportBinding!.layout(
+          viewport: viewport,
+          imageRect: imageRect,
+          plane: widget.plane,
+        );
+        zoom = navigation.value.getMaxScaleOnAxis();
+        pan =
+            MatrixUtils.transformPoint(navigation.value, imageRect.center) -
+            imageRect.center;
+      } else {
+        pan = boundedPan(pan);
+        writeNavigation();
+      }
+      final detail = widget.detail,
+          report = ++viewportGeneration,
+          rect = frame,
+          clip = Offset.zero & viewport;
+      final region = editingDetailVisibleRegion(rect, clip),
+          visible = rect.intersect(clip),
+          dpr = MediaQuery.devicePixelRatioOf(context);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted ||
+            report != viewportGeneration ||
+            detail != widget.detail) {
+          return;
+        }
+        detail?.setViewport(
+          visibleRegion: region,
+          zoom: zoom,
+          viewportPixelSize: visible.size * dpr,
+        );
+      });
       return ClipRect(
         child: Listener(
           key: const ValueKey('legacy-stage'),
@@ -796,7 +1087,7 @@ class _LegacyStageState extends State<_LegacyStage> {
               }
               final nextZoom = (startZoom * d.scale / startScale).clamp(
                 1.0,
-                8.0,
+                32.0,
               );
               final ratio = nextZoom / startZoom;
               final center = viewport.center(Offset.zero);
@@ -807,6 +1098,7 @@ class _LegacyStageState extends State<_LegacyStage> {
                       center -
                       (startFocal - center - startPan) * ratio,
                 );
+                writeNavigation();
               });
             },
             onScaleEnd: (_) {
@@ -817,27 +1109,35 @@ class _LegacyStageState extends State<_LegacyStage> {
                 if (widget.path != null)
                   Positioned.fromRect(
                     rect: frame,
-                    child: Image.file(
-                      File(widget.path!),
-                      key: ValueKey(widget.path),
-                      fit: BoxFit.fill,
-                      cacheWidth: 1280,
-                      excludeFromSemantics: true,
-                      filterQuality: FilterQuality.medium,
-                      frameBuilder: (_, child, frame, synchronous) {
-                        if (frame != null || synchronous) {
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            if (mounted) widget.onImageReady();
-                          });
-                        }
-                        return child;
-                      },
-                      errorBuilder: (_, _, _) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          if (mounted) widget.onImageError();
-                        });
-                        return const SizedBox();
-                      },
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Image.file(
+                          File(widget.path!),
+                          key: ValueKey(widget.path),
+                          fit: BoxFit.fill,
+                          cacheWidth: 1280,
+                          excludeFromSemantics: true,
+                          filterQuality: FilterQuality.medium,
+                          gaplessPlayback: true,
+                          frameBuilder: (_, child, frame, synchronous) {
+                            if (frame != null || synchronous) {
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                if (mounted) widget.onImageReady();
+                              });
+                            }
+                            return child;
+                          },
+                          errorBuilder: (_, _, _) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              if (mounted) widget.onImageError();
+                            });
+                            return const SizedBox();
+                          },
+                        ),
+                        if (detail != null)
+                          EditingDetailTileLayer(controller: detail),
+                      ],
                     ),
                   ),
                 if (widget.overlay && !widget.editor.tracking)

@@ -12,6 +12,7 @@ import 'theme.dart';
 import 'raw_reference.dart';
 import 'latest_preview_queue.dart';
 import 'editing_detail_preview.dart';
+import 'editing_viewport.dart';
 import 'widgets.dart';
 
 class RawDevelopPage extends StatefulWidget {
@@ -21,11 +22,23 @@ class RawDevelopPage extends StatefulWidget {
     required this.photo,
     this.automaticallyEdit = false,
     this.isCurrent,
+    this.viewportState,
+    this.embedded = false,
+    this.onFinished,
+    this.onBackReady,
+    this.embeddedLayoutBuilder,
+    this.initialFrame,
   });
   final AppState state;
   final Photo photo;
   final bool automaticallyEdit;
   final bool Function()? isCurrent;
+  final EditingViewportState? viewportState;
+  final bool embedded;
+  final ValueChanged<bool>? onFinished;
+  final ValueChanged<VoidCallback?>? onBackReady;
+  final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
+  final Json? initialFrame;
   @override
   State<RawDevelopPage> createState() => _RawDevelopPageState();
 }
@@ -66,6 +79,10 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   double progress = 0;
   int revision = 0;
   bool running = false, forwarding = false;
+  bool closing = false;
+  String? borrowedPreview;
+  Json? displayedRecipe;
+  Size sourcePixels = const Size(1, 1);
   int previewGeneration = 0;
   Size? previewPixelSize;
   Size? detailViewportSize;
@@ -75,6 +92,11 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       detailFrameCurrent = false,
       detailRouteCurrent = true;
   final previewTransform = TransformationController();
+  EditingViewportState? ownedViewportState;
+  EditingViewportState get viewportState =>
+      widget.viewportState ?? (ownedViewportState ??= EditingViewportState());
+  EditingViewportBinding? viewportBinding;
+  String previewSourceSha = '';
   late final detailPreview = EditingDetailPreviewController(
     core: widget.state.core,
     owner: owner,
@@ -89,6 +111,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       final old = preview;
       setState(() {
         preview = result['path'] as String;
+        displayedRecipe = <String, dynamic>{};
         final width = result['width'], height = result['height'];
         previewPixelSize =
             width is num &&
@@ -100,6 +123,20 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
             ? Size(width.toDouble(), height.toDouble())
             : null;
         colorStatus = result['rawColorStatus'] as String? ?? '';
+        previewSourceSha = result['sourceSha'] as String? ?? '';
+        final sourceWidth = result['sourceWidth'] ?? widget.photo.info['width'],
+            sourceHeight =
+                result['sourceHeight'] ?? widget.photo.info['height'];
+        if (sourceWidth is num &&
+            sourceHeight is num &&
+            sourceWidth.isFinite &&
+            sourceHeight.isFinite &&
+            sourceWidth > 0 &&
+            sourceHeight > 0) {
+          sourcePixels = Size(sourceWidth.toDouble(), sourceHeight.toDouble());
+        } else if (previewPixelSize != null && borrowedPreview == null) {
+          sourcePixels = previewPixelSize!;
+        }
         error = null;
       });
       if (!interactive &&
@@ -135,6 +172,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   Json snapshot() => object(jsonDecode(jsonEncode(settings)));
   bool get sourceCurrent =>
       mounted &&
+      !closing &&
       widget.isCurrent?.call() != false &&
       widget.state.session['logoutPending'] != true &&
       (widget.state.session['user']?['id'] as String? ?? '') == owner;
@@ -161,6 +199,31 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   @override
   void initState() {
     super.initState();
+    final initial = widget.initialFrame;
+    if (initial != null &&
+        initial['path'] is String &&
+        widget.isCurrent?.call() != false) {
+      final width = initial['width'], height = initial['height'];
+      if (width is num &&
+          height is num &&
+          width > 0 &&
+          height > 0 &&
+          width.isFinite &&
+          height.isFinite) {
+        preview = borrowedPreview = initial['path'] as String;
+        previewSourceSha = initial['sourceSha'] as String? ?? '';
+        previewPixelSize = Size(width.toDouble(), height.toDouble());
+        sourcePixels = Size(
+          (initial['sourceWidth'] as num? ?? width).toDouble(),
+          (initial['sourceHeight'] as num? ?? height).toDouble(),
+        );
+        displayedRecipe = initial['recipe'] is Map
+            ? object(initial['recipe'])
+            : <String, dynamic>{};
+      }
+    }
+    bindViewport();
+    publishBack();
     detailPreview.setEnabled(false);
     previewTransform.addListener(updateDetailViewport);
     widget.state.addListener(ownerChanged);
@@ -180,8 +243,47 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
     unawaited(widget.automaticallyEdit ? openEditor() : render());
   }
 
+  void bindViewport() {
+    viewportBinding?.dispose();
+    viewportBinding = EditingViewportBinding(
+      shared: viewportState,
+      transform: previewTransform,
+    );
+  }
+
+  @override
+  void didUpdateWidget(RawDevelopPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.viewportState != widget.viewportState) bindViewport();
+    if (oldWidget.onBackReady != widget.onBackReady) {
+      oldWidget.onBackReady?.call(null);
+      publishBack();
+    }
+  }
+
+  void publishBack() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted && widget.embedded) {
+      widget.onBackReady?.call(() => finishEmbedded(false));
+    }
+  });
+
+  void finishEmbedded(bool forwarded) {
+    if (!widget.embedded || !mounted || closing) return;
+    closing = true;
+    debounce?.cancel();
+    previewGeneration++;
+    previewQueue.reset();
+    detailPreview.invalidate();
+    if (!forwarded && activeJob != null) {
+      unawaited(widget.state.core.cancel(activeJob!));
+    }
+    widget.onFinished?.call(forwarded);
+  }
+
   @override
   void dispose() {
+    widget.onBackReady?.call(null);
+    viewportBinding?.dispose();
     previewTransform.removeListener(updateDetailViewport);
     previewTransform.dispose();
     detailPreview.dispose();
@@ -195,6 +297,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   }
 
   Future<void> discard(String path, {bool full = false}) async {
+    if (path == borrowedPreview) return;
     if (!p.isWithin(
       p.join(widget.state.core.root, full ? 'raw-editor' : 'previews'),
       path,
@@ -343,17 +446,23 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         'lastDevelopment': result['settings'],
       });
       if (mounted && sourceCurrent) {
-        if (widget.automaticallyEdit) {
-          context.replace(working.editorLocation);
+        final sameSource =
+            previewSourceSha.isEmpty || previewSourceSha == result['sourceSha'];
+        final handoff = sameSource ? viewportState : EditingViewportState();
+        final router = GoRouter.of(context), replace = widget.automaticallyEdit;
+        final location = working.editorLocation;
+        if (widget.embedded) finishEmbedded(true);
+        if (replace) {
+          router.replace(location, extra: handoff);
         } else {
-          context.push(working.editorLocation);
+          router.push(location, extra: handoff);
         }
       }
     } catch (failure) {
-      if (mounted) setState(() => error = '$failure');
+      if (mounted && !closing) setState(() => error = '$failure');
     } finally {
       if (temporary != null) await discard(temporary, full: true);
-      if (mounted) {
+      if (mounted && !closing) {
         setState(() {
           forwarding = false;
           running = false;
@@ -415,6 +524,12 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         fitted,
         Offset.zero & bounds.biggest,
       );
+      viewportBinding?.layout(
+        viewport: bounds.biggest,
+        imageRect: nextFrame,
+        plane: displayedPlane,
+        active: sourceCurrent && detailRouteCurrent && !forwarding,
+      );
       final ratio = MediaQuery.devicePixelRatioOf(context);
       if (detailViewportSize != bounds.biggest ||
           detailImageFrame != nextFrame ||
@@ -440,6 +555,26 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       transformationController: previewTransform,
       maxScale: 32,
       child: Center(child: plane),
+    );
+  }
+
+  EditingViewportPlane get displayedPlane {
+    final initial = widget.initialFrame;
+    final content = preview == borrowedPreview && initial != null
+        ? initial['_viewportContentRect']
+        : null;
+    final rect = content is Map
+        ? Rect.fromLTRB(
+            (content['left'] as num).toDouble(),
+            (content['top'] as num).toDouble(),
+            (content['right'] as num).toDouble(),
+            (content['bottom'] as num).toDouble(),
+          )
+        : const Rect.fromLTWH(0, 0, 1, 1);
+    return EditingViewportPlane.fromRecipe(
+      displayedRecipe ?? <String, dynamic>{},
+      sourceSize: sourcePixels,
+      contentRect: rect,
     );
   }
 
@@ -637,7 +772,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       detailRouteCurrent = routeCurrent;
       scheduleDetailViewport();
     }
-    if (widget.automaticallyEdit && error == null) {
+    if (widget.automaticallyEdit && error == null && !widget.embedded) {
       return Scaffold(
         backgroundColor: const Color(0xff242b27),
         appBar: HueHeader(title: widget.photo.name, back: true),
@@ -798,6 +933,52 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         ),
       ],
     );
+    if (widget.embedded) {
+      final panel = ColoredBox(
+        color: Theme.of(context).colorScheme.surface,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                children: [
+                  IconButton(
+                    tooltip: '取消显影',
+                    onPressed: () => finishEmbedded(false),
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  const Expanded(child: Text('RAW 显影')),
+                  if (!forwarding)
+                    TextButton(
+                      onPressed: selectingReference ? null : openEditor,
+                      child: const Text('完成显影，继续编辑'),
+                    ),
+                ],
+              ),
+            ),
+            if (forwarding)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text('正在生成完整编辑副本 ${(progress * 100).round()}%'),
+              ),
+            Expanded(child: controls),
+          ],
+        ),
+      );
+      return LayoutBuilder(
+        builder: (context, box) =>
+            widget.embeddedLayoutBuilder?.call(context, image, panel) ??
+            Column(
+              children: [
+                Expanded(child: image),
+                SizedBox(
+                  height: (box.maxHeight * .46).clamp(0, 340),
+                  child: panel,
+                ),
+              ],
+            ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('RAW 显影')),
       body: SafeArea(

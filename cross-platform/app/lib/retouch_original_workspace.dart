@@ -3,7 +3,7 @@ part of 'retouch_workspace.dart';
 // Layout, labels and dimensions follow PhotoPortraitDialog / PhotoWorkspaceUi.
 extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   String get currentOverlayKey =>
-      '${data?['localData']}|$selected|${tab == 1 && (skinParameter != 'tone' || tonePerFace != true)}|${widget.regionId ?? ''}';
+      '${data?['localData']}|$selected|${tab == 1 && (skinParameter != 'tone' || tonePerFace != true)}|${editingRegionId ?? ''}';
   void clearPortraitOverlay() {
     portraitOverlayRevision++;
     if (portraitOverlayJob != null) {
@@ -18,7 +18,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   Future<void> refreshPortraitOverlay() async {
     if (!current ||
-        widget.patch ||
+        patchMode ||
         !showOverlay ||
         tab == 2 ||
         photoSampling ||
@@ -40,7 +40,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         'path': widget.photo.path,
         'owner': widget.owner,
         'localData': data!['localData'],
-        if (widget.regionId?.isNotEmpty == true) 'regionId': widget.regionId,
+        if (editingRegionId?.isNotEmpty == true) 'regionId': editingRegionId,
         if (tonePerFace != null) 'tonePerFace': tonePerFace,
         'mode': 'overlay',
         'index': faces.isEmpty ? -1 : selected,
@@ -51,7 +51,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           key != currentOverlayKey) {
         return;
       }
-      if ((response['regionId'] as String? ?? '') != (widget.regionId ?? '')) {
+      if ((response['regionId'] as String? ?? '') != (editingRegionId ?? '')) {
         throw const AppFailure('选区范围已变化。');
       }
       final raw = response['selectionOverlay'];
@@ -172,7 +172,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Future<void> openOriginalPatch() async {
     if (brushRadiusStart != null) cancelBrushSizing();
     if (widget.patch ||
-        widget.regionId?.isNotEmpty == true ||
+        editingRegionId?.isNotEmpty == true ||
         busy ||
         !current ||
         data == null ||
@@ -181,56 +181,89 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     }
     await finishToneSelection();
     if (!mounted || !current || data == null) return;
-    final epoch = operationEpoch,
-        staged = data!,
-        fingerprint = data!['localData'];
-    bool valid() =>
-        operationCurrent(epoch) && data?['localData'] == fingerprint;
-    patchChildOpen = true;
+    final epoch = operationEpoch;
+    final staged = data!;
+    final cached =
+        frame?['_retouchBeforeBody'] == true &&
+            frame?['_retouchSourceLocalData'] == staged['localData']
+        ? frame
+        : cachedBeforeBodyFrame?['_retouchSourceLocalData'] ==
+              staged['localData']
+        ? cachedBeforeBodyFrame
+        : null;
+    clearPortraitOverlay();
+    refreshPortrait(() {
+      patchStart = staged;
+      patchFrameBefore = frame;
+      patchUndoBefore = List.of(undo);
+      patchRedoBefore = List.of(redo);
+      patchRadiusBefore = radius;
+      patchIntentBefore = toolIntent;
+      patchChoosingBefore = choosingGroup;
+      patchChildOpen = true;
+      toolIntent = 'patch';
+      radius = .025;
+      undo.clear();
+      redo.clear();
+      patchEntryFrame = cached;
+      if (cached != null) frame = cached;
+      busy = cached == null;
+      error = null;
+    });
+    // A current source-positioned preview is already the correct repair plane.
+    // Otherwise retain the old photograph while preparing that plane once.
+    if (cached != null) return;
     try {
-      final result = await hueRootPage<Json>(
-        context,
-        MaterialPageRoute(
-          builder: (_) => RetouchWorkspace(
-            state: widget.state,
-            photo: widget.photo,
-            owner: widget.owner,
-            recipe: {...widget.recipe, 'localData': fingerprint},
-            isCurrent: valid,
-            patch: true,
-          ),
-        ),
-      );
-      if (result == null || !valid() || result['localData'] == fingerprint) {
-        return;
-      }
-      refreshPortrait(() {
-        busy = true;
-        stopped = false;
-        error = null;
-      });
-      final next = await call('media.retouchDescribe', {
-        'localData': result['localData'],
-      });
-      final image = await render(next);
-      if (valid()) {
-        refreshPortrait(() {
-          undo.add(staged);
-          if (undo.length > 32) undo.removeAt(0);
-          redo.clear();
-          data = next;
-          frame = image;
-        });
+      final image = await render(staged);
+      if (operationCurrent(epoch) && patchChildOpen) {
+        refreshPortrait(() => frame = patchEntryFrame = image);
       }
     } catch (failure) {
       if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
     } finally {
-      if (operationCurrent(epoch)) {
-        patchChildOpen = false;
-        refreshPortrait(() => busy = false);
-      }
+      if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
     }
-    unawaited(refreshPortraitOverlay());
+  }
+
+  Future<void> finishInlinePatch(bool apply) async {
+    final before = patchStart;
+    if (!patchChildOpen || before == null || !current || apply && busy) return;
+    if (brushRadiusStart != null) cancelBrushSizing();
+    final changed = before['localData'] != data?['localData'];
+    refreshPortrait(() {
+      retireToolWork();
+      if (!apply) {
+        data = before;
+        frame = patchFrameBefore;
+      }
+      undo
+        ..clear()
+        ..addAll(patchUndoBefore ?? []);
+      redo
+        ..clear()
+        ..addAll(patchRedoBefore ?? []);
+      if (apply && changed) {
+        undo.add(before);
+        if (undo.length > 32) undo.removeAt(0);
+        redo.clear();
+      }
+      radius = patchRadiusBefore ?? .022;
+      toolIntent = patchIntentBefore ?? 'overview';
+      choosingGroup = patchChoosingBefore ?? true;
+      patchChildOpen = false;
+      patchStart = patchFrameBefore = patchEntryFrame = null;
+      patchUndoBefore = patchRedoBefore = null;
+      patchRadiusBefore = null;
+      patchIntentBefore = null;
+      patchChoosingBefore = null;
+      comparing = compareWanted = false;
+      error = notice = null;
+    });
+    if (apply && changed && data?['sourcePositioning'] == true) {
+      await refreshOriginalModeFrame();
+    } else {
+      unawaited(refreshPortraitOverlay());
+    }
   }
 
   bool beginPatchStroke(Offset at, Size renderedSize) {
@@ -295,7 +328,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     final epoch = operationEpoch;
     return Positioned.fill(
       child: RetouchDetailPreview(
-        key: ValueKey('retouch-detail-$epoch-$patch'),
+        key: detailPreviewKey,
         core: widget.state.core,
         owner: widget.owner,
         sourcePath: widget.photo.path,
@@ -316,6 +349,28 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (mounted && current) detailViewport.value = value;
   }
 
+  EditingViewportPlane originalViewportPlane(Json? shown) {
+    double dimension(String sourceKey, String key) {
+      final value = shown?[sourceKey] ?? widget.photo.info[key] ?? shown?[key];
+      return value is num && value > 0 ? value.toDouble() : 1;
+    }
+
+    final content = object(shown?['_viewportContentRect'] ?? {});
+    return EditingViewportPlane.fromRecipe(
+      object(shown?['_detailRecipe'] ?? shown?['recipe'] ?? {}),
+      sourceSize: Size(
+        dimension('sourceWidth', 'width'),
+        dimension('sourceHeight', 'height'),
+      ),
+      contentRect: Rect.fromLTRB(
+        (content['left'] as num?)?.toDouble() ?? 0,
+        (content['top'] as num?)?.toDouble() ?? 0,
+        (content['right'] as num?)?.toDouble() ?? 1,
+        (content['bottom'] as num?)?.toDouble() ?? 1,
+      ),
+    );
+  }
+
   Widget originalPatchPhoto() {
     final shown = comparing ? patchEntryFrame : frame;
     return Stack(
@@ -325,6 +380,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
           imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
           controller: viewport,
+          viewportState: sharedViewport,
+          viewportPlane: originalViewportPlane(shown),
+          viewportActive: current,
           onViewportChanged: updateDetailViewport,
           editingEnabled: photoEditingEnabled,
           editingSignal: brushEditing,
@@ -430,9 +488,13 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Widget originalPatchLayout(BuildContext context) => Theme(
     data: hueviaTheme(Brightness.dark, home: false),
     child: PopScope(
-      canPop: true,
+      canPop: !patchChildOpen,
       onPopInvokedWithResult: (didPop, result) {
-        if (didPop) cancelWorkspace(pop: false);
+        if (didPop) {
+          cancelWorkspace(pop: false);
+        } else {
+          requestExit();
+        }
       },
       child: Stack(
         fit: StackFit.expand,
@@ -452,10 +514,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
               centerTitle: true,
               leading: IconButton(
                 tooltip: '取消修补',
-                onPressed: exitRequested ? null : cancelWorkspace,
+                onPressed: exitRequested ? null : requestExit,
                 icon: const RetouchOriginalGlyph('close'),
               ),
               actions: [
+                if (patchChildOpen)
+                  IconButton(
+                    tooltip: '取消人像精修',
+                    onPressed: exitRequested ? null : cancelWorkspace,
+                    icon: const RetouchOriginalGlyph('close'),
+                  ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(4, 8, 12, 8),
                   child: SizedBox(
@@ -476,7 +544,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                               brushRadiusStart != null ||
                               points.isNotEmpty
                           ? null
-                          : () => Navigator.pop(context, data),
+                          : applyWorkspace,
                       child: const Text('应用'),
                     ),
                   ),
@@ -556,6 +624,9 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
       imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
       controller: viewport,
+      viewportState: sharedViewport,
+      viewportPlane: originalViewportPlane(shown),
+      viewportActive: current,
       onViewportChanged: updateDetailViewport,
       editingEnabled: photoEditingEnabled,
       editingSignal: brushEditing,
@@ -987,7 +1058,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
     await finishToneSelection();
-    if (!mounted || !operationCurrent(epoch)) return;
+    if (!operationCurrent(epoch)) return;
     final staged = data!, fingerprint = data!['localData'];
     bool valid() =>
         operationCurrent(epoch) && data?['localData'] == fingerprint;
@@ -999,10 +1070,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     try {
       final base = await call('local.describe', {'localData': fingerprint});
       Json region;
-      if (widget.regionId?.isNotEmpty == true) {
+      if (editingRegionId?.isNotEmpty == true) {
         final matches = (base['regions'] as List? ?? [])
             .map(object)
-            .where((r) => r['id'] == widget.regionId)
+            .where((r) => r['id'] == editingRegionId)
             .toList();
         if (matches.length != 1) throw const AppFailure('当前局部区域已变化，请重新打开。');
         region = matches.single;
@@ -1011,45 +1082,48 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           (await call('local.seedRegion', {'localData': fingerprint}))['seed'],
         );
       }
-      final before = await call('media.retouchChange', {
-        'localData': fingerprint,
-        'action': 'beforeBody',
-      });
-      final paintRecipe = {
-        ...widget.recipe,
-        'localData': before['localData'],
-        'geometry': <String, dynamic>{},
-        'border': <String, dynamic>{},
-      };
-      final image = await call('media.localPreview', {
-        'recipe': paintRecipe,
-        'maxEdge': 1280,
-      });
-      owned = image['path'] as String;
-      if (!mounted || !valid() || !operationCurrent(epoch)) return;
+      final cached =
+          frame?['_retouchBeforeBody'] == true &&
+              frame?['_retouchSourceLocalData'] == fingerprint
+          ? frame
+          : cachedBeforeBodyFrame?['_retouchSourceLocalData'] == fingerprint
+          ? cachedBeforeBodyFrame
+          : null;
+      final source = cached ?? await render(staged, sourcePositioned: true);
+      if (!valid()) return;
+      // Selection owns a dedicated bounded copy, never the parent/live image.
+      final path = p.join(
+        widget.state.core.root,
+        'previews',
+        'retouch-selection-${DateTime.now().microsecondsSinceEpoch}${p.extension(source['path'] as String)}',
+      );
+      owned = (await File(source['path'] as String).copy(path)).path;
+      if (!valid()) return;
+      final image = {...source, 'path': owned, '_borrowedEditorFrame': false};
+      final paintRecipe = object(source['_detailRecipe']);
       refreshPortrait(() => busy = false);
-      final page = SelectionWorkspace(
-        state: widget.state,
-        photo: widget.photo,
-        owner: widget.owner,
-        region: region,
-        localState: base,
-        frame: image,
-        isCurrent: valid,
+      final selection = await openInlineSelection(
+        owned,
+        (finish, backReady) => SelectionWorkspace(
+          state: widget.state,
+          photo: widget.photo,
+          owner: widget.owner,
+          region: region,
+          localState: base,
+          frame: image,
+          recipe: paintRecipe,
+          expectedSourceSha: widget.initialFrame?['sourceSha'] as String? ?? '',
+          isCurrent: valid,
+          embedded: true,
+          onFinished: finish,
+          onBackReady: backReady,
+          viewportState: sharedViewport,
+          embeddedLayoutBuilder: widget.embeddedLayoutBuilder,
+        ),
       );
-      owned =
-          null; // SelectionWorkspace owns this bounded frame until it closes.
-      final selection = await hueRootPage<SelectionResult>(
-        context,
-        MaterialPageRoute(builder: (_) => page),
-      );
-      if (!mounted ||
-          selection == null ||
-          !valid() ||
-          !operationCurrent(epoch)) {
-        return;
-      }
-      if (widget.regionId?.isNotEmpty == true) {
+      owned = null;
+      if (selection == null || !valid()) return;
+      if (editingRegionId?.isNotEmpty == true) {
         refreshPortrait(() => busy = true);
         final next = await call('media.retouchDescribe', {
           'localData': selection.localState['localData'],
@@ -1064,33 +1138,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           });
         }
       } else {
-        final target = selection.regionId;
-        final result = await hueRootPage<Json>(
-          context,
-          MaterialPageRoute(
-            builder: (_) => RetouchWorkspace(
-              state: widget.state,
-              photo: widget.photo,
-              owner: widget.owner,
-              recipe: {
-                ...widget.recipe,
-                'localData': selection.localState['localData'],
-              },
-              isCurrent: valid,
-              regionId: target,
-              regionName:
-                  object(
-                        (selection.localState['regions'] as List).firstWhere(
-                          (r) => object(r)['id'] == target,
-                        ),
-                      )['name']
-                      as String?,
-            ),
-          ),
-        );
-        if (mounted && result != null && valid() && operationCurrent(epoch)) {
-          Navigator.pop(context, result);
-        }
+        await beginInlineRegion(selection);
       }
     } catch (failure) {
       if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
@@ -1143,23 +1191,18 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         refreshPortrait(() => notice = '未发现需要修复的小瑕疵。');
         return;
       }
-      // Heal targets are source coordinates. A separate, read-only frame must
-      // omit body deformation, crop and rotation without replacing staged data.
-      final sourcePositioned = await call('media.retouchChange', {
-        'localData': staged['localData'],
-        'action': 'beforeBody',
-      });
-      final preview = await call('media.reviewPreview', {
-        'recipe': {
-          ...widget.recipe,
-          'localData': sourcePositioned['localData'],
-          'geometry': <String, dynamic>{},
-          'border': <String, dynamic>{},
-        },
-        'maxEdge': 1280,
-      });
+      // Reuse the accepted source plane without changing the parent data.
+      // A newly staged skin mask gets its own truthful before-body preview.
+      final cached =
+          frame?['_retouchBeforeBody'] == true &&
+              frame?['_retouchSourceLocalData'] == staged['localData']
+          ? frame
+          : cachedBeforeBodyFrame?['_retouchSourceLocalData'] ==
+                staged['localData']
+          ? cachedBeforeBodyFrame
+          : null;
+      final preview = cached ?? await render(staged, sourcePositioned: true);
       final previewPath = preview['path'];
-      if (previewPath is String) temporary.add(previewPath);
       if (!valid()) return;
       if (previewPath is! String ||
           (preview['width'] as num? ?? 0) <= 0 ||
@@ -1167,22 +1210,31 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         throw const AppFailure('照片预览尚未就绪，请重试。');
       }
       refreshPortrait(() => busy = false);
-      if (!mounted || !operationCurrent(epoch)) return;
-      final selection = await showRetouchBlemishReview(
-        context,
-        imagePath: previewPath,
-        imageWidth: (preview['width'] as num).toInt(),
-        imageHeight: (preview['height'] as num).toInt(),
-        isCurrent: review,
-        candidates: [
-          for (final (i, row) in candidates.indexed)
-            RetouchBlemishCandidate(
-              index: i,
-              x: (row['tx'] as num).toDouble(),
-              y: (row['ty'] as num).toDouble(),
-              radius: (row['radius'] as num).toDouble(),
-            ),
-        ],
+      if (!operationCurrent(epoch)) return;
+      final selection = await openInlineBlemishes(
+        (finish, backReady) => RetouchBlemishReview(
+          imagePath: previewPath,
+          imageWidth: (preview['width'] as num).toInt(),
+          imageHeight: (preview['height'] as num).toInt(),
+          isCurrent: review,
+          embedded: true,
+          onFinished: finish,
+          onBackReady: backReady,
+          viewportState: sharedViewport,
+          viewportPlane: originalViewportPlane(preview),
+          embeddedLayoutBuilder: widget.embeddedLayoutBuilder,
+          detailOverlay: detailForFrame(preview),
+          onViewportChanged: updateDetailViewport,
+          candidates: [
+            for (final (i, row) in candidates.indexed)
+              RetouchBlemishCandidate(
+                index: i,
+                x: (row['tx'] as num).toDouble(),
+                y: (row['ty'] as num).toDouble(),
+                radius: (row['radius'] as num).toDouble(),
+              ),
+          ],
+        ),
       );
       if (!valid() || selection == null || selection.isEmpty) return;
       // The review owns only indices. Install the complete native heals, once,
@@ -1347,6 +1399,27 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Future<void> refreshOriginalModeFrame() async {
     final epoch = operationEpoch;
     if (!operationCurrent(epoch) || data == null || busy) return;
+    final fingerprint = data!['localData'];
+    final sourcePlane =
+        patchMode ||
+        (tab != 2 &&
+            (!choosingGroup ||
+                (editingRegionId?.isNotEmpty == true &&
+                    data!['sourcePositioning'] == true)));
+    bool matches(Json? candidate) =>
+        candidate?['_retouchSourceLocalData'] == fingerprint &&
+        (data!['sourcePositioning'] != true ||
+            (candidate?['_retouchBeforeBody'] == true) == sourcePlane);
+    final reusable = matches(frame)
+        ? frame
+        : sourcePlane && matches(cachedBeforeBodyFrame)
+        ? cachedBeforeBodyFrame
+        : null;
+    if (reusable != null) {
+      if (!identical(frame, reusable)) refreshPortrait(() => frame = reusable);
+      unawaited(refreshPortraitOverlay());
+      return;
+    }
     refreshPortrait(() {
       busy = true;
       stopped = false;
@@ -1370,6 +1443,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
       choosingGroup = true;
+      toolIntent = 'overview';
       photoSampling = manual = healMode = false;
       notice = null;
     });
@@ -1380,6 +1454,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
+    // Navigation intent is immediate and independent of model/render latency.
+    refreshPortrait(() {
+      toolIntent = natural ? 'natural' : ['face', 'skin', 'body'][section];
+      choosingGroup = false;
+    });
     await finishToneSelection();
     if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
@@ -1400,7 +1479,6 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         bodyViewportBefore = viewport.value.clone();
         bodyOverlayBefore = showOverlay;
         showOverlay = true;
-        viewport.value = Matrix4.identity();
         bodyFrameBefore = frame;
         bodyStart = data;
         bodyUndoBefore = List.of(undo);
@@ -1410,12 +1488,14 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       }
     });
     await refreshOriginalModeFrame();
+    if (!operationCurrent(epoch)) return;
     if (section == 1) {
       try {
         await toneCardRequest('toneCards.list');
       } catch (failure) {
         if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
       }
+      if (!operationCurrent(epoch)) return;
       if (natural) {
         await originalNatural();
       } else if (operationCurrent(epoch) && portrait['hasSkinMask'] != true) {
@@ -1433,7 +1513,12 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (busy || !operationCurrent(epoch) || bodyStart == null) return;
     final start = bodyStart!;
     final oldUndo = bodyUndoBefore!, oldRedo = bodyRedoBefore!;
-    if (!apply) {
+    if (!apply && data?['localData'] == start['localData']) {
+      refreshPortrait(() {
+        data = start;
+        frame = bodyFrameBefore;
+      });
+    } else if (!apply) {
       refreshPortrait(() {
         busy = true;
         stopped = false;
@@ -1465,7 +1550,6 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         if (undo.length > 32) undo.removeAt(0);
         redo.clear();
       }
-      if (bodyViewportBefore != null) viewport.value = bodyViewportBefore!;
       if (bodyOverlayBefore != null) showOverlay = bodyOverlayBefore!;
       comparisonFrame = bodyComparisonBefore;
       bodyComparisonBefore = null;
@@ -1476,6 +1560,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       bodyOverlayBefore = null;
       bodyStart = bodyFrameBefore = null;
       bodyUndoBefore = bodyRedoBefore = null;
+      toolIntent = 'overview';
       choosingGroup = true;
     });
     unawaited(refreshPortraitOverlay());
@@ -2003,15 +2088,15 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       for (final f in [
         ('自然精修', 'NATURAL', 'face'),
         ('肤色', 'tone', 'color'),
-        if (widget.regionId?.isNotEmpty != true) ('磨皮', 'smoothing', 'smooth'),
-        if (widget.regionId?.isNotEmpty == true) ...[
+        if (editingRegionId?.isNotEmpty != true) ('磨皮', 'smoothing', 'smooth'),
+        if (editingRegionId?.isNotEmpty == true) ...[
           ('提亮', 'region-brightness', 'brightness'),
           ('冷暖', 'region-warmth', 'warmth'),
           ('红润', 'region-redness', 'redness'),
           ('磨皮', 'region-smoothing', 'smooth'),
           ('纹理', 'region-texture', 'texture'),
         ],
-        if (widget.regionId?.isNotEmpty != true) ('纹理保留', 'TEXTURE', 'texture'),
+        if (editingRegionId?.isNotEmpty != true) ('纹理保留', 'TEXTURE', 'texture'),
         ('匀肤', 'EVENNESS', 'skin-even'),
         ('去油光', 'SHINE', 'shine-control'),
       ])
@@ -2412,9 +2497,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     child: PopScope(
       canPop:
           exitRequested ||
-          (bodyStart == null &&
-              (busy || scalarStart != null || lightStart != null)) ||
-          (!busy && choosingGroup && scalarStart == null && lightStart == null),
+          (toolIntent == 'overview' && bodyStart == null && !patchChildOpen),
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
           cancelWorkspace(pop: false);
@@ -2441,33 +2524,34 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
               leading: IconButton(
                 tooltip: bodyStart != null
                     ? '取消塑形并返回人像'
-                    : busy ||
-                          scalarStart != null ||
-                          lightStart != null ||
-                          choosingGroup
+                    : toolIntent == 'overview'
                     ? '取消人像精修'
                     : '返回人像工具',
                 onPressed: exitRequested ? null : requestExit,
                 icon: RetouchOriginalGlyph(
-                  bodyStart == null &&
-                          (busy ||
-                              scalarStart != null ||
-                              lightStart != null ||
-                              choosingGroup)
+                  bodyStart == null && toolIntent == 'overview'
                       ? 'close'
                       : 'back',
                 ),
               ),
               title: Text(
-                '${choosingGroup
+                '${toolIntent == 'natural'
+                    ? '自然精修'
+                    : choosingGroup
                     ? '人像'
                     : tab == 2
                     ? '塑形'
                     : tab == 1
                     ? '皮肤'
-                    : '面部'}${!choosingGroup && tab != 2 && data?['sourcePositioning'] == true ? ' · 塑形前定位' : ''}${widget.regionId?.isNotEmpty == true ? ' · ${widget.regionName ?? '局部区域'}' : ''}',
+                    : '面部'}${!choosingGroup && tab != 2 && data?['sourcePositioning'] == true ? ' · 塑形前定位' : ''}${editingRegionId?.isNotEmpty == true ? ' · ${editingRegionName ?? '局部区域'}' : ''}',
               ),
               actions: [
+                if (toolIntent != 'overview')
+                  IconButton(
+                    tooltip: '取消人像精修',
+                    onPressed: exitRequested ? null : cancelWorkspace,
+                    icon: const RetouchOriginalGlyph('close'),
+                  ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
                     4,
@@ -2501,7 +2585,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                               if (bodyStart != null) {
                                 unawaited(finishOriginalBody(true));
                               } else {
-                                Navigator.pop(context, data);
+                                applyWorkspace();
                               }
                             },
                       child: const Text('应用'),
@@ -2546,10 +2630,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                       for (final f in [
                         (1, '皮肤', 'skin'),
                         (0, '面部', 'face'),
-                        if (widget.regionId?.isNotEmpty != true)
+                        if (editingRegionId?.isNotEmpty != true)
                           (2, '塑形', 'body'),
                         (3, '自然精修', 'natural'),
-                        if (widget.regionId?.isNotEmpty != true)
+                        if (editingRegionId?.isNotEmpty != true)
                           (4, '修补', 'heal'),
                       ])
                         RetouchOriginalToolButton(
