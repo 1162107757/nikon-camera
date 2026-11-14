@@ -68,7 +68,8 @@ class DraftCore extends HueviaCore {
       File(
         path,
       ).writeAsBytesSync(File('$root/previews/preview.png').readAsBytesSync());
-      return {'path': path};
+      // The copied fixture is a real 1×1 PNG, matching native preview metadata.
+      return {'path': path, 'width': 1, 'height': 1};
     }
     if (operation == 'media.cleanupAnalyze') {
       return {'cleanupData': 'AWRkZAA='};
@@ -95,6 +96,8 @@ void main() {
             'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP48OHDfwAJdAPQXHvArAAAAABJRU5ErkJggg==',
           ),
         );
+        File('${directory.path}/previews/preview.png')
+            .copySync('${directory.path}/source.png');
         final core = DraftCore(directory.path);
         final state = AppState(core)
           ..presets = [
