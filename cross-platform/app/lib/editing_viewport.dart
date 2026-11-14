@@ -2,12 +2,58 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show listEquals;
+import 'package:flutter/rendering.dart';
 
 typedef EditingWorkspaceLayoutBuilder = Widget Function(
   BuildContext context,
   Widget photo,
   Widget panel,
 );
+
+class EditingToolPanel extends StatelessWidget {
+  const EditingToolPanel({
+    super.key,
+    required this.preferredHeight,
+    required this.child,
+  });
+  final double preferredHeight;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) => child;
+}
+
+class EditingSizeReporter extends SingleChildRenderObjectWidget {
+  const EditingSizeReporter({
+    super.key,
+    required this.onSize,
+    required super.child,
+  });
+  final ValueChanged<Size> onSize;
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _EditingSizeRender(onSize);
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    covariant RenderObject renderObject,
+  ) => (renderObject as _EditingSizeRender).onSize = onSize;
+}
+
+class _EditingSizeRender extends RenderProxyBox {
+  _EditingSizeRender(this.onSize);
+  ValueChanged<Size> onSize;
+  Size? previous;
+  @override
+  void performLayout() {
+    super.performLayout();
+    if (previous == size) return;
+    previous = size;
+    final measured = size, callback = onSize;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (attached && size == measured) callback(measured);
+    });
+  }
+}
 
 /// Navigation only: maps each tool's displayed photo back to the upright source.
 /// Geometry follows PhotoGeometry; it never changes a recipe or brush coordinates.
@@ -160,6 +206,8 @@ class EditingViewportState {
   double zoom = 1;
   double _densityFraction = 1;
   bool _hasSample = false;
+  Offset _anchor = Offset.zero;
+  double _sampleWidth = 0;
   int revision = 0;
 
   void reset() {
@@ -167,7 +215,19 @@ class EditingViewportState {
     zoom = 1;
     _densityFraction = 1;
     _hasSample = false;
+    _anchor = Offset.zero;
+    _sampleWidth = 0;
     revision++;
+  }
+
+  Offset _anchorFor(Size viewport) {
+    if (!_hasSample || _sampleWidth <= 0) return viewport.center(Offset.zero);
+    final ratio = viewport.width / _sampleWidth;
+    final margin = math.min(16.0, viewport.height / 4);
+    return Offset(
+      (_anchor.dx * ratio).clamp(0.0, viewport.width).toDouble(),
+      (_anchor.dy * ratio).clamp(margin, viewport.height - margin).toDouble(),
+    );
   }
 
   /// An applied crop may remove the inspected point; keep the nearest detail visible.
@@ -193,7 +253,8 @@ class EditingViewportState {
   }) {
     if (viewport.isEmpty || imageRect.isEmpty) return;
     final actualPlane = plane ?? EditingViewportPlane.identity;
-    final center = transform.toScene(viewport.center(Offset.zero));
+    final anchor = _anchorFor(viewport);
+    final center = transform.toScene(anchor);
     final point = Offset(
       (center.dx - imageRect.left) / imageRect.width,
       (center.dy - imageRect.top) / imageRect.height,
@@ -211,6 +272,8 @@ class EditingViewportState {
     focus = source;
     zoom = scale;
     _densityFraction = scale * density / viewport.width;
+    _anchor = anchor;
+    _sampleWidth = viewport.width;
     _hasSample = true;
     revision++;
   }
@@ -236,7 +299,7 @@ class EditingViewportState {
       imageRect.left + local.dx * imageRect.width,
       imageRect.top + local.dy * imageRect.height,
     );
-    final center = viewport.center(Offset.zero);
+    final center = _anchorFor(viewport);
     return Matrix4.identity()
       ..setEntry(0, 0, scale)
       ..setEntry(1, 1, scale)

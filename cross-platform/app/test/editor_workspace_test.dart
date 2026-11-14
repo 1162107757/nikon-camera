@@ -102,6 +102,38 @@ void main() {
     await tester.pump();
   }
 
+  Future<void> waitForCropFrame(WidgetTester tester) async {
+    bool ready() {
+      final canvas = find.byType(CropCanvas);
+      final apply = find.widgetWithText(TextButton, '应用');
+      if (canvas.evaluate().length != 1 || apply.evaluate().length != 1) {
+        return false;
+      }
+      final decoded = find
+          .descendant(of: canvas, matching: find.byType(RawImage))
+          .evaluate()
+          .any((element) => (element.widget as RawImage).image != null);
+      return decoded &&
+          tester.widget<CropCanvas>(canvas).enabled &&
+          tester.widget<TextButton>(apply).onPressed != null;
+    }
+
+    // Precache crosses real FileImage IO and decode turns. A spinning loader
+    // cannot settle in fake time while that work still needs a real IO turn.
+    final deadline = Stopwatch()..start();
+    while (!ready() && deadline.elapsed < const Duration(seconds: 8)) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 20)),
+      );
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    expect(
+      ready(),
+      true,
+      reason: 'The current crop image must decode and enable both gestures and Apply.',
+    );
+  }
+
   Future<void> cleanup(WidgetTester tester, Directory directory) async {
     tester.binding.imageCache.clear();
     tester.binding.imageCache.clearLiveImages();
@@ -178,6 +210,7 @@ void main() {
       );
       await tester.tap(find.text('打开构图'));
       await settle(tester);
+      await waitForCropFrame(tester);
       await tester.pumpAndSettle();
       final request = core.calls.firstWhere((c) => c.$1 == 'media.preview').$2;
       expect(object(request['recipe'])['border'], isEmpty);
@@ -241,6 +274,7 @@ void main() {
         touchSlopX: 64,
       );
       await settle(tester);
+      await waitForCropFrame(tester);
       await tester.pumpAndSettle();
       expect(
         object(
@@ -266,10 +300,12 @@ void main() {
       received = {'unexpected': true};
       await tester.tap(find.text('打开构图'));
       await settle(tester);
+      await waitForCropFrame(tester);
       await tester.pumpAndSettle();
       await tester.ensureVisible(find.text('旋转 90°'));
       await tester.tap(find.text('旋转 90°'));
       await settle(tester);
+      await waitForCropFrame(tester);
       await tester.pumpAndSettle();
       expect(
         object(

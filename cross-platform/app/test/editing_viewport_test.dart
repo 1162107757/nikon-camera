@@ -90,7 +90,7 @@ void main() {
     pointClose(plane.toSource(const Offset(.3, .275)), const Offset(.2, .3));
   });
 
-  test('Different panel heights retain source focus and source pixel magnification', () {
+  test('Different panel heights retain the source pixel at its screen position and magnification', () {
     final shared = EditingViewportState();
     final first = TransformationController();
     final binding = EditingViewportBinding(shared: shared, transform: first);
@@ -109,7 +109,9 @@ void main() {
       viewport: const Size(600, 350),
       imageRect: const Rect.fromLTWH(37.5, 0, 525, 350),
     );
-    final center = first.toScene(const Offset(300, 175));
+    // The panel has changed height, so retain the original on-screen anchor
+    // instead of recentering the source pixel in the new photograph bounds.
+    final center = first.toScene(const Offset(300, 250));
     pointClose(
       Offset((center.dx - 37.5) / 525, center.dy / 350),
       const Offset(.8, .4),

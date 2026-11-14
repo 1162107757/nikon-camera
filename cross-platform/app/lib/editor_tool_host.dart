@@ -60,10 +60,19 @@ extension _EmbeddedEditorTools on _EditorPageState {
         );
       }
       final height =
-          (embeddedPhotoViewportSize.height > 0
+          (panel is EditingToolPanel
+                  ? bounds.maxHeight -
+                        panel.preferredHeight.clamp(
+                          math.min(96.0, bounds.maxHeight * .55),
+                          bounds.maxHeight * .55,
+                        )
+                  : embeddedPhotoViewportSize.height > 0
                   ? embeddedPhotoViewportSize.height
                   : bounds.maxHeight * .61)
-              .clamp(100.0, bounds.maxHeight * .8)
+              .clamp(
+                math.min(100.0, math.max(0.0, bounds.maxHeight - 72)),
+                math.max(0.0, bounds.maxHeight - 72),
+              )
               .toDouble();
       return Column(
         children: [

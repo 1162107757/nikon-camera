@@ -3,6 +3,9 @@ part of 'retouch_workspace.dart';
 /// An editor-owned photo plane with a replaceable, bounded tool panel.
 /// No Navigator, Scaffold or second portrait state is created for sub-tools.
 extension _EmbeddedPortraitWorkspace on _RetouchWorkspaceState {
+  String get embeddedDockKey =>
+      '$toolIntent/$choosingGroup/$patchMode/$skinParameter/$faceMode/$bodyTool/$editingRegionId/${tonePreviewStart != null}';
+
   Future<List<int>?> openInlineBlemishes(
     Widget Function(ValueChanged<List<int>?>, ValueChanged<VoidCallback?>)
     builder,
@@ -214,67 +217,100 @@ extension _EmbeddedPortraitWorkspace on _RetouchWorkspaceState {
     child: LayoutBuilder(
       builder: (context, bounds) {
         final photo = patchMode ? originalPatchPhoto() : originalStage();
-        final panel = Column(
-          children: [
-            embeddedPortraitToolbar(),
-            Expanded(
-              child: RetouchOriginalDock(
-                choosingGroup: !patchMode && choosingGroup,
-                entries: [
-                  for (final item in [
-                    (1, '皮肤', 'skin'),
-                    (0, '面部', 'face'),
-                    if (editingRegionId?.isNotEmpty != true) (2, '塑形', 'body'),
-                    (3, '自然精修', 'natural'),
-                    if (editingRegionId?.isNotEmpty != true) (4, '修补', 'heal'),
-                  ])
-                    RetouchOriginalToolButton(
-                      label: item.$2,
-                      icon: item.$3,
-                      entry: true,
-                      onPressed: busy || data == null
-                          ? null
-                          : () => unawaited(
-                              item.$1 == 4
-                                  ? openOriginalPatch()
-                                  : originalSection(
-                                      item.$1 == 3 ? 1 : item.$1,
-                                      natural: item.$1 == 3,
-                                    ),
+        final dockKey = embeddedDockKey;
+        final overview = !patchMode && choosingGroup;
+        final fallbackHeight = overview
+            ? 48 + 20 * math.max(1.0, MediaQuery.textScalerOf(context).scale(1))
+            : 252.0;
+        final preferredHeight =
+            (48 +
+                    (measuredDockKey == dockKey
+                        ? measuredDockHeight
+                        : fallbackHeight))
+                .toDouble();
+        final panel = EditingToolPanel(
+          preferredHeight: preferredHeight,
+          child: Column(
+            children: [
+              embeddedPortraitToolbar(),
+              Expanded(
+                child: RetouchOriginalDock(
+                  key: ValueKey(dockKey),
+                  onContentSize: (size) {
+                    if (!current ||
+                        dockKey != embeddedDockKey ||
+                        !size.height.isFinite ||
+                        size.height <= 0) {
+                      return;
+                    }
+                    if (measuredDockKey == dockKey &&
+                        (measuredDockHeight - size.height).abs() < .5) {
+                      return;
+                    }
+                    refreshPortrait(() {
+                      measuredDockKey = dockKey;
+                      measuredDockHeight = size.height;
+                    });
+                  },
+                  choosingGroup: !patchMode && choosingGroup,
+                  entries: [
+                    for (final item in [
+                      (1, '皮肤', 'skin'),
+                      (0, '面部', 'face'),
+                      if (editingRegionId?.isNotEmpty != true)
+                        (2, '塑形', 'body'),
+                      (3, '自然精修', 'natural'),
+                      if (editingRegionId?.isNotEmpty != true)
+                        (4, '修补', 'heal'),
+                    ])
+                      RetouchOriginalToolButton(
+                        label: item.$2,
+                        icon: item.$3,
+                        entry: true,
+                        onPressed: busy || data == null
+                            ? null
+                            : () => unawaited(
+                                item.$1 == 4
+                                    ? openOriginalPatch()
+                                    : originalSection(
+                                        item.$1 == 3 ? 1 : item.$1,
+                                        natural: item.$1 == 3,
+                                      ),
+                              ),
+                      ),
+                  ],
+                  controls: patchMode
+                      ? [
+                          const Text(
+                            '涂抹需要移除的小范围，松手后自动寻找附近干净纹理。',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: retouchOriginalMuted,
                             ),
-                    ),
-                ],
-                controls: patchMode
-                    ? [
-                        const Text(
-                          '涂抹需要移除的小范围，松手后自动寻找附近干净纹理。',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: retouchOriginalMuted,
                           ),
-                        ),
-                        originalBrushSlider(patch: true),
-                        originalAction(
-                          '移除最后一个修补',
-                          busy || (data?['patchCount'] as int? ?? 0) == 0
-                              ? null
-                              : () => unawaited(
-                                  perform('media.retouchChange', {
-                                    'action': 'removePatch',
-                                    'index': (data!['patchCount'] as int) - 1,
-                                  }),
-                                ),
-                        ),
-                      ]
-                    : tab == 0
-                    ? originalFaceControls()
-                    : tab == 1
-                    ? originalSkinControls()
-                    : originalBodyControls(),
+                          originalBrushSlider(patch: true),
+                          originalAction(
+                            '移除最后一个修补',
+                            busy || (data?['patchCount'] as int? ?? 0) == 0
+                                ? null
+                                : () => unawaited(
+                                    perform('media.retouchChange', {
+                                      'action': 'removePatch',
+                                      'index': (data!['patchCount'] as int) - 1,
+                                    }),
+                                  ),
+                          ),
+                        ]
+                      : tab == 0
+                      ? originalFaceControls()
+                      : tab == 1
+                      ? originalSkinControls()
+                      : originalBodyControls(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
         final builder = widget.embeddedLayoutBuilder;
         if (builder != null) return builder(context, photo, panel);
@@ -283,7 +319,7 @@ extension _EmbeddedPortraitWorkspace on _RetouchWorkspaceState {
           children: [
             Expanded(child: photo),
             SizedBox(
-              height: math.min(280, bounds.maxHeight * .45),
+              height: math.min(preferredHeight, bounds.maxHeight * .55),
               child: panel,
             ),
           ],

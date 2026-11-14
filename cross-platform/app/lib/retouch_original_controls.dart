@@ -757,9 +757,11 @@ class RetouchOriginalDock extends StatelessWidget {
     required this.controls,
     required this.entries,
     required this.choosingGroup,
+    this.onContentSize,
   });
   final List<Widget> controls, entries;
   final bool choosingGroup;
+  final ValueChanged<Size>? onContentSize;
   @override
   Widget build(BuildContext context) {
     final scale = math.max(1.0, MediaQuery.textScalerOf(context).scale(1));
@@ -774,24 +776,31 @@ class RetouchOriginalDock extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: controls,
+                child: EditingSizeReporter(
+                  onSize: (size) =>
+                      onContentSize?.call(size + const Offset(0, 12)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: controls,
+                  ),
                 ),
               ),
             ),
           if (choosingGroup)
             Expanded(
               child: SingleChildScrollView(
-                child: SizedBox(
-                  height: 48 + 20 * scale,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: entries,
+                child: EditingSizeReporter(
+                  onSize: (size) => onContentSize?.call(size),
+                  child: SizedBox(
+                    height: 48 + 20 * scale,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: entries,
+                      ),
                     ),
                   ),
                 ),

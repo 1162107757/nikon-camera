@@ -631,7 +631,8 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       editingEnabled: photoEditingEnabled,
       editingSignal: brushEditing,
       reserveBars: tab == 2 && !choosingGroup,
-      singleFingerPan: tab == 2 && !choosingGroup,
+      // Drawing has priority in PhotoStage; a normal zoomed image remains draggable.
+      singleFingerPan: true,
       navigationEnabled: !photoSampling,
       drawing:
           brushRadiusStart == null &&
@@ -1173,7 +1174,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         error = null;
       });
       var staged = before;
-      if (object(staged['portrait'])['hasSkinMask'] != true) {
+      if (!hasUsableSkin(staged)) {
         staged = await call('media.retouchAnalyze', {
           'localData': staged['localData'],
           'mode': 'skin',
@@ -1286,7 +1287,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     });
     try {
       var next = before;
-      if (object(next['portrait'])['hasSkinMask'] != true) {
+      if (!hasUsableSkin(next)) {
         next = await call('media.retouchAnalyze', {
           'localData': next['localData'],
           'mode': 'skin',
@@ -1487,24 +1488,36 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         redo.clear();
       }
     });
-    await refreshOriginalModeFrame();
+    if (section == 1 && !natural && !hasUsableSkin(data)) {
+      await perform('media.retouchAnalyze', {'mode': 'skin'}, remember: false);
+      if (operationCurrent(epoch) && error == null && !hasUsableSkin(data)) {
+        refreshPortrait(() => notice = '未找到可用的皮肤范围，可重新识别或手动选择范围。');
+      }
+    } else {
+      await refreshOriginalModeFrame();
+    }
     if (!operationCurrent(epoch)) return;
     if (section == 1) {
-      try {
-        await toneCardRequest('toneCards.list');
-      } catch (failure) {
-        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
-      }
-      if (!operationCurrent(epoch)) return;
-      if (natural) {
-        await originalNatural();
-      } else if (operationCurrent(epoch) && portrait['hasSkinMask'] != true) {
-        await perform('media.retouchAnalyze', {
-          'mode': 'skin',
-        }, remember: false);
-      }
+      unawaited(loadOriginalToneCards(epoch));
+      if (natural) await originalNatural();
     } else if (section == 0 && faces.isEmpty) {
       await detectFaces();
+    }
+  }
+
+  bool hasUsableSkin(Json? snapshot) {
+    final skinInfo = object(snapshot?['portrait'] ?? {});
+    return skinInfo['hasSkinMask'] == true &&
+        (skinInfo['skinPixels'] as num? ?? 0) >= 32;
+  }
+
+  Future<void> loadOriginalToneCards(int epoch) async {
+    try {
+      await toneCardRequest('toneCards.list');
+    } catch (failure) {
+      if (operationCurrent(epoch) && !choosingGroup && !patchMode && tab == 1) {
+        refreshPortrait(() => error = '$failure');
+      }
     }
   }
 
@@ -2052,7 +2065,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
               editedTone['toneId'] != 0 &&
               !photoSampling &&
               (tonePerFace != true
-                  ? portrait['hasSkinMask'] == true
+                  ? hasUsableSkin(data)
                   : faces.isNotEmpty && chosen['enabled'] != false),
         ),
     ] else
@@ -2082,7 +2095,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
             ].contains(skinParameter)
             ? -100
             : 0,
-        permitted: portrait['hasSkinMask'] == true,
+        permitted: hasUsableSkin(data),
       ),
     originalRail([
       for (final f in [

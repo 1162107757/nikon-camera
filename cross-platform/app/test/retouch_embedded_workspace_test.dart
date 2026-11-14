@@ -19,6 +19,7 @@ Json _copy(Object? value) => object(jsonDecode(jsonEncode(value)));
 
 class _Core extends PortraitMenuCore {
   _Core(super.root);
+  int skinAnalysisPixels = 100;
   @override
   Future<Json> call(
     String operation, [
@@ -93,6 +94,14 @@ class _Core extends PortraitMenuCore {
       return {...next, 'regionId': payload['regionId'] ?? ''};
     }
     final result = await super.call(operation, payload, jobId);
+    if (operation == 'media.retouchAnalyze' && payload['mode'] == 'skin') {
+      final next = _copy(result);
+      final portrait = object(next['portrait']);
+      portrait['skinPixels'] = skinAnalysisPixels;
+      next['portrait'] = portrait;
+      snapshots[next['localData'] as String] = next;
+      return {...next, 'regionId': payload['regionId'] ?? ''};
+    }
     return operation.startsWith('media.retouch')
         ? {...result, 'regionId': payload['regionId'] ?? ''}
         : result;
@@ -169,12 +178,16 @@ Future<void> _until(
   fail(message);
 }
 
-Future<_Fixture> _open(WidgetTester tester) async {
+Future<_Fixture> _open(
+  WidgetTester tester, {
+  void Function(_Fixture fixture)? configure,
+}) async {
   tester.view.physicalSize = const Size(400, 760);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
   final f = _Fixture();
+  configure?.call(f);
   addTearDown(() async {
     for (final gate in f.held) {
       if (!gate.isCompleted) gate.complete();
@@ -255,7 +268,256 @@ Future<void> _tool(WidgetTester tester, _Fixture f, String label) async {
   );
 }
 
+List<Json> _skinAnalyses(_Fixture fixture) => fixture.core.calls
+    .where(
+      (call) => call.$1 == 'media.retouchAnalyze' && call.$2['mode'] == 'skin',
+    )
+    .map((call) => call.$2)
+    .toList();
+
+Future<void> _backToTools(WidgetTester tester, _Fixture fixture) async {
+  fixture.back!();
+  await _until(
+    tester,
+    () => fixture.page.toolIntent == 'overview' && fixture.page.busy == false,
+    'Back must return to the same portrait tool panel.',
+  );
+  expect(fixture.finished, isEmpty);
+}
+
+Future<void> _ioFrames(WidgetTester tester) async {
+  for (var tick = 0; tick < 5; tick++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 12)),
+    );
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
 void main() {
+  testWidgets(
+    'Allocated empty skin masks auto-analyze before a pending personal tone-card request',
+    (tester) async {
+      final f = await _open(
+        tester,
+        configure: (fixture) {
+          (fixture.core.snapshots['start']!['portrait'] as Json)['skinPixels'] =
+              0;
+          fixture.core.skinAnalysisPixels = 64;
+        },
+      );
+      final cards = f.hold('toneCards.list/');
+      await _tool(tester, f, '皮肤');
+      await _until(
+        tester,
+        () => f.count('toneCards.list') == 1,
+        'The unrelated personal tone-card request must actually be pending.',
+      );
+      expect(cards.isCompleted, false);
+      expect(_skinAnalyses(f), hasLength(1));
+      expect(object(f.page.data['portrait'])['hasSkinMask'], true);
+      expect(object(f.page.data['portrait'])['skinPixels'], 64);
+      expect(f.page.busy, false);
+      expect(f.page.toolIntent, 'skin');
+      expect(f.routes.pushes, 1);
+      expect(f.finished, isEmpty);
+      expect(f.core.calls.where((call) => call.$1 == 'draft.save'), isEmpty);
+      cards.complete();
+      await _ioFrames(tester);
+      expect(_skinAnalyses(f), hasLength(1));
+    },
+  );
+
+  testWidgets(
+    'A skin mask at the native minimum is reused while switching and re-entering tools',
+    (tester) async {
+      final f = await _open(
+        tester,
+        configure: (fixture) {
+          (fixture.core.snapshots['start']!['portrait'] as Json)['skinPixels'] =
+              32;
+        },
+      );
+      await _tool(tester, f, '皮肤');
+      await _backToTools(tester, f);
+      await _tool(tester, f, '面部');
+      await _backToTools(tester, f);
+      await _tool(tester, f, '皮肤');
+      expect(_skinAnalyses(f), isEmpty);
+      expect(object(f.page.data['portrait'])['skinPixels'], 32);
+      expect(f.routes.pushes, 1);
+    },
+  );
+
+  testWidgets(
+    'One empty skin result does not loop on rebuild and explicit re-entry can retry',
+    (tester) async {
+      final f = await _open(
+        tester,
+        configure: (fixture) {
+          (fixture.core.snapshots['start']!['portrait'] as Json)['skinPixels'] =
+              0;
+          fixture.core.skinAnalysisPixels = 0;
+        },
+      );
+      await _tool(tester, f, '皮肤');
+      expect(_skinAnalyses(f), hasLength(1));
+      expect(object(f.page.data['portrait'])['hasSkinMask'], true);
+      expect(object(f.page.data['portrait'])['skinPixels'], 0);
+      expect(f.page.notice, contains('未找到可用的皮肤范围'));
+      await _ioFrames(tester);
+      expect(
+        _skinAnalyses(f),
+        hasLength(1),
+        reason:
+            'A completed empty result must not schedule itself from builds.',
+      );
+      await _backToTools(tester, f);
+      await _tool(tester, f, '皮肤');
+      expect(_skinAnalyses(f), hasLength(2));
+      await _ioFrames(tester);
+      expect(_skinAnalyses(f), hasLength(2));
+      expect(f.finished, isEmpty);
+    },
+  );
+
+  testWidgets(
+    'Cancelling automatic skin analysis permits a new entry and rejects the late first result',
+    (tester) async {
+      final f = await _open(
+        tester,
+        configure: (fixture) {
+          (fixture.core.snapshots['start']!['portrait'] as Json)['skinPixels'] =
+              0;
+          fixture.core.skinAnalysisPixels = 64;
+        },
+      );
+      final first = f.hold('media.retouchAnalyze/skin');
+      await tester.ensureVisible(find.text('皮肤'));
+      await tester.tap(find.text('皮肤'));
+      await _until(
+        tester,
+        () => _skinAnalyses(f).length == 1 && f.page.busy,
+        'The first automatic analysis must be genuinely held.',
+      );
+      final blocked = f.core.blockedJobs.single;
+      await _backToTools(tester, f);
+      expect(first.isCompleted, false);
+      expect(f.core.cancelledJobs, contains(blocked));
+      await _tool(tester, f, '皮肤');
+      expect(_skinAnalyses(f), hasLength(2));
+      expect(object(f.page.data['portrait'])['skinPixels'], 64);
+      final accepted = f.page.data['localData'];
+      first.complete();
+      await _ioFrames(tester);
+      expect(f.page.data['localData'], accepted);
+      expect(f.page.toolIntent, 'skin');
+      expect(f.finished, isEmpty);
+      expect(f.routes.pushes, 1);
+    },
+  );
+
+  testWidgets(
+    'Single-finger overview skin and face navigation moves the zoomed photograph without editing it',
+    (tester) async {
+      final f = await _open(tester);
+      for (final tool in ['overview', '皮肤', '面部']) {
+        if (tool != 'overview') await _tool(tester, f, tool);
+        final before = f.viewport.focus;
+        final scale = f.page.viewport.value.getMaxScaleOnAxis() as double;
+        final mutations = f.core.calls
+            .where(
+              (call) =>
+                  call.$1 == 'media.retouchChange' ||
+                  call.$1 == 'media.retouchHeal' ||
+                  call.$1 == 'media.retouchPatch',
+            )
+            .length;
+        await tester.drag(
+          find.byType(RetouchOriginalPhotoStage),
+          const Offset(36, 20),
+        );
+        await _ioFrames(tester);
+        expect(
+          (f.viewport.focus - before).distance,
+          greaterThan(.001),
+          reason: tool,
+        );
+        expect(f.page.viewport.value.getMaxScaleOnAxis(), closeTo(scale, 1e-8));
+        expect(
+          f.core.calls
+              .where(
+                (call) =>
+                    call.$1 == 'media.retouchChange' ||
+                    call.$1 == 'media.retouchHeal' ||
+                    call.$1 == 'media.retouchPatch',
+              )
+              .length,
+          mutations,
+          reason: tool,
+        );
+        if (tool != 'overview') await _backToTools(tester, f);
+      }
+      expect(f.routes.pushes, 1);
+      expect(f.finished, isEmpty);
+    },
+  );
+
+  testWidgets(
+    'A face-selection brush stroke keeps priority over zoomed single-finger panning',
+    (tester) async {
+      final f = await _open(tester);
+      await _tool(tester, f, '面部');
+      await tester.ensureVisible(find.text('选区'));
+      await tester.tap(find.text('选区'));
+      await tester.pump();
+      await tester.tap(find.text('补选'));
+      await tester.pump();
+      final before = f.viewport.focus;
+      final scale = f.page.viewport.value.getMaxScaleOnAxis() as double;
+      final stage = find.byType(RetouchOriginalPhotoStage);
+      await tester.dragFrom(
+        tester.getRect(stage).center - const Offset(30, 0),
+        const Offset(60, 20),
+      );
+      await _until(
+        tester,
+        () =>
+            f.page.busy == false &&
+            f.core.calls.any(
+              (call) =>
+                  call.$1 == 'media.retouchChange' &&
+                  call.$2['action'] == 'faceStroke',
+            ),
+        'The real canvas stroke must submit its selected face brush command.',
+      );
+      final stroke = f.core.calls
+          .singleWhere(
+            (call) =>
+                call.$1 == 'media.retouchChange' &&
+                call.$2['action'] == 'faceStroke',
+          )
+          .$2;
+      expect(stroke['index'], 0);
+      expect(object(stroke['value'])['erase'], false);
+      expect(
+        (object(stroke['value'])['points'] as List).length,
+        greaterThanOrEqualTo(4),
+      );
+      expect(f.viewport.focus.dx, closeTo(before.dx, 1e-8));
+      expect(f.viewport.focus.dy, closeTo(before.dy, 1e-8));
+      expect(f.page.viewport.value.getMaxScaleOnAxis(), closeTo(scale, 1e-8));
+      expect(
+        f.core.calls.where(
+          (call) =>
+              call.$1 == 'media.retouchHeal' || call.$1 == 'media.retouchPatch',
+        ),
+        isEmpty,
+      );
+      expect(f.finished, isEmpty);
+    },
+  );
+
   testWidgets(
     'Natural intent and Back are immediate while native work is held and never exit the parent portrait',
     (tester) async {

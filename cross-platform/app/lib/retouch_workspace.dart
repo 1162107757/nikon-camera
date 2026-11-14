@@ -59,6 +59,8 @@ class RetouchWorkspace extends StatefulWidget {
 }
 
 class _RetouchWorkspaceState extends State<RetouchWorkspace> {
+  String? measuredDockKey;
+  double measuredDockHeight = 0;
   Json? data, frame;
   final undo = <Json>[], redo = <Json>[];
   String? job, error;

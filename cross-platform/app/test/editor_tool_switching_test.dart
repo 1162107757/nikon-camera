@@ -293,10 +293,12 @@ void main() {
         'Portrait must finish its first preparation',
       );
       expect(h.routes.pushes, routes);
-      expect(
-        tester.getRect(find.byKey(const Key('editor-photo-viewport'))),
-        photo,
+      final portraitPhoto = tester.getRect(
+        find.byKey(const Key('editor-photo-viewport')),
       );
+      expect(portraitPhoto.topLeft, photo.topLeft);
+      expect(portraitPhoto.width, photo.width);
+      expect(portraitPhoto.height, greaterThan(photo.height));
       _sameFocus(h.viewport, focus);
       final describes = core.portrait.calls
           .where((call) => call.$1 == 'media.retouchDescribe')
