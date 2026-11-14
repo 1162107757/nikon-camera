@@ -338,6 +338,35 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         yes(canceled,"full detail rejects an already-canceled native request");
         yes(beforeCancel.equals(snapshot(new File(root,"previews"))),"canceled full detail leaves no temporary frame");
         yes(state.equals(editState())&&original.equals(hash(source)),"rejected full-detail requests preserve source and persistent edit state");
+        JSONObject tilePayload=new JSONObject().put("owner",owner).put("path",result.getPath()).put("detailToken",detail.getString("detailToken")).put("expectedSourceSha",original).put("maxEdge",512).put("region",new JSONObject().put("left",.25).put("top",.25).put("right",.5).put("bottom",.5));
+        JSONObject tile=call("media.detailTile",tilePayload);File tileFile=remember(tile,"previews");
+        yes(tile.getBoolean("temporary")&&tile.getString("detailToken").equals(detail.getString("detailToken"))&&tile.getString("sourceSha").equals(original),"tile owns a read-only frame bound to the issued full-detail source");
+        yes(tile.getInt("width")==400&&tile.getInt("height")==300&&tile.getInt("sourceWidth")==1600&&tile.getInt("sourceHeight")==1200&&tile.getJSONObject("region").getDouble("left")==.25,"tile reports the exact upright pixel-rounded output ROI");
+        double roiError=roiError(result,tileFile,400,300);
+        yes(roiError<8,"real release tile pixels match the edited full-resolution ROI");
+        yes(tile.getInt("decodedWidth")==400&&tile.getInt("decodedHeight")==300&&tile.getLong("decodedBytes")<=4L*1024*1024*4,"native ROI decoder allocates only the bounded 400x300 pixel tile");
+        JSONObject overviewPayload=new JSONObject(tilePayload.toString()).put("maxEdge",128).put("region",new JSONObject().put("left",0).put("top",0).put("right",1).put("bottom",1));
+        JSONObject overview=call("media.detailTile",overviewPayload);remember(overview,"previews");
+        yes(overview.getInt("width")<=128&&overview.getInt("height")<=128&&overview.getInt("decodedWidth")<=128&&overview.getInt("decodedHeight")<=128,"zoomed-out ROI uses sampled region decoding rather than a full-size bitmap");
+        for(JSONObject invalid:new JSONObject[]{new JSONObject(tilePayload.toString()).put("detailToken","unissued-capability"),new JSONObject(tilePayload.toString()).put("owner",owner+"different"),new JSONObject(tilePayload.toString()).put("path",source.getPath()),new JSONObject(tilePayload.toString()).put("expectedSourceSha",String.join("",Collections.nCopies(64,"0"))),new JSONObject(tilePayload.toString()).put("maxEdge",4096)}){
+            Throwable rejected=null;try{call("media.detailTile",invalid);}catch(Throwable value){rejected=unwrap(value);}yes(rejected instanceof IOException,"tile rejects an unissued, cross-owner, rebound, changed-SHA or over-budget capability");
+        }
+        Set<String> tileBeforeCancel=snapshot(new File(root,"previews"));Throwable tileCancelled=null;
+        try{await(worker.submit(()->invoke("media.detailTile",tilePayload.toString(),taskFlag(true),value->{})));}catch(Throwable value){tileCancelled=unwrap(value);}
+        yes(tileCancelled instanceof IOException,"native tile honors an already-cancelled request");
+        yes(tileBeforeCancel.equals(snapshot(new File(root,"previews"))),"cancelled or rejected tiles leave no temporary artifacts");
+        byte[] originalFull=Files.readAllBytes(result.toPath());try{byte[] changed=originalFull.clone();changed[changed.length-1]^=1;Files.write(result.toPath(),changed);Throwable rejected=null;try{call("media.detailTile",tilePayload);}catch(Throwable value){rejected=unwrap(value);}yes(rejected instanceof IOException,"tile rejects changed full-plane bytes even at the issued private path");}finally{Files.write(result.toPath(),originalFull);}
+        byte[] originalSource=Files.readAllBytes(source.toPath());try{byte[] changed=originalSource.clone();changed[changed.length-1]^=1;Files.write(source.toPath(),changed);Throwable rejected=null;try{call("media.detailTile",tilePayload);}catch(Throwable value){rejected=unwrap(value);}yes(rejected instanceof IOException,"tile rejects source bytes changed after full rendering");}finally{Files.write(source.toPath(),originalSource);}
+        yes(state.equals(editState())&&original.equals(hash(source)),"all tile reads preserve original bytes and persistent editing transactions");
+        JSONObject localRecipe=new JSONObject(recipe.toString()).put("geometry",new JSONObject().put("turns",1)).put("border",new JSONObject().put("template",3));
+        JSONObject localDetail=call("media.detailRender",new JSONObject(payload.toString()).put("recipe",localRecipe).put("viewMode","local"));File localFile=remember(localDetail,"previews");
+        yes(localDetail.getInt("width")==1600&&localDetail.getInt("height")==1200,"selection full detail uses the same geometry/border-neutral source plane as localPreview");
+        yes(roiError(result,localFile,0,0)<8,"selection full detail retains the current adjustment profile on the exact source pixels");
+        JSONObject rotated=call("media.detailRender",new JSONObject(payload.toString()).put("recipe",new JSONObject(recipe.toString()).put("geometry",new JSONObject().put("turns",1))));remember(rotated,"previews");
+        yes(rotated.getInt("width")==1200&&rotated.getInt("height")==1600,"default full detail keeps the review composition rather than silently choosing local mode");
+        Throwable badMode=null;try{call("media.detailRender",new JSONObject(payload.toString()).put("viewMode","unknown"));}catch(Throwable value){badMode=unwrap(value);}yes(badMode instanceof IOException,"unknown full-detail view modes are rejected");
+        yes(state.equals(editState())&&original.equals(hash(source)),"local and review full-detail modes preserve all source and persistent edit transactions");
+        evidence.put("detailTileWidth",tile.getInt("width")).put("detailTileHeight",tile.getInt("height")).put("detailTileDecodedBytes",tile.getLong("decodedBytes")).put("detailTileMeanChannelError",roiError).put("detailTileReadOnly",true);
         evidence.put("detailSourceSha256",original).put("detailWidth",size.outWidth).put("detailHeight",size.outHeight).put("detailPersistentStateUnchanged",true);
     }
     private void rawChecks()throws Exception {
@@ -359,6 +388,34 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         yes(bounds.outWidth>0&&bounds.outHeight>0&&Math.max(bounds.outWidth,bounds.outHeight)<=512,"release RAW JNI produced a bounded <=512px encoded preview");
         Bitmap decoded=BitmapFactory.decodeFile(output.getPath());yes(decoded!=null,"release RAW JNI output is a decodable JPEG");if(decoded!=null)decoded.recycle();
         yes(source.length()==bytes&&original.equals(hash(source)),"RAW source length and SHA remain unchanged after actual JNI callbacks");
+        Map<String,String> transactionBefore=editTransactions();
+        JSONObject developPayload=new JSONObject().put("path",source.getPath()).put("owner",owner).put("expectedSourceSha",original).put("settings",new JSONObject().put("colorMode","NEUTRAL").put("exposure",0));
+        JSONObject developed=call("media.rawDetail",developPayload);remember(developed,"previews");
+        yes(developed.getBoolean("temporary")&&developed.getBoolean("fullResolution")&&developed.getInt("width")==info.getInt("width")&&developed.getInt("height")==info.getInt("height")&&developed.getJSONObject("settings").getInt("exposure")==0,"RAW detail returns the complete current staged developer pixels without rawPrepare");
+        JSONObject rawTilePayload=new JSONObject().put("owner",owner).put("path",developed.getString("path")).put("detailToken",developed.getString("detailToken")).put("expectedSourceSha",original).put("maxEdge",512).put("region",new JSONObject().put("left",0).put("top",0).put("right",1).put("bottom",1));
+        JSONObject neutralTile=call("media.detailTile",rawTilePayload);File neutralFile=remember(neutralTile,"previews");
+        yes(neutralTile.getInt("decodedWidth")<=512&&neutralTile.getInt("decodedHeight")<=512&&neutralTile.getLong("decodedBytes")<=4L*1024*1024*4,"RAW full detail can be viewed through bounded native tiles");
+        JSONObject darker=call("media.rawDetail",new JSONObject(developPayload.toString()).put("settings",new JSONObject().put("colorMode","NEUTRAL").put("exposure",-10)));remember(darker,"previews");
+        JSONObject darkTile=call("media.detailTile",new JSONObject(rawTilePayload.toString()).put("path",darker.getString("path")).put("detailToken",darker.getString("detailToken")));File darkFile=remember(darkTile,"previews");
+        yes(meanRed(darkFile)<meanRed(neutralFile)-8,"RAW detail tiles honor newly staged -1 EV rather than reusing stale cached pixels");
+        yes(transactionBefore.equals(editTransactions()),"RAW detail writes only disposable previews and the reusable developer cache, with no draft/version/raw-editor/export transaction");
+        yes(original.equals(hash(source)),"RAW detail leaves the owned original SHA unchanged");
+        JSONArray editValues=new JSONArray();for(int i=0;i<17;i++)editValues.put(i==1?10:0);
+        JSONObject editRecipe=new JSONObject().put("schema",1).put("values",editValues),edited=call("media.rawDetail",new JSONObject(developPayload.toString()).put("recipe",editRecipe).put("viewMode","review"));File editedFile=remember(edited,"previews");
+        yes(meanRed(editedFile)>meanRed(neutralFile)+8,"direct RAW editor full detail applies the frozen +1 EV editing recipe after current development");
+        yes(edited.getBoolean("temporary")&&edited.getBoolean("fullResolution")&&edited.getString("sourceSha").equals(original),"edited RAW detail retains the original NEF/DNG source identity and read-only ownership");
+        JSONObject localRecipe=new JSONObject(editRecipe.toString()).put("geometry",new JSONObject().put("turns",1)).put("border",new JSONObject().put("template",3));
+        JSONObject local=call("media.rawDetail",new JSONObject(developPayload.toString()).put("recipe",localRecipe).put("viewMode","local"));File localFile=remember(local,"previews");
+        yes(local.getInt("width")==info.getInt("width")&&local.getInt("height")==info.getInt("height"),"direct RAW selection full detail strips composition exactly like localPreview");
+        yes(roiError(editedFile,localFile,0,0)<8,"direct RAW local detail retains the same edited pixels while neutralizing geometry and border");
+        JSONObject rotated=call("media.rawDetail",new JSONObject(developPayload.toString()).put("recipe",new JSONObject(editRecipe.toString()).put("geometry",new JSONObject().put("turns",1))));remember(rotated,"previews");
+        yes(rotated.getInt("width")==info.getInt("height")&&rotated.getInt("height")==info.getInt("width"),"direct RAW review detail preserves the frozen rotated composition at full dimensions");
+        Throwable invalidMode=null;try{call("media.rawDetail",new JSONObject(developPayload.toString()).put("recipe",editRecipe).put("viewMode","unknown"));}catch(Throwable value){invalidMode=unwrap(value);}yes(invalidMode instanceof IOException,"direct RAW detail rejects unknown composition modes");
+        JSONObject editedTile=call("media.detailTile",new JSONObject(rawTilePayload.toString()).put("path",edited.getString("path")).put("detailToken",edited.getString("detailToken")));File editedTileFile=remember(editedTile,"previews");
+        yes(editedTile.getString("sourceSha").equals(original)&&meanRed(editedTileFile)>meanRed(neutralFile)+8,"edited RAW ROI tiles retain the original RAW binding and current editing effect");
+        yes(transactionBefore.equals(editTransactions())&&original.equals(hash(source)),"all direct RAW editing detail profiles preserve original bytes and persistent draft/version/raw-editor/export transactions");
+        evidence.put("rawRecipeDetailVerified",true).put("rawRecipeLocalProfileVerified",true).put("rawRecipeSourceSha256",original);
+        evidence.put("rawDetailWidth",developed.getInt("width")).put("rawDetailHeight",developed.getInt("height")).put("rawDetailReadOnly",true).put("rawDetailStagedExposureVerified",true);
         evidence.put("rawSha256",original).put("rawBytes",bytes).put("rawWidth",bounds.outWidth).put("rawHeight",bounds.outHeight).put("rawEmbedded",thumbnail.optBoolean("embeddedPreview",false));
     }
     private File createSource(String extension)throws Exception {
@@ -383,6 +440,12 @@ public final class ReleaseRuntimeInstrumentation extends Instrumentation {
         try{if(before==null||after==null)throw new IOException("Cannot decode release portrait comparison");yes(before.getWidth()==after.getWidth()&&before.getHeight()==after.getHeight(),"portrait comparison uses identical pixel geometry");int changed=0;for(int y=0;y<before.getHeight();y+=Math.max(1,before.getHeight()/48))for(int x=0;x<before.getWidth();x+=Math.max(1,before.getWidth()/48)){int a=before.getPixel(x,y),b=after.getPixel(x,y);if(Math.abs(((a>>16)&255)-((b>>16)&255))+Math.abs(((a>>8)&255)-((b>>8)&255))+Math.abs((a&255)-(b&255))>3)changed++;}return changed;}
         finally{if(before!=null)before.recycle();if(after!=null)after.recycle();}
     }
+    private double roiError(File fullFile,File tileFile,int left,int top)throws IOException{
+        Bitmap full=BitmapFactory.decodeFile(fullFile.getPath()),tile=BitmapFactory.decodeFile(tileFile.getPath());
+        try{if(full==null||tile==null)throw new IOException("Cannot decode ROI comparison");double error=0;int count=0;for(int y=12;y<tile.getHeight()-12;y+=19)for(int x=12;x<tile.getWidth()-12;x+=19){int a=full.getPixel(left+x,top+y),b=tile.getPixel(x,y);error+=Math.abs(((a>>16)&255)-((b>>16)&255))+Math.abs(((a>>8)&255)-((b>>8)&255))+Math.abs((a&255)-(b&255));count+=3;}return error/Math.max(1,count);}finally{if(full!=null)full.recycle();if(tile!=null)tile.recycle();}
+    }
+    private double meanRed(File file)throws IOException{Bitmap bitmap=BitmapFactory.decodeFile(file.getPath());try{if(bitmap==null)throw new IOException("Cannot decode RAW tile");double sum=0;int count=0;for(int y=0;y<bitmap.getHeight();y+=5)for(int x=0;x<bitmap.getWidth();x+=5){sum+=(bitmap.getPixel(x,y)>>16)&255;count++;}return sum/Math.max(1,count);}finally{if(bitmap!=null)bitmap.recycle();}}
+    private Map<String,String> editTransactions()throws Exception{Map<String,String> state=new TreeMap<>();for(String name:new String[]{"photo-edit-drafts","photo-preset-history","photo-versions","raw-editor","exports"})collectState(new File(root,name),state,0,root);return state;}
     private void cleanup()throws IOException {
         List<File> files=new ArrayList<>(owned);Collections.reverse(files);IOException failure=null;
         for(File file:files){try{File canonical=file.getCanonicalFile();if(root==null||!canonical.equals(file)||!canonical.toPath().startsWith(root.toPath())||Files.isSymbolicLink(file.toPath()))throw new IOException("Refusing to clean a non-owned canonical path: "+file);Files.deleteIfExists(file.toPath());}catch(IOException value){if(failure==null)failure=value;else failure.addSuppressed(value);}}

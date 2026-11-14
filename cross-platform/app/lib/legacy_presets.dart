@@ -15,6 +15,7 @@ class LegacyPresetGrid extends StatelessWidget {
     this.onMore,
     this.loadingMore = false,
     this.pageError,
+    this.onLocal,
   });
   final List<Preset> rows;
   final HueviaCore core;
@@ -23,6 +24,7 @@ class LegacyPresetGrid extends StatelessWidget {
   final VoidCallback? onMore;
   final bool loadingMore;
   final String? pageError;
+  final VoidCallback? onLocal;
 
   Widget card(BuildContext context, Preset preset, double ratio) {
     final palette = HuePalette.of(context);
@@ -142,6 +144,7 @@ class LegacyPresetGrid extends StatelessWidget {
                 loading: loadingMore,
                 error: pageError,
                 onRetry: onMore,
+                onLocal: onLocal,
               );
             }
             return Row(
@@ -238,10 +241,12 @@ class LegacyPageStatus extends StatelessWidget {
     required this.loading,
     this.error,
     this.onRetry,
+    this.onLocal,
   });
   final bool loading;
   final String? error;
   final VoidCallback? onRetry;
+  final VoidCallback? onLocal;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -260,6 +265,8 @@ class LegacyPageStatus extends StatelessWidget {
             children: [
               Text(error!, textAlign: TextAlign.center),
               TextButton(onPressed: onRetry, child: const Text('重试加载')),
+              if (onLocal != null)
+                TextButton(onPressed: onLocal, child: const Text('我的预设')),
             ],
           )
         : Text(

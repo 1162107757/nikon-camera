@@ -93,6 +93,109 @@ Future<void> verifyDetailRendering(HueviaCore core) async {
       greaterThan(100),
       reason: 'The requested +1 EV must change actual full pixels',
     );
+    expect(detail['detailToken'], isA<String>());
+    final tilePayload = <String, dynamic>{
+      'owner': owner,
+      'path': detail['path'],
+      'detailToken': detail['detailToken'],
+      'expectedSourceSha': sourceSha,
+      'region': {
+        'left': 300 / 1600,
+        'top': 240 / 1200,
+        'right': 800 / 1600,
+        'bottom': 640 / 1200,
+      },
+      'maxEdge': 256,
+    };
+    final tile = await core.call('media.detailTile', tilePayload);
+    remember(tile);
+    expect((tile['sourceWidth'], tile['sourceHeight']), (1600, 1200));
+    expect(tile['sourceSha'], sourceSha);
+    expect(tile['detailToken'], detail['detailToken']);
+    expect(tile['temporary'], true);
+    expect(
+      (tile['decodedWidth'] as num) * (tile['decodedHeight'] as num),
+      lessThanOrEqualTo(4 * 1024 * 1024),
+    );
+    expect(tile['decodedBytes'], lessThanOrEqualTo(4 * 1024 * 1024 * 4));
+    final visible = await _read(temporary.last);
+    expect((visible.width, visible.height), (250, 200));
+    expect(
+      visible.red,
+      greaterThan(full.red + 50),
+      reason: 'ROI must sample the edited bright rectangle, not the overview',
+    );
+    expect(tile['region'], tilePayload['region']);
+    for (final invalid in [
+      {...tilePayload, 'detailToken': 'unissued-capability'},
+      {...tilePayload, 'owner': '${owner}different-owner'},
+      {...tilePayload, 'path': source.path},
+      {...tilePayload, 'maxEdge': 4096},
+      {...tilePayload, 'expectedSourceSha': List.filled(64, '0').join()},
+      {
+        ...tilePayload,
+        'region': {'left': 0.5, 'top': 0, 'right': 0.5, 'bottom': 1},
+      },
+    ]) {
+      await expectLater(
+        core.call('media.detailTile', invalid),
+        throwsA(isA<AppFailure>()),
+      );
+    }
+    final localRecipe = <String, dynamic>{
+      ...recipe,
+      'geometry': {'turns': 1},
+      'border': {'template': 3},
+    };
+    final localPreview = await core.call('media.localPreview', {
+      ...payload,
+      'recipe': localRecipe,
+      'maxEdge': 640,
+    });
+    remember(localPreview);
+    expect((localPreview['width'], localPreview['height']), (640, 480));
+    final localDetail = await core.call('media.detailRender', {
+      ...payload,
+      'recipe': localRecipe,
+      'viewMode': 'local',
+      'maxEdge': 640,
+    });
+    remember(localDetail);
+    expect(
+      (localDetail['width'], localDetail['height']),
+      (1600, 1200),
+      reason: 'Selection detail strips geometry/border exactly like localPreview, while retaining full pixels',
+    );
+    expect(
+      (await _read(temporary.last)).red,
+      closeTo(full.red, 3),
+      reason:
+          'Selection detail retains the same current global adjustment profile',
+    );
+    final localTile = await core.call('media.detailTile', {
+      ...tilePayload,
+      'path': localDetail['path'],
+      'detailToken': localDetail['detailToken'],
+    });
+    remember(localTile);
+    expect((await _read(temporary.last)).red, closeTo(visible.red, 3));
+    final rotated = await core.call('media.detailRender', {
+      ...payload,
+      'recipe': {
+        ...recipe,
+        'geometry': {'turns': 1},
+      },
+    });
+    remember(rotated);
+    expect(
+      (rotated['width'], rotated['height']),
+      (1200, 1600),
+      reason: 'Omitted viewMode keeps the ordinary composed review profile',
+    );
+    await expectLater(
+      core.call('media.detailRender', {...payload, 'viewMode': 'unknown'}),
+      throwsA(isA<AppFailure>()),
+    );
     expect(await _hash(source), sourceSha);
     expect(
       await core.call('draft.load', {'path': source.path, 'owner': owner}),
@@ -160,6 +263,132 @@ Future<void> verifyDetailRendering(HueviaCore core) async {
       persistentBefore,
       reason: 'Detail viewing never saves drafts, versions or RAW development caches',
     );
+    // RAW detail reuses the real developer/cache, but never rawPrepare, a
+    // persistent editing source, a draft or an export/version transaction.
+    final rawDraft = await core.call('draft.load', {
+      'path': raw.path,
+      'owner': owner,
+    });
+    final developed = await core.call('media.rawDetail', {
+      'path': raw.path,
+      'owner': owner,
+      'expectedSourceSha': rawSha,
+      'settings': {'colorMode': 'NEUTRAL', 'exposure': 0},
+    });
+    remember(developed);
+    expect(developed['temporary'], true);
+    expect(developed['fullResolution'], true);
+    expect((developed['width'], developed['height']), (256, 192));
+    final rawTile = <String, dynamic>{
+      'owner': owner,
+      'path': developed['path'],
+      'detailToken': developed['detailToken'],
+      'expectedSourceSha': rawSha,
+      'region': {'left': 0, 'top': 0, 'right': 1, 'bottom': 1},
+      'maxEdge': 256,
+    };
+    final neutralTile = await core.call('media.detailTile', rawTile);
+    remember(neutralTile);
+    final neutral = await _read(temporary.last);
+    final darker = await core.call('media.rawDetail', {
+      'path': raw.path,
+      'owner': owner,
+      'expectedSourceSha': rawSha,
+      'settings': {'colorMode': 'NEUTRAL', 'exposure': -10},
+    });
+    remember(darker);
+    final darkerTile = await core.call('media.detailTile', {
+      ...rawTile,
+      'path': darker['path'],
+      'detailToken': darker['detailToken'],
+    });
+    remember(darkerTile);
+    expect(
+      (await _read(temporary.last)).red,
+      lessThan(neutral.red - 10),
+      reason: 'Full RAW detail must honor the current staged exposure',
+    );
+    final rawEdited = await core.call('media.rawDetail', {
+      'path': raw.path,
+      'owner': owner,
+      'expectedSourceSha': rawSha,
+      'settings': {'colorMode': 'NEUTRAL', 'exposure': 0},
+      'recipe': recipe,
+      'viewMode': 'review',
+    });
+    remember(rawEdited);
+    final editedPixels = await _read(temporary.last);
+    expect(
+      editedPixels.red,
+      greaterThan(neutral.red + 10),
+      reason: 'Direct RAW editing applies the frozen editing recipe after staged development',
+    );
+    expect(rawEdited['sourceSha'], rawSha);
+    final rawLocal = await core.call('media.rawDetail', {
+      'path': raw.path,
+      'owner': owner,
+      'expectedSourceSha': rawSha,
+      'settings': {'colorMode': 'NEUTRAL', 'exposure': 0},
+      'recipe': localRecipe,
+      'viewMode': 'local',
+    });
+    remember(rawLocal);
+    expect((rawLocal['width'], rawLocal['height']), (256, 192));
+    expect(
+      (await _read(temporary.last)).red,
+      closeTo(editedPixels.red, 3),
+      reason: 'RAW selection detail uses the same local profile, not the rotated/bordered review plane',
+    );
+    final rawReviewRotated = await core.call('media.rawDetail', {
+      'path': raw.path,
+      'owner': owner,
+      'expectedSourceSha': rawSha,
+      'settings': {'colorMode': 'NEUTRAL', 'exposure': 0},
+      'recipe': {
+        ...recipe,
+        'geometry': {'turns': 1},
+      },
+    });
+    remember(rawReviewRotated);
+    expect((rawReviewRotated['width'], rawReviewRotated['height']), (192, 256));
+    final rawEditedTile = await core.call('media.detailTile', {
+      ...rawTile,
+      'path': rawEdited['path'],
+      'detailToken': rawEdited['detailToken'],
+    });
+    remember(rawEditedTile);
+    expect(rawEditedTile['sourceSha'], rawSha);
+    expect((await _read(temporary.last)).red, closeTo(editedPixels.red, 3));
+    for (final extra in [
+      {'recipe': recipe, 'viewMode': 'unknown'},
+      {'recipe': 'invalid'},
+    ]) {
+      await expectLater(
+        core.call('media.rawDetail', {
+          'path': raw.path,
+          'owner': owner,
+          'expectedSourceSha': rawSha,
+          'settings': <String, dynamic>{},
+          ...extra,
+        }),
+        throwsA(isA<AppFailure>()),
+      );
+    }
+    expect(
+      await core.call('draft.load', {'path': raw.path, 'owner': owner}),
+      rawDraft,
+    );
+    expect(await core.call('version.list', {'owner': owner}), versionsBefore);
+    final afterRaw = await _persistent(core.root);
+    for (final name in [
+      'photo-edit-drafts',
+      'photo-preset-history',
+      'photo-versions',
+      'exports',
+    ]) {
+      expect(afterRaw[name], persistentBefore[name]);
+    }
+    expect(await _hash(raw), rawSha);
   } finally {
     for (final file in temporary.reversed) {
       if (await file.exists()) await file.delete();

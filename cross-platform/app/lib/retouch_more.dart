@@ -45,10 +45,16 @@ Future<RetouchTonePickerResult?> showRetouchCustomTone(
   required int rgb,
   required List<RetouchToneCard> cards,
   required Future<List<RetouchToneCard>> Function(String name, int rgb) onSave,
+  ValueChanged<int>? onChanged,
 }) => showDialog<RetouchTonePickerResult>(
   context: context,
   barrierColor: Colors.black.withValues(alpha: .42),
-  builder: (_) => _CustomToneDialog(rgb: rgb, cards: cards, onSave: onSave),
+  builder: (_) => _CustomToneDialog(
+    rgb: rgb,
+    cards: cards,
+    onSave: onSave,
+    onChanged: onChanged,
+  ),
 );
 
 /// Original 84 dp tone rail card, including the split original-colour swatch.
@@ -728,10 +734,12 @@ class _CustomToneDialog extends StatefulWidget {
     required this.rgb,
     required this.cards,
     required this.onSave,
+    this.onChanged,
   });
   final int rgb;
   final List<RetouchToneCard> cards;
   final Future<List<RetouchToneCard>> Function(String name, int rgb) onSave;
+  final ValueChanged<int>? onChanged;
   @override
   State<_CustomToneDialog> createState() => _CustomToneDialogState();
 }
@@ -758,15 +766,20 @@ class _CustomToneDialogState extends State<_CustomToneDialog> {
     }
   }
 
-  void position(Offset point, Size size) => setState(() {
-    hsv = hsv
+  void update(HSVColor value) {
+    setState(() => hsv = value);
+    widget.onChanged?.call(rgb);
+  }
+
+  void position(Offset point, Size size) => update(
+    hsv
         .withSaturation(
           ((point.dx - 4) / math.max(1, size.width - 8)).clamp(0, 1),
         )
         .withValue(
           1 - ((point.dy - 4) / math.max(1, size.height - 8)).clamp(0, 1),
-        );
-  });
+        ),
+  );
   @override
   Widget build(BuildContext context) {
     final color = Color(0xff000000 | rgb);
@@ -787,15 +800,26 @@ class _CustomToneDialogState extends State<_CustomToneDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(24, 24, 24, 16),
-              child: Text(
-                '自定义肤色',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: _text,
-                ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '自定义肤色',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: _text,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: '关闭肤色选择器',
+                    onPressed: () => finish(RetouchTonePickerAction.preview),
+                    icon: const Icon(Icons.close, color: _text),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -876,8 +900,8 @@ class _CustomToneDialogState extends State<_CustomToneDialog> {
                                   divisions: axis == 0 ? 360 : 100,
                                   semanticFormatterCallback: (v) =>
                                       '${['色相', '饱和度', '明度'][axis]} ${v.round()}${axis == 0 ? '°' : '%'}',
-                                  onChanged: (value) => setState(
-                                    () => hsv = axis == 0
+                                  onChanged: (value) => update(
+                                    axis == 0
                                         ? hsv.withHue(value)
                                         : axis == 1
                                         ? hsv.withSaturation(value / 100)
@@ -929,22 +953,6 @@ class _CustomToneDialogState extends State<_CustomToneDialog> {
                     ),
                   ],
                 ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _DialogButton('取消', () => Navigator.pop(context)),
-                  const SizedBox(width: 8),
-                  _DialogButton(
-                    '预览效果',
-                    () => finish(RetouchTonePickerAction.preview),
-                    primary: true,
-                    accent: const Color(0xffffe335),
-                  ),
-                ],
               ),
             ),
           ],

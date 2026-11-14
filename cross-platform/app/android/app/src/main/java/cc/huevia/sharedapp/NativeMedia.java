@@ -17,7 +17,8 @@ final class NativeMedia {
     private final Context context;
     private final SharedRuntime runtime;
     private final NativeExportPreview exportPreview;
-    NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;this.exportPreview=new NativeExportPreview(this.context,runtime);MediaValidation.install(NativeMedia::validateSample);}
+    private final SharedDetailTiles detailTiles;
+    NativeMedia(Context context,SharedRuntime runtime){this.context=context.getApplicationContext();this.runtime=runtime;this.exportPreview=new NativeExportPreview(this.context,runtime);this.detailTiles=new SharedDetailTiles(runtime.root());MediaValidation.install(NativeMedia::validateSample);}
     private static void validateSample(byte[] bytes)throws IOException{
         BitmapFactory.Options options=new BitmapFactory.Options();options.inJustDecodeBounds=true;
         BitmapFactory.decodeByteArray(bytes,0,bytes.length,options);
@@ -28,6 +29,7 @@ final class NativeMedia {
     }
     String request(String operation,String json,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         Map<String,Object> p=SharedJson.object(json);
+        if(operation.equals("media.detailTile"))return detailTile(p,cancel,progress);
         if(operation.startsWith("media.exportPreview"))return exportPreview.request(operation,p,cancel,progress);
         if(operation.startsWith("media.template")){
             cc.huevia.ui.PresetPreviewRenderer templates=new cc.huevia.ui.PresetPreviewRenderer(context);
@@ -110,7 +112,7 @@ final class NativeMedia {
             NativeRawReference.validate(new File((String)reference.get("path")));return SharedJson.encode(reference);
         }
         if(operation.equals("media.rawThumbnail")){if(!raw(source))throw new IOException("请选择 RAW 原文件。");return SharedJson.encode(NativeRawThumbnail.request(runtime,source,cancel));}
-        if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop"))return rawDevelop(operation,p,source,cancel,progress);
+        if(operation.equals("media.rawPreview")||operation.equals("media.rawDevelop")||operation.equals("media.rawDetail"))return rawDevelop(operation,p,source,cancel,progress);
         if(operation.startsWith("media.retouch"))return NativeRetouch.request(context,runtime,operation,p,source,cancel,progress);
         if(operation.equals("media.cleanupAnalyze")){
             String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
@@ -129,6 +131,9 @@ final class NativeMedia {
         int previewEdge=SharedRuntime.integer(p,"maxEdge",1280);
         if(preview&&(previewEdge<128||previewEdge>1280))throw new IOException("预览边长必须在 128 到 1280 之间。");
         String owner=SharedRuntime.text(p,"owner",64),original=source.getPath();
+        String detailMode=detail?SharedRuntime.text(p,"viewMode",16):"";
+        if(detail&&(p.containsKey("viewMode")&&!(p.get("viewMode") instanceof String)||!detailMode.isEmpty()&&!detailMode.equals("local")))throw new IOException("未知的细节构图模式。");
+        boolean detailLocal=detail&&detailMode.equals("local");
         if(detail){
             runtime.guardOwner(owner);if(cancel.getAsBoolean())throw new InterruptedIOException("细节查看已取消。");
             String expected=SharedRuntime.text(p,"expectedSourceSha",64);if(!expected.matches("[a-f0-9]{64}"))throw new IOException("细节查看需要已校验的原图身份。");
@@ -137,7 +142,7 @@ final class NativeMedia {
         }
         if(p.containsKey("snapshot")&&!(p.get("snapshot") instanceof Boolean))throw new IOException("导出快照标识无效。");
         boolean snapshot=Boolean.TRUE.equals(p.get("snapshot"));
-        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):reviewView||snapshot||detail?runtime.reviewView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
+        PhotoEditStore.Draft frozen=originalView?runtime.originalView(original,owner):localView||detailLocal?runtime.localView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):reviewView||snapshot||detail?runtime.reviewView(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe")))):runtime.freezeEdit(original,owner,SharedJson.encode(SharedRuntime.object(p.get("recipe"))));
         if((snapshot||detail)&&!frozen.sourceSha.equals(SharedRuntime.text(p,"expectedSourceSha",64)))throw new IOException("原图与打开导出设置时不同，请重新打开照片。");
         if(!preview)runtime.validateSource(original,frozen.sourceSha);
         if(raw(source))source=RawDeveloper.develop(context,source,owner,RawDevelopmentSettings.DEFAULT,cancel,value->progress.accept(value*.3)).workingFile;
@@ -170,6 +175,8 @@ final class NativeMedia {
                 progress.accept(1);runtime.guardOwner(owner);runtime.validateSource(original,frozen.sourceSha);
                 if(cancel.getAsBoolean())throw new InterruptedIOException("细节查看已取消。");
                 result.put("sourceSha",frozen.sourceSha);result.put("temporary",true);result.put("fullResolution",true);
+                result.put("detailToken",detailTiles.remember(original,owner,frozen.sourceSha,target.getPath(),width,height,cancel));
+                runtime.guardOwner(owner);SharedDetailTiles.check(cancel);
                 String encoded=SharedJson.encode(result);detailComplete=true;return encoded;
             }
             if(preview){result.put("sourceWidth",uncomposed.width);result.put("sourceHeight",uncomposed.height);}
@@ -186,15 +193,29 @@ final class NativeMedia {
     private String rawDevelop(String operation,Map<String,Object> p,File source,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
         if(!raw(source))throw new IOException("请选择 RAW 原文件。");
         String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
+        boolean detail=operation.equals("media.rawDetail");String expected=detail?SharedRuntime.text(p,"expectedSourceSha",64):"";
+        if(detail){if(!expected.matches("[0-9a-f]{64}"))throw new IOException("RAW 原图身份无效。");runtime.validateSource(source.getPath(),expected);}
+        PhotoEditStore.Draft rawRecipe=null;
+        if(detail){
+            String mode=SharedRuntime.text(p,"viewMode",16);
+            if(p.containsKey("viewMode")&&!(p.get("viewMode") instanceof String)||!mode.isEmpty()&&!mode.equals("review")&&!mode.equals("local"))throw new IOException("未知的 RAW 细节构图模式。");
+            if(p.containsKey("recipe")){
+                if(!(p.get("recipe") instanceof Map))throw new IOException("RAW 编辑设置无效。");
+                String recipe=SharedJson.encode(SharedRuntime.object(p.get("recipe")));
+                rawRecipe=mode.equals("local")?runtime.localView(source.getPath(),owner,recipe):runtime.reviewView(source.getPath(),owner,recipe);
+                if(!rawRecipe.sourceSha.equals(expected))throw new IOException("RAW 原图已变化。");
+            }
+        }
         RawDevelopmentSettings settings=SharedRawSettings.parse(SharedJson.encode(SharedRuntime.object(p.get("settings"))));
         SharedRawReference.Reference reference=settings.colorMode==RawDevelopmentSettings.ColorMode.CAMERA_JPEG&&p.get("reference")!=null?SharedRawReference.resolve(runtime.root(),SharedJson.encode(p.get("reference")),cancel):null;
         RawDeveloper.Result result=RawDeveloper.develop(context,source,owner,reference==null?settings:settings.withColorMode(RawDevelopmentSettings.ColorMode.NEUTRAL),cancel,reference==null?progress:value->progress.accept(value*.65));
         RawJpegColorMatch.Fit fit=reference==null?null:NativeRawReference.fit(context,source,owner,result.sourceSha,reference,cancel);
-        boolean preview=operation.equals("media.rawPreview");File dir=new File(runtime.root(),preview?"previews":"raw-editor");
+        boolean preview=operation.equals("media.rawPreview");File dir=new File(runtime.root(),preview||detail?"previews":"raw-editor");
         if(!dir.isDirectory()&&!dir.mkdirs())throw new IOException("无法创建 RAW 编辑目录。");
-        File temporary=File.createTempFile("raw-edit-",".part",dir),target=new File(dir,UUID.randomUUID()+".jpg");Bitmap bitmap=null;
+        File temporary=File.createTempFile("raw-edit-",".part",dir),target=new File(dir,UUID.randomUUID()+".jpg");Bitmap bitmap=null;boolean complete=false;
         try{
-            if(preview&&fit==null){File reduced=small(result.workingFile,dir,cancel);try{Files.move(reduced.toPath(),temporary.toPath(),StandardCopyOption.REPLACE_EXISTING);}finally{Files.deleteIfExists(reduced.toPath());}}
+            if(detail&&fit==null){Files.copy(result.workingFile.toPath(),temporary.toPath(),StandardCopyOption.REPLACE_EXISTING);RawEditorSource.writeMetadata(source,temporary,result.info);}
+            else if(preview&&fit==null){File reduced=small(result.workingFile,dir,cancel);try{Files.move(reduced.toPath(),temporary.toPath(),StandardCopyOption.REPLACE_EXISTING);}finally{Files.deleteIfExists(reduced.toPath());}}
             else{
                 BitmapFactory.Options options=new BitmapFactory.Options();options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);options.inSampleSize=1;options.inScaled=false;options.inMutable=fit!=null;
                 if(preview)while(Math.max(result.info.width,result.info.height)/options.inSampleSize>1280)options.inSampleSize*=2;
@@ -204,13 +225,56 @@ final class NativeMedia {
                 try(FileOutputStream out=new FileOutputStream(temporary)){if(!bitmap.compress(Bitmap.CompressFormat.JPEG,preview?98:100,out))throw new IOException("无法生成 RAW 编辑副本。");out.flush();out.getFD().sync();}
                 bitmap.recycle();bitmap=null;if(!preview)RawEditorSource.writeMetadata(source,temporary,result.info);
             }
+            if(rawRecipe!=null){
+                File composed=File.createTempFile("raw-detail-",".part",dir);
+                try{renderRawRecipe(temporary,composed,rawRecipe,cancel,value->progress.accept(.55+.45*value));Files.move(composed.toPath(),temporary.toPath(),StandardCopyOption.REPLACE_EXISTING);}
+                finally{Files.deleteIfExists(composed.toPath());}
+            }
             if(cancel.getAsBoolean())throw new InterruptedIOException("RAW 显影已取消。");runtime.guardOwner(owner);runtime.validateSource(source.getPath(),result.sourceSha);
             if(reference!=null)reference.verify(cancel);
             Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
-            BitmapFactory.Options info=bounds(target);
-            progress.accept(1);return SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",info.outWidth,"height",info.outHeight,"sourceSha",result.sourceSha,"rawColorStatus",fit==null?result.colorStatus:NativeRawReference.status(fit),"settings",SharedJson.object(SharedRawSettings.json(settings))));
-        }finally{if(bitmap!=null)bitmap.recycle();Files.deleteIfExists(temporary.toPath());}
+            BitmapFactory.Options info=detail?bounds(target,100_000_000):bounds(target);
+            int orientation=new ExifInterface(target.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1),width=orientation>=5?info.outHeight:info.outWidth,height=orientation>=5?info.outWidth:info.outHeight;
+            Map<String,Object> value=SharedRuntime.map("path",target.getPath(),"width",detail?width:info.outWidth,"height",detail?height:info.outHeight,"sourceSha",result.sourceSha,"rawColorStatus",fit==null?result.colorStatus:NativeRawReference.status(fit),"settings",SharedJson.object(SharedRawSettings.json(settings)));
+            if(detail){if(!expected.equals(result.sourceSha))throw new IOException("RAW 原图已变化。");value.put("detailToken",detailTiles.remember(source.getPath(),owner,result.sourceSha,target.getPath(),width,height,cancel));value.put("temporary",true);value.put("fullResolution",true);}
+            progress.accept(1);runtime.guardOwner(owner);SharedDetailTiles.check(cancel);String encoded=SharedJson.encode(value);complete=true;return encoded;
+        }finally{if(bitmap!=null)bitmap.recycle();Files.deleteIfExists(temporary.toPath());if(detail&&!complete)Files.deleteIfExists(target.toPath());}
     }
+    private void renderRawRecipe(File working,File output,PhotoEditStore.Draft frozen,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        PresetPreviewProfile profile=frozen.profile();PhotoExportSpec spec=PhotoExportSpec.full();BitmapFactory.Options source=bounds(working);
+        int orientation=new ExifInterface(working.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);if(orientation<1||orientation>8)orientation=1;
+        PhotoGeometry.Plan geometry=GeometryPreviewProfile.geometry(profile).plan(source.outWidth,source.outHeight,orientation);int[] canvas=BorderPreviewProfile.border(profile).dimensions(geometry.width,geometry.height);PhotoExportSpec.Resolved expected=spec.resolve(canvas[0],canvas[1]);
+        try{
+            if("image/jpeg".equals(source.outMimeType))PhotoPresetRenderer.forContext(context).render(working,output,profile,spec,cancel,progress::accept);
+            else NativeRaster.render(context,working,output,null,profile,spec,false,1280,cancel,progress);
+        }catch(PhotoPresetRenderer.Cancelled stopped){throw new InterruptedIOException("RAW 细节处理已取消。");}
+        SharedDetailTiles.check(cancel);BitmapFactory.Options actual=bounds(output,100_000_000);int exif=new ExifInterface(output.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
+        int width=exif>=5?actual.outHeight:actual.outWidth,height=exif>=5?actual.outWidth:actual.outHeight;if(width!=expected.width||height!=expected.height)throw new IOException("RAW 完整效果图尺寸校验失败。");
+    }
+    private String detailTile(Map<String,Object> p,BooleanSupplier cancel,DoubleConsumer progress)throws IOException{
+        String owner=SharedRuntime.text(p,"owner",64);runtime.guardOwner(owner);
+        SharedDetailTiles.Entry entry=detailTiles.checked(SharedRuntime.text(p,"detailToken",64),owner,SharedRuntime.text(p,"path",4096),SharedRuntime.text(p,"expectedSourceSha",64),cancel);
+        File source=runtime.privateFile(entry.path);Map<String,Object> region=SharedRuntime.object(p.get("region"));
+        BitmapFactory.Options info=bounds(source,100_000_000);int orientation=new ExifInterface(source.getPath()).getAttributeInt(ExifInterface.TAG_ORIENTATION,1);
+        SharedDetailTiles.Plan plan=new SharedDetailTiles.Plan(info.outWidth,info.outHeight,orientation,coordinate(region,"left"),coordinate(region,"top"),coordinate(region,"right"),coordinate(region,"bottom"),SharedRuntime.integer(p,"maxEdge",1536));
+        if(plan.sourceWidth!=entry.width||plan.sourceHeight!=entry.height)throw new IOException("完整细节图尺寸已变化。");
+        File directory=new File(runtime.root(),"previews"),temporary=File.createTempFile("detail-tile-",".part",directory),target=new File(directory,UUID.randomUUID()+".jpg");
+        BitmapRegionDecoder decoder=null;Bitmap decoded=null,tile=null;boolean complete=false;
+        try{
+            SharedDetailTiles.check(cancel);decoder=BitmapRegionDecoder.newInstance(source.getPath(),false);
+            BitmapFactory.Options options=new BitmapFactory.Options();options.inSampleSize=plan.sampleSize;options.inPreferredConfig=Bitmap.Config.ARGB_8888;options.inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB);
+            decoded=decoder.decodeRegion(new Rect(plan.rawLeft,plan.rawTop,plan.rawRight,plan.rawBottom),options);if(decoded==null)throw new IOException("无法读取照片可见细节。");
+            SharedDetailTiles.check(cancel);tile=Bitmap.createBitmap(plan.width,plan.height,Bitmap.Config.ARGB_8888);
+            float[] from=new float[6],to={0,0,plan.width,0,0,plan.height};double[] xs={plan.left,plan.right,plan.left},ys={plan.top,plan.top,plan.bottom};
+            for(int i=0;i<3;i++){from[i*2]=(float)((plan.sourceX(xs[i],ys[i])-plan.rawLeft)*decoded.getWidth()/(plan.rawRight-plan.rawLeft));from[i*2+1]=(float)((plan.sourceY(xs[i],ys[i])-plan.rawTop)*decoded.getHeight()/(plan.rawBottom-plan.rawTop));}
+            Matrix transform=new Matrix();if(!transform.setPolyToPoly(from,0,to,0,3))throw new IOException("细节图方向无效。");new Canvas(tile).drawBitmap(decoded,transform,new Paint(Paint.FILTER_BITMAP_FLAG));
+            try(FileOutputStream output=new FileOutputStream(temporary)){if(!tile.compress(Bitmap.CompressFormat.JPEG,98,output))throw new IOException("无法保存可见细节。");output.flush();output.getFD().sync();}
+            detailTiles.verify(entry,cancel);runtime.guardOwner(owner);SharedDetailTiles.check(cancel);Files.move(temporary.toPath(),target.toPath(),StandardCopyOption.ATOMIC_MOVE);
+            progress.accept(1);runtime.guardOwner(owner);SharedDetailTiles.check(cancel);
+            String value=SharedJson.encode(SharedRuntime.map("path",target.getPath(),"width",plan.width,"height",plan.height,"sourceWidth",plan.sourceWidth,"sourceHeight",plan.sourceHeight,"region",SharedJson.object(plan.regionJson()),"sourceSha",entry.sourceSha,"detailToken",entry.token,"temporary",true,"decodedWidth",decoded.getWidth(),"decodedHeight",decoded.getHeight(),"decodedBytes",decoded.getAllocationByteCount()));complete=true;return value;
+        }finally{if(decoder!=null)decoder.recycle();if(decoded!=null)decoded.recycle();if(tile!=null)tile.recycle();Files.deleteIfExists(temporary.toPath());if(!complete)Files.deleteIfExists(target.toPath());}
+    }
+    private static double coordinate(Map<String,Object> region,String key)throws IOException{Object value=region.get(key);if(!(value instanceof Number))throw new IOException("细节可见区域无效。");return ((Number)value).doubleValue();}
     private static PhotoExportSpec spec(Map<String,Object> p)throws IOException{String size=SharedRuntime.text(p,"size",16);if(size.equals("share"))return PhotoExportSpec.share();if(size.equals("custom"))return PhotoExportSpec.custom(SharedRuntime.integer(p,"longEdge",2048),SharedRuntime.integer(p,"quality",95));return PhotoExportSpec.full();}
     private static boolean raw(File source){String name=source.getName().toLowerCase(Locale.ROOT);return name.matches(".*\\.(nef|nrw|arw|cr2|cr3|dng|raf|rw2|orf|pef|srw)$");}
     private static BitmapFactory.Options bounds(File source)throws IOException{return bounds(source,60_000_000);}

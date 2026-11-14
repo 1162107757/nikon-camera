@@ -203,6 +203,9 @@ void main() {
       final beforePinch = tester
           .widget<CropCanvas>(find.byType(CropCanvas))
           .crop;
+      final beforeViewWidth = tester
+          .getSize(find.byKey(const ValueKey('crop-image-plane')))
+          .width;
       final center = tester.getCenter(find.byType(Image));
       final first = await tester.startGesture(
         center - const Offset(40, 0),
@@ -212,18 +215,22 @@ void main() {
         center + const Offset(40, 0),
         pointer: 2,
       );
-      await first.moveTo(center - const Offset(30, 0));
+      await first.moveTo(center - const Offset(60, 0));
       await tester.pump();
-      await second.moveTo(center + const Offset(15, 0));
+      await second.moveTo(center + const Offset(80, 0));
       await tester.pump();
-      await first.moveTo(center - const Offset(15, 0));
+      await first.moveTo(center - const Offset(90, 0));
       await tester.pump();
       await first.up();
       await second.up();
       await tester.pump();
       expect(
-        tester.widget<CropCanvas>(find.byType(CropCanvas)).crop.width,
-        lessThan(beforePinch.width),
+        tester.widget<CropCanvas>(find.byType(CropCanvas)).crop,
+        beforePinch,
+      );
+      expect(
+        tester.getSize(find.byKey(const ValueKey('crop-image-plane'))).width,
+        greaterThan(beforeViewWidth),
       );
       final beforeStraighten = tester
           .widget<CropCanvas>(find.byType(CropCanvas))

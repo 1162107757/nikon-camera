@@ -65,11 +65,15 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   final listScroll = ScrollController();
   int offset = 0, epoch = 0;
   String? error;
+  String? connectionNotice;
+  // Status notifications must not retry a failed/empty first page in a loop.
+  // Explicit refresh, filter changes, pagination and retry still call page().
+  String photoReadSession = '';
+  String? get visibleError => connected ? error : connectionNotice ?? error;
   String? warning;
   List<Json> items = [];
   int overviewTab = 0;
   bool settingsExpanded = false, connectionUsb = false, usbBusy = false;
-  bool deferPhotoRead = false;
   CameraPhotoSort photoSort = CameraPhotoSort.newest;
   List<Json>? sortedSource;
   CameraPhotoSort? sortedOrder;
@@ -116,7 +120,11 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         value['mode'] as String? ?? (connected ? 'photos' : 'none');
     inventoryReady = value['inventoryReady'] == true;
     final notice = value['connectionNotice'];
-    if (!connected && notice is String && notice.isNotEmpty) error = notice;
+    if (connected) {
+      connectionNotice = null;
+    } else if (notice is String && notice.isNotEmpty) {
+      connectionNotice = notice;
+    }
   }
 
   Future<void> openCameraTool(
@@ -274,16 +282,16 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  Future<void> openConnection({bool loadPhotos = false}) async {
+  Future<void> openConnection({bool? loadPhotos}) async {
     if (childOpen || busy || transfer.busy || exclusive) return;
+    final browseAfter = loadPhotos ?? browsingPhotos;
     childOpen = true;
     previews.pause();
     try {
       final connected = await connectCamera(context, widget.state);
       if (mounted && connected) {
-        childOpen = !loadPhotos;
-        deferPhotoRead = !loadPhotos;
-        await status(reload: loadPhotos, inspectOnly: !loadPhotos);
+        childOpen = !browseAfter;
+        await status(reload: browseAfter, inspectOnly: !browseAfter);
       }
     } finally {
       childOpen = false;
@@ -434,6 +442,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       setState(() {
         acceptCameraStatus(result);
         if (changed) {
+          error = null;
           items = [];
           offset = 0;
           hasMore = false;
@@ -444,7 +453,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
             !connected &&
             (result['connectionNotice'] is! String ||
                 (result['connectionNotice'] as String).isEmpty)) {
-          error = '相机连接已断开，请重新连接后继续。';
+          connectionNotice = '相机连接已断开，请重新连接后继续。';
         }
       });
       previews.setSession(session);
@@ -462,11 +471,10 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         return;
       }
       if (!inspectOnly &&
-          !deferPhotoRead &&
           browsingPhotos &&
           photosReady &&
           !exclusive &&
-          (reload || changed || items.isEmpty)) {
+          (reload || changed || photoReadSession != session)) {
         await page();
       }
     } catch (failure) {
@@ -482,6 +490,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     setState(() {
       busy = true;
       error = null;
+      connectionNotice = null;
       paginationError = null;
       loadingMore = false;
       job = 'camera-connect-${DateTime.now().microsecondsSinceEpoch}';
@@ -553,8 +562,8 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     if (!browsingPhotos || !photosReady || exclusive || transfer.busy || busy) {
       return;
     }
-    deferPhotoRead = false;
     final request = ++epoch, expectedSession = session;
+    if (!next) photoReadSession = expectedSession;
     final identity = 'camera-page-${DateTime.now().microsecondsSinceEpoch}';
     var failed = false;
     if (!next) previews.reset(session);
@@ -756,7 +765,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     model: model,
     protocol: protocol,
     request: connectionRequest,
-    error: error,
+    error: visibleError,
     settingsExpanded: settingsExpanded,
     host: host,
     port: port,
@@ -773,6 +782,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     onTransportChanged: (value) => setState(() {
       connectionUsb = value;
       error = null;
+      connectionNotice = null;
     }),
     onProtocol: chooseProtocol,
     onConnect: connect,
@@ -989,33 +999,10 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                                         color: p.secondary,
                                       ),
                                     ),
-                                  if (!inventoryReady ||
-                                      (items.isEmpty && deferPhotoRead)) ...[
-                                    const SizedBox(height: 20),
-                                    Text(
-                                      '相机已连接。需要浏览时，再读取照片。',
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        height: 1.8,
-                                        color: p.secondary,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    FilledButton(
-                                      onPressed:
-                                          busy ||
-                                              exclusive ||
-                                              transfer.busy ||
-                                              !photosReady
-                                          ? null
-                                          : () => page(refresh: false),
-                                      child: const Text('浏览相机照片'),
-                                    ),
-                                  ],
-                                  if (error != null) ...[
+                                  if (visibleError != null) ...[
                                     const SizedBox(height: 12),
                                     Text(
-                                      error!,
+                                      visibleError!,
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -1029,7 +1016,6 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                                   ],
                                   if (warning != null) Text(warning!),
                                   if (inventoryReady &&
-                                      !deferPhotoRead &&
                                       items.isEmpty &&
                                       !busy &&
                                       error == null &&
@@ -1159,10 +1145,10 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                             color: p.secondary,
                           ),
                         ),
-                        if (overviewTab == 0 && error != null) ...[
+                        if (overviewTab == 0 && visibleError != null) ...[
                           const SizedBox(height: 12),
                           Text(
-                            error!,
+                            visibleError!,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.error,

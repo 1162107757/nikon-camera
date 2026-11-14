@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/retouch_workspace.dart';
 import 'package:huevia/retouch_original_controls.dart';
+import 'package:huevia/retouch_detail_preview.dart';
 import 'package:huevia/retouch_brush_preview.dart';
 import 'package:huevia/theme.dart';
 
@@ -262,7 +263,8 @@ Future<void> settleRetouchFixture(
     }
     for (final element in find.byType(RetouchWorkspace).evaluate()) {
       final dynamic editor = tester.state(find.byWidget(element.widget));
-      if (ModalRoute.of(element)?.isCurrent == false ||
+      if ((ModalRoute.of(element)?.isCurrent == false &&
+              editor.scalarStart == null) ||
           editor.current != true ||
           editor.stopped == true ||
           editor.error != null) {
@@ -463,7 +465,7 @@ void main() {
     timeout: const Timeout(Duration(seconds: 45)),
   );
   testWidgets(
-    'Photo color picking uses actual neutral portrait bitmap pixels and previews until confirmed',
+    'Photo color picking installs actual neutral bitmap RGB and keeps the skin palette open',
     (tester) async {
       await open(tester);
       await skinPage(tester);
@@ -483,20 +485,28 @@ void main() {
       });
       await settle(tester);
       expect(changes('clearPortrait'), hasLength(1));
-      expect(find.text('自定义肤色'), findsOneWidget);
-      await tester.ensureVisible(find.text('预览效果'));
-      await settle(tester);
-      await tester.tap(find.text('预览效果'));
-      await settle(tester);
+      expect(find.text('自定义肤色'), findsNothing);
       expect(object(changes('skin').last['value'])['toneRgb'], 0x12ab34);
-      expect(find.text('使用此色'), findsOneWidget);
+      expect(find.text('使用此色'), findsNothing);
+      expect(find.text('继续选色'), findsNothing);
+      expect(find.text('自定义'), findsOneWidget);
+      expect(find.text('自然米色'), findsOneWidget);
       final apply = tester.widget<TextButton>(
         find.widgetWithText(TextButton, '应用'),
       );
-      expect(apply.onPressed, isNull);
-      await tester.tap(find.text('使用此色'));
+      expect(apply.onPressed, isNotNull);
+      await tester.tap(find.text('自然米色'));
       await settle(tester);
+      expect(object(changes('skin').last['value'])['toneId'], 1);
+      expect(find.text('自然米色'), findsOneWidget);
       expect(find.text('使用此色'), findsNothing);
+      await tester.tap(find.bySemanticsLabel('撤销'));
+      await settle(tester);
+      final dynamic workspace =
+          (find.byType(RetouchWorkspace).evaluate().single as StatefulElement)
+              .state;
+      expect(workspace.data['localData'], 'start');
+      expect(core.previewLocalData[workspace.frame['path']], 'start');
       expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
@@ -1028,6 +1038,14 @@ void main() {
       await tester.tap(find.byTooltip('返回人像工具'));
       await settle(tester);
       await patchPage(tester);
+      final detail = tester.widget<RetouchDetailPreview>(
+        find.byType(RetouchDetailPreview),
+      );
+      final detailRecipe = object(detail.frame['_detailRecipe']);
+      final shown = core.snapshots[detailRecipe['localData']]!;
+      expect((object(shown['portrait'])['body'] as List)[0]['amount'], 0);
+      expect(detailRecipe['geometry'], isEmpty);
+      expect(detailRecipe['border'], isEmpty);
       await patchStroke(tester);
       final payload = patchCalls().single;
       final actual = core.snapshots[payload['localData']]!;
@@ -1348,6 +1366,87 @@ void main() {
         true,
       );
       expect(patchCalls().length, 2);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Custom skin colour updates while open and closes with one undo and no confirmation',
+    (tester) async {
+      await open(tester);
+      await skinPage(tester);
+      await tester.tap(find.text('自定义'));
+      await settle(tester);
+      final dynamic workspace = tester.state(find.byType(RetouchWorkspace));
+      final initial = workspace.frame['path'];
+      final hue = tester.widget<Slider>(
+        find.byKey(const ValueKey('skin-tone-hue')),
+      );
+      hue.onChanged!(120);
+      await settle(tester);
+      expect(changes('skin'), isNotEmpty);
+      expect(workspace.frame['path'], isNot(initial));
+      expect(workspace.undo, isEmpty);
+      hue.onChanged!(180);
+      await settle(tester);
+      final rgb = object(changes('skin').last['value'])['toneRgb'];
+      expect(workspace.skin['toneRgb'], rgb);
+      expect(find.text('使用此色'), findsNothing);
+      expect(find.text('预览效果'), findsNothing);
+      await tester.tap(find.byTooltip('关闭肤色选择器'));
+      await settle(tester);
+      expect(find.text('自定义肤色'), findsNothing);
+      expect(find.text('自然米色'), findsOneWidget);
+      expect(find.text('强度'), findsOneWidget);
+      expect(workspace.skin['toneRgb'], rgb);
+      expect(workspace.undo, hasLength(1));
+      await tester.tap(find.bySemanticsLabel('撤销'));
+      await settle(tester);
+      expect(lastPreviewLocal(), 'start');
+      expect(core.calls.where((c) => c.$1 == 'draft.save'), isEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await settle(tester);
+    },
+    timeout: const Timeout(Duration(seconds: 45)),
+  );
+  testWidgets(
+    'Skin palette stays open and only parent apply returns the selected colour',
+    (tester) async {
+      final cancelled = await pushWorkspace(tester);
+      await tester.tap(find.text('皮肤'));
+      await settle(tester);
+      await tester.tap(find.text('自然米色'));
+      await settle(tester);
+      expect(find.text('自然米色'), findsOneWidget);
+      expect(find.text('强度'), findsOneWidget);
+      expect(find.text('继续选色'), findsNothing);
+      expect(find.text('使用此色'), findsNothing);
+      await tester.tap(find.byTooltip('返回人像工具'));
+      await settle(tester);
+      await tester.tap(find.text('皮肤'));
+      await settle(tester);
+      final dynamic workspace = tester.state(find.byType(RetouchWorkspace));
+      expect(workspace.skin['toneId'], 1);
+      await tester.tap(find.byTooltip('返回人像工具'));
+      await settle(tester);
+      await tester.tap(find.byTooltip('取消人像精修'));
+      await settle(tester);
+      expect(cancelled.completed, 1);
+      expect(cancelled.result, isNull);
+      final applied = await pushWorkspace(tester);
+      await tester.tap(find.text('皮肤'));
+      await settle(tester);
+      await tester.tap(find.text('自然米色'));
+      await settle(tester);
+      await tester.tap(find.widgetWithText(TextButton, '应用'));
+      await settle(tester);
+      expect(applied.completed, 1);
+      expect(object(object(applied.result!['portrait'])['skin'])['toneId'], 1);
+      expect(
+        core.calls.where((c) => c.$1 == 'draft.save' || c.$1 == 'media.export'),
+        isEmpty,
+      );
       await tester.pumpWidget(const SizedBox());
       await settle(tester);
     },

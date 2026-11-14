@@ -41,8 +41,11 @@ def check():
     for platform, path in paths:
         source = path.read_text(encoding='utf-8-sig')
         compact = re.sub(r'\s+', '', source)
-        detail = blocks(source, 'if(detail){')
-        assert len(detail) == 2, (platform, 'explicit detail validation and render-return boundaries')
+        candidates = blocks(source, 'if(detail){')
+        validation = [body for body in candidates if 'expectedSourceSha' in body and '显影' in body]
+        rendered = [body for body in candidates if all(name in body for name in ['fullResolution', 'validateSource', 'return'])]
+        assert len(validation) == 1 and len(rendered) == 1, (platform, 'explicit full-detail validation and render-return boundaries')
+        detail = validation + rendered
         for body in detail:
             assert not any(name in body for name in ['commitVersion', 'freezeEdit', 'markEditExported', 'RawDeveloper.develop', 'HueviaRawDevelop', 'markExported']), (platform, 'no persistent write path inside detail')
             checks += 1
@@ -61,6 +64,32 @@ def check():
             assert 'if(moved&&!complete)' in detail[1] and 'removeItemAtPath:target' in detail[1]
             assert 'load(path,_root,preview?previewEdge:0)' in compact
         checks += 8
+        tile = blocks(source, 'private String detailTile(' if platform == 'android' else '- (NSDictionary *)detailTile:')
+        assert len(tile) == 1
+        body = tile[0]
+        assert all(name in body for name in ['detailToken', 'expectedSourceSha', 'guardOwner', 'region', 'temporary'])
+        assert not any(name in body for name in ['commitVersion', 'freezeEdit', 'markEditExported', 'rawPrepare', 'BitmapFactory.decodeFile', 'CGImageSourceCreateImageAtIndex', 'load('])
+        if platform == 'android':
+            assert all(name in body for name in ['BitmapRegionDecoder', 'decodeRegion', 'inSampleSize', 'detailTiles.verify', 'Files.deleteIfExists(target'])
+        else:
+            assert all(name in body for name in ['imageWithContentsOfURL', 'imageByCroppingToRect', 'createCGImage:image', 'kCIContextCacheIntermediates:@NO', 'verifyWithCcHueviaSharedSharedDetailTiles_Entry', 'removeItemAtPath:target'])
+            assert body.index('imageByCroppingToRect') < body.index('createCGImage:image')
+        assert 'media.rawDetail' in source and 'detailTiles' in source or ('media.rawDetail' in source and '_detailTiles' in source)
+        checks += 5
+        assert 'viewMode' in source and 'detailLocal' in source and '未知的细节构图模式' in source
+        assert 'localView||detailLocal?' in compact or '(localView||detailLocal)?' in compact
+        checks += 2
+        raw = blocks(source, 'private String rawDevelop(' if platform == 'android' else 'if([operation isEqualToString:@"media.rawPreview"]')
+        assert len(raw) == 1
+        assert all(name in raw[0] for name in ['rawRecipe', 'localView', 'reviewView', 'sourceSha', 'detailToken'])
+        assert not any(name in raw[0] for name in ['freezeEdit', 'commitVersion', 'markEditExported', 'rawPrepare'])
+        if platform == 'android':
+            recipe_render = blocks(source, 'private void renderRawRecipe(')
+            assert len(recipe_render) == 1 and all(name in recipe_render[0] for name in ['frozen.profile()', 'PhotoExportSpec.full()', 'PhotoPresetRenderer', 'NativeRaster.render', 'expected.width'])
+            assert not any(name in recipe_render[0] for name in ['freezeEdit', 'commitVersion', 'rawPrepare'])
+        else:
+            assert all(name in raw[0] for name in ['[rawRecipe profile]', 'rawRecipe->geometry_', 'rawRecipe->border_', 'renderPixelsWith', 'CcHueviaAlbumPhotoExportSpec full'])
+        checks += 3
     fixture = (ROOT / 'cross-platform/app/integration_test/native_pipeline_test.dart').read_text(encoding='utf-8-sig')
     assert "import 'detail_render_fixture.dart';" in fixture and 'await verifyDetailRendering(core);' in fixture
     checks += 1

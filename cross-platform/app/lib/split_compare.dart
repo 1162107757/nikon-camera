@@ -4,6 +4,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'editing_detail_preview.dart';
+
 /// Both surfaces have identical geometry. The divider clips a shared zoomed
 /// scene, so switching or dragging never changes the photo's framing.
 class SplitCompare extends StatefulWidget {
@@ -18,6 +20,9 @@ class SplitCompare extends StatefulWidget {
     this.warning,
     this.warningRect = const Rect.fromLTWH(0, 0, 1, 1),
     this.warningCorner = 0,
+    this.effectSize,
+    this.detailController,
+    this.originalDetailController,
   });
   final String effect;
   final String? original;
@@ -28,6 +33,9 @@ class SplitCompare extends StatefulWidget {
   final ui.Image? warning;
   final Rect warningRect;
   final double warningCorner;
+  final Size? effectSize;
+  final EditingDetailPreviewController? detailController,
+      originalDetailController;
   @override
   State<SplitCompare> createState() => _SplitCompareState();
 }
@@ -35,39 +43,123 @@ class SplitCompare extends StatefulWidget {
 class _SplitCompareState extends State<SplitCompare> {
   final transform = TransformationController();
   double divider = .5;
+  Size viewport = Size.zero;
+  Rect imageRect = Rect.zero;
+  bool reportScheduled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    transform.addListener(reportViewport);
+  }
+
+  void reportViewport() {
+    if (!mounted ||
+        viewport.isEmpty ||
+        imageRect.isEmpty ||
+        !TickerMode.valuesOf(context).enabled ||
+        ModalRoute.of(context)?.isCurrent == false) {
+      return;
+    }
+    final visible = Rect.fromPoints(
+      transform.toScene(Offset.zero),
+      transform.toScene(Offset(viewport.width, viewport.height)),
+    ).intersect(imageRect);
+    final scale = transform.value.getMaxScaleOnAxis();
+    final region = visible.isEmpty
+        ? Rect.zero
+        : Rect.fromLTRB(
+            (visible.left - imageRect.left) / imageRect.width,
+            (visible.top - imageRect.top) / imageRect.height,
+            (visible.right - imageRect.left) / imageRect.width,
+            (visible.bottom - imageRect.top) / imageRect.height,
+          );
+    final density = MediaQuery.devicePixelRatioOf(context);
+    final pixels = visible.isEmpty
+        ? Size.zero
+        : Size(
+            visible.width * scale * density,
+            visible.height * scale * density,
+          );
+    widget.detailController?.setViewport(
+      visibleRegion: region,
+      zoom: scale,
+      viewportPixelSize: pixels,
+    );
+    if (widget.enabled && widget.original != null) {
+      widget.originalDetailController?.setViewport(
+        visibleRegion: region,
+        zoom: scale,
+        viewportPixelSize: pixels,
+      );
+    }
+  }
+
+  void reportAfterLayout() {
+    if (reportScheduled) return;
+    reportScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      reportScheduled = false;
+      if (mounted) reportViewport();
+    });
+  }
+
   @override
   void dispose() {
+    transform.removeListener(reportViewport);
     transform.dispose();
     super.dispose();
   }
 
-  Widget image(String path) => Image.file(
-    File(path),
-    width: double.infinity,
-    height: double.infinity,
-    fit: BoxFit.contain,
-    gaplessPlayback: true,
-    excludeFromSemantics: true,
-    errorBuilder: (_, _, _) => Center(
-      child: TextButton(onPressed: widget.onRetry, child: const Text('重试预览')),
-    ),
+  Widget image(String path, {EditingDetailPreviewController? details}) => Stack(
+    fit: StackFit.expand,
+    children: [
+      Image.file(
+        File(path),
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.contain,
+        gaplessPlayback: true,
+        excludeFromSemantics: true,
+        errorBuilder: (_, _, _) => Center(
+          child: TextButton(
+            onPressed: widget.onRetry,
+            child: const Text('重试预览'),
+          ),
+        ),
+      ),
+      if (details != null && !imageRect.isEmpty)
+        Positioned.fromRect(
+          rect: imageRect,
+          child: EditingDetailTileLayer(controller: details),
+        ),
+    ],
   );
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
+      viewport = Size(box.maxWidth, box.maxHeight);
+      final pixels = widget.effectSize ?? widget.selectionSize;
+      imageRect = pixels == null || pixels.isEmpty || viewport.isEmpty
+          ? Rect.zero
+          : Alignment.center.inscribe(
+              applyBoxFit(BoxFit.contain, pixels, viewport).destination,
+              Offset.zero & viewport,
+            );
+      reportAfterLayout();
       void adjust(double value) =>
           setState(() => divider = value.clamp(0.0, 1.0));
       Widget surface(String path) => InteractiveViewer(
         transformationController: transform,
         minScale: 1,
-        maxScale: 8,
+        maxScale: 32,
         child: SizedBox(
           width: box.maxWidth,
           height: box.maxHeight,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              image(path),
+              image(path, details: widget.detailController),
               if (!widget.enabled &&
                   widget.warning != null &&
                   widget.selectionSize != null)
@@ -151,7 +243,10 @@ class _SplitCompareState extends State<SplitCompare> {
                   builder: (_, _) => Transform(
                     transform: transform.value,
                     alignment: Alignment.topLeft,
-                    child: image(widget.original!),
+                    child: image(
+                      widget.original!,
+                      details: widget.originalDetailController,
+                    ),
                   ),
                 ),
               ),

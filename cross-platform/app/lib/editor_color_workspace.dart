@@ -131,6 +131,7 @@ extension _EditorColorWorkspace on _EditorPageState {
 
   Future<void> advancedColorTool(int page) async {
     if (!toolsEnabled || colorToolActive) return;
+    pauseEditorDetails();
     refreshWorkspace(() => colorToolActive = true);
     try {
       await settleLocalAdjustments();
@@ -313,6 +314,10 @@ extension _EditorColorWorkspace on _EditorPageState {
                                 children: [
                                   photoViewport(
                                     heldComparison: held ? entryImage : null,
+                                    heldComparisonRecipe: held
+                                        ? before.data
+                                        : null,
+                                    viewContext: toolContext,
                                     showCompareButton: page != 2 && page != 7,
                                   ),
                                   if ((page == 2 || page == 7) &&

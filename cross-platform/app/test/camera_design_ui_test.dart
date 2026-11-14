@@ -163,7 +163,7 @@ void main() {
   });
 
   testWidgets(
-    'Connection from Sync returns without reading photos until explicit browsing',
+    'Connection from visible Sync reads photos on return without a second browse action',
     (tester) async {
       final core = intent.IntentCameraCore();
       final state = AppState(core)..cameraVisible.value = true;
@@ -176,11 +176,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, '连接相机'));
       await tester.pumpAndSettle();
+      expect(core.photoCalls, isEmpty);
       await tester.tap(find.byKey(const Key('camera-connect')));
       await tester.pumpAndSettle();
-      expect(core.photoCalls, isEmpty);
-      await tester.tap(find.text('浏览相机照片'));
-      await tester.pumpAndSettle();
+      expect(find.text('浏览相机照片'), findsNothing);
       expect(
         core.calls.where((call) => call.$1 == 'camera.page'),
         hasLength(1),

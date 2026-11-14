@@ -25,7 +25,13 @@ class LibraryPage extends StatefulWidget {
 class _LibraryPageState extends State<LibraryPage> {
   int tab = 0, page = 1, generation = 0, onlineTotal = 0;
   String category = '', query = '';
+  // Keep the original bridge error for diagnostics. UI uses fixed copy below.
   String? error;
+  late (String, bool) sessionIdentity;
+  (String, bool) get currentSessionIdentity => (
+    widget.state.session['user']?['id'] as String? ?? '',
+    widget.state.session['logoutPending'] == true,
+  );
   bool busy = false, hasMore = false, requestInFlight = false;
   bool importing = false;
   bool failedNext = false;
@@ -171,13 +177,39 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   void initState() {
     super.initState();
+    sessionIdentity = currentSessionIdentity;
     restoreFilters();
     widget.state.addListener(refreshState);
     if (tab == 1) unawaited(load());
   }
 
   void refreshState() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    if (sessionIdentity != currentSessionIdentity) {
+      resetOnlineOwner();
+    } else {
+      setState(() {});
+    }
+  }
+
+  void resetOnlineOwner() {
+    searchDelay?.cancel();
+    generation++;
+    pendingLoad = null;
+    sessionIdentity = currentSessionIdentity;
+    setState(() {
+      // Only the old account's transient view is retired; no cache file or
+      // downloaded preset is removed or rewritten.
+      online = [];
+      categories = [];
+      onlineTotal = 0;
+      page = 1;
+      hasMore = failedNext = false;
+      error = null;
+      notice = '';
+      busy = false;
+    });
+    if (tab == 1 && !sessionIdentity.$2) unawaited(load());
   }
 
   @override
@@ -186,6 +218,7 @@ class _LibraryPageState extends State<LibraryPage> {
     if (oldWidget.state != widget.state) {
       oldWidget.state.removeListener(refreshState);
       widget.state.addListener(refreshState);
+      resetOnlineOwner();
     }
   }
 
@@ -217,15 +250,24 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> load({bool next = false, bool refresh = false}) async {
-    if (!mounted || tab != 1) return;
+    if (!mounted || tab != 1 || currentSessionIdentity.$2) return;
     if (next && (!hasMore || busy || requestInFlight)) return;
     if (requestInFlight) {
       generation++;
       pendingLoad = (next: next, refresh: refresh);
+      setState(() => busy = true);
       return;
     }
     requestInFlight = true;
     final request = ++generation;
+    final requestState = widget.state, requestOwner = currentSessionIdentity;
+    bool accepted() =>
+        mounted &&
+        tab == 1 &&
+        request == generation &&
+        identical(requestState, widget.state) &&
+        requestOwner == currentSessionIdentity &&
+        !requestOwner.$2;
     setState(() {
       busy = true;
       error = null;
@@ -247,11 +289,21 @@ class _LibraryPageState extends State<LibraryPage> {
                 'fileFormat': format,
               },
       );
-      if (!mounted || request != generation) return;
+      if (!accepted()) return;
       final rows = (value['items'] as List)
           .map((row) => Preset(object(row), online: true))
           .toList();
       setState(() {
+        final cached = value['fromCache'] == true;
+        final unavailable = value['available'] == false;
+        final diagnostic = value['message'] as String? ?? '';
+        if (unavailable) {
+          // An unavailable response is not an authoritative empty catalog.
+          failedNext = next;
+          error = diagnostic.isEmpty ? '在线预设暂不可用。' : diagnostic;
+          notice = '';
+          return;
+        }
         final previousPage = page;
         final unique = <String, Preset>{
           if (next)
@@ -259,22 +311,25 @@ class _LibraryPageState extends State<LibraryPage> {
           for (final item in rows) item.id: item,
         };
         final progressed = !next || unique.length > online.length;
-        online = unique.values.toList();
+        if (!cached || unique.isNotEmpty || online.isEmpty) {
+          online = unique.values.toList();
+        }
         page = value['page'] as int? ?? (next ? previousPage + 1 : 1);
         hasMore =
             !searching &&
             value['hasMore'] == true &&
             progressed &&
             (!next || page > previousPage);
-        onlineTotal = (value['total'] as num?)?.toInt() ?? rows.length;
+        onlineTotal = (value['total'] as num?)?.toInt() ?? online.length;
         categories = List<String>.from(value['categories'] as List)
             .where((item) => item.isNotEmpty)
             .toList();
-        notice = value['message'] as String? ?? '';
-        if (value['available'] == false) error = notice;
+        failedNext = false;
+        notice = '';
+        error = cached ? (diagnostic.isEmpty ? '使用离线缓存。' : diagnostic) : null;
       });
     } catch (failure) {
-      if (mounted && request == generation) {
+      if (accepted()) {
         setState(() {
           failedNext = next;
           error = '$failure';
@@ -282,7 +337,7 @@ class _LibraryPageState extends State<LibraryPage> {
       }
     } finally {
       requestInFlight = false;
-      if (mounted && request == generation) setState(() => busy = false);
+      if (accepted()) setState(() => busy = false);
       final pending = pendingLoad;
       pendingLoad = null;
       if (mounted && tab == 1 && pending != null) {
@@ -290,6 +345,8 @@ class _LibraryPageState extends State<LibraryPage> {
       }
     }
   }
+
+  Future<void> retryOnline() => load(next: failedNext, refresh: true);
 
   Future<void> import() async {
     final selected = await hueDialog<bool>(
@@ -561,6 +618,10 @@ class _LibraryPageState extends State<LibraryPage> {
     }.toList();
     final activeFilters =
         category.isNotEmpty || format.isNotEmpty || download != 'all';
+    final onlineFailure = tab == 1 && error != null;
+    final onlineFailureText = rows.isNotEmpty
+        ? '暂时无法连接在线预设，已保留缓存。'
+        : '暂时无法连接在线预设，请重试或使用我的预设。';
     final displayedCount = tab == 1 && download == 'all' && format.isEmpty
         ? onlineTotal
         : rows.length;
@@ -754,10 +815,37 @@ class _LibraryPageState extends State<LibraryPage> {
                     ),
                     child: Text(notice),
                   ),
-                if (error != null)
+                if (onlineFailure && rows.isNotEmpty && !failedNext)
                   Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(error!),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          onlineFailureText,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: palette.secondary,
+                          ),
+                        ),
+                        Wrap(
+                          spacing: 12,
+                          children: [
+                            TextButton(
+                              onPressed: busy ? null : retryOnline,
+                              child: const Text('重试加载'),
+                            ),
+                            TextButton(
+                              onPressed: () => selectSource(0),
+                              child: const Text('我的预设'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 if (busy || importing)
                   const LinearProgressIndicator(minHeight: 2),
@@ -795,6 +883,8 @@ class _LibraryPageState extends State<LibraryPage> {
                             Text(
                               busy
                                   ? '正在读取预设'
+                                  : onlineFailure
+                                  ? onlineFailureText
                                   : activeFilters && error == null
                                   ? '没有符合条件的预设'
                                   : tab == 0
@@ -808,26 +898,30 @@ class _LibraryPageState extends State<LibraryPage> {
                                 color: palette.ink,
                               ),
                             ),
-                            const SizedBox(height: 8),
-                            Text(
-                              activeFilters && error == null
-                                  ? '试试其他筛选条件。'
-                                  : tab == 0
-                                  ? '添加 NCP、NP3，或从在线预设库下载喜欢的色彩。'
-                                  : error ?? '检查网络后重新加载。',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                height: 1.2,
-                                color: palette.secondary,
+                            if (!onlineFailure) ...[
+                              const SizedBox(height: 8),
+                              Text(
+                                activeFilters && error == null
+                                    ? '试试其他筛选条件。'
+                                    : tab == 0
+                                    ? '添加 NCP、NP3，或从在线预设库下载喜欢的色彩。'
+                                    : '可稍后刷新，或先使用我的预设。',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  height: 1.2,
+                                  color: palette.secondary,
+                                ),
                               ),
-                            ),
+                            ],
                             const SizedBox(height: 20),
                             SizedBox(
                               width: double.infinity,
                               child: OutlinedButton(
                                 onPressed: busy || importing
                                     ? null
+                                    : onlineFailure
+                                    ? retryOnline
                                     : activeFilters && error == null
                                     ? () {
                                         setState(() {
@@ -844,12 +938,19 @@ class _LibraryPageState extends State<LibraryPage> {
                                 child: Text(
                                   activeFilters && error == null
                                       ? '清除筛选'
+                                      : onlineFailure
+                                      ? '重试加载'
                                       : tab == 0
                                       ? '添加本地预设'
                                       : '重新加载',
                                 ),
                               ),
                             ),
+                            if (tab == 1)
+                              TextButton(
+                                onPressed: () => selectSource(0),
+                                child: const Text('我的预设'),
+                              ),
                           ],
                         ),
                       ),
@@ -863,9 +964,18 @@ class _LibraryPageState extends State<LibraryPage> {
                   onOpen: detail,
                   onRemove: presetActions,
                   loadingMore: tab == 1 && busy,
-                  pageError: tab == 1 ? error : null,
+                  pageError: onlineFailure && failedNext
+                      ? onlineFailureText
+                      : null,
+                  onLocal: onlineFailure && failedNext
+                      ? () => selectSource(0)
+                      : null,
                   onMore: tab == 1 && (hasMore || error != null)
-                      ? () => load(next: error == null || failedNext)
+                      ? onlineFailure
+                            ? failedNext
+                                  ? retryOnline
+                                  : null
+                            : () => load(next: true)
                       : null,
                 ),
         ),

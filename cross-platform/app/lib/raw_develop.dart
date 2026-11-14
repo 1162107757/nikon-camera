@@ -11,6 +11,7 @@ import 'domain.dart';
 import 'theme.dart';
 import 'raw_reference.dart';
 import 'latest_preview_queue.dart';
+import 'editing_detail_preview.dart';
 import 'widgets.dart';
 
 class RawDevelopPage extends StatefulWidget {
@@ -30,11 +31,18 @@ class RawDevelopPage extends StatefulWidget {
 }
 
 class _RawPreviewRequest {
-  _RawPreviewRequest(this.settings, this.reference, this.path, this.generation);
+  _RawPreviewRequest(
+    this.settings,
+    this.reference,
+    this.path,
+    this.generation,
+    this.revision,
+  );
   final Json settings;
   final Json? reference;
   final String path;
   final int generation;
+  final int revision;
 }
 
 class _RawDevelopPageState extends State<RawDevelopPage> {
@@ -59,6 +67,21 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   int revision = 0;
   bool running = false, forwarding = false;
   int previewGeneration = 0;
+  Size? previewPixelSize;
+  Size? detailViewportSize;
+  Rect? detailImageFrame;
+  double detailPixelRatio = 1;
+  bool detailViewportScheduled = false,
+      detailFrameCurrent = false,
+      detailRouteCurrent = true;
+  final previewTransform = TransformationController();
+  late final detailPreview = EditingDetailPreviewController(
+    core: widget.state.core,
+    owner: owner,
+    sourcePath: widget.photo.path,
+    isCurrent: () => sourceCurrent && !forwarding && detailRouteCurrent,
+    maxTileEdge: 2048,
+  );
   late final previewQueue = LatestPreviewQueue<_RawPreviewRequest, Json>(
     render: renderPreview,
     isCurrent: previewCurrent,
@@ -66,9 +89,35 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       final old = preview;
       setState(() {
         preview = result['path'] as String;
+        final width = result['width'], height = result['height'];
+        previewPixelSize =
+            width is num &&
+                height is num &&
+                width.isFinite &&
+                height.isFinite &&
+                width > 0 &&
+                height > 0
+            ? Size(width.toDouble(), height.toDouble())
+            : null;
         colorStatus = result['rawColorStatus'] as String? ?? '';
         error = null;
       });
+      if (!interactive &&
+          latest &&
+          request.revision == revision &&
+          previewPixelSize != null) {
+        detailFrameCurrent = true;
+        detailPreview.configureRaw(
+          settings: request.settings,
+          reference: request.reference,
+          revision: request.revision,
+          frameIdentity: preview!,
+          outputSize: previewPixelSize!,
+          expectedSourceSha: result['sourceSha'] as String? ?? '',
+        );
+        detailPreview.setEnabled(true);
+        scheduleDetailViewport();
+      }
       if (old != null && old != preview) unawaited(discard(old));
     },
     onError: (_, failure, stack) {
@@ -93,6 +142,8 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   void ownerChanged() {
     if (sourceCurrent || !mounted) return;
     debounce?.cancel();
+    pauseDetail();
+    detailPreview.invalidate();
     previewGeneration++;
     previewQueue.reset();
     revision++;
@@ -100,6 +151,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     setState(() {
       preview = null;
+      previewPixelSize = null;
       reference = null;
       error = '照片或账号已变化，请返回重新打开。';
     });
@@ -109,6 +161,8 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   @override
   void initState() {
     super.initState();
+    detailPreview.setEnabled(false);
+    previewTransform.addListener(updateDetailViewport);
     widget.state.addListener(ownerChanged);
     events = widget.state.core.operationProgress.listen((event) {
       final value = object(event);
@@ -128,6 +182,9 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   @override
   void dispose() {
+    previewTransform.removeListener(updateDetailViewport);
+    previewTransform.dispose();
+    detailPreview.dispose();
     previewQueue.close();
     widget.state.removeListener(ownerChanged);
     debounce?.cancel();
@@ -154,6 +211,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   void changed(String key, Object value) {
     if (forwarding || !sourceCurrent) return;
+    pauseDetail();
     setState(() {
       settings[key] = value;
       error = null;
@@ -180,6 +238,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   Future<void> queuePreview({required bool interactive}) {
     if (forwarding || !sourceCurrent) return Future.value();
+    pauseDetail();
     return previewQueue.offer(
       _RawPreviewRequest(
         snapshot(),
@@ -188,6 +247,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
             : object(jsonDecode(jsonEncode(reference!.payload))),
         widget.photo.path,
         previewGeneration,
+        revision,
       ),
       interactive: interactive,
     );
@@ -242,6 +302,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   Future<void> openEditor() async {
     if (forwarding || !sourceCurrent) return;
     debounce?.cancel();
+    detailPreview.setEnabled(false);
     previewGeneration++;
     previewQueue.reset();
     revision++;
@@ -298,8 +359,88 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
           running = false;
           activeJob = null;
         });
+        scheduleDetailViewport();
       }
     }
+  }
+
+  void pauseDetail() {
+    detailFrameCurrent = false;
+    detailPreview.setEnabled(false);
+  }
+
+  void scheduleDetailViewport() {
+    if (detailViewportScheduled || !mounted) return;
+    detailViewportScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      detailViewportScheduled = false;
+      if (mounted) updateDetailViewport();
+    });
+  }
+
+  void updateDetailViewport() {
+    final viewport = detailViewportSize, plane = detailImageFrame;
+    if (!mounted || viewport == null || plane == null) return;
+    if (!detailRouteCurrent || forwarding || !sourceCurrent) {
+      detailPreview.setEnabled(false);
+      return;
+    }
+    if (detailFrameCurrent) detailPreview.setEnabled(true);
+    final frame = MatrixUtils.transformRect(previewTransform.value, plane);
+    final clip = Offset.zero & viewport;
+    final visible = frame.intersect(clip);
+    detailPreview.setViewport(
+      visibleRegion: editingDetailVisibleRegion(frame, clip),
+      zoom: previewTransform.value.getMaxScaleOnAxis(),
+      viewportPixelSize: visible.isEmpty
+          ? Size.zero
+          : visible.size * detailPixelRatio,
+    );
+  }
+
+  Widget previewPlane(BoxConstraints bounds) {
+    final size = previewPixelSize;
+    Widget plane = Image.file(
+      File(preview!),
+      fit: BoxFit.contain,
+      semanticLabel: 'RAW 显影预览',
+    );
+    if (size != null) {
+      final fitted = applyBoxFit(
+        BoxFit.contain,
+        size,
+        bounds.biggest,
+      ).destination;
+      final nextFrame = Alignment.center.inscribe(
+        fitted,
+        Offset.zero & bounds.biggest,
+      );
+      final ratio = MediaQuery.devicePixelRatioOf(context);
+      if (detailViewportSize != bounds.biggest ||
+          detailImageFrame != nextFrame ||
+          detailPixelRatio != ratio) {
+        detailViewportSize = bounds.biggest;
+        detailImageFrame = nextFrame;
+        detailPixelRatio = ratio;
+        scheduleDetailViewport();
+      }
+      plane = SizedBox(
+        width: fitted.width,
+        height: fitted.height,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            plane,
+            EditingDetailTileLayer(controller: detailPreview),
+          ],
+        ),
+      );
+    }
+    return InteractiveViewer(
+      transformationController: previewTransform,
+      maxScale: 32,
+      child: Center(child: plane),
+    );
   }
 
   Widget slider(
@@ -449,6 +590,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         widget.state.core.root,
         name: name,
       );
+      pauseDetail();
       await widget.state.updatePhoto(widget.photo, {
         'rawJpegReference': next.stored(widget.state.core.root),
       });
@@ -471,6 +613,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   Future<void> clearReference() async {
     if (forwarding || selectingReference) return;
+    pauseDetail();
     setState(() => selectingReference = true);
     try {
       await widget.state.updatePhoto(widget.photo, {'rawJpegReference': null});
@@ -489,6 +632,11 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   @override
   Widget build(BuildContext context) {
+    final routeCurrent = ModalRoute.of(context)?.isCurrent ?? true;
+    if (detailRouteCurrent != routeCurrent) {
+      detailRouteCurrent = routeCurrent;
+      scheduleDetailViewport();
+    }
     if (widget.automaticallyEdit && error == null) {
       return Scaffold(
         backgroundColor: const Color(0xff242b27),
@@ -513,19 +661,10 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       children: [
         ColoredBox(color: Theme.of(context).colorScheme.surfaceContainer),
         if (preview != null)
-          InteractiveViewer(
-            maxScale: 8,
-            child: Center(
-              child: Image.file(
-                File(preview!),
-                fit: BoxFit.contain,
-                semanticLabel: 'RAW 显影预览',
-              ),
-            ),
-          )
+          LayoutBuilder(builder: (_, bounds) => previewPlane(bounds))
         else
           const Center(child: Icon(Icons.raw_on_outlined, size: 48)),
-        if (running || forwarding)
+        if ((running && preview == null) || forwarding)
           const Positioned(
             left: 0,
             right: 0,
@@ -643,6 +782,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
               onPressed: forwarding
                   ? null
                   : () {
+                      pauseDetail();
                       setState(() => settings = {...defaults});
                       revision++;
                       unawaited(render());

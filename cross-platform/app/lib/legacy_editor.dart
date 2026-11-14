@@ -7,6 +7,7 @@ const _editorMuted = Color(0xffc8cdca);
 extension _LegacyWorkspace on _EditorPageState {
   Future<void> openRetouch({bool patch = false}) async {
     if (!toolsEnabled) return;
+    pauseEditorDetails();
     debounce?.cancel();
     revision++;
     refreshWorkspace(() => managingTools = true);
@@ -367,6 +368,7 @@ extension _LegacyWorkspace on _EditorPageState {
 
   Future<void> history(bool forward) async {
     if (!toolsEnabled || (forward ? redo : undo).isEmpty) return;
+    pauseEditorDetails();
     debounce?.cancel();
     revision++;
     refreshWorkspace(() => managingTools = true);
@@ -550,127 +552,144 @@ extension _LegacyWorkspace on _EditorPageState {
 
   Widget photoViewport({
     String? heldComparison,
+    Json? heldComparisonRecipe,
+    BuildContext? viewContext,
     bool showCompareButton = true,
-  }) => Stack(
-    fit: StackFit.expand,
-    children: [
-      if (preview != null)
-        SplitCompare(
-          effect: heldComparison ?? preview!,
-          original: comparison,
-          enabled: heldComparison == null && compare,
-          warning:
-              histogram.visible &&
-                  histogram.warningCurrent &&
-                  !histogram.updating &&
-                  displayedRevision == revision
-              ? histogram.warning
-              : null,
-          warningRect: histogramContentRect,
-          warningCorner:
-              (object(recipe.data['border'] ?? {})['template'] as int? ?? 0) < 3
-              ? .025 *
-                    (object(recipe.data['border'] ?? {})['corner'] as num? ??
-                        100) /
-                    100
-              : 0,
-          selection: regionLayer,
-          selectionSize:
-              displayedOverlay == null ||
-                  displayedOverlay!['outputWidth'] is! num ||
-                  displayedOverlay!['outputHeight'] is! num
-              ? null
-              : Size(
-                  (displayedOverlay!['outputWidth'] as num).toDouble(),
-                  (displayedOverlay!['outputHeight'] as num).toDouble(),
-                ),
-          onRetry: render,
-        )
-      else if (sameOwner)
-        const Center(child: CircularProgressIndicator(color: _editorYellow)),
-      if (canShowRegionLayer)
-        Positioned(
-          right: 72,
-          bottom: 12,
-          child: WorkspaceTool(
-            icon: 'eye',
-            selected: regionLayerVisible,
-            tooltip: regionLayerVisible ? '隐藏选区，保留调整' : '显示选区',
-            onPressed: () {
-              refreshWorkspace(() => regionLayerVisible = !regionLayerVisible);
-              unawaited(refreshRegionLayer());
-            },
+  }) {
+    final details = editorDetailBindings(
+      viewContext: viewContext ?? context,
+      heldComparison: heldComparison,
+      heldComparisonRecipe: heldComparisonRecipe,
+    );
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        if (preview != null)
+          SplitCompare(
+            effect: heldComparison ?? preview!,
+            original: comparison,
+            enabled: heldComparison == null && compare,
+            effectSize: displayedPhotoSize,
+            detailController: details.effect,
+            originalDetailController: details.original,
+            warning:
+                histogram.visible &&
+                    histogram.warningCurrent &&
+                    !histogram.updating &&
+                    displayedRevision == revision
+                ? histogram.warning
+                : null,
+            warningRect: histogramContentRect,
+            warningCorner:
+                (object(recipe.data['border'] ?? {})['template'] as int? ?? 0) <
+                    3
+                ? .025 *
+                      (object(recipe.data['border'] ?? {})['corner'] as num? ??
+                          100) /
+                      100
+                : 0,
+            selection: regionLayer,
+            selectionSize:
+                displayedOverlay == null ||
+                    displayedOverlay!['outputWidth'] is! num ||
+                    displayedOverlay!['outputHeight'] is! num
+                ? null
+                : Size(
+                    (displayedOverlay!['outputWidth'] as num).toDouble(),
+                    (displayedOverlay!['outputHeight'] as num).toDouble(),
+                  ),
+            onRetry: render,
+          )
+        else if (sameOwner)
+          const Center(child: CircularProgressIndicator(color: _editorYellow)),
+        if (canShowRegionLayer)
+          Positioned(
+            right: 72,
+            bottom: 12,
+            child: WorkspaceTool(
+              icon: 'eye',
+              selected: regionLayerVisible,
+              tooltip: regionLayerVisible ? '隐藏选区，保留调整' : '显示选区',
+              onPressed: () {
+                refreshWorkspace(
+                  () => regionLayerVisible = !regionLayerVisible,
+                );
+                unawaited(refreshRegionLayer());
+              },
+            ),
           ),
-        ),
-      if (showCompareButton)
-        Positioned(
-          top: 9,
-          right: 9,
-          child: SizedBox(
-            width: 48,
-            height: 48,
+        if (showCompareButton)
+          Positioned(
+            top: 9,
+            right: 9,
+            child: SizedBox(
+              width: 48,
+              height: 48,
+              child: Material(
+                color: const Color(0x9c101412),
+                shape: const CircleBorder(),
+                child: IconButton(
+                  tooltip: compare ? '显示效果' : '对比原图',
+                  onPressed: toolsEnabled && widget.photo.info['raw'] != true
+                      ? () {
+                          refreshWorkspace(() => compare = !compare);
+                          revision++;
+                          debounce?.cancel();
+                          unawaited(render());
+                        }
+                      : null,
+                  icon: const HueIcon(
+                    HueIconKind.splitCompare,
+                    size: 21,
+                    color: _editorWhite,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        // Continuous previews already update the visible photograph. A progress
+        // strip per frame flashes; reserve it for initial loading and explicit work.
+        if ((rendering && preview == null) || exporting || analyzingCleanup)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: LinearProgressIndicator(
+              value: progress > 0 ? progress : null,
+              minHeight: 2,
+              color: _editorYellow,
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+        if (error != null)
+          Positioned(
+            bottom: 6,
+            left: 20,
+            right: 20,
             child: Material(
-              color: const Color(0x9c101412),
-              shape: const CircleBorder(),
-              child: IconButton(
-                tooltip: compare ? '显示效果' : '对比原图',
-                onPressed: toolsEnabled && widget.photo.info['raw'] != true
-                    ? () {
-                        refreshWorkspace(() => compare = !compare);
-                        revision++;
-                        debounce?.cancel();
-                        unawaited(render());
-                      }
-                    : null,
-                icon: const HueIcon(
-                  HueIconKind.splitCompare,
-                  size: 21,
-                  color: _editorWhite,
+              color: const Color(0xd9262925),
+              borderRadius: BorderRadius.circular(12),
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      error!,
+                      style: const TextStyle(color: _editorWhite, fontSize: 12),
+                    ),
+                    TextButton(
+                      onPressed: toolsEnabled ? render : null,
+                      child: const Text('重试预览'),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-        ),
-      if (rendering || exporting || analyzingCleanup)
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 0,
-          child: LinearProgressIndicator(
-            value: progress > 0 ? progress : null,
-            minHeight: 2,
-            color: _editorYellow,
-            backgroundColor: Colors.transparent,
-          ),
-        ),
-      if (error != null)
-        Positioned(
-          bottom: 6,
-          left: 20,
-          right: 20,
-          child: Material(
-            color: const Color(0xd9262925),
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    error!,
-                    style: const TextStyle(color: _editorWhite, fontSize: 12),
-                  ),
-                  TextButton(
-                    onPressed: toolsEnabled ? render : null,
-                    child: const Text('重试预览'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-    ],
-  );
+      ],
+    );
+  }
 
   Widget historyBar() => SizedBox(
     height: 48,
@@ -912,6 +931,11 @@ extension _LegacyWorkspace on _EditorPageState {
                       padding: EdgeInsets.zero,
                     ),
                     child: Slider(
+                      // Flutter #193706 caches a blocked Slider's semantics
+                      // ancestry; replace its state when ownership disables it.
+                      key: ValueKey(
+                        'editor-parameter-$parameterIndex-enabled-$toolsEnabled',
+                      ),
                       min: (parameter['min'] as num).toDouble(),
                       max: (parameter['max'] as num).toDouble(),
                       value: value.toDouble(),

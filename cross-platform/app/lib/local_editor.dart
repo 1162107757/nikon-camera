@@ -371,6 +371,7 @@ extension _LocalWorkspace on _EditorPageState {
       return;
     }
     cancelQuick();
+    pauseEditorDetails(retire: true);
     histogram.invalidate();
     parkedDraft = quickBase = null;
     quickCleanup = quickPortrait = null;
@@ -486,6 +487,7 @@ extension _LocalWorkspace on _EditorPageState {
 
   Future<void> editSelection({bool existing = false}) async {
     if (!toolsEnabled) return;
+    pauseEditorDetails();
     debounce?.cancel();
     revision++;
     refreshWorkspace(() => managingTools = true);
@@ -539,6 +541,8 @@ extension _LocalWorkspace on _EditorPageState {
         region: region,
         localState: base,
         frame: frame,
+        recipe: frozen,
+        expectedSourceSha: sourceSha,
         atmosphere: ownedAtmosphere,
         isCurrent: current,
       );

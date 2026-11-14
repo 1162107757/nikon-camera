@@ -370,9 +370,10 @@ void main() {
   );
 
   testWidgets(
-    'custom HSV changes stay tentative; sample and preview return explicit RGB',
+    'custom HSV changes notify immediately and closing retains the selected RGB',
     (tester) async {
       RetouchTonePickerResult? result;
+      final live = <int>[];
       await tester.pumpWidget(
         launch((context) async {
           result = await showRetouchCustomTone(
@@ -380,6 +381,7 @@ void main() {
             rgb: 0xff0000,
             cards: [],
             onSave: (_, _) async => [],
+            onChanged: live.add,
           );
         }),
       );
@@ -392,7 +394,9 @@ void main() {
       await tester.pump();
       expect(result, isNull);
       expect(find.text('预览  #00FF00'), findsOneWidget);
-      await tester.tap(find.text('预览效果'));
+      expect(live, [0x00ff00]);
+      expect(find.text('预览效果'), findsNothing);
+      await tester.tap(find.byTooltip('关闭肤色选择器'));
       await tester.pumpAndSettle();
       expect(result!.action, RetouchTonePickerAction.preview);
       expect(result!.rgb, 0x00ff00);
@@ -403,7 +407,7 @@ void main() {
       expect(result!.action, RetouchTonePickerAction.sample);
       expect(result!.rgb, 0xff0000);
       await open(tester);
-      await tester.tap(find.text('取消'));
+      await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();
       expect(result, isNull);
     },

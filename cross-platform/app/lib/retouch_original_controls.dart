@@ -821,7 +821,7 @@ Rect retouchOriginalPhotoFrame({
       : viewport.height;
   final fit = math.min(viewport.width / imageWidth, available / imageHeight);
   final rawZoom = transform.getMaxScaleOnAxis();
-  final zoom = rawZoom.isFinite ? rawZoom.clamp(1.0, 8.0) : 1.0;
+  final zoom = rawZoom.isFinite ? rawZoom.clamp(1.0, 32.0) : 1.0;
   final width = imageWidth * fit * zoom, height = imageHeight * fit * zoom;
   final mx = math.max(0.0, (width - viewport.width) / 2);
   final my = math.max(0.0, (height - available) / 2);
@@ -840,6 +840,65 @@ Rect retouchOriginalPhotoFrame({
 /// Original portrait/body viewport. child lays out in the zoomed image frame;
 /// callbacks use original normalized image coordinates and the zoomed image size.
 /// Portrait fits the whole stage; BodyCanvas alone reserves and clips 48 dp bars.
+class RetouchPhotoViewport {
+  const RetouchPhotoViewport({
+    required this.imageFrame,
+    required this.clip,
+    required this.visibleRegion,
+    required this.zoom,
+  });
+  final Rect imageFrame, clip, visibleRegion;
+  final double zoom;
+  @override
+  bool operator ==(Object other) =>
+      other is RetouchPhotoViewport &&
+      imageFrame == other.imageFrame &&
+      clip == other.clip &&
+      visibleRegion == other.visibleRegion &&
+      zoom == other.zoom;
+  @override
+  int get hashCode => Object.hash(imageFrame, clip, visibleRegion, zoom);
+}
+
+RetouchPhotoViewport retouchOriginalPhotoViewport({
+  required Size viewport,
+  required double imageWidth,
+  required double imageHeight,
+  required Matrix4 transform,
+  bool reserveBars = false,
+}) {
+  final frame = retouchOriginalPhotoFrame(
+    viewport: viewport,
+    imageWidth: imageWidth,
+    imageHeight: imageHeight,
+    transform: transform,
+    reserveBars: reserveBars,
+  );
+  final available = Rect.fromLTRB(
+    0,
+    reserveBars ? 48 : 0,
+    viewport.width,
+    reserveBars ? math.max(48, viewport.height - 48) : viewport.height,
+  ).intersect(Offset.zero & viewport);
+  final clip = available.isEmpty ? Rect.zero : available;
+  final visible = frame.intersect(clip);
+  final roi = frame.isEmpty || visible.isEmpty
+      ? Rect.zero
+      : Rect.fromLTRB(
+          ((visible.left - frame.left) / frame.width).clamp(0, 1),
+          ((visible.top - frame.top) / frame.height).clamp(0, 1),
+          ((visible.right - frame.left) / frame.width).clamp(0, 1),
+          ((visible.bottom - frame.top) / frame.height).clamp(0, 1),
+        );
+  final scale = transform.getMaxScaleOnAxis();
+  return RetouchPhotoViewport(
+    imageFrame: frame,
+    clip: clip,
+    visibleRegion: roi,
+    zoom: scale.isFinite ? scale.clamp(1.0, 32.0) : 1,
+  );
+}
+
 class RetouchOriginalPhotoStage extends StatefulWidget {
   const RetouchOriginalPhotoStage({
     super.key,
@@ -859,6 +918,7 @@ class RetouchOriginalPhotoStage extends StatefulWidget {
     this.onTap,
     this.onEnd,
     this.onCancel,
+    this.onViewportChanged,
   });
   final double imageWidth, imageHeight;
   final Widget child;
@@ -873,11 +933,47 @@ class RetouchOriginalPhotoStage extends StatefulWidget {
   final bool Function(Offset normalized, Size renderedSize)? onStart;
   final ValueChanged<Offset>? onUpdate, onTap;
   final VoidCallback? onEnd, onCancel;
+  final ValueChanged<RetouchPhotoViewport>? onViewportChanged;
   @override
   State<RetouchOriginalPhotoStage> createState() => _OriginalPhotoStageState();
 }
 
 class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
+  RetouchPhotoViewport? reportedViewport, pendingViewport;
+  bool viewportReportScheduled = false;
+  void reportViewport() {
+    if (widget.onViewportChanged == null ||
+        !TickerMode.valuesOf(context).enabled ||
+        ModalRoute.isCurrentOf(context) == false) {
+      return;
+    }
+    final value = retouchOriginalPhotoViewport(
+      viewport: size,
+      imageWidth: widget.imageWidth,
+      imageHeight: widget.imageHeight,
+      transform: matrix(),
+      reserveBars: widget.reserveBars,
+    );
+    if (value == reportedViewport && pendingViewport == null) return;
+    pendingViewport = value;
+    if (viewportReportScheduled) return;
+    viewportReportScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewportReportScheduled = false;
+      final next = pendingViewport;
+      pendingViewport = null;
+      if (!mounted ||
+          next == null ||
+          next == reportedViewport ||
+          !TickerMode.valuesOf(context).enabled ||
+          ModalRoute.isCurrentOf(context) == false) {
+        return;
+      }
+      reportedViewport = next;
+      widget.onViewportChanged?.call(next);
+    });
+  }
+
   final pointers = <int, Offset>{};
   Size size = Size.zero;
   double zoom = 1, lastSpan = 0;
@@ -953,7 +1049,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
   void readController() {
     final matrix = widget.controller.value;
     final scale = matrix.getMaxScaleOnAxis();
-    zoom = scale.isFinite ? scale.clamp(1, 8) : 1;
+    zoom = scale.isFinite ? scale.clamp(1.0, 32.0) : 1;
     final x = matrix.storage[12], y = matrix.storage[13];
     pan = Offset(x.isFinite ? x : 0, y.isFinite ? y : 0);
     clamp();
@@ -1092,7 +1188,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
       }
       final currentFocus = focus, currentSpan = span(currentFocus);
       if (lastSpan > 0 && currentSpan > 0) {
-        final next = (zoom * currentSpan / lastSpan).clamp(1.0, 8.0),
+        final next = (zoom * currentSpan / lastSpan).clamp(1.0, 32.0),
             ratio = next / zoom;
         final relative = currentFocus - size.center(Offset.zero);
         pan = relative - (relative - pan) * ratio;
@@ -1173,6 +1269,7 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
     builder: (context, bounds) {
       resolveSize(bounds.biggest);
       final target = frame;
+      reportViewport();
       Widget image = Stack(
         clipBehavior: Clip.none,
         children: [

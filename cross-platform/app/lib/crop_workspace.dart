@@ -8,8 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'editing_detail_preview.dart';
 import 'hue_icons.dart';
 import 'photo_workspace_chrome.dart';
+import 'workspace_tools.dart';
 
 const _yellow = Color(0xffffe335), _white = Color(0xfff4f5f7);
 
@@ -23,12 +25,16 @@ class CropWorkspace extends StatefulWidget {
     required this.owner,
     required this.recipe,
     this.initialRatio = -1,
+    this.isCurrent,
+    this.invalidation,
   });
   final HueviaCore core;
   final Photo photo;
   final String owner;
   final Json recipe;
   final double initialRatio;
+  final bool Function()? isCurrent;
+  final Listenable? invalidation;
   @override
   State<CropWorkspace> createState() => _CropWorkspaceState();
 }
@@ -47,6 +53,16 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   bool fitPending = true;
   int generation = 0;
   int atmosphereGeneration = 0;
+  bool stale = false, closing = false;
+  late final detail = EditingDetailPreviewController(
+    core: widget.core,
+    owner: widget.owner,
+    sourcePath: widget.photo.path,
+    isCurrent: () => current,
+    maxTileEdge: 2048,
+  );
+  bool get current =>
+      mounted && !stale && !closing && (widget.isCurrent?.call() ?? true);
   late double ratio = widget.initialRatio;
   String transform = 'angle';
   Timer? debounce;
@@ -65,7 +81,33 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   @override
   void initState() {
     super.initState();
+    widget.invalidation?.addListener(ownerChanged);
     unawaited(render());
+  }
+
+  void ownerChanged() {
+    if (current || !mounted || stale) return;
+    generation++;
+    atmosphereGeneration++;
+    debounce?.cancel();
+    detail.invalidate();
+    if (job != null) unawaited(widget.core.cancel(job!));
+    final old = image, oldAtmosphere = atmosphere;
+    setState(() {
+      stale = true;
+      image = atmosphere = null;
+      busy = false;
+      error = '照片或账号已改变，请返回后重新打开。';
+    });
+    unawaited(discard(old));
+    unawaited(discard(oldAtmosphere));
+  }
+
+  void finish([Json? result]) {
+    if (!mounted || closing || (result != null && !current)) return;
+    closing = true;
+    detail.invalidate();
+    Navigator.pop(context, result);
   }
 
   Future<void> discard(String? value) async {
@@ -85,6 +127,8 @@ class _CropWorkspaceState extends State<CropWorkspace> {
 
   @override
   void dispose() {
+    widget.invalidation?.removeListener(ownerChanged);
+    detail.dispose();
     generation++;
     atmosphereGeneration++;
     debounce?.cancel();
@@ -95,6 +139,8 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   }
 
   Future<void> render() async {
+    if (!current) return;
+    detail.setEnabled(false);
     final serial = ++generation, previous = job;
     final identity = 'crop-${DateTime.now().microsecondsSinceEpoch}';
     job = identity;
@@ -102,24 +148,25 @@ class _CropWorkspaceState extends State<CropWorkspace> {
       busy = true;
       error = null;
     });
+    final profile = <String, dynamic>{
+      ...widget.recipe,
+      'border': <String, dynamic>{},
+      'geometry': {
+        ...geometry,
+        'left': 0,
+        'top': 0,
+        'right': 1000000,
+        'bottom': 1000000,
+      },
+    };
     try {
       if (previous != null) await widget.core.cancel(previous);
       final result = await widget.core.call('media.preview', {
         'path': widget.photo.path,
         'owner': widget.owner,
-        'recipe': {
-          ...widget.recipe,
-          'border': <String, dynamic>{},
-          'geometry': {
-            ...geometry,
-            'left': 0,
-            'top': 0,
-            'right': 1000000,
-            'bottom': 1000000,
-          },
-        },
+        'recipe': profile,
       }, identity);
-      if (!mounted || serial != generation) {
+      if (!current || serial != generation) {
         await discard(result['path'] as String);
         return;
       }
@@ -135,16 +182,26 @@ class _CropWorkspaceState extends State<CropWorkspace> {
           fitPending = false;
         }
       });
+      detail.configure(
+        recipe: profile,
+        revision: serial,
+        frameIdentity: image!,
+        outputSize: Size(
+          (result['width'] as num).toDouble(),
+          (result['height'] as num).toDouble(),
+        ),
+      );
       unawaited(discard(old));
       if (atmosphere == null) unawaited(loadAtmosphere(image!));
     } catch (failure) {
       if (mounted && serial == generation) setState(() => error = '$failure');
     } finally {
-      if (mounted && serial == generation) {
+      if (current && serial == generation) {
         setState(() {
           busy = false;
           job = null;
         });
+        detail.setEnabled(error == null);
       }
     }
   }
@@ -157,7 +214,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
         'owner': widget.owner,
       });
       final path = result['path'] as String;
-      if (!mounted || serial != atmosphereGeneration) {
+      if (!current || serial != atmosphereGeneration) {
         unawaited(discard(path));
         return;
       }
@@ -179,6 +236,8 @@ class _CropWorkspaceState extends State<CropWorkspace> {
   }
 
   void mutate(VoidCallback action, {bool refit = false}) {
+    if (!current) return;
+    detail.setEnabled(false);
     setState(() {
       action();
       fitPending |= refit;
@@ -394,7 +453,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
               Positioned.fill(
                 child: IconButton(
                   tooltip: '返回编辑照片',
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: finish,
                   icon: const HueIcon(
                     HueIconKind.back,
                     size: 20,
@@ -427,9 +486,9 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                 ),
                 shape: const StadiumBorder(),
               ),
-              onPressed: busy || error != null
+              onPressed: !current || busy || error != null
                   ? null
-                  : () => Navigator.pop(context, {
+                  : () => finish({
                       ...geometry,
                       'left': (crop.left * 1000000).round(),
                       'top': (crop.top * 1000000).round(),
@@ -492,6 +551,7 @@ class _CropWorkspaceState extends State<CropWorkspace> {
                                 pixels: pixels,
                                 crop: crop,
                                 enabled: !busy,
+                                detail: detail,
                                 aspect: ratio < 0
                                     ? null
                                     : ratio == 0
@@ -567,6 +627,7 @@ class CropCanvas extends StatefulWidget {
     this.aspect,
     this.enabled = true,
     this.onRetry,
+    this.detail,
   });
   final String image;
   final Size pixels;
@@ -575,16 +636,21 @@ class CropCanvas extends StatefulWidget {
   final double? aspect;
   final bool enabled;
   final VoidCallback? onRetry;
+  final EditingDetailPreviewController? detail;
   @override
   State<CropCanvas> createState() => _CropCanvasState();
 }
 
 class _CropCanvasState extends State<CropCanvas> {
   Rect frame = Rect.zero, start = Rect.zero;
+  Rect fitFrame = Rect.zero, photoClip = Rect.zero, gestureCrop = Rect.zero;
   Offset down = Offset.zero;
+  Offset pan = Offset.zero, startPan = Offset.zero, startFocal = Offset.zero;
+  double zoom = 1, startZoom = 1;
   int edges = 0, pointers = 0;
   double scaleStart = 1;
-  bool multiTouch = false;
+  bool multiTouch = false, navigationStarted = false;
+  int viewportGeneration = 0;
   static const left = 1, top = 2, right = 4, bottom = 8;
   Rect get actual => Rect.fromLTRB(
     frame.left + widget.crop.left * frame.width,
@@ -691,36 +757,52 @@ class _CropCanvasState extends State<CropCanvas> {
 
   void scale(ScaleUpdateDetails details) {
     if (frame.isEmpty) return;
-    if (details.pointerCount != pointers) {
-      pointers = details.pointerCount;
-      multiTouch |= pointers > 1;
-      start = widget.crop;
-      scaleStart = details.scale;
-      return;
-    }
+    pointers = details.pointerCount;
     if (pointers < 2) {
       if (!multiTouch) update(details.localFocalPoint);
       return;
     }
-    final minFactor = math.max(.05 / start.width, .05 / start.height),
-        maxFactor = math.min(1 / start.width, 1 / start.height),
-        factor = (details.scale / scaleStart).clamp(
-          math.min(minFactor, maxFactor),
-          maxFactor,
-        ),
-        w = start.width * factor,
-        h = start.height * factor,
-        fx = ((details.localFocalPoint.dx - frame.left) / frame.width).clamp(
-          0.0,
-          1.0,
-        ),
-        fy = ((details.localFocalPoint.dy - frame.top) / frame.height).clamp(
-          0.0,
-          1.0,
-        ),
-        l = (fx + (start.left - fx) * factor).clamp(0.0, 1 - w),
-        t = (fy + (start.top - fy) * factor).clamp(0.0, 1 - h);
-    widget.onChanged(Rect.fromLTWH(l, t, w, h));
+    if (!navigationStarted) {
+      if (!multiTouch && widget.crop != gestureCrop) {
+        widget.onChanged(gestureCrop);
+      }
+      multiTouch = navigationStarted = true;
+      startZoom = zoom;
+      scaleStart = details.scale;
+      startPan = clampPan(pan);
+      startFocal = details.localFocalPoint;
+      return;
+    }
+    final next = (startZoom * details.scale / scaleStart).clamp(1.0, 32.0);
+    final ratio = next / startZoom, center = fitFrame.center;
+    setState(() {
+      zoom = next;
+      pan = clampPan(
+        details.localFocalPoint -
+            center -
+            (startFocal - center - startPan) * ratio,
+      );
+    });
+  }
+
+  Offset clampPan(Offset value) {
+    final x = math.max(0.0, (fitFrame.width * zoom - photoClip.width) / 2);
+    final y = math.max(0.0, (fitFrame.height * zoom - photoClip.height) / 2);
+    return Offset(value.dx.clamp(-x, x), value.dy.clamp(-y, y));
+  }
+
+  void fitPhoto() => setState(() {
+    zoom = 1;
+    pan = Offset.zero;
+  });
+
+  void actualPixels() {
+    if (fitFrame.isEmpty) return;
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    setState(() {
+      zoom = (widget.pixels.width / (fitFrame.width * dpr)).clamp(1.0, 32.0);
+      pan = Offset.zero;
+    });
   }
 
   String label(Rect r) =>
@@ -734,10 +816,35 @@ class _CropCanvasState extends State<CropCanvas> {
         widget.pixels,
         Size(math.max(1, box.maxWidth - 24), math.max(1, box.maxHeight - 90)),
       ).destination;
-      frame = Alignment.center.inscribe(
-        size,
-        Rect.fromLTWH(0, 78, box.maxWidth, math.max(1, box.maxHeight - 90)),
+      photoClip = Rect.fromLTWH(
+        0,
+        78,
+        box.maxWidth,
+        math.max(1, box.maxHeight - 90),
       );
+      fitFrame = Alignment.center.inscribe(size, photoClip);
+      frame = Rect.fromCenter(
+        center: fitFrame.center + clampPan(pan),
+        width: fitFrame.width * zoom,
+        height: fitFrame.height * zoom,
+      );
+      final detail = widget.detail,
+          visible = frame.intersect(photoClip),
+          report = ++viewportGeneration;
+      final region = editingDetailVisibleRegion(frame, photoClip),
+          dpr = MediaQuery.devicePixelRatioOf(context);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted ||
+            report != viewportGeneration ||
+            detail != widget.detail) {
+          return;
+        }
+        detail?.setViewport(
+          visibleRegion: region,
+          zoom: zoom,
+          viewportPixelSize: Size(visible.width * dpr, visible.height * dpr),
+        );
+      });
       return Focus(
         autofocus: true,
         onKeyEvent: (_, event) {
@@ -759,8 +866,8 @@ class _CropCanvasState extends State<CropCanvas> {
           return KeyEventResult.handled;
         },
         child: Semantics(
-          label: '裁切范围，可拖动四角或边缘调整，拖动内部移动',
-          value: label(widget.crop),
+          label: '裁切范围，单指拖动边框或内部调整，双指缩放和移动照片查看细节',
+          value: '${label(widget.crop)} · 查看 ${(zoom * 100).round()}%',
           increasedValue: widget.enabled
               ? label(shifted(0, 0, resize: .05))
               : null,
@@ -779,27 +886,69 @@ class _CropCanvasState extends State<CropCanvas> {
                     pointers = details.pointerCount;
                     scaleStart = 1;
                     multiTouch = pointers > 1;
+                    gestureCrop = widget.crop;
+                    navigationStarted = false;
                   }
                 : null,
             onScaleUpdate: widget.enabled ? scale : null,
+            onScaleEnd: (_) {
+              pointers = 0;
+              navigationStarted = false;
+            },
             child: Stack(
               children: [
-                Positioned.fromRect(
-                  rect: frame,
-                  child: Image.file(
-                    File(widget.image),
-                    fit: BoxFit.fill,
-                    excludeFromSemantics: true,
-                    errorBuilder: (_, _, _) => Center(
-                      child: TextButton(
-                        onPressed: widget.onRetry,
-                        child: const Text('重试预览'),
-                      ),
+                Positioned.fill(
+                  child: ClipRect(
+                    clipper: _CropPhotoClip(photoClip),
+                    child: Stack(
+                      children: [
+                        Positioned.fromRect(
+                          rect: frame,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.file(
+                                File(widget.image),
+                                key: const ValueKey('crop-image-plane'),
+                                fit: BoxFit.fill,
+                                excludeFromSemantics: true,
+                                errorBuilder: (_, _, _) => Center(
+                                  child: TextButton(
+                                    onPressed: widget.onRetry,
+                                    child: const Text('重试预览'),
+                                  ),
+                                ),
+                              ),
+                              if (detail != null)
+                                EditingDetailTileLayer(controller: detail),
+                            ],
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: CustomPaint(
+                            painter: _CropOverlay(frame, actual),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Positioned.fill(
-                  child: CustomPaint(painter: _CropOverlay(frame, actual)),
+                Positioned(
+                  right: 8,
+                  top: 48,
+                  child: Row(
+                    children: [
+                      WorkspaceTool(
+                        icon: 'fit',
+                        tooltip: '适应照片',
+                        onPressed: widget.enabled ? fitPhoto : null,
+                      ),
+                      TextButton(
+                        onPressed: widget.enabled ? actualPixels : null,
+                        child: const Text('1:1像素'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -808,6 +957,15 @@ class _CropCanvasState extends State<CropCanvas> {
       );
     },
   );
+}
+
+class _CropPhotoClip extends CustomClipper<Rect> {
+  const _CropPhotoClip(this.rect);
+  final Rect rect;
+  @override
+  Rect getClip(Size size) => rect;
+  @override
+  bool shouldReclip(_CropPhotoClip oldClipper) => rect != oldClipper.rect;
 }
 
 class _CropOverlay extends CustomPainter {

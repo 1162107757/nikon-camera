@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
 import 'domain.dart';
+import 'editing_detail_preview.dart';
 import 'photo_workspace_chrome.dart';
 import 'selection_editor.dart';
 import 'selection_mask.dart';
@@ -35,6 +36,8 @@ class SelectionWorkspace extends StatelessWidget {
     this.atmosphere,
     this.isCurrent,
     this.maskBuilder,
+    this.recipe,
+    this.expectedSourceSha = '',
   });
   final AppState state;
   final Photo photo;
@@ -43,6 +46,8 @@ class SelectionWorkspace extends StatelessWidget {
   final String? atmosphere;
   final bool Function()? isCurrent;
   final Future<Json> Function(Json input)? maskBuilder;
+  final Json? recipe;
+  final String expectedSourceSha;
   @override
   Widget build(BuildContext context) => Theme(
     data: hueviaTheme(Brightness.dark, home: false),
@@ -81,6 +86,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
   String requestedMask = '', acceptedMask = '';
   String? error, commitJob;
   int maskGeneration = 0;
+  EditingDetailPreviewController? detail;
   HueviaCore get core => config.state.core;
   String get currentOwner => config.state.session['logoutPending'] == true
       ? ''
@@ -111,6 +117,27 @@ class _SelectionBodyState extends State<_SelectionBody> {
       error = '选区照片尺寸无效，请重新打开。';
     }
     config.state.addListener(accountChanged);
+    if (!imageFailed && config.recipe != null) {
+      detail =
+          EditingDetailPreviewController(
+            core: core,
+            owner: config.owner,
+            sourcePath: config.photo.path,
+            isCurrent: () =>
+                current && config.state.session['logoutPending'] != true,
+            maxTileEdge: 2048,
+          )..configure(
+            recipe: config.recipe!,
+            revision: 0,
+            frameIdentity: framePath,
+            outputSize: Size(
+              (config.frame['width'] as num).toDouble(),
+              (config.frame['height'] as num).toDouble(),
+            ),
+            expectedSourceSha: config.expectedSourceSha,
+            viewMode: 'local',
+          );
+    }
     editor.addListener(changed);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) changed();
@@ -138,10 +165,13 @@ class _SelectionBodyState extends State<_SelectionBody> {
   }
 
   void accountChanged() {
-    if (currentOwner == config.owner && (config.isCurrent?.call() ?? true)) {
+    if (config.state.session['logoutPending'] != true &&
+        currentOwner == config.owner &&
+        (config.isCurrent?.call() ?? true)) {
       return;
     }
     if (!mounted || stale) return;
+    detail?.invalidate();
     editor.cancel();
     editor.removeListener(changed);
     if (commitJob != null) unawaited(core.cancel(commitJob!));
@@ -165,6 +195,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
 
   @override
   void dispose() {
+    detail?.dispose();
     config.state.removeListener(accountChanged);
     editor.removeListener(changed);
     editor.dispose();
@@ -257,6 +288,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
   void close() {
     if (closing) return;
     setState(() => closing = true);
+    detail?.invalidate();
     if (commitJob != null) unawaited(core.cancel(commitJob!));
     Navigator.pop(context);
   }
@@ -289,6 +321,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
       }, job);
       if (!mounted || !current) return;
       closing = true;
+      detail?.invalidate();
       Navigator.pop(context, SelectionResult(result, id));
     } catch (failure) {
       if (current) setState(() => error = '$failure');
@@ -660,6 +693,7 @@ class _SelectionBodyState extends State<_SelectionBody> {
                           sourceSize: sourceSize,
                           mask: mask,
                           enabled: ready && !editor.adjusting,
+                          detail: detail,
                           onImageFailed: () {
                             WidgetsBinding.instance.addPostFrameCallback((_) {
                               if (mounted && !imageFailed) {
@@ -737,6 +771,7 @@ class _SelectionStage extends StatefulWidget {
     required this.hint,
     required this.onImageFailed,
     this.retry,
+    this.detail,
   });
   final SelectionEditor editor;
   final String framePath, hint;
@@ -745,6 +780,7 @@ class _SelectionStage extends StatefulWidget {
   final bool enabled;
   final VoidCallback onImageFailed;
   final VoidCallback? retry;
+  final EditingDetailPreviewController? detail;
   @override
   State<_SelectionStage> createState() => _SelectionStageState();
 }
@@ -758,6 +794,7 @@ class _SelectionStageState extends State<_SelectionStage> {
       downPosition = Offset.zero;
   Size viewport = Size.zero;
   bool multiple = false, navigationStarted = false;
+  int viewportGeneration = 0;
   SelectionEditor get editor => widget.editor;
   Size get fitted {
     final scale = math.min(
@@ -888,7 +925,7 @@ class _SelectionStageState extends State<_SelectionStage> {
         startPan = clampPan(pan);
         startFocal = details.localFocalPoint;
       }
-      final next = (startZoom * details.scale / startScale).clamp(1.0, 8.0),
+      final next = (startZoom * details.scale / startScale).clamp(1.0, 32.0),
           ratio = next / startZoom,
           center = viewport.center(Offset.zero),
           focus = details.localFocalPoint - center,
@@ -914,6 +951,23 @@ class _SelectionStageState extends State<_SelectionStage> {
       }
       viewport = box.biggest;
       final rect = frame;
+      final detail = widget.detail, report = ++viewportGeneration;
+      final clip = Offset.zero & viewport, visible = rect.intersect(clip);
+      final region = editingDetailVisibleRegion(rect, clip),
+          dpr = MediaQuery.devicePixelRatioOf(context);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted ||
+            report != viewportGeneration ||
+            detail != widget.detail) {
+          return;
+        }
+        detail?.setEnabled(widget.enabled);
+        detail?.setViewport(
+          visibleRegion: region,
+          zoom: zoom,
+          viewportPixelSize: Size(visible.width * dpr, visible.height * dpr),
+        );
+      });
       return Stack(
         children: [
           Positioned.fill(
@@ -936,17 +990,25 @@ class _SelectionStageState extends State<_SelectionStage> {
                       children: [
                         Positioned.fromRect(
                           rect: rect,
-                          child: Image.file(
-                            File(widget.framePath),
-                            fit: BoxFit.fill,
-                            cacheWidth: 1280,
-                            excludeFromSemantics: true,
-                            errorBuilder: (_, _, _) {
-                              widget.onImageFailed();
-                              return const Center(
-                                child: Text('预览读取失败，请返回后重试。'),
-                              );
-                            },
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Image.file(
+                                File(widget.framePath),
+                                key: const ValueKey('selection-image-plane'),
+                                fit: BoxFit.fill,
+                                cacheWidth: 1280,
+                                excludeFromSemantics: true,
+                                errorBuilder: (_, _, _) {
+                                  widget.onImageFailed();
+                                  return const Center(
+                                    child: Text('预览读取失败，请返回后重试。'),
+                                  );
+                                },
+                              ),
+                              if (detail != null)
+                                EditingDetailTileLayer(controller: detail),
+                            ],
                           ),
                         ),
                         Positioned.fill(

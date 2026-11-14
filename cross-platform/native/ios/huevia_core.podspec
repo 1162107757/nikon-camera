@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Classes/HueviaCorePlugin.h'
   s.vendored_frameworks = 'Frameworks/JRE.xcframework', 'Frameworks/LibRaw.xcframework', 'Frameworks/TencentOpenAPI.xcframework'
   s.resource_bundles = { 'HueviaNativeAssets' => ['Assets/**/*', 'Notices/*'] }
-  s.frameworks = 'Foundation', 'UIKit', 'ImageIO', 'CoreGraphics', 'CoreText', 'Security', 'Photos', 'PhotosUI', 'UniformTypeIdentifiers', 'Network', 'MetricKit', 'ImageCaptureCore', 'SystemConfiguration', 'CoreTelephony', 'AuthenticationServices', 'SafariServices', 'Vision', 'WebKit'
+  s.frameworks = 'Foundation', 'UIKit', 'ImageIO', 'CoreImage', 'CoreGraphics', 'CoreText', 'Security', 'Photos', 'PhotosUI', 'UniformTypeIdentifiers', 'Network', 'MetricKit', 'ImageCaptureCore', 'SystemConfiguration', 'CoreTelephony', 'AuthenticationServices', 'SafariServices', 'Vision', 'WebKit'
   s.libraries = 'z', 'iconv', 'c++', 'sqlite3'
   s.dependency 'Flutter'
   s.dependency 'TensorFlowLiteC', '2.17.0'

@@ -37,10 +37,12 @@ import 'editor_histogram.dart';
 import 'editor_histogram_controller.dart';
 import 'album_operations.dart';
 import 'latest_preview_queue.dart';
+import 'editing_detail_preview.dart';
 
 part 'legacy_editor.dart';
 part 'editor_filter_dock.dart';
 part 'editor_color_workspace.dart';
+part 'editor_detail_preview.dart';
 part 'local_editor.dart';
 part 'editor_menu_actions.dart';
 
@@ -109,6 +111,8 @@ class _EditorPageState extends State<EditorPage> {
   bool exporting = false, rendering = false, compare = false, restored = false;
   bool managingTools = false;
   bool colorToolActive = false;
+  bool detailRefreshPending = false;
+  EditingDetailPreviewController? effectDetails, comparisonDetails;
   bool analyzingCleanup = false;
   final scopeAnchor = GlobalKey();
   Json localState = {};
@@ -226,6 +230,8 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   void dispose() {
+    effectDetails?.dispose();
+    comparisonDetails?.dispose();
     atmosphereGeneration++;
     atmosphereLoading = false;
     previewQueue.close();
@@ -283,6 +289,7 @@ class _EditorPageState extends State<EditorPage> {
         leaving) {
       return;
     }
+    pauseEditorDetails();
     if (snapshot) checkpoint();
     clearRegionLayer();
     setState(() {
@@ -315,6 +322,7 @@ class _EditorPageState extends State<EditorPage> {
       queuedPreviewRevision == revision;
 
   Future<void> render({bool readOnly = false}) {
+    pauseEditorDetails();
     debounce?.cancel();
     return queuePreview(interactive: false, readOnly: readOnly);
   }
@@ -436,6 +444,7 @@ class _EditorPageState extends State<EditorPage> {
     bool latest,
   ) {
     if (frame == null) return;
+    if (!interactive) detailRefreshPending = false;
     final result = frame.result, frozen = request.recipe;
     final reference = frame.reference;
     final old = preview, oldComparison = comparison;
@@ -532,6 +541,7 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> openCrop({double initialRatio = -1}) async {
     if (!toolsEnabled) return;
+    pauseEditorDetails();
     debounce?.cancel();
     revision++;
     setState(() => managingTools = true);
@@ -547,6 +557,8 @@ class _EditorPageState extends State<EditorPage> {
             photo: widget.photo,
             owner: owner,
             recipe: recipe.clone().data,
+            isCurrent: () => mounted && sameOwner && !leaving,
+            invalidation: widget.state,
             initialRatio: initialRatio,
           ),
         ),
@@ -663,6 +675,7 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> analyzeCleanup() async {
     if (exporting || managingTools || analyzingCleanup || !restored) return;
+    pauseEditorDetails();
     debounce?.cancel();
     revision++;
     final job = 'cleanup-${DateTime.now().microsecondsSinceEpoch}';
@@ -728,6 +741,7 @@ class _EditorPageState extends State<EditorPage> {
   bool exportWindowOpen = false;
   Future<void> export() async {
     if (!toolsEnabled || exportWindowOpen) return;
+    pauseEditorDetails();
     exportWindowOpen = true;
     debounce?.cancel();
     final previousJob = activeJob;

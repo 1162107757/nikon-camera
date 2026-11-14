@@ -179,7 +179,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         patchChildOpen) {
       return;
     }
-    await cancelTonePreview();
+    await finishToneSelection();
     if (!mounted || !current || data == null) return;
     final epoch = operationEpoch,
         staged = data!,
@@ -291,6 +291,31 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     originalGestureLocal = null;
   }
 
+  Widget detailForFrame(Json shown, {bool patch = false}) {
+    final epoch = operationEpoch;
+    return Positioned.fill(
+      child: RetouchDetailPreview(
+        key: ValueKey('retouch-detail-$epoch-$patch'),
+        core: widget.state.core,
+        owner: widget.owner,
+        sourcePath: widget.photo.path,
+        frame: shown,
+        viewport: detailViewport,
+        invalidation: detailInvalidation,
+        isCurrent: () => operationCurrent(epoch),
+        enabled:
+            !busy &&
+            scalarStart == null &&
+            lightStart == null &&
+            !photoSampling,
+      ),
+    );
+  }
+
+  void updateDetailViewport(RetouchPhotoViewport value) {
+    if (mounted && current) detailViewport.value = value;
+  }
+
   Widget originalPatchPhoto() {
     final shown = comparing ? patchEntryFrame : frame;
     return Stack(
@@ -300,6 +325,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
           imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
           imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
           controller: viewport,
+          onViewportChanged: updateDetailViewport,
           editingEnabled: photoEditingEnabled,
           editingSignal: brushEditing,
           drawing: !busy && current && !comparing && brushRadiusStart == null,
@@ -317,6 +343,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                   gaplessPlayback: true,
                   semanticLabel: '修补照片：${widget.photo.name}',
                 ),
+              if (shown != null && current) detailForFrame(shown, patch: true),
               if (!comparing)
                 IgnorePointer(
                   child: CustomPaint(
@@ -529,6 +556,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       imageWidth: (shown?['width'] as num?)?.toDouble() ?? 1,
       imageHeight: (shown?['height'] as num?)?.toDouble() ?? 1,
       controller: viewport,
+      onViewportChanged: updateDetailViewport,
       editingEnabled: photoEditingEnabled,
       editingSignal: brushEditing,
       reserveBars: tab == 2 && !choosingGroup,
@@ -563,6 +591,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                   ? '处理前照片：${widget.photo.name}'
                   : '待编辑照片：${widget.photo.name}',
             ),
+          if (shown != null && current) detailForFrame(shown),
           if (portraitOverlay != null &&
               portraitOverlayKey == currentOverlayKey &&
               showOverlay &&
@@ -856,6 +885,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       return;
     }
     lightStart = data;
+    detailInvalidation.value++;
     lightFrameStart = frame;
     clearPortraitOverlay();
     lightTarget = selected;
@@ -956,7 +986,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
-    await cancelTonePreview();
+    await finishToneSelection();
     if (!mounted || !operationCurrent(epoch)) return;
     final staged = data!, fingerprint = data!['localData'];
     bool valid() =>
@@ -1081,7 +1111,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     final review = ValueNotifier<bool>(true);
     blemishReview = review;
     try {
-      await cancelTonePreview();
+      await finishToneSelection();
       if (!operationCurrent(epoch) || data == null || !review.value) return;
       final before = data!, fingerprint = data!['localData'];
       bool valid() =>
@@ -1194,7 +1224,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Future<void> originalNatural() async {
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
-    await cancelTonePreview();
+    await finishToneSelection();
     if (!operationCurrent(epoch) || data == null) return;
     final before = data!;
     refreshPortrait(() {
@@ -1335,7 +1365,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Future<void> originalGroups() async {
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch)) return;
-    await cancelTonePreview();
+    await finishToneSelection();
     if (bodyStart != null) await finishOriginalBody(false);
     if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
@@ -1350,7 +1380,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (brushRadiusStart != null) cancelBrushSizing();
     final epoch = operationEpoch;
     if (busy || !operationCurrent(epoch) || data == null) return;
-    await cancelTonePreview();
+    await finishToneSelection();
     if (!mounted || !operationCurrent(epoch)) return;
     refreshPortrait(() {
       choosingGroup = false;
@@ -1520,9 +1550,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       return;
     }
     scalarStart = data;
+    detailInvalidation.value++;
     scalarFrameStart = frame;
     clearPortraitOverlay();
     scalarRemember = tonePreviewStart == null;
+    scalarWork = null;
     scalarKey = key;
     scalarEnded = scalarCancelled = false;
   }
@@ -1536,7 +1568,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       return;
     }
     scalarPending = request;
-    if (!scalarRunning) unawaited(drainOriginalScalar());
+    if (!scalarRunning) {
+      scalarWork = drainOriginalScalar();
+      unawaited(scalarWork!);
+    }
   }
 
   Future<void> drainOriginalScalar() async {
@@ -1573,7 +1608,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     scalarEnded = true;
     scalarCancelled = cancel;
     if (cancel) scalarPending = null;
-    if (!scalarRunning) unawaited(completeOriginalScalar());
+    if (!scalarRunning) {
+      scalarWork = completeOriginalScalar();
+      unawaited(scalarWork!);
+    }
   }
 
   Future<void> completeOriginalScalar() async {
@@ -1850,7 +1888,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   List<Widget> originalSkinControls() => [
     if (skinParameter == 'tone') ...[
-      if (tonePreviewStart == null && !photoSampling) ...[
+      if (!photoSampling) ...[
         Row(
           children: [
             Expanded(
@@ -1909,32 +1947,6 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         ),
         SizedBox(height: 88, child: originalToneRail()),
       ],
-      if (tonePreviewStart != null && !photoSampling)
-        Row(
-          children: [
-            Expanded(
-              child: originalAction(
-                '继续选色',
-                busy || pickerSeed == null
-                    ? null
-                    : () => unawaited(customTone(pickerSeed!)),
-              ),
-            ),
-            Expanded(
-              child: originalAction(
-                '取消',
-                busy ? null : () => unawaited(cancelTonePreview()),
-              ),
-            ),
-            Expanded(
-              child: originalAction(
-                '使用此色',
-                busy ? null : confirmTonePreview,
-                selected: true,
-              ),
-            ),
-          ],
-        ),
       if (photoSampling)
         originalAction(
           '点按照片取色 · 点此取消取色',
@@ -1942,7 +1954,6 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
               ? null
               : () {
                   refreshPortrait(() => photoSampling = false);
-                  if (sampleSeed != null) unawaited(customTone(sampleSeed!));
                 },
         ),
       if (editedTone['toneId'] != 0 && !photoSampling)
@@ -2022,7 +2033,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   Future<void> selectOriginalSkinTool(String key) async {
     if (busy || !current) return;
-    await cancelTonePreview();
+    await finishToneSelection();
     if (current) {
       refreshPortrait(() => skinParameter = key);
       unawaited(refreshPortraitOverlay());
@@ -2254,14 +2265,14 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
               RetouchOriginalUtilityButton(
                 icon: 'undo',
                 semanticLabel: bodyStart == null ? '撤销' : '撤销塑形',
-                onPressed: busy || undo.isEmpty
+                onPressed: busy || (undo.isEmpty && tonePreviewStart == null)
                     ? null
                     : () => unawaited(history(false)),
               ),
               RetouchOriginalUtilityButton(
                 icon: 'redo',
                 semanticLabel: bodyStart == null ? '重做' : '重做塑形',
-                onPressed: busy || redo.isEmpty
+                onPressed: busy || tonePreviewStart != null || redo.isEmpty
                     ? null
                     : () => unawaited(history(true)),
               ),
@@ -2389,7 +2400,6 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
             onTap: photoSampling && !busy
                 ? () {
                     refreshPortrait(() => photoSampling = false);
-                    if (sampleSeed != null) unawaited(customTone(sampleSeed!));
                   }
                 : null,
           ),
@@ -2481,13 +2491,13 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                               data == null ||
                               !current ||
                               !originalPortraitReady ||
-                              tonePreviewStart != null ||
                               photoSampling ||
                               scalarStart != null ||
                               lightStart != null ||
                               originalGestureDown != null
                           ? null
                           : () {
+                              unawaited(finishToneSelection());
                               if (bodyStart != null) {
                                 unawaited(finishOriginalBody(true));
                               } else {
@@ -2523,7 +2533,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
                         faceMode == 0 &&
                         ['FILL', 'LIGHT_X', 'LIGHT_Y'].contains(faceParameter),
                     photoSampling: photoSampling,
-                    tonePreviewing: tonePreviewStart != null,
+                    tonePreviewing: false,
                   );
                   final dock = RetouchOriginalDock(
                     choosingGroup: choosingGroup,
