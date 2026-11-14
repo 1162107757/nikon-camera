@@ -20,6 +20,7 @@ class RetouchFrameCall {
 
 class RealtimePortraitCore extends PortraitMenuCore {
   RealtimePortraitCore(super.directory);
+  Completer<Json>? atmosphereGate;
   bool hold = false;
   int active = 0, maximumActive = 0;
   final frames = <RetouchFrameCall>[];
@@ -29,6 +30,10 @@ class RealtimePortraitCore extends PortraitMenuCore {
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (operation == 'media.atmosphere' && atmosphereGate != null) {
+      calls.add((operation, object(jsonDecode(jsonEncode(payload)))));
+      return atmosphereGate!.future;
+    }
     if (operation != 'media.reviewPreview' &&
         operation != 'media.localPreview') {
       return super.call(operation, payload, jobId);
@@ -77,7 +82,7 @@ void main() {
   Future<
     ({RealtimePortraitCore core, RealtimePortraitState state, dynamic editor})
   >
-  open(WidgetTester tester) async {
+  open(WidgetTester tester, {bool holdAtmosphere = false}) async {
     final directory = Directory.systemTemp.createTempSync(
       'huevia-retouch-realtime-',
     );
@@ -88,6 +93,7 @@ void main() {
       ),
     );
     final core = RealtimePortraitCore(directory.path);
+    if (holdAtmosphere) core.atmosphereGate = Completer<Json>();
     final state = RealtimePortraitState(core)..owner('alice');
     await tester.pumpWidget(
       MaterialApp(
@@ -242,6 +248,36 @@ void main() {
       expect(editor.chosen['LIGHT_Y'], 35);
       expect(editor.undo, hasLength(1));
       expect(core.maximumActive, 1);
+      expect(tester.takeException(), isNull);
+      await close(tester, f.state);
+    },
+  );
+
+  testWidgets(
+    'Late portrait atmosphere cannot revive after the account leaves and returns',
+    (tester) async {
+      final f = await open(tester, holdAtmosphere: true), core = f.core;
+      final dynamic editor = f.editor;
+      expect(
+        core.calls.where((call) => call.$1 == 'media.atmosphere'),
+        hasLength(1),
+      );
+      expect(editor.atmosphere, isNull);
+      final latePath = '${core.root}/previews/late-atmosphere.png';
+      File('${core.root}/previews/portrait.png').copySync(latePath);
+      addTearDown(() {
+        if (!core.atmosphereGate!.isCompleted) {
+          core.atmosphereGate!.complete({'path': latePath});
+        }
+      });
+      f.state.owner('bob');
+      f.state.owner('alice');
+      core.atmosphereGate!.complete({'path': latePath});
+      await pumpIo(tester);
+      expect(editor.atmosphere, isNull);
+      expect(editor.frame, isNull);
+      expect(editor.data, isNull);
+      expect(File(latePath).existsSync(), isFalse);
       expect(tester.takeException(), isNull);
       await close(tester, f.state);
     },

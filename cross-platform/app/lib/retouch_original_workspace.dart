@@ -933,6 +933,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   Future<void> loadPortraitAtmosphere(String source) async {
+    final epoch = operationEpoch;
     if (!current || atmosphere != null) return;
     try {
       final result = await widget.state.core.call('media.atmosphere', {
@@ -941,7 +942,7 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       });
       final path = result['path'] as String;
       temporary.add(path);
-      if (!current) {
+      if (!operationCurrent(epoch)) {
         await remove(path);
         return;
       }
