@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:huevia/domain.dart';
 import 'package:huevia/editor.dart';
+import 'package:huevia/legacy_color_controls.dart';
 import 'package:huevia/split_compare.dart';
 import 'package:huevia/theme.dart';
 
@@ -252,24 +253,31 @@ void main() {
       await tester.ensureVisible(find.text('HSL'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('HSL'));
+      for (
+        var i = 0;
+        i < 40 && find.byType(LegacyHslControls).evaluate().isEmpty;
+        i++
+      ) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 15)),
+        );
+        await tester.pump(const Duration(milliseconds: 80));
+      }
+      expect(find.byType(LegacyHslControls), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const ValueKey('hsl-band-7')));
       await tester.pumpAndSettle();
       await tester.tap(find.text('洋红'));
       await tester.pumpAndSettle();
       expect(
         tester
-            .widget<ChoiceChip>(
-              find.ancestor(
-                of: find.text('洋红'),
-                matching: find.byType(ChoiceChip),
-              ),
-            )
-            .selected,
-        isTrue,
+            .widget<LegacyHslControls>(find.byType(LegacyHslControls))
+            .selectedBand,
+        7,
       );
       final hue = tester.widget<Slider>(
         find
             .descendant(
-              of: find.byType(BottomSheet),
+              of: find.byType(LegacyHslControls),
               matching: find.byType(Slider),
             )
             .first,
@@ -281,7 +289,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 250));
       await tester.pumpAndSettle();
       final hueRecipe = object(
-        core.calls.lastWhere((row) => row.$1 == 'media.preview').$2['recipe'],
+        core.calls
+            .lastWhere((row) => row.$1 == 'media.reviewPreview')
+            .$2['recipe'],
       );
       expect(hueRecipe['hsl'], isNull);
       expect(
@@ -293,8 +303,15 @@ void main() {
             as List)[21],
         25,
       );
-      await tester.tap(find.byTooltip('完成'));
-      await tester.pumpAndSettle();
+      await tester.tap(find.text('应用'));
+      for (var i = 0; i < 40; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 15)),
+        );
+        await tester.pump(const Duration(milliseconds: 80));
+        if (find.byType(LegacyHslControls).evaluate().isEmpty) break;
+      }
+      expect(find.byType(LegacyHslControls), findsNothing);
       state.switchOwner();
       await tester.pumpAndSettle();
       expect(find.text('私有照片'), findsNothing);

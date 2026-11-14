@@ -37,7 +37,11 @@ class DraftCore extends HueviaCore {
   ]) async {
     calls.add((operation, payload));
     if (operation == 'local.describe') {
-      return {'localData': '', 'sha256': 'empty', 'regions': []};
+      return {
+        'localData': payload['localData'] ?? '',
+        'sha256': 'fixture-local-data',
+        'regions': [],
+      };
     }
     if (operation == 'draft.load') {
       return {

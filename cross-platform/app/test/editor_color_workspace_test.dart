@@ -24,6 +24,7 @@ class ColorRequest {
 /// These widget tests make no claim about native photo pixels or hardware.
 class ColorWorkspaceCore extends RealtimeCore {
   final requests = <ColorRequest>[];
+  final returnedFrames = <({String operation, String path})>[];
   List<ColorRequest> get reviews => requests
       .where((request) => request.operation == 'media.reviewPreview')
       .toList();
@@ -36,7 +37,12 @@ class ColorWorkspaceCore extends RealtimeCore {
   ]) async {
     requests.add(ColorRequest(operation, payload));
     if (operation == 'media.preview' || operation == 'media.reviewPreview') {
-      return image();
+      final result = image();
+      returnedFrames.add((
+        operation: operation,
+        path: result['path'] as String,
+      ));
+      return result;
     }
     if (operation == 'media.cleanupAnalyze') {
       return {'cleanupData': 'analysis-fixture'};
@@ -56,6 +62,38 @@ Future<void> frames(WidgetTester tester, {int count = 8}) async {
     );
     await tester.pump(const Duration(milliseconds: 80));
   }
+}
+
+/// Popping the route and accepting the replacement photo complete separately.
+/// Wait for the visible base editor to adopt a new native frame from this return,
+/// rather than inspecting a history button built during the outgoing transition.
+Future<void> returnedEditorFrame(
+  WidgetTester tester,
+  ColorWorkspaceCore core, {
+  required int after,
+}) async {
+  for (var i = 0; i < 40; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 15)),
+    );
+    await tester.pump(const Duration(milliseconds: 80));
+    final completed = core.returnedFrames
+        .skip(after)
+        .where((frame) => frame.operation == 'media.preview')
+        .toList();
+    final photograph = find.byType(SplitCompare);
+    if (find
+            .byKey(const Key('legacy-color-controls-scroll'))
+            .evaluate()
+            .isEmpty &&
+        completed.isNotEmpty &&
+        photograph.evaluate().length == 1 &&
+        tester.widget<SplitCompare>(photograph).effect == completed.last.path) {
+      await tester.pump();
+      return;
+    }
+  }
+  fail('The returned editor never displayed its new final native preview.');
 }
 
 Future<({ColorWorkspaceCore core, RealtimeState state})> open(
@@ -244,8 +282,9 @@ void main() {
       );
       await frames(tester);
       expect(neutralCurves(core.reviews.last.recipe), isFalse);
+      final returnedBefore = core.returnedFrames.length;
       await tester.tap(find.text('取消'));
-      await frames(tester);
+      await returnedEditorFrame(tester, core, after: returnedBefore);
       expect(find.byType(CurveControl), findsNothing);
       final rendered = core.requests
           .where((request) => request.operation == 'media.preview')
@@ -379,8 +418,9 @@ void main() {
         ),
         isEmpty,
       );
+      final returnedBefore = core.returnedFrames.length;
       await tester.tap(find.text('取消'));
-      await frames(tester);
+      await returnedEditorFrame(tester, core, after: returnedBefore);
       expect(undoEnabled(tester), isFalse);
       expect(tester.takeException(), isNull);
       await close(tester, fixture.state);
@@ -419,8 +459,9 @@ void main() {
         core.requests.where((request) => request.operation == 'draft.save'),
         isEmpty,
       );
+      final returnedBefore = core.returnedFrames.length;
       await tester.tap(find.text('取消'));
-      await frames(tester);
+      await returnedEditorFrame(tester, core, after: returnedBefore);
       expect(undoEnabled(tester), isFalse);
       expect(tester.takeException(), isNull);
       await close(tester, fixture.state);

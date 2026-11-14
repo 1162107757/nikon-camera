@@ -395,7 +395,8 @@ void main() {
       expect(find.text('拍摄设置'), findsNothing);
       core.viewingChange!.complete(core.remote());
       await frames(tester);
-      expect(find.text('遥控拍摄'), findsOneWidget);
+      expect(find.byType(CameraRemotePage), findsOneWidget);
+      expect(find.text('遥控拍照'), findsOneWidget);
       expect(
         core.calls
             .where((c) => c.operation == 'camera.remote.view')
@@ -423,7 +424,8 @@ void main() {
       await frames(tester);
       expect(find.text('机身当前参数'), findsNothing);
       expect(find.text('Nikon fixture'), findsNothing);
-      expect(find.text('遥控拍摄'), findsOneWidget);
+      expect(find.byType(CameraRemotePage), findsOneWidget);
+      expect(find.text('遥控拍照'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
     },

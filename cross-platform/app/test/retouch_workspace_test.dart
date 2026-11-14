@@ -66,6 +66,8 @@ class PortraitMenuCore extends HueviaCore {
   final gates = <String, Completer<void>>{};
   final cancelledJobs = <String>[];
   final blockedJobs = <String>[];
+  final previewPaths = <String>{};
+  final previewLocalData = <String, String>{};
   int serial = 0, previewSerial = 0;
   String? failAnalyze;
   String regionId = '';
@@ -104,6 +106,9 @@ class PortraitMenuCore extends HueviaCore {
         operation == 'media.localPreview') {
       final target = '$root/previews/frame-${previewSerial++}.png';
       await File('$root/previews/portrait.png').copy(target);
+      previewPaths.add(target);
+      previewLocalData[target] =
+          object(payload['recipe'])['localData'] as String;
       return {'path': target, 'width': 8, 'height': 8};
     }
     if (operation == 'media.retouchDescribe') {
@@ -241,6 +246,55 @@ class PortraitRouteReceipt {
   Json? result;
 }
 
+/// Native preview files and FileImage decoding finish outside the fake clock.
+/// Wait for those actual boundaries, while allowing deliberately held native
+/// jobs and user-facing modal transactions to stay pending for cancellation tests.
+Future<void> settleRetouchFixture(
+  WidgetTester tester,
+  PortraitMenuCore core,
+) async {
+  bool waitingForPreview() {
+    final cache = tester.binding.imageCache;
+    if (core.previewPaths.any(
+      (path) => cache.statusForKey(FileImage(File(path))).pending,
+    )) {
+      return true;
+    }
+    for (final element in find.byType(RetouchWorkspace).evaluate()) {
+      final dynamic editor = tester.state(find.byWidget(element.widget));
+      if (ModalRoute.of(element)?.isCurrent == false ||
+          editor.current != true ||
+          editor.stopped == true ||
+          editor.error != null) {
+        continue;
+      }
+      if (editor.busy == true && !core.blockedJobs.contains(editor.job)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  var idleTurns = 0;
+  for (var attempt = 0; attempt < 100; attempt++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 10)),
+    );
+    await tester.pump(const Duration(milliseconds: 50));
+    if (waitingForPreview()) {
+      idleTurns = 0;
+      continue;
+    }
+    if (++idleTurns < 2) continue;
+    await tester.pumpAndSettle();
+    if (!waitingForPreview()) return;
+    idleTurns = 0;
+  }
+  fail(
+    'The native preview or real image decoding did not become ready within the bounded IO turns.',
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late Directory directory;
@@ -272,15 +326,8 @@ void main() {
       }
     }
   });
-  Future<void> settle(WidgetTester tester) async {
-    await tester.pumpAndSettle();
-    for (var i = 0; i < 3; i++) {
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 5)),
-      );
-      await tester.pumpAndSettle();
-    }
-  }
+  Future<void> settle(WidgetTester tester) =>
+      settleRetouchFixture(tester, core);
 
   Future<void> open(
     WidgetTester tester, {
@@ -479,13 +526,16 @@ void main() {
     },
     timeout: const Timeout(Duration(seconds: 45)),
   );
-  String lastPreviewLocal() =>
-      object(
-            core.calls
-                .lastWhere((c) => c.$1 == 'media.reviewPreview')
-                .$2['recipe'],
-          )['localData']
-          as String;
+  String lastPreviewLocal() {
+    final element =
+        find.byType(RetouchWorkspace).evaluate().single as StatefulElement;
+    final dynamic editor = element.state;
+    // Cancellation can restore the already decoded gesture-start frame without
+    // issuing another render. Assert the installed pixels' snapshot, not merely
+    // the most recent native request (which may have been discarded).
+    return core.previewLocalData[object(editor.frame)['path']]!;
+  }
+
   Future<void> brightness(WidgetTester tester) async {
     await tester.tap(find.text('提亮'));
     await settle(tester);

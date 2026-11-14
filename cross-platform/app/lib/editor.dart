@@ -381,7 +381,7 @@ class _EditorPageState extends State<EditorPage> {
         job,
       );
       if (!previewRequestCurrent(request) || activeJob != job) {
-        await discardPreview(result['path']);
+        unawaited(discardPreview(result['path']));
         return null;
       }
       String? reference;
@@ -405,13 +405,13 @@ class _EditorPageState extends State<EditorPage> {
             job,
           );
         } catch (_) {
-          await discardPreview(result['path']);
+          unawaited(discardPreview(result['path']));
           rethrow;
         }
         reference = before['path'] as String;
         if (!previewRequestCurrent(request) || activeJob != job) {
-          await discardPreview(reference);
-          await discardPreview(result['path']);
+          unawaited(discardPreview(reference));
+          unawaited(discardPreview(result['path']));
           return null;
         }
       }
@@ -481,8 +481,9 @@ class _EditorPageState extends State<EditorPage> {
 
   Future<void> discardPreviewFrame(_EditorPreviewFrame? frame) async {
     if (frame == null) return;
-    await discardPreview(frame.result['path']);
-    await discardPreview(frame.reference);
+    // Decoding a retiring image must not hold up the next native render.
+    unawaited(discardPreview(frame.result['path']));
+    unawaited(discardPreview(frame.reference));
   }
 
   Future<void> discardPreview(Object? path, {bool force = false}) async {

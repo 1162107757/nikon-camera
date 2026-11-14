@@ -9,6 +9,7 @@ import 'package:huevia/copy_adjustments.dart';
 import 'package:huevia/editor.dart';
 import 'package:huevia/editor_details.dart';
 import 'package:huevia/recipes.dart';
+import 'package:huevia/raw_develop.dart';
 import 'package:huevia/retouch_workspace.dart';
 import 'package:huevia/theme.dart';
 import 'package:huevia/versions.dart';
@@ -219,7 +220,20 @@ void main() {
       await tester.tap(find.text('细节预览'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('RAW 显影'));
-      await tester.pumpAndSettle();
+      for (var i = 0; i < 40; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 15)),
+        );
+        await tester.pump(const Duration(milliseconds: 80));
+        if (find.byType(RawDevelopPage).evaluate().isNotEmpty) {
+          final dynamic raw = tester.state(find.byType(RawDevelopPage));
+          if (raw.preview != null && raw.running == false) break;
+        }
+      }
+      final dynamic raw = tester.state(find.byType(RawDevelopPage));
+      expect(raw.preview, isNotNull);
+      expect(raw.running, isFalse);
+      expect(raw.error, isNull);
       expect(
         core.calls.lastWhere((c) => c.$1 == 'source.inspect').$2,
         containsPair('expectedSourceSha', 'raw-sha'),

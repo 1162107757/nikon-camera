@@ -70,7 +70,7 @@ void main() {
           home: CameraPage(state: actualState, configuration: true),
         ),
       );
-      final connect = find.widgetWithText(FilledButton, '连接相机');
+      final connect = find.byKey(const Key('camera-connect'));
       await tester.ensureVisible(connect);
       await tester.tap(connect);
       await tester.pumpAndSettle();
@@ -97,6 +97,12 @@ void main() {
           home: CameraPage(state: actualState),
         ),
       );
+      await tester.pumpAndSettle();
+      // Opening Sync also remains connect-only until the user asks to browse.
+      expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
+      final browse = find.widgetWithText(FilledButton, '浏览相机照片');
+      await tester.ensureVisible(browse);
+      await tester.tap(browse);
       await tester.pumpAndSettle();
       expect(
         core.calls.lastWhere((call) => call.$1 == 'camera.page').$2['session'],

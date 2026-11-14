@@ -9,7 +9,8 @@ import 'package:huevia/retouch_blemish_review.dart';
 import 'package:huevia/retouch_workspace.dart';
 import 'package:huevia/theme.dart';
 
-import 'retouch_workspace_test.dart' show PortraitMenuCore;
+import 'retouch_workspace_test.dart'
+    show PortraitMenuCore, settleRetouchFixture;
 
 class _BlemishCore extends PortraitMenuCore {
   _BlemishCore(super.directory);
@@ -119,15 +120,8 @@ void main() {
     }
   });
 
-  Future<void> settle(WidgetTester tester) async {
-    await tester.pumpAndSettle();
-    for (var i = 0; i < 3; i++) {
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 5)),
-      );
-      await tester.pumpAndSettle();
-    }
-  }
+  Future<void> settle(WidgetTester tester) =>
+      settleRetouchFixture(tester, core);
 
   Future<void> open(WidgetTester tester) async {
     await tester.pumpWidget(

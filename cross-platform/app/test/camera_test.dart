@@ -241,7 +241,7 @@ void main() {
     },
   );
   testWidgets(
-    'Original three-column square camera grid fits small screens without file details',
+    'Approved responsive camera tiles fit small screens without file details or downloading',
     (tester) async {
       tester.view.physicalSize = const Size(320, 568);
       tester.view.devicePixelRatio = 1;
@@ -255,11 +255,12 @@ void main() {
       expect(
         (grid.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount)
             .crossAxisCount,
-        3,
+        2,
       );
       expect(find.textContaining('6048'), findsNothing);
       final cell = tester.getSize(find.byType(CameraThumbnail));
-      expect(cell.width, closeTo(cell.height, .01));
+      expect(cell.width / cell.height, closeTo(.92, .01));
+      expect(core.calls.any((call) => call.$1 == 'camera.download'), isFalse);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       state.dispose();
