@@ -847,14 +847,29 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   void beginOriginalLight() {
-    if (busy || !current || chosen['enabled'] == false || data == null) return;
+    if (busy ||
+        !current ||
+        chosen['enabled'] == false ||
+        data == null ||
+        scalarStart != null ||
+        lightStart != null) {
+      return;
+    }
     lightStart = data;
+    lightFrameStart = frame;
+    clearPortraitOverlay();
     lightTarget = selected;
     lightEnded = lightCancelled = false;
   }
 
   void updateOriginalLight(Offset value) {
-    if (!current || lightStart == null || selected != lightTarget) return;
+    if (!current ||
+        lightStart == null ||
+        selected != lightTarget ||
+        lightEnded ||
+        lightCancelled) {
+      return;
+    }
     lightPending = value;
     if (!lightRunning) unawaited(drainOriginalLight());
   }
@@ -890,6 +905,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   void endOriginalLight({bool cancel = false}) {
+    if (lightStart == null) return;
+    if (lightEnded) {
+      if (cancel) lightCancelled = true;
+      return;
+    }
     lightEnded = true;
     lightCancelled = cancel;
     if (cancel) lightPending = null;
@@ -899,34 +919,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Future<void> completeOriginalLight() async {
     final epoch = operationEpoch;
     final before = lightStart;
-    lightStart = null;
-    lightPending = null;
     if (before == null || !operationCurrent(epoch)) return;
-    if (lightCancelled) {
-      refreshPortrait(() {
-        busy = true;
-        stopped = false;
-      });
-      try {
-        final image = await render(before);
-        if (operationCurrent(epoch)) {
-          refreshPortrait(() {
-            data = before;
-            frame = image;
-          });
-        }
-      } catch (failure) {
-        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
-      } finally {
-        if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
-      }
-    } else if (before['localData'] != data?['localData']) {
-      refreshPortrait(() {
-        undo.add(before);
-        if (undo.length > 32) undo.removeAt(0);
-        redo.clear();
-      });
-    }
+    await finishGesturePreview(
+      before,
+      lightFrameStart,
+      cancelled: () => lightCancelled,
+      remember: true,
+    );
+    if (!operationCurrent(epoch)) return;
+    lightStart = lightFrameStart = null;
+    lightPending = null;
     unawaited(refreshPortraitOverlay());
   }
 
@@ -1509,15 +1511,29 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   );
 
   void beginOriginalScalar(String key) {
-    if (busy || !current || data == null || scalarStart != null) return;
+    if (busy ||
+        !current ||
+        data == null ||
+        scalarStart != null ||
+        lightStart != null) {
+      return;
+    }
     scalarStart = data;
+    scalarFrameStart = frame;
+    clearPortraitOverlay();
     scalarRemember = tonePreviewStart == null;
     scalarKey = key;
     scalarEnded = scalarCancelled = false;
   }
 
   void updateOriginalScalar(String key, Json request) {
-    if (!current || scalarStart == null || scalarKey != key) return;
+    if (!current ||
+        scalarStart == null ||
+        scalarKey != key ||
+        scalarEnded ||
+        scalarCancelled) {
+      return;
+    }
     scalarPending = request;
     if (!scalarRunning) unawaited(drainOriginalScalar());
   }
@@ -1548,6 +1564,11 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   }
 
   void endOriginalScalar({bool cancel = false}) {
+    if (scalarStart == null) return;
+    if (scalarEnded) {
+      if (cancel) scalarCancelled = true;
+      return;
+    }
     scalarEnded = true;
     scalarCancelled = cancel;
     if (cancel) scalarPending = null;
@@ -1557,34 +1578,16 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
   Future<void> completeOriginalScalar() async {
     final epoch = operationEpoch;
     final before = scalarStart;
-    scalarStart = scalarPending = null;
-    scalarKey = null;
     if (before == null || !operationCurrent(epoch)) return;
-    if (scalarCancelled) {
-      refreshPortrait(() {
-        busy = true;
-        stopped = false;
-      });
-      try {
-        final image = await render(before);
-        if (operationCurrent(epoch)) {
-          refreshPortrait(() {
-            data = before;
-            frame = image;
-          });
-        }
-      } catch (failure) {
-        if (operationCurrent(epoch)) refreshPortrait(() => error = '$failure');
-      } finally {
-        if (operationCurrent(epoch)) refreshPortrait(() => busy = false);
-      }
-    } else if (scalarRemember && before['localData'] != data?['localData']) {
-      refreshPortrait(() {
-        undo.add(before);
-        if (undo.length > (bodyStart == null ? 32 : 48)) undo.removeAt(0);
-        redo.clear();
-      });
-    }
+    await finishGesturePreview(
+      before,
+      scalarFrameStart,
+      cancelled: () => scalarCancelled,
+      remember: scalarRemember,
+    );
+    if (!operationCurrent(epoch)) return;
+    scalarStart = scalarFrameStart = scalarPending = null;
+    scalarKey = null;
     unawaited(refreshPortraitOverlay());
   }
 

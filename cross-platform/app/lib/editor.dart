@@ -10,6 +10,7 @@ import 'package:path/path.dart' as p;
 import 'domain.dart';
 import 'photo_format.dart';
 import 'curve_control.dart';
+import 'legacy_color_controls.dart';
 import 'recipes.dart';
 import 'copy_adjustments.dart';
 import 'versions.dart';
@@ -35,8 +36,11 @@ import 'editor_quick.dart';
 import 'editor_histogram.dart';
 import 'editor_histogram_controller.dart';
 import 'album_operations.dart';
+import 'latest_preview_queue.dart';
 
 part 'legacy_editor.dart';
+part 'editor_filter_dock.dart';
+part 'editor_color_workspace.dart';
 part 'local_editor.dart';
 part 'editor_menu_actions.dart';
 
@@ -46,6 +50,28 @@ class EditorPage extends StatefulWidget {
   final Photo photo;
   @override
   State<EditorPage> createState() => _EditorPageState();
+}
+
+class _EditorPreviewRequest {
+  _EditorPreviewRequest(
+    this.recipe,
+    this.revision,
+    this.generation,
+    this.splitting,
+    this.readOnly,
+    this.sourceSha,
+    this.path,
+  );
+  final Recipe recipe;
+  final int revision, generation;
+  final bool splitting, readOnly;
+  final String sourceSha, path;
+}
+
+class _EditorPreviewFrame {
+  _EditorPreviewFrame(this.result, this.reference);
+  final Json result;
+  final String? reference;
 }
 
 class _EditorPageState extends State<EditorPage> {
@@ -60,6 +86,19 @@ class _EditorPageState extends State<EditorPage> {
   late final EditorHistogramController histogram;
   final List<Recipe> undo = [], redo = [];
   Timer? debounce;
+  int previewGeneration = 0, queuedPreviewRevision = -1;
+  late final previewQueue =
+      LatestPreviewQueue<_EditorPreviewRequest, _EditorPreviewFrame?>(
+        render: renderPreview,
+        isCurrent: previewRequestCurrent,
+        onFrame: acceptPreview,
+        onError: (request, failure, stack) {
+          if (previewRequestCurrent(request)) {
+            setState(() => error = '$failure');
+          }
+        },
+        discard: discardPreviewFrame,
+      );
   StreamSubscription<dynamic>? progressEvents;
   String? preview, comparison, error, activeJob, atmosphere;
   int parameterIndex = 1;
@@ -68,6 +107,7 @@ class _EditorPageState extends State<EditorPage> {
   void refreshWorkspace(VoidCallback update) => setState(update);
   bool exporting = false, rendering = false, compare = false, restored = false;
   bool managingTools = false;
+  bool colorToolActive = false;
   bool analyzingCleanup = false;
   final scopeAnchor = GlobalKey();
   Json localState = {};
@@ -185,6 +225,7 @@ class _EditorPageState extends State<EditorPage> {
 
   @override
   void dispose() {
+    previewQueue.close();
     widget.state.removeListener(editorOwnerChanged);
     filters.removeListener(filtersChanged);
     filters.dispose();
@@ -195,14 +236,14 @@ class _EditorPageState extends State<EditorPage> {
     histogram.dispose();
     clearRegionLayer();
     debounce?.cancel();
-    if (restored && !exporting && !photoDeleted) {
+    if (restored && !exporting && !photoDeleted && !colorToolActive) {
       unawaited(saveDraft().catchError((_) {}));
     }
     unawaited(progressEvents?.cancel());
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
-    if (preview != null) unawaited(discardPreview(preview));
-    if (comparison != null) unawaited(discardPreview(comparison));
-    if (atmosphere != null) unawaited(discardPreview(atmosphere));
+    if (preview != null) unawaited(discardPreview(preview, force: true));
+    if (comparison != null) unawaited(discardPreview(comparison, force: true));
+    if (atmosphere != null) unawaited(discardPreview(atmosphere, force: true));
     panelRevision.dispose();
     super.dispose();
   }
@@ -235,7 +276,8 @@ class _EditorPageState extends State<EditorPage> {
         managingTools ||
         analyzingCleanup ||
         !restored ||
-        !sameOwner) {
+        !sameOwner ||
+        leaving) {
       return;
     }
     if (snapshot) checkpoint();
@@ -247,29 +289,78 @@ class _EditorPageState extends State<EditorPage> {
     });
     revision++;
     panelRevision.value++;
+    // Do not debounce the actual drag: a completed native frame is useful even
+    // while the next parameter sample is waiting. The timer only refines the
+    // last sample when an input control has no explicit gesture-end callback.
+    unawaited(queuePreview(interactive: true));
     debounce?.cancel();
     debounce = Timer(const Duration(milliseconds: 180), () {
       unawaited(render());
     });
   }
 
-  Future<void> render({bool readOnly = false}) async {
-    if (managingTools || !sameOwner) return;
-    clearRegionLayer();
-    final current = revision;
-    histogram.markUpdating();
-    try {
-      await settleLocalAdjustments();
-    } catch (failure) {
-      if (mounted && current == revision) setState(() => error = '$failure');
-      return;
+  bool previewRequestCurrent(_EditorPreviewRequest request) =>
+      mounted &&
+      sameOwner &&
+      !leaving &&
+      !managingTools &&
+      !analyzingCleanup &&
+      !exporting &&
+      !exportWindowOpen &&
+      request.path == widget.photo.path &&
+      request.generation == previewGeneration &&
+      queuedPreviewRevision == revision;
+
+  Future<void> render({bool readOnly = false}) {
+    debounce?.cancel();
+    return queuePreview(interactive: false, readOnly: readOnly);
+  }
+
+  Future<void> queuePreview({
+    required bool interactive,
+    bool readOnly = false,
+  }) {
+    if (!mounted || managingTools || !sameOwner || leaving) {
+      return Future.value();
     }
-    if (!mounted || current != revision) return;
-    final splitting = compare;
-    final frozen = recipe.clone();
-    final previousJob = activeJob;
-    if (previousJob != null) await widget.state.core.cancel(previousJob);
-    if (!mounted || current != revision) return;
+    // Modal tools, undo, compare and owner invalidation advance revision outside
+    // change(). Retire their preceding scope before accepting another sample.
+    if (queuedPreviewRevision != revision &&
+        (!interactive || queuedPreviewRevision != revision - 1)) {
+      previewGeneration++;
+      previewQueue.reset();
+    }
+    queuedPreviewRevision = revision;
+    clearRegionLayer();
+    return previewQueue.offer(
+      _EditorPreviewRequest(
+        recipe.clone(),
+        revision,
+        previewGeneration,
+        compare,
+        readOnly || colorToolActive,
+        sourceSha,
+        widget.photo.path,
+      ),
+      interactive: interactive,
+    );
+  }
+
+  Future<_EditorPreviewFrame?> renderPreview(
+    _EditorPreviewRequest request,
+    bool interactive,
+  ) async {
+    if (!previewRequestCurrent(request)) return null;
+    histogram.markUpdating();
+    final frozen = request.recipe;
+    // The queue starts in a microtask, after changeAdjustment has enqueued the
+    // matching local mutation. Await that position, not a moving stream of edits.
+    final queue = localQueue;
+    if (queue != null) {
+      final local = await queue.settled;
+      frozen.data['localData'] = local['localData'];
+    }
+    if (!previewRequestCurrent(request)) return null;
     final job = 'preview-${DateTime.now().microsecondsSinceEpoch}';
     setState(() {
       rendering = true;
@@ -278,22 +369,23 @@ class _EditorPageState extends State<EditorPage> {
     });
     try {
       final result = await widget.state.core.call(
-        readOnly ? 'media.reviewPreview' : 'media.preview',
+        request.readOnly ? 'media.reviewPreview' : 'media.preview',
         {
-          'path': widget.photo.path,
+          'path': request.path,
           'recipe': frozen.data,
           'owner': owner,
-          if (readOnly) 'snapshot': true,
-          if (readOnly) 'expectedSourceSha': sourceSha,
+          'maxEdge': interactive ? 640 : 1280,
+          if (request.readOnly) 'snapshot': true,
+          if (request.readOnly) 'expectedSourceSha': request.sourceSha,
         },
         job,
       );
-      if (!mounted || current != revision || activeJob != job) {
+      if (!previewRequestCurrent(request) || activeJob != job) {
         await discardPreview(result['path']);
-        return;
+        return null;
       }
       String? reference;
-      if (splitting) {
+      if (request.splitting) {
         final neutral = Recipe().data;
         for (final key in ['geometry', 'border']) {
           if (frozen.data[key] != null) neutral[key] = frozen.data[key];
@@ -301,13 +393,14 @@ class _EditorPageState extends State<EditorPage> {
         late final Json before;
         try {
           before = await widget.state.core.call(
-            readOnly ? 'media.reviewPreview' : 'media.preview',
+            request.readOnly ? 'media.reviewPreview' : 'media.preview',
             {
-              'path': widget.photo.path,
+              'path': request.path,
               'recipe': neutral,
               'owner': owner,
-              if (readOnly) 'snapshot': true,
-              if (readOnly) 'expectedSourceSha': sourceSha,
+              'maxEdge': interactive ? 640 : 1280,
+              if (request.readOnly) 'snapshot': true,
+              if (request.readOnly) 'expectedSourceSha': request.sourceSha,
             },
             job,
           );
@@ -316,54 +409,13 @@ class _EditorPageState extends State<EditorPage> {
           rethrow;
         }
         reference = before['path'] as String;
-        if (!mounted || current != revision || activeJob != job) {
+        if (!previewRequestCurrent(request) || activeJob != job) {
           await discardPreview(reference);
           await discardPreview(result['path']);
-          return;
+          return null;
         }
       }
-      final old = preview, oldComparison = comparison;
-      setState(() {
-        preview = result['path'] as String;
-        if (result['geometryWidth'] is num && result['geometryHeight'] is num) {
-          compositionFrame = Size(
-            (result['geometryWidth'] as num).toDouble(),
-            (result['geometryHeight'] as num).toDouble(),
-          );
-          compositionFrameTurns =
-              object(frozen.data['geometry'] ?? {})['turns'] as int? ?? 0;
-        }
-        comparison = reference;
-        displayedOverlay = {
-          'recipe': frozen.data,
-          'sourceWidth': result['sourceWidth'],
-          'sourceHeight': result['sourceHeight'],
-          'outputWidth': result['width'],
-          'outputHeight': result['height'],
-        };
-        displayedRevision = current;
-        error = null;
-      });
-      unawaited(refreshRegionLayer());
-      unawaited(histogram.update(frozen.data, sourceSha));
-      panelRevision.value++;
-      if (oldComparison != null &&
-          oldComparison != preview &&
-          oldComparison != comparison) {
-        unawaited(discardPreview(oldComparison));
-      }
-      if (atmosphere == null && !atmosphereLoading) {
-        unawaited(loadAtmosphere(result['path'] as String));
-      }
-      if (old != null &&
-          old != result['path'] &&
-          p.isWithin(p.join(widget.state.core.root, 'previews'), old)) {
-        unawaited(discardPreview(old));
-      }
-    } catch (failure) {
-      if (mounted && current == revision && activeJob == job) {
-        setState(() => error = '$failure');
-      }
+      return _EditorPreviewFrame(result, reference);
     } finally {
       if (mounted && activeJob == job) {
         setState(() {
@@ -374,13 +426,98 @@ class _EditorPageState extends State<EditorPage> {
     }
   }
 
-  Future<void> discardPreview(Object? path) async {
+  void acceptPreview(
+    _EditorPreviewRequest request,
+    _EditorPreviewFrame? frame,
+    bool interactive,
+    bool latest,
+  ) {
+    if (frame == null) return;
+    final result = frame.result, frozen = request.recipe;
+    final reference = frame.reference;
+    final old = preview, oldComparison = comparison;
+    setState(() {
+      preview = result['path'] as String;
+      if (result['geometryWidth'] is num && result['geometryHeight'] is num) {
+        compositionFrame = Size(
+          (result['geometryWidth'] as num).toDouble(),
+          (result['geometryHeight'] as num).toDouble(),
+        );
+        compositionFrameTurns =
+            object(frozen.data['geometry'] ?? {})['turns'] as int? ?? 0;
+      }
+      comparison = reference;
+      displayedOverlay = {
+        'recipe': frozen.data,
+        'sourceWidth': result['sourceWidth'],
+        'sourceHeight': result['sourceHeight'],
+        'outputWidth': result['width'],
+        'outputHeight': result['height'],
+      };
+      displayedRevision = request.revision;
+      error = null;
+    });
+    unawaited(refreshRegionLayer());
+    // Avoid another full native render per intermediate drag frame. The
+    // settled request refreshes histogram pixels at the normal final size.
+    if (!interactive) {
+      unawaited(histogram.update(frozen.data, request.sourceSha));
+    }
+    panelRevision.value++;
+    if (oldComparison != null &&
+        oldComparison != preview &&
+        oldComparison != comparison) {
+      unawaited(discardPreview(oldComparison));
+    }
+    if (atmosphere == null && !atmosphereLoading) {
+      unawaited(loadAtmosphere(result['path'] as String));
+    }
+    if (old != null &&
+        old != result['path'] &&
+        p.isWithin(p.join(widget.state.core.root, 'previews'), old)) {
+      unawaited(discardPreview(old));
+    }
+  }
+
+  Future<void> discardPreviewFrame(_EditorPreviewFrame? frame) async {
+    if (frame == null) return;
+    await discardPreview(frame.result['path']);
+    await discardPreview(frame.reference);
+  }
+
+  Future<void> discardPreview(Object? path, {bool force = false}) async {
     if (path is! String ||
         !p.isWithin(p.join(widget.state.core.root, 'previews'), path)) {
       return;
     }
+    bool displayed() =>
+        path == preview || path == comparison || path == atmosphere;
+    if (!force && displayed()) return;
     try {
       final file = File(path);
+      // A fast native frame may retire its predecessor before FileImage has
+      // finished reading it. Join that same decoded-image stream before
+      // removing its backing file; this never stalls the render queue.
+      if (await file.exists()) {
+        final read = Completer<void>();
+        final stream = FileImage(file).resolve(const ImageConfiguration());
+        final listener = ImageStreamListener(
+          (image, synchronous) {
+            image.dispose();
+            if (!read.isCompleted) read.complete();
+          },
+          onError: (Object error, StackTrace? stack) {
+            if (!read.isCompleted) read.complete();
+          },
+        );
+        stream.addListener(listener);
+        try {
+          await read.future;
+        } finally {
+          stream.removeListener(listener);
+        }
+      }
+      if (!force && displayed()) return;
       await ResizeImage(FileImage(file), width: 1280).evict();
       await FileImage(file).evict();
       if (await file.exists()) await file.delete();
@@ -533,11 +670,13 @@ class _EditorPageState extends State<EditorPage> {
       progress = 0;
       error = null;
     });
+    panelRevision.value++;
     try {
       await settleLocalAdjustments();
-      if (!mounted || !sameOwner) return;
+      if (!mounted || !sameOwner || activeJob != job) return;
       final regionId = selectedRegionId;
       if (oldJob != null) await widget.state.core.cancel(oldJob);
+      if (!mounted || !sameOwner || activeJob != job) return;
       final result = await widget.state.core.call('media.cleanupAnalyze', {
         'path': widget.photo.path,
         'owner': owner,
@@ -576,6 +715,7 @@ class _EditorPageState extends State<EditorPage> {
           rendering = false;
           activeJob = null;
         });
+        panelRevision.value++;
         if (succeeded) unawaited(render());
       }
     }
@@ -689,63 +829,7 @@ class _EditorPageState extends State<EditorPage> {
   Widget controls({int? tool}) {
     switch (tool ?? tab) {
       case 7:
-        final settings = object(
-          adjustmentRecipe.data['cleanup'] ??
-              {'amount': 100, 'haze': 100, 'noise': 100},
-        );
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text('自动分析原图中的灰雾和噪点，可分别调整两种效果。'),
-            const SizedBox(height: 12),
-            FilledButton.icon(
-              onPressed: exporting || analyzingCleanup || !restored
-                  ? null
-                  : analyzeCleanup,
-              icon: const Icon(Icons.auto_fix_high_rounded),
-              label: Text(
-                analyzingCleanup
-                    ? '正在分析原图…'
-                    : adjustmentRecipe.data['cleanupData'] == null
-                    ? '分析并应用'
-                    : '重新分析原图',
-              ),
-            ),
-            if (analyzingCleanup)
-              TextButton(
-                onPressed: activeJob == null
-                    ? null
-                    : () => widget.state.core.cancel(activeJob!),
-                child: const Text('取消分析'),
-              ),
-            if (adjustmentRecipe.data['cleanupData'] != null) ...[
-              for (final entry in [
-                ('amount', '总强度'),
-                ('haze', '去灰'),
-                ('noise', '降噪'),
-              ])
-                slider(
-                  entry.$2,
-                  (settings[entry.$1] as int? ?? 100).toDouble(),
-                  0,
-                  100,
-                  (value) => changeAdjustment(() {
-                    settings[entry.$1] = value.round();
-                    adjustmentRecipe.data['cleanup'] = settings;
-                  }, snapshot: false),
-                ),
-              TextButton(
-                onPressed: exporting || analyzingCleanup
-                    ? null
-                    : () => changeAdjustment(() {
-                        adjustmentRecipe.data.remove('cleanupData');
-                        adjustmentRecipe.data.remove('cleanup');
-                      }),
-                child: const Text('重置自动去灰'),
-              ),
-            ],
-          ],
-        );
+        return legacyColorControls(7);
       case 0:
         return Column(
           children: [
@@ -864,29 +948,7 @@ class _EditorPageState extends State<EditorPage> {
           ],
         );
       case 2:
-        final palette = object(
-          adjustmentRecipe.data['palette'] ??
-              {'color': 0, 'tone': 0, 'amount': 100},
-        );
-        return Column(
-          children: [
-            for (final entry in [
-              ('color', '色彩', -100.0),
-              ('tone', '明暗', -100.0),
-              ('amount', '强度', 0.0),
-            ])
-              slider(
-                entry.$2,
-                (palette[entry.$1] as int).toDouble(),
-                entry.$3,
-                100,
-                (value) => changeAdjustment(() {
-                  palette[entry.$1] = value.round();
-                  adjustmentRecipe.data['palette'] = palette;
-                }, snapshot: false),
-              ),
-          ],
-        );
+        return legacyColorControls(2);
       case 3:
         final geometry = object(recipe.data['geometry'] ?? {});
         return Column(
@@ -1007,69 +1069,9 @@ class _EditorPageState extends State<EditorPage> {
           ],
         );
       case 5:
-        return CurveControl(
-          curves:
-              (adjustmentRecipe.data['curves'] as List? ??
-                      List.generate(4, (_) => [0, 0, 255, 255]))
-                  .map((row) => List<int>.from(row as List))
-                  .toList(),
-          enabled: toolsEnabled,
-          onStart: checkpoint,
-          onChanged: (value) => changeAdjustment(
-            () => adjustmentRecipe.data['curves'] = value,
-            snapshot: false,
-          ),
-        );
+        return legacyColorControls(5);
       case 6:
-        final values = List<int>.from(
-          adjustmentRecipe.data['hsl'] as List? ?? List.filled(24, 0),
-        );
-        return Column(
-          children: [
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (var band = 0; band < 8; band++)
-                  ChoiceChip(
-                    label: Text(
-                      ['红', '橙', '黄', '绿', '青', '蓝', '紫', '洋红'][band],
-                    ),
-                    selected: hslBand == band,
-                    onSelected: toolsEnabled
-                        ? (_) {
-                            setState(() => hslBand = band);
-                            panelRevision.value++;
-                          }
-                        : null,
-                  ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            for (var axis = 0; axis < 3; axis++)
-              slider(
-                ['色相', '饱和度', '明度'][axis],
-                values[hslBand * 3 + axis].toDouble(),
-                -100,
-                100,
-                (value) => changeAdjustment(() {
-                  values[hslBand * 3 + axis] = value.round();
-                  adjustmentRecipe.data['hsl'] = values;
-                }, snapshot: false),
-              ),
-            TextButton(
-              onPressed: exporting
-                  ? null
-                  : () => changeAdjustment(() {
-                      for (var axis = 0; axis < 3; axis++) {
-                        values[hslBand * 3 + axis] = 0;
-                      }
-                      adjustmentRecipe.data['hsl'] = values;
-                    }),
-              child: const Text('重置此颜色'),
-            ),
-          ],
-        );
+        return legacyColorControls(6);
       default:
         return SizedBox(height: 280, child: borderDock());
     }

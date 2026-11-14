@@ -125,9 +125,9 @@ void main() {
       final actual = AppState(core);
       await open(tester, actual);
       expect(find.text('未找到 JPEG 照片，可切换到 RAW / NEF 查看。'), findsOneWidget);
-      await tester.tap(find.text('RAW / NEF'));
+      await tester.tap(find.byKey(const Key('camera-raw-switch')));
       await settleImages(tester);
-      expect(find.text('DSC_6522.NEF'), findsNothing);
+      expect(find.text('DSC_6522.NEF'), findsOneWidget);
       expect(
         find.byWidgetPredicate(
           (widget) =>
@@ -169,9 +169,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await open(tester, state);
       expect(
-        tester
-            .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'RAW / NEF'))
-            .selected,
+        tester.widget<Switch>(find.byKey(const Key('camera-raw-switch'))).value,
         isTrue,
       );
       expect(
@@ -201,7 +199,7 @@ void main() {
     core.failPage = false;
     await tester.tap(find.text('重试读取照片'));
     await settleImages(tester);
-    expect(find.text('DSC_6522.NEF'), findsNothing);
+    expect(find.text('DSC_6522.NEF'), findsOneWidget);
     expect(find.text('相机读取超时'), findsNothing);
     expect(
       core.calls
@@ -252,7 +250,7 @@ void main() {
       final core = await fixture();
       final state = AppState(core)..cameraRaw = true;
       await open(tester, state, scale: 1.6);
-      expect(find.text('DSC_6522.NEF'), findsNothing);
+      expect(find.text('DSC_6522.NEF'), findsOneWidget);
       final grid = tester.widget<SliverGrid>(find.byType(SliverGrid));
       expect(
         (grid.gridDelegate as SliverGridDelegateWithFixedCrossAxisCount)

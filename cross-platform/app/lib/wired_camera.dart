@@ -9,7 +9,11 @@ class WiredCameraPicker extends StatefulWidget {
     required this.core,
     required this.enabled,
     required this.onConnect,
+    this.compact = false,
+    this.onBusyChanged,
   });
+  final bool compact;
+  final ValueChanged<bool>? onBusyChanged;
   final HueviaCore core;
   final bool enabled;
   final Future<void> Function(String id) onConnect;
@@ -46,6 +50,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
       busy = true;
       error = null;
     });
+    widget.onBusyChanged?.call(true);
     try {
       final result = await request.run(
         'camera.usb.devices',
@@ -59,6 +64,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
       if (mounted) setState(() => error = '$failure');
     } finally {
       if (mounted) setState(() => busy = false);
+      widget.onBusyChanged?.call(false);
     }
   }
 
@@ -70,6 +76,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
       busy = true;
       error = null;
     });
+    widget.onBusyChanged?.call(true);
     try {
       await widget.core.requestUsbPermission(id);
       if (!mounted) return;
@@ -78,6 +85,7 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
       if (mounted) setState(() => error = '$failure');
     } finally {
       if (mounted) setState(() => busy = false);
+      widget.onBusyChanged?.call(false);
     }
   }
 
@@ -85,11 +93,13 @@ class _WiredCameraPickerState extends State<WiredCameraPicker> {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      Text('USB 有线传输', style: Theme.of(context).textTheme.titleMedium),
+      if (!widget.compact)
+        Text('USB 有线传输', style: Theme.of(context).textTheme.titleMedium),
       const SizedBox(height: 8),
-      const Text(
-        '将尼康相机开机，通过支持数据传输的 USB 线连接手机。Android 需开启 OTG；iPhone 可使用 USB-C 或兼容的相机转接器。',
-      ),
+      if (!widget.compact)
+        const Text(
+          '将尼康相机开机，通过支持数据传输的 USB 线连接手机。Android 需开启 OTG；iPhone 可使用 USB-C 或兼容的相机转接器。',
+        ),
       const SizedBox(height: 8),
       OutlinedButton.icon(
         onPressed: busy || !widget.enabled ? null : detect,

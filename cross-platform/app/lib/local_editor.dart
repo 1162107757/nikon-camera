@@ -104,6 +104,8 @@ extension _LocalWorkspace on _EditorPageState {
   void endParameterGesture() {
     if (!mounted) return;
     refreshWorkspace(() => adjustingParameter = false);
+    debounce?.cancel();
+    unawaited(render());
     unawaited(refreshRegionLayer());
   }
 
@@ -383,7 +385,7 @@ extension _LocalWorkspace on _EditorPageState {
       preview = comparison = atmosphere = activeJob = null;
       displayedOverlay = null;
       rendering = false;
-      managingTools = analyzingCleanup = exporting = false;
+      managingTools = analyzingCleanup = exporting = colorToolActive = false;
       localState = {};
       selectedRegionId = null;
       regionAdjustments = null;
@@ -398,7 +400,7 @@ extension _LocalWorkspace on _EditorPageState {
     }
   }
 
-  Future<void> showRegionScope() async {
+  Future<void> showRegionScope({BuildContext? anchorContext}) async {
     if (!toolsEnabled) return;
     try {
       await settleLocalAdjustments();
@@ -407,7 +409,8 @@ extension _LocalWorkspace on _EditorPageState {
           .map(object)
           .toList();
       final anchor =
-          scopeAnchor.currentContext?.findRenderObject() as RenderBox?;
+          (anchorContext ?? scopeAnchor.currentContext)?.findRenderObject()
+              as RenderBox?;
       final overlay =
           Overlay.of(context, rootOverlay: true).context.findRenderObject()
               as RenderBox;

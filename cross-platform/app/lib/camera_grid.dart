@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'camera_previews.dart';
 import 'camera_transfer.dart';
 import 'camera_raw_pairing.dart';
+import 'camera_photo_sort.dart';
 import 'domain.dart';
 
 /// Original AlbumPanel: square cells, 8dp gaps, 14dp corners, format badge.
@@ -20,6 +21,7 @@ class CameraPhotoGrid extends StatelessWidget {
     this.selection,
     this.onSelect,
     this.sliver = false,
+    this.order = CameraPhotoSort.cameraOrder,
   });
   final List<Json> items;
   final CameraPreviews previews;
@@ -29,6 +31,7 @@ class CameraPhotoGrid extends StatelessWidget {
   final Set<int>? selection;
   final void Function(Json)? onSelect;
   final bool sliver;
+  final CameraPhotoSort order;
   @override
   Widget build(BuildContext context) => sliver
       ? SliverLayoutBuilder(
@@ -39,12 +42,13 @@ class CameraPhotoGrid extends StatelessWidget {
         );
 
   Widget grid(BuildContext context, double width) {
-    final columns = ((width + 8) / 112).floor().clamp(3, 8);
+    final columns = ((width + 8) / 176).floor().clamp(2, 8);
     final edge = (width - (columns - 1) * 8) / columns;
     final layout = SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: columns,
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
+      childAspectRatio: .92,
     );
     final cells = SliverChildBuilderDelegate((context, index) {
       final item = items[index];
@@ -63,6 +67,7 @@ class CameraPhotoGrid extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (_) => CameraPhotoViewer(
                           photo: item,
+                          order: order,
                           previews: previews,
                           transfer: transfer,
                           onDownload: () => onDownload(item),
@@ -99,34 +104,42 @@ class CameraPhotoGrid extends StatelessWidget {
                           ),
                   ),
                   Positioned(
-                    left: 8,
-                    bottom: 8,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: const Color(0xb3232521),
-                        borderRadius: BorderRadius.circular(6),
+                    left: 9,
+                    right: 9,
+                    bottom: 10,
+                    child: Text(
+                      item['name'] as String? ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                        shadows: [Shadow(color: Colors.black87, blurRadius: 5)],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 3,
+                    ),
+                  ),
+                  if (selection == null && item['raw'] == true)
+                    Positioned(
+                      right: 7,
+                      top: 7,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Text(
-                          (item['raw'] == true ||
-                                  (item['name'] as String)
-                                      .toLowerCase()
-                                      .endsWith('.nef'))
-                              ? 'NEF'
-                              : 'JPEG',
-                          style: const TextStyle(
-                            fontSize: 10,
-                            height: 1.3,
-                            color: Colors.white,
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5,
+                            vertical: 3,
+                          ),
+                          child: Text(
+                            'NEF',
+                            style: TextStyle(fontSize: 9, color: Colors.white),
                           ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -157,8 +170,10 @@ class CameraPhotoViewer extends StatefulWidget {
     this.photos,
     this.onDownloadPhoto,
     this.onMore,
+    this.order = CameraPhotoSort.cameraOrder,
   });
   final Json photo;
+  final CameraPhotoSort order;
   final CameraPreviews previews;
   final CameraTransfer transfer;
   final Future<void> Function() onDownload;
@@ -202,6 +217,7 @@ class _CameraPhotoViewerState extends State<CameraPhotoViewer> {
         )
         .map((row) => Map<String, dynamic>.unmodifiable(row))
         .toList();
+    photos = sortedCameraPhotos(photos, widget.order);
     index = photos.indexWhere((row) => row['handle'] == widget.photo['handle']);
     if (index < 0) {
       photos.insert(0, Map<String, dynamic>.unmodifiable(widget.photo));
@@ -242,12 +258,15 @@ class _CameraPhotoViewerState extends State<CameraPhotoViewer> {
       try {
         final rows = await widget.onMore!();
         if (!mounted || !valid) return;
+        final currentHandle = photo['handle'];
         final handles = photos.map((row) => row['handle']).toSet();
         final added = rows
             .where((row) => handles.add(row['handle']))
             .map((row) => Map<String, dynamic>.unmodifiable(row))
             .toList();
-        photos.addAll(added);
+        photos = sortedCameraPhotos([...photos, ...added], widget.order);
+        index = photos.indexWhere((row) => row['handle'] == currentHandle);
+        target = index + delta;
         exhausted = added.isEmpty;
       } catch (failure) {
         if (mounted) setState(() => navigationError = '$failure');

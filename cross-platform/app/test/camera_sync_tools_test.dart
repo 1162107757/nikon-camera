@@ -186,7 +186,7 @@ void main() {
       expect(core.pages, hasLength(1));
       expect(find.text('读取更多照片'), findsNothing);
       final scroll = find.byKey(const PageStorageKey('sync-camera-photos'));
-      await tester.drag(scroll, const Offset(0, -1000));
+      await tester.drag(scroll, const Offset(0, -2400));
       await tester.pump();
       expect(core.pages, hasLength(2));
       expect(core.pages.last['offset'], 24);
@@ -197,7 +197,7 @@ void main() {
       await fixtures.settleImages(tester);
       await tester.drag(scroll, const Offset(0, 1800));
       await fixtures.settleImages(tester);
-      expect(find.text('JPEG · 已读取 47 张'), findsOneWidget);
+      expect(find.text('47 张'), findsOneWidget);
       expect(core.pages, hasLength(2));
       await tester.pumpWidget(const SizedBox());
       state.dispose();
@@ -226,7 +226,7 @@ void main() {
       expect(core.pages, hasLength(3));
       await tester.drag(scroll, const Offset(0, 2000));
       await fixtures.settleImages(tester);
-      expect(find.text('JPEG · 已读取 36 张'), findsOneWidget);
+      expect(find.text('36 张'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
       state.dispose();
     },
@@ -238,14 +238,14 @@ void main() {
       final core = await syncCore();
       final state = AppState(core);
       await fixtures.open(tester, state);
-      await tester.tap(find.text('相机工具'));
+      await tester.tap(find.byTooltip('相机工具'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('下载队列'));
       await tester.pumpAndSettle();
       expect(find.byType(CameraDownloadsPage), findsOneWidget);
-      await tester.tap(find.byTooltip('返回'));
+      await tester.tap(find.byTooltip('关闭下载队列'));
       await tester.pumpAndSettle();
-      expect(find.text('JPEG · 已读取 24 张'), findsOneWidget);
+      expect(find.text('24+ 张'), findsOneWidget);
       expect(core.pages, hasLength(1));
       expect(core.cancelled, isEmpty);
       expect(core.calls.where((c) => c.$1 == 'camera.disconnect'), isEmpty);
@@ -265,7 +265,7 @@ void main() {
       await tester.tap(find.text('同步').last);
       await fixtures.settleImages(tester);
       expect(find.byType(SyncToolsDock), findsOneWidget);
-      await tester.tap(find.text('相机工具'));
+      await tester.tap(find.byTooltip('相机工具'));
       await tester.pumpAndSettle();
       for (final tab in ['预设', '相册', '设置']) {
         await tester.tap(find.text(tab).last);
@@ -307,7 +307,7 @@ void main() {
           ),
         ),
       );
-      await tester.tap(find.text('相机工具'));
+      await tester.tap(find.byTooltip('相机工具'));
       await tester.pumpAndSettle();
       expect(find.text('遥控拍照'), findsOneWidget);
       expect(tester.takeException(), isNull);

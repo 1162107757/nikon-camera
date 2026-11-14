@@ -436,14 +436,16 @@ class CameraDownloadsPage extends StatefulWidget {
     super.key,
     required this.state,
     this.embedded = false,
+    this.compact = false,
   });
   final AppState state;
-  final bool embedded;
+  final bool embedded, compact;
   @override
   State<CameraDownloadsPage> createState() => _CameraDownloadsPageState();
 }
 
 class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
+  bool loading = true;
   CameraDownloads get queue => widget.state.cameraDownloads;
   @override
   void initState() {
@@ -452,6 +454,7 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
   }
 
   Future<void> load() async {
+    if (mounted) setState(() => loading = true);
     try {
       await queue.restore();
     } catch (failure) {
@@ -459,6 +462,8 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('$failure')));
       }
+    } finally {
+      if (mounted) setState(() => loading = false);
     }
   }
 
@@ -478,7 +483,88 @@ class _CameraDownloadsPageState extends State<CameraDownloadsPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) {
+    if (!widget.compact) return fullPage(context);
+    return AnimatedBuilder(
+      animation: queue,
+      builder: (context, _) {
+        final p = HuePalette.of(context);
+        if (queue.current == null &&
+            queue.queues.isEmpty &&
+            queue.issues.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 12, 22),
+            child: ListView(
+              shrinkWrap: true,
+              primary: false,
+              padding: EdgeInsets.zero,
+              children: [
+                Row(
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        '下载队列',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: '关闭下载队列',
+                      onPressed: () => Navigator.maybePop(context),
+                      icon: const Icon(Icons.close_rounded, size: 20),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 16, 8, 12),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.downloading_rounded,
+                        size: 28,
+                        color: p.secondary,
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              loading ? '正在读取下载记录' : '暂无下载任务',
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              loading ? '请稍候。' : '选择相机照片后，即可加入队列。',
+                              style: TextStyle(
+                                fontSize: 12,
+                                height: 1.7,
+                                color: p.secondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return SizedBox(
+          height: (MediaQuery.sizeOf(context).height * .62)
+              .clamp(220, 520)
+              .toDouble(),
+          child: fullPage(context),
+        );
+      },
+    );
+  }
+
+  Widget fullPage(BuildContext context) => Scaffold(
     backgroundColor: widget.embedded ? Colors.transparent : null,
     appBar: HueHeader(
       title: '下载队列',

@@ -214,7 +214,7 @@ Future<void> showImport(WidgetTester tester, AppState state) async {
 }
 
 Future<void> tapConnect(WidgetTester tester) async {
-  final button = find.widgetWithText(FilledButton, '连接相机');
+  final button = find.byKey(const Key('camera-connect'));
   await tester.ensureVisible(button);
   await tester.tap(button);
   await tester.pump();
@@ -413,7 +413,7 @@ void main() {
       expect(find.textContaining('相机预设槽位正在使用连接'), findsOneWidget);
       expect(find.textContaining('已读取 0 张'), findsNothing);
       expect(find.textContaining('Nikon Z6II · 已连接'), findsOneWidget);
-      await tester.tap(find.text('相机工具'));
+      await tester.tap(find.byTooltip('相机工具'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('相机预设槽位'));
       await tester.pumpAndSettle();

@@ -24,3 +24,7 @@ docs/migration/validation/features-221/**/*.log -text -whitespace
 docs/migration/validation/features-221/**/*.json -text -whitespace
 docs/migration/validation/features-221/**/*.txt -text -whitespace
 docs/migration/validation/features-221/**/*.exit -text -whitespace
+docs/migration/validation/features-222/**/*.log -text -whitespace
+docs/migration/validation/features-222/**/*.json -text -whitespace
+docs/migration/validation/features-222/**/*.txt -text -whitespace
+docs/migration/validation/features-222/**/*.exit -text -whitespace

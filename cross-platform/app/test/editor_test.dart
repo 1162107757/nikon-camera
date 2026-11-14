@@ -26,6 +26,7 @@ class DraftCore extends HueviaCore {
     };
   }
   final List<(String, Json)> calls = [];
+  int previewSerial = 0;
   @override
   Future<void> cancel(String jobId) async {}
   @override
@@ -56,8 +57,14 @@ class DraftCore extends HueviaCore {
         },
       };
     }
-    if (operation == 'media.preview' || operation == 'media.originalPreview') {
-      return {'path': '$root/previews/preview.png'};
+    if (operation == 'media.preview' ||
+        operation == 'media.reviewPreview' ||
+        operation == 'media.originalPreview') {
+      final path = '$root/previews/frame-${previewSerial++}.png';
+      File(
+        path,
+      ).writeAsBytesSync(File('$root/previews/preview.png').readAsBytesSync());
+      return {'path': path};
     }
     if (operation == 'media.cleanupAnalyze') {
       return {'cleanupData': 'AWRkZAA='};
@@ -95,10 +102,28 @@ void main() {
           ];
         tester.view.physicalSize = size;
         tester.view.devicePixelRatio = 1;
-        addTearDown(() {
+        addTearDown(() async {
+          await tester.pumpWidget(const SizedBox());
+          await tester.pump();
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 40)),
+          );
+          tester.binding.imageCache.clear();
+          tester.binding.imageCache.clearLiveImages();
           tester.view.resetPhysicalSize();
           tester.view.resetDevicePixelRatio();
-          directory.deleteSync(recursive: true);
+          final resolved = directory.absolute.path;
+          expect(
+            resolved.startsWith(Directory.systemTemp.absolute.path),
+            isTrue,
+          );
+          expect(
+            directory.uri.pathSegments.where(
+              (v) => v.startsWith('huevia-editor-test-'),
+            ),
+            isNotEmpty,
+          );
+          await tester.runAsync(() => directory.delete(recursive: true));
         });
         TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
             .setMockMethodCallHandler(
@@ -130,21 +155,26 @@ void main() {
           await tester.ensureVisible(find.text(label));
           await tester.pumpAndSettle();
           await tester.tap(find.text(label));
+          for (var i = 0; i < 4; i++) {
+            await tester.runAsync(
+              () => Future<void>.delayed(const Duration(milliseconds: 20)),
+            );
+            await tester.pump(const Duration(milliseconds: 80));
+          }
           await tester.pumpAndSettle();
         }
 
         await tapLabel('调节');
         await tapLabel('曲线');
         expect(tester.takeException(), isNull);
-        await tapLabel('重置此通道');
+        await tapLabel('重置通道');
         expect(
           core.calls
-              .lastWhere((c) => c.$1 == 'media.preview')
+              .lastWhere((c) => c.$1 == 'media.reviewPreview')
               .$2['recipe']['curves'],
           hasLength(4),
         );
-        await tester.tap(find.byTooltip('完成'));
-        await tester.pumpAndSettle();
+        await tapLabel('应用');
         await tapLabel('裁切');
         await tapLabel('水平翻转');
         final geometry = core.calls
@@ -157,26 +187,23 @@ void main() {
         await tapLabel('HSL');
         expect(find.text('洋红'), findsOneWidget);
         expect(tester.takeException(), isNull);
-        await tester.tap(find.byTooltip('完成'));
-        await tester.pumpAndSettle();
+        await tapLabel('应用');
         await tapLabel('滤镜');
         await tester.tap(find.byTooltip('查看全部滤镜'));
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(DropdownButtonFormField<String>));
+        await tester.tap(find.byKey(const ValueKey('picker-filter-')));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('无滤镜').last);
+        await tester.tap(find.byTooltip('查看全部滤镜'));
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(DropdownButtonFormField<String>));
+        await tester.tap(find.byKey(const ValueKey('filter-source-mine')).last);
         await tester.pumpAndSettle();
-        await tester.tap(find.text('新滤镜').last);
+        await tester.tap(find.byKey(const ValueKey('picker-filter-available')));
         await tester.pumpAndSettle();
         final newRecipe = core.calls
             .lastWhere((call) => call.$1 == 'media.preview')
             .$2['recipe'];
         expect(newRecipe['presetId'], 'available');
         expect(newRecipe['strength'], 100);
-        await tester.tap(find.byTooltip('完成'));
-        await tester.pumpAndSettle();
         await tester.tap(find.byTooltip('对比原图'));
         await tester.pumpAndSettle();
         final originalRequest = core.calls
@@ -193,16 +220,25 @@ void main() {
         );
         await tapLabel('调节');
         await tapLabel('去灰');
-        await tapLabel('分析并应用');
-        await tester.ensureVisible(find.byTooltip('减小总强度'));
-        await tester.pumpAndSettle();
-        await tester.tap(find.byTooltip('减小总强度'));
+        // The original cleanup workspace analyzes once on entry. Adjust the
+        // controlled legacy strength row; it now previews before Apply.
+        final amount = find.byKey(const ValueKey('cleanup-axis-0'));
+        await tester.ensureVisible(amount);
+        final amountSlider = find.descendant(
+          of: amount,
+          matching: find.byType(Slider),
+        );
+        final control = tester.widget<Slider>(amountSlider);
+        control.onChangeStart?.call(100);
+        control.onChanged!(99);
+        control.onChangeEnd?.call(99);
         await tester.pumpAndSettle();
         final cleaned = core.calls
-            .lastWhere((call) => call.$1 == 'media.preview')
+            .lastWhere((call) => call.$1 == 'media.reviewPreview')
             .$2['recipe'];
         expect(cleaned['cleanupData'], 'AWRkZAA=');
         expect(cleaned['cleanup']['amount'], 99);
+        await tapLabel('应用');
         await tester.pumpWidget(const SizedBox());
         await tester.pump();
         expect(core.calls.last.$1, 'draft.save');

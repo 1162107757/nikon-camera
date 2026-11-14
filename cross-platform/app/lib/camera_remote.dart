@@ -9,7 +9,7 @@ import 'camera_transfer.dart';
 import 'domain.dart';
 import 'editor_histogram.dart';
 
-const _background = Color(0xff121313);
+const _background = Color(0xff171816);
 const _text = Color(0xfff6f1eb);
 const _secondary = Color(0xffbeb9b2);
 const _accent = Color(0xfff3b493);
@@ -20,10 +20,12 @@ class CameraRemotePage extends StatefulWidget {
     required this.state,
     this.embedded = false,
     this.onClose,
+    this.onClosing,
   });
   final AppState state;
   final bool embedded;
   final Future<void> Function()? onClose;
+  final ValueChanged<Future<void>>? onClosing;
   @override
   State<CameraRemotePage> createState() => _CameraRemotePageState();
 }
@@ -34,7 +36,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
   String? error, job, operationInFlight, busyLabel;
   Completer<void>? pollCompletion;
   bool busy = false, leaving = false, foreground = true;
-  bool grid = false, histogram = true, transferAfterCapture = false;
+  bool grid = true, histogram = false, transferAfterCapture = false;
   bool uncertain = false;
   Timer? timer;
   DateTime? frameReceivedAt;
@@ -42,7 +44,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
   late final String owner;
   late final CameraTransfer transfer;
   final ValueNotifier<int> updates = ValueNotifier<int>(0);
-  String importedAction = '';
+  String importedAction = '', transport = '';
   HueviaCore get core => widget.state.core;
   String get currentOwner =>
       widget.state.session['user']?['id'] as String? ?? '';
@@ -159,6 +161,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       if (status['connected'] != true || status['session'] is! String) {
         throw const AppFailure('请先连接尼康相机，再打开遥控拍摄。');
       }
+      transport = status['transport'] as String? ?? '';
       data = await call('camera.remote.open', {'session': status['session']});
       importedAction = action['actionId'] as String? ?? '';
       if (data['liveView'] == true && foreground) {
@@ -351,7 +354,13 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     }
   }
 
-  Future<void> closeLease(Json lease, Future<void>? waiting) async {
+  Future<void> closeLease(Json lease, Future<void>? waiting) {
+    final released = releaseLease(lease, waiting);
+    widget.onClosing?.call(released);
+    return released;
+  }
+
+  Future<void> releaseLease(Json lease, Future<void>? waiting) async {
     if (waiting != null) await waiting;
     try {
       await core.call('camera.remote.close', lease);
@@ -773,25 +782,60 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       ),
     ],
   );
-  Widget preview() => CameraRemotePreview(
-    frame: frame,
-    busy: busy,
-    viewing: data['viewing'] == true,
-    foreground: foreground,
-    fresh: remoteFrameIsFresh(frameReceivedAt, DateTime.now()),
-    grid: grid,
-    histogram: histogram,
-    onFocus:
-        error == null &&
-            data['pointFocus'] == true &&
-            frame['pointFocus'] == true
-        ? (x, y) => unawaited(request('camera.remote.focus', {'x': x, 'y': y}))
-        : null,
-    onHistogram: (histogram) => unawaited(showHistogram(histogram)),
-    onResume: data['liveView'] == true
-        ? () => unawaited(request('camera.remote.view', {'enabled': true}))
-        : null,
-  );
+  Widget preview() {
+    final viewing =
+        data['viewing'] == true &&
+        foreground &&
+        remoteFrameIsFresh(frameReceivedAt, DateTime.now());
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        CameraRemotePreview(
+          frame: frame,
+          busy: busy,
+          available: data.isEmpty || data['liveView'] == true,
+          viewing: data['viewing'] == true,
+          foreground: foreground,
+          fresh: remoteFrameIsFresh(frameReceivedAt, DateTime.now()),
+          grid: grid,
+          histogram: histogram,
+          onFocus:
+              error == null &&
+                  !pending &&
+                  viewing &&
+                  data['pointFocus'] == true &&
+                  frame['pointFocus'] == true
+              ? (x, y) =>
+                    unawaited(request('camera.remote.focus', {'x': x, 'y': y}))
+              : null,
+          onHistogram: (measured) => unawaited(showHistogram(measured)),
+          onResume: data['liveView'] == true
+              ? () =>
+                    unawaited(request('camera.remote.view', {'enabled': true}))
+              : null,
+        ),
+        if (viewing)
+          Positioned(
+            right: 14,
+            bottom: 13,
+            child: TextButton.icon(
+              onPressed: busy
+                  ? null
+                  : () => request('camera.remote.view', {'enabled': false}),
+              style: TextButton.styleFrom(
+                foregroundColor: _text,
+                backgroundColor: const Color(0xcc171816),
+                minimumSize: const Size(68, 44),
+                shape: const StadiumBorder(),
+              ),
+              icon: const Icon(Icons.pause_rounded, size: 16),
+              label: const Text('暂停', style: TextStyle(fontSize: 11)),
+            ),
+          ),
+      ],
+    );
+  }
+
   Widget controls() => Column(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -921,8 +965,8 @@ class _CameraRemotePageState extends State<CameraRemotePage>
               enabled:
                   !busy && error == null && !pending && data['capture'] == true,
               child: SizedBox(
-                width: 84,
-                height: 84,
+                width: 78,
+                height: 78,
                 child: IconButton(
                   key: const Key('remote-shutter'),
                   tooltip: '拍照',
@@ -935,20 +979,39 @@ class _CameraRemotePageState extends State<CameraRemotePage>
                       ? null
                       : capture,
                   style: IconButton.styleFrom(
-                    backgroundColor: _accent,
-                    disabledBackgroundColor: _accent.withValues(alpha: .3),
+                    backgroundColor: Colors.transparent,
+                    disabledBackgroundColor: Colors.transparent,
                     foregroundColor: const Color(0xff352016),
+                    padding: const EdgeInsets.all(6),
                     shape: const CircleBorder(
                       side: BorderSide(color: _accent, width: 2),
                     ),
                   ),
-                  icon: const Icon(Icons.camera_alt_outlined, size: 34),
+                  icon: Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color:
+                          busy ||
+                              error != null ||
+                              pending ||
+                              data['capture'] != true ||
+                              data['connected'] != true
+                          ? _accent.withValues(alpha: .3)
+                          : _accent,
+                    ),
+                  ),
                 ),
               ),
             ),
             Expanded(
               child: TextButton(
-                onPressed: busy || error != null || data['autoFocus'] != true
+                onPressed:
+                    busy ||
+                        error != null ||
+                        pending ||
+                        data['autoFocus'] != true
                     ? null
                     : () => request('camera.remote.focus'),
                 child: const Column(
@@ -996,7 +1059,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
                   ),
                   const Expanded(
                     child: Text(
-                      '遥控拍摄',
+                      '遥控拍照',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
@@ -1016,7 +1079,11 @@ class _CameraRemotePageState extends State<CameraRemotePage>
                   children: [
                     Expanded(
                       child: Text(
-                        '${data['connected'] == true ? '•  ' : ''}${data['model'] ?? '正在读取相机能力'}',
+                        '${data['connected'] == true ? '•  ' : ''}${data['model'] ?? '正在读取相机能力'}${transport == 'usb'
+                            ? ' · USB'
+                            : transport == 'wifi'
+                            ? ' · Wi-Fi'
+                            : ''}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(fontSize: 11, color: _secondary),
@@ -1053,6 +1120,15 @@ class _CameraRemotePageState extends State<CameraRemotePage>
                             width: 240,
                             child: SingleChildScrollView(child: controls()),
                           ),
+                        ],
+                      );
+                    }
+                    if (box.maxHeight >= 520 &&
+                        MediaQuery.textScalerOf(context).scale(1) <= 1.3) {
+                      return Column(
+                        children: [
+                          Expanded(child: stage),
+                          controls(),
                         ],
                       );
                     }

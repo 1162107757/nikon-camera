@@ -28,7 +28,7 @@ class CameraConnectionRequest extends ChangeNotifier {
     _pending = pending;
     this.operation = operation;
     this.jobId = jobId;
-    _wired = payload['transport'] == 'usb';
+    _wired = payload['transport'] == 'usb' || operation == 'camera.usb.devices';
     _permissionWaiting = false;
     elapsedSeconds = 0;
     busy = true;
@@ -49,7 +49,10 @@ class CameraConnectionRequest extends ChangeNotifier {
     });
     _deadline = Timer(timeout, () {
       if (_pending != pending) return;
-      cancel(message: '$phase超时，已停止本次操作。请核对相机 Wi-Fi、访问权限和机身确认后重试。');
+      cancel(
+        message:
+            '$phase超时，已停止本次操作。${_wired ? '请检查数据线、USB 访问权限和机身确认后重试。' : '请核对相机 Wi-Fi、本地网络权限和机身确认后重试。'}',
+      );
     });
     notifyListeners();
     unawaited(() async {

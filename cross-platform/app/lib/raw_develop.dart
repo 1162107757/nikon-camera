@@ -10,6 +10,7 @@ import 'package:path/path.dart' as p;
 import 'domain.dart';
 import 'theme.dart';
 import 'raw_reference.dart';
+import 'latest_preview_queue.dart';
 import 'widgets.dart';
 
 class RawDevelopPage extends StatefulWidget {
@@ -26,6 +27,14 @@ class RawDevelopPage extends StatefulWidget {
   final bool Function()? isCurrent;
   @override
   State<RawDevelopPage> createState() => _RawDevelopPageState();
+}
+
+class _RawPreviewRequest {
+  _RawPreviewRequest(this.settings, this.reference, this.path, this.generation);
+  final Json settings;
+  final Json? reference;
+  final String path;
+  final int generation;
 }
 
 class _RawDevelopPageState extends State<RawDevelopPage> {
@@ -48,7 +57,25 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   String colorStatus = '';
   double progress = 0;
   int revision = 0;
-  bool running = false, pending = false, forwarding = false;
+  bool running = false, forwarding = false;
+  int previewGeneration = 0;
+  late final previewQueue = LatestPreviewQueue<_RawPreviewRequest, Json>(
+    render: renderPreview,
+    isCurrent: previewCurrent,
+    onFrame: (request, result, interactive, latest) {
+      final old = preview;
+      setState(() {
+        preview = result['path'] as String;
+        colorStatus = result['rawColorStatus'] as String? ?? '';
+        error = null;
+      });
+      if (old != null && old != preview) unawaited(discard(old));
+    },
+    onError: (_, failure, stack) {
+      if (sourceCurrent && !forwarding) setState(() => error = '$failure');
+    },
+    discard: (result) => discard(result['path'] as String),
+  );
   bool selectingReference = false;
   late RawJpegReference? reference = RawJpegReference.restore(
     widget.photo.info,
@@ -66,13 +93,14 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
   void ownerChanged() {
     if (sourceCurrent || !mounted) return;
     debounce?.cancel();
+    previewGeneration++;
+    previewQueue.reset();
     revision++;
     final old = preview;
     if (activeJob != null) unawaited(widget.state.core.cancel(activeJob!));
     setState(() {
       preview = null;
       reference = null;
-      pending = false;
       error = '照片或账号已变化，请返回重新打开。';
     });
     if (old != null) unawaited(discard(old));
@@ -100,6 +128,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
 
   @override
   void dispose() {
+    previewQueue.close();
     widget.state.removeListener(ownerChanged);
     debounce?.cancel();
     unawaited(events?.cancel());
@@ -130,6 +159,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       error = null;
     });
     revision++;
+    unawaited(queuePreview(interactive: true));
     debounce?.cancel();
     debounce = Timer(
       const Duration(milliseconds: 400),
@@ -137,16 +167,40 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
     );
   }
 
-  Future<void> render() async {
-    if (forwarding || !sourceCurrent) return;
-    if (running) {
-      pending = true;
-      if (activeJob != null) await widget.state.core.cancel(activeJob!);
-      return;
+  bool previewCurrent(_RawPreviewRequest request) =>
+      sourceCurrent &&
+      !forwarding &&
+      request.generation == previewGeneration &&
+      request.path == widget.photo.path;
+
+  Future<void> render() {
+    debounce?.cancel();
+    return queuePreview(interactive: false);
+  }
+
+  Future<void> queuePreview({required bool interactive}) {
+    if (forwarding || !sourceCurrent) return Future.value();
+    return previewQueue.offer(
+      _RawPreviewRequest(
+        snapshot(),
+        reference == null
+            ? null
+            : object(jsonDecode(jsonEncode(reference!.payload))),
+        widget.photo.path,
+        previewGeneration,
+      ),
+      interactive: interactive,
+    );
+  }
+
+  Future<Json> renderPreview(
+    _RawPreviewRequest request,
+    bool interactive,
+  ) async {
+    final job = 'raw-preview-${DateTime.now().microsecondsSinceEpoch}';
+    if (!previewCurrent(request)) {
+      throw const AppFailure('照片或账号已变化，请重新打开。');
     }
-    final current = revision,
-        frozen = snapshot(),
-        job = 'raw-preview-${DateTime.now().microsecondsSinceEpoch}';
     setState(() {
       running = true;
       activeJob = job;
@@ -154,27 +208,27 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
     });
     try {
       final result = await widget.state.core.call('media.rawPreview', {
-        'path': widget.photo.path,
+        'path': request.path,
         'owner': owner,
-        'settings': frozen,
-        if (reference != null) 'reference': reference!.payload,
+        'settings': request.settings,
+        if (request.reference != null) 'reference': request.reference,
       }, job);
+      if (!mounted || !previewCurrent(request)) return result;
       final path = result['path'] as String;
-      if (!sourceCurrent || current != revision || forwarding) {
+      Object? decodeFailure;
+      // A faster native queue can replace a FileImage before its asynchronous
+      // read finishes. Decode each accepted candidate before retiring the old
+      // file, so rapid frames never delete an image that is still being read.
+      await precacheImage(
+        FileImage(File(path)),
+        context,
+        onError: (failure, stack) => decodeFailure = failure,
+      );
+      if (decodeFailure != null) {
         await discard(path);
-        return;
+        throw const AppFailure('无法读取 RAW 显影预览，请重试。');
       }
-      final old = preview;
-      setState(() {
-        preview = path;
-        colorStatus = result['rawColorStatus'] as String? ?? '';
-        error = null;
-      });
-      if (old != null && old != path) await discard(old);
-    } catch (failure) {
-      if (mounted && current == revision && !forwarding) {
-        setState(() => error = '$failure');
-      }
+      return result;
     } finally {
       if (mounted && activeJob == job) {
         setState(() {
@@ -182,17 +236,14 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
           activeJob = null;
         });
       }
-      if (mounted && pending && !forwarding) {
-        pending = false;
-        unawaited(render());
-      }
     }
   }
 
   Future<void> openEditor() async {
     if (forwarding || !sourceCurrent) return;
     debounce?.cancel();
-    pending = false;
+    previewGeneration++;
+    previewQueue.reset();
     revision++;
     final frozen = snapshot(),
         previous = activeJob,
@@ -277,6 +328,7 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
                 }
                 changed(key, value.round());
               },
+        onChangeEnd: forwarding ? null : (_) => unawaited(render()),
       ),
     ],
   );
@@ -406,6 +458,8 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
         settings['colorMode'] = 'CAMERA_JPEG';
         error = null;
       });
+      previewGeneration++;
+      previewQueue.reset();
       revision++;
       unawaited(render());
     } catch (failure) {
@@ -422,6 +476,8 @@ class _RawDevelopPageState extends State<RawDevelopPage> {
       await widget.state.updatePhoto(widget.photo, {'rawJpegReference': null});
       if (!mounted) return;
       setState(() => reference = null);
+      previewGeneration++;
+      previewQueue.reset();
       revision++;
       unawaited(render());
     } catch (failure) {

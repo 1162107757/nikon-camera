@@ -88,6 +88,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   final viewport = TransformationController();
   String? atmosphere;
   Json? scalarStart;
+  Json? scalarFrameStart;
   Json? scalarPending;
   String? scalarKey;
   bool scalarRunning = false,
@@ -95,6 +96,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       scalarCancelled = false,
       scalarRemember = true;
   Json? lightStart;
+  Json? lightFrameStart;
   Offset? lightPending;
   bool lightRunning = false, lightEnded = false, lightCancelled = false;
   int lightTarget = 0;
@@ -158,12 +160,12 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       redo
         ..clear()
         ..addAll(bodyRedoBefore ?? []);
-      scalarStart = scalarPending = null;
+      scalarStart = scalarFrameStart = scalarPending = null;
       scalarKey = null;
       scalarRunning = false;
       scalarEnded = false;
       scalarCancelled = true;
-      lightStart = null;
+      lightStart = lightFrameStart = null;
       lightPending = null;
       lightRunning = false;
       lightCancelled = true;
@@ -251,6 +253,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void accountChanged() {
     if (!current) {
+      operationEpoch++;
       invalidateBlemishReview();
       unawaited(stop());
       if (mounted) setState(() => error = '账号已改变，请返回重新打开照片。');
@@ -264,8 +267,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           photoSampling = false;
           atmosphere = null;
           lightPending = null;
-          lightStart = null;
-          scalarStart = scalarPending = null;
+          lightStart = lightFrameStart = null;
+          scalarStart = scalarFrameStart = scalarPending = null;
           scalarKey = null;
           comparisonFrame = null;
           comparing = compareWanted = false;
@@ -292,6 +295,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         ...value,
       }, id);
       if (!operationCurrent(epoch) || stopped) {
+        final path = result['path'];
+        if (path is String) await remove(path);
         throw const AppFailure('编辑计算已停止。');
       }
       if (op.startsWith('media.retouch') &&
@@ -307,13 +312,15 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   Future<void> remove(String path) async {
     if (!p.isWithin(p.join(widget.state.core.root, 'previews'), path)) return;
     try {
+      await FileImage(File(path)).evict();
       await File(path).delete();
     } on FileSystemException {
       /* disposable */
     }
   }
 
-  Future<Json> render(Json next) async {
+  Future<Json> render(Json next, {bool interactive = false}) async {
+    final epoch = operationEpoch;
     final display =
         (widget.patch ||
             (tab != 2 &&
@@ -334,10 +341,27 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           'geometry': <String, dynamic>{},
           'border': <String, dynamic>{},
         },
-        'maxEdge': 1280,
+        'maxEdge': interactive ? 640 : 1280,
       },
     );
     final path = result['path'] as String;
+    if (!mounted || !operationCurrent(epoch) || stopped) {
+      await remove(path);
+      throw const AppFailure('编辑计算已停止。');
+    }
+    Object? decodeFailure;
+    await precacheImage(
+      FileImage(File(path)),
+      context,
+      onError: (failure, stack) => decodeFailure = failure,
+    );
+    // Do not expose/retire an image while FileImage still has a pending read.
+    // If the route leaves during decoding, this task owns its late file until
+    // decoding completes and can safely remove it without touching newer work.
+    if (!operationCurrent(epoch) || stopped || decodeFailure != null) {
+      await remove(path);
+      throw AppFailure(decodeFailure == null ? '编辑计算已停止。' : '无法读取人像预览，请重试。');
+    }
     temporary.add(path);
     return result;
   }
@@ -396,6 +420,14 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       await cancelTonePreview();
     }
     if (busy || !operationCurrent(epoch) || data == null) return;
+    final scalarGesture = !remember && scalarStart != null;
+    final lightGesture = !remember && lightStart != null;
+    final gesture = scalarGesture || lightGesture;
+    bool cancelledGesture() =>
+        gesture &&
+        (scalarGesture && scalarCancelled ||
+            lightGesture && lightCancelled ||
+            stopped);
     setState(() {
       busy = true;
       stopped = false;
@@ -406,13 +438,23 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         'localData': data!['localData'],
         ...payload,
       });
+      if (cancelledGesture()) return;
       if (op == 'media.retouchAnalyze' &&
           payload['mode'] == 'face' &&
           (object(next['portrait'])['faces'] as List? ?? []).isEmpty) {
         if (operationCurrent(epoch)) setState(() => notice = '未识别到清晰正脸，请手动添加。');
         return;
       }
-      final image = await render(next);
+      // A held body handle uses PhotoStage's current raster dimensions for its
+      // pointer lease. Keep that raster size until all canvas pointers lift.
+      final image = await render(
+        next,
+        interactive: gesture && bodyGestureArea == null,
+      );
+      if (cancelledGesture()) {
+        await remove(image['path'] as String);
+        return;
+      }
       if (operationCurrent(epoch)) {
         setState(() {
           if (remember) {
@@ -435,7 +477,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
             bodyPerson = next['selectedPerson'] as int? ?? 0;
           }
         });
-        unawaited(refreshPortraitOverlay());
+        if (!gesture) unawaited(refreshPortraitOverlay());
       }
     } catch (failure) {
       if (operationCurrent(epoch) && !stopped) {
@@ -448,6 +490,55 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
           points.clear();
         });
       }
+    }
+  }
+
+  Future<void> finishGesturePreview(
+    Json before,
+    Json? beforeFrame, {
+    required bool Function() cancelled,
+    required bool remember,
+  }) async {
+    final epoch = operationEpoch;
+    if (!operationCurrent(epoch)) return;
+    void rollback() {
+      data = before;
+      frame = beforeFrame;
+    }
+
+    if (cancelled() || stopped) {
+      setState(rollback);
+      return;
+    }
+    final candidate = data!;
+    setState(() => busy = true);
+    try {
+      // Only a completed gesture gets the normal-size preview and one history
+      // entry. Intermediate native changes are tentative route-owned values.
+      final image = await render(candidate);
+      if (!operationCurrent(epoch)) return;
+      if (cancelled() || stopped) {
+        await remove(image['path'] as String);
+        if (operationCurrent(epoch)) setState(rollback);
+        return;
+      }
+      setState(() {
+        frame = image;
+        if (remember && before['localData'] != candidate['localData']) {
+          undo.add(before);
+          if (undo.length > (bodyStart == null ? 32 : 48)) undo.removeAt(0);
+          redo.clear();
+        }
+      });
+    } catch (failure) {
+      if (operationCurrent(epoch)) {
+        setState(() {
+          rollback();
+          if (!stopped && !cancelled()) error = '$failure';
+        });
+      }
+    } finally {
+      if (operationCurrent(epoch)) setState(() => busy = false);
     }
   }
 
@@ -493,6 +584,9 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   Future<void> stop() async {
     stopped = true;
+    scalarCancelled = lightCancelled = true;
+    scalarPending = null;
+    lightPending = null;
     if (job != null) {
       try {
         await widget.state.core.cancel(job!);

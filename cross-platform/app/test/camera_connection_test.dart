@@ -226,7 +226,7 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('caller-connect')));
     await tester.pumpAndSettle();
-    final button = find.widgetWithText(FilledButton, '连接相机');
+    final button = find.byKey(const Key('camera-connect'));
     await tester.ensureVisible(button);
     await tester.tap(button);
     await tester.pump();

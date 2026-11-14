@@ -18,6 +18,9 @@ import 'camera_remote.dart';
 import 'camera_slots.dart';
 import 'camera_downloads.dart';
 import 'camera_connection.dart';
+import 'camera_connection_view.dart';
+import 'camera_photo_sort.dart';
+import 'camera_photo_toolbar.dart';
 import 'legacy_glass_sheet.dart';
 import 'sync_tools_dock.dart';
 
@@ -65,7 +68,26 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   String? warning;
   List<Json> items = [];
   int overviewTab = 0;
-  bool settingsExpanded = false;
+  bool settingsExpanded = false, connectionUsb = false, usbBusy = false;
+  bool deferPhotoRead = false;
+  CameraPhotoSort photoSort = CameraPhotoSort.newest;
+  List<Json>? sortedSource;
+  CameraPhotoSort? sortedOrder;
+  List<Json> sortedItems = [];
+  int missingCaptureTimeCount = 0;
+
+  List<Json> get displayedItems {
+    if (!identical(sortedSource, items) || sortedOrder != photoSort) {
+      sortedSource = items;
+      sortedOrder = photoSort;
+      sortedItems = sortedCameraPhotos(items, photoSort);
+      missingCaptureTimeCount = items
+          .where((row) => cameraCaptureTime(row['capturedAt']) == null)
+          .length;
+    }
+    return sortedItems;
+  }
+
   CameraLivePhase? lastLivePhase;
   bool selecting = false;
   bool childOpen = false;
@@ -100,6 +122,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   Future<void> openCameraTool(
     Widget page, {
     bool allowExclusive = false,
+    bool fullScreen = false,
+    bool compact = false,
+    Future<void> Function()? afterClose,
   }) async {
     if (childOpen || busy || transfer.busy || (!allowExclusive && exclusive)) {
       return;
@@ -107,17 +132,36 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     setState(() => childOpen = true);
     previews.pause();
     try {
-      await showLegacyGlassSheet<void>(
-        context,
-        isScrollControlled: !allowExclusive,
-        enableDrag: allowExclusive,
-        isDismissible: allowExclusive,
-        builder: (_) => SizedBox(
-          height: MediaQuery.sizeOf(context).height * .88,
-          child: page,
-        ),
-      );
+      if (fullScreen) {
+        final route = MaterialPageRoute<void>(builder: (_) => page);
+        final pushed = hueRootPage<void>(context, route);
+        try {
+          await pushed;
+        } finally {
+          await route.completed;
+        }
+      } else {
+        await showLegacyGlassSheet<void>(
+          context,
+          isScrollControlled: !allowExclusive,
+          enableDrag: allowExclusive,
+          isDismissible: allowExclusive,
+          builder: (_) => compact
+              ? page
+              : SizedBox(
+                  height: MediaQuery.sizeOf(context).height * .88,
+                  child: page,
+                ),
+        );
+      }
     } finally {
+      if (afterClose != null) {
+        try {
+          await afterClose();
+        } catch (_) {
+          /* Closing does not reconnect. */
+        }
+      }
       childOpen = false;
       if (mounted) {
         setState(() {});
@@ -131,21 +175,27 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     if (childOpen || busy || transfer.busy || exclusive) return;
     if (!connected) await openConnection(loadPhotos: false);
     if (!mounted || !connected || !widget.state.cameraVisible.value) return;
+    Future<void>? remoteClosing;
     await openCameraTool(
       slots
           ? CameraSlotsPage(state: widget.state, embedded: true)
           : CameraRemotePage(
               state: widget.state,
-              embedded: true,
-              onClose: () async =>
-                  Navigator.of(context, rootNavigator: true).pop(),
+              onClosing: (value) => remoteClosing = value,
             ),
+      fullScreen: !slots,
+      afterClose: slots
+          ? null
+          : () async {
+              await remoteClosing;
+            },
     );
   }
 
   Future<void> openDownloads() => openCameraTool(
-    CameraDownloadsPage(state: widget.state, embedded: true),
+    CameraDownloadsPage(state: widget.state, embedded: true, compact: true),
     allowExclusive: true,
+    compact: true,
   );
 
   void loadNearEnd() {
@@ -167,7 +217,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   Future<List<Json>> morePhotos() async {
     if (!busy && !exclusive && hasMore) await page(next: true);
-    return List<Json>.of(items);
+    return List<Json>.of(displayedItems);
   }
 
   void toggleSelection(Json item) {
@@ -183,7 +233,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   Future<void> receiveSelection() async {
     if (busy || transfer.busy || exclusive || selection.isEmpty) return;
     final expectedSession = session;
-    final selected = items
+    final selected = displayedItems
         .where((item) => selection.contains(item['handle']))
         .map((item) => Map<String, dynamic>.of(item))
         .toList();
@@ -224,7 +274,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     setState(() {});
   }
 
-  Future<void> openConnection({bool loadPhotos = true}) async {
+  Future<void> openConnection({bool loadPhotos = false}) async {
     if (childOpen || busy || transfer.busy || exclusive) return;
     childOpen = true;
     previews.pause();
@@ -232,6 +282,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       final connected = await connectCamera(context, widget.state);
       if (mounted && connected) {
         childOpen = !loadPhotos;
+        deferPhotoRead = !loadPhotos;
         await status(reload: loadPhotos, inspectOnly: !loadPhotos);
       }
     } finally {
@@ -365,6 +416,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   void visibilityChanged() {
     if (!widget.state.cameraVisible.value) {
       previews.pause();
+      if (mounted) setState(() {});
       return;
     }
     if (transfer.busy || exclusive) return;
@@ -381,6 +433,13 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       final wasConnected = connected;
       setState(() {
         acceptCameraStatus(result);
+        if (changed) {
+          items = [];
+          offset = 0;
+          hasMore = false;
+          paginationError = null;
+          warning = null;
+        }
         if (wasConnected &&
             !connected &&
             (result['connectionNotice'] is! String ||
@@ -403,6 +462,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         return;
       }
       if (!inspectOnly &&
+          !deferPhotoRead &&
           browsingPhotos &&
           photosReady &&
           !exclusive &&
@@ -493,6 +553,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     if (!browsingPhotos || !photosReady || exclusive || transfer.busy || busy) {
       return;
     }
+    deferPhotoRead = false;
     final request = ++epoch, expectedSession = session;
     final identity = 'camera-page-${DateTime.now().microsecondsSinceEpoch}';
     var failed = false;
@@ -687,221 +748,48 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     ),
   );
 
-  Widget connectionView(BuildContext context) => Scaffold(
-    appBar: HueHeader(
-      title: '连接相机',
-      back: true,
-      actions: [
-        if (connected)
-          IconButton(
-            onPressed: busy ? null : disconnect,
-            tooltip: '断开相机',
-            icon: const Icon(Icons.link_off_rounded),
-          ),
-      ],
+  Widget connectionView(BuildContext context) => CameraConnectionView(
+    usb: connectionUsb,
+    busy: busy,
+    usbBusy: usbBusy,
+    connected: connected && session.isNotEmpty,
+    model: model,
+    protocol: protocol,
+    request: connectionRequest,
+    error: error,
+    settingsExpanded: settingsExpanded,
+    host: host,
+    port: port,
+    transferCard: CameraTransferCard(transfer: transfer),
+    usbPicker: WiredCameraPicker(
+      core: widget.state.core,
+      enabled: !busy,
+      compact: true,
+      onBusyChanged: (value) {
+        if (mounted) setState(() => usbBusy = value);
+      },
+      onConnect: connectWired,
     ),
-    body: SafeArea(
-      top: false,
-      child: Column(
-        children: [
-          if (busy && !transfer.busy && !loadingMore)
-            const LinearProgressIndicator(minHeight: 2),
-          if (connectionRequest.busy) connectionStatus(),
-          Expanded(
-            child: ListView(
-              controller: listScroll,
-              padding: const EdgeInsets.fromLTRB(24, 2, 24, 28),
-              children: [
-                CameraTransferCard(transfer: transfer),
-                if (!connected) ...[
-                  WiredCameraPicker(
-                    core: widget.state.core,
-                    enabled: !busy,
-                    onConnect: (id) => connectWired(id),
-                  ),
-                  const Divider(height: 32),
-                  Text(
-                    'Wi-Fi 无线连接',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    protocol == 'nikon' ? '连接后可浏览照片与导入预设。' : '连接后可浏览和下载 JPEG。',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: HuePalette.of(context).secondary,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    '相机类型',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: HuePalette.of(context).secondary,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Semantics(
-                    button: true,
-                    label: '相机类型：${protocol == 'nikon' ? '尼康' : '富士 X-T20'}',
-                    child: Material(
-                      color: HuePalette.of(context).card,
-                      borderRadius: BorderRadius.circular(16),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(16),
-                        onTap: busy ? null : chooseProtocol,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(minHeight: 64),
-                            child: Row(
-                              children: [
-                                HueIcon(
-                                  HueIconKind.camera,
-                                  size: 24,
-                                  color: HuePalette.of(context).ink,
-                                ),
-                                const SizedBox(width: 14),
-                                Expanded(
-                                  child: Text(
-                                    protocol == 'nikon' ? '尼康' : '富士 X-T20',
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                HueIcon(
-                                  HueIconKind.chevron,
-                                  size: 18,
-                                  color: HuePalette.of(context).secondary,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: HuePalette.of(context).primaryContainer,
-                      foregroundColor: HuePalette.of(context)
-                          .onPrimaryContainer,
-                      minimumSize: const Size(48, 50),
-                    ),
-                    onPressed: busy ? null : connect,
-                    child: Text(busy ? '正在连接' : '连接相机'),
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: busy
-                        ? null
-                        : () => setState(
-                            () => settingsExpanded = !settingsExpanded,
-                          ),
-                    style: TextButton.styleFrom(
-                      foregroundColor: HuePalette.of(context).ink,
-                    ),
-                    child: Text(settingsExpanded ? '收起连接设置' : '连接设置'),
-                  ),
-                  if (Theme.of(context).platform == TargetPlatform.iOS) ...[
-                    Text(
-                      '首次连接请允许“本地网络”访问；如果曾拒绝授权，请在设置中开启后重试。',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: HuePalette.of(context).secondary,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: busy
-                          ? null
-                          : () async {
-                              try {
-                                await widget.state.core.openCameraSettings();
-                              } catch (failure) {
-                                if (context.mounted) report(context, failure);
-                              }
-                            },
-                      child: const Text('打开本地网络权限设置'),
-                    ),
-                  ],
-                  if (settingsExpanded) ...[
-                    const SizedBox(height: 20),
-                    Text(
-                      '相机地址',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: HuePalette.of(context).secondary,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
-                      decoration: BoxDecoration(
-                        color: HuePalette.of(context).card,
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: host,
-                            keyboardType: TextInputType.url,
-                            decoration: const InputDecoration(
-                              labelText: 'IP 地址',
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextField(
-                            controller: port,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(labelText: '端口'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      protocol == 'nikon'
-                          ? '请先在系统设置中连接相机 Wi-Fi，并保持相机 Wi-Fi 开启。'
-                          : '请先连接 X-T20 的 Wi-Fi，在机身按 OK 确认；当前支持 JPEG 浏览和下载。',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: HuePalette.of(context).secondary,
-                      ),
-                    ),
-                  ],
-                ] else ...[
-                  Text(model, style: Theme.of(context).textTheme.headlineSmall),
-                  const SizedBox(height: 8),
-                  const Text('已连接。请返回继续操作；浏览照片请进入同步 → 相机照片。'),
-                ],
-                if (error != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Text(
-                      error!,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    ),
-                  ),
-                if (error != null && !busy)
-                  TextButton(
-                    onPressed: () => hueRootPage<void>(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => DiagnosticsPage(state: widget.state),
-                      ),
-                    ),
-                    child: const Text('导出诊断报告'),
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    onTransportChanged: (value) => setState(() {
+      connectionUsb = value;
+      error = null;
+    }),
+    onProtocol: chooseProtocol,
+    onConnect: connect,
+    onCancel: cancelCameraRequest,
+    onSettings: () => setState(() => settingsExpanded = !settingsExpanded),
+    onPermissionSettings: () async {
+      try {
+        await widget.state.core.openCameraSettings();
+      } catch (failure) {
+        if (context.mounted) report(context, failure);
+      }
+    },
+    onReturn: finishConnection,
+    onDisconnect: disconnect,
+    onDiagnostics: () => hueRootPage<void>(
+      context,
+      MaterialPageRoute(builder: (_) => DiagnosticsPage(state: widget.state)),
     ),
   );
 
@@ -911,69 +799,68 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       ? '未找到 RAW / NEF 照片，可切换到 JPEG 查看。'
       : '未找到 JPEG 照片，可切换到 RAW / NEF 查看。';
 
-  Widget photoTools() => Wrap(
-    spacing: 12,
-    runSpacing: 4,
-    crossAxisAlignment: WrapCrossAlignment.center,
-    children: [
-      ChoiceChip(
-        label: const Text('JPEG'),
-        selected: !raw,
-        onSelected: busy || exclusive
-            ? null
-            : (_) {
-                setState(() => raw = false);
-                unawaited(page());
-              },
-      ),
-      ChoiceChip(
-        label: const Text('RAW / NEF'),
-        selected: raw,
-        onSelected: busy || exclusive
-            ? null
-            : (_) {
-                setState(() => raw = true);
-                unawaited(page());
-              },
-      ),
-      IconButton(
-        tooltip: '刷新照片',
-        onPressed: busy || exclusive ? null : () => page(),
-        icon: const Icon(Icons.refresh_rounded),
-      ),
-      TextButton(
-        onPressed: busy || transfer.busy || exclusive
-            ? null
-            : () => setState(() {
-                selecting = !selecting;
-                selection.clear();
-              }),
-        child: Text(selecting ? '取消多选' : '多选下载'),
-      ),
-      if (selecting) ...[
-        TextButton(
-          onPressed: busy || exclusive
+  Widget photoTools() {
+    final visible = displayedItems;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        CameraPhotoToolbar(
+          count: visible.length,
+          missingTimeCount: missingCaptureTimeCount,
+          hasMore: hasMore,
+          inventoryReady: inventoryReady,
+          raw: raw,
+          selecting: selecting,
+          order: photoSort,
+          onRawChanged: busy || exclusive || transfer.busy
+              ? null
+              : (value) {
+                  setState(() => raw = value);
+                  unawaited(page());
+                },
+          onOrderChanged: busy || exclusive
+              ? null
+              : (value) => setState(() => photoSort = value),
+          onSelection: busy || exclusive || transfer.busy
               ? null
               : () => setState(() {
+                  selecting = !selecting;
                   selection.clear();
-                  selection.addAll(
-                    items.take(100).map((row) => row['handle'] as int),
-                  );
                 }),
-          child: const Text('选择已读取照片'),
         ),
-        FilledButton(
-          onPressed: selection.isEmpty || busy || exclusive
-              ? null
-              : receiveSelection,
-          child: Text('接收 ${selection.length} 张'),
-        ),
+        if (selecting)
+          Wrap(
+            spacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              TextButton(
+                onPressed: busy || exclusive
+                    ? null
+                    : () => setState(() {
+                        selection.clear();
+                        selection.addAll(
+                          displayedItems
+                              .take(100)
+                              .map((row) => row['handle'] as int),
+                        );
+                      }),
+                child: const Text('选择已读取照片'),
+              ),
+              FilledButton(
+                onPressed: selection.isEmpty || busy || exclusive
+                    ? null
+                    : receiveSelection,
+                child: Text('接收 ${selection.length} 张'),
+              ),
+            ],
+          ),
       ],
-    ],
-  );
+    );
+  }
 
   Widget cameraGrid() => CameraPhotoGrid(
-    items: items,
+    items: displayedItems,
+    order: photoSort,
     previews: previews,
     transfer: transfer,
     onDownload: download,
@@ -1087,25 +974,44 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                         physics: const AlwaysScrollableScrollPhysics(),
                         slivers: [
                           SliverPadding(
-                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
+                            padding: const EdgeInsets.fromLTRB(24, 4, 24, 8),
                             sliver: SliverToBoxAdapter(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CameraTransferCard(transfer: transfer),
                                   photoTools(),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    connectionMode == 'slots'
-                                        ? '相机预设槽位正在使用连接，照片尚未读取。'
-                                        : !inventoryReady
-                                        ? '照片目录尚未读取'
-                                        : '${raw ? 'RAW / NEF' : 'JPEG'} · 已读取 ${items.length} 张',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: p.secondary,
+                                  if (connectionMode == 'slots')
+                                    Text(
+                                      '相机预设槽位正在使用连接，照片尚未读取。',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: p.secondary,
+                                      ),
                                     ),
-                                  ),
+                                  if (!inventoryReady ||
+                                      (items.isEmpty && deferPhotoRead)) ...[
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      '相机已连接。需要浏览时，再读取照片。',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        height: 1.8,
+                                        color: p.secondary,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    FilledButton(
+                                      onPressed:
+                                          busy ||
+                                              exclusive ||
+                                              transfer.busy ||
+                                              !photosReady
+                                          ? null
+                                          : () => page(refresh: false),
+                                      child: const Text('浏览相机照片'),
+                                    ),
+                                  ],
                                   if (error != null) ...[
                                     const SizedBox(height: 12),
                                     Text(
@@ -1122,7 +1028,9 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                                     ),
                                   ],
                                   if (warning != null) Text(warning!),
-                                  if (items.isEmpty &&
+                                  if (inventoryReady &&
+                                      !deferPhotoRead &&
+                                      items.isEmpty &&
                                       !busy &&
                                       error == null &&
                                       warning == null)
@@ -1139,7 +1047,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                           if (photosReady)
                             SliverPadding(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
+                                horizontal: 14,
                               ),
                               sliver: cameraGrid(),
                             ),
@@ -1293,9 +1201,11 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                     ? null
                     : () => openConnectedTool(slots: true),
                 downloadActive: widget.state.cameraDownloadsActive,
-                downloadLabel: widget.state.cameraDownloads.current == null
-                    ? '下载队列'
-                    : '下载队列 ${widget.state.cameraDownloads.done}/${widget.state.cameraDownloads.items.length}',
+                downloadRemaining: widget.state.cameraDownloads.current == null
+                    ? 0
+                    : (widget.state.cameraDownloads.items.length -
+                              widget.state.cameraDownloads.done)
+                          .clamp(0, 99999),
               ),
             ),
     );

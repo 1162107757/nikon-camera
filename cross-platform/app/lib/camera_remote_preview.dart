@@ -35,6 +35,7 @@ class CameraRemotePreview extends StatefulWidget {
   const CameraRemotePreview({
     super.key,
     required this.frame,
+    this.available = true,
     required this.viewing,
     required this.busy,
     required this.grid,
@@ -45,6 +46,7 @@ class CameraRemotePreview extends StatefulWidget {
     this.foreground = true,
     this.fresh = true,
   });
+  final bool available;
   final Json frame;
   final bool viewing, busy, grid, histogram, foreground, fresh;
   final void Function(double x, double y)? onFocus;
@@ -212,7 +214,11 @@ class _CameraRemotePreviewState extends State<CameraRemotePreview> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            !widget.foreground || (ready && !widget.fresh)
+                            !widget.available
+                                ? '此相机未提供实时取景'
+                                : !widget.foreground ||
+                                      (ready && !widget.fresh) ||
+                                      (ready && !widget.viewing)
                                 ? '取景已暂停'
                                 : !widget.viewing
                                 ? '取景已关闭'

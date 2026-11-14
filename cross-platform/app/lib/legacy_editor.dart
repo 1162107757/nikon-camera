@@ -538,14 +538,17 @@ extension _LegacyWorkspace on _EditorPageState {
     ),
   );
 
-  Widget photoViewport() => Stack(
+  Widget photoViewport({
+    String? heldComparison,
+    bool showCompareButton = true,
+  }) => Stack(
     fit: StackFit.expand,
     children: [
       if (preview != null)
         SplitCompare(
-          effect: preview!,
+          effect: heldComparison ?? preview!,
           original: comparison,
-          enabled: compare,
+          enabled: heldComparison == null && compare,
           warning:
               histogram.visible &&
                   histogram.warningCurrent &&
@@ -589,34 +592,35 @@ extension _LegacyWorkspace on _EditorPageState {
             },
           ),
         ),
-      Positioned(
-        top: 9,
-        right: 9,
-        child: SizedBox(
-          width: 48,
-          height: 48,
-          child: Material(
-            color: const Color(0x9c101412),
-            shape: const CircleBorder(),
-            child: IconButton(
-              tooltip: compare ? '显示效果' : '对比原图',
-              onPressed: toolsEnabled && widget.photo.info['raw'] != true
-                  ? () {
-                      refreshWorkspace(() => compare = !compare);
-                      revision++;
-                      debounce?.cancel();
-                      unawaited(render());
-                    }
-                  : null,
-              icon: const HueIcon(
-                HueIconKind.splitCompare,
-                size: 21,
-                color: _editorWhite,
+      if (showCompareButton)
+        Positioned(
+          top: 9,
+          right: 9,
+          child: SizedBox(
+            width: 48,
+            height: 48,
+            child: Material(
+              color: const Color(0x9c101412),
+              shape: const CircleBorder(),
+              child: IconButton(
+                tooltip: compare ? '显示效果' : '对比原图',
+                onPressed: toolsEnabled && widget.photo.info['raw'] != true
+                    ? () {
+                        refreshWorkspace(() => compare = !compare);
+                        revision++;
+                        debounce?.cancel();
+                        unawaited(render());
+                      }
+                    : null,
+                icon: const HueIcon(
+                  HueIconKind.splitCompare,
+                  size: 21,
+                  color: _editorWhite,
+                ),
               ),
             ),
           ),
         ),
-      ),
       if (rendering || exporting || analyzingCleanup)
         Positioned(
           left: 0,
@@ -1030,55 +1034,11 @@ extension _LegacyWorkspace on _EditorPageState {
   HueIconKind parameterIcon(String name) => editorParameterIcon(name);
 
   Future<void> advancedTool(int page) async {
-    await showModalBottomSheet<void>(
-      context: context,
-      useRootNavigator: true,
-      useSafeArea: true,
-      isScrollControlled: true,
-      backgroundColor: const Color(0xff292724),
-      builder: (sheet) => Theme(
-        data: workspaceTheme,
-        child: ValueListenableBuilder<int>(
-          valueListenable: panelRevision,
-          builder: (_, _, _) => SafeArea(
-            child: SizedBox(
-              height: MediaQuery.sizeOf(sheet).height * .75,
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      {
-                            0: '全部滤镜',
-                            2: '调色盘',
-                            5: '曲线',
-                            6: 'HSL',
-                            7: '自动去灰',
-                          }[page] ??
-                          '调节',
-                      style: const TextStyle(color: _editorWhite),
-                    ),
-                    trailing: IconButton(
-                      tooltip: '完成',
-                      icon: const HueIcon(
-                        HueIconKind.check,
-                        color: _editorYellow,
-                      ),
-                      onPressed: () => Navigator.pop(sheet),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView(
-                      padding: const EdgeInsets.all(20),
-                      children: [controls(tool: page)],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    if (page == 0) {
+      await openFilterPicker();
+    } else if ({2, 5, 6, 7}.contains(page)) {
+      await advancedColorTool(page);
+    }
   }
 
   Widget borderDock() => BorderPanel(
@@ -1094,200 +1054,6 @@ extension _LegacyWorkspace on _EditorPageState {
     onDragStart: checkpoint,
     onChanged: (border, snapshot) =>
         change(() => recipe.data['border'] = border, snapshot: snapshot),
-  );
-
-  Widget filterDock() => Column(
-    children: [
-      SizedBox(
-        height: 48,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          child: Row(
-            children: [
-              for (final source in [(false, '我的'), (true, '在线')])
-                TextButton(
-                  onPressed: toolsEnabled
-                      ? () => refreshWorkspace(() {
-                          onlineFilters = source.$1;
-                          filterCategory = '';
-                        })
-                      : null,
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(48, 48),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  child: Text(
-                    source.$2,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: onlineFilters == source.$1
-                          ? _editorYellow
-                          : _editorWhite,
-                    ),
-                  ),
-                ),
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (final category in <String>{
-                        '',
-                        ...(onlineFilters
-                                ? filters.online
-                                : widget.state.presets)
-                            .map((preset) => preset.category)
-                            .where((value) => value.isNotEmpty),
-                      })
-                        TextButton(
-                          onPressed: toolsEnabled
-                              ? () => refreshWorkspace(
-                                  () => filterCategory = category,
-                                )
-                              : null,
-                          style: TextButton.styleFrom(
-                            minimumSize: const Size(44, 48),
-                            padding: const EdgeInsets.symmetric(horizontal: 6),
-                          ),
-                          child: Text(
-                            category.isEmpty ? '全部' : category,
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: filterCategory == category
-                                  ? _editorYellow
-                                  : _editorWhite,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              editorButton(
-                HueIconKind.presets,
-                '查看全部滤镜',
-                () => advancedTool(0),
-                disk: false,
-              ),
-            ],
-          ),
-        ),
-      ),
-      if (onlineFilters &&
-          (filters.loading ||
-              filters.error != null ||
-              filters.notice.isNotEmpty))
-        SizedBox(
-          height: 26,
-          child: InkWell(
-            onTap: () => unawaited(filters.load()),
-            child: Text(
-              filters.loading
-                  ? '正在加载在线滤镜…'
-                  : filters.error != null
-                  ? '在线滤镜加载失败 · 轻点重试'
-                  : filters.notice,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 10, color: _editorMuted),
-            ),
-          ),
-        ),
-      if (preparingFilter) const LinearProgressIndicator(minHeight: 2),
-      Expanded(
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          padding: const EdgeInsets.symmetric(horizontal: 18),
-          itemCount: filterRows.length + 1,
-          itemBuilder: (context, index) {
-            final preset = index == 0 ? null : filterRows[index - 1];
-            final id = preset == null ? '' : filters.identity(preset);
-            final thumbRecipe = recipe.clone().data
-              ..['presetId'] = ''
-              ..['presetName'] = ''
-              ..['strength'] = 0;
-            return Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: SizedBox(
-                width: 68,
-                child: InkWell(
-                  onTap: toolsEnabled
-                      ? () => unawaited(selectFilter(preset))
-                      : null,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9),
-                            border: recipe.data['presetId'] == id
-                                ? Border.all(color: const Color(0xffbbb9a1))
-                                : null,
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: restored && sameOwner
-                                ? EditorPresetThumbnail(
-                                    key: ValueKey(id),
-                                    catalog: filters,
-                                    preset: preset,
-                                    recipe: thumbRecipe,
-                                  )
-                                : const SizedBox.expand(),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        preset?.name ?? '原图',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 10,
-                          color: _editorWhite,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-      SizedBox(
-        height: 48,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 21),
-          child: Row(
-            children: [
-              const Text(
-                '强度',
-                style: TextStyle(fontSize: 11, color: _editorWhite),
-              ),
-              Expanded(
-                child: Slider(
-                  min: 0,
-                  max: 100,
-                  value: (recipe.data['strength'] as num).toDouble(),
-                  onChangeStart: toolsEnabled ? (_) => checkpoint() : null,
-                  onChanged: toolsEnabled
-                      ? (value) => change(
-                          () => recipe.data['strength'] = value.round(),
-                          snapshot: false,
-                        )
-                      : null,
-                ),
-              ),
-              Text(
-                '${recipe.data['strength']}',
-                style: const TextStyle(fontSize: 11, color: _editorWhite),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ],
   );
 
   ThemeData get workspaceTheme =>
