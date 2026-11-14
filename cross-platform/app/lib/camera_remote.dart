@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,8 @@ class CameraRemotePage extends StatefulWidget {
 class _CameraRemotePageState extends State<CameraRemotePage>
     with WidgetsBindingObserver {
   Json data = {}, frame = {};
-  String? error, job, operationInFlight;
+  String? error, job, operationInFlight, busyLabel;
+  Completer<void>? pollCompletion;
   bool busy = false, leaving = false, foreground = true;
   bool grid = false, histogram = true, transferAfterCapture = false;
   bool uncertain = false;
@@ -79,16 +81,15 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     }
     timer?.cancel();
     final lease = Map<String, dynamic>.of(scope);
+    final waiting = pollCompletion?.future;
     leaving = true;
-    if (job != null && operationInFlight != 'camera.remote.open') {
+    if (job != null &&
+        operationInFlight != 'camera.remote.open' &&
+        pollCompletion == null) {
       unawaited(core.cancel(job!).catchError((Object _) {}));
     }
     if (data['remoteId'] != null) {
-      unawaited(
-        core
-            .call('camera.remote.close', lease)
-            .catchError((_) => <String, dynamic>{}),
-      );
+      unawaited(closeLease(lease, waiting));
     }
     if (mounted) {
       setState(() {
@@ -163,7 +164,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       if (data['liveView'] == true && foreground) {
         data = await call('camera.remote.view', {...scope, 'enabled': true});
       }
-    });
+    }, label: '正在连接遥控');
     if (current) {
       timer?.cancel();
       timer = Timer.periodic(const Duration(milliseconds: 350), (_) {
@@ -177,42 +178,91 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     }
   }
 
-  Future<void> run(Future<void> Function() operation) async {
+  bool get conflictingWork =>
+      widget.state.cameraLiveActive ||
+      widget.state.cameraDownloadsActive ||
+      widget.state.cameraManualTransferActive;
+  String get statusText =>
+      error ??
+      (busy
+          ? busyLabel ?? '正在处理相机操作'
+          : pending
+          ? '拍摄结果待核对'
+          : action['phase'] == 'verified'
+          ? '已确认新照片'
+          : '相机就绪');
+
+  Future<void> run(
+    Future<void> Function() operation, {
+    String label = '正在处理相机操作',
+    bool allowBackground = false,
+  }) async {
     if (busy || !current) return;
-    if (widget.state.cameraLiveActive ||
-        widget.state.cameraDownloadsActive ||
-        widget.state.cameraManualTransferActive) {
+    if (conflictingWork) {
       setState(() => error = '请先停止边拍边传和相机接收任务，再使用遥控拍摄。');
       return;
     }
+    final waiting = pollCompletion?.future;
+    final expectedLease = Map<String, dynamic>.of(scope);
     setState(() {
       busy = true;
+      busyLabel = waiting == null ? label : '等待相机完成当前读取';
       error = null;
     });
     try {
+      if (waiting != null) await waiting;
+      if (!current) return;
+      if (waiting != null && error != null) return;
+      if (!foreground && !allowBackground) {
+        throw const AppFailure('应用已进入后台，本次操作未发送。');
+      }
+      if (waiting != null &&
+          (expectedLease['session'] != data['session'] ||
+              expectedLease['remoteId'] != data['remoteId'])) {
+        throw const AppFailure('遥控会话已变化，请核对当前相机后重试。');
+      }
+      if (conflictingWork) throw const AppFailure('其他相机任务已开始，本次操作未发送。');
+      if (busyLabel != label) setState(() => busyLabel = label);
       await operation();
     } catch (failure) {
       if (current) error = '$failure';
     } finally {
       if (current) {
-        setState(() => busy = false);
+        setState(() {
+          busy = false;
+          busyLabel = null;
+        });
         updates.value++;
         if (!foreground && data['viewing'] == true) pauseForLifecycle();
       }
     }
   }
 
-  Future<void> request(String operation, [Json payload = const {}]) =>
-      run(() async {
-        data = await call(operation, {...scope, ...payload});
-        if (operation == 'camera.remote.check' ||
-            operation == 'camera.remote.acknowledge') {
-          uncertain = false;
-        }
-        await importVerifiedIfEnabled();
-      });
+  Future<void> request(String operation, [Json payload = const {}]) => run(
+    () async {
+      data = await call(operation, {...scope, ...payload});
+      if (operation == 'camera.remote.check' ||
+          operation == 'camera.remote.acknowledge') {
+        uncertain = false;
+      }
+      await importVerifiedIfEnabled();
+    },
+    label: switch (operation) {
+      'camera.remote.focus' => '正在对焦',
+      'camera.remote.check' => '正在核对拍摄结果',
+      'camera.remote.acknowledge' => '正在确认拍摄结果',
+      'camera.remote.view' => payload['enabled'] == true ? '正在开启取景' : '正在暂停取景',
+      _ => '正在处理相机操作',
+    },
+    allowBackground:
+        operation == 'camera.remote.view' && payload['enabled'] == false,
+  );
 
   Future<void> capture() => run(() async {
+    if (pending) throw const AppFailure('上次拍摄结果待核对，未发送快门。');
+    if (data['connected'] != true || data['capture'] != true) {
+      throw const AppFailure('相机当前不可拍摄，请核对机身状态。');
+    }
     uncertain = true;
     data = await call('camera.remote.capture', scope);
     uncertain = false;
@@ -220,7 +270,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
       data = await call('camera.remote.check', scope);
     }
     await importVerifiedIfEnabled();
-  });
+  }, label: '正在拍摄');
 
   Future<void> importVerifiedIfEnabled() async {
     final id = action['actionId'] as String? ?? '';
@@ -245,18 +295,31 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     if (!current ||
         !foreground ||
         busy ||
+        pollCompletion != null ||
         data['remoteId'] is! String ||
-        error != null) {
+        error != null ||
+        conflictingWork) {
       return;
     }
     final refresh = ++ticks % 8 == 0;
     if (!refresh && data['viewing'] != true) return;
-    await run(() async {
+    final completion = Completer<void>();
+    pollCompletion = completion;
+    var changed = false;
+    try {
       if (refresh) {
-        data = await call('camera.remote.status', scope);
+        final next = await call('camera.remote.status', scope);
+        if (jsonEncode(next) != jsonEncode(data)) {
+          data = next;
+          changed = true;
+        }
         if (!foreground || data['viewing'] != true) return;
         if (action['pending'] == true) {
-          data = await call('camera.remote.check', scope);
+          final checked = await call('camera.remote.check', scope);
+          if (jsonEncode(checked) != jsonEncode(data)) {
+            data = checked;
+            changed = true;
+          }
         }
         await importVerifiedIfEnabled();
       }
@@ -267,9 +330,34 @@ class _CameraRemotePageState extends State<CameraRemotePage>
         if (current && foreground) {
           frame = next;
           frameReceivedAt = DateTime.now();
+          changed = true;
         }
       }
-    });
+    } catch (failure) {
+      if (current) {
+        error = '$failure';
+        changed = true;
+      }
+    } finally {
+      if (identical(pollCompletion, completion)) pollCompletion = null;
+      if (current && changed) {
+        setState(() {});
+        updates.value++;
+      }
+      completion.complete();
+      if (current && !foreground && !busy && data['viewing'] == true) {
+        pauseForLifecycle();
+      }
+    }
+  }
+
+  Future<void> closeLease(Json lease, Future<void>? waiting) async {
+    if (waiting != null) await waiting;
+    try {
+      await core.call('camera.remote.close', lease);
+    } catch (_) {
+      /* A stale lease never closes a replacement reservation. */
+    }
   }
 
   /// The existing photo reader owns metadata and validates the original receipt.
@@ -335,11 +423,12 @@ class _CameraRemotePageState extends State<CameraRemotePage>
   Future<void> finish() async {
     if (busy || (leaving && data.isNotEmpty)) return;
     final lease = Map<String, dynamic>.of(scope);
+    final waiting = pollCompletion?.future;
     setState(() => leaving = true);
     timer?.cancel();
     try {
       if (data['remoteId'] != null) {
-        await core.call('camera.remote.close', lease);
+        await closeLease(lease, waiting);
       }
     } catch (_) {
       /* Closing never reconnects or disconnects another session. */
@@ -383,6 +472,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     final lease = !leaving && data['remoteId'] != null
         ? Map<String, dynamic>.of(scope)
         : null;
+    final waiting = pollCompletion?.future;
     leaving = true;
     timer?.cancel();
     widget.state.removeListener(accountChanged);
@@ -390,15 +480,13 @@ class _CameraRemotePageState extends State<CameraRemotePage>
     transfer.removeListener(transferChanged);
     transfer.dispose();
     updates.dispose();
-    if (job != null && operationInFlight != 'camera.remote.open') {
+    if (job != null &&
+        operationInFlight != 'camera.remote.open' &&
+        pollCompletion == null) {
       unawaited(core.cancel(job!).catchError((Object _) {}));
     }
     if (lease != null) {
-      unawaited(
-        core
-            .call('camera.remote.close', lease)
-            .catchError((_) => <String, dynamic>{}),
-      );
+      unawaited(closeLease(lease, waiting));
     }
     super.dispose();
   }
@@ -778,12 +866,7 @@ class _CameraRemotePageState extends State<CameraRemotePage>
                 ),
               Expanded(
                 child: Text(
-                  error ??
-                      (pending
-                          ? '拍摄结果待核对'
-                          : action['phase'] == 'verified'
-                          ? '已确认新照片'
-                          : '相机就绪'),
+                  statusText,
                   style: TextStyle(
                     fontSize: 12,
                     color: error != null || pending

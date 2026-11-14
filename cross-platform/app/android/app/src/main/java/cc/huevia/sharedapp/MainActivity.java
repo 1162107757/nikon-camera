@@ -42,6 +42,9 @@ public final class MainActivity extends FlutterActivity {
     private volatile EventChannel.EventSink events;
     @Override public FlutterEngine provideFlutterEngine(android.content.Context context){return NativeConnectionProtection.cachedEngine();}
     @Override public boolean shouldDestroyEngineWithHost(){return ownsBackend&&!NativeConnectionProtection.keepEngine();}
+    // Flutter calls this only after its route stack has handled Back. Keep the
+    // launcher activity and camera backend alive when leaving the root page.
+    @Override public boolean popSystemNavigator(){moveTaskToBack(true);return true;}
     @Override public void configureFlutterEngine(FlutterEngine engine){
         super.configureFlutterEngine(engine);
         MainActivity prior=NativeConnectionProtection.previousHost(engine);

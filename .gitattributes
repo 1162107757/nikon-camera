@@ -20,3 +20,7 @@ docs/migration/validation/features-220/**/*.log -text -whitespace
 docs/migration/validation/features-220/**/*.json -text -whitespace
 docs/migration/validation/features-220/**/*.txt -text -whitespace
 docs/migration/validation/features-220/**/*.exit -text -whitespace
+docs/migration/validation/features-221/**/*.log -text -whitespace
+docs/migration/validation/features-221/**/*.json -text -whitespace
+docs/migration/validation/features-221/**/*.txt -text -whitespace
+docs/migration/validation/features-221/**/*.exit -text -whitespace
