@@ -75,7 +75,7 @@ void main() {
       await tester.tap(connect);
       await tester.pumpAndSettle();
       expect(find.text('已核对相机'), findsOneWidget);
-      expect(find.textContaining('浏览照片请进入同步 → 相机照片'), findsOneWidget);
+      expect(find.text('相机已连接。返回上一页继续操作。'), findsOneWidget);
       expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
       core.initialCamera.complete({
         'connected': false,
@@ -84,7 +84,7 @@ void main() {
       });
       await tester.pumpAndSettle();
       expect(find.text('已核对相机'), findsOneWidget);
-      expect(find.textContaining('浏览照片请进入同步 → 相机照片'), findsOneWidget);
+      expect(find.text('相机已连接。返回上一页继续操作。'), findsOneWidget);
       expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
       // A later, explicitly opened photo route gets a fresh State/status read.
       // The configuration page must not read photos or cancel its completed job.
@@ -98,12 +98,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      // Opening Sync also remains connect-only until the user asks to browse.
-      expect(core.calls.where((call) => call.$1 == 'camera.page'), isEmpty);
-      final browse = find.widgetWithText(FilledButton, '浏览相机照片');
-      await tester.ensureVisible(browse);
-      await tester.tap(browse);
-      await tester.pumpAndSettle();
+      // Explicitly entering Sync / camera photos is the user's browse action;
+      // the connection configuration above must never trigger this request.
       expect(
         core.calls.lastWhere((call) => call.$1 == 'camera.page').$2['session'],
         'new-session',
