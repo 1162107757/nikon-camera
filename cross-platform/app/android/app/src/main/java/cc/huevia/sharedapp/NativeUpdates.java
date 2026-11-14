@@ -53,6 +53,7 @@ public final class NativeUpdates implements AutoCloseable {
         value.put("platform","android");value.put("versionName",version);value.put("versionCode",manager.installedCode());
         value.put("packageName",host.getPackageName());value.put("channel",manager.channel());
         value.put("status",manager.status);value.put("error",manager.error);value.put("checking",manager.checking);
+        value.put("checkFailureCode",manager.checkFailureCode);
         value.put("downloading",manager.downloading);value.put("verifying",manager.verifying);value.put("verified",manager.verified);
         value.put("mandatory",manager.mandatory());value.put("progress",manager.progress);value.put("metered",manager.metered());
         if(manager.release!=null){NextAppUpdateManager.Release r=manager.release;Map<String,Object> release=new LinkedHashMap<>();

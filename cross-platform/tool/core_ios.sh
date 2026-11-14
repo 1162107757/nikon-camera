@@ -99,3 +99,4 @@ if expected!=actual: raise SystemExit('JVM / Objective-C core fingerprints diffe
 (work/'parity.json').write_text(json.dumps({'pass':True,'platform':'macOS Objective-C runtime; iOS static runtime built separately','golden':actual},indent=2)+'\n')
 print('PASS original JVM tests translated to Objective-C and matching image fingerprints')
 PY
+bash "$ROOT/cross-platform/tool/public_internet_apple.sh"

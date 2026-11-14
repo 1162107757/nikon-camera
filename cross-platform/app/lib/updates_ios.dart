@@ -221,7 +221,13 @@ class _IosUpdatesPageState extends State<IosUpdatesPage> {
     } catch (failure) {
       if (mounted && attempt == generation) {
         setState(() {
-          error = failure is AppFailure ? '$failure' : '无法检查 iOS 更新，请稍后重试。';
+          error = failure is AppFailure
+              ? '$failure'
+              : failure is SocketException || failure is TimeoutException
+              ? '暂时无法连接更新服务。连接相机 Wi-Fi 时，请同时开启移动数据后重试，无需断开相机。'
+              : failure is HandshakeException
+              ? '无法与更新服务建立安全连接，请稍后重试。'
+              : '无法检查 iOS 更新，请稍后重试。';
           status = '检查未完成';
         });
       }

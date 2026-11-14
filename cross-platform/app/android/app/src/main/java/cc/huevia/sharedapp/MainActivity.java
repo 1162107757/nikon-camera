@@ -16,6 +16,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class MainActivity extends FlutterActivity {
     private final Handler main=new Handler(Looper.getMainLooper());
     private ThreadPoolExecutor worker=new ThreadPoolExecutor(1,1,30,TimeUnit.SECONDS,new ArrayBlockingQueue<>(8));
+    private ThreadPoolExecutor accountWorker=new ThreadPoolExecutor(2,2,30,TimeUnit.SECONDS,new ArrayBlockingQueue<>(8));
+    private ThreadPoolExecutor publicInternetWorker=new ThreadPoolExecutor(3,3,30,TimeUnit.SECONDS,new ArrayBlockingQueue<>(48));
     private ConcurrentHashMap<String,NativeTaskCancellation> jobs=new ConcurrentHashMap<>();
     private AtomicBoolean backendClosed=new AtomicBoolean();
     private boolean ownsBackend=true;
@@ -24,7 +26,7 @@ public final class MainActivity extends FlutterActivity {
     private NativeAlbumOperations albumOperations;
     private BinaryMessenger messenger;
     private MainActivity eventTarget;
-    private SharedRuntime runtime;
+    private volatile SharedRuntime runtime;
     private NativeMedia media;
     private SharedCamera camera;
     private cc.huevia.connection.SharedCameraWifiRetention cameraWifiRetention;
@@ -51,7 +53,10 @@ public final class MainActivity extends FlutterActivity {
         if(prior!=null&&prior!=this&&!prior.backendClosed.get()){
           synchronized(prior.maintenanceState){
             maintenanceState=prior.maintenanceState;
-            worker.shutdown();worker=prior.worker;jobs=prior.jobs;backendClosed=prior.backendClosed;
+            worker.shutdown();worker=prior.worker;
+            accountWorker.shutdown();accountWorker=prior.accountWorker;
+            publicInternetWorker.shutdown();publicInternetWorker=prior.publicInternetWorker;
+            jobs=prior.jobs;backendClosed=prior.backendClosed;
             prior.ownsBackend=false;
             runtime=prior.runtime;media=prior.media;camera=prior.camera;usbCamera=prior.usbCamera;gallery=prior.gallery;cameraWifiRetention=prior.cameraWifiRetention;
             events=prior.events;prior.eventTarget=this;
@@ -125,11 +130,14 @@ public final class MainActivity extends FlutterActivity {
             if(call.method.equals("cancel")){if(job!=null){NativeTaskCancellation flag=jobs.get(job);if(flag!=null&&flag.cancelIfActive()){if(camera!=null)camera.cancel(job);if(gallery!=null)gallery.cancel(job);}}reply.success(null);return;}
             final String identity=job==null?UUID.randomUUID().toString():job;
             NativeTaskCancellation cancelled=new NativeTaskCancellation();if(jobs.putIfAbsent(identity,cancelled)!=null){reply.error("BUSY","该任务正在执行。",null);return;}
-            try{worker.execute(()->{
+            String queuedOperation=call.argument("operation");
+            ThreadPoolExecutor selectedWorker=SharedRuntime.accountNetworkOperation(queuedOperation)?accountWorker
+                    :SharedRuntime.publicNetworkOperation(queuedOperation)?publicInternetWorker:worker;
+            try{selectedWorker.execute(()->{
                 try{
                     Object value;
                     if(call.method.equals("initialize")){
-                        if(runtime==null){android.content.Context app=getApplicationContext();File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);prepareCameraMaintenance();}
+                        if(runtime==null){android.content.Context app=getApplicationContext();AccountHttpTransport.setPublicConnectionOpener(new PublicInternetConnections(app));File root=new File(app.getFilesDir(),"huevia-shared");runtime=new SharedRuntime(root.getPath(),new AndroidAccountStore(app),new AccountHttpTransport(),AccountInstallation.id(app));media=new NativeMedia(app,runtime);camera=new SharedCamera(root.getPath(),(host,port,fuji)->{cc.huevia.album.CameraWifiNetwork network=new cc.huevia.album.CameraWifiNetwork(app);return fuji?network.fujifilmPhotoConnector(host,port):network.connector(host,port);},usbCamera);prepareCameraMaintenance();}
                         if(gallery==null)gallery=new NativeGallery(this,runtime);
                         main.post(this::configureStorageAdapters);
                         value=SharedJson.encode(SharedRuntime.map("root",runtime.root().getPath(),"schema",SharedJson.object(CoreEngine.schema()),"platform","android"));
@@ -149,6 +157,7 @@ public final class MainActivity extends FlutterActivity {
                         else if(operation.equals("files.publishOriginal")){if(originalFiles==null)throw new IOException("文件保存尚未准备好。");value=originalFiles.publish(payload,cancelled::get);}
                         else if(operation.equals("gallery.delete")||operation.equals("gallery.publishedCopies")){if(albumOperations==null)throw new IOException("系统相册尚未准备好。");value=albumOperations.request(operation,payload,cancelled::get);}
                         else if(operation.startsWith("gallery.")){value=gallery.request(operation,payload,cancelled::get,identity);if(operation.equals("gallery.publish")||operation.equals("gallery.publishOriginal"))main.post(()->emit(SharedRuntime.map("kind","galleryChanged")));}
+                        else if(SharedRuntime.accountNetworkOperation(operation)||SharedRuntime.publicNetworkOperation(operation))value=runtime.requestPublic(operation,payload,cancelled::get);
                         else value=runtime.request(operation,payload,cancelled::get,progress);
                     }
                     complete(identity,cancelled,()->reply.success(value));
@@ -191,7 +200,7 @@ public final class MainActivity extends FlutterActivity {
     private void emit(Map<String,Object> value){if(eventTarget!=null){eventTarget.emit(value);return;}EventChannel.EventSink sink=events;if(sink!=null&&!backendClosed.get())try{sink.success(value);}catch(RuntimeException detached){events=null;}}
     private void configureStorageAdapters(){if(runtime==null||messenger==null||isDestroyed())return;if(originalFiles==null){originalFiles=new NativeOriginalFiles(this,runtime);new MethodChannel(messenger,"cc.huevia/file-publication").setMethodCallHandler(originalFiles);}if(albumOperations==null&&gallery!=null)albumOperations=new NativeAlbumOperations(this,runtime,gallery);}
     void stopCameraWork(){for(Map.Entry<String,NativeTaskCancellation> entry:jobs.entrySet()){String id=entry.getKey();if((id.startsWith("camera-")||id.startsWith("download-"))&&entry.getValue().cancelIfActive()){if(camera!=null)camera.cancel(id);}}}
-    void releaseRetainedBackend(){if(!ownsBackend||!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null){camera.setMaintenanceAllowed(false);camera.closeTransport();camera.setMaintenanceObserver(null);}if(cameraWifiRetention!=null)cameraWifiRetention.close();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();}
+    void releaseRetainedBackend(){if(!ownsBackend||!backendClosed.compareAndSet(false,true))return;events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();if(camera!=null){camera.setMaintenanceAllowed(false);camera.closeTransport();camera.setMaintenanceObserver(null);}if(cameraWifiRetention!=null)cameraWifiRetention.close();if(usbCamera!=null)usbCamera.dispose();worker.shutdown();accountWorker.shutdown();publicInternetWorker.shutdown();}
     void retireRetainedBackend(){releaseRetainedBackend();ownsBackend=false;}
     @Override public void cleanUpFlutterEngine(FlutterEngine engine){if(ownsBackend&&!NativeConnectionProtection.keepEngine()){events=null;for(AtomicBoolean flag:jobs.values())flag.set(true);if(gallery!=null)gallery.cancelAll();}super.cleanUpFlutterEngine(engine);}
     @Override protected void onActivityResult(int request,int result,android.content.Intent data){if(albumOperations!=null&&albumOperations.onActivityResult(request,result,data))return;if(originalFiles!=null&&originalFiles.onActivityResult(request,result,data))return;if(qqAuthorization!=null&&qqAuthorization.onActivityResult(request,result,data))return;if(legacyFiles!=null&&legacyFiles.onActivityResult(request,result,data))return;super.onActivityResult(request,result,data);if(importPicker!=null&&importPicker.handles(request))importPicker.result(result,data);}

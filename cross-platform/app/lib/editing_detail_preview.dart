@@ -86,10 +86,42 @@ class _DetailDocument {
     this.token,
     this.width,
     this.height,
-    this.key,
-  );
+    this.key, {
+    this.loan,
+  });
   final String path, sha, token, key;
   final int width, height;
+  final _DetailDocumentLoan? loan;
+}
+
+class _DetailDocumentLoan {
+  _DetailDocumentLoan(this._release);
+  VoidCallback? _release;
+  int _readers = 0;
+  bool _retired = false;
+  bool retainRead() {
+    if (_retired) return false;
+    _readers++;
+    return true;
+  }
+
+  void releaseRead() {
+    assert(_readers > 0);
+    _readers--;
+    _releaseIfUnused();
+  }
+
+  void retire() {
+    _retired = true;
+    _releaseIfUnused();
+  }
+
+  void _releaseIfUnused() {
+    if (!_retired || _readers != 0) return;
+    final release = _release;
+    _release = null;
+    release?.call();
+  }
 }
 
 class _DetailTileRequest {
@@ -103,6 +135,13 @@ class _DetailTileRequest {
   final Rect region;
   final int maxEdge;
   final double densityX, densityY, visibleDensity;
+}
+
+class _DetailReplacement {
+  _DetailReplacement(this.previous, this.next, this.generation);
+  final _DetailConfiguration previous, next;
+  final int generation;
+  final result = Completer<bool>();
 }
 
 /// A predecoded, bounded tile. The controller owns [image]; callers must not
@@ -125,6 +164,56 @@ class EditingDetailTile {
   final Rect region;
   final Size sourceSize;
   final int width, height, revision, requestedMaxEdge;
+}
+
+/// Single-consumption, same-profile pixels for an editor's child workspace.
+/// The image handle is independent. A full document, when present, remains
+/// owned by its original controller until this handoff/borrower releases it.
+class EditingDetailHandoff {
+  EditingDetailHandoff._(
+    this._owner,
+    this._sourcePath,
+    this._root,
+    this._configuration,
+    this._tile,
+    this._image,
+    this._document,
+    this._viewportRegion,
+    this._requestedRegion,
+  );
+  final String _owner, _sourcePath, _root;
+  final _DetailConfiguration _configuration;
+  final EditingDetailTile _tile;
+  final Rect? _viewportRegion, _requestedRegion;
+  ui.Image? _image;
+  _DetailDocument? _document;
+
+  EditingDetailHandoff? _take() {
+    if (_image == null) return null;
+    final result = EditingDetailHandoff._(
+      _owner,
+      _sourcePath,
+      _root,
+      _configuration,
+      _tile,
+      _image,
+      _document,
+      _viewportRegion,
+      _requestedRegion,
+    );
+    _image = null;
+    _document = null;
+    return result;
+  }
+
+  /// Safe after adoption: consumed resources belong to the receiving controller.
+  void dispose() {
+    final image = _image, document = _document;
+    _image = null;
+    _document = null;
+    image?.dispose();
+    document?.loan?.retire();
+  }
 }
 
 /// Read-only, latest-only detail for existing editing canvases.
@@ -161,9 +250,11 @@ class EditingDetailPreviewController extends ChangeNotifier {
   _DetailViewport? _viewport;
   _DetailDocument? _document;
   EditingDetailTile? _tile;
+  _DetailReplacement? _replacement;
+  EditingDetailHandoff? _pendingHandoff;
   Rect? _tileViewportRegion, _tileRequestedRegion;
-  Timer? _timer;
-  String? _job, _error, _inspectedSha;
+  Timer? _timer, _replacementGuard;
+  String? _job, _error, _inspectedSha, _tileConfigurationKey;
   bool _disposed = false, _enabled = true, _pumping = false, _ready = false;
   bool _loading = false, _cancelRequested = false;
   int _generation = 0,
@@ -173,6 +264,7 @@ class EditingDetailPreviewController extends ChangeNotifier {
   Future<void>? _pumpFuture;
   final _owned = <String>{}, _retired = <String>{}, _deleting = <String>{};
   final _leases = <String, int>{};
+  final _deleteDone = <String, Completer<void>>{};
 
   EditingDetailTile? get tile => _current && _enabled ? _tile : null;
   bool get loading => _current && _enabled && _loading;
@@ -180,7 +272,183 @@ class EditingDetailPreviewController extends ChangeNotifier {
   bool get hasDetail => tile != null;
   int get ownedFileCount => _owned.length;
   bool get enabled => _enabled;
+  bool get replacementPending => _replacement != null;
+  bool get handoffPending => _pendingHandoff != null;
   bool get _current => !_disposed && isCurrent();
+
+  /// Capture independent image handles without pausing this controller.
+  /// Only locally owned full files can be lent, so loans cannot form a cycle.
+  EditingDetailHandoff? captureHandoff() {
+    final config = _configuration, shown = tile;
+    if (replacementPending ||
+        !_enabled ||
+        !_current ||
+        config == null ||
+        shown == null ||
+        _tileConfigurationKey != config.key ||
+        shown.revision != config.revision ||
+        shown.frameIdentity != config.frameIdentity ||
+        !_shaPattern.hasMatch(shown.sourceSha) ||
+        (config.expectedSha.isNotEmpty &&
+            config.expectedSha != shown.sourceSha)) {
+      return null;
+    }
+    final image = shown.image.clone();
+    _DetailDocument? borrowed;
+    final document = _document;
+    if (document != null &&
+        document.loan == null &&
+        document.key == config.key &&
+        document.sha == shown.sourceSha &&
+        _owned.contains(document.path) &&
+        !_retired.contains(document.path) &&
+        !_deleting.contains(document.path) &&
+        File(document.path).existsSync()) {
+      final path = document.path;
+      _lease(path);
+      borrowed = _DetailDocument(
+        path,
+        document.sha,
+        document.token,
+        document.width,
+        document.height,
+        document.key,
+        loan: _DetailDocumentLoan(() => _unlease(path)),
+      );
+    }
+    return EditingDetailHandoff._(
+      owner,
+      p.normalize(sourcePath),
+      p.normalize(core.root),
+      config,
+      shown,
+      image,
+      borrowed,
+      _tileViewportRegion,
+      _tileRequestedRegion,
+    );
+  }
+
+  bool _matchesHandoff(EditingDetailHandoff handoff) {
+    final config = _configuration, image = handoff._image;
+    return _current &&
+        _enabled &&
+        !replacementPending &&
+        config != null &&
+        image != null &&
+        handoff._owner == owner &&
+        p.equals(handoff._sourcePath, p.normalize(sourcePath)) &&
+        p.equals(handoff._root, p.normalize(core.root)) &&
+        handoff._configuration.key == config.key &&
+        handoff._configuration.expectedSha == config.expectedSha &&
+        handoff._configuration.outputSize == config.outputSize &&
+        (config.expectedSha.isEmpty ||
+            config.expectedSha == handoff._tile.sourceSha) &&
+        image.width == handoff._tile.width &&
+        image.height == handoff._tile.height &&
+        image.width <= maxTileEdge &&
+        image.height <= maxTileEdge &&
+        image.width * image.height <= _maximumTilePixels;
+  }
+
+  /// Consume a same-profile handoff once. When layout is not known yet the
+  /// private clone waits for the first actual viewport. A same-profile tile may
+  /// cover only part of that viewport; the ordinary frame remains underneath,
+  /// and strict _tileCovers checks drive the remaining ROI/density upgrade.
+  bool adoptHandoff(EditingDetailHandoff? handoff) {
+    if (handoff == null) return false;
+    if (!_matchesHandoff(handoff)) {
+      handoff.dispose();
+      return false;
+    }
+    final consumed = handoff._take()!;
+    _pendingHandoff?.dispose();
+    _pendingHandoff = null;
+    if (_viewport == null) {
+      _pendingHandoff = consumed;
+      return true;
+    }
+    return _adoptHandoffNow(consumed);
+  }
+
+  void _adoptDocument(EditingDetailHandoff handoff) {
+    final borrowed = handoff._document;
+    handoff._document = null;
+    if (borrowed == null) return;
+    if (!_safePath(borrowed.path) ||
+        !File(borrowed.path).existsSync() ||
+        _deleting.contains(borrowed.path)) {
+      borrowed.loan?.retire();
+      return;
+    }
+    final current = _document;
+    if (current != null &&
+        current.key == borrowed.key &&
+        current.sha == borrowed.sha &&
+        current.width == borrowed.width &&
+        current.height == borrowed.height) {
+      borrowed.loan?.retire();
+      return;
+    }
+    _retireDocument(current);
+    if (_owned.contains(borrowed.path)) {
+      // A return handoff can contain this controller's own still-leased file.
+      // Reclaim ownership instead of borrowing from ourselves.
+      _retired.remove(borrowed.path);
+      _document = _DetailDocument(
+        borrowed.path,
+        borrowed.sha,
+        borrowed.token,
+        borrowed.width,
+        borrowed.height,
+        borrowed.key,
+      );
+      borrowed.loan?.retire();
+    } else {
+      _document = borrowed;
+    }
+  }
+
+  bool _adoptHandoffNow(EditingDetailHandoff handoff) {
+    if (!_matchesHandoff(handoff)) {
+      handoff.dispose();
+      return false;
+    }
+    // Retire work started before this explicit same-profile cache transfer.
+    // Its late full result must not overwrite the borrowed document/lease.
+    _generation++;
+    _installationEpoch++;
+    _timer?.cancel();
+    _ready = false;
+    _cancel();
+    _adoptDocument(handoff);
+    final shown = handoff._tile;
+    final old = _tile, config = _configuration!;
+    _tile = EditingDetailTile(
+      image: handoff._image!,
+      path: shown.path,
+      region: shown.region,
+      width: shown.width,
+      height: shown.height,
+      sourceSize: shown.sourceSize,
+      revision: config.revision,
+      frameIdentity: config.frameIdentity,
+      sourceSha: shown.sourceSha,
+      requestedMaxEdge: shown.requestedMaxEdge,
+    );
+    handoff._image = null;
+    _tileConfigurationKey = config.key;
+    _tileViewportRegion = handoff._viewportRegion;
+    _tileRequestedRegion = handoff._requestedRegion;
+    _error = null;
+    _changed();
+    if (old != null) {
+      old.image.dispose();
+      _retire(old.path);
+    }
+    _schedule();
+    return true;
+  }
 
   /// Frozen recipe for the frame actually displayed, not the next live value.
   void configure({
@@ -205,6 +473,79 @@ class EditingDetailPreviewController extends ChangeNotifier {
     outputSize,
     expectedSourceSha,
   );
+
+  /// Stage a frozen frame while its caller continues displaying the old frame.
+  /// A true completion precedes the tile notification in the same event turn,
+  /// so an awaiting parent can commit its already-decoded base frame before the
+  /// next paint. Ordinary [configure] never opts in to holding previous pixels.
+  Future<bool> prepareReplacement({
+    required Json recipe,
+    required int revision,
+    required String frameIdentity,
+    required Size outputSize,
+    String expectedSourceSha = '',
+    String? viewMode,
+  }) {
+    if (_disposed) return Future<bool>.value(false);
+    if (!_current) {
+      invalidate();
+      return Future<bool>.value(false);
+    }
+    final shown = tile, previous = _configuration, viewport = _viewport;
+    if (!_enabled || shown == null || previous == null || viewport == null) {
+      return Future<bool>.value(false);
+    }
+    final sha = expectedSourceSha.isEmpty ? shown.sourceSha : expectedSourceSha;
+    if (!_validSize(outputSize) ||
+        frameIdentity.isEmpty ||
+        !_shaPattern.hasMatch(sha) ||
+        sha != shown.sourceSha) {
+      invalidate();
+      return Future<bool>.value(false);
+    }
+    late final _DetailConfiguration next;
+    try {
+      final raw = _rawExtensions.contains(
+        p.extension(sourcePath).toLowerCase(),
+      );
+      next = _DetailConfiguration(
+        operation: raw ? 'media.rawDetail' : 'media.detailRender',
+        payload: object(
+          jsonDecode(
+            jsonEncode({
+              'recipe': recipe,
+              'viewMode': ?viewMode,
+              if (raw) 'settings': <String, dynamic>{},
+            }),
+          ),
+        ),
+        revision: revision,
+        frameIdentity: frameIdentity,
+        outputSize: outputSize,
+        expectedSha: sha,
+      );
+    } catch (_) {
+      invalidate();
+      return Future<bool>.value(false);
+    }
+    if (!_requiresDetail(next, viewport)) return Future<bool>.value(false);
+    // A newer explicit stage may supersede a still-held target, but its base
+    // remains the last accepted frame rather than the abandoned target.
+    _finishReplacement(false, clearPrevious: false);
+    final baseline = _configuration!;
+    _applyConfiguration(next, holdPrevious: true);
+    final replacement = _replacement = _DetailReplacement(
+      baseline,
+      next,
+      _generation,
+    );
+    // isCurrent is intentionally a callback, not a Listenable. A held native
+    // job must still release the future promptly if the owner/page disappears.
+    _replacementGuard = Timer.periodic(const Duration(milliseconds: 120), (_) {
+      if (!_current) invalidate();
+    });
+    return replacement.result.future;
+  }
 
   /// RAW reference is the existing structured JPEG/reference matching DTO.
   void configureRaw({
@@ -252,23 +593,38 @@ class EditingDetailPreviewController extends ChangeNotifier {
       _changed();
       return;
     }
+    _applyConfiguration(next);
+  }
+
+  void _applyConfiguration(
+    _DetailConfiguration next, {
+    bool holdPrevious = false,
+  }) {
+    final deferred = _pendingHandoff;
+    if (deferred != null &&
+        (deferred._configuration.key != next.key ||
+            deferred._configuration.expectedSha != next.expectedSha ||
+            deferred._configuration.outputSize != next.outputSize)) {
+      _clearPendingHandoff();
+    }
+    if (!holdPrevious) _finishReplacement(false);
     final old = _configuration;
     _configuration = next;
     if (old?.key != next.key) {
       _generation++;
       _installationEpoch++;
       _cancel();
-      _clearTile();
+      if (!holdPrevious) _clearTile();
       final previous = _document;
       _document = null;
-      if (previous != null) _retire(previous.path);
-    } else if (old?.revision != revision ||
-        old?.frameIdentity != frame ||
-        old?.outputSize != size) {
+      _retireDocument(previous);
+    } else if (old?.revision != next.revision ||
+        old?.frameIdentity != next.frameIdentity ||
+        old?.outputSize != next.outputSize) {
       // A same-recipe full file is reusable, but an old frame cannot install a tile.
       _viewportSerial++;
       _installationEpoch++;
-      _clearTile();
+      if (!holdPrevious) _clearTile();
     }
     _error = null;
     _schedule();
@@ -279,6 +635,8 @@ class EditingDetailPreviewController extends ChangeNotifier {
     if (_disposed || _enabled == value) return;
     _enabled = value;
     if (!value) {
+      _clearPendingHandoff();
+      _finishReplacement(false);
       _timer?.cancel();
       _ready = false;
       _viewportSerial++;
@@ -305,6 +663,8 @@ class EditingDetailPreviewController extends ChangeNotifier {
         !zoom.isFinite ||
         zoom <= 0 ||
         !_validSize(viewportPixelSize)) {
+      _clearPendingHandoff();
+      _finishReplacement(false);
       _viewport = null;
       _viewportSerial++;
       _timer?.cancel();
@@ -326,7 +686,14 @@ class EditingDetailPreviewController extends ChangeNotifier {
       viewportPixelSize,
       ++_viewportSerial,
     );
+    final deferred = _pendingHandoff;
+    if (deferred != null) {
+      _pendingHandoff = null;
+      _adoptHandoffNow(deferred);
+      return;
+    }
     if (!_needsDetail) {
+      _finishReplacement(false);
       _timer?.cancel();
       _ready = false;
       _cancel();
@@ -342,6 +709,10 @@ class EditingDetailPreviewController extends ChangeNotifier {
     if (!_current || !_enabled || config == null || viewport == null) {
       return false;
     }
+    return _requiresDetail(config, viewport);
+  }
+
+  bool _requiresDetail(_DetailConfiguration config, _DetailViewport viewport) {
     final visiblePixels = Size(
       config.outputSize.width * viewport.region.width,
       config.outputSize.height * viewport.region.height,
@@ -354,9 +725,16 @@ class EditingDetailPreviewController extends ChangeNotifier {
   void _schedule() {
     _timer?.cancel();
     _ready = false;
-    if (!_needsDetail) return;
+    if (!_needsDetail) {
+      _finishReplacement(false);
+      return;
+    }
     _timer = Timer(debounce, () {
       _timer = null;
+      if (!_needsDetail) {
+        _finishReplacement(false);
+        return;
+      }
       _ready = true;
       if (!_pumping) _pumpFuture = _pump();
     });
@@ -364,6 +742,43 @@ class EditingDetailPreviewController extends ChangeNotifier {
 
   /// Useful when closing an editor; no new work is started by this getter.
   Future<void> get pending => _pumpFuture ?? Future<void>.value();
+
+  bool _isReplacement(_DetailConfiguration config, int generation) {
+    final replacement = _replacement;
+    return replacement != null &&
+        replacement.generation == generation &&
+        replacement.next.key == config.key &&
+        replacement.next.revision == config.revision &&
+        replacement.next.frameIdentity == config.frameIdentity;
+  }
+
+  void _finishReplacement(
+    bool accepted, {
+    bool clearPrevious = true,
+    bool notify = true,
+  }) {
+    final replacement = _replacement;
+    if (replacement == null) return;
+    _replacement = null;
+    _replacementGuard?.cancel();
+    _replacementGuard = null;
+    if (!accepted) {
+      _timer?.cancel();
+      _ready = false;
+      _generation++;
+      _installationEpoch++;
+      _viewportSerial++;
+      _cancel();
+      _configuration = replacement.previous;
+      final abandoned = _document;
+      if (abandoned != null && abandoned.key != replacement.previous.key) {
+        _document = null;
+        _retireDocument(abandoned);
+      }
+      if (clearPrevious) _clearTile(notify: notify);
+    }
+    replacement.result.complete(accepted);
+  }
 
   Future<void> _pump() async {
     if (_pumping || !_ready || !_needsDetail) return;
@@ -389,11 +804,15 @@ class EditingDetailPreviewController extends ChangeNotifier {
           // A source no larger than the ordinary raster offers no new pixels.
           if (document.width <= latest.outputSize.width &&
               document.height <= latest.outputSize.height) {
+            if (_isReplacement(config, generation)) _finishReplacement(false);
             continue;
           }
           final viewport = _viewport!;
           final request = _requestedRegion(viewport, document);
-          if (_tileCovers(latest, viewport, request)) continue;
+          if (_tileCovers(latest, viewport, request)) {
+            if (_isReplacement(config, generation)) _finishReplacement(true);
+            continue;
+          }
           await _renderTile(
             document,
             latest,
@@ -405,6 +824,7 @@ class EditingDetailPreviewController extends ChangeNotifier {
         } catch (failure) {
           if (_matchesContent(config, generation)) {
             _error = '$failure';
+            if (_isReplacement(config, generation)) _finishReplacement(false);
             _changed();
           }
         } finally {
@@ -496,7 +916,11 @@ class EditingDetailPreviewController extends ChangeNotifier {
       height,
       config.key,
     );
+    final previous = _document;
     _document = document;
+    if (previous != null && previous.path != document.path) {
+      _retireDocument(previous);
+    }
     return document;
   }
 
@@ -574,6 +998,7 @@ class EditingDetailPreviewController extends ChangeNotifier {
     final document = _document;
     if (!(current != null &&
         document != null &&
+        _tileConfigurationKey == config.key &&
         current.revision == config.revision &&
         current.frameIdentity == config.frameIdentity &&
         current.region.left <= viewport.region.left &&
@@ -606,7 +1031,12 @@ class EditingDetailPreviewController extends ChangeNotifier {
     int installationEpoch,
   ) async {
     final requested = request.region;
-    _lease(document.path);
+    final loan = document.loan;
+    if (loan == null) {
+      _lease(document.path);
+    } else if (!loan.retainRead()) {
+      throw const AppFailure('借用的细节文件已释放。');
+    }
     late final Json result;
     try {
       result = await _call('media.detailTile', {
@@ -623,7 +1053,11 @@ class EditingDetailPreviewController extends ChangeNotifier {
         },
       });
     } finally {
-      _unlease(document.path);
+      if (loan == null) {
+        _unlease(document.path);
+      } else {
+        loan.releaseRead();
+      }
     }
     final file = _claim(result);
     ui.Image? decoded;
@@ -675,7 +1109,9 @@ class EditingDetailPreviewController extends ChangeNotifier {
       installed = true;
       _tileViewportRegion = viewport.region;
       _tileRequestedRegion = request.region;
+      _tileConfigurationKey = config.key;
       _error = null;
+      if (_isReplacement(config, generation)) _finishReplacement(true);
       _changed();
       // RawImage/RenderImage own their clone until the replacement is painted.
       if (old != null) {
@@ -782,6 +1218,21 @@ class EditingDetailPreviewController extends ChangeNotifier {
   }
 
   void _lease(String file) => _leases[file] = (_leases[file] ?? 0) + 1;
+  void _retireDocument(_DetailDocument? document) {
+    if (document == null) return;
+    final loan = document.loan;
+    if (loan == null) {
+      _retire(document.path);
+    } else {
+      loan.retire();
+    }
+  }
+
+  void _clearPendingHandoff() {
+    _pendingHandoff?.dispose();
+    _pendingHandoff = null;
+  }
+
   void _unlease(String file) {
     final count = (_leases[file] ?? 1) - 1;
     if (count <= 0) {
@@ -799,12 +1250,19 @@ class EditingDetailPreviewController extends ChangeNotifier {
   }
 
   Future<void> _remove(String file) async {
+    final pending = _deleteDone[file];
+    if (pending != null) {
+      await pending.future;
+      return;
+    }
     if (!_owned.contains(file) ||
         !_safePath(file) ||
         (_leases[file] ?? 0) > 0 ||
         !_deleting.add(file)) {
       return;
     }
+    final done = Completer<void>();
+    _deleteDone[file] = done;
     try {
       final type = await FileSystemEntity.type(file, followLinks: false);
       if (type == FileSystemEntityType.notFound) {
@@ -825,6 +1283,8 @@ class EditingDetailPreviewController extends ChangeNotifier {
       // Bounded: a later request retries cleanup before allocating another file.
     } finally {
       _deleting.remove(file);
+      _deleteDone.remove(file);
+      done.complete();
     }
   }
 
@@ -834,13 +1294,14 @@ class EditingDetailPreviewController extends ChangeNotifier {
     }
   }
 
-  void _clearTile() {
+  void _clearTile({bool notify = true}) {
     final old = _tile;
     _tile = null;
     _tileViewportRegion = null;
     _tileRequestedRegion = null;
+    _tileConfigurationKey = null;
     if (old != null) {
-      _changed();
+      if (notify) _changed();
       old.image.dispose();
       _retire(old.path);
     }
@@ -866,25 +1327,31 @@ class EditingDetailPreviewController extends ChangeNotifier {
   /// Drop private pixels immediately on owner/source/page invalidation.
   void invalidate() {
     if (_disposed) return;
+    _clearPendingHandoff();
+    _finishReplacement(false);
     _timer?.cancel();
     _ready = false;
     _generation++;
     _installationEpoch++;
     _viewportSerial++;
     _configuration = null;
+    _inspectedSha = null;
     _cancel();
     _clearTile();
     final full = _document;
     _document = null;
-    if (full != null) _retire(full.path);
+    _retireDocument(full);
     _setLoading(false);
   }
 
   @override
   void dispose() {
     if (_disposed) return;
+    _clearPendingHandoff();
+    _finishReplacement(false, notify: false);
     _disposed = true;
     _timer?.cancel();
+    _replacementGuard?.cancel();
     _ready = false;
     _generation++;
     _installationEpoch++;
@@ -894,7 +1361,9 @@ class EditingDetailPreviewController extends ChangeNotifier {
     final shown = _tile;
     _tile = null;
     shown?.image.dispose();
+    final document = _document;
     _document = null;
+    _retireDocument(document);
     for (final path in _owned.toList()) {
       _retire(path);
     }

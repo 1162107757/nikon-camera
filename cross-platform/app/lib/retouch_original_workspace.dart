@@ -185,6 +185,18 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (!mounted || !current || data == null) return;
     final epoch = operationEpoch;
     final staged = data!;
+    patchBaselineDetails?.dispose();
+    patchBaselineDetails = null;
+    final baseline = frame, details = detailPreviewKey.currentState;
+    if (!comparing &&
+        baseline != null &&
+        details != null &&
+        details.hasSharpFrame &&
+        details.controller.tile?.frameIdentity == baseline['path'] &&
+        details.controller.tile?.revision ==
+            (baseline['_detailRevision'] as int? ?? 0)) {
+      patchBaselineDetails = details.controller.captureHandoff();
+    }
     final cached =
         frame?['_retouchBeforeBody'] == true &&
             frame?['_retouchSourceLocalData'] == staged['localData']
@@ -232,12 +244,31 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
     if (!patchChildOpen || before == null || !current || apply && busy) return;
     if (brushRadiusStart != null) cancelBrushSizing();
     final changed = before['localData'] != data?['localData'];
+    final baselineDetails = patchBaselineDetails;
+    patchBaselineDetails = null;
+    EditingDetailHandoff? appliedDetails;
+    final appliedFrame = frame, details = detailPreviewKey.currentState;
+    if (apply &&
+        changed &&
+        !comparing &&
+        appliedFrame != null &&
+        details != null &&
+        details.hasSharpFrame &&
+        details.controller.tile?.frameIdentity == appliedFrame['path'] &&
+        details.controller.tile?.revision ==
+            (appliedFrame['_detailRevision'] as int? ?? 0)) {
+      appliedDetails = details.controller.captureHandoff();
+    }
+    final restoreBaseline = !apply || !changed;
+    if (!restoreBaseline) baselineDetails?.dispose();
     refreshPortrait(() {
       retireToolWork();
-      if (!apply) {
+      if (restoreBaseline) {
         data = before;
         frame = patchFrameBefore;
       }
+      activeDetailHandoff?.dispose();
+      activeDetailHandoff = restoreBaseline ? baselineDetails : appliedDetails;
       undo
         ..clear()
         ..addAll(patchUndoBefore ?? []);
@@ -262,6 +293,18 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
       error = notice = null;
     });
     if (apply && changed && data?['sourcePositioning'] == true) {
+      final epoch = operationEpoch;
+      if (appliedDetails != null) {
+        refreshPortrait(() {
+          busy = true;
+          preservingSharpFrame = true;
+        });
+        // Retire still cancels the old epoch. Let the new host first adopt the
+        // exact applied source frame, then prepare the real portrait plane.
+        await WidgetsBinding.instance.endOfFrame;
+        if (!mounted || !operationCurrent(epoch)) return;
+        refreshPortrait(() => busy = false);
+      }
       await refreshOriginalModeFrame();
     } else {
       unawaited(refreshPortraitOverlay());
@@ -337,9 +380,10 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
         frame: shown,
         viewport: detailViewport,
         invalidation: detailInvalidation,
+        initialDetails: activeDetailHandoff,
         isCurrent: () => operationCurrent(epoch),
         enabled:
-            !busy &&
+            (!busy || preservingSharpFrame) &&
             scalarStart == null &&
             lightStart == null &&
             !photoSampling,
@@ -349,6 +393,46 @@ extension _OriginalPortraitWorkspace on _RetouchWorkspaceState {
 
   void updateDetailViewport(RetouchPhotoViewport value) {
     if (mounted && current) detailViewport.value = value;
+  }
+
+  RetouchPhotoViewport? preparedDetailViewport(Json next) {
+    final currentViewport = detailViewport.value;
+    final width = (next['width'] as num?)?.toDouble() ?? 0;
+    final height = (next['height'] as num?)?.toDouble() ?? 0;
+    if (currentViewport == null || width <= 0 || height <= 0) return null;
+    final reserve = !patchMode && tab == 2 && !choosingGroup;
+    final size = Size(
+      currentViewport.clip.right,
+      currentViewport.clip.bottom + (reserve ? 48 : 0),
+    );
+    final fit = retouchOriginalPhotoFrame(
+      viewport: size,
+      imageWidth: width,
+      imageHeight: height,
+      transform: Matrix4.identity(),
+      reserveBars: reserve,
+    );
+    final scene = sharedViewport.matrixFor(
+      viewport: size,
+      imageRect: fit,
+      plane: originalViewportPlane(next),
+    );
+    final scale = scene.getMaxScaleOnAxis();
+    final center = size.center(Offset.zero);
+    final pan = Matrix4.diagonal3Values(scale, scale, 1)
+      ..setTranslationRaw(
+        scene.storage[12] - (1 - scale) * center.dx,
+        scene.storage[13] - (1 - scale) * center.dy,
+        0,
+      );
+    return retouchOriginalPhotoViewport(
+      viewport: size,
+      imageWidth: width,
+      imageHeight: height,
+      transform: pan,
+      reserveBars: reserve,
+      clampToBounds: false,
+    );
   }
 
   EditingViewportPlane originalViewportPlane(Json? shown) {

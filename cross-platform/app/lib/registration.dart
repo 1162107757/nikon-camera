@@ -101,6 +101,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
       busy = true;
       error = null;
     });
+    final request = epoch;
+    final owner = widget.state.session['user']?['id'] as String? ?? '';
     try {
       final session = await widget.state.core.call('account.register', {
         'username': username.text.trim(),
@@ -108,6 +110,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         'challengeId': proof,
         'challengeAnswer': answer.text.trim(),
       });
+      if (!mounted || request != epoch) return;
+      if ((widget.state.session['user']?['id'] as String? ?? '') != owner) {
+        throw const AppFailure('账号已改变，请重新打开注册页面。');
+      }
       widget.state.acceptAuthenticatedSession(session);
       unawaited(widget.state.refreshLibrary().catchError((Object _) {}));
       if (mounted) {
@@ -126,6 +132,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         if (code == 'CHALLENGE_INVALID' ||
             code == 'CHALLENGE_EXPIRED' ||
             code == 'CHALLENGE_REQUIRED') {
+          setState(() => error = '$message\n正在更换验证码，账号和密码已保留。');
           await challenge();
           if (!mounted) return;
           message += proof.isEmpty
@@ -202,7 +209,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             textInputAction: TextInputAction.next,
                             decoration: const InputDecoration(
                               labelText: '密码',
-                              helperText: '8–128 个字符',
+                              helperText: '8–128 位，可只用数字或字母',
                             ),
                             validator: (value) =>
                                 value != null &&

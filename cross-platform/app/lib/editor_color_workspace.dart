@@ -3,6 +3,29 @@ part of 'editor.dart';
 /// The original colour dialogs keep a photograph above a compact control pane.
 /// Changes remain tentative until Apply; Back and Cancel restore the entry state.
 extension _EditorColorWorkspace on _EditorPageState {
+  bool get colorFrameMatchesRecipe {
+    final size = displayedPhotoSize;
+    if (preview == null ||
+        size == null ||
+        !size.width.isFinite ||
+        !size.height.isFinite ||
+        displayedRevision != revision ||
+        detailRefreshPending ||
+        rendering ||
+        (debounce?.isActive ?? false) ||
+        displayedOverlay?['recipe'] is! Map) {
+      return false;
+    }
+    // Compare the complete accepted recipe: local edits, RAW settings,
+    // geometry and border all determine the displayed pixels and image plane.
+    // The render queue adds an empty localData even to recipes without one.
+    final accepted = object(displayedOverlay!['recipe']);
+    final expected = recipe.clone().data;
+    accepted.putIfAbsent('localData', () => '');
+    expected.putIfAbsent('localData', () => '');
+    return jsonEncode(accepted) == jsonEncode(expected);
+  }
+
   void beginColorGesture() {
     if (!toolsEnabled) return;
     checkpoint();
@@ -131,10 +154,12 @@ extension _EditorColorWorkspace on _EditorPageState {
 
   Future<void> advancedColorTool(int page) async {
     if (!toolsEnabled || colorToolActive) return;
-    pauseEditorDetails();
     refreshWorkspace(() => colorToolActive = true);
     try {
       await settleLocalAdjustments();
+      if (mounted && toolsEnabled && !colorFrameMatchesRecipe) {
+        await render(readOnly: true);
+      }
     } catch (failure) {
       if (mounted) {
         refreshWorkspace(() => colorToolActive = false);
@@ -142,7 +167,7 @@ extension _EditorColorWorkspace on _EditorPageState {
       }
       return;
     }
-    if (!mounted || !toolsEnabled) {
+    if (!mounted || !toolsEnabled || !colorFrameMatchesRecipe) {
       if (mounted) refreshWorkspace(() => colorToolActive = false);
       return;
     }
@@ -150,6 +175,7 @@ extension _EditorColorWorkspace on _EditorPageState {
     final savedUndo = undo.map((v) => v.clone()).toList();
     final savedRedo = redo.map((v) => v.clone()).toList();
     final beforeCompare = compare;
+    final entryOverlay = object(jsonDecode(jsonEncode(displayedOverlay)));
     String? entryImage;
     final entry = preview;
     if (entry != null &&
@@ -171,16 +197,12 @@ extension _EditorColorWorkspace on _EditorPageState {
       return;
     }
     debounce?.cancel();
-    previewGeneration++;
-    previewQueue.reset();
-    revision++;
     undo.clear();
     redo.clear();
     refreshWorkspace(() {
       colorToolActive = true;
       compare = false;
     });
-    unawaited(render(readOnly: true));
     var expanded = false, working = false, closing = false, held = false;
     final title = {2: '调色盘', 5: '曲线', 6: 'HSL', 7: '去灰'}[page]!;
     if (page == 7 &&
@@ -192,6 +214,7 @@ extension _EditorColorWorkspace on _EditorPageState {
       });
     }
     bool? applied;
+    var changed = false;
     try {
       applied = await openEmbeddedWorkspace<bool>(
         (complete, backReady) => Builder(
@@ -220,7 +243,10 @@ extension _EditorColorWorkspace on _EditorPageState {
                 if (accept && mounted && sameOwner) {
                   try {
                     await settleLocalAdjustments();
-                    await render(readOnly: true);
+                    if (jsonEncode(recipe.data) != jsonEncode(before.data) ||
+                        !colorFrameMatchesRecipe) {
+                      await render(readOnly: true);
+                    }
                     if (!mounted ||
                         !sameOwner ||
                         error != null ||
@@ -426,11 +452,11 @@ extension _EditorColorWorkspace on _EditorPageState {
         ),
       );
       if (!mounted || !sameOwner) return;
-      refreshWorkspace(() => managingTools = true);
       await settleLocalAdjustments();
       if (!mounted || !sameOwner) return;
-      final changed = jsonEncode(recipe.data) != jsonEncode(before.data);
-      if (applied != true) {
+      changed = jsonEncode(recipe.data) != jsonEncode(before.data);
+      if (changed) refreshWorkspace(() => managingTools = true);
+      if (applied != true && changed) {
         debounce?.cancel();
         previewGeneration++;
         previewQueue.reset();
@@ -443,6 +469,7 @@ extension _EditorColorWorkspace on _EditorPageState {
             final discarded = preview;
             preview = entryImage;
             entryImage = null;
+            displayedOverlay = entryOverlay;
             displayedRevision = revision;
             if (discarded != null && discarded != preview) {
               unawaited(discardPreview(discarded));
@@ -450,6 +477,11 @@ extension _EditorColorWorkspace on _EditorPageState {
           }
         });
         await reloadLocalState();
+      } else if (applied != true) {
+        refreshWorkspace(() {
+          selectRegion(regionBefore);
+          compare = beforeCompare;
+        });
       }
       undo
         ..clear()
@@ -465,7 +497,7 @@ extension _EditorColorWorkspace on _EditorPageState {
     } finally {
       unawaited(discardPreview(entryImage));
       if (mounted && sameOwner) {
-        if (applied == true) {
+        if (applied == true && changed) {
           try {
             await saveDraft();
           } catch (failure) {
@@ -479,7 +511,7 @@ extension _EditorColorWorkspace on _EditorPageState {
             managingTools = false;
           });
           panelRevision.value++;
-          unawaited(render());
+          if (changed) unawaited(render());
         }
       }
     }

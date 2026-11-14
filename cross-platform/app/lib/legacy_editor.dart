@@ -7,23 +7,70 @@ const _editorMuted = Color(0xffc8cdca);
 extension _LegacyWorkspace on _EditorPageState {
   Future<void> openRetouch({bool patch = false}) async {
     if (!toolsEnabled) return;
-    pauseEditorDetails();
+    EditingDetailHandoff? initialDetails, returnDetails, returnOriginalDetails;
+    bool Function()? entryCurrent;
+    var changed = false;
+    final entryMedia = MediaQuery.of(context);
+
+    void discardDetails() {
+      initialDetails?.dispose();
+      returnDetails?.dispose();
+      returnOriginalDetails?.dispose();
+      initialDetails = returnDetails = returnOriginalDetails = null;
+    }
+
+    void captureDetails() {
+      discardDetails();
+      initialDetails = effectDetails?.captureHandoff();
+      returnDetails = effectDetails?.captureHandoff();
+      if (compare) returnOriginalDetails = comparisonDetails?.captureHandoff();
+    }
+
+    // Capture before the busy state can disable and clear either parent tile.
+    if (editorFrameMatchesRecipe) captureDetails();
     debounce?.cancel();
-    revision++;
-    refreshWorkspace(() => managingTools = true);
+    refreshWorkspace(() {
+      retouchDetailHandoffPending = true;
+      managingTools = true;
+    });
     try {
       await settleLocalAdjustments();
       if (activeJob != null) await widget.state.core.cancel(activeJob!);
       if (!mounted || !sameOwner) return;
+      if (!editorFrameMatchesRecipe) {
+        discardDetails();
+        previewGeneration++;
+        previewQueue.reset();
+        refreshWorkspace(() => managingTools = false);
+        await render(readOnly: true);
+        if (!mounted || !sameOwner) return;
+        refreshWorkspace(() => managingTools = true);
+        if (!editorFrameMatchesRecipe) return;
+        captureDetails();
+      } else if (initialDetails == null) {
+        // An already accepted native tile may have completed while local edits
+        // settled; give the first child frame that latest independent handle.
+        captureDetails();
+      }
       final frozen = recipe.clone().data, fingerprint = jsonEncode(recipe.data);
       final targetRegion = selectedRegionId;
       final targetName = selectedRegion?['name'] as String?;
+      final acceptedPath = preview, acceptedOverlay = displayedOverlay;
+      final acceptedRevision = revision, acceptedSha = sourceSha;
+      final source = widget.photo.path;
       bool current() =>
           mounted &&
           sameOwner &&
+          !leaving &&
+          widget.photo.path == source &&
+          sourceSha == acceptedSha &&
+          revision == acceptedRevision &&
+          preview == acceptedPath &&
+          identical(displayedOverlay, acceptedOverlay) &&
           jsonEncode(recipe.data) == fingerprint &&
           selectedRegionId == targetRegion;
-      final result = await openEmbeddedWorkspace<Json>(
+      entryCurrent = current;
+      final workspace = openEmbeddedWorkspace<Json>(
         (finish, backReady) => RetouchWorkspace(
           state: widget.state,
           photo: widget.photo,
@@ -39,10 +86,29 @@ extension _LegacyWorkspace on _EditorPageState {
           viewportState: editingViewport,
           embeddedLayoutBuilder: embeddedWorkspaceLayout,
           initialFrame: embeddedInitialFrame,
+          initialDetails: initialDetails,
         ),
       );
+      final toolEpoch = embeddedToolEpoch;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted ||
+            toolEpoch != embeddedToolEpoch ||
+            embeddedTool == null) {
+          return;
+        }
+        // The child has laid out and consumed its independent same-profile HD
+        // clone. Only now stop the parent's native requests and release its tile.
+        refreshWorkspace(() => retouchDetailHandoffPending = false);
+        effectDetails?.setEnabled(false);
+        comparisonDetails?.setEnabled(false);
+      });
+      final result = await workspace;
       if (result == null || !current()) return;
-      if (result['localData'] != (recipe.data['localData'] ?? '')) checkpoint();
+      changed = result['localData'] != (recipe.data['localData'] ?? '');
+      if (!changed) return;
+      checkpoint();
+      pauseEditorDetails();
+      revision++;
       refreshWorkspace(() {
         recipe.data['localData'] = result['localData'];
         if (result['regionId'] is String &&
@@ -58,9 +124,30 @@ extension _LegacyWorkspace on _EditorPageState {
       if (mounted) report(context, failure);
     } finally {
       if (mounted) {
-        refreshWorkspace(() => managingTools = false);
-        unawaited(render());
+        refreshWorkspace(() {
+          retouchDetailHandoffPending = false;
+          managingTools = false;
+        });
+        if (changed) {
+          unawaited(render());
+        } else if (entryCurrent?.call() == true && editorFrameMatchesRecipe) {
+          final bindings = editorDetailBindings(viewContext: context);
+          final knownViewport = MediaQuery.of(context) == entryMedia;
+          restoreEditorDetailHandoff(
+            bindings.effect,
+            returnDetails,
+            knownViewport: knownViewport,
+          );
+          returnDetails = null;
+          restoreEditorDetailHandoff(
+            bindings.original,
+            returnOriginalDetails,
+            knownViewport: knownViewport,
+          );
+          returnOriginalDetails = null;
+        }
       }
+      discardDetails();
     }
   }
 
@@ -68,6 +155,7 @@ extension _LegacyWorkspace on _EditorPageState {
       restored &&
       sameOwner &&
       !leaving &&
+      !retouchDetailHandoffPending &&
       !exporting &&
       !managingTools &&
       !preparingFilter &&

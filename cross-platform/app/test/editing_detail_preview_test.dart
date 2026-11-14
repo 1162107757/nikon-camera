@@ -131,6 +131,11 @@ class _DetailCore extends HueviaCore {
         final gate = holdTile;
         holdTile = null;
         if (gate != null) await gate.future;
+        if (!File(payload['path'] as String).existsSync()) {
+          throw const AppFailure(
+            'The native full document was deleted while being read',
+          );
+        }
         final full = documents[payload['path']]!;
         var width = 16, height = 12;
         var region = object(payload['region']);
@@ -234,13 +239,18 @@ Future<void> _drain(WidgetTester tester, [int count = 16]) async {
 Future<void> _until(
   WidgetTester tester,
   bool Function() ready,
-  String reason,
-) async {
+  String reason, {
+  String Function()? diagnostic,
+}) async {
   final deadline = Stopwatch()..start();
   while (!ready() && deadline.elapsed < const Duration(seconds: 10)) {
     await _drain(tester, 1);
   }
-  expect(ready(), true, reason: reason);
+  expect(
+    ready(),
+    true,
+    reason: diagnostic == null ? reason : '$reason: ${diagnostic()}',
+  );
 }
 
 _DetailFixture _fixture(WidgetTester tester) {
@@ -271,8 +281,877 @@ _DetailFixture _fixture(WidgetTester tester) {
   return fixture;
 }
 
+EditingDetailPreviewController _receiver(
+  _DetailFixture fixture, {
+  Json? recipe,
+  Size size = const Size(640, 480),
+  String expectedSha = _sha,
+  String owner = '',
+  String? sourcePath,
+}) {
+  final controller = EditingDetailPreviewController(
+    core: fixture.core,
+    owner: owner,
+    sourcePath: sourcePath ?? fixture.core.source,
+    isCurrent: () => fixture.current,
+    maxTileEdge: 2048,
+    debounce: const Duration(milliseconds: 5),
+  );
+  addTearDown(controller.dispose);
+  controller.configure(
+    recipe:
+        recipe ??
+        {
+          'values': [1, 2],
+          'geometry': {},
+        },
+    revision: 2,
+    frameIdentity: 'child-frame',
+    outputSize: size,
+    expectedSourceSha: expectedSha,
+  );
+  return controller;
+}
+
+void _receiverViewport(
+  EditingDetailPreviewController controller, {
+  Rect region = const Rect.fromLTWH(.25, .25, .5, .5),
+}) => controller.setViewport(
+  visibleRegion: region,
+  zoom: 2,
+  viewportPixelSize: const Size(800, 600),
+);
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  testWidgets(
+    'Handoff clones sharp pixels and borrows one full document for a new partial viewport',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final original = f.controller.tile!;
+      final handoff = f.controller.captureHandoff()!;
+      final child = _receiver(f);
+      _receiverViewport(child, region: const Rect.fromLTWH(.7, .7, .2, .2));
+      final gate = f.core.gateTile();
+      expect(child.adoptHandoff(handoff), true);
+      expect(child.adoptHandoff(handoff), false);
+      handoff.dispose();
+      expect(child.tile!.frameIdentity, 'child-frame');
+      expect(child.tile!.revision, 2);
+      expect(identical(child.tile!.image, original.image), false);
+      expect(child.tile!.region.right, lessThan(.9));
+      f.controller.setEnabled(false);
+      await tester.pumpWidget(
+        MaterialApp(
+          home: SizedBox(
+            width: 400,
+            height: 300,
+            child: EditingDetailTileLayer(controller: child),
+          ),
+        ),
+      );
+      expect(tester.widget<RawImage>(find.byType(RawImage)).image!.width, 16);
+      await _until(
+        tester,
+        () => f.core.count('media.detailTile') == 2,
+        'The uncovered ROI must request a new tile',
+      );
+      expect(child.tile!.path, original.path);
+      expect(f.core.count('media.detailRender'), 1);
+      expect(child.ownedFileCount, 0);
+      final request = f.core.calls
+          .where((c) => c.$1 == 'media.detailTile')
+          .last
+          .$2;
+      expect(request['path'], f.core.documents.keys.single);
+      expect(request['expectedSourceSha'], _sha);
+      gate.complete();
+      await _until(
+        tester,
+        () => child.tile != null && child.tile!.path != original.path,
+        'The borrowed full must supply the latest viewport',
+      );
+      expect(child.tile!.region.contains(const Offset(.8, .8)), true);
+      expect(f.core.count('media.detailRender'), 1);
+      expect(
+        child.ownedFileCount,
+        1,
+      ); // Only its newly generated tile, not the loan.
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets(
+    'Adoption retires a same-profile full job that was already in flight without losing its document loan',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final fullPath = f.core.documents.keys.single;
+      final handoff = f.controller.captureHandoff()!;
+      final gate = f.core.gateFull();
+      final child = _receiver(f);
+      _receiverViewport(child);
+      await _until(
+        tester,
+        () => f.core.count('media.detailRender') == 2,
+        'Child full work must actually start before adoption',
+      );
+      expect(child.adoptHandoff(handoff), true);
+      f.controller.dispose();
+      expect(File(fullPath).existsSync(), true);
+      gate.complete();
+      await _until(
+        tester,
+        () => f.core.active == 0 && child.ownedFileCount == 0,
+        'Late redundant full work must be retired rather than replace the loan',
+      );
+      expect(child.tile!.frameIdentity, 'child-frame');
+      expect(File(fullPath).existsSync(), true);
+      child.dispose();
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'The original document loan must still release on child disposal',
+      );
+      expect(File(fullPath).existsSync(), false);
+    },
+  );
+
+  testWidgets(
+    'Parent disposal and child profile cancellation wait for an active borrowed native read',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final fullPath = f.core.documents.keys.single;
+      final child = _receiver(f);
+      _receiverViewport(child);
+      expect(child.adoptHandoff(f.controller.captureHandoff()), true);
+      f.controller.dispose();
+      await _drain(tester, 2);
+      expect(File(fullPath).existsSync(), true);
+      final gate = f.core.gateTile();
+      _receiverViewport(child, region: const Rect.fromLTWH(.7, .7, .2, .2));
+      await _until(
+        tester,
+        () => f.core.count('media.detailTile') == 2,
+        'The borrowed native read must start',
+      );
+      child.configure(
+        recipe: {
+          'values': [7],
+        },
+        revision: 3,
+        frameIdentity: 'new-profile',
+        outputSize: const Size(640, 480),
+        expectedSourceSha: _sha,
+      );
+      await _drain(tester, 2);
+      expect(gate.isCompleted, false);
+      expect(File(fullPath).existsSync(), true);
+      gate.complete();
+      await _until(
+        tester,
+        () =>
+            child.tile?.frameIdentity == 'new-profile' &&
+            !File(fullPath).existsSync() &&
+            f.controller.ownedFileCount == 0,
+        'Only completion of the active read may release the parent full file',
+      );
+      expect(f.core.count('media.detailRender'), 2);
+      expect(child.ownedFileCount, 2);
+    },
+  );
+
+  testWidgets(
+    'Independent unconsumed captures keep the parent file until each handle is disposed',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final fullPath = f.core.documents.keys.single;
+      final first = f.controller.captureHandoff()!,
+          second = f.controller.captureHandoff()!;
+      addTearDown(first.dispose);
+      addTearDown(second.dispose);
+      f.controller.dispose();
+      await _drain(tester, 2);
+      expect(File(fullPath).existsSync(), true);
+      first.dispose();
+      await _drain(tester, 2);
+      expect(File(fullPath).existsSync(), true);
+      second.dispose();
+      second.dispose();
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'The final independent capture must release its parent lease',
+      );
+      expect(File(fullPath).existsSync(), false);
+    },
+  );
+
+  testWidgets(
+    'Owner source SHA profile and ordinary output mismatch consume without exposing captured pixels',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final receivers = [
+        _receiver(f, owner: 'other-owner'),
+        _receiver(f, sourcePath: '${f.core.source}.other'),
+        _receiver(f, expectedSha: _sha.replaceAll('a', 'b')),
+        _receiver(
+          f,
+          recipe: {
+            'values': [9],
+          },
+        ),
+        _receiver(f, size: const Size(1280, 960)),
+      ];
+      for (final child in receivers) {
+        final handoff = f.controller.captureHandoff()!;
+        expect(child.adoptHandoff(handoff), false);
+        expect(child.adoptHandoff(handoff), false);
+        handoff.dispose();
+        expect(child.tile, isNull);
+        expect(child.handoffPending, false);
+        expect(child.ownedFileCount, 0);
+      }
+      f.controller.dispose();
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'Rejected captures must not retain any parent document lease',
+      );
+      expect(f.core.count('media.detailRender'), 1);
+    },
+  );
+
+  testWidgets(
+    'A consumed handoff waits for actual layout and survives disposal of the original handle',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final fullPath = f.core.documents.keys.single;
+      final handoff = f.controller.captureHandoff()!;
+      final child = _receiver(f);
+      expect(child.adoptHandoff(handoff), true);
+      expect(child.handoffPending, true);
+      expect(child.tile, isNull);
+      handoff.dispose();
+      f.controller.dispose();
+      expect(File(fullPath).existsSync(), true);
+      _receiverViewport(child);
+      expect(child.handoffPending, false);
+      expect(child.tile!.frameIdentity, 'child-frame');
+      await _drain(tester);
+      expect(f.core.count('media.detailRender'), 1);
+      expect(f.core.count('media.detailTile'), 1);
+      child.dispose();
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'Child disposal must release its borrowed parent document',
+      );
+    },
+  );
+
+  testWidgets(
+    'Changing profile before first layout retires a deferred handoff without displaying it',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final child = _receiver(f);
+      expect(child.adoptHandoff(f.controller.captureHandoff()), true);
+      f.controller.dispose();
+      child.configure(
+        recipe: {
+          'values': [9],
+        },
+        revision: 3,
+        frameIdentity: 'changed-before-layout',
+        outputSize: const Size(640, 480),
+        expectedSourceSha: _sha,
+      );
+      expect(child.handoffPending, false);
+      expect(child.tile, isNull);
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'Unshown deferred data must release its parent lease after profile change',
+      );
+      expect(f.core.count('media.detailRender'), 1);
+    },
+  );
+
+  testWidgets(
+    'Return capture reclaims its own retired document and borrowed documents cannot form a cycle',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Parent tile must decode',
+      );
+      final fullPath = f.core.documents.keys.single;
+      final childEntry = f.controller.captureHandoff()!,
+          parentReturn = f.controller.captureHandoff()!;
+      final child = _receiver(f);
+      _receiverViewport(child);
+      expect(child.adoptHandoff(childEntry), true);
+      final borrowedReturn = child
+          .captureHandoff()!; // Image-only; never re-lends its loan.
+      addTearDown(borrowedReturn.dispose);
+      f.configure(
+        recipe: {
+          'values': [9],
+        },
+        revision: 3,
+        frame: 'temporary-parent',
+      );
+      f.controller.setEnabled(false);
+      child.dispose();
+      f.configure(revision: 4, frame: 'restored-parent');
+      f.controller.setEnabled(true);
+      expect(f.controller.adoptHandoff(parentReturn), true);
+      expect(f.controller.tile!.frameIdentity, 'restored-parent');
+      await _drain(tester);
+      expect(File(fullPath).existsSync(), true);
+      expect(f.core.count('media.detailRender'), 1);
+      f.controller.invalidate();
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'A retained return image must not hold a transitive document lease',
+      );
+      expect(File(fullPath).existsSync(), false);
+    },
+  );
+
+  testWidgets(
+    'Replacement holds sharp pixels through full and tile work then commits one matching paint',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Initial tile must decode',
+      );
+      final old = f.controller.tile!;
+      var baseFrame = old.frameIdentity;
+      StateSetter? updateBase;
+      final painted = <(String, String?)>[];
+      await tester.pumpWidget(
+        MaterialApp(
+          home: StatefulBuilder(
+            builder: (context, setState) {
+              updateBase = setState;
+              final base = baseFrame;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                painted.add((base, f.controller.tile?.frameIdentity));
+              });
+              return SizedBox(
+                width: 400,
+                height: 300,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Text(base),
+                    EditingDetailTileLayer(controller: f.controller),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      );
+      final full = f.core.gateFull(), tileGate = f.core.gateTile();
+      var sawEmpty = false;
+      final acceptedPaths = <String>{old.path};
+      f.controller.addListener(() {
+        final tile = f.controller.tile;
+        if (tile == null) sawEmpty = true;
+        if (tile != null) acceptedPaths.add(tile.path);
+      });
+      final recipe = <String, dynamic>{
+        'values': [9],
+        'geometry': {},
+      };
+      bool? accepted;
+      final ready = f.controller.prepareReplacement(
+        recipe: recipe,
+        revision: 2,
+        frameIdentity: 'frame-2',
+        outputSize: const Size(640, 480),
+        expectedSourceSha: _sha,
+        viewMode: 'local',
+      );
+      recipe['values'][0] = 99;
+      unawaited(
+        ready.then((value) {
+          accepted = value;
+          if (value) updateBase!(() => baseFrame = 'frame-2');
+        }),
+      );
+      await _until(
+        tester,
+        () => f.core.count('media.detailRender') == 2,
+        'Replacement full work must start',
+      );
+      expect(accepted, isNull);
+      expect(f.controller.tile!.path, old.path);
+      expect(f.controller.captureHandoff(), isNull);
+      expect(File(old.path).existsSync(), true);
+      full.complete();
+      await _until(
+        tester,
+        () => f.core.count('media.detailTile') == 2,
+        'Replacement tile work must start',
+      );
+      expect(accepted, isNull);
+      expect(f.controller.tile!.path, old.path);
+      expect(f.controller.replacementPending, true);
+      tileGate.complete();
+      await _until(
+        tester,
+        () => accepted == true,
+        'Replacement must resolve ready',
+      );
+      await tester.pump();
+      expect(f.controller.tile!.frameIdentity, 'frame-2');
+      expect(f.controller.tile!.revision, 2);
+      expect(f.controller.replacementPending, false);
+      expect(find.text('frame-2'), findsOneWidget);
+      expect(sawEmpty, false);
+      expect(acceptedPaths, hasLength(2));
+      expect(painted, contains(('frame-2', 'frame-2')));
+      expect(painted.every((pair) => pair.$1 == pair.$2), true);
+      final frozen = f.core.calls
+          .where((c) => c.$1 == 'media.detailRender')
+          .last
+          .$2;
+      expect(frozen['recipe']['values'], [9]);
+      expect(frozen['viewMode'], 'local');
+      expect(frozen['expectedSourceSha'], _sha);
+      expect(f.core.maximumActive, 1);
+      expect(f.controller.ownedFileCount, lessThanOrEqualTo(4));
+    },
+  );
+
+  testWidgets(
+    'Replacement with no tile or no detail requirement leaves the accepted configuration unchanged',
+    (tester) async {
+      final f = _fixture(tester)..configure();
+      expect(
+        await f.controller.prepareReplacement(
+          recipe: {
+            'values': [9],
+          },
+          revision: 2,
+          frameIdentity: 'unused',
+          outputSize: const Size(640, 480),
+          expectedSourceSha: _sha,
+        ),
+        false,
+      );
+      f.viewport(zoom: 1, pixels: const Size(800, 600));
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Accepted fit tile must decode',
+      );
+      final old = f.controller.tile!;
+      expect(
+        f.core.calls
+            .singleWhere((c) => c.$1 == 'media.detailRender')
+            .$2['recipe']['values'],
+        [1, 2],
+      );
+      expect(
+        await f.controller.prepareReplacement(
+          recipe: {
+            'values': [8],
+          },
+          revision: 3,
+          frameIdentity: 'unneeded',
+          outputSize: const Size(4000, 3000),
+          expectedSourceSha: _sha,
+        ),
+        false,
+      );
+      await _drain(tester);
+      expect(f.controller.tile!.path, old.path);
+      expect(f.core.count('media.detailRender'), 1);
+
+      // A zoomed request can discover only after native inspection that its
+      // ordinary raster already contains every source pixel. It still resolves.
+      f.viewport(zoom: 2);
+      bool? result;
+      unawaited(
+        f.controller
+            .prepareReplacement(
+              recipe: {
+                'values': [7],
+              },
+              revision: 4,
+              frameIdentity: 'source-ceiling',
+              outputSize: const Size(8000, 6000),
+              expectedSourceSha: _sha,
+            )
+            .then<void>((value) {
+              result = value;
+            }),
+      );
+      await _until(
+        tester,
+        () => result != null,
+        'Source ceiling must not leave a pending replacement',
+      );
+      expect(result, false);
+      expect(f.controller.tile, isNull);
+      expect(f.controller.replacementPending, false);
+    },
+  );
+
+  testWidgets(
+    'A rejected replacement releases sharp pixels and cannot resume the rejected profile',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Initial tile must decode',
+      );
+      f.core.wrongTileToken = true;
+      bool? result;
+      unawaited(
+        f.controller
+            .prepareReplacement(
+              recipe: {
+                'values': [9],
+              },
+              revision: 2,
+              frameIdentity: 'rejected',
+              outputSize: const Size(640, 480),
+              expectedSourceSha: _sha,
+            )
+            .then<void>((value) {
+              result = value;
+            }),
+      );
+      await _until(
+        tester,
+        () => result != null,
+        'Rejected native identity must resolve false',
+      );
+      expect(result, false);
+      expect(f.controller.tile, isNull);
+      expect(f.controller.error, isNotNull);
+      f.core.wrongTileToken = false;
+      f.controller.setEnabled(false);
+      f.controller.setEnabled(true);
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Resumed accepted profile must decode',
+        diagnostic: () =>
+            'error=${f.controller.error}; enabled=${f.controller.enabled}; '
+            'owned=${f.controller.ownedFileCount}; calls=${f.core.calls.map((c) => c.$1).toList()}',
+      );
+      expect(f.controller.tile!.frameIdentity, 'frame-1');
+      expect(f.controller.tile!.revision, 1);
+    },
+  );
+
+  for (final action in ['pause', 'invalidate', 'dispose', 'invalid viewport']) {
+    testWidgets(
+      'A $action releases a replacement before held native work completes',
+      (tester) async {
+        final f = _fixture(tester)
+          ..configure()
+          ..viewport();
+        await _until(
+          tester,
+          () => f.controller.hasDetail,
+          'Initial tile must decode',
+        );
+        final gate = f.core.gateFull();
+        bool? result;
+        unawaited(
+          f.controller
+              .prepareReplacement(
+                recipe: {
+                  'values': [9],
+                },
+                revision: 2,
+                frameIdentity: 'abandoned',
+                outputSize: const Size(640, 480),
+                expectedSourceSha: _sha,
+              )
+              .then<void>((value) {
+                result = value;
+              }),
+        );
+        await _until(
+          tester,
+          () => f.core.count('media.detailRender') == 2,
+          'Held replacement full work must start',
+        );
+        switch (action) {
+          case 'pause':
+            f.controller.setEnabled(false);
+            break;
+          case 'invalidate':
+            f.controller.invalidate();
+            break;
+          case 'dispose':
+            f.controller.dispose();
+            break;
+          case 'invalid viewport':
+            f.viewport(region: Rect.zero);
+            break;
+        }
+        await tester.pump();
+        expect(result, false);
+        expect(gate.isCompleted, false);
+        expect(f.controller.tile, isNull);
+        expect(f.controller.replacementPending, false);
+        expect(f.core.cancelled, isNotEmpty);
+        gate.complete();
+        await _until(
+          tester,
+          () => f.core.active == 0 && f.controller.ownedFileCount == 0,
+          'Late abandoned full and old sharp files must retire',
+        );
+        expect(f.controller.tile, isNull);
+      },
+    );
+  }
+
+  testWidgets(
+    'An owner change retires held replacement pixels and returning owner cannot install the late target',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Initial tile must decode',
+      );
+      final gate = f.core.gateFull();
+      bool? result;
+      unawaited(
+        f.controller
+            .prepareReplacement(
+              recipe: {
+                'values': [9],
+              },
+              revision: 2,
+              frameIdentity: 'old-owner-target',
+              outputSize: const Size(640, 480),
+              expectedSourceSha: _sha,
+            )
+            .then<void>((value) {
+              result = value;
+            }),
+      );
+      await _until(
+        tester,
+        () => f.core.count('media.detailRender') == 2,
+        'Held replacement must start',
+      );
+      f.current = false;
+      expect(f.controller.tile, isNull);
+      await tester.pump(const Duration(milliseconds: 121));
+      expect(result, false);
+      expect(gate.isCompleted, false);
+      f.current = true;
+      gate.complete();
+      await _until(
+        tester,
+        () => f.core.active == 0 && f.controller.ownedFileCount == 0,
+        'Returning owner must not retain late private pixels',
+      );
+      expect(f.controller.tile, isNull);
+      expect(f.controller.replacementPending, false);
+    },
+  );
+
+  testWidgets(
+    'Ordinary configuration cancels a staged target and preserves immediate invalidation semantics',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Initial tile must decode',
+      );
+      final gate = f.core.gateFull();
+      bool? result;
+      unawaited(
+        f.controller
+            .prepareReplacement(
+              recipe: {
+                'values': [9],
+              },
+              revision: 2,
+              frameIdentity: 'staged',
+              outputSize: const Size(640, 480),
+              expectedSourceSha: _sha,
+            )
+            .then<void>((value) {
+              result = value;
+            }),
+      );
+      await _until(
+        tester,
+        () => f.core.count('media.detailRender') == 2,
+        'Held replacement must start',
+      );
+      f.configure(
+        recipe: {
+          'values': [3],
+        },
+        revision: 3,
+        frame: 'ordinary',
+      );
+      await tester.pump();
+      expect(result, false);
+      expect(f.controller.tile, isNull);
+      gate.complete();
+      await _until(
+        tester,
+        () => f.controller.tile?.frameIdentity == 'ordinary',
+        'Only the ordinary target may install after cancellation',
+      );
+      expect(f.controller.tile!.revision, 3);
+      expect(f.core.maximumActive, 1);
+    },
+  );
+
+  testWidgets(
+    'A different frozen profile cannot reuse the old tile even if frame labels are equal',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Initial tile must decode',
+      );
+      final old = f.controller.tile!;
+      bool? result;
+      unawaited(
+        f.controller
+            .prepareReplacement(
+              recipe: {
+                'values': [9],
+              },
+              revision: 1,
+              frameIdentity: 'frame-1',
+              outputSize: const Size(640, 480),
+              expectedSourceSha: _sha,
+            )
+            .then<void>((value) {
+              result = value;
+            }),
+      );
+      await _until(
+        tester,
+        () => result == true,
+        'New profile must acquire its own tile',
+      );
+      expect(f.controller.tile!.path, isNot(old.path));
+      expect(f.core.count('media.detailRender'), 2);
+      expect(f.core.count('media.detailTile'), 2);
+    },
+  );
+
+  testWidgets(
+    'A changed expected source rejects staging and immediately retires old source pixels',
+    (tester) async {
+      final f = _fixture(tester)
+        ..configure()
+        ..viewport();
+      await _until(
+        tester,
+        () => f.controller.hasDetail,
+        'Initial tile must decode',
+      );
+      expect(
+        await f.controller.prepareReplacement(
+          recipe: {
+            'values': [9],
+          },
+          revision: 2,
+          frameIdentity: 'other-source',
+          outputSize: const Size(640, 480),
+          expectedSourceSha: _sha.replaceAll('a', 'b'),
+        ),
+        false,
+      );
+      expect(f.controller.tile, isNull);
+      expect(f.controller.replacementPending, false);
+      await _until(
+        tester,
+        () => f.controller.ownedFileCount == 0,
+        'Old source files must be removed',
+      );
+      expect(f.core.count('media.detailRender'), 1);
+    },
+  );
+
   testWidgets(
     'Medium zoom fills physical pixels with native source detail and reuses the accepted request',
     (tester) async {

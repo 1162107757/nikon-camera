@@ -14,6 +14,7 @@ import 'retouch_original_body.dart';
 import 'retouch_brush_preview.dart';
 import 'retouch_blemish_review.dart';
 import 'retouch_detail_preview.dart';
+import 'editing_detail_preview.dart';
 import 'editing_viewport.dart';
 import 'selection_workspace.dart';
 import 'photo_workspace_chrome.dart';
@@ -37,6 +38,7 @@ class RetouchWorkspace extends StatefulWidget {
     this.embedded = false,
     this.viewportState,
     this.initialFrame,
+    this.initialDetails,
     this.onFinished,
     this.onBackReady,
     this.embeddedLayoutBuilder,
@@ -51,6 +53,7 @@ class RetouchWorkspace extends StatefulWidget {
   final bool embedded;
   final EditingViewportState? viewportState;
   final Json? initialFrame;
+  final EditingDetailHandoff? initialDetails;
   final ValueChanged<Json?>? onFinished;
   final ValueChanged<VoidCallback?>? onBackReady;
   final EditingWorkspaceLayoutBuilder? embeddedLayoutBuilder;
@@ -126,7 +129,9 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   final viewport = TransformationController();
   late final sharedViewport = widget.viewportState ?? EditingViewportState();
   final detailViewport = ValueNotifier<RetouchPhotoViewport?>(null);
-  final detailPreviewKey = GlobalKey();
+  final detailPreviewKey = GlobalKey<RetouchDetailPreviewState>();
+  EditingDetailHandoff? activeDetailHandoff, patchBaselineDetails;
+  bool preservingSharpFrame = false;
   final detailInvalidation = ValueNotifier<int>(0);
   int detailFrameRevision = 0;
   String? atmosphere;
@@ -175,6 +180,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void cancelWorkspace({bool pop = true}) {
     if (exitRequested) return;
+    discardDetailHandoffs();
+    preservingSharpFrame = false;
     detailInvalidation.value++;
     invalidateBlemishReview();
     finishInlineBlemishes(null);
@@ -207,6 +214,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       return;
     }
     final result = data;
+    discardDetailHandoffs();
+    preservingSharpFrame = false;
     detailInvalidation.value++;
     exitRequested = true;
     operationEpoch++;
@@ -221,6 +230,7 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   void retireToolWork() {
     final active = job;
     job = null;
+    preservingSharpFrame = false;
     operationEpoch++;
     detailInvalidation.value++;
     invalidateBlemishReview();
@@ -248,6 +258,12 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     bodyGestureArea = bodyGestureDraft = null;
     busy = false;
     stopped = false;
+  }
+
+  void discardDetailHandoffs() {
+    activeDetailHandoff?.dispose();
+    patchBaselineDetails?.dispose();
+    activeDetailHandoff = patchBaselineDetails = null;
   }
 
   void cancelBusyBody() {
@@ -396,6 +412,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
   void initState() {
     super.initState();
     frame = widget.initialFrame;
+    activeDetailHandoff = widget.initialDetails;
+    preservingSharpFrame = widget.initialDetails != null;
     if (widget.patch) toolIntent = 'patch';
     widget.onBackReady?.call(requestExit);
     if (!widget.patch) {
@@ -408,8 +426,10 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
 
   void accountChanged() {
     if (!current) {
+      discardDetailHandoffs();
       finishInlineBlemishes(null);
       finishInlineSelection(null);
+      preservingSharpFrame = false;
       detailInvalidation.value++;
       operationEpoch++;
       invalidateBlemishReview();
@@ -451,7 +471,16 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
         op == 'media.retouchPatch' ||
         op == 'media.localPreview' ||
         op == 'media.reviewPreview') {
-      detailInvalidation.value++;
+      // These calls compute the next accepted frame. The currently displayed
+      // frozen frame remains valid until its sharp replacement is ready.
+      preservingSharpFrame =
+          scalarStart == null &&
+          lightStart == null &&
+          bodyGestureArea == null &&
+          originalGestureDown == null &&
+          brushRadiusStart == null &&
+          detailPreviewKey.currentState?.hasSharpFrame == true;
+      if (!preservingSharpFrame) detailInvalidation.value++;
     }
     final id = 'retouch-${DateTime.now().microsecondsSinceEpoch}';
     job = id;
@@ -542,13 +571,27 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
       throw AppFailure(decodeFailure == null ? '编辑计算已停止。' : '无法读取人像预览，请重试。');
     }
     temporary.add(path);
-    return {
+    final accepted = <String, dynamic>{
       ...result,
       '_detailRecipe': displayRecipe,
       '_detailRevision': ++detailFrameRevision,
       '_retouchSourceLocalData': next['localData'],
       '_retouchBeforeBody': beforeBody || next['sourcePositioning'] != true,
     };
+    if (!interactive && preservingSharpFrame && operationCurrent(epoch)) {
+      final details = detailPreviewKey.currentState;
+      if (details != null) {
+        await details.prepareFrame(
+          accepted,
+          resolveViewport: () => preparedDetailViewport(accepted),
+        );
+      }
+      if (!operationCurrent(epoch) || stopped) {
+        await remove(path);
+        throw const AppFailure('编辑计算已停止。');
+      }
+    }
+    return accepted;
   }
 
   Future<void> load() async {
@@ -1527,6 +1570,8 @@ class _RetouchWorkspaceState extends State<RetouchWorkspace> {
     viewport.dispose();
     detailViewport.dispose();
     detailInvalidation.dispose();
+    discardDetailHandoffs();
+    widget.initialDetails?.dispose();
     brushEditing.dispose();
     widget.state.removeListener(accountChanged);
     unawaited(stop());

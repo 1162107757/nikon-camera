@@ -85,9 +85,6 @@ class _AccountPageState extends State<AccountPage> {
         });
       }
     } catch (failure) {
-      try {
-        await widget.state.refreshSession();
-      } catch (_) {}
       if (mounted) setState(() => error = '$failure');
     } finally {
       if (mounted) setState(() => busy = false);

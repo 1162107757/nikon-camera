@@ -165,6 +165,18 @@ class PresetImage extends StatelessWidget {
     final uri = Uri.tryParse(preset.preview);
     if (uri == null) return fallback();
     if (uri.scheme == 'https' && uri.userInfo.isEmpty) {
+      if (core != null) {
+        return _OnlinePresetImage(
+          key: ValueKey(
+            '$owner/${core!.publicImageGeneration}/${preset.preview}',
+          ),
+          preset: preset,
+          core: core!,
+          owner: owner,
+          detail: detail,
+          fallback: fallback,
+        );
+      }
       return Image.network(
         preset.preview,
         fit: BoxFit.cover,
@@ -184,6 +196,86 @@ class PresetImage extends StatelessWidget {
     }
     return fallback();
   }
+}
+
+// Share the native, validated image cache and in-flight read across tile rebuilds.
+// Native HTTP can select cellular while the camera keeps its own Wi-Fi socket.
+final _onlinePresetImages = <String, Future<String?>>{};
+final _onlinePresetImageRequests = <String, Future<String?>>{};
+
+Future<String?> _onlinePresetImage(
+  HueviaCore core,
+  Preset preset,
+  String owner,
+) {
+  final generation = core.publicImageGeneration;
+  final key = '${core.root}/$owner/$generation/${preset.preview}';
+  final existing = _onlinePresetImages[key] ?? _onlinePresetImageRequests[key];
+  if (existing != null) return existing;
+  final pending = () async {
+    try {
+      final value = await core.call('online.preview', {
+        'preset': preset.data,
+        'owner': owner,
+      });
+      if (generation != core.publicImageGeneration) return null;
+      return value['path'] as String?;
+    } catch (_) {
+      return null;
+    }
+  }();
+  _onlinePresetImageRequests[key] = pending;
+  pending.then((path) {
+    if (identical(_onlinePresetImageRequests[key], pending)) {
+      _onlinePresetImageRequests.remove(key);
+    }
+    if (path != null && generation == core.publicImageGeneration) {
+      _onlinePresetImages[key] = pending;
+      while (_onlinePresetImages.length > 96) {
+        _onlinePresetImages.remove(_onlinePresetImages.keys.first);
+      }
+    }
+  });
+  return pending;
+}
+
+class _OnlinePresetImage extends StatelessWidget {
+  const _OnlinePresetImage({
+    super.key,
+    required this.preset,
+    required this.core,
+    required this.owner,
+    required this.detail,
+    required this.fallback,
+  });
+  final Preset preset;
+  final HueviaCore core;
+  final String owner;
+  final bool detail;
+  final Widget Function() fallback;
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<String?>(
+    future: _onlinePresetImage(core, preset, owner),
+    builder: (_, snapshot) {
+      final path = snapshot.data;
+      if (path != null) {
+        return Image.file(
+          File(path),
+          fit: BoxFit.cover,
+          cacheWidth: detail ? 960 : 480,
+          gaplessPlayback: true,
+          excludeFromSemantics: true,
+          errorBuilder: (_, _, _) => fallback(),
+        );
+      }
+      if (snapshot.connectionState == ConnectionState.done) return fallback();
+      return ColoredBox(
+        color: Theme.of(context).colorScheme.surfaceContainer,
+        child: const Center(child: Icon(Icons.image_outlined)),
+      );
+    },
+  );
 }
 
 Future<void> _presetPreviewQueue = Future.value();

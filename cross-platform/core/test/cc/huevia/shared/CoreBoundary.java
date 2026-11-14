@@ -104,6 +104,7 @@ public final class CoreBoundary {
             checks+=OriginalPublicationBoundaryTest.run(temporary);
             checks+=RegistrationBoundaryTest.run(temporary);
             checks+=QqLoginBoundaryTest.run(temporary);
+            checks+=PublicInternetBoundaryTest.run(temporary);
             checks+=PresetPinsBoundaryTest.run(temporary);
             checks+=WiredCameraBoundaryTest.run(temporary);
             checks+=CameraBoundaryTest.run(temporary);

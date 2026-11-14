@@ -127,6 +127,7 @@ class _EditorPageState extends State<EditorPage> {
   bool exporting = false, rendering = false, compare = false, restored = false;
   bool managingTools = false;
   bool colorToolActive = false;
+  bool retouchDetailHandoffPending = false;
   bool detailRefreshPending = false;
   EditingDetailPreviewController? effectDetails, comparisonDetails;
   bool analyzingCleanup = false;

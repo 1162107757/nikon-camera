@@ -1,6 +1,8 @@
 package cc.huevia.sharedapp;
 
 import cc.huevia.updates.UpdatePolicy;
+import cc.huevia.account.AccountException;
+import cc.huevia.account.AccountHttpTransport;
 
 import android.app.DownloadManager;
 import android.content.Context;
@@ -75,11 +77,12 @@ public final class NextAppUpdateManager implements AutoCloseable {
     private final Context context;
     private final SharedPreferences prefs;
     private final DownloadManager downloads;
+    private final PublicInternetConnections publicInternet;
     private final ExecutorService worker = Executors.newSingleThreadExecutor();
     private final Handler main = new Handler(Looper.getMainLooper());
     private Listener listener;
     public Release release;
-    public String status = "检查是否有新版本", error = "";
+    public String status = "检查是否有新版本", error = "", checkFailureCode = "";
     public boolean checking, downloading, verifying, verified;
     public int progress;
     private boolean closed, foreground, metadataChecked, automaticStarted;
@@ -89,6 +92,7 @@ public final class NextAppUpdateManager implements AutoCloseable {
     public NextAppUpdateManager(Context context, Listener listener) {
         if (!"cc.huevia.next".equals(context.getPackageName())) throw new IllegalArgumentException("Unsupported update package");
         this.context = context.getApplicationContext(); this.listener = listener;
+        publicInternet = new PublicInternetConnections(this.context);
         prefs = this.context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         downloads = this.context.getSystemService(DownloadManager.class);
         downloadId = prefs.getLong("downloadId", -1);
@@ -117,16 +121,10 @@ public final class NextAppUpdateManager implements AutoCloseable {
         } catch (Exception ignored) { return 0; }
     }
     public boolean hasInternet() {
-        try {
-            ConnectivityManager cm = context.getSystemService(ConnectivityManager.class);
-            NetworkCapabilities caps = cm == null ? null : cm.getNetworkCapabilities(cm.getActiveNetwork());
-            return caps != null && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-                    && caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
-        } catch (RuntimeException ignored) { return false; }
+        return publicInternet.hasValidatedInternet();
     }
     public boolean metered() {
-        ConnectivityManager cm = context.getSystemService(ConnectivityManager.class);
-        return cm == null || cm.isActiveNetworkMetered();
+        return publicInternet.metered();
     }
     public void autoCheck(boolean idle) {
         if (closed || checking || (!idle && !mandatory()) || !hasInternet()) return;
@@ -139,18 +137,23 @@ public final class NextAppUpdateManager implements AutoCloseable {
     private void changed() { if (!closed && listener != null) listener.changed(); }
     public void check(boolean automatic) {
         if (closed || checking) return;
-        if (!hasInternet()) { if (!automatic) { error = "当前网络无法上网。连接可上网的网络后，再检查更新。"; changed(); } return; }
         final String selectedChannel = channel();
         prefs.edit().putLong("lastAttempt", System.currentTimeMillis()).apply();
-        checking = true; error = ""; if (!downloading && !verifying) status = "正在检查新版本…"; changed();
+        checking = true; error = ""; checkFailureCode = ""; if (!downloading && !verifying) status = "正在检查新版本…"; changed();
         worker.execute(() -> {
             try {
                 final Metadata result = readMetadata(selectedChannel);
                 main.post(() -> { if (closed || !selectedChannel.equals(channel())) return; checking = false;
                     applyMetadata(result);
                     changed(); if (automatic && result.release != null && listener != null) listener.available(); });
-            } catch (Exception failure) { main.post(() -> { if (closed) return; checking = false;
-                if (!automatic || mandatory()) error = "无法检查更新，请检查网络后重试。";
+            } catch (Exception failure) {
+                String code = failure instanceof AccountException ? ((AccountException) failure).code
+                        : failure instanceof MetadataHttpFailure ? "HTTP_" + ((MetadataHttpFailure) failure).status
+                        : failure instanceof javax.net.ssl.SSLException ? "TLS_FAILED"
+                        : failure instanceof org.json.JSONException ? "INVALID_METADATA" : failure.getClass().getSimpleName();
+                java.util.logging.Logger.getLogger("HueviaUpdates").warning("stage=metadata code=" + code);
+                main.post(() -> { if (closed) return; checking = false; checkFailureCode = code;
+                if (!automatic || mandatory()) error = checkFailureMessage(failure);
                 if (!downloading && !verifying) status = "检查未完成"; changed(); }); }
         });
     }
@@ -181,19 +184,37 @@ public final class NextAppUpdateManager implements AutoCloseable {
                 : "client_newer".equals(result.reason) ? "当前版本比此通道的发布版本更新" : "已是当前最新版本";
     }
     private JSONObject metadata(String selectedChannel) throws Exception {
-        HttpURLConnection connection = (HttpURLConnection) new URL(BASE + "/releases/latest?channel=" + selectedChannel
+        AccountHttpTransport.OpenedConnection opened = publicInternet.open(new URL(BASE + "/releases/latest?channel=" + selectedChannel
                 + "&packageName=" + context.getPackageName() + "&versionCode=" + installedCode() + "&sdk=" + Build.VERSION.SDK_INT
-                + "&abi=" + (Build.SUPPORTED_ABIS.length>0?Build.SUPPORTED_ABIS[0]:"unknown")).openConnection();
+                + "&abi=" + (Build.SUPPORTED_ABIS.length>0?Build.SUPPORTED_ABIS[0]:"unknown")));
+        HttpURLConnection connection = opened.connection;
+        try {
         connection.setConnectTimeout(15000); connection.setReadTimeout(15000); connection.setInstanceFollowRedirects(false);
         connection.setRequestProperty("Accept", "application/json"); connection.setRequestProperty("Cache-Control", "no-cache");
         java.util.concurrent.ScheduledExecutorService deadline = Executors.newSingleThreadScheduledExecutor();
         java.util.concurrent.ScheduledFuture<?> timeout = deadline.schedule(connection::disconnect, 25, java.util.concurrent.TimeUnit.SECONDS);
         try {
-            if (connection.getResponseCode() != 200) throw new IOException("更新服务暂时不可用");
+            int responseStatus = connection.getResponseCode();
+            if (responseStatus != 200) throw new MetadataHttpFailure(responseStatus);
             ByteArrayOutputStream output = new ByteArrayOutputStream(); byte[] block = new byte[4096]; int count;
             try (InputStream input = connection.getInputStream()) { while ((count = input.read(block)) >= 0) { output.write(block, 0, count); if (output.size() > 64 * 1024) throw new IOException("版本信息过长"); } }
             return new JSONObject(output.toString(StandardCharsets.UTF_8.name()));
-        } finally { timeout.cancel(false); deadline.shutdownNow(); connection.disconnect(); }
+        } finally { timeout.cancel(false); deadline.shutdownNow(); }
+        } finally { opened.close(); }
+    }
+    private static final class MetadataHttpFailure extends IOException {
+        final int status;
+        MetadataHttpFailure(int status) { this.status = status; }
+    }
+    private static String checkFailureMessage(Exception failure) {
+        if (failure instanceof AccountException) return failure.getMessage();
+        if (failure instanceof MetadataHttpFailure) return ((MetadataHttpFailure) failure).status == 429
+                ? "检查更新次数较多，请稍后重试。" : "更新服务暂时不可用，请稍后重试。";
+        if (failure instanceof javax.net.ssl.SSLException) return "无法与更新服务建立安全连接，请稍后重试。";
+        if (failure instanceof org.json.JSONException) return "更新服务返回的版本信息无效，请稍后重试。";
+        if (failure instanceof java.net.SocketTimeoutException || failure instanceof java.net.UnknownHostException
+                || failure instanceof java.net.ConnectException) return "暂时无法连接更新服务，请确认移动数据或当前网络可以上网后重试。";
+        return "版本信息校验未完成，请稍后重新检查。";
     }
     public void download(boolean mobileAllowed) {
         if (closed || release == null || checking || downloading || verifying) return;

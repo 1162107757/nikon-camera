@@ -873,6 +873,21 @@ class RetouchPhotoViewport {
   int get hashCode => Object.hash(imageFrame, clip, visibleRegion, zoom);
 }
 
+class RetouchPhotoViewportScope extends InheritedWidget {
+  const RetouchPhotoViewportScope({
+    super.key,
+    required this.value,
+    required super.child,
+  });
+  final RetouchPhotoViewport value;
+  static RetouchPhotoViewport? maybeOf(BuildContext context) => context
+      .dependOnInheritedWidgetOfExactType<RetouchPhotoViewportScope>()
+      ?.value;
+  @override
+  bool updateShouldNotify(RetouchPhotoViewportScope oldWidget) =>
+      value != oldWidget.value;
+}
+
 RetouchPhotoViewport retouchOriginalPhotoViewport({
   required Size viewport,
   required double imageWidth,
@@ -1442,7 +1457,17 @@ class _OriginalPhotoStageState extends State<RetouchOriginalPhotoStage> {
             child: SizedBox(
               width: target.width,
               height: target.height,
-              child: widget.child,
+              child: RetouchPhotoViewportScope(
+                value: retouchOriginalPhotoViewport(
+                  viewport: size,
+                  imageWidth: widget.imageWidth,
+                  imageHeight: widget.imageHeight,
+                  transform: matrix(),
+                  reserveBars: widget.reserveBars,
+                  clampToBounds: sharedBinding == null,
+                ),
+                child: widget.child,
+              ),
             ),
           ),
         ],

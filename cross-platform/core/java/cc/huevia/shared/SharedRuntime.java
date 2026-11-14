@@ -62,6 +62,62 @@ public final class SharedRuntime {
         personal=new SharedPersonal(root,library,accounts,installationId);
     }
     public File root(){return root;}
+    /** Network-only calls may wait for public Internet without holding the runtime/camera queue. */
+    public static boolean accountNetworkOperation(String operation) {
+        return "account.challenge".equals(operation)||"account.login".equals(operation)||"account.register".equals(operation)
+                ||"account.qq".equals(operation)||"account.refresh".equals(operation)||"account.logout".equals(operation);
+    }
+    public static boolean publicNetworkOperation(String operation) {
+        return "online.page".equals(operation)||"online.search".equals(operation)||"online.preview".equals(operation)
+                ||"editor.catalog".equals(operation)||"community.get".equals(operation);
+    }
+    public String requestPublic(String operation,String json,BooleanSupplier cancel)throws IOException {
+        if(!accountNetworkOperation(operation)&&!publicNetworkOperation(operation))throw new IOException("此操作不能在公共网络队列执行。");
+        if(cancel.getAsBoolean())throw new java.io.InterruptedIOException("操作已取消。");
+        return SharedJson.encode(publicRequest(operation,SharedJson.object(json)));
+    }
+    private Object publicRequest(String operation,Map<String,Object> p)throws IOException {
+        switch(operation){
+            case "account.challenge":return accounts.challenge(installationId);
+            case "account.login":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));return authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));
+            case "account.register":return authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));
+            case "account.qq":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));return authenticated(accounts.loginWithQq(text(p,"accessToken",4096)));
+            case "account.refresh":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));return authenticated(accounts.refresh());
+            case "account.logout":
+                if(p.containsKey("owner")&&!accounts.isLogoutPending())guardOwner(text(p,"owner",64));
+                try{accounts.logout();synchronized(this){storageWarning="";}}
+                catch(IOException failure){synchronized(this){storageWarning=failure.getMessage();}throw failure;}
+                finally{profile.clear();}
+                return map("loggedOut",true);
+            case "online.page":{
+                OnlinePresetRepository.PageResult page=online.fetchPage(integer(p,"page",1),integer(p,"pageSize",24),text(p,"category",100),text(p,"fileFormat",8));
+                List<Object> rows=new ArrayList<>();for(OnlinePreset r:page.presets)rows.add(onlineMap(r));
+                return map("items",rows,"total",page.total,"hasMore",page.hasMore,"page",page.page,"categories",page.categories);
+            }
+            case "online.search":{
+                OnlinePresetSearch.Snapshot snapshot=search.load(Boolean.TRUE.equals(p.get("refresh")));
+                String category=text(p,"category",100);if(category.isEmpty())category=PresetCategories.ALL;
+                else if(PresetCategories.UNCATEGORIZED.equals(category))category="";
+                List<Object> rows=new ArrayList<>();for(OnlinePreset r:snapshot.matching(text(p,"query",256),category))rows.add(onlineMap(r));
+                return map("items",rows,"categories",new ArrayList<>(snapshot.categories),"fromCache",snapshot.fromCache,"available",snapshot.available,"message",snapshot.message);
+            }
+            case "online.preview":{
+                String owner=text(p,"owner",64);guardOwner(owner);long generation=accounts.sessionGeneration();
+                File file=online.downloadPreview(OnlinePreset.fromMap(object(p.get("preset"))));
+                guardOwner(owner);
+                if(generation!=accounts.sessionGeneration())throw new AccountException("SESSION_CHANGED",0,"登录状态已变化，请重新载入样片。");
+                return map("path",file.getPath());
+            }
+            case "editor.catalog":{
+                OnlinePresetRepository.CatalogResult catalog=editorCatalog.load();
+                List<Object> rows=new ArrayList<>();for(OnlinePreset r:catalog.presets)rows.add(onlineMap(r));
+                return map("items",rows,"status",catalog.status,"message",catalog.message);
+            }
+            case "community.get":return Boolean.TRUE.equals(p.get("login"))
+                    ?community.getForOwner(text(p,"path",2048),text(p,"ownerId",64)):community.get(text(p,"path",2048),false);
+            default:throw new IOException("未知公共网络操作。");
+        }
+    }
     public synchronized void guardProfile(String owner,String updatedAt)throws IOException{profile.guard(owner,updatedAt);}
     public synchronized String prepareAvatar(String owner,String updatedAt,byte[] jpeg)throws IOException{return SharedJson.encode(profile.prepare(owner,updatedAt,jpeg));}
     public byte[] preset(String id)throws IOException{if(id==null||id.isEmpty())return new byte[0];requirePreset(id);return library.readPreset(id);}
@@ -104,11 +160,7 @@ public final class SharedRuntime {
             return SharedJson.encode(SharedExportSpecs.describe(frozen,p,cancel));
         }
         switch(operation){
-            case "editor.catalog":{
-                OnlinePresetRepository.CatalogResult catalog=editorCatalog.load();
-                List<Object> rows=new ArrayList<>();for(OnlinePreset r:catalog.presets)rows.add(onlineMap(r));
-                result=map("items",rows,"status",catalog.status,"message",catalog.message);break;
-            }
+            case "editor.catalog":result=publicRequest(operation,p);break;
             case "editor.prepare":{
                 String owner=text(p,"owner",64);guardOwner(owner);
                 File source=privateFile(text(p,"path",4096));
@@ -183,18 +235,7 @@ public final class SharedRuntime {
                 result=map("path",output.getPath(),"name",name);break;
             }
             case "library.inspect":result=SharedJson.object(CoreEngine.inspectPreset(preset(text(p,"id",64))));break;
-            case "online.page":{
-                OnlinePresetRepository.PageResult page=online.fetchPage(integer(p,"page",1),integer(p,"pageSize",24),text(p,"category",100),text(p,"fileFormat",8));
-                List<Object> rows=new ArrayList<>();for(OnlinePreset r:page.presets)rows.add(onlineMap(r));
-                result=map("items",rows,"total",page.total,"hasMore",page.hasMore,"page",page.page,"categories",page.categories);break;
-            }
-            case "online.search":{
-                OnlinePresetSearch.Snapshot snapshot=search.load(Boolean.TRUE.equals(p.get("refresh")));
-                String category=text(p,"category",100);if(category.isEmpty())category=PresetCategories.ALL;
-                else if(PresetCategories.UNCATEGORIZED.equals(category))category="";
-                List<Object> rows=new ArrayList<>();for(OnlinePreset r:snapshot.matching(text(p,"query",256),category))rows.add(onlineMap(r));
-                result=map("items",rows,"categories",new ArrayList<>(snapshot.categories),"fromCache",snapshot.fromCache,"available",snapshot.available,"message",snapshot.message);break;
-            }
+            case "online.page":case "online.search":case "online.preview":result=publicRequest(operation,p);break;
             case "online.download":{
                 guardOwner(text(p,"owner",64));
                 OnlinePreset selected=OnlinePreset.fromMap(object(p.get("preset")));
@@ -209,22 +250,12 @@ public final class SharedRuntime {
                 Object current=session(accounts.cachedSession());Map<String,Object> value=current==null?new LinkedHashMap<>():object(current);
                 value.put("storageWarning",storageWarning);value.put("logoutPending",accounts.isLogoutPending());result=value;break;
             }
-            case "account.challenge":result=accounts.challenge(installationId);break;
-            case "account.login":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.login(text(p,"username",32),text(p,"password",256)));break;
-            case "account.register":result=authenticated(accounts.register(text(p,"username",32),text(p,"password",256),text(p,"challengeId",128),text(p,"challengeAnswer",128),installationId));break;
-            case "account.qq":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.loginWithQq(text(p,"accessToken",4096)));break;
-            case "account.refresh":if(p.containsKey("owner"))guardOwner(text(p,"owner",64));result=authenticated(accounts.refresh());break;
+            case "account.challenge":case "account.login":case "account.register":case "account.qq":case "account.refresh":
+                result=publicRequest(operation,p);break;
             case "account.avatarCommit":result=authenticated(profile.commit(text(p,"owner",64),text(p,"receipt",64),text(p,"sha256",64)));break;
             case "account.avatarReset":result=authenticated(profile.reset(text(p,"owner",64),text(p,"updatedAt",64)));break;
             case "account.avatarDiscard":profile.discardForOwner(text(p,"owner",64),text(p,"receipt",64));result=map("discarded",true);break;
-            case "account.logout":
-                if(p.containsKey("owner")&&!accounts.isLogoutPending())guardOwner(text(p,"owner",64));
-                try{accounts.logout();storageWarning="";}catch(IOException failure){storageWarning=failure.getMessage();throw failure;}finally{profile.clear();}
-                result=map("loggedOut",true);break;
-            case "community.get":
-                result=Boolean.TRUE.equals(p.get("login"))
-                    ?community.getForOwner(text(p,"path",2048),text(p,"ownerId",64))
-                    :community.get(text(p,"path",2048),false);break;
+            case "account.logout":case "community.get":result=publicRequest(operation,p);break;
             case "community.write":result=community.writeForOwner(text(p,"method",6),text(p,"path",2048),object(p.get("body")),text(p,"ownerId",64));break;
             case "community.discussion":{
                 guardOwner(text(p,"owner",64));String id=text(p,"id",64);requirePreset(id);PresetRecord record=library.findBySha256(id);
@@ -398,7 +429,10 @@ public final class SharedRuntime {
         if(session==null)return null;AccountRepository.User u=session.user;
         return map("user",map("id",u.id,"username",u.username,"nickname",u.nickname,"avatarUrl",u.avatarUrl,"avatarSource",u.avatarSource,"provider",u.provider,"updatedAt",u.updatedAt,"createdAt",u.createdAt,"lastLoginAt",u.lastLoginAt,"loginCount",u.loginCount,"status",u.status),"expiresAt",session.expiresAt,"verified",session.verified);
     }
-    private Object authenticated(AccountRepository.Session value){storageWarning="";return session(value);}
+    private synchronized Object authenticated(AccountRepository.Session value)throws IOException{
+        if(value!=accounts.cachedSession())throw new AccountException("SESSION_CHANGED",0,"登录状态已变化，请重试。");
+        storageWarning="";return session(value);
+    }
     private static Object onlineMap(OnlinePreset r){return map("id",r.id,"name",r.name,"description",r.description,"fileUrl",r.fileUrl,"sha256",r.sha256,"byteLength",r.byteLength,"previewUrl",r.previewUrl,"compatibleModels",r.compatibleModels,"category",r.category,"authorName",r.authorName,"source",r.source,"fileFormat",r.fileFormat);}
     private static String installationId(File root,String preferred)throws IOException{
         if(preferred!=null&&preferred.matches("(?i)[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}"))return preferred;

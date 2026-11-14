@@ -36,6 +36,7 @@ class HueviaCore {
   String platform = '';
   Json schema = {};
   final previewRevision = ValueNotifier<int>(0);
+  int publicImageGeneration = 0;
   bool customTemplate = false;
   final List<Json> recentOperations = [];
   Future<void> requestUsbPermission(String id) async {
@@ -71,6 +72,14 @@ class HueviaCore {
     Json payload = const {},
     String? jobId,
   ]) async {
+    if (const {
+      'account.login',
+      'account.register',
+      'account.qq',
+      'account.logout',
+    }.contains(operation)) {
+      publicImageGeneration++;
+    }
     final started = Stopwatch()..start();
     var status = 'failed';
     try {
@@ -303,12 +312,21 @@ class AppState extends ChangeNotifier {
   bool _cameraManualTransfer = false;
   bool get cameraManualTransferActive => _cameraManualTransfer;
   bool claimCameraTransfer() {
-    if (_cameraManualTransfer || cameraLiveActive || cameraDownloadsActive) return false;
+    if (_cameraManualTransfer || cameraLiveActive || cameraDownloadsActive) {
+      return false;
+    }
     _cameraManualTransfer = true;
     notifyListeners();
     return true;
   }
-  void releaseCameraTransfer() { if (_cameraManualTransfer) { _cameraManualTransfer = false; notifyListeners(); } }
+
+  void releaseCameraTransfer() {
+    if (_cameraManualTransfer) {
+      _cameraManualTransfer = false;
+      notifyListeners();
+    }
+  }
+
   CameraConnectionProtection? _connectionProtection;
   CameraConnectionProtection get connectionProtection =>
       _connectionProtection ??= CameraConnectionProtection(core);
@@ -330,6 +348,7 @@ class AppState extends ChangeNotifier {
   List<Photo> photos = [];
   Set<String> starredPhotos = {};
   Json session = {};
+  int _sessionRevision = 0, _sessionRefresh = 0, _libraryRefresh = 0;
   Json uiPreferences = {};
   String? uiPreferencesWarning;
   Future<void> _uiCommit = Future.value();
@@ -361,7 +380,8 @@ class AppState extends ChangeNotifier {
     return next;
   }
 
-  Future<T> withPhotoTransaction<T>(Future<T> Function() operation) => _serialPhotos(operation);
+  Future<T> withPhotoTransaction<T>(Future<T> Function() operation) =>
+      _serialPhotos(operation);
 
   Future<void> removePhotos(Set<String> paths) => _serialPhotos(() async {
     final next = photos.where((photo) => !paths.contains(photo.path)).toList();
@@ -382,7 +402,12 @@ class AppState extends ChangeNotifier {
         uiPreferencesWarning = '$error';
       }
       await refreshLibrary();
-      session = await core.call('account.current');
+      final request = ++_sessionRefresh, revision = _sessionRevision;
+      final restored = await core.call('account.current');
+      if (request == _sessionRefresh && revision == _sessionRevision) {
+        _sessionRevision++;
+        session = restored;
+      }
       if (core.platform == 'android' || core.platform == 'ios') {
         await connectionProtection.initialize();
         try {
@@ -411,7 +436,9 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> refreshLibrary() async {
+    final request = ++_libraryRefresh, revision = _sessionRevision;
     final value = await core.call('library.list');
+    if (request != _libraryRefresh || revision != _sessionRevision) return;
     presets = (value['items'] as List)
         .map((row) => Preset(object(row)))
         .toList();
@@ -438,6 +465,7 @@ class AppState extends ChangeNotifier {
       throw const AppFailure('未取得有效登录状态，请重试登录。');
     }
     if (session['user']?['id'] != user['id']) presets = [];
+    _sessionRevision++;
     session = object(value);
     notifyListeners();
   }
@@ -520,7 +548,12 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> refreshSession() async {
-    session = await core.call('account.current');
+    final request = ++_sessionRefresh, revision = _sessionRevision;
+    final value = await core.call('account.current');
+    if (request != _sessionRefresh || revision != _sessionRevision) return;
+    _sessionRevision++;
+    if (session['user']?['id'] != value['user']?['id']) presets = [];
+    session = value;
     notifyListeners();
     await refreshLibrary();
   }

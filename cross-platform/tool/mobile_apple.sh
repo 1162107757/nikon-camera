@@ -27,6 +27,7 @@ assert value['frameworkVersion']=='3.47.9'
 PY
 if [[ "${1:-all}" != build && "${1:-all}" != native-diagnostic ]]; then
 bash "$ROOT/cross-platform/tool/core_ios.sh"
+# core_ios also runs the mandatory Foundation public-I/O gate and mirrors its receipts here.
 bash "$ROOT/cross-platform/tool/avatar_apple.sh"
 bash "$ROOT/cross-platform/tool/wifi_apple.sh"
 python3 "$ROOT/cross-platform/tool/prepare_apple_plugin.py"
